@@ -158,8 +158,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
       _create( 'input', {
         'id':        option.value,
-        'value':     option.value,
+        // Type must come before value or IE fails
         'type':      'checkbox',
+        'value':     option.value,
         'name':      _name,
         'class':     'cf-input cf-multi-select_checkbox',
         'inside':    li

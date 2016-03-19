@@ -1,9 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 
-{% import 'molecules/related-posts.html' as related_posts with context %}
 {% import 'molecules/featured-content.html' as featured_content %}
-
-{% set parent = page.parent() %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block title -%}
     {{ page.seo_title }}
@@ -36,21 +34,10 @@
         {% include 'templates/render_block.html' with context %}
     {%- endfor %}
 
-    <aside class="prefooter">
-        {% for block in page.sidefoot %}
-            {% if 'related_posts' or 'call_to_action' or 'email_signup' in block.block_type %}
-                {% if loop.index == 1 %}
-                    <div class="block
-                                block__flush-top">
-                        {{ render_stream_child(block) }}
-                    </div>
-                {% else %}
-                    <div class="block">
-                        {{ render_stream_child(block) }}
-                    </div>
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-    </aside>
+    {% if page.sidefoot %}
+        <aside class="prefooter">
+            {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+        </aside>
+    {% endif %}
 {% endblock %}
 

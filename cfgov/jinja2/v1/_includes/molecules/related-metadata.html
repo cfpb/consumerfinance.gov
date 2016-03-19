@@ -113,8 +113,9 @@
    ========================================================================== #}
 
 {% macro _text(text) %}
+
 <p class="u-mb0">
-    {{ text.blob.source | safe }}
+    {{ parse_links(text.blob) |safe }}
 </p>
 {% endmacro %}
 

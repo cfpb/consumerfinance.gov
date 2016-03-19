@@ -129,15 +129,6 @@ urlpatterns = [
             name='detail')],
         namespace='newsroom')),
 
-    url(r'^budget/', include([
-        url(r'^$',
-            TemplateView.as_view(template_name='budget/index.html'),
-            name='home'),
-        url(r'^(?P<page_slug>[\w-]+)/$',
-            SheerTemplateView.as_view(),
-            name='page')],
-        namespace="budget")),
-
     url(r'^the-bureau/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='the-bureau/index.html'),
             name='index'),
@@ -165,22 +156,6 @@ urlpatterns = [
             SheerTemplateView.as_view(),
             name='page')],
         namespace='business')),
-
-    url(r'^offices/', include([
-        url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='office',
-                                      local_name='office',
-                                      default_template='offices/_single.html',),
-            name='detail')],
-        namespace='offices')),
-
-    url(r'^sub-pages/', include([
-        url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='sub_page',
-                                      local_name='sub_page',
-                                      default_template='sub-pages/_single.html'),
-            name='detail')],
-        namespace='sub_page')),
 
     url(r'^activity-log/$',
         TemplateView.as_view(template_name='activity-log/index.html'),
@@ -262,7 +237,7 @@ if 'cfpb_common' in settings.INSTALLED_APPS:
 if 'selfregistration' in settings.INSTALLED_APPS:
     from selfregistration.views import CompanySignup
     pattern = url(r'^company-signup/', CompanySignup.as_view())
-    urlpatterns.append(pattern)    
+    urlpatterns.append(pattern)
 
 if settings.DEBUG :
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

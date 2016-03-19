@@ -25,12 +25,12 @@ function TheLeadershipCalendarPage() {
   this.searchFilter = element.all( by.css( '.js-post-filter' ) ).get( 0 );
 
   this.searchFilterBtn =
-  this.searchFilter.all( by.css( '.expandable_target' ) ).first();
+  this.searchFilter.all( by.css( '.m-expandable_target' ) ).first();
 
   this.downloadFilter = element.all( by.css( '.js-post-filter' ) ).get( 1 );
 
   this.downloadFilterBtn =
-  this.downloadFilter.all( by.css( '.expandable_target' ) ).first();
+  this.downloadFilter.all( by.css( '.m-expandable_target' ) ).first();
 
   this.searchFilterResults =
   element.all( by.css( '[data-qa-hook="leadership-calendar-filter"] tbody' ) );

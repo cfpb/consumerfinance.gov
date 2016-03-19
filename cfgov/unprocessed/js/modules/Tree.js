@@ -102,7 +102,7 @@ function Tree() {
  * @classdesc A node in a tree data structure.
  *
  * @param {Tree} tree - The data structure this node is a member of.
- * @param {Object} data - The data data.
+ * @param {Object} data - The data payload.
  * @param {TreeNode} parent - The parent node in the root,
  *   null if this is the root node.
  * @param {Arrray} children - List of children nodes.

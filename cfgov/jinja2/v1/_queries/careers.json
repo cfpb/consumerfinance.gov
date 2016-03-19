@@ -9,7 +9,7 @@
     {
     "range" : {
         "close_date" : {
-          "gte": "now"
+          "gte": "now/d"
         }
       }
     }

@@ -27,7 +27,7 @@
         </h2>
     {% endif %}
 
-    {{ value.paragraph }}
+    {{ parse_links(value.paragraph) |safe }}
 
     {% if value.links %}
         <ul class="list list__unstyled list__links">

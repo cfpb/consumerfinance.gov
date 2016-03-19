@@ -175,11 +175,10 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
 STATICFILES_DIRS = [
-    PROJECT_ROOT.child('static_built'),
-    ('legacy', PROJECT_ROOT.child('v1', 'static-legacy')),
+    PROJECT_ROOT.child('static_built')
 ]
 
-NEMO_PATH = Path(os.environ.get('NEMO_PATH') or 
+NEMO_PATH = Path(os.environ.get('NEMO_PATH') or
         Path(REPOSITORY_ROOT, '../cfpb_nemo'))
 
 if NEMO_PATH.exists():
@@ -283,6 +282,10 @@ SHEER_ELASTICSEARCH_SETTINGS = \
                 "analyzer": {
                     "my_edge_ngram_analyzer": {
                         "tokenizer": "my_edge_ngram_tokenizer"
+                    },
+                    "tag_analyzer": {
+                       "tokenizer": "keyword",
+                       "filter": "lowercase"
                     }
                 },
                 "tokenizer": {
@@ -401,8 +404,8 @@ LOGIN_REDIRECT_URL='/admin/'
 
 SHEER_SITES = {
         'refresh-legacy': V1_TEMPLATE_ROOT,
-        'owning-a-home': 
-            Path(os.environ.get('OAH_SHEER_PATH') or 
+        'owning-a-home':
+            Path(os.environ.get('OAH_SHEER_PATH') or
             Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
         'fin-ed-resources':
             Path(os.environ.get('FIN_ED_SHEER_PATH') or

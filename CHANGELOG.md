@@ -44,6 +44,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add text intro and featured content to SublandingFilterablePage
 - Add a script `move_reports.py` to move all reports under a given SublandingFilterablePage
 - Add a 'careers_preview' query to limit the results to 5
+- Added CFGovLinkHandler to convert richtext internal links to relative links
+- Frontend: added `u-hidden-overflow` utility class.
 
 ### Changed
 - Converted the project to Capital Framework v3
@@ -79,6 +81,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: Added all launch-state mega menu links.
 - Frontend: Added hover-to-show behavior in desktop mega menu.
 - Use the added `careers_preview.json` in the careers sublanding page instead of `careers.json`
+- Wrap prefooter section in Browse pages in a conditional to prevent empty prefooter
+- Frontend: Added behaviors for third level mobile mega menu.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -96,6 +100,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - A couple of Implementation Resource group categories.
 - Removed Chosen.js library and custom styles/scripts.
 - Removed several size=x params passed to query.search(), which don't do anything
+- Removed all the pages and associated code that have been ported to wagtail.
 
 ### Fixed
 - Fix bug where publised pages were showing shared content
@@ -112,6 +117,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed ordering for Filterable results to be newest => oldest by published_date.
 - Fixed a bug where activiating the clear button wasn't clearing filtered results on browse filterable pages.
 - Fixes the values for author and tag options to remove special characters.
+- Fixes layout issues with filters on sheer pages.
+- Fixed failing browser tests due to atomic naming updates.
+- Fixed a bug in the multi-select script where value was set before input type.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 

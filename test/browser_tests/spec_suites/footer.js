@@ -6,26 +6,28 @@ describe( 'The Footer Component', function() {
   var _sharedObject;
 
   var _footerLinkLookup =
-  { '/offices/accessibility/':
+  { '/accessibility/':
       'accessibility',
-    '/offices/office-of-civil-rights/':
+    '/office-civil-rights/':
       'office of civil rights',
     '/careers/':
       'careers',
-    '/offices/foia-requests/':
+    '/foia-requests/':
       'foia',
-    '/offices/cfpb-ombudsman/':
+    '/cfpb-ombudsman/':
       'cfpb ombudsman',
-    '/contact-us/':
+    '/about-us/contact-us/':
       'contact us',
     '/newsroom/':
       'newsroom',
-    '/offices/open-government/':
+    '/open-government/':
       'open government',
-    '/offices/plain-writing/':
+    '/plain-writing/':
       'plain writing',
-    '/offices/privacy/':
+    '/privacy/':
       'privacy, policy & legal notices',
+    '/tribal/':
+      'tribal',
     'http://usa.gov/':
       'usa.gov',
     'http://www.federalreserve.gov/oig/default.htm':
@@ -39,9 +41,7 @@ describe( 'The Footer Component', function() {
     'https://www.flickr.com/photos/cfpbphotos':
       'visit us on flickr',
     'https://www.linkedin.com/company/consumer-financial-protection-bureau':
-      'visit us on linkedin',
-    '':
-      'tbd content'
+      'visit us on linkedin'
   };
 
   beforeAll( function() {

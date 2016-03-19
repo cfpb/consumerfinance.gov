@@ -43,6 +43,7 @@
 
 {% macro render(value) %}
 {% import 'macros/category-icon.html' as category_icon %}
+
 <section class="featured-content-module">
     <div class="featured-content-module_text">
         <p class="h4">
@@ -53,7 +54,7 @@
             {{ value.heading }}
         </h2>
         <p>
-            {{ value.body.source | safe }}
+            {{ parse_links(value.body) |safe }}
         </p>
         <ul class="list list__links">
             {% if value.show_post_link and value.post %}

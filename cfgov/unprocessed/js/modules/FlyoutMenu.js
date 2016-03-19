@@ -54,7 +54,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   var _expandTransition;
   var _collapseTransition;
   var _expandTransitionMethod;
+  var _expandTransitionMethodArgs = [];
   var _collapseTransitionMethod;
+  var _collapseTransitionMethodArgs = [];
 
   // Binded events.
   var _collapseBinded = collapse.bind( this );
@@ -72,6 +74,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   // which is called if collapse is called while
   // expand is animating.
   var _deferFunct = standardType.noopFunct;
+
+  // Whether this instance's behaviors are suspended or not.
+  var _suspended = true;
 
   /**
    * @returns {FlyoutMenu} An instance.
@@ -95,6 +100,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       }
     }
 
+    resume();
+
     return this;
   }
 
@@ -102,7 +109,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * Event handler for when the search input trigger is hovered over.
    */
   function _triggerOver() {
-    this.dispatchEvent( 'triggerOver', { target: this, type: 'triggerOver' } );
+    if ( !_suspended ) {
+      this.dispatchEvent( 'triggerOver',
+                          { target: this, type: 'triggerOver' } );
+    }
   }
 
   /**
@@ -111,13 +121,15 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * @param {MouseEvent} event - The flyout trigger was clicked.
    */
   function _triggerClicked( event ) {
-    event.preventDefault();
-    this.dispatchEvent( 'triggerClick',
-                        { target: this, type: 'triggerClick' } );
-    if ( _isExpanded ) {
-      this.collapse();
-    } else {
-      this.expand();
+    if ( !_suspended ) {
+      this.dispatchEvent( 'triggerClick',
+                          { target: this, type: 'triggerClick' } );
+      event.preventDefault();
+      if ( _isExpanded ) {
+        this.collapse();
+      } else {
+        this.expand();
+      }
     }
   }
 
@@ -132,8 +144,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       this.dispatchEvent( 'expandBegin',
                           { target: this, type: 'expandBegin' } );
       if ( _expandTransitionMethod ) {
-        // The following method is defined in the transition, not this file.
-        _expandTransitionMethod();
+        _expandTransitionMethod
+          .apply( _expandTransition, _expandTransitionMethodArgs );
         if ( _expandTransition && _collapseTransition.isAnimated() ) {
           _expandTransition
             .addEventListener( 'transitionEnd', _expandEndBinded );
@@ -163,8 +175,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _isExpanded = false;
       _isAnimating = true;
       if ( _collapseTransitionMethod ) {
-        // The following method is defined in the transition, not this file.
-        _collapseTransitionMethod();
+        _collapseTransitionMethod
+          .apply( _collapseTransition, _collapseTransitionMethodArgs );
         if ( _collapseTransition && _collapseTransition.isAnimated() ) {
           _collapseTransition
             .addEventListener( 'transitionEnd', _collapseEndBinded );
@@ -177,7 +189,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _triggerDom.setAttribute( 'aria-expanded', 'false' );
       _contentDom.setAttribute( 'aria-expanded', 'false' );
       // TODO: Remove or uncomment when keyboard navigation is in.
-      //_triggerDom.focus();
+      // _triggerDom.focus();
     } else {
       _deferFunct = _collapseBinded;
     }
@@ -221,10 +233,13 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    *   A transition instance to watch for events on.
    * @param {Function} method
    *   The transition method to call on expand.
+   * @param {Array} args
+   *   (Optional) list of arguments to apply to collapse method.
    */
-  function setExpandTransition( transition, method ) {
+  function setExpandTransition( transition, method, args ) {
     _expandTransition = transition;
     _expandTransitionMethod = method;
+    _expandTransitionMethodArgs = args;
   }
 
   /**
@@ -232,10 +247,13 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    *   A transition instance to watch for events on.
    * @param {Function} method
    *   The transition method to call on collapse.
+   * @param {Array} args
+   *   (Optional) list of arguments to apply to collapse method.
    */
-  function setCollapseTransition( transition, method ) {
+  function setCollapseTransition( transition, method, args ) {
     _collapseTransition = transition;
     _collapseTransitionMethod = method;
+    _collapseTransitionMethodArgs = args;
   }
 
   /**
@@ -269,6 +287,30 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     };
   }
 
+  /**
+   * Enable broadcasting of trigger events.
+   * @returns {boolean} True if resumed, false otherwise.
+   */
+  function resume() {
+    if ( _suspended ) {
+      _suspended = false;
+    }
+
+    return !_suspended;
+  }
+
+  /**
+   * Suspend broadcasting of trigger events.
+   * @returns {boolean} True if suspended, false otherwise.
+   */
+  function suspend() {
+    if ( !_suspended ) {
+      _suspended = true;
+    }
+
+    return _suspended;
+  }
+
   // TODO: Use Object.defineProperty to create a getter/setter.
   //       See https://github.com/cfpb/cfgov-refresh/pull/1566/
   //           files#diff-7a844d22219d7d3db1fa7c1e70d7ba45R35
@@ -281,8 +323,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /**
-   * @param {number|string|Object} data - A data identifier such as an Array index,
-   *   Hash key, or Tree node.
+   * @param {number|string|Object} data
+   *   A data identifier such as an Array index, Hash key, or Tree node.
    * @returns {FlyoutMenu} An instance.
    */
   function setData( data ) {
@@ -292,10 +334,17 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /**
-   * @returns {boolean} True if menu is expanded, false otherwise.
+   * @returns {boolean} True if menu is animating, false otherwise.
    */
   function isAnimating() {
     return _isAnimating;
+  }
+
+  /**
+   * @returns {boolean} True if menu is expanded, false otherwise.
+   */
+  function isExpanded() {
+    return _isExpanded;
   }
 
   // Attach public events.
@@ -313,7 +362,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   this.getTransition = getTransition;
   this.getDom = getDom;
   this.isAnimating = isAnimating;
+  this.isExpanded = isExpanded;
+  this.resume = resume;
   this.setData = setData;
+  this.suspend = suspend;
 
   // Public static properties.
   FlyoutMenu.EXPAND_TYPE = 'expand';

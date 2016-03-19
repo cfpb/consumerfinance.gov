@@ -39,5 +39,5 @@
     %}
     {% set icon = icons[category | lower] or icons['blog'] %}
     <span class="cf-icon {{ icon }}
-                 {{- additional_classes or '' -}}"></span>
+                 {{ additional_classes or '' }}"></span>
 {% endmacro %}

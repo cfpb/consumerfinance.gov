@@ -30,6 +30,7 @@
    See [GHE]/flapjack/Modules-V1/wiki/Heros
 
    ========================================================================== #}
+
 <section class="hero"
          {{ 'style=background-color:' +
              value.background_color + ';'
@@ -37,7 +38,7 @@
     <div class="wrapper hero_wrapper">
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
-            <div class="hero_subhead">{{ value.body.source |safe}}</div>
+            <div class="hero_subhead">{{ parse_links(value.body) |safe }}</div>
             {% for link in value.links %}
                 <a href="{{ link.url }}"
                    class="hero_cta

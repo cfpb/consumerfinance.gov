@@ -206,6 +206,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {% include '/js/routes/common.js' %}
 </script>
 
+{# Remove after sheer has been completely phased out #}
+{% if not page %}
+<script type='text/javascript'>
+    {% include '/js/routes/sheer.js' %}
+</script>
+{% endif %}
+
 {# Include template and page-specific JavaScript. #}
 {% macro page_template_js() %}
     {# Check and include template-level JavaScript. #}

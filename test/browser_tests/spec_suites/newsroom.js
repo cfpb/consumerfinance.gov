@@ -24,7 +24,7 @@ describe( 'The Newsroom Page', function() {
     expect( page.sideNav.isPresent() ).toBe( true );
   } );
 
-  it( 'should include a featured topic', function() {
+  xit( 'should include a featured topic', function() {
     expect( page.featuredTopic.isPresent() ).toBe( true );
   } );
 
