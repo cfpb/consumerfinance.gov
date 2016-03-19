@@ -64,8 +64,10 @@ def external_links(value):
             pass
 
         return soup
-    else:   # Handles sheer sites
+    elif 'source' in value:   # Handles sheer sites
         return value['source']
+    else:
+        return value
 
 
 @contextfunction
