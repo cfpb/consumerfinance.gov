@@ -195,12 +195,12 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   this.remove = remove;
   this.setElement = setElement;
 
-  // Public static constants.
-  BaseTransition.BEGIN_EVENT = 'transitionBegin';
-  BaseTransition.END_EVENT = 'transitionEnd';
-  BaseTransition.NO_ANIMATION_CLASS = 'u-no-animation';
-
   return this;
 }
+
+// Public static constants.
+BaseTransition.BEGIN_EVENT = 'transitionBegin';
+BaseTransition.END_EVENT = 'transitionEnd';
+BaseTransition.NO_ANIMATION_CLASS = 'u-no-animation';
 
 module.exports = BaseTransition;
