@@ -1,6 +1,7 @@
 'use strict';
 
 // Required modules.
+var BaseTransition = require( '../modules/transition/BaseTransition' );
 var dataHook = require( '../modules/util/data-hook' );
 var EventObserver = require( '../modules/util/EventObserver' );
 var standardType = require( '../modules/util/standard-type' );
@@ -144,12 +145,15 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       this.dispatchEvent( 'expandBegin',
                           { target: this, type: 'expandBegin' } );
       if ( _expandTransitionMethod ) {
+        var hasTransition = _expandTransition &&
+                            _expandTransition.isAnimated();
+        if ( hasTransition ) {
+          _expandTransition
+            .addEventListener( BaseTransition.END_EVENT, _expandEndBinded );
+        }
         _expandTransitionMethod
           .apply( _expandTransition, _expandTransitionMethodArgs );
-        if ( _expandTransition && _collapseTransition.isAnimated() ) {
-          _expandTransition
-            .addEventListener( 'transitionEnd', _expandEndBinded );
-        } else {
+        if ( !hasTransition ) {
           _expandEndBinded();
         }
       } else {
@@ -175,12 +179,15 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _isExpanded = false;
       _isAnimating = true;
       if ( _collapseTransitionMethod ) {
+        var hasTransition = _collapseTransition &&
+                            _collapseTransition.isAnimated();
+        if ( hasTransition ) {
+          _collapseTransition
+            .addEventListener( BaseTransition.END_EVENT, _collapseEndBinded );
+        }
         _collapseTransitionMethod
           .apply( _collapseTransition, _collapseTransitionMethodArgs );
-        if ( _collapseTransition && _collapseTransition.isAnimated() ) {
-          _collapseTransition
-            .addEventListener( 'transitionEnd', _collapseEndBinded );
-        } else {
+        if ( !hasTransition ) {
           _collapseEndBinded();
         }
       } else {
@@ -207,7 +214,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     _isExpanded = true;
     if ( _expandTransition ) {
       _expandTransition
-        .removeEventListener( 'transitionEnd', _expandEndBinded );
+        .removeEventListener( BaseTransition.END_EVENT, _expandEndBinded );
     }
     this.dispatchEvent( 'expandEnd', { target: this, type: 'expandEnd' } );
     _triggerDom.setAttribute( 'aria-expanded', 'true' );
@@ -223,7 +230,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     _isAnimating = false;
     if ( _collapseTransition ) {
       _collapseTransition
-        .removeEventListener( 'transitionEnd', _collapseEndBinded );
+        .removeEventListener( BaseTransition.END_EVENT, _collapseEndBinded );
     }
     this.dispatchEvent( 'collapseEnd', { target: this, type: 'collapseEnd' } );
   }
