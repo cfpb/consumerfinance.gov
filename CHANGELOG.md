@@ -83,6 +83,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Use the added `careers_preview.json` in the careers sublanding page instead of `careers.json`
 - Wrap prefooter section in Browse pages in a conditional to prevent empty prefooter
 - Frontend: Added behaviors for third level mobile mega menu.
+- Frontend: Made Expandables collapse under 600px window size.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.

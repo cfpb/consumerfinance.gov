@@ -22,8 +22,8 @@ function _inBreakpointRange( breakpointRange, width ) {
 
 /**
  * @param {integer} width - Current window width.
- * @returns {Object} An object literal with Boolean
- * isBpXS, isBpSM, isBpMED, isBpLG, isBpXL properties.
+ * @returns {Object} An object literal with boolean
+ *   isBpXS, isBpSM, isBpMED, isBpLG, isBpXL properties.
  */
 function get( width ) {
   var breakpointState = {};
@@ -34,7 +34,7 @@ function get( width ) {
     breakpointKey = 'is' + rangeKey.charAt( 0 ).toUpperCase() +
                     rangeKey.slice( 1 );
     breakpointState[breakpointKey] =
-    _inBreakpointRange( _breakpointsConfig[rangeKey], width );
+      _inBreakpointRange( _breakpointsConfig[rangeKey], width );
   }
 
   return breakpointState;
