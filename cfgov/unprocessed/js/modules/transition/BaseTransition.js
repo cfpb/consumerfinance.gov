@@ -86,8 +86,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
       this.dispatchEvent( BaseTransition.BEGIN_EVENT, { target: this } );
     } else {
       this.dispatchEvent( BaseTransition.BEGIN_EVENT, { target: this } );
-      _transitionComplete();
-      this.dispatchEvent( BaseTransition.END_EVENT, { target: this } );
+      _transitionCompleteBinded();
     }
   }
 
@@ -95,8 +94,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    * Remove an event listener to the transition.
    */
   function _removeEventListener() {
-    _dom.removeEventListener( _transitionEndEvent,
-                                         _transitionCompleteBinded );
+    _dom.removeEventListener( _transitionEndEvent, _transitionCompleteBinded );
   }
 
   /**
