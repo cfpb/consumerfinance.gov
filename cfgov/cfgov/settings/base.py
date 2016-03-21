@@ -83,6 +83,8 @@ MIDDLEWARE_CLASSES = (
 
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'transition_utilities.middleware.RewriteNemoURLsMiddleware',
+    'timezone_utilities.middleware.TimezoneMiddleware',
+
 )
 
 ROOT_URLCONF = 'cfgov.urls'
