@@ -23,7 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
-## 3.0.0-3.1.0 - 2016-03-21
+## 3.0.0-3.1.1 - 2016-03-21
 
 ### Added
 - Added Backend sidebar contact
