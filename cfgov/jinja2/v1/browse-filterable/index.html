@@ -1,8 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 
-{# Import organisms and molecules used in the template. #}
-{% import 'molecules/notification.html' as notification %}
-{% import 'organisms/post-preview.html' as post_preview with context %}
+{% import 'molecules/featured-content.html' as featured_content %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block title -%}
     {{ page.seo_title if page.seo_title else page.title }}
@@ -12,40 +11,36 @@
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
-{% set breadcrumb_items = [('#', '#', 'Sample Breadcrumb')] %}
-
 {% block content_main %}
     {% for block in page.header %}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block
+                        block__flush-sides">
+                {{ featured_content.render(block.value) }}
+            </div>
+        {% elif loop.index == 1 %}
         <div class="block
                     block__flush-top">
-            {{ block | safe }}
+            {{ render_stream_child(block) }}
         </div>
+        {% endif %}
     {% endfor %}
     {% for block in page.content %}
-        <div class="block
+        {% if 'filter_controls' in block.block_type %}
+            <div class="block
                     block__flush-top">
-            {% if 'filter_controls' in block.block_type %}
-                {% set f = forms.pop(0) %}
-                {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
-                {{ flc(block.value, f, loop.index0) }}
-            {% else %}
-                {{ block | safe }}
-            {% endif %}
-        </div>
-    {% endfor %}
-    <div class="block
-                block__flush-bottom
-                block__flush-sides
-                block__bg
-                block__border-top
-                block__border-right">
-        Put sidefoot content here
-    </div>
-{% endblock %}
 
-{% block content_sidebar scoped -%}
-    <aside>
-        {# TODO: Add sidebar organisms. #}
-        Side Navigation
-    </aside>
-{%- endblock %}
+                {% set f = forms.pop(0) %}
+                {% import 'organisms/filterable-list-controls.html' as flc with context %}
+                {{ flc.render(block.value, f, loop.index0) }}
+            </div>
+        {% else %}
+            {% include 'templates/render_block.html' with context %}
+        {% endif %}
+    {% endfor %}
+    {% if page.sidefoot %}
+        <aside class="prefooter">
+            {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+        </aside>
+    {% endif %}
+{% endblock %}

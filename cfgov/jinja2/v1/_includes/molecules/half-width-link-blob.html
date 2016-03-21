@@ -23,45 +23,10 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update(
-        {
-            'half_width_link_blob': {
-                'heading' :       'This is an example of a Half Width Link Blob',
-                'body': {
-                    'source': lipsumText
-                },
-                'links': [
-                        {
-                            'text': 'This is a Link List molecule inside the blob',
-                            'url':  '/some-url/'
-                        },
-                        {
-                            'text': 'This is another Link List molecule inside the
-                                     blob',
-                            'url':  '/some-other-url/'
-                        }]
-            }
-        })
-    %}
-    {% set value = global_dict.half_width_link_blob %}
-{% endif %}
-<div class="m-half-width-link-blob
-            content-l_col
-            content-l_col-1-2">
-    <h2 class="h3">{{ value.heading }}</h2>
-    <div class="m-half-width-link-blob_paragraph">
-        {{ value.body.source | safe }}
-    </div>
-    <ul class="list list__links">
-        {% for link in value.links %}
-            <li class="list_item">
-                <a class="list_link" href="{{ link.url }}">
-                    {{ link.text }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
+{% from 'molecules/info-unit.html' import info_unit with context %}
 
+{{ info_unit( {
+    'heading': '<h3>' ~ value.heading ~ '</h3>',
+    'body': value.body,
+    'links': value.links
+} ) }}

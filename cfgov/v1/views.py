@@ -5,7 +5,7 @@ from core.services import PDFGeneratorView, ICSView
 from wagtail.wagtailcore.models import Page
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
-from wagtail.wagtailadmin import messages
+from wagtail.wagtailadmin import messages as wagtail_messages
 from django.utils.translation import ugettext as _
 from django.utils import timezone
 from django.core.urlresolvers import reverse
@@ -34,6 +34,7 @@ from .forms import login_form
 from .util import password_policy
 from .models import base
 from .models.base import PasswordHistoryItem
+from .signals import page_unshared
 
 
 LoginForm = login_form()
@@ -81,8 +82,10 @@ def unshare(request, page_id):
         page.save_revision(user=request.user, submitted_for_moderation=False)
         page.save()
 
-        messages.success(request, _("Page '{0}' unshared.").format(page.title), buttons=[
-            messages.button(reverse('wagtailadmin_pages:edit', args=(page.id,)), _('Edit'))
+        page_unshared.send(sender=page.specific_class, instance=page.specific)
+
+        wagtail_messages.success(request, _("Page '{0}' unshared.").format(page.title), buttons=[
+            wagtail_messages.button(reverse('wagtailadmin_pages:edit', args=(page.id,)), _('Edit'))
         ])
 
         return redirect('wagtailadmin_explore', page.get_parent().id)
@@ -244,3 +247,67 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
 
 
 password_reset_confirm = account._wrap_password_reset_view(custom_password_reset_confirm)
+
+## User Creation
+from wagtail.wagtailusers.views.users import add_user_perm, change_user_perm
+from wagtail.wagtailusers.forms import UserCreationForm, UserEditForm
+from wagtail.wagtailadmin.utils import permission_required
+
+@permission_required(add_user_perm)
+def create_user(request):
+    if request.POST:
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            password1 = form.cleaned_data.get('password1', '')
+            password2 = form.cleaned_data.get('password2', '')
+            errors = password_policy._check_passwords(password1, password2, None)
+
+            if len(errors) == 0:
+                user = form.save()
+                wagtail_messages.success(request, _("User '{0}' created.").format(user), buttons=[
+                    wagtail_messages.button(reverse('wagtailusers_users:edit', args=(user.id,)), _('Edit'))
+                ])
+                return redirect('wagtailusers_users:index')
+            else:
+                messages.error(request, errors)
+        else:
+            wagtail_messages.error(request, _("The user could not be created due to errors."))
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'wagtailusers/users/create.html', {
+        'form': form,
+    })
+
+@permission_required(change_user_perm)
+def edit_user(request, user_id):
+    user = get_object_or_404(get_user_model(), id=user_id)
+    if request.POST:
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            errors = []
+            password1 = form.cleaned_data.get('password1', '')
+            password2 = form.cleaned_data.get('password2', '')
+
+            if password1 and password2:
+                errors = password_policy._check_passwords(password1, password2, None)
+                password_check = True
+
+            if len(errors) == 0 or not password_check:
+                user = form.save()
+                wagtail_messages.success(request, _("User '{0}' updated.").format(user), buttons=[
+                    wagtail_messages.button(reverse('wagtailusers_users:edit', args=(user.id,)), _('Edit'))
+                ])
+                return redirect('wagtailusers_users:index')
+            else:
+                messages.error(request, errors)
+        else:
+            wagtail_messages.error(request, _("The user could not be saved due to errors."))
+    else:
+        form = UserEditForm(instance=user)
+
+    return render(request, 'wagtailusers/users/edit.html', {
+        'user': user,
+        'form': form,
+    })
+

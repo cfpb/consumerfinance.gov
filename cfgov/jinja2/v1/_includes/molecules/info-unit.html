@@ -1,0 +1,81 @@
+{# ==========================================================================
+
+   Info Unit
+
+   ==========================================================================
+
+   Description:
+
+   Create an info-unit molecule when given:
+
+   value.modifier:  A modifier class used to alternate the info unit from
+                    stacked to inline layouts
+
+   value.image:     An object containing:
+
+                    url:           The image url
+                    alt:           Image alt
+                    is_square:     Whether the image is square or not.
+                                   Default is false
+                    is_decorative: Whether the image is a bg image or not.
+                                   Default is false
+
+   value.heading:   A string containing title of module.
+
+   value.body:      A string containing the content to display below the
+                    heading (typically a paragraph).
+
+   value.is_button: Boolean if the link should be a button.
+                    Defaut is false
+
+   value.links:     A tuple of items to create a list of links. Objects include
+                    a url and text to display.
+
+                    link_url:  A string for the URL of the link.
+                    link_text: A string for the text of the link.
+
+
+   ========================================================================== #}
+
+{% macro info_unit(value) %}
+<div class="m-info-unit
+            {{ 'm-info-unit__' ~ value.modifier if value.modifier else '' }}">
+
+    {% if value.image %}
+        {% if value.image.is_decorative %}
+        <div class="m-info-unit_image
+                    {{ 'm-info-unit_image__square' if value.image.is_square else '' }}"
+             style="background-image: url( {{ value.image.url }} );">
+        </div>
+        {% else %}
+        <img src="{{ value.image.url }}"
+             alt="{{ value.image.alt if value.image.alt else '' }}"
+             class="m-info-unit_image
+                    {{ 'm-info-unit_image__square' if value.image.is_square else '' }}">
+        {% endif %}
+    {% endif %}
+
+    <div class="m-info-unit_content">
+        {{ value.heading | safe if value.heading else '' }}
+
+        {{ value.body | safe }}
+
+        {% if value.links %}
+            <ul class="list list__links">
+            {% for link in value.links %}
+                <li class="list_item">
+                    <a class="{{ 'btn m-info-unit_btn' if value.is_button
+                                  else 'list_link' }}"
+                       href="{{ link.url }}">
+                        {# TODO: check for link.url otherwise show disabled
+                                 after testing is completed #}
+                        {{ link.text if link.text else 'Learn More' }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+</div>
+{% endmacro %}

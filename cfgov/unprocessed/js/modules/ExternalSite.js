@@ -5,7 +5,7 @@
 
 'use strict';
 
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 
 /**
  * ExternalSite
@@ -21,8 +21,7 @@ function ExternalSite( element ) {
   var TOTAL_DURATION = 5;
   var INTERVAL = 1000;
 
-  var _dom =
-    atomicCheckers.validateDomElement( element, BASE_CLASS, 'ExternalSite' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'ExternalSite' );
   var _durationEl = _dom.querySelector( '.external-site_reload-container' );
   var _directEl = _dom.querySelector( '.external-site_proceed-btn' );
   var _duration = TOTAL_DURATION;
@@ -58,7 +57,7 @@ function ExternalSite( element ) {
    * Update the timer HTML content.
    */
   function _updateContent() {
-    var plurality = _duration !== 1 ? 's' : '';
+    var plurality = _duration === 1 ? '' : 's';
     var content = '<span class=\'external-site_reload-duration\'>' +
                   _duration + '</span> second' + plurality;
     _durationEl.innerHTML = content;

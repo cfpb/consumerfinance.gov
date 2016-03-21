@@ -17,7 +17,7 @@ var paths = require( '../../config/environment' ).paths;
 var webpackConfig = require( '../../config/webpack-config.js' );
 var webpackStream = require( 'webpack-stream' );
 
-gulp.task( 'scripts', function() {
+gulp.task( 'scripts:modern', function() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
     .pipe( gulpModernizr( {
       tests:   [ 'csspointerevents', 'classlist' ],
@@ -35,3 +35,24 @@ gulp.task( 'scripts', function() {
       stream: true
     } ) );
 } );
+
+gulp.task( 'scripts:ie', function() {
+  return gulp.src( paths.unprocessed + '/js/ie/common.ie.js' )
+    .pipe( webpackStream( {
+      entry: paths.unprocessed + '/js/ie/common.ie.js',
+      output: {
+        filename: 'common.ie.js'
+      }
+    } ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpUglify() )
+    .pipe( gulp.dest( paths.processed + '/js/ie/' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+} );
+
+gulp.task( 'scripts', [
+  'scripts:modern',
+  'scripts:ie'
+] );

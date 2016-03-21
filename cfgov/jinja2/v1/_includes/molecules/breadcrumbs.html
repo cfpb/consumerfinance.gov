@@ -1,0 +1,28 @@
+{# ==========================================================================
+
+   breadcrumbs.render()
+
+   ==========================================================================
+
+   Description:
+
+   Create breadcrumb markup when given:
+
+   items:              An array of tuples used to display nav items.
+                       format: (href, id, caption)
+
+   additional_classes: Extra classes you wish to add to the nav,
+                       space separated.
+
+   ========================================================================== #}
+
+{# TODO: Remove additional_classes parameter from macros. #}
+{% macro render(breadcrumbs, additional_classes) %}
+    <nav class="breadcrumbs {{ additional_classes }}" aria-label="Breadcrumbs">
+        {% for crumb in breadcrumbs %}
+        <a class="breadcrumbs_link" href="{{ get_page_state_url({}, crumb) }}">
+            {{ crumb.title | e }}
+        </a>
+        {% endfor %}
+    </nav>
+{% endmacro %}

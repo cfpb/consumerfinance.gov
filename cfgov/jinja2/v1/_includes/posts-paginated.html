@@ -15,7 +15,7 @@
         {% set use_blog_category = true %}
     {% elif post.category %}
         {% set category = post.category %}
-        {% set use_blog_category = false %}
+        {% set sheer_page = true %}
     {% endif -%}
     {%- import 'macros/category-slug.html' as category_slug %}
 
@@ -35,7 +35,7 @@
                     {% set slug = category_slug.render(cat,
                                                        vars.path,
                                                        'meta-header_left',
-                                                       use_blog_category) %}
+                                                       use_blog_category, 0, sheer_page) %}
                     {{ slug }}
                 {% endfor %}
             {% endif %}

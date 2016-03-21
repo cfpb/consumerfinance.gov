@@ -17,40 +17,32 @@
    ========================================================================== #}
 
 {% macro render(block, is_half_width=false, hide_header_slug=false) %}
-{% import 'macros/category-icon.html' as category_icon %}
-{% set title_icon_lookup = {
-    "newsroom" : ("Newsroom","newspaper"),
-    "posts"    : ("Blog", "speech-bubble"),
-    "events"   : ("Events", "speech-bubble")
-  }
-%}
-{% set page = page or global_dict.page %}
-{% set related_post_types = page.related_posts(block) %}
-{% if related_post_types %}
-<div class="m-related-posts
-            {{'m-related-posts__half-width'
-              if is_half_width else ''}}">
-    {% if not hide_header_slug %}
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
-            Related Posts
-        </span>
-    </h2>
+    {% import 'macros/category-icon.html' as category_icon %}
+    {% set related_post_types = page.related_posts(block, request.site.hostname) %}
+    {% if related_post_types %}
+        <div class="m-related-posts
+                    {{'m-related-posts__half-width'
+                      if is_half_width else ''}}">
+            {% if not hide_header_slug %}
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Related Posts
+                    </span>
+                </h2>
+            {% endif %}
+            {% for post_type, post_type_list in related_post_types.iteritems() %}
+                {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", "cf-icon-speech-bubble") %}
+                <div class="m-related-posts_list-container">
+                    {% if block.value.show_heading %}
+                        <h3 class="h4">
+                            {{ icon }} {{ title }}
+                        </h3>
+                    {% endif %}
+                    {{ _related_posts_list(post_type_list, block.value.limit) }}
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
-    {% for post_type, post_type_list in related_post_types.iteritems() %}
-    {% set title, icon = title_icon_lookup[post_type] or ("Blog", "speech-bubble") %}
-    <div class="m-related-posts_list-container">
-    {% if block.value.show_heading %}
-        <h3 class="h4">
-             <span class="cf-icon cf-icon-{{icon}}"></span>
-            {{ title }}
-        </h3>
-    {% endif %}
-        {{ _related_posts_list(post_type_list) }}
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
 {% endmacro %}
 
 
@@ -68,40 +60,41 @@
 
    ========================================================================== #}
 
-{% macro _related_posts_list(posts) %}
-{% import 'macros/time.html' as time %}
-{% set page = page or global_dict.page %}
-<ul class="m-related-posts_list
-           list list__unstyled
-           list__spaced">
-    {% for post in posts %}
-    {% set post_url = slugurl(post.slug) or '' %}
-    <li class="list_item">
-        <h3 class="h4 u-mb5">
-            <a class="list_link"
-               href="{{ post_url if post_url else post.permalink }}">
-                {{ post.title | safe }}
-            </a>
-        </h3>
-        {% if post.text %}
-        <p>
-            {{ post.text | safe }}
-        </p>
-        {% endif %}
-        <p class="date">
-            {{ time.render(post.latest_revision_created_at, {'date':true}) }}
-        </p>
-    </li>
-    {% endfor %}
-</ul>
+{% macro _related_posts_list(posts, limit) %}
+    {% import 'macros/time.html' as time %}
+    {% set limit = limit|int if posts|length >= limit|int else posts|length %}
+    <ul class="m-related-posts_list
+               list list__unstyled
+               list__spaced">
+        {% for i in range(limit) %}
+            {% set post_url = slugurl(posts[i].slug) or '' %}
+            <li class="list_item">
+                <h3 class="h4 u-mb5">
+                    <a class="list_link"
+                       href="{{ post_url or posts[i].permalink }}">
+                        {{ posts[i].title | safe }}
+                    </a>
+                </h3>
+                {% if posts[i].text %}
+                <p>
+                    {{ posts[i].text | safe }}
+                </p>
+                {% endif %}
+                <p class="date">
+                    {% set date = posts[i].latest_revision_created_at or  posts[i].date %}
+                    {{ time.render(date, {'date':true}) }}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
 
-{% for block in page.sidefoot %}
-  {% if 'related_posts' in block.block_type %}
-    {% if block.value.view_more %}
-        {{ _view_more(block) }}
-    {% endif %}
-  {% endif %}
-{% endfor %}
+    {% for block in page.sidefoot %}
+        {% if 'related_posts' in block.block_type %}
+            {% if block.value.view_more %}
+                {{ _view_more(block) }}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 {% endmacro %}
 
 {# ==========================================================================

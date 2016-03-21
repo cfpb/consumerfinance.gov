@@ -1,6 +1,6 @@
 {% extends 'layout-side-nav.html' %}
 {% import '_vars-the-bureau.html' as vars with context %}
-{% import 'molecules/hero.html' as hero %}
+{% import 'molecules/featured-content.html' as featured_content %}
 
 {% block title -%}
     The Bureau
@@ -27,34 +27,6 @@
     the-bureau
 {%- endblock %}
 
-{% block hero -%}
-    {% do global_dict.update(
-        {
-            'hero': {
-                'heading':   'We are the CFPB',
-                'body': {
-                    'source': 'We are a government agency created after the 2008
-                              financial crisis. We protect American consumers.
-                              Allow us to introduce ourselves.'
-                },
-                'image': {
-                    'upload': {
-                        'url': 'https://img.youtube.com/vi/en0Iq8II4fA/maxresdefault.jpg'
-                    }
-                },
-                'background_color': '#d5e7e6',
-                'link': {
-                    'text': 'See the history of the CFPB',
-                    'url':  '/the-bureau/history/'
-                }
-            }
-        })
-    %}
-    {% set value = global_dict.hero %}
-    {% set prototype = true %}
-    {% include 'molecules/hero.html' with context %}
-{%- endblock %}
-
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
@@ -65,6 +37,31 @@
     <p class="h3">We work to make markets for consumer financial products and services work
     for Americans. We arm people with the information they need to make smart financial
     decisions, and we protect them from unfair, deceptive, and abusive practices.</p>
+
+    <div class="block block__flush-sides">
+        {% set youtubeURL = 'https://www.youtube.com/embed/en0Iq8II4fA?autoplay=1&enablejsapi=1' %}
+
+        {{ featured_content.render({
+            'category':  'featured-video',
+            'heading':   'The Bureau',
+            'body': {
+                'source': 'We are a government agency created after the 2008
+                          financial crisis. We protect American consumers.
+                          Allow us to introduce ourselves.'
+            },
+            'image': {
+            },
+            'video': {
+                'id':    'en0Iq8II4fA',
+                'url':    youtubeURL,
+                'height': '320',
+                'width' : '568'
+            },
+            'button_pos': 'bottomRight',
+            })
+        }}
+    </div>
+
     <p>Above all, this means ensuring that consumers get the information they need to make
     the financial decisions they believe are best for themselves and their families. But
     it also means we look out for bad actors—through regular examinations of financial
@@ -102,34 +99,32 @@
             }]
         })
     }}
+    <div class="block block__flush">
+        <section class="o-well"
+                 data-qa-hook="bureau-core-functions">
+            <h2>Our core functions</h2>
+            <p>Congress created the CFPB to create a single point of accountability for enforcing
+            federal consumer financial laws and protecting consumers in the financial marketplace.
+            Before, that responsibility was divided among several agencies. Today, it’s our job.</p>
 
-    <section class="block
-                    block__bg
-                    block__border
-                    block__flush"
-             data-qa-hook="bureau-core-functions">
-        <h2>Our core functions</h2>
-        <p>Congress created the CFPB to create a single point of accountability for enforcing
-        federal consumer financial laws and protecting consumers in the financial marketplace.
-        Before, that responsibility was divided among several agencies. Today, it’s our job.</p>
-
-        <section class="bureau-functions block__padded-top">
-            <h3 class="h4">Among other things, we:</h3>
-            <ul class="list list__branded bureau-functions_list u-mb0">
-                <li>Write rules, supervise companies, and enforce federal consumer
-                financial protection laws</li>
-                <li>Restrict unfair, deceptive, or abusive acts or practices</li>
-                <li>Take consumer complaints</li>
-                <li>Promote financial education</li>
-            </ul>
-            <ul class="list list__branded bureau-functions_list">
-                <li>Research consumer behavior</li>
-                <li>Monitor financial markets for new risks to consumers</li>
-                <li>Enforce laws that outlaw discrimination and other unfair treatment
-                in consumer finance</li>
-            </ul>
-        </section>
-    </section><!-- END .content-block -->
+            <section class="bureau-functions block__padded-top">
+                <h3 class="h4">Among other things, we:</h3>
+                <ul class="list list__branded bureau-functions_list u-mb0">
+                    <li>Write rules, supervise companies, and enforce federal consumer
+                    financial protection laws</li>
+                    <li>Restrict unfair, deceptive, or abusive acts or practices</li>
+                    <li>Take consumer complaints</li>
+                    <li>Promote financial education</li>
+                </ul>
+                <ul class="list list__branded bureau-functions_list">
+                    <li>Research consumer behavior</li>
+                    <li>Monitor financial markets for new risks to consumers</li>
+                    <li>Enforce laws that outlaw discrimination and other unfair treatment
+                    in consumer finance</li>
+                </ul>
+            </section>
+        </section><!-- END .content-block -->
+    </div>
 
     <section class="block block__padded-top block__flush-top">
         <h2>CFPB leadership</h2>
@@ -158,12 +153,12 @@
                 <div class="media bureau-bio">
                     <div class="media_image-container">
                         <img class="media_image media_image__150"
-                             src="/static/img/deputy-director-fuchs-round-300x300.jpg"
-                             alt="Deputy Director Meredith Fuchs">
+                             src="/static/img/deputy-director-silberman-round-300x300.jpg"
+                             alt="Deputy Director David Silberman">
                     </div>
                     <div class="media_body">
                         <span class="h6">Deputy Director</span>
-                        <h3 class="bureau-bio_name">Meredith Fuchs</h3>
+                        <h3 class="bureau-bio_name">David Silberman</h3>
                         <a class="jump-link jump-link__underline"
                            href="about-deputy-director/">
                             Read bio
@@ -181,7 +176,7 @@
             </li>
             <li class="list_item u-show-on-mobile">
                 <a class="list_link" href="about-deputy-director">
-                    Learn more about Deputy Director Meredith Fuchs
+                    Learn more about Deputy Director David Silberman
                 </a>
             </li>
             <li class="list_item">
@@ -196,23 +191,4 @@
             </li>
         </ul>
     </section><!-- END .block leadership -->
-
-    <section class="block block__padded-top block__border-top bureau-history">
-        <h2 class="bureau-history_header">CFPB history</h2>
-        <div class="media">
-            <div class="media_image-container media_image-container__wide-margin">
-                <img class="media_image bureau-history_image" src="/static/img/obama_cordray.jpg" alt="Director Richard Cordray shaking hands with President Barack Obama">
-            </div>
-            <div class="media_body">
-                <div class="bureau-history_text">
-                    <p class="h4">From the financial crisis through our work returning
-                    billions of dollars to consumers, find out where we came from and what
-                    we’ve been doing.</p>
-                    <a class="jump-link jump-link__underline" href="history">
-                        Learn about the history of the CFPB
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section><!-- END .bureau-history -->
 {% endblock %}

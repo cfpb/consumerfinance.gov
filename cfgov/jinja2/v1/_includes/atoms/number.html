@@ -14,14 +14,4 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% do global_dict.update(
-        {
-            'number': {
-                'text':  '100',
-            }
-        })
-    %}
-    {% set value = global_dict.number %}
-{% endif %}
 <p>{{ value.text }}</p>

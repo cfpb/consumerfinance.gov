@@ -8,6 +8,11 @@ var _breakpointsConfig = require( '../../config/breakpoints-config' );
 var _getViewportDimensions = require( './get-viewport-dimensions' )
                              .getViewportDimensions;
 
+/**
+ * @param {Object} breakpointRange - Object containing breakpoint constants.
+ * @param {integer} width - Current window width.
+ * @returns {boolean} Whether the passed width is within a breakpoint range.
+ */
 function _inBreakpointRange( breakpointRange, width ) {
   var min = breakpointRange.min || 0;
   var max = breakpointRange.max || Number.POSITIVE_INFINITY;
@@ -16,9 +21,9 @@ function _inBreakpointRange( breakpointRange, width ) {
 }
 
 /**
- * @returns {object} An object literal with Boolean
- * isBpXS, isBpSM, isBpMED, isBpLG, isBpXL properties.
- * @param {integer} width Current window width.
+ * @param {integer} width - Current window width.
+ * @returns {Object} An object literal with boolean
+ *   isBpXS, isBpSM, isBpMED, isBpLG, isBpXL properties.
  */
 function get( width ) {
   var breakpointState = {};
@@ -29,7 +34,7 @@ function get( width ) {
     breakpointKey = 'is' + rangeKey.charAt( 0 ).toUpperCase() +
                     rangeKey.slice( 1 );
     breakpointState[breakpointKey] =
-    _inBreakpointRange( _breakpointsConfig[rangeKey], width );
+      _inBreakpointRange( _breakpointsConfig[rangeKey], width );
   }
 
   return breakpointState;

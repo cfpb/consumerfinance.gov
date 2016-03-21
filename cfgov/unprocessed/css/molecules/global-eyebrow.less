@@ -65,7 +65,12 @@
         }
     }
 
+    &_actions {
+        text-align: right;
+    }
+
     &_languages {
+        display: inline;
         list-style-type: none;
 
         li {
@@ -81,6 +86,10 @@
         a {
             .u-link__no-border();
         }
+    }
+
+    &_phone {
+        padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
     }
 
     &__horizontal {
@@ -109,10 +118,16 @@
             padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
         }
 
-        .m-global-eyebrow_languages {
-            padding-left: 37px; //22px flag + 15px spacing
+        .m-global-eyebrow_actions {
             padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
             border-top: 1px solid @gray-40;
+            text-align: left;
+        }
+
+        .m-global-eyebrow_phone,
+        .m-global-eyebrow_languages {
+          display: block;
+          padding-left: 37px; //22px flag + 15px spacing
         }
     }
 }

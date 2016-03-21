@@ -14,9 +14,25 @@
    value.heading:             Heading text.
    value.body:                Body text.
 
-   value.post                 Page being featured
-   value.show_post_link       Flag to render the Post
-   value.post_link_text       Flag to render the Post
+   value.post:                Page being featured
+
+   value.show_post_link:      Flag to render the post link
+   value.post_link_text:      String for the link text of the displayed post
+   value.macro_link:          If the FCM is rendered outside of wagtail,
+                              this is a simpler way of adding a link.
+                              This is an object made up of url and text.
+   value.links:               If the FCM is rendered in wagtail, this returns
+                              the links.
+
+   value.video:               This object gets passed to video-player.html
+                              By default, the following values should exist.
+                                'is_fcm': true,
+                                'height': '320',
+                                'width':  '568'
+                              Wagtail should set the following values.
+                                'id', 'url'
+
+
 
    value.image:               A image object containing the URL & alt text for screenreaders
                               of the image to be placed adjacent to the text.
@@ -25,37 +41,10 @@
 
    ========================================================================== #}
 
+{% macro render(value) %}
 {% import 'macros/category-icon.html' as category_icon %}
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update(
-        {
-            'featured_content_module': {
-                'category': 'Featured event',
-                'heading':  'Fall Consumer Advisory Board meeting in
-                            Washington, DC',
-                'body':     { 'source': lipsumText },
-                'links':    [{
-                              'text': 'Read More About the Event',
-                              'url':  '#'
-                            }],
-                'image':    {
-                              'upload': {
-                                'url': 'https://maps.googleapis.com/maps/api/staticmap?center=Washington%2C%20DC&size=540x304&zoom=12&scale=2'
-                              },
-                            'alt': 'Map of Washington D.C.'
-                }
-            }
-        })
-    %}
-    {% set value = global_dict.featured_content_module %}
-    {% set prototype = true %}
-{% endif %}
 
-<section class="block
-                block__border
-                block__flush
-                featured-content-module">
+<section class="featured-content-module">
     <div class="featured-content-module_text">
         <p class="h4">
             {{ category_icon.render( fcm_label(value.category) ) | safe }}
@@ -65,7 +54,7 @@
             {{ value.heading }}
         </h2>
         <p>
-            {{ value.body.source | safe }}
+            {{ parse_links(value.body) |safe }}
         </p>
         <ul class="list list__links">
             {% if value.show_post_link and value.post %}
@@ -75,7 +64,13 @@
                   </a>
                 </li>
             {% endif %}
-
+            {% if value.macro_link %}
+              <li class="list_item">
+                  <a class="list_link" href="{{ value.macro_link.url }}">
+                      {{ value.macro_link.text }}
+                  </a>
+              </li>
+            {% endif %}
             {% for link in value.links %}
                 <li class="list_item">
                     <a class="list_link" href="{{ link.url }}">
@@ -85,17 +80,18 @@
             {% endfor %}
         </ul>
     </div>
-
-    <div class="featured-content-module_visual">
-        {% if value.image.upload %}
-            {% if prototype %}
-                {% set photo=value.image.upload %}
-            {% else %}
-                {% set photo=image(value.image.upload, 'original') %}
-            {% endif %}
+    {% if value.video.url and value.video.id %}
+        <div class="featured-content-module_visual">
+            {% import 'macros/video-player.html' as video_player %}
+            {{ video_player.render(value) }}
+        </div>
+    {% elif value.image %}
+        <div class="featured-content-module_visual">
+            {% set photo = image(value.image.upload, 'original') %}
             <img class="featured-content-module_img"
                  src="{{ photo.url }}"
                  alt="{{ value.image.alt }}">
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 </section>
+{% endmacro %}

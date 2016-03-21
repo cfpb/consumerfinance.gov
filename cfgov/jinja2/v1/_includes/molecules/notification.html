@@ -23,19 +23,6 @@
 
    ========================================================================== #}
 
-{% if not page %}
-    {% do global_dict.update(
-        {
-            'notification': {
-                'is_visible': false,
-                'type': 'success',
-                'message': 'Success!',
-                'explanation': 'Explanation text paragraph.'
-            }
-        })
-    %}
-{% endif %}
-
 {% macro render(type, is_visible, message, explanation=none) %}
 
   {% set type_lookup  = {
@@ -45,7 +32,7 @@
       }
   %}
   {% set icon = type_lookup[type]  %}
-  {% set type = ('m-notification__' + type) if type else '' %}
+  {% set type = ('m-notification__' + type|string) if type else '' %}
 
   <div class="m-notification
               {{ type }}

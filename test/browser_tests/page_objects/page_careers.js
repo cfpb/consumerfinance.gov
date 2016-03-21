@@ -1,14 +1,13 @@
 'use strict';
 
-var _assign = require( 'lodash/assign' );
-var _getQAelement = require( '../util/QAelement' ).get;
+var _getQAelement = require( '../util/qa-element' ).get;
 var careersSocialSection =
 require( '../shared_objects/careers-social-section' );
 
 
 function Careers() {
 
-  _assign( this, careersSocialSection );
+  Object.assign( this, careersSocialSection );
 
   this.get = function() {
     browser.get( '/careers/' );
@@ -26,8 +25,7 @@ function Careers() {
 
   this.infoSectionTitles = this.infoSection.all( by.css( 'h2' ) );
 
-  this.infoSectionDescriptions =
-  this.infoSection.all( by.css( '.short-desc' ) );
+  this.infoSectionDescriptions = _getQAelement( 'info-section-desc', true );
 
   this.infoSectionLinks = this.infoSection.all( by.css( 'a' ) );
 

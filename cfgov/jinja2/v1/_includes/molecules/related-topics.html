@@ -15,18 +15,6 @@
                    by the text of link.
 
    ========================================================================== #}
-{% if not value %}
-    {% do global_dict.update({
-        'related_topics': {
-            'topics': [
-                {'url': '/url/', 'text': 'Link text'},
-                {'url': '/url/', 'text': 'Link text'},
-                {'url': '/url/', 'text': 'Link text'},
-            ]
-        }
-    }) %}
-{% endif %}
-{% set value = value or global_dict.related_topics %}
 <div class="m-related-topics">
     <h2 class="header-slug">
         <span class="header-slug_inner">

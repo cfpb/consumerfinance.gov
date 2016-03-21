@@ -1,11 +1,8 @@
 'use strict';
 
-// Required polyfills for IE9.
-if ( !Modernizr.classlist ) { require( '../modules/polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
-
 // Required modules.
 var Expandable = require( '../molecules/Expandable' );
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 
 /**
  * ExpandableGroup
@@ -21,8 +18,7 @@ function ExpandableGroup( element ) {
 
   var BASE_CLASS = 'o-expandable-group';
 
-  var _dom =
-    atomicCheckers.validateDomElement( element, BASE_CLASS, 'ExpandableGroup' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'ExpandableGroup' );
   var _domChildren = _dom.querySelectorAll( '.m-expandable' );
   var _lastOpenChild;
   var _isAccordion;

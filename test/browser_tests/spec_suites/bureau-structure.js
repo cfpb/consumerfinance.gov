@@ -9,6 +9,11 @@ describe( 'The Bureau Structure Page', function() {
   beforeAll( function() {
     page = new TheBureauStructurePage();
     page.get();
+
+    browser.getCapabilities().then( function( cap ) {
+      browser.name = cap.get('browserName');
+      browser.version = cap.get('version');
+    } );
   } );
 
 
@@ -21,24 +26,6 @@ describe( 'The Bureau Structure Page', function() {
   it( 'should have a side nav',
     function() {
       expect( page.sideNav.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include the Director’s image',
-    function() {
-      expect( page.directorImage.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include the Director’s name',
-    function() {
-      expect( page.directorName.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include the Director’s title',
-    function() {
-      expect( page.directorTitle.isPresent() ).toBe( true );
     }
   );
 
@@ -58,9 +45,13 @@ describe( 'The Bureau Structure Page', function() {
     function() {
       expect( page.orgChartChildNodes.count() ).toBeGreaterThan( 0 );
 
-      page.orgChartChildNodes.each( function( childNode ) {
-        expect( childNode.isDisplayed() ).toBe( false );
-      } );
+      var ie8 = browser.name === 'internet explorer' && browser.version === '8';
+
+      if ( !ie8 ) {
+        page.orgChartChildNodes.each( function( childNode ) {
+          expect( childNode.isDisplayed() ).toBe( false );
+        } );
+      }
     }
   );
 

@@ -1,10 +1,15 @@
 'use strict';
 
 // Required modules.
-var atomicCheckers = require( '../modules/util/atomic-checkers' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var breakpointState = require( '../modules/util/breakpoint-state' );
+var dataHook = require( '../modules/util/data-hook' );
 var EventObserver = require( '../modules/util/EventObserver' );
 var FlyoutMenu = require( '../modules/FlyoutMenu' );
+var MegaMenuDesktop = require( '../organisms/MegaMenuDesktop' );
+var MegaMenuMobile = require( '../organisms/MegaMenuMobile' );
+var MoveTransition = require( '../modules/transition/MoveTransition' );
+var Tree = require( '../modules/Tree' );
 
 /**
  * MegaMenu
@@ -14,21 +19,19 @@ var FlyoutMenu = require( '../modules/FlyoutMenu' );
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the organism.
- * @returns {Object} An MegaMenu instance.
+ * @returns {MegaMenu} An instance.
  */
 function MegaMenu( element ) {
-
   var BASE_CLASS = 'o-mega-menu';
 
-  var _dom =
-    atomicCheckers.validateDomElement( element, BASE_CLASS, 'MegaMenu' );
-  var _flyoutMenu = new FlyoutMenu( _dom,
-                                    '.' + BASE_CLASS + '_trigger',
-                                    '.' + BASE_CLASS + '_content' ).init();
-  var _activeMenu = _flyoutMenu;
-  var _activeMenuDom = _flyoutMenu.getDom().content;
-  var _menuItems = _dom.querySelectorAll( '.' + BASE_CLASS + '_content-item' );
-  var _subMenus = {};
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'MegaMenu' );
+
+  // Tree data model.
+  var _menus;
+
+  // Screen-size specific behaviors.
+  var _desktopNav;
+  var _mobileNav;
 
   // TODO: Move tab trigger to its own class.
   var _tabTriggerDom = _dom.querySelector( '.' + BASE_CLASS + '_tab-trigger' );
@@ -36,51 +39,128 @@ function MegaMenu( element ) {
   var KEY_TAB = 9;
 
   /**
-   * @returns {Object} The MegaMenu instance.
+   * @returns {MegaMenu} An instance.
    */
   function init() {
-    var initEventsBinded = _initEvents.bind( this );
-    var menuItem;
-    var submenu;
-    for ( var i = 1, len = _menuItems.length; i < len; i++ ) {
-      menuItem = _menuItems[i];
-      if ( menuItem.querySelector( '.u-link__disabled' ) === null ) {
-        submenu =
-          new FlyoutMenu( menuItem, '.' + BASE_CLASS + '_content-link',
-                          '.' + BASE_CLASS + '_subcontent',
-                          '.' + BASE_CLASS + '_subcontent-btn__back' ).init();
-        _subMenus[menuItem] = submenu;
-        initEventsBinded( submenu );
-      }
+    // DOM selectors.
+    var rootMenuDom = _dom;
+    var rootContentDom = rootMenuDom.querySelector( FlyoutMenu.CONTENT_SEL );
+    var submenusDom = _dom.querySelectorAll( FlyoutMenu.BASE_SEL );
+
+    // Create model.
+    _menus = new Tree();
+
+    // Create root menu.
+    var transition = new MoveTransition( rootContentDom ).init();
+    var rootMenu = new FlyoutMenu( rootMenuDom ).init();
+    // Set initial position.
+    rootMenu.setExpandTransition( transition, transition.moveToOrigin );
+    rootMenu.setCollapseTransition( transition, transition.moveLeft );
+    _addEvents( rootMenu );
+
+    // Populate tree model with menus.
+    var rootNode = _menus.init( rootMenu ).getRoot();
+    rootMenu.setData( rootNode );
+    _populateTreeFromDom( rootMenuDom, rootNode, _addMenu );
+
+    // Initialize screen-size specific behaviors.
+    _desktopNav = new MegaMenuDesktop( _menus ).init();
+    _mobileNav = new MegaMenuMobile( _menus ).init();
+    _mobileNav.addEventListener( 'rootExpandBegin', _handleRootExpandBegin.bind( this ) );
+    _mobileNav.addEventListener( 'rootCollapseEnd', _handleRootCollapseEnd.bind( this ) );
+
+    window.addEventListener( 'resize', _resizeHandler );
+
+    if ( _isInDesktop() ) {
+      _desktopNav.resume();
+    } else {
+      _mobileNav.resume();
     }
 
-    initEventsBinded( _flyoutMenu );
+    _dom.classList.remove( 'u-hidden' );
+
     _tabTriggerDom.addEventListener( 'keyup', _handleTabPress );
 
     return this;
   }
 
   /**
-   * @param {FlyoutMenu} menu - The FlyoutMenu to add event listeners to.
+   * Perform a recursive depth-first search of the DOM
+   * and call a function for each node.
+   * @param {HTMLNode} dom - A DOM element to search from.
+   * @param {TreeNode} parentNode
+   *   Node in a tree from which to attach new nodes.
+   * @param {Function} callback - Function to call on each node.
+   *   Must return a TreeNode.
    */
-  function _initEvents( menu ) {
-    menu.addEventListener( 'toggle', _handleToggle.bind( this ) );
-    menu.addEventListener( 'expandBegin', _handleExpandBegin );
-    menu.addEventListener( 'collapseBegin', _handleCollapseBegin );
+  function _populateTreeFromDom( dom, parentNode, callback ) {
+    var children = dom.children;
+    var child;
+    for ( var i = 0, len = children.length; i < len; i++ ) {
+      var newParentNode = parentNode;
+      child = children[i];
+      newParentNode = callback.call( this, child, newParentNode );
+      _populateTreeFromDom( child, newParentNode, callback );
+    }
   }
 
   /**
-   * Event handler for when there's a click on the page's body.
-   * Used to close the global search, if needed.
-   * @param {MouseEvent} event The event object for the mousedown event.
+   * Create a new FlyoutMenu and attach it to a new tree node.
+   * @param {HTMLNode} dom
+   *   A DOM element to check for a js data-* attribute hook.
+   * @param {TreeNode} parentNode
+   *   The parent node in a tree on which to attach a new menu.
+   * @returns {TreeNode} Return the processed tree node.
    */
-  function _handleBodyClick( event ) {
-    var target = event.target;
+  function _addMenu( dom, parentNode ) {
+    var newParentNode = parentNode;
+    var transition;
+    if ( dataHook.contains( dom, FlyoutMenu.BASE_CLASS ) ) {
+      var menu = new FlyoutMenu( dom ).init();
+      transition = new MoveTransition( menu.getDom().content ).init();
+      menu.setExpandTransition( transition, transition.moveToOrigin );
+      menu.setCollapseTransition( transition, transition.moveLeft );
+      _addEvents( menu );
+      newParentNode = newParentNode.tree.add( menu, newParentNode );
+      menu.setData( newParentNode );
+    }
 
-    var isInDesktop = _isInDesktop();
-    if ( isInDesktop && !_isDesktopTarget( target ) ||
-         !isInDesktop && !_isMobileTarget( target ) ) {
-      collapse();
+    return newParentNode;
+  }
+
+  /**
+   * @param {FlyoutMenu} menu - a menu on which to attach events.
+   */
+  function _addEvents( menu ) {
+    menu.addEventListener( 'triggerOver', _handleEvent );
+    menu.addEventListener( 'triggerClick', _handleEvent );
+    menu.addEventListener( 'expandBegin', _handleEvent );
+    menu.addEventListener( 'expandEnd', _handleEvent );
+    menu.addEventListener( 'collapseBegin', _handleEvent );
+    menu.addEventListener( 'collapseEnd', _handleEvent );
+  }
+
+  /**
+   * Handle events coming from menu,
+   * and pass it to the desktop or mobile behaviors.
+   * @param {Object} event - A FlyoutMenu event object.
+   */
+  function _handleEvent( event ) {
+    var activeNav = _isInDesktop() ? _desktopNav : _mobileNav;
+    activeNav.handleEvent( event );
+  }
+
+  /**
+   * Handle resizing of the window,
+   * suspends or resumes the mobile or desktop menu behaviors.
+   */
+  function _resizeHandler() {
+    if ( _isInDesktop() ) {
+      _mobileNav.suspend();
+      _desktopNav.resume();
+    } else {
+      _desktopNav.suspend();
+      _mobileNav.resume();
     }
   }
 
@@ -101,24 +181,6 @@ function MegaMenu( element ) {
   }
 
   /**
-   * Whether a target is one of the ones that appear in the desktop view.
-   * @param {HTMLNode} target - The target of a mouse event (most likely).
-   * @returns {boolean} True if the passed target is in the desktop view.
-   */
-  function _isDesktopTarget( target ) {
-    return _activeMenuDom.contains( target );
-  }
-
-  /**
-   * Whether a target is one of the ones that appear in the mobile view.
-   * @param {HTMLNode} target - The target of a mouse event (most likely).
-   * @returns {boolean} True if the passed target is in the mobile view.
-   */
-  function _isMobileTarget( target ) {
-    return _dom.contains( target );
-  }
-
-  /**
    * Event handler for when the tab key is pressed.
    * @param {KeyboardEvent} event
    *   The event object for the keyboard key press.
@@ -130,64 +192,31 @@ function MegaMenu( element ) {
   }
 
   /**
-   * Open the mega menu.
-   * @returns {Object} A MegaMenu instance.
-   */
-  function expand() {
-    _activeMenu.expand();
-
-    return this;
-  }
-
-  /**
    * Close the mega menu.
-   * @returns {Object} A MegaMenu instance.
+   * @returns {MegaMenu} An instance.
    */
   function collapse() {
-    _activeMenu.collapse();
+    if ( !_isInDesktop() ) {
+      _mobileNav.collapse();
+    }
 
     return this;
   }
 
   /**
-   * Event handler for when the search input flyout is toggled,
-   * which opens/closes the search input.
-   * @param {Event} event - Event dispatched by the FlyoutMenu instance.
+   * Event handler for when root menu expand transition begins.
+   * @param {Object} event - A MegaMenuMobile event.
    */
-  function _handleToggle( event ) {
-    var target = event.target;
-    if ( target === _flyoutMenu &&
-         _activeMenu !== target ) {
-      _activeMenu.collapse();
-    }
-    _activeMenu = target;
-    _activeMenuDom = _activeMenu.getDom().content;
-    this.dispatchEvent( 'toggle', { target: this } );
+  function _handleRootExpandBegin( event ) {
+    this.dispatchEvent( 'rootExpandBegin', { target: this } );
   }
 
   /**
-   * Event handler for when FlyoutMenu expand transition begins.
-   * Use this to perform post-expandBegin actions.
+   * Event handler for when root menu collapse transition ends.
+   * @param {Object} event - A MegaMenuMobile event.
    */
-  function _handleExpandBegin() {
-    // If on a submenu, focus the back button, otherwise focus the first link.
-    var firstMenuLink;
-    if ( _activeMenu === _flyoutMenu ) {
-      firstMenuLink = _activeMenuDom.querySelector( 'a' );
-    } else {
-      firstMenuLink = _activeMenuDom.querySelector( 'button' );
-    }
-
-    firstMenuLink.focus();
-    document.body.addEventListener( 'mousedown', _handleBodyClick );
-  }
-
-  /**
-   * Event handler for when FlyoutMenu collapse transition begins.
-   * Use this to perform post-collapseBegin actions.
-   */
-  function _handleCollapseBegin() {
-    document.body.removeEventListener( 'mousedown', _handleBodyClick );
+  function _handleRootCollapseEnd( event ) {
+    this.dispatchEvent( 'rootCollapseEnd', { target: this } );
   }
 
   // Attach public events.
@@ -197,7 +226,6 @@ function MegaMenu( element ) {
   this.dispatchEvent = eventObserver.dispatchEvent;
 
   this.init = init;
-  this.expand = expand;
   this.collapse = collapse;
 
   return this;

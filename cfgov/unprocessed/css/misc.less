@@ -645,14 +645,111 @@
         height: 5px;
         width: 100%;
 
-        position: relative;
-        top: 5px;
+        position: absolute;
+        // Offset for thickness of shadow.
+        bottom: -5px;
+        left: 0;
 
         background: @gray;
         // Whitespace in content so element can have dimensions set.
-        content: '\a0';
+        content: '';
         opacity: 0.2;
     }
+}
+
+
+/* topdoc
+  name: Transition utility classes.
+  family: cfgov-misc
+  notes:
+    - "Adds transitions utilty classes for transform, opacity,
+       and for the removing the transition duration."
+  tags:
+    - cfgov-misc
+*/
+.u-move-transition {
+    transition: transform 0.25s ease-out;
+}
+
+.u-alpha-transition {
+    transition: opacity 0.25s ease-out;
+}
+
+.u-no-animation {
+    transition-duration: 0s;
+}
+
+/* topdoc
+  name: Move utility classes.
+  family: cfgov-misc
+  notes:
+    - "Utility classes for moving an element using transform translate values."
+  tags:
+    - cfgov-misc
+*/
+.u-move-to-origin {
+    transform: translateX( 0 );
+}
+
+.u-move-left {
+    transform: translateX( -100% );
+}
+
+// TODO: Look into adding a mixin for movement multiples.
+.u-move-left-2x {
+    transform: translateX( -200% );
+}
+
+.u-move-left-3x {
+    transform: translateX( -300% );
+}
+
+.u-move-right {
+    transform: translateX( 100% );
+}
+
+.u-move-up {
+    transform: translateY( -100% );
+}
+
+/* topdoc
+  name: Alpha utility classes.
+  family: cfgov-misc
+  notes:
+    - "Utility classes for setting an element's opacity."
+  tags:
+    - cfgov-misc
+*/
+.u-alpha-100 {
+    opacity: 1;
+}
+
+.u-alpha-0 {
+    opacity: 0;
+}
+
+/* topdoc
+  name: Download icons
+  family: cfgov-misc
+  notes:
+    - "Adds download icons to certain links"
+  tags:
+    - cfgov-misc
+*/
+
+
+a[href$='.pdf']:after,
+a[href$='.doc']:after,
+a[href$='.docx']:after,
+a[href$='.xls']:after,
+a[href$='.xlsx']:after,
+a[href$='.csv']:after,
+a[href$='.zip']:after {
+    .cf-icon();
+    display: inline-block;
+    content: @cf-icon-download;
+    width: 1em;
+    text-align: right;
 }
 
 /* topdoc

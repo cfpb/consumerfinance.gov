@@ -16,17 +16,18 @@
 {% endblock %}
 
 {% block content_main %}
-
-    <h1 data-qa-hook="main-title">Procurement History</h1>
-    <p class="h3" data-qa-hook="main-summary">
-        Each year, we publish information about our contracts and awards from the preceding fiscal year.
-        This can be helpful in understanding the kinds of products and services we procure and how that may
-        change over time. In recent years, we have published three procurement review documents: a summary
-        worksheet of our largest awards, an inventory of all of our service contracts, and a memo to the
-        Office of Management and Budget that describes any planned analysis. For other types of financial
-        information,
-        <a href="/budget/">see our budget and strategy</a>.
-    </p>
+    <div class="block block__flush-top">
+        <h1 data-qa-hook="main-title">Procurement History</h1>
+        <p class="lead-paragraph" data-qa-hook="main-summary">
+            Each year, we publish information about our contracts and awards from the preceding fiscal year.
+            This can be helpful in understanding the kinds of products and services we procure and how that may
+            change over time. In recent years, we have published three procurement review documents: a summary
+            worksheet of our largest awards, an inventory of all of our service contracts, and a memo to the
+            Office of Management and Budget that describes any planned analysis. For other types of financial
+            information,
+            <a href="/budget/">see our budget and strategy</a>.
+        </p>
+    </div>
 
     <div class="business_page-content">
         {% set page = get_document('pages', '36603') %}

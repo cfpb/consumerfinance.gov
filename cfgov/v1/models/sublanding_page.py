@@ -1,3 +1,5 @@
+from itertools import chain
+
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
@@ -12,7 +14,6 @@ from . import organisms
 class SublandingPage(CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
-        ('text_introduction', molecules.TextIntroduction()),
     ], blank=True)
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
@@ -21,6 +22,7 @@ class SublandingPage(CFGOVPage):
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('full_width_text', organisms.FullWidthText()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
         ('table', organisms.Table()),
         ('contact', organisms.MainContactInfo()),
@@ -35,8 +37,8 @@ class SublandingPage(CFGOVPage):
             ('is_round', blocks.BooleanBlock(required=False, default=True,
                                              label='Round?')),
             ('icon', blocks.CharBlock(help_text='Enter icon class name.')),
-            ('heading', blocks.CharBlock(label='Introduction Heading')),
-            ('body', blocks.TextBlock(label='Introduction Body')),
+            ('heading', blocks.CharBlock(required=False, label='Introduction Heading')),
+            ('body', blocks.TextBlock(required=False, label='Introduction Body')),
         ], heading='Breakout Image', icon='image')),
         ('related_posts', organisms.RelatedPosts()),
     ], blank=True)
@@ -59,3 +61,18 @@ class SublandingPage(CFGOVPage):
     ])
 
     template = 'sublanding-page/index.html'
+
+    def get_browsefilterable_posts(self, request):
+        filter_pages = [p.specific for p in self.get_appropriate_descendants(request.site.hostname)
+                        if 'BrowseFilterablePage' in p.specific_class.__name__]
+        posts = []
+        for page in filter_pages:
+            form_class = page.get_form_class()
+            posts.append(page.get_page_set(form_class(parent=page, hostname=request.site.hostname),
+                                           request.site.hostname))
+
+        if posts:
+            posts = list(chain(*posts))
+            posts.sort(key=lambda x: x.date_published, reverse=True)
+
+        return posts

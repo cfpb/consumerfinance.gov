@@ -1386,6 +1386,27 @@ textarea {
 
 
 /* topdoc
+  name: Hidden Overflow
+  family: cf-core
+  patterns:
+    - name: Utility class
+      markup: |
+        <div class="u-hidden-overflow"></div>
+      codenotes:
+        - .u-hidden-overflow;
+      notes:
+        - "Use this class to hide content outside the bounds of an element.
+           Used for cropping views in multi-level menus."
+  tags:
+    - cf-core
+*/
+
+.u-hidden-overflow {
+    overflow: hidden;
+}
+
+
+/* topdoc
   name: Invisible
   family: cf-core
   patterns:
@@ -1459,6 +1480,29 @@ textarea {
         &:after {
             top: unit( @grid_gutter-width / @base-font-size-px, em) !important;
         }
+    });
+}
+
+
+/* topdoc
+  name: Flush sides on small devices
+  family: cf-layout
+  patterns:
+    - name: .content__flush-sides-on-small
+      markup: |
+        <aside class="content_sidebar content__flush-sides-on-small">
+          <!-- sidebar components -->
+        </aside>
+        <div class="content_main content__flush-sides-on-small">
+          <!-- main content components -->
+        </div>
+  tags: cf-layout
+*/
+.content__flush-sides-on-small {
+    .respond-to-max(@bp-sm-max, {
+        padding-left: 0;
+        padding-right: 0;
+        border-width: 0;
     });
 }
 
@@ -1547,14 +1591,67 @@ ul:last-child,
 }
 
 /* topdoc
+  name: Add Large breakpoint only columns
+  family: cf-layout
+  notes:
+    - "Columns normally only stack under @bp-sm-min.
+       These keep them stacked till @bp-lg-min"
+  tags:
+    - cf-layout
+*/
+.content-l_col-1-3__on-lg {
+    + .content-l_col-1-3__on-lg {
+        .respond-to-max( @bp-med-max, {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+
+        .respond-to-range( @bp-sm-min, @bp-med-max, {
+            &:before {
+                .a-rule-break();
+                content: '';
+                display: block;
+            }
+        } );
+    }
+
+    .respond-to-range( @bp-sm-min, @bp-med-max, {
+        .grid_column( 1, 1 );
+    } );
+
+    .respond-to-min( @bp-lg-min, {
+        .grid_column(4);
+    } );
+}
+
+.content-l_col-1-2__on-lg {
+    .respond-to-max( @bp-med-max, {
+        + .content-l_col-1-2__on-lg {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
+    } );
+
+    .respond-to-range( @bp-sm-min, @bp-med-max, {
+        .grid_column( 1, 1 );
+    } );
+
+    .respond-to-min( @bp-lg-min, {
+        .grid_column(6);
+    } );
+}
+
+/* topdoc
   name: Adjustments to meta-header
   family: cf-typography
   notes:
-    - "Temporary changes to meta-header to be ported to cf-typography to allow better adjustments on mobile"
+    - "Changes to meta-header to be ported to cf-typography to allow better adjustments on mobile"
+    - "Changes to better control spacing when a category isn't set"
   tags:
     - cf-typography
 */
 
+.meta-header {
+    overflow: auto;
+}
 
 .meta-header_right {
     .respond-to-max(@mobile-max, {
@@ -1600,6 +1697,84 @@ select[multiple] {
     font-size: 14px;
     &p {
         margin-bottom: unit(10px / @base-font-size-px, em);
+    }
+}
+
+/*
+  name: Adjustments to Featured Content Module
+  notes:
+    - "Adding border to FCM"
+    - "Adjustment to make FCM work with video"
+ */
+
+.featured-content-module {
+    border: 1px solid @block__border;
+}
+
+.featured-content-module_img {
+    .respond-to-min(@fcm-bp-min, {
+        max-height: 320px;
+        width: auto;
+        height: auto;
+    });
+}
+
+.featured-content-module_visual {
+    .respond-to-max(@fcm-bp-max, {
+        margin-bottom: @grid_gutter-width;
+    });
+
+    .video-player_image {
+        max-width: none;
+        height: 320px;
+    }
+
+}
+
+.featured-content-module_visual.video-playing {
+    left: 0;
+}
+
+/* topdoc
+  name: Set form elements to base webfont
+  family: cf-core
+  tags:
+    - cf-core
+*/
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select[multiple] {
+    .webfont-regular();
+}
+
+/* topdoc
+  name: Match the input to button
+  family: cf-form
+  notes: "Matches the font-size and padding of the input in
+          .input-with-btn to the button"
+  tags:
+    - cf-form
+*/
+
+input {
+    .input-with-btn & {
+        // Match button 8px padding minus border width
+        padding-top: 7px;
+        padding-bottom: 7px;
+
+        // Match button font-size
+        font-size: unit( 14px / @base-font-size-px, em );
+
+        &:focus {
+            box-shadow: 0 0 0 1px @pacific inset;
+            outline: none;
+        }
     }
 }
 

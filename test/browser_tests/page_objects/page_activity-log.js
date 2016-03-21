@@ -14,13 +14,13 @@ function ActivityLog() {
   this.searchFilter = element( by.css( '.js-post-filter' ) );
 
   this.searchFilterBtn =
-  this.searchFilter.element( by.css( '.expandable_target' ) );
+  this.searchFilter.element( by.css( '.m-expandable_target' ) );
 
   this.searchFilterShowBtn =
-  this.searchFilter.element( by.css( '.expandable_cue-open' ) );
+  this.searchFilter.element( by.css( '.m-expandable_cue-open' ) );
 
   this.searchFilterHideBtn =
-  this.searchFilter.element( by.css( '.expandable_cue-close' ) );
+  this.searchFilter.element( by.css( '.m-expandable_cue-close' ) );
 
   this.searchFilterResults =
   element.all( by.css( '[data-qa-hook="filter-results"] tr' ) );

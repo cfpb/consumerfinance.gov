@@ -10,28 +10,44 @@
 
    ========================================================================== #}
 
-<div class="m-global-search">
-    <button class="m-global-search_trigger">
+<div class="m-global-search"
+     data-js-hook="flyout-menu">
+    <button class="m-global-search_trigger"
+            data-js-hook="flyout-menu_trigger">
         <span class="m-global-search_trigger-label">
             <span class="u-visually-hidden">Search</span>
         </span>
     </button>
-    <div class="m-global-search_content" aria-expanded="false">
-        <form class="m-global-search_content-form">
+    <div class="m-global-search_content
+                u-hidden"
+         data-js-hook="flyout-menu_content"
+         aria-expanded="false">
+        <form class="m-global-search_content-form"
+              action="http://search.consumerfinance.gov/search"
+              method="get">
+            {# Required hidden input for CFPB search. #}
+            <input type="hidden"
+                           name="utf8"
+                           value="✓">
+            <input type="hidden"
+                   id="affiliate"
+                   name="affiliate"
+                   value="cfpb">
             <div class="input-with-btn">
                 <div class="input-with-btn_input
                             input-contains-label">
-                    <label for="search-input"
+                    <label for="query"
                            class="input-contains-label_before
                                   input-contains-label_before__search">
                     </label>
-                    <label for="search-input"
+                    <label for="query"
                            class="input-contains-label_after
                                   input-contains-label_after__clear
                                   u-hidden">
                     </label>
                     <input type="text"
-                           id="search-input"
+                           id="query"
+                           name="query"
                            value=""
                            placeholder="Search the CFPB">
                 </div>
@@ -51,6 +67,6 @@
                 </ul>
             </div>
         </form>
-        <button class="m-global-search_tab-trigger" aria-hidden></button>
+        <button class="m-global-search_tab-trigger" aria-hidden="true"></button>
     </div>
 </div>

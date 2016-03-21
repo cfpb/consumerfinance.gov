@@ -1,5 +1,6 @@
 import time
 from datetime import timedelta
+from itertools import chain
 from util import ERROR_MESSAGES
 
 from django import forms
@@ -12,9 +13,9 @@ from django.contrib.auth import authenticate
 from django.conf import settings
 from django.forms import widgets
 
-from sheerlike.templates import date_formatter
+from sheerlike.templates import get_date_obj
 from .models import ref
-from .models.learn_page import AbstractFilterPage
+from .models.base import CFGOVPage
 from .util.util import most_common
 
 
@@ -110,11 +111,19 @@ class FilterDateField(forms.DateField):
     def clean(self, value):
         if value:
             try:
-                value = date_formatter(value)
+                value = get_date_obj(value)
             except Exception as e:
                 pass
         return value
 
+class PDFFilterDateField(forms.DateField):
+    def clean(self, value):
+        if value:
+            try:
+                value = get_date_string(value)
+            except Exception as e:
+                pass
+        return value
 
 class FilterCheckboxList(forms.CharField):
     def validate(self, value):
@@ -128,9 +137,9 @@ class FilterCheckboxList(forms.CharField):
 class CalenderPDFFilterForm(forms.Form):
     filter_calendar = FilterCheckboxList(label='Calendar',
         error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS'])
-    filter_range_date_gte = FilterDateField(required=False,
+    filter_range_date_gte = PDFFilterDateField(required=False,
         error_messages=ERROR_MESSAGES['DATE_ERRORS'])
-    filter_range_date_lte = FilterDateField(required=False,
+    filter_range_date_lte = PDFFilterDateField(required=False,
         error_messages=ERROR_MESSAGES['DATE_ERRORS'])
 
     def __init__(self, *args, **kwargs):
@@ -161,12 +170,13 @@ class FilterableListForm(forms.Form):
     authors_select_attrs = {
         'class': 'chosen-select',
         'multiple': 'multiple',
-        'data-placeholder': 'Search for authors',
+        'data-placeholder': 'Search for authors'
     }
     from_select_attrs = {
         'class': 'js-filter_range-date js-filter_range-date__gte',
         'type': 'text',
         'placeholder': 'dd/mm/yyyy',
+        'data-type': 'date'
     }
     to_select_attrs = from_select_attrs.copy()
     to_select_attrs.update({
@@ -174,11 +184,11 @@ class FilterableListForm(forms.Form):
     })
 
     title = forms.CharField(max_length=250, required=False)
-    from_date = forms.DateField(
+    from_date = FilterDateField(
         required=False,
         input_formats=['%d/%m/%Y'],
         widget=widgets.DateInput(attrs=from_select_attrs))
-    to_date = forms.DateField(
+    to_date = FilterDateField(
         required=False,
         input_formats=['%d/%m/%Y'],
         widget=widgets.DateInput(attrs=to_select_attrs))
@@ -197,17 +207,19 @@ class FilterableListForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         parent = kwargs.pop('parent')
+        hostname = kwargs.pop('hostname')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        self.set_topics(parent)
-        self.set_authors(parent)
+        self.set_topics(parent, hostname)
+        self.set_authors(parent, hostname)
 
     # Populate Topics' choices
-    def set_topics(self, parent):
-        all_tags = [tag for tags in [page.tags.names() for page in
-                    AbstractFilterPage.objects.live().descendant_of(
-                    parent).live()] for tag in tags]
+    def set_topics(self, parent, hostname):
+        tags = [tag for tags in
+                     [page.tags.names() for page in
+                      CFGOVPage.objects.live_shared(hostname).descendant_of(parent)]
+                     for tag in tags]
         # Orders by most to least common tags
-        options = most_common(all_tags)
+        options = most_common(tags)
         most = [(option, option) for option in options[:3]]
         other = [(option, option) for option in options[3:]]
         self.fields['topics'].choices = \
@@ -215,10 +227,10 @@ class FilterableListForm(forms.Form):
              ('All other topics', tuple(other)))
 
     # Populate Authors' choices
-    def set_authors(self, parent):
+    def set_authors(self, parent, hostname):
         all_authors = [author for authors in [page.authors.names() for page in
-                       AbstractFilterPage.objects.live().descendant_of(
-                       parent).live()] for author in authors]
+                       CFGOVPage.objects.live_shared(hostname).descendant_of(
+                       parent)] for author in authors]
         # Orders by most to least common authors
         self.fields['authors'].choices = [(author, author) for author in
                                           most_common(all_authors)]
@@ -273,10 +285,6 @@ class FilterableListForm(forms.Form):
                     final_query &= \
                         Q((query, self.cleaned_data.get(field_name)))
         return final_query
-
-    # Returns the field to order the list by
-    def get_order_attr(self):
-        return 'date_published'
 
     # Returns a list of query strings to associate for each field, ordered by
     # the field declaration for the form. Note: THEY MUST BE ORDERED IN THE

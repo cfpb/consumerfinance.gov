@@ -1,16 +1,15 @@
 'use strict';
 
-var _assign = require( 'lodash/assign' );
 var filter = require( '../shared_objects/filter.js' );
 var pagination = require( '../shared_objects/pagination' );
 var stayInformedSection = require( '../shared_objects/stay-informed-section' );
 var rssSection = require( '../shared_objects/rss-section' );
 
-var _getQAElement = require( '../util/QAelement' ).get;
+var _getQAElement = require( '../util/qa-element' ).get;
 
 function Newsroom() {
 
-  _assign( this, filter, pagination, stayInformedSection, rssSection );
+  Object.assign( this, filter, pagination, stayInformedSection, rssSection );
 
   this.get = function() {
     browser.get( '/newsroom/' );
@@ -20,7 +19,7 @@ function Newsroom() {
 
   this.mainTitle = _getQAElement( 'main-title' );
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.featuredTopic = element( by.css( '.featured-topic' ) );
 

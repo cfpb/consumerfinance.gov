@@ -8,54 +8,15 @@
 
    Creates an email sign up form when given:
 
-   value:      An object used to customize the markup.
+   value:         An object used to customize the markup.
 
-   value.heading: A string with the title for the header slug
+   value.heading: A string with the title for the header slug.
 
-   value.text: The text used within the description markup.
+   value.text:    The text used within the description markup.
 
-   value.gd_code:       A GovDelivery code for a specified mailing list.
+   value.gd_code: A GovDelivery code for a specified mailing list.
 
    ========================================================================== #}
-
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% macro _privacy_statement() %}
-        The information you provide will permit the Consumer Financial
-        Protection Bureau to process your request or inquiry.
-        <a href="/sub-pages/privacy-policy/">See More</a>
-    {% endmacro %}
-
-    {% macro _form_field() %}
-        {% do global_dict.update({
-            'form_field': {
-                'label':       'Email Address',
-                'name':        'o-email-signup_email',
-                'placeholder': 'mail@example.com',
-                'type':        'email',
-                'info':        {
-                    'source': _privacy_statement()
-                },
-                'required':    true,
-                'btn_text':    'Sign up'
-            }
-        }) %}
-        {% set value = global_dict.form_field %}
-        {% include 'molecules/form-field-with-button.html' %}
-    {% endmacro %}
-
-    {% do global_dict.update({
-        'email_signup': {
-            'heading':    'Slug Title',
-            'text':       lipsumText,
-            'form_field': [
-                _form_field()
-            ]
-        }
-    }) %}
-    {% set value = global_dict.email_signup %}
-    {% set prototype = true %}
-{% endif %}
 
 <div class="o-email-signup">
 {% if value.heading %}

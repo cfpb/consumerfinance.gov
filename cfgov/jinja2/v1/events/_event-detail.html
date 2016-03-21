@@ -12,27 +12,29 @@
             {{ page.future_body | striptags }}
         {% endif %}
         </p>
-        <div class="modification-date date u-right">
-            <span>Updated</span>
-            {% import 'macros/time.html' as time %}
-            {{ time.render(page.latest_revision_created_at, {'date':true}) }}
+        <div>
+            <div class="modification-date date u-right">
+                <span>Updated</span>
+                {% import 'macros/time.html' as time %}
+                {{ time.render(page.latest_revision_created_at, {'date':true}) }}
+            </div>
+            {% import 'macros/share.html' as share with context %}
+            {{ share.render({
+                'title': page.title,
+                'hide_heading': true,
+                'twitter_options': {
+                    'text':     page.twtr_text,
+                    'related':  page.twtr_rel,
+                    'language': page.twtr_lang,
+                    'hashtags': page.twtr_hash
+                }
+            }) }}
         </div>
-        {% import 'macros/share.html' as share with context %}
-        {{ share.render({
-            'title': page.title,
-            'hide_heading': true,
-            'twitter_options': {
-                'text':     page.twtr_text,
-                'related':  page.twtr_rel,
-                'language': page.twtr_lang,
-                'hashtags': page.twtr_hash
-            }
-        }) }}
         {% from 'events/_macros.html' import event_venue as event_venue %}
-        {{ event_venue(page, event_state) }}
+        {{ event_venue( page, event_state ) }}
     </header>
     <div class="post_body">
-        {% if (event_state != 'past') %}
+        {% if ( event_state == 'future' ) %}
         <aside class="post_inset post_inset__right line-container event-status">
             <div class="line-container_body">
                 <h1 class="u-visually-hidden">Event reservation and viewing details</h1>
@@ -64,6 +66,28 @@
                   </p>
                 </div>
                 {% endif %}
+            </div>
+        </aside>
+        {% elif ( event_state == 'present' and page.live_stream_availability ) %}
+        <aside class="post_inset post_inset__right line-container event-status">
+            <div class="line-container_body">
+                <div class="event-status_livestream">
+                    <p>
+                        <span class="cf-icon cf-icon-livestream"></span>
+                        <strong>
+                            Having trouble with the Live stream?
+                        </strong>
+                    </p>
+                    <p>
+                        Use the link below to troubleshoot the live video stream if it isn't playing properly.
+                    </p>
+                    <p>
+                        {# TODO: Add real link #}
+                        <a href="/">
+                            Livestream video help FAQ
+                        </a>
+                    </p>
+                </div>
             </div>
         </aside>
         {% endif %}

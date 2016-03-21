@@ -1,8 +1,5 @@
 'use strict';
 
-// Required polyfills for IE9.
-if ( window.Modernizr && !window.Modernizr.classlist ) { require( '../polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
-
 /**
  * Get the sibling nodes of a dom node.
  *
@@ -48,17 +45,27 @@ function not( elems, exclude ) {
  * Get the nearest parent node of an element.
  *
  * @param {HTMLNode} elem - A DOM element.
- * @param {string} className - CSS classname.
- * @returns {HTMLNode} Nearest parent node that contains className, or null.
+ * @param {string} selector - CSS selector.
+ * @returns {HTMLNode} Nearest parent node that matches the selector.
  */
-function closest( elem, className ) {
+function closest( elem, selector ) {
   elem = elem.parentNode;
-  do {
-    if ( elem.classList && elem.classList.contains( className ) ) {
-      return elem;
+
+  var matchesSelector = elem.matches ||
+                        elem.webkitMatchesSelector ||
+                        elem.mozMatchesSelector ||
+                        elem.msMatchesSelector;
+  var match;
+
+  while ( elem ) {
+    if ( matchesSelector.bind( elem )( selector ) ) {
+      match = elem;
+    } else {
+      elem = elem.parentElement;
     }
-    elem = elem.parentNode;
-  } while ( elem );
+
+    if ( match ) return elem;
+  }
 
   return null;
 }

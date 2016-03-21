@@ -16,14 +16,118 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Added Backend sidebar contact
+- Add Related Metadata molecule to backend
+- Added `ClearableInput` class for clearable input behavior
+  in `input-contains-label` CF class.
+- Added Github specific Issue and PR templates.
+- included paragraph rich text field to related links
+- Added new content flush sides on small modifier to fix an issue where margin was set on the molecule level instead of the template.
+- Added Info Unit Macro.
+- URL field to the Post Preview organism
+- Frontend: Added overlay atom.
+- Signal receiver function to unpublish all revisions for a page when a page is unpublished
+- Backend: HomePage Model
+- David Silberman's assets
+- Frontend: Added JS init scripts for /offices/, /sub-pages/, and /budget/.
+- Frontend: Added data-* attribute JS utility class.
+- New manager to query for the most appropriate pages (shared and/or live)
+- Enabled Demo Page in flapjack
+- Included Password Complexity rules for admin user creation/editing flow
+- Enabled email backend for Production settings
+- Frontend: Added utility classes for translation and opacity CSS transitions.
+- Added SublandingFilterablePage class
+- Script to semi-automate importing refresh data
+- Provided option to exclude sibling pages in secondary navigation
+- Added tests for `external-site-redirect.js`
+- Frontend: Added JS Tree data structure and traversal algorithms.
+- Add text intro and featured content to SublandingFilterablePage
+- Add a script `move_reports.py` to move all reports under a given SublandingFilterablePage
+- Add a 'careers_preview' query to limit the results to 5
+- Added CFGovLinkHandler to convert richtext internal links to relative links
+- Frontend: added `u-hidden-overflow` utility class.
 
 ### Changed
+- Converted the project to Capital Framework v3
+- Updated `protractor` from `3.0.0` to `3.1.1`.
+- Included Table organism within full width text
+- Changed BrowseFilterablePage and related-metadata.html molecule templates to account for new backend
+- Abstracted info unit into a helper mixin to make it easier to re-use the inline version.
+- Moved Home page specific layout changes to it's own file.
+- Updated jsdom from `7.2.2` to `8.0.4`.
+- Updated secondary-nav to use new expandable molecule in place of old CF Expandable.
+- Updated gulp-eslint from `1.0.0` to `2.0.0`.
+- Converted Link Blob Group, 25/75 Group, and 50/50 Group to single Info Unit Group.
+- Converted Link Blob Macro to Info Unit Macro.
+- Converted 25/75 Macro to Info Unit Macro.
+- Converted 50/50 Macro to Info Unit Macro.
+- Updated Home Page to Info Unit Macro.
+- Included use of wagtail `classname` meta field for block css modifiers
+- Breadcrumbs for Wagtail pages now handled by Wagtail
+- Changed Wagtail pages extending from `layout-side-nav.html` to use new side navigation handling
+- Changed FilterableListControls.js to add validation for email, date, and checkbox fields.
+- Converted references and asset urls from Fuchs to Silberman.
+- Fix blog post template to use sheerlike related posts method.
+- Restructured mega menu to include submenus recursively to allow for a third-level.
+- Renamed atomic-checkers `validateDomElement` to atomic-helpers `checkDom`.
+- Add two categories to the Implementation Resource group.
+- Updated the homepage based on user feedback.
+- Renamed preview_link_url/text => secondary_link_url/text
+- Updated Categories for Research & Reports.
+- Changes to job listing pages.
+- included backend support for Video in FCM
+- Changed `external-site-redirect.js` to remove jQuery and fix Regex.
+- Updated the global search for no-js and IE 8-10 fixes.
+- Frontend: Added all launch-state mega menu links.
+- Frontend: Added hover-to-show behavior in desktop mega menu.
+- Use the added `careers_preview.json` in the careers sublanding page instead of `careers.json`
+- Wrap prefooter section in Browse pages in a conditional to prevent empty prefooter
+- Frontend: Added behaviors for third level mobile mega menu.
+- Frontend: Made Expandables collapse under 600px window size.
+- Updated the Mega Menu layout to avoid pointer events for older IE.
+- Updated the Mega Menu for devices without JS.
 
 ### Removed
+- Removed normalize and normalize-legacy from main less file because CF already includes it.
+- Removed old branded list mixin (was causing compile errors).
+- Removed unnecessary Wagtail streamdata retrieval function from v1/utils/util.py
+- Removed old beta styles.
+- Removed prototype language, such as instances of setting `value`, `page`, and `global_dict`
+- Imports of contact info macros that were breaking the page
+- Removed Link Blob, 25/75, and 50/50 styles.
+- Removed need for negative margin tweaks after groups.
+- Removed need for positive margin tweaks aroung group headings.
+- Removed heros from old WordPress pages.
+- Removed `show-hide-fields.js` script and reference from common.js.
+- Meredith Fuch's assets.
+- A couple of Implementation Resource group categories.
+- Removed Chosen.js library and custom styles/scripts.
+- Removed several size=x params passed to query.search(), which don't do anything
+- Removed all the pages and associated code that have been ported to wagtail.
 
 ### Fixed
-
-
+- Fix bug where publised pages were showing shared content
+- Fixed Contacts import-data script to set phone numbers correctly
+- Fixed an issue where heros were not displaying on new Wagtail pages.
+- Fixed an error where the secondary nav script was trying to initialize on pages it wasn't used.
+- Fixed archive_events script to run in production.
+- Fixed issue where form validation clashed with filterable list controls.
+- Post preview title now links to page link.
+- Fixed a bug where the search input and button in the header were misaligned.
+- Fixed urls document type for career pages.
+- Fixed stacking bug in header search.
+- Fixed page saving bug that would prevent the display of a page's tags
+- Fixed ordering for Filterable results to be newest => oldest by published_date.
+- Fixed a bug where activiating the clear button wasn't clearing filtered results on browse filterable pages.
+- Fixes the values for author and tag options to remove special characters.
+- Fixes layout issues with filters on sheer pages.
+- Fixed failing browser tests due to atomic naming updates.
+- Fixed a bug in the multi-select script where value was set before input type.
+- Fixed positioning bug in global search.
+- Fixed issue where categories without a set icon were showing the speach icon.
+- Fixed issue where a filtered page wasn’t showing the selected options in the multiselect.
+- Fixed an error in the Browser tests for IE 8.
+- Fixed an error in the Browser tests when running on Jenkins.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
@@ -291,9 +395,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated filterable-list-controls organism to allow for multiple option
 - Password Policy & Lockout criteria for login, account password change & forgot my password.
 - Updated the project to use Avenir font by default
-- Updated `mocha` from `2.2.4` from `2.4.2`.
-- Updated `sinon` from `1.14.1` from `1.17.3`.
-- Updated `lodash` from `3.10.0` from `4.0.1`.
+- Updated `mocha` from `2.2.4` to `2.4.2`.
+- Updated `sinon` from `1.14.1` to `1.17.3`.
+- Updated `lodash` from `3.10.0` to `4.0.1`.
 - Change jinja2 templates to handle Wagtail page
 - Fixed [1348](https://github.com/cfpb/cfgov-refresh/issues/1348) and [1354](https://github.com/cfpb/cfgov-refresh/issues/1354)
 - Updated brand colors to updates in generator-cf.

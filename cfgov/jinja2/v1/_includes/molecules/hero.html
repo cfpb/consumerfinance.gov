@@ -31,33 +31,6 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% do global_dict.update(
-            {
-                'hero': {
-                    'heading':   'This is an example of a Hero Molecule',
-                    'body': {
-                        'source': 'Heroes function as a primary focal point on a page,
-                                  often used to introduce a collection of pages by
-                                  combining a brief description of the goals of that
-                                  section along with a visually impactful graphic.'
-                    },
-                    'image': {
-                                  'upload': {
-                                            'url': 'http://placehold.it/1600x900'
-                                  }
-                    },
-                    'background_color': '#d5e7e6',
-                    'links': [{
-                            'text': 'Placeholder link',
-                            'url':  '#'
-                        }]
-                }
-            })
-    %}
-    {% set value = global_dict.hero %}
-    {% set prototype = true %}
-{% endif %}
 <section class="hero"
          {{ 'style=background-color:' +
              value.background_color + ';'
@@ -65,25 +38,22 @@
     <div class="wrapper hero_wrapper">
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
-            <div class="hero_subhead">{{ value.body.source |safe}}</div>
+            <div class="hero_subhead">{{ parse_links(value.body) |safe }}</div>
             {% for link in value.links %}
                 <a href="{{ link.url }}"
                    class="hero_cta
-                   {{ 'btn' if value.is_button
-                   else '' }}">
+                   {{ 'btn' if value.is_button else '' }}">
                     {{ link.text }}
                 </a>
             {% endfor %}
         </div>
+
         {% if value.image.upload %}
-            {% if prototype %}
-                {% set photo=value.image.upload %}
-            {% else %}
-                {% set photo=image(value.image.upload, 'original') %}
-            {% endif %}
+            {% set photo=image(value.image.upload, 'original') %}
             <div class="hero_image"
-                 style="background-image: url( {{ photo.url }} );">
+                 style="background-image: url( {{ photo.url }} );"></div>
         {% endif %}
-        </div>
     </div>
 </section>
+
+

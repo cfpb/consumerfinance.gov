@@ -1,11 +1,11 @@
 import collections
 import re
+import os
+from itertools import chain
 from time import time
 from django.conf import settings
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.blocks.struct_block import StructValue
-
-
 
 def id_validator(id_string, search=re.compile(r'[^a-zA-Z0-9-_]').search):
     if id_string:
@@ -22,18 +22,20 @@ def to_camel_case(snake_str):
 
 
 def get_unique_id(prefix='', suffix=''):
-    index = hex(int(time()*10000000))[2:]
+    index = hex(int(time() * 10000000))[2:]
     return prefix + str(index) + suffix
 
 
- # These messages are manually mirrored on the
- # Javascript side in error-messages-config.js
+    # These messages are manually mirrored on the
+    # Javascript side in error-messages-config.js
+
+
 ERROR_MESSAGES = {
-    'CHECKBOX_ERRORS' : {
-        'required' : 'Please select at least one of the "%s" options.'
+    'CHECKBOX_ERRORS': {
+        'required': 'Please select at least one of the "%s" options.'
     },
-    'DATE_ERRORS' :{
-        'invalid' : 'You have entered an invalid date.',
+    'DATE_ERRORS': {
+        'invalid': 'You have entered an invalid date.',
         'one_required': 'Please enter at least one date.'
     }
 }
@@ -54,23 +56,55 @@ def most_common(lst):
         return [most] + most_common(new_list)
 
 
-# When viewing the page as preview, the stream_data is a list of tuples. This
-# changes it to a wagtail-like dictionary that would be used if the page had
-# been viewed as published/shared.
-def wagtail_stream_data(tupl_list):
-    if isinstance(tupl_list, collections.Iterable):
-        stream_data = []
-        for tupl in tupl_list:
-            if isinstance(tupl, dict):
-                return tupl_list
-            elif isinstance(tupl, tuple):
-                if isinstance(tupl[1], StructValue):
-                    stream_data.append({'type': tupl[0], 'value': tupl[1]})
-                else:
-                    stream_data.append({'type': tupl[0],
-                                        'value': wagtail_stream_data(tupl[1])})
-            elif isinstance(tupl, StreamValue.StreamChild):
-                stream_data.append({'type': tupl.block_type,
-                                    'value': wagtail_stream_data(tupl.value)})
-        return stream_data
-    return tupl_list
+def get_form_id(page, get_request):
+    from filterable_context import get_form_specific_filter_data
+
+    form_ids = []
+
+    form_ids = get_form_specific_filter_data(page, page.get_form_class(),
+                                                      get_request).keys()
+    if form_ids:
+        return form_ids[0]
+    else:
+        return None
+
+
+def instanceOfBrowseOrFilterablePages(page):
+    from ..models import BrowsePage, BrowseFilterablePage
+    return isinstance(page, BrowsePage) or isinstance(page, BrowseFilterablePage)
+
+
+# For use by Browse type pages to get the secondary navigation items
+def get_secondary_nav_items(current, hostname, exclude_siblings=False):
+    from ..templatetags.share import get_page_state_url
+    on_staging = os.environ.get('STAGING_HOSTNAME') == hostname
+    nav_items = []
+    parent = current.get_parent().specific
+    page = parent if instanceOfBrowseOrFilterablePages(parent) else current
+
+    pages = [page] if page.secondary_nav_exclude_sibling_pages else page.get_appropriate_siblings(hostname)
+
+    for sibling in pages:
+        # Only if it's a Browse type page
+        if 'Browse' in sibling.specific_class.__name__:
+            sibling = page if page.id == sibling.id else sibling
+            item = {
+                'title': sibling.title,
+                'slug': sibling.slug,
+                'url': get_page_state_url({}, sibling),
+                'children': [],
+            }
+            children = sibling.get_children().specific()
+            for child in [c for c in children if (on_staging and c.shared) or c.live]:
+                if instanceOfBrowseOrFilterablePages(child):
+                    item['children'].append({
+                        'title': child.title,
+                        'slug': child.slug,
+                        'url': get_page_state_url({}, child),
+                    })
+            nav_items.append(item)
+    # Return a boolean about whether or not the current page has Browse children
+    for item in nav_items:
+        if get_page_state_url({}, page) == item['url'] and item['children']:
+            return nav_items, True
+    return nav_items, False

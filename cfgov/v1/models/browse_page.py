@@ -1,14 +1,17 @@
 import itertools
 
+from django.db import models
+
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
-    StreamFieldPanel
+    StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
 
 from .base import CFGOVPage
 from . import molecules
 from . import organisms
+from ..util.util import get_secondary_nav_items
 
 
 class BrowsePage(CFGOVPage):
@@ -28,8 +31,7 @@ class BrowsePage(CFGOVPage):
         ('table', organisms.Table()),
     ], blank=True)
 
-    side_navigation = StreamField([], blank=True)
-
+    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [
@@ -37,17 +39,23 @@ class BrowsePage(CFGOVPage):
         StreamFieldPanel('content'),
     ]
 
-    sidebar_panels = [StreamFieldPanel('side_navigation')] + CFGOVPage.sidefoot_panels
+    sidefoot_panels = CFGOVPage.sidefoot_panels + [
+        FieldPanel('secondary_nav_exclude_sibling_pages'),
+    ]
 
     # Tab handler interface
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
-        ObjectList(sidebar_panels, heading='Sidebar'),
+        ObjectList(sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
     template = 'browse-basic/index.html'
 
-    def elements(self):
-        return list(itertools.chain(self.content.stream_data))
+    def full_width_serif(self):
+        return true
 
+    def get_context(self, request, *args, **kwargs):
+        context = super(BrowsePage, self).get_context(request, *args, **kwargs)
+        context.update({'get_secondary_nav_items': get_secondary_nav_items})
+        return context

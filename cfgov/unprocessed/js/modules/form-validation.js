@@ -71,7 +71,7 @@ function _sendSubscriptionRequest( elem ) {
 }
 
 function init() {
-  $( 'form' )
+  $( '#email-subscribe-form' )
     .cf_notifier()
     .cf_formValidator( 'init', {
       onFailure: function( event, fields ) {
@@ -79,15 +79,10 @@ function init() {
         _sendError( this, fields.invalid[0] );
       },
       onSuccess: function( event ) {
-        if ( $( this ).hasClass( 'js-type-and-filter_form' ) ) {
+        _clearError( this );
+        if ( this.id === 'email-subscribe-form' ) {
           event.preventDefault();
-          $( '.type-and-filter' ).trigger( 'attemptSearch' );
-        } else {
-          _clearError( this );
-          if ( this.id === 'email-subscribe-form' ) {
-            event.preventDefault();
-            _sendSubscriptionRequest( this );
-          }
+          _sendSubscriptionRequest( this );
         }
       }
     } );

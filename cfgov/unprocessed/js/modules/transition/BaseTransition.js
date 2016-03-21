@@ -1,0 +1,206 @@
+'use strict';
+
+// Required modules.
+var EventObserver = require( '../../modules/util/EventObserver' );
+
+/**
+ * BaseTransition
+ * @class
+ *
+ * @classdesc Initializes new BaseTransition behavior.
+ *   This shouldn't be used directly, but instead should be
+ *   the base class used through composition by a specific transition.
+ *
+ * @param {HTMLNode} element
+ *   DOM element to apply transition to.
+ * @param {Object} classes
+ *   The classes to apply to this transition.
+ * @returns {BaseTransition} An instance.
+ */
+function BaseTransition( element, classes ) { // eslint-disable-line max-statements, no-inline-comments, max-len
+  var _classes = classes;
+  var _dom;
+
+  var _lastClass;
+  var _transitionEndEvent;
+  var _transitionCompleteBinded = _transitionComplete.bind( this );
+  var _addEventListenerBinded = _addEventListener.bind( this );
+  var _isFlushed = false;
+
+  /**
+   * @returns {BaseTransition} An instance.
+   */
+  function init() {
+    setElement( element );
+
+    return this;
+  }
+
+  /**
+   * Add an event listener to the transition, or call the transition
+   * complete handler immediately if transition not supported.
+   * @param {HTMLNode} elem - Set the HTML element target of this transition.
+   */
+  function setElement( elem ) {
+    // If the element has already been set,
+    // clear the transition classes from the old element.
+    if ( _dom ) {
+      remove();
+      animateOn();
+    }
+    _dom = elem;
+    _dom.classList.add( _classes.BASE_CLASS );
+    _transitionEndEvent = _getTransitionEndEvent( _dom );
+  }
+
+  /**
+   * Add a "transition-duration: 0s" utility CSS class.
+   */
+  function animateOn() {
+    _dom.classList.remove( BaseTransition.NO_ANIMATION_CLASS );
+  }
+
+  /**
+   * Remove a "transition-duration: 0s" utility CSS class.
+   */
+  function animateOff() {
+    _dom.classList.add( BaseTransition.NO_ANIMATION_CLASS );
+  }
+
+  /**
+   * @returns {boolean} Whether the transition has a duration or not.
+   */
+  function isAnimated() {
+    return !_dom.classList.contains( BaseTransition.NO_ANIMATION_CLASS );
+  }
+
+  /**
+   * Add an event listener to the transition, or call the transition
+   * complete handler immediately if transition not supported.
+   */
+  function _addEventListener() {
+    // If transition is not supported, call handler directly (IE9/OperaMini).
+    if ( _transitionEndEvent ) {
+      _dom.addEventListener( _transitionEndEvent,
+                                        _transitionCompleteBinded );
+      this.dispatchEvent( BaseTransition.BEGIN_EVENT, { target: this } );
+    } else {
+      this.dispatchEvent( BaseTransition.BEGIN_EVENT, { target: this } );
+      _transitionCompleteBinded();
+    }
+  }
+
+  /**
+   * Remove an event listener to the transition.
+   */
+  function _removeEventListener() {
+    _dom.removeEventListener( _transitionEndEvent, _transitionCompleteBinded );
+  }
+
+  /**
+   * Handle the end of a transition.
+   */
+  function _transitionComplete() {
+    _removeEventListener();
+    this.dispatchEvent( BaseTransition.END_EVENT, { target: this } );
+  }
+
+  /**
+   * Search for and remove initial BaseTransition classes that have
+   * already been applied to this BaseTransition's target element.
+   */
+  function _flush() {
+    for ( var prop in _classes ) {
+      if ( _classes.hasOwnProperty( prop ) &&
+           _classes[prop] !== _classes.BASE_CLASS &&
+           _dom.classList.contains( _classes[prop] ) ) {
+        _dom.classList.remove( _classes[prop] );
+      }
+    }
+  }
+
+  /**
+   * Remove all transition classes.
+   */
+  function remove() {
+    _dom.classList.remove( _classes.BASE_CLASS );
+    _flush();
+  }
+
+  /**
+   * @param {string} className - A CSS class.
+   * @returns {boolean} False if the class is already applied,
+   *   otherwise true if the class was applied.
+   */
+  function applyClass( className ) {
+    if ( !_isFlushed ) {
+      _flush();
+      _isFlushed = true;
+    }
+
+    if ( _dom.classList.contains( className ) ) {
+      return false;
+    }
+
+    _removeEventListener();
+    _dom.classList.remove( _lastClass );
+    _lastClass = className;
+    _addEventListenerBinded();
+    _dom.classList.add( _lastClass );
+
+    return true;
+  }
+
+  // TODO: Update Expandables to use a transition.
+  /**
+   * @param {HTMLNode} elem
+   *   The element to check for support of transition end event.
+   * @returns {string} The browser-prefixed transition end event.
+   */
+  function _getTransitionEndEvent( elem ) {
+    if ( !elem ) {
+      var msg = 'Element does not have TransitionEnd event. It may be null!';
+      throw new Error( msg );
+    }
+
+    var transition;
+    var transitions = {
+      WebkitTransition: 'webkitTransitionEnd',
+      MozTransition:    'transitionend',
+      OTransition:      'oTransitionEnd otransitionend',
+      transition:       'transitionend'
+    };
+
+    for ( var t in transitions ) {
+      if ( transitions.hasOwnProperty( t ) &&
+           typeof elem.style[t] !== 'undefined' ) {
+        transition = transitions[t];
+        break;
+      }
+    }
+    return transition;
+  }
+
+  // Attach public events.
+  var eventObserver = new EventObserver();
+  this.addEventListener = eventObserver.addEventListener;
+  this.dispatchEvent = eventObserver.dispatchEvent;
+  this.removeEventListener = eventObserver.removeEventListener;
+
+  this.animateOff = animateOff;
+  this.animateOn = animateOn;
+  this.applyClass = applyClass;
+  this.init = init;
+  this.isAnimated = isAnimated;
+  this.remove = remove;
+  this.setElement = setElement;
+
+  return this;
+}
+
+// Public static constants.
+BaseTransition.BEGIN_EVENT = 'transitionBegin';
+BaseTransition.END_EVENT = 'transitionEnd';
+BaseTransition.NO_ANIMATION_CLASS = 'u-no-animation';
+
+module.exports = BaseTransition;

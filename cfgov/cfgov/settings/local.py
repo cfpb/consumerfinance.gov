@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = True
-INSTALLED_APPS += ('django_extensions', 'wagtail.contrib.wagtailstyleguide')
+INSTALLED_APPS += ('wagtail.contrib.wagtailstyleguide',)
 
 DATABASES = {
     'default': {
@@ -13,3 +13,5 @@ DATABASES = {
         'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
     },
 }
+
+STATIC_ROOT = REPOSITORY_ROOT.child('collectstatic')

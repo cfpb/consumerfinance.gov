@@ -11,6 +11,10 @@
     About Richard Cordray
 {%- endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
 {% block content_main %}
 
 	{% import 'molecules/social-media.html' as social_media %}
@@ -19,11 +23,13 @@
         <h1 data-qa-hook="director-bio-title">
             Director Richard Cordray
         </h1>
-        <p class="h3" data-qa-hook="director-bio-summary">
+        <p class="lead-paragraph" data-qa-hook="director-bio-summary">
             Richard Cordray serves as the first Director of the
             Consumer Financial Protection Bureau. He previously
             led the Bureau’s Enforcement Division.
         </p>
+    </div>
+    <div class="block">
         <figure class="media float-media rwd-crop" data-qa-hook="director-bio-image">
             <img class="media_image media_image__150 rwd-crop_item"
                  src="/static/img/director-cordray-300x400.jpg"
@@ -180,59 +186,16 @@
             </div>
         </section>
 
-        <div class="block
-                    block__padded-top
-                    block__border-top">
-            <div class="content-l content-l__main content-l__large-gutters"
-                 data-qa-hook="director-corner">
-                <section class="content-l_col content-l_col-1-2">
-                    <h2>
-                        Cordray’s Corner
-                    </h2>
-                    <figure class="figure__bordered">
-                        <img src="/static/img/cordrays_corner_420x236.jpg" alt="Portrait of Director Richard Cordray speaking">
-                    </figure>
-                    <p>
-                        View videos of Director Richard Cordray discussing various relevant fiancial topics
-                        and how the bureau is involved.
-                    </p>
-                    <a class="jump-link jump-link__external-link"
-                       href="https://www.youtube.com/user/cfpbvideo/search?query=Cordray%27s+Corner">
-                        <span class="jump-link_text">
-                            View Cordray’s Corner videos on YouTube
-                        </span>
-                    </a>
-                </section>
-                <section class="content-l_col
-                                content-l_col-1-2
-                                content-l_col__before-divider"
-                         data-qa-hook="director-history">
-                    <h2>
-                        CFPB history
-                    </h2>
-                    <figure class="figure__bordered">
-                        <img src="/static/img/obama_cordray.jpg" alt="Director Richard Cordray shaking hands with President Barack Obama">
-                    </figure>
-                    <p>
-                        In January of 2012, President Barack Obama appointed Richard Cordray to be the first
-                        Director of the CFPB.
-                    </p>
-                    <a class="jump-link jump-link__underline"
-                       href="{{ vars.path + 'history/' }}">
-                        Learn more about our history
-                    </a>
-                </section>
+        <section class="prefooter">
+            <div class="block block__flush-top">
+                {%- import 'related-links.html' as related_links %}
+                {{ related_links.render([
+                    [ vars.path + 'about-deputy-director/',
+                      'Learn about Deputy Director David Silberman' ],
+                    [ vars.path + 'bureau-structure/',
+                      'Bureau organizational structure' ],
+                ]) -}}
             </div>
-        </div>
-
-        <section class="block u-mb0">
-            {%- import 'related-links.html' as related_links %}
-            {{ related_links.render([
-                [ vars.path + 'about-deputy-director/',
-                  'Learn about Deputy Director Meredith Fuchs' ],
-                [ vars.path + 'bureau-structure/',
-                  'Bureau organizational structure' ],
-            ]) -}}
         </section>
 
     </aside>

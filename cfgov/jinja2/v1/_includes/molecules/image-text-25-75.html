@@ -25,77 +25,19 @@
 
    ========================================================================== #}
 
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% macro _lipsum_paragraph() %}
-        <p>{{ lipsumText }}</p>
-    {% endmacro %}
-    {% do global_dict.update(
-        {
-            'image_text_25_75': {
-                'heading' :       'Placeholder',
-                'body': {
-                    'source': _lipsum_paragraph()
-                },
-                'image': {
-                      'upload': {
-                                'url': 'http://placehold.it/300x300',
-                                'alt': ''
-                      }
-                },
-                'links': [{
-                            'text': 'Placeholder link',
-                            'url':  '#'
-                }]
-            }
-        })
-    %}
-    {% set value = global_dict.image_text_25_75 %}
-    {% set prototype = true %}
+{% from 'molecules/info-unit.html' import info_unit with context %}
+{% if value.image.upload %}
+    {% set photo=image(value.image.upload, 'original') %}
 {% endif %}
-
-<div class="m-image-text-25-75">
-    {# TODO: Change to HR #}
-    {% if value.has_rule %}
-        <div class="a-rule-break"></div>
-    {% endif %}
-
-    <div class="m-image-text-25-75_image-container">
-        {# Use a div if this is a decorative image,
-        in which case the alt attribute is empty. #}
-
-        {% if value.image.upload %}
-            {% if prototype %}
-                {% set photo=value.image.upload %}
-            {% else %}
-                {% set photo=image(value.image.upload, 'original') %}
-            {% endif %}
-
-            {% if value.image.alt == '' %}
-                <div class="m-image-text-25-75_image u-centered-on-mobile"
-                     style="background-image:url({{ photo.url }})"></div>
-            {% else %}
-                <img class="m-image-text-25-75_image u-centered-on-mobile"
-                     src="{{ photo.url }}"
-                     alt="{{ value.image.alt }}">
-            {% endif %}
-        {% endif %}
-    </div>
-
-    <div class="m-image-text-25-75_content">
-        <h3>{{ value.heading }}</h3>
-        {# TODO: similar molecules include the p tag in the template. We should standardize with one or the other #}
-        {{ value.body.source | safe }}
-
-        <ul class="list list__links">
-            {% for link in value.links %}
-                <li class="list_item">
-                    <a class="list_link" href="{{ link.url }}">
-                        {{ link.text }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-</div>
+{{ info_unit( {
+    'modifier': 'inline',
+    'image': {
+        'url': photo.url if photo else '/',
+        'alt': value.image.alt,
+        'is_square': true,
+        'is_decorative': value.image.alt == ''
+    },
+    'heading': '<h3>' ~ value.heading ~ '</h3>',
+    'body': value.body,
+    'links': value.links
+} ) }}

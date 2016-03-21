@@ -29,9 +29,9 @@ describe( 'The Newsroom Press Resources Page', function() {
   } );
 
   it( 'should include a Press contact email address', function() {
-    expect( page.contactListEmail .getText() )
+    expect( page.contactListEmail.getText() )
     .toBe( 'press@consumerfinance.gov' );
-    expect( page.contactListEmail .getAttribute( 'href' ) )
+    expect( page.contactListEmail.getAttribute( 'href' ) )
     .toBe( 'mailto:inquiries@consumerfinance.gov' );
   } );
 
@@ -49,21 +49,17 @@ describe( 'The Newsroom Press Resources Page', function() {
     expect( page.pressSectionIntro.isPresent() ).toBe( true );
   } );
 
-  it( 'should include Director’s bio', function() {
+  it( 'should include Director’s images', function() {
     expect( page.directorsImage.getAttribute( 'src' ) )
-    .toBe( browser.baseUrl + '/static/img/director-cordray-round-300x300.jpg' );
-    expect( page.directorsName.getText() ).toBe( 'Richard Cordray' );
+    .toExist;
     expect( page.directorsHighResImageLink.getText() )
     .toBe( 'High-res portrait' );
     expect( page.directorsLowResImageLink.getText() )
     .toBe( 'Low-res portrait' );
   } );
 
-  it( 'should include the Deputy Director bio', function() {
-    expect( page.deputyDirectorsImage.getAttribute( 'src' ) ).toBe(
-    browser.baseUrl + '/static/img/deputy-director-fuchs-round-300x300.jpg' );
-    expect( page.deputyDirectorsName.getText() )
-    .toBe( 'Meredith Fuchs' );
+  it( 'should include the Deputy Director’s images', function() {
+    expect( page.deputyDirectorsImage.getAttribute( 'src' ) ).toExist;
     expect( page.deputyDirectorsHighResImageLink.getText() )
     .toBe( 'High-res portrait' );
     expect( page.deputyDirectorsLowResImageLink.getText() )
@@ -76,7 +72,7 @@ describe( 'The Newsroom Press Resources Page', function() {
   } );
 
   it( 'should include more than one contact person', function() {
-    expect( page.contactPersons .count() ).toBeGreaterThan( 1 );
+    expect( page.contactPersons.count() ).toBeGreaterThan( 1 );
   } );
 
   it( 'should include a Stay Informed section', function() {

@@ -16,30 +16,19 @@
     </div>
 
     {% for block in page.molecules %}
-        <div class="block">
-            {{ render_stream_child(block) }}
-        </div>
+        {% include 'templates/render_block.html' with context %}
     {% endfor %}
 
     {% for block in page.organisms %}
-        {{ render_stream_child(block) }}
+        {% include 'templates/render_block.html' with context %}
     {% endfor %}
     </div>
-
-    <div class="block">
-        {% include '_includes/organisms/main-contact-info.html' %}
-    </div>
-
 {% endblock content_main %}
 
 {% block content_sidebar scoped -%}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
 <aside>
-    {% for block in page.sidefoot %}
-        {% if 'related_posts' in block.block_type %}
-            {{ related_posts.render() }}
-        {% else %}
-            {{ render_stream_child(block) }}
-        {% endif %}
-    {% endfor %}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
 </aside>
 {%- endblock %}

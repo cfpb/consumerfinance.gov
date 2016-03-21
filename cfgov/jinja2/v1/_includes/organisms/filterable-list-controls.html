@@ -8,22 +8,24 @@
 
    Create an expandable of filters when given:
 
-   controls     Collection of field controls and other settings to determine
-                    what's rendered.
+   controls: Collection of field controls and other settings to determine
+             what's rendered.
 
-   form         Django form that carries the fields that are to be rendered
+   form:     Django form that carries the fields that are to be rendered.
 
-   index        A unique number given to render the form and its fields with
+   index:    A unique number given to render the form and its fields with.
 
    ========================================================================== #}
 {% from 'molecules/expandable.html' import expandable with context %}
 
-{% macro _filter_selectable(type, index, label_text, id, name, value) %}
+{% macro _filter_selectable(type, index, label_text, id, name, value, required=None, group=None) %}
     <input class="cf-input"
            type="{{ type }}"
            value="{{ value }}"
            id="filter{{ index }}_{{ id }}"
            name="filter{{ index }}_{{ name }}"
+           {{ 'data-required=' ~ required if required else ''  }}
+           {{ 'data-group=' ~ group if group else ''  }}
            {{ 'checked' if is_filter_selected('filter' ~ index ~ '_' ~ name, value) else '' }}>
     <label for="filter{{ index }}_{{ id }}" >
         {{ label_text if label_text else value }}
@@ -75,77 +77,77 @@
     {% endif %}
     {% if controls.topics or controls.authors or controls.date_range %}
         <div class="form-l_col
+                    form-l_col__flush-bottom
                     form-l_col-2-3">
-            <div class="form-group">
-                <div class="form-l">
-                    {% if controls.topics %}
-                        <div class="form-l_col
-                                    form-l_col-1-2">
-                            <div class="form-group">
-                                <label class="form-label-header"
-                                       for="topics">
-                                    Topic
-                                </label>
-                                {{ form.render_with_id(form.topics,
-                                   'filter' ~ index ~ '_topics') }}
-                            </div>
+            <div class="form-l">
+                {% if controls.topics %}
+                    <div class="form-l_col
+                                form-l_col-1-2">
+                        <div class="form-group">
+                            <label class="form-label-header"
+                                   for="topics">
+                                Topic
+                            </label>
+                            {{ form.render_with_id(form.topics,
+                               'filter' ~ index ~ '_topics') }}
                         </div>
-                    {% endif %}
-                    {% if controls.authors %}
-                        <div class="form-l_col
-                                    form-l_col-1-2">
-                            <div class="form-group">
-                                <label class="form-label-header"
-                                       for="authors">
-                                    Author
-                                </label>
-                                {{ form.render_with_id(form.authors,
-                                   'filter' ~ index ~ '_authors') }}
-                            </div>
+                    </div>
+                {% endif %}
+                {% if controls.authors %}
+                    <div class="form-l_col
+                                form-l_col-1-2">
+                        <div class="form-group">
+                            <label class="form-label-header"
+                                   for="authors">
+                                Author
+                            </label>
+                            {{ form.render_with_id(form.authors,
+                               'filter' ~ index ~ '_authors') }}
                         </div>
-                    {% endif %}
-                    {% if controls.date_range %}
-                        <div class="form-l_col
-                                    form-l_col-1">
-                            <div class="form-group">
-                                <label class="form-label-header">
-                                    Date Range
-                                </label>
-                                <div class="form-l">
-                                    <div class="form-l_col
-                                                form-l_col-1-2">
-                                        <div class="form-group">
-                                            <label class="form-label-header"
-                                                   for="from_date">
-                                                From:
-                                            </label>
-                                            {{ form.render_with_id(form.from_date,
-                                               'filter' ~ index ~ '_from_date') }}
-                                        </div>
+                    </div>
+                {% endif %}
+                {% if controls.date_range %}
+                    <div class="form-l_col
+                                form-l_col__flush-bottom
+                                form-l_col-1">
+                        <div class="form-group">
+                            <label class="form-label-header">
+                                Date Range
+                            </label>
+                            <div class="form-l">
+                                <div class="form-l_col
+                                            form-l_col-1-2">
+                                    <div class="form-group">
+                                        <label class="form-label-header"
+                                               for="{{ 'filter' ~ index ~ '_from_date' }}">
+                                            From:
+                                        </label>
+                                        {{ form.render_with_id(form.from_date,
+                                           'filter' ~ index ~ '_from_date') }}
                                     </div>
-                                    <div class="form-l_col
-                                                form-l_col-1-2">
-                                        <div class="form-group">
-                                            <label class="form-label-header"
-                                                   for="to_date">
-                                                To:
-                                            </label>
-                                            {{ form.render_with_id(form.to_date,
-                                               'filter' ~ index ~ '_to_date') }}
-                                        </div>
+                                </div>
+                                <div class="form-l_col
+                                            form-l_col-1-2">
+                                    <div class="form-group">
+                                        <label class="form-label-header"
+                                               for="{{ 'filter' ~ index ~ '_to_date' }}">
+                                            To:
+                                        </label>
+                                        {{ form.render_with_id(form.to_date,
+                                           'filter' ~ index ~ '_to_date') }}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endif %}
 {% endmacro %}
 
 {% macro _filters_form(controls, form, index) %}
-    <form class="form-l"
+    <form
         {% if 'filterable-list' in controls.form_type %}
             method="get"
             action=".">
@@ -156,22 +158,20 @@
         {% endif %}
         <input type="hidden" name="form-id" id="form-id" value="{{ index }}">
 
-        <div class="form-l_col
-                    form-l_col-1">
-            <div class="form-group">
-                <div class="form-l">
-                    {{ _render_filter_fields(controls, form, index) }}
-                </div>
+        <div class="form-l">
+            {{ _render_filter_fields(controls, form, index) }}
+
+            <div class="form-l_col
+                        form-l_col__flush-bottom
+                        form-l_col-1">
+                <input class="btn form-actions_item"
+                       type="submit"
+                       value="Apply Filters">
+                <a class="btn btn__warning btn__link"
+                   href="{{ request.path }}">
+                    Clear filters
+                </a>
             </div>
-        </div>
-        <div class="form-actions form-actions__left-on-med">
-            <input class="btn form-actions_item"
-                   type="submit"
-                   value="Apply Filters">
-            <input class="btn btn__warning btn__link form-actions_item js-form_clear"
-                   type="button"
-                   value="Clear filters"
-                   data-js-hook="form-clear">
         </div>
     </form>
 {% endmacro %}
@@ -181,8 +181,11 @@
 
 {% macro render(controls, form, index) %}
     <div class="o-filterable-list-controls">
+        {% if request.GET %}
+            {% do controls.update({'is_expanded':true}) %}
+        {% endif %}
         {% set form_markup = _filters_form(controls, form, index) %}
-        {% call() expandable(controls, true) %}
+        {% call() expandable(controls) %}
             {{ form_markup | safe }}
         {% endcall %}
         {% for field in form %}
@@ -198,8 +201,10 @@
             {% endfor %}
         {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
-            {% if posts.paginator.count == 0 %}
-                {{ notification('warning', true, 
+            {% if not request.GET %}
+                {{ notification('success', false, posts.paginator.count ~ ' filtered results') }}
+            {% elif posts.paginator.count == 0 %}
+                {{ notification('warning', true,
                     'Sorry, there were no results based on your filter selections.',
                     'Please reset the filter or change your selections and try again.') }}
             {% else %}

@@ -1,7 +1,6 @@
 /* ==========================================================================
    Clear form button
    - Clear checkboxes and selects
-   - Clear Chosen.js elements
    - Clear jquery.custom-input elements
    ========================================================================== */
 
@@ -34,10 +33,7 @@ function init() {
     $form.find( 'select option:first' )
     .attr( 'selected', true );
 
-    // Clear Chosen.js elements
-    $form.find( '.chosen-select' )
-    .val( '' )
-    .trigger( 'chosen:updated' );
+    $form.submit();
   } );
 }
 

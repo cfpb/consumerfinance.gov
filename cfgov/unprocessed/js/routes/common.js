@@ -11,21 +11,31 @@ require( 'cf-expandables' );
 
 // Global modules.
 require( '../modules/beta-banner-state' ).init();
-require( '../modules/secondary-nav-toggle' ).init();
 require( '../modules/footer-button' ).init();
 require( '../modules/focus-target' ).init();
 require( '../modules/post-filter' ).init();
-require( '../modules/init-chosen' ).init();
 require( '../modules/form-validation' ).init();
 require( '../modules/scroll-on-history-collapse' ).init();
 require( '../modules/clear-form-buttons' ).init();
-require( '../modules/youtube' ).init();
+require( '../modules/UStreamPlayer' ).init( '.video-player__ustream' );
+require( '../modules/YoutubePlayer' ).init( '.video-player__youtube' );
 require( '../modules/pagination-validation.js' ).init();
-require( '../modules/show-hide-fields.js' ).init();
 require( '../modules/external-site-redirect.js' ).init();
 
 // GLOBAL ATOMIC ELEMENTS.
 // Organisms.
 var Header = require( '../organisms/Header.js' );
 var header = new Header( document.body );
-header.init();
+// Initialize header by passing it reference to global overlay atom.
+header.init( document.body.querySelector( '.a-overlay' ) );
+
+// Multi-select.
+// TODO: Move to browse-filterable route after old WP pages are removed
+var Multiselect = require( '../molecules/Multiselect' );
+var selects = document.querySelectorAll( 'select[multiple]' );
+
+var multiselect;
+for ( var i = 0, len = selects.length; i < len; i++ ) {
+  multiselect = new Multiselect( selects[i] );
+  multiselect.init();
+}

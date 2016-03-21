@@ -30,10 +30,9 @@
 
 {% block content_sidebar %}
     <section class="block block__flush-top">
-        {% if page %}
+        {# TODO: When moving blogs to Wagtail, change to "molecules/related-posts.html". #}
         {% import 'related-posts.html' as related_posts with context %}
-        {{ related_posts.render() }}
-        {% endif %}
+        {{ related_posts.render(post) }}
     </section>
     <section class="block" data-qa-hook="stay-informed-section">
         <h2 class="header-slug">
@@ -42,7 +41,7 @@
             </span>
         </h2>
         <div class="block block__sub block__flush-top">
-            <p>
+            <p data-qa-hook="stay-informed-desc">
                 Subscribe to our email newsletter. We will update you on new blogs.
             </p>
             {% import 'macros/subscribe.html' as subscribe with context %}

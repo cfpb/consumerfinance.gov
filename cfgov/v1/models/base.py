@@ -1,6 +1,10 @@
 import os
+from itertools import chain
+import json
+from sets import Set
 
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import pre_delete
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
@@ -11,21 +15,20 @@ from django.contrib.auth.models import User
 from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
-    UserPagePermissionsProxy, Orderable
+    UserPagePermissionsProxy, Orderable, PageManager, PageQuerySet
 from wagtail.wagtailcore.url_routing import RouteResult
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, \
     MultiFieldPanel, TabbedInterface, ObjectList
-
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 
-from sets import Set
+from sheerlike.query import QueryFinder
 
 from . import ref
-from . import atoms
 from . import molecules
 from . import organisms
 from ..util import util
@@ -47,6 +50,31 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 
+class CFGOVPageQuerySet(PageQuerySet):
+    def shared_q(self):
+        return Q(shared=True)
+
+    def shared(self):
+        return self.filter(self.shared_q())
+
+    def live_shared_q(self):
+        return self.live_q() | self.shared_q()
+
+    def live_shared(self, hostname):
+        staging_hostname = os.environ.get('STAGING_HOSTNAME')
+        if staging_hostname in hostname:
+            return self.filter(self.live_shared_q())
+        else:
+            return self.live()
+
+
+class BaseCFGOVPageManager(PageManager):
+    def get_queryset(self):
+        return CFGOVPageQuerySet(self.model).order_by('path')
+
+CFGOVPageManager = BaseCFGOVPageManager.from_queryset(CFGOVPageQuerySet)
+
+
 class CFGOVPage(Page):
     authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
                                      verbose_name='Authors',
@@ -62,18 +90,18 @@ class CFGOVPage(Page):
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
+    objects = CFGOVPageManager()
+
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
     sidefoot = StreamField([
-        ('slug', blocks.CharBlock(icon='title')),
-        ('heading', blocks.CharBlock(icon='title')),
-        ('paragraph', blocks.TextBlock(icon='edit')),
-        ('hyperlink', atoms.Hyperlink()),
         ('call_to_action', molecules.CallToAction()),
         ('related_links', molecules.RelatedLinks()),
         ('related_posts', organisms.RelatedPosts()),
+        ('related_metadata', molecules.RelatedMetadata()),
         ('email_signup', organisms.EmailSignUp()),
         ('contact', organisms.MainContactInfo()),
+        ('sidebar_contact', organisms.SidebarContactInfo()),
     ], blank=True)
 
     # Panels
@@ -97,30 +125,59 @@ class CFGOVPage(Page):
         ObjectList(settings_panels, heading='Configuration'),
     ])
 
-    def related_posts(self, block):
+    def related_posts(self, block, hostname):
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
-        # TODO: Replace this in a more global scope when Filterable List gets
-        # implemented in the backend.
+        # TODO: Add other search types as they are implemented in Django
         # Import classes that use this class here to maintain proper import
         # order.
         from . import EventPage
-        search_types = {
-            'events': EventPage,
-        }
-        # End TODO
-        for search_type, page_class in search_types.items():
+        search_types = [
+            ('events', EventPage, 'Events'),
+        ]
+        for search_type, search_class, search_type_name in search_types:
             if 'relate_%s' % search_type in block.value \
                     and block.value['relate_%s' % search_type]:
-                related[search_type] = \
-                    page_class.objects.filter(query).order_by(
+                related[search_type_name] = \
+                    search_class.objects.filter(query).order_by(
                         '-latest_revision_created_at').exclude(
-                        slug=self.slug)[:block.value['limit']]
+                        slug=self.slug).live_shared(hostname)[:block.value['limit']]
+        # TODO: Remove each search_type as it is implemented into Django
+        queries = QueryFinder()
+        for search_type, search_type_name in [('newsroom', 'Newsroom'), ('posts', 'Blog')]:
+            if 'relate_%s' % search_type in block.value \
+                    and block.value['relate_%s' % search_type]:
+                if search_type == 'newsroom':
+                    search_type = 'just_newsroom'
+                sheer_query = getattr(queries, search_type)
+                related[search_type_name] = \
+                    sheer_query.get_tag_related_documents(tags=self.tags.names(),
+                                                          size=block.value['limit'])
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
+
+    def get_breadcrumbs(self, site):
+        ancestors = self.get_ancestors()
+        home_page_children = site.root_page.get_children()
+        for i, ancestor in enumerate(ancestors):
+            if ancestor in home_page_children:
+                return ancestors[i+1:]
+        return []
+
+    def get_appropriate_descendants(self, hostname, inclusive=True):
+        return CFGOVPage.objects.live_shared(hostname).descendant_of(self, inclusive)
+
+    def get_appropriate_siblings(self, hostname, inclusive=True):
+        return CFGOVPage.objects.live_shared(hostname).sibling_of(self, inclusive)
+
+    def get_next_appropriate_siblings(self, hostname, inclusive=False):
+        return self.get_appropriate_siblings(hostname=hostname, inclusive=inclusive).filter(path__gte=self.path).order_by('path')
+
+    def get_prev_appropriate_siblings(self, hostname, inclusive=False):
+        return self.get_appropriate_siblings(hostname=hostname, inclusive=inclusive).filter(path__lte=self.path).order_by('-path')
 
     @property
     def status_string(self):
@@ -178,11 +235,20 @@ class CFGOVPage(Page):
 
         else:
             # Request is for this very page.
-            if self.live or self.shared and request.site.hostname == \
-                    os.environ.get('STAGING_HOSTNAME'):
-                return RouteResult(self)
-            else:
-                raise Http404
+            # If we're on the production site, make sure the version of the page
+            # displayed is the latest version that has `live` set to True for
+            # the live site or `shared` set to True for the staging site.
+            staging_hostname = os.environ.get('STAGING_HOSTNAME')
+            revisions = self.revisions.all().order_by('-created_at')
+            for revision in revisions:
+                page_version = json.loads(revision.content_json)
+                if request.site.hostname != staging_hostname:
+                    if page_version['live']:
+                        return RouteResult(revision.as_page_object())
+                else:
+                    if page_version['shared']:
+                        return RouteResult(revision.as_page_object())
+            raise Http404
 
     def permissions_for_user(self, user):
         """
@@ -200,7 +266,9 @@ class CFGOVPage(Page):
         return parent
 
     def elements(self):
-        return []
+        lst = [value for key, value in vars(self).iteritems()
+               if type(value) is StreamValue]
+        return list(chain(*lst))
 
     def _media(self):
         from v1 import models
@@ -208,16 +276,10 @@ class CFGOVPage(Page):
         js = ()
 
         for child in self.elements():
-            if isinstance(child, dict):
-                type = child['type']
-            else:
-                type = child[0]
-
-            class_ = getattr(models, util.to_camel_case(type))
-
-            instance = class_()
-
             try:
+                class_ = type(child.block)
+                instance = class_()
+
                 if hasattr(instance.Media, 'js'):
                     js += instance.Media.js
             except:

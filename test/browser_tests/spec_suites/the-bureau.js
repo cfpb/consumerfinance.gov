@@ -16,21 +16,9 @@ describe( 'The Bureau Page', function() {
     }
   );
 
-  it( 'should have a hero',
-    function() {
-      expect( page.hero.isPresent() ).toBe( true );
-    }
-  );
-
   it( 'should have a side nav',
     function() {
       expect( page.sideNav.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include Bureau history',
-    function() {
-      expect( page.bureauHistory.isPresent() ).toBe( true );
     }
   );
 
@@ -49,7 +37,7 @@ describe( 'The Bureau Page', function() {
 
   it( 'should include the Deputy Director’s Bio',
     function() {
-      expect( page.deputyDirectorsName.getText() ).toEqual( 'Meredith Fuchs' );
+      expect( page.deputyDirectorsName.getText() ).toEqual( 'David Silberman' );
       expect( page.deputyDirectorsBio.isPresent() ).toBe( true );
     }
   );

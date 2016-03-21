@@ -1,6 +1,6 @@
 'use strict';
 
-var _getQAElement = require( '../util/QAelement' ).get;
+var _getQAElement = require( '../util/qa-element' ).get;
 
 function TheAboutDirectorPage() {
 
@@ -17,17 +17,11 @@ function TheAboutDirectorPage() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.directorBio = _getQAElement( 'director-bio' );
 
   this.directorBioSummary = _getQAElement( 'director-bio-summary' );
-
-  this.directorCorner = _getQAElement( 'director-corner' );
-
-  this.directorHistory = _getQAElement( 'director-history' );
-
-  this.directorTitle = _getQAElement( 'director-bio-title' );
 
   this.directorImage = _getQAElement( 'director-bio-image' );
 

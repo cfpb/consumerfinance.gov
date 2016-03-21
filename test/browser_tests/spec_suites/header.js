@@ -29,8 +29,8 @@ describe( 'The Header Component', function() {
     );
 
     browser.getCapabilities().then( function( cap ) {
-      browser.name = cap.caps_.browserName;
-      browser.version = cap.caps_.version;
+      browser.name = cap.get('browserName');
+      browser.version = cap.get('version');
     } );
   } );
 
@@ -58,8 +58,8 @@ describe( 'The Header Component', function() {
     expect( _sharedObject.navList.isPresent() ).toBe( true );
   } );
 
-  it( 'should include four Primary Nav Links', function() {
-    expect( _sharedObject.primaryLinks.count() ).toEqual( 4 );
+  it( 'should include six Primary Nav Links', function() {
+    expect( _sharedObject.primaryLinks.count() ).toEqual( 6 );
   } );
 
   it( 'should include multiple Sub Nav Links', function() {

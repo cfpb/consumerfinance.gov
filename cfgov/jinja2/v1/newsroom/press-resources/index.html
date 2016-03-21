@@ -67,16 +67,16 @@
             </section>
 
             <section class="contact-person content-l_col-1-2">
-                <h3 class="contact-person_name">Walter Suskind</h3>
+                <h3 class="contact-person_name">Laura Van Dyke</h3>
                 <div class="contact-person_title">Press Assistant</div>
                 <ul class="contact-person_methods list list__unstyled">
                     <li class="list_item">
-                        <a href="mailto:walter.suskind@cfpb.gov">
-                            walter.suskind@cfpb.gov
+                        <a href="mailto:laura.vandyke@cfpb.gov">
+                            laura.vandyke@cfpb.gov
                         </a>
                     </li>
                     <li class="list_item">
-                        <a href="tel:2024359469">(202) 435-9469</a>
+                        <a href="tel:2024359019">(202) 435-9019</a>
                     </li>
                 </ul>
             </section>
@@ -107,6 +107,21 @@
                     </li>
                     <li class="list_item">
                         <a href="tel:2024357673">(202) 435-7673</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="contact-person content-l_col-1-2">
+                <h3 class="contact-person_name">David Mayorga</h3>
+                <div class="contact-person_title">Spokesperson</div>
+                <ul class="contact-person_methods list list__unstyled">
+                    <li class="list_item">
+                        <a href="mailto:david.mayorga@cfpb.gov">
+                            david.mayorga@cfpb.gov
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="tel:2024357159">(202) 435-7159</a>
                     </li>
                 </ul>
             </section>
@@ -159,20 +174,20 @@
             <section class="contact-person contact-person__director content-l_col-1-2">
                 <div class="media">
                     <img class="media_image media_image__150 contact-person_photo"
-                         src="/static/img/deputy-director-fuchs-round-300x300.jpg"
-                         alt="Deputy Director Meredith Fuchs">
+                         src="/static/img/deputy-director-silberman-round-300x300.jpg"
+                         alt="Deputy Director David Silberman">
                     <div class="contact-person_title">Deputy Director</div>
-                    <h3 class="contact-person_name">Meredith Fuchs</h3>
+                    <h3 class="contact-person_name">David Silberman</h3>
                     <ul class="list list__links">
-                        {# TODO: Add high-res portrait when we have one for meredith. #}
                         <li class="list_item">
-                            <a class="list_link jump-link jump-link__download u-link__disabled">
+                            <a class="list_link jump-link jump-link__download"
+                               href="/static/img/deputy-director-silberman-high-res.jpg">
                                 <span class="jump-link_text">High-res portrait</span>
                             </a>
                         </li>
                         <li class="list_item">
                             <a class="list_link jump-link jump-link__download"
-                               href="/static/img/deputy-director-fuchs-300x400.jpg">
+                               href="/static/img/deputy-director-silberman-low-res.jpg">
                                 <span class="jump-link_text">Low-res portrait</span>
                             </a>
                         </li>
@@ -189,11 +204,7 @@
 
     </section><!-- END .press-section.press-photos-bios -->
 
-    <aside class="block
-                  block__bg
-                  block__flush-sides
-                  block__flush-bottom
-                  ">
+    <aside class="prefooter">
         <div class="content-l content-l__main">
             <section class="content-l_col content-l_col-1-2"
                      data-qa-hook="stay-informed-section">
@@ -203,7 +214,7 @@
                     </span>
                 </h2>
                 <div class="block block__sub block__flush-top">
-                    <p>
+                    <p data-qa-hook="stay-informed-desc">
                         Subscribe to get our press releases by email.
                     </p>
                     {% import 'macros/subscribe.html' as subscribe with context %}

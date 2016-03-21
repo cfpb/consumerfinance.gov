@@ -10,7 +10,7 @@
    See [GHE]/flapjack/Modules-V1/wiki/Contact-Information-(Sidebar)
 
    content:                  An object containing sidebar content.
-   content.heading:          A string containing a sidebar heading.
+   content.header:           A string containing a sidebar header.
    content.body:             A string containing sidebar paragraph content.
 
    contact:                  An object with contact details.
@@ -36,100 +36,36 @@
 
    ========================================================================== #}
 
-{% import 'molecules/contact-email.html' as contact_email %}
-{% import 'molecules/contact-phone.html' as contact_phone %}
-{% import 'molecules/contact-address.html' as contact_address %}
-{% if page %}
-    <div class="o-sidebar-contact-info">
-        <div class="o-sidebar-contact-info_heading">
-            <h2 class="header-slug">
+<div class="o-sidebar-contact-info">
+    <div class="o-sidebar-contact-info_heading">
+        <h2 class="header-slug">
                 <span class="header-slug_inner">
                     Contact Information
                 </span>
-            </h2>
-        </div>
-
-        <div class="o-sidebar-contact-info_column">
-            {% for block in page.contact.contact_info %}
-                {% if block.block_type == 'address' %}
-                    {% set map_details = (block.value.street + ', ' +
-                    block.value.city + ' ' +
-                    block.value.state + ' ' +
-                    block.value.zip_code) | urlencode %}
-                    <figure>
-                        <a href="https://www.google.com/maps/place/{{ map_details }}">
-                            <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2"
-                                 alt="">
-                        </a>
-                    </figure>
-                {% endif %}
-            {% endfor %}
-
-            <h3>{{ page.contact.heading }}</h3>
-
-            <p>{{ page.contact.body |safe }}</p>
-        </div>
-
-        <div class="o-sidebar-contact-info_column">
-            {% if page.contact.contact_info %}
-                {% for block in page.contact.contact_info %}
-                    {{ render_stream_child(block) }}
-                {% endfor %}
-            {% endif %}
-        </div>
+        </h2>
     </div>
-{% else %}
-    {% macro render(content, contact) %}
-        <div class="o-sidebar-contact-info">
-            <div class="o-sidebar-contact-info_heading">
-                <h2 class="header-slug">
-                    <span class="header-slug_inner">
-                        Contact Information
-                    </span>
-                </h2>
-            </div>
 
-            <div class="o-sidebar-contact-info_column">
-                {% set map_details = (contact.address.street + ', ' +
-                contact.address.city + ' ' +
-                contact.address.state + ' ' +
-                contact.address.zip_code) | urlencode %}
-                <figure>
-                    <a href="https://www.google.com/maps/place/{{ map_details }}">
-                        <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ map_details }}&scale=2"
-                             alt="">
-                    </a>
-                </figure>
+    <div class="o-sidebar-contact-info_column">
+        {% if value.header %}
+            <h3>{{ value.header }}</h3>
+        {% endif %}
 
-                <h3>{{ content.heading }}</h3>
+        {{ parse_links(value.contact.body) |safe }}
+    </div>
 
-                <p>{{ content.body }}</p>
-            </div>
-
-            <div class="o-sidebar-contact-info_column">
-                {% if contact.emails %}
-                    {{ contact_email.render(contact.emails) }}
-                {% endif %}
-
-                {% if contact.phones %}
-                    {{ contact_phone.render(contact.phones) }}
-                {% endif %}
-
-                {% if contact.faxes %}
-                    {{ contact_phone.render(contact.faxes, true) }}
-                {% endif %}
-
-                {% if contact.address %}
-                    {{ contact_address.render({
-                            'label':    'Mailing Address',
-                            'title':    contact.address.title,
-                            'street':   contact.address.street,
-                            'city':     contact.address.city,
-                            'state':    contact.address.state,
-                            'zip_code': contact.address.zip_code
-                            }) }}
-                {% endif %}
-            </div>
-        </div>
-    {% endmacro %}
-{% endif %}
+    <div class="o-sidebar-contact-info_column">
+        {% set blockLookup = {
+          email: '',
+          phone: '',
+          address: '',
+        } %}
+        {% if value.contact.contact_info %}
+            {% for block in value.contact.contact_info %}
+                {% do blockLookup.update({ block.block_type: block } ) %}
+            {% endfor %}
+            {{ blockLookup.email }}
+            {{ blockLookup.phone }}
+            {{ blockLookup.address }}
+        {% endif %}
+    </div>
+</div>

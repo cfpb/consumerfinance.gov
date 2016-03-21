@@ -7,11 +7,7 @@ function TheBureauPage() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
-
-  this.hero = element( by.css( '.hero' ) );
-
-  this.bureauHistory = element( by.css( '.bureau-history' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.bureauMission =
   element.all( by.css( '.js-mobile-carousel .media-stack_item' ) );

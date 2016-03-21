@@ -12,95 +12,33 @@
    See [GHE]/flapjack/Modules-V1/wiki/50-50-Image-&-Text
 
    value:                An object with the following options for value.
-   value.heading:          A string containing title of module.
+   value.heading:        A string containing title of module.
    value.image:          A image object containing the URL & alt text for screenreaders
-                            of the image to be placed adjacent to the text.
+                         of the image to be placed adjacent to the text.
    value.is_widescreen:  Boolean if the image should be widescreen ratio.
-                            Will be 4:3 ratio by default.
+                         Will be square ratio by default.
+                         TODO: change is_widescreen to is_square after backend change is made.
    value.body:           A string for the description under the image.
 
    value.is_button:      Boolean if the link should be a button.
-                            If false/blank,
-                            the button will remain a plain link.
+                         If false/blank,
+                         the button will remain a plain link.
    value.links:          A list of links containing URL & Text of the link/button.
 
-   value.has_rule:       Whether there is a bottom gray rule.
-                            Default is false.
-
    ========================================================================== #}
-
-{% if not value %}
-    {% set lipsumText = lipsum(1, false, 10, 25) | safe %}
-    {% do global_dict.update(
-        {
-            'image_text_50_50': {
-                'heading' :    'Image and Text 50-50',
-                'image': {
-                      'upload': {
-                                'url': 'http://placehold.it/1600x900'
-                      },
-                      'alt': 'This is a placeholder image'
-                },
-                'is_widescreen': true,
-                'body': {
-                    'source': lipsumText
-                },
-                'is_button' :   true,
-                'links': [{
-                            'text': 'Placeholder link',
-                            'url':  '#'
-                }]
-            }
-        })
-    %}
-    {% set value = global_dict.image_text_50_50 %}
-    {% set prototype = true %}
+{% from 'molecules/info-unit.html' import info_unit with context %}
+{% if value.image.upload %}
+    {% set photo=image(value.image.upload, 'original') %}
 {% endif %}
-<div class="m-image-text-50-50
-            content-l_col
-            content-l_col-1-2">
-    {# TODO: Change to HR #}
-    {% if value.has_rule %}
-        <div class="a-rule-break"></div>
-    {% endif %}
-
-    <div class="{{ 'm-image-text-50-50_widescreen-container' if value.is_widescreen
-            else 'm-image-text-50-50_container'}}">
-
-        {% if value.image.upload %}
-            {% if prototype %}
-                {% set photo=value.image.upload %}
-            {% else %}
-                {% set photo=image(value.image.upload, 'original') %}
-            {% endif %}
-
-            <img src="{{ photo.url }}"
-                 alt="{{ value.image.alt }}"
-                 class="m-image-text-50-50_image">
-        {% endif %}
-    </div>
-
-    <h2>
-        {{ value.heading }}
-    </h2>
-
-    <p>
-        {{ value.body.source | safe }}
-    </p>
-
-    {% if value.links %}
-        <ul class="list list__links">
-            {% for link in value.links %}
-                <li class="list_item">
-                    <a class="{% if value.is_button %}
-                              btn m-image-text-50-50_btn
-                              {% else %}
-                              jump-link jump-link__underline
-                              {% endif %}" href="{{ link.url }}">
-                        {{ link.text if link.text else 'Learn More' }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
+{{ info_unit( {
+    'image': {
+        'url': photo.url if photo else '/',
+        'alt': value.image.alt,
+        'is_square': value.is_widescreen == false,
+        'is_decorative': value.image.alt == ''
+    },
+    'heading': '<h3>' ~ value.heading ~ '</h3>',
+    'body': value.body,
+    'is_button': value.is_button,
+    'links': value.links
+} ) }}

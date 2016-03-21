@@ -47,7 +47,7 @@ describe( 'The Small Businesses Page', function() {
     .toBe( true );
   } );
 
-  it( 'should have Small Business Info sections', function() {
+  xit( 'should have Small Business Info sections', function() {
     var BASE_URL = 'http://files.consumerfinance.gov/f/';
     var smallBusinessLinks =
     [ BASE_URL + '201305_cfpb_Small-business-guide.pdf',

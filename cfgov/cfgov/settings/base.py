@@ -2,6 +2,8 @@ import os
 from unipath import Path
 from ..util import admin_emails
 
+from django.conf import global_settings
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
@@ -10,6 +12,11 @@ PROJECT_ROOT = REPOSITORY_ROOT.child('cfgov')
 V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
 
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
+
+# Use the django default password hashing
+PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
+
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -20,11 +27,12 @@ INSTALLED_APPS = (
     'wagtail.wagtailusers',
     'wagtail.wagtailimages',
     'wagtail.wagtailembeds',
-    'wagtail.wagtailsearch',
+#    'wagtail.wagtailsearch', conflicts with haystack, will need to revist
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',
 
+    'localflavor',
     'modelcluster',
     'compressor',
     'taggit',
@@ -35,13 +43,30 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'storages',
-    'localflavor',
     'flags',
     'v1',
     'core',
     'sheerlike',
+    'django_extensions',
 )
+
+OPTIONAL_APPS=[
+    {'import':'noticeandcomment','apps':('noticeandcomment','cfpb_common')},
+    {'import':'cfpb_common','apps':('cfpb_common','cfpb_common')},
+    {'import':'jobmanager','apps':('jobmanager','cfpb_common')},
+    {'import':'cal','apps':('cal','cfpb_common')},
+    {'import':'comparisontool','apps':('comparisontool','haystack','cfpb_common')},
+    {'import':'agreements','apps':('agreements','haystack', 'cfpb_common')},
+    {'import':'knowledgebase','apps':('knowledgebase','haystack', 'cfpb_common')},
+    {'import':'selfregistration','apps':('selfregistration','cfpb_common')},
+    {'import':'hud_api_replace','apps':('hud_api_replace','cfpb_common')},
+    {'import':'retirement_api','apps':('retirement_api',)},
+    {'import':'complaint','apps':('complaint','complaintdatabase','complaint_common',)},
+    {'import':'ratechecker','apps':('ratechecker','rest_framework')},
+    {'import':'countylimits','apps':('countylimits','rest_framework')},
+]
 
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
@@ -57,6 +82,7 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailcore.middleware.SiteMiddleware',
 
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'transition_utilities.middleware.RewriteNemoURLsMiddleware',
 )
 
 ROOT_URLCONF = 'cfgov.urls'
@@ -78,7 +104,9 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [PROJECT_ROOT.child('static_built')],
+        'DIRS': [V1_TEMPLATE_ROOT, V1_TEMPLATE_ROOT.child('_includes'),
+            V1_TEMPLATE_ROOT.child('_layouts'),
+            PROJECT_ROOT.child('static_built')],
         'APP_DIRS': False,
         'OPTIONS': {
             'environment': 'v1.environment',
@@ -136,7 +164,8 @@ MEDIA_URL = '/f/'
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'sheerlike.finders.SheerlikeStaticFinder',
+    'transition_utilities.finders.NoPHPFileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
@@ -146,9 +175,14 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
 STATICFILES_DIRS = [
-    PROJECT_ROOT.child('static_built'),
-    ('legacy', PROJECT_ROOT.child('v1', 'static-legacy')),
+    PROJECT_ROOT.child('static_built')
 ]
+
+NEMO_PATH = Path(os.environ.get('NEMO_PATH') or
+        Path(REPOSITORY_ROOT, '../cfpb_nemo'))
+
+if NEMO_PATH.exists():
+    STATICFILES_DIRS.append(('nemo', NEMO_PATH))
 
 ALLOWED_HOSTS = ['*']
 
@@ -158,7 +192,6 @@ WAGTAIL_SITE_NAME = 'v1'
 WAGTAILIMAGES_IMAGE_MODEL = 'v1.CFGOVImage'
 TAGGIT_CASE_INSENSITIVE = True
 
-SHEER_SITES = [V1_TEMPLATE_ROOT]
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')
 
@@ -234,6 +267,11 @@ SHEER_PROCESSORS = \
             "url": "$WORDPRESS/api/get_posts/?post_type=faq",
             "processor": "processors.wordpress_faq",
             "mappings": MAPPINGS.child("faq.json")
+        },
+        "report": {
+            "url": "$WORDPRESS/api/get_posts/?post_type=cfpb_report",
+            "processor": "processors.wordpress_cfpb_report",
+            "mappings": MAPPINGS.child("report.json")
         }
     }
 
@@ -244,6 +282,10 @@ SHEER_ELASTICSEARCH_SETTINGS = \
                 "analyzer": {
                     "my_edge_ngram_analyzer": {
                         "tokenizer": "my_edge_ngram_tokenizer"
+                    },
+                    "tag_analyzer": {
+                       "tokenizer": "keyword",
+                       "filter": "lowercase"
                     }
                 },
                 "tokenizer": {
@@ -265,6 +307,39 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 # PDFReactor
 PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
 
+#LEGACY APPS
+
+STATIC_VERSION = ''
+LEGACY_APP_URLS={'jobmanager': True,
+                 'cal':True,
+                 'comparisontool':True,
+                 'agreements':True,
+                 'knowledgebase':True,
+                 'selfregistration':True,
+                 'hud_api_replace':True,
+                 'retirement_api':True,
+                 'complaint':True,
+                 'complaintdatabase':True,
+                 'ratechecker':True,
+                 'countylimits':True,
+                 'noticeandcomment':True}
+
+# DJANGO HUD API
+GOOGLE_MAPS_API_PRIVATE_KEY = os.environ.get('GOOGLE_MAPS_API_PRIVATE_KEY')
+GOOGLE_MAPS_API_CLIENT_ID = os.environ.get('GOOGLE_MAPS_API_CLIENT_ID')
+DJANGO_HUD_NOTIFY_EMAILS = os.environ.get('DJANGO_HUD_NOTIFY_EMAILS')
+# in seconds, 2592000 == 30 days. Google allows no more than a month of caching
+DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': SHEER_ELASTICSEARCH_SERVER,
+        'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX', SHEER_ELASTICSEARCH_INDEX+'_haystack'),
+    },
+}
+
 # S3 Configuration
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
@@ -277,6 +352,28 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
 
     MEDIA_URL = os.environ.get('AWS_S3_URL') + '/f/'
 
+# Govdelivery
+
+GOVDELIVERY_USER = os.environ.get('GOVDELIVERY_USER')
+GOVDELIVERY_PASSWORD = os.environ.get('GOVDELIVERY_PASSWORD')
+GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
+
+# LOAD OPTIONAL APPS
+# code from https://gist.github.com/msabramo/945406
+
+for app in OPTIONAL_APPS:
+    if app.get("condition", True):
+	try:
+	    __import__(app["import"])
+	except ImportError:
+	    pass
+	else:
+	    for name in app.get("apps",()):
+		if name not in INSTALLED_APPS:
+		    INSTALLED_APPS+=(name,)
+	    MIDDLEWARE_CLASSES += app.get("middleware", ())
+	    if 'TEMPLATE_CONTEXT_PROCESSORS' in locals():
+		TEMPLATE_CONTEXT_PROCESSORS += app.get("context_processors", ())
 WAGTAIL_ENABLE_UPDATE_CHECK = False  # Removes wagtail version update check banner from admin page.
 
 # Email
@@ -303,3 +400,14 @@ LOGIN_FAIL_TIME_PERIOD = os.environ.get('LOGIN_FAIL_TIME_PERIOD', 120 * 60)
 # number of failed attempts
 LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
 LOGIN_REDIRECT_URL='/admin/'
+
+
+SHEER_SITES = {
+        'refresh-legacy': V1_TEMPLATE_ROOT,
+        'owning-a-home':
+            Path(os.environ.get('OAH_SHEER_PATH') or
+            Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
+        'fin-ed-resources':
+            Path(os.environ.get('FIN_ED_SHEER_PATH') or
+            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist'))
+}

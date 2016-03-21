@@ -13,7 +13,7 @@ def isRequired(field_name):
 
 class HalfWidthLinkBlob(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(blank=True,  required=False)
+    body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:
@@ -56,6 +56,7 @@ class TextIntroduction(blocks.StructBlock):
     class Meta:
         icon = 'title'
         template = '_includes/molecules/text-introduction.html'
+        classname = 'block__flush-top'
 
 
 class Hero(blocks.StructBlock):
@@ -72,6 +73,7 @@ class Hero(blocks.StructBlock):
     class Meta:
         icon = 'image'
         template = '_includes/molecules/hero.html'
+        classname = 'block__flush'
 
 
 class FormFieldWithButton(blocks.StructBlock):
@@ -128,10 +130,18 @@ class FeaturedContent(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink(required=False),
                              label='Additional Links')
 
+    video = blocks.StructBlock([
+        ('id', blocks.CharBlock(required=False, help_text='e.g In \"https://www.youtube.com/watch?v=en0Iq8II4fA\", the ID is everything after the \"?v=\"')),
+        ('url', blocks.CharBlock(default='/', required=False)),
+        ('height', blocks.CharBlock(default='320', required=False)),
+        ('width', blocks.CharBlock(default='568', required=False)),
+    ])
+
     class Meta:
         template = '_includes/molecules/featured-content.html'
         icon = 'doc-full-inverse'
         label = 'Featured Content'
+        classname = 'block__flush'
 
 
 class CallToAction(blocks.StructBlock):
@@ -186,6 +196,7 @@ class ContactPhone(blocks.StructBlock):
 
 class RelatedLinks(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink())
 
     class Meta:
@@ -227,3 +238,31 @@ class Expandable(BaseExpandable):
             ('address', ContactAddress()),
         ], blank=True
     )
+
+
+class RelatedMetadata(blocks.StructBlock):
+    slug = blocks.CharBlock(max_length=100)
+    content = blocks.StreamBlock([
+        ('text', blocks.StructBlock([
+            ('heading', blocks.CharBlock(max_length=100)),
+            ('blob', blocks.RichTextBlock())
+        ], icon='pilcrow')),
+        ('list', blocks.StructBlock([
+            ('heading', blocks.CharBlock(max_length=100)),
+            ('links', blocks.ListBlock(atoms.Hyperlink())),
+        ], icon='list-ul')),
+        ('date', blocks.StructBlock([
+            ('heading', blocks.CharBlock(max_length=100)),
+            ('date', blocks.DateBlock(required=False))
+        ], icon='date')),
+        ('topics', blocks.StructBlock([
+            ('heading', blocks.CharBlock(max_length=100, default='Topics')),
+            ('show_topics', blocks.BooleanBlock(default=True, required=False))
+        ], icon='tag')),
+    ])
+    half_width = blocks.BooleanBlock(required=False, default=False)
+
+    class Meta:
+        icon = 'grip'
+        template = '_includes/molecules/related-metadata.html'
+        label = 'Related Metadata'

@@ -1,8 +1,5 @@
 'use strict';
 
-// Required polyfills for IE9.
-if ( !Modernizr.classlist ) { require( '../modules/polyfill/class-list' ); } // eslint-disable-line no-undef, global-require, no-inline-comments, max-len
-
 // Required modules.
 var arrayHelpers = require( '../modules/util/array-helpers' );
 var typeCheckers = require( '../modules/util/type-checkers' );
@@ -62,10 +59,16 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _placeholder = _dom.getAttribute( 'placeholder' );
     _filtered = _optionData = _sanitizeList( _options );
 
+    for ( var i = 0, l = _filtered.length; i < l; i++ ) {
+      if ( _filtered[i].checked ) {
+        _selections.push( _filtered[i] );
+      }
+    }
+
     if ( _optionData.length > 0 ) {
       _populateMarkup();
       _bindEvents();
-      _dom.parentNode.removeChild(_dom);
+      _dom.parentNode.removeChild( _dom );
     }
 
     return this;
@@ -77,9 +80,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function expand() {
     _container.classList.add( 'active' );
-    _fieldset.setAttribute( 'visibility', 'visible' );
+    _fieldset.classList.remove( 'u-invisible' );
     _fieldset.setAttribute( 'aria-hidden', false );
-
     return this;
   }
 
@@ -89,10 +91,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function collapse() {
     _container.classList.remove( 'active' );
-    _fieldset.setAttribute( 'visibility', 'hidden' );
+    _fieldset.classList.add( 'u-invisible' );
     _fieldset.setAttribute( 'aria-hidden', true );
     _index = -1;
-
     return this;
   }
 
@@ -107,10 +108,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
     for ( var i = 0, len = list.length; i < len; i++ ) {
       item = list[i];
-
       cleaned.push( {
-        value: item.value,
-        text:  item.text
+        value:   item.value,
+        text:    item.text,
+        checked: item.defaultSelected
       } );
     }
 
@@ -133,6 +134,21 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       inside:    _container
     } );
 
+    _selections.forEach( function( option ) {
+      var li = _create( 'li', {
+        'data-option': option.value
+      } );
+
+      _create( 'label', {
+        'for':         option.value,
+        'textContent': option.text,
+        'className':   'cf-multi-select_label',
+        'inside':      li
+      } );
+
+      _choices.appendChild( li );
+    } );
+
     _header = _create( 'header', {
       className: 'cf-multi-select_header'
     } );
@@ -141,12 +157,13 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       className:   'cf-multi-select_search',
       type:        'text',
       placeholder: _placeholder || 'Choose up to five',
-      inside:      _header
+      inside:      _header,
+      id:          _name
     } );
 
     _fieldset = _create( 'fieldset', {
-      className:  'cf-multi-select_fieldset',
-      visibility: 'hidden'
+      className:  'cf-multi-select_fieldset u-invisible',
+      'aria-hidden': 'true'
     } );
 
     _list = _create( 'ul', {
@@ -159,14 +176,19 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         'data-option': option.value
       } );
 
-      _create( 'input', {
+      var inputData = {
         'id':        option.value,
-        'value':     option.value,
-        'type':      'checkbox',
-        'name':      _name,
-        'class':     'cf-input cf-multi-select_checkbox',
-        'inside':    li
-      } );
+        // Type must come before value or IE fails
+        'type':    'checkbox',
+        'value':   option.value,
+        'name':    _name,
+        'class':   'cf-input cf-multi-select_checkbox',
+        'inside':  li
+      }
+      if ( option.checked ) {
+        inputData.checked = true;
+      }
+      _create( 'input', inputData );
 
       _create( 'label', {
         'for':         option.value,
@@ -249,7 +271,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _index = -1;
     _isBlurSkipped = false;
 
-    if ( _fieldset.getAttribute( 'visibility' ) === 'visible' ) {
+    if ( _fieldset.getAttribute( 'aria-hidden' ) === 'false' ) {
       _search.focus();
     }
   }
@@ -334,19 +356,21 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         expand();
       },
       blur: function() {
-        if ( !_isBlurSkipped ) {
+        if ( !_isBlurSkipped &&
+              _fieldset.getAttribute( 'aria-hidden' ) === 'false' ) {
           collapse();
         }
       },
       mousedown: function() {
-        if ( _fieldset.getAttribute( 'visibility' ) === 'hidden' ) {
+        if ( _fieldset.getAttribute( 'aria-hidden' ) === 'true' ) {
           expand();
         }
       },
       keydown: function( event ) {
         var key = event.keyCode;
 
-        if ( _fieldset.getAttribute( 'visibility' ) === 'hidden' ) {
+        if ( _fieldset.getAttribute( 'aria-hidden' ) === 'true' &&
+             key != KEY_TAB ) {
           expand();
         }
 
@@ -360,7 +384,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           _highlight( DIR_NEXT );
         } else if ( key === KEY_TAB &&
                     !event.shiftKey &&
-                    _fieldset.getAttribute( 'visibility' ) === 'visible' ) {
+                    _fieldset.getAttribute( 'aria-hidden' ) === 'false' ) {
           collapse();
         }
       }

@@ -92,24 +92,22 @@
     - cfgov-molecules
 */
 
-.js .m-global-search {
+.m-global-search {
+    // Hide search unless we have JS or it's a desktop-ish size
+    display: none;
+
+    .js & {
+        display: block;
+    }
 
     &_trigger {
-        height: unit( 45px / 18px, em );
-        min-width: unit( 45px / 18px, em );
-        padding-left: unit( @grid_gutter-width / 2 / 18px, em );
-        padding-right: unit( @grid_gutter-width / 2 / 18px, em );
-
-        // TODO: Check that float doesn't spill outside molecule.
-        float: right;
-        position: relative;
-        z-index: 20;
-
-        background: @white;
+        // Resets
+        background-color: transparent;
         border: none;
-        color: @black;
-        font-size: unit( 18px / @base-font-size-px, em );
-        pointer-events: auto;
+        display: none;
+
+        box-sizing: border-box;
+        border-left: 1px solid transparent;
 
         &:focus {
             outline: 1px dotted @black;
@@ -117,23 +115,40 @@
 
         &:before {
             .cf-icon();
+
             content: @cf-icon-search;
-            font-size: unit( 20px / 18px, em );
+        }
+
+        // Only show trigger if we have JS
+        .js & {
+            display: block;
         }
     }
 
     &_content {
-        padding-top: unit( @grid_gutter-width / 4 / @base-font-size-px, em );
+        position: absolute;
+        left: 0;
 
-        transform: translateX( 100% );
-        transition: transform 0.25s ease-out;
-
-        &[aria-expanded="true"] {
-            display: block;
-
-            transform: translateX( 0 );
+        &-form {
+            width: 100%;
         }
 
+        // Only add transforms if we have JS
+        .js & {
+            &.u-invisible {
+                overflow-x: hidden;
+            }
+
+            &-form {
+                position: absolute;
+            }
+        }
+
+        .js &[aria-expanded="true"] &-form {
+            display: block;
+        }
+
+        // Hide suggestions outside of tablet sizes
         &-suggestions {
             display: none;
 
@@ -144,80 +159,71 @@
         }
     }
 
-    // Tablet size and below.
+    // Up to desktops
     .respond-to-max( @bp-sm-max, {
-        // Absolute position when there is a flyout at mobile/tablet sizes.
-        // Make the height large so that the overflowing flyout can be hidden,
-        // but not get cropped when it's visible.
-        height: 500px;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        overflow-x: hidden;
-        // TODO: This will be ignored in IE8-10,
-        //       leading to the overflow preventing clicks on the links.
-        pointer-events: none;
+        &_trigger{
+            padding-top: unit( @grid_gutter-width / 2 / 16px, em );
+            padding-bottom: unit( @grid_gutter-width / 2 / 16px, em );
+            height: unit( 60px / @base-font-size-px, em );
+            min-width: unit( 60px / @base-font-size-px, em );
 
-        &_trigger {
-            height: unit( 60px / 18px, em );
-            min-width: unit( 60px / 18px, em );
-            padding-top: unit( @grid_gutter-width / 2 / 18px, em );
-            padding-bottom: unit( @grid_gutter-width / 2 / 18px, em );
-            display: block;
+            &:before {
+                font-size: unit( 20px / 16px, em );
+            }
 
             &[aria-expanded="true"] {
                 background: @gray-10;
                 border-left: 1px solid @gray-40;
-                color: @black;
 
+                // Show "X" icon when flyout is open
                 &:before {
-                    .cf-icon();
                     content: @cf-icon-delete;
                 }
             }
         }
 
-        &_content {
-            box-sizing: border-box;
+         &_content {
             width: 100%;
 
-            position: absolute;
-            left: 0;
-            // Offset for height of trigger button.
-            top: 60px;
-            z-index: 10;
-
-            background-color: @gray-5;
-            border-top: 1px solid @gray-40;
-            border-bottom: 1px solid @gray-40;
-            pointer-events: auto;
-
             &-form {
-                padding-top: @margin__em;
-                padding-left: @margin_half__em;
-                padding-right: @margin_half__em;
-                padding-bottom: @margin_half__em;
-            }
+                .u-drop-shadow-after();
 
-            .u-drop-shadow-after();
+                box-sizing: border-box;
+                width: 100%;
+                padding: @margin__em
+                         @margin_half__em
+                         @margin_half__em;
+
+                left: 0;
+                z-index: 10;
+
+                background-color: @gray-5;
+                border-top: 1px solid @gray-40;
+                border-bottom: 1px solid @gray-40;
+            }
         }
     } );
 
-    // Tablet size and above.
-    .respond-to-min( @bp-sm-min {
-        &_trigger {
-            // Show "Search" text in trigger at tablet sizes.
-            &-label:before {
-                .webfont-medium();
-                content: 'Search';
-            }
+    // Tablet and above.
+    .respond-to-min( @bp-sm-min, {
+        // Add "Search" text in trigger
+        &_trigger-label:before {
+            .webfont-medium();
+
+            content: 'Search';
         }
     } );
 
     // Tablet size only.
-    .respond-to-range( @bp-sm-min, @bp-med-min, {
-        // Show "Close" text in trigger at tablet sizes.
+    .respond-to-range( @bp-sm-min, @bp-sm-max, {
         &_trigger {
+            // Min-width sets open/close states to same size
+            min-width: 110px;
+
+            padding-left: unit( @grid_gutter-width / 2 / 18px, em );
+            padding-right: unit( @grid_gutter-width / 2 / 18px, em );
+
+            // Show "Close" text when flyout is open
             &[aria-expanded="true"] {
                 .m-global-search_trigger-label:before {
                     content: 'Close';
@@ -231,44 +237,39 @@
         }
     } );
 
-    // Desktop size.
-    .respond-to-min( @bp-med-min {
-      overflow: hidden;
+    // Desktop and above
+    .respond-to-min( @bp-med-min, {
+        // Always show on desktop, even without JS
+        display: block;
+        // Center on the call to action (CTA) divider to right of search
+        padding-top: 6px;
+        padding-bottom: 6px;
+        // Match CTA offset from divider
+        padding-right: @margin_half__em;
 
-      // Match height of Search button at desktop size.
-      // Used to make overflow cover one line only.
-      // 1px offset is to expand overflow area by 1px
-      // so that the focus outline is not cropped.
-      max-height: 47px;
-      position: relative;
-      left: -1px;
-      top: -1px;
+        overflow: hidden;
 
-      &_trigger,
-      &_trigger:focus,
-       {
-        position: relative;
-        top: 1px;
-      }
-      &_content {
-        position: relative;
-        left: 1px;
-      }
+        &_trigger {
+            // Match height of input with button
+            padding: 7px 0;
+        }
 
+        .js & {
+            position: relative;
 
-      &_trigger {
-          &[aria-expanded="true"] {
-              display: none;
-          }
-      }
+            &_trigger {
+                float: right;
+            }
 
-      &_content {
-          padding-right: @margin_half__em;
-      }
-
+            &_content {
+                right: @margin_half__em;
+                width: auto;
+            }
+        }
     } );
 
     // TODO: Move these styles to cf-enhancements/cf-forms.
+    // Look into removing grid styles altogether
     // Mobile size.
     .respond-to-min( 480px, {
         &_content-form {
@@ -287,21 +288,13 @@
             }
         }
     } );
-}
 
-.m-global-search {
     // Tab trigger is used to capture press of the tab key so that
     // global search can be collapsed when it hits this element.
     &_tab-trigger {
         position: absolute;
         top: -9999px;
         left: -9999px;
-    }
-}
-
-.no-js .m-global-search {
-    &_trigger {
-        display: none;
     }
 }
 

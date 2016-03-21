@@ -2,6 +2,7 @@
 
 var fs = require( 'fs' );
 var paths = require( '../config/environment' ).paths;
+var globAll = require( 'glob-all' );
 
 module.exports = {
   pkg:    JSON.parse( fs.readFileSync( 'bower.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
@@ -50,7 +51,10 @@ module.exports = {
     src:      '/main.less',
     dest:     paths.processed + '/css',
     settings: {
-      paths:    [ paths.lib ],
+      paths:  globAll.sync( [
+        paths.modules + '/capital-framework/**',
+        paths.lib
+      ] ),
       compress: true
     }
   },
@@ -60,7 +64,7 @@ module.exports = {
   },
   copy: {
     icons: {
-      src:  paths.lib + '/cf-icons/src/fonts/*',
+      src:  paths.modules + '/capital-framework/src/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
     },
     vendorfonts: {
@@ -77,9 +81,7 @@ module.exports = {
     },
     vendorimg: {
       src: [
-        paths.lib + '/slick-carousel/slick/ajax-loader.gif',
-        paths.lib + '/chosen/chosen-sprite.png',
-        paths.lib + '/chosen/chosen-sprite@2x.png'
+        paths.lib + '/slick-carousel/slick/ajax-loader.gif'
       ],
       dest: paths.processed + '/img'
     },

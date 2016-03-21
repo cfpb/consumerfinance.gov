@@ -25,18 +25,39 @@ from .filters import filter_dsl_from_multidict
 from .middleware import get_request
 
 
-ALLOWED_SEARCH_PARAMS = ('doc_type',
-                         'analyze_wildcard', 'analyzer', 'default_operator', 'df',
-                         'explain', 'fields', 'indices_boost', 'lenient',
-                         'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
-                         'lowercase_expanded_terms', 'from_', 'preference', 'q', 'routing',
-                         'scroll', 'search_type', 'size', 'sort', 'source', 'stats',
-                         'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text', 'timeout',
-                         'version')
+ALLOWED_SEARCH_PARAMS = (
+    'doc_type',
+    'analyze_wildcard',
+    'analyzer',
+    'default_operator',
+    'df',
+    'explain',
+    'fields',
+    'indices_boost',
+    'lenient',
+    'allow_no_indices',
+    'expand_wildcards',
+    'ignore_unavailable',
+    'lowercase_expanded_terms',
+    'from_',
+    'preference',
+    'q',
+    'routing',
+    'scroll',
+    'search_type',
+    'size',
+    'sort',
+    'source',
+    'stats',
+    'suggest_field',
+    'suggest_mode',
+    'suggest_size',
+    'suggest_text',
+    'timeout',
+    'version')
 
 
-FakeQuery = namedtuple('FakeQuery',['es','es_index'])
-
+FakeQuery = namedtuple('FakeQuery', ['es', 'es_index'])
 
 
 def mapping_for_type(typename, es, es_index):
@@ -52,16 +73,22 @@ def field_or_source_value(fieldname, hit_dict):
         return hit_dict['_source'][fieldname]
 
 
-def datatype_for_fieldname_in_mapping(fieldname, hit_type, mapping_dict, es, es_index):
+def datatype_for_fieldname_in_mapping(
+        fieldname,
+        hit_type,
+        mapping_dict,
+        es,
+        es_index):
 
     try:
-        return mapping_dict[es_index]["mappings"][hit_type]["properties"][fieldname]["type"]
+        return mapping_dict[es_index]["mappings"][
+            hit_type]["properties"][fieldname]["type"]
     except KeyError:
         return None
 
 
 def coerced_value(value, datatype):
-    if datatype == None or value == None:
+    if datatype is None or value is None:
         return value
 
     TYPE_MAP = {'string': unicode,
@@ -73,8 +100,8 @@ def coerced_value(value, datatype):
 
     coercer = TYPE_MAP[datatype]
 
-    if type(value) == list:
-        if value and type(value[0]) == list:
+    if isinstance(value, list):
+        if value and isinstance(value[0], list):
             return [[coercer(y) for y in v] for v in value]
         else:
             return [coercer(v) for v in value] or ""
@@ -104,8 +131,10 @@ class QueryHit(object):
             pattern_name = sheerlike.PERMALINK_REGISTRY[self.type]
             return reverse(pattern_name, kwargs=dict(doc_id=self._id))
         else:
-            raise NotImplementedError("Please use django's reverse url system,"
-                                       "or register a permalink for %s" % self.type)
+            raise NotImplementedError(
+                "Please use django's reverse url system,"
+                "or register a permalink for %s" %
+                self.type)
 
     def __getattr__(self, attrname):
         value = field_or_source_value(attrname, self.hit_dict)
@@ -143,12 +172,22 @@ class QueryResults(object):
     def __iter__(self):
         if 'hits' in self.result_dict and 'hits' in self.result_dict['hits']:
             for hit in self.result_dict['hits']['hits']:
-                query_hit =  QueryHit(hit, self.query.es, self.query.es_index)
+                query_hit = QueryHit(hit, self.query.es, self.query.es_index)
                 yield query_hit
+
+    def __getitem__(self, index):
+        if 'hits' in self.result_dict and 'hits' in self.result_dict['hits']:
+            for i, hit in enumerate(self.result_dict['hits']['hits']):
+                if i == index:
+                    return QueryHit(hit, self.query.es, self.query.es_index)
+
+    def __len__(self):
+        if 'hits' in self.result_dict and 'hits' in self.result_dict['hits']:
+            return len(self.result_dict['hits']['hits'])
 
     def aggregations(self, fieldname):
         if "aggregations" in self.result_dict and \
-            fieldname in self.result_dict['aggregations']:
+                fieldname in self.result_dict['aggregations']:
             return self.result_dict['aggregations'][fieldname]['buckets']
 
     def json_compatible(self):
@@ -177,7 +216,8 @@ class QueryResults(object):
 
         encoded = urlencode(args_dict, doseq=True)
         if encoded:
-            url = "".join([request.path, "?", urlencode(args_dict, doseq=True)])
+            url = "".join(
+                [request.path, "?", urlencode(args_dict, doseq=True)])
             return url
         else:
             return request.path
@@ -185,7 +225,7 @@ class QueryResults(object):
 
 class Query(object):
 
-    def __init__(self, filename,es, es_index, json_safe=False):
+    def __init__(self, filename, es, es_index, json_safe=False):
         # TODO: make the no filename case work
 
         self.es_index = es_index
@@ -194,7 +234,24 @@ class Query(object):
         self.__results = None
         self.json_safe = json_safe
 
-    def search(self, aggregations=None, use_url_arguments=True, size=10, **kwargs):
+    def get_tag_related_documents(self, tags, size=0):
+        query_file = json.loads(file(self.filename).read())
+        doc_type = query_file['query']['doc_type']
+        query_dict = {'query': {'bool': {'should': []}}}
+        if size:
+            query_dict['size'] = size
+        for tag in tags:
+            query_dict['query']['bool']['should'].append({'match': {'tags.lower': tag}})
+        response = self.es.search(index=self.es_index, doc_type=doc_type,
+                                  body=query_dict, analyzer='tag_analyzer')
+        return QueryResults(self, response)
+
+    def search(
+            self,
+            aggregations=None,
+            use_url_arguments=True,
+            size=10,
+            **kwargs):
         query_file = json.loads(file(self.filename).read())
         query_dict = query_file['query']
 
@@ -203,48 +260,49 @@ class Query(object):
         arguments and arguments that can be placed directly into the query body.
         The dict constructor syntax supports python 2.6, 2.7, and 3.x
         If python 2.7, use dict comprehension and iteritems()
-        With python 3, use dict comprehension and items() (items() replaces 
+        With python 3, use dict comprehension and items() (items() replaces
         iteritems and is just as fast)
         '''
-        filter_args = dict((key, value) for (key, value) in kwargs.items() 
-            if key.startswith('filter_'))
-        non_filter_args = dict((key, value) for (key, value) in kwargs.items() 
-            if not key.startswith('filter_'))
+        filter_args = dict((key, value) for (key, value) in kwargs.items()
+                           if key.startswith('filter_'))
+        non_filter_args = dict((key, value) for (key, value) in kwargs.items()
+                               if not key.startswith('filter_'))
         query_dict.update(non_filter_args)
         pagenum = 1
 
-        request = get_request()
         # Add in filters from the template.
         new_multidict = MultiDict()
         # First add the url arguments if requested
         if use_url_arguments:
+            request = get_request()
             new_multidict = MultiDict(request.GET.copy())
+            args_flat = request.GET.copy()
         # Next add the arguments from the search() function used in the
         # template
         for key, value in filter_args.items():
             new_multidict.update({key: value})
 
         filters = filter_dsl_from_multidict(new_multidict)
-        args_flat = request.GET.copy()
         query_body = {}
 
         if aggregations:
             aggs_dsl = {}
-            if type(aggregations) is str:
-                aggregations = [aggregations] # so we can treat it as a list
+            if isinstance(aggregations, str):
+                aggregations = [aggregations]  # so we can treat it as a list
             for fieldname in aggregations:
-                aggs_dsl[fieldname] = {'terms': 
-                    {'field': fieldname, 'size': 10000}}
+                aggs_dsl[fieldname] = {'terms':
+                                       {'field': fieldname, 'size': 10000}}
             query_body['aggs'] = aggs_dsl
         else:
-            if 'page' in args_flat:
-                args_flat['from_'] = int(
-                    query_dict.get('size', '10')) * (int(args_flat['page']) - 1)
-                pagenum = int(args_flat['page'])
+            if use_url_arguments:
+                if 'page' in args_flat:
+                    args_flat['from_'] = int(query_dict.get(
+                        'size', '10')) * (int(args_flat['page']) - 1)
+                    pagenum = int(args_flat['page'])
 
-            args_flat_filtered = dict(
-                [(k, v) for k, v in args_flat.items() if v])
-            query_dict.update(args_flat_filtered)
+                args_flat_filtered = dict(
+                    [(k, v) for k, v in args_flat.items() if v])
+                query_dict.update(args_flat_filtered)
             query_body['query'] = {'filtered': {'filter': {}}}
             if filters:
                 query_body['query']['filtered']['filter'][
@@ -256,26 +314,28 @@ class Query(object):
                 for json_filter in query_file['filters']:
                     query_body['query']['filtered'][
                         'filter']['and'].append(json_filter)
-        final_query_dict = dict((k, v)
-                                for (k, v) in query_dict.items() if k in ALLOWED_SEARCH_PARAMS)
+        final_query_dict = dict(
+            (k, v) for (
+                k, v) in query_dict.items() if k in ALLOWED_SEARCH_PARAMS)
         final_query_dict['index'] = self.es_index
         final_query_dict['body'] = query_body
         response = self.es.search(**final_query_dict)
         response['query'] = query_dict
-        return QueryResults(self,response, pagenum)
+        return QueryResults(self, response, pagenum)
 
     def possible_values_for(self, field, **kwargs):
         results = self.search(aggregations=[field], **kwargs)
         return results.aggregations(field)
 
 
-
 class QueryFinder(object):
 
     def __init__(self):
-        self.es = elasticsearch.Elasticsearch(settings.SHEER_ELASTICSEARCH_SERVER)
+        self.es = elasticsearch.Elasticsearch(
+            settings.SHEER_ELASTICSEARCH_SERVER)
         self.es_index = settings.SHEER_ELASTICSEARCH_INDEX
-        self.searchpath = [Path(site).child('_queries') for site in settings.SHEER_SITES]
+        self.searchpath = [Path(p).child('_queries')
+                           for s, p in settings.SHEER_SITES.items()]
 
     def __getattr__(self, name):
         for dir in self.searchpath:

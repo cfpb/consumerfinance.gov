@@ -1,6 +1,6 @@
 'use strict';
 
-var _getQAElement = require( '../util/QAelement' ).get;
+var _getQAElement = require( '../util/qa-element' ).get;
 
 function DoingBusinessWithUs() {
 
@@ -10,7 +10,7 @@ function DoingBusinessWithUs() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.mainTitle = _getQAElement( 'main-title' );
 
@@ -29,17 +29,15 @@ function DoingBusinessWithUs() {
 
   this.businessStepTitles = this.businessSteps.all( by.css( 'h3' ) );
 
-  this.businessStepDescriptions =
-  this.businessSteps.all( by.css( '.short-desc' ) );
+  this.businessStepDescriptions = _getQAElement( 'business-step-desc', true );
 
   this.businessStepLinks = this.businessSteps.all( by.css( 'a' ) );
 
-  this.moreInfoSection = _getQAElement( 'more-info' );
+  this.moreInfoSection = _getQAElement( 'more-info', true );
 
   this.moreInfoSectionTitles = this.moreInfoSection.all( by.css( 'h2' ) );
 
-  this.moreInfoSectionDescriptions =
-  this.moreInfoSection.all( by.css( '.short-desc' ) );
+  this.moreInfoSectionDescriptions = _getQAElement( 'more-info-desc', true );
 
   this.moreInfoSectionLinks = this.moreInfoSection.all( by.css( 'a' ) );
 

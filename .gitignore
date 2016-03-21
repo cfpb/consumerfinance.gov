@@ -89,6 +89,7 @@ cfgov/f/
 images/
 documents/
 original_images/
+collectstatic/*
 
 # Unit test / coverage reports
 #################

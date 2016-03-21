@@ -1,7 +1,6 @@
 'use strict';
 
-var _assign = require( 'lodash/assign' );
-var _getQAelement = require( '../util/QAelement' ).get;
+var _getQAelement = require( '../util/qa-element' ).get;
 var careersSocialSection =
 require( '../shared_objects/careers-social-section' );
 var relatedLinksSection = require( '../shared_objects/related-links-section' );
@@ -9,7 +8,7 @@ var relatedLinksSection = require( '../shared_objects/related-links-section' );
 
 function CurrentOpenings() {
 
-  _assign( this, careersSocialSection, relatedLinksSection );
+  Object.assign( this, careersSocialSection, relatedLinksSection );
 
   this.get = function() {
     browser.get( '/careers/current-openings/' );
@@ -17,7 +16,7 @@ function CurrentOpenings() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.sideNav = element( by.css( '.nav-secondary' ) );
+  this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.introSection = _getQAelement( 'intro-section' );
 
@@ -32,8 +31,7 @@ function CurrentOpenings() {
 
   this.infoSectionTitles = this.infoSection.all( by.css( 'h2' ) );
 
-  this.infoSectionDescriptions =
-  this.infoSection.all( by.css( '.short-desc' ) );
+  this.infoSectionDescriptions = _getQAelement( 'info-section-desc', true );
 
   this.infoSectionLinks = this.infoSection.all( by.css( 'a' ) );
 
