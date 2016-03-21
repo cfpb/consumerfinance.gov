@@ -37,7 +37,9 @@
         'testimony': 'cf-icon-double-quote',
       }
     %}
-    {% set icon = icons[category | lower] or icons['blog'] %}
+    {% set icon = icons[category | lower] %}
+    {% if icon %}
     <span class="cf-icon {{ icon }}
                  {{ additional_classes or '' }}"></span>
+    {% endif %}
 {% endmacro %}
