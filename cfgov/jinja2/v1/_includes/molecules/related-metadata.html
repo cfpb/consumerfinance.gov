@@ -115,7 +115,7 @@
 {% macro _text(text) %}
 
 <p class="u-mb0">
-    {{ parse_links(text.blob) |safe }}
+    {{ parse_links(text.blob) | safe }}
 </p>
 {% endmacro %}
 
@@ -129,7 +129,7 @@
 
    Creates related metadata related topics markup
 
-   value: An object holding the tag information (Unused)
+   list: An object holding the tag information (Unused)
 
    ========================================================================== #}
 

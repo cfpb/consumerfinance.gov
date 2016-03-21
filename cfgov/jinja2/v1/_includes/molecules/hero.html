@@ -4,6 +4,8 @@
 
    ==========================================================================
 
+   See [GHE]/flapjack/Modules-V1/wiki/Heros
+
    Description:
 
    Create a hero molecule.
@@ -13,21 +15,22 @@
    value.heading:   A string containing title of module.
 
    value.body:      A string containing the content to display below the
-                       heading (typically a paragraph).
+                    heading (typically a paragraph).
 
    value.image:     A image object containing the URL of the image to be placed
-                       adjacent to the text.
+                    adjacent to the text.
 
 
    value.background_color:
-                       A string containing the color code (in any format) to
-                       set as the hero background color.
+                    A string containing the color code (in any format) to
+                    set as the hero background color.
 
-   value.links:      A list of links containing URL & Text of the link/button.
-   value.is_button:  A boolean to change the CTA link to a button.
+   value.links:     A tuple of items to create a list of links, containing:
 
+                    url:  A string for the URL of the link.
+                    text: A string for the text of the link.
 
-   See [GHE]/flapjack/Modules-V1/wiki/Heros
+   value.is_button: A boolean to change the CTA link to a button.
 
    ========================================================================== #}
 
@@ -38,11 +41,11 @@
     <div class="wrapper hero_wrapper">
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
-            <div class="hero_subhead">{{ parse_links(value.body) |safe }}</div>
+            <div class="hero_subhead">{{ parse_links(value.body) | safe }}</div>
             {% for link in value.links %}
                 <a href="{{ link.url }}"
                    class="hero_cta
-                   {{ 'btn' if value.is_button else '' }}">
+                          {{ 'btn' if value.is_button else '' }}">
                     {{ link.text }}
                 </a>
             {% endfor %}
@@ -55,5 +58,3 @@
         {% endif %}
     </div>
 </section>
-
-

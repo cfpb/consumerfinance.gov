@@ -27,7 +27,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailusers',
     'wagtail.wagtailimages',
     'wagtail.wagtailembeds',
-#    'wagtail.wagtailsearch', conflicts with haystack, will need to revist
+#    'wagtail.wagtailsearch', # TODO: conflicts with haystack, will need to revisit.
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',

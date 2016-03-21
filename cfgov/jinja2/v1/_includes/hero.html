@@ -16,7 +16,7 @@
          style="background-color: {{ hero.custom_fields.background_color[0]
                                      if hero.custom_fields.background_color }}">
     <div class="hero_wrapper">
-        <a class="hero_card" {{ hero_href|join if hero_href else '' }}>
+        <a class="hero_card" {{ hero_href | join if hero_href else '' }}>
             <article class="hero_preview">
                 {% if related_post %}
                 <span class="category-slug">
@@ -32,12 +32,12 @@
                     </header>
                     <p class="summary_text">
                     {%- if hero.content %}
-                        {{- hero.content|striptags -}}
+                        {{- hero.content | striptags -}}
                     {%- elif related_post %}
                         {%- if related_post.dek %}
-                            {{- related_post.dek|striptags -}}
+                            {{- related_post.dek | striptags -}}
                         {% else %}
-                            {{- related_post.excerpt|striptags -}}
+                            {{- related_post.excerpt | striptags -}}
                         {% endif -%}
                     {% endif -%}
                     </p>
