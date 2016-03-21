@@ -21,7 +21,10 @@ var ERROR_MESSAGES = {
   FIELD: {
     REQUIRED: 'This field is required.'
   },
-  DEFAULT: 'Error!'
+  DEFAULT: 'Error!',
+  DOM: {
+    INVALID: 'Invalid dom element was provided.'
+  }
 };
 
-module.exports = Object.seal( ERROR_MESSAGES );
+module.exports = Object.freeze( ERROR_MESSAGES );

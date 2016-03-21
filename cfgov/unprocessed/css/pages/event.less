@@ -88,6 +88,13 @@
     }
 }
 
+/* Event-Media-Container
+   ========================================================================== */
+
+.event-media_container {
+    border: 1px solid @gray-10;
+}
+
 
 /* Event-Meta
    ========================================================================== */
@@ -154,14 +161,14 @@
     border-top: 5px solid @green;
 }
 
-.event-venue_header {
+.event-venue_details {
     padding: 1.5em 1.5em .5em;
 
     .respond-to-max(@bp-xs-max, {
         padding: 1.5em;
     });
 
-    .event-calendar_container {
+    .datetime {
         .h5();
         text-transform: uppercase;
     }
@@ -191,8 +198,33 @@
     }
 }
 
+.event-venue_header {
+    margin-bottom: 10px;
+}
+
+.event-venue_live-btn {
+    margin-right: 10px;
+    background-color: @green;
+    color: @black;
+    text-transform: uppercase;
+    padding: 6px 15px 4px;
+
+    .cf-icon {
+        font-size: 20px;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+}
+
+.event-venu_live-btn_text {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
 .event-venue_heading {
     display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
 }
 
 

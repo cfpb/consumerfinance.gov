@@ -26,6 +26,11 @@
 
 {% block content_main %}
     {% include 'events/_event-detail.html' %}
+    {% from 'events/_macros.html' import event_media as event_media %}
+    {% if event_state and event_state == 'past' %}
+        {{ event_media(page) }}
+    {% endif %}
+
     {% if page.agenda_items %}
         {% from 'events/_macros.html' import event_agenda as event_agenda %}
         {{ event_agenda(page) }}
@@ -33,7 +38,7 @@
     <div class="event-footer">
      {# TODO resolve download button and verify reservation email at a future date #}
 
-{#        {% if event_state and event_state != 'past' %}#}
+{#        {% if event_state and event_state != 'future' %}#}
 {#            <p class="event-footer_banner">#}
 {#                <span class="event-footer_banner-message h4">This event requires an RSVP. Reserve your spot here: </span>#}
 {#                <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:" class="btn">#}

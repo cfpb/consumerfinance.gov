@@ -130,8 +130,19 @@
 {% macro event_venue(event, event_state) %}
     {%- set city =  event.venue_city + ', ' + event.venue_state | default('Washington, DC') -%}
     <section class="event-venue">
-        <header class="event-venue_header">
-            <h2 class="event-venue_heading">{{ city }}</h2>
+        <div class="event-venue_details">
+            <header class="event-venue_header">
+                {% if ( event_state == 'present' ) %}
+                <button class="btn
+                          event-venue_live-btn">
+                    <span class="cf-icon cf-icon-livestream"></span>
+                    <span class="event-venue_live-btn_text">Live</span>
+                </button>
+                {% endif %}
+                <h2 class="event-venue_heading">
+                    {{ city }}
+                </h2>
+            </header>
             <div class="content-l">
                 <div class="event-meta content-l_col content-l_col-1-2">
                     {{ event_meta_address(event,
@@ -139,7 +150,7 @@
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
-                {% if (event_state == 'past' and event.youtube_url is not defined) %}
+                {% if ( event_state == 'past' and not event.youtube_url ) %}
                     Video Replay will be<br> available shortly
                 {% else %}
                     {% import 'macros/time.html' as time %}
@@ -157,28 +168,41 @@
                 {% endif %}
                 </div>
           </div>
-        </header>
+        </div>
         <footer>
             <figure class="event-media_container">
-            {# TODO: Add code for live streaming Event and determine image property name #}
-            {% if (event_state == 'past' and event.youtube_url is defined) %}
+            {% if (event_state == 'past' and event.youtube_url ) %}
                 {% import 'macros/video-player.html' as video_player %}
-                {% set video_id   = event.youtube_url.split('=') | last %}
-                {% set image_url  = event.flickr_url if event.flickr_url is defined else '' %}
+                {% set image_url  = event.flickr_url %}
+                {% set video_id   = event.video_id | default( '' ) %}
                 {{ video_player.render({
                       'button_pos': 'bottomRight',
                       'image': {
                           'url': image_url,
                       },
                       'video': {
-                          'id': video_id
+                          'id': video_id,
+                          'url': event.youtube_url
                       }
                    })
                 }}
             {% elif event_state == 'past' %}
-                {# TODO: Replace placeholder image with appropriate image #}
-                <img src="https://placeholdit.imgix.net/~text?C3%97350&w=700&h=350"
-                     alt="Video placeholder image" />
+                {% set image_url = event.archive_image or '/static/img/cfpb_video_cover_card_1380x776.png' %}
+                <img src=" {{ image_url }}" alt="Video placeholder image" />
+            {% elif event_state == 'present' and event.live_stream_url  %}
+                {% import 'macros/video-player.html' as video_player %}
+                {% set video_id = event.video_id | default( '' ) %}
+                {{ video_player.render({
+                    'button_pos': 'bottomRight',
+                    'image': {
+                        'url': '',
+                    },
+                    'video': {
+                        'player': 'ustream',
+                        'id':     video_id,
+                        'url':    event.live_stream_url
+                    }
+                }) }}
             {% else %}
                 {{ event_location_image({
                     'location': city,
@@ -250,7 +274,7 @@
                 </td>
                 <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
                 {% for speaker in bound.speakers.value %}
-                    {%- if speaker.bound_blocks.url -%}
+                    {%- if speaker.bound_blocks.url.render() -%}
                     <a href="{{ speaker.bound_blocks.url.render() }}">
                     {{ speaker.bound_blocks.name.render() }}
                     </a>
@@ -290,4 +314,80 @@
        {%- endif -%}
    {%- endfor -%}
 {%- endfor -%}
+{% endmacro %}
+
+{# ==========================================================================
+
+   event_media()
+
+   ==========================================================================
+
+   Description:
+
+   Create event archive media markup when given:
+
+   event: An event from a query result.
+
+   ========================================================================== #}
+
+{% macro event_media( event ) %}
+{% set col_classes = 'content-l_col
+                      content-l_col-1-2
+                      block
+                      block__padded-top
+                      block__flush-top
+                      block__flush-bottom'
+%}
+
+{% if event.speech_transcript or event.video_transcript or event.flickr_url %}
+<div class="block block__border-top">
+    <div class="event-archive_media-container
+                content-l
+                content-l__large-gutters">
+        {% if event.flickr_url %}
+        <section class="{{ col_classes }} block__padded-bottom">
+            <h4>Photography</h4>
+            <p class="u-flexible-container">
+                <img class="u-flexible-container_inner"
+                     src='{{ event.flickr_url }}' >
+            </p>
+            <p class="speech_link-container">
+                <a class="jump-link
+                          jump-link__external-link
+                          jump-link__underline"
+                    href="{{ event.flickr_url }}">
+                    See the album for the Event
+                </a>
+            </p>
+        </section>
+        {% endif %}
+        <div class="{{ col_classes }}">
+            {% if event.speech_transcript %}
+            <section class="block block__flush-top">
+                <h4>Speech text</h4>
+                <p>
+                    <a href="{{ event.speech_transcript.url }}"
+                       class="jump-link
+                              jump-link__underline">
+                       Download speech
+                    </a>
+                </p>
+            </section>
+            {% endif %}
+            {% if event.video_transcript %}
+            <section class="block block__flush-bottom">
+                <h4>Video transcript</h4>
+                <p>
+                    <a href="{{ event.video_transcript.url }}"
+                       class="jump-link
+                              jump-link__underline">
+                       Download transcript
+                    </a>
+                </p>
+            </section>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endmacro %}
