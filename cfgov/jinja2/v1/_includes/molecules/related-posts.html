@@ -91,7 +91,7 @@
     {% for block in page.sidefoot %}
         {% if 'related_posts' in block.block_type %}
             {% if block.value.view_more %}
-                {{ _view_more(block) }}
+                {{ _view_more( block.value.view_more ) }}
             {% endif %}
         {% endif %}
     {% endfor %}
@@ -107,14 +107,20 @@
 
    Creates view more markup when given:
 
+   link:      A tuple of link information.
+
+   link.url:  The link URL.
+
+   link.text: The link text.
+
    ========================================================================== #}
 
-{% macro _view_more(block) %}
-{% if block.value.view_more.text %}
+{% macro _view_more( link ) %}
+{% if link.text %}
 <a class="jump-link jump-link__underline"
-   href="{{ block.value.view_more.url }}">
+   href="{{ link.url }}">
     <span class="jump-link_text">
-        {{ block.value.view_more.text }}
+        {{ link.text }}
     </span>
 </a>
 {% endif %}
