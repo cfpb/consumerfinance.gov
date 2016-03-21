@@ -9,6 +9,11 @@ describe( 'The Bureau Structure Page', function() {
   beforeAll( function() {
     page = new TheBureauStructurePage();
     page.get();
+
+    browser.getCapabilities().then( function( cap ) {
+      browser.name = cap.get('browserName');
+      browser.version = cap.get('version');
+    } );
   } );
 
 
@@ -40,9 +45,13 @@ describe( 'The Bureau Structure Page', function() {
     function() {
       expect( page.orgChartChildNodes.count() ).toBeGreaterThan( 0 );
 
-      page.orgChartChildNodes.each( function( childNode ) {
-        expect( childNode.isDisplayed() ).toBe( false );
-      } );
+      var ie8 = browser.name === 'internet explorer' && browser.version === '8';
+
+      if ( !ie8 ) {
+        page.orgChartChildNodes.each( function( childNode ) {
+          expect( childNode.isDisplayed() ).toBe( false );
+        } );
+      }
     }
   );
 
