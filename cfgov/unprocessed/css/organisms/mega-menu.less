@@ -125,9 +125,6 @@
 */
 
 .o-mega-menu {
-    position: relative;
-    width: 100%;
-
     &_content-item {
         // Override margin added by CF to list items.
         margin-bottom: 0;
@@ -164,21 +161,24 @@
     // Tablet/mobile sizes.
     .respond-to-max( @bp-sm-max, {
         &_trigger {
+            display: none;
             height: unit( 60px / 18px, em );
             min-width: unit( 60px / 18px, em );
             padding-top: unit( @grid_gutter-width / 2 / 18px, em );
             padding-bottom: unit( @grid_gutter-width / 2 / 18px, em );
 
-            // TODO: Check that float doesn't spill outside organism.
-            float: left;
-            position: relative;
+            position: absolute;
+            top: 0;
             z-index: 20;
 
             background: @white;
             border: none;
             color: @black;
             font-size: unit( 18px / @base-font-size-px, em );
-            pointer-events: auto;
+
+            .js & {
+                display: block;
+            }
 
             &:focus {
                 outline: 1px dotted @black;
@@ -206,18 +206,29 @@
         // Menu flyout.
         // All menus - Tablet/Mobile.
         &_content {
+            display: none;
             box-sizing: border-box;
             width: 100%;
 
-            position: absolute;
-            left: 0;
-            top: -1px;
-            z-index: 10;
+            .js & {
+                display: block;
+                position: absolute;
+                left: 0;
+                top: -1px;
+                z-index: 10;
+            }
+
+            &-2,
+            &-3 {
+                position: absolute;
+                left: 0;
+                top: -1px;
+                z-index: 10;
+            }
 
             background-color: @gray-5;
             border-top: 1px solid @gray-50;
             border-bottom: 1px solid @gray-50;
-            pointer-events: auto;
 
             .u-drop-shadow-after();
 
@@ -283,16 +294,18 @@
                 padding-top: @grid_gutter-width / 2;
                 padding-bottom: @grid_gutter-width / 2;
 
-                &__has-children:after {
-                    .cf-icon();
+                .js & {
+                    &__has-children:after {
+                        .cf-icon();
 
-                    position: absolute;
-                    right: 0;
-                    top: 50%;
-                    transform: translateY( -50% );
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY( -50% );
 
-                    color: @green;
-                    content: @cf-icon-right;
+                        color: @green;
+                        content: @cf-icon-right;
+                    }
                 }
 
                 &__current,
@@ -304,8 +317,11 @@
 
         // 1st-level menu - Tablet/Mobile.
         &_content-1 {
-            // Offset for height of trigger button.
-            top: 60px;
+            .js & {
+                // Offset for height of trigger button.
+                top: 60px;
+            }
+            display: block;
 
             &-list {
                 padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
@@ -392,6 +408,7 @@
                     transform: translateY( 0 );
                 }
             }
+
             &-list {
                 margin-bottom: 0;
             }
@@ -399,6 +416,12 @@
             &-item {
                 display: inline-block;
                 margin-right: @grid_gutter-width / 2;
+
+                .no-js &:hover {
+                    .o-mega-menu_content-2 {
+                        display: block;
+                    }
+                }
             }
 
             &-link {
@@ -448,10 +471,9 @@
             z-index: 10;
             width: 100%;
 
-            // Set an arbtrary min-height to create a "window" into which
-            // the menu will slide into view.
-            min-height: 600px;
-            pointer-events: none;
+            .no-js & {
+                display: none;
+            }
 
             &[aria-expanded="true"] {
 
@@ -461,7 +483,6 @@
             }
 
             &-wrapper {
-                pointer-events: auto;
                 background-color: @gray-5;
                 border-top: 1px solid @gray-50;
                 border-bottom: 1px solid @gray-50;

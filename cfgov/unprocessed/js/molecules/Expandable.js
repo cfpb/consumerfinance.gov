@@ -1,8 +1,9 @@
 'use strict';
 
 // Required modules.
-var EventObserver = require( '../modules/util/EventObserver' );
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
+var breakpointState = require( '../modules/util/breakpoint-state' );
+var EventObserver = require( '../modules/util/EventObserver' );
 
 /**
  * Expandable
@@ -39,6 +40,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
   // TODO: Replace function of _that with Function.prototype.bind.
   var _that = this;
+  var _collapseBinded = collapse.bind( this );
+  var _expandBinded = expand.bind( this );
 
   /**
    * @param {number} state
@@ -47,8 +50,10 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function init( state ) {
     _calcHeight();
-    if ( state === EXPANDED ||
-         _dom.getAttribute( 'data-state' ) === 'expanded' ) {
+    // Even if expanded is set, don't expand if in mobile window size.
+    if ( !_isInMobile() &&
+         ( state === EXPANDED ||
+         _dom.getAttribute( 'data-state' ) === 'expanded' ) ) {
       // If expanded by default, we need to set the height inline so the
       // inline transition to collapse the Expandable works.
       // TODO: Handle issue of height calculating before
@@ -64,11 +69,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
     _target.addEventListener( 'click', _handleClick );
 
-    // TODO: Remove if statement if polyfill that
-    //       adds addEventListener to window is used.
-    if ( window.addEventListener ) {
-      window.addEventListener( 'resize', _refreshHeight );
-    }
+    window.addEventListener( 'resize', _resizeHandler );
 
     _initObserver();
 
@@ -112,9 +113,9 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function toggle( duration ) {
     if ( _isExpanded() ) {
-      _that.collapse( duration );
+      _collapseBinded( duration );
     } else {
-      _that.expand( duration );
+      _expandBinded( duration );
     }
     return _that;
   }
@@ -231,6 +232,16 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   }
 
   /**
+   * Handle a resize of the window.
+   */
+  function _resizeHandler() {
+    _refreshHeight();
+    if ( _isInMobile() ) {
+      _collapseBinded();
+    }
+  }
+
+  /**
    * Reset the height of the Expandables, when e.g. resizing the window.
    */
   function _refreshHeight() {
@@ -293,6 +304,20 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     return _state;
   }
 
+  // TODO: Move this to breakpoint-state.js.
+  /**
+   * Whether currently in the desktop view.
+   * @returns {boolean} True if in the desktop view, otherwise false.
+   */
+  function _isInMobile() {
+    var isInMobile = false;
+    var currentBreakpoint = breakpointState.get();
+    if ( currentBreakpoint.isBpXS ) {
+      isInMobile = true;
+    }
+    return isInMobile;
+  }
+
   // Attach public events.
   var eventObserver = new EventObserver();
   this.addEventListener = eventObserver.addEventListener;
@@ -307,12 +332,15 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   // Export constants so initialization signature can support, e.g.
   // var item = new Expandable( '.item' );
   // item.init( item.EXPANDED );
+  // TODO: Move these to Expandable.COLLAPSED and Expandable.EXPANDED.
+  //       So that they are set on the constructor, not an instance.
   this.COLLAPSED = COLLAPSED;
   this.EXPANDED = EXPANDED;
 
   return this;
 }
 
+// TODO: Use MoveTransition so this can be removed.
 /**
  * @param {HTMLNode} elm
  *   The element to check for support of transition end event.

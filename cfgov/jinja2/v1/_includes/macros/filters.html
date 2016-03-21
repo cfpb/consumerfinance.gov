@@ -190,6 +190,7 @@
       >
     {% if options.form_method and options.form_method == 'post' %}
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <input name="form-id" type="hidden" value="{{ options.id_prefix }}">
     {% endif %}
     <div class="form-l">
 
@@ -230,7 +231,7 @@
                     Calendars
                 </label>
                 {% for director in directors_list %}
-                    {{ _filter_checkbox( 'calendar', director ) | safe }}
+                    {{ _filter_checkbox( 'calendar', director, '', options.id_prefix) | safe }}
                 {% endfor %}
             </div>
         </div>
@@ -319,7 +320,7 @@
                         </label>
                         <input class="js-filter_range-date js-filter_range-date__gte"
                                id="{{ options.id_range_date_gte }}"
-                               name="filter_range_date_gte"
+                               name="{{ options.id_range_date_gte }}"
                                type="text"
                                value="{{ from_date_formatted if from_date_formatted else '' }}"
                                placeholder="YYYY-MM">
@@ -337,7 +338,7 @@
                         </label>
                         <input class="js-filter_range-date js-filter_range-date__lte"
                                id="{{ options.id_range_date_lte }}"
-                               name="filter_range_date_lte"
+                               name="{{ options.id_range_date_lte }}"
                                type="text"
                                value="{{ to_date_formatted if to_date_formatted else '' }}"
                                placeholder="YYYY-MM">
@@ -356,9 +357,10 @@
             <input class="btn form-actions_item"
                    type="submit"
                    value="{{ options.submit_label }}">
-            <input class="btn btn__warning btn__link form-actions_item js-form_clear"
-                   type="button"
-                   value="Reset filters">
+            <a class="btn btn__warning btn__link"
+                   href="{{ request.path }}">
+                    Reset filters
+            </a>
         </div>
     </div>
 
@@ -387,12 +389,12 @@
 
 {# A helper macro for filters()
    ========================================================================== #}
-{% macro _filter_checkbox(field, value, label) %}
+{% macro _filter_checkbox(field, value, label, id_prefix) %}
     {% from 'macros/util/format/url.html' import slugify as slugify %}
     {% set id = get_unique_id('filter_', '_') ~ slugify( value ) %}
     <input class="cf-input"
            type="checkbox"
-           name="filter_{{ field }}"
+           name="{{ id_prefix }}filter_{{ field }}"
            value="{{ value }}"
            id="{{ id }}"
            {%- if is_filter_selected(field, value) %}

@@ -11,10 +11,9 @@ def _convert_date(date, tz):
         if type(date) in [datetime.datetime, datetime.date]:
             if isinstance(date, datetime.datetime):
                 pytzone = timezone(tz)
-                if not date.tzinfo:
-                    date = pytzone.localize(date)
-                else:
-                    date = date.astimezone(pytzone)
+                if date.tzinfo:
+                    date = date.replace(tzinfo=None)
+                date = pytzone.localize(date)
     return date
 
 

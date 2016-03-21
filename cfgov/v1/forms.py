@@ -116,6 +116,14 @@ class FilterDateField(forms.DateField):
                 pass
         return value
 
+class PDFFilterDateField(forms.DateField):
+    def clean(self, value):
+        if value:
+            try:
+                value = get_date_string(value)
+            except Exception as e:
+                pass
+        return value
 
 class FilterCheckboxList(forms.CharField):
     def validate(self, value):
@@ -129,9 +137,9 @@ class FilterCheckboxList(forms.CharField):
 class CalenderPDFFilterForm(forms.Form):
     filter_calendar = FilterCheckboxList(label='Calendar',
         error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS'])
-    filter_range_date_gte = FilterDateField(required=False,
+    filter_range_date_gte = PDFFilterDateField(required=False,
         error_messages=ERROR_MESSAGES['DATE_ERRORS'])
-    filter_range_date_lte = FilterDateField(required=False,
+    filter_range_date_lte = PDFFilterDateField(required=False,
         error_messages=ERROR_MESSAGES['DATE_ERRORS'])
 
     def __init__(self, *args, **kwargs):

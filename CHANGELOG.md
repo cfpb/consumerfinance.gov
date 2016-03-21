@@ -83,6 +83,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Use the added `careers_preview.json` in the careers sublanding page instead of `careers.json`
 - Wrap prefooter section in Browse pages in a conditional to prevent empty prefooter
 - Frontend: Added behaviors for third level mobile mega menu.
+- Frontend: Made Expandables collapse under 600px window size.
+- Updated the Mega Menu layout to avoid pointer events for older IE.
+- Updated the Mega Menu for devices without JS.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF already includes it.
@@ -120,6 +123,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixes layout issues with filters on sheer pages.
 - Fixed failing browser tests due to atomic naming updates.
 - Fixed a bug in the multi-select script where value was set before input type.
+- Fixed positioning bug in global search.
+- Fixed issue where categories without a set icon were showing the speach icon.
+- Fixed issue where a filtered page wasn’t showing the selected options in the multiselect.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 

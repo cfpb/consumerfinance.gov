@@ -90,21 +90,21 @@ class PDFGeneratorView(View):
 
     def post(self, request):
         index = request.POST.get('form-id')
-        filter_calendar = 'filter' + index + '_categories'
-        filter_from_date = 'filter' + index + '_from_date'
-        filter_to_date = 'filter' + index + '_to_date'
+        filter_calendar = index + 'filter_calendar'
+        filter_range_date_gte = index + '-filter_range-date-gte'
+        filter_range_date_lte = index + '-filter_range-date-lte'
         form = CalenderPDFFilterForm({
             'filter_calendar': request.POST.get(filter_calendar),
-            'filter_range_date_gte': request.POST.get(filter_from_date),
-            'filter_range_date_lte': request.POST.get(filter_to_date),
+            'filter_range_date_gte': request.POST.get(filter_range_date_gte),
+            'filter_range_date_lte': request.POST.get(filter_range_date_lte),
         })
         if form.is_valid():
             query_opts = {
-                'filter_calendar': form.cleaned_data.get(filter_calendar),
+                'filter_calendar': form.cleaned_data.get('filter_calendar'),
                 'filter_range_date_gte':
-                    form.cleaned_data.get(filter_from_date),
+                    form.cleaned_data.get('filter_range_date_gte'),
                 'filter_range_date_lte':
-                    form.cleaned_data.get(filter_to_date),
+                    form.cleaned_data.get('filter_range_date_lte'),
             }
             return self.generate_pdf(query_opts)
         else:

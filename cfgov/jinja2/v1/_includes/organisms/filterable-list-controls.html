@@ -8,12 +8,12 @@
 
    Create an expandable of filters when given:
 
-   controls     Collection of field controls and other settings to determine
-                    what's rendered.
+   controls: Collection of field controls and other settings to determine
+             what's rendered.
 
-   form         Django form that carries the fields that are to be rendered
+   form:     Django form that carries the fields that are to be rendered.
 
-   index        A unique number given to render the form and its fields with
+   index:    A unique number given to render the form and its fields with.
 
    ========================================================================== #}
 {% from 'molecules/expandable.html' import expandable with context %}
@@ -167,10 +167,10 @@
                 <input class="btn form-actions_item"
                        type="submit"
                        value="Apply Filters">
-                <input class="btn btn__warning btn__link form-actions_item js-form_clear"
-                       type="button"
-                       value="Clear filters"
-                       data-js-hook="form-clear">
+                <a class="btn btn__warning btn__link"
+                   href="{{ request.path }}">
+                    Clear filters
+                </a>
             </div>
         </div>
     </form>
@@ -181,6 +181,9 @@
 
 {% macro render(controls, form, index) %}
     <div class="o-filterable-list-controls">
+        {% if request.GET %}
+            {% do controls.update({'is_expanded':true}) %}
+        {% endif %}
         {% set form_markup = _filters_form(controls, form, index) %}
         {% call() expandable(controls) %}
             {{ form_markup | safe }}
