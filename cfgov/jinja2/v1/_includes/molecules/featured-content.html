@@ -6,38 +6,40 @@
 
    Description:
 
-   Create a featured content molecule. See
-   [GHE]/flapjack/Modules-V1/wiki/Featured-Content-Module
+   Create a featured content molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/Featured-Content-Module
 
-   value:                     An object with the following options for value.
+   value:                An object with the following options for value.
 
-   value.heading:             Heading text.
-   value.body:                Body text.
+   value.heading:        Heading text.
 
-   value.post:                Page being featured
+   value.body:           Body text.
 
-   value.show_post_link:      Flag to render the post link
-   value.post_link_text:      String for the link text of the displayed post
-   value.macro_link:          If the FCM is rendered outside of wagtail,
-                              this is a simpler way of adding a link.
-                              This is an object made up of url and text.
-   value.links:               If the FCM is rendered in wagtail, this returns
-                              the links.
+   value.post:           Page being featured.
 
-   value.video:               This object gets passed to video-player.html
-                              By default, the following values should exist.
-                                'is_fcm': true,
-                                'height': '320',
-                                'width':  '568'
-                              Wagtail should set the following values.
-                                'id', 'url'
+   value.show_post_link: Flag to render the post link
 
+   value.post_link_text: String for the link text of the displayed post
 
+   value.macro_link:     If the FCM is rendered outside of wagtail,
+                         this is a simpler way of adding a link.
+                         This is an object made up of url and text.
 
-   value.image:               A image object containing the URL & alt text for screenreaders
-                              of the image to be placed adjacent to the text.
+   value.links:          If the FCM is rendered in wagtail,
+                         this returns the links.
 
-   value.links:               A collection of links with URL & Text.
+   value.video:          This object gets passed to video-player.html
+                         By default, the following values should exist:
+                           'is_fcm': true,
+                           'height': '320',
+                           'width':  '568'
+                         Wagtail should set the following values:
+                           'id', 'url'
+
+   value.image:          A image object containing the URL & alt text for screenreaders
+                         of the image to be placed adjacent to the text.
+
+   value.links:          A collection of links with URL & Text.
 
    ========================================================================== #}
 

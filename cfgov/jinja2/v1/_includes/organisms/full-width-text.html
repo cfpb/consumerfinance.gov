@@ -18,13 +18,13 @@
             <div class="m-full-width-text
                         {{ 'm-full-width-text__serif' if
                          page.full_width_serif else '' }}">
-                {{ parse_links(block.value) |safe }}
+                {{ parse_links(block.value) | safe }}
             </div>
         {% elif 'table' in block.block_type %}
             <div class="m-full-width-text
                         {{ 'm-full-width-text__serif' if
                         page.full_width_serif else '' }}">
-                {{ render_stream_child(block) |safe}}
+                {{ render_stream_child(block) | safe}}
             </div>
         {% else %}
             <div class="m-inset">
