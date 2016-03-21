@@ -123,6 +123,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed a bug in the multi-select script where value was set before input type.
 - Fixed positioning bug in global search.
 - Fixed issue where categories without a set icon were showing the speach icon.
+- Fixed issue where a filtered page wasn’t showing the selected options in the multiselect.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 

@@ -59,6 +59,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _placeholder = _dom.getAttribute( 'placeholder' );
     _filtered = _optionData = _sanitizeList( _options );
 
+    for ( var i = 0, l = _filtered.length; i < l; i++ ) {
+      if ( _filtered[i].checked ) {
+        _selections.push( _filtered[i] );
+      }
+    }
+
     if ( _optionData.length > 0 ) {
       _populateMarkup();
       _bindEvents();
@@ -102,10 +108,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
     for ( var i = 0, len = list.length; i < len; i++ ) {
       item = list[i];
-
       cleaned.push( {
-        value: item.value,
-        text:  item.text
+        value:   item.value,
+        text:    item.text,
+        checked: item.defaultSelected
       } );
     }
 
@@ -126,6 +132,21 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _choices = _create( 'ul', {
       className: 'list__unstyled cf-multi-select_choices',
       inside:    _container
+    } );
+
+    _selections.forEach( function( option ) {
+      var li = _create( 'li', {
+        'data-option': option.value
+      } );
+
+      _create( 'label', {
+        'for':         option.value,
+        'textContent': option.text,
+        'className':   'cf-multi-select_label',
+        'inside':      li
+      } );
+
+      _choices.appendChild( li );
     } );
 
     _header = _create( 'header', {
@@ -155,15 +176,19 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         'data-option': option.value
       } );
 
-      _create( 'input', {
+      var inputData = {
         'id':        option.value,
         // Type must come before value or IE fails
-        'type':      'checkbox',
-        'value':     option.value,
-        'name':      _name,
-        'class':     'cf-input cf-multi-select_checkbox',
-        'inside':    li
-      } );
+        'type':    'checkbox',
+        'value':   option.value,
+        'name':    _name,
+        'class':   'cf-input cf-multi-select_checkbox',
+        'inside':  li
+      }
+      if ( option.checked ) {
+        inputData.checked = true;
+      }
+      _create( 'input', inputData );
 
       _create( 'label', {
         'for':         option.value,
