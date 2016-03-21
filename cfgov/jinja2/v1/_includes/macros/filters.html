@@ -357,9 +357,10 @@
             <input class="btn form-actions_item"
                    type="submit"
                    value="{{ options.submit_label }}">
-            <input class="btn btn__warning btn__link form-actions_item js-form_clear"
-                   type="button"
-                   value="Reset filters">
+            <a class="btn btn__warning btn__link"
+                   href="{{ request.path }}">
+                    Reset filters
+            </a>
         </div>
     </div>
 
