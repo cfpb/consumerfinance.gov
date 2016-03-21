@@ -135,11 +135,9 @@
                 </div>
             </div>
             {% for url, fmc in media_items %}
-            {% if url == nav_overview_url %}
-            <aside class="sub-nav_media">
+                {% if url == nav_overview_url %}
                 {{ fmc }}
-            </aside>
-            {% endif %}
+                {% endif %}
             {% endfor %}
         {# Close Wrapper if needed #}
         {{ '</div>' | safe if nav_depth > 1 else '' }}
