@@ -88,7 +88,6 @@ function setStorage( storage ) {
  *   or persistent storage (localStorage).
  * @returns {object} A local storage or session storage instance.
  */
-/* istanbul ignore next */
 function _getStorageType( storage ) {
   // Use default setting if none is provided.
   if ( typeof storage !== 'object' ) {

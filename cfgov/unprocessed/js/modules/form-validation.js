@@ -24,6 +24,10 @@ function _createMessage( type, label ) {
   return message[type];
 }
 
+/**
+ * @param {HTMLFormElement} elem - The form HTML element.
+ * @param {Object} field - Hash of field parameters (label, status, elem).
+ */
 function _sendError( elem, field ) {
   var label = field.label;
   var type;
@@ -41,12 +45,20 @@ function _sendError( elem, field ) {
   $( field.elem ).addClass( 'error' );
 }
 
+/**
+ * Clear an error that is showing.
+ * @param {HTMLFormElement} elem - The form HTML element.
+ */
 function _clearError( elem ) {
   var $elem = $( elem );
   $elem.trigger( 'cf_notifier:clear' );
   $elem.find( '.error' ).removeClass( 'error' );
 }
 
+/**
+ * Attempt to send the email to the GovDelivery server.
+ * @param {HTMLFormElement} elem - The form HTML element.
+ */
 function _sendSubscriptionRequest( elem ) {
   var $form = $( elem );
   var action = $form.attr( 'action' );
@@ -70,6 +82,9 @@ function _sendSubscriptionRequest( elem ) {
   } );
 }
 
+/**
+ * Initialize the email subscribe form validation.
+ */
 function init() {
   $( '#email-subscribe-form' )
     .cf_notifier()

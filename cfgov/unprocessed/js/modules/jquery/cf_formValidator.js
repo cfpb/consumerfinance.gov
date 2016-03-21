@@ -185,6 +185,9 @@ var _validator = {
   }
 };
 
+/**
+ * Initializes CF form validator jquery plugin.
+*/
 function init() {
   $.fn.cf_formValidator = function() {
     var options;

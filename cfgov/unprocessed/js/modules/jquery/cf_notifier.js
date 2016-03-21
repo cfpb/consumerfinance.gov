@@ -12,7 +12,9 @@ var _notifierTemplate = '<div class="m-notification ' +
                              'style="display: none;">' +
                           '<span class="m-notification_icon cf-icon"></span>' +
                           '<div class="m-notification_content">' +
-                              '<p class="h4 m-notification_message">{{{ message }}}</p>' +
+                              '<p class="h4 m-notification_message">' +
+                                '{{{ message }}}' +
+                              '</p>' +
                           '</div>' +
                         '</div>';
 
@@ -157,6 +159,9 @@ var _notifier = {
   }
 };
 
+/**
+ * Initializes CF notification jquery plugin.
+*/
 function init() {
   $.fn.cf_notifier = function() {
     var options;
