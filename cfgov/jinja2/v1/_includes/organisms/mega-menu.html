@@ -107,7 +107,8 @@
      data-js-hook="flyout-menu_content">
 
     <div class="{{ _classes( nav_depth, '-wrapper' ) }}">
-        <div class="wrapper">
+        {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
+            {# Open wrapper if needed #}
             {% if nav_depth > 1 %}
             <button class="{{ _classes( nav_depth, '-alt-trigger' ) }}"
                     data-js-hook="flyout-menu_alt-trigger">
@@ -140,7 +141,8 @@
             </aside>
             {% endif %}
             {% endfor %}
-        </div>
+        {# Close Wrapper if needed #}
+        {{ '</div>' | safe if nav_depth > 1 else '' }}
     </div>
 
     {% if nav_depth == 1 %}
