@@ -3,6 +3,8 @@
 // Required modules.
 var arrayHelpers = require( '../modules/util/array-helpers' );
 var typeCheckers = require( '../modules/util/type-checkers' );
+var domTraverse = require( '../modules/util/dom-traverse' );
+var domCreate = require( '../modules/util/dom-manipulators' ).create;
 
 /**
  * Multiselect
@@ -123,23 +125,23 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function _populateMarkup() {
     // Add a container for our markup and hide the default select elem
-    _container = _create( 'div', {
+    _container = domCreate( 'div', {
       className: 'cf-multi-select',
       around:    _dom
     } );
 
     // Create all our markup but wait to manipulate the DOM just once
-    _choices = _create( 'ul', {
+    _choices = domCreate( 'ul', {
       className: 'list__unstyled cf-multi-select_choices',
       inside:    _container
     } );
 
     _selections.forEach( function( option ) {
-      var li = _create( 'li', {
+      var li = domCreate( 'li', {
         'data-option': option.value
       } );
 
-      _create( 'label', {
+      domCreate( 'label', {
         'for':         option.value,
         'textContent': option.text,
         'className':   'cf-multi-select_label',
@@ -149,11 +151,11 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       _choices.appendChild( li );
     } );
 
-    _header = _create( 'header', {
+    _header = domCreate( 'header', {
       className: 'cf-multi-select_header'
     } );
 
-    _search = _create( 'input', {
+    _search = domCreate( 'input', {
       className:   'cf-multi-select_search',
       type:        'text',
       placeholder: _placeholder || 'Choose up to five',
@@ -161,18 +163,18 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       id:          _name
     } );
 
-    _fieldset = _create( 'fieldset', {
-      'className':   'cf-multi-select_fieldset u-invisible',
+    _fieldset = domCreate( 'fieldset', {
+      className:     'cf-multi-select_fieldset u-invisible',
       'aria-hidden': 'true'
     } );
 
-    _list = _create( 'ul', {
+    _list = domCreate( 'ul', {
       className: 'list__unstyled cf-multi-select_options',
       inside:    _fieldset
     } );
 
     _optionData.forEach( function( option ) {
-      var li = _create( 'li', {
+      var li = domCreate( 'li', {
         'data-option': option.value
       } );
 
@@ -190,9 +192,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         inputData.checked = true;
       }
 
-      _create( 'input', inputData );
+      domCreate( 'input', inputData );
 
-      _create( 'label', {
+      domCreate( 'label', {
         'for':         option.value,
         'textContent': option.text,
         'className':   'cf-multi-select_label',
@@ -255,11 +257,11 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           _choices.removeChild( li );
         }
       } else {
-        li = _create( 'li', {
+        li = domCreate( 'li', {
           'data-option': option.value
         } );
 
-        _create( 'label', {
+        domCreate( 'label', {
           'for': option.value,
           'innerHTML': option.text,
           'inside': li
@@ -404,7 +406,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           event.preventDefault();
           event.target.checked = !checked;
 
-          _fire( _queryOne( event.target ), 'change', {} );
+          _fire( domTraverse.queryOne( event.target ), 'change', {} );
         } else if ( key === KEY_ESCAPE ) {
           _search.focus();
           collapse();
@@ -440,48 +442,6 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    */
   function _filterContains( text, value ) {
     return RegExp( _regExpEscape( value.trim() ), 'i' ).test( text );
-  }
-
-  /**
-   * Queries the doc for the first match of the elem
-   * @param   {object|string} expr HTMLNode or string to query for
-   * @param   {object} con         The document location to query
-   * @returns {HTMLNode}           The elem
-   */
-  function _queryOne( expr, con ) {
-    return typeCheckers.isString( expr ) ?
-      ( con || document ).querySelector( expr ) :
-      expr || null;
-  }
-
-  /**
-   * Shortcut for creating new dom elements
-   * @param   {string} tag     The html elem to create
-   * @param   {object} options The options for building the elem
-   * @returns {HTMLNode}       The created elem
-   */
-  function _create( tag, options ) {
-    var elem = document.createElement( tag );
-
-    for ( var i in options ) {
-      if ( options.hasOwnProperty( i ) ) {
-        var val = options[i];
-        var ref = _queryOne( val );
-
-        if ( i === 'inside' ) {
-          ref.appendChild( elem );
-        } else if ( i === 'around' ) {
-          ref.parentNode.insertBefore( elem, ref );
-          elem.appendChild( ref );
-        } else if ( i in elem ) {
-          elem[i] = val;
-        } else {
-          elem.setAttribute( i, val );
-        }
-      }
-    }
-
-    return elem;
   }
 
   /**
