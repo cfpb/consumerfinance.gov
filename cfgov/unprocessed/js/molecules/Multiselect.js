@@ -162,7 +162,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     } );
 
     _fieldset = _create( 'fieldset', {
-      className:  'cf-multi-select_fieldset u-invisible',
+      'className':   'cf-multi-select_fieldset u-invisible',
       'aria-hidden': 'true'
     } );
 
@@ -177,17 +177,19 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       } );
 
       var inputData = {
-        'id':        option.value,
+        'id':     option.value,
         // Type must come before value or IE fails
-        'type':    'checkbox',
-        'value':   option.value,
-        'name':    _name,
-        'class':   'cf-input cf-multi-select_checkbox',
-        'inside':  li
-      }
+        'type':   'checkbox',
+        'value':  option.value,
+        'name':   _name,
+        'class':  'cf-input cf-multi-select_checkbox',
+        'inside': li
+      };
+
       if ( option.checked ) {
         inputData.checked = true;
       }
+
       _create( 'input', inputData );
 
       _create( 'label', {
@@ -370,7 +372,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         var key = event.keyCode;
 
         if ( _fieldset.getAttribute( 'aria-hidden' ) === 'true' &&
-             key != KEY_TAB ) {
+             key !== KEY_TAB ) {
           expand();
         }
 

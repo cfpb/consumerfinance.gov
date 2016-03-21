@@ -70,7 +70,8 @@ function empty( field, currentStatus ) {
 }
 
 /**
- * checkbox Determines if a field contains a required number of picked checkbox options
+ * checkbox
+ * Determines if a field contains a required number of picked checkbox options.
  *
  * @param {Object} field         Field to test
  * @param {Object} currentStatus A previous tested status for the field
