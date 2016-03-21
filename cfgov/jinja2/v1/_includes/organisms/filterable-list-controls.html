@@ -167,10 +167,10 @@
                 <input class="btn form-actions_item"
                        type="submit"
                        value="Apply Filters">
-                <input class="btn btn__warning btn__link form-actions_item js-form_clear"
-                       type="button"
-                       value="Clear filters"
-                       data-js-hook="form-clear">
+                <a class="btn btn__warning btn__link"
+                   href="{{ request.path }}">
+                    Clear filters
+                </a>
             </div>
         </div>
     </form>
