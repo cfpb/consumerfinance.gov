@@ -29,8 +29,8 @@ describe( 'The Header Component', function() {
     );
 
     browser.getCapabilities().then( function( cap ) {
-      browser.name = cap.caps_.browserName;
-      browser.version = cap.caps_.version;
+      browser.name = cap.get('browserName');
+      browser.version = cap.get('version');
     } );
   } );
 

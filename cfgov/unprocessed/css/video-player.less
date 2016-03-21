@@ -89,11 +89,35 @@
 
 .video-player_video-container__flexible {
     .video-player_iframe-container {
+        width: auto;
         .u-flexible-container();
     }
 
-    .video-player_video {
+    .video-player_iframe {
         .u-flexible-container_inner();
+    }
+
+    .video-player_video-actions-container {
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    .video-player_share-actions {
+
+        .respond-to-min( @bp-sm-min {
+            text-align: right;
+        } );
+    }
+
+    .video-player_share-actions,
+    .video-player_video-actions {
+        margin-bottom: 0;
+        .grid_column(6);
+
+        .respond-to-max( @bp-xs-max {
+            width: 100%;
+        } );
     }
 }
 
@@ -150,7 +174,7 @@
         .u-flexible-container();
     }
 
-    .video-player_video {
+    .video-player_iframe {
         .u-flexible-container_inner();
     }
 });
@@ -162,7 +186,8 @@
         left: @video-width__px;
     }
 
-    .video-player_share-actions, .video-player_video-actions {
+    .video-player_share-actions,
+    .video-player_video-actions {
         margin-bottom: @grid_gutter-width;
     }
     .video-player_share-actions{

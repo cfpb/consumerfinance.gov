@@ -126,6 +126,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed positioning bug in global search.
 - Fixed issue where categories without a set icon were showing the speach icon.
 - Fixed issue where a filtered page wasn’t showing the selected options in the multiselect.
+- Fixed an error in the Browser tests for IE 8.
+- Fixed an error in the Browser tests when running on Jenkins.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
