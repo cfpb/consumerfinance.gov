@@ -122,6 +122,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed failing browser tests due to atomic naming updates.
 - Fixed a bug in the multi-select script where value was set before input type.
 - Fixed positioning bug in global search.
+- Fixed issue where categories without a set icon were showing the speach icon.
 
 ## 3.0.0-3.0.0 - 2016-02-11
 
