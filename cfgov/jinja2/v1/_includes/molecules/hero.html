@@ -40,8 +40,8 @@
              if value.background_color else '' }}>
     <div class="wrapper hero_wrapper">
         <div class="hero_text">
-            <h1 class="hero_heading">{{ value.heading | safe}}</h1>
-            <div class="hero_subhead">{{ parse_links(value.body) | safe }}</div>
+            <h1 class="hero_heading">{{ value.heading | safe }}</h1>
+            <div class="hero_subhead">{{ parse_links( value.body ) | safe }}</div>
             {% for link in value.links %}
                 <a href="{{ link.url }}"
                    class="hero_cta
@@ -50,9 +50,8 @@
                 </a>
             {% endfor %}
         </div>
-
         {% if value.image.upload %}
-            {% set photo=image(value.image.upload, 'original') %}
+            {% set photo=image( value.image.upload, 'original' ) %}
             <div class="hero_image"
                  style="background-image: url( {{ photo.url }} );"></div>
         {% endif %}

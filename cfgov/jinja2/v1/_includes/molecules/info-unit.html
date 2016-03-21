@@ -35,29 +35,25 @@
 
    ========================================================================== #}
 
-{% macro info_unit(value) %}
+{% macro info_unit( value ) %}
 <div class="m-info-unit
             {{ 'm-info-unit__' ~ value.modifier if value.modifier else '' }}">
-
     {% if value.image %}
         {% if value.image.is_decorative %}
-        <div class="m-info-unit_image
-                    {{ 'm-info-unit_image__square' if value.image.is_square else '' }}"
-             style="background-image: url( {{ value.image.url }} );">
-        </div>
+            <div class="m-info-unit_image
+                        {{ 'm-info-unit_image__square' if value.image.is_square else '' }}"
+                 style="background-image: url( {{ value.image.url }} );">
+            </div>
         {% else %}
-        <img src="{{ value.image.url }}"
-             alt="{{ value.image.alt if value.image.alt else '' }}"
-             class="m-info-unit_image
-                    {{ 'm-info-unit_image__square' if value.image.is_square else '' }}">
+            <img src="{{ value.image.url }}"
+                 alt="{{ value.image.alt if value.image.alt else '' }}"
+                 class="m-info-unit_image
+                        {{ 'm-info-unit_image__square' if value.image.is_square else '' }}">
         {% endif %}
     {% endif %}
-
     <div class="m-info-unit_content">
         {{ value.heading | safe if value.heading else '' }}
-
         {{ value.body | safe }}
-
         {% if value.links %}
             <ul class="list list__links">
             {% for link in value.links %}
@@ -74,6 +70,5 @@
             </ul>
         {% endif %}
     </div>
-
 </div>
 {% endmacro %}

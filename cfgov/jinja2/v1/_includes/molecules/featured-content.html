@@ -43,35 +43,35 @@
 
    ========================================================================== #}
 
-{% macro render(value) %}
+{% macro render( value ) %}
 {% import 'macros/category-icon.html' as category_icon %}
 
 <section class="featured-content-module">
     <div class="featured-content-module_text">
         <p class="h4">
-            {{ category_icon.render( fcm_label(value.category) ) | safe }}
+            {{ category_icon.render( fcm_label( value.category ) ) | safe }}
             {{ fcm_label( value.category ) }}
         </p>
         <h2>
             {{ value.heading }}
         </h2>
         <p>
-            {{ parse_links(value.body) |safe }}
+            {{ parse_links( value.body ) |safe }}
         </p>
         <ul class="list list__links">
             {% if value.show_post_link and value.post %}
                 <li class="list_item">
-                  <a class="list_link" href="{{ value.post.url_path }}">
-                    {{ value.post_link_text }}
-                  </a>
+                    <a class="list_link" href="{{ value.post.url_path }}">
+                        {{ value.post_link_text }}
+                    </a>
                 </li>
             {% endif %}
             {% if value.macro_link %}
-              <li class="list_item">
-                  <a class="list_link" href="{{ value.macro_link.url }}">
-                      {{ value.macro_link.text }}
-                  </a>
-              </li>
+                <li class="list_item">
+                    <a class="list_link" href="{{ value.macro_link.url }}">
+                        {{ value.macro_link.text }}
+                    </a>
+                </li>
             {% endif %}
             {% for link in value.links %}
                 <li class="list_item">
@@ -85,7 +85,7 @@
     {% if value.video.url and value.video.id %}
         <div class="featured-content-module_visual">
             {% import 'macros/video-player.html' as video_player %}
-            {{ video_player.render(value) }}
+            {{ video_player.render( value ) }}
         </div>
     {% elif value.image %}
         <div class="featured-content-module_visual">
