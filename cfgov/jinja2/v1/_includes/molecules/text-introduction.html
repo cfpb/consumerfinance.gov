@@ -9,20 +9,24 @@
    Create a Text Introduction molecule.
    See [GHE]/flapjack/Modules-V1/wiki/Text-Introduction
 
-   value:           An object with the following options for value.
+   value:         An object with the following options for value.
 
-   value.heading:   Heading text.
-   value.intro:     Body introduction text.
-   value.body:      Body text.
+   value.heading: Heading text.
 
-   value.links:     A collection of links with URL & Text.
+   value.intro:   Body introduction text.
+
+   value.body:    Body text.
+
+   value.links:   A tuple of items to create a list of links, containing:
+
+                  url:  A string for the URL of the link.
+                  text: A string for the text of the link.
 
    ========================================================================== #}
 
-
 <h1>{{ value.heading }}</h1>
-<div class="lead-paragraph">{{ parse_links(value.intro) |safe }}</div>
-{{ parse_links(value.body) |safe }}
+<div class="lead-paragraph">{{ parse_links(value.intro) | safe }}</div>
+{{ parse_links(value.body) | safe }}
 <ul class="list list__links">
     {% for link in value.links %}
         <li class="list_item">

@@ -36,7 +36,7 @@
     {% endif %}
 
     {% if value.body %}
-        <p>{{ parse_links(value.body) |safe }}</p>
+        <p>{{ parse_links(value.body) | safe }}</p>
     {% endif %}
 
     {# Should be a stack of Expandable instances. #}

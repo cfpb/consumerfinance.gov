@@ -45,7 +45,6 @@ function MegaMenu( element ) {
     // DOM selectors.
     var rootMenuDom = _dom;
     var rootContentDom = rootMenuDom.querySelector( FlyoutMenu.CONTENT_SEL );
-    var submenusDom = _dom.querySelectorAll( FlyoutMenu.BASE_SEL );
 
     // Create model.
     _menus = new Tree();
@@ -66,8 +65,10 @@ function MegaMenu( element ) {
     // Initialize screen-size specific behaviors.
     _desktopNav = new MegaMenuDesktop( _menus ).init();
     _mobileNav = new MegaMenuMobile( _menus ).init();
-    _mobileNav.addEventListener( 'rootExpandBegin', _handleRootExpandBegin.bind( this ) );
-    _mobileNav.addEventListener( 'rootCollapseEnd', _handleRootCollapseEnd.bind( this ) );
+    _mobileNav.addEventListener( 'rootExpandBegin',
+                                 _handleRootExpandBegin.bind( this ) );
+    _mobileNav.addEventListener( 'rootCollapseEnd',
+                                 _handleRootCollapseEnd.bind( this ) );
 
     window.addEventListener( 'resize', _resizeHandler );
 
@@ -205,17 +206,15 @@ function MegaMenu( element ) {
 
   /**
    * Event handler for when root menu expand transition begins.
-   * @param {Object} event - A MegaMenuMobile event.
    */
-  function _handleRootExpandBegin( event ) {
+  function _handleRootExpandBegin() {
     this.dispatchEvent( 'rootExpandBegin', { target: this } );
   }
 
   /**
    * Event handler for when root menu collapse transition ends.
-   * @param {Object} event - A MegaMenuMobile event.
    */
-  function _handleRootCollapseEnd( event ) {
+  function _handleRootCollapseEnd() {
     this.dispatchEvent( 'rootCollapseEnd', { target: this } );
   }
 
