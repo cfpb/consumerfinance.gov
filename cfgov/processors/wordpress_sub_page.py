@@ -2,6 +2,7 @@ import sys
 import json
 import os.path
 import requests
+from sheerlike.external_links import process_external_links
 
 
 def posts_at_url(url):
@@ -66,6 +67,8 @@ def process_sub_page(post):
         post['has_parent'] = True
     else:
         post['has_parent'] = False
+
+    post = process_external_links(post)
 
     return {'_type': 'sub_page',
             '_id': post['slug'],

@@ -6,6 +6,7 @@ import os.path
 import requests
 import dateutil.parser
 from collections import OrderedDict
+from sheerlike.external_links import process_external_links
 
 
 def posts_at_url(url):
@@ -102,6 +103,8 @@ def process_event(event):
             del event[key]
 
     event = OrderedDict(sorted(event.items(), key=lambda k: k[0]))
+
+    event = process_external_links(event)
 
     return {'_type': 'events',
             '_id': event['slug'],

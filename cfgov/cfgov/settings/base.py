@@ -186,6 +186,8 @@ if NEMO_PATH.exists():
 
 ALLOWED_HOSTS = ['*']
 
+EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
+
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = 'v1'
