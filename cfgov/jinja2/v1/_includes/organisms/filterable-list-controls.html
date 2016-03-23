@@ -181,7 +181,8 @@
 
 {% macro render(controls, form, index) %}
     <div class="o-filterable-list-controls">
-        {% if request.GET %}
+        {% set has_active_filters = page.has_active_filters(request) %}
+        {% if has_active_filters %}
             {% do controls.update({'is_expanded':true}) %}
         {% endif %}
         {% set form_markup = _filters_form(controls, form, index) %}
@@ -201,7 +202,7 @@
             {% endfor %}
         {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
-            {% if not request.GET %}
+            {% if has_active_filters == false %}
                 {{ notification('success', false, posts.paginator.count ~ ' filtered results') }}
             {% elif posts.paginator.count == 0 %}
                 {{ notification('warning', true,
