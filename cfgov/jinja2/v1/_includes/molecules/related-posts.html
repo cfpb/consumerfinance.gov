@@ -41,6 +41,13 @@
                     {{ _related_posts_list(post_type_list, block.value.limit) }}
                 </div>
             {% endfor %}
+            {% for block in page.sidefoot %}
+                {% if 'related_posts' in block.block_type %}
+                    {% if block.value.view_more %}
+                        {{ _view_more( block.value.view_more ) }}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
         </div>
     {% endif %}
 {% endmacro %}
@@ -88,13 +95,6 @@
         {% endfor %}
     </ul>
 
-    {% for block in page.sidefoot %}
-        {% if 'related_posts' in block.block_type %}
-            {% if block.value.view_more %}
-                {{ _view_more( block.value.view_more ) }}
-            {% endif %}
-        {% endif %}
-    {% endfor %}
 {% endmacro %}
 
 {# ==========================================================================
