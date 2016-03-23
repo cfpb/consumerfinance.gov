@@ -19,6 +19,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- Abstracted create and queryOneout of the multiselect
+
 ### Removed
 
 ### Fixed
