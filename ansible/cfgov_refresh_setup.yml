@@ -72,25 +72,3 @@
 
     - name: Create Sheer Index
       shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py sheer_index"
-
-      # Virtualbox Setup allows halt and up with vagrant again
-    - name: Virtualbox Add Setup
-      shell: /etc/init.d/vboxadd setup
-
-      # Restart and wait for host to come back up
-    - name: restart machine
-      shell: sleep 2 && shutdown -r now "Ansible updates triggered"
-      async: 1
-      poll: 0
-      sudo: true
-      ignore_errors: true
-
-    - name: waiting for server to come back
-      local_action: wait_for host=10.0.2.15 state=started delay=30 timeout=300
-      sudo: false
-
-    # - name: Update webdriver manager
-    #   command: web-manager update
-
-    # - name: npm install
-    #   shell: "cd /vagrant; npm install"

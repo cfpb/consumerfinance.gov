@@ -2,8 +2,8 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "CentOS64"
-  config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
+  config.vm.box = "CFPBCentos64"
+  config.vm.box_url = "https://s3.amazonaws.com/virtual-boxes/package.box"
 
   config.vm.network "forwarded_port", guest: 80, host: 8002
   config.vm.network "forwarded_port", guest: 8000, host: 8001
