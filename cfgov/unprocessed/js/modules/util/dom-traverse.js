@@ -49,9 +49,11 @@ function getSiblings( elem, selector ) {
 function not( elems, exclude ) {
   var elemsArr = Array.prototype.slice.call( elems );
   var index = elemsArr.indexOf( exclude );
+
   if ( index > -1 ) {
-    return elemsArr.splice( index, 1 );
+    elemsArr.splice( index, 1 );
   }
+
   return elemsArr;
 }
 

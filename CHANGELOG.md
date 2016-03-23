@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Featured Menu Content Molecule.
 - Added Global Banner Molecule.
 - Added Digital Privacy Policy to the footer.
+- Added tests for dom-traverse functions
 
 ### Changed
 
