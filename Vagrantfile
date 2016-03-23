@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "CFPBCentos64"
+  config.vm.box = "CFPBCentOS64"
   config.vm.box_url = "https://s3.amazonaws.com/virtual-boxes/package.box"
 
   config.vm.network "forwarded_port", guest: 80, host: 8002
