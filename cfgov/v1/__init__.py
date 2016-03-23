@@ -54,6 +54,7 @@ def parse_links(soup):
     span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
     for a in soup.find_all('a', href=True):
         if p.match(a['href']):
+            a['href'] = '/external-site/?ext_url=' + a['href']
             a.attrs.update({'class': a_class})
             a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
     return soup
