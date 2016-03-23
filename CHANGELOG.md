@@ -16,6 +16,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Added Featured Menu Content Molecule.
 
 ### Changed
 
