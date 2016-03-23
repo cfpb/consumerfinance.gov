@@ -241,17 +241,17 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * @param   {string} value The value of the option the user has chosen
    */
   function _updateSelections( value ) {
-    var option = arrayHelpers.valInArray( _optionData, value ).item ||
-                 _optionData[_index];
+    var optionIndex = arrayHelpers.indexOfObject( _optionData, 'value', value );
+    var option = _optionData[optionIndex] || _optionData[_index];
 
     if ( option ) {
-      var inSelections = arrayHelpers.valInArray( _selections, option.value );
+      var selectionIndex = _selections.indexOf( option );
       var li;
 
-      if ( inSelections ) {
-        li = _choices.querySelector( 'li[data-option="' + option.value + '"]' );
+      if ( selectionIndex > -1 ) {
+        _selections.splice( selectionIndex, 1 );
 
-        _selections.splice( inSelections.index, 1 );
+        li = _choices.querySelector( 'li[data-option="' + option.value + '"]' );
 
         if ( li ) {
           _choices.removeChild( li );
@@ -430,7 +430,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * @param   {object} event The checkbox change event
    */
   function _changeHandler( event ) {
-    _updateSelections( event.target.id );
+    _updateSelections( event.target.value );
     _resetSearch();
   }
 
