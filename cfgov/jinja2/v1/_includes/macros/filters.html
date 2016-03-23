@@ -402,7 +402,7 @@
            {%- endif -%}
            >
     <label class="form-group_item" for="{{ id }}">
-        {{ label if label else value }}
+        {{ label | safe if label else value | safe }}
     </label>
 {% endmacro %}
 

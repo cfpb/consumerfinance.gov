@@ -20,7 +20,6 @@ require( '../modules/clear-form-buttons' ).init();
 require( '../modules/UStreamPlayer' ).init( '.video-player__ustream' );
 require( '../modules/YoutubePlayer' ).init( '.video-player__youtube' );
 require( '../modules/pagination-validation.js' ).init();
-require( '../modules/external-site-redirect.js' ).init();
 
 // GLOBAL ATOMIC ELEMENTS.
 // Organisms.

@@ -2,6 +2,7 @@ import sys
 import json
 import os.path
 import requests
+from sheerlike.external_links import process_external_links
 
 
 def posts_at_url(url):
@@ -30,6 +31,8 @@ def process_post(page):
 
     del page['comments']
     page['_id'] = page['id']
+
+    page = process_external_links(page)
 
     return {'_type': 'pages',
             '_id': page['id'],
