@@ -31,11 +31,11 @@
 
     {% if value.links %}
         <ul class="list list__unstyled list__links">
-        {% for link in value.links %}
-            <li class="list_item">
-                <a href="{{ link.url }}" class="list_link">{{ link.text }}</a>
-            </li>
-        {% endfor %}
+            {% for link in value.links %}
+                <li class="list_item">
+                    <a href="{{ link.url }}" class="list_link">{{ link.text }}</a>
+                </li>
+            {% endfor %}
         </ul>
     {% endif %}
 </div>

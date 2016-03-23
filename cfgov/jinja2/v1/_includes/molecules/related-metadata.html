@@ -15,7 +15,7 @@
 
    ========================================================================== #}
 
-{% macro render(value) %}
+{% macro render( value ) %}
 {% set types_lookup = {
     'date':   _date,
     'list':   _list,
@@ -39,7 +39,7 @@
             <h3 class="h4">
                 {{ block.value.heading }}
             </h3>
-            {{ types_lookup[block.block_type](block.value) }}
+            {{ types_lookup[block.block_type]( block.value ) }}
         </div>
     {% endfor %}
 </div>
@@ -62,17 +62,17 @@
 
    ========================================================================== #}
 
-{% macro _list(list, is_related_topics=false) %}
+{% macro _list( list, is_related_topics=false ) %}
 <ul class="list
            list__unstyled
            list__links
            {{ 'm-related-metadata_topics' if is_related_topics else '' }} ">
     {% for link in list.links %}
-    <li class="list_item">
-        <a href="{{ link.url }}" class="list_link">
-            {{ link.text }}
-        </a>
-    </li>
+        <li class="list_item">
+            <a href="{{ link.url }}" class="list_link">
+                {{ link.text }}
+            </a>
+        </li>
     {% endfor %}
 </ul>
 {% endmacro %}
@@ -94,7 +94,7 @@
 {% macro _date(date) %}
 {% import 'macros/time.html' as time %}
 <p class="date u-mb0">
-    {{ time.render(date.date, {'date':true}) }}
+    {{ time.render( date.date, {'date':true} ) }}
 </p>
 {% endmacro %}
 
@@ -112,8 +112,7 @@
 
    ========================================================================== #}
 
-{% macro _text(text) %}
-
+{% macro _text( text ) %}
 <p class="u-mb0">
     {{ parse_links(text.blob) | safe }}
 </p>
@@ -133,6 +132,6 @@
 
    ========================================================================== #}
 
-{% macro _topics(list) %}
-    {{ _list( page.related_metadata_tags(request.GET), true ) }}
+{% macro _topics( list ) %}
+    {{ _list( page.related_metadata_tags( request.GET ), true ) }}
 {% endmacro %}

@@ -16,9 +16,9 @@
 
    ========================================================================== #}
 
-{% macro render(block, is_half_width=false, hide_header_slug=false) %}
+{% macro render( block, is_half_width=false, hide_header_slug=false ) %}
     {% import 'macros/category-icon.html' as category_icon %}
-    {% set related_post_types = page.related_posts(block, request.site.hostname) %}
+    {% set related_post_types = page.related_posts( block, request.site.hostname ) %}
     {% if related_post_types %}
         <div class="m-related-posts
                     {{'m-related-posts__half-width'
@@ -31,14 +31,14 @@
                 </h2>
             {% endif %}
             {% for post_type, post_type_list in related_post_types.iteritems() %}
-                {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", "cf-icon-speech-bubble") %}
+                {% set title, icon = ( post_type, category_icon.render( post_type ) ) or ( "Blog", "cf-icon-speech-bubble" ) %}
                 <div class="m-related-posts_list-container">
                     {% if block.value.show_heading %}
                         <h3 class="h4">
                             {{ icon }} {{ title }}
                         </h3>
                     {% endif %}
-                    {{ _related_posts_list(post_type_list, block.value.limit) }}
+                    {{ _related_posts_list( post_type_list, block.value.limit ) }}
                 </div>
             {% endfor %}
         </div>

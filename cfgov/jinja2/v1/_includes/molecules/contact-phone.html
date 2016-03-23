@@ -32,14 +32,14 @@
     <span class="cf-icon {{ icon }}"></span>
     <span class="h5">{{ label }}</span>
     {% for phone in value.phones %}
-    <p>
-        <b>{{ format_phone(phone.number) }}</b>
-        {% if phone.vanity %}
-        <span>{{ format_phone(phone.vanity) }}</span>
-        {% endif %}
-        {% if phone.tty %}
-        <span>TTY/TDD: {{ format_phone(phone.tty) }}<span>
-        {% endif %}
-    </p>
+        <p>
+            <b>{{ format_phone( phone.number ) }}</b>
+            {% if phone.vanity %}
+                <span>{{ format_phone( phone.vanity ) }}</span>
+            {% endif %}
+            {% if phone.tty %}
+                <span>TTY/TDD: {{ format_phone( phone.tty ) }}<span>
+            {% endif %}
+        </p>
     {% endfor %}
 </div>

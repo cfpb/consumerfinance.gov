@@ -26,14 +26,12 @@
 
    ========================================================================== #}
 
-{% macro expandable(value) %}
-
+{% macro expandable( value ) %}
 <div class="m-expandable
             m-expandable__expanded
             {{ 'm-expandable__borders' if value.is_bordered else '' }}
             {{ 'm-expandable__midtone' if value.is_midtone else '' }}"
             {{ 'data-state=expanded' if value.is_expanded else '' }}>
-
     <button class="m-expandable_target">
         <div class="m-expandable_header">
             <span class="m-expandable_header-left
@@ -64,9 +62,9 @@
             {% else %}
                 {% for block in value.content %}
                     {% if 'paragraph' in block.block_type %}
-                        {{ parse_links(block.value) |safe}}
+                        {{ parse_links( block.value ) | safe }}
                     {% else %}
-                        {{ render_stream_child(block) }}
+                        {{ render_stream_child( block ) }}
                     {% endif %}
                 {% endfor %}
             {% endif %}
@@ -76,5 +74,5 @@
 {% endmacro %}
 
 {% if value %}
-    {{ expandable(value) }}
+    {{ expandable( value ) }}
 {% endif %}
