@@ -17,6 +17,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Added Featured Menu Content Molecule.
+- Added Global Banner Molecule.
 
 ### Changed
 

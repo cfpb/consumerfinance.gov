@@ -1,8 +1,8 @@
 /* ==========================================================================
    cfgov-refresh
-   Beta splash page and banner.
+   Global banner in the header.
    ========================================================================== */
-.beta-banner {
+.m-global-banner {
     padding: (@grid_gutter-width / 2) 0;
     position: relative;
     z-index: 10;
@@ -12,7 +12,7 @@
     font-size: 0.875em;
     transition: padding 0.2s ease-out;
 
-    &.m-expandable__expanded {
+    .m-expandable__expanded {
         padding: @grid_gutter-width 0;
     }
 
@@ -84,7 +84,7 @@
 }
 
 .no-js {
-    .beta-banner_btn {
+    .m-global-banner_btn {
         display: none;
     }
 }

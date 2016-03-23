@@ -10,7 +10,6 @@ require( 'jquery-easing' );
 require( 'cf-expandables' );
 
 // Global modules.
-require( '../modules/beta-banner-state' ).init();
 require( '../modules/footer-button' ).init();
 require( '../modules/focus-target' ).init();
 require( '../modules/post-filter' ).init();

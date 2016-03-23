@@ -17,13 +17,3 @@ if ( filterableListDom ) {
     filterableListControls.init();
   }
 }
-
-var expandableDom = document.querySelectorAll( '.m-expandable' );
-var expandable;
-if ( expandableDom ) {
-  for ( var i = 0, len = expandableDom.length; i < len; i++ ) {
-    expandable = new Expandable( expandableDom[i] );
-    expandable.init();
-  }
-}
-
