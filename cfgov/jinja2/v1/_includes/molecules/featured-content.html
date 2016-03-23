@@ -83,10 +83,8 @@
         </ul>
     </div>
     {% if value.video.url and value.video.id %}
-        <div class="featured-content-module_visual">
-            {% import 'macros/video-player.html' as video_player %}
-            {{ video_player.render(value) }}
-        </div>
+        {% import 'macros/video-player.html' as video_player %}
+        {{ video_player.render(value) }}
     {% elif value.image %}
         <div class="featured-content-module_visual">
             {% set photo = image(value.image.upload, 'original') %}
