@@ -30,8 +30,9 @@ def share_the_page(request, page):
     # and save the page.
     if is_sharing or is_publishing:
         page.shared = True
-    else:
-        page.shared = False
+        page.has_unshared_changes = False
+    if not is_sharing and not is_publishing:
+        page.has_unshared_changes = True
     page.save()
 
     # If the page isn't being published but the page is live and the editor
@@ -42,11 +43,11 @@ def share_the_page(request, page):
     # True and we're never commiting the change. As seen in CFGOVPage's route
     # method, `route()` will select the latest revision of the page where `live`
     # is set to True and return that revision as a page object to serve the request with.
-    if not is_publishing:
-        page.live = False
     latest = page.get_latest_revision()
     content_json = json.loads(latest.content_json)
-    content_json['live'], content_json['shared'] = page.live, page.shared
+    content_json['live'] = is_publishing
+    content_json['shared'] = page.shared
+    content_json['has_unshared_changes'] = page.has_unshared_changes
     latest.content_json = json.dumps(content_json)
     latest.save()
     if is_publishing:
