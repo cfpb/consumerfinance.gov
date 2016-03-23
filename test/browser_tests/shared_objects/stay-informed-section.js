@@ -21,8 +21,6 @@ var stayInformedSection = {
 
   emailFormLabel: _emailSubscribeForm.element( by.css( 'label' ) ),
 
-  emailFormDescription: _getQAelement( 'stay-informed-desc' ),
-
   emailFormHiddenField:
   _emailSubscribeForm.element( by.css( 'input[type="hidden"]' ) ),
 

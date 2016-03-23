@@ -9,9 +9,6 @@ function TheBureauPage() {
 
   this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
-  this.bureauMission =
-  element.all( by.css( '.js-mobile-carousel .media-stack_item' ) );
-
   this.bureauFunctions =
   element( by.css( '[data-qa-hook="bureau-core-functions"]' ) );
 

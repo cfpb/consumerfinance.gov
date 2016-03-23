@@ -13,7 +13,7 @@ describe( 'The Blog Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Blog' );
+    expect( page.pageTitle() ).toContain( 'Blog' );
   } );
 
   it( 'should include a main title', function() {
@@ -62,10 +62,6 @@ describe( 'The Blog Page', function() {
   it( 'should include an Email Subscribe button', function() {
     expect( page.emailFormBtn.getAttribute( 'value' ) )
     .toBe( 'Sign up' );
-  } );
-
-  it( 'should include an Email Subscribe description', function() {
-    expect( page.emailFormDescription.isPresent() ).toBe( true );
   } );
 
   it( 'should include an RSS Subscribe section', function() {

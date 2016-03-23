@@ -13,7 +13,7 @@ describe( 'The Blog single Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Lessons we’ve learned' );
+    expect( page.pageTitle() ).toContain( 'Lessons we’ve learned' );
   } );
 
   it( 'should include a post title', function() {
@@ -38,12 +38,6 @@ describe( 'The Blog single Page', function() {
 
   it( 'should include a content sidebar', function() {
     expect( page.contentSidebar.isPresent() ).toBe( true );
-  } );
-
-  xit( 'might include Related Posts in the sidebar', function() {
-    if ( page.relatedPosts ) {
-      expect( page.relatedPostsTitle.getText() ).toBe( 'RELATED POSTS' );
-    }
   } );
 
   it( 'should include a Stay Informed section in the sidebar', function() {
@@ -78,10 +72,6 @@ describe( 'The Blog single Page', function() {
   it( 'should include an Email Subscribe button', function() {
     expect( page.emailFormBtn.getAttribute( 'value' ) )
     .toBe( 'Sign up' );
-  } );
-
-  it( 'should include an Email Subscribe description', function() {
-    expect( page.emailFormDescription.isPresent() ).toBe( true );
   } );
 
   it( 'should include an RSS Subscribe section', function() {

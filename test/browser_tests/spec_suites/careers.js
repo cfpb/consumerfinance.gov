@@ -17,11 +17,7 @@ describe( 'The Careers Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Careers at the CFPB' );
-  } );
-
-  it( 'should have an intro title', function() {
-    expect( page.introSectionTitle.getText() ).toBe( 'Careers at the CFPB' );
+    expect( page.pageTitle() ).toContain( 'Careers at the CFPB' );
   } );
 
   it( 'should have an openings section', function() {
@@ -56,20 +52,6 @@ describe( 'The Careers Page', function() {
     expect( page.infoSectionDescriptions.count() ).toEqual( 2 );
     expect( page.infoSectionLinks.getAttribute( 'href' ) )
     .toEqualUrl( infoSectionLinks );
-  } );
-
-  it( 'should have a social info section', function() {
-    var socialSectionTitles = [ 'Follow us on LinkedIn',
-    'Provide Feedback' ];
-    var socialSectionLinks =
-    [ 'https://www.linkedin.com/company/consumer-financial-protection-bureau',
-    'mailto:jobs@consumerfinance.gov' ];
-
-    expect( page.socialSectionTitles.getText() )
-    .toEqual( socialSectionTitles );
-    expect( page.socialSectionDescriptions.count() ).toEqual( 2 );
-    expect( page.socialSectionLinks.getAttribute( 'href' ) )
-    .toEqual( socialSectionLinks );
   } );
 
 } );

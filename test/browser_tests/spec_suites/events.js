@@ -14,7 +14,7 @@ describe( 'Events Landing page', function() {
   } );
 
   xit( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Upcoming Events' );
+    expect( page.pageTitle() ).toContain( 'Upcoming Events' );
   } );
 
   xit( 'should include a hero', function() {

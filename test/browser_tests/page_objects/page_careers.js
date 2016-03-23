@@ -1,13 +1,10 @@
 'use strict';
 
 var _getQAelement = require( '../util/qa-element' ).get;
-var careersSocialSection =
-require( '../shared_objects/careers-social-section' );
-
 
 function Careers() {
 
-  Object.assign( this, careersSocialSection );
+  Object.assign( this );
 
   this.get = function() {
     browser.get( '/careers/' );

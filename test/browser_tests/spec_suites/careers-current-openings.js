@@ -17,19 +17,11 @@ describe( 'The Current Openings Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Current Openings' );
+    expect( page.pageTitle() ).toContain( 'Current Openings' );
   } );
 
   it( 'should have a sideNav', function() {
     expect( page.sideNav.isPresent() ).toBe( true );
-  } );
-
-  it( 'should have an intro title', function() {
-    expect( page.introSectionTitle.getText() ).toBe( 'Current Openings' );
-  } );
-
-  it( 'should have a jobs openings table ', function() {
-    expect( page.jobOpeningsTable.isPresent() ).toBe( true );
   } );
 
   it( 'should have a career info section', function() {
@@ -43,20 +35,6 @@ describe( 'The Current Openings Page', function() {
     expect( page.infoSectionDescriptions.count() ).toEqual( 4 );
     expect( page.infoSectionLinks.getAttribute( 'href' ) )
     .toEqualUrl( infoSectionLinks );
-  } );
-
-  it( 'should have a social info section', function() {
-    var socialSectionTitles = [ 'Follow us on LinkedIn',
-    'Provide Feedback' ];
-    var socialSectionLinks =
-    [ 'https://www.linkedin.com/company/consumer-financial-protection-bureau',
-    'mailto:jobs@consumerfinance.gov' ];
-
-    expect( page.socialSectionTitles.getText() )
-    .toEqual( socialSectionTitles );
-    expect( page.socialSectionDescriptions.count() ).toEqual( 2 );
-    expect( page.socialSectionLinks.getAttribute( 'href' ) )
-    .toEqual( socialSectionLinks );
   } );
 
   it( 'should have a Related Links section', function() {

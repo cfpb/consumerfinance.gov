@@ -1,14 +1,12 @@
 'use strict';
 
 var _getQAelement = require( '../util/qa-element' ).get;
-var careersSocialSection =
-require( '../shared_objects/careers-social-section' );
 var relatedLinksSection = require( '../shared_objects/related-links-section' );
 
 
 function ApplicationProcess() {
 
-  Object.assign( this, careersSocialSection, relatedLinksSection );
+  Object.assign( this, relatedLinksSection );
 
   this.get = function() {
     browser.get( '/careers/application-process/' );
@@ -19,10 +17,6 @@ function ApplicationProcess() {
   this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.introSection = _getQAelement( 'intro-section' );
-
-  this.introSectionTitle = this.introSection.element( by.css( 'h1' ) );
-
-  this.introSectionLink = this.introSection.element( by.css( 'a' ) );
 
   this.jobApplicationsInterfaces =
   element.all( by.css( '.job-applications-interfaces .media' ) );

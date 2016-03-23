@@ -1,14 +1,12 @@
 'use strict';
 
 var _getQAelement = require( '../util/qa-element' ).get;
-var careersSocialSection =
-require( '../shared_objects/careers-social-section' );
 var relatedLinksSection = require( '../shared_objects/related-links-section' );
 
 
 function WorkingAtCFPB() {
 
-  Object.assign( this, careersSocialSection, relatedLinksSection );
+  Object.assign( this, relatedLinksSection );
 
   this.get = function() {
     browser.get( '/careers/working-at-cfpb/' );

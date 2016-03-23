@@ -19,7 +19,7 @@ describe( 'The Bureau Structure Page', function() {
 
   it( 'should properly load in a browser',
     function() {
-      expect( page.pageTitle() ).toBe( 'Bureau Structure' );
+      expect( page.pageTitle() ).toContain( 'Bureau Structure' );
     }
   );
 
@@ -58,14 +58,6 @@ describe( 'The Bureau Structure Page', function() {
   it( 'should include the download button',
     function() {
       expect( page.downloadBtn.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include the speaking info',
-    function() {
-      expect( page.speakingInfo.isPresent() ).toBe( true );
-      expect( page.speakingInfoEmail.getText() )
-      .toEqual( 'cfpb.events@cfpb.gov' );
     }
   );
 
