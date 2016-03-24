@@ -54,18 +54,10 @@
     </div>
 
     <div class="o-sidebar-contact-info_column">
-        {% set blockLookup = {
-          email: '',
-          phone: '',
-          address: '',
-        } %}
         {% if value.contact.contact_info %}
             {% for block in value.contact.contact_info %}
-                {% do blockLookup.update({ block.block_type: block } ) %}
+                {{ render_stream_child(block) }}
             {% endfor %}
-            {{ blockLookup.email }}
-            {{ blockLookup.phone }}
-            {{ blockLookup.address }}
         {% endif %}
     </div>
 </div>
