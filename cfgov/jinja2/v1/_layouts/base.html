@@ -136,41 +136,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <a href="#main" id="skip-nav">Skip to main content</a>
 
-{% if flag_enabled('BETA_NOTICE') %}
-<div class="beta-banner
-            m-expandable
-            m-expandable__expanded"
-     id="beta-banner">
-    <div class="wrapper wrapper__match-content">
-        <div class="beta-banner_head">
-            <span class="cf-icon
-                         cf-icon-error-round
-                         beta-banner_icon"></span>
-            This beta site is a work in progress.
-        </div>
-        <div class="m-expandable_content">
-            <p class="beta-banner_desc  m-expandable_content-animated">
-                We’re prototyping new designs. Things may not work as expected.
-                Our regular site continues to be at
-                <a href="http://www.consumerfinance.gov/">www.consumerfinance.gov</a>.
-            </p>
-        </div>
-        <button class="btn
-                       beta-banner_btn
-                       m-expandable_target
-                       m-expandable_link"
-                id="beta-banner_btn">
-            <span class="m-expandable_cue m-expandable_cue-close">
-                Collapse <span class="cf-icon cf-icon-up"></span>
-            </span>
-            <span class="m-expandable_cue m-expandable_cue-open">
-                More info <span class="cf-icon cf-icon-down"></span>
-            </span>
-        </button>
-    </div>
-</div>
-{% endif %}
-
 {% block header %}
     {% include 'organisms/header.html' %}
 {% endblock header %}

@@ -1,5 +1,41 @@
 <header class="o-header"
         role="banner">
+
+    {% if flag_enabled('BETA_NOTICE') %}
+    <div class="m-global-banner">
+        <div class="wrapper
+                    wrapper__match-content
+                    m-expandable
+                    m-expandable__expanded">
+            <div class="m-global-banner_head">
+                <span class="cf-icon
+                             cf-icon-error-round
+                             m-global-banner_icon"></span>
+                This beta site is a work in progress.
+            </div>
+            <div class="m-expandable_content">
+                <p class="m-global-banner_desc  m-expandable_content-animated">
+                    We’re prototyping new designs. Things may not work as expected.
+                    Our regular site continues to be at
+                    <a href="http://www.consumerfinance.gov/">www.consumerfinance.gov</a>.
+                </p>
+            </div>
+            <button class="btn
+                           m-global-banner_btn
+                           m-expandable_target
+                           m-expandable_link"
+                    id="m-global-banner_btn">
+                <span class="m-expandable_cue m-expandable_cue-close">
+                    Collapse <span class="cf-icon cf-icon-up"></span>
+                </span>
+                <span class="m-expandable_cue m-expandable_cue-open">
+                    More info <span class="cf-icon cf-icon-down"></span>
+                </span>
+            </button>
+        </div>
+    </div>
+    {% endif %}
+
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render( true ) }}
 
