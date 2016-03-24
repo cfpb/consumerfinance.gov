@@ -14,14 +14,13 @@
  *
  * @param {TreeNode} node - Node within a tree to traverse from.
  * @param {Function} callback - Function to call at each node.
+ *   `this` will be the treeTranserval module within the callback.
  */
 function backtrack( node, callback ) {
-  // TODO: Check that value of `this` references the expected thing.
-  //       It may make sense to have it reference node.tree.
   callback.call( this, node );
   var parent = node.parent;
   if ( parent ) {
-    backtrack( parent, callback );
+    backtrack.apply( this, [ parent, callback ] );
   }
 }
 
@@ -39,6 +38,7 @@ function backtrack( node, callback ) {
  *
  * @param {TreeNode} node - Node within a tree to traverse from.
  * @param {Function} callback - Function to call at each node.
+ *   `this` will be the treeTranserval module within the callback.
  */
 function bfs( node, callback ) {
   var queue = [ node ];
@@ -68,14 +68,13 @@ function bfs( node, callback ) {
  *
  * @param {TreeNode} node - Node within a tree to traverse from.
  * @param {Function} callback - Function to call at each node.
+ *   `this` will be the treeTranserval module within the callback.
  */
 function dfs( node, callback ) {
-  // TODO: Check that value of `this` references the expected thing.
-  //       It may make sense to have it reference node.tree.
   callback.call( this, node );
   var children = node.children;
   for ( var i = 0, len = children.length; i < len; i++ ) {
-    dfs( children[i], callback );
+    dfs.apply( this, [ children[i], callback ] );
   }
 }
 
