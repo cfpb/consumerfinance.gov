@@ -105,6 +105,7 @@ urlpatterns = [
     ],
         namespace='docs')),
 
+    url(r'^blog/(?P<path>.*)$', RedirectView.as_view(url='/about-us/blog/%(path)s', permanent=True)),
     url(r'^about-us/blog/', include([
         url(r'^$', TemplateView.as_view(template_name='blog/index.html'),
             name='index'),
@@ -115,6 +116,7 @@ urlpatterns = [
             name='detail')],
         namespace='blog')),
 
+    url(r'^newsroom/(?P<path>.*)$', RedirectView.as_view(url='/about-us/newsroom/%(path)s', permanent=True)),
     url(r'^about-us/newsroom/', include([
         url(r'^$', TemplateView.as_view(template_name='newsroom/index.html'),
             name='index'),
@@ -228,7 +230,7 @@ urlpatterns = [
     url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
 
     # Report redirects
-    url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s')),
+    url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s', permanent=True)),
 ]
 if 'cfpb_common' in settings.INSTALLED_APPS:
     pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')
