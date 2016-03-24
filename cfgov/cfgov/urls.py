@@ -105,7 +105,7 @@ urlpatterns = [
     ],
         namespace='docs')),
 
-    url(r'^blog/', include([
+    url(r'^about-us/blog/', include([
         url(r'^$', TemplateView.as_view(template_name='blog/index.html'),
             name='index'),
         url(r'^(?P<doc_id>[\w-]+)/$',
@@ -115,7 +115,7 @@ urlpatterns = [
             name='detail')],
         namespace='blog')),
 
-    url(r'^newsroom/', include([
+    url(r'^about-us/newsroom/', include([
         url(r'^$', TemplateView.as_view(template_name='newsroom/index.html'),
             name='index'),
         url(r'^press-resources/$',

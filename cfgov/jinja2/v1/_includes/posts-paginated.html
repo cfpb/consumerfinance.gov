@@ -10,7 +10,7 @@
     {#- Blog uses a different category field ('blog_category')
         so on that page we'll need to tell category_slug to use that field
         rather than the normal 'category' #}
-    {%- if vars.path == '/blog/' %}
+    {%- if vars.path == '/about-us/blog/' %}
         {% set category = post.blog_category %}
         {% set use_blog_category = true %}
     {% elif post.category %}
@@ -62,7 +62,7 @@
 
 {% endfor %}
 
-{% if vars.path == '/blog/' %}
+{% if vars.path == '/about-us/blog/' %}
     {% set category_field = 'blog_category' %}
 {% else %}
     {% set category_field = 'category' %}
