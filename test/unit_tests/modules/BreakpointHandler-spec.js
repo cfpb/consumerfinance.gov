@@ -5,7 +5,7 @@ var jsdom = require( 'mocha-jsdom' );
 var sinon = require( 'sinon' );
 var BreakpointHandler;
 var args;
-var BASE_LOC = '../../../../cfgov/unprocessed/js/';
+var BASE_LOC = '../../../cfgov/unprocessed/js/';
 var standardType = require( BASE_LOC + 'modules/util/standard-type' );
 
 beforeEach( function() {
