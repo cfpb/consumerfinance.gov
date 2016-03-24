@@ -22,6 +22,8 @@ from transition_utilities.conditional_urls import include_if_app_enabled
 from wagtail.wagtailadmin.forms import PasswordResetForm
 from wagtail.wagtailadmin.views import account
 
+fin_ed = SheerSite('fin-ed-resources')
+
 urlpatterns = [
     url(r'^django-admin/login', cfpb_login, name='wagtailadmin_login'),
     url(r'^django-admin/password_change', change_password, name='wagtailadmin_account_change_password'),
@@ -49,11 +51,15 @@ urlpatterns = [
     url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
     url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
-    url(r'^adult-financial-education/', include(SheerSite('fin-ed-resources').urls_for_prefix('adult-financial-education'))),
-    url(r'^youth-financial-education/', include(SheerSite('fin-ed-resources').urls_for_prefix('youth-financial-education'))),
-    url(r'^library-resources/', include(SheerSite('fin-ed-resources').urls_for_prefix('library-resources'))),
-    url(r'^tax-preparer-resources/', include(SheerSite('fin-ed-resources').urls_for_prefix('tax-preparer-resources'))),
-    url(r'^managing-someone-elses-money/', include(SheerSite('fin-ed-resources').urls_for_prefix('managing-someone-elses-money'))),
+
+    url(r'^adult-financial-education/', include(fin_ed.urls_for_prefix('adult-financial-education'))),
+    url(r'^youth-financial-education/', include(fin_ed.urls_for_prefix('youth-financial-education'))),
+    url(r'^library-resources/', include(fin_ed.urls_for_prefix('library-resources'))),
+    url(r'^tax-preparer-resources/', include(fin_ed.urls_for_prefix('tax-preparer-resources'))),
+    url(r'^managing-someone-elses-money/', include(fin_ed.urls_for_prefix('managing-someone-elses-money'))),
+    url(r'^parents/(?P<path>.*)$', RedirectView.as_view(url='/money-as-you-grow/%(path)s', permanent=True)),
+    url(r'^money-as-you-grow/', include(fin_ed.urls_for_prefix('money-as-you-grow'))),
+    url(r'fin-ed/privacy-act-statement/', include(fin_ed.urls_for_prefix('privacy-act-statement'))),
     url(r'^docs/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='docs_index.html'), name='index'),
 
