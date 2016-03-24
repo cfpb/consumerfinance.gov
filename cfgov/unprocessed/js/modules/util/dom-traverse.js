@@ -1,5 +1,19 @@
 'use strict';
 
+var typeCheckers = require( './type-checkers' );
+
+/**
+ * Queries for the first match unless an HTMLNode is passed
+ * @param   {(HTMLNode|string)} expr HTMLNode or string to query for
+ * @param   {Object}          con  The document location to query
+ * @returns {HTMLNode}             The elem
+ */
+function queryOne( expr, con ) {
+  return typeCheckers.isString( expr ) ?
+    ( con || document ).querySelector( expr ) :
+    expr || null;
+}
+
 /**
  * Get the sibling nodes of a dom node.
  *
@@ -71,6 +85,7 @@ function closest( elem, selector ) {
 }
 
 module.exports = {
+  queryOne:    queryOne,
   closest:     closest,
   getSiblings: getSiblings,
   not:         not

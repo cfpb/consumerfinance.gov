@@ -13,7 +13,8 @@ from flags.template_functions import flag_enabled, flag_disabled
 from util.util import get_unique_id
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
+from django.conf import settings
 
 default_app_config = 'v1.apps.V1AppConfig'
 
@@ -39,38 +40,30 @@ def environment(**options):
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
         'get_page_state_url': share.get_page_state_url,
-        'parse_links': external_links,
+        'parse_links': external_links_filter,
     })
     env.filters.update({
         'slugify': slugify,
     })
     return env
 
-EXTERNAL_LINK_PATTERN = '(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
 
-
-def parse_link(soup):
-    try:
-        p = re.compile(EXTERNAL_LINK_PATTERN)
-
-        for a in soup('a'):
-            if p.match(a['href']):
-                a.append('<span class="' + str(
-                    os.environ.get('EXTERNAL_LINK_CSS',
-                                   'icon-link link-with-icon icon-link__external-link')) + '"></span>')
-    except:
-        pass
-
+def parse_links(soup):
+    p = re.compile(settings.EXTERNAL_LINK_PATTERN)
+    a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
+    span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
+    for a in soup.find_all('a', href=True):
+        if p.match(a['href']):
+            a['href'] = '/external-site/?ext_url=' + a['href']
+            a.attrs.update({'class': a_class})
+            a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
     return soup
 
 
-def external_links(value):
+def external_links_filter(value):
     if isinstance(value, RichText):
-        return parse_link(BeautifulSoup(expand_db_html(value.source)))
-    elif 'source' in value:   # Handles sheer sites
-        return value['source']
-    else:
-        return value
+        return parse_links(BeautifulSoup(expand_db_html(value.source), 'html.parser'))
+    return value
 
 
 @contextfunction

@@ -2,6 +2,7 @@ import sys
 import json
 import os.path
 import requests
+from sheerlike.external_links import process_external_links
 
 
 def posts_at_url(url):
@@ -38,6 +39,7 @@ def process_career(career):
                 ap_types['application_type']['name'] = \
                     ap_types['application_type']['applicant_type']
                 del ap_types['application_type']['applicant_type']
+    career = process_external_links(career)
     return {'_type': 'career',
             '_id': career['id'],
             '_source': career}

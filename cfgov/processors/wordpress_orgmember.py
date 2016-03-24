@@ -2,6 +2,7 @@ import sys
 import json
 import os.path
 import requests
+from sheerlike.external_links import process_external_links
 
 
 def posts_at_url(url):
@@ -46,6 +47,8 @@ def process_orgmember(member):
                            ['titles_0', 'titles_1']
                             if member['custom_fields'].get(title)]
     del member['custom_fields']
+
+    member = process_external_links(member)
 
     return {'_type': 'orgmember',
             '_id': member['slug'],

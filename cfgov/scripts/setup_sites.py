@@ -2,7 +2,7 @@ from wagtail.wagtailcore.models import Site
 from django.conf import settings
 
 
-def run(hostname):
+def run(hostname=None):
     if settings.DEBUG:
         # Set up sites
         live = 'localhost'

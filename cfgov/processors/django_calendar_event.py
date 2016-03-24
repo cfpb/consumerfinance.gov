@@ -2,6 +2,7 @@ import sys
 import json
 import os.path
 import requests
+from sheerlike.external_links import process_external_links
 
 import dateutil.parser
 import datetime
@@ -40,6 +41,8 @@ def process_event(event):
             del event['description']
         else:
             event['description'] = event['description'].strip()
+
+    event = process_external_links(event)
 
     return {'_type': 'calendar_event',
             '_id': event['id'],

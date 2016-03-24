@@ -13,6 +13,7 @@
 
 {% macro render() %}
 {% import 'molecules/social-media.html' as social_media with context %}
+{% set external_redirect_url = '/external-site/?ext_url=' %}
 <footer class="footer" role="contentinfo">
     <div class="wrapper wrapper__match-content">
 
@@ -111,7 +112,7 @@
                         <a class="list_link
                                   icon-link
                                   icon-link__external-link"
-                           href="http://usa.gov/">
+                           href="{{ external_redirect_url }}http://usa.gov/">
                             USA.gov
                         </a>
                     </li>
@@ -119,7 +120,7 @@
                         <a class="list_link
                                   icon-link
                                   icon-link__external-link"
-                           href="http://www.federalreserve.gov/oig/default.htm">
+                           href="{{ external_redirect_url }}http://www.federalreserve.gov/oig/default.htm">
                             Office of Inspector General
                         </a>
                     </li>
