@@ -16,12 +16,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
 - Added Featured Menu Content Molecule.
 
 ### Changed
 
 - Abstracted create and queryOneout of the multiselect.
 - Simplified array searching in the Multiselect.
+- Updated the home hero to it’s own molecule.
 
 ### Removed
 

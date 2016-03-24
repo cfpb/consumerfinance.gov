@@ -13,7 +13,15 @@
 
     <main class="content" id="main" role="main">
 
-        {% include 'molecules/home-hero.html' %}
+        {% from 'molecules/home-hero.html' import home_hero with context %}
+        {{ home_hero( {
+            'heading': 'We’re on your side',
+            'body':    'We are the Consumer Financial Protection Bureau,
+                        a U.S. government agency that makes sure banks, lenders,
+                        and other financial companies treat you fairly.',
+            'sm_img':  '/static/img/home-hero_sm.jpg',
+            'lg_img':  '/static/img/home-hero_lg.jpg'
+        } ) }}
 
         {% from 'molecules/info-unit.html' import info_unit with context %}
         <div class="o-well
