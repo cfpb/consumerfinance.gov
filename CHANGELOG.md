@@ -16,6 +16,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+- Added Featured Menu Content Molecule.
+- Added Global Banner Molecule.
+
+### Changed
+
+- Abstracted create and queryOneout of the multiselect.
+- Simplified array searching in the Multiselect.
+- Updated the home hero to it’s own molecule.
+
+### Removed
+
+### Fixed
+
+ - Fixed active filter notification on Browse Filterable pages.
+
+## 3.0.0-3.1.1 - 2016-03-21
+
+### Added
 - Added Backend sidebar contact
 - Add Related Metadata molecule to backend
 - Added `ClearableInput` class for clearable input behavior

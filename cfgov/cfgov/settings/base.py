@@ -27,7 +27,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailusers',
     'wagtail.wagtailimages',
     'wagtail.wagtailembeds',
-#    'wagtail.wagtailsearch', conflicts with haystack, will need to revist
+#    'wagtail.wagtailsearch', # TODO: conflicts with haystack, will need to revisit.
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',
@@ -187,6 +187,8 @@ if NEMO_PATH.exists():
     STATICFILES_DIRS.append(('nemo', NEMO_PATH))
 
 ALLOWED_HOSTS = ['*']
+
+EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
 
 # Wagtail settings
 

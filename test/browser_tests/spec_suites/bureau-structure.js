@@ -11,8 +11,8 @@ describe( 'The Bureau Structure Page', function() {
     page.get();
 
     browser.getCapabilities().then( function( cap ) {
-      browser.name = cap.get('browserName');
-      browser.version = cap.get('version');
+      browser.name = cap.get( 'browserName' );
+      browser.version = cap.get( 'version' );
     } );
   } );
 

@@ -11,10 +11,10 @@
 
    Creates mega menu CSS classes when given:
 
-   nav_depth:    Level of menu nesting. 1 equals the root menu.
+   nav_depth: Level of menu nesting. 1 equals the root menu.
 
-   suffix:       Suffix to add to the classes.
-                 Default is ''.
+   suffix:    Suffix to add to the classes.
+              Default is ''.
 
    ========================================================================== #}
 
@@ -135,11 +135,9 @@
                 </div>
             </div>
             {% for url, fmc in media_items %}
-            {% if url == nav_overview_url %}
-            <aside class="sub-nav_media">
+                {% if url == nav_overview_url %}
                 {{ fmc }}
-            </aside>
-            {% endif %}
+                {% endif %}
             {% endfor %}
         {# Close Wrapper if needed #}
         {{ '</div>' | safe if nav_depth > 1 else '' }}

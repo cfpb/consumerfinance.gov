@@ -2,6 +2,7 @@ import sys
 import json
 import os.path
 import requests
+from sheerlike.external_links import process_external_links
 
 
 def posts_at_url(url):
@@ -81,6 +82,8 @@ def process_contact(contact):
             contact['web'] = contact['custom_fields']['web']
 
     del contact['custom_fields']
+
+    contact = process_external_links(contact)
 
     return {'_type': 'contact',
             '_id': contact['slug'],

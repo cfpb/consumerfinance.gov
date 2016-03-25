@@ -16,7 +16,6 @@
 @o-well_bg: @gray-5;
 @o-well_border: @gray-40;
 
-
 /* topdoc
   name: Well (Gray Well)
   family: cfgov-organisms
@@ -32,6 +31,17 @@
           Structural cheat sheet:
           -----------------------
           .o-well
+    - name: Full width example (for use outside of the content_main wrapper)
+      markup: |
+        <div class="o-well o-well__full">
+            <h2>Gray Well</h2>
+            <p>Well's content</p>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-well.o-well__full
   tags:
     - cfgov-organisms
 */
@@ -48,6 +58,18 @@
         padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
         padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
     } );
+
+    &__full {
+        .respond-to-min( @bp-xl-min, {
+            // TODO: 45px should be moved to a global grid gutter var
+            // Max-width - both gutters: required due to well spanning the
+            // full page
+            max-width: 1230px - ( 45px * 2 );
+            margin: 0 auto;
+            padding-right: unit( 45px / @base-font-size-px, em );
+            padding-left: unit( 45px / @base-font-size-px, em );
+        } );
+    }
 }
 
 /* topdoc

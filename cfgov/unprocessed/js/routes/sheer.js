@@ -18,7 +18,7 @@ if ( filterableListDom ) {
   }
 }
 
-var expandableDom = document.querySelectorAll( '.m-expandable' );
+var expandableDom = document.querySelectorAll( '.content_main .m-expandable' );
 var expandable;
 if ( expandableDom ) {
   for ( var i = 0, len = expandableDom.length; i < len; i++ ) {
@@ -26,4 +26,3 @@ if ( expandableDom ) {
     expandable.init();
   }
 }
-

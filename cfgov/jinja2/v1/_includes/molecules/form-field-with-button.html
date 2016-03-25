@@ -12,8 +12,7 @@
 
    value.btn_text:          The text for the submit button.
 
-   value.field.required:    Boolean indicating whether the field is
-                            required.
+   value.field.required:    Boolean indicating whether the field is required.
 
    value.field.id:          The id for the input.
 
@@ -38,7 +37,7 @@
                class="m-form-field-with-button_field"
                {{ 'required' if value.required else '' }}>
     </div>
-    <p>{{ parse_links(value.info) |safe }}</p>
+    <p>{{ parse_links(value.info) | safe }}</p>
     <input class="btn btn__full" type="submit" value="{{ value.btn_text }}">
 </div>
 

@@ -25,10 +25,10 @@
         <form class="m-global-search_content-form"
               action="http://search.consumerfinance.gov/search"
               method="get">
-            {# Required hidden input for CFPB search. #}
+            {# The following inputs are required by the CFPB search portal. #}
             <input type="hidden"
-                           name="utf8"
-                           value="✓">
+                   name="utf8"
+                   value="✓">
             <input type="hidden"
                    id="affiliate"
                    name="affiliate"
@@ -59,11 +59,26 @@
             <div class="m-global-search_content-suggestions">
                 <p class="h5">Suggested search terms:</p>
                 <ul class="list list__horizontal">
-                    {# TODO: Add suggested link URLs. #}
-                    <li class="list_item"><a class="list_link" href="#">Regulations</a></li>
-                    <li class="list_item"><a class="list_link" href="#">Compliance guides</a></li>
-                    <li class="list_item"><a class="list_link" href="#">Mortgage</a></li>
-                    <li class="list_item"><a class="list_link" href="#">College loans</a></li>
+                    <li class="list_item">
+                        <a class="list_link" href="http://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=regulations">
+                            Regulations
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link" href="http://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=compliance+guides">
+                            Compliance guides
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link" href="http://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=mortgage">
+                            Mortgage
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link" href="http://search.consumerfinance.gov/search?utf8=%E2%9C%93&affiliate=cfpb&query=college+loans">
+                            College loans
+                        </a>
+                    </li>
                 </ul>
             </div>
         </form>

@@ -2,6 +2,7 @@ import sys
 import json
 import os.path
 import requests
+from sheerlike.external_links import process_external_links
 
 
 def posts_at_url(url):
@@ -45,6 +46,8 @@ def process_history(item):
             item['section_date_to'] = item['custom_fields']['section_date_to']
 
     del item['custom_fields']
+
+    item = process_external_links(item)
 
     return {'_type': 'history',
             '_id': item['slug'],
