@@ -58,17 +58,6 @@ class BrowseFilterablePage(base.CFGOVPage):
     def get_page_set(self, form, hostname):
         return filterable_context.get_page_set(self, form, hostname)
 
-    def has_active_filters(self, request):
-        active_filters = False;
-        form_class = filterable_context.get_form_class()
-        filters = filterable_context.get_form_specific_filter_data(self, form_class, request.GET)
-        if filters:
-            for value in filters[0].itervalues():
-                if value:
-                    active_filters = True
-
-        return active_filters
-
 
 class EventArchivePage(BrowseFilterablePage):
     def get_form_class(self):
