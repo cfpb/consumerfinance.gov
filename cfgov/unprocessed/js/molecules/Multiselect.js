@@ -418,6 +418,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       }
     } );
 
+    _bind( _container, {
+      mousedown: function() {
+        _isBlurSkipped = true;
+      }
+    } );
+
     for ( var i = 0, len = inputs.length; i < len; i++ ) {
       _bind( inputs[i], {
         change: _changeHandler
