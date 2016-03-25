@@ -57,11 +57,11 @@
                             'links': [
                                 {
                                     'text': 'Submit your complaint',
-                                    'url':  '#'
+                                    'url':  '/complaint/'
                                 },
                                 {
                                     'text': 'Browse public complaints about companies',
-                                    'url':  '#'
+                                    'url':  '/complaintdatabase/'
                                 }
                             ]
                         } ) }}
@@ -79,12 +79,8 @@
                             'body': '<p>Financial matters can be complicated. Get the facts you need to make choices about money, credit scores, mortgages, and more.</p>',
                             'links': [
                                 {
-                                    'text': 'Learn more about credit cards, student loans, and other financial products',
-                                    'url':  '#'
-                                },
-                                {
                                     'text': 'Find answers to common questions',
-                                    'url':  '#'
+                                    'url':  '/askcfpb/'
                                 }
                             ]
                         } ) }}
@@ -103,15 +99,15 @@
                             'links': [
                                 {
                                     'text': 'Paying for College',
-                                    'url':  '#'
+                                    'url':  '/paying-for-college/'
                                 },
                                 {
                                     'text': 'Owning a Home',
-                                    'url':  '#'
+                                    'url':  '/owning-a-home/'
                                 },
                                 {
                                     'text': 'Planning for Retirement',
-                                    'url':  '#'
+                                    'url':  '/retirement/before-you-claim/'
                                 }
                             ]
                         } ) }}
@@ -170,7 +166,7 @@
 
         <div class="wrapper">
             <div class="content_main content_main__home">
-                <h2>Latest Updates</h2>
+                <h2>Latest updates</h2>
                 {% import 'macros/time.html' as time %}
                 <div class="content-l">
                     {% for sections in page.latest_updates %}

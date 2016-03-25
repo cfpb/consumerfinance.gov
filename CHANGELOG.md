@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
  - Fixed active filter notification on Browse Filterable pages.
+ - Corrected the homepage links.
 
 ## 3.0.0-3.1.1 - 2016-03-21
 
