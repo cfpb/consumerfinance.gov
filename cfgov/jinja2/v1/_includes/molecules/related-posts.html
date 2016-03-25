@@ -88,7 +88,10 @@
                 </p>
                 {% endif %}
                 <p class="date">
-                    {% set date = posts[i].latest_revision_created_at or  posts[i].date %}
+                    {% set date = posts[i].start_dt
+                                  or posts[i].date_published
+                                  or posts[i].latest_revision_created_at
+                                  or posts[i].date %}
                     {{ time.render(date, {'date':true}) }}
                 </p>
             </li>
