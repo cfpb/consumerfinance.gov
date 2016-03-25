@@ -83,7 +83,7 @@ class CFGOVPage(Page):
     tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
                                   related_name='tagged_pages')
     shared = models.BooleanField(default=False)
-
+    has_unshared_changes = models.BooleanField(default=False)
     language = models.CharField(choices=ref.supported_languagues, default='en', max_length=2)
 
     # This is used solely for subclassing pages we want to make at the CFPB.
@@ -180,20 +180,33 @@ class CFGOVPage(Page):
 
     @property
     def status_string(self):
-        if not self.live:
-            if self.expired:
-                return _("expired")
-            elif self.approved_schedule:
-                return _("scheduled")
-            elif self.shared:
-                return _("shared")
-            else:
-                return _("draft")
-        else:
+        if self.live and self.shared:
             if self.has_unpublished_changes:
-                return _("live + draft")
+                if self.has_unshared_changes:
+                    # Get the second to last revision to reference what the page's
+                    # state was in order to determine whether this page has shared
+                    # updates or if all the page's content was live.
+                    second_r = self.revisions.order_by('-created_at', '-id')[1]
+                    second_content = json.loads(second_r.content_json)
+                    if second_content['live'] and second_content['shared']:
+                        return _('live + draft')
+                    else:
+                        return _('live + (shared + draft)')
+                else:
+                    return _("live + shared")
             else:
                 return _("live")
+        elif self.shared:
+            if self.has_unshared_changes:
+                return _("shared + draft")
+            else:
+                return _("shared")
+        elif self.expired:
+            return _("expired")
+        elif self.approved_schedule:
+            return _("scheduled")
+        else:
+            return _("draft")
 
     def sharable_pages(self):
         """
@@ -245,7 +258,7 @@ class CFGOVPage(Page):
                     if page_version['live']:
                         return RouteResult(revision.as_page_object())
                 else:
-                    if page_version['shared']:
+                    if page_version['shared'] and not page_version['has_unshared_changes']:
                         return RouteResult(revision.as_page_object())
             raise Http404
 

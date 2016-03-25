@@ -7,8 +7,10 @@ from itertools import chain
 
 
 def save_revisions(apps, schema_editor):
-    from v1.models.learn_page import DocumentDetailPage, EventPage, LearnPage
-
+    DocumentDetailPage = apps.get_model('v1', 'DocumentDetailPage')
+    EventPage = apps.get_model('v1', 'EventPage')
+    LearnPage = apps.get_model('v1', 'LearnPage')
+    
     pages = list(chain(DocumentDetailPage.objects.all(),
                        EventPage.objects.all(),
                        LearnPage.objects.all()))
