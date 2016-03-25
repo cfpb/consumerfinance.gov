@@ -4,8 +4,6 @@ var _getQAelement = require( '../util/qa-element' ).get;
 
 function Careers() {
 
-  Object.assign( this );
-
   this.get = function() {
     browser.get( '/careers/' );
   };
