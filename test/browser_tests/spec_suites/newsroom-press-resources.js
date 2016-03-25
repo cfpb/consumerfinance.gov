@@ -13,7 +13,7 @@ describe( 'The Newsroom Press Resources Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Press resources' );
+    expect( page.pageTitle() ).toContain( 'Press resources' );
   } );
 
   it( 'should include a main title', function() {
@@ -107,10 +107,6 @@ describe( 'The Newsroom Press Resources Page', function() {
   it( 'should include a Email Subscribe button', function() {
     expect( page.emailFormBtn.getAttribute( 'value' ) )
     .toBe( 'Sign up' );
-  } );
-
-  it( 'should include a Email Subscribe description', function() {
-    expect( page.emailFormDescription.isPresent() ).toBe( true );
   } );
 
   it( 'should include a RSS Subscribe section', function() {

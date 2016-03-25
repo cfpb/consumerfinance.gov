@@ -17,16 +17,11 @@ describe( 'The Application Process Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Job Application Process' );
+    expect( page.pageTitle() ).toContain( 'Job Application Process' );
   } );
 
   it( 'should have a sideNav', function() {
     expect( page.sideNav.isPresent() ).toBe( true );
-  } );
-
-  it( 'should have an intro title', function() {
-    expect( page.introSectionTitle.getText() )
-    .toBe( 'Job Application Process' );
   } );
 
   it( 'should have three job application interfaces ', function() {
@@ -50,20 +45,6 @@ describe( 'The Application Process Page', function() {
     expect( page.infoSectionDescriptions.count() ).toEqual( 5 );
     expect( page.infoSectionLinks.getAttribute( 'href' ) )
     .toEqualUrl( infoSectionLinks );
-  } );
-
-  it( 'should have a social info section', function() {
-    var socialSectionTitles = [ 'Follow us on LinkedIn',
-    'Provide Feedback' ];
-    var socialSectionLinks =
-    [ 'https://www.linkedin.com/company/consumer-financial-protection-bureau',
-    'mailto:jobs@consumerfinance.gov' ];
-
-    expect( page.socialSectionTitles.getText() )
-    .toEqual( socialSectionTitles );
-    expect( page.socialSectionDescriptions.count() ).toEqual( 2 );
-    expect( page.socialSectionLinks.getAttribute( 'href' ) )
-    .toEqual( socialSectionLinks );
   } );
 
   it( 'should have a Related Links section', function() {

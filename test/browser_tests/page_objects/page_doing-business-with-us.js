@@ -12,8 +12,6 @@ function DoingBusinessWithUs() {
 
   this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
-  this.mainTitle = _getQAElement( 'main-title' );
-
   this.mainSummary = _getQAElement( 'main-summary' );
 
   this.mainSummaryContactLink = this.mainSummary.element( by.css( 'a' ) );

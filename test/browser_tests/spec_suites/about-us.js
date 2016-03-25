@@ -13,10 +13,10 @@ describe( 'About Landing Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'About Us' );
+    expect( page.pageTitle() ).toContain( 'About Us' );
   } );
 
-  it( 'should load items in the sidebar', function() {
+  it( 'should load the activity block in the sidebar', function() {
     expect( page.activityBlock ).toExist;
   } );
 
@@ -26,5 +26,9 @@ describe( 'About Landing Page', function() {
 
     expect( page.secondIcon.getAttribute( 'class' ) )
       .toContain( 'cf-icon cf-icon-newspaper' );
+  } );
+
+  it( 'should display some activity items in the activity block', function() {
+    expect( page.activityItems ).toExist;
   } );
 } );

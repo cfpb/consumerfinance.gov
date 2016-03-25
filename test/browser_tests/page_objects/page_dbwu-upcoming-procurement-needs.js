@@ -12,8 +12,6 @@ function UpcomingProcurementNeeds() {
 
   this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
-  this.mainTitle = _getQAElement( 'main-title' );
-
   this.mainSummary = _getQAElement( 'main-summary' );
 
   this.breadcrumb = element( by.css( '.breadcrumbs_link' ) );

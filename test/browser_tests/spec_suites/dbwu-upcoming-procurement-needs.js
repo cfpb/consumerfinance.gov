@@ -17,7 +17,7 @@ describe( 'The Upcoming Procurement Needs Page', function() {
 
   it( 'should properly load in a browser', function() {
     expect( page.pageTitle() )
-    .toBe( 'Doing Business with Us: Upcoming Procurement Needs' );
+    .toContain( 'Doing Business with Us: Upcoming Procurement Needs' );
   } );
 
   it( 'should have a side nav', function() {
@@ -26,10 +26,6 @@ describe( 'The Upcoming Procurement Needs Page', function() {
 
   it( 'should have a breadcrumb', function() {
     expect( page.breadcrumb.getText() ).toBe( 'Doing Business with Us' );
-  } );
-
-  it( 'should have a main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Upcoming Procurement Needs' );
   } );
 
   it( 'should have a main summary', function() {
