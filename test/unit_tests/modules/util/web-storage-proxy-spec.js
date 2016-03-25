@@ -56,7 +56,7 @@ describe( 'web-storage-proxy', function() {
     sandbox.restore();
   } );
 
-  describe( 'setItem', function() {
+  describe( '.setItem()', function() {
     it( 'should set an item of "bar" for the key "foo" in sessionStorage',
       function() {
         setItem( 'foo', 'bar', window.sessionStorage );
@@ -99,7 +99,7 @@ describe( 'web-storage-proxy', function() {
   } );
 
 
-  describe( 'getItem', function() {
+  describe( '.getItem()', function() {
     beforeEach( function() {
       window.sessionStorage.setItem( 'foo', 'bar' );
       window.localStorage.setItem( 'foo', 'baz' );
@@ -141,7 +141,7 @@ describe( 'web-storage-proxy', function() {
     );
   } );
 
-  describe( 'removeItem', function() {
+  describe( '.removeItem()', function() {
     beforeEach( function() {
       window.sessionStorage.setItem( 'foo', 'bar' );
       window.localStorage.setItem( 'foo', 'baz' );
@@ -191,7 +191,7 @@ describe( 'web-storage-proxy', function() {
     );
   } );
 
-  describe( 'setStorage', function() {
+  describe( '.setStorage()', function() {
     beforeEach( function() {
       setStorage( window.localStorage );
     } );
@@ -259,6 +259,13 @@ describe( 'web-storage-proxy', function() {
         expect( storageError, Error ).to.throw( Error );
       }
     );
-  } );
 
+    xit( 'should set storage to an object if sessionStorage throws an error',
+      function() {
+        // TODO: If cookies are disabled, window.sessionStorage
+        //       will throw a SecurityError and the internal storage will be
+        //       an object literal.
+      }
+    );
+  } );
 } );
