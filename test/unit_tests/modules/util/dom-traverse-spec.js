@@ -1,10 +1,10 @@
 'use strict';
+
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+
 var chai = require( 'chai' );
 var expect = chai.expect;
-var sinon = require( 'sinon' );
 var jsdom = require( 'mocha-jsdom' );
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-var ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
 var domTraverse = require( BASE_JS_PATH + 'modules/util/dom-traverse' );
 
 describe( 'Dom Traverse queryOne', function() {
