@@ -181,7 +181,7 @@
 
 {% macro render(controls, form, index) %}
     <div class="o-filterable-list-controls">
-        {% set has_active_filters = page.has_active_filters(request) %}
+        {% set has_active_filters = has_active_filters(page, request, index) %}
         {% if has_active_filters %}
             {% do controls.update({'is_expanded':true}) %}
         {% endif %}

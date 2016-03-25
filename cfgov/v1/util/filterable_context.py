@@ -8,6 +8,7 @@ from ..models.learn_page import AbstractFilterPage
 
 def get_context(page, request, context):
     context.update({'get_secondary_nav_items': get_secondary_nav_items})
+    context.update({'has_active_filters': has_active_filters})
 
     context['forms'] = []
     form_class = get_form_class()
@@ -90,3 +91,16 @@ def get_page_set(page, form, hostname):
 
     filter_pages.sort(key=lambda x: x.date_published, reverse=True)
     return filter_pages
+
+
+def has_active_filters(page, request, index):
+    active_filters = False;
+    form_class = get_form_class()
+    forms_data = get_form_specific_filter_data(page, form_class, request.GET)
+    if forms_data:
+        for filters in forms_data[index].values():
+            for value in filters:
+                if value:
+                    active_filters = True
+
+    return active_filters
