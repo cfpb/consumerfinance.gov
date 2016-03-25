@@ -26,6 +26,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Abstracted create and queryOneout of the multiselect.
 - Simplified array searching in the Multiselect.
 - Updated the home hero to it’s own molecule.
+- Updated the layout for the level 1 menu items to distribute them more evenly
+  across the header.
 
 ### Removed
 
@@ -72,11 +74,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Converted the project to Capital Framework v3
 - Updated `protractor` from `3.0.0` to `3.1.1`.
 - Included Table organism within full width text
-- Changed BrowseFilterablePage and related-metadata.html molecule templates to account for new backend
-- Abstracted info unit into a helper mixin to make it easier to re-use the inline version.
+- Changed BrowseFilterablePage and related-metadata.html molecule templates to
+  account for new backend
+- Abstracted info unit into a helper mixin to make it easier to re-use the inline
+  version.
 - Moved Home page specific layout changes to it's own file.
 - Updated jsdom from `7.2.2` to `8.0.4`.
-- Updated secondary-nav to use new expandable molecule in place of old CF Expandable.
+- Updated secondary-nav to use new expandable molecule in place of old CF
+  Expandable.
 - Updated gulp-eslint from `1.0.0` to `2.0.0`.
 - Converted Link Blob Group, 25/75 Group, and 50/50 Group to single Info Unit Group.
 - Converted Link Blob Macro to Info Unit Macro.
@@ -85,11 +90,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated Home Page to Info Unit Macro.
 - Included use of wagtail `classname` meta field for block css modifiers
 - Breadcrumbs for Wagtail pages now handled by Wagtail
-- Changed Wagtail pages extending from `layout-side-nav.html` to use new side navigation handling
-- Changed FilterableListControls.js to add validation for email, date, and checkbox fields.
+- Changed Wagtail pages extending from `layout-side-nav.html` to use new side
+  navigation handling
+- Changed FilterableListControls.js to add validation for email, date, and
+  checkbox fields.
 - Converted references and asset urls from Fuchs to Silberman.
 - Fix blog post template to use sheerlike related posts method.
-- Restructured mega menu to include submenus recursively to allow for a third-level.
+- Restructured mega menu to include submenus recursively to allow for a
+  third-level.
 - Renamed atomic-checkers `validateDomElement` to atomic-helpers `checkDom`.
 - Add two categories to the Implementation Resource group.
 - Updated the homepage based on user feedback.
@@ -101,7 +109,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the global search for no-js and IE 8-10 fixes.
 - Frontend: Added all launch-state mega menu links.
 - Frontend: Added hover-to-show behavior in desktop mega menu.
-- Use the added `careers_preview.json` in the careers sublanding page instead of `careers.json`
+- Use the added `careers_preview.json` in the careers sublanding page instead
+  of `careers.json`
 - Wrap prefooter section in Browse pages in a conditional to prevent empty prefooter
 - Frontend: Added behaviors for third level mobile mega menu.
 - Frontend: Made Expandables collapse under 600px window size.
@@ -109,11 +118,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the Mega Menu for devices without JS.
 
 ### Removed
-- Removed normalize and normalize-legacy from main less file because CF already includes it.
+- Removed normalize and normalize-legacy from main less file because CF
+  already includes it.
 - Removed old branded list mixin (was causing compile errors).
 - Removed unnecessary Wagtail streamdata retrieval function from v1/utils/util.py
 - Removed old beta styles.
-- Removed prototype language, such as instances of setting `value`, `page`, and `global_dict`
+- Removed prototype language, such as instances of setting `value`, `page`,
+  and `global_dict`
 - Imports of contact info macros that were breaking the page
 - Removed Link Blob, 25/75, and 50/50 styles.
 - Removed need for negative margin tweaks after groups.
@@ -130,7 +141,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix bug where publised pages were showing shared content
 - Fixed Contacts import-data script to set phone numbers correctly
 - Fixed an issue where heros were not displaying on new Wagtail pages.
-- Fixed an error where the secondary nav script was trying to initialize on pages it wasn't used.
+- Fixed an error where the secondary nav script was trying to initialize on
+  pages it wasn't used.
 - Fixed archive_events script to run in production.
 - Fixed issue where form validation clashed with filterable list controls.
 - Post preview title now links to page link.
@@ -139,14 +151,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed stacking bug in header search.
 - Fixed page saving bug that would prevent the display of a page's tags
 - Fixed ordering for Filterable results to be newest => oldest by published_date.
-- Fixed a bug where activiating the clear button wasn't clearing filtered results on browse filterable pages.
+- Fixed a bug where activiating the clear button wasn't clearing filtered
+  results on browse filterable pages.
 - Fixes the values for author and tag options to remove special characters.
 - Fixes layout issues with filters on sheer pages.
 - Fixed failing browser tests due to atomic naming updates.
 - Fixed a bug in the multi-select script where value was set before input type.
 - Fixed positioning bug in global search.
 - Fixed issue where categories without a set icon were showing the speach icon.
-- Fixed issue where a filtered page wasn’t showing the selected options in the multiselect.
+- Fixed issue where a filtered page wasn’t showing the selected options in the
+  multiselect.
 - Fixed an error in the Browser tests for IE 8.
 - Fixed an error in the Browser tests when running on Jenkins.
 
