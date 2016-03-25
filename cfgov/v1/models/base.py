@@ -1,6 +1,7 @@
 import os
-from itertools import chain
 import json
+from itertools import chain
+from collections import OrderedDict
 
 from django.db import models
 from django.db.models import Q
@@ -265,8 +266,9 @@ class CFGOVPage(Page):
         return parent
 
     # To be overriden if page type requires JS files every time
-    def get_page_js(self):
-        return []
+    # 'template' is used as the key for front-end consistency
+    def add_page_js(self, js):
+        js['template'] = []
 
     # Retrieves the stream values on a page from it's Streamfield
     def _get_streamfield_blocks(self):
@@ -275,30 +277,48 @@ class CFGOVPage(Page):
         return list(chain(*lst))
 
     # Gets the JS from the Streamfield data
-    def _get_block_js(self):
-        from v1 import models
-
-        js = []
-
+    def _add_streamfield_js(self, js):
+        # Create a dictionary with keys ordered organisms, molecules, then atoms
         for child in self._get_streamfield_blocks():
-            class_ = type(child.block)
-            instance = class_()
+            child_class = type(child.block)
+            self._add_block_js(child_class, child.block, js)
 
-            try:
-                class_ = type(child.block)
-                instance = class_()
+    # Recursively search the blocks and classes for declared Media.js
+    def _add_block_js(self, block_class, original_block, js):
+        if issubclass(block_class, blocks.StructBlock):
+            self._assign_js(block_class(), js)
+            for child in original_block.child_blocks.values():
+                self._add_block_js(type(child), child, js)
+        elif issubclass(block_class, blocks.ListBlock):
+            self._assign_js(block_class(original_block.child_block), js)
+            for name, child in original_block.child_block.child_blocks.iteritems():
+                self._add_block_js(type(child), child, js)
+        else:
+            self._assign_js(block_class(), js)
 
-                if hasattr(instance.Media, 'js'):
-                    js += instance.Media.js
-            except:
-                pass
-
-        return set(js)
+    # Assign the Media js to the dictionary appropriately
+    def _assign_js(self, obj, js):
+        try:
+            if hasattr(obj.Media, 'js'):
+                for key in js.keys():
+                    if obj.__module__.endswith(key):
+                        js[key] += obj.Media.js
+                if not [key for key in js.keys() if obj.__module__.endswith(key)]:
+                    js.update({'other': obj.Media.js})
+        except:
+            pass
 
     # Returns all the JS files specific to this page and it's current Streamfield's blocks
     @property
     def media(self):
-        return set(chain(self.get_page_js(), self._get_block_js()))
+        js = OrderedDict()
+        for key in ['template', 'organisms', 'molecules', 'atoms']:
+            js.update({key: []})
+        self.add_page_js(js)
+        self._add_streamfield_js(js)
+        for key, js_files in js.iteritems():
+            js[key] = list(set(js_files))
+        return js
 
 
 class CFGOVPageCategory(Orderable):
