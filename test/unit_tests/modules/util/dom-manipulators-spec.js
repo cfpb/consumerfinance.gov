@@ -1,27 +1,24 @@
 'use strict';
+
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+
 var chai = require( 'chai' );
 var expect = chai.expect;
-var sinon = require( 'sinon' );
 var jsdom = require( 'mocha-jsdom' );
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-var ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
 var domManipulators = require( BASE_JS_PATH + 'modules/util/dom-manipulators' );
-var heading;
-var span;
-var div;
 
 describe( 'Dom Manipulators create', function() {
   jsdom();
 
   before( function() {
-    heading = domManipulators.create( 'h1', {
+    var heading = domManipulators.create( 'h1', {
       'textContent': 'Create Heading Text',
       'id':          'create-heading-id',
       'className':   'create-heading-class',
       'data-name':   'create-heading-data'
     } );
 
-    span = domManipulators.create( 'span', {
+    domManipulators.create( 'span', {
       'textContent': 'Heading Span',
       'id':          'create-span-id',
       'className':   'create-span-class',
@@ -31,7 +28,7 @@ describe( 'Dom Manipulators create', function() {
 
     document.body.appendChild( heading );
 
-    div = domManipulators.create( 'div', {
+    domManipulators.create( 'div', {
       'id':        'create-div-id',
       'className': 'create-div-class',
       'data-name': 'create-div-data',
