@@ -1,4 +1,5 @@
 import os, re,HTMLParser
+from urlparse import urlparse
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
@@ -41,6 +42,7 @@ def environment(**options):
         'is_blog': ref.is_blog,
         'get_page_state_url': share.get_page_state_url,
         'parse_links': external_links_filter,
+        'get_protected_url': get_protected_url,
     })
     env.filters.update({
         'slugify': slugify,
@@ -83,3 +85,19 @@ def render_stream_child(context, stream_child):
     unescaped = HTMLParser.HTMLParser().unescape(html)
     # Return the rendered template as safe html
     return Markup(unescaped)
+
+@contextfunction
+def get_protected_url(context, page):
+    request_hostname = urlparse(context['request'].url).hostname
+    url = page.url
+    if url is None:  # If page is not aligned to a site root return None
+        return None
+    page_hostname = urlparse(url).hostname
+    staging_hostname = os.environ.get('STAGING_HOSTNAME')
+    if page.live:
+        return url
+    elif page.specific.shared:
+        if request_hostname == staging_hostname:
+            return url.replace(page_hostname, staging_hostname)
+        else:
+            return '#'
