@@ -29,6 +29,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the home hero to it’s own molecule.
 - Updated the layout for the level 1 menu items to distribute them more evenly
   across the header.
+- Abstracted the string utils from the Multiselect.
 
 ### Removed
 
