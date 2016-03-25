@@ -1,7 +1,6 @@
 import os
 from itertools import chain
 import json
-from sets import Set
 
 from django.db import models
 from django.db.models import Q
@@ -265,17 +264,26 @@ class CFGOVPage(Page):
         parent = self.get_ancestors(inclusive=False).reverse()[0].specific
         return parent
 
-    def elements(self):
+    # To be overriden if page type requires JS files every time
+    def get_page_js(self):
+        return []
+
+    # Retrieves the stream values on a page from it's Streamfield
+    def _get_streamfield_blocks(self):
         lst = [value for key, value in vars(self).iteritems()
                if type(value) is StreamValue]
         return list(chain(*lst))
 
-    def _media(self):
+    # Gets the JS from the Streamfield data
+    def _get_block_js(self):
         from v1 import models
 
-        js = ()
+        js = []
 
-        for child in self.elements():
+        for child in self._get_streamfield_blocks():
+            class_ = type(child.block)
+            instance = class_()
+
             try:
                 class_ = type(child.block)
                 instance = class_()
@@ -285,9 +293,12 @@ class CFGOVPage(Page):
             except:
                 pass
 
-        return Set(js)
+        return set(js)
 
-    media = property(_media)
+    # Returns all the JS files specific to this page and it's current Streamfield's blocks
+    @property
+    def media(self):
+        return set(chain(self.get_page_js(), self._get_block_js()))
 
 
 class CFGOVPageCategory(Orderable):
