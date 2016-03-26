@@ -237,7 +237,8 @@ class Query(object):
     def get_tag_related_documents(self, tags, size=0):
         query_file = json.loads(file(self.filename).read())
         doc_type = query_file['query']['doc_type']
-        query_dict = {'query': {'bool': {'should': []}}}
+        query_dict = {'sort': [{'date': {'order': 'desc'}}],
+                      'query': {'bool': {'should': []}}}
         if size:
             query_dict['size'] = size
         for tag in tags:
