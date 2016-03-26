@@ -55,7 +55,8 @@
     {% set button_pos   = options.button_pos or 'center' %}
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
     <div class="video-player
-                video-player__{{ video_player }}"
+                video-player__{{ video_player }}
+                {{ 'featured-content-module_visual' if is_flexible == false }}"
          {{ "data-id="~video_id | trim if video_id else '' }}
          data-src="{{ video_url }}"
          data-width="{{ options.video.width if options.video.width else '' }}"

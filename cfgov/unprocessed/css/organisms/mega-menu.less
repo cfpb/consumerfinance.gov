@@ -508,6 +508,16 @@
                 margin-bottom: unit( @grid_gutter-width / 2 / 18px, em );
 
                 font-size: 1em;
+
+                // ------------------------------------------------------------
+                // TODO: Remove when Consumer Tools and Education Resources
+                //       have overview pages post-launch.
+                //       This is temporary code to hide the overview links
+                //       at desktop sizes.
+                .u-link__disabled {
+                    visibility: hidden;
+                }
+                // ------------------------------------------------------------
             }
 
             &-lists {
@@ -560,28 +570,6 @@
                 //       can be used here when implementing Featured Menu Content.
                 border-left: 0;
             }
-        }
-    } );
-
-    // TODO: Update to Featured Menu Content molecule.
-    .sub-nav_media {
-        .grid_column( 4 );
-
-        padding: 0 @grid_gutter-width / 2;
-
-        position: relative;
-    }
-
-    .respond-to-max( @bp-med-max, {
-        .sub-nav_media {
-            display: none !important;
-        }
-    } );
-
-    .respond-to-min( @bp-xl-min, {
-        .sub-nav_media {
-            padding-right: @grid_gutter-width;
-            padding-left: @grid_gutter-width;
         }
     } );
 }

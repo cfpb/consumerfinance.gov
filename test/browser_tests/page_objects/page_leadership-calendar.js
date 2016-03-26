@@ -13,14 +13,10 @@ function TheLeadershipCalendarPage() {
   this.intro =
   element( by.css( '[data-qa-hook="leadership-calendar-intro"]' ) );
 
-  this.introTitle = this.intro.all( by.css( 'h1' ) ).first();
-
   this.introSummary =
   this.intro.element(
     by.css( '[data-qa-hook="leadership-calendar-summary"]' )
   );
-
-  this.socialMediaShare = this.intro.element( by.css( '.m-social-media' ) );
 
   this.searchFilter = element.all( by.css( '.js-post-filter' ) ).get( 0 );
 

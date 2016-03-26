@@ -223,7 +223,7 @@ urlpatterns = [
     url(r'^hud-api-replace/', include_if_app_enabled('hud_api_replace','hud_api_replace.urls')),
     url(r'^retirement/', include_if_app_enabled('retirement_api','retirement_api.urls')),
     url(r'^complaint/', include_if_app_enabled('complaint','complaint.urls')),
-    url(r'^complaintdatabase/', include_if_app_enabled('complaintdatabase','complaintdatabase.urls')),
+    url(r'^data-research/consumer-complaints/', include_if_app_enabled('complaintdatabase','complaintdatabase.urls')),
     url(r'^oah-api/rates/', include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
 

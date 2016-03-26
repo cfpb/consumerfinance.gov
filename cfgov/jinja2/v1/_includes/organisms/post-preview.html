@@ -44,8 +44,8 @@
 {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
 {% macro render(post, type='', form_id=0, url='') %}
-    {% set page_url = url or get_page_state_url({'request':request}, page) %}
-    {% set post_url = get_page_state_url({'request':request}, post) %}
+    {% set page_url = url or get_protected_url(page) %}
+    {% set post_url = get_protected_url(post) %}
     <article class="o-post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">

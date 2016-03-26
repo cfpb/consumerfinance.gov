@@ -13,6 +13,7 @@
 
 {% macro render() %}
 {% import 'molecules/social-media.html' as social_media with context %}
+{% set external_redirect_url = '/external-site/?ext_url=' %}
 <footer class="footer" role="contentinfo">
     <div class="wrapper wrapper__match-content">
 
@@ -76,8 +77,9 @@
                         </a>
                     </li>
                     <li class="list_item">
-                        <a class="list_link" href="/open-government/">
-                            Open Government
+                        <a class="list_link"
+                           href="/privacy/digital-privacy-policy/">
+                            Digital Privacy Policy
                         </a>
                     </li>
                 </ul>
@@ -90,14 +92,17 @@
                         </a>
                     </li>
                     <li class="list_item">
-                        <a class="list_link"
-                           href="/office-civil-rights/">
+                        <a class="list_link" href="/office-civil-rights/">
                             Office of Civil Rights
                         </a>
                     </li>
                     <li class="list_item">
-                        <a class="list_link"
-                           href="/tribal/">
+                        <a class="list_link" href="/open-government/">
+                            Open Government
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link" href="/tribal/">
                             Tribal
                         </a>
                     </li>
@@ -111,7 +116,7 @@
                         <a class="list_link
                                   icon-link
                                   icon-link__external-link"
-                           href="http://usa.gov/">
+                           href="{{ external_redirect_url }}http://usa.gov/">
                             USA.gov
                         </a>
                     </li>
@@ -119,7 +124,7 @@
                         <a class="list_link
                                   icon-link
                                   icon-link__external-link"
-                           href="http://www.federalreserve.gov/oig/default.htm">
+                           href="{{ external_redirect_url }}http://www.federalreserve.gov/oig/default.htm">
                             Office of Inspector General
                         </a>
                     </li>

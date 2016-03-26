@@ -7,25 +7,22 @@
 'use strict';
 
 /**
- * @param   {array} array    An array to query through for the expected value.
- * @param   {string} val     The value to query for.
- * @returns {boolean|object} Returns false if the array is empty or there's
- *                           no match, otherwise returns the matched object
- *                           containing the value.
+ * Searches an array for the first object with the matching key:value pair
+ * @param   {Array}  array  An array to query through for the expected value.
+ * @param   {string} key    The key to check the value against.
+ * @param   {string} val    The value to match to the key.
+ * @returns {number}        Returns the index of a match, else -1
  */
-function valInArray( array, val ) {
-  var match = false;
+function indexOfObject( array, key, val ) {
+  var match = -1;
 
   if ( !array.length > 0 ) {
     return match;
   }
 
   array.forEach( function( item, index ) {
-    if ( item.value === val ) {
-      match = {
-        index: index,
-        item: item
-      };
+    if ( item[key] === val ) {
+      match = index;
     }
   } );
 
@@ -33,5 +30,5 @@ function valInArray( array, val ) {
 }
 
 module.exports = {
-  valInArray: valInArray
+  indexOfObject: indexOfObject
 };

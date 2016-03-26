@@ -47,6 +47,9 @@ class BrowseFilterablePage(base.CFGOVPage):
 
     template = 'browse-filterable/index.html'
 
+    def get_page_js(self):
+        return super(BrowseFilterablePage, self).get_page_js() + ['secondary-navigation.js']
+
     def get_context(self, request, *args, **kwargs):
         context = super(BrowseFilterablePage, self).get_context(request, *args, **kwargs)
         return filterable_context.get_context(self, request, context)
@@ -57,7 +60,7 @@ class BrowseFilterablePage(base.CFGOVPage):
 
     def get_page_set(self, form, hostname):
         return filterable_context.get_page_set(self, form, hostname)
-     
+
 
 class EventArchivePage(BrowseFilterablePage):
     def get_form_class(self):

@@ -13,7 +13,7 @@ describe( 'Careers/Student-and-graduates', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Students and Graduates' );
+    expect( page.pageTitle() ).toContain( 'Students and Graduates' );
   } );
 
   it( 'should have 4 opportunities for students and graduates', function() {

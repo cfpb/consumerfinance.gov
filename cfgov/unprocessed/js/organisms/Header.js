@@ -2,6 +2,7 @@
 
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
+var GlobalBanner = require( '../molecules/GlobalBanner.js' );
 var GlobalSearch = require( '../molecules/GlobalSearch.js' );
 var MegaMenu = require( '../organisms/MegaMenu.js' );
 
@@ -20,6 +21,8 @@ function Header( element ) {
   var BASE_CLASS = 'o-header';
 
   var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Header' );
+
+  var _globalbanner;
   var _globalSearch;
   var _megaMenu;
   var _overlay;
@@ -30,7 +33,19 @@ function Header( element ) {
    * @returns {Object} The Header instance.
    */
   function init( overlay ) {
+    // TODO: Investigate a better method of handling optional elements.
+    //       Banner is optional, so we don't want to throw a nice error
+    //       when its DOM isn't found.
+    try {
+      _globalbanner = new GlobalBanner( _dom );
+      _globalbanner.init();
+    } catch( err ) {
+      // No Banner to initialize.
+    }
+
+    // Semi-opaque overlay that shows over the content when the menu flies out.
     _overlay = overlay;
+
     _globalSearch = new GlobalSearch( _dom );
     _globalSearch.addEventListener( 'expandBegin', _searchExpandBegin );
     _globalSearch.init();

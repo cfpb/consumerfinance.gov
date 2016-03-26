@@ -13,7 +13,7 @@ describe( 'The Activity Log Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Activity Log' );
+    expect( page.pageTitle() ).toContain( 'Activity Log' );
   } );
 
   it( 'should include a main title', function() {

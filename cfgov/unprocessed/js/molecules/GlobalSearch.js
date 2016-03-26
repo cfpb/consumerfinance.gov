@@ -16,7 +16,7 @@ var MoveTransition = require( '../modules/transition/MoveTransition' );
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the molecule.
- * @returns {Object} An GlobalSearch instance.
+ * @returns {GlobalSearch} An instance.
  */
 function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 

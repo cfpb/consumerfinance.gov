@@ -14,7 +14,7 @@ describe( 'The Leadership Calendar Page', function() {
 
   it( 'should properly load in a browser',
     function() {
-      expect( page.pageTitle() ).toBe( 'Leadership calendar' );
+      expect( page.pageTitle() ).toContain( 'Leadership calendar' );
     }
   );
 
@@ -24,21 +24,9 @@ describe( 'The Leadership Calendar Page', function() {
     }
   );
 
-  it( 'should include an intro title',
-    function() {
-      expect( page.introTitle.getText() ).toBe( 'Leadership Calendar' );
-    }
-  );
-
   it( 'should include an intro summary',
     function() {
       expect( page.introSummary.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include a share section',
-    function() {
-      expect( page.socialMediaShare.isPresent() ).toBe( true );
     }
   );
 

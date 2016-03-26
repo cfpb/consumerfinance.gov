@@ -1,14 +1,35 @@
-<div class="o-well
-            o-well__full
-            o-well__home-hero">
+{# ==========================================================================
+
+   Overlay Hero
+
+   ==========================================================================
+
+   Description:
+
+   Create an home-hero molecule when given:
+
+   value.heading:   A string containing title of module.
+
+   value.body:      A string containing the content to display below the
+                    heading (typically a paragraph).
+
+   value.sm_img:     The image url for faux image on small devices.
+
+   value.lg_img:     The image url for background image on larger devices.
+
+   ========================================================================== #}
+
+{% macro home_hero( value ) %}
+<div class="m-home-hero" style="background-image: url({{ value.lg_img }});">
     <div class="content-l">
-        <section class="m-home-hero">
-            <h1 class="m-home-hero_heading">We're on your side</h1>
+        <section class="m-home-hero_content">
+            <h1 class="m-home-hero_heading">{{ value.heading }}</h1>
             <p class="m-home-hero_text">
-                We are the Consumer Financial Protection Bureau,
-                a U.S. government agency that makes sure banks, lenders,
-                and other financial companies treat you fairly.
+                {{ value.body }}
             </p>
         </section>
     </div>
+    <div class="m-home-hero_sm-img"
+         style="background-image: url({{ value.sm_img }});"></div>
 </div>
+{% endmacro %}

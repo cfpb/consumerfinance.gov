@@ -12,7 +12,7 @@ describe( 'The Bureau Page', function() {
 
   it( 'should properly load in a browser',
     function() {
-      expect( page.pageTitle() ).toBe( 'The Bureau' );
+      expect( page.pageTitle() ).toContain( 'The Bureau' );
     }
   );
 
@@ -22,29 +22,15 @@ describe( 'The Bureau Page', function() {
     }
   );
 
-  it( 'should include Bureau functions',
-    function() {
-      expect( page.bureauFunctions.isPresent() ).toBe( true );
-    }
-  );
-
   it( 'should include the Director’s Bio',
     function() {
-      expect( page.directorsName.getText() ).toEqual( 'Richard Cordray' );
       expect( page.directorsBio.isPresent() ).toBe( true );
     }
   );
 
   it( 'should include the Deputy Director’s Bio',
     function() {
-      expect( page.deputyDirectorsName.getText() ).toEqual( 'David Silberman' );
       expect( page.deputyDirectorsBio.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include three Bureau mission statements',
-    function() {
-      expect( page.bureauMission.count() ).toEqual( 3 );
     }
   );
 

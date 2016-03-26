@@ -209,7 +209,7 @@
                 {% set category_field = 'category' %}
             {% endif -%}
             {% for category in categories -%}
-                {{ _filter_checkbox( category_field, category.key ) | safe }}
+                {{ _filter_checkbox( category_field, category.key, id_prefix=options.id_prefix ) | safe }}
             {% endfor %}
             </div>
         </div>
@@ -402,7 +402,7 @@
            {%- endif -%}
            >
     <label class="form-group_item" for="{{ id }}">
-        {{ label if label else value }}
+        {{ label | safe if label else value | safe }}
     </label>
 {% endmacro %}
 

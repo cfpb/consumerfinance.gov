@@ -10,7 +10,6 @@ require( 'jquery-easing' );
 require( 'cf-expandables' );
 
 // Global modules.
-require( '../modules/beta-banner-state' ).init();
 require( '../modules/footer-button' ).init();
 require( '../modules/focus-target' ).init();
 require( '../modules/post-filter' ).init();
@@ -20,7 +19,6 @@ require( '../modules/clear-form-buttons' ).init();
 require( '../modules/UStreamPlayer' ).init( '.video-player__ustream' );
 require( '../modules/YoutubePlayer' ).init( '.video-player__youtube' );
 require( '../modules/pagination-validation.js' ).init();
-require( '../modules/external-site-redirect.js' ).init();
 
 // GLOBAL ATOMIC ELEMENTS.
 // Organisms.

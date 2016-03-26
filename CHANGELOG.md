@@ -17,11 +17,21 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Added Featured Menu Content Molecule.
+- Added Global Banner Molecule.
+- Added Digital Privacy Policy to the footer.
+
 ### Changed
+
+- Abstracted create and queryOneout of the multiselect.
+- Simplified array searching in the Multiselect.
+- Updated the home hero to it’s own molecule.
 
 ### Removed
 
 ### Fixed
+
+ - Fixed active filter notification on Browse Filterable pages.
 
 ## 3.0.0-3.1.1 - 2016-03-21
 

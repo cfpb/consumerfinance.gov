@@ -14,11 +14,7 @@ function PastAwards() {
 
   this.breadcrumb = element( by.css( '.breadcrumbs_link' ) );
 
-  this.mainTitle = _getQAElement( 'main-title' );
-
   this.mainSummary = _getQAElement( 'main-summary' );
-
-  this.summaryNavLink = this.mainSummary.element( by.css( 'a' ) );
 
   this.businessContentTitles =
   element.all( by.css( '.business_page-content h3' ) );

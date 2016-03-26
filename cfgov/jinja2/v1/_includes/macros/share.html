@@ -103,6 +103,7 @@
         'show_twitter': true,
         'show_linkedin': false
     } %}
+  {% set external_redirect_url = '/external-site/?ext_url=' %}
   {% set _ignore = settings.update(options) %}
 
     <div class="share
@@ -126,7 +127,7 @@
             {% if settings.show_facebook %}
             <li class="list_item">
                 <a class="share-icon"
-                   href="https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}"
+                   href="{{ external_redirect_url }}https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}"
                    target="_blank">
                     <span class="cf-icon cf-icon-facebook-square"></span>
                     <span class="u-visually-hidden">Share on Facebook</span>
@@ -136,7 +137,7 @@
             {% if settings.show_twitter %}
             <li class="list_item">
                 <a class="share-icon"
-                   href="{{ share_twitter_url(settings.twitter_options) }}"
+                   href="{{ external_redirect_url ~ share_twitter_url(settings.twitter_options) }}"
                    target="_blank">
                     <span class="cf-icon cf-icon-twitter-square"></span>
                     <span class="u-visually-hidden">Share on Twitter</span>
@@ -146,7 +147,7 @@
             {% if settings.show_linkedin %}
             <li class="list_item">
                 <a class="share-icon"
-                   href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.url|urlencode }}&title={{ settings.title }}%20Developer%20Network"
+                   href="{{external_redirect_url}}https://www.linkedin.com/shareArticle?mini=true&url={{ request.url|urlencode }}&title={{ settings.title }}%20Developer%20Network"
                    target="_blank">
                     <span class="cf-icon cf-icon-linkedin-square"></span>
                     <span class="u-visually-hidden">Share on LinkedIn</span>

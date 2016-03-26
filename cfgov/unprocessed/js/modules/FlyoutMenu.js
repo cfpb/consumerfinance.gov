@@ -108,6 +108,19 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
 
   /**
    * Event handler for when the search input trigger is hovered over.
+   * @param {HTMLNode} elem - The element to set.
+   * @param {boolean} value - The value to set on `aria-expanded`,
+   *   casts to a string.
+   * @param {string} The cast value.
+   */
+  function _setAriaExpandedAttr( elem, value ) {
+    var strValue = String( value );
+    elem.setAttribute( 'aria-expanded', strValue );
+    return strValue;
+  }
+
+  /**
+   * Event handler for when the search input trigger is hovered over.
    */
   function _triggerOver() {
     if ( !_suspended ) {
@@ -193,8 +206,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       } else {
         _collapseEndBinded();
       }
-      _triggerDom.setAttribute( 'aria-expanded', 'false' );
-      _contentDom.setAttribute( 'aria-expanded', 'false' );
+      if ( _altTriggerDom ) _setAriaExpandedAttr( _altTriggerDom, false );
+      _setAriaExpandedAttr( _triggerDom, false );
+      _setAriaExpandedAttr( _contentDom, false );
       // TODO: Remove or uncomment when keyboard navigation is in.
       // _triggerDom.focus();
     } else {
@@ -217,8 +231,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         .removeEventListener( BaseTransition.END_EVENT, _expandEndBinded );
     }
     this.dispatchEvent( 'expandEnd', { target: this, type: 'expandEnd' } );
-    _triggerDom.setAttribute( 'aria-expanded', 'true' );
-    _contentDom.setAttribute( 'aria-expanded', 'true' );
+    if ( _altTriggerDom ) _setAriaExpandedAttr( _altTriggerDom, true );
+    _setAriaExpandedAttr( _triggerDom, true );
+    _setAriaExpandedAttr( _contentDom, true );
     // Call collapse, if it was called while expand was animating.
     _deferFunct();
   }
