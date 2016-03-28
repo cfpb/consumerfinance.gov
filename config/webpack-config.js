@@ -34,11 +34,5 @@ module.exports = {
     } ),
     // Wrap JS in raw Jinja tags so included JS won't get parsed by Jinja.
     new BannerFooterPlugin( '{% raw %}', '{% endraw %}', { raw: true } )
-  ],
-  module: {
-    loaders: [
-      // Disable incompatible AMD pattern in dateformat module.
-      { test: require.resolve( 'dateformat' ), loader: 'imports?define=>false' }
-    ]
-  }
+  ]
 };

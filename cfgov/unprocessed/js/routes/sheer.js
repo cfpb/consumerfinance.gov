@@ -9,7 +9,7 @@
 var FilterableListControls = require( '../organisms/FilterableListControls' );
 var Expandable = require( '../molecules/Expandable' );
 
-var filterableListDom = document.querySelector( '.o-filterable-list-controls' );
+var filterableListDom = document.querySelectorAll( '.o-filterable-list-controls' );
 var filterableListControls;
 if ( filterableListDom ) {
   for ( var i = 0, len = filterableListDom.length; i < len; i++ ) {
