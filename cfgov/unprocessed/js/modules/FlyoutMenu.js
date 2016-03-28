@@ -79,6 +79,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   // Whether this instance's behaviors are suspended or not.
   var _suspended = true;
 
+  // TODO: Add param to set the FlyoutMenu open at initialization-time.
   /**
    * @returns {FlyoutMenu} An instance.
    */
@@ -110,6 +111,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         if ( _altTriggerDom.tagName === 'A' ) {
           _altTriggerDom.setAttribute( 'data-gtm_ignore', 'true' );
         }
+        // TODO: alt trigger should probably listen for a mouseover event too.
         _altTriggerDom.addEventListener( 'click', triggerClickedBinded );
       }
     }
@@ -200,10 +202,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   function collapse() {
     if ( _isExpanded && !_isAnimating ) {
       _deferFunct = standardType.noopFunct;
+      _isAnimating = true;
+      _isExpanded = false;
       this.dispatchEvent( 'collapseBegin',
                           { target: this, type: 'collapseBegin' } );
-      _isExpanded = false;
-      _isAnimating = true;
       if ( _collapseTransitionMethod ) {
         var hasTransition = _collapseTransition &&
                             _collapseTransition.isAnimated();
