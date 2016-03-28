@@ -181,8 +181,10 @@ class FilterControls(molecules.BaseExpandable):
     ], default='filterable-list')
     title = blocks.BooleanBlock(default=True, required=False,
                                 label='Filter Title')
+    post_date_description = blocks.CharBlock(default='Published')
     categories = blocks.StructBlock([
         ('filter_category', blocks.BooleanBlock(default=True, required=False)),
+        ('show_preview_categories', blocks.BooleanBlock(default=True, required=False)),
         ('page_type', blocks.ChoiceBlock(choices=ref.page_types,
                                          required=False)),
     ])
