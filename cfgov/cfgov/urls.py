@@ -137,8 +137,9 @@ urlpatterns = [
             name='detail')],
         namespace='newsroom')),
 
-    url(r'^the-bureau/', include([
-        url(r'^$', SheerTemplateView.as_view(template_name='the-bureau/index.html'),
+    url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/%(path)s', permanent=True)),
+    url(r'^about-us/the-bureau/', include([
+        url(r'^$', SheerTemplateView.as_view(template_name='about-us/the-bureau/index.html'),
             name='index'),
         url(r'^leadership-calendar/$',
             SheerTemplateView.as_view(),
@@ -146,8 +147,6 @@ urlpatterns = [
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
             name='page'),
-        url(r'^about-director/201410_cfpb_bio_cordray.pdf$',
-            renderDirectoryPDF, name='cordray_pdf'),
         url(r'^leadership-calendar/pdf/$',
             LeadershipCalendarPDFView.as_view(),
             name='leadership-calendar-pdf'),
