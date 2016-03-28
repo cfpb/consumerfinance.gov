@@ -15,15 +15,11 @@
 <div class="o-full-width-text-group">
     {% for block in value %}
         {% if 'content' in block.block_type %}
-            <div class="m-full-width-text
-                        {{ 'm-full-width-text__serif' if
-                         page.full_width_serif else '' }}">
+            <div class="m-full-width-text">
                 {{ parse_links(block.value) | safe }}
             </div>
         {% elif 'table' in block.block_type %}
-            <div class="m-full-width-text
-                        {{ 'm-full-width-text__serif' if
-                        page.full_width_serif else '' }}">
+            <div class="m-full-width-text">
                 {{ render_stream_child(block) | safe}}
             </div>
         {% else %}

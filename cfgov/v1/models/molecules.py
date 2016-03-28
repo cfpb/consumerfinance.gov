@@ -225,7 +225,7 @@ class BaseExpandable(blocks.StructBlock):
         label = 'Expandable'
 
     class Media:
-        js = ("expandable.js",)
+        js = ["expandable.js"]
 
 
 class Expandable(BaseExpandable):

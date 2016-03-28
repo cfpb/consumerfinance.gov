@@ -18,12 +18,7 @@ var webStorageProxy;
 
 describe( 'Global Banner State', function() {
 
-  jsdom( {
-    created: function( error, win ) {
-      if ( error ) console.log( error );
-      win.Modernizr = {};
-    }
-  } );
+  jsdom();
 
   before( function() {
     webStorageProxy =
@@ -35,35 +30,40 @@ describe( 'Global Banner State', function() {
     // TODO: Investigate importing the HTML directly from the atomic template.
     document.body.innerHTML =
     '<div class="m-global-banner">' +
-        '<div class="wrapper ' +
-                    'wrapper__match-content ' +
-                    'm-expandable ' +
-                    'm-expandable__expanded">' +
-            '<div class="m-global-banner_head">' +
-                '<span class="cf-icon ' +
-                             'cf-icon-error-round ' +
-                             'm-global-banner_icon"></span>' +
-                'This beta site is a work in progress.' +
-            '</div>' +
-            '<div class="m-expandable_content" aria-expanded="true" style="height: 22px;">' +
-                '<p class="m-global-banner_desc  m-expandable_content-animated">' +
-                    'We’re prototyping new designs. Things may not work as expected. ' +
-                    'Our regular site continues to be at ' +
-                    '<a href="http://www.consumerfinance.gov/">www.consumerfinance.gov</a>.' +
-                '</p>' +
-            '</div>' +
-            '<button class="btn ' +
-                           'm-global-banner_btn ' +
-                           'm-expandable_target ' +
-                           'm-expandable_link" id="m-global-banner_btn" aria-pressed="true">' +
-                '<span class="m-expandable_cue m-expandable_cue-close">' +
-                    'Collapse <span class="cf-icon cf-icon-up"></span>' +
-                '</span>' +
-                '<span class="m-expandable_cue m-expandable_cue-open">' +
-                    'More info <span class="cf-icon cf-icon-down"></span>' +
-                '</span>' +
-            '</button>' +
+    '<div class="wrapper ' +
+                'wrapper__match-content ' +
+                'm-expandable ' +
+                'm-expandable__expanded">' +
+        '<div class="m-global-banner_head">' +
+            '<span class="cf-icon ' +
+                         'cf-icon-error-round ' +
+                         'm-global-banner_icon"></span>' +
+            'This beta site is a work in progress.' +
         '</div>' +
+        '<div class="m-expandable_content" ' +
+              'aria-expanded="true" style="height: 22px;">' +
+            '<p class="m-global-banner_desc ' +
+                      'm-expandable_content-animated">' +
+                'We’re prototyping new designs. ' +
+                'Things may not work as expected. ' +
+                'Our regular site continues to be at ' +
+                '<a href="http://www.consumerfinance.gov/">' +
+                    'www.consumerfinance.gov</a>.' +
+            '</p>' +
+        '</div>' +
+        '<button class="btn ' +
+                       'm-global-banner_btn ' +
+                       'm-expandable_target ' +
+                       'm-expandable_link" id="m-global-banner_btn" ' +
+                 'aria-pressed="true">' +
+            '<span class="m-expandable_cue m-expandable_cue-close">' +
+                'Collapse <span class="cf-icon cf-icon-up"></span>' +
+            '</span>' +
+            '<span class="m-expandable_cue m-expandable_cue-open">' +
+                'More info <span class="cf-icon cf-icon-down"></span>' +
+            '</span>' +
+        '</button>' +
+    '</div>' +
     '</div>';
 
     contentDom = document.querySelector( '.m-expandable_content' );
@@ -76,7 +76,8 @@ describe( 'Global Banner State', function() {
     clickEvent.initEvent( 'click', true, true );
 
     GlobalBanner = require( BASE_JS_PATH + 'molecules/GlobalBanner' );
-    globalBanner = new GlobalBanner( document.querySelector( '.m-global-banner' ) );
+    globalBanner =
+      new GlobalBanner( document.querySelector( '.m-global-banner' ) );
 
     window.localStorage = new StorageMock();
     window.sessionStorage = new StorageMock();
@@ -112,7 +113,8 @@ describe( 'Global Banner State', function() {
        .to.be.undefined;
       globalBanner.init();
       globalBanner.toggleStoredState();
-      expect( webStorageProxy.getItem( 'globalBannerIsExpanded' ) ).to.equal( 'false' );
+      var isSet = webStorageProxy.getItem( 'globalBannerIsExpanded' );
+      expect( isSet ).to.equal( 'false' );
     } );
 
     it( 'should set the localStorage state to expanded', function() {
@@ -121,7 +123,8 @@ describe( 'Global Banner State', function() {
       globalBanner.init();
       globalBanner.toggleStoredState();
       globalBanner.toggleStoredState();
-      expect( webStorageProxy.getItem( 'globalBannerIsExpanded' ) ).to.equal( 'true' );
+      var isSet = webStorageProxy.getItem( 'globalBannerIsExpanded' );
+      expect( isSet ).to.equal( 'true' );
     } );
   } );
 
@@ -129,10 +132,11 @@ describe( 'Global Banner State', function() {
     it( 'should remove event handlers and local storage data', function() {
       globalBanner.init();
       globalBanner.toggleStoredState();
-      expect( webStorageProxy.getItem( 'globalBannerIsExpanded' ) ).to.equal( 'false' );
+      var isSet = webStorageProxy.getItem( 'globalBannerIsExpanded' );
+      expect( isSet ).to.equal( 'false' );
       globalBanner.destroy();
-      expect( webStorageProxy.getItem( 'globalBannerIsExpanded' ) )
-       .to.be.undefined;
+      isSet = webStorageProxy.getItem( 'globalBannerIsExpanded' );
+      expect( isSet ).to.be.undefined;
 
       targetDom.dispatchEvent( clickEvent );
       window.setTimeout( function() {
@@ -144,4 +148,3 @@ describe( 'Global Banner State', function() {
 
 
 } );
-

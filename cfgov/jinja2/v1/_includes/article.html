@@ -88,7 +88,7 @@
 {% if post.tags|length %}
     <footer>
         {%- import 'tags.html' as tags %}
-        {{ tags.render(post.tags, path) }}
+        {{ tags.render(post.tags, path, is_sheer=True) }}
     </footer>
 {% endif %}
 </article>

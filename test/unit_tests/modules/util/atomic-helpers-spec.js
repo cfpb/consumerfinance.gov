@@ -10,10 +10,13 @@ var atomicHelpers = require( BASE_JS_PATH + 'modules/util/atomic-helpers' );
 
 describe( 'atomic-helpers', function() {
 
+  var HTML_SNIPPET = '<div class="container">' +
+                     '<div class="m-expandable"></div></div>';
+  var initdom = jsdom.jsdom( HTML_SNIPPET );
+  var document = initdom.defaultView.document;
+
   var containerDom;
   var expandableDom;
-  var initdom = jsdom.jsdom( '<div class="container"><div class="m-expandable"></div></div>' );
-  var document = initdom.defaultView.document;
 
   before( function() {
     containerDom = document.querySelector( '.container' );
@@ -22,29 +25,33 @@ describe( 'atomic-helpers', function() {
 
   describe( '.checkDom()', function() {
     it( 'should throw an error if element DOM not found', function() {
-      var errMsg = 'undefined passed to Expandable.js is not valid. ' +
+      var errMsg = 'null passed to Expandable.js is not valid. ' +
                    'Check that element is a valid DOM node';
-      var errFunc = function() {
-        atomicHelpers.checkDom( undefined, '.m-expandable', 'Expandable' );
-      };
+      function errFunc() {
+        atomicHelpers.checkDom( null, '.m-expandable', 'Expandable' );
+      }
       expect( errFunc ).to.throw( Error, errMsg );
     } );
 
     it( 'should throw an error if element class not found', function() {
       var errMsg = 'mock-class not found on or in passed DOM node.';
-      var errFunc = function() {
+      function errFunc() {
         atomicHelpers.checkDom( expandableDom, 'mock-class', 'Expandable' );
-      };
+      }
       expect( errFunc ).to.throw( Error, errMsg );
     } );
 
-    it( 'should return the correct HTMLElement when direct element is searched', function() {
-      var dom = atomicHelpers.checkDom( expandableDom, 'm-expandable', 'Expandable' );
+    it( 'should return the correct HTMLElement ' +
+        'when direct element is searched', function() {
+      var dom =
+        atomicHelpers.checkDom( expandableDom, 'm-expandable', 'Expandable' );
       expect( dom ).to.be.equal( expandableDom );
     } );
 
-    it( 'should return the correct HTMLElement when parent element is searched', function() {
-      var dom = atomicHelpers.checkDom( containerDom, 'm-expandable', 'Expandable' );
+    it( 'should return the correct HTMLElement ' +
+        'when parent element is searched', function() {
+      var dom =
+        atomicHelpers.checkDom( containerDom, 'm-expandable', 'Expandable' );
       expect( dom ).to.be.equal( expandableDom );
     } );
   } );
