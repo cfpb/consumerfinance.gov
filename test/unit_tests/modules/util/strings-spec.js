@@ -2,7 +2,6 @@
 var chai = require( 'chai' );
 var expect = chai.expect;
 var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-var ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
 var strings = require( BASE_JS_PATH + 'modules/util/strings' );
 var string;
 var control;
