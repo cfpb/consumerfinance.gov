@@ -50,6 +50,7 @@ def run():
                 a.value['end_dt'] = a.value['end_dt'].astimezone(timezone('UTC'))
                 print "Updated end_dt for Agenda Item '%s' from %s to %s " %(a.value['description'], previous_dt, a.value['end_dt'])
         e.save()
-        e.save_revision()
+        revision = e.save_revision()
+        revision.publish()
 
 
