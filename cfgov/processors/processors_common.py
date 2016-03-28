@@ -1,4 +1,4 @@
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from urlparse import urlsplit, urlunsplit
 
 replacements = (('/blog/', '/about-us/blog/'),
@@ -11,7 +11,6 @@ def update_path(path):
     for pattern, substitute in replacements:
         if path.startswith(pattern):
             new_path = path.replace(pattern,substitute)
-            print "replaced %s with %s" % (path, new_path)
             return new_path
     return path
 
