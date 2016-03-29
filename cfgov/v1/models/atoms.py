@@ -53,8 +53,13 @@ class Hyperlink(blocks.StructBlock):
     text = blocks.CharBlock(required=False)
     url = blocks.CharBlock(default='/', required=False)
 
-    def __init__(self, required=True):
+    def __init__(self, required=True, text=None, url=None):
         self.required = required
+        if text:
+            self.base_blocks['text'].meta.default = text
+        if url:
+            self.base_blocks['url'].meta.default = url
+
         super(Hyperlink, self).__init__()
 
     def clean(self, data):
