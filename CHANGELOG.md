@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Digital Privacy Policy to the footer.
 - Added tests for dom-traverse functions
 - Added specific Blog/Newsroom Categories to Related Post options
+- base.html now checks for page (seo) title if exists
 
 ### Changed
 
@@ -33,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Abstracted the string utils from the Multiselect.
 - Updated the Hero Macro for the new overlay hero styles.
 - Updated article template to render all categories
+- Append bureau title on every template rendered
 
 ### Removed
 

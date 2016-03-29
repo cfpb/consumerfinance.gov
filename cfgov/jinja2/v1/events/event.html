@@ -4,10 +4,6 @@
     {% set event_state = when(page.start_dt | date('%c'), page.end_dt | date('%c')) %}
 {% endif %}
 
-{% block title -%}
-    {{ page.seo_title }}
-{%- endblock %}
-
 {% block desc -%}
     {{ page.seo_description }}
 {%- endblock %}
