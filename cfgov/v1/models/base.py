@@ -140,7 +140,7 @@ class CFGOVPage(Page):
                     and block.value['relate_%s' % search_type]:
                 related[search_type_name] = \
                     search_class.objects.filter(query).order_by(
-                        'latest_revision_created_at').exclude(
+                        '-date_published').exclude(
                         slug=self.slug).live_shared(hostname)[:block.value['limit']]
         # TODO: Remove each search_type as it is implemented into Django
         queries = QueryFinder()
