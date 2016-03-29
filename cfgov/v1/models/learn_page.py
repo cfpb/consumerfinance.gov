@@ -85,10 +85,10 @@ class AbstractFilterPage(CFGOVPage):
         # have the first id on the page. For more, see v1/models/browse_filterable_page.py line 105.
         parent = self.parent()
         id = util.get_form_id(parent, get_request)
-        for tag in self.tags.names():
-            tag_link = {'text': tag, 'url': ''}
+        for tag in self.tags.all():
+            tag_link = {'text': tag.name, 'url': ''}
             if id is not None:
-                param = '?filter' + str(id) + '_topics=' + tag
+                param = '?filter' + str(id) + '_topics=' + tag.slug
                 tag_link['url'] = get_page_state_url({'request': get_request}, parent) + param
             tags['links'].append(tag_link)
 

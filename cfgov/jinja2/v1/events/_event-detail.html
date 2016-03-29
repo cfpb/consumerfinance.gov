@@ -93,10 +93,10 @@
         {% endif %}
         {{ page.body | safe }}
     </div>
-    {% if page.tags.names() | length %}
+    {% if page.tags.all() | length %}
     <footer>
         {%- import 'tags.html' as tags %}
-        {{ tags.render(page.tags.names(), path) }}
+        {{ tags.render(page.tags.all(), path) }}
     </footer>
     {% endif %}
 </article>

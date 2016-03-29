@@ -50,7 +50,7 @@ def most_common(lst):
         # Gets the most common element in the list.
         most = max(set(lst), key=lst.count)
         # Creates a new list without that element.
-        new_list = [e for e in lst if most not in e]
+        new_list = [e for e in lst if most != e]
         # Recursively returns a list with the most common elements ordered
         # most to least. Ties go to the lowest index in the given list.
         return [most] + most_common(new_list)
