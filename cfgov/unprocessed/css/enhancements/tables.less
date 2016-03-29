@@ -1,0 +1,149 @@
+
+/* topdoc
+  name: Tables
+  family: cf-tables
+  notes:
+    - Adjustments for cf-tables to allow them to be full-width
+  tags:
+    - cfgov-cf-tables
+*/
+
+.respond-to-max(@bp-sm-max, {
+    table {
+        width: 100%;
+    }
+});
+
+
+/* topdoc
+  name: Simple Table
+  family: cfgov-cf-enhancements
+  notes:
+    - Extends the above stacked tables for sm devices
+    - Hides the thead
+    - Styles first td as if it were the thead
+    - Allows any other td to be styled as a heading level 4
+    - Adds data-label attr for small td labels above td content
+    - Used in older blog posts to make them responsive.
+      Do not remove unless removed from blog posts.
+  patterns:
+    - name: Collapsable Table
+      markup: |
+        <table class="simple-table">
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                    <th>Column 3</th>
+                    <th>Column 4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td>Lorem ipsum dolor.</td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td data-label="Lorem">Lorem ipsum dolor.</td>
+                    <td data-label="Ipsum">Lorem ipsum dolor.</td>
+                </tr>
+            </tbody>
+        </table>
+    - name: simple-table__row-links (modifier)
+      markup: |
+        <table class="simple-table simple-table__row-links">
+            <thead>
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#">Lorem ipsum dolor.</a></td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                </tr>
+                <tr>
+                    <td><a href="#">Lorem ipsum dolor.</a></td>
+                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                </tr>
+            </tbody>
+        </table>
+      codenotes:
+        - |
+          .simple-table.simple-table__row-links
+      notes:
+        - "Modifier that makes rows appear to be hoverable links.
+           Used in coordination with simple-table-row-links.js."
+    tags:
+  tags:
+    - cfgov-cf-enhancements
+*/
+@td-bg-mobile: @gray-5;
+@tr-link-color: @white;
+@tr-link-bg-hover: @pacific-80;
+.simple-table {
+
+    &__row-links {
+      .respond-to-min(961px, {
+          tr:hover {
+              td {
+                  background: @tr-link-bg-hover;
+                  color: @tr-link-color;
+                  cursor: pointer;
+              }
+              a {
+                  color: @tr-link-color;
+              }
+          }
+      });
+    }
+
+    .respond-to-max(960px, {
+
+        font-size: 14px;
+
+        thead {
+            display: none;
+        }
+
+        tbody {
+            border-top: none;
+        }
+
+        tr {
+            border-bottom: none;
+        }
+
+        td:first-child {
+            .h4();
+            margin-bottom: 10px;
+            background-color: @td-bg-mobile;
+        }
+
+        td[data-label] {
+            padding-bottom: 20px;
+
+            &:before {
+                .h6();
+                display: block;
+                content: attr(data-label);
+            }
+        }
+
+        &_row-heading {
+            .h4();
+            margin-bottom: 0;
+        }
+    });
+}

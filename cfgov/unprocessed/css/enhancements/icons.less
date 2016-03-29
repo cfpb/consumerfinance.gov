@@ -1,0 +1,140 @@
+
+
+/* topdoc
+  name: Icon list modifier
+  family: cfgov-cf-enhancements
+  notes:
+    - "Set up a list with icons on the left, in place of bullets."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                <span class="list_text">List item 1</span>
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                <span class="list_text">List item 2</span>
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-fax list_icon"></span>
+                <span class="list_text">List item 3</span>
+            </li>
+        </ul>
+  tags:
+    - cf-typography
+*/
+
+.list__icons {
+    .list__unstyled();
+
+    .list_icon,
+    .list_text {
+        display: table-cell;
+    }
+
+    .list_icon {
+        width: 1.5em;
+        .list__icons .list_icon__left();
+    }
+}
+
+
+/* topdoc
+  name: List icon left modifier
+  family: cfgov-cf-enhancements
+  notes:
+    - "Left align the icons in an icon list."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-technology list_icon list_icon__left"></span>
+                <span class="list_text">List item 1</span>
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon list_icon__left"></span>
+                <span class="list_text">List item 2</span>
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-money list_icon list_icon__left"></span>
+                <span class="list_text">List item 3</span>
+            </li>
+        </ul>
+  tags:
+    - cf-typography
+*/
+
+.list__icons {
+    .list_icon__left {
+        // TODO: Remove the !important once this lands in cf-typography.
+        text-align: left !important;
+    }
+}
+
+/* topdoc
+  name: List icon center modifier
+  family: cfgov-cf-enhancements
+  notes:
+    - "Center align the icons in an icon list."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-technology list_icon list_icon__center"></span>
+                <span class="list_text">List item 1</span>
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon list_icon__center"></span>
+                <span class="list_text">List item 2</span>
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-money list_icon list_icon__center"></span>
+                <span class="list_text">List item 3</span>
+            </li>
+        </ul>
+  tags:
+    - cf-typography
+*/
+
+.list__icons {
+    .list_icon__center {
+        text-align: center;
+    }
+}
+
+/* topdoc
+  name: List icon right modifier
+  family: cfgov-cf-enhancements
+  notes:
+    - "Right align the icons in an icon list."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item list_icon__right">
+                <span class="cf-icon cf-icon-technology list_icon"></span>
+                <span class="list_text">List item 1</span>
+            </li>
+            <li class="list_item list_icon__right">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                <span class="list_text">List item 2</span>
+            </li>
+            <li class="list_item list_icon__right">
+                <span class="cf-icon cf-icon-money list_icon"></span>
+                <span class="list_text">List item 3</span>
+            </li>
+        </ul>
+  tags:
+    - cf-typography
+*/
+
+.list__icons {
+    .list_icon__right {
+        padding-right: .5em;
+        text-align: right;
+    }
+}
