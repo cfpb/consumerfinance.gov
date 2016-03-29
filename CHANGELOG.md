@@ -30,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the layout for the level 1 menu items to distribute them more evenly
   across the header.
 - Abstracted the string utils from the Multiselect.
+- Disabled GTM tracking for links in menu and return to top link.
 
 ### Removed
 
