@@ -6,11 +6,17 @@
 
 var $ = require( 'jquery' );
 
+// TODO: Refactor this file to remove jquery dependency.
+//       http://stackoverflow.com/questions/21474678/
+//       scrolltop-animation-without-jquery
 /**
  * Set up event handler for button to scroll to top of page.
  */
 function init() {
   var duration = 300;
+
+  // Disable Google Tag Manager tracking on this link.
+  $( '.js-return-to-top' ).attr( 'data-gtm_ignore', 'true' );
 
   $( '.js-return-to-top' ).click( function( event ) {
     event.preventDefault();

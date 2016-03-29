@@ -121,6 +121,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: Made Expandables collapse under 600px window size.
 - Updated the Mega Menu layout to avoid pointer events for older IE.
 - Updated the Mega Menu for devices without JS.
+- Disabled GTM tracking for links in menu and return to top link.
 
 ### Removed
 - Removed normalize and normalize-legacy from main less file because CF
