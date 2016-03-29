@@ -43,32 +43,35 @@
 {% import 'macros/time.html' as time %}
 {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
-{% macro render(post, type='', form_id=0, url='') %}
+{% macro render(post, controls, form_id=0, url='') %}
+    {% set type = controls.page_type or '' %}
     {% set page_url = url or get_protected_url(page) %}
     {% set post_url = get_protected_url(post) %}
     <article class="o-post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">
-                Published {{ time.render(post.date_published, {'date':true}) }}
+                {{ controls.post_date_description }} {{ time.render(post.date_published, {'date':true}) }}
             </span>
             {# Newsroom Blog category logic #}
-            {% if 'newsroom' in type %}
-                {% if is_blog(post) %}
-                    {{ category_slug.render('blog',
-                            page_url,
-                            'post_slug meta-header_left',
-                            false, form_id) }}
-                {% endif %}
-            {% else %}
-                {% for cat in post.categories.all() %}
-                    {% if loop.index > 1 %}
-                        |
+            {% if controls.categories.show_preview_categories %}
+                {% if 'newsroom' in type %}
+                    {% if is_blog(post) %}
+                        {{ category_slug.render('blog',
+                                page_url,
+                                'post_slug meta-header_left',
+                                false, form_id) }}
                     {% endif %}
-                    {{ category_slug.render(cat.name,
-                            page_url,
-                            'post_slug meta-header_left',
-                            false, form_id) }}
-                {% endfor %}
+                {% else %}
+                    {% for cat in post.categories.all() %}
+                        {% if loop.index > 1 %}
+                            |
+                        {% endif %}
+                        {{ category_slug.render(cat.name,
+                                page_url,
+                                'post_slug meta-header_left',
+                                false, form_id) }}
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         </div>
          {% if 'EventPage' in post.specific_class.__name__ %}
