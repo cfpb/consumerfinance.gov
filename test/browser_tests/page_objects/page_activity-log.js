@@ -11,7 +11,7 @@ function ActivityLog() {
 
   this.mainSummary = element( by.css( '[data-qa-hook="main-summary"]' ) );
 
-  this.searchFilter = element( by.css( '.js-post-filter' ) );
+  this.searchFilter = element( by.css(  '[data-qa-hook="filter"]' ) );
 
   this.searchFilterBtn =
   this.searchFilter.element( by.css( '.m-expandable_target' ) );
