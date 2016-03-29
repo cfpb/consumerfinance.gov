@@ -18,7 +18,7 @@ describe( 'The Footer Component', function() {
       'cfpb ombudsman',
     '/about-us/contact-us/':
       'contact us',
-    '/newsroom/':
+    '/about-us/newsroom/':
       'newsroom',
     '/open-government/':
       'open government',

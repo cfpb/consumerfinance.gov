@@ -95,7 +95,7 @@ describe( 'The Blog Page', function() {
     expect( page.mNotification.isPresent() ).toBe( true );
   } );
 
-   it( 'should include an atomic expandable', function() {
+  it( 'should include an atomic expandable', function() {
     expect( page.mExpandable.isPresent() ).toBe( true );
   } );
 
