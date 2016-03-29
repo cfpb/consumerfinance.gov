@@ -7,7 +7,7 @@
   },
   "feed": {
     "feed_title": "CFPB Blog",
-    "feed_url": "/blog/",
+    "feed_url": "/about-us/blog/",
     "entry_title": "$$title$$",
     "entry_author": "$$author$$",
     "entry_content": "$$content$$",
