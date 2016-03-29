@@ -21,6 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Global Banner Molecule.
 - Added Digital Privacy Policy to the footer.
 - Added tests for dom-traverse functions
+- Add an EXTERNAL_ICON_PATTERN to handle icons and links separately
 
 ### Changed
 
@@ -30,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the layout for the level 1 menu items to distribute them more evenly
   across the header.
 - Abstracted the string utils from the Multiselect.
+- .gov links have an external icon
 
 ### Removed
 
