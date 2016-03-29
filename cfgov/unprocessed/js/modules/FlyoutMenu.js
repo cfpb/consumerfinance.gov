@@ -126,7 +126,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * @param {HTMLNode} elem - The element to set.
    * @param {boolean} value - The value to set on `aria-expanded`,
    *   casts to a string.
-   * @param {string} The cast value.
+   * @returns {string} The cast value.
    */
   function _setAriaExpandedAttr( elem, value ) {
     var strValue = String( value );
