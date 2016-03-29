@@ -12,7 +12,6 @@ require( 'cf-expandables' );
 // Global modules.
 require( '../modules/footer-button' ).init();
 require( '../modules/focus-target' ).init();
-require( '../modules/post-filter' ).init();
 require( '../modules/form-validation' ).init();
 require( '../modules/scroll-on-history-collapse' ).init();
 require( '../modules/clear-form-buttons' ).init();

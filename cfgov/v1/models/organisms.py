@@ -155,7 +155,7 @@ class ExpandableGroup(blocks.StructBlock):
         template = '_includes/organisms/expandable-group.html'
 
     class Media:
-        js = ("expandable-group.js",)
+        js = ["expandable-group.js"]
 
 
 class ItemIntroduction(blocks.StructBlock):
@@ -198,4 +198,4 @@ class FilterControls(molecules.BaseExpandable):
         icon = 'form'
 
     class Media:
-        js = ('notification.js', 'expandable.js', 'filterable-list-controls.js',)
+        js = ['notification.js', 'expandable.js', 'filterable-list-controls.js']

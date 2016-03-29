@@ -5,6 +5,7 @@ var arrayHelpers = require( '../modules/util/array-helpers' );
 var typeCheckers = require( '../modules/util/type-checkers' );
 var domTraverse = require( '../modules/util/dom-traverse' );
 var domCreate = require( '../modules/util/dom-manipulators' ).create;
+var stringMatch = require( '../modules/util/strings' ).stringMatch;
 
 /**
  * Multiselect
@@ -292,7 +293,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       _index = -1;
 
       _filtered = _optionData.filter( function( item ) {
-        return _filterContains( item.text, value );
+        return stringMatch( item.text, value );
       } );
 
       _filterResults();
@@ -418,6 +419,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       }
     } );
 
+    _bind( _container, {
+      mousedown: function() {
+        _isBlurSkipped = true;
+      }
+    } );
+
     for ( var i = 0, len = inputs.length; i < len; i++ ) {
       _bind( inputs[i], {
         change: _changeHandler
@@ -432,16 +439,6 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   function _changeHandler( event ) {
     _updateSelections( event.target.value );
     _resetSearch();
-  }
-
-  /**
-   * Tests if the user's query matches the text input
-   * @param   {string} text  The text to test against
-   * @param   {string} value The value the user has entered
-   * @returns {boolean}      Returns the boolean result of the test
-   */
-  function _filterContains( text, value ) {
-    return RegExp( _regExpEscape( value.trim() ), 'i' ).test( text );
   }
 
   /**
@@ -491,15 +488,6 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     }
 
     target.dispatchEvent( evt );
-  }
-
-  /**
-   * Escapes a string
-   * @param   {string} s The string to escape
-   * @returns {string}   The escaped string
-   */
-  function _regExpEscape( s ) {
-    return s.replace( /[-\\^$*+?.()|[\]{}]/g, '\\$&' );
   }
 
   // Attach public events.

@@ -13,7 +13,7 @@ describe( 'About Landing Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toContain( 'About Us' );
+    expect( page.pageTitle() ).toContain( 'About us' );
   } );
 
   it( 'should load the activity block in the sidebar', function() {

@@ -752,6 +752,16 @@ a[href$='.zip']:after {
     text-align: right;
 }
 
+.date-range {
+    &_label {
+        display: none;
+
+        .lt-ie10 & {
+            display: inline;
+        }
+    }
+}
+
 /* topdoc
   name: EOF
   eof: true

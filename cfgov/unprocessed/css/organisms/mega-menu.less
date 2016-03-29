@@ -415,7 +415,7 @@
 
             &-item {
                 display: inline-block;
-                margin-right: @grid_gutter-width / 2;
+                margin-right: @grid_gutter-width;
 
                 .no-js &:hover {
                     .o-mega-menu_content-2 {
@@ -426,7 +426,7 @@
 
             &-link {
                 padding-bottom: @grid_gutter-width;
-                margin-left: @grid_gutter-width / 2;
+                margin-left: @grid_gutter-width;
 
                 font-size: unit( 18px / @base-font-size-px, em );
 
@@ -562,6 +562,12 @@
 
     // Large desktop size.
     .respond-to-min( @bp-lg-min, {
+
+        &_content-1 {
+            &-item {
+                margin-right: @grid_gutter-width * 1.5;
+            }
+        }
         // 2nd-level menu - Large desktop.
          &_content-2 {
             &-grid {
@@ -569,6 +575,16 @@
                 // TODO: Check if .grid_nested-col-group()
                 //       can be used here when implementing Featured Menu Content.
                 border-left: 0;
+            }
+        }
+    } );
+
+    // Xtra-Large desktop size.
+    .respond-to-min( @bp-xl-min, {
+
+        &_content-1 {
+            &-item {
+                margin-right: @grid_gutter-width * 2;
             }
         }
     } );

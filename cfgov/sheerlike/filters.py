@@ -32,6 +32,7 @@ def generate_range_filters(multidict, filter_keys):
     This generates the ElasticSearch filter DSL for filters that check whether
     a field is within a certain range
     '''
+
     range_clause = {"range": {}}
     for key in filter_keys:
         full_field = key.replace('filter_range_', '')
@@ -67,18 +68,24 @@ def generate_range_filters(multidict, filter_keys):
             range_clause['range']['date']['gte'], range_clause['range']['date']['lte'] = \
                 range_clause['range']['date'][
                     'lte'], range_clause['range']['date']['gte']
-        # If either date matches the YYYY-M[M] format, append the
-        # appropriate day
-        if 'lte' in range_clause['range']['date'] and re.compile(
-                "^[0-9]{4}-[0-9]{1,2}$").match(range_clause['range']['date']['lte']):
-            year, month = range_clause['range']['date']['lte'].split('-')
-            last_day_of_month = calendar.monthrange(
-                int(year), int(month))[1]
-            range_clause['range']['date'][
-                'lte'] += "-{0}".format(last_day_of_month)
-        if 'gte' in range_clause['range']['date'] and re.compile(
-                "^[0-9]{4}-[0-9]{1,2}$").match(range_clause['range']['date']['gte']):
-            range_clause['range']['date']['gte'] += "-1"
+        if 'lte' in range_clause['range']['date']:
+            # If either date matches the YYYY-M[M] format, append the
+            # appropriate day
+            date_lte = range_clause['range']['date']['lte']
+            if re.compile("^[0-9]{4}-[0-9]{1,2}$").match(date_lte):
+                year, month = date_lte.split('-')
+                last_day_of_month = calendar.monthrange(int(year), int(month))[1]
+                range_clause['range']['date']['lte'] += "-{0}".format(last_day_of_month)
+            elif re.compile("\d{2}\/\d{2,4}").match(date_lte):
+                range_clause['range']['date']['lte'] = parse(date_lte)
+
+        if 'gte' in range_clause['range']['date']:
+            date_gte = range_clause['range']['date']['gte']
+            if re.compile("^[0-9]{4}-[0-9]{1,2}$").match(date_gte):
+                range_clause['range']['date']['gte'] += "-1"
+            elif re.compile("\d{2}\/\d{2,4}").match(date_gte):
+                range_clause['range']['date']['gte'] = parse(date_gte)
+
     return range_clause
 
 
@@ -93,7 +100,6 @@ def filter_dsl_from_multidict(multidict):
     if term_filter_keys:
         term_clause = generate_term_filters(multidict, term_filter_keys)
         final_filters.append(term_clause)
-
     if range_filter_keys:
         range_clause = generate_range_filters(multidict, range_filter_keys)
         final_filters.append(range_clause)
@@ -101,7 +107,6 @@ def filter_dsl_from_multidict(multidict):
 
 
 def selected_filters_from_multidict(multidict, field):
-
     return [k for k in multidict.getlist(field) +
             multidict.getlist('filter_' + field) if k]
 
