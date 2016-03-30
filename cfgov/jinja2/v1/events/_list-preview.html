@@ -48,11 +48,11 @@
                     <div class="tags tags__hide-heading">
                         <span class="tags_heading u-visually-hidden">Topics:</span>
                         <ul class="tags_list">
-                        {% for tag in event.tags.names() %}
+                        {% for tag in event.tags.all() %}
                             <li class="tags_tag">
-                                <a class="tags_link" href="{{ request.path }}?topics={{ tag }}">
+                                <a class="tags_link" href="{{ request.path }}?topics={{ tag.slug }}">
                                     <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                                    {{ tag }}
+                                    {{ tag.name }}
                                 </a>
                             </li>
                         {% endfor %}

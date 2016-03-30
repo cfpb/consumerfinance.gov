@@ -164,9 +164,9 @@
                     </span>
                 {% endfor %}
 
-                {% if post.tags.names() | length %}
+                {% if post.tags.all() | length %}
                     {%- import 'tags.html' as tags %}
-                    {{ tags.render(post.tags.names(), page_url, true, false, form_id) }}
+                    {{ tags.render(post.tags.all(), page_url, true, false, form_id) }}
                 {% endif %}
             </div>
             {% if post.secondary_link_url and post.secondary_link_text %}

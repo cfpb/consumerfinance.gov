@@ -214,26 +214,36 @@ class FilterableListForm(forms.Form):
 
     # Populate Topics' choices
     def set_topics(self, parent, hostname):
-        tags = [tag for tags in
-                     [page.tags.names() for page in
+        tags = [(tag.slug, tag.name) for tags in
+                     [page.tags.all() for page in
                       CFGOVPage.objects.live_shared(hostname).descendant_of(parent)]
                      for tag in tags]
         # Orders by most to least common tags
-        options = most_common(tags)
-        most = [(option, option) for option in options[:3]]
-        other = [(option, option) for option in options[3:]]
+        choices = []
+        tag_slugs = [tag[0] for tag in tags]
+        for slug in most_common(tag_slugs):
+            for tag in tags:
+                if slug == tag[0]:
+                    choices.append(tag)
+                    break
         self.fields['topics'].choices = \
-            (('Most frequent', tuple(most)),
-             ('All other topics', tuple(other)))
+            (('Most frequent', choices[:3]),
+             ('All other topics', choices[3:]))
 
     # Populate Authors' choices
     def set_authors(self, parent, hostname):
-        all_authors = [author for authors in [page.authors.names() for page in
-                       CFGOVPage.objects.live_shared(hostname).descendant_of(
-                       parent)] for author in authors]
+        authors = [(author.slug, author.name) for authors in [page.authors.all()
+                   for page in CFGOVPage.objects.live_shared(hostname).descendant_of(parent)]
+                   for author in authors]
         # Orders by most to least common authors
-        self.fields['authors'].choices = [(author, author) for author in
-                                          most_common(all_authors)]
+        choices = []
+        author_slugs = [author[0] for author in authors]
+        for slug in most_common(author_slugs):
+            for author in authors:
+                if slug == author[0]:
+                    choices.append(author)
+                    break
+        self.fields['authors'].choices = tuple(choices)
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
@@ -295,8 +305,8 @@ class FilterableListForm(forms.Form):
             'date_published__gte',   # from_date
             'date_published__lte',   # to_date
             'categories__name__in',  # categories
-            'tags__name__in',        # topics
-            'authors__name__in',     # authors
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
         ]
 
 

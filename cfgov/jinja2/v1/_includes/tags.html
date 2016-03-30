@@ -35,11 +35,17 @@
     <ul class="tags_list">
     {% for tag in tags %}
         <li class="tags_tag">
-          {% set url_arg = 'filter_tags=' if is_sheer else 'filter' ~ index|string ~ '_topics=' %}
-            <a class="tags_link" href="{{ path }}?{{ url_arg }}{{ tag }}">
-                <span class="tags_bullet" aria-hidden="true">&bull;</span>
-                {{ tag }}
-            </a>
+          {% if is_sheer %}
+              <a class="tags_link" href="{{ path }}?filter_tags={{ tag }}">
+                  <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                  {{ tag }}
+              </a>
+          {% else %}
+              <a class="tags_link" href="{{ path }}?filter{{ index }}_topics={{ tag.slug }}">
+                  <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                  {{ tag.name }}
+              </a>
+          {% endif %}
         </li>
     {% endfor %}
     </ul>
