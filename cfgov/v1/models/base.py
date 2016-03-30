@@ -155,9 +155,9 @@ class CFGOVPage(Page):
 
                 for cat in block.value['specific_categories']:
                     if util.get_related_posts_categories(cat) == 'posts' and search_type == 'posts':
-                        match_query.append({'match': {'blog_category': cat}})
+                        match_query.append({'term': {'blog_category': cat}})
                     elif util.get_related_posts_categories(cat) == 'newsroom' and search_type == 'just_newsroom':
-                        match_query.append({'match': {'category': cat}})
+                        match_query.append({'term': {'category': cat}})
 
                 related[search_type_name] = \
                     sheer_query.get_tag_related_documents(tags=self.tags.names(),

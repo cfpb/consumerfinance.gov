@@ -237,16 +237,26 @@ class Query(object):
     def get_tag_related_documents(self, tags, size=0, additional_args={}):
         query_file = json.loads(file(self.filename).read())
         doc_type = query_file['query']['doc_type']
-        query_dict = {'sort': [{'date': {'order': 'desc'}}],
-                      'query': {'bool': {'should': []}}}
+        query_dict = {'sort': [{'date': {'order': 'desc'}}]}
+
+        if not additional_args:
+            query_dict['query'] = {'bool': {'should': []}}
+            for tag in tags:
+                query_dict['query']['bool']['should'].append({'match': {'tags.lower': tag.lower()}})
+
+        else:
+            filtered_query = json.loads(file(getattr(QueryFinder(), 'filtered_17').filename).read())
+            query_dict['query'] = filtered_query
+
+            for tag in tags:
+                query_dict['query']['filtered']['query']['bool']['should'].append({'term': {'tags.lower': tag.lower()}})
+
+            for arg in additional_args:
+                query_dict['query']['filtered']['filter']['or'].append(arg)
+
         if size:
             query_dict['size'] = size
-        for tag in tags:
-            query_dict['query']['bool']['should'].append({'match': {'tags.lower': tag}})
 
-        if additional_args:
-            for arg in additional_args:
-                query_dict['query']['bool']['should'].append(arg)
 
         response = self.es.search(index=self.es_index, doc_type=doc_type,
                                   body=query_dict, analyzer='tag_analyzer')
