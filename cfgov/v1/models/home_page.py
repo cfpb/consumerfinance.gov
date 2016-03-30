@@ -1,5 +1,6 @@
 from .base import CFGOVPage
-from . import organisms, molecules, atoms, ref
+from . import organisms, molecules, atoms
+from ..util import ref
 from django.db import models
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \

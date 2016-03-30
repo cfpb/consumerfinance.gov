@@ -2,9 +2,8 @@ from django.core.exceptions import ValidationError
 
 from wagtail.wagtailcore import blocks
 
-from . import ref
 from . import atoms
-from ..util import util
+from ..util import util, ref
 
 
 def isRequired(field_name):
