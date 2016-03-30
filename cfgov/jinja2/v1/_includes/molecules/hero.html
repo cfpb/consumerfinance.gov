@@ -47,11 +47,11 @@
                 value.background_color + ';"'
                 if value.background_color else '' }}>
 
-    {% if value.background_image %}
-            {% set background_image=image(value.background_image, 'original') %}
-    {% endif %}
     <div class="wrapper hero_wrapper"
-         style="background-image: url( {{  background_image.url if background_image else '' }} );">
+          {% if value.background_image %}
+            {% set background_image=image(value.background_image, 'original') %}
+               style="background-image: url( {{  background_image.url }});"
+          {% endif %}>
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
             <div class="hero_subhead">{{ parse_links(value.body) | safe }}</div>
