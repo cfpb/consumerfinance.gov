@@ -33,6 +33,8 @@ from . import molecules
 from . import organisms
 from ..util import util
 
+import urllib
+
 
 class CFGOVAuthoredPages(TaggedItemBase):
     content_object = ParentalKey('CFGOVPage')
@@ -125,9 +127,20 @@ class CFGOVPage(Page):
         ObjectList(settings_panels, heading='Configuration'),
     ])
 
+    def generate_view_more_url(self):
+        tags = []
+        for tag in self.tags.names():
+            tags.append(urllib.quote_plus(tag))
+        tags = '&'.join(tags)
+        return "/activity-log?filter_tags=%s" % (tags)
+
+
     def related_posts(self, block, hostname):
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
+        if self.tags.names():
+            block.value['view_more']['url'] = self.generate_view_more_url()
+            self.save()
         # TODO: Add other search types as they are implemented in Django
         # Import classes that use this class here to maintain proper import
         # order.
