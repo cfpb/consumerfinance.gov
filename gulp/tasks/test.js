@@ -36,13 +36,14 @@ gulp.task( 'test:unit:scripts', function( cb ) {
 } );
 
 gulp.task( 'test:unit:macro', function( cb ) {
-  exec( 'python ' + config.tests + '/macro_tests/test_macros.py',
-    function( err, stdout, stderr ) {
-      $.util.log( stdout );
-      $.util.log( stderr );
-      cb( err );
-    }
-  );
+  spawn(
+    'python',
+    [ config.tests + '/macro_tests/test_macros.py' ],
+    { stdio: 'inherit' }
+  )
+    .once( 'close', function() {
+      $.util.log( 'Macro unit tests done!' );
+    } );
 } );
 
 gulp.task( 'test:unit:server', function() {
