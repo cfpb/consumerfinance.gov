@@ -4,7 +4,6 @@ var gulp = require( 'gulp' );
 var $ = require( 'gulp-load-plugins' )();
 var sitespeedio = require( 'gulp-sitespeedio' );
 var childProcess = require( 'child_process' );
-var exec = childProcess.exec;
 var spawn = childProcess.spawn;
 var config = require( '../config' ).test;
 var fsHelper = require( '../utils/fsHelper' );
@@ -36,13 +35,14 @@ gulp.task( 'test:unit:scripts', function( cb ) {
 } );
 
 gulp.task( 'test:unit:macro', function( cb ) {
-  exec( 'python ' + config.tests + '/macro_tests/test_macros.py',
-    function( err, stdout, stderr ) {
-      $.util.log( stdout );
-      $.util.log( stderr );
-      cb( err );
-    }
-  );
+  spawn(
+    'python',
+    [ config.tests + '/macro_tests/test_macros.py' ],
+    { stdio: 'inherit' }
+  )
+    .once( 'close', function() {
+      $.util.log( 'Macro unit tests done!' );
+    } );
 } );
 
 gulp.task( 'test:unit:server', function() {
