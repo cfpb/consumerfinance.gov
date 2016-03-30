@@ -405,7 +405,7 @@ LOGIN_REDIRECT_URL='/admin/'
 
 
 SHEER_SITES = {
-        'refresh-legacy': V1_TEMPLATE_ROOT,
+        'assets': V1_TEMPLATE_ROOT,
         'owning-a-home':
             Path(os.environ.get('OAH_SHEER_PATH') or
             Path(REPOSITORY_ROOT, '../owning-a-home/dist')),

@@ -280,21 +280,17 @@ class CFGOVPage(Page):
     def _add_streamfield_js(self, js):
         # Create a dictionary with keys ordered organisms, molecules, then atoms
         for child in self._get_streamfield_blocks():
-            child_class = type(child.block)
-            self._add_block_js(child_class, child.block, js)
+            self._add_block_js(child.block, js)
 
     # Recursively search the blocks and classes for declared Media.js
-    def _add_block_js(self, block_class, original_block, js):
-        if issubclass(block_class, blocks.StructBlock):
-            self._assign_js(block_class(), js)
-            for child in original_block.child_blocks.values():
-                self._add_block_js(type(child), child, js)
-        elif issubclass(block_class, blocks.ListBlock):
-            self._assign_js(block_class(original_block.child_block), js)
-            for name, child in original_block.child_block.child_blocks.iteritems():
-                self._add_block_js(type(child), child, js)
-        else:
-            self._assign_js(block_class(), js)
+    def _add_block_js(self, block, js):
+        self._assign_js(block, js)
+        if issubclass(type(block), blocks.StructBlock):
+            for child in block.child_blocks.values():
+                self._add_block_js(child, js)
+        elif issubclass(type(block), blocks.ListBlock):
+            for child in block.child_block.child_blocks.values():
+                self._add_block_js(child, js)
 
     # Assign the Media js to the dictionary appropriately
     def _assign_js(self, obj, js):

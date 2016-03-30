@@ -91,6 +91,14 @@ describe( 'The Blog Page', function() {
     } );
   } );
 
+  it( 'should include an atomic notification', function() {
+    expect( page.mNotification.isPresent() ).toBe( true );
+  } );
+
+  it( 'should include an atomic expandable', function() {
+    expect( page.mExpandable.isPresent() ).toBe( true );
+  } );
+
   it( 'should include a visible Show button', function() {
     expect( page.searchFilterShowBtn.isDisplayed() ).toBe( true );
     expect( page.searchFilterShowBtn.getText() ).toBe( 'Show' );

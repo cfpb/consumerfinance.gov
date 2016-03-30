@@ -15,12 +15,12 @@
     "permalink": true
   },
   "newsroom": {
-    "url":       "/newsroom/<id>/",
+    "url":       "/about-us/newsroom/<id>/",
     "type":      "newsroom",
     "permalink": true
   },
   "post": {
-    "url":       "/blog/<id>/",
+    "url":       "/about-us/blog/<id>/",
     "type":      "posts",
     "permalink": true
   },

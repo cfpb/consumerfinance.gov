@@ -213,7 +213,7 @@
             {% endif %}
         {% endif %}
         {% for post in posts %}
-            {{ post_preview(post, controls.categories.page_type, index) }}
+            {{ post_preview(post, controls, form_id=index) }}
         {% endfor %}
         {% include 'molecules/pagination.html' %}
     </div>

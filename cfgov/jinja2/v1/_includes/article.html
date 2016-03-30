@@ -16,10 +16,11 @@
                        is called `newsroom`.
 
    path:               The path to which post filters are applies. For example,
-                       if the post is a blog post then path should be '/blog/'.
-                       Remember to leverage vars.path instead of using the
-                       literal string '/blog/'. Path is used to create the
-                       filtered URL: {{ path }}?filter_tags={{ tag }}
+                       if the post is a blog post then path should be 
+                       '/about-us/blog/'.  Remember to leverage vars.path
+                       instead of using the literal string '/about-us/blog/'.
+                       Path is used to create the filtered URL:
+                       {{ path }}?filter_tags={{ tag }}
 
    ========================================================================== #}
 
@@ -30,7 +31,7 @@
 <article class="post">
     <header>
         {%- import 'macros/category-slug.html' as category_slug %}
-        {% if path == '/blog/' and post.blog_category.0 %}
+        {% if path == '/about-us/blog/' and post.blog_category.0 %}
             {% set use_blog_category = true %}
             {{ category_slug.render(post.blog_category.0,
                                     path,

@@ -11,7 +11,6 @@
     "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "browser-sync": "^2.8.0",
     "capital-framework": "^3.1.1",
-    "dateformat": "^1.0.11",
     "del": "^2.0.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.0.2",
@@ -65,7 +64,6 @@
     "player": "^0.6.1"
   },
   "browser": {
-    "dateformat": "./node_modules/dateformat/lib/dateformat.js",
     "handlebars": "./node_modules/handlebars/dist/handlebars.min.js",
     "history": "./vendor/history.js/scripts/bundled-uncompressed/html5/jquery.history.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",

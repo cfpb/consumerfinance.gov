@@ -110,26 +110,20 @@
     'id_prefix':                '',
     'id_tags':                  'filter_tags',
     'id_author':                'filter_author',
-    'id_range_date_gte':        'filter_range-date-gte',
-    'id_range_date_lte':        'filter_range-date-lte',
-    'id_from_month':            'filter_from-month',
-    'id_from_year':             'filter_from-year',
-    'id_to_month':              'filter_to-month',
-    'id_to_year':               'filter_to-year'
+    'id_range_date_gte':        'filter_range_date_gte',
+    'id_range_date_lte':        'filter_range_date_lte'
 } -%}
 {%- set _ignore = options.update(user_options) -%}
 
 {#- Create ID's for all of the form inputs and containers using `id_prefix`. -#}
+{#- Please check Sheerlike before changing the names of fields as it
+{#  depends a certain naming structure -#}
 {%- if options.id_prefix != '' %}
 {%- set _ignore = options.update({
     'id_tags':              options.id_prefix + '-filter_tags',
     'id_author':            options.id_prefix + '-filter_author',
-    'id_range_date_gte':    options.id_prefix + '-filter_range-date-gte',
-    'id_range_date_lte':    options.id_prefix + '-filter_range-date-lte',
-    'id_from_month':        options.id_prefix + '-filter_from-month',
-    'id_from_year':         options.id_prefix + '-filter_from-year',
-    'id_to_month':          options.id_prefix + '-filter_to-month',
-    'id_to_year':           options.id_prefix + '-filter_to-year'
+    'id_range_date_gte':    options.id_prefix + '-filter_range_date_gte',
+    'id_range_date_lte':    options.id_prefix + '-filter_range_date_lte'
 }) -%}
 {%- endif -%}
 
@@ -142,8 +136,8 @@
 <div class="m-expandable
             m-expandable__borders
             m-expandable__midtone
-            {{ 'm-expandable__expanded' if is_expanded else '' }}
-            js-post-filter">
+            m-expandable__expanded"
+      data-qa-hook="filter">
     <button class="m-expandable_target" aria-pressed="true">
         <div class="m-expandable_header">
             <span class="m-expandable_header-left
@@ -242,7 +236,6 @@
                     form-l_col__flush-bottom
                     form-l_col-2-3">
             <div class="form-l">
-
                 {# Tag filters #}
                 {% if filters.tags %}
                 <div class="form-l_col form-l_col-1-2">
@@ -315,15 +308,16 @@
                     {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
                     {% set from_date_formatted = from_date | date('%m/%d/%Y') if from_date %}
                     <div class="form-l_col form-l_col-1-2">
-                        <label for="{{ options.id_range_date_gte }}">
-                            From <span class="date_label">(YYYY-MM)</span>:
+                        <label for="{{ options.id_range_date_gte }}" class="form-label-header">
+                            From <span class="date-range_label">mm/dd/yyyy</span>:
                         </label>
                         <input class="js-filter_range-date js-filter_range-date__gte"
                                id="{{ options.id_range_date_gte }}"
                                name="{{ options.id_range_date_gte }}"
                                type="text"
                                value="{{ from_date_formatted if from_date_formatted else '' }}"
-                               placeholder="YYYY-MM">
+                               placeholder="mm/dd/yyyy"
+                               data-type="date">
                     </div>
                     {#
                         ===============
@@ -333,15 +327,16 @@
                     {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
                     {% set to_date_formatted = to_date | date('%m/%d/%Y') if to_date %}
                     <div class="form-l_col form-l_col-1-2">
-                        <label for="{{ options.id_range_date_lte }}">
-                            To <span class="date_label">(YYYY-MM)</span>:
+                        <label for="{{ options.id_range_date_lte }}" class="form-label-header">
+                            To <span class="date-range_label">mm/dd/yyyy</span>:
                         </label>
                         <input class="js-filter_range-date js-filter_range-date__lte"
                                id="{{ options.id_range_date_lte }}"
                                name="{{ options.id_range_date_lte }}"
                                type="text"
                                value="{{ to_date_formatted if to_date_formatted else '' }}"
-                               placeholder="YYYY-MM">
+                               placeholder="mm/dd/yyyy"
+                               data-type="date">
                     </div>
                   </div>
                 </div>

@@ -10,35 +10,46 @@
 
    Create a hero molecule.
 
-   value:           An object with the following requirements.
+   value:               An object with the following requirements.
 
-   value.heading:   A string containing title of module.
+   value.is_overlay:    A boolean to change the hero to an overlay hero.
+   value.is_white_text: A boolean to change the text color to white.
 
-   value.body:      A string containing the content to display below the
-                    heading (typically a paragraph).
+   value.heading:       A string containing title of module.
 
-   value.image:     A image object containing the URL of the image to be placed
-                    adjacent to the text.
+   value.body:          A string containing the content to display below the
+                        heading (typically a paragraph).
+
+   value.lg_image:      An image object containing the URL of the image to be
+                        placed behind the hero.
+
+   value.sm_image:      A image object containing the URL of the image to be
+                        placed adjacent to the text.
 
 
    value.background_color:
-                    A string containing the color code (in any format) to
-                    set as the hero background color.
+                        A string containing the color code (in any format) to
+                        set as the hero background color.
 
-   value.links:     A tuple of items to create a list of links, containing:
+   value.links:         A tuple of items to create a list of links, containing:
 
-                    url:  A string for the URL of the link.
-                    text: A string for the text of the link.
+                        url:  A string for the URL of the link.
+                        text: A string for the text of the link.
 
-   value.is_button: A boolean to change the CTA link to a button.
+   value.is_button:     A boolean to change the CTA link to a button.
 
    ========================================================================== #}
 
-<section class="hero"
-         {{ 'style=background-color:' +
-             value.background_color + ';'
-             if value.background_color else '' }}>
-    <div class="wrapper hero_wrapper">
+<section class="hero
+                {{ 'hero__overlay' if value.is_overlay else '' }}
+                {{ 'hero__white-text' if value.is_white_text else '' }}"
+         {{ 'style="background-color:' +
+                value.background_color + ';"'
+                if value.background_color else '' }}>
+    <div class="wrapper hero_wrapper"
+          {{ 'style="background-image: ' +
+                value.background_image + ';"'
+                if value.background_image else '' }}>
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
             <div class="hero_subhead">{{ parse_links(value.body) | safe }}</div>

@@ -22,6 +22,8 @@ from transition_utilities.conditional_urls import include_if_app_enabled
 from wagtail.wagtailadmin.forms import PasswordResetForm
 from wagtail.wagtailadmin.views import account
 
+fin_ed = SheerSite('fin-ed-resources')
+
 urlpatterns = [
     url(r'^django-admin/login', cfpb_login, name='wagtailadmin_login'),
     url(r'^django-admin/password_change', change_password, name='wagtailadmin_account_change_password'),
@@ -49,11 +51,15 @@ urlpatterns = [
     url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
     url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
-    url(r'^adult-financial-education/', include(SheerSite('fin-ed-resources').urls_for_prefix('adult-financial-education'))),
-    url(r'^youth-financial-education/', include(SheerSite('fin-ed-resources').urls_for_prefix('youth-financial-education'))),
-    url(r'^library-resources/', include(SheerSite('fin-ed-resources').urls_for_prefix('library-resources'))),
-    url(r'^tax-preparer-resources/', include(SheerSite('fin-ed-resources').urls_for_prefix('tax-preparer-resources'))),
-    url(r'^managing-someone-elses-money/', include(SheerSite('fin-ed-resources').urls_for_prefix('managing-someone-elses-money'))),
+
+    url(r'^adult-financial-education/', include(fin_ed.urls_for_prefix('adult-financial-education'))),
+    url(r'^youth-financial-education/', include(fin_ed.urls_for_prefix('youth-financial-education'))),
+    url(r'^library-resources/', include(fin_ed.urls_for_prefix('library-resources'))),
+    url(r'^tax-preparer-resources/', include(fin_ed.urls_for_prefix('tax-preparer-resources'))),
+    url(r'^managing-someone-elses-money/', include(fin_ed.urls_for_prefix('managing-someone-elses-money'))),
+    url(r'^parents/(?P<path>.*)$', RedirectView.as_view(url='/money-as-you-grow/%(path)s', permanent=True)),
+    url(r'^money-as-you-grow/', include(fin_ed.urls_for_prefix('money-as-you-grow'))),
+    url(r'fin-ed/privacy-act-statement/', include(fin_ed.urls_for_prefix('privacy-act-statement'))),
     url(r'^docs/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='docs_index.html'), name='index'),
 
@@ -105,7 +111,8 @@ urlpatterns = [
     ],
         namespace='docs')),
 
-    url(r'^blog/', include([
+    url(r'^blog/(?P<path>.*)$', RedirectView.as_view(url='/about-us/blog/%(path)s', permanent=True)),
+    url(r'^about-us/blog/', include([
         url(r'^$', TemplateView.as_view(template_name='blog/index.html'),
             name='index'),
         url(r'^(?P<doc_id>[\w-]+)/$',
@@ -115,7 +122,8 @@ urlpatterns = [
             name='detail')],
         namespace='blog')),
 
-    url(r'^newsroom/', include([
+    url(r'^newsroom/(?P<path>.*)$', RedirectView.as_view(url='/about-us/newsroom/%(path)s', permanent=True)),
+    url(r'^about-us/newsroom/', include([
         url(r'^$', TemplateView.as_view(template_name='newsroom/index.html'),
             name='index'),
         url(r'^press-resources/$',
@@ -129,8 +137,9 @@ urlpatterns = [
             name='detail')],
         namespace='newsroom')),
 
-    url(r'^the-bureau/', include([
-        url(r'^$', SheerTemplateView.as_view(template_name='the-bureau/index.html'),
+    url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/%(path)s', permanent=True)),
+    url(r'^about-us/the-bureau/', include([
+        url(r'^$', SheerTemplateView.as_view(template_name='about-us/the-bureau/index.html'),
             name='index'),
         url(r'^leadership-calendar/$',
             SheerTemplateView.as_view(),
@@ -138,8 +147,6 @@ urlpatterns = [
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
             name='page'),
-        url(r'^about-director/201410_cfpb_bio_cordray.pdf$',
-            renderDirectoryPDF, name='cordray_pdf'),
         url(r'^leadership-calendar/pdf/$',
             LeadershipCalendarPDFView.as_view(),
             name='leadership-calendar-pdf'),
@@ -228,7 +235,7 @@ urlpatterns = [
     url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
 
     # Report redirects
-    url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s')),
+    url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s', permanent=True)),
 ]
 if 'cfpb_common' in settings.INSTALLED_APPS:
     pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')
