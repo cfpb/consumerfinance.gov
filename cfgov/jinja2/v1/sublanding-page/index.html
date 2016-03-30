@@ -4,10 +4,6 @@
 {% import 'organisms/post-preview.html' as post_preview with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% block title -%}
-    {{ page.seo_title }}
-{%- endblock %}
-
 {% block hero -%}
     {% for block in page.header -%}
         {% include 'templates/render_block.html' with context %}
