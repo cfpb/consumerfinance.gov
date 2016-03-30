@@ -6,6 +6,7 @@ from time import time
 from django.conf import settings
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.blocks.struct_block import StructValue
+from ref import related_posts_categories
 
 def id_validator(id_string, search=re.compile(r'[^a-zA-Z0-9-_]').search):
     if id_string:
@@ -39,6 +40,19 @@ ERROR_MESSAGES = {
         'one_required': 'Please enter at least one date.'
     }
 }
+
+
+def get_related_posts_categories(category):
+    if category:
+        cats = dict(related_posts_categories)
+        for key, value in cats.iteritems():
+            sub_cats = dict(value)
+
+            if category in sub_cats:
+                if key == 'Blog':
+                    return 'posts'
+                elif key == 'Newsroom':
+                    return 'newsroom'
 
 
 # Orders by most to least common in the given list.

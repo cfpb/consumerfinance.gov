@@ -21,6 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Global Banner Molecule.
 - Added Digital Privacy Policy to the footer.
 - Added tests for dom-traverse functions
+- Added specific Blog/Newsroom Categories to Related Post options
 
 ### Changed
 
@@ -31,6 +32,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   across the header.
 - Abstracted the string utils from the Multiselect.
 - Updated the Hero Macro for the new overlay hero styles.
+- Updated article template to render all categories
 
 ### Removed
 

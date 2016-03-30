@@ -33,12 +33,24 @@
         {%- import 'macros/category-slug.html' as category_slug %}
         {% if path == '/about-us/blog/' and post.blog_category.0 %}
             {% set use_blog_category = true %}
-            {{ category_slug.render(post.blog_category.0,
-                                    path,
-                                    'post_slug',
-                                    use_blog_category) }}
+            {% for icon in post.blog_category %}
+                {% if loop.index > 1 %}
+                    |
+                {% endif %}
+                {{ category_slug.render(icon,
+                        path,
+                        'post_slug meta-header_left',
+                        use_blog_category) }}
+            {% endfor %}
         {% elif post.category.0 %}
-            {{ category_slug.render(post.category.0, path, 'post_slug') }}
+            {% for icon in post.category %}
+                {% if loop.index > 1 %}
+                    |
+                {% endif %}
+                {{ category_slug.render(icon,
+                        path,
+                        'post_slug meta-header_left') }}
+            {% endfor %}
         {% endif %}
         <h1 class="post_heading">
             {{ post.title|safe }}
