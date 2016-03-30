@@ -21,7 +21,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Global Banner Molecule.
 - Added Digital Privacy Policy to the footer.
 - Added tests for dom-traverse functions
-- Added default values for the View More text and URL. 
+- Added default values for the View more text and URL. 
+- Dynamically create the View more URL if there are tags
 
 ### Changed
 
