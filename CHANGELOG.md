@@ -32,6 +32,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the layout for the level 1 menu items to distribute them more evenly
   across the header.
 - Abstracted the string utils from the Multiselect.
+- Updated the Hero Macro for the new overlay hero styles.
 
 ### Removed
 
