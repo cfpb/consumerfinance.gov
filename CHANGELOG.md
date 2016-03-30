@@ -18,6 +18,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
+- Updated Global Search to set search trigger to invisible,
+  since hidden is overridden.
 
 ### Removed
 
