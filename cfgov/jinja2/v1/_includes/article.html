@@ -16,7 +16,7 @@
                        is called `newsroom`.
 
    path:               The path to which post filters are applies. For example,
-                       if the post is a blog post then path should be 
+                       if the post is a blog post then path should be
                        '/about-us/blog/'.  Remember to leverage vars.path
                        instead of using the literal string '/about-us/blog/'.
                        Path is used to create the filtered URL:
@@ -26,7 +26,7 @@
 
 {% macro render(post, path) %}
 
-{% import 'macros/share.html' as share with context %}
+{% import 'molecules/social-media.html' as social_media with context %}
 
 <article class="post">
     <header>
@@ -79,7 +79,7 @@
                 {{ time.render(post.date, {'date':true}) }}
             </span>
         </div>
-        {{ share.render({
+        {{ social_media.render({
             'title': post.title,
             'hide_heading': true,
             'twitter_options': {
