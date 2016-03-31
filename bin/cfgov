@@ -56,8 +56,6 @@ if ($#ARGV >= 0) {
 		`vagrant ssh -c "cd /vagrant; scl enable devtoolset-2 bash; ./frontend.sh init" &`;
 	}
 	elsif ($ARGV[0] eq 'assets') {
-		print("\nUsing GCC 4.8...\n");
-		`vagrant ssh -c "scl enable devtoolset-2 bash"`;
 		print("\nRebuilding frontend assets (may take a few minutes)...\n");
 		`vagrant ssh -c "cd /vagrant; scl enable devtoolset-2 bash; ./frontend.sh build" &`;
 	}
