@@ -3,10 +3,6 @@
 {% import 'molecules/featured-content.html' as featured_content %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% block title -%}
-    {{ page.seo_title }}
-{%- endblock %}
-
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}

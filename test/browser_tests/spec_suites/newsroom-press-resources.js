@@ -49,21 +49,28 @@ describe( 'The Newsroom Press Resources Page', function() {
     expect( page.pressSectionIntro.isPresent() ).toBe( true );
   } );
 
+  it( 'should include Director’s bio', function() {
+    expect( page.directorsBioLink.getText() ).toBe( 'Biography' );
+  } );
+
   it( 'should include Director’s images', function() {
-    expect( page.directorsImage.getAttribute( 'src' ) )
-    .toExist;
+    expect( page.directorsImage.getAttribute( 'src' ) ).toExist;
     expect( page.directorsHighResImageLink.getText() )
-    .toBe( 'High-res portrait' );
+      .toBe( 'High-res portrait' );
     expect( page.directorsLowResImageLink.getText() )
-    .toBe( 'Low-res portrait' );
+      .toBe( 'Low-res portrait' );
+  } );
+
+  it( 'should include Deputy Director’s bio', function() {
+    expect( page.deputyDirectorsBioLink.getText() ).toBe( 'Biography' );
   } );
 
   it( 'should include the Deputy Director’s images', function() {
     expect( page.deputyDirectorsImage.getAttribute( 'src' ) ).toExist;
     expect( page.deputyDirectorsHighResImageLink.getText() )
-    .toBe( 'High-res portrait' );
+      .toBe( 'High-res portrait' );
     expect( page.deputyDirectorsLowResImageLink.getText() )
-    .toBe( 'Low-res portrait' );
+      .toBe( 'Low-res portrait' );
 
   } );
 

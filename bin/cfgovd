@@ -1,0 +1,40 @@
+#! /usr/bin/perl
+
+my $workDir = "/vagrant/cfgov/";
+my $userDir = "/home/vagrant/";
+my $outFile = $userDir.".cfgovOutput";
+
+if ($#ARGV >= 0) {
+	if ($ARGV[0] eq "start_django") {
+		chdir($workDir) || die "Project does not exist.\n";
+		`PYTHONUNBUFFERED=1 python manage.py runserver 0.0.0.0:8000 >$outFile`;
+	}
+	elsif ($ARGV[0] eq 'stop_django') {
+		my @procList = `ps -aux |grep "runserver"`;
+		my $myProc = $procList[0];
+		if ($#procList > 0) {	
+			my @psIds = split(/  /, $myProc);	
+			print("\nKilling process $psIds[1]\n");	
+			`kill -9 $psIds[1]`;
+		}
+	}
+	elsif ($ARGV[0] eq 'stop_gulp_watch') {
+		my @procList = `ps -aux |grep "start_gulp_watch"`;
+		my $myProc = $procList[0];
+		if ($#procList > 0) {	
+			my @psIds = split(/  /, $myProc);	
+			print("\nKilling process $psIds[1]\n");	
+			`kill -9 $psIds[1]`;
+		}
+	}
+	elsif ($ARGV[0] eq 'start_gulp_watch') {
+		chdir("/vagrant");
+		`gulp watch`;
+	}
+	elsif ($ARGV[0] eq 'init') {
+		`sudo webdriver-manager update`;
+		`sudo rm -Rf /home/vagrant/.node-gyp`;
+		`sudo rm -Rf /home/vagrant/.npm`;
+		`sudo rm -Rf /vagrant/node_modules`;
+	}
+}
