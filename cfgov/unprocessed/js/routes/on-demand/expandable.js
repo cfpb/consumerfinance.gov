@@ -7,4 +7,4 @@
 var atomicHelpers = require( '../../modules/util/atomic-helpers' );
 var Expandable = require( '../../molecules/Expandable' );
 
-atomicHelpers.instantiateAll( '.m-expandable', ExpandableGroup );
+atomicHelpers.instantiateAll( '.m-expandable', Expandable );

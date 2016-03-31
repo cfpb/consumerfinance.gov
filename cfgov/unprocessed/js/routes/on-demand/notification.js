@@ -5,6 +5,6 @@
 'use strict';
 
 var atomicHelpers = require( '../../modules/util/atomic-helpers' );
-var ExpandableGroup = require( '../../molecules/Notification' );
+var Notification = require( '../../molecules/Notification' );
 
 atomicHelpers.instantiateAll( '.m-notification', Notification );
