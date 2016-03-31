@@ -23,7 +23,7 @@ gulp.task( 'styles:modern', function() {
       'url("/img/chosen-sprite@2x.png")'
     ) )
     .pipe( $.autoprefixer( {
-      browsers: [ 'last 2 version' ]
+      browsers: [ 'last 2 version', 'android 4']
     } ) )
     .pipe( $.header( banner, { pkg: pkg } ) )
     .pipe( $.sourcemaps.write( '.' ) )
