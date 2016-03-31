@@ -155,9 +155,11 @@ urlpatterns = [
             name='leadership-calendar-print')],
         namespace='the-bureau')),
 
-    url(r'^doing-business-with-us/', include([
+
+    url(r'^doing-business-with-us/(?P<path>.*)$', RedirectView.as_view(url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
+    url(r'^about-us/doing-business-with-us/', include([
         url(r'^$',
-            TemplateView.as_view(template_name='doing-business-with-us/index.html'),
+            TemplateView.as_view(template_name='about-us/doing-business-with-us/index.html'),
             name='index'),
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
@@ -193,8 +195,9 @@ urlpatterns = [
 
     url(r'^external-site/$', SheerTemplateView.as_view(template_name='external-site/index.html'), name='external-site'),
 
-    url(r'^careers/', include([
-        url(r'^$', TemplateView.as_view(template_name='careers/index.html'),
+    url(r'^careers/(?P<path>.*)$', RedirectView.as_view(url='/about-us/careers/%(path)s', permanent=True)),
+    url(r'^about-us/careers/', include([
+        url(r'^$', TemplateView.as_view(template_name='about-us/careers/index.html'),
             name='careers'),
 
         url(r'^(?P<doc_id>[\w-]+)/$',
