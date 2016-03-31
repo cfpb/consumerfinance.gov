@@ -51,13 +51,18 @@ def environment(**options):
 
 
 def parse_links(soup):
-    p = re.compile(settings.EXTERNAL_LINK_PATTERN)
+    link_pattern = re.compile(settings.EXTERNAL_LINK_PATTERN)
+    icon_pattern = re.compile(settings.EXTERNAL_ICON_PATTERN)
     a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
     span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
     for a in soup.find_all('a', href=True):
-        if p.match(a['href']):
+        # Sets the link to an external one if you're leaving .gov 
+        if link_pattern.match(a['href']):
             a['href'] = '/external-site/?ext_url=' + a['href']
+        # Sets the icon to indicate you're leaving consumerfinance.gov
+        if icon_pattern.match(a['href']):
             a.attrs.update({'class': a_class})
+            a.append(' ') # We want an extra space before the icon
             a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
     return soup
 
