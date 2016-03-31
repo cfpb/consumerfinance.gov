@@ -62,6 +62,7 @@ def parse_links(soup):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         if icon_pattern.match(a['href']):
             a.attrs.update({'class': a_class})
+            a.append(' ') # We want an extra space before the icon
             a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
     return soup
 
