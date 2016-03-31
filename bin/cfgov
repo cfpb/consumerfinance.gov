@@ -50,16 +50,16 @@ if ($#ARGV >= 0) {
 	}
 
 	elsif ($ARGV[0] eq 'init') {
-		# print("\nInitializing vbox guest add-ons (may take a few minutes)...\n");
-		# `vagrant ssh -c "sudo /etc/init.d/vboxadd setup" 2>/dev/null`;
 		print("\nInitializing npm and node js...\n");
 		`vagrant ssh -c "cd /vagrant/bin/; cfgovd init" 2>/dev/null`;
 		print("\nInitializing local node js modules (may take a few minutes)...\n");
-		`vagrant ssh -c "cd /vagrant; ./frontend.sh init" &`;
+		`vagrant ssh -c "cd /vagrant; scl enable devtoolset-2 bash; ./frontend.sh init" &`;
 	}
 	elsif ($ARGV[0] eq 'assets') {
+		print("\nUsing GCC 4.8...\n");
+		`vagrant ssh -c "scl enable devtoolset-2 bash"`;
 		print("\nRebuilding frontend assets (may take a few minutes)...\n");
-		`vagrant ssh -c "cd /vagrant; ./frontend.sh build" &`;
+		`vagrant ssh -c "cd /vagrant; scl enable devtoolset-2 bash; ./frontend.sh build" &`;
 	}
 	elsif ($ARGV[0] eq 'log') {
 		my $logData = `vagrant ssh -c "cat /home/vagrant/.cfgovOutput" 2>/dev/null`;

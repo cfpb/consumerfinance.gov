@@ -51,13 +51,6 @@
         pkg: "devtoolset-2"
         state: present
 
-    - name: Enable new gcc in bashrc
-      lineinfile:
-        dest: '/home/vagrant/.bashrc'
-        state: present
-        regexp: 'source /opt/rh/devtoolset-2/enable'
-        line: 'source /opt/rh/devtoolset-2/enable'
-
     # PDFReactor
     - name: Download PDFReactor
       get_url: 
