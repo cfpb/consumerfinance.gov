@@ -38,12 +38,39 @@
         - "alsa-lib-devel"
         - "libnotify"
 
+    - name: Import CERN's GPG key
+      shell: "rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/x86_64/RPM-GPG-KEYs/RPM-GPG-KEY-cern"
+      sudo: yes
+
+    - name: Save slc6-devtoolset.repo repository information
+      shell: "wget -O /etc/yum.repos.d/slc6-devtoolset.repo http://linuxsoft.cern.ch/cern/devtoolset/slc6-devtoolset.repo"
+      sudo: yes
+
+    - name: Install devtoolset-2
+      yum:
+        pkg: "devtoolset-2"
+        state: present
+
+    - name: Enable new gcc in bashrc
+      lineinfile:
+        dest: '/home/vagrant/.bashrc'
+        state: present
+        regexp: 'scl enable devtoolset-2'
+        line: 'scl enable devtoolset-2'
+
     # PDFReactor
-    - name: download PDFReactor
-      get_url: url=http://download.realobjects.de/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz force=false
+    - name: Download PDFReactor
+      get_url: 
+        url: http://download.realobjects.de/PDFreactor_6_3_6828_3_unix_installer.tar.gz 
+        dest: /opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz 
+        force: false
 
     - name: Untar PDFReactor
-      unarchive: src=/opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz dest=/opt copy=no
+      unarchive: 
+        src: /opt/PDFreactor_6_3_6828_3_unix_installer.tar.gz 
+        dest: /opt 
+        copy: no
+        creates: /opt/.pdfreactor_untarred
 
     - name: Start PDFReactor service
       command: /opt/PDFreactor/bin/pdfreactorwebservice start 
@@ -56,7 +83,11 @@
       pip: requirements=/vagrant/requirements/local.txt virtualenv=/vagrant/cfgov-refresh virtualenv_command=/usr/local/bin/virtualenv
 
     - name: Add environment variables to bashrc
-      lineinfile: "dest=/home/vagrant/.bashrc state=present regexp='source /vagrant/cfgov-refresh/bin/activate' line='source /vagrant/cfgov-refresh/bin/activate; source /vagrant/.env'"
+      lineinfile: 
+        dest: /home/vagrant/.bashrc 
+        state: present 
+        regexp: 'source /vagrant/cfgov-refresh/bin/activate' 
+        line: 'source /vagrant/cfgov-refresh/bin/activate; source /vagrant/.env'
 
     - name: Migrate django db to match application state
       shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py migrate"
