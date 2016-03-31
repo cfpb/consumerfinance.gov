@@ -23,7 +23,7 @@
    value.lg_image:      An image object containing the URL of the image to be
                         placed behind the hero.
 
-   value.sm_image:      A image object containing the URL of the image to be
+   value.image:         A image object containing the URL of the image to be
                         placed adjacent to the text.
 
 
@@ -46,10 +46,12 @@
          {{ 'style="background-color:' +
                 value.background_color + ';"'
                 if value.background_color else '' }}>
+
     <div class="wrapper hero_wrapper"
-          {{ 'style="background-image: ' +
-                value.background_image + ';"'
-                if value.background_image else '' }}>
+          {% if value.background_image %}
+            {% set background_image=image(value.background_image, 'original') %}
+               style="background-image: url( {{  background_image.url }});"
+          {% endif %}>
         <div class="hero_text">
             <h1 class="hero_heading">{{ value.heading | safe}}</h1>
             <div class="hero_subhead">{{ parse_links(value.body) | safe }}</div>
