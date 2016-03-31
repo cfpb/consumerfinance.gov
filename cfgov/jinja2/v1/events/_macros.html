@@ -155,16 +155,6 @@
                 {% else %}
                     {% import 'macros/time.html' as time %}
                     {{ time.render(event.start_dt) }}
-
-                    {# TODO: Replace with real download link #}
-                    {% if event_state == 'future' %}
-                    <a class="event-calendar_download
-                              jump-link
-                              jump-link__download
-                              u-link__disabled">
-                        <span class="jump_link_text">Download .ics</span>
-                    </a>
-                    {% endif %}
                 {% endif %}
                 </div>
           </div>

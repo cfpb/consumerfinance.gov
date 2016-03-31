@@ -42,6 +42,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 
 - Removed Georgia usage for the time being.
+- Removed ICS download placeholder from events.
 
 ### Fixed
 
