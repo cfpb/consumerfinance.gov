@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add an EXTERNAL_ICON_PATTERN to handle icons and links separately
 - Added specific Blog/Newsroom Categories to Related Post options
 - base.html now checks for page (seo) title if exists
+- Added a space before the external icon
 
 ### Changed
 
