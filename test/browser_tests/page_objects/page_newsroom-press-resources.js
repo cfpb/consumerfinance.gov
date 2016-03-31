@@ -23,50 +23,53 @@ function PressResources() {
   this.contactList = element( by.css( '.press-contacts_main-contact-list' ) );
 
   this.contactListEmail = element.all(
-  by.css( '.press-contacts_main-contact-list .list_link' ) ).get( 0 );
+    by.css( '.press-contacts_main-contact-list .list_link' ) ).get( 0 );
 
   this.contactListPhone = element.all(
-  by.css( '.press-contacts_main-contact-list .list_link' ) ).get( 1 );
+    by.css( '.press-contacts_main-contact-list .list_link' ) ).get( 1 );
 
   this.contactPersons =
-  element.all( by.css( '.press-contacts_people .contact-person' ) );
+    element.all( by.css( '.press-contacts_people .contact-person' ) );
 
   this.pressSectionTitle = element( by.css( '.press-photos-bios_title' ) );
 
   this.pressSectionIntro = element( by.css( '.press-section_intro' ) );
 
   this.directorsBio =
-  element.all( by.css( '.press-photos-bios .contact-person' ) ).get( 0 );
+    element.all( by.css( '.press-photos-bios .contact-person' ) ).get( 0 );
 
   this.directorsImage =
-  this.directorsBio.all( by.css( '.contact-person_photo' ) ).get( 0 );
+    this.directorsBio.all( by.css( '.contact-person_photo' ) ).get( 0 );
 
   this.directorsName =
-  this.directorsBio.all( by.css( '.contact-person_name' ) ).get( 0 );
+    this.directorsBio.all( by.css( '.contact-person_name' ) ).get( 0 );
 
   this.directorsBioLink =
-  this.directorsBio.all( by.css( '.list__links .list__link' ) ).get( 0 );
+    this.directorsBio.all( by.css( 'a' ) ).get( 0 );
 
   this.directorsHighResImageLink =
-  this.directorsBio.all( by.css( '.list__links .list_link' ) ).get( 1 );
+    this.directorsBio.all( by.css( 'a' ) ).get( 1 );
 
   this.directorsLowResImageLink =
-  this.directorsBio.all( by.css( '.list__links .list_link' ) ).get( 2 );
+    this.directorsBio.all( by.css( 'a' ) ).get( 2 );
 
   this.deputyDirectorBio =
-  element.all( by.css( '.press-photos-bios .contact-person' ) ).get( 1 );
+    element.all( by.css( '.press-photos-bios .contact-person' ) ).get( 1 );
 
   this.deputyDirectorsName =
-  this.deputyDirectorBio.all( by.css( '.contact-person_name' ) ).get( 0 );
+    this.deputyDirectorBio.all( by.css( '.contact-person_name' ) ).get( 0 );
+
+  this.deputyDirectorsBioLink =
+    this.deputyDirectorBio.all( by.css( 'a' ) ).get( 0 );
 
   this.deputyDirectorsImage =
-  this.deputyDirectorBio.all( by.css( '.contact-person_photo' ) ).get( 0 );
+    this.deputyDirectorBio.all( by.css( '.contact-person_photo' ) ).get( 0 );
 
   this.deputyDirectorsHighResImageLink =
-  this.deputyDirectorBio.all( by.css( '.list__links .list_link' ) ).get( 0 );
+    this.deputyDirectorBio.all( by.css( 'a' ) ).get( 1 );
 
   this.deputyDirectorsLowResImageLink =
-  this.deputyDirectorBio.all( by.css( '.list__links .list_link' ) ).get( 1 );
+    this.deputyDirectorBio.all( by.css( 'a' ) ).get( 2 );
 
 }
 

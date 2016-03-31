@@ -11,7 +11,7 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-from . import base, molecules, organisms, ref
+from . import base, molecules, organisms
 from .learn_page import AbstractFilterPage
 from .. import forms
 from ..util.util import get_secondary_nav_items

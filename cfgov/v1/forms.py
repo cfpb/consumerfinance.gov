@@ -14,7 +14,7 @@ from django.conf import settings
 from django.forms import widgets
 
 from sheerlike.templates import get_date_obj
-from .models import ref
+from .util import ref
 from .models.base import CFGOVPage
 from .util.util import most_common
 

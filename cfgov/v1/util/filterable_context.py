@@ -2,7 +2,8 @@ from .. import forms
 from .util import get_secondary_nav_items
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from ..models import base, molecules, organisms, ref
+from ..models import base, molecules, organisms
+from ref import categories as ref_categories
 from ..models.learn_page import AbstractFilterPage
 
 
@@ -76,7 +77,7 @@ def get_page_set(page, form, hostname):
                 f.value['categories']['page_type']:
             categories = form.cleaned_data.get('categories', [])
             if not categories or 'blog' in categories:
-                blog_cats = [c[0] for c in ref.categories[1][1]]
+                blog_cats = [c[0] for c in ref_categories[1][1]]
                 blog_q = Q('categories__name__in', blog_cats)
 
     results = AbstractFilterPage.objects.live_shared(hostname).descendant_of(
