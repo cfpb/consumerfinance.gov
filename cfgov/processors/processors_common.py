@@ -15,7 +15,7 @@ def update_path(path):
     return path
 
 def fix_links(html):
-    soup = BeautifulSoup(html)
+    soup = BeautifulSoup(html, 'lxml')
     for link in soup.findAll('a'):
         try:
             urldata = urlsplit(link['href'])
