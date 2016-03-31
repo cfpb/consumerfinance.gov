@@ -55,8 +55,8 @@
       lineinfile:
         dest: '/home/vagrant/.bashrc'
         state: present
-        regexp: 'scl enable devtoolset-2'
-        line: 'scl enable devtoolset-2'
+        regexp: 'source /opt/rh/devtoolset-2/enable'
+        line: 'source /opt/rh/devtoolset-2/enable'
 
     # PDFReactor
     - name: Download PDFReactor
