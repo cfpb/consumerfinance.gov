@@ -50,10 +50,10 @@
     <article class="o-post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">
-                {{ controls.post_date_description }} {{ time.render(post.date_published, {'date':true}) }}
+                {{ controls.post_date_description if controls.post_date_description else 'Published'}} {{ time.render(post.date_published, {'date':true}) }}
             </span>
             {# Newsroom Blog category logic #}
-            {% if controls.categories.show_preview_categories %}
+            {% if controls.show_preview_categories %}
                 {% if 'newsroom' in type %}
                     {% if is_blog(post) %}
                         {{ category_slug.render('blog',
