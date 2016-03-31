@@ -50,8 +50,8 @@ if ($#ARGV >= 0) {
 	}
 
 	elsif ($ARGV[0] eq 'init') {
-		print("\nInitializing vbox guest add-ons (may take a few minutes)...\n");
-		`vagrant ssh -c "sudo /etc/init.d/vboxadd setup" 2>/dev/null`;
+		# print("\nInitializing vbox guest add-ons (may take a few minutes)...\n");
+		# `vagrant ssh -c "sudo /etc/init.d/vboxadd setup" 2>/dev/null`;
 		print("\nInitializing npm and node js...\n");
 		`vagrant ssh -c "cd /vagrant/bin/; cfgovd init" 2>/dev/null`;
 		print("\nInitializing local node js modules (may take a few minutes)...\n");

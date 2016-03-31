@@ -132,8 +132,8 @@ is_installed(){
   echo "$return_"
 }
 
-if [ "$1" = "init"] || ["$1" = "build" ]; then
-  if [ "$1" = "init" ]; then
+if [ "$1" == "init"] || ["$1" == "build" ]; then
+  if [ "$1" == "init" ]; then
     init ""
     clean
     install
