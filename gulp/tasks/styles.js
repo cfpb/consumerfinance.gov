@@ -26,7 +26,7 @@ gulp.task( 'styles:modern', function() {
       browsers: [ 'last 2 version',
                   'android 4',
                   'BlackBerry 7',
-                  'BlackBerry 10']
+                  'BlackBerry 10' ]
     } ) )
     .pipe( $.header( banner, { pkg: pkg } ) )
     .pipe( $.sourcemaps.write( '.' ) )

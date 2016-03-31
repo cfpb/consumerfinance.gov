@@ -18,12 +18,14 @@ function TheLeadershipCalendarPage() {
     by.css( '[data-qa-hook="leadership-calendar-summary"]' )
   );
 
-  this.searchFilter = element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 0 );
+  this.searchFilter =
+  element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 0 );
 
   this.searchFilterBtn =
   this.searchFilter.all( by.css( '.m-expandable_target' ) ).first();
 
-  this.downloadFilter = element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 1 );
+  this.downloadFilter =
+  element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 1 );
 
   this.downloadFilterBtn =
   this.downloadFilter.all( by.css( '.m-expandable_target' ) ).first();
