@@ -2,8 +2,12 @@
 {% set request_host = 'http://' + request.META.HTTP_HOST %}
 {% set request_referrer = request.META.HTTP_REFERER or request_host %}
 
-{% set request_url_param = request.GET.get('ext_url', '') %}
-{% set external_url = request_url_param or request_host %}
+{% set request_url = request.GET.get('ext_url', '') %}
+{% set request_body = request.GET.get('body') %}
+{% if request_body %}
+  {% set request_url = request_url + "&body=" + request_body %}
+{% endif %}
+{% set external_url = request_url or request_host %}
 
 {% block title -%}
     External Site | Consumer Financial Protection Bureau
