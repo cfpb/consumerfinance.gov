@@ -22,10 +22,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 
 - Defaulted Related posts slug title to 'Further Reading' and made it a field in wagtail.
+- Enabled gov delivery subscriptions to work on wagtail pages
+- randomized formfieldWithButton Id and included name field for post requests.
 
 ### Removed
 
 ### Fixed
+
+- 
 
 ## 3.0.0-3.2.1 - 2016-03-21
 

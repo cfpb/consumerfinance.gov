@@ -85,8 +85,7 @@ class FormFieldWithButton(blocks.StructBlock):
     btn_text = blocks.CharBlock(required=False)
 
     required = blocks.BooleanBlock(required=False)
-    id = blocks.CharBlock(required=False,
-                          help_text="Type of form i.e emailForm, submission-form. Should be unique if multiple forms are used")
+
     info = blocks.RichTextBlock(required=False, label="Disclaimer")
     label = blocks.CharBlock(required=True)
     type = blocks.ChoiceBlock(choices=[
