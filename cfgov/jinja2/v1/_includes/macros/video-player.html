@@ -34,10 +34,12 @@
     {% set video_player = options.video.player or
                           ( video_url.find( 'youtube.com') > -1 and 'youtube' ) or
                           ( video_url.find( 'ustream.tv') and 'ustream' ) %}
+    {% set image_url = '/static/img/cfpb_video_cover_card_1380x776.png' %}
+    {% set video_id = options.video.id | default('') %}
+
     {# TODO: Replace with django method for getting video id if youtube and urlparams #}
     {% if video_player == 'youtube' -%}
-        {% set video_id = options.video.id or ( video_url.split('?')[0].split('/') | last ) %}
-        {% set image_url = options.image.url or ( 'https://img.youtube.com/vi/' + video_id + '/maxresdefault.jpg' ) %}
+        {% set video_id =  video_url.split('?')[0].split('/') | last %}
         {% if video_url.find( '?' ) == -1 -%}
             {% set video_url = video_url ~ '?'  %}
         {% endif %}
@@ -50,17 +52,13 @@
         {% if video_url.find( 'origin=' ) == -1 -%}
             {% set video_url = _buildParam( video_url, 'origin=http://' ~ request.META['HTTP_HOST'] )  %}
         {% endif %}
-    {% else %}
-        {% set video_id = '' %}
-        {% set image_url = '/static/img/cfpb_video_cover_card_1380x776.png' %}
     {% endif %}
-
     {% set button_pos   = options.button_pos or 'center' %}
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
     <div class="video-player
                 video-player__{{ video_player }}
-                {{ 'featured-content-module_visual' if is_flexible == false }}"
-         {{ "data-id="~video_id | trim if video_id else '' }}
+                {{ 'featured-content-module_visual' if is_flexible == false else '' }}"
+         {{ "data-id=" ~ video_id  if video_id else '' }}
          data-src="{{ video_url }}"
          data-width="{{ options.video.width if options.video.width else '' }}"
          data-height="{{ options.video.height if options.video.height else '' }}">

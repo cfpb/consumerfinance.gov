@@ -14,14 +14,14 @@ var DOM_INVALID = require( '../config/error-messages-config' ).DOM.INVALID;
 var CLASSES = Object.freeze( {
   VIDEO_PLAYER_SELECTOR:     '.video-player',
   VIDEO_PLAYING_STATE:       'video-playing',
+  IMAGE_SELECTOR:            '.video-player_image',
   IFRAME_CLASS_NAME:         'video-player_iframe',
   IFRAME_CONTAINER_SELECTOR: '.video-player_iframe-container',
   PLAY_BTN_SELECTOR:         '.video-player_play-btn',
   CLOSE_BTN_SELECTOR:        '.video-player_close-btn'
 } );
 
-
-// PRIVATE properties.
+// Private properties.
 var _isIframeLoaded;
 var _isIframeLoading;
 var _isVideoPlaying;
@@ -40,8 +40,6 @@ function VideoPlayer( element, options ) {
   _this = this;
   options = options || {};
   this.baseElement = _ensureElement( element, options.createIFrame );
-
-  // TODO: Add utility function for dataset. Oh dear IE, how I love you.
   this.iFrameProperties = _assign( _dataSet( this.baseElement ) ||
     {}, this.iFrameProperties );
 
@@ -207,6 +205,7 @@ var API = {
   baseElement: null,
 
   childElements: {
+    image:           CLASSES.IMAGE_SELECTOR,
     iFrame:          CLASSES.IFRAME_SELECTOR,
     iFrameContainer: CLASSES.IFRAME_CONTAINER_SELECTOR,
     playBtn:         CLASSES.PLAY_BTN_SELECTOR,
@@ -227,6 +226,7 @@ var API = {
   * @param {function} callback - function called when script is loaded.
   */
   embedScript: function embedScript( script, callback ) {
+
     /**
     * Function called when script is loaded.
     */
