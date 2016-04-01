@@ -88,9 +88,10 @@ class RelatedPosts(blocks.StructBlock):
                                           label='Newsroom', editable=False)
     relate_events = blocks.BooleanBlock(required=False, default=True,
                                         label='Events')
-    view_more = atoms.Hyperlink(required=False, text="View more", url="/activity-log")
 
     specific_categories = blocks.ListBlock(blocks.ChoiceBlock(choices=ref.related_posts_categories, required=False), required=False)
+
+    view_more = atoms.Hyperlink(required=False)
 
     class Meta:
         icon = 'link'

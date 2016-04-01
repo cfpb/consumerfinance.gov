@@ -137,6 +137,7 @@ class CFGOVPage(Page):
     def related_posts(self, block, hostname):
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
+        block.value['view_more']['text'] = "View more"
         if self.tags.names():
             block.value['view_more']['url'] = self.generate_view_more_url()
             self.save()
