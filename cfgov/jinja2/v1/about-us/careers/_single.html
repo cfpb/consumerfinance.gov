@@ -21,7 +21,7 @@
 
 {% block content_main %}
 
-{% import 'macros/share.html' as share with context %}
+{% import 'molecules/social-media.html' as social_media with context %}
 
     <section class="block
                     block__flush-top
@@ -49,20 +49,17 @@
                     Interested in applying?
                 </a>
             </div>
-            <div class="content-l_col content-l_col-1-2">
-            {{ share.render({
-                'title': career.title,
-                'heading': 'Share this job',
-                'hide_heading': false,
-                'show_linkedin': true,
-                'twitter_options': {
-                    'text':     career.title,
-                    'related':  '@cfpb',
-                    'hashtags': '#usajobs'
-                },
-                'additional_classes':
-                    'share__horizontal share__align-right'
-            }) }}
+            <div class="t-careers_social
+                        content-l_col
+                        content-l_col-1-2">
+                {{ social_media.render({
+                    'title': career.title,
+                    'twitter_options': {
+                        'text':     career.title,
+                        'related':  '@cfpb',
+                        'hashtags': '#usajobs'
+                    }
+                }) }}
             </div>
         </div>
     </section>
@@ -71,7 +68,7 @@
                     block__padded-top
                     block__border-top">
         <h2>Job Description</h2>
-        {{ career.description | safe}}
+        {{ career.description | safe }}
 
         {# TODO: Discuss how to break duties and departments out of
                  the description.
@@ -95,19 +92,19 @@
             <div class="content-l_col content-l_col-1-2">
                 <h2 class="u-mb0" id="interested">Interested in Applying?</h2>
             </div>
-            <div class="content-l_col content-l_col-1-2">
-                {{ share.render({
-                    'title': 'Test Opening Title',
-                    'heading': 'Share this job',
-                    'hide_heading': false,
-                    'show_linkedin': true,
+            <div class="t-careers_social
+                        content-l_col
+                        content-l_col-1-2">
+                {# TODO: Fix vertical alignment.
+                         Social Media icons are slightly high
+                         relative to Interested in Applying heading. #}
+                {{ social_media.render({
+                    'title': career.title,
                     'twitter_options': {
                         'text':     career.title,
                         'related':  '@cfpb',
                         'hashtags': '#usajobs'
-                    },
-                    'additional_classes':
-                        'share__horizontal share__align-right'
+                    }
                 }) }}
             </div>
         </div>
@@ -119,13 +116,13 @@
             <ul class="list list__links">
                 <li class="list_item">
                     <a class="jump-link"
-                       href="/careers/working-at-cfpb/">
+                       href="/about-us/careers/working-at-cfpb/">
                         Learn about working @ CFPB
                     </a>
                 </li>
                 <li class="list_item">
                     <a class="jump-link"
-                       href="/careers/application-process/">
+                       href="/about-us/careers/application-process/">
                         Learn about the application process
                     </a>
                 </li>
@@ -161,12 +158,12 @@
     </p>
     <ul class="list list__links u-mb0">
         <li class="list_item">
-            <a href="/careers/working-at-cfpb" class="list_link">
+            <a href="/about-us/careers/working-at-cfpb" class="list_link">
                 Working at the CFPB
             </a>
         </li>
         <li class="list_item">
-            <a href="/careers/application-process" class="list_link">
+            <a href="/about-us/careers/application-process" class="list_link">
                 Learn how the application process works
             </a>
         </li>

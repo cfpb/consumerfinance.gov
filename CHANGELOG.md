@@ -17,10 +17,22 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+### Changed
+
+### Removed
+
+### Fixed
+
+## 3.0.0-3.2.0 - 2016-03-21
+
+### Added
+
 - Added Featured Menu Content Molecule.
 - Added Global Banner Molecule.
 - Added Digital Privacy Policy to the footer.
 - Added tests for dom-traverse functions
+- Added default values for the View more text and URL. 
+- Dynamically create the View more URL if there are tags
 - Add an EXTERNAL_ICON_PATTERN to handle icons and links separately
 - Added specific Blog/Newsroom Categories to Related Post options
 - base.html now checks for page (seo) title if exists
