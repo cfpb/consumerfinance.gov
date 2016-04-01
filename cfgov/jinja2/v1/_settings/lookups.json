@@ -1,6 +1,6 @@
 {
   "career": {
-    "url":       "/careers/current-openings/<id>/",
+    "url":       "/about-us/careers/current-openings/<id>/",
     "type":      "career",
     "permalink": true
   },

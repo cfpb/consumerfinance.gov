@@ -1,6 +1,6 @@
 /* ==========================================================================
    Nav-secondary.
-   This is for the sidenav on, e.g. /doing-business-with-us/past-awards/.
+   This is for the sidenav on,e.g./about-us/doing-business-with-us/past-awards/.
    ========================================================================== */
 
 'use strict';

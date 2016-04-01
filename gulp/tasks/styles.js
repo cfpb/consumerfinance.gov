@@ -24,6 +24,7 @@ gulp.task( 'styles:modern', function() {
     ) )
     .pipe( $.autoprefixer( {
       browsers: [ 'last 2 version',
+                  'not ie <= 8',
                   'android 4',
                   'BlackBerry 7',
                   'BlackBerry 10' ]
@@ -49,7 +50,7 @@ gulp.task( 'styles:ie', function() {
       'url("/img/chosen-sprite@2x.png")'
     ) )
     .pipe( $.autoprefixer( {
-      browsers: [ 'IE 7', 'IE 8' ]
+      browsers: [ 'ie 7-8' ]
     } ) )
     .pipe( mqr( {
       width: '75em'

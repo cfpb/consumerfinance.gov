@@ -13,7 +13,7 @@
     "capital-framework": "^3.1.1",
     "del": "^2.0.0",
     "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^3.0.2",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-changed": "^1.2.1",
     "gulp-cssmin": "^0.1.7",
     "gulp-header": "^1.2.2",
