@@ -8,10 +8,10 @@
 
    Creates markup for Social Media molecule.
 
-   is_share_view: Whether the "Share this" heading is shown.
-                  Default is true.
-
    options:       Object of optional parameters.
+
+   options.is_share_view:    Whether the "Share this" heading is shown.
+                             Default is true.
 
    options.title:            Sets the title in email subject line
                              and in the LinkedIn share post.
@@ -21,20 +21,23 @@
                              to be appended to default Tweet text.
                              https://dev.twitter.com/web/tweet-button/parameters
 
-   options.twitter_related: A comma-separated list of accounts
-                            related to the content of the shared URI.
-                            https://dev.twitter.com/web/tweet-button/parameters
+   options.twitter_related:  A comma-separated list of accounts
+                             related to the content of the shared URI.
+                             https://dev.twitter.com/web/tweet-button/parameters
+                             Default is `cfpb`.
 
-   options.twitter_lang:    Loads text components in the specified language.
-                            https://dev.twitter.com/web/tweet-button/parameters
+   options.twitter_lang:     Loads text components in the specified language,
+                             if other than English.
+                             https://dev.twitter.com/web/tweet-button/parameters
 
    ========================================================================== #}
 
 {# TODO: Remove global page reference when moving to Wagtail. #}
-{% macro render(is_share_view=true, options={}) %}
+{% macro render( options={} ) %}
 {% set title = options.title | urlencode or ( page or {} ).seo_title | urlencode  %}
 {% set parsed_url = request.url | urlencode %}
 {% set external_redirect_url = '/external-site/?ext_url=' %}
+{% set is_share_view = options.is_share_view | default( true ) %}
 <div class="m-social-media
             m-social-media__{{ 'share' if is_share_view else 'follow' }}">
     {% if is_share_view %}
@@ -107,7 +110,7 @@
             {% if is_share_view %}
                 <li class="list_item">
                     <a class="m-social-media_icon"
-                       href="{{ external_redirect_url ~ link.share_url }}"
+                       href="{{ external_redirect_url ~ link.share_url | trim }}"
                        {{ 'target=_blank' if link.name != 'email' else '' }}>
                         <span class="cf-icon {{ link.class }}"></span>
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
@@ -116,7 +119,7 @@
             {% else %}
                 <li class="list_item">
                     <a class="m-social-media_icon"
-                       href="{{ external_redirect_url ~ link.homepage }}">
+                       href="{{ external_redirect_url ~ link.homepage | trim }}">
                         <span class="cf-icon {{ link.class }}"></span>
                         <span class="u-visually-hidden">Visit us on {{ link.name }}</span>
                     </a>
@@ -139,6 +142,8 @@
     {% endif -%}
     {%- if options.twitter_related %}
         {% set _share_twitter_url = _share_twitter_url + '&related=' + options.twitter_related %}
+    {%- else %}
+        {% set _share_twitter_url = _share_twitter_url + '&related=cfpb' %}
     {% endif -%}
     {%- if options.twitter_lang %}
         {% set _share_twitter_url = _share_twitter_url + '&lang=' + options.twitter_lang %}
