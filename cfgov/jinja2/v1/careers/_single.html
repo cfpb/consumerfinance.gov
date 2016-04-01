@@ -21,7 +21,7 @@
 
 {% block content_main %}
 
-{% import 'macros/share.html' as share with context %}
+{% import 'molecules/social-media.html' as social_media with context %}
 
     <section class="block
                     block__flush-top
@@ -49,20 +49,16 @@
                     Interested in applying?
                 </a>
             </div>
-            <div class="content-l_col content-l_col-1-2">
-            {{ share.render({
-                'title': career.title,
-                'heading': 'Share this job',
-                'hide_heading': false,
-                'show_linkedin': true,
-                'twitter_options': {
-                    'text':     career.title,
-                    'related':  '@cfpb',
-                    'hashtags': '#usajobs'
-                },
-                'additional_classes':
-                    'share__horizontal share__align-right'
-            }) }}
+            <div class="t-careers_social
+                        content-l_col
+                        content-l_col-1-2">
+                {{ social_media.render({
+                    'twitter_options': {
+                        'text':     career.title,
+                        'related':  '@cfpb',
+                        'hashtags': '#usajobs'
+                    }
+                }) }}
             </div>
         </div>
     </section>
@@ -95,19 +91,18 @@
             <div class="content-l_col content-l_col-1-2">
                 <h2 class="u-mb0" id="interested">Interested in Applying?</h2>
             </div>
-            <div class="content-l_col content-l_col-1-2">
-                {{ share.render({
-                    'title': 'Test Opening Title',
-                    'heading': 'Share this job',
-                    'hide_heading': false,
-                    'show_linkedin': true,
+            <div class="t-careers_social
+                        content-l_col
+                        content-l_col-1-2">
+                {# TODO: Fix vertical alignment.
+                         Social Media icons are slightly high
+                         relative to Interested in Applying heading. #}
+                {{ social_media.render({
                     'twitter_options': {
                         'text':     career.title,
                         'related':  '@cfpb',
                         'hashtags': '#usajobs'
-                    },
-                    'additional_classes':
-                        'share__horizontal share__align-right'
+                    }
                 }) }}
             </div>
         </div>
