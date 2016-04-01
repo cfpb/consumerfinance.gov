@@ -21,6 +21,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 
+- Remove Disqus comments from blog pages
+
 ### Fixed
 
 ## 3.0.0-3.2.1 - 2016-03-21
