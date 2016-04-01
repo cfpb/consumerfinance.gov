@@ -2,7 +2,13 @@
 {% set request_host = 'http://' + request.META.HTTP_HOST %}
 {% set request_referrer = request.META.HTTP_REFERER or request_host %}
 
+
 {% set request_url = request.get_full_path()[24:] %}
+{# request.get_full_path always begins with "/external-site/ext_url=", 
+   which we want to strip out. therefore we start at the 24th character.
+   if we ever change the path, then we'll need to update it here.
+#}
+
 {% set external_url = request_url or request_host %}
 
 {% block title -%}
