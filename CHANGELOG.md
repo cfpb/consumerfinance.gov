@@ -17,6 +17,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+### Changed
+
+### Removed
+
+### Fixed
+
+## 3.0.0-3.2.0 - 2016-03-21
+
+### Added
+
 - Added Featured Menu Content Molecule.
 - Added Global Banner Molecule.
 - Added Digital Privacy Policy to the footer.
