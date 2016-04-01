@@ -4,7 +4,7 @@
   patterns:
     - name: Default example
       markup: |
-        <div class="m-social-media">
+        <div class="m-social-media m-social-media__share">
             <h5 class="m-social-media_heading">Share this</h5>
             <ul class="list">
                 <li class="list_item">
@@ -21,18 +21,25 @@
         - |
           Structural cheat sheet:
           -----------------------
-          .m-social-media
+          .m-social-media.m-social-media__share
             .m-social-media_heading
             ul.list
               li.list_item
                 .m-social-media_icon
                   span.cf-icon
                   span.u-visually-hidden
+      notes:
+        - "m-social-media__follow modifier is identical
+           but does not include the heading."
   tags:
     - cfgov-molecules
 */
 
 .m-social-media {
+    display: inline-block;
+
+    // This could be wrapped in the `m-social-media__share` modifier,
+    // but it's ok on its own too.
     &_heading {
         display: inline-block;
         padding-right: unit( @grid_gutter-width / @base-font-size-px, em );

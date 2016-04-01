@@ -10,7 +10,7 @@
         </span>
     </h2>
     <ul class="list list__unstyled list__spaced">
-    {% for similar in more_like_this(post, search_types=doc_types, search_size=quantity) %}
+    {% for similar in more_like_this(post, search_types=doc_types, search_size=quantity, body={'sort': [{'date': {'order': 'desc'}}]}) %}
         <li class="list_item">
             <h3 class="h4 u-mb5">
                 <a class="list_link"

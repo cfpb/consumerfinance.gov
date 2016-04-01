@@ -128,7 +128,18 @@ is_installed(){
   echo "$return_"
 }
 
-init "$1"
-clean
-install
-build
+if [ "$1" = "init" || "$1" = "build" ]; then
+  if [ "$1" = "init" ]; then
+    init ""
+    clean
+    install
+  else
+    build
+  fi
+else
+  init "$1"
+  clean
+  install
+  build
+fi
+

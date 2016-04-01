@@ -28,10 +28,9 @@ from modelcluster.tags import ClusterTaggableManager
 
 from sheerlike.query import QueryFinder
 
-from . import ref
 from . import molecules
 from . import organisms
-from ..util import util
+from ..util import util, ref
 
 import urllib
 
@@ -153,19 +152,29 @@ class CFGOVPage(Page):
                     and block.value['relate_%s' % search_type]:
                 related[search_type_name] = \
                     search_class.objects.filter(query).order_by(
-                        'latest_revision_created_at').exclude(
+                        '-date_published').exclude(
                         slug=self.slug).live_shared(hostname)[:block.value['limit']]
         # TODO: Remove each search_type as it is implemented into Django
         queries = QueryFinder()
+
         for search_type, search_type_name in [('newsroom', 'Newsroom'), ('posts', 'Blog')]:
             if 'relate_%s' % search_type in block.value \
                     and block.value['relate_%s' % search_type]:
                 if search_type == 'newsroom':
                     search_type = 'just_newsroom'
                 sheer_query = getattr(queries, search_type)
+
+                match_query = []
+
+                for cat in block.value['specific_categories']:
+                    if util.get_related_posts_categories(cat) == 'posts' and search_type == 'posts':
+                        match_query.append({'term': {'blog_category': cat}})
+                    elif util.get_related_posts_categories(cat) == 'newsroom' and search_type == 'just_newsroom':
+                        match_query.append({'term': {'category': cat}})
+
                 related[search_type_name] = \
                     sheer_query.get_tag_related_documents(tags=self.tags.names(),
-                                                          size=block.value['limit'])
+                                                          size=block.value['limit'], additional_args=match_query)
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
@@ -302,8 +311,7 @@ class CFGOVPage(Page):
             for child in block.child_blocks.values():
                 self._add_block_js(child, js)
         elif issubclass(type(block), blocks.ListBlock):
-            for child in block.child_block.child_blocks.values():
-                self._add_block_js(child, js)
+            self._add_block_js(block.child_block, js)
 
     # Assign the Media js to the dictionary appropriately
     def _assign_js(self, obj, js):

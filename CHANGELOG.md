@@ -17,12 +17,27 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+### Changed
+
+### Removed
+
+### Fixed
+
+## 3.0.0-3.2.0 - 2016-03-21
+
+### Added
+
 - Added Featured Menu Content Molecule.
 - Added Global Banner Molecule.
 - Added Digital Privacy Policy to the footer.
 - Added tests for dom-traverse functions
 - Added default values for the View more text and URL. 
 - Dynamically create the View more URL if there are tags
+- Add an EXTERNAL_ICON_PATTERN to handle icons and links separately
+- Added specific Blog/Newsroom Categories to Related Post options
+- base.html now checks for page (seo) title if exists
+- Added a space before the external icon
+- Added validation for Youtube URLs.
 
 ### Changed
 
@@ -32,7 +47,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the layout for the level 1 menu items to distribute them more evenly
   across the header.
 - Abstracted the string utils from the Multiselect.
+- .gov links have an external icon
 - Updated the Hero Macro for the new overlay hero styles.
+- Updated article template to render all categories
+- Append bureau title on every template rendered
 
 ### Removed
 

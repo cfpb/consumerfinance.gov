@@ -43,6 +43,7 @@ def environment(**options):
         'get_page_state_url': share.get_page_state_url,
         'parse_links': external_links_filter,
         'get_protected_url': get_protected_url,
+        'related_metadata_tags': related_metadata_tags,
     })
     env.filters.update({
         'slugify': slugify,
@@ -51,13 +52,18 @@ def environment(**options):
 
 
 def parse_links(soup):
-    p = re.compile(settings.EXTERNAL_LINK_PATTERN)
+    link_pattern = re.compile(settings.EXTERNAL_LINK_PATTERN)
+    icon_pattern = re.compile(settings.EXTERNAL_ICON_PATTERN)
     a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
     span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
     for a in soup.find_all('a', href=True):
-        if p.match(a['href']):
+        # Sets the link to an external one if you're leaving .gov 
+        if link_pattern.match(a['href']):
             a['href'] = '/external-site/?ext_url=' + a['href']
+        # Sets the icon to indicate you're leaving consumerfinance.gov
+        if icon_pattern.match(a['href']):
             a.attrs.update({'class': a_class})
+            a.append(' ') # We want an extra space before the icon
             a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
     return soup
 
@@ -101,3 +107,25 @@ def get_protected_url(context, page):
             return url.replace(page_hostname, staging_hostname)
         else:
             return '#'
+
+@contextfunction
+def related_metadata_tags(context, page):
+    request = context['request']
+    # Set the tags to correct data format
+    tags = {'links': []}
+    # From an ancestor, get the form ids then use the first id since the 
+    # filterable list on the page will probably have the first id on the page.
+    id = None
+    filter_page = None
+    for ancestor in page.get_ancestors().reverse().specific():
+        if ancestor.specific_class.__name__ in ['BrowseFilterablePage', 'SublandingFilterablePage']:
+            filter_page = ancestor
+            id = util.get_form_id(ancestor, request.GET)
+            break
+    for tag in page.specific.tags.names():
+        tag_link = {'text': tag, 'url': ''}
+        if id is not None:
+            param = '?filter' + str(id) + '_topics=' + tag
+            tag_link['url'] = get_protected_url(context, filter_page) + param
+        tags['links'].append(tag_link)
+    return tags

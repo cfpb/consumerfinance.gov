@@ -1,7 +1,8 @@
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
-from . import atoms, molecules, ref
+from . import atoms, molecules
+from ..util import ref
 from .snippets import Contact as ContactSnippetClass
 
 
@@ -88,6 +89,8 @@ class RelatedPosts(blocks.StructBlock):
     relate_events = blocks.BooleanBlock(required=False, default=True,
                                         label='Events')
     view_more = atoms.Hyperlink(required=False, text="View more", url="/activity-log")
+
+    specific_categories = blocks.ListBlock(blocks.ChoiceBlock(choices=ref.related_posts_categories, required=False), required=False)
 
     class Meta:
         icon = 'link'

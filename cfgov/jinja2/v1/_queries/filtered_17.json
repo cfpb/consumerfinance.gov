@@ -1,0 +1,14 @@
+{
+  "filtered": {
+    "filter": {
+      "or": [
+      ]
+    },
+    "query": {
+      "bool": {
+        "should": [
+        ]
+      }
+    }
+  }
+}

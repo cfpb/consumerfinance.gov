@@ -9,6 +9,21 @@ limited_categories = [
     ('double-quote', 'Testimony'),
 ]
 
+related_posts_categories = [
+    ('Blog', (
+        ('At the CFPB', 'At the CFPB'),
+        ('Policy &amp; Compliance', 'Policy & Compliance'),
+        ('Data, Research &amp; Reports', 'Data, research & reports'),
+        ('Info for Consumers', 'Info for consumers'),
+    )),
+    ('Newsroom', (
+        ('Op-Ed', 'Op-Ed'),
+        ('Press Release', 'Press Release'),
+        ('Speech', 'Speech'),
+        ('Testimony', 'Testimony'),
+    )),
+]
+
 page_types = [
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
@@ -41,7 +56,7 @@ categories = [
     )),
     ('Blog', (
         ('at-the-cfpb', 'At the CFPB'),
-        ('cfpb_report', 'CFPB Report'),
+        ('policy_compliance', 'Policy & Compliance'),
         ('data-research-reports', 'Data, research & reports'),
         ('info-for-consumers', 'Info for consumers'),
     )),

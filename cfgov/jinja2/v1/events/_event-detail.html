@@ -12,16 +12,15 @@
             {{ page.future_body | striptags }}
         {% endif %}
         </p>
-        <div>
-            <div class="modification-date date u-right">
+        <div class="t-event_details">
+            <div class="modification-date date">
                 <span>Updated</span>
                 {% import 'macros/time.html' as time %}
                 {{ time.render(page.latest_revision_created_at, {'date':true}) }}
             </div>
-            {% import 'macros/share.html' as share with context %}
-            {{ share.render({
+            {% import 'molecules/social-media.html' as social_media with context %}
+            {{ social_media.render({
                 'title': page.title,
-                'hide_heading': true,
                 'twitter_options': {
                     'text':     page.twtr_text,
                     'related':  page.twtr_rel,
