@@ -34,7 +34,7 @@ gulp.task( 'test:unit:scripts', function( cb ) {
     } );
 } );
 
-gulp.task( 'test:unit:macro', function( cb ) {
+gulp.task( 'test:unit:macro', function() {
   spawn(
     'python',
     [ config.tests + '/macro_tests/test_macros.py' ],
