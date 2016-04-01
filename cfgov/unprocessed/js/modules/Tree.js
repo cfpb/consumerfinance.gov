@@ -78,7 +78,9 @@ function Tree() {
    * @returns {Array} A list of all nodes at a particular tree level.
    */
   function getAllAtLevel( level ) {
-    return _levelCache[level];
+    var levelCache = _levelCache[level];
+    if ( !levelCache ) levelCache = [];
+    return levelCache;
   }
 
   // TODO: Implement remove method.

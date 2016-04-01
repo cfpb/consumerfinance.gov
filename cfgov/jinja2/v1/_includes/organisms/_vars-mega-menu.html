@@ -18,50 +18,75 @@
                                    recursively repeats nav_group structure.
 #}
 
-{# TODO: Update file path for Featured Menu Content module when that is added. #}
-{% import 'templates/nav/about-us-media.html' as about_us_media %}
+{% import 'molecules/featured-menu-content.html' as featured_menu_content %}
 
 {# Featured Menu Content. #}
+{% set about_us_content = {
+    'link': {
+        'text': 'The CFPB: Working for you',
+        'url':  '/about-us/the-bureau/',
+    },
+    'image': {
+        'src': '/static/img/fmc-about-us-540x300.jpg',
+        'alt': 'Still from about the CFPB video.',
+    },
+    'body': 'This short video covers what the CFPB is ' +
+            'and how we are working for American consumers.',
+} %}
+{% set poly_com_content = {
+    'link': {
+        'text': 'Resources to help you comply',
+        'url':  '/policy-compliance/guidance/implementation-guidance/',
+    },
+    'image': {
+        'src': '/static/img/fmc-poly-com-540x300.jpg',
+        'alt': 'Still from Know Before You Owe video.',
+    },
+    'body': 'The TILA-RESPA integrated disclosure rule ' +
+            'replaces four disclosure forms with two new ones. ' +
+            'We have resources to help you comply.'
+} %}
 {% set media_items = [
-  ('/about-us/', about_us_media)
+  ( '/about-us/', featured_menu_content.render( about_us_content ) ),
+  ( '/policy-compliance/', featured_menu_content.render( poly_com_content ) )
 ] %}
 
 {% set nav_items = [(
     ('Consumer Tools', '#', [(
-        ('Submit a Complaint', '', []),
-        ('Ask CFPB', '', []),
-        ('Tell Your Story', '', []),
-        ('Information for Students', '', []),
-        ('Information for Older Americans', '', []),
-        ('Information for Servicemembers', '', [])
+        ('Submit a Complaint', '/complaint/', []),
+        ('Ask CFPB', '/askcfpb/', []),
+        ('Tell Your Story', '/your-story/', []),
+        ('Information for Students', '/students/', []),
+        ('Information for Older Americans', '/older-americans/', []),
+        ('Information for Servicemembers & Veterans', '/servicemembers/', [])
     ),(
-        ('Paying for College', '', []),
-        ('Owning a Home', '', []),
-        ('Planning for Retirement', '', []),
-        ('Sending Money Abroad', '', [])
+        ('Paying for College', '/paying-for-college/', []),
+        ('Owning a Home', '/owning-a-home/', []),
+        ('Planning for Retirement', '/retirement/', []),
+        ('Sending Money Abroad', '/sending-money/', [])
     ),(
-        ('Know Before You Owe Mortgages', '', []),
-        ('Trouble Paying Your Mortgage?', '', []),
-        ('Protections Against Discrimination', '', [])
+        ('Know Before You Owe Mortgages', '/know-before-you-owe/', []),
+        ('Trouble Paying Your Mortgage?', '/mortgagehelp/', []),
+        ('Protections Against Discrimination', '/fair-lending/', [])
     )]),
     ('Educational Resources', '#', [(
-        ('Your Money, Your Goals', '', []),
-        ('Adult Financial Education', '', []),
-        ('Youth Financial Education', '', [])
+        ('Your Money, Your Goals', '/your-money-your-goals/', []),
+        ('Adult Financial Education', '/adult-financial-education/', []),
+        ('Youth Financial Education', '/youth-financial-education/', [])
     ),(
-        ('Resources for Libraries', '', []),
-        ('Resources for Tax Preparers', '', []),
-        ('Resources for Parents', '', [])
+        ('Resources for Libraries', '/library-resources/', []),
+        ('Resources for Tax Preparers', '/tax-preparer-resources/', []),
+        ('Resources for Parents', '/money-as-you-grow/', [])
     ),(
-        ('Information for Economically Vulnerable Consumers', '', []),
-        ('Managing Someone Else’s Money', '', []),
-        ('Free Brochures', '', [])
+        ('Information for Economically Vulnerable Consumers', '/empowerment/', []),
+        ('Managing Someone Else’s Money', '/managing-someone-elses-money/', []),
+        ('Free Brochures', 'http://promotions.usa.gov/cfpbpubs.html', [])
     )]),
     ('Data & Research', '/data-research/', [(
         ('Research & Reports', '/data-research/research-reports/', []),
     ),(
-        ('Consumer Complaint Database', '/complaintdatabase/', []),
-        ('Mortgage Database (HMDA)', '/hmda/', [])
+        ('Consumer Complaint Database', '/data-research/consumer-complaints/', []),
+        ('Mortgage Database (HMDA)', '/data-research/mortgage-data-hmda/', [])
     ),(
         ('Credit Card Surveys & Agreements', '/data-research/credit-card-data/', []),
     )]),
@@ -94,13 +119,13 @@
         )])
     )]),
     ('About Us', '/about-us/', [(
-        ('The Bureau', '/the-bureau/', []),
+        ('The Bureau', '/about-us/the-bureau/', []),
         ('Budget & Strategy', '/about-us/budget-strategy/', []),
         ('Payments to Harmed Consumers',
          '/about-us/payments-harmed-consumers/', [])
     ),(
-        ('Blog','/blog/', []),
-        ('Newsroom', '/newsroom/', []),
+        ('Blog','/about-us/blog/', []),
+        ('Newsroom', '/about-us/newsroom/', []),
         ('Events', '/about-us/events/', []),
         ('Recent Postings', '/activity-log/', [])
     ),(

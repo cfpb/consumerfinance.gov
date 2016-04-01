@@ -10,6 +10,7 @@ function AboutUs() {
   this.feedIcons = element.all( by.css( '.activity .cf-icon' ) );
   this.firstIcon = this.feedIcons.first();
   this.secondIcon = this.feedIcons.last();
+  this.activityItems = element.all( by.css( '.activity .list-item' ) );
 }
 
 module.exports = AboutUs;

@@ -9,7 +9,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from .base import CFGOVPage
 from . import molecules
 from . import organisms
-
+from ..util import filterable_context, util
 
 class SublandingPage(CFGOVPage):
     header = StreamField([
@@ -62,17 +62,17 @@ class SublandingPage(CFGOVPage):
 
     template = 'sublanding-page/index.html'
 
-    def get_browsefilterable_posts(self, request):
+    def get_browsefilterable_posts(self, request, limit):
         filter_pages = [p.specific for p in self.get_appropriate_descendants(request.site.hostname)
                         if 'BrowseFilterablePage' in p.specific_class.__name__]
-        posts = []
+        filtered_controls = {}
         for page in filter_pages:
+            id = str(util.get_form_id(page, request.GET))
+            if id not in filtered_controls.keys():
+                filtered_controls.update({id: []})
             form_class = page.get_form_class()
-            posts.append(page.get_page_set(form_class(parent=page, hostname=request.site.hostname),
-                                           request.site.hostname))
-
-        if posts:
-            posts = list(chain(*posts))
-            posts.sort(key=lambda x: x.date_published, reverse=True)
-
+            filtered_controls[id] = filterable_context.get_page_set(
+                page, form_class(parent=page, hostname=request.site.hostname), request.site.hostname)
+        posts_tuple_list = [(id, post) for id, posts in filtered_controls.iteritems() for post in posts]
+        posts = sorted(posts_tuple_list, key=lambda p: p[1].date_published)[:limit]
         return posts

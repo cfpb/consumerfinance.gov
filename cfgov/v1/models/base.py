@@ -1,7 +1,7 @@
 import os
-from itertools import chain
 import json
-from sets import Set
+from itertools import chain
+from collections import OrderedDict
 
 from django.db import models
 from django.db.models import Q
@@ -28,10 +28,9 @@ from modelcluster.tags import ClusterTaggableManager
 
 from sheerlike.query import QueryFinder
 
-from . import ref
 from . import molecules
 from . import organisms
-from ..util import util
+from ..util import util, ref
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -140,19 +139,29 @@ class CFGOVPage(Page):
                     and block.value['relate_%s' % search_type]:
                 related[search_type_name] = \
                     search_class.objects.filter(query).order_by(
-                        '-latest_revision_created_at').exclude(
+                        '-date_published').exclude(
                         slug=self.slug).live_shared(hostname)[:block.value['limit']]
         # TODO: Remove each search_type as it is implemented into Django
         queries = QueryFinder()
+
         for search_type, search_type_name in [('newsroom', 'Newsroom'), ('posts', 'Blog')]:
             if 'relate_%s' % search_type in block.value \
                     and block.value['relate_%s' % search_type]:
                 if search_type == 'newsroom':
                     search_type = 'just_newsroom'
                 sheer_query = getattr(queries, search_type)
+
+                match_query = []
+
+                for cat in block.value['specific_categories']:
+                    if util.get_related_posts_categories(cat) == 'posts' and search_type == 'posts':
+                        match_query.append({'term': {'blog_category': cat}})
+                    elif util.get_related_posts_categories(cat) == 'newsroom' and search_type == 'just_newsroom':
+                        match_query.append({'term': {'category': cat}})
+
                 related[search_type_name] = \
                     sheer_query.get_tag_related_documents(tags=self.tags.names(),
-                                                          size=block.value['limit'])
+                                                          size=block.value['limit'], additional_args=match_query)
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
@@ -265,29 +274,55 @@ class CFGOVPage(Page):
         parent = self.get_ancestors(inclusive=False).reverse()[0].specific
         return parent
 
-    def elements(self):
+    # To be overriden if page type requires JS files every time
+    # 'template' is used as the key for front-end consistency
+    def add_page_js(self, js):
+        js['template'] = []
+
+    # Retrieves the stream values on a page from it's Streamfield
+    def _get_streamfield_blocks(self):
         lst = [value for key, value in vars(self).iteritems()
                if type(value) is StreamValue]
         return list(chain(*lst))
 
-    def _media(self):
-        from v1 import models
+    # Gets the JS from the Streamfield data
+    def _add_streamfield_js(self, js):
+        # Create a dictionary with keys ordered organisms, molecules, then atoms
+        for child in self._get_streamfield_blocks():
+            self._add_block_js(child.block, js)
 
-        js = ()
+    # Recursively search the blocks and classes for declared Media.js
+    def _add_block_js(self, block, js):
+        self._assign_js(block, js)
+        if issubclass(type(block), blocks.StructBlock):
+            for child in block.child_blocks.values():
+                self._add_block_js(child, js)
+        elif issubclass(type(block), blocks.ListBlock):
+            self._add_block_js(block.child_block, js)
 
-        for child in self.elements():
-            try:
-                class_ = type(child.block)
-                instance = class_()
+    # Assign the Media js to the dictionary appropriately
+    def _assign_js(self, obj, js):
+        try:
+            if hasattr(obj.Media, 'js'):
+                for key in js.keys():
+                    if obj.__module__.endswith(key):
+                        js[key] += obj.Media.js
+                if not [key for key in js.keys() if obj.__module__.endswith(key)]:
+                    js.update({'other': obj.Media.js})
+        except:
+            pass
 
-                if hasattr(instance.Media, 'js'):
-                    js += instance.Media.js
-            except:
-                pass
-
-        return Set(js)
-
-    media = property(_media)
+    # Returns all the JS files specific to this page and it's current Streamfield's blocks
+    @property
+    def media(self):
+        js = OrderedDict()
+        for key in ['template', 'organisms', 'molecules', 'atoms']:
+            js.update({key: []})
+        self.add_page_js(js)
+        self._add_streamfield_js(js)
+        for key, js_files in js.iteritems():
+            js[key] = list(set(js_files))
+        return js
 
 
 class CFGOVPageCategory(Orderable):

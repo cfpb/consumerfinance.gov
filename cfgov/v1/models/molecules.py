@@ -1,10 +1,10 @@
 from django.core.exceptions import ValidationError
 
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-from . import ref
 from . import atoms
-from ..util import util
+from ..util import util, ref
 
 
 def isRequired(field_name):
@@ -63,12 +63,17 @@ class Hero(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
 
-    image = atoms.ImageBasic()
+    background_image = ImageChooserBlock(required=False,
+                                         help_text='An image object containing the URL of the image to be placed behind the hero.')
+
+    image = atoms.ImageBasic(required=False)
 
     background_color = blocks.CharBlock(required=False,
                                         help_text="Use Hexcode colors e.g #F0F8FF")
     links = blocks.ListBlock(atoms.Hyperlink())
     is_button = blocks.BooleanBlock(required=False)
+    is_white_text = blocks.BooleanBlock(required=False)
+    is_overlay = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = 'image'
@@ -225,7 +230,7 @@ class BaseExpandable(blocks.StructBlock):
         label = 'Expandable'
 
     class Media:
-        js = ("expandable.js",)
+        js = ["expandable.js"]
 
 
 class Expandable(BaseExpandable):

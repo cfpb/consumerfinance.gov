@@ -12,7 +12,6 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 from . import base, molecules, organisms, ref
 from .learn_page import AbstractFilterPage
 from .. import forms
-from ..util.util import get_secondary_nav_items
 from ..util import filterable_context
 
 
@@ -47,17 +46,20 @@ class BrowseFilterablePage(base.CFGOVPage):
 
     template = 'browse-filterable/index.html'
 
+    def add_page_js(self, js):
+        super(BrowseFilterablePage, self).add_page_js(js)
+        js['template'] += ['secondary-navigation.js']
+
     def get_context(self, request, *args, **kwargs):
         context = super(BrowseFilterablePage, self).get_context(request, *args, **kwargs)
         return filterable_context.get_context(self, request, context)
-
 
     def get_form_class(self):
         return filterable_context.get_form_class()
 
     def get_page_set(self, form, hostname):
         return filterable_context.get_page_set(self, form, hostname)
-     
+
 
 class EventArchivePage(BrowseFilterablePage):
     def get_form_class(self):

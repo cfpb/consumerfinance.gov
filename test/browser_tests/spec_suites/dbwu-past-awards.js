@@ -17,7 +17,7 @@ describe( 'The Past Awards Page', function() {
 
   it( 'should properly load in a browser', function() {
     expect( page.pageTitle() )
-    .toBe( 'Doing Business with Us: Past Awards' );
+    .toContain( 'Doing Business with Us: Past Awards' );
   } );
 
   it( 'should have a side nav', function() {
@@ -28,17 +28,8 @@ describe( 'The Past Awards Page', function() {
     expect( page.breadcrumb.getText() ).toBe( 'Doing Business with Us' );
   } );
 
-  it( 'should have a main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Procurement History' );
-  } );
-
   it( 'should have a main summary', function() {
     expect( page.mainSummary.isPresent() ).toBe( true );
-  } );
-
-  it( 'should have a summary navigation link', function() {
-    expect( page.summaryNavLink.getAttribute( 'href' ) )
-    .toBe( browser.baseUrl + '/budget/' );
   } );
 
   it( 'should have Business content', function() {

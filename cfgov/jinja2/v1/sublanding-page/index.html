@@ -4,10 +4,6 @@
 {% import 'organisms/post-preview.html' as post_preview with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
-{% block title -%}
-    {{ page.seo_title }}
-{%- endblock %}
-
 {% block hero -%}
     {% for block in page.header -%}
         {% include 'templates/render_block.html' with context %}
@@ -33,11 +29,10 @@
         {% elif 'post_preview_snapshot' in block.block_type %}
             <div class="block 
                         {{ block.block.meta.classname if block.block.meta.classname else '' }}">
-                {% set posts = page.get_browsefilterable_posts(request) %}
                 {% set limit = block.value.limit | int %}
-                {% set num_posts = limit if limit <= posts | length else posts | length %}
-                {% for i in range(num_posts) %}
-                    {{ post_preview.render(posts[i], '', 0, get_page_state_url({'request':request}, posts[i].parent())) }}
+                {% set posts = page.get_browsefilterable_posts(request, limit) %}
+                {% for post in posts %}
+                    {{ post_preview.render(post=post[1], controls=none, form_id=post[0], url=get_protected_url(post[1].parent())) }}
                 {% endfor %}
              </div>
         {% elif 'filter_controls' in block.block_type %}

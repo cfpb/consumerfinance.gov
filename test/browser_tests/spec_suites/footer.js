@@ -18,7 +18,7 @@ describe( 'The Footer Component', function() {
       'cfpb ombudsman',
     '/about-us/contact-us/':
       'contact us',
-    '/newsroom/':
+    '/about-us/newsroom/':
       'newsroom',
     '/open-government/':
       'open government',
@@ -26,6 +26,8 @@ describe( 'The Footer Component', function() {
       'plain writing',
     '/privacy/':
       'privacy, policy & legal notices',
+    '/privacy/digital-privacy-policy/':
+      'digital privacy policy',
     '/tribal/':
       'tribal',
     'http://usa.gov/':
@@ -76,7 +78,7 @@ describe( 'The Footer Component', function() {
 
       element.getText().then( function( textValue ) {
         _linkText = textValue.toLowerCase();
-        expect( _footerLinkLookup[_linkHref] ).toEqual( _linkText );
+        expect( _footerLinkLookup[_linkHref] ).toContain( _linkText );
       } );
 
     } );

@@ -26,11 +26,6 @@ function TheBureauStructurePage() {
   this.downloadBtn =
   this.downloadInfo.element( by.css( 'a.btn' ) );
 
-  this.speakingInfo =
-  element( by.css( '[data-qa-hook="org-chart-speaking-info"]' ) );
-
-  this.speakingInfoEmail = this.speakingInfo.element( by.css( 'a' ) );
-
 }
 
 module.exports = TheBureauStructurePage;

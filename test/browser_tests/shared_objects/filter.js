@@ -1,6 +1,6 @@
 'use strict';
 
-var _searchFilter = element( by.css( '.js-post-filter' ) );
+var _searchFilter = element( by.css( '[data-qa-hook="filter"]' ) );
 
 function _getFilterElement( selector ) {
   return _searchFilter.element( by.css( selector ) );

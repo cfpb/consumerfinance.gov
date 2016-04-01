@@ -1,7 +1,8 @@
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
-from . import atoms, molecules, ref
+from . import atoms, molecules
+from ..util import ref
 from .snippets import Contact as ContactSnippetClass
 
 
@@ -87,6 +88,9 @@ class RelatedPosts(blocks.StructBlock):
                                           label='Newsroom', editable=False)
     relate_events = blocks.BooleanBlock(required=False, default=True,
                                         label='Events')
+
+    specific_categories = blocks.ListBlock(blocks.ChoiceBlock(choices=ref.related_posts_categories, required=False), required=False)
+
     view_more = atoms.Hyperlink(required=False)
 
     class Meta:
@@ -155,7 +159,7 @@ class ExpandableGroup(blocks.StructBlock):
         template = '_includes/organisms/expandable-group.html'
 
     class Media:
-        js = ("expandable-group.js",)
+        js = ["expandable-group.js"]
 
 
 class ItemIntroduction(blocks.StructBlock):
@@ -181,8 +185,10 @@ class FilterControls(molecules.BaseExpandable):
     ], default='filterable-list')
     title = blocks.BooleanBlock(default=True, required=False,
                                 label='Filter Title')
+    post_date_description = blocks.CharBlock(default='Published')
     categories = blocks.StructBlock([
         ('filter_category', blocks.BooleanBlock(default=True, required=False)),
+        ('show_preview_categories', blocks.BooleanBlock(default=True, required=False)),
         ('page_type', blocks.ChoiceBlock(choices=ref.page_types,
                                          required=False)),
     ])
@@ -198,4 +204,4 @@ class FilterControls(molecules.BaseExpandable):
         icon = 'form'
 
     class Media:
-        js = ('notification.js', 'expandable.js', 'filterable-list-controls.js',)
+        js = ['notification.js', 'expandable.js', 'filterable-list-controls.js']

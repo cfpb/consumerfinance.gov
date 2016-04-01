@@ -17,7 +17,10 @@ function noopFunct() {
   // Placeholder function meant to be overridden.
 }
 
+var UNDEFINED;
+
 module.exports = {
   JS_HOOK:   JS_HOOK,
-  noopFunct: noopFunct
+  noopFunct: noopFunct,
+  UNDEFINED: UNDEFINED
 };

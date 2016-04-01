@@ -13,7 +13,7 @@ describe( 'The Blog Page', function() {
   } );
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Blog' );
+    expect( page.pageTitle() ).toContain( 'Blog' );
   } );
 
   it( 'should include a main title', function() {
@@ -64,10 +64,6 @@ describe( 'The Blog Page', function() {
     .toBe( 'Sign up' );
   } );
 
-  it( 'should include an Email Subscribe description', function() {
-    expect( page.emailFormDescription.isPresent() ).toBe( true );
-  } );
-
   it( 'should include an RSS Subscribe section', function() {
     expect( page.rssSubscribeSection.isPresent() ).toBe( true );
   } );
@@ -93,6 +89,14 @@ describe( 'The Blog Page', function() {
       searchFilterBtn.click();
       browser.sleep( 1000 );
     } );
+  } );
+
+  it( 'should include an atomic notification', function() {
+    expect( page.mNotification.isPresent() ).toBe( true );
+  } );
+
+  it( 'should include an atomic expandable', function() {
+    expect( page.mExpandable.isPresent() ).toBe( true );
   } );
 
   it( 'should include a visible Show button', function() {

@@ -13,8 +13,7 @@ from django.contrib.auth import authenticate
 from django.conf import settings
 from django.forms import widgets
 
-from sheerlike.templates import get_date_obj
-from .models import ref
+from .util import ref
 from .models.base import CFGOVPage
 from .util.util import most_common
 
@@ -109,6 +108,7 @@ class FilterErrorList(ErrorList):
 
 class FilterDateField(forms.DateField):
     def clean(self, value):
+        from sheerlike.templates import get_date_obj
         if value:
             try:
                 value = get_date_obj(value)

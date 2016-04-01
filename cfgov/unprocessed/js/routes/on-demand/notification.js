@@ -1,14 +1,10 @@
 /* ==========================================================================
-   Scripts for Notification Molecule.
+   Scripts for Notification molecule.
    ========================================================================== */
 
 'use strict';
 
-var Notification = require('../../molecules/Notification');
-var notifications = document.querySelectorAll('.m-notification');
-var notification;
+var atomicHelpers = require( '../../modules/util/atomic-helpers' );
+var Notification = require( '../../molecules/Notification' );
 
-for (var i = 0, len = notifications.length; i < len; i++) {
-    notification = new Notification(notifications[i]).init();
-}
-
+atomicHelpers.instantiateAll( '.m-notification', Notification );

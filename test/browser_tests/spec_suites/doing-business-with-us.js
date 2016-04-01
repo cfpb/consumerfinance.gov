@@ -17,15 +17,11 @@ describe( 'The Doing Business with Us Page', function() {
 
 
   it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'Doing business with us' );
+    expect( page.pageTitle() ).toContain( 'Doing business with us' );
   } );
 
   it( 'should have a side nav', function() {
     expect( page.sideNav.isPresent() ).toBe( true );
-  } );
-
-  it( 'should have a main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Doing Business with Us' );
   } );
 
   it( 'should have a main summary', function() {

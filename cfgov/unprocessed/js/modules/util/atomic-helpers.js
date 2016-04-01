@@ -36,7 +36,25 @@ function checkDom( element, baseClass, atomicName ) {
   return dom;
 }
 
+/**
+ * @param {string} selector - Selector to search for in the document.
+ * @param {Function} Constructor - A constructor function.
+ * @returns {Array} List of instances that were instantiated.
+ */
+function instantiateAll( selector, Constructor ) {
+  var all = document.querySelectorAll( selector );
+  var inst;
+  var insts = [];
+  for ( var i = 0, len = all.length; i < len; i++ ) {
+    inst = new Constructor( all[i] );
+    inst.init();
+    insts.push( inst );
+  }
+  return insts;
+}
+
 // Expose public methods.
 module.exports = {
-  checkDom: checkDom
+  checkDom: checkDom,
+  instantiateAll: instantiateAll
 };

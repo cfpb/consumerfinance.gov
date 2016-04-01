@@ -26,6 +26,9 @@
    ========================================================================== #}
 
 {% macro render(options={}) -%}
+    {# TODO: Update to use molecules/social-media.html and remove macros/share.html.
+             This will require moving the additional_classes up a level to the organism
+             or include a modifier for the social media icons for a compact appearance. #}
     {% import 'macros/share.html' as share with context %}
     {% set video_url    = options.video.url | default('/') %}
     {% set video_player = options.video.player or
@@ -55,7 +58,8 @@
     {% set button_pos   = options.button_pos or 'center' %}
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
     <div class="video-player
-                video-player__{{ video_player }}"
+                video-player__{{ video_player }}
+                {{ 'featured-content-module_visual' if is_flexible == false }}"
          {{ "data-id="~video_id | trim if video_id else '' }}
          data-src="{{ video_url }}"
          data-width="{{ options.video.width if options.video.width else '' }}"

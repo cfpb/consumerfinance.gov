@@ -2,12 +2,14 @@ from .. import forms
 from .util import get_secondary_nav_items
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from ..models import base, molecules, organisms, ref
+from ..models import base, molecules, organisms
+from ref import categories as ref_categories
 from ..models.learn_page import AbstractFilterPage
 
 
 def get_context(page, request, context):
     context.update({'get_secondary_nav_items': get_secondary_nav_items})
+    context.update({'has_active_filters': has_active_filters})
 
     context['forms'] = []
     form_class = get_form_class()
@@ -75,7 +77,7 @@ def get_page_set(page, form, hostname):
                 f.value['categories']['page_type']:
             categories = form.cleaned_data.get('categories', [])
             if not categories or 'blog' in categories:
-                blog_cats = [c[0] for c in ref.categories[1][1]]
+                blog_cats = [c[0] for c in ref_categories[1][1]]
                 blog_q = Q('categories__name__in', blog_cats)
 
     results = AbstractFilterPage.objects.live_shared(hostname).descendant_of(
@@ -90,3 +92,16 @@ def get_page_set(page, form, hostname):
 
     filter_pages.sort(key=lambda x: x.date_published, reverse=True)
     return filter_pages
+
+
+def has_active_filters(page, request, index):
+    active_filters = False;
+    form_class = get_form_class()
+    forms_data = get_form_specific_filter_data(page, form_class, request.GET)
+    if forms_data:
+        for filters in forms_data[index].values():
+            for value in filters:
+                if value:
+                    active_filters = True
+
+    return active_filters

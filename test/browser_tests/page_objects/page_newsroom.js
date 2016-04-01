@@ -21,17 +21,6 @@ function Newsroom() {
 
   this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
-  this.featuredTopic = element( by.css( '.featured-topic' ) );
-
-  this.featuredTopicTitle =
-  this.featuredTopic.element( by.css( '.summary_header' ) );
-
-  this.featuredTopicSummaryText =
-  this.featuredTopic.all( by.css( '.summary_cols' ) ).get( 0 );
-
-  this.featuredTopicSummaryLinks =
-  this.featuredTopic.all( by.css( '.summary_cols' ) ).get( 1 );
-
   this.relatedContent = element( by.css( '.related_content' ) );
 
   this.relatedLinks =

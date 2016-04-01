@@ -20,7 +20,7 @@
 {% macro render(breadcrumbs, additional_classes) %}
     <nav class="breadcrumbs {{ additional_classes }}" aria-label="Breadcrumbs">
         {% for crumb in breadcrumbs %}
-        <a class="breadcrumbs_link" href="{{ get_page_state_url({}, crumb) }}">
+        <a class="breadcrumbs_link" href="{{ get_protected_url(crumb) }}">
             {{ crumb.title | e }}
         </a>
         {% endfor %}

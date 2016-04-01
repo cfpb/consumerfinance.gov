@@ -13,7 +13,15 @@
 
     <main class="content" id="main" role="main">
 
-        {% include 'molecules/home-hero.html' %}
+        {% from 'molecules/home-hero.html' import home_hero with context %}
+        {{ home_hero( {
+            'heading': 'We’re on your side',
+            'body':    'We are the Consumer Financial Protection Bureau,
+                        a U.S. government agency that makes sure banks, lenders,
+                        and other financial companies treat you fairly.',
+            'sm_img':  '/static/img/home-hero_sm.jpg',
+            'lg_img':  '/static/img/home-hero_lg.jpg'
+        } ) }}
 
         {% from 'molecules/info-unit.html' import info_unit with context %}
         <div class="o-well
@@ -49,11 +57,11 @@
                             'links': [
                                 {
                                     'text': 'Submit your complaint',
-                                    'url':  '#'
+                                    'url':  '/complaint/'
                                 },
                                 {
                                     'text': 'Browse public complaints about companies',
-                                    'url':  '#'
+                                    'url':  '/complaintdatabase/'
                                 }
                             ]
                         } ) }}
@@ -71,12 +79,8 @@
                             'body': '<p>Financial matters can be complicated. Get the facts you need to make choices about money, credit scores, mortgages, and more.</p>',
                             'links': [
                                 {
-                                    'text': 'Learn more about credit cards, student loans, and other financial products',
-                                    'url':  '#'
-                                },
-                                {
                                     'text': 'Find answers to common questions',
-                                    'url':  '#'
+                                    'url':  '/askcfpb/'
                                 }
                             ]
                         } ) }}
@@ -95,15 +99,15 @@
                             'links': [
                                 {
                                     'text': 'Paying for College',
-                                    'url':  '#'
+                                    'url':  '/paying-for-college/'
                                 },
                                 {
                                     'text': 'Owning a Home',
-                                    'url':  '#'
+                                    'url':  '/owning-a-home/'
                                 },
                                 {
                                     'text': 'Planning for Retirement',
-                                    'url':  '#'
+                                    'url':  '/retirement/before-you-claim/'
                                 }
                             ]
                         } ) }}
@@ -162,7 +166,7 @@
 
         <div class="wrapper">
             <div class="content_main content_main__home">
-                <h2>Latest Updates</h2>
+                <h2>Latest updates</h2>
                 {% import 'macros/time.html' as time %}
                 <div class="content-l">
                     {% for sections in page.latest_updates %}
@@ -189,8 +193,9 @@
                             {% endfor %}
                         {% if loop.last %}
                             <div>
-                                <a class="jump-link jump-link__underline"
-                                   href="#">
+                                <a class="jump-link
+                                          jump-link__underline"
+                                   href="/activity-log/">
                                     See all activities
                                 </a>
                             </div>

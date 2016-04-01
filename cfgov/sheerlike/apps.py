@@ -14,5 +14,10 @@ class SheerlikeConfig(AppConfig):
                         str(directory), str(
                             directory.child('_includes')), str(
                             directory.child('_layouts'))], 'OPTIONS': {
-                        'environment': 'v1.environment', 'site_slug': app, }}
+                        'environment': 'v1.environment', 'site_slug': app,
+                        'extensions': [
+                            'wagtail.wagtailcore.jinja2tags.core',
+                            'wagtail.wagtailadmin.jinja2tags.userbar',
+                            'wagtail.wagtailimages.jinja2tags.images',
+                             ], }}
                 settings.TEMPLATES.append(engine_config)

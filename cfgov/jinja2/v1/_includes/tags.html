@@ -15,8 +15,8 @@
 
    path:          The path to which the filter applies. For example, if the
                   tags are used on a blog article then path should be
-                  '/blog/'. Remember to leverage vars.path instead of
-                  using the literal string '/blog/'. Path is used to
+                  '/about-us/blog/'. Remember to leverage vars.path instead of
+                  using the literal string '/about-us/blog/'. Path is used to
                   create the filtered URL: {{ path }}?filter_tags={{ tag }}.
 
    hide_heading:  The optional boolean flag to hide the tags_heading element.
@@ -29,13 +29,14 @@
 
    ========================================================================== #}
 
-{% macro render(tags, path, hide_heading=false, display_block=false, index=0) %}
+{% macro render(tags, path, hide_heading=false, display_block=false, index=0, is_sheer=False) %}
 <div class="tags {{'tags__hide-heading' if hide_heading else ''}} {{'tags__block-list' if display_block else '' }}">
     <span class="{{'u-visually-hidden' if hide_heading else 'tags_heading' }}">Topics:</span>
     <ul class="tags_list">
     {% for tag in tags %}
         <li class="tags_tag">
-            <a class="tags_link" href="{{ path }}?filter{{ index }}_topics={{ tag }}">
+          {% set url_arg = 'filter_tags=' if is_sheer else 'filter' ~ index|string ~ '_topics=' %}
+            <a class="tags_link" href="{{ path }}?{{ url_arg }}{{ tag }}">
                 <span class="tags_bullet" aria-hidden="true">&bull;</span>
                 {{ tag }}
             </a>

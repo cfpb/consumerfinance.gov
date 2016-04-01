@@ -2,6 +2,7 @@ from datetime import datetime
 from localflavor.us.models import USStateField
 
 from django.db import models
+from django.core.validators import RegexValidator
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
@@ -13,8 +14,6 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from . import molecules
 from . import organisms
 from .base import CFGOVPage, CFGOVPageManager
-from ..templatetags.share import get_page_state_url
-from ..util import util
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -76,23 +75,6 @@ class AbstractFilterPage(CFGOVPage):
     is_creatable = False
 
     objects = CFGOVPageManager()
-
-    def related_metadata_tags(self, get_request):
-        # Set the tags to correct data format
-        tags = {'links': []}
-        # From the parent, get the form ids from the BrowseFilterablePage helper method
-        # then use the first id since the filterable list on the page will probably
-        # have the first id on the page. For more, see v1/models/browse_filterable_page.py line 105.
-        parent = self.parent()
-        id = util.get_form_id(parent, get_request)
-        for tag in self.tags.names():
-            tag_link = {'text': tag, 'url': ''}
-            if id is not None:
-                param = '?filter' + str(id) + '_topics=' + tag
-                tag_link['url'] = get_page_state_url({'request': get_request}, parent) + param
-            tags['links'].append(tag_link)
-
-        return tags
 
 
 class LearnPage(AbstractFilterPage):
@@ -169,7 +151,10 @@ class EventPage(AbstractFilterPage):
         related_name='+'
     )
     flickr_url = models.URLField("Flickr URL", blank=True)
-    youtube_url = models.URLField("Youtube URL", blank=True)
+    youtube_url = models.URLField("Youtube URL", blank=True,
+    help_text="Format: https://www.youtube.com/embed/video_id. It can be obtained by clicking on Share > Embed on Youtube.",
+    validators=[ RegexValidator(regex='^https?:\/\/www\.youtube\.com\/embed\/.*$')])
+
     live_stream_availability = models.BooleanField("Streaming?", default=False,
                                                    blank=True)
     live_stream_url = models.URLField("URL", blank=True)

@@ -12,7 +12,7 @@ describe( 'The About Deputy Director Page', function() {
 
   it( 'should properly load in a browser',
     function() {
-      expect( page.pageTitle() ).toBe( 'About David Silberman' );
+      expect( page.pageTitle() ).toContain( 'About David Silberman' );
     }
   );
 
@@ -24,38 +24,13 @@ describe( 'The About Deputy Director Page', function() {
 
   it( 'should include the Deputy Director’s bio',
     function() {
-      expect( page.directorBioSummary.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include the Deputy Director’s summary',
-    function() {
-      expect( page.directorBioSummary.isPresent() ).toBe( true );
+      expect( page.directorBio.isPresent() ).toBe( true );
     }
   );
 
   it( 'should include the Deputy Director’s image',
     function() {
       expect( page.directorImage.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include a More Info section',
-    function() {
-      expect( page.moreInfo.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include a More Info title',
-    function() {
-      expect( page.moreInfoTitle.getText() )
-      .toContain( 'More information' );
-    }
-  );
-
-  it( 'should include three More Info items',
-    function() {
-      expect( page.moreInfoItems.count() ).toEqual( 3 );
     }
   );
 
@@ -80,18 +55,6 @@ describe( 'The About Deputy Director Page', function() {
       expect( lowResImageDownload.isPresent() ).toBe( true );
       expect( lowResImageDownload.getText() )
       .toEqual( 'Low-res portrait' );
-    }
-  );
-
-  it( 'should include a Related Links section',
-    function() {
-      expect( page.relatedLinks.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include a Share section',
-    function() {
-      expect( page.socialMediaShare.isPresent() ).toBe( true );
     }
   );
 

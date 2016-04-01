@@ -16,28 +16,43 @@
                        is called `newsroom`.
 
    path:               The path to which post filters are applies. For example,
-                       if the post is a blog post then path should be '/blog/'.
-                       Remember to leverage vars.path instead of using the
-                       literal string '/blog/'. Path is used to create the
-                       filtered URL: {{ path }}?filter_tags={{ tag }}
+                       if the post is a blog post then path should be
+                       '/about-us/blog/'.  Remember to leverage vars.path
+                       instead of using the literal string '/about-us/blog/'.
+                       Path is used to create the filtered URL:
+                       {{ path }}?filter_tags={{ tag }}
 
    ========================================================================== #}
 
 {% macro render(post, path) %}
 
-{% import 'macros/share.html' as share with context %}
+{% import 'molecules/social-media.html' as social_media with context %}
 
 <article class="post">
     <header>
         {%- import 'macros/category-slug.html' as category_slug %}
-        {% if path == '/blog/' and post.blog_category.0 %}
+        {% if path == '/about-us/blog/' and post.blog_category.0 %}
             {% set use_blog_category = true %}
-            {{ category_slug.render(post.blog_category.0,
-                                    path,
-                                    'post_slug',
-                                    use_blog_category) }}
+            {% for icon in post.blog_category %}
+                {% if loop.index > 1 %}
+                    |
+                {% endif %}
+                {{ category_slug.render(icon,
+                        path,
+                        'post_slug meta-header_left',
+                        use_blog_category,
+                        sheerpage=True) }}
+            {% endfor %}
         {% elif post.category.0 %}
-            {{ category_slug.render(post.category.0, path, 'post_slug') }}
+            {% for icon in post.category %}
+                {% if loop.index > 1 %}
+                    |
+                {% endif %}
+                {{ category_slug.render(icon,
+                        path,
+                        'post_slug meta-header_left',
+                        sheerpage=True) }}
+            {% endfor %}
         {% endif %}
         <h1 class="post_heading">
             {{ post.title|safe }}
@@ -66,7 +81,7 @@
                 {{ time.render(post.date, {'date':true}) }}
             </span>
         </div>
-        {{ share.render({
+        {{ social_media.render({
             'title': post.title,
             'hide_heading': true,
             'twitter_options': {
@@ -88,7 +103,7 @@
 {% if post.tags|length %}
     <footer>
         {%- import 'tags.html' as tags %}
-        {{ tags.render(post.tags, path) }}
+        {{ tags.render(post.tags, path, is_sheer=True) }}
     </footer>
 {% endif %}
 </article>

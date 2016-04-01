@@ -415,7 +415,7 @@
 
             &-item {
                 display: inline-block;
-                margin-right: @grid_gutter-width / 2;
+                margin-right: @grid_gutter-width;
 
                 .no-js &:hover {
                     .o-mega-menu_content-2 {
@@ -426,7 +426,7 @@
 
             &-link {
                 padding-bottom: @grid_gutter-width;
-                margin-left: @grid_gutter-width / 2;
+                margin-left: @grid_gutter-width;
 
                 font-size: unit( 18px / @base-font-size-px, em );
 
@@ -508,6 +508,16 @@
                 margin-bottom: unit( @grid_gutter-width / 2 / 18px, em );
 
                 font-size: 1em;
+
+                // ------------------------------------------------------------
+                // TODO: Remove when Consumer Tools and Education Resources
+                //       have overview pages post-launch.
+                //       This is temporary code to hide the overview links
+                //       at desktop sizes.
+                .u-link__disabled {
+                    visibility: hidden;
+                }
+                // ------------------------------------------------------------
             }
 
             &-lists {
@@ -552,6 +562,12 @@
 
     // Large desktop size.
     .respond-to-min( @bp-lg-min, {
+
+        &_content-1 {
+            &-item {
+                margin-right: @grid_gutter-width * 1.5;
+            }
+        }
         // 2nd-level menu - Large desktop.
          &_content-2 {
             &-grid {
@@ -563,25 +579,13 @@
         }
     } );
 
-    // TODO: Update to Featured Menu Content molecule.
-    .sub-nav_media {
-        .grid_column( 4 );
-
-        padding: 0 @grid_gutter-width / 2;
-
-        position: relative;
-    }
-
-    .respond-to-max( @bp-med-max, {
-        .sub-nav_media {
-            display: none !important;
-        }
-    } );
-
+    // Xtra-Large desktop size.
     .respond-to-min( @bp-xl-min, {
-        .sub-nav_media {
-            padding-right: @grid_gutter-width;
-            padding-left: @grid_gutter-width;
+
+        &_content-1 {
+            &-item {
+                margin-right: @grid_gutter-width * 2;
+            }
         }
     } );
 }

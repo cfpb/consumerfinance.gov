@@ -9,7 +9,7 @@
 var FilterableListControls = require( '../organisms/FilterableListControls' );
 var Expandable = require( '../molecules/Expandable' );
 
-var filterableListDom = document.querySelector( '.o-filterable-list-controls' );
+var filterableListDom = document.querySelectorAll( '.o-filterable-list-controls' );
 var filterableListControls;
 if ( filterableListDom ) {
   for ( var i = 0, len = filterableListDom.length; i < len; i++ ) {
@@ -18,7 +18,7 @@ if ( filterableListDom ) {
   }
 }
 
-var expandableDom = document.querySelectorAll( '.m-expandable' );
+var expandableDom = document.querySelectorAll( '.content_main .m-expandable' );
 var expandable;
 if ( expandableDom ) {
   for ( var i = 0, len = expandableDom.length; i < len; i++ ) {
@@ -26,4 +26,3 @@ if ( expandableDom ) {
     expandable.init();
   }
 }
-

@@ -2,6 +2,7 @@ import sys
 import json
 import os.path
 import requests
+from sheerlike.external_links import process_external_links
 
 
 def posts_at_url(url):
@@ -50,6 +51,8 @@ def process_post(post):
         post['links'] = links
 
     del post['custom_fields']
+
+    post = process_external_links(post)
 
     return {'_type': 'featured_topic',
             '_id': post['slug'],

@@ -186,6 +186,9 @@ if NEMO_PATH.exists():
 
 ALLOWED_HOSTS = ['*']
 
+EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
+EXTERNAL_ICON_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
+
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = 'v1'
@@ -403,7 +406,7 @@ LOGIN_REDIRECT_URL='/admin/'
 
 
 SHEER_SITES = {
-        'refresh-legacy': V1_TEMPLATE_ROOT,
+        'assets': V1_TEMPLATE_ROOT,
         'owning-a-home':
             Path(os.environ.get('OAH_SHEER_PATH') or
             Path(REPOSITORY_ROOT, '../owning-a-home/dist')),

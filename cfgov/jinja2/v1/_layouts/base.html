@@ -17,10 +17,8 @@
 
     ============================================================================
 -->
-
-<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie10 lt-ie9"> <![endif]-->
+<!--[if IE 9]>         <html lang="en" class="no-js lt-ie10"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
@@ -43,7 +41,15 @@
     ==================
 -->
 
-    <title>{% block title %}MISSING TITLE{% endblock title %}</title>
+    <title>
+        {% block title -%}
+            {% if page -%}
+                {{ page.seo_title or page.title }} | Consumer Financial Protection Bureau
+            {%- else -%}
+                Consumer Financial Protection Bureau
+            {%- endif %}
+        {%- endblock title %}
+    </title>
     <meta name="description"
           content="{% block desc %}Prototyping for the consumerfinance.gov refresh{% endblock %}">
 
@@ -136,41 +142,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <a href="#main" id="skip-nav">Skip to main content</a>
 
-{% if flag_enabled('BETA_NOTICE') %}
-<div class="beta-banner
-            m-expandable
-            m-expandable__expanded"
-     id="beta-banner">
-    <div class="wrapper wrapper__match-content">
-        <div class="beta-banner_head">
-            <span class="cf-icon
-                         cf-icon-error-round
-                         beta-banner_icon"></span>
-            This beta site is a work in progress.
-        </div>
-        <div class="m-expandable_content">
-            <p class="beta-banner_desc  m-expandable_content-animated">
-                We’re prototyping new designs. Things may not work as expected.
-                Our regular site continues to be at
-                <a href="http://www.consumerfinance.gov/">www.consumerfinance.gov</a>.
-            </p>
-        </div>
-        <button class="btn
-                       beta-banner_btn
-                       m-expandable_target
-                       m-expandable_link"
-                id="beta-banner_btn">
-            <span class="m-expandable_cue m-expandable_cue-close">
-                Collapse <span class="cf-icon cf-icon-up"></span>
-            </span>
-            <span class="m-expandable_cue m-expandable_cue-open">
-                More info <span class="cf-icon cf-icon-down"></span>
-            </span>
-        </button>
-    </div>
-</div>
-{% endif %}
-
 {% block header %}
     {% include 'organisms/header.html' %}
 {% endblock header %}
@@ -221,8 +192,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {# TODO: Remove Else conditional when this is fully moved to wagtail. #}
     {# Check and include page-level JavaScript. #}
     {% if page and page.media %}
-        {% for js in page.media %}
-            {% include '/js/routes/on-demand/' + js ignore missing %}
+        {% for type, jsfiles in page.media.iteritems() %}
+            {% for js in jsfiles %}
+                {% include '/js/routes/on-demand/' + js ignore missing %}
+            {% endfor %}
         {% endfor %}
     {% else %}
         {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
