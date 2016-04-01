@@ -20,6 +20,7 @@
             </div>
             {% import 'molecules/social-media.html' as social_media with context %}
             {{ social_media.render({
+                'title': page.title,
                 'twitter_options': {
                     'text':     page.twtr_text,
                     'related':  page.twtr_rel,
