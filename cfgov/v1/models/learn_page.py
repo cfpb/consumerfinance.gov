@@ -2,6 +2,7 @@ from datetime import datetime
 from localflavor.us.models import USStateField
 
 from django.db import models
+from django.core.validators import RegexValidator
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
@@ -150,7 +151,10 @@ class EventPage(AbstractFilterPage):
         related_name='+'
     )
     flickr_url = models.URLField("Flickr URL", blank=True)
-    youtube_url = models.URLField("Youtube URL", blank=True)
+    youtube_url = models.URLField("Youtube URL", blank=True,
+    help_text="Format: https://www.youtube.com/embed/video_id. It can be obtained by clicking on Share > Embed on Youtube.",
+    validators=[ RegexValidator(regex='^https?:\/\/www\.youtube\.com\/embed\/.*$')])
+
     live_stream_availability = models.BooleanField("Streaming?", default=False,
                                                    blank=True)
     live_stream_url = models.URLField("URL", blank=True)
