@@ -80,7 +80,7 @@ def get_form_id(page, get_request):
     if form_ids:
         return form_ids[0]
     else:
-        return None
+        return 0
 
 
 def instanceOfBrowseOrFilterablePages(page):

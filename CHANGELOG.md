@@ -25,6 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added specific Blog/Newsroom Categories to Related Post options
 - base.html now checks for page (seo) title if exists
 - Added a space before the external icon
+- Added validation for Youtube URLs.
 
 ### Changed
 

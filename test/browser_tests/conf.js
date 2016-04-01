@@ -174,6 +174,8 @@ var config = {
     );
 
     // Set default windowSize parameter equal to the value in settings.js.
+    browser.params.windowWidth = windowWidthPx;
+    browser.params.windowHeight = windowHeightPx;
     browser.params.windowSize = String( windowWidthPx ) +
                                 ',' + String( windowHeightPx );
 

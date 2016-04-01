@@ -298,8 +298,7 @@ class CFGOVPage(Page):
             for child in block.child_blocks.values():
                 self._add_block_js(child, js)
         elif issubclass(type(block), blocks.ListBlock):
-            for child in block.child_block.child_blocks.values():
-                self._add_block_js(child, js)
+            self._add_block_js(block.child_block, js)
 
     # Assign the Media js to the dictionary appropriately
     def _assign_js(self, obj, js):
