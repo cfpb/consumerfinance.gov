@@ -1,6 +1,7 @@
 'use strict';
 
-var _oFilterableListControls = element( by.css( '.o-filterable-list-controls' ) );
+var _oFilterableListControls =
+  element( by.css( '.o-filterable-list-controls' ) );
 
 function _getFilterableElement( selector ) {
   return _oFilterableListControls.element( by.css( selector ) );

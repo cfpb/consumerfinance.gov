@@ -1,9 +1,10 @@
 /* ==========================================================================
-   Scripts for Secondary Navigation Organism
+   Scripts for Secondary Navigation organism
    ========================================================================== */
 
 'use strict';
 
-// List of organisms used.
 var SecondaryNavigation = require( '../../organisms/SecondaryNavigation' );
-var secondaryNavigation = new SecondaryNavigation( document.querySelector( '.content_sidebar .o-secondary-navigation' ) ).init();
+
+var dom = document.querySelector( '.content_sidebar .o-secondary-navigation' );
+var secondaryNavigation = new SecondaryNavigation( dom ).init();

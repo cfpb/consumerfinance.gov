@@ -1,9 +1,10 @@
 /* ==========================================================================
-   Scripts for Filterable List Controls
+   Scripts for Filterable List Controls organism
    ========================================================================== */
 
 'use strict';
 
-// List of organisms used.
+var atomicHelpers = require( '../../modules/util/atomic-helpers' );
 var FilterableListControls = require( '../../organisms/FilterableListControls' );
-var filterableListControls = new FilterableListControls( document.body ).init();
+
+atomicHelpers.instantiateAll( '.o-filterable-list-controls', FilterableListControls );

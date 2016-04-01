@@ -40,7 +40,8 @@
                 {{ category_slug.render(icon,
                         path,
                         'post_slug meta-header_left',
-                        use_blog_category) }}
+                        use_blog_category,
+                        sheerpage=True) }}
             {% endfor %}
         {% elif post.category.0 %}
             {% for icon in post.category %}
@@ -49,7 +50,8 @@
                 {% endif %}
                 {{ category_slug.render(icon,
                         path,
-                        'post_slug meta-header_left') }}
+                        'post_slug meta-header_left',
+                        sheerpage=True) }}
             {% endfor %}
         {% endif %}
         <h1 class="post_heading">
