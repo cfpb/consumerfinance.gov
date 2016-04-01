@@ -52,12 +52,12 @@ if ($#ARGV >= 0) {
 	elsif ($ARGV[0] eq 'init') {
 		print("\nInitializing npm and node js...\n");
 		`vagrant ssh -c "cd /vagrant/bin/; cfgovd init" 2>/dev/null`;
-		print("\nInitializing local node js modules (may take a few minutes)...\n");
-		`vagrant ssh -c "cd /vagrant; scl enable devtoolset-2 bash; ./frontend.sh init" &`;
+		print("\nInitializing local node js modules (takes ~20-25 min.)...\n");
+		exec("vagrant ssh -c \"cd /vagrant; source /opt/rh/devtoolset-2/enable; sh frontend.sh init\"");
 	}
 	elsif ($ARGV[0] eq 'assets') {
-		print("\nRebuilding frontend assets (may take a few minutes)...\n");
-		`vagrant ssh -c "cd /vagrant; scl enable devtoolset-2 bash; ./frontend.sh build" &`;
+		print("\nRebuilding frontend assets (takes ~5-10 min)...\n");
+		`vagrant ssh -c "cd /vagrant; source /opt/rh/devtoolset-2/enable; sh frontend.sh build" &`;
 	}
 	elsif ($ARGV[0] eq 'log') {
 		my $logData = `vagrant ssh -c "cat /home/vagrant/.cfgovOutput" 2>/dev/null`;
