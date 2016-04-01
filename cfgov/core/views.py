@@ -2,14 +2,33 @@ import os
 
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.http import JsonResponse
 from govdelivery.api import GovDelivery
+
+from wagtail.wagtailadmin.views import pages
+from wagtail.wagtailcore.views import serve as wagtail_serve
 
 from core.utils import extract_answers_from_request
 
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 REQUIRED_PARAMS = ['email', 'code']
+
+
+def preview_if_content_server(request, path):
+    if not request.site:
+        raise Http404
+
+    if request.site.hostname == os.environ['STAGING_HOSTNAME']:
+
+        path_components = [component for component in path.split('/') if component]
+        live_page, args, kwargs = request.site.root_page.specific.route(request, path_components)
+        preview_page = live_page.get_latest_revision_as_page()
+        return preview_page.serve_preview(request, preview_page.default_preview_mode)
+
+    else:
+        return wagtail_serve(request, path)
 
 
 @csrf_exempt

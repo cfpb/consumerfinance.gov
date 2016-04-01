@@ -9,18 +9,17 @@ from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 from sheerlike.sites import SheerSite
 
+from core.views import preview_if_content_server
+
 from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
     change_password, password_reset_confirm, cfpb_login, create_user, edit_user
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
-from django.views.generic import RedirectView
 
 from transition_utilities.conditional_urls import include_if_app_enabled
 
-from wagtail.wagtailadmin.forms import PasswordResetForm
-from wagtail.wagtailadmin.views import account
 
 fin_ed = SheerSite('fin-ed-resources')
 
@@ -251,7 +250,10 @@ if settings.DEBUG :
 
 # Catch remaining URL patterns that did not match a route thus far.
 
-urlpatterns.append(url(r'', include(wagtail_urls)))
+if 'STAGING_HOSTNAME' in os.environ:
+    urlpatterns.append(url(r'^((?:[\w\-]+/)*)$', preview_if_content_server, name='wagtail_serve'))
+else:
+    urlpatterns.append(url(r'', include(wagtail_urls)))
 
 from sheerlike import register_permalink
 
