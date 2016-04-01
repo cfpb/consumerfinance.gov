@@ -45,15 +45,18 @@
 
 {% macro render(post, controls, form_id=0, url='') %}
     {% set type = controls.page_type or '' %}
+    {% set date_desc = controls.post_date_description or 'Published' %}
+    {% set cat_controls = controls.categories %}
+    {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
     {% set page_url = url or get_protected_url(page) %}
     {% set post_url = get_protected_url(post) %}
     <article class="o-post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">
-                {{ controls.post_date_description if controls.post_date_description else 'Published'}} {{ time.render(post.date_published, {'date':true}) }}
+                {{ date_desc }} {{ time.render(post.date_published, {'date':true}) }}
             </span>
             {# Newsroom Blog category logic #}
-            {% if controls.show_preview_categories %}
+            {% if show_categories %}
                 {% if 'newsroom' in type %}
                     {% if is_blog(post) %}
                         {{ category_slug.render('blog',
