@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Scripts for `/careers/current-openings/.
+   Scripts for `/about-us/careers/current-openings/.
    ========================================================================== */
 
 'use strict';
