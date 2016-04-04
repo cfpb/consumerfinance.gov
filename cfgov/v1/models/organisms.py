@@ -82,6 +82,8 @@ class RelatedPosts(blocks.StructBlock):
                                        label='Show Heading and Icon?',
                                        help_text='This toggles the heading and'
                                                  + ' icon for the related types.')
+    header_title = blocks.CharBlock(default='Further reading', label='Slug Title')
+
     relate_posts = blocks.BooleanBlock(required=False, default=True,
                                        label='Blog Posts', editable=False)
     relate_newsroom = blocks.BooleanBlock(required=False, default=True,
