@@ -127,12 +127,12 @@ class CFGOVPage(Page):
     ])
 
     def generate_view_more_url(self):
+        url = '/activity-log/?'
         tags = []
         for tag in self.tags.names():
-            tags.append(urllib.quote_plus(tag))
+            tags.append('filter_tags=' + urllib.quote_plus(tag))
         tags = '&'.join(tags)
-        return "/activity-log?filter_tags=%s" % (tags)
-
+        return url + tags
 
     def related_posts(self, block, hostname):
         related = {}
