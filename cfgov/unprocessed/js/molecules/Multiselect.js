@@ -252,6 +252,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       if ( selectionIndex > -1 ) {
         _selections.splice( selectionIndex, 1 );
 
+        if ( _list.classList.contains( 'max-selections' ) ) {
+          _list.classList.remove( 'max-selections' );
+        }
+
         li = _choices.querySelector( 'li[data-option="' + option.value + '"]' );
 
         if ( li ) {
@@ -270,6 +274,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
         _choices.appendChild( li );
         _selections.push( option );
+
+        if ( _selections.length > 4 ) {
+          _list.classList.add( 'max-selections' );
+        }
       }
     }
 

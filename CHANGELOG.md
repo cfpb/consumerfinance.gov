@@ -17,6 +17,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Adds a max-selections checker to the Multiselect.
+
 ### Changed
 
 ### Removed
