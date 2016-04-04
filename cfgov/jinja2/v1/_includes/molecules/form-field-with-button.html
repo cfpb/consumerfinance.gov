@@ -23,13 +23,14 @@
    ========================================================================== #}
 
 <div class="m-form-field-with-button">
+    {% set form_id = ('form_' ~ range(1, 100) | random) %}
     <div class="form-group">
-        <label for="{{ value.id }}">
+        <label for="{{ form_id }}">
             <b>{{ value.label }}</b>
             {{ '(required)' if value.required else '' }}
         </label>
 
-        <input id="{{ ('form_' ~ range(1, 100) | random) }}"
+        <input id="{{ form_id }}"
                type="{{ value.type }}"
                placeholder="{{ value.placeholder }}"
                name="{{ field or '' }}"
