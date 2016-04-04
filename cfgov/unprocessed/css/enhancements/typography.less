@@ -1,0 +1,430 @@
+
+/* topdoc
+  name: Download links list
+  family: cfgov-cf-enhancements
+  patterns:
+    codenotes:
+        - ".list__download();"
+    notes:
+        - "Styles a list of links with associated download icons."
+  tags:
+    - cf-typography
+*/
+.list__download() {
+    ul {
+        .list__links();
+        .list__icons();
+
+        li {
+            .list__links .list_item();
+            .list__icons .list_item();
+        }
+
+        a {
+            .list_link();
+            .jump-link();
+
+            // Override jump-link optical offset value.
+            left: 0;
+
+            span {
+                .list__icons .list_text();
+            }
+
+            &:after {
+                .cf-icon();
+                // Offset to address lack of space between text and icon
+                width: 1em;
+                content: @cf-icon-download;
+                color: @pacific;
+                text-align: right;
+            }
+        }
+
+        // Remove the bottom border on all but the last
+        // link when at mobile sizes, so that the top and bottom
+        // dotted borders don't double-up to 2px width.
+        // Does not work in IE8.
+        :not(:last-child) {
+            a {
+                .respond-to-max(@bp-xs-max, {
+                    border-bottom: none;
+                });
+            }
+        }
+
+    }
+}
+
+/* topdoc
+  name: Steps list modifier
+  family: cfgov-cf-enhancements
+  notes:
+    - "Set up a list with 'Step x:' instead of bullets "
+  patterns:
+    - name: Default example
+      markup: |
+        <ol class="list list__steps short-desc">
+            <li class="list-item">Fill out the form</li>
+            <li class="list-item">Generate a PDF</li>
+            <li class="list-item">Email, fax or mail the PDF</li>
+        </ol>
+  tags:
+    - cf-typography
+*/
+
+.list__steps {
+    padding-left: 0;
+    counter-reset: item;
+    list-style: none;
+
+    .list-item {
+        position: relative;
+
+        &::before {
+            content: "Step " counter(item) ": ";
+            counter-increment: item;
+        }
+    }
+}
+
+/* topdoc
+  name: Jump link
+  family: cf-typography
+  patterns:
+    - name: .jump-link
+      markup: |
+        <a class="jump-link" href="#">
+            <span class="jump-link_text">Default jump link</span>
+        </a>
+      codenotes:
+        - .jump-link
+    - name: .jump-link__large (modifier)
+      markup: |
+        <a class="jump-link jump-link__large" href="#">
+            <span class="jump-link_text">Large jump link</span>
+        </a>
+      codenotes:
+        - .jump-link__large
+      notes:
+        - "18px font-size, compared to the default of 16px"
+    - name: .jump-link__<icon> (modifier)
+      markup: |
+        <a class="jump-link jump-link__right" href="#">
+            <span class="jump-link_text">Jump link using the right icon from cf-icons</span>
+        </a>
+      codenotes:
+        - .jump-link__<icon>
+      notes:
+        - ".jump-link extends .icon-link, so all that is needed to add an icon
+           to a jump link is to add a modifier with the icon's name."
+    - name: .jump-link__before (modifier)
+      markup: |
+        <a class="jump-link jump-link__left jump-link__before" href="#">
+            <span class="jump-link_text">Jump link with icon on left</span>
+        </a>
+      codenotes:
+        - .jump-link__<icon>.jump-link__before
+      notes:
+        - "Jump links can also have icons before the text, like icon links."
+    - name: .jump-link__bg (modifier)
+      markup: |
+        <a class="jump-link jump-link__bg" href="#">
+            <span class="jump-link_text">Jump link with grey background and
+                solid borders on small screens</span>
+        </a>
+      codenotes:
+        - .jump-link__bg
+  tags:
+    - cf-typography
+*/
+
+.jump-link {
+    .webfont-medium();
+    .icon-link();
+    font-size: unit(16px / @base-font-size-px, em);
+
+    &__large {
+        font-size: unit(18px / @base-font-size-px, em);
+    }
+
+    &__underline {
+        border-bottom-width: 1px;
+    }
+
+    .respond-to-max(@bp-xs-max, {
+        .block-link();
+
+        &:after {
+            margin-bottom: -0.625em;
+            position: absolute;
+            right: 0;
+            bottom: 50%;
+            text-align: right;
+        }
+
+        &__before {
+            padding-left: 1.25em;
+
+            &:before {
+                position: absolute;
+                margin-bottom: -0.625em;
+                bottom: 50%;
+                left: 0;
+            }
+        }
+
+        &_text {
+            border-bottom-width: 0;
+        }
+
+        &__bg {
+            background: @jump-link__bg;
+            border: solid @jump-link__bg-border;
+            border-width: 1px 0;
+            padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 1em;
+            &:after {
+                right: 1em;
+            }
+            &:before {
+                left: unit(10px / @base-font-size-px, em);
+            }
+        }
+    });
+}
+
+
+
+/* topdoc
+  name: Link list modifier
+  family: cf-typography
+  notes:
+    - "The link list modifier is intended to be used for lists where each item
+      is a link. It converts to a finger-friendly link with a large tap area
+      on smaller screens."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__links">
+            <li class="list_item">
+                <a class="list_link" href="#">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 3</a>
+            </li>
+        </ul>
+    - name: Link list with icons
+      markup: |
+        <ul class="list list__links list__icons">
+            <li class="list_item">
+                <a class="list_link icon-link icon-link__before icon-link__email"
+                   href="#">
+                    <span class="icon-link_text">List item 1</span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link icon-link icon-link__before icon-link__phone"
+                   href="#">
+                    <span class="icon-link_text">List item 2</span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link icon-link icon-link__before icon-link__fax"
+                   href="#">
+                    <span class="icon-link_text">List item 3</span>
+                </a>
+            </li>
+        </ul>
+  tags:
+    - cf-typography
+*/
+
+.list__links {
+    .list__unstyled();
+
+    .list_item {
+        margin-bottom: unit(10px / @base-font-size-px, em);
+
+        .respond-to-max(@bp-xs-max, {
+            margin-bottom: -1px;
+        });
+    }
+
+    &.list__spaced .list_item + .list_item {
+        margin-top: 0;
+    }
+
+    .list_link {
+        .respond-to-max(@bp-xs-max, {
+            .block-link();
+
+            &.icon-link:after {
+                position: absolute;
+                margin-bottom: -0.625em;
+                right: 0;
+                bottom: 50%;
+                text-align: right;
+            }
+
+            .icon-link_text {
+                border-bottom-width: 0;
+            }
+        });
+    }
+
+    &.list__icons {
+        .list_link {
+            position: relative;
+            // Adjust for optical alignment of icons.
+            left: -0.125em;
+        }
+
+        .icon-link:before,
+        .icon-link:after {
+            width: 1.125em;
+            text-align: center;
+        }
+    }
+}
+
+
+/* topdoc
+  name: Lists
+  family: cfgov-lists
+  notes:
+    - "Note that modifiers are the most common use cases for this block, hence
+      the reason there are no direct styles associated with .list or .list_item."
+  patterns:
+    - name: Basic structure
+      markup: |
+        <ul class="list">
+            <li class="list_item">
+                <a class="list_link" href="#">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 3</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 4</a>
+            </li>
+        </ul>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .list
+            .list_item
+              .list_link
+    - name: List link
+      markup: |
+        <a class="list_link" href="#">List link</a>,&nbsp;
+        <span class="list_link">List link</span>
+      codenotes:
+        - .list_link
+      notes:
+        - "Notice that you can use any element for .list_link."
+  tags:
+    - cf-typography
+*/
+
+.list_link {
+    .webfont-medium();
+
+    &.list_link__phone {
+        .respond-to-min(@bp-sm-min, {
+            .u-link__colors(@black);
+            .u-link__no-border;
+        });
+    }
+}
+
+/* topdoc
+  name: Base styles for definition lists
+  family: cf-core
+  notes:
+    - "Sets the term and definition in-line to each other but broken into rows"
+  tags:
+    - cf-core
+*/
+dt {
+    .h5();
+    .u-inline-block();
+
+    margin-bottom: 0.5em;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+}
+
+dd {
+    display: inline;
+    margin-left: 0.2em;
+
+    &:after {
+        display: block;
+        content: '';
+    }
+}
+
+
+/* topdoc
+  name: Remove margin from last-children
+  family: cf-core
+  notes:
+    - "Remove margin bottom for items that close out a block to ensure the
+      60px margin on the block is concistent"
+  tags:
+    - cf-core
+*/
+
+ul:last-child,
+.list__links .list_item:last-child {
+    margin-bottom: 0;
+}
+
+/* topdoc
+  name: Adjustments to meta-header
+  family: cf-typography
+  notes:
+    - "Changes to meta-header to be ported to cf-typography to allow better adjustments on mobile"
+    - "Changes to better control spacing when a category isn't set"
+  tags:
+    - cf-typography
+*/
+
+.meta-header {
+    overflow: auto;
+}
+
+.meta-header_right {
+    .respond-to-max(@mobile-max, {
+        margin-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+    });
+}
+
+/* topdoc
+  name: Adjustments to pull quote citation
+  family: cf-typography
+  notes:
+    - "An adjustment to add an emdash to pull quote citation"
+  tags:
+    - cf-typography
+*/
+
+.pull-quote_citation:before {
+    content: "\2014 ";
+}
+
+.micro-copy {
+    font-size: 14px;
+    &p {
+        margin-bottom: unit(10px / @base-font-size-px, em);
+    }
+}

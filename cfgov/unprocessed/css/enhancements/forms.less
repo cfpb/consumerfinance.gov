@@ -1,0 +1,283 @@
+/* topdoc
+  name: Set form elements to base webfont
+  family: cf-core
+  tags:
+    - cf-core
+*/
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select[multiple] {
+    .webfont-regular();
+}
+
+/* topdoc
+  name: Warning
+  family: cf-forms
+  notes:
+    - "Adds Warning state to form fields"
+  tags:
+    - cf-forms
+*/
+
+@input-warning:     @gold;
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+select[multiple],
+textarea {
+    &.warning {
+        border: 1px solid @input-warning;
+        outline: 1px solid @input-warning;
+    }
+}
+
+.warning + .@{cf-forms_input-icon-class} {
+    color: @input-warning;
+}
+
+/* topdoc
+  name: Icon inside input
+  family: cf-forms
+  patterns:
+    - name: Default icons before and after a default input.
+      markup: |
+        <div class="input-contains-label">
+            <label for="search-input"
+                   class="input-contains-label_before
+                          input-contains-label_before__search">
+            </label>
+            <label for="search-input"
+                   class="input-contains-label_after
+                          input-contains-label_after__clear">
+            </label>
+            <input type="text"
+                   value="">
+        </div>
+    - name: Super-sized icons before and after a super input.
+      markup: |
+        <div class="input-contains-label
+                    input__super">
+            <label for="search-input"
+                   class="input-contains-label_before
+                          input-contains-label_before__search">
+            </label>
+            <label for="search-input"
+                   class="input-contains-label_after
+                          input-contains-label_after__clear">
+            </label>
+            <input class="input__super"
+                   type="text"
+                   value="">
+        </div>
+    - name: Default icons before and after a default input, with a button.
+      markup: |
+        <div class="input-with-btn">
+            <div class="input-with-btn_input
+                        input-contains-label">
+                <label for="search-input"
+                       class="input-contains-label_before
+                              input-contains-label_before__search">
+                </label>
+                <label for="search-input"
+                       class="input-contains-label_after
+                              input-contains-label_after__clear">
+                </label>
+                <input type="text"
+                       id="search-input"
+                       value="">
+            </div>
+            <div class="input-with-btn_btn">
+                <button class="btn">Search</button>
+            </div>
+        </div>
+    - name: Super-sized icons before and after a super input, with a button.
+      markup: |
+        <div class="input-with-btn">
+            <div class="input-with-btn_input
+                        input-contains-label
+                        input__super">
+                <label for="search-input"
+                       class="input-contains-label_before
+                              input-contains-label_before__search">
+                </label>
+                <label for="search-input"
+                       class="input-contains-label_after
+                              input-contains-label_after__clear">
+                </label>
+                <input class="input__super"
+                       type="text"
+                       id="search-input"
+                       value="">
+            </div>
+            <div class="input-with-btn_btn">
+                <button class="btn btn__super">Search</button>
+            </div>
+        </div>
+  tags:
+    - cf-forms
+*/
+
+.input-contains-label {
+    position: relative;
+
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="number"] {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    &_before ~ input[type="text"],
+    &_before ~ input[type="search"],
+    &_before ~ input[type="email"],
+    &_before ~ input[type="url"],
+    &_before ~ input[type="tel"],
+    &_before ~ input[type="number"] {
+        padding-left: unit( 25px / @btn-font-size, em );
+
+        &.input__super {
+            padding-left: unit( 35px / @super-btn-font-size, em );
+        }
+    }
+
+    &_after ~ input[type="text"],
+    &_after ~ input[type="search"],
+    &_after ~ input[type="email"],
+    &_after ~ input[type="url"],
+    &_after ~ input[type="tel"],
+    &_after ~ input[type="number"] {
+        padding-right: unit( 30px / @btn-font-size, em );
+
+        &.input__super {
+            padding-right: unit( 35px / @super-btn-font-size, em );
+        }
+    }
+
+    &_before,
+    &_after {
+        position: absolute;
+        top: unit( 7px / @btn-font-size, em );
+        cursor: pointer;
+        font-size: unit( @btn-font-size / @base-font-size-px, em );
+    }
+
+    &_before {
+        left: unit( 12px / @btn-font-size, em );
+    }
+
+    &_after {
+        right: unit( 14px / @btn-font-size, em );
+    }
+
+    &.input__super {
+        .input-contains-label_before,
+        .input-contains-label_after {
+            font-size: unit( @super-btn-font-size / @base-font-size-px, em );
+        }
+
+        .input-contains-label_before {
+            left: unit( 12px / @super-btn-font-size, em );
+        }
+
+        .input-contains-label_after {
+            right: unit( 12px / @super-btn-font-size, em );
+        }
+    }
+
+
+    // Specific adjustments for particular icon/label combinations.
+
+    // Example of icon without label.
+    // Add magnifying glass icon to input field.
+    &_before__search {
+        &:before {
+            .cf-icon();
+            content: @cf-icon-search;
+        }
+    }
+
+    // Example of icon + label.
+    // Add "x Clear" button to input field.
+    &_after__clear {
+        &:before {
+            .cf-icon();
+            content: @cf-icon-delete;
+        }
+
+        .respond-to-min( @bp-sm-min, {
+            &:after {
+                content: 'Clear';
+            }
+
+            & ~ input[type="text"],
+            & ~ input[type="search"],
+            & ~ input[type="email"],
+            & ~ input[type="url"],
+            & ~ input[type="tel"],
+            & ~ input[type="number"] {
+                padding-right: unit( 65px / @btn-font-size, em );
+
+                &.input__super {
+                    padding-right: unit( 80px / @super-btn-font-size, em );
+                }
+            }
+        } );
+    }
+}
+
+/* topdoc
+  name: Sets default styling for multi-selects
+ */
+
+select[multiple] {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px;
+}
+
+.form-label-header {
+    .heading-4();
+    margin-bottom: unit(10px / @font-size, em);
+
+    // TODO: These two properties can be removed when this is ported to CF
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* topdoc
+  name: Match the input to button
+  family: cf-form
+  notes: "Matches the font-size and padding of the input in
+          .input-with-btn to the button"
+  tags:
+    - cf-form
+*/
+
+input {
+    .input-with-btn & {
+        // Match button 8px padding minus border width
+        padding-top: 7px;
+        padding-bottom: 7px;
+
+        // Match button font-size
+        font-size: unit( 14px / @base-font-size-px, em );
+
+        &:focus {
+            box-shadow: 0 0 0 1px @pacific inset;
+            outline: none;
+        }
+    }
+}

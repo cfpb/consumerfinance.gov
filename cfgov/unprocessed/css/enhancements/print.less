@@ -1,0 +1,20 @@
+/* topdoc
+  name: Superheader print styles
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .superheader
+      markup: |
+        <div class="print">
+            <h1 class="superheader">
+                A big green header
+            </h1>
+        </div>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.superheader {
+    .respond-to-print({
+        color: @green;
+    });
+}

@@ -1,0 +1,105 @@
+/* topdoc
+    name: Expandable header modifier
+    family: cfgov-cf-enhancements
+    patterns:
+    - name: expandable_header__jump-link (modifier)
+      markup: |
+        <button class="expandable_header expandable_header__jump-link expandable_target">
+            <span class="expandable_header-left expandable_label">
+                Expandable Header
+            </span>
+            <span class="expandable_header-right expandable_link">
+                <span class="expandable_cue-open">
+                    <span class="cf-icon cf-icon-plus-round"></span>
+                </span>
+                <span class="expandable_cue-close">
+                    <span class="cf-icon cf-icon-minus-round"></span>
+                </span>
+            </span>
+        </button>
+      codenotes:
+        - |
+          .expandable_header__jump-link
+      notes:
+        - "This modifier styles the expandable header as a jump link on mobile
+           screens. Can be used for mobile-only expandables."
+        - "Use the `button` element with `.expandable_header`. to make the whole
+           header clickable."
+    tags:
+    - cfgov-cf-enhancements
+*/
+
+.expandable_header__jump-link {
+
+    .respond-to-max(@bp-xs-max, {
+        display: block;
+        width: 100%;
+        padding: unit(10px / @base-font-size-px, em) 0;
+        border: dotted @pacific;
+        border-width: 1px 0;
+
+        .expandable_label,
+        .expandable_link {
+            color: @pacific;
+        }
+
+        &:hover,
+        &.hover {
+            border-style: solid;
+            border-color: @pacific-60;
+
+            .expandable_label,
+            .expandable_link {
+                color: @pacific-60;
+            }
+        }
+
+        &:focus,
+        &.focus {
+            border-style: solid;
+            outline: thin dotted;
+        }
+
+        &:active,
+        &.active {
+            border-style: solid;
+            border-color: @navy;
+
+            .expandable_label,
+            .expandable_link {
+                color: @navy;
+            }
+        }
+    });
+
+}
+
+.expandable_header-left {
+  width: 78%;
+}
+
+.expandable_header-right {
+  width: 22%;
+  text-align: right;
+}
+
+.expandable__mobile-only .expandable_header {
+  .respond-to-min(@bp-sm-min, {
+    display: none;
+  });
+}
+
+// TODO: After merging into cf-expandables, this variable can be removed.
+@expandable-group-divider: darken(#895983, 15%);
+// TODO: If/when `border-bottom` is removed from `.expandable-group_header`
+// the following override is not necessary.
+.expandable-group_header {
+    border-bottom: none;
+}
+// Adds top border to expandable item so expandables have top-border
+// when header is absent.
+// TODO: `.expandable-group_items` is non-standard,
+// see https://github.com/cfpb/cf-expandables/issues/45
+.expandable-group_items .expandable:first-child {
+    border-top: 1px solid @expandable-group-divider;
+}
