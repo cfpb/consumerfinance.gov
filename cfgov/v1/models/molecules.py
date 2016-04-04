@@ -98,23 +98,6 @@ class FormFieldWithButton(blocks.StructBlock):
     ], required=False)
     placeholder = blocks.CharBlock(required=False)
 
-    def clean(self, data):
-        error_dict = {}
-
-        try:
-            data = super(FormFieldWithButton, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
-
-        if not util.id_validator(data['id']):
-            id_err = ['Id must only contain alphabets, numbers, underscores and hyphens']
-            error_dict.update({'id': id_err})
-
-        if error_dict:
-            raise ValidationError("ImageBasicUrlAlt validation errors", params=error_dict)
-        else:
-            return data
-
     class Meta:
         icon = 'mail'
         template = '_includes/molecules/form-field-with-button.html'
