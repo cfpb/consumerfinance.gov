@@ -3,7 +3,6 @@ import json
 import os.path
 import requests
 from sheerlike.external_links import process_external_links
-from .processors_common import fix_links
 
 
 def posts_at_url(url):
@@ -57,7 +56,6 @@ def process_post(post):
     del post['custom_fields']
 
     post = process_external_links(post)
-    post['content'] = fix_links(post['content'])
 
     return {'_type': 'newsroom',
             '_id': post['slug'],
