@@ -64,7 +64,7 @@ class SublandingPage(CFGOVPage):
 
     def get_browsefilterable_posts(self, request, limit):
         filter_pages = [p.specific for p in self.get_appropriate_descendants(request.site.hostname)
-                        if 'BrowseFilterablePage' in p.specific_class.__name__]
+                        if 'FilterablePage' in p.specific_class.__name__]
         filtered_controls = {}
         for page in filter_pages:
             id = str(util.get_form_id(page, request.GET))
@@ -74,5 +74,5 @@ class SublandingPage(CFGOVPage):
             filtered_controls[id] = filterable_context.get_page_set(
                 page, form_class(parent=page, hostname=request.site.hostname), request.site.hostname)
         posts_tuple_list = [(id, post) for id, posts in filtered_controls.iteritems() for post in posts]
-        posts = sorted(posts_tuple_list, key=lambda p: p[1].date_published)[:limit]
+        posts = sorted(posts_tuple_list, key=lambda p: p[1].date_published, reverse=True)[:limit]
         return posts
