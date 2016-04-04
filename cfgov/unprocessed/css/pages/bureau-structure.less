@@ -308,7 +308,6 @@
     padding: @margin / 2 0;
     border-top: 1px solid @node-border-color;
     border-bottom: 1px solid @node-border-color;
-    margin-top: @margin;
 }
 
 .org-chart_node_more-info {
@@ -330,6 +329,10 @@
 
     &_name {
         .webfont-medium();
+    }
+
+    + .m-expandable_target {
+        margin-top: @margin;
     }
 }
 
