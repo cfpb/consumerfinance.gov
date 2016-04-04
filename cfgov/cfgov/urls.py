@@ -23,6 +23,8 @@ from wagtail.wagtailadmin.forms import PasswordResetForm
 from wagtail.wagtailadmin.views import account
 
 fin_ed = SheerSite('fin-ed-resources')
+know_before_you_owe = SheerSite('know-before-you-owe')
+owning_a_home = SheerSite('owning-a-home')
 
 urlpatterns = [
     url(r'^django-admin/login', cfpb_login, name='wagtailadmin_login'),
@@ -50,7 +52,14 @@ urlpatterns = [
 
     url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
-    url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
+    url(r'^owning-a-home/', include(owning_a_home.urls)),
+
+    # this is unforunate, but these paths are coded in javascript or JSON
+    # and thus don't get picked up in the middleware
+    url(r'know-before-you-owe/static/(?P<path>.*)$',
+        RedirectView.as_view(url='/static/know-before-you-owe/static/%(path)s', permanent=True)),
+
+    url(r'^know-before-you-owe/', include(know_before_you_owe.urls)),
 
     url(r'^adult-financial-education/', include(fin_ed.urls_for_prefix('adult-financial-education'))),
     url(r'^youth-financial-education/', include(fin_ed.urls_for_prefix('youth-financial-education'))),

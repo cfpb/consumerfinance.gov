@@ -412,5 +412,8 @@ SHEER_SITES = {
             Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
         'fin-ed-resources':
             Path(os.environ.get('FIN_ED_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist'))
+            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
+        'know-before-you-owe':
+            Path(os.environ.get('KBYO_SHEER_PATH') or
+            Path(REPOSITORY_ROOT, '../know-before-you-owe/dist'))
 }
