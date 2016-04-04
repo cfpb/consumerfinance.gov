@@ -58,7 +58,7 @@ function scriptsModern() {
  * Bundle IE9-specific script.
  * @returns {PassThrough} A source stream.
  */
-function scriptsIe() {
+function scriptsIE() {
   return gulp.src( paths.unprocessed + '/js/ie/common.ie.js' )
     .pipe( webpackStream( webpackConfig.ieConf ) )
     .on( 'error', handleErrors )
@@ -68,9 +68,26 @@ function scriptsIe() {
     } ) );
 }
 
+/**
+ * Bundle atomic component scripts.
+ * Provides a means to bundle JS for specific atomic components,
+ * which then can be carried over to other projects.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsOnDemand() {
+  return gulp.src( paths.unprocessed + '/js/routes/on-demand/*.js' )
+    .pipe( webpackStream( webpackConfig.onDemandConf ) )
+    .on( 'error', handleErrors )
+    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
-gulp.task( 'scripts:ie', scriptsIe );
+gulp.task( 'scripts:ie', scriptsIE );
+gulp.task( 'scripts:ondemand', scriptsOnDemand );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',

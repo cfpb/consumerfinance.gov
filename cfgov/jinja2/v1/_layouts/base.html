@@ -143,7 +143,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <a href="#main" id="skip-nav">Skip to main content</a>
 
 {% block header %}
-    {% include 'organisms/header.html' %}
+    {% import 'organisms/header.html' as o_header with context %}
+    {{ o_header.render( show_banner=true ) }}
 {% endblock header %}
 
 {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
