@@ -55,9 +55,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the Hero Macro for the new overlay hero styles.
 - Updated article template to render all categories
 - Append bureau title on every template rendered
-- Changing the times we receive for calendar events to match our db. 
+- Changing the times we receive for calendar events to match our db.
 - Updated `external-site/index.html` to use the full params of whatever's being passed in.
 - Changed copy on `/the-bureau/`
+- Updated titles and names in the Bureau Structure page
 
 ### Removed
 
