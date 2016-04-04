@@ -1,0 +1,207 @@
+
+
+/* topdoc
+  name: Block
+  family: cf-layout
+    - name: Padded-left modifier
+      markup: |
+        Main content...
+        <div class="block block__padded-left block__border-left">
+            Content block with left margin, padding, and border.
+        </div>
+      codenotes:
+        - .block.block__padded-left
+    - name: Padded-right modifier
+      markup: |
+        <div class="block block__padded-right block__border-right">
+            Content block with right margin, padding, and border.
+        </div>
+        Content...
+      codenotes:
+        - .block.block__padded-right
+  tags:
+    - cf-layout
+*/
+.respond-to-min(@bp-med-min, {
+    .block {
+        &__padded-left {
+            padding-left: unit(@grid_gutter-width / @base-font-size-px, em);
+            margin-left: unit(@grid_gutter-width / @base-font-size-px, em);
+        }
+
+        &__padded-right {
+            padding-right: unit(@grid_gutter-width / @base-font-size-px, em);
+            margin-right: unit(@grid_gutter-width / @base-font-size-px, em);
+        }
+    }
+});
+
+
+/* topdoc
+  name: Half top padding
+  family: cf-layout
+  patterns:
+    - name: .content__half-top-on-desk
+      markup: |
+        <aside class="content_sidebar content__half-top-on-desk">
+          <!-- sidebar components -->
+        </aside>
+        <div class="content_main content__half-top-on-desk">
+          <!-- main content components -->
+        </div>
+  tags: cf-layout
+*/
+.content__half-top-on-desk {
+    .respond-to-min(@bp-med-min, {
+        padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
+
+        &:after {
+            top: unit( @grid_gutter-width / @base-font-size-px, em) !important;
+        }
+    });
+}
+
+
+/* topdoc
+  name: Flush sides on small devices
+  family: cf-layout
+  patterns:
+    - name: .content__flush-sides-on-small
+      markup: |
+        <aside class="content_sidebar content__flush-sides-on-small">
+          <!-- sidebar components -->
+        </aside>
+        <div class="content_main content__flush-sides-on-small">
+          <!-- main content components -->
+        </div>
+  tags: cf-layout
+*/
+.content__flush-sides-on-small {
+    .respond-to-max(@bp-sm-max, {
+        padding-left: 0;
+        padding-right: 0;
+        border-width: 0;
+    });
+}
+
+
+/* topdoc
+  name: Code styles
+  family: cf-layout
+  notes:
+    - "Removes top margin on 1-column layouts."
+  tags:
+    - cf-layout
+*/
+.content-l_col {
+    &.content-l_col-1 + &.content-l_col-1 {
+        margin-top: 0;
+    }
+}
+
+/* topdoc
+  name: Add 1/4 and 3/4 columns
+  family: cf-layout
+  notes:
+    - "Temporary addition until latest cf-layout is included in the project"
+  tags:
+    - cf-layout
+*/
+
+.content-l_col-1-4 {
+    .respond-to-min(@bp-sm-min, {
+        .grid_column(3);
+    });
+}
+
+.content-l_col-3-4 {
+    .respond-to-min(@bp-sm-min, {
+        margin-top: 0 !important;
+        .grid_column(9);
+    });
+}
+
+/* topdoc
+  name: Add Large breakpoint only columns
+  family: cf-layout
+  notes:
+    - "Columns normally only stack under @bp-sm-min.
+       These keep them stacked till @bp-lg-min"
+  tags:
+    - cf-layout
+*/
+.content-l_col-1-3__on-lg {
+    + .content-l_col-1-3__on-lg {
+        .respond-to-max( @bp-med-max, {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+
+        .respond-to-range( @bp-sm-min, @bp-med-max, {
+            &:before {
+                .a-rule-break();
+                content: '';
+                display: block;
+            }
+        } );
+    }
+
+    .respond-to-range( @bp-sm-min, @bp-med-max, {
+        .grid_column( 1, 1 );
+    } );
+
+    .respond-to-min( @bp-lg-min, {
+        .grid_column(4);
+    } );
+}
+
+.content-l_col-1-2__on-lg {
+    .respond-to-max( @bp-med-max, {
+        + .content-l_col-1-2__on-lg {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
+    } );
+
+    .respond-to-range( @bp-sm-min, @bp-med-max, {
+        .grid_column( 1, 1 );
+    } );
+
+    .respond-to-min( @bp-lg-min, {
+        .grid_column(6);
+    } );
+}
+
+/*
+  name: Adjustments to Featured Content Module
+  notes:
+    - "Adding border to FCM"
+    - "Adjustment to make FCM work with video"
+ */
+
+.featured-content-module {
+    border: 1px solid @block__border;
+}
+
+.featured-content-module_img {
+    .respond-to-min(@fcm-bp-min, {
+        max-height: 320px;
+        width: auto;
+        height: auto;
+    });
+}
+
+.featured-content-module_visual {
+    .respond-to-max(@fcm-bp-max, {
+        margin-bottom: @grid_gutter-width;
+    });
+
+    .video-player_image {
+        max-width: none;
+        height: 320px;
+    }
+
+}
+
+
+.featured-content-module_visual.video-playing {
+    left: 0;
+}

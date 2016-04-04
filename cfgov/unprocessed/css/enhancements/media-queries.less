@@ -1,0 +1,83 @@
+/* topdoc
+  name: respond-to-print() (mixin)
+  notes:
+    - "This mixin allows us to easily write styles that target both
+       `@media print` and `.print`."
+  family: media-queries
+  patterns:
+    - name: Usage
+      codenotes:
+        - |
+          // Example Less
+          .example {
+              color: @gray;
+
+              .respond-to-print({
+                  color: @black;
+              });
+          }
+
+          // Exports to
+          .example {
+              color: #75787B;
+          }
+          @media print {
+              .example {
+                  color: #101820;
+              }
+          }
+          .print .example {
+              color: #101820;
+          }
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.respond-to-print(@rules) {
+    @media print {
+        @rules();
+    }
+    .print & {
+        @rules();
+    }
+}
+
+/* topdoc
+  name: respond-to-dpi(@ratio) (mixin)
+  notes:
+    - "This mixin allows us to easily write styles
+    that target high-resolution screens,
+    such as Apple retina screens"
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Usage
+      codenotes:
+        - |
+          // Example Less
+          .example {
+              background: url(regular-resolution-image.png);
+
+              .respond-to-dpi(2, {
+                  background-image: url(retina-image.png);
+              });
+          }
+
+          // Exports to
+          .example {
+              background: url(regular-resolution-image.png);
+          }
+          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+              .example {
+                  background-image: url(retina-image.png);
+              }
+          }
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.respond-to-dpi(@ratio, @rules) {
+    @dpi: (@ratio * 96dpi);
+    @media (-webkit-min-device-pixel-ratio: @ratio), (min-resolution: @dpi) {
+        @rules();
+    }
+}

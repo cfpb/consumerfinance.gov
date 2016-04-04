@@ -22,16 +22,4 @@ describe( 'The Bureau Page', function() {
     }
   );
 
-  it( 'should include the Director’s Bio',
-    function() {
-      expect( page.directorsBio.isPresent() ).toBe( true );
-    }
-  );
-
-  it( 'should include the Deputy Director’s Bio',
-    function() {
-      expect( page.deputyDirectorsBio.isPresent() ).toBe( true );
-    }
-  );
-
 } );

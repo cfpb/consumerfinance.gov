@@ -12,23 +12,19 @@
             {{ page.future_body | striptags }}
         {% endif %}
         </p>
-        <div>
-            <div class="modification-date date u-right">
+        <div class="t-event_details">
+            <div class="modification-date date">
                 <span>Updated</span>
                 {% import 'macros/time.html' as time %}
                 {{ time.render(page.latest_revision_created_at, {'date':true}) }}
             </div>
-            {% import 'macros/share.html' as share with context %}
-            {{ share.render({
-                'title': page.title,
-                'hide_heading': true,
-                'twitter_options': {
-                    'text':     page.twtr_text,
-                    'related':  page.twtr_rel,
-                    'language': page.twtr_lang,
-                    'hashtags': page.twtr_hash
-                }
-            }) }}
+            {% import 'molecules/social-media.html' as social_media with context %}
+            {{ social_media.render( {
+                'title':            page.twtr_text,
+                'twitter_related':  page.twtr_rel,
+                'twitter_lang':     page.twtr_lang,
+                'twitter_hashtags': page.twtr_hash
+            } ) }}
         </div>
         {% from 'events/_macros.html' import event_venue as event_venue %}
         {{ event_venue( page, event_state ) }}
@@ -96,7 +92,7 @@
     {% if page.tags.names() | length %}
     <footer>
         {%- import 'tags.html' as tags %}
-        {{ tags.render(page.tags.names(), path) }}
+        {{ tags.render( page.tags.names(), path ) }}
     </footer>
     {% endif %}
 </article>

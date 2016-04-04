@@ -1,0 +1,213 @@
+/* topdoc
+  name: Width utilities
+  family: cf-utilities
+  patterns:
+    - name: Percent-based
+      markup: |
+        <div class="u-w95pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w95pct</code>
+        </div>
+        <div class="u-w85pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w85pct</code>
+        </div>
+        <div class="u-w65pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w65pct</code>
+        </div>
+        <div class="u-w55pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w55pct</code>
+        </div>
+        <div class="u-w45pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w45pct</code>
+        </div>
+        <div class="u-w35pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w35pct</code>
+        </div>
+        <div class="u-w15pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w15pct</code>
+        </div>
+        <div class="u-w5pct" style="background: #DBEDD4; margin-bottom: 1px;">
+            <code>.u-w5pct</code>
+        </div>
+      notes:
+        - "Inline styles are for demonstration purposes only, please don't use
+           them."
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.u-w95pct  { width: 95%; }
+.u-w85pct  { width: 85%; }
+.u-w65pct  { width: 65%; }
+.u-w55pct  { width: 55%; }
+.u-w45pct  { width: 45%; }
+.u-w35pct  { width: 35%; }
+.u-w15pct  { width: 15%; }
+.u-w5pct   { width:  5%; }
+
+
+/* topdoc
+  name: Centered on mobile utility
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .u-centered-on-mobile
+      markup: |
+        <div>
+            <div class="u-centered-on-mobile" style="width:100px;height:100px;background-color:green;">
+                Block centered on mobile
+            </div>
+            <p class="u-centered-on-mobile">Paragraph centered on mobile</p>
+        </div>
+      notes:
+        - "Sometimes content (parts/all of a media block, for example)
+           should be centered on mobile, but not on larger screen sizes."
+        - "This implementation conflates inline & block element centering,
+           though they could be made into separate classes."
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.respond-to-max(@bp-xs-max, {
+    .u-centered-on-mobile {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+});
+
+/* topdoc
+  name: Reset all
+  family: cf-core
+  patterns:
+    - name: .u-reset
+      markup: |
+        <fieldset class="u-reset">
+        </fieldset>
+      notes:
+        - "A class to remove any default spacing or borders on an element."
+  tags:
+    - cf-utilities
+*/
+
+.u-reset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* topdoc
+  name: Hide only when JS is active
+  family: cf-core
+  patterns:
+    - name: .js-is-hidden
+      markup: |
+        <fieldset class="js-reveal-with-js-class u-hide-js-only">
+        </fieldset>
+      notes:
+        - "A class to hide only when JS is active."
+  tags:
+    - cf-utilities
+*/
+
+.js-is-hidden {
+    display: none !important;
+    .no-js & {
+        display: block;
+    }
+}
+
+
+/* topdoc
+  name: Hidden
+  family: cf-core
+  patterns:
+    - name: Utility class
+      markup: |
+        <span class="u-hidden">Not shown</span>
+      codenotes:
+        - .u-hidden;
+      notes:
+        - "Use this class to hide something from everything.
+           Useful if you want to show it using JS after
+           checking for browser-support."
+  tags:
+    - cf-core
+*/
+
+.u-hidden {
+    display: none;
+}
+
+
+/* topdoc
+  name: Hidden Overflow
+  family: cf-core
+  patterns:
+    - name: Utility class
+      markup: |
+        <div class="u-hidden-overflow"></div>
+      codenotes:
+        - .u-hidden-overflow;
+      notes:
+        - "Use this class to hide content outside the bounds of an element.
+           Used for cropping views in multi-level menus."
+  tags:
+    - cf-core
+*/
+
+.u-hidden-overflow {
+    overflow: hidden;
+}
+
+
+/* topdoc
+  name: Invisible
+  family: cf-core
+  patterns:
+    - name: Utility class
+      markup: |
+        <span class="u-invisible">Not shown</span>
+      codenotes:
+        - .u-invisible;
+      notes:
+        - "Use this class to make something invisible.
+           Useful for hiding off-screen elements that
+           are part of an animation, but you don't want
+           as part of the tabindex."
+  tags:
+    - cf-core
+*/
+
+.u-invisible {
+    visibility: hidden;
+}
+
+
+/* topdoc
+  name: Disabled link
+  family: cf-core
+  patterns:
+    - name: Utility class
+      markup: |
+        <a class="u-link__disabled">
+          This link is disabled.
+        </div>
+      codenotes:
+        - .u-link__disabled;
+      notes:
+        - "Use this as a general class to give links
+           or button links disabled styling.
+           Sets the color, background-color,
+           removes the border, and sets the cursor to not-allowed."
+  tags:
+    - cf-core
+*/
+.u-link__disabled {
+    border: none !important;
+    color: @gray-40 !important;
+    cursor: not-allowed !important;
+
+    &.btn {
+        background-color: @gray-20 !important;
+    }
+}
+
