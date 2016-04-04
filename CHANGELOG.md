@@ -19,6 +19,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- Defaulted Related posts slug title to 'Further Reading' and made it a field in wagtail.
+
 ### Removed
 
 ### Fixed
