@@ -81,15 +81,12 @@
                 {{ time.render(post.date, {'date':true}) }}
             </span>
         </div>
-        {{ social_media.render({
-            'title': post.title,
-            'twitter_options': {
-                'text':     post.twtr_text,
-                'related':  post.twtr_rel,
-                'language': post.twtr_lang,
-                'hashtags': post.twtr_hash
-            }
-        }) }}
+        {{ social_media.render( {
+            'title':            post.title,
+            'twitter_related':  post.twtr_rel,
+            'twitter_lang':     post.twtr_lang,
+            'twitter_hashtags': post.twtr_hash
+        } ) }}
     {% if post.thumbnail.images %}
         <img class="post_featured-img"
              src="{{ post.thumbnail.images.full.url }}"
@@ -97,12 +94,12 @@
     {% endif %}
     </header>
     <div class="post_body">
-        {{ post.content|safe }}
+        {{ post.content | safe }}
     </div>
-{% if post.tags|length %}
+{% if post.tags | length %}
     <footer>
         {%- import 'tags.html' as tags %}
-        {{ tags.render(post.tags, path, is_sheer=True) }}
+        {{ tags.render( post.tags, path, is_sheer=True ) }}
     </footer>
 {% endif %}
 </article>
