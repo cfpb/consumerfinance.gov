@@ -807,6 +807,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Add reverse flag back into post preview snapshot for most recent pages
+
 ### Changed
 
 ### Removed
