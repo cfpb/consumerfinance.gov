@@ -13,7 +13,6 @@ require( 'cf-expandables' );
 require( '../modules/footer-button' ).init();
 require( '../modules/focus-target' ).init();
 require( '../modules/form-validation' ).init();
-require( '../modules/scroll-on-history-collapse' ).init();
 require( '../modules/clear-form-buttons' ).init();
 require( '../modules/UStreamPlayer' ).init( '.video-player__ustream' );
 require( '../modules/YoutubePlayer' ).init( '.video-player__youtube' );
