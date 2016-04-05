@@ -32,7 +32,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
-- 
+- Fixed paths to templates that were moved in to /about-us
 
 ## 3.0.0-3.2.1 - 2016-03-21
 
