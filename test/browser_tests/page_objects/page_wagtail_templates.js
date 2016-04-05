@@ -71,7 +71,7 @@ function EventArchivePage() {
 function DocumentDetailPage() {
 
   this.get = function() {
-    var baseUrl = '/browse-filterable-page/document-detail';
+    var baseUrl = '/browse-filterable-page/document-detail-page/';
     browser.get( baseUrl );
   };
 
@@ -82,7 +82,7 @@ function DocumentDetailPage() {
 function LearnPage() {
 
   this.get = function() {
-    var baseUrl = '/browse-filterable-page/learn';
+    var baseUrl = '/browse-filterable-page/learn-page';
     browser.get( baseUrl );
   };
 
@@ -93,7 +93,7 @@ function LearnPage() {
 function EventPage() {
 
   this.get = function() {
-    var baseUrl = '/browse-filterable-page/event';
+    var baseUrl = '/browse-filterable-page/event-page';
     browser.get( baseUrl );
   };
 
@@ -110,3 +110,15 @@ module.exports.event_archive = EventArchivePage;
 module.exports.docdetail = DocumentDetailPage;
 module.exports.learn = LearnPage;
 module.exports.event = EventPage;
+
+module.exports = {
+  landing:    LandingPage,
+  sublanding: SubLandingPage,
+  browse: BrowsePage,
+  browse_filterable: BrowseFilterablePage,
+  sublanding_filterable: SublandingFilterablePage,
+  event_archive: EventArchivePage,
+  docdetail: DocumentDetailPage,
+  learn: LearnPage,
+  event: EventPage
+}

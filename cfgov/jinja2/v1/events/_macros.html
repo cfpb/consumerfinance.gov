@@ -154,7 +154,9 @@
                     Video Replay will be<br> available shortly
                 {% else %}
                     {% import 'macros/time.html' as time %}
-                    {{ time.render(event.start_dt) }}
+                    {% if event.start_dt%}
+                        {{ time.render(event.start_dt) }}
+                    {% endif %}
                 {% endif %}
                 </div>
           </div>

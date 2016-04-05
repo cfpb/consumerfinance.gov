@@ -1,16 +1,16 @@
 'use strict';
 
-var LandingPage = require('../page_objects/page_wagtail_templates.js').landing;
-var SubLandingPage = require('../page_objects/page_wagtail_templates.js').sublanding;
-var BrowsePage = require('../page_objects/page_wagtail_templates.js').browse;
-var BrowseFilterablePage = require('../page_objects/page_wagtail_templates.js').browse_filterable;
-var SublandingFilterablePage = require('../page_objects/page_wagtail_templates.js').sublanding_filterable;
-var EventArchivePage = require('../page_objects/page_wagtail_templates.js').event_archive;
-var LearnPage = require('../page_objects/page_wagtail_templates.js').LearnPage;
-var EventPage = require('../page_objects/page_wagtail_templates.js').EventPage;
-var DocumentDetailPage = require('../page_objects/page_wagtail_templates.js').docdetail;
+var LandingPage = require( '../page_objects/page_wagtail_templates.js' ).landing;
+var SubLandingPage = require( '../page_objects/page_wagtail_templates.js' ).sublanding;
+var BrowsePage = require( '../page_objects/page_wagtail_templates.js' ).browse;
+var BrowseFilterablePage = require( '../page_objects/page_wagtail_templates.js' ).browse_filterable;
+var SublandingFilterablePage = require( '../page_objects/page_wagtail_templates.js' ).sublanding_filterable;
+var EventArchivePage = require( '../page_objects/page_wagtail_templates.js' ).event_archive;
+var LearnPage = require( '../page_objects/page_wagtail_templates.js' ).learn;
+var EventPage = require( '../page_objects/page_wagtail_templates.js' ).event;
+var DocumentDetailPage = require( '../page_objects/page_wagtail_templates.js' ).docdetail;
 
-xdescribe('Wagtail Landing Page', function () {
+describe('Wagtail Landing Page', function () {
     var page;
 
     beforeAll(function () {
@@ -26,7 +26,7 @@ xdescribe('Wagtail Landing Page', function () {
 
 });
 
-xdescribe('Wagtail SubLanding Page', function () {
+describe('Wagtail SubLanding Page', function () {
     var page;
 
     beforeAll(function () {
@@ -42,7 +42,7 @@ xdescribe('Wagtail SubLanding Page', function () {
 
 });
 
-xdescribe('Wagtail Browse Page', function () {
+describe('Wagtail Browse Page', function () {
     var page;
 
     beforeAll(function () {
@@ -58,7 +58,7 @@ xdescribe('Wagtail Browse Page', function () {
 
 });
 
-xdescribe('Wagtail Browse Filterable Page', function () {
+describe('Wagtail Browse Filterable Page', function () {
     var page;
 
     beforeAll(function () {
@@ -74,7 +74,7 @@ xdescribe('Wagtail Browse Filterable Page', function () {
 
 });
 
-xdescribe('Wagtail Sublanding Filterable Page', function () {
+describe('Wagtail Sublanding Filterable Page', function () {
     var page;
 
     beforeAll(function () {
@@ -90,7 +90,7 @@ xdescribe('Wagtail Sublanding Filterable Page', function () {
 
 });
 
-xdescribe('Wagtail Event Archive Page', function () {
+describe('Wagtail Event Archive Page', function () {
     var page;
 
     beforeAll(function () {
@@ -106,7 +106,7 @@ xdescribe('Wagtail Event Archive Page', function () {
 
 });
 
-xdescribe('Wagtail Learn Page', function () {
+describe('Wagtail Learn Page', function () {
     var page;
 
     beforeAll(function () {
@@ -122,7 +122,7 @@ xdescribe('Wagtail Learn Page', function () {
 
 });
 
-xdescribe('Wagtail Event Page', function () {
+describe('Wagtail Event Page', function () {
     var page;
 
     beforeAll(function () {
@@ -138,7 +138,7 @@ xdescribe('Wagtail Event Page', function () {
 
 });
 
-xdescribe('Wagtail Document Detail Page', function () {
+describe('Wagtail Document Detail Page', function () {
     var page;
 
     beforeAll(function () {
