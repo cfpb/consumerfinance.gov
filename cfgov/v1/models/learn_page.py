@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from localflavor.us.models import USStateField
 
 from django.db import models
@@ -33,7 +33,7 @@ class AbstractFilterPage(CFGOVPage):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    date_published = models.DateField(default=datetime.now)
+    date_published = models.DateField(default=date.today)
     date_filed = models.DateField(null=True, blank=True)
     comments_close_by = models.DateField(null=True, blank=True)
 
