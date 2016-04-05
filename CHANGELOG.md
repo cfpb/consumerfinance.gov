@@ -20,6 +20,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Adds a max-selections checker to the Multiselect.
 
 ### Changed
+- Updated Global Search to set search trigger to invisible,
+  since hidden is overridden.
 
 - Defaulted Related posts slug title to 'Further Reading' and made it a field in wagtail.
 
