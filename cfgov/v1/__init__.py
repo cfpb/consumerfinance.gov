@@ -56,6 +56,9 @@ def parse_links(soup):
     icon_pattern = re.compile(settings.EXTERNAL_ICON_PATTERN)
     a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
     span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
+    for tag in soup:
+        if hasattr(tag, 'style'):
+            del tag['style']
     for a in soup.find_all('a', href=True):
         # Sets the link to an external one if you're leaving .gov 
         if link_pattern.match(a['href']):

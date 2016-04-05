@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 - Adds a max-selections checker to the Multiselect.
+- Remove inline CSS when running sheer_index
 
 ### Changed
 - Updated Global Search to set search trigger to invisible,
