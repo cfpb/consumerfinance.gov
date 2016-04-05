@@ -4,16 +4,6 @@
     "type":      "career",
     "permalink": true
   },
-  "sub_page": {
-    "url":       "/sub-pages/<id>/",
-    "type":      "sub_page",
-    "permalink": true
-  },
-  "office": {
-    "url":       "/offices/<id>/",
-    "type":      "office",
-    "permalink": true
-  },
   "newsroom": {
     "url":       "/about-us/newsroom/<id>/",
     "type":      "newsroom",
