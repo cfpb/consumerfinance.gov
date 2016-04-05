@@ -15,7 +15,7 @@ def update_path(path):
     return path
 
 def fix_links(html):
-    soup = BeautifulSoup(html, 'lxml')
+    soup = BeautifulSoup(html, 'html.parser')
     for link in soup.findAll('a'):
         try:
             urldata = urlsplit(link['href'])
@@ -27,5 +27,4 @@ def fix_links(html):
             # this means there's no href-- perhaps an <a name="foo"> link
             continue
 
-    return unicode(soup)
-
+    return soup.encode(formatter="html")
