@@ -27,13 +27,11 @@ var modernConf = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin( COMMON_BUNDLE_NAME ),
     new webpack.optimize.CommonsChunkPlugin( COMMON_BUNDLE_NAME,
-                                             [ COMMON_BUNDLE_NAME ] ),
+                                             'common.[chunkhash].js' ),
     // Change warnings flag to true to view linter-style warnings at runtime.
     new webpack.optimize.UglifyJsPlugin( {
       compress: { warnings: false }
     } ),
-    // Wrap JS in raw Jinja tags so included JS won't get parsed by Jinja.
-    new BannerFooterPlugin( '{% raw %}', '{% endraw %}', { raw: true } )
   ]
 };
 
