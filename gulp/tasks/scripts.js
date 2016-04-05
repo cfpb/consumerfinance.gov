@@ -25,7 +25,7 @@ var webpackStream = require( 'webpack-stream' );
 function scriptsPolyfill() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
     .pipe( gulpModernizr( {
-      tests:   [ 'csspointerevents', 'classlist' ],
+      tests:   [ 'csspointerevents', 'classlist', 'es5' ],
       options: [ 'setClasses',
                  'html5printshiv',
                  'fnBind' ]
@@ -84,13 +84,35 @@ function scriptsOnDemand() {
     } ) );
 }
 
+/**
+ * Bundle Es5 shim scripts.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsEs5Shim() {
+  return gulp.src( paths.unprocessed + '/js/shims/es5-shim.js' )
+    .pipe( webpackStream( {
+      entry: paths.unprocessed + '/js/shims/es5-shim.js',
+      output: {
+        filename: 'es5-shim.js'
+      }
+    } ) )
+    .on( 'error', handleErrors )
+    .pipe( gulp.dest( paths.processed + '/js/' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
+
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:ondemand', scriptsOnDemand );
+gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
-  'scripts:ie'
+  'scripts:ie',
+  'scripts:es5-shim'
 ] );
