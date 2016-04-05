@@ -59,8 +59,31 @@ function stylesIe() {
     } ) );
 }
 
+/**
+ * Process stand-alone atomic component CSS.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesOnDemand() {
+  return gulp.src( config.cwd + '/on-demand/*.less' )
+    .pipe( $.less( config.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( $.autoprefixer( {
+      browsers: [ 'last 2 version',
+                  'ie 7-8',
+                  'android 4',
+                  'BlackBerry 7',
+                  'BlackBerry 10' ]
+    } ) )
+    .pipe( $.header( banner, { pkg: pkg } ) )
+    .pipe( gulp.dest( config.dest ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:ie', stylesIe );
+gulp.task( 'styles:ondemand', stylesOnDemand );
 
 gulp.task( 'styles', [
   'styles:modern',

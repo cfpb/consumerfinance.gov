@@ -1,0 +1,65 @@
+/* ==========================================================================
+   cfgov-refresh
+   Master Less File.
+   ========================================================================== */
+
+
+/* Base styles
+   @import combined CF components Less file and make any overrides.
+   ========================================================================== */
+
+// Import required CF components.
+// Combined CF components.
+@import (less) 'cf-core/src/cf-core.less';
+@import (less) 'cf-icons/src/cf-icons.less';
+@import (less) 'cf-buttons/src/cf-buttons.less';
+@import (less) 'cf-forms/src/cf-forms.less';
+
+.o-header {
+    @import (less) 'cf-buttons/src/cf-buttons.less';
+    @import (less) 'cf-layout/src/cf-layout.less';
+    @import (less) 'cf-typography/src/cf-typography.less';
+}
+
+// The Capital Framework (CF) brand color palette.
+@import (less) "../brand-palette.less";
+
+// Override the CF theme variables with colors from the brand color palette.
+@import (less) "../cf-theme-overrides.less";
+
+// Enhancements that are on a migration path to being added to CF.
+// CF Core
+@import (less) "../enhancements/vars.less";
+@import (less) "../enhancements/media-queries.less";
+@import (less) "../enhancements/utilities.less";
+@import (less) "../enhancements/base.less";
+
+.o-header {
+    // CF Forms
+    @import (less) "../enhancements/forms.less";
+}
+
+/* Base patterns
+   ========================================================================== */
+@import (less) "../misc.less";
+
+/* Atom pieces
+   ========================================================================== */
+
+@import (less) "../atoms/rule-break.less";
+@import (less) "../atoms/overlay.less";
+
+/* Molecule pieces
+   ========================================================================== */
+
+@import (less) "../molecules/featured-menu-content.less";
+@import (less) "../molecules/global-banner.less";
+@import (less) "../molecules/global-eyebrow.less";
+@import (less) "../molecules/global-header-cta.less";
+@import (less) "../molecules/global-search.less";
+
+/* Organism pieces
+   ========================================================================== */
+
+@import (less) "../organisms/header.less";
+@import (less) "../organisms/mega-menu.less";

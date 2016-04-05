@@ -1,7 +1,25 @@
+{# ==========================================================================
+
+   header.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for Header organism.
+
+   show_banner: Whether the global banner molecule is included.
+                Default is true.
+
+   ========================================================================== #}
+
+{# TODO: Remove global page reference when moving to Wagtail. #}
+{% macro render( show_banner=false ) %}
+
 <header class="o-header"
         role="banner">
 
-    {% if flag_enabled('BETA_NOTICE') %}
+    {% if flag_enabled('BETA_NOTICE') and show_banner %}
     <div class="m-global-banner">
         <div class="wrapper
                     wrapper__match-content
@@ -70,3 +88,5 @@
 
     </div>
 </header>
+
+{% endmacro %}

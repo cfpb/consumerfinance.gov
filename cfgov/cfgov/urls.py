@@ -250,6 +250,7 @@ if 'selfregistration' in settings.INSTALLED_APPS:
     urlpatterns.append(pattern)
 
 if settings.DEBUG :
+    urlpatterns.append(url(r'^test-fixture/$', SheerTemplateView.as_view(template_name='test-fixture/index.html'), name='test-fixture'))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch remaining URL patterns that did not match a route thus far.

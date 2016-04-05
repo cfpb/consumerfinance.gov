@@ -8,6 +8,8 @@ import warnings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.template import loader, RequestContext
+from django.utils.html import mark_safe
 
 from jinja2 import Environment
 import jinja2.runtime
@@ -28,6 +30,13 @@ default_app_config = 'sheerlike.apps.SheerlikeConfig'
 
 def register_permalink(sheer_type, url_pattern_name):
     PERMALINK_REGISTRY[sheer_type] = url_pattern_name
+
+
+def global_render_template(name, **kwargs):
+    request = get_request()
+    context = RequestContext(request, kwargs or None)
+    template = loader.get_template(name, using='wagtail-env')
+    return mark_safe(template.render(context.flatten()))
 
 
 def url_for(app, filename, site_slug=None):
