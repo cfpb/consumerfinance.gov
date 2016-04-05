@@ -5,7 +5,7 @@ var _getQAelement = require( '../util/qa-element' ).get;
 function Careers() {
 
   this.get = function() {
-    browser.get( '/careers/' );
+    browser.get( '/about-us/careers/' );
   };
 
   this.pageTitle = function() { return browser.getTitle(); };
