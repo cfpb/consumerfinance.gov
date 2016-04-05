@@ -16,9 +16,9 @@ describe( 'The Bureau Page', function() {
     }
   );
 
-  it( 'should have a side nav',
+  it( 'should have a secondary nav',
     function() {
-      expect( page.sideNav.isPresent() ).toBe( true );
+      expect( page.secondaryNav.isPresent() ).toBe( true );
     }
   );
 
