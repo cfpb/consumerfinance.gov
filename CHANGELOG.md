@@ -27,6 +27,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Defaulted Related posts slug title to 'Further Reading' and made it a field in wagtail.
 - Enabled gov delivery subscriptions to work on wagtail pages
 - randomized formfieldWithButton Id and included name field for post requests.
+- Update Director's Bio and Deputy Director's Bio
+
 
 ### Removed
 - Removed `gulp beep` task for optional alerting when the build process
@@ -36,7 +38,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
+<<<<<<< 1f4eb681f82301548ca77f928e3df203bdb63c60
 - Fixed paths to templates that were moved in to /about-us
+=======
+-
+>>>>>>> Update director and deputy director bios
 
 ## 3.0.0-3.2.1 - 2016-03-21
 
