@@ -16,8 +16,8 @@ if ($#ARGV >= 0) {
 			`vagrant ssh -c "/vagrant/bin/cfgovd start_django" &`;
 		}
 		elsif (($#ARGV >= 1) && ($ARGV[1] eq "watch")) {
-			print("\nStarted gulp watch\n");
-			`vagrant ssh -c "/vagrant/bin/cfgovd start_gulp_watch" &`;
+			print("\nStarting gulp watch\n");
+			exec("vagrant ssh -c \"cd /vagrant; source /opt/rh/devtoolset-2/enable; gulp watch\"");
 		}
 		else {
 			print("\nStarting CF Gov Refresh VM...\n\n");

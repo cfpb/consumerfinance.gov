@@ -19,17 +19,13 @@ if ($#ARGV >= 0) {
 		}
 	}
 	elsif ($ARGV[0] eq 'stop_gulp_watch') {
-		my @procList = `ps -aux |grep "start_gulp_watch"`;
+		my @procList = `ps -aux |grep "gulp"`;
 		my $myProc = $procList[0];
 		if ($#procList > 0) {	
 			my @psIds = split(/  /, $myProc);	
 			print("\nKilling process $psIds[1]\n");	
 			`kill -9 $psIds[1]`;
 		}
-	}
-	elsif ($ARGV[0] eq 'start_gulp_watch') {
-		chdir("/vagrant");
-		`gulp watch`;
 	}
 	elsif ($ARGV[0] eq 'init') {
 		`sudo webdriver-manager update`;
