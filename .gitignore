@@ -42,7 +42,6 @@ Thumbs.db
 # Environment vars #
 ####################
 .env
-beep-build.mp3
 .vagrant
 
 # npm packages #

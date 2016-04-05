@@ -29,6 +29,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - randomized formfieldWithButton Id and included name field for post requests.
 
 ### Removed
+- Removed `gulp beep` task for optional alerting when the build process
+  has completed.
 
 ### Fixed
 

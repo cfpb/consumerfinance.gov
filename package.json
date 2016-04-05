@@ -60,9 +60,6 @@
     "sinon-chai": "^2.8.0",
     "wcag": "^0.2.2"
   },
-  "optionalDependencies": {
-    "player": "^0.6.1"
-  },
   "browser": {
     "handlebars": "./node_modules/handlebars/dist/handlebars.min.js",
     "history": "./vendor/history.js/scripts/bundled-uncompressed/html5/jquery.history.js",
