@@ -5,7 +5,9 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from wagtail.wagtailcore.models import Page, Site
 
-from v1.models import HomePage, BrowseFilterablePage, BrowsePage, DemoPage, SublandingPage, SublandingFilterablePage, EventPage, DocumentDetailPage, EventArchivePage, LearnPage, LandingPage
+from v1.models import HomePage, BrowseFilterablePage, BrowsePage, DemoPage, SublandingPage, SublandingFilterablePage, \
+    EventPage, DocumentDetailPage, EventArchivePage, LearnPage, LandingPage
+
 
 def run():
     print 'Running script \'scripts.initial_test_data\' ...'
@@ -32,7 +34,7 @@ def run():
     else:
         site_root = site_root[0]
 
-    # Setting new site root
+    #Setting new site root
     site = Site.objects.first()
     site.port = 8000
     site.root_page_id = site_root.id
@@ -40,37 +42,35 @@ def run():
     content_site = Site(hostname='content.localhost', port=8000, root_page_id=site_root.id)
     content_site.save()
 
-    def publish_page(obj):
-        site_root.add_child(instance=obj)
-        revision = obj.save_revision(
-        user=admin_user,
-        submitted_for_moderation=False,
+    def publish_page(child=None, root=site_root):
+        root.add_child(instance=child)
+        revision = child.save_revision(
+            user=admin_user,
+            submitted_for_moderation=False,
         )
         revision.publish()
 
-
-    # Create each page type
-    bfp = BrowseFilterablePage(title='browse filterable page', slug='browse-filterable-page', owner=admin_user)
-    publish_page(bfp)
-    bp = BrowsePage(title='browse page', slug='browse-page', owner=admin_user)
-    publish_page(bp)
-    dp = DemoPage(title='demo page', slug='demo-page', owner=admin_user)
-    publish_page(dp)
-    sp = SublandingPage(title='sublanding page', slug='sublanding-page', owner=admin_user)
-    publish_page(sp)
-    sfp = SublandingFilterablePage(title='sublanding filterable page', slug='sublanding-filterable-page', owner=admin_user)
-    publish_page(sfp)
-    ep = EventPage(title='event page', slug='event-page', owner=admin_user)
-    publish_page(ep)
-    ddp = DocumentDetailPage(title='document detail page', slug='document-detail-page', owner=admin_user)
-    publish_page(ddp)
-    eap = EventArchivePage(title='event archive page', slug='event-archive-page', owner=admin_user)
-    publish_page(eap)
-    lp = LearnPage(title='learn page', slug='learn-page', owner=admin_user)
-    publish_page(lp)
-    lap = LandingPage(title='landing page', slug='landing-page', owner=admin_user)
+    # Create each Page Type
+    lap = LandingPage(title='Landing Page', slug='landing-page', owner=admin_user)
     publish_page(lap)
+    sp = SublandingPage(title='Sublanding Page', slug='sublanding-page', owner=admin_user)
+    publish_page(sp)
+    bp = BrowsePage(title='Browse Page', slug='browse-page', owner=admin_user)
+    publish_page(bp)
 
+    # Filterable Pages
+    bfp = BrowseFilterablePage(title='Browse Filterable Page', slug='browse-filterable-page', owner=admin_user)
+    publish_page(bfp)
+    sfp = SublandingFilterablePage(title='Sublanding Filterable Page', slug='sublanding-filterable-page',
+                                   owner=admin_user)
+    publish_page(sfp)
+    eap = EventArchivePage(title='Event Archive Page', slug='event-archive-page', owner=admin_user)
+    publish_page(eap)
 
-
-
+    # Filter Pages
+    ep = EventPage(title='Event Page', slug='event-page', owner=admin_user)
+    publish_page(ep, bfp)
+    ddp = DocumentDetailPage(title='Document Detail Page', slug='document-detail-page', owner=admin_user)
+    publish_page(ddp, bfp)
+    lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
+    publish_page(lp, bfp)
