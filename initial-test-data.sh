@@ -12,10 +12,10 @@ set -e
 # Import Data
 import_data(){
     echo 'Creating DB Tables...'
+    ./create-mysql-db.sh testdb
     ./cfgov/manage.py migrate --settings='cfgov.settings.test'
     echo 'Loading Initial Data...'
     ./cfgov/manage.py runscript initial_test_data --settings='cfgov.settings.test'
-
 }
 
 import_data

@@ -17,19 +17,14 @@ MYSQL=`which mysql`
 
 if [ -z "$1" ]
 then
-  Q1="CREATE DATABASE IF NOT EXISTS $MYSQL_NAME;"
-  Q2="GRANT ALL ON *.* TO '$MYSQL_USER'@'$MYSQL_HOST' IDENTIFIED BY '';"
-  Q3="FLUSH PRIVILEGES;"
-  SQL="${Q1}${Q2}${Q3}"
+  Q1="drop database $MYSQL_NAME;"
+  SQL="${Q1}"
 
   $MYSQL -uroot -e "$SQL"
-  echo "Database $MYSQL_NAME and user $MYSQL_USER created with a blank password"
+  echo "Database $MYSQL_NAME dropped."
 else
-  Q1="CREATE DATABASE IF NOT EXISTS $1;"
-  Q2="GRANT ALL ON *.* TO '$MYSQL_USER'@'$MYSQL_HOST' IDENTIFIED BY '$MYSQL_PW';"
-  Q3="FLUSH PRIVILEGES;"
-  SQL="${Q1}${Q2}${Q3}"
-
+  Q1="drop database $1;"
+  SQL="${Q1}"
 
   if [ $# -ne $EXPECTED_ARGS ]
   then
@@ -38,8 +33,10 @@ else
   fi
 
   $MYSQL -uroot -e "$SQL"
-  ok "Database $1 and user $MYSQL_USER created with a password $MYSQL_PW"
+  ok "Database $1 dropped."
 fi
+
+
 
 
 
