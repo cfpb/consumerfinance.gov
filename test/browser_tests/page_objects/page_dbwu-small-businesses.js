@@ -5,7 +5,7 @@ var _getQAElement = require( '../util/qa-element' ).get;
 function SmallBusinessess() {
 
   this.get = function() {
-    browser.get( 'doing-business-with-us/small-businesses/' );
+    browser.get( '/about-us/doing-business-with-us/small-businesses/' );
   };
 
   this.pageTitle = function() { return browser.getTitle(); };

@@ -37,8 +37,9 @@ describe( 'The Working At CFPB Page', function() {
     [ 'Current Openings', 'Job Application Process',
     'Students & Recent Graduates' ];
     var infoSectionLinks =
-    [ '/careers/current-openings/', '/careers/application-process/',
-    '/careers/students-and-graduates/' ];
+    [ '/about-us/careers/current-openings/',
+      '/about-us/careers/application-process/',
+      '/about-us/careers/students-and-graduates/' ];
 
     expect( page.infoSectionTitles.getText() )
     .toEqual( infoSectionTitles );

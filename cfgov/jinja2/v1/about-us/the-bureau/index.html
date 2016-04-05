@@ -34,9 +34,14 @@
 {% block content_main %}
 
     <h1>The Bureau</h1>
-    <p class="h3">We work to make markets for consumer financial products and services work
-    for Americans. We arm people with the information they need to make smart financial
-    decisions, and we protect them from unfair, deceptive, and abusive practices.</p>
+    <p class="lead-paragraph">
+        We aim to make consumer financial markets work for consumers,
+        responsible providers, and the economy as a whole.
+        We protect consumers from unfair, deceptive, or abusive practices
+        and take action against companies that break the law.
+        We arm people with the information and stepstools
+        that they need to make smart financial decisions.
+    </p>
 
     <div class="block block__flush-sides">
         {% set youtubeURL = 'https://www.youtube.com/embed/en0Iq8II4fA?autoplay=1&enablejsapi=1' %}
@@ -44,15 +49,13 @@
         {{ featured_content.render({
             'category':  'featured-video',
             'heading':   'The Bureau',
-            'body': {
-                'source': 'We are a government agency created after the 2008
-                          financial crisis. We protect American consumers.
-                          Allow us to introduce ourselves.'
-            },
+            'body': 'We are a government agency created
+                     after the 2008 financial crisis to protect consumers.
+                     Allow us to introduce ourselves.',
             'image': {
             },
             'video': {
-                'id':    'en0Iq8II4fA',
+                'id':    '2Wy4AmMIAOU',
                 'url':    youtubeURL,
                 'height': '320',
                 'width' : '568'
@@ -62,40 +65,40 @@
         }}
     </div>
 
-    <p>Above all, this means ensuring that consumers get the information they need to make
-    the financial decisions they believe are best for themselves and their families. But
-    it also means we look out for bad actors—through regular examinations of financial
-    companies, complaints from consumers, and our own investigations—and when we find
-    unfair, deceptive, or abusive practices, we take action. We also:</p>
+    <p>
+        In a market that works, the prices, risks, and terms of the deal
+        are clear upfront so that consumers can understand their options
+        and comparison shop.
+        Companies all play by the same consumer protection rules
+        and compete fairly on providing quality and service.
+        To achieve this vision, the CFPB works to:
+    </p>
 
     {% import 'macros/mobile-carousel.html' as mobile_carousel %}
     {{ mobile_carousel.render({
         'image_sizes_class': 'media_image__130-to-150',
         'image_base_url':    '/static/img/',
         'data': [{
-            'image_filename': 'educate.png',
-            'title':          'Educate',
-            'desc':      'We work with financial companies to help them
-                          understand how to follow our rules.
-                          We write reports about the state of the market.
-                          We answer common consumer questions and create
-                          toolkits so people know what their next step
-                          should be.'
+            'image_filename': 'empower.png',
+            'title':          'Empower',
+            'desc':      'We create tools, answer common questions,
+                          and provide tips
+                          that help consumers navigate their financial choices
+                          and shop for the deal that works best for them.'
             }, {
             'image_filename': 'enforce.png',
             'title':          'Enforce',
-            'desc':      'We take action against bad actors who hurt
-                          people in the financial services marketplace,
-                          returning billions of
-                          dollars to consumers.'
+            'desc':      'We take action against predatory companies
+                          and practices that violate the law
+                          and have already returned billions of
+                          dollars to harmed consumers.'
             }, {
-            'image_filename': 'empower.png',
-            'title':          'Empower',
-            'desc':      'We create tools that let consumers take greater
-                          control of their options. We create opportunities
-                          for entrepreneurs, experts, advocates,
-                          and the financial industry to innovate in
-                          consumer-friendly ways.'
+            'image_filename': 'educate.png',
+            'title':          'Educate',
+            'desc':      'We encourage financial education
+                          and capability from childhood through retirement,
+                          publish research, and educate financial companies
+                          about their responsibilities.'
             }]
         })
     }}
@@ -103,92 +106,44 @@
         <section class="o-well"
                  data-qa-hook="bureau-core-functions">
             <h2>Our core functions</h2>
-            <p>Congress created the CFPB to create a single point of accountability for enforcing
-            federal consumer financial laws and protecting consumers in the financial marketplace.
-            Before, that responsibility was divided among several agencies. Today, it’s our job.</p>
+            <p>
+                The CFPB was created to provide a single point of
+                accountability for enforcing federal consumer financial laws
+                and protecting consumers in the
+                financial marketplace.
+                Before, that responsibility was divided among several agencies.
+                Today, it’s our primary focus.
+            </p>
 
             <section class="bureau-functions block__padded-top">
-                <h3 class="h4">Among other things, we:</h3>
+                <h3 class="h4">Our work includes:</h3>
                 <ul class="list list__branded bureau-functions_list u-mb0">
-                    <li>Write rules, supervise companies, and enforce federal consumer
-                    financial protection laws</li>
-                    <li>Restrict unfair, deceptive, or abusive acts or practices</li>
-                    <li>Take consumer complaints</li>
-                    <li>Promote financial education</li>
+                    <li>
+                        Rooting out unfair, deceptive, or abusive acts
+                        or practices by writing rules, supervising companies,
+                        and enforcing the law
+                    </li>
+                    <li>
+                        Enforcing laws that outlaw discrimination
+                        in consumer finance
+                    </li>
+                    <li>
+                        Taking consumer complaints
+                    </li>
                 </ul>
                 <ul class="list list__branded bureau-functions_list">
-                    <li>Research consumer behavior</li>
-                    <li>Monitor financial markets for new risks to consumers</li>
-                    <li>Enforce laws that outlaw discrimination and other unfair treatment
-                    in consumer finance</li>
+                    <li>
+                        Enhancing financial education
+                    </li>
+                    <li>
+                        Researching the consumer experience of
+                        using financial products
+                    </li>
+                    <li>
+                        Monitoring financial markets for new risks to consumers
+                    </li>
                 </ul>
             </section>
         </section><!-- END .content-block -->
     </div>
-
-    <section class="block block__padded-top block__flush-top">
-        <h2>CFPB leadership</h2>
-        <p>In January of 2012, President Barack Obama appointed
-        Richard Cordray to be the first Director of the CFPB.</p>
-
-         <div class="block block__sub content-l content-l__main u-hide-on-mobile">
-            <section class="content-l_col-1-2">
-                <div class="media bureau-bio">
-                    <div class="media_image-container">
-                        <img class="media_image media_image__150"
-                             src="/static/img/director-cordray-round-300x300.jpg"
-                             alt="Director Richard Cordray">
-                    </div>
-                    <div class="media_body">
-                        <span class="h6">Director</span>
-                        <h3 class="bureau-bio_name">Richard Cordray</h3>
-                        <a class="jump-link jump-link__underline"
-                           href="about-director/">
-                            Read bio
-                        </a>
-                    </div>
-                </div>
-            </section>
-            <section class="content-l_col-1-2">
-                <div class="media bureau-bio">
-                    <div class="media_image-container">
-                        <img class="media_image media_image__150"
-                             src="/static/img/deputy-director-silberman-round-300x300.jpg"
-                             alt="Deputy Director David Silberman">
-                    </div>
-                    <div class="media_body">
-                        <span class="h6">Deputy Director</span>
-                        <h3 class="bureau-bio_name">David Silberman</h3>
-                        <a class="jump-link jump-link__underline"
-                           href="about-deputy-director/">
-                            Read bio
-                        </a>
-                    </div>
-                </div>
-            </section>
-        </div><!-- END .block bios -->
-
-        <ul class="list list__links">
-            <li class="list_item u-show-on-mobile">
-                <a class="list_link" href="about-director">
-                    Learn more about Director Richard Cordray
-                </a>
-            </li>
-            <li class="list_item u-show-on-mobile">
-                <a class="list_link" href="about-deputy-director">
-                    Learn more about Deputy Director David Silberman
-                </a>
-            </li>
-            <li class="list_item">
-                <a class="list_link" href="leadership-calendar">
-                    Review our leadership’s calendar
-                </a>
-            </li>
-            <li class="list_item">
-                <a class="list_link" href="bureau-structure">
-                    Organizational structure and leadership
-                </a>
-            </li>
-        </ul>
-    </section><!-- END .block leadership -->
 {% endblock %}

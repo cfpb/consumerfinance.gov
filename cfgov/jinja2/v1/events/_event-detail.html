@@ -19,15 +19,12 @@
                 {{ time.render(page.latest_revision_created_at, {'date':true}) }}
             </div>
             {% import 'molecules/social-media.html' as social_media with context %}
-            {{ social_media.render({
-                'title': page.title,
-                'twitter_options': {
-                    'text':     page.twtr_text,
-                    'related':  page.twtr_rel,
-                    'language': page.twtr_lang,
-                    'hashtags': page.twtr_hash
-                }
-            }) }}
+            {{ social_media.render( {
+                'title':            page.twtr_text,
+                'twitter_related':  page.twtr_rel,
+                'twitter_lang':     page.twtr_lang,
+                'twitter_hashtags': page.twtr_hash
+            } ) }}
         </div>
         {% from 'events/_macros.html' import event_venue as event_venue %}
         {{ event_venue( page, event_state ) }}
@@ -95,7 +92,7 @@
     {% if page.tags.names() | length %}
     <footer>
         {%- import 'tags.html' as tags %}
-        {{ tags.render(page.tags.names(), path) }}
+        {{ tags.render( page.tags.names(), path ) }}
     </footer>
     {% endif %}
 </article>

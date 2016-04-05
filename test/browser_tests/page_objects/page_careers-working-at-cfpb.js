@@ -9,7 +9,7 @@ function WorkingAtCFPB() {
   Object.assign( this, relatedLinksSection );
 
   this.get = function() {
-    browser.get( '/careers/working-at-cfpb/' );
+    browser.get( '/about-us/careers/working-at-cfpb/' );
   };
 
   this.pageTitle = function() { return browser.getTitle(); };

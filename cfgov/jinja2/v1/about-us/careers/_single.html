@@ -52,14 +52,10 @@
             <div class="t-careers_social
                         content-l_col
                         content-l_col-1-2">
-                {{ social_media.render({
-                    'title': career.title,
-                    'twitter_options': {
-                        'text':     career.title,
-                        'related':  '@cfpb',
-                        'hashtags': '#usajobs'
-                    }
-                }) }}
+                {{ social_media.render( {
+                    'title':            career.title,
+                    'twitter_hashtags': 'usajobs'
+                } ) }}
             </div>
         </div>
     </section>
@@ -98,14 +94,10 @@
                 {# TODO: Fix vertical alignment.
                          Social Media icons are slightly high
                          relative to Interested in Applying heading. #}
-                {{ social_media.render({
-                    'title': career.title,
-                    'twitter_options': {
-                        'text':     career.title,
-                        'related':  '@cfpb',
-                        'hashtags': '#usajobs'
-                    }
-                }) }}
+                {{ social_media.render( {
+                    'title':            career.title,
+                    'twitter_hashtags': 'usajobs'
+                } ) }}
             </div>
         </div>
         <div class="block">

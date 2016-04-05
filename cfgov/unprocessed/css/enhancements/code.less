@@ -1,0 +1,19 @@
+/* topdoc
+  name: Code styles
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: .inline-code
+      markup: |
+        <code class="inline-code">code { color: red; }</code>
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.inline-code {
+    display: inline-block;
+    padding: unit(3px / 14px, em) unit(5px / 14px, em);
+    border-radius: 4px;
+    background: @gray-10;
+    color: @black;
+    font-size: unit(14px / @base-font-size-px, em);
+}

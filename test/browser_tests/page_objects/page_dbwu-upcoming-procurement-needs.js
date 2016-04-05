@@ -5,7 +5,7 @@ var _getQAElement = require( '../util/qa-element' ).get;
 function UpcomingProcurementNeeds() {
 
   this.get = function() {
-    browser.get( 'doing-business-with-us/upcoming-procurement-needs/' );
+    browser.get( '/about-us/doing-business-with-us/upcoming-procurement-needs/' );
   };
 
   this.pageTitle = function() { return browser.getTitle(); };

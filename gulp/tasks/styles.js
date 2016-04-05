@@ -9,19 +9,15 @@ var config = require( '../config' ).styles;
 var handleErrors = require( '../utils/handleErrors' );
 var browserSync = require( 'browser-sync' );
 
-gulp.task( 'styles:modern', function() {
+/**
+ * Process modern CSS.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesModern() {
   return gulp.src( config.cwd + config.src )
     .pipe( $.sourcemaps.init() )
     .pipe( $.less( config.settings ) )
     .on( 'error', handleErrors )
-    .pipe( $.replace(
-      /url\('chosen-sprite.png'\)/ig,
-      'url("/img/chosen-sprite.png")'
-    ) )
-    .pipe( $.replace(
-      /url\('chosen-sprite@2x.png'\)/ig,
-      'url("/img/chosen-sprite@2x.png")'
-    ) )
     .pipe( $.autoprefixer( {
       browsers: [ 'last 2 version',
                   'not ie <= 8',
@@ -35,20 +31,16 @@ gulp.task( 'styles:modern', function() {
     .pipe( browserSync.reload( {
       stream: true
     } ) );
-} );
+}
 
-gulp.task( 'styles:ie', function() {
+/**
+ * Process legacy CSS for IE7 and 8 only.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesIe() {
   return gulp.src( config.cwd + config.src )
     .pipe( $.less( config.settings ) )
     .on( 'error', handleErrors )
-    .pipe( $.replace(
-      /url\('chosen-sprite.png'\)/ig,
-      'url("/img/chosen-sprite.png")'
-    ) )
-    .pipe( $.replace(
-      /url\('chosen-sprite@2x.png'\)/ig,
-      'url("/img/chosen-sprite@2x.png")'
-    ) )
     .pipe( $.autoprefixer( {
       browsers: [ 'ie 7-8' ]
     } ) )
@@ -65,7 +57,10 @@ gulp.task( 'styles:ie', function() {
     .pipe( browserSync.reload( {
       stream: true
     } ) );
-} );
+}
+
+gulp.task( 'styles:modern', stylesModern );
+gulp.task( 'styles:ie', stylesIe );
 
 gulp.task( 'styles', [
   'styles:modern',

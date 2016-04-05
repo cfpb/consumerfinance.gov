@@ -17,7 +17,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Adds a max-selections checker to the Multiselect.
+
 ### Changed
+
+- Defaulted Related posts slug title to 'Further Reading' and made it a field in wagtail.
 
 ### Removed
 
@@ -31,7 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Global Banner Molecule.
 - Added Digital Privacy Policy to the footer.
 - Added tests for dom-traverse functions
-- Added default values for the View more text and URL. 
+- Added default values for the View more text and URL.
 - Dynamically create the View more URL if there are tags
 - Add an EXTERNAL_ICON_PATTERN to handle icons and links separately
 - Added specific Blog/Newsroom Categories to Related Post options
@@ -51,11 +55,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the Hero Macro for the new overlay hero styles.
 - Updated article template to render all categories
 - Append bureau title on every template rendered
+- Changing the times we receive for calendar events to match our db.
 - Updated `external-site/index.html` to use the full params of whatever's being passed in.
+- Changed copy on `/the-bureau/`
+- Updated titles and names in the Bureau Structure page
 
 ### Removed
 
 - Removed Georgia usage for the time being.
+- Removed ICS download placeholder from events.
 
 ### Fixed
 
@@ -803,6 +811,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.0.0-1.2.2 - 2015-07-02
 
 ### Added
+
+- Add reverse flag back into post preview snapshot for most recent pages
 
 ### Changed
 
