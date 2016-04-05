@@ -151,7 +151,7 @@ urlpatterns = [
             LeadershipCalendarPDFView.as_view(),
             name='leadership-calendar-pdf'),
         url(r'^leadership-calendar/print/$',
-            SheerTemplateView.as_view(template_name='the-bureau/leadership-calendar/print/index.html'),
+            SheerTemplateView.as_view(template_name='about-us/the-bureau/leadership-calendar/print/index.html'),
             name='leadership-calendar-print')],
         namespace='the-bureau')),
 
@@ -203,14 +203,14 @@ urlpatterns = [
         url(r'^(?P<doc_id>[\w-]+)/$',
             SheerTemplateView.as_view(doc_type='career',
                                       local_name='career',
-                                      default_template='careers/_single.html'), name='career'),
+                                      default_template='about-us/careers/_single.html'), name='career'),
 
-        url(r'^current-openings/$', SheerTemplateView.as_view(template_name='current-openings/index.html'),
+        url(r'^current-openings/$', SheerTemplateView.as_view(template_name='about-us/current-openings/index.html'),
             name='current-openings'),
-        url(r'^students-and-graduates/$', SheerTemplateView.as_view(template_name='students-and-graduates/index.html'),
+        url(r'^students-and-graduates/$', SheerTemplateView.as_view(template_name='about-us/students-and-graduates/index.html'),
             name='students-and-graduates'),
 
-        url(r'^working-at-cfpb/$', SheerTemplateView.as_view(template_name='working-at-cfpb/index.html'),
+        url(r'^working-at-cfpb/$', SheerTemplateView.as_view(template_name='about-us/working-at-cfpb/index.html'),
             name='working-at-cfpb'),
 
     ],
