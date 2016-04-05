@@ -1,7 +1,5 @@
 'use strict';
 
-var _getQAElement = require( '../util/qa-element' ).get;
-
 function LandingPage() {
 
   this.get = function() {
@@ -121,4 +119,4 @@ module.exports = {
   docdetail: DocumentDetailPage,
   learn: LearnPage,
   event: EventPage
-}
+};
