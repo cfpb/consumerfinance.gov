@@ -31,21 +31,9 @@ describe( 'The Careers Page', function() {
   it( 'should have a career info section', function() {
     var infoSectionTitles = [ 'Job Application Process',
     'Students and Recent Graduates' ];
-    var infoSectionLinks = [ '/careers/application-process/',
-    '/careers/students-and-graduates/' ];
-
-    expect( page.infoSectionTitles.getText() )
-    .toEqual( infoSectionTitles );
-    expect( page.infoSectionDescriptions.count() ).toEqual( 2 );
-    expect( page.infoSectionLinks.getAttribute( 'href' ) )
-    .toEqualUrl( infoSectionLinks );
-  } );
-
-  it( 'should have a career info section', function() {
-    var infoSectionTitles = [ 'Job Application Process',
-    'Students and Recent Graduates' ];
-    var infoSectionLinks = [ '/careers/application-process/',
-    '/careers/students-and-graduates/' ];
+    var infoSectionLinks = [
+      '/about-us/careers/application-process/',
+      '/about-us/careers/students-and-graduates/' ];
 
     expect( page.infoSectionTitles.getText() )
     .toEqual( infoSectionTitles );

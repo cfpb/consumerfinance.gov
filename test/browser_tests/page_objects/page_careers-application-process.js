@@ -9,7 +9,7 @@ function ApplicationProcess() {
   Object.assign( this, relatedLinksSection );
 
   this.get = function() {
-    browser.get( '/careers/application-process/' );
+    browser.get( '/about-us/careers/application-process/' );
   };
 
   this.pageTitle = function() { return browser.getTitle(); };

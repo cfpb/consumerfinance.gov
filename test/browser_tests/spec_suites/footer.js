@@ -10,7 +10,7 @@ describe( 'The Footer Component', function() {
       'accessibility',
     '/office-civil-rights/':
       'office of civil rights',
-    '/careers/':
+    '/about-us/careers/':
       'careers',
     '/foia-requests/':
       'foia',

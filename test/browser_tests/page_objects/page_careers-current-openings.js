@@ -9,7 +9,7 @@ function CurrentOpenings() {
   Object.assign( this, relatedLinksSection );
 
   this.get = function() {
-    browser.get( '/careers/current-openings/' );
+    browser.get( '/about-us/careers/current-openings/' );
   };
 
   this.pageTitle = function() { return browser.getTitle(); };
