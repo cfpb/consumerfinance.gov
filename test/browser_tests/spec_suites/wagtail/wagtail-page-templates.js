@@ -1,14 +1,14 @@
 'use strict';
 
-var LandingPage = require( '../page_objects/page_wagtail_templates.js' ).landing;
-var SubLandingPage = require( '../page_objects/page_wagtail_templates.js' ).sublanding;
-var BrowsePage = require( '../page_objects/page_wagtail_templates.js' ).browse;
-var BrowseFilterablePage = require( '../page_objects/page_wagtail_templates.js' ).browse_filterable;
-var SublandingFilterablePage = require( '../page_objects/page_wagtail_templates.js' ).sublanding_filterable;
-var EventArchivePage = require( '../page_objects/page_wagtail_templates.js' ).event_archive;
-var LearnPage = require( '../page_objects/page_wagtail_templates.js' ).learn;
-var EventPage = require( '../page_objects/page_wagtail_templates.js' ).event;
-var DocumentDetailPage = require( '../page_objects/page_wagtail_templates.js' ).docdetail;
+var LandingPage = require( '../../page_objects/page_wagtail_templates.js' ).landing;
+var SubLandingPage = require( '../../page_objects/page_wagtail_templates.js' ).sublanding;
+var BrowsePage = require( '../../page_objects/page_wagtail_templates.js' ).browse;
+var BrowseFilterablePage = require( '../../page_objects/page_wagtail_templates.js' ).browse_filterable;
+var SublandingFilterablePage = require( '../../page_objects/page_wagtail_templates.js' ).sublanding_filterable;
+var EventArchivePage = require( '../../page_objects/page_wagtail_templates.js' ).event_archive;
+var LearnPage = require( '../../page_objects/page_wagtail_templates.js' ).learn;
+var EventPage = require( '../../page_objects/page_wagtail_templates.js' ).event;
+var DocumentDetailPage = require( '../../page_objects/page_wagtail_templates.js' ).docdetail;
 
 describe('Wagtail Landing Page', function () {
     var page;

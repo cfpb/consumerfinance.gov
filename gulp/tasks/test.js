@@ -102,6 +102,37 @@ function _getProtractorParams() {
   // If --version=number flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'version' );
 
+  console.log(params);
+  return params;
+}
+
+function _getProtractorWagtailParams() {
+
+  // Set default configuration command-line parameter.
+  var params = [ 'test/browser_tests/conf.js' ];
+  var commandLineParams = minimist( process.argv.slice( 2 ) );
+
+  // If --sauce=false flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'sauce' );
+
+  // If --specs=path/to/js flag is added on the command-line,
+  // pass the value to protractor to override the default specs to run.
+  commandLineParams['specs']  = 'wagtail/*';
+  params = _addCommandLineFlag( params, commandLineParams, 'specs' );
+
+  // If --windowSize=w,h flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'windowSize' );
+
+  // If --browserName=browser flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'browserName' );
+
+  // If --platform=os flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'platform' );
+
+  // If --version=number flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'version' );
+
+  console.log(params);
   return params;
 }
 
@@ -156,6 +187,26 @@ gulp.task( 'test:acceptance:browser', function() {
       $.util.log( 'Protractor tests done!' );
     } );
 } );
+
+gulp.task('test:acceptance:wagtail', function () {
+  spawn(
+      './initial-test-data.sh', [], {stdio: 'inherit'}
+  ).once('close', function () {
+        spawn(
+            fsHelper.getBinary('protractor'),
+            _getProtractorWagtailParams(),
+            {stdio: 'inherit'}
+        )
+            .once('close', function () {
+              $.util.log('Wagtail Protractor tests done!');
+              spawn(
+                  './drop-db.sh', ['testdb'], {stdio: 'inherit'}
+              ).once('close', function () {
+                  });
+
+            });
+      });
+});
 
 gulp.task( 'test:acceptance',
   [
