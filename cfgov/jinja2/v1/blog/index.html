@@ -46,12 +46,6 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <section class="block block__flush-top">
-        {% if view.popular_posts %}
-            {% import 'popular-stories.html' as popular_stories with context %}
-            {{ popular_stories.render(view.popular_posts) }}
-        {% endif %}
-    </section>
     <section class="block" data-qa-hook="stay-informed-section">
         <h2 class="header-slug">
             <span class="header-slug_inner">
