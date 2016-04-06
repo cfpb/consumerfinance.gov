@@ -75,9 +75,10 @@ function _addCommandLineFlag( protractorParams, commandLineParams, value ) {
 
 /**
  * Format and return parameters for Protractor binary.
+ * @param {boolean} isWagtailSpec flag determining if these params are specific to the wagtail browser spec
  * @returns {Array} List of Protractor binary parameters as strings.
  */
-function _getProtractorParams() {
+function _getProtractorParams(isWagtailSpec) {
 
   // Set default configuration command-line parameter.
   var params = [ 'test/browser_tests/conf.js' ];
@@ -88,6 +89,9 @@ function _getProtractorParams() {
 
   // If --specs=path/to/js flag is added on the command-line,
   // pass the value to protractor to override the default specs to run.
+  if ( isWagtailSpec ) {
+    commandLineParams.specs = 'wagtail/*';
+  }
   params = _addCommandLineFlag( params, commandLineParams, 'specs' );
 
   // If --windowSize=w,h flag is added on the command-line.
@@ -156,6 +160,24 @@ gulp.task( 'test:acceptance:browser', function() {
       $.util.log( 'Protractor tests done!' );
     } );
 } );
+
+gulp.task('test:acceptance:wagtail', function () {
+  spawn(
+    './initial-test-data.sh', [], {stdio: 'inherit'}
+  ).once('close', function () {
+    spawn(
+        fsHelper.getBinary('protractor'),
+        _getProtractorParams(true),
+        {stdio: 'inherit'}
+      )
+        .once('close', function () {
+          $.util.log('Wagtail Protractor tests done!');
+          spawn(
+            './drop-db.sh', ['testdb'], {stdio: 'inherit'}
+          );
+        });
+  });
+});
 
 gulp.task( 'test:acceptance',
   [
