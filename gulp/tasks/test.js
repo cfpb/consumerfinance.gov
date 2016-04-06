@@ -170,12 +170,6 @@ gulp.task('test:acceptance:wagtail', function () {
         _getProtractorParams(true),
         {stdio: 'inherit'}
       )
-        .once('close', function () {
-          $.util.log('Wagtail Protractor tests done!');
-          spawn(
-            './drop-db.sh', ['testdb'], {stdio: 'inherit'}
-          );
-        });
   });
 });
 
