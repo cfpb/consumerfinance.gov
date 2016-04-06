@@ -29,6 +29,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - randomized formfieldWithButton Id and included name field for post requests.
 - Update Director's Bio and Deputy Director's Bio
 - Update the leadership calendar copy and links
+- Updated the placeholders in wagtail filterable list controls.
 
 ### Removed
 
