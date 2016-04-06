@@ -77,7 +77,7 @@ function _addCommandLineFlag( protractorParams, commandLineParams, value ) {
  * Format and return parameters for Protractor binary.
  * @returns {Array} List of Protractor binary parameters as strings.
  */
-function _getProtractorParams() {
+function _getProtractorParams(isWagtailSpec) {
 
   // Set default configuration command-line parameter.
   var params = [ 'test/browser_tests/conf.js' ];
@@ -88,6 +88,9 @@ function _getProtractorParams() {
 
   // If --specs=path/to/js flag is added on the command-line,
   // pass the value to protractor to override the default specs to run.
+  if (isWagtailSpec){
+    commandLineParams['specs']  = 'wagtail/*';
+  }
   params = _addCommandLineFlag( params, commandLineParams, 'specs' );
 
   // If --windowSize=w,h flag is added on the command-line.
@@ -102,37 +105,6 @@ function _getProtractorParams() {
   // If --version=number flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'version' );
 
-  console.log(params);
-  return params;
-}
-
-function _getProtractorWagtailParams() {
-
-  // Set default configuration command-line parameter.
-  var params = [ 'test/browser_tests/conf.js' ];
-  var commandLineParams = minimist( process.argv.slice( 2 ) );
-
-  // If --sauce=false flag is added on the command-line.
-  params = _addCommandLineFlag( params, commandLineParams, 'sauce' );
-
-  // If --specs=path/to/js flag is added on the command-line,
-  // pass the value to protractor to override the default specs to run.
-  commandLineParams['specs']  = 'wagtail/*';
-  params = _addCommandLineFlag( params, commandLineParams, 'specs' );
-
-  // If --windowSize=w,h flag is added on the command-line.
-  params = _addCommandLineFlag( params, commandLineParams, 'windowSize' );
-
-  // If --browserName=browser flag is added on the command-line.
-  params = _addCommandLineFlag( params, commandLineParams, 'browserName' );
-
-  // If --platform=os flag is added on the command-line.
-  params = _addCommandLineFlag( params, commandLineParams, 'platform' );
-
-  // If --version=number flag is added on the command-line.
-  params = _addCommandLineFlag( params, commandLineParams, 'version' );
-
-  console.log(params);
   return params;
 }
 
@@ -194,7 +166,7 @@ gulp.task('test:acceptance:wagtail', function () {
   ).once('close', function () {
         spawn(
             fsHelper.getBinary('protractor'),
-            _getProtractorWagtailParams(),
+            _getProtractorParams(true),
             {stdio: 'inherit'}
         )
             .once('close', function () {
