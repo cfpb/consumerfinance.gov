@@ -21,9 +21,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Remove inline CSS when running sheer_index
 
 ### Changed
+
 - Updated Global Search to set search trigger to invisible,
   since hidden is overridden.
-
 - Defaulted Related posts slug title to 'Further Reading' and made it a field in wagtail.
 - Enabled gov delivery subscriptions to work on wagtail pages
 - randomized formfieldWithButton Id and included name field for post requests.
@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ### Removed
+
 - Removed `gulp beep` task for optional alerting when the build process
   has completed.
 
@@ -38,11 +39,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
-<<<<<<< 1f4eb681f82301548ca77f928e3df203bdb63c60
 - Fixed paths to templates that were moved in to /about-us
-=======
--
->>>>>>> Update director and deputy director bios
+- Update biographies for director bios
 
 ## 3.0.0-3.2.1 - 2016-03-21
 
