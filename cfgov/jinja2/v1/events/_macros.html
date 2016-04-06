@@ -36,7 +36,6 @@
 
 {% macro event_location_image(options={}) %}
     {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
-
     <img class="{{ options.additional_classes if options.additional_classes else '' }}"
          src="{{ location_image_url({
                         'location': options.location
@@ -70,12 +69,11 @@
    ========================================================================== #}
 
 {% macro event_meta_address(event, address_format='{city}, {state}') %}
-    {%- set city   =  event.venue_city     | default('Washington', true) -%}
-    {%- set state  =  event.venue_state    | default('DC', true) -%}
-    {%- set street =  event.venue_street   | default('1275 First St NE', true) -%}
-    {%- set name   =  event.venue_name     | default('CFPB', true) -%}
-    {%- set zip    =  event.venue_zip_code | default('20002', true) -%}
-
+    {%- set city   =  event.venue_city   | default('', true) -%}
+    {%- set state  =  event.venue_state  | default('', true) -%}
+    {%- set street =  event.venue_street | default('', true) -%}
+    {%- set name   =  event.venue_name   | default('', true) -%}
+    {%- set zip    =  event.venue_zip    | default('', true) -%}
     <p class="event-meta_address h-adr">
         {%- macro _city() %}
             <span class="event-meta_city p-locality">{{ city }}</span>
@@ -128,7 +126,8 @@
    ========================================================================== #}
 
 {% macro event_venue(event, event_state) %}
-    {%- set city =  event.venue_city + ', ' + event.venue_state | default('Washington, DC') -%}
+    {% set state_prefix = ', ' if event.venue_city and event.venue_state else '' %}
+    {% set city_prefix_state = event.venue_city ~ state_prefix ~ event.venue_state %}
     <section class="event-venue">
         <div class="event-venue_details">
             <header class="event-venue_header">
@@ -140,13 +139,13 @@
                 </button>
                 {% endif %}
                 <h2 class="event-venue_heading">
-                    {{ city }}
+                    {{ city_prefix_state }}
                 </h2>
             </header>
             <div class="content-l">
                 <div class="event-meta content-l_col content-l_col-1-2">
                     {{ event_meta_address(event,
-                        address_format ='{venue} {street} {city}, {state} {zip}'
+                        address_format ='{venue} {street} {city}' ~ state_prefix ~ '{state} {zip}'
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
@@ -197,7 +196,7 @@
                 }) }}
             {% else %}
                 {{ event_location_image({
-                    'location': city,
+                    'location': city_prefix_state,
                     'zoom':     '12',
                     'scale':    '2',
                     'size':     '640x320'
