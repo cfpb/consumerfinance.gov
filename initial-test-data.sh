@@ -13,9 +13,9 @@ set -e
 import_data(){
     echo 'Creating DB Tables...'
     ./create-mysql-db.sh
-    ./cfgov/manage.py migrate --settings='cfgov.settings.test'
+    ./cfgov/manage.py migrate
     echo 'Loading Initial Data...'
-    ./cfgov/manage.py runscript initial_test_data --settings='cfgov.settings.test'
+    ./cfgov/manage.py runscript initial_test_data
 }
 
 import_data

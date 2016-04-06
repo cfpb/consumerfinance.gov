@@ -3,7 +3,7 @@
 {% set breadcrumb_items = vars.breadcrumb_items %}
 
 {% block title -%}
-    {{ post.title }} | Consumer Financial Protection Bureau
+    {{ post.title | safe}} | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block desc -%}
