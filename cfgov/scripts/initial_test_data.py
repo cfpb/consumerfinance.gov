@@ -36,11 +36,12 @@ def run():
 
     #Setting new site root
     site = Site.objects.first()
-    site.port = 8000
-    site.root_page_id = site_root.id
-    site.save()
-    content_site = Site(hostname='content.localhost', port=8000, root_page_id=site_root.id)
-    content_site.save()
+    if site.root_page_id != site_root.id:
+        site.port = 8000
+        site.root_page_id = site_root.id
+        site.save()
+        content_site = Site(hostname='content.localhost', port=8000, root_page_id=site_root.id)
+        content_site.save()
 
     def publish_page(child=None, root=site_root):
         root.add_child(instance=child)
@@ -51,26 +52,41 @@ def run():
         revision.publish()
 
     # Create each Page Type
-    lap = LandingPage(title='Landing Page', slug='landing-page', owner=admin_user)
-    publish_page(lap)
-    sp = SublandingPage(title='Sublanding Page', slug='sublanding-page', owner=admin_user)
-    publish_page(sp)
-    bp = BrowsePage(title='Browse Page', slug='browse-page', owner=admin_user)
-    publish_page(bp)
+    if not LandingPage.objects.filter(title='Landing Page'):
+        lap = LandingPage(title='Landing Page', slug='landing-page', owner=admin_user)
+        publish_page(lap)
+
+    if not SublandingPage.objects.filter(title='Sublanding Page'):
+        sp = SublandingPage(title='Sublanding Page', slug='sublanding-page', owner=admin_user)
+        publish_page(sp)
+
+    if not BrowsePage.objects.filter(title='Browse Page'):
+        bp = BrowsePage(title='Browse Page', slug='browse-page', owner=admin_user)
+        publish_page(bp)
 
     # Filterable Pages
-    bfp = BrowseFilterablePage(title='Browse Filterable Page', slug='browse-filterable-page', owner=admin_user)
-    publish_page(bfp)
-    sfp = SublandingFilterablePage(title='Sublanding Filterable Page', slug='sublanding-filterable-page',
-                                   owner=admin_user)
-    publish_page(sfp)
-    eap = EventArchivePage(title='Event Archive Page', slug='event-archive-page', owner=admin_user)
-    publish_page(eap)
+    if not BrowseFilterablePage.objects.filter(title='Browse Filterable Page'):
+        bfp = BrowseFilterablePage(title='Browse Filterable Page', slug='browse-filterable-page', owner=admin_user)
+        publish_page(bfp)
+
+    if not SublandingFilterablePage.objects.filter(title='Sublanding Filterable Page'):
+        sfp = SublandingFilterablePage(title='Sublanding Filterable Page', slug='sublanding-filterable-page',
+                                       owner=admin_user)
+        publish_page(sfp)
+
+    if not EventArchivePage.objects.filter(title='Event Archive Page'):
+        eap = EventArchivePage(title='Event Archive Page', slug='event-archive-page', owner=admin_user)
+        publish_page(eap)
 
     # Filter Pages
-    ep = EventPage(title='Event Page', slug='event-page', owner=admin_user)
-    publish_page(ep, bfp)
-    ddp = DocumentDetailPage(title='Document Detail Page', slug='document-detail-page', owner=admin_user)
-    publish_page(ddp, bfp)
-    lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
-    publish_page(lp, bfp)
+    if not EventPage.objects.filter(title='Event Page'):
+        ep = EventPage(title='Event Page', slug='event-page', owner=admin_user)
+        publish_page(ep, bfp)
+
+    if not DocumentDetailPage.objects.filter(title='Document Detail Page'):
+        ddp = DocumentDetailPage(title='Document Detail Page', slug='document-detail-page', owner=admin_user)
+        publish_page(ddp, bfp)
+
+    if not LearnPage.objects.filter(title='Learn Page'):
+        lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
+        publish_page(lp, bfp)
