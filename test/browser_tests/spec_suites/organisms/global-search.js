@@ -17,7 +17,7 @@ describe( 'GlobalSearch', function() {
   var _nonLinkDom;
 
   beforeAll( function() {
-    _nonLinkDom = element( by.css( '.footer_official-website' ) );
+    _nonLinkDom = element( by.css( '.o-footer_official-website' ) );
     _dom = {
       trigger:   element( by.css( TRIGGER_SEL ) ),
       content:   element( by.css( CONTENT_SEL ) ),

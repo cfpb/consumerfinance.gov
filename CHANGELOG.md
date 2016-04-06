@@ -30,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Update Director's Bio and Deputy Director's Bio
 - Update the leadership calendar copy and links
 - Updated the placeholders in wagtail filterable list controls.
+- Updated footer to atomic footer.
 
 ### Removed
 
