@@ -5,7 +5,7 @@ var arrayHelpers = require( '../modules/util/array-helpers' );
 var typeCheckers = require( '../modules/util/type-checkers' );
 var domTraverse = require( '../modules/util/dom-traverse' );
 var domCreate = require( '../modules/util/dom-manipulators' ).create;
-var stringMatch = require( '../modules/util/strings' ).stringMatch;
+var strings = require( '../modules/util/strings' );
 
 /**
  * Multiselect
@@ -111,6 +111,14 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
     for ( var i = 0, len = list.length; i < len; i++ ) {
       item = list[i];
+
+      // If the value isn't valid kill the script and propt the developer
+      if ( !strings.stringValid( item.value ) ) {
+        console.log( '\'' + item.value + '\' is not a valid value' );
+
+        return false;
+      }
+
       cleaned.push( {
         value:   item.value,
         text:    item.text,
@@ -301,7 +309,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       _index = -1;
 
       _filtered = _optionData.filter( function( item ) {
-        return stringMatch( item.text, value );
+        return strings.stringMatch( item.text, value );
       } );
 
       _filterResults();

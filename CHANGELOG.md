@@ -34,13 +34,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 - Removed `gulp beep` task for optional alerting when the build process
   has completed.
-
 - Remove Disqus comments from blog pages
 
 ### Fixed
 
 - Fixed paths to templates that were moved in to /about-us
 - Update biographies for director bios
+- Fixed issue with bad values in the multiselect.
+
 
 ## 3.0.0-3.2.1 - 2016-03-21
 

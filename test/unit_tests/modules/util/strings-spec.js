@@ -30,6 +30,50 @@ describe( 'Strings stringEscape()', function() {
   } );
 } );
 
+describe( 'Strings stringValid()', function() {
+  it( 'should return true when testing a standard string', function() {
+    string = 'Test String';
+
+    expect( strings.stringValid( string ) ).to.be.true;
+  } );
+
+  it( 'should return true when testing a hyphenated string', function() {
+    string = 'Test-String';
+
+    expect( strings.stringValid( string ) ).to.be.true;
+  } );
+
+  it( 'should return true when testing an underscored string', function() {
+    string = 'Test_String';
+
+    expect( strings.stringValid( string ) ).to.be.true;
+  } );
+
+  it( 'should return false when testing a string containing a single tick',
+    function() {
+      string = 'Person\'s Name';
+
+      expect( strings.stringValid( string) ).to.be.false;
+    }
+  );
+
+  it( 'should return false when testing a string containing a colon',
+    function() {
+      string = 'Person: Name';
+
+      expect( strings.stringValid( string) ).to.be.false;
+    }
+  );
+
+  it( 'should return false when testing a string containing a gt or lt',
+    function() {
+      string = '<body>';
+
+      expect( strings.stringValid( string) ).to.be.false;
+    }
+  );
+} );
+
 describe( 'Strings stringMatch()', function() {
   it( 'should return true when testing matching strings', function() {
     string = 'Test String';
