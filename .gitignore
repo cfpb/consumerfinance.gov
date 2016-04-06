@@ -101,6 +101,7 @@ ansible/roles/*
 test/macro_tests/src/
 test/unit_test_coverage/
 test/perf_test_results/
+test/screenshot.png
 htmlcov/
 .tox/
 .coverage
