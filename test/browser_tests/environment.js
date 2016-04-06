@@ -20,7 +20,7 @@ module.exports = {
           ':' + ( process.env.HTTP_PORT || webServerDefaultPort ),
 
   // The base path where the spec suites are located.
-  specsBasePath: 'spec_suites/',
+  specsBasePath: 'spec_suites/**/*',
 
   // The default window width and height.
   // Can be overridden with the --windowSize=w,h command-line flag.

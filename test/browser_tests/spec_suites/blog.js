@@ -24,12 +24,6 @@ describe( 'The Blog Page', function() {
     expect( page.contentSidebar.isPresent() ).toBe( true );
   } );
 
-  it( 'might include Popular Stories in the sidebar', function() {
-    if ( page.popularStories ) {
-      expect( page.popularStoriesTitle.getText() ).toBe( 'POPULAR STORIES' );
-    }
-  } );
-
   it( 'should include a Stay Informed section in the sidebar', function() {
     expect( page.stayInformedSection.isPresent() ).toBe( true );
   } );

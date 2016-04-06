@@ -3,10 +3,11 @@
 var JasmineReporters = require( 'jasmine-reporters' );
 var JasmineSpecReporter = require( 'jasmine-spec-reporter' );
 var mkdirp = require( 'mkdirp' );
+var environment = require( './environment.js' );
 
 exports.config = {
   framework:    'jasmine2',
-  specs:        [ 'spec_suites/*.js' ],
+  specs:        [ environment.specsBasePath + '.js' ],
   capabilities: {
     'browserName':       'chrome',
     'name':              'flapjack-browser-tests ' + process.env.SITE_DESC,
