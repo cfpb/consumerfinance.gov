@@ -92,6 +92,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
 
     var triggerClickedBinded = _triggerClicked.bind( this );
     var triggerOverBinded = _triggerOver.bind( this );
+
+    // Set initial `aria-expanded="false"` attribute.
+    _setAriaExpandedAttr( _triggerDom, 'false' );
+
     _triggerDom.addEventListener( 'click', triggerClickedBinded );
     _triggerDom.addEventListener( 'mouseover', triggerOverBinded );
 
@@ -111,6 +115,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         if ( _altTriggerDom.tagName === 'A' ) {
           _altTriggerDom.setAttribute( 'data-gtm_ignore', 'true' );
         }
+
+        // Set initial `aria-expanded="false"` attribute.
+        _setAriaExpandedAttr( _altTriggerDom, 'false' );
+
         // TODO: alt trigger should probably listen for a mouseover event too.
         _altTriggerDom.addEventListener( 'click', triggerClickedBinded );
       }
