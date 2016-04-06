@@ -22,6 +22,7 @@ from .filters import selected_filters_for_field, is_filter_selected
 from .templates import get_date_string
 from .middleware import get_request
 
+
 from flags.template_functions import flag_enabled, flag_disabled
 
 PERMALINK_REGISTRY = {}
@@ -108,6 +109,7 @@ def environment(**options):
         'when': when,
         'flag_enabled': flag_enabled,
         'flag_disabled': flag_disabled,
+        'global_include': global_render_template,
     })
     env.filters.update({
         'date': get_date_string
