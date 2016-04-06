@@ -99,13 +99,9 @@
     The jinja template and associate HTML to include for an atomic component.
 #}
 {% if atomic_type == 'header' %}
-
-    {# Overlay for the page. Used for the mobile mega menu. #}
-    <div class="a-overlay u-hidden"></div>
-
-    {% import 'organisms/header.html' as o_header with context %}
-    {{ o_header.render() }}
-
+    {% include 'on-demand/header.html' %}
+{% elif atomic_type == 'footer' %}
+    {% include 'on-demand/footer.html' %}
 {% endif %}
 
 {#
