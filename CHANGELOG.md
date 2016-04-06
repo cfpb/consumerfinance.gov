@@ -33,6 +33,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the placeholders in wagtail filterable list controls.
 - Updated footer to atomic footer.
 - Pinned our NPM dependencies.
+- Updated Capital Framework to 3.3.0
 
 ### Removed
 

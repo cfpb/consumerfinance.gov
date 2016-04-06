@@ -12,7 +12,7 @@
   "dependencies": {
     "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "browser-sync": "2.11.2",
-    "capital-framework": "3.2.1",
+    "capital-framework": "3.3.0",
     "del": "2.2.0",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.0",
