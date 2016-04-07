@@ -19,7 +19,8 @@ function SharedPage() {
   };
 
   this.getStaging = function() {
-    var baseUrl = 'content.' + process.env.HTTP_HOST + ':' + process.env.HTTP_PORT + '/shared-page/';
+    var baseUrl = 'content.' + process.env.HTTP_HOST + ':' + 
+      process.env.HTTP_PORT + '/shared-page/';
     browser.get( baseUrl );
   };
 
@@ -61,8 +62,8 @@ function LiveDraftPage() {
 }
 
 module.exports = {
-  draftpage: DraftPage,
-  sharedpage: SharedPage,
-  livepage: LivePage,
-  livedraftpage: LiveDraftPage,
+  draftpage:     DraftPage,
+  sharedpage:    SharedPage,
+  livepage:      LivePage,
+  livedraftpage: LiveDraftPage
 };
