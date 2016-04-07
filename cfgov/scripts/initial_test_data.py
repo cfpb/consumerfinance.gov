@@ -5,9 +5,14 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from wagtail.wagtailcore.models import Page, Site
 
-from v1.models import HomePage, BrowseFilterablePage, BrowsePage, DemoPage, SublandingPage, SublandingFilterablePage, \
-    EventPage, DocumentDetailPage, EventArchivePage, LearnPage, LandingPage
-
+from v1.models.home_page import HomePage
+from v1.models.landing_page import LandingPage
+from v1.models.sublanding_page import SublandingPage
+from v1.models.learn_page import EventPage, LearnPage, DocumentDetailPage
+from v1.models.browse_page import BrowsePage
+from v1.models.browse_filterable_page import BrowseFilterablePage, EventArchivePage
+from v1.models.sublanding_filterable_page import SublandingFilterablePage
+from v1.models.demo import DemoPage
 
 def run():
     print 'Running script \'scripts.initial_test_data\' ...'
