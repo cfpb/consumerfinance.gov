@@ -36,6 +36,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
   var _state = COLLAPSED;
   var _transitionEndEvent = _getTransitionEndEvent( _content );
+  var _transitionPrefix = _getTransitionPrefix( _transitionEndEvent );
   var _contentHeight;
 
   // TODO: Replace function of _that with Function.prototype.bind.
@@ -168,7 +169,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function _transitionHeight( callback, duration ) {
     if ( _transitionEndEvent ) {
       _content.addEventListener( _transitionEndEvent, callback );
-      _content.style.transition = 'height ' + duration + 's ease-out';
+      _content.style[_transitionPrefix] = 'height ' + duration + 's ease-out';
     } else {
       // TODO: Remove callback-return ESLint ignore
       callback(); // eslint-disable-line callback-return, inline-comments, max-len
@@ -367,6 +368,22 @@ function _getTransitionEndEvent( elm ) {
     }
   }
   return transition;
+}
+
+/**
+ * @param {string} transitionEnd The browser-prefixed transition end event.
+ * @returns {string} The browser-prefixed transition event.
+ */
+function _getTransitionPrefix( transitionEnd ) {
+  var TRANSITION_PREFIXES = {
+    webkitTransitionEnd: '-webkit-transition',
+    MozTransition      : '-moz-transition',
+    OTransition        : '-o-transition',
+    transitionend      : 'transition'
+  };
+
+  return TRANSITION_PREFIXES[transitionEnd] ||
+         TRANSITION_PREFIXES.transitionend;
 }
 
 /**
