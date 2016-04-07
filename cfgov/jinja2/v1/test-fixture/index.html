@@ -1,0 +1,120 @@
+{# ==========================================================================
+
+   Minimal template for rendering out an atomic component in sudo isolation.
+
+   ========================================================================== #}
+
+{% set atomic_type = request.GET.get( 'atomic' ) %}
+{# Set to the Header organism by default. #}
+{% set atomic_type = 'header' if atomic_type == None else atomic_type %}
+
+<!DOCTYPE html>
+
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie10 lt-ie9"> <![endif]-->
+<!--[if IE 9]>         <html lang="en" class="no-js lt-ie10"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# {% block og_article_prefix %}{% endblock %}">
+
+<!--
+    ===========
+    GLOBAL META
+    ===========
+-->
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    {% block meta_viewport %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock meta_viewport %}
+
+<!--
+    ==================
+    PAGE-SPECIFIC META
+    ==================
+-->
+
+    <title>{% block title %}MISSING TITLE{% endblock title %}</title>
+    <meta name="description"
+          content="{% block desc %}Prototyping for the consumerfinance.gov refresh{% endblock %}">
+
+    <!-- Open Graph properties -->
+        <!--   Required  -->
+        <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
+        <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+        <meta property="og:url" content="{{ request.url }}">
+        <meta property="og:image"
+              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
+        <!--   Optional -->
+        <meta property="og:description" content="{% block og_desc %}{{ self.desc() }}{% endblock %}">
+        <meta property="og:site_name" content="Consumer Financial Protection Bureau">
+        <!--   Facebook -->
+        <meta property="fb:app_id" content="210516218981921">
+        {% block og_article_author %}{% endblock %}
+    <!-- End of Open Graph properties -->
+
+    {# TODO: Explicit favicon link needed for testing. Remove for production. #}
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+{#
+    ============
+    ONDEMAND CSS
+    ============
+    The atomic CSS file. This includes legacy IE-specific prefixing.
+#}
+<link rel="stylesheet" href="{{ static('css/' + atomic_type + '.css') }}">
+
+{#
+    ================
+    POLYFILL SCRIPTS
+    ================
+    The following scripts must be included in the <head>
+    and are used to polyfill missing functionality in legacy browsers.
+#}
+    {# Customized Modernizr build that includes html5shiv.
+       Built via gulp-modernizer in `scripts.js` task. #}
+    <script src="{{ static('js/modernizr.min.js') }}"></script>
+
+    <!--[if lt IE 9]>
+    <script>
+        // If in IE8 reverse no-js/js class change made by modernizr.
+        var docElement = document.documentElement;
+        docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
+    </script>
+    <![endif]-->
+
+    <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
+{#
+    ====================
+    END POLYFILL SCRIPTS
+    ====================
+#}
+</head>
+
+<body>
+
+{#
+    =================
+    ONDEMAND TEMPLATE
+    =================
+    The jinja template and associate HTML to include for an atomic component.
+#}
+{% if atomic_type == 'header' %}
+    {% include 'on-demand/header.html' %}
+{% elif atomic_type == 'footer' %}
+    {% include 'on-demand/footer.html' %}
+{% endif %}
+
+{#
+    ===============
+    ONDEMAND SCRIPT
+    ===============
+    The atomic JS file. This needs to be delivered either:
+    (a) At the bottom of the <body> (as shown).
+    (b) In the <head> with the `defer` and `async` attributes
+        set on the <script> tag.
+#}
+<script type="text/javascript" src="{{ static('js/atomic/' + atomic_type + '.js') }}"></script>
+
+</body>
+
+</html>

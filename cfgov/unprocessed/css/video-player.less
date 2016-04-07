@@ -48,13 +48,23 @@
     }
 }
 
-// Video image container related styles
+// Video image related styles
 
 .video-player_image-container {
     position: relative;
     // @black not used because it's not totally black.
     background-color: #000;
     text-align: center;
+}
+
+.video-player_image {
+    opacity: 0;
+    transition: opacity .25s;
+
+    .no-js &,
+    &-loaded {
+        opacity: 1;
+    }
 }
 
 .video-player_play-btn {

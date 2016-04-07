@@ -18,14 +18,35 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 - Adds a max-selections checker to the Multiselect.
+- Remove inline CSS when running sheer_index.
+- Abstracted dom events for easier reuse throughout the project.
 
 ### Changed
 
+- Updated Global Search to set search trigger to invisible,
+  since hidden is overridden.
 - Defaulted Related posts slug title to 'Further Reading' and made it a field in wagtail.
+- Enabled gov delivery subscriptions to work on wagtail pages
+- randomized formfieldWithButton Id and included name field for post requests.
+- Update Director's Bio and Deputy Director's Bio
+- Update the leadership calendar copy and links
+- Updated the placeholders in wagtail filterable list controls.
+- Updated footer to atomic footer.
+- Pinned our NPM dependencies.
+- Updated Capital Framework to 3.3.0
 
 ### Removed
 
+- Removed `gulp beep` task for optional alerting when the build process
+  has completed.
+- Remove Disqus comments from blog pages
+
 ### Fixed
+
+- Fixed paths to templates that were moved in to /about-us.
+- Update biographies for director bios.
+- Fixed issue with bad values in the multiselect.
+- Fixed the missing logon on IE 8.
 
 ## 3.0.0-3.2.1 - 2016-03-21
 

@@ -146,7 +146,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   function _handleExpandBegin() {
     this.dispatchEvent( 'expandBegin', { target: this } );
     // If it's the desktop view, hide the "Search" button.
-    if ( _isInDesktop() ) { _triggerDom.classList.add( 'u-hidden' ); }
+    if ( _isInDesktop() ) { _triggerDom.classList.add( 'u-invisible' ); }
     _contentDom.classList.remove( 'u-invisible' );
     _searchInputDom.select();
 
@@ -158,7 +158,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * Use this to perform post-collapseBegin actions.
    */
   function _handleCollapseBegin() {
-    _triggerDom.classList.remove( 'u-hidden' );
+    _triggerDom.classList.remove( 'u-invisible' );
     document.body.removeEventListener( 'mousedown', _handleBodyClick );
   }
 

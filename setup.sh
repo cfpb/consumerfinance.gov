@@ -12,7 +12,6 @@ set -e
 setup(){
   ./frontend.sh $1
   ./backend.sh $1
-  gulp beep
 }
 
 setup $1

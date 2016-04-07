@@ -49,7 +49,25 @@ var ieConf = {
   ]
 };
 
+var onDemandConf = {
+  context: path.join( __dirname, '/../', paths.unprocessed,
+                      JS_ROUTES_PATH + '/on-demand' ),
+  entry:   scriptsManifest.getDirectoryMap( paths.unprocessed +
+                                            JS_ROUTES_PATH + '/on-demand' ),
+  output: {
+    path:     path.join( __dirname, 'js' ),
+    filename: '[name]'
+  },
+  plugins: [
+    // Change warnings flag to true to view linter-style warnings at runtime.
+    new webpack.optimize.UglifyJsPlugin( {
+      compress: { warnings: false }
+    } )
+  ]
+};
+
 module.exports = {
-  modernConf:  modernConf,
-  ieConf:      ieConf
+  onDemandConf: onDemandConf,
+  ieConf:       ieConf,
+  modernConf:   modernConf
 };

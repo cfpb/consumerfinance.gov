@@ -3,9 +3,10 @@
 // Required modules.
 var arrayHelpers = require( '../modules/util/array-helpers' );
 var typeCheckers = require( '../modules/util/type-checkers' );
-var domTraverse = require( '../modules/util/dom-traverse' );
+var queryOne = require( '../modules/util/dom-traverse' ).queryOne;
 var domCreate = require( '../modules/util/dom-manipulators' ).create;
-var stringMatch = require( '../modules/util/strings' ).stringMatch;
+var strings = require( '../modules/util/strings' );
+var bindEvent = require( '../modules/util/dom-events' ).bindEvent;
 
 /**
  * Multiselect
@@ -111,6 +112,14 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
     for ( var i = 0, len = list.length; i < len; i++ ) {
       item = list[i];
+
+      // If the value isn't valid kill the script and propt the developer
+      if ( !strings.stringValid( item.value ) ) {
+        console.log( '\'' + item.value + '\' is not a valid value' );
+
+        return false;
+      }
+
       cleaned.push( {
         value:   item.value,
         text:    item.text,
@@ -301,7 +310,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       _index = -1;
 
       _filtered = _optionData.filter( function( item ) {
-        return stringMatch( item.text, value );
+        return strings.stringMatch( item.text, value );
       } );
 
       _filterResults();
@@ -361,7 +370,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   function _bindEvents() {
     var inputs = _list.querySelectorAll( 'input' );
 
-    _bind( _search, {
+    bindEvent( _search, {
       input: function() {
         _evaluate( this.value );
       },
@@ -403,7 +412,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       }
     } );
 
-    _bind( _list, {
+    bindEvent( _list, {
       mousedown: function() {
         _isBlurSkipped = true;
       },
@@ -415,7 +424,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           event.preventDefault();
           event.target.checked = !checked;
 
-          _fire( domTraverse.queryOne( event.target ), 'change', {} );
+          queryOne( event.target ).dispatchEvent( 'change' );
         } else if ( key === KEY_ESCAPE ) {
           _search.focus();
           collapse();
@@ -427,14 +436,14 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       }
     } );
 
-    _bind( _container, {
+    bindEvent( _container, {
       mousedown: function() {
         _isBlurSkipped = true;
       }
     } );
 
     for ( var i = 0, len = inputs.length; i < len; i++ ) {
-      _bind( inputs[i], {
+      bindEvent( inputs[i], {
         change: _changeHandler
       } );
     }
@@ -450,52 +459,22 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Shortcut for binding event listeners to elements
-   * @param  {HTMLNode} elem The element to attach the event listener to
-   * @param  {object} options   The options for the event listener
+   * Tests if the user's query matches the text input
+   * @param   {string} text  The text to test against
+   * @param   {string} value The value the user has entered
+   * @returns {boolean}      Returns the boolean result of the test
    */
-  function _bind( elem, options ) {
-    var callback;
-    for ( var evt in options ) {
-      if ( options.hasOwnProperty( evt ) ) {
-        callback = options[evt];
-        _parseEvent( evt, elem, callback );
-      }
-    }
+  function _filterContains( text, value ) {
+    return RegExp( _regExpEscape( value.trim() ), 'i' ).test( text );
   }
 
   /**
-   * Parses the event passed byt the _bind shortcut to create the event listener
-   * @param   {string}   evt      The type of event to watch for
-   * @param   {HTMLNode} elem     The element to watch for the passed event
-   * @param   {Function} callback The function to trigger on the event
+   * Escapes a string
+   * @param   {string} s The string to escape
+   * @returns {string}   The escaped string
    */
-  function _parseEvent( evt, elem, callback ) {
-    evt.split( /\s+/ ).forEach(
-      function( event ) {
-        elem.addEventListener( event, callback );
-      }
-    );
-  }
-
-  /**
-   * Shortcut for triggering events on elements
-   * @param  {HTMLNode} target   The element to fire events on
-   * @param  {string} type       The event type to create
-   * @param  {object} properties The options for the event
-   */
-  function _fire( target, type, properties ) {
-    var evt = document.createEvent( 'HTMLEvents' );
-
-    evt.initEvent( type, true, true );
-
-    for ( var j in properties ) {
-      if ( properties.hasOwnProperty( j ) ) {
-        evt[j] = properties[j];
-      }
-    }
-
-    target.dispatchEvent( evt );
+  function _regExpEscape( s ) {
+    return s.replace( /[-\\^$*+?.()|[\]{}]/g, '\\$&' );
   }
 
   // Attach public events.
