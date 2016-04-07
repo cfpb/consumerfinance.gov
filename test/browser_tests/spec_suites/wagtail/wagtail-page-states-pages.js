@@ -19,7 +19,7 @@ describe( 'Wagtail Draft Page', function() {
 
   it( 'should not load in a browser',
     function() {
-      expect( 404 );
+      expect( !page );
     }
   );
 
@@ -35,7 +35,7 @@ describe( 'Wagtail Shared Page', function() {
   it( 'should not load in a browser',
     function() {
       page.get();
-      expect( 404 );
+      expect( !page );
     }
   );
 
