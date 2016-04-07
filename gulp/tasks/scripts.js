@@ -96,6 +96,7 @@ function scriptsEs5Shim() {
         filename: 'es5-shim.js'
       }
     } ) )
+    .pipe( gulpUglify() )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + '/js/' ) )
     .pipe( browserSync.reload( {
