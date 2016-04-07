@@ -218,14 +218,6 @@
                 z-index: 10;
             }
 
-            &-2,
-            &-3 {
-                position: absolute;
-                left: 0;
-                top: -1px;
-                z-index: 10;
-            }
-
             background-color: @gray-5;
             border-top: 1px solid @gray-50;
             border-bottom: 1px solid @gray-50;
@@ -269,11 +261,6 @@
                 border-bottom: 1px solid @gray-50;
             }
 
-            &-grid {
-                padding-left: unit( @grid_gutter-width / 2 / 18px, em );
-                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-            }
-
             // Adjust padding and margin on unordered list menu items
             // above the global eyebrow.
             &-list {
@@ -292,6 +279,7 @@
                 .u-link__colors( @pacific, @pacific, @pacific-60, @pacific, @dark-navy );
 
                 padding-top: @grid_gutter-width / 2;
+                padding-right: @grid_gutter-width / 2;
                 padding-bottom: @grid_gutter-width / 2;
 
                 .js & {
@@ -374,7 +362,6 @@
 
         // 3rd-level menu - Tablet/Mobile.
         &_content-3 {
-
             // TODO: There is similar code set on all three menus.
             //       Investigate if it can be combined.
             // Remove final border line of last list item.
@@ -386,10 +373,18 @@
         }
 
         // Submenus - Tablet/Mobile.
-        // TODO: Enable when third-level behaviors are in.
         &_content-2,
         &_content-3 {
             .u-move-right();
+            position: absolute;
+            left: 0;
+            top: -1px;
+            z-index: 10;
+
+            &-grid {
+                padding-left: unit( @grid_gutter-width / 2 / 18px, em );
+                padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            }
         }
     } );
 
