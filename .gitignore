@@ -108,6 +108,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+.snyk
 
 # IDE Specifc
 ############
