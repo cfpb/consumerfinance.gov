@@ -38,6 +38,7 @@
   "devDependencies": {
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
     "chai": "3.5.0",
+    "es5-shim": "4.5.7",
     "glob-all": "3.0.1",
     "gulp-concat": "2.6.0",
     "gulp-coveralls": "0.1.4",
@@ -63,6 +64,7 @@
     "wcag": "0.2.2"
   },
   "browser": {
+    "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",
     "handlebars": "./node_modules/handlebars/dist/handlebars.min.js",
     "history": "./vendor/history.js/scripts/bundled-uncompressed/html5/jquery.history.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",

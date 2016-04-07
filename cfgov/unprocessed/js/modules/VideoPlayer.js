@@ -21,11 +21,12 @@ var CLASSES = Object.freeze( {
   CLOSE_BTN_SELECTOR:        '.video-player_close-btn'
 } );
 
+
 // Private properties.
-var _isIframeLoaded;
-var _isIframeLoading;
-var _isVideoPlaying;
-var _isVideoStopped;
+var _isIframeLoaded = false;
+var _isIframeLoading = false;
+var _isVideoPlaying = false;
+var _isVideoStopped = true;
 var _this;
 
 /**
@@ -102,16 +103,15 @@ VideoPlayer.init = function init( selector ) {
 function _attachIFrame() {
   var iFrameElement = _this.childElements.iFrame;
   var iFrameContainerElement = _this.childElements.iFrameContainer;
-  var state = _this.state;
 
-  if ( state.isIframeLoaded === false && state.isIframeLoading === false &&
+  if ( _isIframeLoaded === false && _isIframeLoading === false &&
     iFrameElement === null ) {
     iFrameElement = _createElement( 'iframe', _this.iFrameProperties );
     iFrameElement.classList.add( CLASSES.IFRAME_CLASS_NAME );
     iFrameElement.setAttribute( 'frameborder', 0 );
-    state.isIframeLoading = true;
+    _this.state.isIframeLoading = true;
     iFrameElement.onload =
-      function oniFrameLoad() { state.isIframeLoaded = true; };
+      function oniFrameLoad() { _this.state.setIsIframeLoaded( true ); };
     iFrameContainerElement.appendChild( iFrameElement );
   } else if( _this.childElements.iframeContainer === null ) {
     throw new Error( 'No iframe container element found.' );
@@ -243,30 +243,29 @@ var API = {
     src:             '',
     width:           '100%'
   },
-  // TODO: With this amount of states it probably makes more sense to have
-  // getState/setState methods.
+
   state: {
     isIframeLoading: false,
     isPlayerInitialized: false,
     isScriptLoading: false,
-    get isIframeLoaded() {
-      return _isIframeLoaded || false;
+    getIsIframeLoaded: function() {
+      return _isIframeLoaded;
     },
-    set isIframeLoaded( value ) {
+    setIsIframeLoaded: function( value ) {
       if ( value === true ) _isIframeLoading = false;
       _isIframeLoaded = value;
     },
-    get isVideoPlaying() {
-      return _isVideoPlaying || false;
+    getIsVideoPlaying: function() {
+      return _isVideoPlaying;
     },
-    set isVideoPlaying( value ) {
+    setIsVideoPlaying: function( value ) {
       if ( value === true ) _isVideoStopped = false;
       _isVideoPlaying = value;
     },
-    get isVideoStopped() {
-      return _isVideoStopped || true;
+    getIsVideoStopped: function() {
+      return _isVideoStopped;
     },
-    set isVideoStopped( value ) {
+    setIsVideoStopped: function( value ) {
       if ( value === true ) _isVideoPlaying = false;
       _isVideoStopped = value;
     }
@@ -276,11 +275,11 @@ var API = {
   * Function used to play the video player.
   */
   play: function play( ) {
-    if( this.state.isIframeLoaded === false ) {
+    if( _isIframeLoaded === false ) {
       _attachIFrame();
     }
     this.baseElement.classList.add( CLASSES.VIDEO_PLAYING_STATE );
-    this.state.isVideoPlaying = true;
+    this.state.setIsVideoPlaying( true );
   },
 
   /**
@@ -288,7 +287,7 @@ var API = {
   */
   stop: function stop( ) {
     this.baseElement.classList.remove( CLASSES.VIDEO_PLAYING_STATE );
-    this.state.isVideoStopped = true;
+    this.state.setIsVideoStopped( true );
   }
 };
 
