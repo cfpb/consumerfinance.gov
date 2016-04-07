@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated footer to atomic footer.
 - Pinned our NPM dependencies.
 - Updated Capital Framework to 3.3.0
+- Changed U.S. flag image paths to be root-relative
 
 ### Removed
 
