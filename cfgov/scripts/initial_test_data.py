@@ -14,6 +14,7 @@ from v1.models.browse_filterable_page import BrowseFilterablePage, EventArchiveP
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.demo import DemoPage
 
+
 def run():
     print 'Running script \'scripts.initial_test_data\' ...'
 
@@ -95,3 +96,14 @@ def run():
     if not LearnPage.objects.filter(title='Learn Page'):
         lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
         publish_page(lp, bfp)
+
+    from time import sleep
+    # Molecules
+    bfp = BrowseFilterablePage.objects.filter(title='Browse Filterable Page')[0]
+    if not bfp.header.stream_data:
+        bfp.header.stream_data = [{'type': 'text_introduction', 'value': {'body': '', 'has_rule': False, 'intro': 'this is an intro', 'heading': '', 'links': []}}]
+        bfp.save()
+        sleep(5) # This seems to help. Without it, the molecules.js test usually fails. 
+        revision = bfp.save_revision()
+        revision.publish()
+
