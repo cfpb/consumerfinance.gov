@@ -1,14 +1,11 @@
 'use strict';
 var chai = require( 'chai' );
 var expect = chai.expect;
-var sinon = require( 'sinon' );
 var jsdom = require( 'mocha-jsdom' );
 var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-var ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
 var domEvents = require( BASE_JS_PATH + 'modules/util/dom-events' );
 var input;
 var clicked;
-var message;
 
 describe( 'Dom Events bindEvent', function() {
   jsdom();
@@ -22,19 +19,15 @@ describe( 'Dom Events bindEvent', function() {
 
   it( 'should not update the var until event is triggered', function() {
     domEvents.bindEvent( input, {
-        click: function() {
-          clicked = true;
-        }
-      } );
-      expect( clicked ).to.be.false;
+      click: function() { clicked = true; }
+    } );
+    expect( clicked ).to.be.false;
   } );
 
   it( 'should not update the var if another event is triggered',
     function() {
       domEvents.bindEvent( input, {
-        click: function() {
-          clicked = true;
-        }
+        click: function() { clicked = true; }
       } );
       input.focus();
       expect( clicked ).to.be.false;
@@ -44,9 +37,7 @@ describe( 'Dom Events bindEvent', function() {
   it( 'should update the var when the event is triggered',
     function() {
       domEvents.bindEvent( input, {
-        click: function() {
-          clicked = true;
-        }
+        click: function() { clicked = true; }
       } );
       input.click();
       expect( clicked ).to.be.true;

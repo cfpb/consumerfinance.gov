@@ -377,9 +377,9 @@ function _getTransitionEndEvent( elm ) {
 function _getTransitionPrefix( transitionEnd ) {
   var TRANSITION_PREFIXES = {
     webkitTransitionEnd: '-webkit-transition',
-    MozTransition      : '-moz-transition',
-    OTransition        : '-o-transition',
-    transitionend      : 'transition'
+    MozTransition:       '-moz-transition',
+    OTransition:         '-o-transition',
+    transitionend:       'transition'
   };
 
   return TRANSITION_PREFIXES[transitionEnd] ||
