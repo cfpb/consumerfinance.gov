@@ -1,11 +1,12 @@
+from django.test import TestCase
 from django.utils.datastructures import MultiValueDict as MultiDict
 
 from sheerlike import filters
 
 
-class TestArgParsing(object):
+class TestArgParsing(TestCase):
 
-    def setup(self):
+    def setUp(self):
         self.args = MultiDict([('filter_category', ['cats', 'dogs']),
                                ('filter_planet', ['earth']),
                                ('filter_range_date_lte', ['2014-6-1']),
@@ -38,7 +39,7 @@ class TestArgParsing(object):
         assert (('dogs') in selected)
 
 
-class TestDateValidation(object):
+class TestDateValidation(TestCase):
 
     def test_date_validation_incorrect_range(self):
         args = MultiDict([('filter_range_date_gte', ['2014-6']),
