@@ -37,9 +37,14 @@
         </p>
     {% endif %}
 
+    {% set field = 'email' %}
     {% for form in value.form_field %}
-        {{ form | safe }}
+        {{ render_stream_child(form) }}
     {% endfor %}
+
+    <div class="form-group">
+        <input type="hidden" name="code" value="{{ value.gd_code }}">
+    </div>
 </form>
 </div>
 

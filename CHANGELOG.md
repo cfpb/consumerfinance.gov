@@ -17,11 +17,51 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+
 ### Changed
+
 
 ### Removed
 
+
 ### Fixed
+
+## 3.0.0-3.3.0 - 2016-04-08
+
+### Added
+
+- Adds a max-selections checker to the Multiselect.
+- Remove inline CSS when running sheer_index.
+- Abstracted dom events for easier reuse throughout the project.
+
+### Changed
+
+- Updated Global Search to set search trigger to invisible,
+  since hidden is overridden.
+- Defaulted Related posts slug title to 'Further Reading' and made it a field in wagtail.
+- Enabled gov delivery subscriptions to work on wagtail pages
+- randomized formfieldWithButton Id and included name field for post requests.
+- Update Director's Bio and Deputy Director's Bio
+- Update the leadership calendar copy and links
+- Updated the placeholders in wagtail filterable list controls.
+- Updated footer to atomic footer.
+- Pinned our NPM dependencies.
+- Updated Capital Framework to 3.3.0
+- Changed U.S. flag image paths to be root-relative
+
+### Removed
+
+- Removed `gulp beep` task for optional alerting when the build process
+  has completed.
+- Remove Disqus comments from blog pages
+
+### Fixed
+
+- Fixed paths to templates that were moved in to /about-us.
+- Update biographies for director bios.
+- Fixed issue with bad values in the multiselect.
+- Fixed the missing logon on IE 8.
+- Fixed an issue w/ the spacing on the hero.
 
 ## 3.0.0-3.2.1 - 2016-03-21
 
@@ -31,7 +71,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added Global Banner Molecule.
 - Added Digital Privacy Policy to the footer.
 - Added tests for dom-traverse functions
-- Added default values for the View more text and URL. 
+- Added default values for the View more text and URL.
 - Dynamically create the View more URL if there are tags
 - Add an EXTERNAL_ICON_PATTERN to handle icons and links separately
 - Added specific Blog/Newsroom Categories to Related Post options
@@ -51,11 +91,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the Hero Macro for the new overlay hero styles.
 - Updated article template to render all categories
 - Append bureau title on every template rendered
+- Changing the times we receive for calendar events to match our db.
 - Updated `external-site/index.html` to use the full params of whatever's being passed in.
+- Changed copy on `/the-bureau/`
+- Updated titles and names in the Bureau Structure page
 
 ### Removed
 
 - Removed Georgia usage for the time being.
+- Removed ICS download placeholder from events.
 
 ### Fixed
 
@@ -803,6 +847,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.0.0-1.2.2 - 2015-07-02
 
 ### Added
+
+- Add reverse flag back into post preview snapshot for most recent pages
 
 ### Changed
 

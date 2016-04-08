@@ -14,8 +14,6 @@
 
    value.field.required:    Boolean indicating whether the field is required.
 
-   value.field.id:          The id for the input.
-
    value.field.info:        The text information to display above the field.
 
    value.field.label:       The label for the input.
@@ -25,15 +23,17 @@
    ========================================================================== #}
 
 <div class="m-form-field-with-button">
+    {% set form_id = ('form_' ~ range(1, 100) | random) %}
     <div class="form-group">
-        <label for="{{ value.id }}">
+        <label for="{{ form_id }}">
             <b>{{ value.label }}</b>
             {{ '(required)' if value.required else '' }}
         </label>
-        <input id="{{ value.id }}"
+
+        <input id="{{ form_id }}"
                type="{{ value.type }}"
                placeholder="{{ value.placeholder }}"
-               name="{{ value.name }}"
+               name="{{ field or '' }}"
                class="m-form-field-with-button_field"
                {{ 'required' if value.required else '' }}>
     </div>

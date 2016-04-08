@@ -14,20 +14,20 @@
 {% macro render() %}
 {% import 'molecules/social-media.html' as social_media with context %}
 {% set external_redirect_url = '/external-site/?ext_url=' %}
-<footer class="footer" role="contentinfo">
+<footer class="o-footer" role="contentinfo">
     <div class="wrapper wrapper__match-content">
 
-        <div class="footer-pre">
+        <div class="o-footer_pre">
 
             <a class="btn
                       btn__secondary
-                      footer_top-button
-                      js-return-to-top"
+                      js-return-to-top
+                      o-footer_top-button"
                href="#">
                 Back to top <span class="cf-icon cf-icon-arrow-up"></span>
             </a>
 
-            <ul class="footer_nav-list">
+            <ul class="o-footer_nav-list">
                 <li class="list_item">
                     <a class="list_link" href="/about-us/contact-us/">
                         Contact Us
@@ -53,14 +53,14 @@
                         block__flush-top
                         block__flush-bottom
                         block__padded-top">
-                {{ social_media.render( is_share_view=false ) }}
+                {{ social_media.render( { 'is_share_view': false } ) }}
             </div>
-        </div><!-- END .footer-pre -->
+        </div>{# END .o-footer_pre #}
 
-        <div class="footer-middle-left">
+        <div class="o-footer-middle-left">
 
-            <div class="footer_col">
-                <ul class="footer_list">
+            <div class="o-footer_col">
+                <ul class="o-footer_list">
                     <li class="list_item">
                         <a class="list_link" href="/foia-requests/">
                             FOIA
@@ -84,8 +84,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="footer_col">
-                <ul class="footer_list">
+            <div class="o-footer_col">
+                <ul class="o-footer_list">
                     <li class="list_item">
                         <a class="list_link" href="/accessibility/">
                             Accessibility
@@ -108,16 +108,16 @@
                     </li>
                 </ul>
             </div>
-        </div><!-- END .footer-middle-left -->
+        </div>{# END .o-footer-middle-left #}
 
-        <div class="footer-middle-right">
-                <ul class="footer_list">
+        <div class="o-footer-middle-right">
+                <ul class="o-footer_list">
                     <li class="list_item">
                         <a class="list_link
                                   icon-link
                                   icon-link__external-link"
                            href="http://usa.gov/">
-                            USA.gov
+                            <span class="icon-link_text">USA.gov</span>
                         </a>
                     </li>
                     <li class="list_item">
@@ -125,18 +125,18 @@
                                   icon-link
                                   icon-link__external-link"
                            href="http://www.federalreserve.gov/oig/default.htm">
-                            Office of Inspector General
+                            <span class="icon-link_text">Office of Inspector General</span>
                         </a>
                     </li>
                 </ul>
-        </div><!-- END .footer-middle-right -->
+        </div>{# END .o-footer-middle-right #}
 
-        <div class="footer-post">
-            <p class="footer_official-website">
+        <div class="o-footer-post">
+            <p class="o-footer_official-website">
                 An official website of the United States Government
             </p>
-        </div><!-- END .footer-post -->
+        </div>{# END .o-footer-post #}
 
-    </div><!-- END .wrapper.wrapper__match-content -->
-</footer><!-- END .footer -->
+    </div>{# END .wrapper.wrapper__match-content #}
+</footer>{# END .o-footer #}
 {% endmacro %}

@@ -1,0 +1,11 @@
+{# ==========================================================================
+
+   Render a header without the banner, for use in the global_include used
+   in non-V1 projects.
+
+   ========================================================================== #}
+
+{# Overlay for the page. Used for the mobile mega menu. #}
+<div class="a-overlay u-hidden"></div>
+{% import 'organisms/header.html' as header with context %}
+{{ header.render( show_banner=false ) }}

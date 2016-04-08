@@ -114,6 +114,10 @@ build(){
   echo 'Building project...'
   gulp clean
   gulp build
+
+  if [ "$cli_flag" = "production" ]; then
+    gulp scripts:ondemand
+  fi
 }
 
 # Returns 1 if a global command-line program installed, else 0.
@@ -128,8 +132,8 @@ is_installed(){
   echo "$return_"
 }
 
-if [ "$1" = "init" || "$1" = "build" ]; then
-  if [ "$1" = "init" ]; then
+if [ "$1" == "init" ] || [ "$1" == "build" ]; then
+  if [ "$1" == "init" ]; then
     init ""
     clean
     install

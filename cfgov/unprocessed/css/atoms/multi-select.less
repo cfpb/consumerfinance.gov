@@ -60,16 +60,23 @@
             display: none;
         }
 
-        &.no-results {
+        &.no-results,
+        &.max-selections {
             li {
                 display: none;
             }
 
             &:after {
                 display: list-item;
-
-                content: 'No results found';
             }
+        }
+
+        &.no-results:after {
+            content: 'No results found';
+        }
+
+        &.max-selections:after {
+            content: 'Reached maximum of five selections';
         }
     }
 

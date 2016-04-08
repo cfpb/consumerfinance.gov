@@ -78,15 +78,14 @@ class Hero(blocks.StructBlock):
     class Meta:
         icon = 'image'
         template = '_includes/molecules/hero.html'
-        classname = 'block__flush'
+        classname = 'block__flush-top block__flush-bottom'
 
 
 class FormFieldWithButton(blocks.StructBlock):
     btn_text = blocks.CharBlock(required=False)
 
     required = blocks.BooleanBlock(required=False)
-    id = blocks.CharBlock(required=False,
-                          help_text="Type of form i.e emailForm, submission-form. Should be unique if multiple forms are used")
+
     info = blocks.RichTextBlock(required=False, label="Disclaimer")
     label = blocks.CharBlock(required=True)
     type = blocks.ChoiceBlock(choices=[
@@ -98,23 +97,6 @@ class FormFieldWithButton(blocks.StructBlock):
         ('radio', 'Radio'),
     ], required=False)
     placeholder = blocks.CharBlock(required=False)
-
-    def clean(self, data):
-        error_dict = {}
-
-        try:
-            data = super(FormFieldWithButton, self).clean(data)
-        except ValidationError as e:
-            error_dict.update(e.params)
-
-        if not util.id_validator(data['id']):
-            id_err = ['Id must only contain alphabets, numbers, underscores and hyphens']
-            error_dict.update({'id': id_err})
-
-        if error_dict:
-            raise ValidationError("ImageBasicUrlAlt validation errors", params=error_dict)
-        else:
-            return data
 
     class Meta:
         icon = 'mail'

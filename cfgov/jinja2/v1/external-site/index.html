@@ -6,7 +6,7 @@
 {% set request_url = request_copy.pop('ext_url', None) %}
 {% set params = request_copy | urlencode %}
 {% if request_url %}
-   {% set request_url = request_url[0] + '&' + params %}
+   {% set request_url = request_url[0] + '&' + params if params else request_url[0] %}
 {% endif %}
 
 {% set external_url = request_url or request_host %}

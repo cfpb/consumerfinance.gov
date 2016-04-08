@@ -22,9 +22,9 @@
            m-expandable__expanded'
           if has_children else '' }}">
     {% if has_children %}
+    {{ role.render(org) }}
     <button class="m-expandable_target">
         <div class="m-expandable_header">
-            {{ role.render(org) }}
             <div class="org-chart_node_expander">
                 <span class="m-expandable_header-left
                              m-expandable_label

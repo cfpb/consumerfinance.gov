@@ -1,8 +1,8 @@
 'use strict';
 
-var Footer = require( '../shared_objects/footer.js' );
+var Footer = require( '../../shared_objects/footer.js' );
 
-describe( 'The Footer Component', function() {
+describe( 'Footer', function() {
   var _sharedObject;
 
   var _footerLinkLookup =
@@ -10,7 +10,7 @@ describe( 'The Footer Component', function() {
       'accessibility',
     '/office-civil-rights/':
       'office of civil rights',
-    '/careers/':
+    '/about-us/careers/':
       'careers',
     '/foia-requests/':
       'foia',

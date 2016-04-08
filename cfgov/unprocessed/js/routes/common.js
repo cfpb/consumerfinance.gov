@@ -10,10 +10,8 @@ require( 'jquery-easing' );
 require( 'cf-expandables' );
 
 // Global modules.
-require( '../modules/footer-button' ).init();
 require( '../modules/focus-target' ).init();
 require( '../modules/form-validation' ).init();
-require( '../modules/scroll-on-history-collapse' ).init();
 require( '../modules/clear-form-buttons' ).init();
 require( '../modules/UStreamPlayer' ).init( '.video-player__ustream' );
 require( '../modules/YoutubePlayer' ).init( '.video-player__youtube' );
@@ -25,6 +23,9 @@ var Header = require( '../organisms/Header.js' );
 var header = new Header( document.body );
 // Initialize header by passing it reference to global overlay atom.
 header.init( document.body.querySelector( '.a-overlay' ) );
+
+var Footer = require( '../organisms/Footer.js' );
+var footer = new Footer( document.body ).init();
 
 // Multi-select.
 // TODO: Move to browse-filterable route after old WP pages are removed

@@ -1,5 +1,5 @@
 
-// TODO: Move the theme variables to cf-enhancements.
+// TODO: Move the theme variables to /enhancements/ for CF.
 /* topdoc
   name: Theme variables
   family: cf-core
@@ -12,12 +12,14 @@
         - |
           @margin__em
           @margin_half__em
+          @mobile_trigger_ht__px
   tags:
     - cf-core
 */
 
 @margin__em: unit( @grid_gutter-width / @base-font-size-px, em );
 @margin_half__em: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+@mobile_trigger_ht__px: 54px;
 
 /* topdoc
   name: Global Search molecule
@@ -93,7 +95,7 @@
 */
 
 .m-global-search {
-    // Hide search unless we have JS or it's a desktop-ish size
+    // Hide search unless we have JS or it's a desktop-ish size.
     display: none;
 
     .js & {
@@ -101,7 +103,7 @@
     }
 
     &_trigger {
-        // Resets
+        // Resets for default button styles.
         background-color: transparent;
         border: none;
         display: none;
@@ -119,7 +121,7 @@
             content: @cf-icon-search;
         }
 
-        // Only show trigger if we have JS
+        // Only show trigger if we have JS.
         .js & {
             display: block;
         }
@@ -133,7 +135,7 @@
             width: 100%;
         }
 
-        // Only add transforms if we have JS
+        // Only add transforms if we have JS.
         .js & {
             &.u-invisible {
                 overflow-x: hidden;
@@ -148,7 +150,7 @@
             display: block;
         }
 
-        // Hide suggestions outside of tablet sizes
+        // Hide suggestions outside of tablet sizes.
         &-suggestions {
             display: none;
 
@@ -159,13 +161,13 @@
         }
     }
 
-    // Up to desktops
+    // Up to desktops.
     .respond-to-max( @bp-sm-max, {
         &_trigger{
             padding-top: unit( @grid_gutter-width / 2 / 16px, em );
             padding-bottom: unit( @grid_gutter-width / 2 / 16px, em );
-            height: unit( 60px / @base-font-size-px, em );
-            min-width: unit( 60px / @base-font-size-px, em );
+            height: unit( @mobile_trigger_ht__px / @base-font-size-px, em );
+            min-width: unit( @mobile_trigger_ht__px / @base-font-size-px, em );
 
             &:before {
                 font-size: unit( 20px / 16px, em );
@@ -175,7 +177,7 @@
                 background: @gray-10;
                 border-left: 1px solid @gray-40;
 
-                // Show "X" icon when flyout is open
+                // Show "X" icon when flyout is open.
                 &:before {
                     content: @cf-icon-delete;
                 }
@@ -206,7 +208,7 @@
 
     // Tablet and above.
     .respond-to-min( @bp-sm-min, {
-        // Add "Search" text in trigger
+        // Add "Search" text in trigger.
         &_trigger-label:before {
             .webfont-medium();
 
@@ -217,13 +219,13 @@
     // Tablet size only.
     .respond-to-range( @bp-sm-min, @bp-sm-max, {
         &_trigger {
-            // Min-width sets open/close states to same size
+            // Min-width sets open/close states to same size.
             min-width: 110px;
 
             padding-left: unit( @grid_gutter-width / 2 / 18px, em );
             padding-right: unit( @grid_gutter-width / 2 / 18px, em );
 
-            // Show "Close" text when flyout is open
+            // Show "Close" text when flyout is open.
             &[aria-expanded="true"] {
                 .m-global-search_trigger-label:before {
                     content: 'Close';
@@ -239,18 +241,18 @@
 
     // Desktop and above
     .respond-to-min( @bp-med-min, {
-        // Always show on desktop, even without JS
+        // Always show on desktop, even without JS.
         display: block;
-        // Center on the call to action (CTA) divider to right of search
+        // Center on the call to action (CTA) divider to right of search.
         padding-top: 6px;
         padding-bottom: 6px;
-        // Match CTA offset from divider
+        // Match CTA offset from divider.
         padding-right: @margin_half__em;
 
         overflow: hidden;
 
         &_trigger {
-            // Match height of input with button
+            // Match height of input with button.
             padding: 7px 0;
         }
 
@@ -269,7 +271,7 @@
     } );
 
     // TODO: Move these styles to cf-enhancements/cf-forms.
-    // Look into removing grid styles altogether
+    //       Look into removing grid styles altogether.
     // Mobile size.
     .respond-to-min( 480px, {
         &_content-form {

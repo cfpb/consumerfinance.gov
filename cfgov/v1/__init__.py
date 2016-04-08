@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import os, re,HTMLParser
 from urlparse import urlparse
 
@@ -11,11 +12,12 @@ from jinja2 import Environment, contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
-from util.util import get_unique_id
+from .util.util import get_unique_id
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup
 from django.conf import settings
+from processors.processors_common import fix_link
 
 default_app_config = 'v1.apps.V1AppConfig'
 
@@ -52,19 +54,25 @@ def environment(**options):
 
 
 def parse_links(soup):
-    link_pattern = re.compile(settings.EXTERNAL_LINK_PATTERN)
-    icon_pattern = re.compile(settings.EXTERNAL_ICON_PATTERN)
+    extlink_pattern = re.compile(settings.EXTERNAL_LINK_PATTERN)
+    noncfpb_pattern = re.compile(settings.NONCFPB_LINK_PATTERN)
+    files_pattern = re.compile(settings.FILES_LINK_PATTERN)
     a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
     span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
+    for tag in soup:
+        if hasattr(tag, 'style'):
+            del tag['style']
     for a in soup.find_all('a', href=True):
         # Sets the link to an external one if you're leaving .gov 
-        if link_pattern.match(a['href']):
+        if extlink_pattern.match(a['href']):
             a['href'] = '/external-site/?ext_url=' + a['href']
         # Sets the icon to indicate you're leaving consumerfinance.gov
-        if icon_pattern.match(a['href']):
+        if noncfpb_pattern.match(a['href']):
             a.attrs.update({'class': a_class})
             a.append(' ') # We want an extra space before the icon
             a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
+        elif not files_pattern.match(a['href']):
+            fix_link(a)
     return soup
 
 
@@ -85,7 +93,11 @@ def render_stream_child(context, stream_child):
     # Create a new context based on the current one as we can't edit it directly
     new_context = context.get_all()
     # Add the value on the context (value is the keyword chosen by wagtail for the blocks context)
-    new_context['value'] = stream_child.value
+    try:
+        new_context['value'] = stream_child.value
+    except:
+        new_context['value'] = stream_child
+
     # Render the template with the context
     html = template.render(new_context)
     unescaped = HTMLParser.HTMLParser().unescape(html)

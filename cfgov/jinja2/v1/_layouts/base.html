@@ -97,6 +97,7 @@
     {# Customized Modernizr build that includes html5shiv.
        Built via gulp-modernizer in `scripts.js` task. #}
     <script src="{{ static('js/modernizr.min.js') }}"></script>
+    <script src="{{ static('js/es5-shim.js') }}"></script>
 
     <!--[if lt IE 9]>
     <script>
@@ -143,7 +144,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <a href="#main" id="skip-nav">Skip to main content</a>
 
 {% block header %}
-    {% include 'organisms/header.html' %}
+    {% import 'organisms/header.html' as o_header with context %}
+    {{ o_header.render( show_banner=true ) }}
 {% endblock header %}
 
 {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
@@ -157,8 +159,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
  <!-- /PRIMARY CONTENT -->
 
 {% block footer %}
-    {% import 'macros/footer-global.html' as footer_global with context %}
-    {{ footer_global.render() }}
+    {% import 'organisms/footer.html' as o_footer with context %}
+    {{ o_footer.render() }}
 {% endblock footer %}
 
 {% endblock body %}

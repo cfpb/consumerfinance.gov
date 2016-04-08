@@ -8,7 +8,7 @@
 
 {% set active_nav_id = 'bureau-structure' %}
 {% set breadcrumb_items = vars.breadcrumb_items %}
-{% set categories = [{ 
+{% set categories = [{
                         'title': 'Divisions',
                         'sub_title': 'Offices in this division',
                         'data': division_data.data
@@ -16,7 +16,7 @@
                         'title':'Office of the Director',
                         'sub_title': 'Offices under this position',
                         'data': office_data.data
-                     }] 
+                     }]
 %}
 
 {% block title -%}
@@ -46,7 +46,7 @@
 
 {% block content_main %}
     <h1>Bureau Structure</h1>
-    <p>Org chart last updated: January 11, 2016</p>
+    <p>Org chart last updated: April 4, 2016</p>
     <div class="org-chart">
         <div class="org-chart_node org-chart_node__root">
             {{ role.render({

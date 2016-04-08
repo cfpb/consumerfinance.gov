@@ -1,5 +1,7 @@
 'use strict';
 
+var _assign = require( './assign' ).assign;
+
 /**
  * Converts a string from selector-case to camelCase.
  * @param {string} str - The string in selector-case form.
@@ -19,7 +21,9 @@ function _toCamelCase( str ) {
  * @returns {Object} The data set.
  */
 function dataSet( element ) {
-  if ( document.documentElement.dataset ) return element.dataset;
+  if ( document.documentElement.dataset ) {
+    return _assign({}, element.dataset );
+  }
 
   var dataset = {};
   var regex = /^data-(.+)/;

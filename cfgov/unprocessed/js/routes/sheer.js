@@ -18,7 +18,7 @@ if ( filterableListDom ) {
   }
 }
 
-var expandableDom = document.querySelectorAll( '.content_main .m-expandable' );
+var expandableDom = document.querySelectorAll( '.content .m-expandable' );
 var expandable;
 if ( expandableDom ) {
   for ( var i = 0, len = expandableDom.length; i < len; i++ ) {

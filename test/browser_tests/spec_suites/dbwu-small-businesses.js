@@ -61,7 +61,7 @@ describe( 'The Small Businesses Page', function() {
     [ 'How to do business with us',
       'Expected procurement requests' ];
     var moreInfoSectionLinks = [ 'https://www.sam.gov/',
-    '/doing-business-with-us/upcoming-procurement-needs/' ];
+    '/about-us/doing-business-with-us/upcoming-procurement-needs/' ];
 
     expect( page.moreInfoSectionTitles.getText() )
     .toEqual( moreInfoSectionTitles );

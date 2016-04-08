@@ -11,7 +11,8 @@ var YoutubePlayer;
 
 var CLASSES = Object.freeze( {
   VIDEO_PLAYER_SELECTOR: '.video-player__youtube',
-  IFRAME_CLASS_NAME:     'video-player_iframe__youtube'
+  IFRAME_CLASS_NAME:     'video-player_iframe__youtube',
+  IMAGE_LOADED_STATE:    'video-player_image-loaded'
 } );
 
 var API = {
@@ -19,6 +20,8 @@ var API = {
   constructor: YoutubePlayer,
 
   SCRIPT_API: 'http://www.youtube.com/iframe_api',
+
+  IMAGE_URL: 'https://img.youtube.com/vi/%video_id%/maxresdefault.jpg',
 
   iFrameProperties: {
     id: CLASSES.IFRAME_CLASS_NAME
@@ -43,20 +46,53 @@ var API = {
     var youtubeEvents = this.playerOptions.events;
     youtubeEvents.onReady = this.onPlayerReady.bind( this );
     youtubeEvents.onStateChange = this.onPlayerStateChange.bind( this );
+    this.videoId = this.baseElement &&
+      this.baseElement.getAttribute( 'data-id' );
+    this.loadImage();
   },
+
 
   /**
    * Handle initializing of Youtube player and embed API script if necessary.
    */
   initPlayer: function( ) {
     var YouTubePlayer = window.YT;
+    var player;
     if ( YouTubePlayer && YouTubePlayer.Player ) {
-      var player = new YouTubePlayer.Player( this.iFrameProperties.id
+      player = new YouTubePlayer.Player( this.iFrameProperties.id
         , this.playerOptions );
       this.state.isPlayerInitialized = true;
     } else if( this.state.isScriptLoading === false ) {
       window.onYouTubeIframeAPIReady = this.initPlayer;
       this.embedScript();
+    }
+  },
+
+  /**
+   * Load Youtube max res image if it exists.
+   * TODO: Replace this method by calling the Youtube data API.
+   * https://developers.google.com/youtube/v3/getting-started#fields
+   */
+  loadImage: function( ) {
+    var defaultImage;
+    var maxResImage;
+    var maxResImageSrc;
+
+    if ( this.videoId ) {
+      defaultImage = this.childElements.image;
+      maxResImage = document.createElement( 'img' );
+      maxResImageSrc = this.IMAGE_URL.replace( '%video_id%', this.videoId );
+      maxResImage.onload = onImageStateChange;
+      maxResImage.onerror = onImageStateChange;
+      maxResImage.src = maxResImageSrc;
+    }
+
+    function onImageStateChange() {
+      // 120 is the natural width of the default youtube image.
+      if ( maxResImage.naturalWidth && maxResImage.naturalWidth !== 120 ) {
+        defaultImage.src = maxResImageSrc;
+      }
+      defaultImage.classList.add( CLASSES.IMAGE_LOADED_STATE );
     }
   },
 
@@ -98,7 +134,7 @@ var API = {
    */
   stop: function( ) {
     this._super.stop.call( this );
-    if ( this.player ) {
+    if ( this.state.isPlayerInitialized ) {
       this.player.stopVideo();
     }
   }

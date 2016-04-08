@@ -1,5 +1,7 @@
+import re
 from bs4 import BeautifulSoup
 from urlparse import urlsplit, urlunsplit
+from django.conf import settings
 
 replacements = (('/blog/', '/about-us/blog/'),
                 ('/pressrelease/','/about-us/newsroom/'),
@@ -14,18 +16,9 @@ def update_path(path):
             return new_path
     return path
 
-def fix_links(html):
-    soup = BeautifulSoup(html, 'lxml')
-    for link in soup.findAll('a'):
-        try:
-            urldata = urlsplit(link['href'])
-            new_path = update_path(urldata.path)
-            new_href = urlunsplit((None, None, urldata.path, urldata.query,
-                                  urldata.fragment))
-            link['href'] = new_href
-        except KeyError:
-            # this means there's no href-- perhaps an <a name="foo"> link
-            continue
-
-    return unicode(soup)
-
+def fix_link(link):
+    urldata = urlsplit(link['href'])
+    new_path = update_path(urldata.path)
+    new_href = urlunsplit((None, None, urldata.path, urldata.query,
+                          urldata.fragment))
+    link['href'] = new_href

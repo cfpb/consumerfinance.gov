@@ -66,6 +66,9 @@ OPTIONAL_APPS=[
     {'import':'complaint','apps':('complaint','complaintdatabase','complaint_common',)},
     {'import':'ratechecker','apps':('ratechecker','rest_framework')},
     {'import':'countylimits','apps':('countylimits','rest_framework')},
+    {'import':'regcore','apps':('regcore','regcore_read', 'regcore_write')},
+    {'import':'eregsip','apps':('eregsip',)},
+    {'import':'regulations','apps':('regulations',)},
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -187,7 +190,8 @@ if NEMO_PATH.exists():
 ALLOWED_HOSTS = ['*']
 
 EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
-EXTERNAL_ICON_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
+NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
+FILES_LINK_PATTERN = r'https?:\/\/files\.consumerfinance.gov\/f\/\S+\.[a-z]+'
 
 # Wagtail settings
 
@@ -314,7 +318,7 @@ PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/pyth
 
 STATIC_VERSION = ''
 LEGACY_APP_URLS={'jobmanager': True,
-                 'cal':True,
+                 'cal':False,
                  'comparisontool':True,
                  'agreements':True,
                  'knowledgebase':True,
@@ -324,6 +328,8 @@ LEGACY_APP_URLS={'jobmanager': True,
                  'complaint':True,
                  'complaintdatabase':True,
                  'ratechecker':True,
+                 'regcore':True,
+                 'regulations':True,
                  'countylimits':True,
                  'noticeandcomment':True}
 
@@ -412,5 +418,55 @@ SHEER_SITES = {
             Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
         'fin-ed-resources':
             Path(os.environ.get('FIN_ED_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist'))
+            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
+        'know-before-you-owe':
+            Path(os.environ.get('KBYO_SHEER_PATH') or
+            Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
+        'tax-time-saving':
+            Path(os.environ.get('TAX_TIME_SHEER_PATH') or
+            Path(REPOSITORY_ROOT, '../tax-time-saving/dist')),
 }
+
+CACHES = {
+    'default' : {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/eregs_cache',
+    },
+    'eregs_longterm_cache': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/eregs_longterm_cache',
+        'TIMEOUT': 60*60*24*15,     # 15 days
+        'OPTIONS': {
+            'MAX_ENTRIES': 10000,
+        },
+    },
+    'api_cache':{
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'api_cache_memory',
+        'TIMEOUT': 3600,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        },
+    }
+}
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
+CACHE_MIDDLEWARE_SECONDS = 600
+
+if 'EREGS_REGULATIONS_DIR' in os.environ:
+    #The base URL for the API that we use to access layers and the regulation.
+    API_BASE = os.environ['EREGS_API_BASE']
+
+    #When we generate an full HTML version of the regulation, we want to
+    #write it out somewhere. This is where.
+    OFFLINE_OUTPUT_DIR = ''
+
+    DATE_FORMAT = 'n/j/Y'
+
+    GOOGLE_ANALYTICS_ID = ''
+    GOOGLE_ANALYTICS_SITE = ''
+
+    CACHE_MIDDLEWARE_ALIAS = 'default'
+    CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
+    CACHE_MIDDLEWARE_SECONDS = 1800

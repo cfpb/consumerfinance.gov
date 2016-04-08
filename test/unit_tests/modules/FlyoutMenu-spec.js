@@ -72,6 +72,7 @@ describe( 'FlyoutMenu', function() {
     } );
 
     it( 'should have correct state before initializing', function() {
+      // TODO: check aria-expanded state as well.
       expect( flyoutMenu.isAnimating() ).to.be.false;
       expect( flyoutMenu.isExpanded() ).to.be.false;
       expect( flyoutMenu.getTransition() ).to.be.undefined;

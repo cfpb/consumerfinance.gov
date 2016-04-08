@@ -3,7 +3,7 @@
 {% set breadcrumb_items = vars.breadcrumb_items %}
 
 {% block title -%}
-    {{ post.title }} | Consumer Financial Protection Bureau
+    {{ post.title | safe}} | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block desc -%}
@@ -25,7 +25,6 @@
 {% block content_main %}
     {% import 'article.html' as article with context %}
     {{ article.render(post, vars.path) }}
-    {% include 'templates/comments.html' %}
 {% endblock %}
 
 {% block content_sidebar %}

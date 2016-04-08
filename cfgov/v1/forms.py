@@ -80,7 +80,7 @@ def login_form():
                     dt_now = timezone.now()
                     try:
                         current_password_data = self.user_cache.passwordhistoryitem_set.latest()
-                    
+
                         if dt_now > current_password_data.expires_at:
                             raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
 
@@ -162,20 +162,21 @@ class CalenderPDFFilterForm(forms.Form):
 
 
 class FilterableListForm(forms.Form):
+    title_attrs = {
+        'placeholder': 'Search for a specific word in item title'
+    }
     topics_select_attrs = {
-        'class': 'chosen-select',
         'multiple': 'multiple',
         'data-placeholder': 'Search for topics',
     }
     authors_select_attrs = {
-        'class': 'chosen-select',
         'multiple': 'multiple',
         'data-placeholder': 'Search for authors'
     }
     from_select_attrs = {
         'class': 'js-filter_range-date js-filter_range-date__gte',
         'type': 'text',
-        'placeholder': 'dd/mm/yyyy',
+        'placeholder': 'mm/dd/yyyy',
         'data-type': 'date'
     }
     to_select_attrs = from_select_attrs.copy()
@@ -183,14 +184,17 @@ class FilterableListForm(forms.Form):
         'class': 'js-filter_range-date js-filter_range-date__lte',
     })
 
-    title = forms.CharField(max_length=250, required=False)
+    title = forms.CharField(
+        max_length=250,
+        required=False,
+        widget=widgets.TextInput(attrs=title_attrs))
     from_date = FilterDateField(
         required=False,
-        input_formats=['%d/%m/%Y'],
+        input_formats=['%m/%d/%Y'],
         widget=widgets.DateInput(attrs=from_select_attrs))
     to_date = FilterDateField(
         required=False,
-        input_formats=['%d/%m/%Y'],
+        input_formats=['%m/%d/%Y'],
         widget=widgets.DateInput(attrs=to_select_attrs))
     categories = forms.MultipleChoiceField(
         required=False,

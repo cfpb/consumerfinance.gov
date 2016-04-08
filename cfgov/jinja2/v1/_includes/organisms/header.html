@@ -1,7 +1,25 @@
+{# ==========================================================================
+
+   header.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates markup for Header organism.
+
+   show_banner: Whether the global banner molecule is included.
+                Default is true.
+
+   ========================================================================== #}
+
+{# TODO: Remove global page reference when moving to Wagtail. #}
+{% macro render( show_banner=false ) %}
+
 <header class="o-header"
         role="banner">
 
-    {% if flag_enabled('BETA_NOTICE') %}
+    {% if flag_enabled('BETA_NOTICE') and show_banner %}
     <div class="m-global-banner">
         <div class="wrapper
                     wrapper__match-content
@@ -48,6 +66,14 @@
             {% include 'molecules/global-search.html' with context %}
 
             <a class="o-header_logo" href="/">
+                <!--[if lt IE 9]>
+                    <img class="o-header_logo-img"
+                         src="/static/img/logo_sm-exec.png"
+                         alt="Consumer Financial Protection Bureau"
+                         width="237"
+                         height="50">
+                <![endif]-->
+                <!--[if gt IE 8]><!-->
                 <img class="o-header_logo-img u-js-only"
                      src="/static/img/logo_sm-exec.svg"
                      onerror="this.onerror=null;this.src='/static/img/logo_sm-exec.png';"
@@ -61,6 +87,7 @@
                          width="237"
                          height="50">
                 </noscript>
+                <!--<![endif]-->
             </a>
 
             {% block primary_nav %}
@@ -70,3 +97,5 @@
 
     </div>
 </header>
+
+{% endmacro %}

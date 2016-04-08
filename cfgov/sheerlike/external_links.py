@@ -13,7 +13,8 @@ def process_external_links(doc):
 
 def _process_data(field):
     if isinstance(field, basestring):
-        field = str(parse_links(BeautifulSoup(field, 'html.parser')))
+        soup = BeautifulSoup(field, 'html.parser')
+        field = parse_links(soup).encode(formatter=None)
     elif isinstance(field, list):
         for i, value in enumerate(field):
             field[i] = _process_data(value)

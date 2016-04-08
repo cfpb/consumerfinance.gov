@@ -9,7 +9,11 @@ var config = require( '../config' ).test;
 var fsHelper = require( '../utils/fsHelper' );
 var minimist = require( 'minimist' );
 
-gulp.task( 'test:unit:scripts', function( cb ) {
+/**
+ * Run Mocha JavaScript unit tests.
+ * @param {Function} cb - Callback function to call on completion.
+ */
+function testUnitScripts( cb ) {
   gulp.src( config.src )
     .pipe( $.istanbul( {
       includeUntested: true
@@ -32,29 +36,33 @@ gulp.task( 'test:unit:scripts', function( cb ) {
 
         .on( 'end', cb );
     } );
-} );
+}
 
-gulp.task( 'test:unit:macro', function() {
+/**
+ * Run jinja macro unit tests.
+ */
+function testUnitMacro() {
   spawn(
     'python',
     [ config.tests + '/macro_tests/test_macros.py' ],
     { stdio: 'inherit' }
-  )
-    .once( 'close', function() {
-      $.util.log( 'Macro unit tests done!' );
-    } );
-} );
+  ).once( 'close', function() {
+    $.util.log( 'Macro unit tests done!' );
+  } );
+}
 
-gulp.task( 'test:unit:server', function() {
+/**
+ * Run tox unit tests.
+ */
+function testUnitServer() {
   spawn(
     'tox',
     [ 'cfgov/core/tests' ],
     { stdio: 'inherit' }
-  )
-    .once( 'close', function() {
-      $.util.log( 'Tox tests done!' );
-    } );
-} );
+  ).once( 'close', function() {
+    $.util.log( 'Tox tests done!' );
+  } );
+}
 
 /**
  * Add a command-line flag to a list of Protractor parameters, if present.
@@ -146,23 +154,6 @@ gulp.task( 'test:perf', sitespeedio( {
   }
 } ) );
 
-gulp.task( 'test:acceptance:browser', function() {
-  spawn(
-    fsHelper.getBinary( 'protractor' ),
-    _getProtractorParams(),
-    { stdio: 'inherit' }
-  )
-    .once( 'close', function() {
-      $.util.log( 'Protractor tests done!' );
-    } );
-} );
-
-gulp.task( 'test:acceptance',
-  [
-    'test:acceptance:browser'
-  ]
-);
-
 /**
  * Processes command-line and environment variables
  * for passing to the wcag executable.
@@ -196,35 +187,84 @@ function _parsePath( urlPath ) {
   return urlPath;
 }
 
-gulp.task( 'test:a11y', function() {
+/**
+ * Run WCAG accessibility tests.
+ */
+function testA11y() {
   spawn(
     fsHelper.getBinary( 'wcag', '.bin' ),
     _getWCAGParams(),
     { stdio: 'inherit' }
-  )
-    .once( 'close', function() {
-      $.util.log( 'WCAG tests done!' );
-    } );
-} );
+  ).once( 'close', function() {
+    $.util.log( 'WCAG tests done!' );
+  } );
+}
 
-// This task will only run on Travis
-gulp.task( 'test:coveralls', function() {
+/**
+ * Run the protractor browser acceptance tests.
+ */
+function testAcceptanceBrowser() {
+  spawn(
+    fsHelper.getBinary( 'protractor' ),
+    _getProtractorParams(),
+    { stdio: 'inherit' }
+  ).once( 'close', function() {
+    $.util.log( 'Protractor tests done!' );
+  } );
+}
+
+/**
+ * Initialize the test database
+ * and call the protractor browser acceptance tests.
+ */
+function testAcceptanceWagtail() {
+  spawn(
+    './initial-test-data.sh', [], { stdio: 'inherit' }
+  ).once( 'close', function() {
+    $.util.log( 'Loaded Wagtail database data!' );
+    // TODO: narrow the scope to only --specs=wagtail/*
+    testAcceptanceBrowser();
+  } );
+}
+
+/**
+ * Run coveralls reports on Travis.
+ */
+function testCoveralls() {
   gulp.src( config.tests + '/unit_test_coverage/lcov.info' )
     .pipe( $.coveralls() );
-} );
+}
 
-gulp.task( 'test',
+// This task will only run on Travis
+gulp.task( 'test:coveralls', testCoveralls );
+
+gulp.task( 'test:a11y', testA11y );
+
+gulp.task( 'test:acceptance:browser', testAcceptanceBrowser );
+gulp.task( 'test:acceptance:wagtail', testAcceptanceWagtail );
+gulp.task( 'test:acceptance',
   [
-    'lint',
-    'test:unit',
-    'test:acceptance'
+    'test:acceptance:browser',
+    'test:acceptance:wagtail'
   ]
 );
+
+gulp.task( 'test:unit:scripts', testUnitScripts );
+gulp.task( 'test:unit:macro', testUnitMacro );
+gulp.task( 'test:unit:server', testUnitServer );
 
 gulp.task( 'test:unit',
   [
     'test:unit:scripts',
     'test:unit:macro',
     'test:unit:server'
+  ]
+);
+
+gulp.task( 'test',
+  [
+    'lint',
+    'test:unit',
+    'test:acceptance'
   ]
 );

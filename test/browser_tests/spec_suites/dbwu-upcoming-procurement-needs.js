@@ -48,7 +48,7 @@ describe( 'The Upcoming Procurement Needs Page', function() {
     [ 'How to do business with us',
       'Small and disadvantaged businesses' ];
     var moreInfoSectionLinks = [ 'https://www.sam.gov/',
-    '/doing-business-with-us/small-businesses/' ];
+    '/about-us/doing-business-with-us/small-businesses/' ];
 
     expect( page.moreInfoSectionTitles.getText() )
     .toEqual( moreInfoSectionTitles );

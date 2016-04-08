@@ -17,4 +17,3 @@ boto==2.38.0
 django-storages==1.1.8
 django-haystack==2.4.1
 beautifulsoup4==4.4.1
-lxml==3.6.0

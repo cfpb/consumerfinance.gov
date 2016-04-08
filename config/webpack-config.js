@@ -14,7 +14,7 @@ var webpack = require( 'webpack' );
 var JS_ROUTES_PATH = '/js/routes';
 var COMMON_BUNDLE_NAME = 'common.js';
 
-module.exports = {
+var modernConf = {
   // jQuery is exported in the global space in the head.
   externals: { jquery: 'jQuery' },
   context:   path.join( __dirname, '/../', paths.unprocessed, JS_ROUTES_PATH ),
@@ -35,4 +35,39 @@ module.exports = {
     // Wrap JS in raw Jinja tags so included JS won't get parsed by Jinja.
     new BannerFooterPlugin( '{% raw %}', '{% endraw %}', { raw: true } )
   ]
+};
+
+var ieConf = {
+  entry: paths.unprocessed + '/js/ie/common.ie.js',
+  output: {
+    filename: 'common.ie.js'
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin( {
+      compress: { warnings: false }
+    } )
+  ]
+};
+
+var onDemandConf = {
+  context: path.join( __dirname, '/../', paths.unprocessed,
+                      JS_ROUTES_PATH + '/on-demand' ),
+  entry:   scriptsManifest.getDirectoryMap( paths.unprocessed +
+                                            JS_ROUTES_PATH + '/on-demand' ),
+  output: {
+    path:     path.join( __dirname, 'js' ),
+    filename: '[name]'
+  },
+  plugins: [
+    // Change warnings flag to true to view linter-style warnings at runtime.
+    new webpack.optimize.UglifyJsPlugin( {
+      compress: { warnings: false }
+    } )
+  ]
+};
+
+module.exports = {
+  onDemandConf: onDemandConf,
+  ieConf:       ieConf,
+  modernConf:   modernConf
 };
