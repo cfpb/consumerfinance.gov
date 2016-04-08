@@ -28,11 +28,12 @@ function _isPlainObject( object ) {
 */
 function assign( destination ) {
   destination = destination || {};
-
+  var hasOwnProp;
   for ( var i = 1; i < arguments.length; i++ ) {
     var source = arguments[i] || {};
+    hasOwnProp = Object.hasOwnProperty.bind( source );
     for ( var key in source ) {
-      if ( source.hasOwnProperty( key ) ) {
+      if ( hasOwnProp( key ) ) {
         var value = source[key];
         if ( _isPlainObject( value ) ) {
           assign( destination[key] = {}, value );
