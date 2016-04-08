@@ -17,6 +17,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+
+### Changed
+
+
+### Removed
+
+
+### Fixed
+
+## 3.0.0-3.3.0 - 2016-04-08
+
+### Added
+
 - Adds a max-selections checker to the Multiselect.
 - Remove inline CSS when running sheer_index.
 - Abstracted dom events for easier reuse throughout the project.
