@@ -53,7 +53,7 @@ describe( 'Strings stringValid()', function() {
     function() {
       string = 'Person\'s Name';
 
-      expect( strings.stringValid( string) ).to.be.false;
+      expect( strings.stringValid( string ) ).to.be.false;
     }
   );
 
@@ -61,7 +61,7 @@ describe( 'Strings stringValid()', function() {
     function() {
       string = 'Person: Name';
 
-      expect( strings.stringValid( string) ).to.be.false;
+      expect( strings.stringValid( string ) ).to.be.false;
     }
   );
 
@@ -69,7 +69,7 @@ describe( 'Strings stringValid()', function() {
     function() {
       string = '<body>';
 
-      expect( strings.stringValid( string) ).to.be.false;
+      expect( strings.stringValid( string ) ).to.be.false;
     }
   );
 } );
