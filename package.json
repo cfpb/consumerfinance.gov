@@ -37,6 +37,7 @@
     "webpack-stream": "3.1.0"
   },
   "devDependencies": {
+    "browser-sync": "2.11.2",
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
     "chai": "3.5.0",
     "es5-shim": "4.5.7",
