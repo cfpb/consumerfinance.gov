@@ -18,15 +18,21 @@ function _genericLint( src ) {
 }
 
 /**
- * Lints the gulpfile for errors
+ * Lints the gulpfile for errors.
  */
 gulp.task( 'lint:build', function() {
   return _genericLint( config.build );
 } );
 
+/**
+ * Lints the test js files for errors.
+ */
+gulp.task( 'lint:tests', function() {
+  return _genericLint( config.test );
+} );
 
 /**
- * Lints the source js files for errors
+ * Lints the source js files for errors.
  */
 gulp.task( 'lint:scripts', function() {
   return _genericLint( config.src );
@@ -37,5 +43,6 @@ gulp.task( 'lint:scripts', function() {
  */
 gulp.task( 'lint', [
   'lint:build',
+  'lint:tests',
   'lint:scripts'
 ] );

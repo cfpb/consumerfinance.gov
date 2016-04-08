@@ -25,8 +25,8 @@ module.exports = {
       ' *  A public domain work of the Consumer Financial Protection Bureau\n' +
       ' */\n',
   lint: {
-    src: [
-      paths.unprocessed + '/js/**/*.js',
+    src: [ paths.unprocessed + '/js/**/*.js' ],
+    test:  [
       paths.test + '/unit_tests/**/*.js',
       paths.test + '/browser_tests/**/*.js'
     ],
