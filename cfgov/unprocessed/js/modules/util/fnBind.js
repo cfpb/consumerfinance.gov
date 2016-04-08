@@ -19,10 +19,9 @@
 * @param {object} context - the `this` you want to call the function with
 * @returns {function} The wrapped version of the supplied function
 */
-
-function fnBind(fn, context) {
+function fnBind( fn, context ) {
   return function() {
-    return fn.apply(context, arguments);
+    return fn.apply( context, arguments );
   };
 }
 
