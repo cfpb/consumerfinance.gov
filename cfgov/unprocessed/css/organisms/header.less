@@ -10,11 +10,15 @@
       codenotes:
         - |
           @margin_half__em
+          @mobile_trigger_ht__px
+          @min_app_width__px
   tags:
     - cf-core
 */
 
 @margin_half__em: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+@mobile_trigger_ht__px: 54px;
+@min_app_width__px: 320px;
 
 /* topdoc
   name: Header
@@ -66,7 +70,7 @@
 */
 
 .o-header {
-    min-width: 320px;
+    min-width: @min_app_width__px;
     border-bottom: 5px solid @green;
     position: relative;
     z-index: 10;
@@ -128,21 +132,24 @@
         // Tablet/mobile sizes.
         .respond-to-max( @bp-sm-max, {
             .js & {
-                // Offset logo by width of mega menu trigger: 60px + 10px gap.
-                margin-left: 70px;
+                // Offset logo by width of mega menu trigger + 10px gap.
+                margin-left: @mobile_trigger_ht__px + ( @grid_gutter-width / 2 );
             }
         } );
 
         &-img {
-            height: 40px;
-            width: 190px;
-            margin: 10px;
+            // Size is to fit 320px minimum width for older iPhones, etc.
+            height: @mobile_trigger_ht__px - 20px;
+            width: auto;
+            // Margin is to bring height to menu trigger's 60px (40 + 10 + 10).
+            margin-top: 10px;
+            margin-bottom: 10px;
             // Removes typical inline vertical whitespace.
             vertical-align: middle;
 
             // Desktop size.
             .respond-to-min( @bp-med-min, {
-                margin: 0 0 unit(20px / @base-font-size-px, em) 0;
+                margin: 0 0 unit( 20px / @base-font-size-px, em ) 0;
                 height: 50px;
                 width: 237px;
             } );
