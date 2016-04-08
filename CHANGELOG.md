@@ -26,6 +26,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
+- Fixed issue where missing images were breaking the hero layout
+
 ## 3.0.0-3.3.0 - 2016-04-08
 
 ### Added
