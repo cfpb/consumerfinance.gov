@@ -230,6 +230,7 @@ urlpatterns = [
             name='how-to-apply-for-a-federal-job-with-the-cfpb'),
     ],
         namespace='transcripts')),
+    url(r'^jobs/', include_if_app_enabled('jobmanager','jobmanager.urls')),
     url(r'^paying-for-college/', include_if_app_enabled('comparisontool','comparisontool.urls')),
     url(r'^credit-cards/agreements/', include_if_app_enabled('agreements','agreements.urls')),
     url(r'^(?i)askcfpb/', include_if_app_enabled('knowledgebase','knowledgebase.urls')),
