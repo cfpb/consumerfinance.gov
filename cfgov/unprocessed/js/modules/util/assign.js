@@ -9,6 +9,7 @@
 
 'use strict';
 
+var fnBind = require( './fnBind' ).fnBind;
 
 /**
 * @param {Object} object - JavaScript object.
@@ -31,7 +32,7 @@ function assign( destination ) {
   var hasOwnProp;
   for ( var i = 1; i < arguments.length; i++ ) {
     var source = arguments[i] || {};
-    hasOwnProp = Object.hasOwnProperty.bind( source );
+    hasOwnProp = fnBind( Object.hasOwnProperty, source );
     for ( var key in source ) {
       if ( hasOwnProp( key ) ) {
         var value = source[key];
