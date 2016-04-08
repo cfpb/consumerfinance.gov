@@ -77,9 +77,7 @@
     "validate": "./node_modules/validate.js/validate.js"
   },
   "scripts": {
-    "test": "snyk test",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "test": "snyk test"
   },
   "snyk": true
 }
