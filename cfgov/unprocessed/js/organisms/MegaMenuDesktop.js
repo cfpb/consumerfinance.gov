@@ -47,17 +47,16 @@ function MegaMenuDesktop( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function handleEvent( event ) {
-    if ( !_suspended ) {
-      var eventMap = {
-        triggerClick: _handleTriggerClickBinded,
-        triggerOver:  _handleTriggerOverBinded,
-        expandBegin:  _handleExpandBeginBinded,
-        collapseEnd:  _handleCollapseEndBinded
-      };
+    if ( _suspended ) return;
+    var eventMap = {
+      triggerClick: _handleTriggerClickBinded,
+      triggerOver:  _handleTriggerOverBinded,
+      expandBegin:  _handleExpandBeginBinded,
+      collapseEnd:  _handleCollapseEndBinded
+    };
 
-      var currHandler = eventMap[event.type];
-      if ( currHandler ) currHandler( event );
-    }
+    var currHandler = eventMap[event.type];
+    if ( currHandler ) currHandler( event );
   }
 
   /**
