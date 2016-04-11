@@ -242,7 +242,7 @@ urlpatterns = [
     url(r'^data-research/consumer-complaints/', include_if_app_enabled('complaintdatabase','complaintdatabase.urls')),
     url(r'^oah-api/rates/', include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
-    url(r'^eregs-api/', include_if_app_enabled('regcore','regcore.urls')),
+    url(r'^eregs-api/', include_if_app_enabled('regcore', 'regcore.urls')),
     url(r'^eregulations/', include_if_app_enabled('regulations','regulations.urls')),
 
     # Report redirects
