@@ -214,7 +214,7 @@ function FilterableListControls( element ) {
 
     if ( isInGroup ) {
       var groupName = field.getAttribute( 'data-group' ) ||
-                field.getAttribute( 'name' );
+                      field.getAttribute( 'name' );
       var groupSelector = '[name=' + groupName + ']:checked,' +
                           '[data-group=' + groupName + ']:checked';
       fieldset = _form.querySelectorAll( groupSelector ) || [];
