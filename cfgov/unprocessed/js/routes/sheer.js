@@ -13,7 +13,7 @@ var filterableListDom = document.querySelectorAll( '.o-filterable-list-controls'
 var filterableListControls;
 if ( filterableListDom ) {
   for ( var i = 0, len = filterableListDom.length; i < len; i++ ) {
-    filterableListControls = new FilterableListControls( document.body )
+    filterableListControls = new FilterableListControls( filterableListDom[i] );
     filterableListControls.init();
   }
 }
