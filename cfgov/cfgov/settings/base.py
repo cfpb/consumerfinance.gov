@@ -501,4 +501,3 @@ CACHES = {
         },
     }
 }
-API_BASE = os.environ['EREGS_API_BASE']
