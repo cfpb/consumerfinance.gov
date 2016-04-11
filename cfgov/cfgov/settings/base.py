@@ -455,7 +455,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
 CACHE_MIDDLEWARE_SECONDS = 600
 
 #The base URL for the API that we use to access layers and the regulation.
-API_BASE = os.environ.get('EREGS_API_BASE')
+API_BASE = os.environ.get('EREGS_API_BASE', '')
 
 #When we generate an full HTML version of the regulation, we want to
 #write it out somewhere. This is where.
