@@ -17,6 +17,21 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+
+### Changed
+
+
+### Removed
+
+
+### Fixed
+
+- Fixed issue where missing images were breaking the hero layout
+
+## 3.0.0-3.3.0 - 2016-04-08
+
+### Added
+
 - Adds a max-selections checker to the Multiselect.
 - Remove inline CSS when running sheer_index.
 - Abstracted dom events for easier reuse throughout the project.
@@ -48,6 +63,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Update biographies for director bios.
 - Fixed issue with bad values in the multiselect.
 - Fixed the missing logon on IE 8.
+- Fixed an issue w/ the spacing on the hero.
 
 ## 3.0.0-3.2.1 - 2016-03-21
 

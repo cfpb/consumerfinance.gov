@@ -87,8 +87,12 @@ var API = {
       maxResImage.src = maxResImageSrc;
     }
 
+    /**
+     * Event handler for loading state change (onload and onerror)
+     * of an image element when the src attribute is set.
+     */
     function onImageStateChange() {
-      // 120 is the natural width of the default youtube image.
+      // 120px is the natural width of the default YouTube image.
       if ( maxResImage.naturalWidth && maxResImage.naturalWidth !== 120 ) {
         defaultImage.src = maxResImageSrc;
       }

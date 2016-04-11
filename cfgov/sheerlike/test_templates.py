@@ -27,5 +27,4 @@ class TestTemplates(TestCase):
         date_format = '%Y-%m-%d %Z'
         tz = 'America/Chicago'
         result = get_date_string(date_string, date_format, tz)
-        print result
         assert(result == '2015-02-01 CST')

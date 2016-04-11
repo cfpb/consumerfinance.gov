@@ -91,8 +91,8 @@ class PDFGeneratorView(View):
     def post(self, request):
         index = request.POST.get('form-id')
         filter_calendar = index + 'filter_calendar'
-        filter_range_date_gte = index + '-filter_range-date-gte'
-        filter_range_date_lte = index + '-filter_range-date-lte'
+        filter_range_date_gte = index + '-filter_range_date_gte'
+        filter_range_date_lte = index + '-filter_range_date_lte'
         form = CalenderPDFFilterForm({
             'filter_calendar': request.POST.get(filter_calendar),
             'filter_range_date_gte': request.POST.get(filter_range_date_gte),

@@ -42,12 +42,12 @@ def process_event(event):
     # when Wagtail fixes https://github.com/torchbox/wagtail/issues/2406
     # along with https://github.com/cfpb/cfgov-refresh/pull/1661
     dt_start = dt_start.astimezone(timezone('America/New_York'))
-    event['date'] = dt_start.strftime('%Y-%m-%d %H:%M')
+    event['date'] = dt_start.isoformat()
     event['dtstart'] = event['date']
 
     dt_end = dateutil.parser.parse(event['dtend'])
     dt_end = dt_end.astimezone(timezone('America/New_York'))
-    event['dtend'] = dt_end.strftime('%Y-%m-%d %H:%M')
+    event['dtend'] = dt_end.isoformat()
 
     event['day'] = datetime.date(dt_start.year, dt_start.month, dt_start.day)
     if event['description']:

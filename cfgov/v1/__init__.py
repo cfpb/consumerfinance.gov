@@ -56,6 +56,7 @@ def environment(**options):
 def parse_links(soup):
     extlink_pattern = re.compile(settings.EXTERNAL_LINK_PATTERN)
     noncfpb_pattern = re.compile(settings.NONCFPB_LINK_PATTERN)
+    files_pattern = re.compile(settings.FILES_LINK_PATTERN)
     a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
     span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
     for tag in soup:
@@ -70,7 +71,7 @@ def parse_links(soup):
             a.attrs.update({'class': a_class})
             a.append(' ') # We want an extra space before the icon
             a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
-        else:
+        elif not files_pattern.match(a['href']):
             fix_link(a)
     return soup
 
@@ -129,7 +130,7 @@ def related_metadata_tags(context, page):
     id = None
     filter_page = None
     for ancestor in page.get_ancestors().reverse().specific():
-        if ancestor.specific_class.__name__ in ['BrowseFilterablePage', 'SublandingFilterablePage']:
+        if ancestor.specific_class.__name__ in ['EventArchivePage', 'FilterablePage']:
             filter_page = ancestor
             id = util.get_form_id(ancestor, request.GET)
             break

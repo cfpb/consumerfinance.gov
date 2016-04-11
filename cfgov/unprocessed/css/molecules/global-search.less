@@ -1,5 +1,5 @@
 
-// TODO: Move the theme variables to cf-enhancements.
+// TODO: Move the theme variables to /enhancements/ for CF.
 /* topdoc
   name: Theme variables
   family: cf-core
@@ -12,12 +12,14 @@
         - |
           @margin__em
           @margin_half__em
+          @mobile_trigger_ht__px
   tags:
     - cf-core
 */
 
 @margin__em: unit( @grid_gutter-width / @base-font-size-px, em );
 @margin_half__em: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+@mobile_trigger_ht__px: 54px;
 
 /* topdoc
   name: Global Search molecule
@@ -164,8 +166,8 @@
         &_trigger{
             padding-top: unit( @grid_gutter-width / 2 / 16px, em );
             padding-bottom: unit( @grid_gutter-width / 2 / 16px, em );
-            height: unit( 60px / @base-font-size-px, em );
-            min-width: unit( 60px / @base-font-size-px, em );
+            height: unit( @mobile_trigger_ht__px / @base-font-size-px, em );
+            min-width: unit( @mobile_trigger_ht__px / @base-font-size-px, em );
 
             &:before {
                 font-size: unit( 20px / 16px, em );

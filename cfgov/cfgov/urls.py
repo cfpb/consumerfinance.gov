@@ -52,6 +52,14 @@ urlpatterns = [
 
     url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
 
+    # the two redirects are an unfortunate workaround, could be resolved by
+    # using static('path/to/asset') in the source template
+
+    url(r'^tax-time-saving/static/(?P<path>.*)$', RedirectView.as_view(url='/static/tax-time-saving/static/%(path)s')),
+    url(r'^tax-time-saving/', include(SheerSite('tax-time-saving').urls)),
+    url(r'^know-before-you-owe/static/(?P<path>.*)$', RedirectView.as_view(url='/static/know-before-you-owe/static/%(path)s')),
+    url(r'^know-before-you-owe/', include(SheerSite('know-before-you-owe').urls)),
+
     url(r'^adult-financial-education/', include(fin_ed.urls_for_prefix('adult-financial-education'))),
     url(r'^youth-financial-education/', include(fin_ed.urls_for_prefix('youth-financial-education'))),
     url(r'^library-resources/', include(fin_ed.urls_for_prefix('library-resources'))),
@@ -223,8 +231,6 @@ urlpatterns = [
     ],
         namespace='transcripts')),
     url(r'^jobs/', include_if_app_enabled('jobmanager','jobmanager.urls')),
-    url(r'^notice-and-comment/', include_if_app_enabled('noticeandcomment','noticeandcomment.urls')),
-    url(r'^leadership-calendar/', include_if_app_enabled('cal','cal.urls')),
     url(r'^paying-for-college/', include_if_app_enabled('comparisontool','comparisontool.urls')),
     url(r'^credit-cards/agreements/', include_if_app_enabled('agreements','agreements.urls')),
     url(r'^(?i)askcfpb/', include_if_app_enabled('knowledgebase','knowledgebase.urls')),
@@ -236,6 +242,8 @@ urlpatterns = [
     url(r'^data-research/consumer-complaints/', include_if_app_enabled('complaintdatabase','complaintdatabase.urls')),
     url(r'^oah-api/rates/', include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/', include_if_app_enabled('countylimits','countylimits.urls')),
+    url(r'^eregs-api/', include_if_app_enabled('regcore','regcore.urls')),
+    url(r'^eregulations/', include_if_app_enabled('regulations','regulations.urls')),
 
     # Report redirects
     url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s', permanent=True)),

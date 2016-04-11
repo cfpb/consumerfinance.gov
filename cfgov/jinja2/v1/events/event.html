@@ -5,7 +5,7 @@
 {% endif %}
 
 {% block desc -%}
-    {{ page.seo_description }}
+    {{ page.seo_description if page.seo_description else '' }}
 {%- endblock %}
 
 {% block og_type -%}
