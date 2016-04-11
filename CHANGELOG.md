@@ -35,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Adds a max-selections checker to the Multiselect.
 - Remove inline CSS when running sheer_index.
 - Abstracted dom events for easier reuse throughout the project.
+- Added npm shrinkwrap and snyk dependency monitoring
 
 ### Changed
 
@@ -56,6 +57,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed `gulp beep` task for optional alerting when the build process
   has completed.
 - Remove Disqus comments from blog pages
+- Removed sitespeed.io gulp task
 
 ### Fixed
 
