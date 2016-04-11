@@ -3,6 +3,7 @@
 // Required modules.
 var EventObserver = require( '../modules/util/EventObserver' );
 var MoveTransition = require( '../modules/transition/MoveTransition' );
+var treeTraversal = require( '../modules/util/tree-traversal' );
 
 /**
  * MegaMenuDesktop
@@ -47,15 +48,15 @@ function MegaMenuDesktop( menus ) {
    */
   function handleEvent( event ) {
     if ( !_suspended ) {
-      if ( event.type === 'triggerClick' ) {
-        _handleTriggerClickBinded( event );
-      } else if ( event.type === 'triggerOver' ) {
-        _handleTriggerOverBinded( event );
-      } else if ( event.type === 'expandBegin' ) {
-        _handleExpandBeginBinded( event );
-      } else if ( event.type === 'collapseEnd' ) {
-        _handleCollapseEndBinded( event );
-      }
+      var eventMap = {
+        triggerClick: _handleTriggerClickBinded,
+        triggerOver:  _handleTriggerOverBinded,
+        expandBegin:  _handleExpandBeginBinded,
+        collapseEnd:  _handleCollapseEndBinded
+      };
+
+      var currHandler = eventMap[event.type];
+      if ( currHandler ) currHandler( event );
     }
   }
 
@@ -150,54 +151,7 @@ function MegaMenuDesktop( menus ) {
    */
   function resume() {
     if ( _suspended ) {
-      var level2 = _menus.getAllAtLevel( 1 );
-      var menu;
-      var contentDom;
-      var wrapperDom;
-      var wrapperSel = '.o-mega-menu_content-2-wrapper';
-      var transition;
-      for ( var i = 0, len = level2.length; i < len; i++ ) {
-        menu = level2[i].data;
-        contentDom = menu.getDom().content;
-        wrapperDom = contentDom.querySelector( wrapperSel );
-        transition = menu.getTransition();
-        // This checks if the transition has been removed by MegaMenuMobile.
-        if ( transition ) {
-          transition.setElement( wrapperDom );
-        } else {
-          transition = new MoveTransition( wrapperDom );
-        }
-        transition.moveUp();
-        // TODO: The only reason hiding is necessary is that the
-        //       drop-shadow of the menu extends below it border,
-        //       so it's still visible when the menu slides -100% out of view.
-        //       Investigate whether it would be better to have a u-move-up-1_1x
-        //       or similar class to move up -110%. Or whether the drop-shadow
-        //       could be included within the bounds of the menu.
-        menu.getDom().content.classList.add( 'u-invisible' );
-        menu.setExpandTransition( transition, transition.moveToOrigin );
-        menu.setCollapseTransition( transition, transition.moveUp );
-
-        // TODO: Investigate whether deferred collapse has another solution.
-        //       This check is necessary since a call to an already collapsed
-        //       menu will set a deferred collapse that will be called
-        //       on expandEnd next time the flyout is expanded.
-        //       The deferred collapse is used in cases where the
-        //       user clicks the flyout menu while it is animating open,
-        //       so that it appears like they can collapse it, even when
-        //       clicking during the expand animation.
-        if ( menu.isExpanded() ) {
-          menu.collapse();
-        }
-      }
-
-      // TODO: Combine this loop with the above
-      //       into a Breadth-First Search iteration.
-      var level3 = _menus.getAllAtLevel( 2 );
-      for ( var i2 = 0, len2 = level3.length; i2 < len2; i2++ ) {
-        level3[i2].data.suspend();
-      }
-
+      treeTraversal.bfs( _menus.getRoot(), _handleResumeTraversal );
       _suspended = false;
     }
 
@@ -210,31 +164,94 @@ function MegaMenuDesktop( menus ) {
    */
   function suspend() {
     if ( !_suspended ) {
-      var level2 = _menus.getAllAtLevel( 1 );
-      var menu;
-      var transition;
-      for ( var i = 0, len = level2.length; i < len; i++ ) {
-        menu = level2[i].data;
-        transition = menu.getTransition();
-        transition.remove();
-        menu.getDom().content.classList.remove( 'u-invisible' );
-
-        if ( menu.isExpanded() ) {
-          menu.collapse();
-        }
-      }
-
-      // TODO: Combine this loop with the above
-      //       into a Breadth-First Search iteration.
-      var level3 = _menus.getAllAtLevel( 2 );
-      for ( var i2 = 0, len2 = level3.length; i2 < len2; i2++ ) {
-        level3[i2].data.resume();
-      }
-
+      treeTraversal.bfs( _menus.getRoot(), _handleSuspendTraversal );
       _suspended = true;
     }
 
     return _suspended;
+  }
+
+  /**
+   * Iterate over the sub menus and handle setting the resumed state.
+   * @param {TreeNode} node - The data source for the current menu.
+   */
+  function _handleResumeTraversal( node ) {
+    var nLevel = node.level;
+    var menu = node.data;
+
+    if ( nLevel === 1 ) {
+      var wrapperSel = '.o-mega-menu_content-2-wrapper';
+      var contentDom = menu.getDom().content;
+      var wrapperDom = contentDom.querySelector( wrapperSel );
+      var transition = menu.getTransition();
+
+      // This checks if the transition has been removed by MegaMenuMobile.
+      transition = _setTransitionElement( wrapperDom, transition );
+      transition.moveUp();
+
+      // TODO: The only reason hiding is necessary is that the
+      //       drop-shadow of the menu extends below it border,
+      //       so it's still visible when the menu slides -100% out of view.
+      //       Investigate whether it would be better to have a u-move-up-1_1x
+      //       or similar class to move up -110%. Or whether the drop-shadow
+      //       could be included within the bounds of the menu.
+      menu.getDom().content.classList.add( 'u-invisible' );
+      menu.setExpandTransition( transition, transition.moveToOrigin );
+      menu.setCollapseTransition( transition, transition.moveUp );
+
+      // TODO: Investigate whether deferred collapse has another solution.
+      //       This check is necessary since a call to an already collapsed
+      //       menu will set a deferred collapse that will be called
+      //       on expandEnd next time the flyout is expanded.
+      //       The deferred collapse is used in cases where the
+      //       user clicks the flyout menu while it is animating open,
+      //       so that it appears like they can collapse it, even when
+      //       clicking during the expand animation.
+      if ( menu.isExpanded() ) {
+        menu.collapse();
+      }
+    } else if ( nLevel === 2 ) {
+      menu.suspend();
+    }
+  }
+
+  /**
+   * Iterate over the sub menus and handle setting the suspended state.
+   * @param {TreeNode} node - The data source for the current menu.
+   */
+  function _handleSuspendTraversal( node ) {
+    var nLevel = node.level;
+    var menu = node.data;
+
+    if ( nLevel === 1 ) {
+      var transition = menu.getTransition();
+      transition.remove();
+      menu.getDom().content.classList.remove( 'u-invisible' );
+
+      if ( menu.isExpanded() ) {
+        menu.collapse();
+      }
+    } else if ( nLevel === 2 ) {
+      menu.resume();
+    }
+  }
+
+  /**
+   * Set an element on an existing transition or create a new transition.
+   * @param {HTMLNode} element - Target of a transition.
+   * @param {MoveTransition} [setTransition] - The transition to apply.
+   * @returns {MoveTransition}
+   *   The passed in transition or a new transition if none was supplied.
+   */
+  function _setTransitionElement( element, setTransition ) {
+    var transition = setTransition;
+    if ( transition ) {
+      transition.setElement( element );
+    } else {
+      transition = new MoveTransition( element );
+    }
+
+    return transition;
   }
 
   // Attach public events.
