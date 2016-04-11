@@ -130,7 +130,7 @@ def related_metadata_tags(context, page):
     id = None
     filter_page = None
     for ancestor in page.get_ancestors().reverse().specific():
-        if ancestor.specific_class.__name__ in ['EventArchivePage', 'FilterablePage']:
+        if ancestor.specific_class.__name__ in ['EventArchivePage', 'BrowseFilterablePage', 'SublandingFilterablePage']:
             filter_page = ancestor
             id = util.get_form_id(ancestor, request.GET)
             break
