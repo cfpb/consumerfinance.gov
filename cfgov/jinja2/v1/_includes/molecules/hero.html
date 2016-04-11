@@ -64,10 +64,13 @@
             {% endfor %}
         </div>
 
+
+        <div class="hero_image"
         {% if value.image.upload %}
             {% set photo=image(value.image.upload, 'original') %}
-            <div class="hero_image"
-                 style="background-image: url( {{ photo.url }} );"></div>
+             style="background-image:
+                    url( {{- photo.url -}} );"
         {% endif %}
+          ></div>
     </div>
 </section>

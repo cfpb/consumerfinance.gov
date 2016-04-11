@@ -6,7 +6,7 @@
         },
         "dtstart": {
             "type": "date",
-            "format": "Y-M-D H:m"
+            "format": "dateOptionalTime"
         },
         "description": {
             "type": "string"
@@ -36,11 +36,11 @@
         },
         "date": {
             "type": "date",
-            "format": "Y-M-D H:m"
+            "format": "dateOptionalTime"
         },
         "dtend": {
             "type": "date",
-            "format": "Y-M-D H:m"
+            "format": "dateOptionalTime"
         },
         "summary": {
             "type": "string"

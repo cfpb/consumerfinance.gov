@@ -99,24 +99,14 @@ function EventPage() {
 
 }
 
-module.exports.landing = LandingPage;
-module.exports.sublanding = SubLandingPage;
-module.exports.browse = BrowsePage;
-module.exports.browse_filterable = BrowseFilterablePage;
-module.exports.sublanding_filterable = SublandingFilterablePage;
-module.exports.event_archive = EventArchivePage;
-module.exports.docdetail = DocumentDetailPage;
-module.exports.learn = LearnPage;
-module.exports.event = EventPage;
-
 module.exports = {
-  landing:    LandingPage,
-  sublanding: SubLandingPage,
-  browse: BrowsePage,
-  browse_filterable: BrowseFilterablePage,
-  sublanding_filterable: SublandingFilterablePage,
-  event_archive: EventArchivePage,
-  docdetail: DocumentDetailPage,
-  learn: LearnPage,
-  event: EventPage
+  landing:              LandingPage,
+  sublanding:           SubLandingPage,
+  browse:               BrowsePage,
+  browseFilterable:     BrowseFilterablePage,
+  sublandingFilterable: SublandingFilterablePage,
+  eventArchive:         EventArchivePage,
+  docdetail:            DocumentDetailPage,
+  learn:                LearnPage,
+  event:                EventPage
 };

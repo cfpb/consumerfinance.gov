@@ -2,7 +2,6 @@
 
 // Required modules.
 var arrayHelpers = require( '../modules/util/array-helpers' );
-var typeCheckers = require( '../modules/util/type-checkers' );
 var queryOne = require( '../modules/util/dom-traverse' ).queryOne;
 var domCreate = require( '../modules/util/dom-manipulators' ).create;
 var strings = require( '../modules/util/strings' );
@@ -174,7 +173,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     } );
 
     _fieldset = domCreate( 'fieldset', {
-      className:     'cf-multi-select_fieldset u-invisible',
+      'className':   'cf-multi-select_fieldset u-invisible',
       'aria-hidden': 'true'
     } );
 

@@ -28,7 +28,8 @@ describe( 'The homepage', function() {
 
           var stylesheet = browser.baseUrl + '/static/css';
 
-          if ( browser.name === 'internet explorer' && browser.version === '8' ) {
+          if ( browser.name === 'internet explorer' &&
+               browser.version === '8' ) {
             stylesheet += '/main.ie.css';
           } else {
             stylesheet += '/main.css';

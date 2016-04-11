@@ -454,19 +454,50 @@ CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
 CACHE_MIDDLEWARE_SECONDS = 600
 
-if 'EREGS_REGULATIONS_DIR' in os.environ:
-    #The base URL for the API that we use to access layers and the regulation.
-    API_BASE = os.environ['EREGS_API_BASE']
+#The base URL for the API that we use to access layers and the regulation.
+API_BASE = os.environ.get('EREGS_API_BASE', '')
 
-    #When we generate an full HTML version of the regulation, we want to
-    #write it out somewhere. This is where.
-    OFFLINE_OUTPUT_DIR = ''
+#When we generate an full HTML version of the regulation, we want to
+#write it out somewhere. This is where.
+OFFLINE_OUTPUT_DIR = ''
 
-    DATE_FORMAT = 'n/j/Y'
+DATE_FORMAT = 'n/j/Y'
 
-    GOOGLE_ANALYTICS_ID = ''
-    GOOGLE_ANALYTICS_SITE = ''
+GOOGLE_ANALYTICS_ID = ''
+GOOGLE_ANALYTICS_SITE = ''
 
-    CACHE_MIDDLEWARE_ALIAS = 'default'
-    CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
-    CACHE_MIDDLEWARE_SECONDS = 1800
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
+CACHE_MIDDLEWARE_SECONDS = 1800
+
+
+#eRegs
+BACKENDS = {
+    'regulations': 'regcore.db.django_models.DMRegulations',
+    'layers': 'regcore.db.django_models.DMLayers',
+    'notices': 'regcore.db.django_models.DMNotices',
+    'diffs': 'regcore.db.django_models.DMDiffs',
+}
+
+CACHES = {
+    'default' : {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/eregs_cache',
+    },
+    'eregs_longterm_cache': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/eregs_longterm_cache',
+        'TIMEOUT': 60*60*24*15,     # 15 days
+        'OPTIONS': {
+            'MAX_ENTRIES': 10000,
+        },
+    },
+    'api_cache':{
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'api_cache_memory',
+        'TIMEOUT': 3600,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        },
+    }
+}
