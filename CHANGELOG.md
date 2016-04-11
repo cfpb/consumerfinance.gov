@@ -26,9 +26,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
-- Fixed issue where missing images were breaking the hero layout
 
-## 3.0.0-3.3.0 - 2016-04-08
+
+## 3.0.0-3.3.1 - 2016-04-11
 
 ### Added
 
@@ -66,6 +66,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed issue with bad values in the multiselect.
 - Fixed the missing logon on IE 8.
 - Fixed an issue w/ the spacing on the hero.
+- Fixed issue where missing images were breaking the hero layout
 
 ## 3.0.0-3.2.1 - 2016-03-21
 
