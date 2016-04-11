@@ -56,7 +56,7 @@ function MegaMenuMobile( menus ) {
   /**
    * Event handler for when there's a click on the page's body.
    * Used to close the global search, if needed.
-   * @param {MouseEvent} event The event object for the mousedown event.
+   * @param {MouseEvent} event The event object for the click event.
    */
   function _handleBodyClick( event ) {
     var target = event.target;
@@ -74,17 +74,16 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function handleEvent( event ) {
-    if ( !_suspended ) {
-      if ( event.type === 'triggerClick' ) {
-        _handleTriggerClickBinded( event );
-      } else if ( event.type === 'expandBegin' ) {
-        _handleExpandBeginBinded( event );
-      } else if ( event.type === 'collapseBegin' ) {
-        _handleCollapseBeginBinded( event );
-      } else if ( event.type === 'collapseEnd' ) {
-        _handleCollapseEndBinded( event );
-      }
-    }
+    if ( _suspended ) return;
+    var eventMap = {
+      triggerClick:  _handleTriggerClickBinded,
+      expandBegin:   _handleExpandBeginBinded,
+      collapseBegin: _handleCollapseBeginBinded,
+      collapseEnd:   _handleCollapseEndBinded
+    };
+
+    var currHandler = eventMap[event.type];
+    if ( currHandler ) currHandler( event );
   }
 
   /**
@@ -159,11 +158,12 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleExpandBegin( event ) {
+    window.scrollTo( 0, 0 );
     var menu = event.target;
     _handleToggle( menu );
     if ( menu === _rootMenu ) {
       this.dispatchEvent( 'rootExpandBegin', { target: this } );
-      _bodyDom.addEventListener( 'mousedown', _handleBodyClick );
+      _bodyDom.addEventListener( 'click', _handleBodyClick );
     }
 
     // TODO: Enable or remove when keyboard navigation is in.
@@ -186,7 +186,7 @@ function MegaMenuMobile( menus ) {
     var menu = event.target;
     _handleToggle( menu );
     if ( menu === _rootMenu ) {
-      _bodyDom.removeEventListener( 'mousedown', _handleBodyClick );
+      _bodyDom.removeEventListener( 'click', _handleBodyClick );
     }
   }
 
@@ -274,7 +274,7 @@ function MegaMenuMobile( menus ) {
       // TODO: Investigate updating this to close the menus directly
       //       so `_handleCollapseEnd` is fired.
       this.dispatchEvent( 'rootCollapseEnd', { target: this } );
-      _bodyDom.removeEventListener( 'mousedown', _handleBodyClick );
+      _bodyDom.removeEventListener( 'click', _handleBodyClick );
     }
 
     return _suspended;

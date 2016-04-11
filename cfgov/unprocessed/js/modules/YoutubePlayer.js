@@ -23,6 +23,10 @@ var API = {
 
   IMAGE_URL: 'https://img.youtube.com/vi/%video_id%/maxresdefault.jpg',
 
+  YOUTUBE_API_CONFIG: {
+    'host': 'https://www.youtube.com'
+  },
+
   iFrameProperties: {
     id: CLASSES.IFRAME_CLASS_NAME
   },
@@ -59,11 +63,12 @@ var API = {
     var YouTubePlayer = window.YT;
     var player;
     if ( YouTubePlayer && YouTubePlayer.Player ) {
+      YouTubePlayer.setConfig( this.YOUTUBE_API_CONFIG );
       player = new YouTubePlayer.Player( this.iFrameProperties.id
         , this.playerOptions );
       this.state.isPlayerInitialized = true;
     } else if( this.state.isScriptLoading === false ) {
-      window.onYouTubeIframeAPIReady = this.initPlayer;
+      window.onYouTubeIframeAPIReady = this.initPlayer.bind( this );
       this.embedScript();
     }
   },
@@ -87,8 +92,12 @@ var API = {
       maxResImage.src = maxResImageSrc;
     }
 
+    /**
+     * Event handler for loading state change (onload and onerror)
+     * of an image element when the src attribute is set.
+     */
     function onImageStateChange() {
-      // 120 is the natural width of the default youtube image.
+      // 120px is the natural width of the default YouTube image.
       if ( maxResImage.naturalWidth && maxResImage.naturalWidth !== 120 ) {
         defaultImage.src = maxResImageSrc;
       }

@@ -311,8 +311,7 @@
                         <label for="{{ options.id_range_date_gte }}" class="form-label-header">
                             From <span class="date-range_label">mm/dd/yyyy</span>:
                         </label>
-                        <input class="js-filter_range-date js-filter_range-date__gte"
-                               id="{{ options.id_range_date_gte }}"
+                        <input id="{{ options.id_range_date_gte }}"
                                name="{{ options.id_range_date_gte }}"
                                type="text"
                                value="{{ from_date_formatted if from_date_formatted else '' }}"
@@ -330,8 +329,7 @@
                         <label for="{{ options.id_range_date_lte }}" class="form-label-header">
                             To <span class="date-range_label">mm/dd/yyyy</span>:
                         </label>
-                        <input class="js-filter_range-date js-filter_range-date__lte"
-                               id="{{ options.id_range_date_lte }}"
+                        <input id="{{ options.id_range_date_lte }}"
                                name="{{ options.id_range_date_lte }}"
                                type="text"
                                value="{{ to_date_formatted if to_date_formatted else '' }}"
