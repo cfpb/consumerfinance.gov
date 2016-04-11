@@ -74,17 +74,16 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function handleEvent( event ) {
-    if ( !_suspended ) {
-      if ( event.type === 'triggerClick' ) {
-        _handleTriggerClickBinded( event );
-      } else if ( event.type === 'expandBegin' ) {
-        _handleExpandBeginBinded( event );
-      } else if ( event.type === 'collapseBegin' ) {
-        _handleCollapseBeginBinded( event );
-      } else if ( event.type === 'collapseEnd' ) {
-        _handleCollapseEndBinded( event );
-      }
-    }
+    if ( _suspended ) return;
+    var eventMap = {
+      triggerClick:  _handleTriggerClickBinded,
+      expandBegin:   _handleExpandBeginBinded,
+      collapseBegin: _handleCollapseBeginBinded,
+      collapseEnd:   _handleCollapseEndBinded
+    };
+
+    var currHandler = eventMap[event.type];
+    if ( currHandler ) currHandler( event );
   }
 
   /**
@@ -159,6 +158,7 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleExpandBegin( event ) {
+    window.scrollTo( 0, 0 );
     var menu = event.target;
     _handleToggle( menu );
     if ( menu === _rootMenu ) {
