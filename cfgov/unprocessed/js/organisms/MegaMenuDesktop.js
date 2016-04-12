@@ -189,7 +189,7 @@ function MegaMenuDesktop( menus ) {
       transition.moveUp();
 
       // TODO: The only reason hiding is necessary is that the
-      //       drop-shadow of the menu extends below it border,
+      //       drop-shadow of the menu extends below its border,
       //       so it's still visible when the menu slides -100% out of view.
       //       Investigate whether it would be better to have a u-move-up-1_1x
       //       or similar class to move up -110%. Or whether the drop-shadow
@@ -247,7 +247,7 @@ function MegaMenuDesktop( menus ) {
     if ( transition ) {
       transition.setElement( element );
     } else {
-      transition = new MoveTransition( element );
+      transition = new MoveTransition( element ).init();
     }
 
     return transition;
