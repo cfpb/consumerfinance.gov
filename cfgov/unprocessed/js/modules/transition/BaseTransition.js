@@ -2,7 +2,7 @@
 
 // Required modules.
 var EventObserver = require( '../../modules/util/EventObserver' );
-// TODO: import Function.bind polyfill.
+var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 
 /**
  * BaseTransition
@@ -32,8 +32,8 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    * @returns {BaseTransition} An instance.
    */
   function init() {
-    _transitionCompleteBinded = _transitionComplete.bind( this );
-    _addEventListenerBinded = _addEventListener.bind( this );
+    _transitionCompleteBinded = fnBind( _transitionComplete, this );
+    _addEventListenerBinded = fnBind( _addEventListener, this );
     setElement( element );
 
     return this;

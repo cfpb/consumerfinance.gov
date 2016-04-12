@@ -3,7 +3,7 @@
 // Required modules.
 var EventObserver = require( '../../modules/util/EventObserver' );
 var BaseTransition = require( './BaseTransition' );
-// TODO: import Function.bind polyfill.
+var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 
 // Exported constants.
 var CLASSES = {
@@ -31,7 +31,7 @@ function AlphaTransition( element ) {
    */
   function init() {
     _baseTransition.init();
-    var _transitionCompleteBinded = _transitionComplete.bind( this );
+    var _transitionCompleteBinded = fnBind( _transitionComplete, this );
     _baseTransition.addEventListener( BaseTransition.END_EVENT,
                                       _transitionCompleteBinded );
     return this;
