@@ -9,6 +9,7 @@
 
 'use strict';
 
+var fnBind = require( './fnBind' ).fnBind;
 
 /**
 * @param {Object} object - JavaScript object.
@@ -28,11 +29,12 @@ function _isPlainObject( object ) {
 */
 function assign( destination ) {
   destination = destination || {};
-
+  var hasOwnProp;
   for ( var i = 1; i < arguments.length; i++ ) {
     var source = arguments[i] || {};
+    hasOwnProp = fnBind( Object.hasOwnProperty, source );
     for ( var key in source ) {
-      if ( source.hasOwnProperty( key ) ) {
+      if ( hasOwnProp( key ) ) {
         var value = source[key];
         if ( _isPlainObject( value ) ) {
           assign( destination[key] = {}, value );

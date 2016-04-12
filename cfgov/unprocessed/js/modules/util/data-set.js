@@ -22,7 +22,7 @@ function _toCamelCase( str ) {
  */
 function dataSet( element ) {
   if ( document.documentElement.dataset ) {
-    return _assign({}, element.dataset );
+    return _assign( {}, element.dataset );
   }
 
   var dataset = {};

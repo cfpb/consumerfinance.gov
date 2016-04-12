@@ -17,9 +17,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+
+### Changed
+
+
+### Removed
+
+
+### Fixed
+
+
+
+## 3.0.0-3.3.1 - 2016-04-11
+
+### Added
+
 - Adds a max-selections checker to the Multiselect.
 - Remove inline CSS when running sheer_index.
 - Abstracted dom events for easier reuse throughout the project.
+- Added npm shrinkwrap and snyk dependency monitoring
 
 ### Changed
 
@@ -34,12 +50,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated footer to atomic footer.
 - Pinned our NPM dependencies.
 - Updated Capital Framework to 3.3.0
+- Changed U.S. flag image paths to be root-relative
 
 ### Removed
 
 - Removed `gulp beep` task for optional alerting when the build process
   has completed.
 - Remove Disqus comments from blog pages
+- Removed sitespeed.io gulp task
 
 ### Fixed
 
@@ -47,6 +65,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Update biographies for director bios.
 - Fixed issue with bad values in the multiselect.
 - Fixed the missing logon on IE 8.
+- Fixed an issue w/ the spacing on the hero.
+- Fixed issue where missing images were breaking the hero layout
 
 ## 3.0.0-3.2.1 - 2016-03-21
 

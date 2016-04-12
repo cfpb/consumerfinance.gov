@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-import os, re,HTMLParser
+import os, re, HTMLParser
 from urlparse import urlparse
 
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -56,11 +56,22 @@ def environment(**options):
 def parse_links(soup):
     extlink_pattern = re.compile(settings.EXTERNAL_LINK_PATTERN)
     noncfpb_pattern = re.compile(settings.NONCFPB_LINK_PATTERN)
+    files_pattern = re.compile(settings.FILES_LINK_PATTERN)
     a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
     span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
-    for tag in soup:
-        if hasattr(tag, 'style'):
+
+    # This removes style tags <style>
+    for s in soup('style'):
+        s.decompose()
+
+    # This removes all inline style attr's
+    for tag in soup.recursiveChildGenerator():
+        try:
             del tag['style']
+        except:
+            # 'NavigableString' object has does not have attr's
+            pass
+
     for a in soup.find_all('a', href=True):
         # Sets the link to an external one if you're leaving .gov 
         if extlink_pattern.match(a['href']):
@@ -68,9 +79,9 @@ def parse_links(soup):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         if noncfpb_pattern.match(a['href']):
             a.attrs.update({'class': a_class})
-            a.append(' ') # We want an extra space before the icon
+            a.append(' ')  # We want an extra space before the icon
             a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
-        else:
+        elif not files_pattern.match(a['href']):
             fix_link(a)
     return soup
 
@@ -103,6 +114,7 @@ def render_stream_child(context, stream_child):
     # Return the rendered template as safe html
     return Markup(unescaped)
 
+
 @contextfunction
 def get_protected_url(context, page):
     request_hostname = urlparse(context['request'].url).hostname
@@ -119,6 +131,7 @@ def get_protected_url(context, page):
         else:
             return '#'
 
+
 @contextfunction
 def related_metadata_tags(context, page):
     request = context['request']
@@ -129,7 +142,7 @@ def related_metadata_tags(context, page):
     id = None
     filter_page = None
     for ancestor in page.get_ancestors().reverse().specific():
-        if ancestor.specific_class.__name__ in ['BrowseFilterablePage', 'SublandingFilterablePage']:
+        if ancestor.specific_class.__name__ in ['EventArchivePage', 'BrowseFilterablePage', 'SublandingFilterablePage']:
             filter_page = ancestor
             id = util.get_form_id(ancestor, request.GET)
             break
