@@ -27,14 +27,14 @@
 <h1>{{ value.heading }}</h1>
 <div class="lead-paragraph">{{ parse_links(value.intro) | safe }}</div>
 {{ parse_links(value.body) | safe }}
-{% if value.links.url %}
-  <ul class="list list__links">
-      {% for link in value.links %}
-          <li class="list_item">
-              <a class="list_link" href="{{ link.url }}">
-                  {{ link.text }}
-              </a>
-          </li>
-      {% endfor %}
-  </ul>
-{% endif %}
+{% for link in value.links %}
+    {% if link.text %}
+        {% if loop.first %}<ul class="list list__links">{% endif %}
+            <li class="list_item">
+                <a class="list_link" href="{{ link.url }}">
+                    {{ link.text }}
+                </a>
+            </li>
+        {% if loop.last %}</ul>{% endif %}
+    {% endif %}
+{% endfor %}
