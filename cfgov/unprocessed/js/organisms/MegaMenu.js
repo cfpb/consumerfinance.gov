@@ -71,6 +71,10 @@ function MegaMenu( element ) {
                                  _handleRootCollapseEnd.bind( this ) );
 
     window.addEventListener( 'resize', _resizeHandler );
+    // Funnel window resize handler into orientation change on devices that support it.
+    if ( 'onorientationchange' in window ) {
+      window.addEventListener( 'orientationchange', _resizeHandler );
+    }
 
     if ( _isInDesktop() ) {
       _desktopNav.resume();
