@@ -63,7 +63,7 @@ class PDFGeneratorView(View):
             raise PDFReactorNotConfigured('PDFreactor python library path needs to be configured.')
 
         pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_WARN)
-        pdf_reactor.setLicenseKey(self.license)
+        pdf_reactor.setLicenseKey(str(self.license))
         pdf_reactor.setAuthor('CFPB')
         pdf_reactor.setAddTags(True)
         pdf_reactor.setAddBookmarks(True)

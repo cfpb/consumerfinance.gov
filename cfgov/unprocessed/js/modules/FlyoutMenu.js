@@ -4,6 +4,7 @@
 var BaseTransition = require( '../modules/transition/BaseTransition' );
 var dataHook = require( '../modules/util/data-hook' );
 var EventObserver = require( '../modules/util/EventObserver' );
+var fnBind = require( '../modules/util/fn-bind' ).fnBind;
 var standardType = require( '../modules/util/standard-type' );
 
 /**
@@ -60,10 +61,10 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   var _collapseTransitionMethodArgs = [];
 
   // Binded events.
-  var _collapseBinded = collapse.bind( this );
+  var _collapseBinded = fnBind( collapse, this );
   // Needed to add and remove events to transitions.
-  var _collapseEndBinded = _collapseEnd.bind( this );
-  var _expandEndBinded = _expandEnd.bind( this );
+  var _collapseEndBinded = fnBind( _collapseEnd, this );
+  var _expandEndBinded = fnBind( _expandEnd, this );
 
   // If this menu appears in a data source,
   // this can be used to store the source.
@@ -90,8 +91,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _triggerDom.setAttribute( 'data-gtm_ignore', 'true' );
     }
 
-    var triggerClickedBinded = _triggerClicked.bind( this );
-    var triggerOverBinded = _triggerOver.bind( this );
+    var triggerClickedBinded = fnBind( _triggerClicked, this );
+    var triggerOverBinded = fnBind( _triggerOver, this );
 
     // Set initial `aria-expanded="false"` attribute.
     _setAriaExpandedAttr( _triggerDom, 'false' );

@@ -28,7 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 
-## 3.0.0-3.3.1 - 2016-04-11
+## 3.0.0-3.3.2 - 2016-04-11
 
 ### Added
 
