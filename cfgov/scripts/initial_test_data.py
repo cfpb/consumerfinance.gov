@@ -13,6 +13,8 @@ from v1.models.browse_page import BrowsePage
 from v1.models.browse_filterable_page import BrowseFilterablePage, EventArchivePage
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.demo import DemoPage
+from wagtail.wagtailcore.blocks import StreamValue
+
 
 def run():
     print 'Running script \'scripts.initial_test_data\' ...'
@@ -72,6 +74,7 @@ def run():
     # Filterable Pages
     if not BrowseFilterablePage.objects.filter(title='Browse Filterable Page'):
         bfp = BrowseFilterablePage(title='Browse Filterable Page', slug='browse-filterable-page', owner=admin_user)
+        bfp.header = StreamValue(bfp.header.stream_block, [{'type': 'text_introduction', 'value': {'body': '', 'has_rule': False, 'intro': 'this is an intro', 'heading': '', 'links': []}}], True)
         publish_page(bfp)
 
     if not SublandingFilterablePage.objects.filter(title='Sublanding Filterable Page'):
@@ -95,3 +98,4 @@ def run():
     if not LearnPage.objects.filter(title='Learn Page'):
         lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
         publish_page(lp, bfp)
+
