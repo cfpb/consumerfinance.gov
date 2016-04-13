@@ -6,6 +6,7 @@ var breakpointState = require( '../modules/util/breakpoint-state' );
 var dataHook = require( '../modules/util/data-hook' );
 var EventObserver = require( '../modules/util/EventObserver' );
 var FlyoutMenu = require( '../modules/FlyoutMenu' );
+var fnBind = require( '../modules/util/fn-bind' ).fnBind;
 var MegaMenuDesktop = require( '../organisms/MegaMenuDesktop' );
 var MegaMenuMobile = require( '../organisms/MegaMenuMobile' );
 var MoveTransition = require( '../modules/transition/MoveTransition' );
@@ -66,11 +67,15 @@ function MegaMenu( element ) {
     _desktopNav = new MegaMenuDesktop( _menus ).init();
     _mobileNav = new MegaMenuMobile( _menus ).init();
     _mobileNav.addEventListener( 'rootExpandBegin',
-                                 _handleRootExpandBegin.bind( this ) );
+                                 fnBind (_handleRootExpandBegin, this ) );
     _mobileNav.addEventListener( 'rootCollapseEnd',
-                                 _handleRootCollapseEnd.bind( this ) );
+                                 fnBind( _handleRootCollapseEnd, this ) );
 
     window.addEventListener( 'resize', _resizeHandler );
+    // Funnel window resize handler into orientation change on devices that support it.
+    if ( 'onorientationchange' in window ) {
+      window.addEventListener( 'orientationchange', _resizeHandler );
+    }
 
     if ( _isInDesktop() ) {
       _desktopNav.resume();

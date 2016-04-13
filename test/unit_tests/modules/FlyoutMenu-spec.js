@@ -224,7 +224,7 @@ describe( 'FlyoutMenu', function() {
   describe( '.setExpandTransition()', function() {
     it( 'should set a transition', function( done ) {
       flyoutMenu.init();
-      var transition = new MoveTransition( contentDom );
+      var transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.addEventListener( 'expandEnd', function() {
         try {
@@ -242,7 +242,7 @@ describe( 'FlyoutMenu', function() {
   describe( '.setCollapseTransition()', function() {
     it( 'should set a transition', function( done ) {
       flyoutMenu.init();
-      var transition = new MoveTransition( contentDom );
+      var transition = new MoveTransition( contentDom ).init();
       triggerDom.click();
       flyoutMenu.setCollapseTransition( transition, transition.moveLeft );
       flyoutMenu.addEventListener( 'collapseEnd', function() {
@@ -262,7 +262,7 @@ describe( 'FlyoutMenu', function() {
     it( 'should return a transition instance', function() {
       flyoutMenu.init();
       expect( flyoutMenu.getTransition() ).to.be.undefined;
-      var transition = new MoveTransition( contentDom );
+      var transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
       expect( flyoutMenu.getTransition() ).to.equal( transition );

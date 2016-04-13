@@ -4,6 +4,7 @@
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var breakpointState = require( '../modules/util/breakpoint-state' );
 var EventObserver = require( '../modules/util/EventObserver' );
+var fnBind = require( '../modules/util/fn-bind' ).fnBind;
 
 /**
  * Expandable
@@ -41,8 +42,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
   // TODO: Replace function of _that with Function.prototype.bind.
   var _that = this;
-  var _collapseBinded = collapse.bind( this );
-  var _expandBinded = expand.bind( this );
+  var _collapseBinded = fnBind( collapse, this );
+  var _expandBinded = fnBind( expand, this );
 
   /**
    * @param {number} state
