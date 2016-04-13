@@ -5,7 +5,7 @@ INSTALLED_APPS += ('wagtail.contrib.wagtailstyleguide',)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': MYSQL_ENGINE,
         'NAME': os.environ.get('MYSQL_NAME'),
         'USER': os.environ.get('MYSQL_USER'),
         'PASSWORD': os.environ.get('MYSQL_PW', ''),

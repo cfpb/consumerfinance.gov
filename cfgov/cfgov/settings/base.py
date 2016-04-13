@@ -18,7 +18,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
 try:
     import mysql
-    MYSQL_ENGINE = 'django.db.backends.mysql'
+    MYSQL_ENGINE = 'mysql.connector.django'
 except ImportError:
     MYSQL_ENGINE = 'django.db.backends.mysql'
 
