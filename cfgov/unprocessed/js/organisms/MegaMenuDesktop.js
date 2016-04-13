@@ -2,6 +2,7 @@
 
 // Required modules.
 var EventObserver = require( '../modules/util/EventObserver' );
+var fnBind = require( '../modules/util/fn-bind' ).fnBind;
 var MoveTransition = require( '../modules/transition/MoveTransition' );
 var treeTraversal = require( '../modules/util/tree-traversal' );
 
@@ -20,10 +21,10 @@ function MegaMenuDesktop( menus ) {
   var _bodyDom = document.body;
 
   // Binded functions.
-  var _handleTriggerClickBinded = _handleTriggerClick.bind( this );
-  var _handleTriggerOverBinded = _handleTriggerOver.bind( this );
-  var _handleExpandBeginBinded = _handleExpandBegin.bind( this );
-  var _handleCollapseEndBinded = _handleCollapseEnd.bind( this );
+  var _handleTriggerClickBinded = fnBind( _handleTriggerClick, this );
+  var _handleTriggerOverBinded = fnBind( _handleTriggerOver, this );
+  var _handleExpandBeginBinded = fnBind( _handleExpandBegin, this );
+  var _handleCollapseEndBinded = fnBind( _handleCollapseEnd, this );
 
   // Tree model.
   var _menus = menus;
