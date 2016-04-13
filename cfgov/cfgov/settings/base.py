@@ -16,6 +16,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
+try:
+    import mysql
+    MYSQL_ENGINE = 'django.db.backends.mysql'
+except ImportError:
+    MYSQL_ENGINE = 'django.db.backends.mysql'
 
 # Application definition
 
@@ -130,7 +135,7 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': MYSQL_ENGINE,
         'NAME': os.environ.get('MYSQL_NAME', 'v1'),
         'USER': os.environ.get('MYSQL_USER', 'root'),
         'PASSWORD': os.environ.get('MYSQL_PW', ''),
