@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 
+- Removed resolved TODOs and old macros replaced by atomic components
 
 ### Fixed
 
