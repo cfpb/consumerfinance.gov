@@ -3,8 +3,6 @@ import datetime
 
 from core.management.commands._helpers import PageDataConverter
 
-from ..util.ref import categories
-
 
 class DataConverter(PageDataConverter):
 
@@ -12,33 +10,36 @@ class DataConverter(PageDataConverter):
         super(DataConverter, self).add_defaults(post_dict)
         post_dict['header-count'] = 0
 
-        # Categories
-        for i in range(len(doc['blog_category'])):
-            post_dict['categories-'+str(i)+'-id'] = u''
-            post_dict['categories-'+str(i)+'-DELETE'] = u''
-            post_dict['categories-'+str(i)+'-ORDER'] = str(i+1)
-            for categories_tuple in categories:
-                if categories_tuple[0] == 'Blog':
-                    for category_tuple in categories_tuple[1]:
-                        if category_tuple[1] == doc[blog_category][i]:
-                            post_dict['categories-'+str(i)+'-name'] = category_tuple[0]
-
         # Sidefoot
         post_dict.update({
-            'sidefoot-count': '1',
-            'sidefoot-0-type': 'related_posts',
-            'sidefoot-0-deleted': '',
-            'sidefoot-0-order': '0',
-            'sidefoot-0-value-relate_posts': 'on',
-            'sidefoot-0-value-specific_categories-count': '1',
-            'sidefoot-0-value-specific_categories-0-value': '',
-            'sidefoot-0-value-limit': '3',
-            'sidefoot-0-value-show_heading': 'on',
-            'sidefoot-0-value-specific_categories-0-order': '0',
-            'sidefoot-0-value-specific_categories-0-deleted': '',
-            'sidefoot-0-value-header_title': 'Further reading',
-            'sidefoot-0-value-view_more-url': '/',
-            'sidefoot-0-value-view_more-text': '',
+            'sidefoot-count': u'2',
+            'sidefoot-0-type': u'related_posts',
+            'sidefoot-0-deleted': u'',
+            'sidefoot-0-order': u'0',
+            'sidefoot-0-value-relate_posts': u'on',
+            'sidefoot-0-value-specific_categories-count': u'1',
+            'sidefoot-0-value-specific_categories-0-value': u'',
+            'sidefoot-0-value-limit': u'3',
+            'sidefoot-0-value-show_heading': u'on',
+            'sidefoot-0-value-specific_categories-0-order': u'0',
+            'sidefoot-0-value-specific_categories-0-deleted': u'',
+            'sidefoot-0-value-header_title': u'Further reading',
+            'sidefoot-0-value-view_more-url': u'/',
+            'sidefoot-0-value-view_more-text': u'',
+            'sidefoot-1-type': u'email_signup',
+            'sidefoot-1-deleted': u'',
+            'sidefoot-1-order': u'1',
+            'sidefoot-1-value-form_field-0-value-type': u'email',
+            'sidefoot-1-value-form_field-0-deleted': u'',
+            'sidefoot-1-value-gd_code': u'USCFPB_91',
+            'sidefoot-1-value-form_field-0-order': u'0',
+            'sidefoot-1-value-form_field-count': u'1',
+            'sidefoot-1-value-form_field-0-value-info': u'<p>The information you provide will permit the Consumer Financial Protection Bureau to process your request or inquiry.\xa0<a href="http://privacy/privacy-policy/">See More</a></p>',
+            'sidefoot-1-value-form_field-0-value-btn_text': u'Sign Up',
+            'sidefoot-1-value-heading': u'Stay Informed',
+            'sidefoot-1-value-form_field-0-value-label': u'Email Address',
+            'sidefoot-1-value-form_field-0-value-placeholder': u'example@mail.com',
+            'sidefoot-1-value-text': u'Subscribe to our email newsletter. We will update you on new blogs.',
         })
 
     def set_date(self, date_str):
@@ -63,7 +64,7 @@ class DataConverter(PageDataConverter):
         }
         self.add_defaults(doc, post_dict)
 
-        post_dict['post_preview_description'] = doc.get('excerpt', '')
+        post_dict['preview_description'] = doc.get('excerpt', '').decode('utf-8')
         post_dict['date_published'] = self.set_date(doc.get('date', ''))
         post_dict['tags'] = self.format_tags(doc.get('tags'))
         post_dict['authors'] = self.format_tags(doc.get('author'))
