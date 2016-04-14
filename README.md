@@ -26,6 +26,12 @@ or wiki—is a final product unless it is marked as such or appears on consumerf
 - [Node](http://nodejs.org) and npm (Node Package Manager):
   Used for downloading and managing front-end dependencies and assets.
 
+For Vagrant Virtualbox usage:
+- [VirtualBox](https://www.virtualbox.org)
+- [Vagrant](https://www.vagrantup.com)
+- python >=  2.6
+- ansible >= 1.9
+
 ## Installation
 
 Using the console, navigate to your project directory (`cd ~/Projects` or equivalent).
