@@ -245,6 +245,7 @@ urlpatterns = [
     url(r'^eregs-api/', include_if_app_enabled('regcore', 'regcore.urls')),
     url(r'^eregulations/', include_if_app_enabled('regulations','regulations.urls')),
 
+    url(r'^find-a-housing-counselor/$', TemplateView.as_view(template_name='find_a_housing_counselor.html')),
     # Report redirects
     url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s', permanent=True)),
 ]
