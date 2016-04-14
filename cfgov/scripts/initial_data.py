@@ -37,16 +37,18 @@ def run():
             site_root = site_root[0]
 
         # Setting new site root
-        site = Site.objects.first()
-        site.port = 8000
-        site.root_page_id = site_root.id
-        site.save()
-        content_site = Site(hostname='content.localhost', port=8000, root_page_id=site_root.id)
-        content_site.save()
+        if not Site.objects.filter(hostname='content.localhost').exists():
+            site = Site.objects.first()
+            site.port = 8000
+            site.root_page_id = site_root.id
+            site.save()
+            content_site = Site(hostname='content.localhost', port=8000, root_page_id=site_root.id)
+            content_site.save()
 
-        # Clean Up
-        old_site_root = Page.objects.filter(id=2)[0]
-        old_site_root.delete()
+            # Clean Up
+            old_site_root = Page.objects.filter(id=2)[0]
+            if old_site_root:
+                old_site_root.delete()
 
         # Events Browse Page required for event `import-data` command
         if not BrowseFilterablePage.objects.filter(title='Events').exists():
@@ -62,7 +64,7 @@ def run():
         if not BrowseFilterablePage.objects.filter(title='Archive').exists():
             archived_events = BrowseFilterablePage(title='Archive', slug='archive', owner=admin_user)
             if not events:
-                events = BrowsePage.objects.get(title='Events')
+                events = BrowseFilterablePage.objects.get(title='Events')
 
             events.add_child(instance=archived_events)
             revision = archived_events.save_revision(
