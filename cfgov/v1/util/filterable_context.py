@@ -20,14 +20,15 @@ def get_context(page, request, context):
         if form.is_valid():
             # Paginate results by 10 items per page.
             paginator = Paginator(get_page_set(page, form, request.site.hostname), 10)
-            page = request.GET.get('page')
+            try:
+                page = int(request.GET.get('page'))
+            except ValueError:
+                page = 1
 
             # Get the page number in the request and get the page from the
             # paginator to serve.
             try:
                 posts = paginator.page(page)
-            except PageNotAnInteger:
-                posts = paginator.page(1)
             except EmptyPage:
                 posts = paginator.page(paginator.num_pages)
 
