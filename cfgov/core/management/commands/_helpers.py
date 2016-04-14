@@ -131,7 +131,7 @@ class Importer:
                     print slug
 
 
-class PageDataConverter:
+class PageDataConverter(object):
     def convert(self, imported_data):
         raise NotImplementedError()
 

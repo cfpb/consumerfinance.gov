@@ -106,6 +106,25 @@ class DocumentDetailPage(AbstractFilterPage):
     template = 'document-detail/index.html'
 
 
+class LegacyBlogPage(AbstractFilterPage):
+    content = RichTextField()
+
+    objects = CFGOVPageManager()
+
+    content_panels = CFGOVPage.content_panels + [
+        StreamFieldPanel('header'),
+        FieldPanel('content'),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='General Content'),
+        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
+    ])
+
+    template = 'blog/legacy_blog_page.html'
+
+
 class AgendaItemBlock(blocks.StructBlock):
     start_dt = blocks.DateTimeBlock(label="Start", required=False)
     end_dt = blocks.DateTimeBlock(label="End", required=False)
