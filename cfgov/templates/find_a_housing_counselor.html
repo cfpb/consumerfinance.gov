@@ -49,7 +49,9 @@
 		</div><!-- end .cfpb_hud_hca_api_more_info -->
 	</div><!-- end .hud_hca_api_form_container -->
 
-	<div id="hud_hca_api_map_container" class="hud_hca_api_map col"></div><!-- end .hud_hca_api_map -->
+	<div id="hud_hca_api_map_container" class="hud_hca_api_map col">
+    <div id="hud_hca_api_map_canvas" ></div>
+  </div><!-- end .hud_hca_api_map -->
 </div><!-- end .hud_hca_api_grid_twothird -->
 
 <div id="hud_hca_api_results_container" class="hud_hca_api_results">
@@ -145,7 +147,14 @@
 
 {% endblock content %}
 
+
+{% block app_css %}
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+<link href='{% static 'hud_api/css/hud_api.css' %}' rel='stylesheet' ></link>
+{% endblock %}
+
 {% block app_js %}
-<script type='text/javascript' src='{% static 'hud_api/hud_api.js' %}'></script>
+<script type='text/javascript' src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+<script type='text/javascript' src='{% static 'hud_api/js/hud_api.js' %}'></script>
 
 {% endblock %}
