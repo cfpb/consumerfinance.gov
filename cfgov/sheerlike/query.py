@@ -267,10 +267,13 @@ class Query(object):
             aggregations=None,
             use_url_arguments=True,
             size=10,
+            pdf_print=False,
             **kwargs):
         query_file = json.loads(file(self.filename).read())
         query_dict = query_file['query']
 
+        if pdf_print:
+            query_dict['size'] = settings.ELASTICSEARCH_BIGINT
         '''
         These dict constructors split the kwargs from the template into filter
         arguments and arguments that can be placed directly into the query body.
