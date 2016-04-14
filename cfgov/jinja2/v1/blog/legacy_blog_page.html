@@ -20,7 +20,7 @@
             {%- import 'macros/category-slug.html' as category_slug %}
             {% for category in page.categories.all() %}
                 {{ '|' if loop.index > 1 else '' }}
-                {{ category_slug.render(category, 'post_slug meta-header_left') }}
+                {{ category_slug.render(category.name, 'post_slug meta-header_left') }}
             {% endfor %}
             <h1 class="post_heading">
                 {{ page.title|safe }}
@@ -58,19 +58,6 @@
 
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
-     <section class="block" data-qa-hook="stay-informed-section">
-        <h2 class="header-slug">
-            <span class="header-slug_inner">
-                Stay informed
-            </span>
-        </h2>
-        <div class="block block__sub block__flush-top">
-            <p data-qa-hook="stay-informed-desc">
-                Subscribe to our email newsletter. We will update you on new blogs.
-            </p>
-            {% import 'macros/subscribe.html' as subscribe with context %}
-            {{ subscribe.render('USCFPB_91') }}
-        </div>
 {#         <div class="block block__sub" data-qa-hook="rss-subscribe-section">
             {% import 'rss.html' as rss %}
             {{ rss.render(vars.rss_path) }}
