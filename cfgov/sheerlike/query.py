@@ -312,9 +312,12 @@ class Query(object):
         else:
             if use_url_arguments:
                 if 'page' in args_flat:
+                    try:
+                        pagenum = int(args_flat['page'])
+                    except ValueError:
+                        pagenum = 1
                     args_flat['from_'] = int(query_dict.get(
-                        'size', '10')) * (int(args_flat['page']) - 1)
-                    pagenum = int(args_flat['page'])
+                        'size', '10')) * (pagenum - 1)
 
                 args_flat_filtered = dict(
                     [(k, v) for k, v in args_flat.items() if v])
