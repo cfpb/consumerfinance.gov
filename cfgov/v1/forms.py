@@ -314,3 +314,39 @@ class EventArchiveFilterForm(FilterableListForm):
             'tags__name__in',        # topics
             'authors__name__in',     # authors
         ]
+
+
+class NewsroomFilterForm(FilterableListForm):
+
+    def get_pages(self, parent, hostname):
+        pages = CFGOVPage.objects.live_shared(hostname).descendant_of(parent)
+        blogs = []
+        try:
+            blog = CFGOVPage.objects.get(slug='blog')
+            blogs = CFGOVPage.objects.live_shared(hostname).descendant_of(blog)
+        except CFGOVPage.DoesNotExist:
+            print 'A blog landing page needs to be made'
+        if blogs:
+            pages = list(chain(pages, blogs))
+        return pages
+
+    # Populate Topics' choices
+    def set_topics(self, parent, hostname):
+        print 'here'
+        tags = [tag for tags in [page.tags.names() for page in self.get_pages(parent, hostname)] for tag in tags]
+        # Orders by most to least common tags
+        options = most_common(tags)
+        most = [(option, option) for option in options[:3]]
+        other = [(option, option) for option in options[3:]]
+        self.fields['topics'].choices = \
+            (('Most frequent', tuple(most)),
+             ('All other topics', tuple(other)))
+
+    # Populate Authors' choices
+    def set_authors(self, parent, hostname):
+        all_authors = [author for authors in
+                       [page.authors.names() for page in self.get_pages(parent, hostname)]
+                       for author in authors]
+        # Orders by most to least common authors
+        self.fields['authors'].choices = [(author, author) for author in
+                                          most_common(all_authors)]
