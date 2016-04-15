@@ -72,19 +72,25 @@ class Importer:
             if self.overwrite and existing:
                 pages_views.edit(request, existing.id)
             else:
-                pages_views.create(request, self.app, self.wagtail_type,
-                                   parent_page.id)
+                pages_views.create(request, self.app, self.wagtail_type, parent_page.id)
         except (IntegrityError, MessageFailure):
+            self.is_valid(existing, imported_data)
             try:
-                self.is_valid(existing, imported_data)
-                page = Page.objects.get(slug=imported_data['slug']).specific
-                for i in range(len(imported_data['blog_category'])):
+                if existing:
+                    existing = existing.specific
+                page = existing or Page.objects.descendant_of(parent_page).get(slug=imported_data['slug']).specific
+                if 'blog_category' in imported_data:
+                    cat_key = 'blog_category'
+                else:
+                    cat_key = 'category'
+                for i in range(len(imported_data[cat_key])):
                     for categories_tuple in categories:
-                        if categories_tuple[0] == 'Blog':
+                        if categories_tuple[0] in ['Blog', 'Newsroom']:
                             for category_tuple in categories_tuple[1]:
-                                if category_tuple[1].lower() == imported_data['blog_category'][i].lower():
+                                if category_tuple[1].lower() == imported_data[cat_key][i].lower():
                                     c, created = page.categories.get_or_create(page=page, name=category_tuple[0])
                                     c.save()
+
                 page.save()
                 page.save_revision().publish()
             except Page.DoesNotExist:

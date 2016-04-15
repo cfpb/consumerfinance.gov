@@ -125,6 +125,10 @@ class LegacyBlogPage(AbstractFilterPage):
     template = 'blog/legacy_blog_page.html'
 
 
+class LegacyNewsroomPage(LegacyBlogPage):
+    template = 'newsroom/legacy-newsroom-page.html'
+
+
 class AgendaItemBlock(blocks.StructBlock):
     start_dt = blocks.DateTimeBlock(label="Start", required=False)
     end_dt = blocks.DateTimeBlock(label="End", required=False)
