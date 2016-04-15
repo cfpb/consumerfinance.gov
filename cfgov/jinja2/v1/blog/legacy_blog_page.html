@@ -18,9 +18,10 @@
     <article class="post">
         <header>
             {%- import 'macros/category-slug.html' as category_slug %}
+            {% set index, ancestor = get_filter_data(page) %}
             {% for category in page.categories.all() %}
                 {{ '|' if loop.index > 1 else '' }}
-                {{ category_slug.render(category.name, 'post_slug meta-header_left') }}
+                {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug meta-header_left', index=index) }}
             {% endfor %}
             <h1 class="post_heading">
                 {{ page.title|safe }}
@@ -52,7 +53,7 @@
         {% if page.tags.all() | length %}
             <footer>
                 {%- import 'tags.html' as tags %}
-                {{ tags.render(page.tags.names(), request.path) }}
+                {{ tags.render( related_metadata_tags(page), '', is_wagtail=True) }}
             </footer>
         {% endif %}
     </article>
