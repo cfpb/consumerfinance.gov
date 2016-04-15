@@ -7,7 +7,7 @@ Find a housing counselor
 
 {% block content %}
 <section>
-			  <ul class="bread meta">
+  <ul class="bread meta">
   	<li><a href="/">Home</a></li>
         <li>Find a housing counselor</li>
   </ul>         
@@ -70,7 +70,7 @@ Find a housing counselor
             <div class="hud_hca_api_results_actions">
                 <p>
                     <span class="icon-print"></span>
-                    <span class="hud_hca_api_results_print"><a class="hud-hca-api-print" href="#print">Print list</a></span>
+                    <span class="hud_hca_api_results_print"></span>
                     <span class="icon-save"></span>
                     <span class="hud_hca_api_results_save"><a id="generate-pdf-link" href="/save-hud-counselors-list/" target="_blank">Save list as PDF</a></span>
                 </p>
@@ -155,6 +155,7 @@ Find a housing counselor
 {% block app_css %}
 <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
 <link href='{% static 'hud_api/css/hud_api.css' %}' rel='stylesheet' ></link>
+<link href='{% static 'hud_api/css/print_hud_api.css' %}' rel='stylesheet' ></link>
 {% endblock %}
 
 {% block app_js %}
