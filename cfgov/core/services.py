@@ -14,6 +14,7 @@ from v1.forms import CalenderPDFFilterForm
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.conf import settings
 
 class PDFReactorNotConfigured(Exception):
     pass
@@ -24,7 +25,7 @@ if six.PY2:
         sys.path.append(os.environ.get('PDFREACTOR_LIB'))
         from PDFreactor import *
     except:
-        pass
+       PDFReactor = None
 
 class PDFGeneratorView(View):
     render_url = None
