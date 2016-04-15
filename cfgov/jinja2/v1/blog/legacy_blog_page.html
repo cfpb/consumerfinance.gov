@@ -45,16 +45,18 @@
             </div>
             {% import 'molecules/social-media.html' as social_media with context %}
             {{ social_media.render({'title': page.title}) }}
-        <div class="post_body">
-            {{ parse_links(page.content) | safe }}
-        </div>
-    {% if page.tags.all() | length %}
-        <footer>
-            {%- import 'tags.html' as tags %}
-            {{ tags.render(page.tags.names(), request.path) }}
-        </footer>
-    {% endif %}
-</article>{% endblock %}
+            <div class="post_body">
+                {{ parse_links(page.content) | safe }}
+            </div>
+        </header>
+        {% if page.tags.all() | length %}
+            <footer>
+                {%- import 'tags.html' as tags %}
+                {{ tags.render(page.tags.names(), request.path) }}
+            </footer>
+        {% endif %}
+    </article>
+{% endblock %}
 
 {% block content_sidebar %}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
