@@ -15,48 +15,7 @@
 {%- endblock %}
 
 {% block content_main %}
-    <article class="post">
-        <header>
-            {%- import 'macros/category-slug.html' as category_slug %}
-            {% set index, ancestor = get_filter_data(page) %}
-            {% for category in page.categories.all() %}
-                {{ '|' if loop.index > 1 else '' }}
-                {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug meta-header_left', index=index) }}
-            {% endfor %}
-            <h1 class="post_heading">
-                {{ page.title|safe }}
-            </h1>
-            <div class="post_meta">
-            {% set num_authors = page.authors.all()|length %}
-            {% if num_authors %}
-                <span class="post_byline">
-                {%- for author in page.authors.all() -%}
-                    {{- 'By ' if loop.index == 1 else ', ' if num_authors > 2 and not loop.index == num_authors else ' ' }}
-                    <a href="{{ request.path }}?filter_author={{ author.slug }}">
-                        {{ author.name }}
-                    </a>
-                {%- endfor -%}
-                    &ndash;
-                </span>
-            {% endif %}
-            <span class="date">
-                {% import 'macros/time.html' as time %}
-                {{ time.render(page.date_published, {'date':true}) }}
-            </span>
-            </div>
-            {% import 'molecules/social-media.html' as social_media with context %}
-            {{ social_media.render({'title': page.title}) }}
-            <div class="post_body">
-                {{ parse_links(page.content) | safe }}
-            </div>
-        </header>
-        {% if page.tags.all() | length %}
-            <footer>
-                {%- import 'tags.html' as tags %}
-                {{ tags.render( related_metadata_tags(page), '', is_wagtail=True) }}
-            </footer>
-        {% endif %}
-    </article>
+    {% include 'article.html' %}
 {% endblock %}
 
 {% block content_sidebar %}

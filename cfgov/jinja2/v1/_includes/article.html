@@ -24,84 +24,47 @@
 
    ========================================================================== #}
 
-{% macro render(post, path) %}
-
 {% import 'molecules/social-media.html' as social_media with context %}
 
 <article class="post">
     <header>
         {%- import 'macros/category-slug.html' as category_slug %}
-        {% if path == '/about-us/blog/' and post.blog_category.0 %}
-            {% set use_blog_category = true %}
-            {% for icon in post.blog_category %}
-                {% if loop.index > 1 %}
-                    |
-                {% endif %}
-                {{ category_slug.render(icon,
-                        path,
-                        'post_slug meta-header_left',
-                        use_blog_category,
-                        sheerpage=True) }}
-            {% endfor %}
-        {% elif post.category.0 %}
-            {% for icon in post.category %}
-                {% if loop.index > 1 %}
-                    |
-                {% endif %}
-                {{ category_slug.render(icon,
-                        path,
-                        'post_slug meta-header_left',
-                        sheerpage=True) }}
-            {% endfor %}
-        {% endif %}
+        {% set index, ancestor = get_filter_data(page) %}
+        {% for category in page.categories.all() %}
+            {{ '|' if loop.index > 1 else '' }}
+            {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug meta-header_left', index=index) }}
+        {% endfor %}
         <h1 class="post_heading">
-            {{ post.title|safe }}
+            {{ page.title|safe }}
         </h1>
-    {% if post.dek %}
-        <p class="post_dek">
-            {{ post.dek|safe }}
-        </p>
-    {% endif %}
         <div class="post_meta">
-        {% if post.author.0 %}
+        {% set num_authors = page.authors.all()|length %}
+        {% if num_authors %}
             <span class="post_byline">
-                By <a href="{{ path }}?filter_author={{ post.author.0 }}">
-                    {{ post.author.0 }}
+            {%- for author in page.authors.all() -%}
+                {{- 'By ' if loop.index == 1 else ', ' if num_authors > 2 and not loop.index == num_authors else ' ' }}
+                <a href="{{ request.path }}?filter_author={{ author.slug }}">
+                    {{ author.name }}
                 </a>
-                {% if post.author.1 %}
-                    and <a href="{{ path }}?filter_author={{ post.author.1 }}">
-                        {{ post.author.1 }}
-                    </a>
-                {% endif %}
+            {%- endfor -%}
                 &ndash;
             </span>
         {% endif %}
-            <span class="date">
-                {% import 'macros/time.html' as time %}
-                {{ time.render(post.date, {'date':true}) }}
-            </span>
+        <span class="date">
+            {% import 'macros/time.html' as time %}
+            {{ time.render(page.date_published, {'date':true}) }}
+        </span>
         </div>
-        {{ social_media.render( {
-            'title':            post.title,
-            'twitter_related':  post.twtr_rel,
-            'twitter_lang':     post.twtr_lang,
-            'twitter_hashtags': post.twtr_hash
-        } ) }}
-    {% if post.thumbnail.images %}
-        <img class="post_featured-img"
-             src="{{ post.thumbnail.images.full.url }}"
-             alt="{{ post.thumbnail.alt_text }}">
-    {% endif %}
+        {% import 'molecules/social-media.html' as social_media with context %}
+        {{ social_media.render({'title': page.title}) }}
+        <div class="post_body">
+            {{ parse_links(page.content) | safe }}
+        </div>
     </header>
-    <div class="post_body">
-        {{ post.content | safe }}
-    </div>
-{% if post.tags | length %}
-    <footer>
-        {%- import 'tags.html' as tags %}
-        {{ tags.render( post.tags, path, is_sheer=True ) }}
-    </footer>
-{% endif %}
+    {% if page.tags.all() | length %}
+        <footer>
+            {%- import 'tags.html' as tags %}
+            {{ tags.render( related_metadata_tags(page), '', is_wagtail=True) }}
+        </footer>
+    {% endif %}
 </article>
-
-{% endmacro %}

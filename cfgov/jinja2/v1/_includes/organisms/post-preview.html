@@ -56,13 +56,11 @@
             </span>
             {# Newsroom Blog category logic #}
             {% if show_categories %}
-                {% if 'newsroom' in cat_controls.page_type %}
-                    {% if is_blog(post) %}
-                        {{ category_slug.render('blog',
-                                page_url,
-                                'post_slug meta-header_left',
-                                false, form_id) }}
-                    {% endif %}
+                {% if 'newsroom' in cat_controls.page_type and is_blog(post) %}
+                    {{ category_slug.render('blog',
+                            page_url,
+                            'post_slug meta-header_left',
+                            false, form_id) }}
                 {% else %}
                     {% for cat in post.categories.all() %}
                         {% if loop.index > 1 %}
