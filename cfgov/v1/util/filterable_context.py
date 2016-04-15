@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from ..models import base, molecules, organisms
 from ref import categories as ref_categories
+from ..models import CFGOVPage
 from ..models.learn_page import AbstractFilterPage
 
 
@@ -12,7 +13,7 @@ def get_context(page, request, context):
     context.update({'has_active_filters': has_active_filters})
 
     context['forms'] = []
-    form_class = get_form_class()
+    form_class = page.specific.get_form_class()
     form_specific_filters = get_form_specific_filter_data(page, form_class, request.GET)
     forms = [form_class(form_specific_filters[filters_id], parent=page, hostname=request.site.hostname)
              for filters_id in form_specific_filters.keys()]
@@ -34,10 +35,6 @@ def get_context(page, request, context):
             context.update({'posts': posts})
         context['forms'].append(form)
     return context
-
-
-def get_form_class():
-    return forms.FilterableListForm
 
 
 # Transform each GET parameter key from unique ID for the form in the
@@ -78,17 +75,25 @@ def get_page_set(page, form, hostname):
             categories = form.cleaned_data.get('categories', [])
             if not categories or 'blog' in categories:
                 blog_cats = [c[0] for c in ref_categories[1][1]]
-                blog_q = Q('categories__name__in', blog_cats)
+                blog_q = Q(('categories__name__in', blog_cats))
 
     results = AbstractFilterPage.objects.live_shared(hostname).descendant_of(
-        page).filter(form.generate_query() | blog_q)
+        page).filter(form.generate_query())
+    blogs = None
+    if blog_q:
+        try:
+            blog = CFGOVPage.objects.get(slug='blog')
+            blogs = AbstractFilterPage.objects.live_shared(hostname).descendant_of(blog)
+        except CFGOVPage.DoesNotExist:
+            pass
 
     if isinstance(page, EventArchivePage):
-        filter_pages = [page for page in results if isinstance(page, AbstractFilterPage)]
+        filter_pages = [page.specific for page in results]
     else:
-        filter_pages = [page for page in results if
-                        isinstance(page, AbstractFilterPage) and not isinstance(page.get_parent().specific,
-                                                                                EventArchivePage)]
+        filter_pages = [page.specific for page in results
+                        if not isinstance(page.get_parent().specific, EventArchivePage)]
+        if blogs:
+            filter_pages += [page.specific for page in blogs]
 
     filter_pages.sort(key=lambda x: x.date_published, reverse=True)
     return filter_pages
@@ -96,7 +101,7 @@ def get_page_set(page, form, hostname):
 
 def has_active_filters(page, request, index):
     active_filters = False;
-    form_class = get_form_class()
+    form_class = page.get_form_class()
     forms_data = get_form_specific_filter_data(page, form_class, request.GET)
     if forms_data:
         for filters in forms_data[index].values():

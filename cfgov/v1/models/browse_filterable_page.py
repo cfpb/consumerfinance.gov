@@ -55,7 +55,7 @@ class BrowseFilterablePage(base.CFGOVPage):
         return filterable_context.get_context(self, request, context)
 
     def get_form_class(self):
-        return filterable_context.get_form_class()
+        return forms.FilterableListForm
 
     def get_page_set(self, form, hostname):
         return filterable_context.get_page_set(self, form, hostname)
@@ -64,6 +64,14 @@ class BrowseFilterablePage(base.CFGOVPage):
 class EventArchivePage(BrowseFilterablePage):
     def get_form_class(self):
         return forms.EventArchiveFilterForm
+
+    def get_template(self, request, *args, **kwargs):
+        return BrowseFilterablePage.template
+
+
+class NewsroomLandingPage(BrowseFilterablePage):
+    def get_form_class(self):
+        return forms.NewsroomFilterForm
 
     def get_template(self, request, *args, **kwargs):
         return BrowseFilterablePage.template

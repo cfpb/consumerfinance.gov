@@ -44,7 +44,6 @@
 {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
 {% macro render(post, controls, form_id=0, url='') %}
-    {% set type = controls.page_type or '' %}
     {% set date_desc = controls.post_date_description or 'Published' %}
     {% set cat_controls = controls.categories %}
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
@@ -57,7 +56,7 @@
             </span>
             {# Newsroom Blog category logic #}
             {% if show_categories %}
-                {% if 'newsroom' in type %}
+                {% if 'newsroom' in cat_controls.page_type %}
                     {% if is_blog(post) %}
                         {{ category_slug.render('blog',
                                 page_url,
