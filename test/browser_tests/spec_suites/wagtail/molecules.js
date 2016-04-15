@@ -39,3 +39,17 @@ describe( 'Related Links', function() {
   );
 
 } );
+
+
+describe( 'Quote', function() {
+  beforeAll( function() {
+    browser.get( '/browse-filterable-page/learn-page/' );
+  } );
+  it( 'should properly load in a browser',
+    function() {
+      expect(element(by.css( 'body' )).getText() ).toContain(
+        'this is a quote' );
+    }
+  );
+
+} );
