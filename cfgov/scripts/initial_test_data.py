@@ -100,3 +100,8 @@ def run():
         lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
         publish_page(lp, bfp)
 
+    if not DemoPage.objects.filter(title='Demo Page'):
+        dp = DemoPage(title='Demo Page', slug='demo-page', owner=admin_user)
+        dp.sidefoot = StreamValue(dp.sidefoot.stream_block, [{'type': 'related_links', 'value': {'links': [{'url': '/url', 'text': 'this is a related link'}]}}], True)
+        publish_page(dp)
+
