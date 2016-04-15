@@ -18,8 +18,6 @@ var filter = {
 
   searchFilterHideBtn: _getFilterElement( '.m-expandable_cue-close' ),
 
-  searchFilterResetBtn: _getFilterElement( '.js-form_clear' ),
-
   searchFilterSubmitBtn: _getFilterElement( 'btn[type="submit"]' )
 
 };
