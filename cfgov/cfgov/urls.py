@@ -104,17 +104,6 @@ urlpatterns = [
     ],
         namespace='docs')),
 
-    url(r'^blog/(?P<path>.*)$', RedirectView.as_view(url='/about-us/blog/%(path)s', permanent=True)),
-    url(r'^about-us/blog/', include([
-        url(r'^$', TemplateView.as_view(template_name='blog/index.html'),
-            name='index'),
-        url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='posts',
-                                      local_name='post',
-                                      default_template='blog/_single.html'),
-            name='detail')],
-        namespace='blog')),
-
     url(r'^newsroom/(?P<path>.*)$', RedirectView.as_view(url='/about-us/newsroom/%(path)s', permanent=True)),
     url(r'^about-us/newsroom/', include([
         url(r'^$', TemplateView.as_view(template_name='newsroom/index.html'),
