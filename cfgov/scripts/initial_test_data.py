@@ -69,6 +69,7 @@ def run():
 
     if not BrowsePage.objects.filter(title='Browse Page'):
         bp = BrowsePage(title='Browse Page', slug='browse-page', owner=admin_user)
+        bp.header = StreamValue(bp.header.stream_block, [{'type': 'featured_content', 'value': {'body': "<p>this is a featured content body</p>"}}], True)
         publish_page(bp)
 
     # Filterable Pages
