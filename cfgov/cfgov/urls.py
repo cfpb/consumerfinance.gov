@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
+from legacy.views import HousingCounselorPDFView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 from sheerlike.sites import SheerSite
@@ -245,6 +246,8 @@ urlpatterns = [
     url(r'^eregs-api/', include_if_app_enabled('regcore', 'regcore.urls')),
     url(r'^eregulations/', include_if_app_enabled('regulations','regulations.urls')),
 
+    url(r'^find-a-housing-counselor/$', TemplateView.as_view(template_name='find_a_housing_counselor.html')),
+    url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
     # Report redirects
     url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s', permanent=True)),
 ]
