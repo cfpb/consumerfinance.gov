@@ -26,6 +26,19 @@ describe( 'Featured Content', function() {
 
 } );
 
+describe( 'Expandable', function() {
+  beforeAll( function() {
+    browser.get( '/browse-page/' );
+  } );
+  it( 'should properly load in a browser',
+    function() {
+      expect(element(by.css( 'body' )).getText() ).toContain(
+        'this is an expandable' );
+    }
+  );
+
+} );
+
 
 describe( 'Related Links', function() {
   beforeAll( function() {
@@ -39,7 +52,6 @@ describe( 'Related Links', function() {
   );
 
 } );
-
 
 describe( 'Quote', function() {
   beforeAll( function() {

@@ -70,6 +70,7 @@ def run():
     if not BrowsePage.objects.filter(title='Browse Page'):
         bp = BrowsePage(title='Browse Page', slug='browse-page', owner=admin_user)
         bp.header = StreamValue(bp.header.stream_block, [{'type': 'featured_content', 'value': {'body': "<p>this is a featured content body</p>"}}], True)
+        bp.content = StreamValue(bp.content.stream_block, [{'type': 'expandable', 'value': {'label': 'this is an expandable'}}], True)
         publish_page(bp)
 
     # Filterable Pages
