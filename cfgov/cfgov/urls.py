@@ -51,6 +51,8 @@ urlpatterns = [
 
     url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
+    url(r'^owning-a-home/static/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/static/%(path)s')),
+    url(r'^owning-a-home/resources/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/resources/%(path)s')),
     url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
 
     # the two redirects are an unfortunate workaround, could be resolved by
