@@ -18,19 +18,19 @@
 {% endblock %}
 
 {% block body %}
-
-    {% import 'macros/active-filters.html' as active_filters with context %}
     {% import 'leadership-calendar-table.html' as calendar %}
 
     <main class="content print" id="main" role="main">
         <div class="content_wrapper">
             <div class="content_main">
                 <div class="print-header">
-                    {% set query = queries.calendar_event -%}
-                    {%- set posts = query.search() -%}
+                    {% set query = queries.calendar_event %}
+                    {% set posts = query.search(pdf_print=True) %}
+
+                    {% import 'macros/active-filters.html' as active_filters with context %}
                     <h1 class="superheader">Leadership Calendar</h1>
                     {{ active_filters.render(posts, ['calendar', 'range_date'], {
-                        'show_filters_label': false,
+                        'show_filters_label': true,
                         'show_unfiltered_count': true,
                         'use_list': true
                     }) }}
