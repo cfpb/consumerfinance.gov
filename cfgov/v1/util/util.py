@@ -85,7 +85,7 @@ def get_form_id(page, get_request):
 
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
-    return isinstance(page, BrowsePage) or isinstance(page, BrowseFilterablePage)
+    return isinstance(page, BrowsePage, BrowseFilterablePage)
 
 
 # For use by Browse type pages to get the secondary navigation items

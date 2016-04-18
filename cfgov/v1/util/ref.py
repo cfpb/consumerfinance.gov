@@ -25,6 +25,7 @@ related_posts_categories = [
 ]
 
 page_types = [
+    ('activity-log', 'Activity Log'),
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
     ('enforcement', 'Enforcement action'),
@@ -122,6 +123,13 @@ supported_languagues = [
 
 def page_type_choices():
     new_choices = [
+        ('Activity Log', (
+            ('blog', 'Blog'),
+            ('op-ed', 'Op-Ed'),
+            ('press-release', 'Press Release'),
+            ('research-report', 'Report'),
+            ('speech', 'Speech'),
+            ('testimony', 'Testimony'))),
         ('Leadership Calendar', (
             ('richard-cordray', 'Richard Cordray'),
             ('david-silberman', 'David Silberman'),
@@ -136,6 +144,11 @@ def page_type_choices():
             ('speech', 'Speech'),
             ('testimony', 'Testimony'))),
     ]
+    categories_copy = list(categories)
+    for i, category in enumerate(categories_copy):
+        for choice in new_choices:
+            if choice[0] == category[0]:
+                del categories_copy[i]
     return sorted(categories + new_choices)
 
 

@@ -54,5 +54,10 @@ class SublandingFilterablePage(base.CFGOVPage):
 
     def get_page_set(self, form, hostname):
         return filterable_context.get_page_set(self, form, hostname)
-     
 
+
+class ActivityLogPage(SublandingFilterablePage):
+    template = 'activity-log/index.html'
+
+    def get_form_class(self):
+        return forms.ActivityLogFilterForm

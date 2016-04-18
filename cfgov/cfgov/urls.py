@@ -132,10 +132,6 @@ urlpatterns = [
             name='page')],
         namespace='business')),
 
-    url(r'^activity-log/$',
-        TemplateView.as_view(template_name='activity-log/index.html'),
-        name='activity-log'),
-
     url(r'^subscriptions/new/$',
         'core.views.govdelivery_subscribe',
         name='govdelivery'),

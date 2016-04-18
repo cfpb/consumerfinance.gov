@@ -1,9 +1,11 @@
+from itertools import chain
+
 from .. import forms
 from .util import get_secondary_nav_items
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from ..models import base, molecules, organisms
-from ref import categories as ref_categories
+from ref import choices_for_page_type
 from ..models import CFGOVPage
 from ..models.learn_page import AbstractFilterPage
 
@@ -20,7 +22,7 @@ def get_context(page, request, context):
     for form in forms:
         if form.is_valid():
             # Paginate results by 10 items per page.
-            paginator = Paginator(get_page_set(page, form, request.site.hostname), 10)
+            paginator = Paginator(get_page_set(page, form, request.site.hostname), form.per_page_limit())
             page = request.GET.get('page')
 
             # Get the page number in the request and get the page from the
@@ -65,38 +67,33 @@ def get_form_specific_filter_data(page, form_class, request_dict):
 
 # Returns a queryset of AbstractFilterPages
 def get_page_set(page, form, hostname):
-    from ..models.browse_filterable_page import EventArchivePage
-    # If this is the Newsroom, then we need to go get the blog
-    # from a different part of the site.
-    blog_q = Q()
+    results = {}
     for f in page.content:
-        if 'filter_controls' in f.block_type and 'newsroom' in \
-                f.value['categories']['page_type']:
+        if 'filter_controls' in f.block_type and f.value['categories']['page_type'] in ['activity-log', 'newsroom']:
             categories = form.cleaned_data.get('categories', [])
-            if not categories or 'blog' in categories:
-                blog_cats = [c[0] for c in ref_categories[1][1]]
-                blog_q = Q(('categories__name__in', blog_cats))
-
-    results = AbstractFilterPage.objects.live_shared(hostname).descendant_of(
-        page).filter(form.generate_query())
-    blogs = None
-    if blog_q:
-        try:
-            blog = CFGOVPage.objects.get(slug='blog')
-            blogs = AbstractFilterPage.objects.live_shared(hostname).descendant_of(blog)
-        except CFGOVPage.DoesNotExist:
-            pass
-
-    if isinstance(page, EventArchivePage):
-        filter_pages = [page.specific for page in results]
-    else:
-        filter_pages = [page.specific for page in results
-                        if not isinstance(page.get_parent().specific, EventArchivePage)]
-        if blogs:
-            filter_pages += [page.specific for page in blogs]
-
-    filter_pages.sort(key=lambda x: x.date_published, reverse=True)
-    return filter_pages
+            if f.value['categories']['page_type'] == 'activity-log':
+                selections = {'blog': False, 'research-report': False}
+            else:
+                selections = {'blog': False}
+            for category in selections.keys():
+                if not categories or category in categories:
+                    selections[category] = True
+                    categories += [c[0] for c in choices_for_page_type(category)]
+                    if category in categories:
+                        del categories[categories.index(category)]
+            if f.value['categories']['page_type'] == 'activity-log':
+                selections.update({'newsroom': True})
+    results.update({'current': AbstractFilterPage.objects.live_shared(hostname).descendant_of(page).filter(form.generate_query())})
+    # del form.cleaned_data['categories']
+    for slug, is_selected in selections.iteritems():
+        if is_selected:
+            try:
+                parent = CFGOVPage.objects.get(slug=slug)
+                results.update({slug: AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent).filter(form.generate_query())})
+            except CFGOVPage.DoesNotExist:
+                print slug, 'does not exist'
+    filter_pages = list(chain(*results.values()))
+    return sorted(filter_pages, key=lambda x: x.date_published, reverse=True)
 
 
 def has_active_filters(page, request, index):
