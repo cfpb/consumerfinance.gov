@@ -60,6 +60,8 @@ class PostPreviewSnapshot(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit',
                              help_text='How many posts do you want to show?')
 
+    post_date_description = blocks.CharBlock(default='Published')
+
     class Meta:
         icon = 'order'
 
