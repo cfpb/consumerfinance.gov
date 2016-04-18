@@ -36,9 +36,7 @@ describe( 'The Bureau Page', function() {
 
       it( 'should show the hide button after clicked', function() {
         page.expandableTarget.click();
-        page.wait( function() {
-          return expect( page.hideButton.isDisplayed() ).toBe( true );
-        }, 1000 );
+        browser.wait( page.hideButton.isDisplayed() );
 
       } );
     } );
