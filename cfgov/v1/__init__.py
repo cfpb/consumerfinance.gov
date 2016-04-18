@@ -73,11 +73,11 @@ def parse_links(soup):
             pass
 
     for a in soup.find_all('a', href=True):
-        # Sets the link to an external one if you're leaving .gov 
-        if extlink_pattern.match(a['href']):
-            a['href'] = '/external-site/?ext_url=' + a['href']
         # Sets the icon to indicate you're leaving consumerfinance.gov
         if noncfpb_pattern.match(a['href']):
+            # Sets the link to an external one if you're leaving .gov 
+            if extlink_pattern.match(a['href']):
+                a['href'] = '/external-site/?ext_url=' + a['href']
             a.attrs.update({'class': a_class})
             a.append(' ')  # We want an extra space before the icon
             a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
