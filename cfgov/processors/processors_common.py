@@ -19,6 +19,6 @@ def update_path(path):
 def fix_link(link):
     urldata = urlsplit(link['href'])
     new_path = update_path(urldata.path)
-    new_href = urlunsplit((urldata.scheme, None, urldata.path, urldata.query,
+    new_href = urlunsplit((urldata.scheme, urldata.netloc, urldata.path, urldata.query,
                           urldata.fragment))
     link['href'] = new_href
