@@ -3,6 +3,7 @@ import json
 from itertools import chain
 from collections import OrderedDict
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_delete
@@ -17,6 +18,8 @@ from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
+from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
     UserPagePermissionsProxy, Orderable, PageManager, PageQuerySet
 from wagtail.wagtailcore.url_routing import RouteResult
@@ -30,6 +33,7 @@ from sheerlike.query import QueryFinder
 
 from . import molecules
 from . import organisms
+from .. import get_protected_url
 from ..util import util, ref
 
 import urllib
@@ -127,21 +131,18 @@ class CFGOVPage(Page):
         ObjectList(settings_panels, heading='Configuration'),
     ])
 
-    def generate_view_more_url(self):
-        url = '/activity-log/?'
+    def generate_view_more_url(self, request):
         tags = []
+        activity_log = CFGOVPage.objects.get(slug='activity-log').specific
+        index = util.get_form_id(activity_log, request.GET)
         for tag in self.tags.names():
-            tags.append('filter_tags=' + urllib.quote_plus(tag))
+            tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
         tags = '&'.join(tags)
-        return url + tags
+        return get_protected_url({'request': request}, activity_log) + '?' + tags
 
     def related_posts(self, block, hostname):
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
-        block.value['view_more']['text'] = "View more"
-        if self.tags.names():
-            block.value['view_more']['url'] = self.generate_view_more_url()
-            self.save()
         # TODO: Add other search types as they are implemented in Django
         # Import classes that use this class here to maintain proper import
         # order.
