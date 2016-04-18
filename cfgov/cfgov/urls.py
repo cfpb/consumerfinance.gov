@@ -7,12 +7,11 @@ from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
 from legacy.views import HousingCounselorPDFView
 from sheerlike.views.generic import SheerTemplateView
-from sheerlike.feeds import SheerlikeFeed
 from sheerlike.sites import SheerSite
 
 from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
     change_password, password_reset_confirm, cfpb_login, create_user, edit_user
-from v1.feed import BlogFeed
+from v1.feed import BlogFeed, NewsroomFeed
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
@@ -156,7 +155,8 @@ urlpatterns = [
             name='server_error')],
         namespace='govdelivery')),
 
-    url(r'^feed/blog/$', BlogFeed(), name='feed'),
+    url(r'^feed/blog/$', BlogFeed(), name='blog_feed'),
+    url(r'^feed/newsroom/$', NewsroomFeed(), name='newsroom_feed'),
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 
