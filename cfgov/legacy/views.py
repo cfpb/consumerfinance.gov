@@ -1,7 +1,8 @@
+import six, sys, os
 from core.services import PDFGeneratorView
 from django.conf import settings
 from django.http import HttpResponse
-import six
+from .forms import HousingCounselorForm
 
 if six.PY2:
     try:
@@ -14,9 +15,15 @@ if six.PY2:
 class HousingCounselorPDFView(PDFGeneratorView):
     def get_render_url(self):
         request = self.request
-        api_url = 'hud-api-replace/%s.html/' % request.GET['zip']
-        url = '%s://%s/%s' % (request.scheme, request.get_host(), api_url)
-        return url
+
+        form = HousingCounselorForm(request.GET)
+        if form.is_valid():
+            zip = form.cleaned_data['zip']
+            api_url = 'hud-api-replace/%s.html/' % zip
+            url = '%s://%s/%s' % (request.scheme, request.get_host(), api_url)
+            return url
+        else:
+            raise Exception(form.errors)
 
     def get(self, request):
 
