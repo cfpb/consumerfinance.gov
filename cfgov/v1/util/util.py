@@ -85,7 +85,7 @@ def get_form_id(page, get_request):
 
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
-    return isinstance(page, BrowsePage, BrowseFilterablePage)
+    return isinstance(page, (BrowsePage, BrowseFilterablePage))
 
 
 # For use by Browse type pages to get the secondary navigation items
@@ -99,8 +99,8 @@ def get_secondary_nav_items(current, hostname, exclude_siblings=False):
     pages = [page] if page.secondary_nav_exclude_sibling_pages else page.get_appropriate_siblings(hostname)
 
     for sibling in pages:
-        # Only if it's a Browse type page
-        if 'Browse' in sibling.specific_class.__name__:
+        # Only if it's a Browse(Filterable) type page
+        if instanceOfBrowseOrFilterablePages(sibling.specific):
             sibling = page if page.id == sibling.id else sibling
             item = {
                 'title': sibling.title,

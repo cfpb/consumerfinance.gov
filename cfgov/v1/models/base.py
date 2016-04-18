@@ -103,6 +103,7 @@ class CFGOVPage(Page):
         ('email_signup', organisms.EmailSignUp()),
         ('contact', organisms.MainContactInfo()),
         ('sidebar_contact', organisms.SidebarContactInfo()),
+        ('rss_feed', molecules.RSSFeed()),
     ], blank=True)
 
     # Panels

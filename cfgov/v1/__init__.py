@@ -42,6 +42,7 @@ def environment(**options):
         'fcm_label': ref.fcm_label,
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
+        'is_report': ref.is_report,
         'get_page_state_url': share.get_page_state_url,
         'parse_links': external_links_filter,
         'get_protected_url': get_protected_url,

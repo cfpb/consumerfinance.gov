@@ -7,7 +7,13 @@ from core.management.commands._helpers import PageDataConverter
 class DataConverter(PageDataConverter):
 
     tag_counterparts = [
-        ('Consumer response', 'Consumer Response')
+        ('Consumer response', 'Consumer Response'),
+        ('Academic Research Council', 'Academic research council'),
+        ('Online Resources', 'Online resources'),
+        ('deceptive practices', 'Deceptive practices'),
+        ('Civil Penalty Fund', 'Civil penalty fund'),
+        ('Open for Suggestions', 'Open for suggestions'),
+        ('careers', 'Careers'),
     ]
 
     def add_defaults(self, doc, post_dict):

@@ -34,7 +34,7 @@ page_types = [
     ('impl-resource', 'Implementation Resource'),
     ('newsroom', 'Newsroom'),
     ('notice-opportunity-comment', 'Notice and Opportunity for Comment'),
-    ('research-report', 'Research Report'),
+    ('research-reports', 'Research Report'),
     ('rule-under-dev', 'Rule under development'),
     ('leadership-calendar', 'Leadership Calendar'),
 ]
@@ -127,7 +127,7 @@ def page_type_choices():
             ('blog', 'Blog'),
             ('op-ed', 'Op-Ed'),
             ('press-release', 'Press Release'),
-            ('research-report', 'Report'),
+            ('research-reports', 'Report'),
             ('speech', 'Speech'),
             ('testimony', 'Testimony'))),
         ('Leadership Calendar', (
@@ -175,6 +175,12 @@ def fcm_label(category):
 
 def is_blog(page):
     for category in page.categories.all():
-        for blog_category in choices_for_page_type('blog'):
-            if category.name == blog_category[0]:
+        for choice in choices_for_page_type('blog'):
+            if category.name == choice[0]:
+                return True
+
+def is_report(page):
+    for category in page.categories.all():
+        for choice in choices_for_page_type('research-reports'):
+            if category.name == choice[0]:
                 return True

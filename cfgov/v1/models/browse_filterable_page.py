@@ -1,3 +1,4 @@
+from itertools import chain
 from operator import attrgetter
 
 from django.conf import settings
@@ -70,8 +71,27 @@ class EventArchivePage(BrowseFilterablePage):
 
 
 class NewsroomLandingPage(BrowseFilterablePage):
+    template = BrowseFilterablePage.template
+
+    def get_page_set(self, form, hostname):
+        get_blog = False
+        for f in self.content:
+            if 'filter_controls' in f.block_type and f.value['categories']['page_type'] == ['newsroom']:
+                categories = form.cleaned_data.get('categories', [])
+                if not categories or 'blog' in categories:
+                    get_blog = True
+                    if 'blog' in categories:
+                        del categories[categories.index('blog')]
+        filter_pages = AbstractFilterPage.objects.live_shared(hostname).descendant_of(self).filter(form.generate_query())
+        if get_blog:
+            try:
+                del form.cleaned_data['categories']
+                blog = base.CFGOVPage.objects.get(slug='blog')
+                blogs = AbstractFilterPage.objects.live_shared(hostname).descendant_of(blog).filter(form.generate_query())
+                filter_pages = list(chain(filter_pages, blogs))
+            except base.CFGOVPage.DoesNotExist:
+                print 'Blog does not exist'
+        return sorted(filter_pages, key=lambda x: x.date_published, reverse=True)
+
     def get_form_class(self):
         return forms.NewsroomFilterForm
-
-    def get_template(self, request, *args, **kwargs):
-        return BrowseFilterablePage.template

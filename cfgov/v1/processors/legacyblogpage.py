@@ -6,6 +6,16 @@ from core.management.commands._helpers import PageDataConverter
 
 class DataConverter(PageDataConverter):
 
+    tag_counterparts = [
+        ('Consumer response', 'Consumer Response'),
+        ('Academic Research Council', 'Academic research council'),
+        ('Online Resources', 'Online resources'),
+        ('deceptive practices', 'Deceptive practices'),
+        ('Civil Penalty Fund', 'Civil penalty fund'),
+        ('Open for Suggestions', 'Open for suggestions'),
+        ('careers', 'Careers'),
+    ]
+
     def add_defaults(self, doc, post_dict):
         super(DataConverter, self).add_defaults(post_dict)
         post_dict['header-count'] = 0
@@ -48,6 +58,10 @@ class DataConverter(PageDataConverter):
 
     def format_tags(self, doc_tags):
         tags = ''
+        for i, tag in enumerate(doc_tags):
+            for counterpart in self.tag_counterparts:
+                if tag in counterpart[0]:
+                    doc_tags[i] = counterpart[1]
         for tag in doc_tags:
             if ' ' in tag:
                 tag = '"%s"' % tag

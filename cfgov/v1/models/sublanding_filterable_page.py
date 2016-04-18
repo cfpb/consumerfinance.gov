@@ -1,3 +1,4 @@
+from itertools import chain
 from operator import attrgetter
 
 from django.conf import settings
@@ -58,6 +59,41 @@ class SublandingFilterablePage(base.CFGOVPage):
 
 class ActivityLogPage(SublandingFilterablePage):
     template = 'activity-log/index.html'
+
+    def get_page_set(page, form, hostname):
+        results = {}
+        selections = {}
+
+        # Get filter selections for Blog and Report
+        for f in page.content:
+            if 'filter_controls' in f.block_type and f.value['categories']['page_type'] == 'activity-log':
+                categories = form.cleaned_data.get('categories', [])
+                selections = {'blog': False, 'research-reports': False}
+                for category in selections.keys():
+                    if not categories or category in categories:
+                        selections[category] = True
+                        if category in categories:
+                            del categories[categories.index(category)]
+        # Get Newsroom pages
+        if categories:
+            try:
+                parent = CFGOVPage.objects.get(slug='newsroom')
+                results['newsroom'] = AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent).filter(form.generate_query())
+            except CFGOVPage.DoesNotExist:
+                print 'Newsroom does not exist'
+
+        # Get Blog and Report pages if they were selected
+        del form.cleaned_data['categories']
+        for slug, is_selected in selections.iteritems():
+            if is_selected:
+                try:
+                    parent = CFGOVPage.objects.get(slug=slug)
+                    results.update({slug: AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent).filter(form.generate_query())})
+                except CFGOVPage.DoesNotExist:
+                    print slug, 'does not exist'
+
+        filter_pages = list(chain(*results.values()))
+        return sorted(filter_pages, key=lambda x: x.date_published, reverse=True)
 
     def get_form_class(self):
         return forms.ActivityLogFilterForm

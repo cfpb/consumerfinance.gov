@@ -22,7 +22,7 @@ def get_context(page, request, context):
     for form in forms:
         if form.is_valid():
             # Paginate results by 10 items per page.
-            paginator = Paginator(get_page_set(page, form, request.site.hostname), form.per_page_limit())
+            paginator = Paginator(page.get_page_set(form, request.site.hostname), form.per_page_limit())
             page = request.GET.get('page')
 
             # Get the page number in the request and get the page from the
@@ -68,6 +68,7 @@ def get_form_specific_filter_data(page, form_class, request_dict):
 # Returns a queryset of AbstractFilterPages
 def get_page_set(page, form, hostname):
     results = {}
+    selections = {}
     for f in page.content:
         if 'filter_controls' in f.block_type and f.value['categories']['page_type'] in ['activity-log', 'newsroom']:
             categories = form.cleaned_data.get('categories', [])
