@@ -46,6 +46,7 @@ def environment(**options):
         'parse_links': external_links_filter,
         'get_protected_url': get_protected_url,
         'related_metadata_tags': related_metadata_tags,
+        'get_filter_data': get_filter_data,
     })
     env.filters.update({
         'slugify': slugify,
@@ -139,13 +140,7 @@ def related_metadata_tags(context, page):
     tags = {'links': []}
     # From an ancestor, get the form ids then use the first id since the 
     # filterable list on the page will probably have the first id on the page.
-    id = None
-    filter_page = None
-    for ancestor in page.get_ancestors().reverse().specific():
-        if ancestor.specific_class.__name__ in ['EventArchivePage', 'BrowseFilterablePage', 'SublandingFilterablePage']:
-            filter_page = ancestor
-            id = util.get_form_id(ancestor, request.GET)
-            break
+    id, filter_page = get_filter_data(context, page)
     for tag in page.specific.tags.names():
         tag_link = {'text': tag, 'url': ''}
         if id is not None:
@@ -153,3 +148,11 @@ def related_metadata_tags(context, page):
             tag_link['url'] = get_protected_url(context, filter_page) + param
         tags['links'].append(tag_link)
     return tags
+
+
+@contextfunction
+def get_filter_data(context, page):
+    for ancestor in page.get_ancestors().reverse().specific():
+        if ancestor.specific_class.__name__ in ['BrowseFilterablePage', 'SublandingFilterablePage',
+                                                'EventArchivePage', 'NewsroomLandingPage']:
+            return util.get_form_id(ancestor, context['request'].GET), ancestor
