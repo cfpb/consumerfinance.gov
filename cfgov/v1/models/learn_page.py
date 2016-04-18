@@ -127,6 +127,7 @@ class LegacyBlogPage(AbstractFilterPage):
 
 class LegacyNewsroomPage(LegacyBlogPage):
     template = 'newsroom/legacy-newsroom-page.html'
+    objects = CFGOVPageManager()
 
 
 class AgendaItemBlock(blocks.StructBlock):

@@ -144,10 +144,11 @@ class CFGOVPage(Page):
         # TODO: Add other search types as they are implemented in Django
         # Import classes that use this class here to maintain proper import
         # order.
-        from . import EventPage, LegacyBlogPage
+        from . import EventPage, LegacyBlogPage, LegacyNewsroomPage
         search_types = [
-            ('events', EventPage, 'Events'),
             ('posts', LegacyBlogPage, 'Blog'),
+            ('newsroom', LegacyNewsroomPage, 'Newsroom'),
+            ('events', EventPage, 'Events'),
         ]
         for search_type, search_class, search_type_name in search_types:
             if 'relate_%s' % search_type in block.value \
@@ -156,17 +157,6 @@ class CFGOVPage(Page):
                     search_class.objects.filter(query).order_by(
                         '-date_published').exclude(
                         slug=self.slug).live_shared(hostname)[:block.value['limit']]
-
-        # TODO: Convert Newsroom to Django
-        queries = QueryFinder()
-        if 'relate_newsroom' in block.value and block.value['relate_newsroom']:
-            sheer_query = getattr(queries, 'just_newsroom')
-            match_query = []
-            for cat in block.value['specific_categories']:
-                match_query.append({'term': {'category': cat}})
-            related['Newsroom'] = \
-                sheer_query.get_tag_related_documents(tags=self.tags.names(),
-                                                      size=block.value['limit'], additional_args=match_query)
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
