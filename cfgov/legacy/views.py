@@ -1,6 +1,14 @@
-from core.services import PDFGeneratorView, PDFReactor
+from core.services import PDFGeneratorView
 from django.conf import settings
 from django.http import HttpResponse
+import six
+
+if six.PY2:
+    try:
+        sys.path.append(os.environ.get('PDFREACTOR_LIB'))
+        from PDFreactor import *
+    except:
+        PDFreactor = None
 
 
 class HousingCounselorPDFView(PDFGeneratorView):
@@ -13,7 +21,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
     def get(self, request):
 
         self.request = request
-        if settings.DEBUG and PDFReactor is None:
+        if settings.DEBUG and PDFreactor is None:
             return HttpResponse("PDF Reactor is not configured, can not render %s" % self.get_render_url())
 
         return self.generate_pdf()
