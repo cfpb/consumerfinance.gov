@@ -34,7 +34,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
         return self.generate_pdf()
 
     def get_filename(self):
-        return '%s.zip' % self.request.GET['zip']
+        return '%s.pdf' % self.request.GET['zip']
 
     def generate_pdf(self):
         url = self.get_render_url()
