@@ -58,6 +58,9 @@ class PDFGeneratorView(View):
         if self.license is None:
             raise Exception("PDFGeneratorView requires a license")
 
+        if settings.DEBUG and PDFReactor is None:
+            return HttpResponse("PDF Reactor is not configured, can not render %s" % self.get_render_url())
+
         try:
             pdf_reactor = PDFreactor()
         except:
