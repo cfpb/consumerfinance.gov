@@ -21,6 +21,9 @@ class HousingCounselorPDFView(PDFGeneratorView):
     def get(self, request):
 
         self.request = request
+        if settings.DEBUG and PDFreactor is None:
+            return HttpResponse("PDF Reactor is not configured, can not render %s" % self.get_render_url())
+
         return self.generate_pdf()
 
     def get_filename(self):
@@ -35,10 +38,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
         try:
             pdf_reactor = PDFreactor()
         except:
-            if settings.DEBUG:
-                return HttpResponse("PDF Reactor is not configured, can not render %s" % self.get_render_url())
-            else:
-                raise PDFReactorNotConfigured('PDFreactor python library path needs to be configured.')
+            raise PDFReactorNotConfigured('PDFreactor python library path needs to be configured.')
 
         pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_WARN)
         pdf_reactor.setLicenseKey(str(self.license))
