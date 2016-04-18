@@ -25,7 +25,7 @@ if six.PY2:
         sys.path.append(os.environ.get('PDFREACTOR_LIB'))
         from PDFreactor import *
     except:
-       PDFReactor = None
+       PDFreactor = None
 
 class PDFGeneratorView(View):
     render_url = None
