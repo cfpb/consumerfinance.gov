@@ -130,7 +130,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 # Admin Url Access
-ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', True)
+ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

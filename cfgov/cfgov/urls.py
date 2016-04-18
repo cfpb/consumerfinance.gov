@@ -234,12 +234,7 @@ urlpatterns = [
     url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s', permanent=True)),
 ]
 
-if settings.DEBUG:
-    allow_admin_url = True
-else:
-    allow_admin_url = settings.ALLOW_ADMIN_URL
-
-if allow_admin_url:
+if settings.ALLOW_ADMIN_URL:
     patterns = [
         url(r'^django-admin/login', cfpb_login, name='wagtailadmin_login'),
         url(r'^django-admin/password_change', change_password, name='wagtailadmin_account_change_password'),
