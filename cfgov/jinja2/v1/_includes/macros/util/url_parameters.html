@@ -13,9 +13,11 @@
    ========================================================================== #}
 
 {% macro url_parameters(parameters) %}
-    {%- for name, value in parameters.iteritems() -%}
-        {% if value and 'page' not in name -%}
-            &{{ name }}={{ value }}
+    {%- for key in parameters.keys() -%}
+        {% if parameters.getlist(key) and 'page' not in key -%}
+            {%- for value in parameters.getlist(key, []) -%}
+                &{{ key }}={{ value }}
+            {%- endfor -%}
         {%- endif %}
     {%- endfor -%}
 {% endmacro %}
