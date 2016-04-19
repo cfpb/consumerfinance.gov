@@ -107,6 +107,11 @@ urlpatterns = [
     url(r'^blog/(?P<path>.*)$', RedirectView.as_view(url='/about-us/blog/%(path)s', permanent=True)),
     url(r'^newsroom/(?P<path>.*)$', RedirectView.as_view(url='/about-us/newsroom/%(path)s', permanent=True)),
 
+    url(r'^about-us/newsroom/press-resources/$',
+        TemplateView.as_view(
+            template_name='newsroom/press-resources/index.html'),
+            name='press-resources'),
+
     url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/%(path)s', permanent=True)),
     url(r'^about-us/the-bureau/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='about-us/the-bureau/index.html'),

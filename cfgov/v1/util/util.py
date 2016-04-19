@@ -96,6 +96,24 @@ def get_secondary_nav_items(current, hostname, exclude_siblings=False):
     parent = current.get_parent().specific
     page = parent if instanceOfBrowseOrFilterablePages(parent) else current
 
+    # TODO: Remove this ASAP once Press Resources gets its own Wagtail page
+    if page.slug == 'newsroom':
+        return [
+            {
+                'title': page.title,
+                'slug': page.slug,
+                'url': get_page_state_url({}, page),
+                'children': [
+                    {
+                        'title': 'Press Resources',
+                        'slug': 'press-resources',
+                        'url': '/newsroom/press-resources/',
+                    }
+                ],
+            }
+        ], True
+    # END TODO
+
     pages = [page] if page.secondary_nav_exclude_sibling_pages else page.get_appropriate_siblings(hostname)
 
     for sibling in pages:
