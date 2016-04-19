@@ -15,7 +15,7 @@ var minimist = require( 'minimist' );
 function testUnitScripts( cb ) {
   gulp.src( config.src )
     .pipe( $.istanbul( {
-      includeUntested: true
+      includeUntested: false
     } ) )
     .pipe( $.istanbul.hookRequire() )
     .on( 'finish', function() {
