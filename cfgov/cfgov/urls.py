@@ -238,8 +238,9 @@ urlpatterns = [
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
-        url(r'^django-admin/login', cfpb_login, name='wagtailadmin_login'),
-        url(r'^django-admin/password_change', change_password, name='wagtailadmin_account_change_password'),
+        url(r'^django-admin/login', cfpb_login, name='django_admin_login'),
+        url(r'^django-admin/auth/user/add/', create_user, name='django_admin_create_user'),
+        url(r'^django-admin/password_change', change_password, name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
         url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
