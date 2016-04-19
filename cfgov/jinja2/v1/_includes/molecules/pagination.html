@@ -63,6 +63,8 @@
                    type="number"
                    min="1"
                    max="{{ posts.paginator.num_pages }}"
+                   pattern="[0-9]*"
+                   inputmode="numeric"
                    value="{{ posts.number }}">
             <span class="m-pagination_label">
                 of {{ posts.paginator.num_pages }}

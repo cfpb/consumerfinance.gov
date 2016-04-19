@@ -14,7 +14,6 @@ require( '../modules/focus-target' ).init();
 require( '../modules/form-validation' ).init();
 require( '../modules/UStreamPlayer' ).init( '.video-player__ustream' );
 require( '../modules/YoutubePlayer' ).init( '.video-player__youtube' );
-require( '../modules/pagination-validation.js' ).init();
 
 // GLOBAL ATOMIC ELEMENTS.
 // Organisms.
