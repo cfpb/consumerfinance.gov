@@ -10,18 +10,6 @@
     Information on the leadership, structure, and history of the CFPB
 {%- endblock %}
 
-{% block css -%}
-    {{ super() }}
-    {# TODO: Resolve slick font issue.
-             For the slick stylesheet to pick up its font and img reference the
-             fonts and images found at /src/vendor/slick-carousel/slick/ should
-             be included in same directory as slick.css.
-             However, including the slick fonts makes the dots on the
-             /about-us/the-bureau/ page at mobile sizes enormous.
-    #}
-    <link rel="stylesheet" href="/static/css/slick.css">
-{%- endblock %}
-
 {% block content_modifiers -%}
     {{ super() }}
     the-bureau
