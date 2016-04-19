@@ -38,16 +38,21 @@
     {% if value.date or value.authors.text %}
         <p>
     {% endif %}
-    {% if value.authors.text %}
-        By
-        {% for link in value.authors %}
-            {% if loop.first == false %}
-            and
-            {% endif %}
-            <a href="{{ link.url }}">{{ link.text }}</a>
-        {% endfor %}
-        {{ '-' if value.date else ''}}
-    {% endif %}
+    {% for link in value.authors %}
+        {%- if link.text -%}
+          {%- if loop.first -%}
+              By
+          {%- elif loop.last -%}
+              &nbsp;and
+          {%- else -%}
+              ,
+          {%- endif -%}
+              &nbsp;<a href="{{ link.url }}">{{ link.text }}</a>
+          {%- if loop.last -%}
+              &nbsp;{{ '-' if value.date else ''}}
+          {%- endif -%}
+        {%- endif -%}
+    {% endfor %}
     {% if value.date %}
         {{ time.render(value.date, {'date':true}) }}
     {% endif %}

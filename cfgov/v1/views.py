@@ -40,7 +40,7 @@ from .signals import page_unshared
 LoginForm = login_form()
 
 class LeadershipCalendarPDFView(PDFGeneratorView):
-    render_url = 'http://localhost/the-bureau/leadership-calendar/print/'
+    render_url = 'http://localhost/about-us/the-bureau/leadership-calendar/print/'
     stylesheet_url = 'http://localhost/static/css/pdfreactor-fonts.css'
     filename = 'cfpb_leadership-calendar.pdf'
 

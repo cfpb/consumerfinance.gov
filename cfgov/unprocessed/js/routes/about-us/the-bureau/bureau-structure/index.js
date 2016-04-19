@@ -10,9 +10,9 @@
 var $ = require( 'jquery' );
 require( 'slick' );
 
-var ContentSlider = require( '../../../modules/ContentSlider' );
-var BreakpointHandler = require( '../../../modules/BreakpointHandler' );
-var Expandable = require( '../../../molecules/Expandable' );
+var ContentSlider = require( '../../../../modules/ContentSlider' );
+var BreakpointHandler = require( '../../../../modules/BreakpointHandler' );
+var Expandable = require( '../../../../molecules/Expandable' );
 
 var _slider;
 

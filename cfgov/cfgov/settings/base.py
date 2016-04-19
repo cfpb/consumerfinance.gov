@@ -16,6 +16,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
+try:
+    import mysql
+    MYSQL_ENGINE = 'mysql.connector.django'
+except ImportError:
+    MYSQL_ENGINE = 'django.db.backends.mysql'
 
 # Application definition
 
@@ -124,13 +129,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cfgov.wsgi.application'
 
+# Admin Url Access
+ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': MYSQL_ENGINE,
         'NAME': os.environ.get('MYSQL_NAME', 'v1'),
         'USER': os.environ.get('MYSQL_USER', 'root'),
         'PASSWORD': os.environ.get('MYSQL_PW', ''),
@@ -201,6 +208,7 @@ TAGGIT_CASE_INSENSITIVE = True
 
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')
+ELASTICSEARCH_BIGINT = 50000
 
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
 SHEER_PROCESSORS = \

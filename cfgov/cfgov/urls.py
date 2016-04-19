@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
+from legacy.views import HousingCounselorPDFView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.feeds import SheerlikeFeed
 from sheerlike.sites import SheerSite
@@ -25,25 +26,7 @@ from wagtail.wagtailadmin.views import account
 fin_ed = SheerSite('fin-ed-resources')
 
 urlpatterns = [
-    url(r'^django-admin/login', cfpb_login, name='wagtailadmin_login'),
-    url(r'^django-admin/password_change', change_password, name='wagtailadmin_account_change_password'),
-    url(r'^django-admin/', include(admin.site.urls)),
-    url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
-    # - Overridded Wagtail Password views - #
-    url(r'^admin/login/$', cfpb_login, name='wagtailadmin_login'),
-    url(r'^admin/password_reset/', include([
-        url(
-            r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-            password_reset_confirm, name='wagtailadmin_password_reset_confirm',
-        )
-    ])),
-    url(r'^admin/account/change_password/$', change_password, name='wagtailadmin_account_change_password'),
-    url(r'^admin/users/add/$', create_user, name='create_user'),
-    url(r'^admin/users/([^\/]+)/$', edit_user, name='edit_user'),
-    # ----------------x-------------------- #
-
-    url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     # TODO: Enable search route when search is available.
     # url(r'^search/$', 'search.views.search', name='search'),
@@ -245,9 +228,37 @@ urlpatterns = [
     url(r'^eregs-api/', include_if_app_enabled('regcore', 'regcore.urls')),
     url(r'^eregulations/', include_if_app_enabled('regulations','regulations.urls')),
 
+    url(r'^find-a-housing-counselor/$', TemplateView.as_view(template_name='find_a_housing_counselor.html')),
+    url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
     # Report redirects
     url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s', permanent=True)),
 ]
+
+if settings.ALLOW_ADMIN_URL:
+    patterns = [
+        url(r'^django-admin/login', cfpb_login, name='wagtailadmin_login'),
+        url(r'^django-admin/password_change', change_password, name='wagtailadmin_account_change_password'),
+        url(r'^django-admin/', include(admin.site.urls)),
+        url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
+
+        # - Overridded Wagtail Password views - #
+        url(r'^admin/login/$', cfpb_login, name='wagtailadmin_login'),
+        url(r'^admin/password_reset/', include([
+            url(
+                r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+                password_reset_confirm, name='wagtailadmin_password_reset_confirm',
+            )
+        ])),
+        url(r'^admin/account/change_password/$', change_password, name='wagtailadmin_account_change_password'),
+        url(r'^admin/users/add/$', create_user, name='create_user'),
+        url(r'^admin/users/([^\/]+)/$', edit_user, name='edit_user'),
+        # ----------------x-------------------- #
+
+        url(r'^admin/', include(wagtailadmin_urls)),
+    ]
+
+    urlpatterns = patterns + urlpatterns
+
 if 'cfpb_common' in settings.INSTALLED_APPS:
     pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')
     urlpatterns.append(pattern)
