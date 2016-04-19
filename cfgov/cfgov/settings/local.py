@@ -15,3 +15,5 @@ DATABASES = {
 }
 
 STATIC_ROOT = REPOSITORY_ROOT.child('collectstatic')
+
+ALLOW_ADMIN_URL = DEBUG or os.environ.get('ALLOW_ADMIN_URL', False)
