@@ -263,8 +263,10 @@ if settings.ALLOW_ADMIN_URL:
     urlpatterns = patterns + urlpatterns
 
 if 'cfpb_common' in settings.INSTALLED_APPS:
-    pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')
-    urlpatterns.append(pattern)
+    patterns= [url(r'^token-provider/', 'cfpb_common.views.token_provider'),
+               url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(template_name='knowbeforeyouowe/creditcards/tool.html'), name='cckbyo'),
+               ]
+    urlpatterns += patterns
 
 if 'selfregistration' in settings.INSTALLED_APPS:
     from selfregistration.views import CompanySignup
