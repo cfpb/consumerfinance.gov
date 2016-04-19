@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'compressor',
     'taggit',
 
+    'overextends',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
