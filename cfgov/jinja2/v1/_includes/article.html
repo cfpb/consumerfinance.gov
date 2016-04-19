@@ -58,7 +58,9 @@
         {% import 'molecules/social-media.html' as social_media with context %}
         {{ social_media.render({'title': page.title}) }}
         <div class="post_body">
-            {{ parse_links(page.content) | safe }}
+            {% for block in page.content %}
+                {{ parse_links(block.value) | safe }}
+            {% endfor %}
         </div>
     </header>
     {% if page.tags.all() | length %}

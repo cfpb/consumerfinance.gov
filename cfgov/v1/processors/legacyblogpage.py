@@ -22,6 +22,11 @@ class DataConverter(PageDataConverter):
 
         # Sidefoot
         post_dict.update({
+            'content-0-type': u'content',
+            'content-0-value': doc.get('content', '').decode('utf-8'),
+            'content-0-order': u'0',
+            'content-count': u'1',
+            'content-0-deleted': u'',
             'sidefoot-count': u'2',
             'sidefoot-0-type': u'related_posts',
             'sidefoot-0-deleted': u'',
@@ -74,7 +79,6 @@ class DataConverter(PageDataConverter):
         post_dict = {
             'title':   doc.get('title', ''),
             'slug':    doc.get('slug', ''),
-            'content': doc.get('content', '').decode('utf-8'),
         }
         self.add_defaults(doc, post_dict)
 

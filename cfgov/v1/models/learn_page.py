@@ -107,13 +107,15 @@ class DocumentDetailPage(AbstractFilterPage):
 
 
 class LegacyBlogPage(AbstractFilterPage):
-    content = RichTextField()
+    content = StreamField([
+        ('content', blocks.RawHTMLBlock(help_text='Content from WordPress unescaped.')),
+    ])
 
     objects = CFGOVPageManager()
 
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
-        FieldPanel('content'),
+        StreamFieldPanel('content'),
     ]
 
     edit_handler = TabbedInterface([

@@ -48,6 +48,7 @@ def environment(**options):
         'get_protected_url': get_protected_url,
         'related_metadata_tags': related_metadata_tags,
         'get_filter_data': get_filter_data,
+        'cfgovpage_objects': CFGOVPage.objects,
     })
     env.filters.update({
         'slugify': slugify,
