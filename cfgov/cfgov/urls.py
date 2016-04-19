@@ -12,7 +12,7 @@ from sheerlike.sites import SheerSite
 
 from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
     change_password, password_reset_confirm, cfpb_login, create_user, edit_user
-
+from v1.feed import BlogFeed
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
@@ -182,7 +182,7 @@ urlpatterns = [
             name='server_error')],
         namespace='govdelivery')),
 
-    url(r'^feed/(?P<doc_type>[\w-]+)/$', SheerlikeFeed(), name='feed'),
+    url(r'^feed/blog/$', BlogFeed(), name='feed'),
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 

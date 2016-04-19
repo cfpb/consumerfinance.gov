@@ -144,9 +144,10 @@ class CFGOVPage(Page):
         # TODO: Add other search types as they are implemented in Django
         # Import classes that use this class here to maintain proper import
         # order.
-        from . import EventPage
+        from . import EventPage, LegacyBlogPage
         search_types = [
             ('events', EventPage, 'Events'),
+            ('posts', LegacyBlogPage, 'Blog'),
         ]
         for search_type, search_class, search_type_name in search_types:
             if 'relate_%s' % search_type in block.value \
@@ -155,27 +156,17 @@ class CFGOVPage(Page):
                     search_class.objects.filter(query).order_by(
                         '-date_published').exclude(
                         slug=self.slug).live_shared(hostname)[:block.value['limit']]
-        # TODO: Remove each search_type as it is implemented into Django
+
+        # TODO: Convert Newsroom to Django
         queries = QueryFinder()
-
-        for search_type, search_type_name in [('newsroom', 'Newsroom'), ('posts', 'Blog')]:
-            if 'relate_%s' % search_type in block.value \
-                    and block.value['relate_%s' % search_type]:
-                if search_type == 'newsroom':
-                    search_type = 'just_newsroom'
-                sheer_query = getattr(queries, search_type)
-
-                match_query = []
-
-                for cat in block.value['specific_categories']:
-                    if util.get_related_posts_categories(cat) == 'posts' and search_type == 'posts':
-                        match_query.append({'term': {'blog_category': cat}})
-                    elif util.get_related_posts_categories(cat) == 'newsroom' and search_type == 'just_newsroom':
-                        match_query.append({'term': {'category': cat}})
-
-                related[search_type_name] = \
-                    sheer_query.get_tag_related_documents(tags=self.tags.names(),
-                                                          size=block.value['limit'], additional_args=match_query)
+        if 'relate_newsroom' in block.value and block.value['relate_newsroom']:
+            sheer_query = getattr(queries, 'just_newsroom')
+            match_query = []
+            for cat in block.value['specific_categories']:
+                match_query.append({'term': {'category': cat}})
+            related['Newsroom'] = \
+                sheer_query.get_tag_related_documents(tags=self.tags.names(),
+                                                      size=block.value['limit'], additional_args=match_query)
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
