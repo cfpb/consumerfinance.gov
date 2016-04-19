@@ -32,7 +32,7 @@
                 {% set limit = block.value.limit | int %}
                 {% set posts = page.get_browsefilterable_posts(request, limit) %}
                 {% for post in posts %}
-                    {{ post_preview.render(post=post[1], controls=none, form_id=post[0], url=get_protected_url(post[1].parent())) }}
+                    {{ post_preview.render(post=post[1], controls=none, form_id=post[0], url=get_protected_url(post[1].parent()), post_date_description=block.value.post_date_description) }}
                 {% endfor %}
              </div>
         {% elif 'filter_controls' in block.block_type %}
