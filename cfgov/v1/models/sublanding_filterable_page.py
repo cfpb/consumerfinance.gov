@@ -75,7 +75,7 @@ class ActivityLogPage(SublandingFilterablePage):
                         if category in categories:
                             del categories[categories.index(category)]
         # Get Newsroom pages
-        if categories:
+        if not categories or map(lambda x: x in [c[0] for c in ref.choices_for_page_type('newsroom')], categories):
             try:
                 parent = CFGOVPage.objects.get(slug='newsroom')
                 results['newsroom'] = AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent).filter(form.generate_query())
