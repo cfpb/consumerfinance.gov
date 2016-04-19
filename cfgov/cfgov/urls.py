@@ -263,8 +263,6 @@ if settings.ALLOW_ADMIN_URL:
 
 if 'cfpb_common' in settings.INSTALLED_APPS:
     patterns= [url(r'^token-provider/', 'cfpb_common.views.token_provider'),
-               url(r'^students/knowbeforeyouowe/$', TemplateView.as_view(template_name='knowbeforeyouowe/studentloans/tool.html')),
-               url(r'^students/knowbeforeyouowe/about/$', TemplateView.as_view(template_name='knowbeforeyouowe/studentloans/about.html')),
                url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(template_name='knowbeforeyouowe/creditcards/tool.html'), name='cckbyo'),
                ]
     urlpatterns += patterns
