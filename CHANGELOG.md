@@ -17,12 +17,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Added unit test specs for all files to test (excluding config, polyfills and jQuery plugins)
 
 ### Changed
 
 
 ### Removed
 
+- Removed resolved TODOs and old macros replaced by atomic components
 
 ### Fixed
 

@@ -41,13 +41,7 @@
                     {{ _related_posts_list(post_type_list, block.value.limit) }}
                 </div>
             {% endfor %}
-            {% for block in page.sidefoot %}
-                {% if 'related_posts' in block.block_type %}
-                    {% if block.value.view_more %}
-                        {{ _view_more( block.value.view_more ) }}
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+            {{ _view_more() }}
         </div>
     {% endif %}
 {% endmacro %}
@@ -118,13 +112,11 @@
 
    ========================================================================== #}
 
-{% macro _view_more( link ) %}
-{% if link.text %}
-<a class="jump-link jump-link__underline"
-   href="{{ link.url }}">
-    <span class="jump-link_text">
-        {{ link.text }}
-    </span>
-</a>
-{% endif %}
+{% macro _view_more() %}
+    <a class="jump-link jump-link__underline"
+       href="{{ page.generate_view_more_url(request) }}">
+        <span class="jump-link_text">
+            View more
+        </span>
+    </a>
 {% endmacro %}

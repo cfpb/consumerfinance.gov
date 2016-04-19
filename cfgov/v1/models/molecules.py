@@ -253,3 +253,13 @@ class RelatedMetadata(blocks.StructBlock):
         icon = 'grip'
         template = '_includes/molecules/related-metadata.html'
         label = 'Related Metadata'
+
+class RSSFeed(blocks.ChoiceBlock):
+    choices = [
+        ('blog_feed', 'Blog Feed'),
+        ('newsroom_feed', 'Newsroom Feed'),
+    ]
+
+    class Meta:
+        icon = 'plus'
+        template = '_includes/molecules/rss-feed.html'

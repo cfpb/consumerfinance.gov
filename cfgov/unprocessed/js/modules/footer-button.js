@@ -1,7 +1,6 @@
 /* ==========================================================================
    Footer Button: Scroll to Top
    ========================================================================== */
-
 'use strict';
 
 var $ = require( 'jquery' );
@@ -12,6 +11,7 @@ var $ = require( 'jquery' );
 /**
  * Set up event handler for button to scroll to top of page.
  */
+/* istanbul ignore next */
 function init() {
   var duration = 300;
 

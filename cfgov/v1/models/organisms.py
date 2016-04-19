@@ -60,6 +60,8 @@ class PostPreviewSnapshot(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit',
                              help_text='How many posts do you want to show?')
 
+    post_date_description = blocks.CharBlock(default='Published')
+
     class Meta:
         icon = 'order'
 
@@ -92,8 +94,6 @@ class RelatedPosts(blocks.StructBlock):
                                         label='Events')
 
     specific_categories = blocks.ListBlock(blocks.ChoiceBlock(choices=ref.related_posts_categories, required=False), required=False)
-
-    view_more = atoms.Hyperlink(required=False)
 
     class Meta:
         icon = 'link'
