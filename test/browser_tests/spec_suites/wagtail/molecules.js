@@ -78,3 +78,16 @@ describe( 'Call to Action', function() {
   );
 
 } );
+
+describe( 'Call to Action', function() {
+  beforeAll( function() {
+    browser.get( '/sublanding-filterable-page/' );
+  } );
+  it( 'should properly load in a browser',
+    function() {
+      expect(element(by.css( 'body' )).getText() ).toContain(
+        'this is a hero heading' );
+    }
+  );
+
+} );

@@ -76,12 +76,13 @@ def run():
     # Filterable Pages
     if not BrowseFilterablePage.objects.filter(title='Browse Filterable Page'):
         bfp = BrowseFilterablePage(title='Browse Filterable Page', slug='browse-filterable-page', owner=admin_user)
-        bfp.header = StreamValue(bfp.header.stream_block, [{'type': 'text_introduction', 'value': {'body': '', 'has_rule': False, 'intro': 'this is an intro', 'heading': '', 'links': []}}], True)
+        bfp.header = StreamValue(bfp.header.stream_block, [{'type': 'text_introduction', 'value': {'intro': 'this is an intro'}}], True)
         publish_page(bfp)
 
     if not SublandingFilterablePage.objects.filter(title='Sublanding Filterable Page'):
         sfp = SublandingFilterablePage(title='Sublanding Filterable Page', slug='sublanding-filterable-page',
                                        owner=admin_user)
+        sfp.header = StreamValue(sfp.header.stream_block, [{'type': 'hero', 'value': {'heading': "this is a hero heading"}}], True)
         publish_page(sfp)
 
     if not EventArchivePage.objects.filter(title='Event Archive Page'):
