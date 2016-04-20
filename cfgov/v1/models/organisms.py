@@ -1,4 +1,5 @@
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from . import atoms, molecules
@@ -137,6 +138,7 @@ class Table(blocks.StructBlock):
 
 class FullWidthText(blocks.StreamBlock):
     content = blocks.RichTextBlock(icon='edit')
+    media = images_blocks.ImageChooserBlock(icon='image')
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
@@ -170,18 +172,6 @@ class ItemIntroduction(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
 
-    date = blocks.DateTimeBlock(required=False)
-    has_social = blocks.BooleanBlock(required=False, help_text="Whether to show the share icons or not.")
-
-    class Meta:
-        icon = 'form'
-        template = '_includes/organisms/item-introduction.html'
-        classname = 'block__flush-top'
-
-
-class BlogIntroduction(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    paragraph = blocks.RichTextBlock(required=False)
     date = blocks.DateTimeBlock(required=False)
     has_social = blocks.BooleanBlock(required=False, help_text="Whether to show the share icons or not.")
 

@@ -24,9 +24,17 @@
 
    ========================================================================== #}
 
-<h1>{{ value.heading }}</h1>
-<div class="lead-paragraph">{{ parse_links(value.intro) | safe }}</div>
-{{ parse_links(value.body) | safe }}
+{% if value.heading %}
+    <h1>{{ value.heading }}</h1>
+{% endif %}
+{% if value.intro.src %}
+    <div class="lead-paragraph">
+        {{ parse_links(value.intro) | safe }}
+    </div>
+{% endif %}
+{% if value.body %}
+    {{ parse_links(value.body) | safe }}
+{% endif %}
 {% for link in value.links %}
     {% if link.text %}
         {% if loop.first %}<ul class="list list__links">{% endif %}
