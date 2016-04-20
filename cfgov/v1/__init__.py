@@ -120,6 +120,9 @@ def render_stream_child(context, stream_child):
 
 @contextfunction
 def get_protected_url(context, page):
+    if page is None:
+        return '#'
+    
     request_hostname = urlparse(context['request'].url).hostname
     url = page.url
     if url is None:  # If page is not aligned to a site root return None
