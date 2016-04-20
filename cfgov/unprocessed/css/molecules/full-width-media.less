@@ -1,0 +1,37 @@
+/* topdoc
+  name: Full width media
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-full-width-text-group">
+            <div class="m-full-width-media">
+                <img class="m-full-width-media_image" />
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-full-width-text
+            .m-full-width-media
+              .m-full-width-media_image
+  tags:
+    - cfgov-molecules
+  notes:
+    - These are held in a full-width-text-group container to be held with
+      various insets and tables as needed.
+*/
+
+.m-full-width-media {
+
+    &_image {
+        display: block;
+        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
