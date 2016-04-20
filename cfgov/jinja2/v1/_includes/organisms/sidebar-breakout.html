@@ -104,7 +104,8 @@
                             {{ related_metadata.render(block.value) }}
                         </div>
                     {% else %}
-                        {% include 'templates/render_block.html' with context %}
+                        {% import 'templates/render_block.html' as render_block with context %}
+                        {{ render_block.render(block, loop.index) }}
                     {% endif %}
                 {% endfor %}
             </aside>
