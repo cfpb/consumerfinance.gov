@@ -182,6 +182,11 @@ urlpatterns = [
             name='server_error')],
         namespace='govdelivery')),
 
+
+    url(r'^regulation-comment/new/$',
+        'core.views.regsgov_comment',
+        name='regsgov'),
+
     url(r'^feed/(?P<doc_type>[\w-]+)/$', SheerlikeFeed(), name='feed'),
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
