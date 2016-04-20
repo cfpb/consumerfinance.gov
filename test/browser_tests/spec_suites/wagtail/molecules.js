@@ -53,6 +53,19 @@ describe( 'Related Links', function() {
 
 } );
 
+describe( 'Related Metadata', function() {
+  beforeAll( function() {
+    browser.get( '/browse-filterable-page/document-detail-page' );
+  } );
+  it( 'should properly load in a browser',
+    function() {
+      expect(element(by.css( 'body' )).getText() ).toContain(
+        'this is a related metadata heading' );
+    }
+  );
+
+} );
+
 describe( 'Quote', function() {
   beforeAll( function() {
     browser.get( '/browse-filterable-page/learn-page/' );

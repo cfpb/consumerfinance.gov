@@ -96,6 +96,7 @@ def run():
 
     if not DocumentDetailPage.objects.filter(title='Document Detail Page'):
         ddp = DocumentDetailPage(title='Document Detail Page', slug='document-detail-page', owner=admin_user)
+        ddp.sidefoot = StreamValue(ddp.sidefoot.stream_block, [{'type': 'related_metadata', 'value': {'content': [{'type': 'text', 'value': {'heading': 'this is a related metadata heading'}}]}}], True)
         publish_page(ddp, bfp)
 
     if not LearnPage.objects.filter(title='Learn Page'):
