@@ -53,11 +53,12 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   var _isExpanded = false;
   var _isAnimating = false;
 
-  var _expandTransition;
-  var _collapseTransition;
-  var _expandTransitionMethod;
+  var _expandTransition = null;
+  var _expandTransitionMethod = null;
   var _expandTransitionMethodArgs = [];
-  var _collapseTransitionMethod;
+
+  var _collapseTransition = null;
+  var _collapseTransitionMethod = null;
   var _collapseTransitionMethodArgs = [];
 
   // Binded events.
@@ -303,6 +304,24 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /**
+   * Clear the transitions attached to this FlyoutMenu instance.
+   */
+  function clearTransitions() {
+    var transition = getTransition( FlyoutMenu.EXPAND_TYPE );
+    if ( transition ) { transition.remove(); }
+    transition = getTransition( FlyoutMenu.COLLAPSE_TYPE );
+    if ( transition ) { transition.remove(); }
+
+    _expandTransition = null;
+    _expandTransitionMethod = null;
+    _expandTransitionMethodArgs = [];
+
+    _collapseTransition = null;
+    _collapseTransitionMethod = null;
+    _collapseTransitionMethodArgs = [];
+  }
+
+  /**
    * @param {string} type
    *   (Optional) The type of transition to return.
    *   Accepts 'expand' or 'collapse'.
@@ -310,7 +329,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    *   as type-safe constants passed into this method.
    *   If neither or something else is supplied, expand type is returned.
    * @returns {MoveTransition|AlphaTransition}
-   *   A transition instance set on this instance, or undefined if none is set.
+   *   A transition instance set on this instance, or null if none is set.
    */
   function getTransition( type ) {
     if ( type === FlyoutMenu.COLLAPSE_TYPE ) {
@@ -404,6 +423,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   this.collapse = collapse;
   this.setExpandTransition = setExpandTransition;
   this.setCollapseTransition = setCollapseTransition;
+  this.clearTransitions = clearTransitions;
   this.getData = getData;
   this.getTransition = getTransition;
   this.getDom = getDom;
