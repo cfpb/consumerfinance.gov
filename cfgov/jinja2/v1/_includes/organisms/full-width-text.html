@@ -22,6 +22,10 @@
             <div class="m-full-width-text">
                 {{ render_stream_child(block) | safe}}
             </div>
+        {% elif 'media' in block.block_type %}
+            <div class="m-full-width-media">
+                {# render media here #}
+            </div>
         {% else %}
             <div class="m-inset">
                 {{ block | safe }}
