@@ -245,7 +245,7 @@ class CFGOVPage(Page):
             # displayed is the latest version that has `live` set to True for
             # the live site or `shared` set to True for the staging site.
             staging_hostname = os.environ.get('STAGING_HOSTNAME')
-            revisions = self.revisions.all().order_by('-created_at')
+            revisions = self.revisions.all().order_by('-id', '-created_at')
             for revision in revisions:
                 page_version = json.loads(revision.content_json)
                 if request.site.hostname != staging_hostname:
