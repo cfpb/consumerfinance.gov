@@ -1,6 +1,7 @@
 'use strict';
 
-var _searchFilter = element( by.css( '[data-qa-hook="filter"]' ) );
+var _searchFilter =
+  element( by.css( '.o-filterable-list-controls .m-expandable' ) );
 
 function _getFilterElement( selector ) {
   return _searchFilter.element( by.css( selector ) );
@@ -8,9 +9,6 @@ function _getFilterElement( selector ) {
 
 var filter = {
   searchFilter: _searchFilter,
-
-  searchFilterCategories:
-  _getFilterElement( '[data-qa-hook="filter-categories"]' ),
 
   searchFilterBtn: _getFilterElement( '.m-expandable_target' ),
 
