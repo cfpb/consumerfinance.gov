@@ -4,6 +4,8 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from django.http import JsonResponse
+import requests
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 from govdelivery.api import GovDelivery
 
 from core.utils import extract_answers_from_request
@@ -48,8 +50,14 @@ def govdelivery_subscribe(request):
     return passing_response
 
 
+REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
 REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
-REQUIRED_PARAMS_REGSGOV = ['document_id', 'comment', 'first_name', 'last_name']
+REQUIRED_PARAMS_REGSGOV = [
+    'comment_on',
+    'general_comment',
+    'first_name',
+    'last_name'
+]
 
 
 @csrf_exempt
@@ -67,28 +75,56 @@ def regsgov_comment(request):
     else:
         passing_response = redirect('reg_comment:success')
         failing_response = redirect('reg_comment:server_error')
+
+    print 'POSTed form data: '
+    print request.POST
+
     for required_param in REQUIRED_PARAMS_REGSGOV:
-        if required_param not in request.POST or not request.POST[required_param]:
+        if required_param not in request.POST or request.POST.get(required_param) is None:
             return failing_response if is_ajax else \
                 redirect('reg_comment:user_error')
-    document_id = request.POST['document_id']
     try:
-        submission_response = submit_comment(api_key=REGSGOV_API_KEY,
-                                             document_id, request.POST)
-        if submission_response.status_code != 200:
+        submission_response = submit_comment(REGSGOV_API_KEY, request.POST)
+        if submission_response.status_code != 201:
             return failing_response
     except Exception:
         return failing_response
-    """
-    answers = extract_answers_from_request(request)
-    for question_id, answer_text in answers:
-        response = gd.set_subscriber_answers_to_question(email_address,
-                                                         question_id,
-                                                         answer_text)
-    """
+
+    # answers = extract_answers_from_request(request)
+    # for question_id, answer_text in answers:
+    #     response = gd.set_subscriber_answers_to_question(email_address,
+    #                                                      question_id,
+    #                                                      answer_text)
 
     return passing_response
 
 
-def submit_comment(api_key, document_id, payload):
-    
+def submit_comment(api_key, data):
+
+    base_url = os.environ.get('REGSGOV_BASE_URL')
+
+    url_to_call = "{}?api_key={}&D={}".format(base_url, api_key,
+                                              data['comment_on'])
+
+    print 'Submitting comment to URL: '
+    print url_to_call
+
+    p = MultipartEncoder(
+        fields={
+            'first_name': data['first_name'],
+            'last_name': data['last_name'],
+            'email': data['email'] if data.get('email') else None,
+            'general_comment': data['general_comment'],
+            'comment_on': data['comment_on'],
+            'organization': 'NA'
+        }
+    )
+
+    # To send multipart/form-data, use the files parameter to send a dictionary
+    response = requests.post(url_to_call, data=p,
+                             headers={'Content-Type': p.content_type})
+
+    print 'Response: '
+    print response.text
+
+    return response

@@ -1,0 +1,45 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    Reg comment form test | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block content_main %}
+    <div class="o-email-signup">
+        <h2>
+            Submit a comment
+        </h2>
+
+        <form id="reg-comment-test"
+              action="/regulation-comment/new/"
+              method="POST"
+              enctype="multipart/form-data">
+            <textarea name="general_comment" required></textarea>
+
+            <label for="first_name">
+                First name
+            </label>
+            <input type="text" id="first_name" name="first_name" required>
+            <label for="last_name">
+                Last name
+            </label>
+            <input type="text" id="last_name" name="last_name" required>
+            <label for="email">
+                Email address
+            </label>
+            <input type="text" id="email" name="email">
+
+            <div class="form-group">
+                <input type="hidden" name="comment_on" value="CFPB_FRDOC_0001-0439">
+            </div>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock %}
+
+{% block content_sidebar scoped -%}
+    <aside>
+        Blah blah blah
+    </aside>
+{%- endblock %}

@@ -182,6 +182,28 @@ urlpatterns = [
             name='server_error')],
         namespace='govdelivery')),
 
+    url(r'^regulation-comment/new/$',
+        'core.views.regsgov_comment',
+        name='regsgov'),
+
+    url(r'^regulation-comment/', include([
+        url(r'^success/$',
+            TemplateView.as_view(
+                template_name='regulation-comment/success/index.html'),
+            name='success'),
+        url(r'^error/$',
+            TemplateView.as_view(
+                template_name='regulation-comment/error/index.html'),
+            name='user_error'),
+        url(r'^server-error/$',
+            TemplateView.as_view(
+                template_name='regulation-comment/server-error/index.html'),
+            name='server_error')],
+        namespace='reg_comment')),
+
+    # Testing reg comment form
+    url(r'^reg-comment-form-test/$', SheerTemplateView.as_view(template_name='about-us/reg-comment-form-test.html'), name='reg-comment-form-test'),
+
     url(r'^feed/(?P<doc_type>[\w-]+)/$', SheerlikeFeed(), name='feed'),
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
