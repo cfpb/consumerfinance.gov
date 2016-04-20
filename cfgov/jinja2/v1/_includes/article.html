@@ -24,11 +24,15 @@
 
    ========================================================================== #}
 
-{% import 'molecules/social-media.html' as social_media with context %}
+{%- import 'molecules/social-media.html' as social_media with context -%}
+{%- import 'macros/category-slug.html' as category_slug -%}
+{%- import 'macros/time.html' as time -%}
+{%- import 'molecules/social-media.html' as social_media with context -%}
+{%- import 'templates/render_block.html' as render_block with context -%}
+{%- import 'tags.html' as tags -%}
 
 <article class="post">
     <header>
-        {%- import 'macros/category-slug.html' as category_slug %}
         {% set index, ancestor = get_filter_data(page) %}
         {% for category in page.categories.all() %}
             {{ '|' if loop.index > 1 else '' }}
@@ -51,21 +55,22 @@
             </span>
         {% endif %}
         <span class="date">
-            {% import 'macros/time.html' as time %}
             {{ time.render(page.date_published, {'date':true}) }}
         </span>
         </div>
-        {% import 'molecules/social-media.html' as social_media with context %}
         {{ social_media.render({'title': page.title}) }}
         <div class="post_body">
             {% for block in page.content %}
-                {{ parse_links(block.value) | safe }}
+                {% if block.block_type == 'content' %}
+                    {{ parse_links(block.value) | safe }}
+                {% else %}
+                    {{ render_block.render(block, loop.index) }}
+                {% endif %}
             {% endfor %}
         </div>
     </header>
     {% if page.tags.all() | length %}
         <footer>
-            {%- import 'tags.html' as tags %}
             {{ tags.render( related_metadata_tags(page), '', is_wagtail=True) }}
         </footer>
     {% endif %}

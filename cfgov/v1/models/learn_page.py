@@ -20,6 +20,7 @@ class AbstractFilterPage(CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('item_introduction', organisms.ItemIntroduction()),
+        ('blog_introduction', organisms.BlogIntroduction()),
     ], blank=True)
     preview_title = models.CharField(max_length=255, null=True, blank=True)
     preview_subheading = models.CharField(max_length=255, null=True, blank=True)
@@ -104,32 +105,6 @@ class DocumentDetailPage(AbstractFilterPage):
     edit_handler = AbstractFilterPage.edit_handler
 
     template = 'document-detail/index.html'
-
-
-class LegacyBlogPage(AbstractFilterPage):
-    content = StreamField([
-        ('content', blocks.RawHTMLBlock(help_text='Content from WordPress unescaped.')),
-    ])
-
-    objects = CFGOVPageManager()
-
-    content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('content'),
-    ]
-
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
-    ])
-
-    template = 'blog/legacy_blog_page.html'
-
-
-class LegacyNewsroomPage(LegacyBlogPage):
-    template = 'newsroom/legacy-newsroom-page.html'
-    objects = CFGOVPageManager()
 
 
 class AgendaItemBlock(blocks.StructBlock):

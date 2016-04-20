@@ -1,0 +1,72 @@
+{# ==========================================================================
+
+   Item Introduction
+
+   ==========================================================================
+
+   Description:
+
+   Create an Item Introduction molecule.
+   See [GHE]/flapjack/Modules-V1/wiki/Item-Introduction
+
+   value:                   An object with the following options for value.
+
+   value.category:         The category label text.
+   value.heading:          Heading text.
+   value.paragraph.source: Body introduction text.
+   value.authors:          Array of author names and associated URLs.
+
+   value.date:             A datetime for the post.
+   value.has_social:       Whether to show the share icons or not.
+
+   ========================================================================== #}
+
+
+{% import 'molecules/social-media.html' as social_media with context %}
+{% import 'macros/category-slug.html' as category_slug %}
+{% import 'macros/time.html' as time %}
+
+{% macro render(value) %}
+
+{% set form_id, ancestor = get_filter_data(page) %}
+{% set page_url = get_protected_url(ancestor) %}
+
+<div class="o-item-introduction">
+    <div class="h4">
+        {{ category_slug.render(value.category, page_url, index=form_id) }}
+    </div>
+    <h1>{{ value.heading }}</h1>
+
+    {% if value.paragraph %}
+        <div class="lead-paragraph">{{ parse_links(value.paragraph) | safe }}</div>
+    {% endif %}
+    {% if value.date or page.authors.all() %}
+        <p>
+    {% endif %}
+    {% for author in page.authors.names() %}
+        {% if loop.index == 1  %}
+            By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
+                {{ author }}
+                </a>
+        {% elif loop.last == true %}
+            and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
+                {{ author }}
+                </a>
+        {% else %}
+            , <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
+                {{ author }}
+                </a>
+        {% endif %}
+    {% endfor %}
+    {% if value.date %}
+        {{ time.render(value.date, {'date':true}) }}
+    {% endif %}
+    {% if value.date or page.authors.all() %}
+        </p>
+    {% endif %}
+    {% if value.has_social %}
+        {{ social_media.render() }}
+    {% endif %}
+</div>
+
+{% endmacro %}

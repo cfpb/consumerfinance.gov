@@ -179,6 +179,18 @@ class ItemIntroduction(blocks.StructBlock):
         classname = 'block__flush-top'
 
 
+class BlogIntroduction(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    paragraph = blocks.RichTextBlock(required=False)
+    date = blocks.DateTimeBlock(required=False)
+    has_social = blocks.BooleanBlock(required=False, help_text="Whether to show the share icons or not.")
+
+    class Meta:
+        icon = 'form'
+        template = '_includes/organisms/item-introduction.html'
+        classname = 'block__flush-top'
+
+
 class FilterControls(molecules.BaseExpandable):
     form_type = blocks.ChoiceBlock(choices=[
         ('filterable-list', 'Filterable List'),
