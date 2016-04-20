@@ -145,7 +145,7 @@ def related_metadata_tags(context, page):
     id, filter_page = get_filter_data(context, page)
     for tag in page.specific.tags.names():
         tag_link = {'text': tag, 'url': ''}
-        if id is not None:
+        if id is not None and filter_page is not None:
             param = '?filter' + str(id) + '_topics=' + tag
             tag_link['url'] = get_protected_url(context, filter_page) + param
         tags['links'].append(tag_link)
