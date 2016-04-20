@@ -99,7 +99,7 @@ def run():
 
     if not LearnPage.objects.filter(title='Learn Page'):
         lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
-        lp.content = StreamValue(lp.content.stream_block, [{'type': 'full_width_text', 'value': [{'type': 'quote', 'value': {'body': 'this is a quote', 'citation': 'a citation'}}]}], True)
+        lp.content = StreamValue(lp.content.stream_block, [{'type': 'full_width_text', 'value': [{'type': 'quote', 'value': {'body': 'this is a quote', 'citation': 'a citation'}}]}, {'type': 'call_to_action', 'value': {'paragraph_text': 'this is a call to action'}}], True)
         publish_page(lp, bfp)
 
     if not DemoPage.objects.filter(title='Demo Page'):
