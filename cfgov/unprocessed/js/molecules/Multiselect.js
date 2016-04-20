@@ -435,7 +435,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       }
     } );
 
-    bindEvent( _container, {
+    bindEvent( _fieldset, {
       mousedown: function() {
         _isBlurSkipped = true;
       }
