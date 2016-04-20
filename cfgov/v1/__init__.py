@@ -158,3 +158,5 @@ def get_filter_data(context, page):
         if ancestor.specific_class.__name__ in ['BrowseFilterablePage', 'SublandingFilterablePage',
                                                 'EventArchivePage', 'NewsroomLandingPage']:
             return util.get_form_id(ancestor, context['request'].GET), ancestor
+
+    return None, None
