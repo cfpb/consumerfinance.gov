@@ -247,6 +247,12 @@ if 'cfpb_common' in settings.INSTALLED_APPS:
                ]
     urlpatterns += patterns
 
+if 'cal' in settings.INSTALLED_APPS:
+    from cal.views import CalendarJSONList
+    patterns= [url(r'^leadership-calendar/cfpb-leadership.json$', CalendarJSONList.as_view()),
+               ]
+    urlpatterns += patterns
+
 if 'selfregistration' in settings.INSTALLED_APPS:
     from selfregistration.views import CompanySignup
     pattern = url(r'^company-signup/', CompanySignup.as_view())
