@@ -27,6 +27,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 - Hid overflow-x at mobile sizes on document body.
 - Added `halt()` and `clearTransitions()` methods to transition behaviors.
+- Updated the content on doing-business-with-us and doing-business-with-us/upcoming-procurement-needs based on EA feedback.
+
 
 
 ### Removed
