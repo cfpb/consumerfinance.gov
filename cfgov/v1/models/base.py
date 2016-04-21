@@ -141,27 +141,37 @@ class CFGOVPage(Page):
         return get_protected_url({'request': request}, activity_log) + '?' + tags
 
     def related_posts(self, block, hostname):
+        from . import AbstractFilterPage
         related = {}
+        queries = {}
         query = models.Q(('tags__name__in', self.tags.names()))
-        if block.value['specific_categories']:
+        if [c for c in block.value['specific_categories'] if c]:
             categories = ref.related_posts_category_lookup(block.value['specific_categories'])
             query &= Q(('categories__name__in', categories))
-        # TODO: Add other search types as they are implemented in Django
-        # Import classes that use this class here to maintain proper import
-        # order.
-        from . import EventPage, LegacyBlogPage, LegacyNewsroomPage
         search_types = [
-            ('posts', LegacyBlogPage, 'Blog'),
-            ('newsroom', LegacyNewsroomPage, 'Newsroom'),
-            ('events', EventPage, 'Events'),
+            ('blog', 'posts', 'Blog', query),
+            ('newsroom', 'newsroom', 'Newsroom', query),
+            ('events', 'events', 'Events', query),
         ]
-        for search_type, search_class, search_type_name in search_types:
+        for parent_slug, search_type, search_type_name, search_query in search_types:
+            try:
+                parent = Page.objects.get(slug=parent_slug)
+                search_query &= Page.objects.descendant_of_q(parent)
+                if parent_slug == 'events':
+                    try:
+                        parent = Page.objects.get(slug='archive-past-events')
+                        search_query &= (Page.objects.descendant_of_q(parent) | query)
+                    except Page.DoesNotExist:
+                        print 'archive-past-events does not exist'
+                queries[search_type_name] = search_query
+            except Page.DoesNotExist:
+                print parent_slug, 'does not exist'
+        for parent_slug, search_type, search_type_name, search_query in search_types:
             if 'relate_%s' % search_type in block.value \
                     and block.value['relate_%s' % search_type]:
                 related[search_type_name] = \
-                    search_class.objects.filter(query).order_by(
-                        '-date_published').exclude(
-                        slug=self.slug).live_shared(hostname)[:block.value['limit']]
+                    AbstractFilterPage.objects.live_shared(hostname).filter(
+                        queries[search_type_name]).order_by('-date_published')[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
@@ -248,7 +258,7 @@ class CFGOVPage(Page):
             # displayed is the latest version that has `live` set to True for
             # the live site or `shared` set to True for the staging site.
             staging_hostname = os.environ.get('STAGING_HOSTNAME')
-            revisions = self.revisions.all().order_by('-id', '-created_at')
+            revisions = self.revisions.all().order_by('-created_at')
             for revision in revisions:
                 page_version = json.loads(revision.content_json)
                 if request.site.hostname != staging_hostname:

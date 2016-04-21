@@ -133,8 +133,8 @@ def related_posts_category_lookup(related_categories):
         for name, cats in categories:
             for c in cats:
                 if r == c[1]:
-                    related.append(c[0])
-    return related
+                    results.append(c[0])
+    return results
 
 
 def page_type_choices():
