@@ -184,7 +184,7 @@ urlpatterns = [
 
     url(r'^regulation-comment/new/$',
         'core.views.regsgov_comment',
-        name='regsgov'),
+        name='reg_comment'),
 
     url(r'^regulation-comment/', include([
         url(r'^success/$',

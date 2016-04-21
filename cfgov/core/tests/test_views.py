@@ -100,3 +100,84 @@ class GovDeliverySubscribeTest(TestCase):
                  call('fake@example.com', 'hello', 'goodbye')]
         mock_set_answers.assert_has_calls(calls, any_order=True)
         self.assertEqual(mock_set_answers.call_count, 2)
+
+class RegsgovCommentTest(TestCase):
+    def test_missing_comment_on(self):
+        response = self.client.post(reverse('reg_comment'),
+                                    {'general_comment': 'FAKE_COMMENT',
+                                    'first_name': 'FAKE_FIRST',
+                                    'last_name': 'FAKE_LAST'})
+        self.assertEquals(urlparse(response['Location']).path,
+                          reverse('reg_comment:user_error'))
+
+    def test_missing_general_comment(self):
+        response = self.client.post(reverse('reg_comment'),
+                                    {'comment_on': 'FAKE_DOC_NUM',
+                                    'first_name': 'FAKE_FIRST',
+                                    'last_name': 'FAKE_LAST'})
+        self.assertEquals(urlparse(response['Location']).path,
+                          reverse('reg_comment:user_error'))
+
+    def test_missing_first_name(self):
+        response = self.client.post(reverse('reg_comment'),
+                                    {'comment_on': 'FAKE_DOC_NUM',
+                                    'general_comment': 'FAKE_COMMENT',
+                                    'last_name': 'FAKE_LAST'})
+        self.assertEquals(urlparse(response['Location']).path,
+                          reverse('reg_comment:user_error'))
+
+    def test_missing_last_name(self):
+        response = self.client.post(reverse('reg_comment'),
+                                    {'comment_on': 'FAKE_DOC_NUM',
+                                    'general_comment': 'FAKE_COMMENT',
+                                    'first_name': 'FAKE_FIRST'})
+        self.assertEquals(urlparse(response['Location']).path,
+                          reverse('reg_comment:user_error'))
+
+    def test_missing_comment_on_ajax(self):
+        response = self.client.post(reverse('reg_comment'),
+                                    {'general_comment': 'FAKE_COMMENT',
+                                    'first_name': 'FAKE_FIRST',
+                                    'last_name': 'FAKE_LAST'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.content.decode('utf-8'),
+                         json.dumps({'result': 'fail'}))
+
+    def test_missing_general_comment_ajax(self):
+        response = self.client.post(reverse('reg_comment'),
+                                    {'comment_on': 'FAKE_DOC_NUM',
+                                    'first_name': 'FAKE_FIRST',
+                                    'last_name': 'FAKE_LAST'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.content.decode('utf-8'),
+                         json.dumps({'result': 'fail'}))
+
+    def test_missing_first_name_ajax(self):
+        response = self.client.post(reverse('reg_comment'),
+                                    {'comment_on': 'FAKE_DOC_NUM',
+                                    'general_comment': 'FAKE_COMMENT',
+                                    'last_name': 'FAKE_LAST'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.content.decode('utf-8'),
+                         json.dumps({'result': 'fail'}))
+
+
+    def test_missing_last_name_ajax(self):
+        response = self.client.post(reverse('reg_comment'),
+                                    {'comment_on': 'FAKE_DOC_NUM',
+                                    'general_comment': 'FAKE_COMMENT'
+                                    'first_name': 'FAKE_FIRST'},
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(response.content.decode('utf-8'),
+                         json.dumps({'result': 'fail'}))
+
+    @patch('core.views.submit_comment')
+    def test_successful_comment(self, mock_submit):
+        mock_gd.return_value.status_code = 200
+        response = self.client.post(reverse('govdelivery'),
+                                    {'code': 'FAKE_CODE',
+                                     'email': 'fake@example.com'})
+        mock_gd.assert_called_with('fake@example.com',
+                                   ['FAKE_CODE'])
+        self.assertEquals(urlparse(response['Location']).path,
+                          reverse('govdelivery:success'))
