@@ -64,7 +64,7 @@ class SublandingPage(CFGOVPage):
 
     def get_browsefilterable_posts(self, request, limit):
         filter_pages = [p.specific for p in self.get_appropriate_descendants(request.site.hostname)
-                        if 'FilterablePage' in p.specific_class.__name__]
+                        if 'FilterablePage' in p.specific_class.__name__ and 'archive' not in p.title.lower()]
         filtered_controls = {}
         for page in filter_pages:
             id = str(util.get_form_id(page, request.GET))
