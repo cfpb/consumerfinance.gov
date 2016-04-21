@@ -13,6 +13,14 @@
    remove this and empty after-header div #}
 <a href="#after-nav" id="skip-nav">Skip to main content</a>
 
+<div class="header-dom no-js">
 {% import 'organisms/header.html' as header with context %}
 {{ header.render( show_banner=false ) }}
+</div>
 <div id="after-nav"></div>
+
+<script>
+  // Limiting .no-js and .js to the header to avoid collisions elsewhere
+  var headerDom = document.querySelector( '.header-dom' );
+  headerDom.className = headerDom.className.replace('no-js','js');
+</script>

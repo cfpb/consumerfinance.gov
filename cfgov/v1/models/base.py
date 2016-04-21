@@ -143,6 +143,9 @@ class CFGOVPage(Page):
     def related_posts(self, block, hostname):
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
+        if block.value['specific_categories']:
+            categories = ref.related_posts_category_lookup(block.value['specific_categories'])
+            query &= Q(('categories__name__in', categories))
         # TODO: Add other search types as they are implemented in Django
         # Import classes that use this class here to maintain proper import
         # order.
@@ -245,7 +248,7 @@ class CFGOVPage(Page):
             # displayed is the latest version that has `live` set to True for
             # the live site or `shared` set to True for the staging site.
             staging_hostname = os.environ.get('STAGING_HOSTNAME')
-            revisions = self.revisions.all().order_by('-created_at')
+            revisions = self.revisions.all().order_by('-id', '-created_at')
             for revision in revisions:
                 page_version = json.loads(revision.content_json)
                 if request.site.hostname != staging_hostname:

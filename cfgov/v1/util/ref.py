@@ -121,6 +121,22 @@ supported_languagues = [
 ]
 
 
+def related_posts_category_lookup(related_categories):
+    related = []
+    for category in related_categories:
+        for name, related_posts_cats in related_posts_categories:
+            for cat in related_posts_cats:
+                if category == cat[0]:
+                    related.append(cat[1])
+    results = []
+    for r in related:
+        for name, cats in categories:
+            for c in cats:
+                if r == c[1]:
+                    related.append(c[0])
+    return related
+
+
 def page_type_choices():
     new_choices = [
         ('Activity Log', (
@@ -178,6 +194,9 @@ def is_blog(page):
         for choice in choices_for_page_type('blog'):
             if category.name == choice[0]:
                 return True
+    if 'Blog' in page.specific_class.__name__:
+        return True
+
 
 def is_report(page):
     for category in page.categories.all():

@@ -17,17 +17,22 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
-- Added unit test specs for all files to test (excluding config, polyfills and jQuery plugins)
+- Added unit test specs for all files to test (excluding config, polyfills and jQuery plugins).
+- Added no-js and js classes to the on-demand header.
+- Added link to Livestream FAQ.
+- Flag for database routing for content.consumerfinance.gov
 
 ### Changed
 
 
 ### Removed
 
-- Removed resolved TODOs and old macros replaced by atomic components
+- Removed resolved TODOs and old macros replaced by atomic components.
 
 ### Fixed
 
+- Fixed an issue where the multiselect couldn't be closed.
+- Fixed the browser tests for the recent change to wagtail pages.
 
 
 ## 3.0.0-3.3.2 - 2016-04-11

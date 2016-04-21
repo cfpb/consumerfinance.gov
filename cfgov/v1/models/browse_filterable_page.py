@@ -71,7 +71,7 @@ class EventArchivePage(BrowseFilterablePage):
 
 
 class NewsroomLandingPage(BrowseFilterablePage):
-    template = BrowseFilterablePage.template
+    template = 'newsroom/index.html'
 
     def get_page_set(self, form, hostname):
         get_blog = False

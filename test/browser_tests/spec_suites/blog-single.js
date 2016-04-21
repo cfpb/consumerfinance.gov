@@ -53,7 +53,7 @@ describe( 'The Blog single Page', function() {
   } );
 
   it( 'should include an Email Subscribe label', function() {
-    expect( page.emailFormLabel.getText() ).toBe( 'Email address' );
+    expect( page.emailFormLabel.getText() ).toBe( 'Email Address' );
   } );
 
   it( 'should include an Email Subscribe input', function() {
@@ -71,7 +71,7 @@ describe( 'The Blog single Page', function() {
 
   it( 'should include an Email Subscribe button', function() {
     expect( page.emailFormBtn.getAttribute( 'value' ) )
-    .toBe( 'Sign up' );
+    .toBe( 'Sign Up' );
   } );
 
   it( 'should include an RSS Subscribe section', function() {

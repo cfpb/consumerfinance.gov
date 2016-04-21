@@ -17,7 +17,8 @@
 {% block content_main %}
     {% for block in page.header -%}
         {% if block.block_type != 'hero' %}
-            {% include 'templates/render_block.html' with context %}
+            {% import 'templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
     {% for block in page.content -%}
@@ -27,7 +28,8 @@
                 {{ render_stream_child(block) }}
             </div>
         {% else %}
-             {% include 'templates/render_block.html' with context %}
+             {% import 'templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
 {% endblock %}

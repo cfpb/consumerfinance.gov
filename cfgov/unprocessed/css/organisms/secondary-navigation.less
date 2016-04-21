@@ -90,6 +90,12 @@
 .o-secondary-navigation {
     .webfont-regular();
 
+    &__no-children {
+      .respond-to-max( @bp-sm-max, {
+          display: none;
+      } );
+    }
+
     .m-expandable_target {
         .webfont-demi();
 
