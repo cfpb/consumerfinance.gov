@@ -82,7 +82,7 @@
                                 {% endif %}
                                 {% if blocks.body.value %}
                                     <p class="o-sidebar-breakout_text-body">
-                                        {{ blocks.body.render() }}
+                                        {{ parse_links(blocks.body.render()) | safe }}
                                     </p>
                                 {% endif %}
                                 </div>
@@ -99,10 +99,16 @@
                             {{ loop(blocks[loop.index:]) }}
                             {% break %}
                         {% endif %}
-                    {% elif 'related_metadata' in block.block_type %}
-                        <div class="block {{- 'block__flush-top' if loop.index == 1 else '' -}}">
-                            {{ related_metadata.render(block.value) }}
-                        </div>
+                    {% elif 'slug' in block.block_type %}
+                        <h2 class="header-slug">
+                            <span class="header-slug_inner">
+                                {{ block.value }}
+                            </span>
+                        </h2>
+                    {% elif 'paragraph' in block.block_type %}
+                        <p class="o-sidebar-breakout_text-body">
+                            {{ parse_links(block.value) | safe }}
+                        </p>
                     {% else %}
                         {% import 'templates/render_block.html' as render_block with context %}
                         {{ render_block.render(block, loop.index) }}
