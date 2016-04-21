@@ -4,6 +4,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from django.http import JsonResponse
+from django.contrib import messages
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 from govdelivery.api import GovDelivery
@@ -70,14 +71,11 @@ def regsgov_comment(request):
     """
     is_ajax = request.is_ajax()
     if is_ajax:
-        passing_response = JsonResponse({'result': 'pass'})
+        # passing_response = JsonResponse({'result': 'pass'})
         failing_response = JsonResponse({'result': 'fail'})
     else:
-        passing_response = redirect('reg_comment:success')
+        # passing_response = redirect('reg_comment:success')
         failing_response = redirect('reg_comment:server_error')
-
-    print 'POSTed form data: '
-    print request.POST
 
     for required_param in REQUIRED_PARAMS_REGSGOV:
         if required_param not in request.POST or request.POST.get(required_param) is None:
@@ -97,7 +95,16 @@ def regsgov_comment(request):
     #                                                      question_id,
     #                                                      answer_text)
 
-    return passing_response
+    tracking_number = submission_response.text.get('trackingNumber')
+    print "Tracking Number"
+    print tracking_number
+
+    # For non-ajax, tracking number will appear as a message with tag: success
+    # messages.add_message(request, messages.SUCCESS, tracking_number)
+    messages.success(request, tracking_number)
+
+    return JsonResponse({ 'result': 'pass', 'tracking_number': tracking_number }) if is_ajax
+        else redirect('reg_comment:success')
 
 
 def submit_comment(api_key, data):
@@ -107,14 +114,11 @@ def submit_comment(api_key, data):
     url_to_call = "{}?api_key={}&D={}".format(base_url, api_key,
                                               data['comment_on'])
 
-    print 'Submitting comment to URL: '
-    print url_to_call
-
-    p = MultipartEncoder(
+    parsed_data = MultipartEncoder(
         fields={
             'first_name': data['first_name'],
             'last_name': data['last_name'],
-            'email': data['email'] if data.get('email') else None,
+            'email': data['email'] if data.get('email') else 'NA',
             'general_comment': data['general_comment'],
             'comment_on': data['comment_on'],
             'organization': 'NA'
@@ -122,10 +126,8 @@ def submit_comment(api_key, data):
     )
 
     # To send multipart/form-data, use the files parameter to send a dictionary
-    response = requests.post(url_to_call, data=p,
-                             headers={'Content-Type': p.content_type})
+    response = requests.post(url_to_call, data=parsed_data,
+                             headers={'Content-Type': parsed_data.content_type})
 
-    print 'Response: '
-    print response.text
 
     return response
