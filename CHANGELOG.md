@@ -24,6 +24,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- Hid overflow-x at mobile sizes on document body.
+- Added `halt()` and `clearTransitions()` methods to transition behaviors.
+
 
 ### Removed
 

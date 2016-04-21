@@ -165,6 +165,12 @@ function MegaMenuDesktop( menus ) {
   function suspend() {
     if ( !_suspended ) {
       treeTraversal.bfs( _menus.getRoot(), _handleSuspendTraversal );
+
+      // Ensure body events were removed.
+      _bodyDom.removeEventListener( 'mousemove', _handleMove );
+      _bodyDom.removeEventListener( 'mouseleave', _handleMove );
+      // Clear active menu.
+      _activeMenu = null;
       _suspended = true;
     }
 
@@ -185,7 +191,7 @@ function MegaMenuDesktop( menus ) {
       var wrapperDom = contentDom.querySelector( wrapperSel );
       var transition = menu.getTransition();
 
-      // This checks if the transition has been removed by MegaMenuMobile.
+      // This ensures the transition has been removed by MegaMenuMobile.
       transition = _setTransitionElement( wrapperDom, transition );
       transition.moveUp();
 
@@ -224,8 +230,7 @@ function MegaMenuDesktop( menus ) {
     var menu = node.data;
 
     if ( nLevel === 1 ) {
-      var transition = menu.getTransition();
-      transition.remove();
+      menu.clearTransitions();
       menu.getDom().content.classList.remove( 'u-invisible' );
 
       if ( menu.isExpanded() ) {
