@@ -143,6 +143,9 @@ class CFGOVPage(Page):
     def related_posts(self, block, hostname):
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
+        if block.value['specific_categories']:
+            categories = ref.related_posts_category_lookup(block.value['specific_categories'])
+            query &= Q(('categories__name__in', categories))
         # TODO: Add other search types as they are implemented in Django
         # Import classes that use this class here to maintain proper import
         # order.
