@@ -20,10 +20,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added unit test specs for all files to test (excluding config, polyfills and jQuery plugins).
 - Added no-js and js classes to the on-demand header.
 - Added link to Livestream FAQ.
-- Flag for database routing for content.consumerfinance.gov
+- Flag for database routing for content.consumerfinance.gov.
+- Added the Digital Gov search script.
 
 ### Changed
 
+- Hid overflow-x at mobile sizes on document body.
+- Added `halt()` and `clearTransitions()` methods to transition behaviors.
+- Updated the content on doing-business-with-us and doing-business-with-us/upcoming-procurement-needs based on EA feedback.
 
 ### Removed
 
@@ -33,6 +37,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 - Fixed an issue where the multiselect couldn't be closed.
 - Fixed the browser tests for the recent change to wagtail pages.
+- Fixed the mobile menu for on-demand django pages.
+- Fixed disappearing search close button when swapping device orientation.
 
 
 ## 3.0.0-3.3.2 - 2016-04-11

@@ -20,7 +20,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
         if form.is_valid():
             zip = form.cleaned_data['zip']
             api_url = 'hud-api-replace/%s.html/' % zip
-            url = '%s://%s/%s' % (request.scheme, request.get_host(), api_url)
+            url = '%s://%s/%s' % (request.scheme, 'localhost', api_url)
             return url
         else:
             raise Exception(form.errors)

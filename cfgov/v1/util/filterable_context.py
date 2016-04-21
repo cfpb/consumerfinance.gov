@@ -67,34 +67,10 @@ def get_form_specific_filter_data(page, form_class, request_dict):
 
 # Returns a queryset of AbstractFilterPages
 def get_page_set(page, form, hostname):
-    results = {}
-    selections = {}
-    for f in page.content:
-        if 'filter_controls' in f.block_type and f.value['categories']['page_type'] in ['activity-log', 'newsroom']:
-            categories = form.cleaned_data.get('categories', [])
-            if f.value['categories']['page_type'] == 'activity-log':
-                selections = {'blog': False, 'research-report': False}
-            else:
-                selections = {'blog': False}
-            for category in selections.keys():
-                if not categories or category in categories:
-                    selections[category] = True
-                    categories += [c[0] for c in choices_for_page_type(category)]
-                    if category in categories:
-                        del categories[categories.index(category)]
-            if f.value['categories']['page_type'] == 'activity-log':
-                selections.update({'newsroom': True})
-    results.update({'current': AbstractFilterPage.objects.live_shared(hostname).descendant_of(page).filter(form.generate_query())})
-    # del form.cleaned_data['categories']
-    for slug, is_selected in selections.iteritems():
-        if is_selected:
-            try:
-                parent = CFGOVPage.objects.get(slug=slug)
-                results.update({slug: AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent).filter(form.generate_query())})
-            except CFGOVPage.DoesNotExist:
-                print slug, 'does not exist'
-    filter_pages = list(chain(*results.values()))
-    return sorted(filter_pages, key=lambda x: x.date_published, reverse=True)
+    pages = AbstractFilterPage.objects.live_shared(hostname).descendant_of(
+        page).filter(form.generate_query()).order_by('-date_published')
+    pages = [p for p in pages if 'archive' not in p.parent().title.lower()]
+    return pages
 
 
 def has_active_filters(page, request, index):

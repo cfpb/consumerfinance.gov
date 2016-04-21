@@ -109,6 +109,7 @@ function MoveTransition( element ) { // eslint-disable-line max-statements, no-i
 
   this.animateOff = _baseTransition.animateOff;
   this.animateOn = _baseTransition.animateOn;
+  this.halt = _baseTransition.halt;
   this.isAnimated = _baseTransition.isAnimated;
   this.setElement = _baseTransition.setElement;
   this.remove = _baseTransition.remove;
