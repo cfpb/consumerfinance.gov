@@ -138,8 +138,9 @@ function MegaMenu( element ) {
    * @param {FlyoutMenu} menu - a menu on which to attach events.
    */
   function _addEvents( menu ) {
-    menu.addEventListener( 'triggerOver', _handleEvent );
     menu.addEventListener( 'triggerClick', _handleEvent );
+    menu.addEventListener( 'triggerOver', _handleEvent );
+    menu.addEventListener( 'triggerOut', _handleEvent );
     menu.addEventListener( 'expandBegin', _handleEvent );
     menu.addEventListener( 'expandEnd', _handleEvent );
     menu.addEventListener( 'collapseBegin', _handleEvent );
