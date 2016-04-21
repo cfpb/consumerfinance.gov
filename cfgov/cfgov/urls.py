@@ -184,12 +184,11 @@ urlpatterns = [
 
     url(r'^regulation-comment/new/$',
         'core.views.regsgov_comment',
-        name='regsgov'),
+        name='reg_comment'),
 
     url(r'^regulation-comment/', include([
         url(r'^success/$',
-            TemplateView.as_view(
-                template_name='regulation-comment/success/index.html'),
+            'core.views.comment_success',
             name='success'),
         url(r'^error/$',
             TemplateView.as_view(
@@ -203,6 +202,7 @@ urlpatterns = [
 
     # Testing reg comment form
     url(r'^reg-comment-form-test/$', SheerTemplateView.as_view(template_name='about-us/reg-comment-form-test.html'), name='reg-comment-form-test'),
+    #url(r'^reg-comment-success/$', SheerTemplateView.as_view(template_name='regulation-comment/success/index.html'), name='reg-comment-success'),
 
     url(r'^feed/(?P<doc_type>[\w-]+)/$', SheerlikeFeed(), name='feed'),
 

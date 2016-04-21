@@ -3,9 +3,13 @@ import os
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import JsonResponse
+from django.contrib import messages
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
+import json
 from govdelivery.api import GovDelivery
 
 from core.utils import extract_answers_from_request
@@ -30,7 +34,7 @@ def govdelivery_subscribe(request):
         passing_response = redirect('govdelivery:success')
         failing_response = redirect('govdelivery:server_error')
     for required_param in REQUIRED_PARAMS_GOVDELIVERY:
-        if required_param not in request.POST or not request.POST[required_param]:
+        if required_param not in request.POST or not request.POST.get(required_param):
             return failing_response if is_ajax else \
                 redirect('govdelivery:user_error')
     email_address = request.POST['email']
@@ -70,20 +74,18 @@ def regsgov_comment(request):
     """
     is_ajax = request.is_ajax()
     if is_ajax:
-        passing_response = JsonResponse({'result': 'pass'})
+        # passing_response = JsonResponse({'result': 'pass'})
         failing_response = JsonResponse({'result': 'fail'})
     else:
-        passing_response = redirect('reg_comment:success')
+        # passing_response = redirect('reg_comment:success')
         failing_response = redirect('reg_comment:server_error')
-
-    print 'POSTed form data: '
-    print request.POST
 
     for required_param in REQUIRED_PARAMS_REGSGOV:
         if required_param not in request.POST or request.POST.get(required_param) is None:
             return failing_response if is_ajax else \
                 redirect('reg_comment:user_error')
     try:
+
         submission_response = submit_comment(REGSGOV_API_KEY, request.POST)
         if submission_response.status_code != 201:
             return failing_response
@@ -96,7 +98,19 @@ def regsgov_comment(request):
     #                                                      question_id,
     #                                                      answer_text)
 
-    return passing_response
+    print "Submission response: "
+    print submission_response.text
+    json_data = json.loads(submission_response.text)
+    tracking_number = json_data.get('trackingNumber')
+    print "Tracking Number"
+    print tracking_number
+
+    # For non-ajax, tracking number will appear as a message with tag: success
+    # messages.add_message(request, messages.SUCCESS, tracking_number)
+    # messages.set_level(request, messages.SUCCESS)
+    messages.success(request, tracking_number)
+
+    return JsonResponse({'result': 'pass', 'tracking_number': tracking_number}) if is_ajax else redirect('reg_comment:success')
 
 
 def submit_comment(api_key, data):
@@ -106,14 +120,11 @@ def submit_comment(api_key, data):
     url_to_call = "{}?api_key={}&D={}".format(base_url, api_key,
                                               data['comment_on'])
 
-    print 'Submitting comment to URL: '
-    print url_to_call
-
-    p = MultipartEncoder(
+    parsed_data = MultipartEncoder(
         fields={
             'first_name': data['first_name'],
             'last_name': data['last_name'],
-            'email': data['email'] if data.get('email') else None,
+            'email': data['email'] if data.get('email') else 'NA',
             'general_comment': data['general_comment'],
             'comment_on': data['comment_on'],
             'organization': 'NA'
@@ -121,10 +132,12 @@ def submit_comment(api_key, data):
     )
 
     # To send multipart/form-data, use the files parameter to send a dictionary
-    response = requests.post(url_to_call, data=p,
-                             headers={'Content-Type': p.content_type})
-
-    print 'Response: '
-    print response.text
+    response = requests.post(url_to_call, data=parsed_data,
+                             headers={'Content-Type': parsed_data.content_type})
 
     return response
+
+
+def comment_success(request):
+    return render_to_response('regulation-comment/success/index.html', {},
+                              context_instance=RequestContext(request))
