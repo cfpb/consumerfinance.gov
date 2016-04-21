@@ -27,7 +27,7 @@
 {% if value.heading %}
     <h1>{{ value.heading }}</h1>
 {% endif %}
-{% if value.intro.src %}
+{% if value.intro.source %}
     <div class="lead-paragraph">
         {{ parse_links(value.intro) | safe }}
     </div>
