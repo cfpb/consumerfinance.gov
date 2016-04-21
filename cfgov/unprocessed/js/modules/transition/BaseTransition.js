@@ -26,6 +26,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   var _transitionEndEvent;
   var _transitionCompleteBinded;
   var _addEventListenerBinded;
+  var _isAnimating = false;
   var _isFlushed = false;
 
   /**
@@ -87,10 +88,29 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   }
 
   /**
+   * Halt an in-progress animation and call the complete event immediately.
+   */
+  function halt() {
+    if ( !_isAnimating ) { return; }
+    _dom.style.webkitTransitionDuration = '0';
+    _dom.style.mozTransitionDuration = '0';
+    _dom.style.oTransitionDuration = '0';
+    _dom.style.transitionDuration = '0';
+    _dom.removeEventListener( _transitionEndEvent,
+                              _transitionCompleteBinded );
+    _transitionCompleteBinded();
+    _dom.style.webkitTransitionDuration = '';
+    _dom.style.mozTransitionDuration = '';
+    _dom.style.oTransitionDuration = '';
+    _dom.style.transitionDuration = '';
+  }
+
+  /**
    * Add an event listener to the transition, or call the transition
    * complete handler immediately if transition not supported.
    */
   function _addEventListener() {
+    _isAnimating = true;
     // If transition is not supported, call handler directly (IE9/OperaMini).
     if ( _transitionEndEvent ) {
       _dom.addEventListener( _transitionEndEvent,
@@ -115,6 +135,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   function _transitionComplete() {
     _removeEventListener();
     this.dispatchEvent( BaseTransition.END_EVENT, { target: this } );
+    _isAnimating = false;
   }
 
   /**
@@ -138,6 +159,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    */
   function remove() {
     if ( _dom ) {
+      halt();
       _dom.classList.remove( _classes.BASE_CLASS );
       _flush();
       return true;
@@ -211,6 +233,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   this.animateOff = animateOff;
   this.animateOn = animateOn;
   this.applyClass = applyClass;
+  this.halt = halt;
   this.init = init;
   this.isAnimated = isAnimated;
   this.remove = remove;

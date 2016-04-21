@@ -267,10 +267,13 @@ class Query(object):
             aggregations=None,
             use_url_arguments=True,
             size=10,
+            pdf_print=False,
             **kwargs):
         query_file = json.loads(file(self.filename).read())
         query_dict = query_file['query']
 
+        if pdf_print:
+            query_dict['size'] = settings.ELASTICSEARCH_BIGINT
         '''
         These dict constructors split the kwargs from the template into filter
         arguments and arguments that can be placed directly into the query body.
@@ -312,9 +315,12 @@ class Query(object):
         else:
             if use_url_arguments:
                 if 'page' in args_flat:
+                    try:
+                        pagenum = int(args_flat['page'])
+                    except ValueError:
+                        pagenum = 1
                     args_flat['from_'] = int(query_dict.get(
-                        'size', '10')) * (int(args_flat['page']) - 1)
-                    pagenum = int(args_flat['page'])
+                        'size', '10')) * (pagenum - 1)
 
                 args_flat_filtered = dict(
                     [(k, v) for k, v in args_flat.items() if v])

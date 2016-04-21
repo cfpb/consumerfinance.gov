@@ -82,45 +82,45 @@ describe( 'The Newsroom Press Resources Page', function() {
     expect( page.contactPersons.count() ).toBeGreaterThan( 1 );
   } );
 
-  it( 'should include a Stay Informed section', function() {
+  xit( 'should include a Stay Informed section', function() {
     expect( page.stayInformedSection.isPresent() ).toBe( true );
   } );
 
-  it( 'should include a Stay Informed section title', function() {
+  xit( 'should include a Stay Informed section title', function() {
     expect( page.stayInformedSectionTitle.getText() ).toBe( 'STAY INFORMED' );
   } );
 
-  it( 'should include a Email Subscribe form', function() {
+  xit( 'should include a Email Subscribe form', function() {
     expect( page.emailSubscribeForm.isPresent() ).toBe( true );
   } );
 
-  it( 'should include a Email Subscribe label', function() {
+  xit( 'should include a Email Subscribe label', function() {
     expect( page.emailFormLabel.getText() ).toBe( 'Email address' );
   } );
 
-  it( 'should include a Email Subscribe input', function() {
+  xit( 'should include a Email Subscribe input', function() {
     expect( page.emailFormInput.isPresent() ).toBe( true );
     expect( page.emailFormInput.getAttribute( 'placeholder' ) )
     .toBe( 'example@mail.com' );
   } );
 
-  it( 'should include a Email Subscribe hidden field', function() {
+  xit( 'should include a Email Subscribe hidden field', function() {
     expect( page.emailFormHiddenField.getAttribute( 'value' ) )
     .toBe( 'USCFPB_23' );
     expect( page.emailFormHiddenField.getAttribute( 'name' ) )
     .toBe( 'code' );
   } );
 
-  it( 'should include a Email Subscribe button', function() {
+  xit( 'should include a Email Subscribe button', function() {
     expect( page.emailFormBtn.getAttribute( 'value' ) )
     .toBe( 'Sign up' );
   } );
 
-  it( 'should include a RSS Subscribe section', function() {
+  xit( 'should include a RSS Subscribe section', function() {
     expect( page.rssSubscribeSection.isPresent() ).toBe( true );
   } );
 
-  it( 'should include a RSS Subscribe button', function() {
+  xit( 'should include a RSS Subscribe button', function() {
     expect( page.rssSubscribeBtn.getText() ).toBe( 'Subscribe to RSS' );
   } );
 

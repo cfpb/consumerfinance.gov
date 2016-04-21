@@ -13,7 +13,6 @@
 
    ========================================================================== #}
 
-{# TODO: Remove global page reference when moving to Wagtail. #}
 {% macro render( show_banner=false ) %}
 
 <header class="o-header"
@@ -57,7 +56,7 @@
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render( true ) }}
 
-    <div class="o-header_content">
+    <div class="o-header_content no-js">
 
         <div class="wrapper">
             {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
@@ -96,6 +95,11 @@
         </div>
 
     </div>
+    <script>
+      /* TODO: scope no-js to individual molecules/organisms. This is a hack to fix no-js on the on-demand header, while also allowing the menu to be scoped to o-header for on-demand pages. */
+      var headerDom = document.querySelector( '.o-header_content' );
+      headerDom.className = headerDom.className.replace('no-js','js');
+    </script>
 </header>
 
 {% endmacro %}

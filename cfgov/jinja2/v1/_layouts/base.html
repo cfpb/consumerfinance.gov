@@ -51,7 +51,7 @@
         {%- endblock title %}
     </title>
     <meta name="description"
-          content="{% block desc %}Prototyping for the consumerfinance.gov refresh{% endblock %}">
+          content="{% block desc %}{{ page.search_description if page and page.search_description else 'Prototyping for the consumerfinance.gov refresh' }}{% endblock %}">
 
     <!-- Open Graph properties -->
         <!--   Required  -->
@@ -61,7 +61,7 @@
         <meta property="og:image"
               content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
         <!--   Optional -->
-        <meta property="og:description" content="{% block og_desc %}{{ self.desc() }}{% endblock %}">
+        <meta property="og:description" content="{% block og_desc %}{{- page.search_description if page and page.search_description -}}{% endblock %}">
         <meta property="og:site_name" content="Consumer Financial Protection Bureau">
         <!--   Facebook -->
         <meta property="fb:app_id" content="210516218981921">
@@ -210,6 +210,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
 {% endif %}
 <!--<![endif]-->
+
+<script type='text/javascript'>
+//<![CDATA[
+    var usasearch_config = { siteHandle: 'cfpb' };
+
+    var script = document.createElement( 'script' );
+    script.type = 'text/javascript';
+    script.src = 'http://search.usa.gov/javascripts/remote.loader.js';
+    document.getElementsByTagName( 'head' )[0].appendChild( script );
+//]]>
+</script>
 {% endblock javascript %}
 
 </body>

@@ -82,23 +82,36 @@
                                 {% endif %}
                                 {% if blocks.body.value %}
                                     <p class="o-sidebar-breakout_text-body">
-                                        {{ blocks.body.render() }}
+                                        {{ parse_links(blocks.body.render()) | safe }}
                                     </p>
                                 {% endif %}
                                 </div>
                             {% endif %}
                         {% endif %}
                     {% elif 'related_posts' in block.block_type %}
-                        {% import '_includes/molecules/related-posts.html' as related_posts with context %}
-                        {{ related_posts.render(block) }}
+                        {% set posts = page.related_posts(block, request.site.hostname) %}
+                        {% if posts %}
+                            <div class="block {{- 'block__flush-top' if loop.index == 1 else '' -}}">
+                                {{ related_posts.render(posts, block, half_width) }}
+                            </div>
+                        {% else %}
+                            {% set blocks = streamfield|list %}
+                            {{ loop(blocks[loop.index:]) }}
+                            {% break %}
+                        {% endif %}
                     {% elif 'slug' in block.block_type %}
                         <h2 class="header-slug">
                             <span class="header-slug_inner">
-                                {{ render_stream_child(block) }}
+                                {{ block.value }}
                             </span>
                         </h2>
                     {% elif 'paragraph' in block.block_type %}
-                        {{ block.value | safe }}
+                        <p class="o-sidebar-breakout_text-body">
+                            {{ parse_links(block.value) | safe }}
+                        </p>
+                    {% else %}
+                        {% import 'templates/render_block.html' as render_block with context %}
+                        {{ render_block.render(block, loop.index) }}
                     {% endif %}
                 {% endfor %}
             </aside>

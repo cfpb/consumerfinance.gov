@@ -14,6 +14,7 @@ from v1.forms import CalenderPDFFilterForm
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.conf import settings
 
 class PDFReactorNotConfigured(Exception):
     pass
@@ -24,7 +25,7 @@ if six.PY2:
         sys.path.append(os.environ.get('PDFREACTOR_LIB'))
         from PDFreactor import *
     except:
-        pass
+       PDFreactor = None
 
 class PDFGeneratorView(View):
     render_url = None
@@ -56,6 +57,9 @@ class PDFGeneratorView(View):
     def generate_pdf(self, query_opts):
         if self.license is None:
             raise Exception("PDFGeneratorView requires a license")
+
+        if settings.DEBUG and PDFreactor is None:
+            return HttpResponse("PDF Reactor is not configured, can not render %s" % self.get_render_url())
 
         try:
             pdf_reactor = PDFreactor()

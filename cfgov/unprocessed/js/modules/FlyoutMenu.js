@@ -53,11 +53,12 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   var _isExpanded = false;
   var _isAnimating = false;
 
-  var _expandTransition;
-  var _collapseTransition;
-  var _expandTransitionMethod;
+  var _expandTransition = null;
+  var _expandTransitionMethod = null;
   var _expandTransitionMethodArgs = [];
-  var _collapseTransitionMethod;
+
+  var _collapseTransition = null;
+  var _collapseTransitionMethod = null;
   var _collapseTransitionMethodArgs = [];
 
   // Binded events.
@@ -80,6 +81,11 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   // Whether this instance's behaviors are suspended or not.
   var _suspended = true;
 
+  // Event immediately preceeding mouseover is touchstart,
+  // if that event's present we'll want to ignore mouseover
+  // to avoid a mouseover and click immediately after each other.
+  var _touchTriggered = false;
+
   // TODO: Add param to set the FlyoutMenu open at initialization-time.
   /**
    * @returns {FlyoutMenu} An instance.
@@ -91,14 +97,17 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _triggerDom.setAttribute( 'data-gtm_ignore', 'true' );
     }
 
-    var triggerClickedBinded = fnBind( _triggerClicked, this );
-    var triggerOverBinded = fnBind( _triggerOver, this );
+    var handleTriggerClickedBinded = fnBind( _handleTriggerClicked, this );
+    var handleTriggerOverBinded = fnBind( _handleTriggerOver, this );
+    var handleTriggerOutBinded = fnBind( _handleTriggerOut, this );
 
     // Set initial `aria-expanded="false"` attribute.
     _setAriaExpandedAttr( _triggerDom, 'false' );
 
-    _triggerDom.addEventListener( 'click', triggerClickedBinded );
-    _triggerDom.addEventListener( 'mouseover', triggerOverBinded );
+    _triggerDom.addEventListener( 'click', handleTriggerClickedBinded );
+    _triggerDom.addEventListener( 'touchstart', _handleTouchStart );
+    _triggerDom.addEventListener( 'mouseover', handleTriggerOverBinded );
+    _triggerDom.addEventListener( 'mouseout', handleTriggerOutBinded );
 
     if ( _altTriggerDom ) {
       // If menu contains a submenu but doesn't have
@@ -120,8 +129,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         // Set initial `aria-expanded="false"` attribute.
         _setAriaExpandedAttr( _altTriggerDom, 'false' );
 
-        // TODO: alt trigger should probably listen for a mouseover event too.
-        _altTriggerDom.addEventListener( 'click', triggerClickedBinded );
+        // TODO: alt trigger should probably listen
+        //       for a mouseover/mouseout event too.
+        _altTriggerDom.addEventListener( 'click', handleTriggerClickedBinded );
       }
     }
 
@@ -131,7 +141,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /**
-   * Event handler for when the search input trigger is hovered over.
+   * Event handler for when the trigger is hovered over.
    * @param {HTMLNode} elem - The element to set.
    * @param {boolean} value - The value to set on `aria-expanded`,
    *   casts to a string.
@@ -144,12 +154,30 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /**
-   * Event handler for when the search input trigger is hovered over.
+   * Event handler for when the search input trigger is touched.
    */
-  function _triggerOver() {
-    if ( !_suspended ) {
+  function _handleTouchStart() {
+    _touchTriggered = true;
+  }
+
+  /**
+   * Event handler for when the trigger is hovered over.
+   */
+  function _handleTriggerOver() {
+    if ( !_touchTriggered && !_suspended ) {
       this.dispatchEvent( 'triggerOver',
                           { target: this, type: 'triggerOver' } );
+    }
+    _touchTriggered = false;
+  }
+
+  /**
+   * Event handler for when the trigger is hovered out.
+   */
+  function _handleTriggerOut() {
+    if ( !_suspended ) {
+      this.dispatchEvent( 'triggerOut',
+                          { target: this, type: 'triggerOut' } );
     }
   }
 
@@ -158,7 +186,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    * which opens/closes the search input.
    * @param {MouseEvent} event - The flyout trigger was clicked.
    */
-  function _triggerClicked( event ) {
+  function _handleTriggerClicked( event ) {
     if ( !_suspended ) {
       this.dispatchEvent( 'triggerClick',
                           { target: this, type: 'triggerClick' } );
@@ -303,6 +331,24 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /**
+   * Clear the transitions attached to this FlyoutMenu instance.
+   */
+  function clearTransitions() {
+    var transition = getTransition( FlyoutMenu.EXPAND_TYPE );
+    if ( transition ) { transition.remove(); }
+    transition = getTransition( FlyoutMenu.COLLAPSE_TYPE );
+    if ( transition ) { transition.remove(); }
+
+    _expandTransition = null;
+    _expandTransitionMethod = null;
+    _expandTransitionMethodArgs = [];
+
+    _collapseTransition = null;
+    _collapseTransitionMethod = null;
+    _collapseTransitionMethodArgs = [];
+  }
+
+  /**
    * @param {string} type
    *   (Optional) The type of transition to return.
    *   Accepts 'expand' or 'collapse'.
@@ -310,7 +356,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    *   as type-safe constants passed into this method.
    *   If neither or something else is supplied, expand type is returned.
    * @returns {MoveTransition|AlphaTransition}
-   *   A transition instance set on this instance, or undefined if none is set.
+   *   A transition instance set on this instance, or null if none is set.
    */
   function getTransition( type ) {
     if ( type === FlyoutMenu.COLLAPSE_TYPE ) {
@@ -404,6 +450,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   this.collapse = collapse;
   this.setExpandTransition = setExpandTransition;
   this.setCollapseTransition = setCollapseTransition;
+  this.clearTransitions = clearTransitions;
   this.getData = getData;
   this.getTransition = getTransition;
   this.getDom = getDom;
