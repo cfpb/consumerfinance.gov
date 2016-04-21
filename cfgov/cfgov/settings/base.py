@@ -249,6 +249,11 @@ SHEER_PROCESSORS = \
             "processor": "processors.wordpress_orgmember",
             "mappings": MAPPINGS.child("orgmember.json")
         },
+        "pages": {
+            "url": "$WORDPRESS/api/get_posts/?post_type=page",
+            "processor": "processors.wordpress_page",
+            "mappings": MAPPINGS.child("pages.json")
+        },
         "posts": {
             "url": "$WORDPRESS/api/get_posts/",
             "processor": "processors.wordpress_post",
