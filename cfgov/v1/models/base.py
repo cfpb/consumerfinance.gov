@@ -145,9 +145,6 @@ class CFGOVPage(Page):
         related = {}
         queries = {}
         query = models.Q(('tags__name__in', self.tags.names()))
-        if [c for c in block.value['specific_categories'] if c]:
-            categories = ref.related_posts_category_lookup(block.value['specific_categories'])
-            query &= Q(('categories__name__in', categories))
         search_types = [
             ('blog', 'posts', 'Blog', query),
             ('newsroom', 'newsroom', 'Newsroom', query),
@@ -157,10 +154,24 @@ class CFGOVPage(Page):
             try:
                 parent = Page.objects.get(slug=parent_slug)
                 search_query &= Page.objects.descendant_of_q(parent)
+                if 'specific_categories' in block.value:
+                    specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
+                    choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
+                    categories = [c for c in specific_categories if c in choices]
+                    if categories:
+                        search_query &= Q(('categories__name__in', categories))
                 if parent_slug == 'events':
                     try:
-                        parent = Page.objects.get(slug='archive-past-events')
-                        search_query &= (Page.objects.descendant_of_q(parent) | query)
+                        parent_slug = 'archive-past-events'
+                        parent = Page.objects.get(slug=parent_slug)
+                        q = (Page.objects.descendant_of_q(parent) & query)
+                        if 'specific_categories' in block.value:
+                            specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
+                            choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
+                            categories = [c for c in specific_categories if c in choices]
+                            if categories:
+                                q &= Q(('categories__name__in', categories))
+                        search_query |= q
                     except Page.DoesNotExist:
                         print 'archive-past-events does not exist'
                 queries[search_type_name] = search_query

@@ -174,7 +174,7 @@ def choices_for_page_type(page_type):
             for cat_slug, cat_tuples in page_type_choices():
                 if name == cat_slug:
                     return list(cat_tuples)
-
+    return []
 
 def category_label(category):
     for parent, children in page_type_choices():
