@@ -20,7 +20,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added unit test specs for all files to test (excluding config, polyfills and jQuery plugins).
 - Added no-js and js classes to the on-demand header.
 - Added link to Livestream FAQ.
-- Flag for database routing for content.consumerfinance.gov
+- Flag for database routing for content.consumerfinance.gov.
+- Added the Digital Gov search script.
 
 ### Changed
 
