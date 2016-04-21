@@ -217,6 +217,8 @@ urlpatterns = [
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
+        url(r'^d/admin/(?P<path>.*)$', RedirectView.as_view(url='/django-admin/%(path)s',permanent=True)),
+        url(r'^picard/(?P<path>.*)$', RedirectView.as_view(url='/tasks/%(path)s',permanent=True)),
         url(r'^django-admin/login', cfpb_login, name='django_admin_login'),
         url(r'^django-admin/auth/user/add/', create_user, name='django_admin_create_user'),
         url(r'^django-admin/password_change', change_password, name='django_admin_account_change_password'),
@@ -238,6 +240,11 @@ if settings.ALLOW_ADMIN_URL:
 
         url(r'^admin/', include(wagtailadmin_urls)),
     ]
+    if 'picard' in settings.INSTALLED_APPS:
+        patterns.append(url(r'^tasks/', include('picard.urls')))
+
+    if 'selfregistration' in settings.INSTALLED_APPS:
+        patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
 
     urlpatterns = patterns + urlpatterns
 

@@ -75,6 +75,7 @@ OPTIONAL_APPS=[
     {'import':'regcore','apps':('regcore','regcore_read', 'regcore_write')},
     {'import':'eregsip','apps':('eregsip',)},
     {'import':'regulations','apps':('regulations',)},
+    {'import':'picard','apps':('picard',)},
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -418,6 +419,7 @@ LOGIN_FAIL_TIME_PERIOD = os.environ.get('LOGIN_FAIL_TIME_PERIOD', 120 * 60)
 # number of failed attempts
 LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
 LOGIN_REDIRECT_URL='/admin/'
+LOGIN_URL = "/admin/login/"
 
 
 SHEER_SITES = {
@@ -510,3 +512,5 @@ CACHES = {
         },
     }
 }
+
+PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
