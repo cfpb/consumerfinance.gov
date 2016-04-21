@@ -17,6 +17,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-3.3.3 - 2016-04-21
+
+### Added
+
 - Added unit test specs for all files to test (excluding config, polyfills and jQuery plugins).
 - Added no-js and js classes to the on-demand header.
 - Added link to Livestream FAQ.
