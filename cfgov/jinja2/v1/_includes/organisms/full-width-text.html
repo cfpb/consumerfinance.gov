@@ -25,7 +25,7 @@
         {% elif 'media' in block.block_type %}
             <div class="m-full-width-media">
                 {% set media = image(block.value, 'original') %}
-                <img class="m-full-width-media" src="{{ media.url }}" alt="{{ media.alt }}">
+                <img class="m-full-width-media_image" src="{{ media.url }}" alt="{{ media.alt }}">
             </div>
         {% else %}
             <div class="m-inset">
