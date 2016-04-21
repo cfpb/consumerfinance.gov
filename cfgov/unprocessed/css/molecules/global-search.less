@@ -131,8 +131,18 @@
         position: absolute;
         left: 0;
 
+        // Offset to move the global search content over so it's not visible
+        // in the gap between the "search" button and the edge of
+        // global search overflow area.
+        padding-left: 16px;
+
         &-form {
             width: 100%;
+        }
+
+        // Resets the offset for moving the global search content out of view.
+        &[aria-expanded="true"] {
+          padding-left: 0;
         }
 
         // Only add transforms if we have JS.
