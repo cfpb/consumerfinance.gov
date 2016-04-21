@@ -7,5 +7,5 @@ var expect = chai.expect;
 var fnBind = require( BASE_JS_PATH + 'modules/util/fn-bind' );
 
 describe( 'fn-bind', function() {
-
+  // TODO: Implement tests.
 } );

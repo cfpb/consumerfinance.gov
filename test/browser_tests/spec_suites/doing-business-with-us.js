@@ -59,8 +59,9 @@ describe( 'The Doing Business with Us Page', function() {
   it( 'should have two More Info sections', function() {
     var moreInfoSectionTitles = [ 'Existing and past service contracts',
       'Small, women-owned, and minority-owned businesses' ];
-    var moreInfoSectionLinks = [ '/about-us/doing-business-with-us/past-awards/',
-    '/about-us/doing-business-with-us/small-businesses/' ];
+    var moreInfoSectionLinks =
+      [ '/about-us/doing-business-with-us/past-awards/',
+        '/about-us/doing-business-with-us/small-businesses/' ];
 
     expect( page.moreInfoSectionTitles.getText() )
     .toEqual( moreInfoSectionTitles );

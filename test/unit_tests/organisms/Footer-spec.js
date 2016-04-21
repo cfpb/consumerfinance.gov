@@ -6,5 +6,5 @@ var expect = chai.expect;
 var Footer = require( BASE_JS_PATH + 'organisms/Footer' );
 
 describe( 'Footer', function() {
-
+  // TODO: Implement tests.
 } );

@@ -3,7 +3,6 @@
 var chai = require( 'chai' );
 var expect = chai.expect;
 var jsdom = require( 'mocha-jsdom' );
-var sinon = require( 'sinon' );
 
 var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 var Multiselect = require( BASE_JS_PATH + 'molecules/Multiselect' );
@@ -22,7 +21,7 @@ describe( 'Multiselect', function() {
   jsdom();
 
   beforeEach( function() {
-    document.body.innerHTML = HTML_SNIPPET
+    document.body.innerHTML = HTML_SNIPPET;
 
     selectDom = document.querySelector( 'select[multiple]' );
     multiselect =
@@ -41,7 +40,8 @@ describe( 'Multiselect', function() {
   } );
 
   describe( 'dom creation', function() {
-    xit( 'should autocheck any selected options (form submitted pages)', function() {
+    xit( 'should autocheck any selected options ' +
+         '(form submitted pages)', function() {
       var options = selectDom.querySelectorAll( 'option' );
       options[0].selected = 'selected';
       multiselect.init();

@@ -10,5 +10,5 @@ var MoveTransition =
   require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
 
 describe( 'MoveTransition', function() {
-
+  // TODO: Implement tests.
 } );
