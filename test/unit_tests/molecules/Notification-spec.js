@@ -6,5 +6,5 @@ var expect = chai.expect;
 var Notification = require( BASE_JS_PATH + 'molecules/Notification' );
 
 describe( 'Notification', function() {
-
+  // TODO: Implement tests.
 } );

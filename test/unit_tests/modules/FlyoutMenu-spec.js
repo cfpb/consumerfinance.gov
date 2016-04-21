@@ -282,7 +282,6 @@ describe( 'FlyoutMenu', function() {
       flyoutMenu.clearTransitions();
       expect( flyoutMenu.getTransition() ).to.be.null;
       hasClass = contentDom.classList.contains( 'u-move-transition' );
-      console.log( contentDom.classList );
       expect( hasClass ).to.be.false;
     } );
   } );

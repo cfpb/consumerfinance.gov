@@ -10,5 +10,5 @@ var AlphaTransition =
   require( BASE_JS_PATH + 'modules/transition/AlphaTransition' );
 
 describe( 'AlphaTransition', function() {
-
+  // TODO: Implement tests.
 } );

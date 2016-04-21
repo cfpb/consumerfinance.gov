@@ -6,5 +6,5 @@ var expect = chai.expect;
 var VideoPlayer = require( BASE_JS_PATH + 'modules/VideoPlayer' );
 
 describe( 'VideoPlayer', function() {
-
+  // TODO: Implement tests.
 } );

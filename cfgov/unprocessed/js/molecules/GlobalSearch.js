@@ -148,7 +148,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     // TODO: Remove when Android 4.0-4.4 support is dropped.
     // Hack to fix reflow issues on legacy Android devices.
     _contentDom.style.display = 'none';
-    _contentDom.offsetHeight;
+    _contentDom.offsetHeight; // eslint-disable-line no-unused-expressions, no-inline-comments, max-len
     _contentDom.style.display = '';
 
     _contentDom.classList.remove( 'u-invisible' );
