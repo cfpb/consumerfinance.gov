@@ -71,8 +71,12 @@ class SublandingPage(CFGOVPage):
             if id not in filtered_controls.keys():
                 filtered_controls.update({id: []})
             form_class = page.get_form_class()
-            filtered_controls[id] = filterable_context.get_page_set(
+            posts = filterable_context.get_page_set(
                 page, form_class(parent=page, hostname=request.site.hostname), request.site.hostname)
+            if filtered_controls[id]:
+                filtered_controls[id] += posts
+            else:
+                filtered_controls[id] = posts
         posts_tuple_list = [(id, post) for id, posts in filtered_controls.iteritems() for post in posts]
         posts = sorted(posts_tuple_list, key=lambda p: p[1].date_published, reverse=True)[:limit]
         return posts
