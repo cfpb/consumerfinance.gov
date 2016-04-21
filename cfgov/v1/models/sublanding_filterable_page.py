@@ -61,7 +61,7 @@ class ActivityLogPage(SublandingFilterablePage):
     template = 'activity-log/index.html'
 
     def get_page_set(page, form, hostname):
-        results = {}
+        queries = {}
         selections = {}
 
         # Get filter selections for Blog and Report
@@ -74,11 +74,12 @@ class ActivityLogPage(SublandingFilterablePage):
                         selections[category] = True
                         if category in categories:
                             del categories[categories.index(category)]
+
         # Get Newsroom pages
         if not categories or map(lambda x: x in [c[0] for c in ref.choices_for_page_type('newsroom')], categories):
             try:
                 parent = CFGOVPage.objects.get(slug='newsroom')
-                results['newsroom'] = AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent).filter(form.generate_query())
+                queries['newsroom'] = AbstractFilterPage.objects.descendant_of_q(parent) & form.generate_query()
             except CFGOVPage.DoesNotExist:
                 print 'Newsroom does not exist'
 
@@ -88,12 +89,15 @@ class ActivityLogPage(SublandingFilterablePage):
             if is_selected:
                 try:
                     parent = CFGOVPage.objects.get(slug=slug)
-                    results.update({slug: AbstractFilterPage.objects.live_shared(hostname).descendant_of(parent).filter(form.generate_query())})
+                    queries.update({slug: AbstractFilterPage.objects.descendant_of_q(parent) & form.generate_query()})
                 except CFGOVPage.DoesNotExist:
                     print slug, 'does not exist'
 
-        filter_pages = list(chain(*results.values()))
-        return sorted(filter_pages, key=lambda x: x.date_published, reverse=True)
+        # AND all selected queries together
+        final_q = reduce(lambda x,y: x|y, queries.values())
+
+        return AbstractFilterPage.objects.live_shared(hostname).filter(final_q).order_by('-date_published')
+
 
     def get_form_class(self):
         return forms.ActivityLogFilterForm
