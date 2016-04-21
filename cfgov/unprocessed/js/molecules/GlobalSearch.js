@@ -66,12 +66,8 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     var handleExpandBeginBinded = fnBind( _handleExpandBegin, this );
     _flyoutMenu.addEventListener( 'expandBegin', handleExpandBeginBinded );
     _flyoutMenu.addEventListener( 'collapseBegin', _handleCollapseBegin );
-    _flyoutMenu.addEventListener( 'collapseEnd', _handleCollapseEnd );
 
     _tabTriggerDom.addEventListener( 'keyup', _handleTabPress );
-
-    // Set initial collapse state.
-    _handleCollapseEnd();
 
     return this;
   }
@@ -146,7 +142,6 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     this.dispatchEvent( 'expandBegin', { target: this } );
     // If it's the desktop view, hide the "Search" button.
     if ( _isInDesktop() ) { _triggerDom.classList.add( 'u-invisible' ); }
-    _contentDom.classList.remove( 'u-invisible' );
     _searchInputDom.select();
 
     document.body.addEventListener( 'mousedown', _handleBodyClick );
@@ -157,20 +152,8 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * Use this to perform post-collapseBegin actions.
    */
   function _handleCollapseBegin() {
-    _triggerDom.classList.remove( 'u-invisible' );
+    if ( _isInDesktop() ) { _triggerDom.classList.remove( 'u-invisible' ); }
     document.body.removeEventListener( 'mousedown', _handleBodyClick );
-  }
-
-  /**
-   * Event handler for when FlyoutMenu collapse transition ends.
-   * Use this to perform post-collapseEnd actions.
-   */
-  function _handleCollapseEnd() {
-    // TODO: When tabbing is used to collapse the search flyout
-    //       it will not animate with the below line.
-    //       Investigate why this is the case for tab key
-    //       but not with mouse clicks.
-    _contentDom.classList.add( 'u-invisible' );
   }
 
   /**
