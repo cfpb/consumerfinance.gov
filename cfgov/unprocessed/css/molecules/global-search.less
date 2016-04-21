@@ -254,6 +254,10 @@
         &_trigger {
             // Match height of input with button.
             padding: 7px 0;
+
+            &[aria-expanded="true"] {
+                .u-invisible();
+            }
         }
 
         .js & {
