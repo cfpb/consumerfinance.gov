@@ -26,9 +26,7 @@ function scriptsPolyfill() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
     .pipe( gulpModernizr( {
       tests:   [ 'csspointerevents', 'classlist', 'es5' ],
-      options: [ 'setClasses',
-                 'html5printshiv',
-                 'fnBind' ]
+      options: [ 'setClasses', 'html5printshiv' ]
     } ) )
     .pipe( gulpUglify() )
     .pipe( gulpRename( 'modernizr.min.js' ) )
