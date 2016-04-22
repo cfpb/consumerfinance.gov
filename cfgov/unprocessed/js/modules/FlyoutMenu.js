@@ -39,7 +39,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
 
   // TODO: Update atomic-helpers to support CSS selectors for validity check.
   var _dom = dataHook.contains( element, BASE_CLASS ) ? element : null;
-  if ( !_dom ) _dom = element.parentNode.querySelector( BASE_SEL );
+  if ( !_dom ) { _dom = element.parentNode.querySelector( BASE_SEL ); }
   if ( !_dom ) { throw new Error( 'Selector not found on passed node!' ); }
 
   var _triggerDom = _dom.querySelector( TRIGGER_SEL );
@@ -53,12 +53,12 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   var _isExpanded = false;
   var _isAnimating = false;
 
-  var _expandTransition = null;
-  var _expandTransitionMethod = null;
+  var _expandTransition;
+  var _expandTransitionMethod;
   var _expandTransitionMethodArgs = [];
 
-  var _collapseTransition = null;
-  var _collapseTransitionMethod = null;
+  var _collapseTransition;
+  var _collapseTransitionMethod;
   var _collapseTransitionMethodArgs = [];
 
   // Binded events.
@@ -307,8 +307,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    *   A transition instance to watch for events on.
    * @param {Function} method
    *   The transition method to call on expand.
-   * @param {Array} args
-   *   (Optional) list of arguments to apply to collapse method.
+   * @param {Array} [args]
+   *   List of arguments to apply to collapse method.
    */
   function setExpandTransition( transition, method, args ) {
     _expandTransition = transition;
@@ -321,8 +321,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
    *   A transition instance to watch for events on.
    * @param {Function} method
    *   The transition method to call on collapse.
-   * @param {Array} args
-   *   (Optional) list of arguments to apply to collapse method.
+   * @param {Array} [args]
+   *   List of arguments to apply to collapse method.
    */
   function setCollapseTransition( transition, method, args ) {
     _collapseTransition = transition;
@@ -339,24 +339,24 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     transition = getTransition( FlyoutMenu.COLLAPSE_TYPE );
     if ( transition ) { transition.remove(); }
 
-    _expandTransition = null;
-    _expandTransitionMethod = null;
+    _expandTransition = standardType.UNDEFINED;
+    _expandTransitionMethod = standardType.UNDEFINED;
     _expandTransitionMethodArgs = [];
 
-    _collapseTransition = null;
-    _collapseTransitionMethod = null;
+    _collapseTransition = standardType.UNDEFINED;
+    _collapseTransitionMethod = standardType.UNDEFINED;
     _collapseTransitionMethodArgs = [];
   }
 
   /**
-   * @param {string} type
-   *   (Optional) The type of transition to return.
+   * @param {string} [type]
+   *   The type of transition to return.
    *   Accepts 'expand' or 'collapse'.
    *   `FlyoutMenu.EXPAND_TYPE` and `FlyoutMenu.COLLAPSE_TYPE` can be used
    *   as type-safe constants passed into this method.
    *   If neither or something else is supplied, expand type is returned.
-   * @returns {MoveTransition|AlphaTransition}
-   *   A transition instance set on this instance, or null if none is set.
+   * @returns {MoveTransition|AlphaTransition|undefined}
+   *   A transition instance set on this instance, or undefined if none is set.
    */
   function getTransition( type ) {
     if ( type === FlyoutMenu.COLLAPSE_TYPE ) {

@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.contrib.auth import authenticate
 from django.conf import settings
 from django.forms import widgets
+from taggit.models import Tag
 
 from .util import ref
 from .models.base import CFGOVPage
@@ -213,17 +214,16 @@ class FilterableListForm(forms.Form):
         parent = kwargs.pop('parent')
         hostname = kwargs.pop('hostname')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        self.set_topics(parent, hostname)
-        self.set_authors(parent, hostname)
+        page_ids = CFGOVPage.objects.live_shared(hostname).descendant_of(parent).values_list('id', flat=True)
+        self.set_topics(parent, page_ids, hostname)
+        self.set_authors(parent, page_ids, hostname)
 
     # Populate Topics' choices
-    def set_topics(self, parent, hostname):
-        tags = [tag for tags in
-                     [page.tags.names() for page in
-                      CFGOVPage.objects.live_shared(hostname).descendant_of(parent)]
-                     for tag in tags]
+    def set_topics(self, parent, page_ids, hostname):
+        tags = Tag.objects.filter(v1_cfgovtaggedpages_items__content_object__id__in=page_ids).values_list('name', flat=True)
+
         # Orders by most to least common tags
-        options = most_common(tags)
+        options = most_common(list(tags))
         most = [(option, option) for option in options[:3]]
         other = [(option, option) for option in options[3:]]
         self.fields['topics'].choices = \
@@ -231,13 +231,12 @@ class FilterableListForm(forms.Form):
              ('All other topics', tuple(other)))
 
     # Populate Authors' choices
-    def set_authors(self, parent, hostname):
-        all_authors = [author for authors in [page.authors.names() for page in
-                       CFGOVPage.objects.live_shared(hostname).descendant_of(
-                       parent)] for author in authors]
+    def set_authors(self, parent, page_ids, hostname):
+        authors = Tag.objects.filter(v1_cfgovauthoredpages_items__content_object__id__in=page_ids).values_list('name', flat=True)
+
         # Orders by most to least common authors
         self.fields['authors'].choices = [(author, author) for author in
-                                          most_common(all_authors)]
+                                          most_common(list(authors))]
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
@@ -320,50 +319,36 @@ class EventArchiveFilterForm(FilterableListForm):
 
 
 class NewsroomFilterForm(FilterableListForm):
-
-    def get_pages(self, parent, hostname):
-        pages = CFGOVPage.objects.live_shared(hostname).descendant_of(parent)
-        blogs = []
+    def __init__(self, *args, **kwargs):
+        parent = kwargs.pop('parent')
+        hostname = kwargs.pop('hostname')
+        super(FilterableListForm, self).__init__(*args, **kwargs)
         try:
             blog = CFGOVPage.objects.get(slug='blog')
-            blogs = CFGOVPage.objects.live_shared(hostname).descendant_of(blog)
         except CFGOVPage.DoesNotExist:
             print 'A blog landing page needs to be made'
-        if blogs:
-            pages = list(chain(pages, blogs))
-        return pages
-
-    # Populate Topics' choices
-    def set_topics(self, parent, hostname):
-        tags = [tag for tags in [page.tags.names() for page in self.get_pages(parent, hostname)] for tag in tags]
-        # Orders by most to least common tags
-        options = most_common(tags)
-        most = [(option, option) for option in options[:3]]
-        other = [(option, option) for option in options[3:]]
-        self.fields['topics'].choices = \
-            (('Most frequent', tuple(most)),
-             ('All other topics', tuple(other)))
-
-    # Populate Authors' choices
-    def set_authors(self, parent, hostname):
-        all_authors = [author for authors in
-                       [page.authors.names() for page in self.get_pages(parent, hostname)]
-                       for author in authors]
-        # Orders by most to least common authors
-        self.fields['authors'].choices = [(author, author) for author in
-                                          most_common(all_authors)]
+        query = CFGOVPage.objects.child_of_q(parent)
+        query |= CFGOVPage.objects.child_of_q(blog)
+        page_ids = CFGOVPage.objects.live_shared(hostname).filter(query).values_list('id', flat=True)
+        self.set_topics(parent, page_ids, hostname)
+        self.set_authors(parent, page_ids, hostname)
 
 
 class ActivityLogFilterForm(NewsroomFilterForm):
-    def per_page_limit(self):
-        return 100
-
-    def get_pages(self, parent, hostname):
-        pages = {'blog': None, 'newsroom': None, 'research-reports': None}
-        for slug in pages.keys():
+    def __init__(self, *args, **kwargs):
+        parent = kwargs.pop('parent')
+        hostname = kwargs.pop('hostname')
+        super(FilterableListForm, self).__init__(*args, **kwargs)
+        query = CFGOVPage.objects.child_of_q(parent)
+        for slug in ['blog', 'newsroom', 'research-reports']:
             try:
-                page = CFGOVPage.objects.get(slug=slug)
-                pages[slug] = CFGOVPage.objects.live_shared(hostname).descendant_of(page)
+                parent = CFGOVPage.objects.get(slug=slug)
+                query |= CFGOVPage.objects.child_of_q(parent)
             except CFGOVPage.DoesNotExist:
                 print slug, 'does not exist'
-        return list(chain(*[qs for qs in pages.values() if qs]))
+        page_ids = CFGOVPage.objects.live_shared(hostname).filter(query).values_list('id', flat=True)
+        self.set_topics(parent, page_ids, hostname)
+        self.set_authors(parent, page_ids, hostname)
+
+    def per_page_limit(self):
+        return 100
