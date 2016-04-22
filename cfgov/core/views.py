@@ -103,9 +103,10 @@ def regsgov_comment(request):
         if is_ajax else redirect('reg_comment:success')
 
 
-def submit_comment(api_key, data):
+def submit_comment(data):
 
     base_url = os.environ.get('REGSGOV_BASE_URL')
+    api_key = 
 
     url_to_call = "{}?api_key={}&D={}".format(base_url, api_key,
                                               data['comment_on'])
