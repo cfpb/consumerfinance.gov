@@ -6,5 +6,5 @@ var expect = chai.expect;
 var FilterableListControls = require( BASE_JS_PATH + 'organisms/FilterableListControls' );
 
 describe( 'FilterableListControls', function() {
-
+  // TODO: Implement tests.
 } );

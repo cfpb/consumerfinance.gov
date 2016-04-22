@@ -6,5 +6,5 @@ var expect = chai.expect;
 var ExternalSite = require( BASE_JS_PATH + 'modules/ExternalSite' );
 
 describe( 'ExternalSite', function() {
-
+  // TODO: Implement tests.
 } );

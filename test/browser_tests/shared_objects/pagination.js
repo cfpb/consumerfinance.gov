@@ -3,15 +3,20 @@ var paginationContent = element( by.css( '.m-pagination' ) );
 
 var pagination = {
 
-  paginationContent: paginationContent,
+  paginationContent:
+    paginationContent,
 
-  paginationForm: paginationContent.element( by.css( 'form' ) ),
+  paginationForm:
+    paginationContent.element( by.css( 'form' ) ),
 
-  paginationPrevBtn: paginationContent.element( by.css( '.m-pagination_btn-prev' ) ),
+  paginationPrevBtn:
+    paginationContent.element( by.css( '.m-pagination_btn-prev' ) ),
 
-  paginationNextBtn: paginationContent.element( by.css( '.m-pagination_btn-next' ) ),
+  paginationNextBtn:
+    paginationContent.element( by.css( '.m-pagination_btn-next' ) ),
 
-  paginationPageInput: paginationContent.element( by.css( '#m-pagination_current-page' ) )
+  paginationPageInput:
+    paginationContent.element( by.css( '#m-pagination_current-page' ) )
 
 };
 

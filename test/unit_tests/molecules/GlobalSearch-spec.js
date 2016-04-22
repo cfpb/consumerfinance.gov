@@ -6,5 +6,5 @@ var expect = chai.expect;
 var GlobalSearch = require( BASE_JS_PATH + 'molecules/GlobalSearch' );
 
 describe( 'GlobalSearch', function() {
-
+  // TODO: Implement tests.
 } );

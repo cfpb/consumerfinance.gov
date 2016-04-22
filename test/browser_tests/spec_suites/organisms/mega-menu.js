@@ -35,17 +35,28 @@ describe( 'MegaMenu', function() {
       } );
 
       describe( 'when mouse is over link', function() {
-        it( 'should show content first link content', function() {
+        it( 'should NOT show first link content immediately', function() {
           browser.driver.actions().mouseMove( _dom.triggerPolyCom ).perform()
             .then( function() {
+              expect( _dom.contentPolyCom.isDisplayed() ).toBe( false );
+            } );
+        } );
+
+        it( 'should show first link content after a delay', function() {
+          browser.driver.actions().mouseMove( _dom.triggerPolyCom ).perform()
+            .then( function() {
+              // Wait for delay to show menu
+              browser.sleep( 500 );
               expect( _dom.contentPolyCom.isDisplayed() ).toBe( true );
             } );
         } );
       } );
 
-      describe( 'when mouse moves from one link to another', function() {
+      describe( 'when mouse moves from one link to another after a delay', function() {
         beforeEach( function() {
           browser.driver.actions().mouseMove( _dom.triggerPolyCom ).perform();
+          // Wait for delay to show menu
+          browser.sleep( 500 );
           browser.driver.actions().mouseMove( _dom.triggerAboutUs ).perform();
         } );
 

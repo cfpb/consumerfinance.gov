@@ -7,5 +7,5 @@ var expect = chai.expect;
 var EventObserver = require( BASE_JS_PATH + 'modules/util/EventObserver' );
 
 describe( 'EventObserver', function() {
-
+  // TODO: Implement tests.
 } );
