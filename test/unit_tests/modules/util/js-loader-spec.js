@@ -7,5 +7,5 @@ var expect = chai.expect;
 var jsLoader = require( BASE_JS_PATH + 'modules/util/js-loader' );
 
 describe( 'js-loader', function() {
-
+  // TODO: Implement tests.
 } );

@@ -6,5 +6,5 @@ var expect = chai.expect;
 var MegaMenuDesktop = require( BASE_JS_PATH + 'organisms/MegaMenuDesktop' );
 
 describe( 'MegaMenuDesktop', function() {
-
+  // TODO: Implement tests.
 } );
