@@ -1,5 +1,6 @@
 import json
 import sys
+
 from mock import call, patch
 
 if sys.version_info[0] < 3:
@@ -7,8 +8,10 @@ if sys.version_info[0] < 3:
 else:
     from urllib.parse import urlparse
 
+from urllib import urlencode
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.http import QueryDict
 
 
 class GovDeliverySubscribeTest(TestCase):
@@ -171,15 +174,45 @@ class RegsgovCommentTest(TestCase):
         self.assertEqual(response.content.decode('utf-8'),
                          json.dumps({'result': 'fail'}))
 
-    # @patch('core.views.submit_comment')
-    # def test_successful_comment(self, mock_submit):
-    #     mock_gd.return_value.status_code = 200
-    #     response = self.client.post(reverse('reg_comment'),
-    #                                 {'comment_on': 'FAKE_DOC_NUM',
-    #                                 'general_comment': 'FAKE_COMMENT',
-    #                                 'first_name': 'FAKE_FIRST',
-    #                                 'last_name': 'FAKE_LAST'},
-    #     mock_submit.assert_called_with('fake@example.com',
-    #                                ['FAKE_CODE'])
-    #     self.assertEquals(urlparse(response['Location']).path,
-    #                       reverse('govdelivery:success'))
+    @patch('core.views.submit_comment')
+    def test_successful_comment(self, mock_submit):
+        mock_submit.return_value.status_code = 201
+        mock_submit.return_value.text = '{"trackingNumber": "FAKE_TRACK_NUM"}'
+        data = {'comment_on': 'FAKE_DOC_NUM',
+                'general_comment': 'FAKE_COMMENT',
+                'first_name': 'FAKE_FIRST',
+                'last_name': 'FAKE_LAST'}
+        response = self.client.post(reverse('reg_comment'), data)
+
+        mock_submit.assert_called_with(QueryDict(urlencode(data)))
+        self.assertEquals(urlparse(response['Location']).path,
+                          reverse('reg_comment:success'))
+        # TODO: How do I check tracking number in messages
+
+    @patch('core.views.submit_comment')
+    def test_successful_comment_ajax(self, mock_submit):
+        mock_submit.return_value.status_code = 201
+        mock_submit.return_value.text = '{"trackingNumber": "FAKE_TRACK_NUM"}'
+        data = {'comment_on': 'FAKE_DOC_NUM',
+                'general_comment': 'FAKE_COMMENT',
+                'first_name': 'FAKE_FIRST',
+                'last_name': 'FAKE_LAST'}
+        response = self.client.post(reverse('reg_comment'), data,
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        mock_submit.assert_called_with(QueryDict(urlencode(data)))
+        self.assertEqual(response.content.decode('utf-8'),
+                         json.dumps({'result': 'pass', 'tracking_number': 'FAKE_TRACK_NUM'}))
+
+
+    @patch('core.views.submit_comment')
+    def test_server_error(self, mock_submit):
+        mock_submit.return_value.status_code = 500
+        data = {'comment_on': 'FAKE_DOC_NUM',
+                'general_comment': 'FAKE_COMMENT',
+                'first_name': 'FAKE_FIRST',
+                'last_name': 'FAKE_LAST'}
+        response = self.client.post(reverse('reg_comment'), data)
+
+        mock_submit.assert_called_with(QueryDict(urlencode(data)))
+        self.assertEquals(urlparse(response['Location']).path,
+                          reverse('reg_comment:server_error'))
