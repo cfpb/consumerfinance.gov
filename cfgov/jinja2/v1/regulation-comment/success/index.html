@@ -9,14 +9,17 @@
 {%- endblock %}
 
 {% block content_main %}
+
     <h1><span class="cf-icon cf-icon-approved-round"></span> Success!</h1>
     <p>
         Your comment was successfuly submitted.
-        Your Comment Tracking Number is: 
+
+        Your Comment Tracking Number is:
         <b>
-            {% if messages %}
-                {% for message in messages %}
-                    {% if message.tags == 'success' %}{{ message }}
+            {% if get_messages(request) %}
+                {% for message in get_messages(request) %}
+                    {% if message.tags == 'success' %}{{ message }}{% endif %}
+
                 {% endfor %}
             {% endif %}
         </b>

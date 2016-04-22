@@ -3,10 +3,13 @@ import os
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import JsonResponse
 from django.contrib import messages
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
+import json
 from govdelivery.api import GovDelivery
 
 from core.utils import extract_answers_from_request
@@ -89,22 +92,15 @@ def regsgov_comment(request):
     except Exception:
         return failing_response
 
-    # answers = extract_answers_from_request(request)
-    # for question_id, answer_text in answers:
-    #     response = gd.set_subscriber_answers_to_question(email_address,
-    #                                                      question_id,
-    #                                                      answer_text)
 
-    tracking_number = submission_response.text.get('trackingNumber')
-    print "Tracking Number"
-    print tracking_number
+    json_data = json.loads(submission_response.text)
+    tracking_number = json_data.get('trackingNumber')
 
     # For non-ajax, tracking number will appear as a message with tag: success
-    # messages.add_message(request, messages.SUCCESS, tracking_number)
     messages.success(request, tracking_number)
 
-    return JsonResponse({ 'result': 'pass', 'tracking_number': tracking_number }) if is_ajax
-        else redirect('reg_comment:success')
+    return JsonResponse({'result': 'pass', 'tracking_number': tracking_number}) \
+        if is_ajax else redirect('reg_comment:success')
 
 
 def submit_comment(api_key, data):
@@ -128,6 +124,6 @@ def submit_comment(api_key, data):
     # To send multipart/form-data, use the files parameter to send a dictionary
     response = requests.post(url_to_call, data=parsed_data,
                              headers={'Content-Type': parsed_data.content_type})
-
-
+    print response
+    print response.text
     return response
