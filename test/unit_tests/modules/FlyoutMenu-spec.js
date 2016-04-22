@@ -75,7 +75,7 @@ describe( 'FlyoutMenu', function() {
       // TODO: check aria-expanded state as well.
       expect( flyoutMenu.isAnimating() ).to.be.false;
       expect( flyoutMenu.isExpanded() ).to.be.false;
-      expect( flyoutMenu.getTransition() ).to.be.null;
+      expect( flyoutMenu.getTransition() ).to.be.undefined;
       expect( flyoutMenu.getData() ).to.be.undefined;
     } );
 
@@ -261,7 +261,7 @@ describe( 'FlyoutMenu', function() {
   describe( '.getTransition()', function() {
     it( 'should return a transition instance', function() {
       flyoutMenu.init();
-      expect( flyoutMenu.getTransition() ).to.be.null;
+      expect( flyoutMenu.getTransition() ).to.be.undefined;
       var transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
@@ -280,7 +280,7 @@ describe( 'FlyoutMenu', function() {
       var hasClass = contentDom.classList.contains( 'u-move-transition' );
       expect( hasClass ).to.be.true;
       flyoutMenu.clearTransitions();
-      expect( flyoutMenu.getTransition() ).to.be.null;
+      expect( flyoutMenu.getTransition() ).to.be.undefined;
       hasClass = contentDom.classList.contains( 'u-move-transition' );
       expect( hasClass ).to.be.false;
     } );

@@ -61,11 +61,11 @@ INSTALLED_APPS = (
 OPTIONAL_APPS=[
     {'import':'noticeandcomment','apps':('noticeandcomment','cfpb_common')},
     {'import':'cfpb_common','apps':('cfpb_common','cfpb_common')},
-    {'import':'jobmanager','apps':('jobmanager','cfpb_common')},
+    {'import':'jobmanager','apps':('jobmanager','cfpb_common', 'reversion')},
     {'import':'cal','apps':('cal','cfpb_common')},
     {'import':'comparisontool','apps':('comparisontool','haystack','cfpb_common')},
     {'import':'agreements','apps':('agreements','haystack', 'cfpb_common')},
-    {'import':'knowledgebase','apps':('knowledgebase','haystack', 'cfpb_common')},
+    {'import':'knowledgebase','apps':('knowledgebase','haystack', 'cfpb_common', 'reversion')},
     {'import':'selfregistration','apps':('selfregistration','cfpb_common')},
     {'import':'hud_api_replace','apps':('hud_api_replace','cfpb_common')},
     {'import':'retirement_api','apps':('retirement_api',)},
