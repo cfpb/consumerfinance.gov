@@ -17,6 +17,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Added tests for the public methods in the Multiselect
+
 ### Changed
 
 ### Removed

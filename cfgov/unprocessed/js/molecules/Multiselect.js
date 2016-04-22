@@ -457,25 +457,6 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _resetSearch();
   }
 
-  /**
-   * Tests if the user's query matches the text input
-   * @param   {string} text  The text to test against
-   * @param   {string} value The value the user has entered
-   * @returns {boolean}      Returns the boolean result of the test
-   */
-  function _filterContains( text, value ) {
-    return RegExp( _regExpEscape( value.trim() ), 'i' ).test( text );
-  }
-
-  /**
-   * Escapes a string
-   * @param   {string} s The string to escape
-   * @returns {string}   The escaped string
-   */
-  function _regExpEscape( s ) {
-    return s.replace( /[-\\^$*+?.()|[\]{}]/g, '\\$&' );
-  }
-
   // Attach public events.
   this.init = init;
   this.expand = expand;
