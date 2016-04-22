@@ -203,8 +203,10 @@ urlpatterns = [
         namespace='reg_comment')),
 
     # Testing reg comment form
-    url(r'^reg-comment-form-test/$', SheerTemplateView.as_view(template_name='about-us/reg-comment-form-test.html'), name='reg-comment-form-test'),
-    #url(r'^reg-comment-success/$', SheerTemplateView.as_view(template_name='regulation-comment/success/index.html'), name='reg-comment-success'),
+    url(r'^reg-comment-form-test/$',
+        SheerTemplateView.as_view(
+            template_name='regulation-comment/reg-comment-form-test.html'),
+        name='reg-comment-form-test'),
 
     url(r'^feed/(?P<doc_type>[\w-]+)/$', SheerlikeFeed(), name='feed'),
 

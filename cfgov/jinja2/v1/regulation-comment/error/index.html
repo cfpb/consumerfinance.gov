@@ -9,10 +9,14 @@
 {%- endblock %}
 
 {% block content_main %}
-    <h1><span class="cf-icon cf-icon-error-round"></span> Please try again.</h1>
+    <h1><span class="cf-icon cf-icon-error-round"></span> Please try again</h1>
     <p>
-        Your comment was not successfully submitted.<br>
-        Please go back and ensure that you have filled out the comment field
-        and the name fields.
+        Your comment was not successfully submitted.
+        Please go back and ensure that you have filled out all of the required fields:
     </p>
+    <ul>
+        <li>Comment</li>
+        <li>First name</li>
+        <li>Last name</li>
+    </ul>
 {% endblock %}

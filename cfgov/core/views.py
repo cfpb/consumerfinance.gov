@@ -74,24 +74,21 @@ def regsgov_comment(request):
     """
     is_ajax = request.is_ajax()
     if is_ajax:
-        # passing_response = JsonResponse({'result': 'pass'})
         failing_response = JsonResponse({'result': 'fail'})
     else:
-        # passing_response = redirect('reg_comment:success')
         failing_response = redirect('reg_comment:server_error')
 
     for required_param in REQUIRED_PARAMS_REGSGOV:
-        if required_param not in request.POST or request.POST.get(required_param) is None:
-            return failing_response if is_ajax else \
-                redirect('reg_comment:user_error')
-    try:
+        if not request.POST.get(required_param):
+            return failing_response if is_ajax \
+                else redirect('reg_comment:user_error')
 
+    try:
         submission_response = submit_comment(REGSGOV_API_KEY, request.POST)
         if submission_response.status_code != 201:
             return failing_response
     except Exception:
         return failing_response
-
 
     json_data = json.loads(submission_response.text)
     tracking_number = json_data.get('trackingNumber')
@@ -99,12 +96,16 @@ def regsgov_comment(request):
     # For non-ajax, tracking number will appear as a message with tag: success
     messages.success(request, tracking_number)
 
-    return JsonResponse({'result': 'pass', 'tracking_number': tracking_number}) \
-        if is_ajax else redirect('reg_comment:success')
+    return JsonResponse(
+        {'result': 'pass', 'tracking_number': tracking_number}
+    ) if is_ajax else redirect('reg_comment:success')
 
 
 def submit_comment(api_key, data):
-
+    """
+    View that actually performs the comment submission via the Regulations.gov
+    Comment API, then returns the response.
+    """
     base_url = os.environ.get('REGSGOV_BASE_URL')
 
     url_to_call = "{}?api_key={}&D={}".format(base_url, api_key,
@@ -123,7 +124,10 @@ def submit_comment(api_key, data):
 
     # To send multipart/form-data, use the files parameter to send a dictionary
     response = requests.post(url_to_call, data=parsed_data,
-                             headers={'Content-Type': parsed_data.content_type})
+                             headers={
+                                 'Content-Type': parsed_data.content_type
+                             })
     print response
     print response.text
+
     return response
