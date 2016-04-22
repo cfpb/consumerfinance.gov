@@ -67,7 +67,7 @@ def get_form_specific_filter_data(page, form_class, request_dict):
 
 # Returns a queryset of AbstractFilterPages
 def get_page_set(page, form, hostname):
-    return AbstractFilterPage.objects.live_shared(hostname).descendant_of(
+    return AbstractFilterPage.objects.live_shared(hostname).child_of(
         page).filter(form.generate_query()).order_by('-date_published')
 
 

@@ -86,21 +86,18 @@ class NewsroomLandingPage(BrowseFilterablePage):
                         categories_cache = list(categories)
 
         blog_q = Q()
-        newsroom_q = AbstractFilterPage.objects.descendant_of_q(self)
+        newsroom_q = AbstractFilterPage.objects.child_of_q(self)
         newsroom_q &= form.generate_query()
         if get_blog:
             try:
                 del form.cleaned_data['categories']
                 blog = base.CFGOVPage.objects.get(slug='blog')
-                blog_q = AbstractFilterPage.objects.descendant_of_q(blog)
+                blog_q = AbstractFilterPage.objects.child_of_q(blog)
                 blog_q &= form.generate_query()
             except base.CFGOVPage.DoesNotExist:
                 print 'Blog does not exist'
 
-        if not categories_cache and get_blog:
-            return AbstractFilterPage.objects.live_shared(hostname).filter(blog_q).order_by('-date_published')
-        else:
-            return AbstractFilterPage.objects.live_shared(hostname).filter(newsroom_q | blog_q).order_by('-date_published')
+        return AbstractFilterPage.objects.live_shared(hostname).filter(newsroom_q | blog_q).order_by('-date_published')
 
 
     def get_form_class(self):

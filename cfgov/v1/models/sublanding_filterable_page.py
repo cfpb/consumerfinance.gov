@@ -63,6 +63,7 @@ class ActivityLogPage(SublandingFilterablePage):
     def get_page_set(page, form, hostname):
         queries = {}
         selections = {}
+        categories_cache = list(form.cleaned_data.get('categories', []))
 
         # Get filter selections for Blog and Report
         for f in page.content:
@@ -76,10 +77,10 @@ class ActivityLogPage(SublandingFilterablePage):
                             del categories[categories.index(category)]
 
         # Get Newsroom pages
-        if not categories or map(lambda x: x in [c[0] for c in ref.choices_for_page_type('newsroom')], categories):
+        if not categories_cache or map(lambda x: x in [c[0] for c in ref.choices_for_page_type('newsroom')], categories):
             try:
                 parent = CFGOVPage.objects.get(slug='newsroom')
-                queries['newsroom'] = AbstractFilterPage.objects.descendant_of_q(parent) & form.generate_query()
+                queries['newsroom'] = AbstractFilterPage.objects.child_of_q(parent) & form.generate_query()
             except CFGOVPage.DoesNotExist:
                 print 'Newsroom does not exist'
 
@@ -89,7 +90,7 @@ class ActivityLogPage(SublandingFilterablePage):
             if is_selected:
                 try:
                     parent = CFGOVPage.objects.get(slug=slug)
-                    queries.update({slug: AbstractFilterPage.objects.descendant_of_q(parent) & form.generate_query()})
+                    queries.update({slug: AbstractFilterPage.objects.child_of_q(parent) & form.generate_query()})
                 except CFGOVPage.DoesNotExist:
                     print slug, 'does not exist'
 
