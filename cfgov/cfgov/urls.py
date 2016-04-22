@@ -186,8 +186,6 @@ urlpatterns = [
             template_name='regulation-comment/reg-comment-form-test.html'),
         name='reg-comment-form-test'),
 
-    url(r'^feed/(?P<doc_type>[\w-]+)/$', SheerlikeFeed(), name='feed'),
-
     url(r'^feed/blog/$', BlogFeed(), name='blog_feed'),
     url(r'^feed/newsroom/$', NewsroomFeed(), name='newsroom_feed'),
 
