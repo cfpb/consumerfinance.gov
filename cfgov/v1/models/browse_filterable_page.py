@@ -1,3 +1,4 @@
+from itertools import chain
 from operator import attrgetter
 
 from django.conf import settings
@@ -55,7 +56,7 @@ class BrowseFilterablePage(base.CFGOVPage):
         return filterable_context.get_context(self, request, context)
 
     def get_form_class(self):
-        return filterable_context.get_form_class()
+        return forms.FilterableListForm
 
     def get_page_set(self, form, hostname):
         return filterable_context.get_page_set(self, form, hostname)
@@ -67,3 +68,37 @@ class EventArchivePage(BrowseFilterablePage):
 
     def get_template(self, request, *args, **kwargs):
         return BrowseFilterablePage.template
+
+
+class NewsroomLandingPage(BrowseFilterablePage):
+    template = 'newsroom/index.html'
+
+    def get_page_set(self, form, hostname):
+        get_blog = False
+        categories_cache = None
+        for f in self.content:
+            if 'filter_controls' in f.block_type and f.value['categories']['page_type'] == 'newsroom':
+                categories = form.cleaned_data.get('categories', [])
+                if not categories or 'blog' in categories:
+                    get_blog = True
+                    if 'blog' in categories:
+                        del categories[categories.index('blog')]
+                        categories_cache = list(categories)
+
+        blog_q = Q()
+        newsroom_q = AbstractFilterPage.objects.child_of_q(self)
+        newsroom_q &= form.generate_query()
+        if get_blog:
+            try:
+                del form.cleaned_data['categories']
+                blog = base.CFGOVPage.objects.get(slug='blog')
+                blog_q = AbstractFilterPage.objects.child_of_q(blog)
+                blog_q &= form.generate_query()
+            except base.CFGOVPage.DoesNotExist:
+                print 'Blog does not exist'
+
+        return AbstractFilterPage.objects.live_shared(hostname).filter(newsroom_q | blog_q).order_by('-date_published')
+
+
+    def get_form_class(self):
+        return forms.NewsroomFilterForm

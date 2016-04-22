@@ -25,6 +25,7 @@ related_posts_categories = [
 ]
 
 page_types = [
+    ('activity-log', 'Activity Log'),
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
     ('enforcement', 'Enforcement action'),
@@ -33,7 +34,7 @@ page_types = [
     ('impl-resource', 'Implementation Resource'),
     ('newsroom', 'Newsroom'),
     ('notice-opportunity-comment', 'Notice and Opportunity for Comment'),
-    ('research-report', 'Research Report'),
+    ('research-reports', 'Research Report'),
     ('rule-under-dev', 'Rule under development'),
     ('leadership-calendar', 'Leadership Calendar'),
 ]
@@ -120,8 +121,31 @@ supported_languagues = [
 ]
 
 
+def related_posts_category_lookup(related_categories):
+    related = []
+    for category in related_categories:
+        for name, related_posts_cats in related_posts_categories:
+            for cat in related_posts_cats:
+                if category == cat[0]:
+                    related.append(cat[1])
+    results = []
+    for r in related:
+        for name, cats in categories:
+            for c in cats:
+                if r == c[1]:
+                    results.append(c[0])
+    return results
+
+
 def page_type_choices():
     new_choices = [
+        ('Activity Log', (
+            ('blog', 'Blog'),
+            ('op-ed', 'Op-Ed'),
+            ('press-release', 'Press Release'),
+            ('research-reports', 'Report'),
+            ('speech', 'Speech'),
+            ('testimony', 'Testimony'))),
         ('Leadership Calendar', (
             ('richard-cordray', 'Richard Cordray'),
             ('david-silberman', 'David Silberman'),
@@ -136,6 +160,11 @@ def page_type_choices():
             ('speech', 'Speech'),
             ('testimony', 'Testimony'))),
     ]
+    categories_copy = list(categories)
+    for i, category in enumerate(categories_copy):
+        for choice in new_choices:
+            if choice[0] == category[0]:
+                del categories_copy[i]
     return sorted(categories + new_choices)
 
 
@@ -145,7 +174,7 @@ def choices_for_page_type(page_type):
             for cat_slug, cat_tuples in page_type_choices():
                 if name == cat_slug:
                     return list(cat_tuples)
-
+    return []
 
 def category_label(category):
     for parent, children in page_type_choices():
@@ -162,6 +191,15 @@ def fcm_label(category):
 
 def is_blog(page):
     for category in page.categories.all():
-        for blog_category in choices_for_page_type('blog'):
-            if category.name == blog_category[0]:
+        for choice in choices_for_page_type('blog'):
+            if category.name == choice[0]:
+                return True
+    if 'Blog' in page.specific_class.__name__:
+        return True
+
+
+def is_report(page):
+    for category in page.categories.all():
+        for choice in choices_for_page_type('research-reports'):
+            if category.name == choice[0]:
                 return True

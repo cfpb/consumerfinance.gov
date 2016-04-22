@@ -76,7 +76,7 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function handleEvent( event ) {
-    if ( _suspended ) return;
+    if ( _suspended ) { return; }
     var eventMap = {
       triggerClick:  _handleTriggerClickBinded,
       expandBegin:   _handleExpandBeginBinded,
@@ -85,7 +85,7 @@ function MegaMenuMobile( menus ) {
     };
 
     var currHandler = eventMap[event.type];
-    if ( currHandler ) currHandler( event );
+    if ( currHandler ) { currHandler( event ); }
   }
 
   /**
@@ -99,6 +99,11 @@ function MegaMenuMobile( menus ) {
     var menuNode = menu.getData();
     var level = menuNode.level;
     var transition = rootMenu.getTransition();
+
+    // Halt any active transitions.
+    if ( _activeMenu ) {
+      _activeMenu.getTransition().halt();
+    }
 
     if ( menu === rootMenu ) {
       // Root menu clicked.
@@ -250,26 +255,7 @@ function MegaMenuMobile( menus ) {
     if ( !_suspended ) {
       _suspended = true;
 
-      _rootMenu.getTransition().remove();
-
-      var rootNode = _menus.getRoot();
-      treeTraversal.bfs( rootNode, function( node ) {
-        node.data.setCollapseTransition( null );
-        node.data.setExpandTransition( null );
-
-        // TODO: Investigate whether deferred collapse has another solution.
-        //       This check is necessary since a call to an already collapsed
-        //       menu will set a deferred collapse that will be called
-        //       on expandEnd next time the flyout is expanded.
-        //       The deferred collapse is used in cases where the
-        //       user clicks the flyout menu while it is animating open,
-        //       so that it appears like they can collapse it, even when
-        //       clicking during the expand animation.
-        if ( node.data.isExpanded() ) {
-          node.data.collapse();
-        }
-      } );
-
+      treeTraversal.bfs( _menus.getRoot(), _handleSuspendTraversal );
       _rootMenuContentDom.classList.remove( 'u-invisible' );
       _rootMenuContentDom.classList.remove( 'u-hidden-overflow' );
 
@@ -280,6 +266,27 @@ function MegaMenuMobile( menus ) {
     }
 
     return _suspended;
+  }
+
+  /**
+   * Iterate over the sub menus and handle setting the suspended state.
+   * @param {TreeNode} node - The data source for the current menu.
+   */
+  function _handleSuspendTraversal( node ) {
+    var menu = node.data;
+    menu.clearTransitions();
+
+    // TODO: Investigate whether deferred collapse has another solution.
+    //       This check is necessary since a call to an already collapsed
+    //       menu will set a deferred collapse that will be called
+    //       on expandEnd next time the flyout is expanded.
+    //       The deferred collapse is used in cases where the
+    //       user clicks the flyout menu while it is animating open,
+    //       so that it appears like they can collapse it, even when
+    //       clicking during the expand animation.
+    if ( menu.isExpanded() ) {
+      menu.collapse();
+    }
   }
 
   // Attach public events.

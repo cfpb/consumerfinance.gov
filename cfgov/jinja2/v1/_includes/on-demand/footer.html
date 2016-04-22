@@ -6,3 +6,14 @@
 
 {% import 'organisms/footer.html' as footer with context %}
 {{ footer.render() }}
+
+<script type='text/javascript'>
+//<![CDATA[
+    var usasearch_config = { siteHandle: 'cfpb' };
+
+    var script = document.createElement( 'script' );
+    script.type = 'text/javascript';
+    script.src = 'http://search.usa.gov/javascripts/remote.loader.js';
+    document.getElementsByTagName( 'head' )[0].appendChild( script );
+//]]>
+</script>

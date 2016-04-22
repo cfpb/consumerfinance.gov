@@ -90,6 +90,12 @@
 .o-secondary-navigation {
     .webfont-regular();
 
+    &__no-children {
+      .respond-to-max( @bp-sm-max, {
+          display: none;
+      } );
+    }
+
     .m-expandable_target {
         .webfont-demi();
 
@@ -123,6 +129,10 @@
                 margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
 
                 border-top: 1px solid @gray-40;
+
+                li[data-nav-is-active="False"]{
+                    display: none;
+                }
             });
         }
 

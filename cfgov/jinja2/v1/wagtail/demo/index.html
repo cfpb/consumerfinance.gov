@@ -12,11 +12,13 @@
     </div>
 
     {% for block in page.molecules %}
-        {% include 'templates/render_block.html' with context %}
+        {% import 'templates/render_block.html' as render_block with context %}
+        {{ render_block.render(block, loop.index) }}
     {% endfor %}
 
     {% for block in page.organisms %}
-        {% include 'templates/render_block.html' with context %}
+        {% import 'templates/render_block.html' as render_block with context %}
+        {{ render_block.render(block, loop.index) }}
     {% endfor %}
     </div>
 {% endblock content_main %}

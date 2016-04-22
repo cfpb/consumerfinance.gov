@@ -6,5 +6,5 @@ var expect = chai.expect;
 var ExpandableGroup = require( BASE_JS_PATH + 'organisms/ExpandableGroup' );
 
 describe( 'ExpandableGroup', function() {
-
+  // TODO: Implement tests.
 } );

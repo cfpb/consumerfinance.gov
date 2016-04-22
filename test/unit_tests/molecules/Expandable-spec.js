@@ -6,5 +6,5 @@ var expect = chai.expect;
 var Expandable = require( BASE_JS_PATH + 'molecules/Expandable' );
 
 describe( 'Expandable', function() {
-
+  // TODO: Implement tests.
 } );

@@ -85,7 +85,7 @@ def get_form_id(page, get_request):
 
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
-    return isinstance(page, BrowsePage) or isinstance(page, BrowseFilterablePage)
+    return isinstance(page, (BrowsePage, BrowseFilterablePage))
 
 
 # For use by Browse type pages to get the secondary navigation items
@@ -96,11 +96,29 @@ def get_secondary_nav_items(current, hostname, exclude_siblings=False):
     parent = current.get_parent().specific
     page = parent if instanceOfBrowseOrFilterablePages(parent) else current
 
+    # TODO: Remove this ASAP once Press Resources gets its own Wagtail page
+    if page.slug == 'newsroom':
+        return [
+            {
+                'title': page.title,
+                'slug': page.slug,
+                'url': get_page_state_url({}, page),
+                'children': [
+                    {
+                        'title': 'Press Resources',
+                        'slug': 'press-resources',
+                        'url': '/newsroom/press-resources/',
+                    }
+                ],
+            }
+        ], True
+    # END TODO
+
     pages = [page] if page.secondary_nav_exclude_sibling_pages else page.get_appropriate_siblings(hostname)
 
     for sibling in pages:
-        # Only if it's a Browse type page
-        if 'Browse' in sibling.specific_class.__name__:
+        # Only if it's a Browse(Filterable) type page
+        if instanceOfBrowseOrFilterablePages(sibling.specific):
             sibling = page if page.id == sibling.id else sibling
             item = {
                 'title': sibling.title,

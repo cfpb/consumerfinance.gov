@@ -72,6 +72,7 @@ function AlphaTransition( element ) {
 
   this.animateOff = _baseTransition.animateOff;
   this.animateOn = _baseTransition.animateOn;
+  this.halt = _baseTransition.halt;
   this.isAnimated = _baseTransition.isAnimated;
   this.remove = _baseTransition.remove;
   this.setElement = _baseTransition.setElement;

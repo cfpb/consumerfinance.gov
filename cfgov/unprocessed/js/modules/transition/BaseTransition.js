@@ -26,6 +26,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   var _transitionEndEvent;
   var _transitionCompleteBinded;
   var _addEventListenerBinded;
+  var _isAnimating = false;
   var _isFlushed = false;
 
   /**
@@ -60,7 +61,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    * @returns {BaseTransition} An instance.
    */
   function animateOn() {
-    if ( !_dom ) return this;
+    if ( !_dom ) { return this; }
     _dom.classList.remove( BaseTransition.NO_ANIMATION_CLASS );
 
     return this;
@@ -71,7 +72,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    * @returns {BaseTransition} An instance.
    */
   function animateOff() {
-    if ( !_dom ) return this;
+    if ( !_dom ) { return this; }
     _dom.classList.add( BaseTransition.NO_ANIMATION_CLASS );
 
     return this;
@@ -82,8 +83,26 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    *   Returns false if this transition has not been initialized.
    */
   function isAnimated() {
-    if ( !_dom ) return false;
+    if ( !_dom ) { return false; }
     return !_dom.classList.contains( BaseTransition.NO_ANIMATION_CLASS );
+  }
+
+  /**
+   * Halt an in-progress animation and call the complete event immediately.
+   */
+  function halt() {
+    if ( !_isAnimating ) { return; }
+    _dom.style.webkitTransitionDuration = '0';
+    _dom.style.mozTransitionDuration = '0';
+    _dom.style.oTransitionDuration = '0';
+    _dom.style.transitionDuration = '0';
+    _dom.removeEventListener( _transitionEndEvent,
+                              _transitionCompleteBinded );
+    _transitionCompleteBinded();
+    _dom.style.webkitTransitionDuration = '';
+    _dom.style.mozTransitionDuration = '';
+    _dom.style.oTransitionDuration = '';
+    _dom.style.transitionDuration = '';
   }
 
   /**
@@ -91,6 +110,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    * complete handler immediately if transition not supported.
    */
   function _addEventListener() {
+    _isAnimating = true;
     // If transition is not supported, call handler directly (IE9/OperaMini).
     if ( _transitionEndEvent ) {
       _dom.addEventListener( _transitionEndEvent,
@@ -115,6 +135,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   function _transitionComplete() {
     _removeEventListener();
     this.dispatchEvent( BaseTransition.END_EVENT, { target: this } );
+    _isAnimating = false;
   }
 
   /**
@@ -138,6 +159,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    */
   function remove() {
     if ( _dom ) {
+      halt();
       _dom.classList.remove( _classes.BASE_CLASS );
       _flush();
       return true;
@@ -153,7 +175,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    *   otherwise true if the class was applied.
    */
   function applyClass( className ) {
-    if ( !_dom ) return false;
+    if ( !_dom ) { return false; }
     if ( !_isFlushed ) {
       _flush();
       _isFlushed = true;
@@ -211,6 +233,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
   this.animateOff = animateOff;
   this.animateOn = animateOn;
   this.applyClass = applyClass;
+  this.halt = halt;
   this.init = init;
   this.isAnimated = isAnimated;
   this.remove = remove;

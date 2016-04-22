@@ -7,7 +7,8 @@
   name: Body Font
   family: cf-core
   notes:
-    - "Set the body to Avenir Regular"
+    - "Set the body to Avenir Regular."
+    - "Hides overflow on mobile sizes."
   patterns:
     - name: Body
       codenotes:
@@ -18,7 +19,11 @@
 */
 
 body {
-  .webfont-regular();
+    .webfont-regular();
+
+    .respond-to-max( @bp-sm-max, {
+        overflow-x: hidden;
+    } );
 }
 
 /* topdoc
