@@ -29,8 +29,8 @@ describe( 'The Careers Page', function() {
   } );
 
   it( 'should have a career info section', function() {
-    var infoSectionTitles = [ 'Job Application Process',
-    'Students and Recent Graduates' ];
+    var infoSectionTitles = [ 'Job application process',
+    'Students and recent graduates' ];
     var infoSectionLinks = [
       '/about-us/careers/application-process/',
       '/about-us/careers/students-and-graduates/' ];

@@ -67,12 +67,12 @@ function MegaMenu( element ) {
     _desktopNav = new MegaMenuDesktop( _menus ).init();
     _mobileNav = new MegaMenuMobile( _menus ).init();
     _mobileNav.addEventListener( 'rootExpandBegin',
-                                 fnBind (_handleRootExpandBegin, this ) );
+                                 fnBind( _handleRootExpandBegin, this ) );
     _mobileNav.addEventListener( 'rootCollapseEnd',
                                  fnBind( _handleRootCollapseEnd, this ) );
 
     window.addEventListener( 'resize', _resizeHandler );
-    // Funnel window resize handler into orientation change on devices that support it.
+    // Pipe window resize handler into orientation change on supported devices.
     if ( 'onorientationchange' in window ) {
       window.addEventListener( 'orientationchange', _resizeHandler );
     }
@@ -138,8 +138,9 @@ function MegaMenu( element ) {
    * @param {FlyoutMenu} menu - a menu on which to attach events.
    */
   function _addEvents( menu ) {
-    menu.addEventListener( 'triggerOver', _handleEvent );
     menu.addEventListener( 'triggerClick', _handleEvent );
+    menu.addEventListener( 'triggerOver', _handleEvent );
+    menu.addEventListener( 'triggerOut', _handleEvent );
     menu.addEventListener( 'expandBegin', _handleEvent );
     menu.addEventListener( 'expandEnd', _handleEvent );
     menu.addEventListener( 'collapseBegin', _handleEvent );

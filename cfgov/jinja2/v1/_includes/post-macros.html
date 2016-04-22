@@ -98,10 +98,12 @@
             </label>
             <input class="pagination_current-page"
                    id="pagination_current-page"
+                   inputmode="numeric"
                    name="page"
                    type="number"
                    min="1"
                    max="{{ query_obj.pages }}"
+                   pattern="[0-9]*"
                    value="{{ query_obj.current_page }}">
             {#- Include any current filters when submitting this form to allow
                 for paginating through a filtered set of results.

@@ -3,6 +3,7 @@ import json
 from itertools import chain
 from collections import OrderedDict
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_delete
@@ -17,6 +18,8 @@ from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
+from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
     UserPagePermissionsProxy, Orderable, PageManager, PageQuerySet
 from wagtail.wagtailcore.url_routing import RouteResult
@@ -30,6 +33,7 @@ from sheerlike.query import QueryFinder
 
 from . import molecules
 from . import organisms
+from .. import get_protected_url
 from ..util import util, ref
 
 import urllib
@@ -103,6 +107,7 @@ class CFGOVPage(Page):
         ('email_signup', organisms.EmailSignUp()),
         ('contact', organisms.MainContactInfo()),
         ('sidebar_contact', organisms.SidebarContactInfo()),
+        ('rss_feed', molecules.RSSFeed()),
     ], blank=True)
 
     # Panels
@@ -126,56 +131,58 @@ class CFGOVPage(Page):
         ObjectList(settings_panels, heading='Configuration'),
     ])
 
-    def generate_view_more_url(self):
-        url = '/activity-log/?'
+    def generate_view_more_url(self, request):
         tags = []
+        activity_log = CFGOVPage.objects.get(slug='activity-log').specific
+        index = util.get_form_id(activity_log, request.GET)
         for tag in self.tags.names():
-            tags.append('filter_tags=' + urllib.quote_plus(tag))
+            tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
         tags = '&'.join(tags)
-        return url + tags
+        return get_protected_url({'request': request}, activity_log) + '?' + tags
 
     def related_posts(self, block, hostname):
+        from . import AbstractFilterPage
         related = {}
+        queries = {}
         query = models.Q(('tags__name__in', self.tags.names()))
-        block.value['view_more']['text'] = "View more"
-        if self.tags.names():
-            block.value['view_more']['url'] = self.generate_view_more_url()
-            self.save()
-        # TODO: Add other search types as they are implemented in Django
-        # Import classes that use this class here to maintain proper import
-        # order.
-        from . import EventPage
         search_types = [
-            ('events', EventPage, 'Events'),
+            ('blog', 'posts', 'Blog', query),
+            ('newsroom', 'newsroom', 'Newsroom', query),
+            ('events', 'events', 'Events', query),
         ]
-        for search_type, search_class, search_type_name in search_types:
+        for parent_slug, search_type, search_type_name, search_query in search_types:
+            try:
+                parent = Page.objects.get(slug=parent_slug)
+                search_query &= Page.objects.descendant_of_q(parent)
+                if 'specific_categories' in block.value:
+                    specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
+                    choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
+                    categories = [c for c in specific_categories if c in choices]
+                    if categories:
+                        search_query &= Q(('categories__name__in', categories))
+                if parent_slug == 'events':
+                    try:
+                        parent_slug = 'archive-past-events'
+                        parent = Page.objects.get(slug=parent_slug)
+                        q = (Page.objects.descendant_of_q(parent) & query)
+                        if 'specific_categories' in block.value:
+                            specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
+                            choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
+                            categories = [c for c in specific_categories if c in choices]
+                            if categories:
+                                q &= Q(('categories__name__in', categories))
+                        search_query |= q
+                    except Page.DoesNotExist:
+                        print 'archive-past-events does not exist'
+                queries[search_type_name] = search_query
+            except Page.DoesNotExist:
+                print parent_slug, 'does not exist'
+        for parent_slug, search_type, search_type_name, search_query in search_types:
             if 'relate_%s' % search_type in block.value \
                     and block.value['relate_%s' % search_type]:
                 related[search_type_name] = \
-                    search_class.objects.filter(query).order_by(
-                        '-date_published').exclude(
-                        slug=self.slug).live_shared(hostname)[:block.value['limit']]
-        # TODO: Remove each search_type as it is implemented into Django
-        queries = QueryFinder()
-
-        for search_type, search_type_name in [('newsroom', 'Newsroom'), ('posts', 'Blog')]:
-            if 'relate_%s' % search_type in block.value \
-                    and block.value['relate_%s' % search_type]:
-                if search_type == 'newsroom':
-                    search_type = 'just_newsroom'
-                sheer_query = getattr(queries, search_type)
-
-                match_query = []
-
-                for cat in block.value['specific_categories']:
-                    if util.get_related_posts_categories(cat) == 'posts' and search_type == 'posts':
-                        match_query.append({'term': {'blog_category': cat}})
-                    elif util.get_related_posts_categories(cat) == 'newsroom' and search_type == 'just_newsroom':
-                        match_query.append({'term': {'category': cat}})
-
-                related[search_type_name] = \
-                    sheer_query.get_tag_related_documents(tags=self.tags.names(),
-                                                          size=block.value['limit'], additional_args=match_query)
+                    AbstractFilterPage.objects.live_shared(hostname).filter(
+                        queries[search_type_name]).order_by('-date_published')[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.

@@ -7,5 +7,5 @@ var expect = chai.expect;
 var standardType = require( BASE_JS_PATH + 'modules/util/standard-type' );
 
 describe( 'standard-type', function() {
-
+  // TODO: Implement tests.
 } );

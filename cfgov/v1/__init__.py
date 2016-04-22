@@ -42,10 +42,13 @@ def environment(**options):
         'fcm_label': ref.fcm_label,
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
+        'is_report': ref.is_report,
         'get_page_state_url': share.get_page_state_url,
         'parse_links': external_links_filter,
         'get_protected_url': get_protected_url,
         'related_metadata_tags': related_metadata_tags,
+        'get_filter_data': get_filter_data,
+        'cfgovpage_objects': CFGOVPage.objects,
     })
     env.filters.update({
         'slugify': slugify,
@@ -117,6 +120,9 @@ def render_stream_child(context, stream_child):
 
 @contextfunction
 def get_protected_url(context, page):
+    if page is None:
+        return '#'
+    
     request_hostname = urlparse(context['request'].url).hostname
     url = page.url
     if url is None:  # If page is not aligned to a site root return None
@@ -139,17 +145,21 @@ def related_metadata_tags(context, page):
     tags = {'links': []}
     # From an ancestor, get the form ids then use the first id since the 
     # filterable list on the page will probably have the first id on the page.
-    id = None
-    filter_page = None
-    for ancestor in page.get_ancestors().reverse().specific():
-        if ancestor.specific_class.__name__ in ['EventArchivePage', 'BrowseFilterablePage', 'SublandingFilterablePage']:
-            filter_page = ancestor
-            id = util.get_form_id(ancestor, request.GET)
-            break
+    id, filter_page = get_filter_data(context, page)
     for tag in page.specific.tags.names():
         tag_link = {'text': tag, 'url': ''}
-        if id is not None:
+        if id is not None and filter_page is not None:
             param = '?filter' + str(id) + '_topics=' + tag
             tag_link['url'] = get_protected_url(context, filter_page) + param
         tags['links'].append(tag_link)
     return tags
+
+
+@contextfunction
+def get_filter_data(context, page):
+    for ancestor in page.get_ancestors().reverse().specific():
+        if ancestor.specific_class.__name__ in ['BrowseFilterablePage', 'SublandingFilterablePage',
+                                                'EventArchivePage', 'NewsroomLandingPage']:
+            return util.get_form_id(ancestor, context['request'].GET), ancestor
+
+    return None, None

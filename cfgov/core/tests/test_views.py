@@ -182,4 +182,4 @@ class RegsgovCommentTest(TestCase):
     #     mock_submit.assert_called_with('fake@example.com',
     #                                ['FAKE_CODE'])
     #     self.assertEquals(urlparse(response['Location']).path,
-                          reverse('govdelivery:success'))
+    #                       reverse('govdelivery:success'))

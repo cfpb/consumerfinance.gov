@@ -61,6 +61,14 @@ describe( 'BaseTransition', function() {
     } );
   } );
 
+  describe( '.halt()', function() {
+    xit( 'should immediately fire transition end event', function() {
+      // TODO: To test halt() the transition needs to be started and
+      //       then halt() needs to be called before the transition
+      //       duration has completed.
+    } );
+  } );
+
   describe( '.remove()', function() {
     it( 'should remove transition classes from element', function() {
       transition.init();

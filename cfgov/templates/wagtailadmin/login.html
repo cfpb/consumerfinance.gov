@@ -1,18 +1,16 @@
-{% extends "wagtailadmin/admin_base.html" %}
+{% overextends "wagtailadmin/login.html" %}
 {% load compress static i18n %}
-{% block titletag %}{% trans "Sign in" %}{% endblock %}
-{% block bodyclass %}login{% endblock %}
-
-{% block extra_css %}
-    {{ block.super }}
-
-    {% compress css %}
-        <link rel="stylesheet" href="{% static 'wagtailadmin/css/layouts/login.css' %}" type="text/css" />
-    {% endcompress %}
-{% endblock %}
 
 {% block furniture %}
     <div class="content-wrapper">
+        <div style="float:right">
+        {% if '/django-admin/' in request.path %}
+            <h2><a href="/admin/">Log into Wagtail Admin</a></h2>
+        {% else %}
+            <h2><a href="/django-admin/">Log into Django Admin</a></h2>
+        {% endif %}
+        </div>
+
         {% if messages  or form.non_field_errors %}
             <div class="messages">
                 <ul>
@@ -32,7 +30,15 @@
             {% url 'wagtailadmin_home' as home_url %}
             <input type="hidden" name="next" value="{{ next|default:home_url }}" />
 
-            <h1>{% block branding_login %}{% trans "Sign in to Wagtail" %}{% endblock %}</h1>
+            {% block branding_login %}
+            <h1>
+            {% if '/django-admin/' in request.path %}
+                {% trans "Sign in to consumerfinance.gov" %}
+            {% else %}
+                <img class="wagtail-logo" src="{% static 'wagtailadmin/images/wagtail-logo.svg' %}" alt="Wagtail" width="30" /> {% trans "Sign in to consumerfinance.gov" %}
+            {% endif %}
+            </h1>
+            {% endblock %}
 
             <ul class="fields">
                 <li class="full">
@@ -75,13 +81,4 @@
             </ul>
         </form>
     </div>
-{% endblock %}
-
-{% block extra_js %}
-{{ block.super }}
-<script>
-    $(function(){
-        $('form input[name=username]').focus();
-    })
-</script>
 {% endblock %}

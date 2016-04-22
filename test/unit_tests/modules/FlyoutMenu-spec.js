@@ -271,6 +271,21 @@ describe( 'FlyoutMenu', function() {
     } );
   } );
 
+  describe( '.clearTransitions()', function() {
+    it( 'should remove all transitions', function() {
+      flyoutMenu.init();
+      var transition = new MoveTransition( contentDom ).init();
+      flyoutMenu.setExpandTransition( transition, transition.moveLeft );
+      flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
+      var hasClass = contentDom.classList.contains( 'u-move-transition' );
+      expect( hasClass ).to.be.true;
+      flyoutMenu.clearTransitions();
+      expect( flyoutMenu.getTransition() ).to.be.undefined;
+      hasClass = contentDom.classList.contains( 'u-move-transition' );
+      expect( hasClass ).to.be.false;
+    } );
+  } );
+
   describe( '.getDom()', function() {
     it( 'should return references to full dom', function() {
       flyoutMenu.init();

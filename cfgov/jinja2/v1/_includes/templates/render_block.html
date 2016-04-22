@@ -1,3 +1,6 @@
-<div class="block {{ block.block.meta.classname if block.block.meta.classname else '' }}">
-    {{ render_stream_child(block) }}
-</div>
+
+{% macro render(block, index) %}
+    <div class="block {{ 'block__flush-top' if index == 1 else '' }} {{ block.block.meta.classname if block.block.meta.classname else '' -}}">
+        {{ render_stream_child(block) }}
+    </div>
+{% endmacro %}

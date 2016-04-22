@@ -7,12 +7,12 @@ from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
 from legacy.views import HousingCounselorPDFView
 from sheerlike.views.generic import SheerTemplateView
-from sheerlike.feeds import SheerlikeFeed
 from sheerlike.sites import SheerSite
+from sheerlike.feeds import SheerlikeFeed
 
 from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
     change_password, password_reset_confirm, cfpb_login, create_user, edit_user
-
+from v1.feed import BlogFeed, NewsroomFeed
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
@@ -104,31 +104,14 @@ urlpatterns = [
     ],
         namespace='docs')),
 
-    url(r'^blog/(?P<path>.*)$', RedirectView.as_view(url='/about-us/blog/%(path)s', permanent=True)),
-    url(r'^about-us/blog/', include([
-        url(r'^$', TemplateView.as_view(template_name='blog/index.html'),
-            name='index'),
-        url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='posts',
-                                      local_name='post',
-                                      default_template='blog/_single.html'),
-            name='detail')],
-        namespace='blog')),
 
+    url(r'^blog/(?P<path>.*)$', RedirectView.as_view(url='/about-us/blog/%(path)s', permanent=True)),
     url(r'^newsroom/(?P<path>.*)$', RedirectView.as_view(url='/about-us/newsroom/%(path)s', permanent=True)),
-    url(r'^about-us/newsroom/', include([
-        url(r'^$', TemplateView.as_view(template_name='newsroom/index.html'),
-            name='index'),
-        url(r'^press-resources/$',
-            TemplateView.as_view(
-                template_name='newsroom/press-resources/index.html'),
+
+    url(r'^about-us/newsroom/press-resources/$',
+        TemplateView.as_view(
+            template_name='newsroom/press-resources/index.html'),
             name='press-resources'),
-        url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='newsroom',
-                                      local_name='newsroom',
-                                      default_template='newsroom/_single.html'),
-            name='detail')],
-        namespace='newsroom')),
 
     url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/%(path)s', permanent=True)),
     url(r'^about-us/the-bureau/', include([
@@ -158,10 +141,6 @@ urlpatterns = [
             SheerTemplateView.as_view(),
             name='page')],
         namespace='business')),
-
-    url(r'^activity-log/$',
-        TemplateView.as_view(template_name='activity-log/index.html'),
-        name='activity-log'),
 
     url(r'^subscriptions/new/$',
         'core.views.govdelivery_subscribe',
@@ -203,10 +182,15 @@ urlpatterns = [
         namespace='reg_comment')),
 
     # Testing reg comment form
-    url(r'^reg-comment-form-test/$', SheerTemplateView.as_view(template_name='about-us/reg-comment-form-test.html'), name='reg-comment-form-test'),
-    #url(r'^reg-comment-success/$', SheerTemplateView.as_view(template_name='regulation-comment/success/index.html'), name='reg-comment-success'),
+    url(r'^reg-comment-form-test/$',
+        SheerTemplateView.as_view(
+            template_name='regulation-comment/reg-comment-form-test.html'),
+        name='reg-comment-form-test'),
 
     url(r'^feed/(?P<doc_type>[\w-]+)/$', SheerlikeFeed(), name='feed'),
+
+    url(r'^feed/blog/$', BlogFeed(), name='blog_feed'),
+    url(r'^feed/newsroom/$', NewsroomFeed(), name='newsroom_feed'),
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 
@@ -262,8 +246,11 @@ urlpatterns = [
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
-        url(r'^django-admin/login', cfpb_login, name='wagtailadmin_login'),
-        url(r'^django-admin/password_change', change_password, name='wagtailadmin_account_change_password'),
+        url(r'^d/admin/(?P<path>.*)$', RedirectView.as_view(url='/django-admin/%(path)s',permanent=True)),
+        url(r'^picard/(?P<path>.*)$', RedirectView.as_view(url='/tasks/%(path)s',permanent=True)),
+        url(r'^django-admin/login', cfpb_login, name='django_admin_login'),
+        url(r'^django-admin/auth/user/add/', create_user, name='django_admin_create_user'),
+        url(r'^django-admin/password_change', change_password, name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
         url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
@@ -282,12 +269,25 @@ if settings.ALLOW_ADMIN_URL:
 
         url(r'^admin/', include(wagtailadmin_urls)),
     ]
+    if 'picard' in settings.INSTALLED_APPS:
+        patterns.append(url(r'^tasks/', include('picard.urls')))
+
+    if 'selfregistration' in settings.INSTALLED_APPS:
+        patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
 
     urlpatterns = patterns + urlpatterns
 
 if 'cfpb_common' in settings.INSTALLED_APPS:
-    pattern=url(r'^token-provider/', 'cfpb_common.views.token_provider')
-    urlpatterns.append(pattern)
+    patterns= [url(r'^token-provider/', 'cfpb_common.views.token_provider'),
+               url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(template_name='knowbeforeyouowe/creditcards/tool.html'), name='cckbyo'),
+               ]
+    urlpatterns += patterns
+
+if 'cal' in settings.INSTALLED_APPS:
+    from cal.views import CalendarJSONList
+    patterns= [url(r'^leadership-calendar/cfpb-leadership.json$', CalendarJSONList.as_view()),
+               ]
+    urlpatterns += patterns
 
 if 'selfregistration' in settings.INSTALLED_APPS:
     from selfregistration.views import CompanySignup

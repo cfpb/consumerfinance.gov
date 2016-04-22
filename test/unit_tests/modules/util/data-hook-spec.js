@@ -7,5 +7,5 @@ var expect = chai.expect;
 var dataHook = require( BASE_JS_PATH + 'modules/util/data-hook' );
 
 describe( 'data-hook', function() {
-
+  // TODO: Implement tests.
 } );

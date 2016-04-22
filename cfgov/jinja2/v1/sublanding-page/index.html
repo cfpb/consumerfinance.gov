@@ -6,7 +6,8 @@
 
 {% block hero -%}
     {% for block in page.header -%}
-        {% include 'templates/render_block.html' with context %}
+        {% import 'templates/render_block.html' as render_block with context %}
+        {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 {% endblock %}
 
@@ -42,9 +43,11 @@
                 {{ flc(block.value, f, loop.index0) }}
             </div>
         {% elif 'text_introduction' not in block.block_type %}
-            {% include 'templates/render_block.html' with context %}
+            {% import 'templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
         {% elif not page.sidebar_breakout %}
-            {% include 'templates/render_block.html' with context %}
+            {% import 'templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
 {% endblock %}
