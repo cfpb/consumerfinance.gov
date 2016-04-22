@@ -61,7 +61,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    * @returns {BaseTransition} An instance.
    */
   function animateOn() {
-    if ( !_dom ) return this;
+    if ( !_dom ) { return this; }
     _dom.classList.remove( BaseTransition.NO_ANIMATION_CLASS );
 
     return this;
@@ -72,7 +72,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    * @returns {BaseTransition} An instance.
    */
   function animateOff() {
-    if ( !_dom ) return this;
+    if ( !_dom ) { return this; }
     _dom.classList.add( BaseTransition.NO_ANIMATION_CLASS );
 
     return this;
@@ -83,7 +83,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    *   Returns false if this transition has not been initialized.
    */
   function isAnimated() {
-    if ( !_dom ) return false;
+    if ( !_dom ) { return false; }
     return !_dom.classList.contains( BaseTransition.NO_ANIMATION_CLASS );
   }
 
@@ -175,7 +175,7 @@ function BaseTransition( element, classes ) { // eslint-disable-line max-stateme
    *   otherwise true if the class was applied.
    */
   function applyClass( className ) {
-    if ( !_dom ) return false;
+    if ( !_dom ) { return false; }
     if ( !_isFlushed ) {
       _flush();
       _isFlushed = true;
