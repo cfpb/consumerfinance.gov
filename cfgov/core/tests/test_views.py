@@ -13,6 +13,9 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.http import QueryDict
 
+from django.contrib.messages.storage.cookie import CookieStorage
+from django.contrib.messages import SUCCESS
+
 
 class GovDeliverySubscribeTest(TestCase):
     """
@@ -187,7 +190,13 @@ class RegsgovCommentTest(TestCase):
         mock_submit.assert_called_with(QueryDict(urlencode(data)))
         self.assertEquals(urlparse(response['Location']).path,
                           reverse('reg_comment:success'))
-        # TODO: How do I check tracking number in messages
+        # TODO: There may be a better way to get messages_list,
+        # fix if possible
+        messages_list = CookieStorage(response)._decode(
+                            response.cookies['messages'].value)
+        self.assertEqual(len(messages_list), 1)
+        self.assertEqual(messages_list[0].message, 'FAKE_TRACK_NUM')
+        self.assertEqual(messages_list[0].level, SUCCESS)
 
     @patch('core.views.submit_comment')
     def test_successful_comment_ajax(self, mock_submit):
