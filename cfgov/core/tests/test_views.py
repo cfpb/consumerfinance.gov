@@ -15,6 +15,12 @@ from django.http import QueryDict
 
 from django.contrib.messages.storage.cookie import CookieStorage
 from django.contrib.messages import SUCCESS
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+from core.views import submit_comment
+
+#import cfgov.settings.base as settings
+#from cfgov.settings.base import REGSGOV_BASE_URL, REGSGOV_API_KEY
+
 
 
 class GovDeliverySubscribeTest(TestCase):
@@ -230,3 +236,25 @@ class RegsgovCommentTest(TestCase):
     # Test that throws an exception to go to server server_error
 
     # Test to submit comment 
+
+    @patch('requests.post')
+    @patch('cfgov.settings.base.REGSGOV_BASE_URL', 'FAKE_URL')
+    @patch('cfgov.settings.base.REGSGOV_API_KEY', 'FAKE_API_KEY')
+    def test_submit_comment_success(self, mock_post):
+        mock_post.return_value = {'response': 'fake_response'}
+
+        data = {'comment_on': 'FAKE_DOC_NUM',
+                'general_comment': 'FAKE_COMMENT',
+                'first_name': 'FAKE_FIRST',
+                'last_name': 'FAKE_LAST'}
+        response = submit_comment(QueryDict(urlencode(data)))
+        act_call_args = mock_post.call_args
+        # self.assertEqual(act_call_args[0], 'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
+        # exp_data = data
+        # exp_data['email'] = 'NA'
+        # exp_data['organization'] = 'NA'
+        # self.assertEqual(act_call_args[1], MultipartEncoder(fields=exp_data))  
+        # self.assertTrue(act_call_args[2].has_key('Content-Type'))
+
+        # print act_call_args[2]['Content-Type']
+        # self.assertContains('multipart/form-data', act_call_args[2]['Content-Type'])
