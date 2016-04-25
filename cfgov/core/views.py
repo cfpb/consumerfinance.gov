@@ -13,7 +13,7 @@ import json
 from govdelivery.api import GovDelivery
 
 from core.utils import extract_answers_from_request
-import cfgov.settings.base as settings
+from django.conf import settings
 
 REQUIRED_PARAMS_GOVDELIVERY = ['email', 'code']
 
