@@ -13,8 +13,8 @@ import json
 from govdelivery.api import GovDelivery
 
 from core.utils import extract_answers_from_request
+import cfgov.settings.base as settings
 
-ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 REQUIRED_PARAMS_GOVDELIVERY = ['email', 'code']
 
 
@@ -39,7 +39,7 @@ def govdelivery_subscribe(request):
                 redirect('govdelivery:user_error')
     email_address = request.POST['email']
     codes = request.POST.getlist('code')
-    gd = GovDelivery(account_code=ACCOUNT_CODE)
+    gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
     try:
         subscription_response = gd.set_subscriber_topics(email_address, codes)
         if subscription_response.status_code != 200:
@@ -99,20 +99,17 @@ def regsgov_comment(request):
     ) if is_ajax else redirect('reg_comment:success')
 
 
-REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
-REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
-
-
 def submit_comment(data):
     """
     View that actually performs the comment submission via the Regulations.gov
     Comment API, then returns the response.
     """
-    base_url = os.environ.get('REGSGOV_BASE_URL')
-    api_key = os.environ.get('REGSGOV_API_KEY')
 
-    url_to_call = "{}?api_key={}&D={}".format(base_url, api_key,
-                                              data['comment_on'])
+    url_to_call = "{}?api_key={}&D={}".format(settings.REGSGOV_BASE_URL, 
+                                                settings.REGSGOV_API_KEY,
+                                                data['comment_on'])
+
+    print url_to_call
 
     parsed_data = MultipartEncoder(
         fields={

@@ -216,3 +216,8 @@ class RegsgovCommentTest(TestCase):
         mock_submit.assert_called_with(QueryDict(urlencode(data)))
         self.assertEquals(urlparse(response['Location']).path,
                           reverse('reg_comment:server_error'))
+
+
+    # Test that throws an exception to go to server server_error
+
+    # Test to submit comment 
