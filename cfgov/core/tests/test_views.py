@@ -240,7 +240,7 @@ class RegsgovCommentTest(TestCase):
     @patch('requests.post')
     @patch('cfgov.settings.base.REGSGOV_BASE_URL', 'FAKE_URL')
     @patch('cfgov.settings.base.REGSGOV_API_KEY', 'FAKE_API_KEY')
-    def test_submit_comment_success(self, mock_post):
+    def test_submit_comment_success_no_email(self, mock_post):
         mock_post.return_value = {'response': 'fake_response'}
 
         data = {'comment_on': u'FAKE_DOC_NUM',
@@ -253,6 +253,30 @@ class RegsgovCommentTest(TestCase):
         self.assertEqual(act_args[0], 'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
         exp_data_field = data
         exp_data_field['email'] = u'NA'
+        exp_data_field['organization'] = u'NA'
+        exp_data = MultipartEncoder(fields=exp_data_field)
+        self.assertTrue(act_kwargs.get('data'), exp_data)
+        self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)  
+        self.assertTrue(act_kwargs.get('headers').has_key('Content-Type'))
+
+        self.assertIn('multipart/form-data', act_kwargs.get('headers').get('Content-Type'))
+
+    @patch('requests.post')
+    @patch('cfgov.settings.base.REGSGOV_BASE_URL', 'FAKE_URL')
+    @patch('cfgov.settings.base.REGSGOV_API_KEY', 'FAKE_API_KEY')
+    def test_submit_comment_success_email(self, mock_post):
+        mock_post.return_value = {'response': 'fake_response'}
+
+        data = {'comment_on': u'FAKE_DOC_NUM',
+                'general_comment': u'FAKE_COMMENT',
+                'first_name': u'FAKE_FIRST',
+                'last_name': u'FAKE_LAST',
+                'email': u'FAKE_EMAIL'}
+        response = submit_comment(QueryDict(urlencode(data)))
+        act_args, act_kwargs = mock_post.call_args
+
+        self.assertEqual(act_args[0], 'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
+        exp_data_field = data
         exp_data_field['organization'] = u'NA'
         exp_data = MultipartEncoder(fields=exp_data_field)
         self.assertTrue(act_kwargs.get('data'), exp_data)

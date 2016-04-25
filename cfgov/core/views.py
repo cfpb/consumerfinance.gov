@@ -109,7 +109,6 @@ def submit_comment(data):
                                                 settings.REGSGOV_API_KEY,
                                                 data['comment_on'])
 
-    print url_to_call
 
     parsed_data = MultipartEncoder(
         fields={
@@ -122,7 +121,6 @@ def submit_comment(data):
         }
     )
 
-    # To send multipart/form-data, use the files parameter to send a dictionary
     response = requests.post(url_to_call, data=parsed_data,
                              headers={
                                  'Content-Type': parsed_data.content_type
