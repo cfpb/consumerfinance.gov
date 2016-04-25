@@ -243,18 +243,20 @@ class RegsgovCommentTest(TestCase):
     def test_submit_comment_success(self, mock_post):
         mock_post.return_value = {'response': 'fake_response'}
 
-        data = {'comment_on': 'FAKE_DOC_NUM',
-                'general_comment': 'FAKE_COMMENT',
-                'first_name': 'FAKE_FIRST',
-                'last_name': 'FAKE_LAST'}
+        data = {'comment_on': u'FAKE_DOC_NUM',
+                'general_comment': u'FAKE_COMMENT',
+                'first_name': u'FAKE_FIRST',
+                'last_name': u'FAKE_LAST'}
         response = submit_comment(QueryDict(urlencode(data)))
-        act_call_args = mock_post.call_args
-        # self.assertEqual(act_call_args[0], 'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
-        # exp_data = data
-        # exp_data['email'] = 'NA'
-        # exp_data['organization'] = 'NA'
-        # self.assertEqual(act_call_args[1], MultipartEncoder(fields=exp_data))  
-        # self.assertTrue(act_call_args[2].has_key('Content-Type'))
+        act_args, act_kwargs = mock_post.call_args
 
-        # print act_call_args[2]['Content-Type']
-        # self.assertContains('multipart/form-data', act_call_args[2]['Content-Type'])
+        self.assertEqual(act_args[0], 'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
+        exp_data_field = data
+        exp_data_field['email'] = u'NA'
+        exp_data_field['organization'] = u'NA'
+        exp_data = MultipartEncoder(fields=exp_data_field)
+        self.assertTrue(act_kwargs.get('data'), exp_data)
+        self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)  
+        self.assertTrue(act_kwargs.get('headers').has_key('Content-Type'))
+
+        self.assertIn('multipart/form-data', act_kwargs.get('headers').get('Content-Type'))

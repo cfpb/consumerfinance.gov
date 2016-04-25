@@ -115,10 +115,10 @@ def submit_comment(data):
         fields={
             'first_name': data['first_name'],
             'last_name': data['last_name'],
-            'email': data['email'] if data.get('email') else 'NA',
+            'email': data['email'] if data.get('email') else u'NA',
             'general_comment': data['general_comment'],
             'comment_on': data['comment_on'],
-            'organization': 'NA'
+            'organization': u'NA'
         }
     )
 
