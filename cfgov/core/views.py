@@ -130,7 +130,5 @@ def submit_comment(data):
                              headers={
                                  'Content-Type': parsed_data.content_type
                              })
-    print response
-    print response.text
 
     return response
