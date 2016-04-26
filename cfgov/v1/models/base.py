@@ -182,7 +182,8 @@ class CFGOVPage(Page):
                     and block.value['relate_%s' % search_type]:
                 related[search_type_name] = \
                     AbstractFilterPage.objects.live_shared(hostname).filter(
-                        queries[search_type_name]).distinct().order_by('-date_published')[:block.value['limit']]
+                        queries[search_type_name]).distinct().exclude(
+                        id=self.id).order_by('-date_published')[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
