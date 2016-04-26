@@ -97,7 +97,7 @@ class ActivityLogPage(SublandingFilterablePage):
         # AND all selected queries together
         final_q = reduce(lambda x,y: x|y, queries.values())
 
-        return AbstractFilterPage.objects.live_shared(hostname).filter(final_q).order_by('-date_published')
+        return AbstractFilterPage.objects.live_shared(hostname).filter(final_q).distinct().order_by('-date_published')
 
 
     def get_form_class(self):
