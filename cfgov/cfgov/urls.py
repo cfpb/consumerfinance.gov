@@ -8,6 +8,7 @@ from django.views.generic.base import TemplateView, RedirectView
 from legacy.views import HousingCounselorPDFView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
+from sheerlike.feeds import SheerlikeFeed
 
 from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
     change_password, password_reset_confirm, cfpb_login, create_user, edit_user
@@ -160,6 +161,32 @@ urlpatterns = [
             name='server_error')],
         namespace='govdelivery')),
 
+    url(r'^regulation-comment/new/$',
+        'core.views.regsgov_comment',
+        name='reg_comment'),
+
+    url(r'^regulation-comment/', include([
+        url(r'^success/$',
+            TemplateView.as_view(
+                template_name='regulation-comment/success/index.html'),
+            #'core.views.comment_success',
+            name='success'),
+        url(r'^error/$',
+            TemplateView.as_view(
+                template_name='regulation-comment/error/index.html'),
+            name='user_error'),
+        url(r'^server-error/$',
+            TemplateView.as_view(
+                template_name='regulation-comment/server-error/index.html'),
+            name='server_error')],
+        namespace='reg_comment')),
+
+    # Testing reg comment form
+    url(r'^reg-comment-form-test/$',
+        SheerTemplateView.as_view(
+            template_name='regulation-comment/reg-comment-form-test.html'),
+        name='reg-comment-form-test'),
+
     url(r'^feed/blog/$', BlogFeed(), name='blog_feed'),
     url(r'^feed/newsroom/$', NewsroomFeed(), name='newsroom_feed'),
 
@@ -168,25 +195,7 @@ urlpatterns = [
     url(r'^external-site/$', SheerTemplateView.as_view(template_name='external-site/index.html'), name='external-site'),
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(url='/about-us/careers/%(path)s', permanent=True)),
-    url(r'^about-us/careers/', include([
-        url(r'^$', TemplateView.as_view(template_name='about-us/careers/index.html'),
-            name='careers'),
-
-        url(r'^(?P<doc_id>[\w-]+)/$',
-            SheerTemplateView.as_view(doc_type='career',
-                                      local_name='career',
-                                      default_template='about-us/careers/_single.html'), name='career'),
-
-        url(r'^current-openings/$', SheerTemplateView.as_view(template_name='about-us/current-openings/index.html'),
-            name='current-openings'),
-        url(r'^students-and-graduates/$', SheerTemplateView.as_view(template_name='about-us/students-and-graduates/index.html'),
-            name='students-and-graduates'),
-
-        url(r'^working-at-cfpb/$', SheerTemplateView.as_view(template_name='about-us/working-at-cfpb/index.html'),
-            name='working-at-cfpb'),
-
-    ],
-        namespace='careers')),
+    url(r'^about-us/careers/', include('jobmanager.urls', namespace='careers')),
 
     url(r'^transcripts/', include([
         url(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$', SheerTemplateView.as_view(
@@ -194,7 +203,6 @@ urlpatterns = [
             name='how-to-apply-for-a-federal-job-with-the-cfpb'),
     ],
         namespace='transcripts')),
-    url(r'^jobs/', include_if_app_enabled('jobmanager','jobmanager.urls')),
     url(r'^paying-for-college/', include_if_app_enabled('comparisontool','comparisontool.urls')),
     url(r'^credit-cards/agreements/', include_if_app_enabled('agreements','agreements.urls')),
     url(r'^(?i)askcfpb/', include_if_app_enabled('knowledgebase','knowledgebase.urls')),
@@ -213,6 +221,12 @@ urlpatterns = [
     url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
     # Report redirects
     url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s', permanent=True)),
+    url(r'^jobs/supervision/$', TemplateView.as_view(template_name='jobmanager/supervision.html'), name='jobs_supervision'),
+
+    url(r'^jobs/technology-innovation-fellows/$',
+        TemplateView.as_view(template_name='jobmanager/technology-innovation-fellows.html'), 
+        name='technology_innovation_fellows'),
+    url(r'^jobs/fellowship_form_submit/$', 'jobmanager.views.fellowship_form_submit', name='fellowship_form_submit'),
 ]
 
 if settings.ALLOW_ADMIN_URL:

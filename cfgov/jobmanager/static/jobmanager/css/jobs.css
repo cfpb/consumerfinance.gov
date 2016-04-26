@@ -1,0 +1,194 @@
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+#power {
+	background: url(../../jobmanager/img/power_jobs.jpg) no-repeat;
+	height: 359px;
+}
+
+#power > h1 {
+	display: inline-block;
+	padding: .25em;
+	color: white;
+	background-color: #50a748;
+	font-size: 265%;
+}
+
+#power > span {
+	display: inline-block;
+	padding: .25em;
+	color: #50a748;
+	background-color: white;
+	font-family: "Avenir Next", Verdana, sans-serif;
+	font-weight: 500;
+	font-size: 230%;
+ 	margin-top: 48px;
+ 	margin-right: 350px;
+}
+
+#region {
+	background: url(../../jobmanager/img/Job_location_map.fw.png) no-repeat;
+	height: 600px;
+}
+
+.three-col {
+	margin-top: 0px;
+}
+
+#howtoapply {
+	width: 66.15082%;
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 2.04918%;
+}
+
+#jobs-how-it-works.fellowship section{}
+
+.jobs-how-it-works{
+
+}
+.jobs-how-it-works > div > div{
+	border:0px;
+	border-collapse:separate;
+	border-spacing:10px 0px;
+	padding:0px;
+	background-color:#F2F2F2;
+	width:30%;
+	padding:25px 15px 15px 15px;
+}
+
+#jobs-search div, #students-and-grads div {
+	background-color:#F2F2F2;
+}
+
+.padded-module {
+	padding:25px 15px 15px 15px;
+	margin-bottom:1em;
+}
+
+
+.half {
+	display: inline-block;
+	width: 48.70866%;
+	margin:.5% 1.9685% 1.9685% 0;
+	padding: 0;
+	vertical-align: top;
+}
+
+.third {
+	display: inline-block;
+	width: 31.70866%;
+	margin: 0 1.9685% 1.9685% 0;
+	padding: 0;
+	vertical-align: top;
+}
+
+.omega {
+	margin-right:0;
+}
+
+#followus {
+	width: 31.0%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+address {
+	display: inline; /* candidate for reset */
+}
+
+#followus img {
+	margin-top: 16px;
+}
+
+#recruit h2 {
+	color: #333;
+	padding: 0.25em 0;
+	margin: 0;
+	border-top: 1px solid #333;
+	border-bottom: 2px solid #333;
+	font-size: 1em;
+}
+
+#jlist a {
+	border-bottom: none;
+	font-size: .8em;
+}
+
+#jlist a:visited {
+	color: #4D819A;
+	border-bottom: none;
+}
+
+#jlist > h1 {
+	border-bottom: 1px solid #AFAFB3;
+	margin: .5em 0;
+	padding: 1em 0;
+	font-size: 1.4em;
+	text-transform: uppercase;
+}
+
+#jlist h2 {
+	display: inline-block;
+}
+
+#jlist section {
+	margin-left: 83px;
+	margin-top: 1em;
+	margin-bottom: 1.5em;
+}
+
+#jlist div {
+	border-bottom: none;
+	padding-bottom: 1em;
+	margin-top: 24px;
+}
+
+#dlist a {
+	border-bottom: none;
+	font-size: .8em;
+	border: none;
+	background-color: #50B948;
+	color: white;
+	padding: 0.5em 0.5em;
+	margin: .5em 0em 1.3em 0;
+	display: inline-block;
+	font-size: 0.875em;
+	font-family: "Avenir Next", Verdana, sans-serif;
+}
+
+#dlist a:visited {
+	color: white;
+	border-bottom: none;
+}
+
+#dlist div {
+	border-bottom: none;
+	padding-bottom: 1em;
+	margin-top: 1em;
+	}
+
+date {
+	font-size: 16px;
+	text-transform: none;
+	font-weight: 400;
+	letter-spacing: 0;
+	font-style: italic;
+}
+
+/* STYLES FROM JOBS 2 */
+
+.border-top-sect{background:url(../img/sect-top-line.png) no-repeat;}
+
+/* Green Button */
+.green-button{display:block;background:url(../img/green-botton.png) right;color:white;font-family:arial;cursor:pointer;
+	text-transform:uppercase;font-size:13px;font-weight:bold;padding:11px 0 8px 11px;border-radius:2px;}
+.green-button:hover{box-shadow:0 0 3px #999;}
+.green-button:active{box-shadow:0 0 0px white;}
+.green-button.med-width{width:430px;}
+.green-button.small-width{width:200px;}
+.green-button.header_look{background:#50A748;border-radius:8px;}
+.button-disabled{background:gray;}
+
+

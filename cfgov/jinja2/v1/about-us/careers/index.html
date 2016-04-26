@@ -1,13 +1,11 @@
 {% extends 'layout-2-1-bleedbar.html' %}
-{% set query = queries.careers_preview %}
-{% set careers = query.search() %}
 
 {% block title -%}
     Careers at the CFPB | Consumer Financial Protection Bureau
 {%- endblock %}
 
 {% block desc -%}
-    {# TODO: Add page meta description. #}
+    Information on careers at the CFPB.
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -63,10 +61,10 @@
                    data-qa-hook="openings-section">
                 <h2 class="h3">Newest openings</h2>
                 <ul class="list list__unstyled">
-                    {% for career in careers %}
+                    {% for career in newest_careers %}
                     <li class="list_item">
                         <a class="list_link"
-                            href="{{ career.permalink }}">{{ career.title }}</a>
+                           href="{{ url('careers:detail',args=[career.pk]) }}">{{ career.title }}</a>
                         <p class="date">
                             CLOSING
                             {% import 'macros/time.html' as time %}

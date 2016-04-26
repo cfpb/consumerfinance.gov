@@ -69,17 +69,20 @@ def run():
 
     if not BrowsePage.objects.filter(title='Browse Page'):
         bp = BrowsePage(title='Browse Page', slug='browse-page', owner=admin_user)
+        bp.header = StreamValue(bp.header.stream_block, [{'type': 'featured_content', 'value': {'body': "<p>this is a featured content body</p>"}}], True)
+        bp.content = StreamValue(bp.content.stream_block, [{'type': 'expandable', 'value': {'label': 'this is an expandable'}}], True)
         publish_page(bp)
 
     # Filterable Pages
     if not BrowseFilterablePage.objects.filter(title='Browse Filterable Page'):
         bfp = BrowseFilterablePage(title='Browse Filterable Page', slug='browse-filterable-page', owner=admin_user)
-        bfp.header = StreamValue(bfp.header.stream_block, [{'type': 'text_introduction', 'value': {'body': '', 'has_rule': False, 'intro': 'this is an intro', 'heading': '', 'links': []}}], True)
+        bfp.header = StreamValue(bfp.header.stream_block, [{'type': 'text_introduction', 'value': {'intro': 'this is an intro'}}], True)
         publish_page(bfp)
 
     if not SublandingFilterablePage.objects.filter(title='Sublanding Filterable Page'):
         sfp = SublandingFilterablePage(title='Sublanding Filterable Page', slug='sublanding-filterable-page',
                                        owner=admin_user)
+        sfp.header = StreamValue(sfp.header.stream_block, [{'type': 'hero', 'value': {'heading': "this is a hero heading"}}], True)
         publish_page(sfp)
 
     if not EventArchivePage.objects.filter(title='Event Archive Page'):
@@ -93,9 +96,16 @@ def run():
 
     if not DocumentDetailPage.objects.filter(title='Document Detail Page'):
         ddp = DocumentDetailPage(title='Document Detail Page', slug='document-detail-page', owner=admin_user)
+        ddp.sidefoot = StreamValue(ddp.sidefoot.stream_block, [{'type': 'related_metadata', 'value': {'content': [{'type': 'text', 'value': {'heading': 'this is a related metadata heading'}}]}}], True)
         publish_page(ddp, bfp)
 
     if not LearnPage.objects.filter(title='Learn Page'):
         lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
+        lp.content = StreamValue(lp.content.stream_block, [{'type': 'full_width_text', 'value': [{'type': 'quote', 'value': {'body': 'this is a quote', 'citation': 'a citation'}}]}, {'type': 'call_to_action', 'value': {'paragraph_text': 'this is a call to action'}}], True)
         publish_page(lp, bfp)
+
+    if not DemoPage.objects.filter(title='Demo Page'):
+        dp = DemoPage(title='Demo Page', slug='demo-page', owner=admin_user)
+        dp.sidefoot = StreamValue(dp.sidefoot.stream_block, [{'type': 'related_links', 'value': {'links': [{'url': '/url', 'text': 'this is a related link'}]}}], True)
+        publish_page(dp)
 
