@@ -56,12 +56,14 @@ INSTALLED_APPS = (
     'core',
     'sheerlike',
     'django_extensions',
+    'reversion',
+    'tinymce'
 )
 
 OPTIONAL_APPS=[
     {'import':'noticeandcomment','apps':('noticeandcomment','cfpb_common')},
-    {'import':'cfpb_common','apps':('cfpb_common','cfpb_common')},
-    {'import':'jobmanager','apps':('jobmanager','cfpb_common', 'reversion')},
+    {'import':'cfpb_common','apps':('cfpb_common',)},
+    {'import':'jobmanager','apps':('jobmanager', 'reversion', 'tinymce')},
     {'import':'cal','apps':('cal','cfpb_common')},
     {'import':'comparisontool','apps':('comparisontool','haystack','cfpb_common')},
     {'import':'agreements','apps':('agreements','haystack', 'cfpb_common')},
