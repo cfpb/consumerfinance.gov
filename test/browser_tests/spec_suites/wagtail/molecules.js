@@ -93,7 +93,7 @@ describe( 'Call to Action', function() {
 
 } );
 
-describe( 'Call to Action', function() {
+describe( 'Hero', function() {
   beforeAll( function() {
     browser.get( '/sublanding-filterable-page/' );
   } );
