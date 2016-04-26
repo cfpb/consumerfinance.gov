@@ -18,10 +18,6 @@ from django.contrib.messages import SUCCESS
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 from core.views import submit_comment
 
-#import cfgov.settings.base as settings
-#from cfgov.settings.base import REGSGOV_BASE_URL, REGSGOV_API_KEY
-
-
 
 class GovDeliverySubscribeTest(TestCase):
     """
