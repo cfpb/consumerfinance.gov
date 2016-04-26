@@ -65,7 +65,7 @@ OPTIONAL_APPS=[
     {'import':'cal','apps':('cal','cfpb_common')},
     {'import':'comparisontool','apps':('comparisontool','haystack','cfpb_common')},
     {'import':'agreements','apps':('agreements','haystack', 'cfpb_common')},
-    {'import':'knowledgebase','apps':('knowledgebase','haystack', 'cfpb_common', 'reversion')},
+    {'import':'knowledgebase','apps':('knowledgebase','haystack', 'cfpb_common', 'reversion', 'tinymce')},
     {'import':'selfregistration','apps':('selfregistration','cfpb_common')},
     {'import':'hud_api_replace','apps':('hud_api_replace','cfpb_common')},
     {'import':'retirement_api','apps':('retirement_api',)},
@@ -219,11 +219,6 @@ SHEER_PROCESSORS = \
             "url": "$WORDPRESS/leadership-calendar/cfpb-leadership.json",
             "processor": "processors.django_calendar_event",
             "mappings": MAPPINGS.child("calendar_event.json")
-        },
-        "careers": {
-            "url": "$WORDPRESS/jobs/jobs.json",
-            "processor": "processors.django_career",
-            "mappings": MAPPINGS.child("career.json")
         },
         "contact": {
             "url": "$WORDPRESS/api/get_posts/?post_type=contact",
