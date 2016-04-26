@@ -322,8 +322,7 @@ PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/pyth
 #LEGACY APPS
 
 STATIC_VERSION = ''
-LEGACY_APP_URLS={'jobmanager': True,
-                 'cal':False,
+LEGACY_APP_URLS={ 'cal':False,
                  'comparisontool':True,
                  'agreements':True,
                  'knowledgebase':True,

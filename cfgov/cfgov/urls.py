@@ -194,6 +194,12 @@ urlpatterns = [
     url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
     # Report redirects
     url(r'^reports/(?P<path>.*)$', RedirectView.as_view(url='/data-research/research-reports/%(path)s', permanent=True)),
+    url(r'^jobs/supervision/$', TemplateView.as_view(template_name='jobmanager/supervision.html'), name='jobs_supervision'),
+
+    url(r'^jobs/technology-innovation-fellows/$',
+        TemplateView.as_view(template_name='jobmanager/technology-innovation-fellows.html'), 
+        name='technology_innovation_fellows'),
+    url(r'^jobs/fellowship_form_submit/$', 'jobmanager.views.fellowship_form_submit', name='fellowship_form_submit'),
 ]
 
 if settings.ALLOW_ADMIN_URL:

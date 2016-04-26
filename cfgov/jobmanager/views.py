@@ -62,7 +62,7 @@ def current_openings(request):
 
     today = timezone.now().date()
     jobs = Job.objects.filter(open_date__lte=today,close_date__gte=today,           
-            active=True).order_by('close_date')
+            active=True).order_by('close_date','title')
     
     return render(request, "about-us/careers/current-openings/index.html",
         {'careers':jobs})

@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta property="og:title" content="Technology & Innovation Fellows"/>
 <meta property="og:type" content="government"/>
-<meta property="og:url" content="{% url 'careers:technology_innovation_fellows' %}"/>
+<meta property="og:url" content="{% url 'technology_innovation_fellows' %}"/>
 
 {% endblock %}
 
@@ -22,7 +22,7 @@
 
 {% block content %}
 <script type="text/javascript">
-fellowship_form_submit_url = "{% url 'careers:fellowship_form_submit' %}";
+fellowship_form_submit_url = "{% url 'fellowship_form_submit' %}";
 </script>
 <div class="jobs-theme">
     <div class="sub-theme-bold sub-theme-bold--divided">
@@ -61,7 +61,7 @@ fellowship_form_submit_url = "{% url 'careers:fellowship_form_submit' %}";
                     </ul>
                 </div><!-- END .span4 -->
                 <div class="span5 offset1">
-                    <form method="POST" class="fellows-signup-form" id="get-update-form"{#  action="{% url 'careers:fellowship_form_submit' %}" #}>
+                    <form method="POST" class="fellows-signup-form" id="get-update-form"{#  action="{% url 'fellowship_form_submit' %}" #}>
                         <h3>Sign up for fellowship updates</h3>
                         <label>
                             <div>First Name</div>
