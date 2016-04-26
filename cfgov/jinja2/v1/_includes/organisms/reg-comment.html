@@ -25,60 +25,40 @@
           action="/regulation-comment/new/"
           method="POST"
           enctype="multipart/form-data">
-        <div class="m-form-field-with-button">
-            <div class="form-group">
-                <label for="general_comment">
-                    Enter your comments
-                </label>
-                <textarea name="general_comment" rows="5" required></textarea>
+        <label for="general_comment">
+            Enter your comments
+        </label>
+        <textarea name="general_comment" rows="5" required></textarea>
 
-                <p class="u-mb30">
-                    If you would like to include an attachment with your response,
-                    please submit your comment at
-                    <a class="icon-link icon-link__external-link"
-                       href="https://www.regulations.gov/">
-                        <span class="icon-link_text">Regulations.gov</span>
-                    </a>.
-                </p>
-            </div>
-        </div>
+        <p class="u-mb30">
+            If you would like to include an attachment with your response,
+            please submit your comment at
+            <a class="icon-link icon-link__external-link"
+               href="https://www.regulations.gov/">
+                <span class="icon-link_text">Regulations.gov</span>
+            </a>.
+        </p>
 
-        <div class="m-form-field-with-button">
-            <div class="form-group">
-                <label for="first_name">
-                    First name
-                </label>
-                <input type="text" id="first_name" name="first_name" required>
-            </div>
-        </div>
+        <label for="first_name">
+            First name
+        </label>
+        <input type="text" id="first_name" name="first_name" required>
 
-        <div class="m-form-field-with-button">
-            <div class="form-group">
-                <label for="last_name">
-                    Last name
-                </label>
-                <input type="text" id="last_name" name="last_name" required>
-            </div>
-        </div>
+        <label for="last_name">
+            Last name
+        </label>
+        <input type="text" id="last_name" name="last_name" required>
 
-        <div class="m-form-field-with-button">
-            <div class="form-group">
-                <label for="email">
-                    Email address
-                    <span class="label_note">(optional)</span>
-                </label>
-                <input type="text" id="email" name="email">
-            </div>
-        </div>
+        <label for="email">
+            Email address
+            <span class="label_note">(optional)</span>
+        </label>
+        <input type="email" id="email" name="email"
+               placeholder="example@mail.com">
 
-        <div class="m-form-field-with-button">
-            <input class="btn btn__full" type="submit"
-                   value="Submit your feedback">
-        </div>
+        <input class="btn btn__full" type="submit" value="Submit your feedback">
 
-        <div class="form-group">
-            <input type="hidden" name="comment_on" value="{{ value.document_id }}">
-        </div>
+        <input type="hidden" name="comment_on" value="{{ value.document_id }}">
     </form>
 
     <p>
