@@ -212,9 +212,14 @@
                 {{ notification('success', true, posts.paginator.count ~ ' filtered results') }}
             {% endif %}
         {% endif %}
-        {% for post in posts %}
-            {{ post_preview(post, controls, form_id=index) }}
-        {% endfor %}
+        {% if controls.categories.page_type == 'activity-log' %}
+            {% import 'activity-log/_activity-list.html' as activity_list with context %}
+            {{ activity_list.render(posts, index) }}
+        {% else %}
+            {% for post in posts %}
+                {{ post_preview(post, controls, form_id=index) }}
+            {% endfor %}
+        {% endif %}
         {% include 'molecules/pagination.html' %}
     </div>
 {% endmacro %}

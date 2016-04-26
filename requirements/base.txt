@@ -7,6 +7,7 @@ django>=1.8,<=1.8.99
 six==1.9.0
 python-dateutil==2.1
 requests==2.7.0
+requests_toolbelt==0.6.0
 git+https://github.com/rosskarchner/govdelivery.git#egg=govdelivery
 icalendar==3.9.0
 django-localflavor==1.1
@@ -17,3 +18,4 @@ boto==2.38.0
 django-storages==1.1.8
 django-haystack==2.4.1
 beautifulsoup4==4.4.1
+django-overextends==0.4.1

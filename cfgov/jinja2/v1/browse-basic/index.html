@@ -27,7 +27,8 @@
     {%- endfor %}
 
     {% for block in page.content -%}
-        {% include 'templates/render_block.html' with context %}
+        {% import 'templates/render_block.html' as render_block with context %}
+        {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 
     {% if page.sidefoot %}

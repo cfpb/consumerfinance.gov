@@ -68,7 +68,7 @@
     {%- if options.show_filters_label -%}
         <li class="list_item filtered-by_header">
         {%- if posts | list | length > 0 -%}
-          {% if posts.paginator is defined -%}
+          {% if posts.paginator -%}
             {{ posts.paginator.count }} filtered result{{ 's' if posts.paginator.count > 1 }} for
           {% else -%}
             {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
@@ -81,16 +81,16 @@
     {%- for filter in active_filters %}
         <li class="list_item filtered-by_filter">
             {{ 'Blog' if filter == 'post' else filter }}
-        {%- if not loop.last or active_date_filters | length > 0 -%}
+        {% if not loop.last or active_date_filters | length > 0 %}
             ,
-        {%- endif %}
+        {% endif %}
         </li>
     {% endfor %}
     {%- if active_date_filters | length > 0 -%}
         <li class="list_item filtered-by_filter">
         {%- for filter in active_date_filters %}
             {{ filter | date("%B %Y") }}
-            {{ '&ndash;' | safe if not loop.last }}
+            {{ '&ndash;' | safe if not loop.last else '' }}
         {%- endfor -%}
         </li>
     {%- endif %}
@@ -98,7 +98,7 @@
     {% if options.show_unfiltered_count and options.show_filters_label %}
         <li class="list_item">
             <span class="filtered-by_header">
-              {% if posts.paginator is defined -%}
+              {% if posts.paginator -%}
                 {{ posts.paginator.count }} result{{ 's' if posts.paginator.count > 1 }}
               {% else -%}
                 {{ posts.total }} result{{ 's' if posts.total > 1 }}

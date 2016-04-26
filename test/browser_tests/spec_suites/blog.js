@@ -16,7 +16,7 @@ describe( 'The Blog Page', function() {
     expect( page.pageTitle() ).toContain( 'Blog' );
   } );
 
-  it( 'should include a main title', function() {
+  xit( 'should include a main title', function() {
     expect( page.mainTitle.getText() ).toBe( 'Blog' );
   } );
 
@@ -37,7 +37,7 @@ describe( 'The Blog Page', function() {
   } );
 
   it( 'should include an Email Subscribe label', function() {
-    expect( page.emailFormLabel.getText() ).toBe( 'Email address' );
+    expect( page.emailFormLabel.getText() ).toBe( 'Email Address' );
   } );
 
   it( 'should include an Email Subscribe input', function() {
@@ -55,7 +55,7 @@ describe( 'The Blog Page', function() {
 
   it( 'should include an Email Subscribe button', function() {
     expect( page.emailFormBtn.getAttribute( 'value' ) )
-    .toBe( 'Sign up' );
+    .toBe( 'Sign Up' );
   } );
 
   it( 'should include an RSS Subscribe section', function() {
@@ -71,10 +71,10 @@ describe( 'The Blog Page', function() {
   } );
 
   it( 'should include a search filter button', function() {
-    expect( page.searchFilterBtn.getText() ).toContain( 'posts' );
+    expect( page.searchFilterBtn.getText() ).toContain( 'Posts' );
   } );
 
-  it( 'should include a search filter categories', function() {
+  xit( 'should include a search filter categories', function() {
     var searchFilterBtn = page.searchFilterBtn;
     var searchFilterCategories = page.searchFilterCategories;
     searchFilterBtn.click();
@@ -102,7 +102,7 @@ describe( 'The Blog Page', function() {
     expect( page.searchFilterHideBtn.isDisplayed() ).toBe( false );
   } );
 
-  it( 'should include pagination results', function() {
+  xit( 'should include pagination results', function() {
     expect( page.paginationResults.count() ).toBeGreaterThan( 0 );
   } );
 

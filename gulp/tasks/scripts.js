@@ -17,6 +17,23 @@ var paths = require( '../../config/environment' ).paths;
 var webpackConfig = require( '../../config/webpack-config.js' );
 var webpackStream = require( 'webpack-stream' );
 
+/**
+ * Standardize webpack workflow for handling script
+ * configuration, source, and destination settings.
+ * @param {Object} config - Settings for webpack.
+ * @param {string} src - Source URL in the unprocessed assets directory.
+ * @param {string} dest - Destination URL in the processed assets directory.
+ * @returns {PassThrough} A source stream.
+ */
+function _processScript( config, src, dest ) {
+  return gulp.src( paths.unprocessed + src )
+    .pipe( webpackStream( config ) )
+    .on( 'error', handleErrors )
+    .pipe( gulp.dest( paths.processed + dest ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
 
 /**
  * Generate modernizr polyfill bundle.
@@ -26,9 +43,7 @@ function scriptsPolyfill() {
   return gulp.src( paths.unprocessed + '/js/routes/common.js' )
     .pipe( gulpModernizr( {
       tests:   [ 'csspointerevents', 'classlist', 'es5' ],
-      options: [ 'setClasses',
-                 'html5printshiv',
-                 'fnBind' ]
+      options: [ 'setClasses', 'html5printshiv' ]
     } ) )
     .pipe( gulpUglify() )
     .pipe( gulpRename( 'modernizr.min.js' ) )
@@ -45,13 +60,8 @@ function scriptsPolyfill() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsModern() {
-  return gulp.src( paths.unprocessed + '/js/routes/common.js' )
-    .pipe( webpackStream( webpackConfig.modernConf ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.processed + '/js/routes/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _processScript( webpackConfig.modernConf,
+                         '/js/routes/common.js', '/js/routes/' );
 }
 
 /**
@@ -59,13 +69,8 @@ function scriptsModern() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsIE() {
-  return gulp.src( paths.unprocessed + '/js/ie/common.ie.js' )
-    .pipe( webpackStream( webpackConfig.ieConf ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.processed + '/js/ie/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _processScript( webpackConfig.ieConf,
+                         '/js/ie/common.ie.js', '/js/ie/' );
 }
 
 /**
@@ -75,13 +80,8 @@ function scriptsIE() {
  * @returns {PassThrough} A source stream.
  */
 function scriptsOnDemand() {
-  return gulp.src( paths.unprocessed + '/js/routes/on-demand/*.js' )
-    .pipe( webpackStream( webpackConfig.onDemandConf ) )
-    .on( 'error', handleErrors )
-    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
-    .pipe( browserSync.reload( {
-      stream: true
-    } ) );
+  return _processScript( webpackConfig.onDemandConf,
+                         '/js/routes/on-demand/*.js', '/js/atomic/' );
 }
 
 /**

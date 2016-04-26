@@ -1,0 +1,50 @@
+{# ==========================================================================
+
+   email_signup.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates an email sign up form when given:
+
+   value:         An object used to customize the markup.
+
+   value.heading: A string with the title for the header slug.
+
+   value.text:    The text used within the description markup.
+
+   value.gd_code: A GovDelivery code for a specified mailing list.
+
+   ========================================================================== #}
+
+<div class="o-email-signup">
+{% if value.heading %}
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            {{ value.heading }}
+        </span>
+    </h2>
+{% endif %}
+
+<form id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
+      action="/subscriptions/new/"
+      method="POST"
+      enctype="application/x-www-form-urlencoded">
+    {% if value.text %}
+        <p>
+            {{ value.text }}
+        </p>
+    {% endif %}
+
+    {% set field = 'email' %}
+    {% for form in value.form_field %}
+        {{ render_stream_child(form) }}
+    {% endfor %}
+
+    <div class="form-group">
+        <input type="hidden" name="code" value="{{ value.gd_code }}">
+    </div>
+</form>
+</div>
+

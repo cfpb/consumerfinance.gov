@@ -55,6 +55,11 @@ describe( 'GlobalSearch', function() {
         } );
 
         it( 'should NOT have a search trigger', function() {
+          // Pause to allow the transition to complete animating.
+          // Update to use `protractor.until.elementIsNotVisible`
+          // if this causes random failures due to differences in
+          // execution time of the transition.
+          browser.sleep( 500 );
           expect( _dom.trigger.isDisplayed() ).toBe( false );
         } );
 

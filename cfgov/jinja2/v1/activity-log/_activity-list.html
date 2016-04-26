@@ -1,0 +1,59 @@
+{% import 'macros/category-slug.html' as category_slug %}
+{% import 'macros/time.html' as time %}
+
+{% macro render(posts, form_id=0) %}
+    {% set page_url = get_protected_url(page) %}
+    <table class="u-w100pct" data-qa-hook="filter-results">
+        <tbody>
+            <tr class="u-visually-hidden">
+                <th>
+                    Category
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Date published
+                </th>
+            </tr>
+        {%- for post in posts %}
+            {% set post_url = get_protected_url(post) %}
+            <tr>
+                <td class="u-w20pct">
+                    {% if is_blog(post) %}
+                        {{ category_slug.render('blog',
+                                page_url,
+                                'post_slug meta-header_left',
+                                false, form_id) }}
+                    {% elif is_report(post) %}
+                        {{ category_slug.render('report',
+                                page_url,
+                                'post_slug meta-header_left',
+                                false, form_id) }}
+                    {% else %}
+                        {% for cat in post.categories.all() %}
+                            {% if loop.index > 1 %}
+                                |
+                            {% endif %}
+                            {{ category_slug.render(cat.name,
+                                    page_url,
+                                    'post_slug meta-header_left',
+                                    false, form_id) }}
+                        {% endfor %}
+                    {% endif %}
+                </td>
+                <td class="u-w65pct">
+                    <a href="{{ post_url }}">
+                        <span class="h4 u-mb0">
+                            {{ post.preview_title | safe if post.preview_title else post.title }}
+                        </span>
+                    </a>
+                </td>
+                <td class="u-w15pct">
+                    {{ time.render(post.date_published, {'date':true}) }}
+                </td>
+            </tr>
+        {%- endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
