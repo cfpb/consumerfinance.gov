@@ -41,7 +41,6 @@ def index(request):
 
 def detail(request,job_id):
     today = timezone.now().date()
-    referer_view = get_referer_view(request) or 'location'  # default
     job_pk = int(job_id)
     job = Job.objects.filter(pk=job_id, open_date__lte=today,
             close_date__gte=today,active=True).get()
@@ -63,7 +62,7 @@ def current_openings(request):
 
     today = timezone.now().date()
     jobs = Job.objects.filter(open_date__lte=today,close_date__gte=today,           
-            active=True).order_by('-open_date')[:5]
+            active=True).order_by('close_date')
     
     return render(request, "about-us/careers/current-openings/index.html",
         {'careers':jobs})
