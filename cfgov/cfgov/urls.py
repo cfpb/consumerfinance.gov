@@ -8,6 +8,7 @@ from django.views.generic.base import TemplateView, RedirectView
 from legacy.views import HousingCounselorPDFView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
+from sheerlike.feeds import SheerlikeFeed
 
 from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
     change_password, password_reset_confirm, cfpb_login, create_user, edit_user
@@ -159,6 +160,32 @@ urlpatterns = [
                 template_name='govdelivery-subscribe/server-error/index.html'),
             name='server_error')],
         namespace='govdelivery')),
+
+    url(r'^regulation-comment/new/$',
+        'core.views.regsgov_comment',
+        name='reg_comment'),
+
+    url(r'^regulation-comment/', include([
+        url(r'^success/$',
+            TemplateView.as_view(
+                template_name='regulation-comment/success/index.html'),
+            #'core.views.comment_success',
+            name='success'),
+        url(r'^error/$',
+            TemplateView.as_view(
+                template_name='regulation-comment/error/index.html'),
+            name='user_error'),
+        url(r'^server-error/$',
+            TemplateView.as_view(
+                template_name='regulation-comment/server-error/index.html'),
+            name='server_error')],
+        namespace='reg_comment')),
+
+    # Testing reg comment form
+    url(r'^reg-comment-form-test/$',
+        SheerTemplateView.as_view(
+            template_name='regulation-comment/reg-comment-form-test.html'),
+        name='reg-comment-form-test'),
 
     url(r'^feed/blog/$', BlogFeed(), name='blog_feed'),
     url(r'^feed/newsroom/$', NewsroomFeed(), name='newsroom_feed'),

@@ -514,3 +514,10 @@ CACHES = {
 }
 
 PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
+
+# GovDelivery environment variables
+ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
+
+# Regulations.gov environment variables
+REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
+REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
