@@ -32,25 +32,26 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   // Search settings.
   var MIN_CHARS = 3;
+  var MAX_SELECTIONS = 5;
 
   // Internal vars.
   var _dom = element;
   var _index = -1;
   var _isBlurSkipped = false;
-  var _selections = [];
+  var _selectionsCount = 0;
   var _name;
   var _options;
-  var _optionData;
-  var _filtered;
+  var _optionsData;
+  var _filteredData;
   var _placeholder;
 
   // Markup elems, conver this to templating engine in the future.
-  var _container;
-  var _choices;
-  var _header;
-  var _search;
-  var _fieldset;
-  var _list;
+  var _containerDom;
+  var _selectionsDom;
+  var _headerDom;
+  var _searchDom;
+  var _fieldsetDom;
+  var _optionsDom;
 
   /**
    * Set up and create the multi-select.
@@ -60,15 +61,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _name = _dom.name;
     _options = _dom.options || [];
     _placeholder = _dom.getAttribute( 'placeholder' );
-    _filtered = _optionData = _sanitizeList( _options );
+    _filteredData = _optionsData = _sanitizeOptions( _options );
 
-    for ( var i = 0, l = _filtered.length; i < l; i++ ) {
-      if ( _filtered[i].checked ) {
-        _selections.push( _filtered[i] );
-      }
-    }
-
-    if ( _optionData.length > 0 ) {
+    if ( _optionsData.length > 0 ) {
       _populateMarkup();
       _bindEvents();
       _dom.parentNode.removeChild( _dom );
@@ -82,9 +77,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * @returns {object} The Multiselect instance.
    */
   function expand() {
-    _container.classList.add( 'active' );
-    _fieldset.classList.remove( 'u-invisible' );
-    _fieldset.setAttribute( 'aria-hidden', false );
+    _containerDom.classList.add( 'active' );
+    _fieldsetDom.classList.remove( 'u-invisible' );
+    _fieldsetDom.setAttribute( 'aria-hidden', false );
     return this;
   }
 
@@ -93,9 +88,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * @returns {object} The Multiselect instance.
    */
   function collapse() {
-    _container.classList.remove( 'active' );
-    _fieldset.classList.add( 'u-invisible' );
-    _fieldset.setAttribute( 'aria-hidden', true );
+    _containerDom.classList.remove( 'active' );
+    _fieldsetDom.classList.add( 'u-invisible' );
+    _fieldsetDom.setAttribute( 'aria-hidden', true );
     _index = -1;
     return this;
   }
@@ -105,7 +100,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * @param   {array} list The options from the parent select elem
    * @returns {array}      An array of option objects
    */
-  function _sanitizeList( list ) {
+  function _sanitizeOptions( list ) {
     var item;
     var cleaned = [];
 
@@ -133,89 +128,85 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * Populates and injects the markup for the custom multi-select
    */
   function _populateMarkup() {
-    // Add a container for our markup and hide the default select elem
-    _container = domCreate( 'div', {
+    // Add a container for our markup
+    _containerDom = domCreate( 'div', {
       className: 'cf-multi-select',
       around:    _dom
     } );
 
     // Create all our markup but wait to manipulate the DOM just once
-    _choices = domCreate( 'ul', {
+    _selectionsDom = domCreate( 'ul', {
       className: 'list__unstyled cf-multi-select_choices',
-      inside:    _container
+      inside:    _containerDom
     } );
 
-    _selections.forEach( function( option ) {
-      var li = domCreate( 'li', {
-        'data-option': option.value
-      } );
-
-      domCreate( 'label', {
-        'for':         option.value,
-        'textContent': option.text,
-        'className':   'cf-multi-select_label',
-        'inside':      li
-      } );
-
-      _choices.appendChild( li );
-    } );
-
-    _header = domCreate( 'header', {
+    _headerDom = domCreate( 'header', {
       className: 'cf-multi-select_header'
     } );
 
-    _search = domCreate( 'input', {
+    _searchDom = domCreate( 'input', {
       className:   'cf-multi-select_search',
       type:        'text',
       placeholder: _placeholder || 'Choose up to five',
-      inside:      _header,
+      inside:      _headerDom,
       id:          _name
     } );
 
-    _fieldset = domCreate( 'fieldset', {
+    _fieldsetDom = domCreate( 'fieldset', {
       'className':   'cf-multi-select_fieldset u-invisible',
       'aria-hidden': 'true'
     } );
 
-    _list = domCreate( 'ul', {
+    _optionsDom = domCreate( 'ul', {
       className: 'list__unstyled cf-multi-select_options',
-      inside:    _fieldset
+      inside:    _fieldsetDom
     } );
 
-    _optionData.forEach( function( option ) {
-      var li = domCreate( 'li', {
+    _optionsData.forEach( function( option ) {
+      var _optionsItemDom = domCreate( 'li', {
         'data-option': option.value
       } );
 
-      var inputData = {
+      domCreate( 'input', {
         'id':     option.value,
         // Type must come before value or IE fails
-        'type':   'checkbox',
-        'value':  option.value,
-        'name':   _name,
-        'class':  'cf-input cf-multi-select_checkbox',
-        'inside': li
-      };
-
-      if ( option.checked ) {
-        inputData.checked = true;
-      }
-
-      domCreate( 'input', inputData );
+        'type':    'checkbox',
+        'value':   option.value,
+        'name':    _name,
+        'class':   'cf-input cf-multi-select_checkbox',
+        'inside':  _optionsItemDom,
+        'checked': option.checked
+      } );
 
       domCreate( 'label', {
         'for':         option.value,
         'textContent': option.text,
         'className':   'cf-multi-select_label',
-        'inside':      li
+        'inside':      _optionsItemDom
       } );
 
-      _list.appendChild( li );
+      _optionsDom.appendChild( _optionsItemDom );
+
+      if ( option.checked ) {
+        var selectionsItemDom = domCreate( 'li', {
+          'data-option': option.value
+        } );
+
+        domCreate( 'label', {
+          'for':         option.value,
+          'textContent': option.text,
+          'className':   'cf-multi-select_label',
+          'inside':      selectionsItemDom
+        } );
+
+        _selectionsDom.appendChild( selectionsItemDom );
+        _selectionsCount += 1;
+      }
     } );
 
     // Write our new markup to the DOM
-    _container.appendChild( _header );
-    _container.appendChild( _fieldset );
+    _containerDom.appendChild( _headerDom );
+    _containerDom.appendChild( _fieldsetDom );
   }
 
   /**
@@ -224,7 +215,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    *                             current focus
    */
   function _highlight( direction ) {
-    var count = _filtered.length;
+    var count = _filteredData.length;
 
     if ( direction === DIR_NEXT && _index < count - 1 ) {
       _index += 1;
@@ -233,15 +224,15 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     }
 
     if ( _index > -1 ) {
-      var value = _filtered[_index].value;
-      var item = _list.querySelector( '[data-option="' + value + '"]' );
+      var value = _filteredData[_index].value;
+      var item = _optionsDom.querySelector( '[data-option="' + value + '"]' );
       var input = item.querySelector( 'input' );
 
       _isBlurSkipped = true;
       input.focus();
     } else {
       _isBlurSkipped = false;
-      _search.focus();
+      _searchDom.focus();
     }
   }
 
@@ -250,41 +241,44 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * @param   {string} value The value of the option the user has chosen
    */
   function _updateSelections( value ) {
-    var optionIndex = arrayHelpers.indexOfObject( _optionData, 'value', value );
-    var option = _optionData[optionIndex] || _optionData[_index];
+    var optionIndex
+      = arrayHelpers.indexOfObject( _optionsData, 'value', value );
+    var option = _optionsData[optionIndex] || _optionsData[_index];
 
     if ( option ) {
-      var selectionIndex = _selections.indexOf( option );
-      var li;
+      var _selectionsItemDom;
 
-      if ( selectionIndex > -1 ) {
-        _selections.splice( selectionIndex, 1 );
-
-        if ( _list.classList.contains( 'max-selections' ) ) {
-          _list.classList.remove( 'max-selections' );
+      if ( option.checked ) {
+        if ( _optionsDom.classList.contains( 'max-selections' ) ) {
+          _optionsDom.classList.remove( 'max-selections' );
         }
 
-        li = _choices.querySelector( 'li[data-option="' + option.value + '"]' );
+        _selectionsItemDom =_selectionsDom
+          .querySelector( '[data-option="' + option.value + '"]' );
 
-        if ( li ) {
-          _choices.removeChild( li );
+        if ( _selectionsItemDom ) {
+          _selectionsDom.removeChild( _selectionsItemDom );
         }
+        option.checked = false;
+        _selectionsCount -= 1;
       } else {
-        li = domCreate( 'li', {
+        _selectionsItemDom = domCreate( 'li', {
           'data-option': option.value
         } );
 
         domCreate( 'label', {
-          'for': option.value,
+          'for':       option.value,
           'innerHTML': option.text,
-          'inside': li
+          'inside':    _selectionsItemDom
         } );
 
-        _choices.appendChild( li );
-        _selections.push( option );
+        _selectionsDom.appendChild( _selectionsItemDom );
 
-        if ( _selections.length > 4 ) {
-          _list.classList.add( 'max-selections' );
+        option.checked = true;
+        _selectionsCount += 1;
+
+        if ( _selectionsCount >= MAX_SELECTIONS ) {
+          _optionsDom.classList.add( 'max-selections' );
         }
       }
     }
@@ -292,8 +286,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _index = -1;
     _isBlurSkipped = false;
 
-    if ( _fieldset.getAttribute( 'aria-hidden' ) === 'false' ) {
-      _search.focus();
+    if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'false' ) {
+      _searchDom.focus();
     }
   }
 
@@ -305,10 +299,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   function _evaluate( value ) {
     _resetFilter();
 
-    if ( value.length >= MIN_CHARS && _optionData.length > 0 ) {
+    if ( value.length >= MIN_CHARS && _optionsData.length > 0 ) {
       _index = -1;
 
-      _filtered = _optionData.filter( function( item ) {
+      _filteredData = _optionsData.filter( function( item ) {
         return strings.stringMatch( item.text, value );
       } );
 
@@ -317,10 +311,10 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Resets the search input
+   * Resets the search input and filtering
    */
   function _resetSearch() {
-    _search.value = '';
+    _searchDom.value = '';
     _resetFilter();
   }
 
@@ -328,27 +322,28 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * Resets the filtered option list
    */
   function _resetFilter() {
-    _list.classList.remove( 'filtered', 'no-results' );
+    _optionsDom.classList.remove( 'filtered', 'no-results' );
 
-    for ( var i = 0, len = _list.children.length; i < len; i++ ) {
-      _list.children[i].classList.remove( 'filter-match' );
+    for ( var i = 0, len = _optionsDom.children.length; i < len; i++ ) {
+      _optionsDom.children[i].classList.remove( 'filter-match' );
     }
 
-    _filtered = _optionData;
+    _filteredData = _optionsData;
   }
 
   /**
    * Filters the list of options based on the results of the evaluate function
    */
   function _filterResults() {
-    _list.classList.add( 'filtered' );
-    var item;
+    _optionsDom.classList.add( 'filtered' );
+    var _optionsItemDom;
 
-    if ( _filtered.length > 0 ) {
-      _filtered.forEach( function( option ) {
-        item = _list.querySelector( 'li[data-option="' + option.value + '"]' );
+    if ( _filteredData.length > 0 ) {
+      _filteredData.forEach( function( option ) {
+        _optionsItemDom =
+          _optionsDom.querySelector( '[data-option="' + option.value + '"]' );
 
-        item.classList.add( 'filter-match' );
+        _optionsItemDom.classList.add( 'filter-match' );
       } );
     } else {
       _noResults();
@@ -359,17 +354,17 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * Updates the list of options to show the user there are no matching results
    */
   function _noResults() {
-    _list.classList.add( 'no-results' );
-    _list.classList.remove( 'filtered' );
+    _optionsDom.classList.add( 'no-results' );
+    _optionsDom.classList.remove( 'filtered' );
   }
 
   /**
    * Binds events to the search input, option list, and checkboxes
    */
   function _bindEvents() {
-    var inputs = _list.querySelectorAll( 'input' );
+    var inputs = _optionsDom.querySelectorAll( 'input' );
 
-    bindEvent( _search, {
+    bindEvent( _searchDom, {
       input: function() {
         _evaluate( this.value );
       },
@@ -378,19 +373,19 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       },
       blur: function() {
         if ( !_isBlurSkipped &&
-              _fieldset.getAttribute( 'aria-hidden' ) === 'false' ) {
+              _fieldsetDom.getAttribute( 'aria-hidden' ) === 'false' ) {
           collapse();
         }
       },
       mousedown: function() {
-        if ( _fieldset.getAttribute( 'aria-hidden' ) === 'true' ) {
+        if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'true' ) {
           expand();
         }
       },
       keydown: function( event ) {
         var key = event.keyCode;
 
-        if ( _fieldset.getAttribute( 'aria-hidden' ) === 'true' &&
+        if ( _fieldsetDom.getAttribute( 'aria-hidden' ) === 'true' &&
              key !== KEY_TAB ) {
           expand();
         }
@@ -405,13 +400,13 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           _highlight( DIR_NEXT );
         } else if ( key === KEY_TAB &&
                     !event.shiftKey &&
-                    _fieldset.getAttribute( 'aria-hidden' ) === 'false' ) {
+                    _fieldsetDom.getAttribute( 'aria-hidden' ) === 'false' ) {
           collapse();
         }
       }
     } );
 
-    bindEvent( _list, {
+    bindEvent( _optionsDom, {
       mousedown: function() {
         _isBlurSkipped = true;
       },
@@ -425,7 +420,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
           queryOne( event.target ).dispatchEvent( 'change' );
         } else if ( key === KEY_ESCAPE ) {
-          _search.focus();
+          _searchDom.focus();
           collapse();
         } else if ( key === KEY_UP ) {
           _highlight( DIR_PREV );
@@ -435,7 +430,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       }
     } );
 
-    bindEvent( _fieldset, {
+    bindEvent( _fieldsetDom, {
       mousedown: function() {
         _isBlurSkipped = true;
       }
@@ -455,25 +450,6 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   function _changeHandler( event ) {
     _updateSelections( event.target.value );
     _resetSearch();
-  }
-
-  /**
-   * Tests if the user's query matches the text input
-   * @param   {string} text  The text to test against
-   * @param   {string} value The value the user has entered
-   * @returns {boolean}      Returns the boolean result of the test
-   */
-  function _filterContains( text, value ) {
-    return RegExp( _regExpEscape( value.trim() ), 'i' ).test( text );
-  }
-
-  /**
-   * Escapes a string
-   * @param   {string} s The string to escape
-   * @returns {string}   The escaped string
-   */
-  function _regExpEscape( s ) {
-    return s.replace( /[-\\^$*+?.()|[\]{}]/g, '\\$&' );
   }
 
   // Attach public events.

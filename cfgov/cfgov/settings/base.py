@@ -56,16 +56,18 @@ INSTALLED_APPS = (
     'core',
     'sheerlike',
     'django_extensions',
+    'reversion',
+    'tinymce'
 )
 
 OPTIONAL_APPS=[
     {'import':'noticeandcomment','apps':('noticeandcomment','cfpb_common')},
-    {'import':'cfpb_common','apps':('cfpb_common','cfpb_common')},
-    {'import':'jobmanager','apps':('jobmanager','cfpb_common', 'reversion')},
+    {'import':'cfpb_common','apps':('cfpb_common',)},
+    {'import':'jobmanager','apps':('jobmanager', 'reversion', 'tinymce')},
     {'import':'cal','apps':('cal','cfpb_common')},
     {'import':'comparisontool','apps':('comparisontool','haystack','cfpb_common')},
     {'import':'agreements','apps':('agreements','haystack', 'cfpb_common')},
-    {'import':'knowledgebase','apps':('knowledgebase','haystack', 'cfpb_common', 'reversion')},
+    {'import':'knowledgebase','apps':('knowledgebase','haystack', 'cfpb_common', 'reversion', 'tinymce')},
     {'import':'selfregistration','apps':('selfregistration','cfpb_common')},
     {'import':'hud_api_replace','apps':('hud_api_replace','cfpb_common')},
     {'import':'retirement_api','apps':('retirement_api',)},
@@ -220,11 +222,6 @@ SHEER_PROCESSORS = \
             "processor": "processors.django_calendar_event",
             "mappings": MAPPINGS.child("calendar_event.json")
         },
-        "careers": {
-            "url": "$WORDPRESS/jobs/jobs.json",
-            "processor": "processors.django_career",
-            "mappings": MAPPINGS.child("career.json")
-        },
         "contact": {
             "url": "$WORDPRESS/api/get_posts/?post_type=contact",
             "processor": "processors.wordpress_contact",
@@ -327,8 +324,7 @@ PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/pyth
 #LEGACY APPS
 
 STATIC_VERSION = ''
-LEGACY_APP_URLS={'jobmanager': True,
-                 'cal':False,
+LEGACY_APP_URLS={ 'cal':False,
                  'comparisontool':True,
                  'agreements':True,
                  'knowledgebase':True,
@@ -514,3 +510,10 @@ CACHES = {
 }
 
 PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
+
+# GovDelivery environment variables
+ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
+
+# Regulations.gov environment variables
+REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
+REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')

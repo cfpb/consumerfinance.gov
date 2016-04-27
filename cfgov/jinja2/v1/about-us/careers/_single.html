@@ -27,8 +27,6 @@
                     block__flush-top
                     block__sub">
         <h1>{{ career.title }}</h1>
-        {# TODO: Discuss careers with multiple grades. #}
-        {% set grade = career.grades[0] %}
         <dl>
             <dt>Expiration Date:</dt>
             <dd>
@@ -36,11 +34,11 @@
                 {{ time.render(career.close_date, {'date':true}) }}
             </dd>
             <dt>Region:</dt>
-            <dd>{{ career.locations[0].region_long }}</dd>
+            <dd>{{ career.locations.all()[0].region_long }}</dd>
             <dt>Grade:</dt>
             <dd>
-                <strong>({{ grade.grade }})</strong>
-                ${{ '{:,d}'.format( grade.salary_min ) }}–${{ '{:,d}'.format( grade.salary_max ) }}
+                <strong>({{ career.grades.all()|join(', ') }})</strong>
+                ${{ '{:,d}'.format( salary_min ) }}–${{ '{:,d}'.format( salary_max ) }}
             </dd>
         </dl>
         <div class="content-l">
@@ -120,12 +118,12 @@
                 </li>
             </ul>
         </div>
-        {% for applicant_type in career.applicant_types %}
+        {% for job_applicant_type in career.jobapplicanttype_set.all() %}
         <div class="block block__bg block__border">
-            <h4>{{ applicant_type.application_type.name }}</h4>
-            <p>{{ applicant_type.application_type.description | striptags }}</p>
+            <h4>{{ job_applicant_type.application_type.applicant_type }}</h4>
+            <p>{{ job_applicant_type.application_type.description | striptags }}</p>
 
-            <p><a class="btn" href="{{ applicant_type.usajobs_url }}">Apply now</a></p>
+            <p><a class="btn" href="{{ job_applicant_type.usajobs_url }}">Apply now</a></p>
 
             <p>
                 You are about to leave consumerfinance.gov. To submit the application, you must go to USAJobs.gov.

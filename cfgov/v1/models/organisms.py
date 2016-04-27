@@ -79,6 +79,17 @@ class EmailSignUp(blocks.StructBlock):
         template = '_includes/organisms/email-signup.html'
 
 
+class RegComment(blocks.StructBlock):
+    document_id = blocks.CharBlock(required=True, label='Document ID',
+                                   help_text='Federal Register document ID number to which the comment should be submitted. Should follow this format: CFPB-YYYY-####-####')
+    id = blocks.CharBlock(required=False, label='id',
+                          help_text='Sets the id attribute in the form\'s markup. If not set, the form will be assigned a base id of `o-reg-comment_` with a random number appended.')
+
+    class Meta:
+        icon = 'form'
+        template = '_includes/organisms/reg-comment.html'
+
+
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit')
     show_heading = blocks.BooleanBlock(required=False, default=True,

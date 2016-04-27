@@ -51,7 +51,13 @@
         {%- endblock title %}
     </title>
     <meta name="description"
-          content="{% block desc %}{{ page.search_description if page and page.search_description else 'Prototyping for the consumerfinance.gov refresh' }}{% endblock %}">
+          content="
+            {%- block desc -%}
+                {{- page.search_description if page and page.search_description
+                    else 'Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.'
+                -}}
+            {%- endblock -%}
+          ">
 
     <!-- Open Graph properties -->
         <!--   Required  -->
