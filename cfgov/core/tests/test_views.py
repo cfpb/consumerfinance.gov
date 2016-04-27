@@ -116,7 +116,7 @@ class RegsgovCommentTest(TestCase):
                                     'first_name': 'FAKE_FIRST',
                                     'last_name': 'FAKE_LAST'})
         self.assertEquals(urlparse(response['Location']).path,
-                          reverse('reg_comment:user_error'))
+                          reverse('reg_comment:server_error'))
 
     def test_missing_general_comment(self):
         response = self.client.post(reverse('reg_comment'),
