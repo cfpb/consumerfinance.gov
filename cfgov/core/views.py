@@ -55,10 +55,7 @@ def govdelivery_subscribe(request):
 
 
 REQUIRED_PARAMS_REGSGOV = [
-    'comment_on',
     'general_comment',
-    'first_name',
-    'last_name'
 ]
 
 
@@ -105,15 +102,14 @@ def submit_comment(data):
     Comment API, then returns the response.
     """
 
-    url_to_call = "{}?api_key={}&D={}".format(settings.REGSGOV_BASE_URL, 
-                                                settings.REGSGOV_API_KEY,
-                                                data['comment_on'])
-
+    url_to_call = "{}?api_key={}&D={}".format(settings.REGSGOV_BASE_URL,
+                                              settings.REGSGOV_API_KEY,
+                                              data['comment_on'])
 
     parsed_data = MultipartEncoder(
         fields={
-            'first_name': data['first_name'],
-            'last_name': data['last_name'],
+            'first_name': data['first_name'] if data.get('first_name') else u'Anonymous',
+            'last_name': data['last_name'] if data.get('last_name') else u'Anonymous',
             'email': data['email'] if data.get('email') else u'NA',
             'general_comment': data['general_comment'],
             'comment_on': data['comment_on'],
