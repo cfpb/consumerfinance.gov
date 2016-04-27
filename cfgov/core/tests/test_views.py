@@ -116,29 +116,13 @@ class RegsgovCommentTest(TestCase):
                                     'first_name': 'FAKE_FIRST',
                                     'last_name': 'FAKE_LAST'})
         self.assertEquals(urlparse(response['Location']).path,
-                          reverse('reg_comment:user_error'))
+                          reverse('reg_comment:server_error'))
 
     def test_missing_general_comment(self):
         response = self.client.post(reverse('reg_comment'),
                                     {'comment_on': 'FAKE_DOC_NUM',
                                     'first_name': 'FAKE_FIRST',
                                     'last_name': 'FAKE_LAST'})
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('reg_comment:user_error'))
-
-    def test_missing_first_name(self):
-        response = self.client.post(reverse('reg_comment'),
-                                    {'comment_on': 'FAKE_DOC_NUM',
-                                    'general_comment': 'FAKE_COMMENT',
-                                    'last_name': 'FAKE_LAST'})
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('reg_comment:user_error'))
-
-    def test_missing_last_name(self):
-        response = self.client.post(reverse('reg_comment'),
-                                    {'comment_on': 'FAKE_DOC_NUM',
-                                    'general_comment': 'FAKE_COMMENT',
-                                    'first_name': 'FAKE_FIRST'})
         self.assertEquals(urlparse(response['Location']).path,
                           reverse('reg_comment:user_error'))
 
@@ -231,7 +215,7 @@ class RegsgovCommentTest(TestCase):
 
     # Test that throws an exception to go to server server_error
 
-    # Test to submit comment 
+    # Test to submit comment
 
     @patch('requests.post')
     @patch('cfgov.settings.base.REGSGOV_BASE_URL', 'FAKE_URL')
@@ -252,7 +236,7 @@ class RegsgovCommentTest(TestCase):
         exp_data_field['organization'] = u'NA'
         exp_data = MultipartEncoder(fields=exp_data_field)
         self.assertTrue(act_kwargs.get('data'), exp_data)
-        self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)  
+        self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)
         self.assertTrue(act_kwargs.get('headers').has_key('Content-Type'))
 
         self.assertIn('multipart/form-data', act_kwargs.get('headers').get('Content-Type'))
@@ -276,7 +260,7 @@ class RegsgovCommentTest(TestCase):
         exp_data_field['organization'] = u'NA'
         exp_data = MultipartEncoder(fields=exp_data_field)
         self.assertTrue(act_kwargs.get('data'), exp_data)
-        self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)  
+        self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)
         self.assertTrue(act_kwargs.get('headers').has_key('Content-Type'))
 
         self.assertIn('multipart/form-data', act_kwargs.get('headers').get('Content-Type'))
