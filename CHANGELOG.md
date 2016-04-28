@@ -17,11 +17,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-3.3.9 - 2016-04-28
+
+### Added
+
 - Added tests for the public methods in the Multiselect
 - API client for Regulations.gov Comment API
 - reg-comment organism and Wagtail module for adding it to a page
 
 ### Changed
+
+- Make further reading and list filter results distinct
 
 ### Removed
 
