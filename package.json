@@ -68,8 +68,6 @@
     "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",
     "handlebars": "./node_modules/handlebars/dist/handlebars.min.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",
-    "jquery-easing": "./node_modules/capital-framework/node_modules/jquery.easing/jquery.easing.js",
-    "cf-expandables": "./node_modules/capital-framework/src/cf-expandables/src/cf-expandables.js",
     "slick": "./vendor/slick-carousel/slick/slick.js",
     "validate": "./node_modules/validate.js/validate.js"
   },
