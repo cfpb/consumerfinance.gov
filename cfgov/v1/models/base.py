@@ -153,7 +153,7 @@ class CFGOVPage(Page):
         for parent_slug, search_type, search_type_name, search_query in search_types:
             try:
                 parent = Page.objects.get(slug=parent_slug)
-                search_query &= Page.objects.descendant_of_q(parent)
+                search_query &= Page.objects.child_of_q(parent)
                 if 'specific_categories' in block.value:
                     specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
                     choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
@@ -164,7 +164,7 @@ class CFGOVPage(Page):
                     try:
                         parent_slug = 'archive-past-events'
                         parent = Page.objects.get(slug=parent_slug)
-                        q = (Page.objects.descendant_of_q(parent) & query)
+                        q = (Page.objects.child_of_q(parent) & query)
                         if 'specific_categories' in block.value:
                             specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
                             choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
@@ -182,7 +182,8 @@ class CFGOVPage(Page):
                     and block.value['relate_%s' % search_type]:
                 related[search_type_name] = \
                     AbstractFilterPage.objects.live_shared(hostname).filter(
-                        queries[search_type_name]).order_by('-date_published')[:block.value['limit']]
+                        queries[search_type_name]).distinct().exclude(
+                        id=self.id).order_by('-date_published')[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
