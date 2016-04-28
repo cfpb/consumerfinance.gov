@@ -97,7 +97,7 @@ class NewsroomLandingPage(BrowseFilterablePage):
             except base.CFGOVPage.DoesNotExist:
                 print 'Blog does not exist'
 
-        return AbstractFilterPage.objects.live_shared(hostname).filter(newsroom_q | blog_q).order_by('-date_published')
+        return AbstractFilterPage.objects.live_shared(hostname).filter(newsroom_q | blog_q).distinct().order_by('-date_published')
 
 
     def get_form_class(self):
