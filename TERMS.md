@@ -53,8 +53,6 @@ author or the affirmer.
   et al., is licensed under MIT/GPL2.
 - [jQuery](http://jquery.com/) by The jQuery Foundation is licensed under the
   MIT License.
-- [jQuery Easing](http://gsgd.co.uk/sandbox/jquery/easing/) by George McGinley
-  Smith is licensed under the BSD License.
 - [Modernizr](https://github.com/Modernizr/Modernizr) by Faruk Ateş, et al.,
   is licensed under MIT License.
 - [Normalize](http://necolas.github.io/normalize.css/) by Nicolas Gallagher,

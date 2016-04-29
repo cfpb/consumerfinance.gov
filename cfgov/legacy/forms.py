@@ -1,5 +1,6 @@
 from django import forms
+from localflavor.us.forms import USZipCodeField
 
 
 class HousingCounselorForm(forms.Form):
-    zip = forms.IntegerField(label='Zipcode', max_value=99999)
+    zip = USZipCodeField()
