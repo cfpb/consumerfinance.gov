@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
+- Frontend: Added No Fear Act link to footer.
 
 ### Removed
 
