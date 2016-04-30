@@ -27,6 +27,6 @@
     {{ streamfield_sidefoot.render(page.sidefoot) }}
     <div class="block block__sub" data-qa-hook="rss-subscribe-section">
         {% import 'rss.html' as rss %}
-        {{ rss.render(reverse('blog_feed')) }}
+        {{ rss.render('feed/') }}
     </div>
 {% endblock %}
