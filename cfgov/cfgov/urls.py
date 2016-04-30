@@ -182,8 +182,10 @@ urlpatterns = [
             template_name='regulation-comment/reg-comment-form-test.html'),
         name='reg-comment-form-test'),
 
+    url(r'^feed/$', RedirectView.as_view(url='/about-us/blog/feed/')),
     url(r'^feed/blog/$', RedirectView.as_view(url='/about-us/blog/feed/')),
-    url(r'^feed/newsroom/$', RedirectView.as_view(url='/about-us/blog/newsroom/feed/')),
+    url(r'^feed/newsroom/$', RedirectView.as_view(url='/about-us/newsroom/feed/')),
+    url(r'^newsroom-feed/$', RedirectView.as_view(url='/about-us/newsroom/feed/')),
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 
