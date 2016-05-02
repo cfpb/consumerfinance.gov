@@ -39,7 +39,7 @@ $(document).ready(function(){
         
         $.ajax({
             type: "POST", 
-            url: "/jobs/submit-govdelivery/",
+            url: "/subscriptions/new/",
             data: form.serialize(),
             complete: function(req, status_msg) {
                 if(status_msg == 'success')
