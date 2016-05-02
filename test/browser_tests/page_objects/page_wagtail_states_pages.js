@@ -1,16 +1,5 @@
 'use strict';
 
-function DraftPage() {
-
-  this.get = function() {
-    var baseUrl = '/draft-page/';
-    browser.get( baseUrl );
-  };
-
-  this.pageTitle = function() { return browser.getTitle(); };
-
-}
-
 function SharedPage() {
 
   this.get = function() {
@@ -19,7 +8,7 @@ function SharedPage() {
   };
 
   this.getStaging = function() {
-    var baseUrl = 'content.' + process.env.HTTP_HOST + ':' + 
+    var baseUrl = process.env.STAGING_HOSTNAME + ':' + 
       process.env.HTTP_PORT + '/shared-page/';
     browser.get( baseUrl );
   };
@@ -35,25 +24,9 @@ function SharedDraftPage() {
     browser.get( baseUrl );
   };
 
-  this.pageTitle = function() { return browser.getTitle(); };
-
-}
-
-function LivePage() {
-
-  this.get = function() {
-    var baseUrl = '/live-page/';
-    browser.get( baseUrl );
-  };
-
-  this.pageTitle = function() { return browser.getTitle(); };
-
-}
-
-function LiveDraftPage() {
-
-  this.get = function() {
-    var baseUrl = '/live-draft-page/';
+  this.getStaging = function() {
+    var baseUrl = process.env.STAGING_HOSTNAME + ':' + 
+      process.env.HTTP_PORT + '/shared-draft-page/';
     browser.get( baseUrl );
   };
 
@@ -62,8 +35,6 @@ function LiveDraftPage() {
 }
 
 module.exports = {
-  draftpage:     DraftPage,
   sharedpage:    SharedPage,
-  livepage:      LivePage,
-  livedraftpage: LiveDraftPage
+  shareddraftpage:    SharedDraftPage,
 };

@@ -120,6 +120,14 @@ def run():
         site_root.add_child(instance=shared)
         shared.save_revision(user=admin_user)
 
+    if not DemoPage.objects.filter(slug='shared-draft-page'):
+        shared = DemoPage(title='Shared Page', slug='shared-draft-page', owner=admin_user, live=False, shared=True)
+        site_root.add_child(instance=shared)
+        shared.save_revision(user=admin_user)
+        shared.title = 'Shared Draft Page'
+        shared.save()
+        shared.save_revision(user=admin_user)
+
     if not DemoPage.objects.filter(slug='live-page'):
         live = DemoPage(title='Live Page', slug='live-page', owner=admin_user, live=True, shared=True)
         publish_page(live)

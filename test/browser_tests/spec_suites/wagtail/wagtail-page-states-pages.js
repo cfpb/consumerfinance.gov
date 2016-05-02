@@ -1,20 +1,18 @@
 'use strict';
 
-var DraftPage = require(
-  '../../page_objects/page_wagtail_states_pages.js' ).draftpage;
-var SharedPage = require(
-  '../../page_objects/page_wagtail_states_pages.js' ).sharedpage;
-var LivePage = require(
-  '../../page_objects/page_wagtail_states_pages.js' ).livepage;
-var LiveDraftPage = require(
-  '../../page_objects/page_wagtail_states_pages.js' ).livedraftpage;
+var state_pages = require(
+  '../../page_objects/page_wagtail_states_pages.js' )
+var SharedPage = state_pages.sharedpage
+var SharedDraftPage = state_pages.shareddraftpage
+
+var TITLE_TAGLINE = ' | Consumer Financial Protection Bureau';
+
 
 describe( 'Wagtail Draft Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new DraftPage();
-    page.get();
+    page = browser.get('/draft-page/');
   } );
 
   it( 'should not load in a browser',
@@ -42,8 +40,38 @@ describe( 'Wagtail Shared Page', function() {
   it( 'should properly load in a browser',
     function() {
       page.getStaging();
-      expect( page.pageTitle() ).toContain(
-        'Shared Page | Consumer Financial Protection Bureau' );
+      expect( page.pageTitle() ).toEqual( 'Shared Page' + TITLE_TAGLINE );
+    }
+  );
+
+} );
+
+describe( 'Wagtail Shared Draft Page', function() {
+  var page;
+
+  beforeAll( function() {
+    page = new SharedDraftPage();
+  } );
+
+  it( 'should not load in a browser',
+    function() {
+      page.get();
+      expect( !page );
+    }
+  );
+
+  it( 'should properly load in a browser',
+    function() {
+      page.getStaging();
+      expect( page.pageTitle() ).toEqual( 'Shared Page' + TITLE_TAGLINE );
+    }
+  );
+
+  it( 'should not display unshared content',
+    function() {
+      page.getStaging();
+      expect( page.pageTitle() ).not.toEqual(
+        'Shared Draft Page' + TITLE_TAGLINE );
     }
   );
 
@@ -53,14 +81,12 @@ describe( 'Wagtail Live Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new LivePage();
-    page.get();
+    page = browser.get('/live-page/');
   } );
 
   it( 'should properly load in a browser',
     function() {
-      expect( page.pageTitle() ).toContain(
-        'Live Page | Consumer Financial Protection Bureau' );
+      expect( browser.getTitle() ).toEqual( 'Live Page' + TITLE_TAGLINE );
     }
   );
 
@@ -70,14 +96,13 @@ describe( 'Wagtail Live Draft Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new LiveDraftPage();
-    page.get();
+    page = browser.get('/live-draft-page/');
   } );
 
   it( 'should properly load in a browser',
     function() {
-      expect( page.pageTitle() ).toContain(
-        'Live Draft Page | Consumer Financial Protection Bureau' );
+      expect( browser.getTitle() ).toEqual(
+        'Live Draft Page' + TITLE_TAGLINE );
     }
   );
 
