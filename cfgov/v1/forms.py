@@ -161,6 +161,18 @@ class CalenderPDFFilterForm(forms.Form):
             raise forms.ValidationError(ERROR_MESSAGES['DATE_ERRORS']['one_required'])
         return cleaned_data
 
+class MultipleChoiceField(forms.MultipleChoiceField):
+    def validate(self, value):
+        tags = Tag.objects.all().values_list('name', flat=True)
+        for tag in value:
+            if tag not in tags:
+                raise ValidationError(
+                    self.error_messages['invalid_choice'],
+                    code='invalid_choice',
+                    params={'value': tag},
+                )
+
+
 
 class FilterableListForm(forms.Form):
     title_attrs = {
@@ -201,11 +213,11 @@ class FilterableListForm(forms.Form):
         required=False,
         choices=ref.page_type_choices,
         widget=widgets.CheckboxSelectMultiple())
-    topics = forms.MultipleChoiceField(
+    topics = MultipleChoiceField(
         required=False,
         choices=[],
         widget=widgets.SelectMultiple(attrs=topics_select_attrs))
-    authors = forms.MultipleChoiceField(
+    authors = MultipleChoiceField(
         required=False,
         choices=[],
         widget=widgets.SelectMultiple(attrs=authors_select_attrs))
