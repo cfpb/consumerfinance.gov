@@ -218,8 +218,8 @@ class RegsgovCommentTest(TestCase):
     # Test to submit comment
 
     @patch('requests.post')
-    @patch('cfgov.settings.base.REGSGOV_BASE_URL', 'FAKE_URL')
-    @patch('cfgov.settings.base.REGSGOV_API_KEY', 'FAKE_API_KEY')
+    @patch('django.conf.settings.REGSGOV_BASE_URL', 'FAKE_URL')
+    @patch('django.conf.settings.REGSGOV_API_KEY', 'FAKE_API_KEY')
     def test_submit_comment_success_no_email(self, mock_post):
         mock_post.return_value = {'response': 'fake_response'}
 
@@ -242,8 +242,8 @@ class RegsgovCommentTest(TestCase):
         self.assertIn('multipart/form-data', act_kwargs.get('headers').get('Content-Type'))
 
     @patch('requests.post')
-    @patch('cfgov.settings.base.REGSGOV_BASE_URL', 'FAKE_URL')
-    @patch('cfgov.settings.base.REGSGOV_API_KEY', 'FAKE_API_KEY')
+    @patch('django.conf.settings.REGSGOV_BASE_URL', 'FAKE_URL')
+    @patch('django.conf.settings.REGSGOV_API_KEY', 'FAKE_API_KEY')
     def test_submit_comment_success_email(self, mock_post):
         mock_post.return_value = {'response': 'fake_response'}
 

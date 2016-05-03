@@ -18,9 +18,10 @@ from .. import forms
 from ..util import filterable_context
 
 from .base import CFGOVPage
+from .feeds import FilterableFeedPageMixin
 
 
-class SublandingFilterablePage(base.CFGOVPage):
+class SublandingFilterablePage(FilterableFeedPageMixin, base.CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)

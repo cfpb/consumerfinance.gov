@@ -12,11 +12,12 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
 from . import base, molecules, organisms, ref
 from .learn_page import AbstractFilterPage
+from .feeds import FilterableFeedPageMixin
 from .. import forms
 from ..util import filterable_context
 
 
-class BrowseFilterablePage(base.CFGOVPage):
+class BrowseFilterablePage(FilterableFeedPageMixin, base.CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', molecules.FeaturedContent()),

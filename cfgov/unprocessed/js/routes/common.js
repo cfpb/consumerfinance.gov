@@ -6,8 +6,6 @@
 
 // Vendor libraries.
 require( 'jquery' );
-require( 'jquery-easing' );
-require( 'cf-expandables' );
 
 // Global modules.
 require( '../modules/focus-target' ).init();
@@ -24,14 +22,3 @@ header.init( document.body.querySelector( '.a-overlay' ) );
 
 var Footer = require( '../organisms/Footer.js' );
 var footer = new Footer( document.body ).init();
-
-// Multi-select.
-// TODO: Move to browse-filterable route after old WP pages are removed
-var Multiselect = require( '../molecules/Multiselect' );
-var selects = document.querySelectorAll( 'select[multiple]' );
-
-var multiselect;
-for ( var i = 0, len = selects.length; i < len; i++ ) {
-  multiselect = new Multiselect( selects[i] );
-  multiselect.init();
-}

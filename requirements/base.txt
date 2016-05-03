@@ -21,3 +21,4 @@ beautifulsoup4==4.4.1
 django-overextends==0.4.1
 django-reversion==1.10.1
 django-tinymce==2.2.0
+Wand==0.4.2
