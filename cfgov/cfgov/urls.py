@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
-from legacy.views import HousingCounselorPDFView
+from legacy.views import HousingCounselorPDFView, dbrouter_shortcut
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
 
@@ -221,7 +221,7 @@ urlpatterns = [
     url(r'^jobs/supervision/$', TemplateView.as_view(template_name='jobmanager/supervision.html'), name='jobs_supervision'),
 
     url(r'^jobs/technology-innovation-fellows/$',
-        TemplateView.as_view(template_name='jobmanager/technology-innovation-fellows.html'), 
+        TemplateView.as_view(template_name='jobmanager/technology-innovation-fellows.html'),
         name='technology_innovation_fellows'),
     url(r'^jobs/fellowship_form_submit/$', 'jobmanager.views.fellowship_form_submit', name='fellowship_form_submit'),
 ]
@@ -251,6 +251,10 @@ if settings.ALLOW_ADMIN_URL:
 
         url(r'^admin/', include(wagtailadmin_urls)),
     ]
+
+    if os.environ.get('DATABASE_ROUTING', False):
+        patterns = [url(r'^django-admin/r/(?P<content_type_id>\d*)/(?P<object_id>\d*)/$', dbrouter_shortcut)] + patterns
+
     if 'picard' in settings.INSTALLED_APPS:
         patterns.append(url(r'^tasks/', include('picard.urls')))
 
