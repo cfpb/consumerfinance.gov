@@ -6,8 +6,6 @@
 
 // Vendor libraries.
 require( 'jquery' );
-require( 'jquery-easing' );
-require( 'cf-expandables' );
 
 // Global modules.
 require( '../modules/focus-target' ).init();

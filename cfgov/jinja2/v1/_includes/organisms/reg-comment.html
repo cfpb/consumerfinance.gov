@@ -41,13 +41,15 @@
 
         <label for="first_name">
             First name
+            <span class="label_note">(optional)</span>
         </label>
-        <input type="text" id="first_name" name="first_name" required>
+        <input type="text" id="first_name" name="first_name">
 
         <label for="last_name">
             Last name
+            <span class="label_note">(optional)</span>
         </label>
-        <input type="text" id="last_name" name="last_name" required>
+        <input type="text" id="last_name" name="last_name">
 
         <label for="email">
             Email address
@@ -56,20 +58,20 @@
         <input type="email" id="email" name="email"
                placeholder="example@mail.com">
 
+        <p>
+            <strong>Sensitive personal information, such as account numbers or
+            Social Security numbers, should not be included.</strong>
+            Your comments will become part of the public record and posted to
+            <a class="icon-link icon-link__external-link"
+               href="https://www.regulations.gov/">
+            <span class="icon-link_text">Regulations.gov</span>
+            </a>.
+            Comments generally will not be edited to remove any
+            identifying or contact information.
+        </p>
+
         <input class="btn btn__full" type="submit" value="Submit your feedback">
 
         <input type="hidden" name="comment_on" value="{{ value.document_id }}">
     </form>
-
-    <p>
-        Sensitive personal information, such as account numbers or
-        Social Security Numbers, should not be included.
-        Your comments will become part of the public record and posted to
-        <a class="icon-link icon-link__external-link"
-           href="https://www.regulations.gov/">
-            <span class="icon-link_text">Regulations.gov</span>
-        </a>.
-        Comments generally will not be edited to remove any
-        identifying or contact information.
-    </p>
 </div>
