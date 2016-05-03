@@ -9,7 +9,6 @@ urlpatterns = patterns(
     url(r'^$', 'index', name='jobs'),
     url(r'^current-openings/$', 'current_openings', name='current_openings'),
 
-    url(r'^submit-govdelivery/$', 'submit_govdelivery', name='jobs_submit-govdelivery'),
     url(r'application-process',
         TemplateView.as_view(template_name='about-us/careers/application-process/index.html')),
     url(r'working-at-cfpb/$',
