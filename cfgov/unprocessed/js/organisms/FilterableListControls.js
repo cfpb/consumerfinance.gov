@@ -4,6 +4,7 @@
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
 var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
+var Multiselect = require( '../molecules/Multiselect' );
 var Notification = require( '../molecules/Notification' );
 var validators = require( '../modules/util/validators' );
 
@@ -44,6 +45,8 @@ function FilterableListControls( element ) {
   function init( ) {
     _notification = new Notification( _dom );
     _notification.init();
+
+    atomicHelpers.instantiateAll( 'select[multiple]', Multiselect );
 
     _initEvents();
   }

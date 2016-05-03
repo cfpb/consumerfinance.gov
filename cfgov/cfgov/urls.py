@@ -8,20 +8,15 @@ from django.views.generic.base import TemplateView, RedirectView
 from legacy.views import HousingCounselorPDFView
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
-from sheerlike.feeds import SheerlikeFeed
 
-from v1.views import LeadershipCalendarPDFView, unshare, renderDirectoryPDF, \
-    change_password, password_reset_confirm, cfpb_login, create_user, edit_user
-from v1.feed import BlogFeed, NewsroomFeed
+from v1.views import LeadershipCalendarPDFView, unshare, change_password, \
+                     password_reset_confirm, cfpb_login, create_user, edit_user
+
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
-from django.views.generic import RedirectView
 
 from transition_utilities.conditional_urls import include_if_app_enabled
-
-from wagtail.wagtailadmin.forms import PasswordResetForm
-from wagtail.wagtailadmin.views import account
 
 fin_ed = SheerSite('fin-ed-resources')
 
@@ -187,8 +182,10 @@ urlpatterns = [
             template_name='regulation-comment/reg-comment-form-test.html'),
         name='reg-comment-form-test'),
 
-    url(r'^feed/blog/$', BlogFeed(), name='blog_feed'),
-    url(r'^feed/newsroom/$', NewsroomFeed(), name='newsroom_feed'),
+    url(r'^feed/$', RedirectView.as_view(url='/about-us/blog/feed/')),
+    url(r'^feed/blog/$', RedirectView.as_view(url='/about-us/blog/feed/')),
+    url(r'^feed/newsroom/$', RedirectView.as_view(url='/about-us/newsroom/feed/')),
+    url(r'^newsroom-feed/$', RedirectView.as_view(url='/about-us/newsroom/feed/')),
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 

@@ -98,10 +98,10 @@
     =================
     The jinja template and associate HTML to include for an atomic component.
 #}
-{% if atomic_type == 'header' %}
-    {% include 'on-demand/header.html' %}
-{% elif atomic_type == 'footer' %}
-    {% include 'on-demand/footer.html' %}
+{% if atomic_type == 'header' or
+      atomic_type == 'footer' %}
+    {% set atomic_type_template = 'on-demand/' + atomic_type + '.html' %}
+    {% include atomic_type_template %}
 {% endif %}
 
 {#

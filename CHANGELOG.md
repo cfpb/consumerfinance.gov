@@ -24,6 +24,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 3.0.0-3.3.10 - 2016-05-03
+
+### Added
+
+### Changed
+- Frontend: Added No Fear Act link to footer.
+- Frontend: Added No Fear Act link to footer.
+- RSS Feeds for all Filterable Pages
+- Animated Gif Support
+- Ensure files uploaded as .PDFs get a download icon
+- Handle govdelivery job subscriptions via a Django form
+- Refactored HousingCounselor form to use USZipCodeField() inorder to not strip leading zeros
+
+### Removed
+
+### Fixed
+
+
 ## 3.0.0-3.3.9 - 2016-04-28
 
 ### Added
