@@ -5,7 +5,7 @@ from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from . import molecules
+from ..atomic_elements import molecules
 import hashlib
 
 

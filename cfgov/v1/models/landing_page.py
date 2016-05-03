@@ -6,8 +6,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
 
 from .base import CFGOVPage
-from . import molecules
-from . import organisms
+from ..atomic_elements import molecules, organisms
 
 
 class LandingPage(CFGOVPage):

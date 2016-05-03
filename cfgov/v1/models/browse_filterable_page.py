@@ -10,10 +10,11 @@ from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
-from . import base, molecules, organisms, ref
+from . import base, ref
 from .learn_page import AbstractFilterPage
-from .feeds import FilterableFeedPageMixin
 from .. import forms
+from ..atomic_elements import molecules, organisms
+from ..feeds import FilterableFeedPageMixin
 from ..util import filterable_context
 
 
