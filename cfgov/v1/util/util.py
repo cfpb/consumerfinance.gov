@@ -89,7 +89,7 @@ def instanceOfBrowseOrFilterablePages(page):
 
 
 # For use by Browse type pages to get the secondary navigation items
-def get_secondary_nav_items(current, hostname, exclude_siblings=False):
+def get_secondary_nav_items(current, hostname):
     from ..templatetags.share import get_page_state_url
     on_staging = os.environ.get('STAGING_HOSTNAME') == hostname
     nav_items = []
