@@ -16,6 +16,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- RegComment organism: New option to use a generic link for commenting at
+  Regulations.gov or going directly to the specified document's comment form.
 
 ### Changed
 - Frontend: Added No Fear Act link to footer.
