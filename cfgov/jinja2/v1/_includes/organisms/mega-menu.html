@@ -66,7 +66,8 @@
                   {{ _classes( nav_depth, '-link__has-children' ) if nav_children | count > 0 else '' }}
                   {{ _classes( nav_depth, '-link__current' ) if nav_url == request.path else '' }}"
            {{ '' if nav_url == '' else 'href=' + nav_url | e }}
-           {{ 'data-js-hook=flyout-menu_trigger' if nav_children | count > 0 else '' }}>
+           {{ 'data-js-hook=flyout-menu_trigger' if nav_children | count > 0 else '' }}
+           {{ 'aria-pressed=false' if nav_children | count > 0 else '' }}>
             {{ nav_caption }}
         </a>
         {% if nav_children | count > 0 %}
@@ -168,7 +169,9 @@
      data-js-hook="flyout-menu"
      aria-label="main navigation"
      role="navigation">
-    <button class="{{ base_class ~ '_trigger' }}" data-js-hook="flyout-menu_trigger">
+    <button class="{{ base_class ~ '_trigger' }}"
+            data-js-hook="flyout-menu_trigger"
+            aria-pressed="false">
         <span class="u-visually-hidden">Menu</span>
     </button>
     {# Create a root menu at depth one.
