@@ -7,7 +7,7 @@ describe( 'Text Introduction', function() {
 
   it( 'should properly load in a browser',
     function() {
-      expect( element(by.css( 'body' ) ).getText() )
+      expect( element( by.css( 'body' ) ).getText() )
         .toContain( 'this is an intro' );
     }
   );
@@ -20,8 +20,8 @@ describe( 'Featured Content', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect(element(by.css( 'body' )).getText() ).toContain(
-        'this is a featured content body' );
+      expect( element( by.css( 'body' ) ).getText() )
+        .toContain( 'this is a featured content body' );
     }
   );
 
@@ -33,8 +33,8 @@ describe( 'Expandable', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect(element(by.css( 'body' )).getText() ).toContain(
-        'this is an expandable' );
+      expect( element( by.css( 'body' ) ).getText() )
+        .toContain( 'this is an expandable' );
     }
   );
 
@@ -47,8 +47,8 @@ describe( 'Related Links', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect(element(by.css( 'body' )).getText() ).toContain(
-        'this is a related link' );
+      expect( element( by.css( 'body' ) ).getText() )
+        .toContain( 'this is a related link' );
     }
   );
 
@@ -60,8 +60,8 @@ describe( 'Related Metadata', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect(element(by.css( 'body' )).getText() ).toContain(
-        'this is a related metadata heading' );
+      expect( element( by.css( 'body' ) ).getText() )
+        .toContain( 'this is a related metadata heading' );
     }
   );
 
@@ -73,8 +73,8 @@ describe( 'Quote', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect(element(by.css( 'body' )).getText() ).toContain(
-        'this is a quote' );
+      expect( element( by.css( 'body' ) ).getText() )
+        .toContain( 'this is a quote' );
     }
   );
 
@@ -86,8 +86,8 @@ describe( 'Call to Action', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect(element(by.css( 'body' )).getText() ).toContain(
-        'this is a call to action' );
+      expect( element( by.css( 'body' ) ).getText() )
+        .toContain( 'this is a call to action' );
     }
   );
 
@@ -99,8 +99,8 @@ describe( 'Hero', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect(element(by.css( 'body' )).getText() ).toContain(
-        'this is a hero heading' );
+      expect( element( by.css( 'body' ) ).getText() )
+        .toContain( 'this is a hero heading' );
     }
   );
 

@@ -52,7 +52,8 @@ describe( 'MegaMenu', function() {
         } );
       } );
 
-      describe( 'when mouse moves from one link to another after a delay', function() {
+      describe( 'when mouse moves from one link ' +
+                'to another after a delay', function() {
         beforeEach( function() {
           browser.driver.actions().mouseMove( _dom.triggerPolyCom ).perform();
           // Wait for delay to show menu
