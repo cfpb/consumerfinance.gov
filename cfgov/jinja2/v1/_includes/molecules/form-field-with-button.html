@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   form_field_with_button.render()
+   Form Field With Button
 
    ==========================================================================
 
@@ -8,17 +8,20 @@
 
    Creates a form field with text when given:
 
-   value:  An object used to customize the markup.
+   value:                   Object defined from a StreamField block.
 
-   value.btn_text:          The text for the submit button.
+   value.label:             String for form input label.
 
-   value.field.required:    Boolean indicating whether the field is required.
+   value.required:          Boolean on whether the input is required or not.
 
-   value.field.info:        The text information to display above the field.
+   value.type:              String for the type of HTML input.
 
-   value.field.label:       The label for the input.
+   value.placeholder:       String for the placeholder of HTML input.
 
-   value.field.placeholder: The placeholder used for the input.
+   value.info:              String for the text information to display
+                            above the HTML input.
+
+   value.btn_text:          String for the text for the submit button.
 
    ========================================================================== #}
 
@@ -27,6 +30,8 @@
     <div class="form-group">
         <label for="{{ form_id }}">
             <b>{{ value.label }}</b>
+            {% TODO: Update required param name to is_requrired
+                     to make clear it's a boolean. %}
             {{ '(required)' if value.required else '' }}
         </label>
 
@@ -40,4 +45,3 @@
     <p>{{ parse_links(value.info) | safe }}</p>
     <input class="btn btn__full" type="submit" value="{{ value.btn_text }}">
 </div>
-

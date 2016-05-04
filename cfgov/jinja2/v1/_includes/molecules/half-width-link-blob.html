@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   half-width-link-blob.render()
+   Half Width Link Blob
 
    ==========================================================================
 
@@ -8,17 +8,18 @@
 
    Create a half-width-link-blob molecule when given:
 
-   value:         An object with the following options for value.
+   value:               Object defined from a StreamField block.
 
-   value.heading: A string containing title of module.
+   value.heading:       (Optional) A string containing title of module.
 
-   value.body:    A string containing the content  to display below the
-                     heading (typically a paragraph).
+   value.body:          A string containing the content to display below the
+                        heading (typically a paragraph).
 
-   value.links:   A tuple of items to create a list of links, containing:
+   value.links:         A tuple of items to create a list of links, containing:
 
-                  url:  A string for the URL of the link.
-                  text: A string for the text of the link.
+   value.links[i].url:  A string for the URL of the link.
+
+   value.links[i].text: A string for the text of the link.
 
    ========================================================================== #}
 
