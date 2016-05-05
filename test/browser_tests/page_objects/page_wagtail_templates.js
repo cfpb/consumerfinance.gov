@@ -166,19 +166,19 @@ function ActivityLogPage() {
 }
 
 module.exports = {
-  landing:              LandingPage,
-  sublanding:           SubLandingPage,
-  browse:               BrowsePage,
-  browseFilterable:     BrowseFilterablePage,
-  sublandingFilterable: SublandingFilterablePage,
-  eventArchive:         EventArchivePage,
-  docdetail:            DocumentDetailPage,
-  learn:                LearnPage,
-  event:                EventPage,
-  newsroomLanding:      NewsroomLandingPage,
-  newsroom:             NewsroomPage,
-  legacyNewsroom:       LegacyNewsroomPage,
-  blog:                 BlogPage,
-  legacyBlog:           LegacyBlogPage,
-  activityLog:          ActivityLogPage
+  Landing:              LandingPage,
+  Sublanding:           SubLandingPage,
+  Browse:               BrowsePage,
+  BrowseFilterable:     BrowseFilterablePage,
+  SublandingFilterable: SublandingFilterablePage,
+  EventArchive:         EventArchivePage,
+  Docdetail:            DocumentDetailPage,
+  Learn:                LearnPage,
+  Event:                EventPage,
+  NewsroomLanding:      NewsroomLandingPage,
+  Newsroom:             NewsroomPage,
+  LegacyNewsroom:       LegacyNewsroomPage,
+  Blog:                 BlogPage,
+  LegacyBlog:           LegacyBlogPage,
+  ActivityLog:          ActivityLogPage
 };

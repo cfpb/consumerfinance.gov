@@ -1,9 +1,9 @@
 'use strict';
 
 var state_pages = require(
-  '../../page_objects/page_wagtail_states_pages.js' )
-var SharedPage = state_pages.sharedpage
-var SharedDraftPage = state_pages.shareddraftpage
+  '../../page_objects/page_wagtail_states_pages.js' );
+var SharedPage = state_pages.sharedpage;
+var SharedDraftPage = state_pages.shareddraftpage;
 
 var TITLE_TAGLINE = ' | Consumer Financial Protection Bureau';
 

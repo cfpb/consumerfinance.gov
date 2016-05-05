@@ -1,24 +1,14 @@
 'use strict';
 
-var pageWagtailTemplate =
+var PageWagtailTemplate =
   require( '../../page_objects/page_wagtail_templates.js' );
-var LandingPage = pageWagtailTemplate.landing;
-var SubLandingPage = pageWagtailTemplate.sublanding;
-var BrowsePage = pageWagtailTemplate.browse;
-var BrowseFilterablePage = pageWagtailTemplate.browseFilterable;
-var SublandingFilterablePage = pageWagtailTemplate.sublandingFilterable;
-var EventArchivePage = pageWagtailTemplate.eventArchive;
-var LearnPage = pageWagtailTemplate.learn;
-var EventPage = pageWagtailTemplate.event;
-var DocumentDetailPage = pageWagtailTemplate.docdetail;
-
 var TITLE_TAGLINE = ' | Consumer Financial Protection Bureau';
 
 describe( 'Wagtail Landing Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new LandingPage();
+    page = new PageWagtailTemplate.Landing();
     page.get();
   } );
 
@@ -31,7 +21,7 @@ describe( 'Wagtail SubLanding Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new SubLandingPage();
+    page = new PageWagtailTemplate.Sublanding();
     page.get();
   } );
 
@@ -44,7 +34,7 @@ describe( 'Wagtail Browse Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new BrowsePage();
+    page = new PageWagtailTemplate.Browse();
     page.get();
   } );
 
@@ -58,7 +48,7 @@ describe( 'Wagtail Browse Filterable Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new BrowseFilterablePage();
+    page = new PageWagtailTemplate.BrowseFilterable();
     page.get();
   } );
 
@@ -71,7 +61,7 @@ describe( 'Wagtail Sublanding Filterable Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new SublandingFilterablePage();
+    page = new PageWagtailTemplate.SublandingFilterable();
     page.get();
   } );
 
@@ -85,7 +75,7 @@ describe( 'Wagtail Event Archive Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new EventArchivePage();
+    page = new PageWagtailTemplate.EventArchive();
     page.get();
   } );
 
@@ -99,7 +89,7 @@ describe( 'Wagtail Learn Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new LearnPage();
+    page = new PageWagtailTemplate.Learn();
     page.get();
   } );
 
@@ -113,7 +103,7 @@ describe( 'Wagtail Event Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new EventPage();
+    page = new PageWagtailTemplate.Event();
     page.get();
   } );
 
@@ -126,7 +116,7 @@ describe( 'Wagtail Document Detail Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new DocumentDetailPage();
+    page = new PageWagtailTemplate.Docdetail();
     page.get();
   } );
 
@@ -140,7 +130,7 @@ describe( 'Wagtail Newsroom Landing Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new pageWagtailTemplate.newsroomLanding();
+    page = new PageWagtailTemplate.NewsroomLanding();
     page.get();
   } );
 
@@ -154,7 +144,7 @@ describe( 'Wagtail Newsroom Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new pageWagtailTemplate.newsroom();
+    page = new PageWagtailTemplate.Newsroom();
     page.get();
   } );
 
@@ -168,7 +158,7 @@ describe( 'Wagtail Legacy Newsroom Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new pageWagtailTemplate.legacyNewsroom();
+    page = new PageWagtailTemplate.LegacyNewsroom();
     page.get();
   } );
 
@@ -182,7 +172,7 @@ describe( 'Wagtail Blog Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new pageWagtailTemplate.blog();
+    page = new PageWagtailTemplate.Blog();
     page.get();
   } );
 
@@ -196,7 +186,7 @@ describe( 'Wagtail Legacy Blog Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new pageWagtailTemplate.legacyBlog();
+    page = new PageWagtailTemplate.LegacyBlog();
     page.get();
   } );
 
@@ -210,7 +200,7 @@ describe( 'Wagtail Activity Log Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new pageWagtailTemplate.activityLog();
+    page = new PageWagtailTemplate.ActivityLog();
     page.get();
   } );
 
