@@ -30,7 +30,7 @@
 
 {% macro expandable(value) %}
 
-<div class="m-expandable
+<div data-qa-hook="expandable" class="m-expandable
             m-expandable__expanded
             {{ 'm-expandable__borders' if value.is_bordered else '' }}
             {{ 'm-expandable__midtone' if value.is_midtone else '' }}"
