@@ -14,6 +14,7 @@ if os.environ.get('DATABASE_ROUTING', False):
             'PASSWORD': os.environ.get('MYSQL_PW', ''),
             'HOST': os.environ.get('MYSQL_HOST', ''),
             'PORT': os.environ.get('MYSQL_PORT', ''),
+            'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
         },
         'legacy': {
             'ENGINE': MYSQL_ENGINE,
@@ -22,6 +23,7 @@ if os.environ.get('DATABASE_ROUTING', False):
             'PASSWORD': os.environ.get('LEGACY_MYSQL_PW', ''),
             'HOST': os.environ.get('LEGACY_MYSQL_HOST', ''),
             'PORT': os.environ.get('LEGACY_MYSQL_PORT', ''),
+            'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
         },
     }
 else:
@@ -33,6 +35,7 @@ else:
             'PASSWORD': os.environ.get('MYSQL_PW', ''),
             'HOST': os.environ.get('MYSQL_HOST', ''),
             'PORT': os.environ.get('MYSQL_PORT', ''),
+            'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
         },
     }
 
