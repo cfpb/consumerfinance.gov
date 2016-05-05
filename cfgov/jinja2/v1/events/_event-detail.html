@@ -1,3 +1,5 @@
+{% import 'macros/time.html' as time %}
+
 <article class="post post__event">
     <header>
         <h1 class="post_heading">
@@ -15,8 +17,10 @@
         <div class="t-event_details">
             <div class="modification-date date">
                 <span>Updated</span>
-                {% import 'macros/time.html' as time %}
-                {{ time.render(page.latest_revision_created_at, {'date':true}) }}
+                {{ time.render(
+                    page.latest_revision_created_at,
+                    {'date': true}
+                ) }}
             </div>
             {% import 'molecules/social-media.html' as social_media with context %}
             {{ social_media.render( {
@@ -56,9 +60,10 @@
                       <span class="event-meta_description event-meta_description__block">
                           Video link available:
                       </span>
-                      {% import 'macros/time.html' as time %}
-                      {{ time.render(page.live_stream_date,
-                                     {'date':true, 'time':true, 'timezone':true}) }}
+                      {{ time.render(
+                          page.live_stream_date,
+                          timezone='America/New_York'
+                      ) }}
                   </p>
                 </div>
                 {% endif %}
