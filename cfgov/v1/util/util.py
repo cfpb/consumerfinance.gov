@@ -12,9 +12,8 @@ def get_unique_id(prefix='', suffix=''):
     index = hex(int(time() * 10000000))[2:]
     return prefix + str(index) + suffix
 
-    # These messages are manually mirrored on the
-    # Javascript side in error-messages-config.js
-
+# These messages are manually mirrored on the
+# Javascript side in error-messages-config.js
 
 ERROR_MESSAGES = {
     'CHECKBOX_ERRORS': {
