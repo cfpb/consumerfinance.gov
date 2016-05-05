@@ -16,6 +16,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Additional page template tests
 
 ### Changed
 - Frontend: Added No Fear Act link to footer.
