@@ -1,5 +1,5 @@
 from .base import CFGOVPage
-from . import organisms, molecules, atoms
+from ..atomic_elements import atoms, molecules, organisms
 from ..util import ref
 from django.db import models
 from wagtail.wagtailcore.fields import StreamField

@@ -4,7 +4,7 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 from . import atoms, molecules
 from ..util import ref
-from .snippets import Contact as ContactSnippetClass
+from ..models.snippets import Contact as ContactSnippetClass
 
 
 class Well(blocks.StructBlock):

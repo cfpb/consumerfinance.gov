@@ -7,8 +7,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
-from . import molecules
-from . import organisms
+from ..atomic_elements import molecules, organisms
 from ..util import filterable_context, util
 
 class SublandingPage(CFGOVPage):

@@ -12,13 +12,14 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-from . import base, molecules, organisms, ref
+from . import base, ref
+from ..atomic_elements import molecules, organisms
 from .learn_page import AbstractFilterPage
 from .. import forms
 from ..util import filterable_context
 
 from .base import CFGOVPage
-from .feeds import FilterableFeedPageMixin
+from ..feeds import FilterableFeedPageMixin
 
 
 class SublandingFilterablePage(FilterableFeedPageMixin, base.CFGOVPage):

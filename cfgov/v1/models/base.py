@@ -31,9 +31,8 @@ from modelcluster.tags import ClusterTaggableManager
 
 from sheerlike.query import QueryFinder
 
-from . import molecules
-from . import organisms
 from .. import get_protected_url
+from ..atomic_elements import molecules, organisms
 from ..util import util, ref
 
 import urllib
