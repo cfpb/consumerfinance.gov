@@ -118,6 +118,7 @@ def run():
                              [{"type": "email_signup", "value": {"text": "", "gd_code": "", "heading": "Email Sign Up", "form_field": [{"info": "", "type": "", "required": False, "label": "Email Sign up", "btn_text": "", "placeholder": ""}]}}, {"type": "rss_feed", "value": "blog_feed"}],
                              True)
     publish_page(base)
+    publish_page(sp)
 
     bp = BrowsePage.objects.filter(title='Browse Page')
     if not bp:
