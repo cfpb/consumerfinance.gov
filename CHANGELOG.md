@@ -24,7 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
-## 3.0.0-3.3.11 - 2016-05-05
+## 3.0.0-3.3.12 - 2016-05-05
 
 ### Added
 - Additional page template tests
@@ -37,7 +37,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated event times to show EDT.
 
 
-## 3.0.0-3.3.10 - 2016-05-03
+## 3.0.0-3.3.11 - 2016-05-03
 
 ### Added
 - Front end: Added No Fear Act link to footer.
@@ -48,6 +48,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Ensure files uploaded as .PDFs get a download icon
 - Handle govdelivery job subscriptions via a Django form
 - Refactored HousingCounselor form to use USZipCodeField() in order to not strip leading zeros
+
+
+## 3.3.0-3.3.10 - 2016-04-28
+
+### Fixed
+- Typo in reg comment form
 
 
 ## 3.0.0-3.3.9 - 2016-04-28
