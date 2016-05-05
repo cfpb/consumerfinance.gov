@@ -38,7 +38,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
             return self.generate_pdf()
         except InvalidZipException:
             if not settings.DEBUG:
-                return render('500.html', request, status=500)
+                return HttpResponse("That does not appear to be a valid zip code", status=400)
             raise
 
     def get_filename(self):
