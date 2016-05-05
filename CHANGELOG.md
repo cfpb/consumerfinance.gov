@@ -16,6 +16,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-3.3.11 - 2016-05-05
+
+### Added
 - Additional page template tests
 - RegComment organism: New option to use a generic link for commenting at
   Regulations.gov or going directly to the specified document's comment form.
@@ -24,10 +35,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Updated event times to show EDT.
-
-### Removed
-
-### Fixed
 
 
 ## 3.0.0-3.3.10 - 2016-05-03
