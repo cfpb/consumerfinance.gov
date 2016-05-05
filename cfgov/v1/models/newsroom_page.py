@@ -11,9 +11,8 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from . import molecules
-from . import organisms
 from . import BlogPage, LegacyBlogPage, CFGOVPageManager
+from ..atomic_elements import molecules, organisms
 
 
 class NewsroomPage(BlogPage):

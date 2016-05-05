@@ -153,8 +153,11 @@
                     Video Replay will be<br> available shortly
                 {% else %}
                     {% import 'macros/time.html' as time %}
-                    {% if event.start_dt%}
-                        {{ time.render(event.start_dt) }}
+                    {% if event.start_dt %}
+                        {{ time.render(
+                            event.start_dt,
+                            timezone='America/New_York'
+                        ) }}
                     {% endif %}
                 {% endif %}
                 </div>
@@ -251,7 +254,10 @@
             <tr>
                 <td class="{{ options.time_col_classes }}">
                     {% import 'macros/time.html' as time %}
-                    {{ time.render(bound.start_dt.render(), {'time':true, 'timezone':true}) }}
+                    {{ time.render(
+                        bound.start_dt.render(),
+                        {'date':false,'time':true,'timezone':false}
+                    ) }}
                     &ndash;
                     {{ time.render(bound.end_dt.render(), {'time':true, 'timezone':true}) }}
                 </td>

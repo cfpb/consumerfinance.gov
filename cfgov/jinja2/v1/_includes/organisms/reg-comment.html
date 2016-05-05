@@ -10,13 +10,17 @@
 
    value:               An object used to customize the markup.
 
-   value.document_id:   Federal Register document ID number to which
-                        the comment should be submitted.
-                        Should follow this format: `CFPB-FRDOC_####-####`.
+   value.document_id:       Federal Register document ID number to which
+                            the comment should be submitted.
+                            Should follow this format: `CFPB-FRDOC_####-####`
 
-   value.id:            (optional) Sets the id attribute in the form's markup.
-                        If not set, the form will be assigned a base id of
-                        `o-reg-comment_` with a random number appended.
+   value.generic_regs_link: A Boolean indicating whether the link to comment
+                            at Regulations.gov should be generic, rather than
+                            pointing to the specific document.
+
+   value.id:                (optional) Sets the form's id attribute.
+                            If not set, the form will be assigned an id of
+                            `o-reg-comment_` with a random number appended.
 
    ========================================================================== #}
 
@@ -34,7 +38,12 @@
             If you would like to include an attachment with your response,
             please submit your comment at
             <a class="icon-link icon-link__external-link"
-               href="https://www.regulations.gov/">
+               href="https://www.regulations.gov/{{
+                    '#!submitComment;D=' + value.document_id
+                    if not value.generic_regs_link
+                    else ''
+               }}"
+               target="_blank">
                 <span class="icon-link_text">Regulations.gov</span>
             </a>.
         </p>
@@ -58,9 +67,11 @@
         <input type="email" id="email" name="email"
                placeholder="example@mail.com">
 
-        <p>
-            <strong>Sensitive personal information, such as account numbers or
-            Social Security numbers, should not be included.</strong>
+        <p class="o-reg-comment_disclaimer">
+            <span class="o-reg-comment_disclaimer-em">
+                Sensitive personal information, such as account numbers or
+                Social Security numbers, should not be included.
+            </span>
             Your comments will become part of the public record and posted to
             <a class="icon-link icon-link__external-link"
                href="https://www.regulations.gov/">

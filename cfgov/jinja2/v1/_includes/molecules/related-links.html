@@ -6,15 +6,21 @@
 
     Description:
 
-    Creates related posts markup when given:
+    Creates related links markup when given:
 
-    value:         A collection of a heading and links.
+    value:               Object defined from a StreamField block.
 
-    value.heading: The heading of the related links inset.
-                    (Default: Related Links)
+    value.heading:       The heading of the related links inset.
+                         Default is "Related Links".
 
-    value.links:   An list of links with the link first followed by the text of
-                    link   .
+    value.paragraph:     String for text above the links.
+
+    value.links:         (Optional) An list of links with the link first
+                         followed by the text of link.
+
+    value.links[i].url:  A string for the URL of the link.
+
+    value.links[i].text: A string for the text of the link.
 
    ========================================================================== #}
 
@@ -27,7 +33,7 @@
         </h2>
     {% endif %}
 
-    {{ parse_links(value.paragraph) |safe }}
+    {{ parse_links(value.paragraph) | safe }}
 
     {% if value.links %}
         <ul class="list list__unstyled list__links">

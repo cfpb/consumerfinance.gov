@@ -10,6 +10,8 @@ describe( 'Footer', function() {
       'accessibility',
     '/office-civil-rights/':
       'office of civil rights',
+    '/office-civil-rights/no-fear-act/':
+      'no fear act data',
     '/about-us/careers/':
       'careers',
     '/foia-requests/':

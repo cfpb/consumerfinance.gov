@@ -27,7 +27,7 @@ Sauce Labs can be used to run tests remotely in the cloud.
    cd /Users/<YOUR MAC OSX USERNAME>/Applications/SauceConnect
    ```
 4. Copy step 3 from the the SauceLabs
-   [Basic Setup instructions](https://docs.saucelabs.com/reference/sauce-connect/#basic-setup)
+   [Basic Setup instructions](https://wiki.saucelabs.com/display/DOCS/Basic+Sauce+Connect+Setup#BasicSauceConnectSetup-SettingUpSauceConnect)
    and run that in your Terminal window.
    Once you see `Sauce Connect is up` in the Terminal,
    that means the tunnel has successfully been established

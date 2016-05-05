@@ -8,6 +8,8 @@
 
    Create an Expandable molecule when given:
 
+   value:             Object defined from a StreamField block.
+
    value.label:       Label you want on the Expandable.
                       Default is an empty string.
 
@@ -28,7 +30,7 @@
 
 {% macro expandable(value) %}
 
-<div class="m-expandable
+<div data-qa-hook="expandable" class="m-expandable
             m-expandable__expanded
             {{ 'm-expandable__borders' if value.is_bordered else '' }}
             {{ 'm-expandable__midtone' if value.is_midtone else '' }}"

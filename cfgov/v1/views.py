@@ -1,23 +1,19 @@
-import time, re
-from datetime import timedelta
-
 from core.services import PDFGeneratorView, ICSView
 from wagtail.wagtailcore.models import Page
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from wagtail.wagtailadmin import messages as wagtail_messages
 from django.utils.translation import ugettext as _
-from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import HttpResponse
 
+from django.contrib.auth import get_user_model
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash, get_user_model, REDIRECT_FIELD_NAME, views as auth_views, \
-    login
-from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth import update_session_auth_hash,\
+        REDIRECT_FIELD_NAME, login
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth import hashers
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
 from django.shortcuts import resolve_url
@@ -27,17 +23,16 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.encoding import force_text
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.template.response import TemplateResponse
-from wagtail.wagtailadmin.views import account
-from wagtail.wagtailadmin import forms
 
-from .forms import login_form
-from .util import password_policy
-from .models import base
-from .models.base import PasswordHistoryItem
+from wagtail.wagtailadmin.views import account
+from wagtail.wagtailusers.views.users import add_user_perm, change_user_perm
+from wagtail.wagtailadmin.utils import permission_required
+
+from .auth_forms import CFGOVUserCreationForm, CFGOVUserEditForm,\
+    CFGOVSetPasswordForm, CFGOVPasswordChangeForm, LoginForm
+
 from .signals import page_unshared
 
-
-LoginForm = login_form()
 
 class LeadershipCalendarPDFView(PDFGeneratorView):
     render_url = 'http://localhost/about-us/the-bureau/leadership-calendar/print/'
@@ -96,6 +91,7 @@ def unshare(request, page_id):
 
 
 # Overrided Wagtail Views
+@login_required
 def change_password(request):
     if not account.password_management_enabled():
         raise Http404
@@ -103,29 +99,24 @@ def change_password(request):
     user = request.user
     can_change_password = user.has_usable_password()
 
-    if can_change_password:
-        if request.POST:
-            form = PasswordChangeForm(user=user, data=request.POST)
-
-            if form.is_valid():
-                password1 = form.cleaned_data.get('new_password1', '')
-                password2 = form.cleaned_data.get('new_password2', '')
-
-                errors = password_policy._check_passwords(password1, password2, user)
-
-                if len(errors) == 0:
-                    form.save()
-                    update_session_auth_hash(request, form.user)
-
-                    messages.success(request, _("Your password has been changed successfully!"))
-                    return redirect('wagtailadmin_account')
-                else:
-                    messages.error(request, errors)
-                    form = PasswordChangeForm(user=request.user)
-        else:
-            form = PasswordChangeForm(user=request.user)
-    else:
+    if not can_change_password:
         form = None
+
+    if request.POST:
+        form = CFGOVPasswordChangeForm(user=user, data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+
+            messages.success(request, _("Your password has been changed successfully!"))
+            return redirect('wagtailadmin_account')
+        else:
+            if '__all__' in form.errors:
+                for error in form.errors['__all__']:
+                    messages.error(request, error)
+    else:
+        form = CFGOVPasswordChangeForm(user=request.user)
 
     return render(request, 'wagtailadmin/account/change_password.html', {
         'form': form,
@@ -193,6 +184,7 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
     return TemplateResponse(request, template_name, context)
 
 
+
 @sensitive_post_parameters()
 @never_cache
 def custom_password_reset_confirm(request, uidb64=None, token=None,
@@ -217,21 +209,13 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
         validlink = True
         title = _('Enter new password')
         if request.method == 'POST':
-            form = SetPasswordForm(user, request.POST)
+            form = CFGOVSetPasswordForm(user, request.POST)
             if form.is_valid():
-                password1 = form.cleaned_data.get('new_password1', '')
-                password2 = form.cleaned_data.get('new_password2', '')
-                errors = password_policy._check_passwords(password1, password2, user)
-
-                if len(errors) == 0:
-                    form.save()
+                    user.temporarylockout_set.all().delete()
                     return HttpResponseRedirect(post_reset_redirect)
-                else:
-                    messages.error(request, errors)
-                    form = SetPasswordForm(user)
 
         else:
-            form = SetPasswordForm(user)
+            form = CFGOVSetPasswordForm(user)
     else:
         validlink = False
         form = None
@@ -249,31 +233,24 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
 password_reset_confirm = account._wrap_password_reset_view(custom_password_reset_confirm)
 
 ## User Creation
-from wagtail.wagtailusers.views.users import add_user_perm, change_user_perm
-from wagtail.wagtailusers.forms import UserCreationForm, UserEditForm
-from wagtail.wagtailadmin.utils import permission_required
+
+
+
 
 @permission_required(add_user_perm)
 def create_user(request):
     if request.POST:
-        form = UserCreationForm(request.POST)
+        form = CFGOVUserCreationForm(request.POST)
         if form.is_valid():
-            password1 = form.cleaned_data.get('password1', '')
-            password2 = form.cleaned_data.get('password2', '')
-            errors = password_policy._check_passwords(password1, password2, None)
-
-            if len(errors) == 0:
                 user = form.save()
                 wagtail_messages.success(request, _("User '{0}' created.").format(user), buttons=[
                     wagtail_messages.button(reverse('wagtailusers_users:edit', args=(user.id,)), _('Edit'))
                 ])
                 return redirect('wagtailusers_users:index')
-            else:
-                messages.error(request, errors)
-        else:
-            wagtail_messages.error(request, _("The user could not be created due to errors."))
+        elif '__all__' in form.errors:
+                wagtail_messages.error(request,form.errors['__all__'])
     else:
-        form = UserCreationForm()
+        form = CFGOVUserCreationForm()
 
     return render(request, 'wagtailusers/users/create.html', {
         'form': form,
@@ -283,31 +260,21 @@ def create_user(request):
 def edit_user(request, user_id):
     user = get_object_or_404(get_user_model(), id=user_id)
     if request.POST:
-        form = UserEditForm(request.POST, instance=user)
+        form = CFGOVUserEditForm(request.POST, instance=user)
         if form.is_valid():
-            errors = []
-            password1 = form.cleaned_data.get('password1', '')
-            password2 = form.cleaned_data.get('password2', '')
-
-            if password1 and password2:
-                errors = password_policy._check_passwords(password1, password2, None)
-                password_check = True
-
-            if len(errors) == 0 or not password_check:
-                user = form.save()
-                wagtail_messages.success(request, _("User '{0}' updated.").format(user), buttons=[
-                    wagtail_messages.button(reverse('wagtailusers_users:edit', args=(user.id,)), _('Edit'))
-                ])
-                return redirect('wagtailusers_users:index')
-            else:
-                messages.error(request, errors)
+            user = form.save()
+            user.temporarylockout_set.all().delete()
+            wagtail_messages.success(request, _("User '{0}' updated.").format(user), buttons=[
+                wagtail_messages.button(reverse('wagtailusers_users:edit', args=(user.id,)), _('Edit'))
+            ])
+            return redirect('wagtailusers_users:index')
         else:
-            wagtail_messages.error(request, _("The user could not be saved due to errors."))
+            if '__all__' in form.errors:
+                wagtail_messages.error(request,form.errors['__all__'])
     else:
-        form = UserEditForm(instance=user)
+        form = CFGOVUserEditForm(instance=user)
 
     return render(request, 'wagtailusers/users/edit.html', {
         'user': user,
         'form': form,
     })
-

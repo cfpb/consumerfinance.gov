@@ -23,8 +23,6 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
 
   var BASE_CLASS = 'm-global-search';
   var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'GlobalSearch' );
-  var _triggerSel = '.' + BASE_CLASS + '_trigger';
-  var _triggerDom = _dom.querySelector( _triggerSel );
   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   var _flyoutMenu = new FlyoutMenu( _dom );
   var _searchInputDom;

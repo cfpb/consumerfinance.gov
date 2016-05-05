@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   hero.render()
+   Hero
 
    ==========================================================================
 
@@ -10,33 +10,34 @@
 
    Create a hero molecule.
 
-   value:               An object with the following requirements.
+   value:                  Object defined from a StreamField block.
 
-   value.is_overlay:    A boolean to change the hero to an overlay hero.
-   value.is_white_text: A boolean to change the text color to white.
+   value.is_overlay:       A boolean to change the hero to an overlay hero.
 
-   value.heading:       A string containing title of module.
+   value.is_white_text:    A boolean to change the text color to white.
 
-   value.body:          A string containing the content to display below the
-                        heading (typically a paragraph).
+   value.background_color: A string containing the color code (in any format) to
+                           set as the hero background color.
 
-   value.lg_image:      An image object containing the URL of the image to be
-                        placed behind the hero.
+   value.background_image: An image object.
 
-   value.image:         A image object containing the URL of the image to be
-                        placed adjacent to the text.
+   value.heading:          A string containing title of module.
 
+   value.body:             A string containing the content to display below the
+                           heading (typically a paragraph).
 
-   value.background_color:
-                        A string containing the color code (in any format) to
-                        set as the hero background color.
+   value.links:            A tuple of items to create a list of links, containing:
 
-   value.links:         A tuple of items to create a list of links, containing:
+   value.links[i].url:     A string for the URL of the link.
 
-                        url:  A string for the URL of the link.
-                        text: A string for the text of the link.
+   value.links[i].text:    A string for the text of the link.
 
-   value.is_button:     A boolean to change the CTA link to a button.
+   value.is_button:        A boolean to change the CTA link to a button.
+
+   value.image:            A image object containing the image to be
+                           placed adjacent to the text.
+
+   value.image.upload      An image object.
 
    ========================================================================== #}
 
@@ -63,7 +64,6 @@
                 </a>
             {% endfor %}
         </div>
-
 
         <div class="hero_image"
         {% if value.image.upload %}

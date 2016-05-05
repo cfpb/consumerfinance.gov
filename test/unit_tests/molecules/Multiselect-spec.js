@@ -32,7 +32,7 @@ describe( 'Multiselect', function() {
 
   beforeEach( function() {
     sandbox = sinon.sandbox.create();
-    sandbox.stub(window.console, "log");
+    sandbox.stub( window.console, 'log' );
 
     document.body.innerHTML = HTML_SNIPPET;
 
