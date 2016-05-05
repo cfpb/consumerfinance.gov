@@ -135,3 +135,87 @@ describe( 'Wagtail Document Detail Page', function() {
       .toContain( 'Document Detail Page' + TITLE_TAGLINE );
   } );
 } );
+
+describe( 'Wagtail Newsroom Landing Page', function() {
+  var page;
+
+  beforeAll( function() {
+    page = new pageWagtailTemplate.newsroomLanding();
+    page.get();
+  } );
+
+  it( 'should properly load in a browser', function() {
+    expect( page.pageTitle() )
+      .toContain( 'Newsroom Landing Page' + TITLE_TAGLINE );
+  } );
+} );
+
+describe( 'Wagtail Newsroom Page', function() {
+  var page;
+
+  beforeAll( function() {
+    page = new pageWagtailTemplate.newsroom();
+    page.get();
+  } );
+
+  it( 'should properly load in a browser', function() {
+    expect( page.pageTitle() )
+      .toContain( 'Newsroom Page' + TITLE_TAGLINE );
+  } );
+} );
+
+describe( 'Wagtail Legacy Newsroom Page', function() {
+  var page;
+
+  beforeAll( function() {
+    page = new pageWagtailTemplate.legacyNewsroom();
+    page.get();
+  } );
+
+  it( 'should properly load in a browser', function() {
+    expect( page.pageTitle() )
+      .toContain( 'Legacy Newsroom Page' + TITLE_TAGLINE );
+  } );
+} );
+
+describe( 'Wagtail Blog Page', function() {
+  var page;
+
+  beforeAll( function() {
+    page = new pageWagtailTemplate.blog();
+    page.get();
+  } );
+
+  it( 'should properly load in a browser', function() {
+    expect( page.pageTitle() )
+      .toContain( 'Blog Page' + TITLE_TAGLINE );
+  } );
+} );
+
+describe( 'Wagtail Legacy Blog Page', function() {
+  var page;
+
+  beforeAll( function() {
+    page = new pageWagtailTemplate.legacyBlog();
+    page.get();
+  } );
+
+  it( 'should properly load in a browser', function() {
+    expect( page.pageTitle() )
+      .toContain( 'Legacy Blog Page' + TITLE_TAGLINE );
+  } );
+} );
+
+describe( 'Wagtail Activity Log Page', function() {
+  var page;
+
+  beforeAll( function() {
+    page = new pageWagtailTemplate.activityLog();
+    page.get();
+  } );
+
+  it( 'should properly load in a browser', function() {
+    expect( page.pageTitle() )
+      .toContain( 'Activity Log Page' + TITLE_TAGLINE );
+  } );
+} );

@@ -99,6 +99,72 @@ function EventPage() {
 
 }
 
+function NewsroomLandingPage() {
+
+  this.get = function() {
+    var baseUrl = '/newsroom-landing-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function NewsroomPage() {
+
+  this.get = function() {
+    var baseUrl = '/newsroom-landing-page/newsroom-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function LegacyNewsroomPage() {
+
+  this.get = function() {
+    var baseUrl = '/newsroom-landing-page/legacy-newsroom-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function BlogPage() {
+
+  this.get = function() {
+    var baseUrl = '/sublanding-filterable-page/blog-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function LegacyBlogPage() {
+
+  this.get = function() {
+    var baseUrl = '/sublanding-filterable-page/legacy-blog-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function ActivityLogPage() {
+
+  this.get = function() {
+    var baseUrl = '/activity-log-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
 module.exports = {
   landing:              LandingPage,
   sublanding:           SubLandingPage,
@@ -108,5 +174,11 @@ module.exports = {
   eventArchive:         EventArchivePage,
   docdetail:            DocumentDetailPage,
   learn:                LearnPage,
-  event:                EventPage
+  event:                EventPage,
+  newsroomLanding:      NewsroomLandingPage,
+  newsroom:             NewsroomPage,
+  legacyNewsroom:       LegacyNewsroomPage,
+  blog:                 BlogPage,
+  legacyBlog:           LegacyBlogPage,
+  activityLog:          ActivityLogPage
 };
