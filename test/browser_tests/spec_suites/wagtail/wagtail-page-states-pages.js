@@ -1,9 +1,9 @@
 'use strict';
 
-var state_pages = require(
+var statePages = require(
   '../../page_objects/page_wagtail_states_pages.js' );
-var SharedPage = state_pages.sharedpage;
-var SharedDraftPage = state_pages.shareddraftpage;
+var SharedPage = statePages.sharedpage;
+var SharedDraftPage = statePages.shareddraftpage;
 
 var TITLE_TAGLINE = ' | Consumer Financial Protection Bureau';
 
@@ -12,7 +12,7 @@ describe( 'Wagtail Draft Page', function() {
   var page;
 
   beforeAll( function() {
-    page = browser.get('/draft-page/');
+    page = browser.get( '/draft-page/' );
   } );
 
   it( 'should not load in a browser',
@@ -78,10 +78,8 @@ describe( 'Wagtail Shared Draft Page', function() {
 } );
 
 describe( 'Wagtail Live Page', function() {
-  var page;
-
   beforeAll( function() {
-    page = browser.get('/live-page/');
+    browser.get( '/live-page/' );
   } );
 
   it( 'should properly load in a browser',
@@ -93,10 +91,8 @@ describe( 'Wagtail Live Page', function() {
 } );
 
 describe( 'Wagtail Live Draft Page', function() {
-  var page;
-
   beforeAll( function() {
-    page = browser.get('/live-draft-page/');
+    browser.get( '/live-draft-page/' );
   } );
 
   it( 'should properly load in a browser',
