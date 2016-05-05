@@ -208,6 +208,13 @@
             } );
         }
     }
+
+    // Hide return to top button on print.
+    .respond-to-print( {
+        &_top-button {
+            display: none !important;
+        }
+    } );
 }
 
 /* topdoc

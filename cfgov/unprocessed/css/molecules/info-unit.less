@@ -161,7 +161,16 @@
             .u-info-unit-base__inline( @m-info-unit_img__lg );
         } );
     }
+
+    // Hide image on print.
+    .respond-to-print( {
+        &_image {
+            display: none;
+        }
+    } );
 }
 
-
-
+/* topdoc
+    name: EOF
+    eof: true
+*/
