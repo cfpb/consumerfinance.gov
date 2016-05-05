@@ -1,7 +1,4 @@
 from .base import *
-from .atoms import *
-from .molecules import *
-from .organisms import *
 from ..util.ref import *
 
 from .snippets import *

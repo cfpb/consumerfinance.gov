@@ -8,11 +8,25 @@
 
    Creates related posts markup when given:
 
-   is_half_width:    A Boolean indicating whether the posts should be at half
-                     width. Defaults to False.
+   posts:                    TODO: Add data type and description.
 
-   hide_header_slug: A Boolean indicating whether the header should be hidden.
-                     Defaults to False.
+   posts.iteritems():        TODO: Add data type and description.
+
+   block:                    TODO: Add data type and description.
+
+   block.value:              TODO: Add data type and description.
+
+   block.value.header_title: TODO: Add data type and description.
+
+   block.value.show_heading: TODO: Add data type and description.
+
+   is_half_width:            A Boolean indicating whether the posts
+                             should be at half width.
+                             Defaults to False.
+
+   hide_header_slug:         A Boolean indicating whether
+                             the header should be hidden.
+                             Defaults to False.
 
    ========================================================================== #}
 
@@ -56,11 +70,13 @@
 
    posts: A list of dictionaries containing related posts.
 
+   limit: Number at which to limit displaying posts.
+
    ========================================================================== #}
 
 {% macro _related_posts_list(posts, limit) %}
     {% import 'macros/time.html' as time %}
-    {% set limit = limit|int if posts|length >= limit|int else posts|length %}
+    {% set limit = limit | int if posts | length >= limit | int else posts | length %}
     <ul class="m-related-posts_list
                list list__unstyled
                list__spaced">
@@ -94,18 +110,6 @@
 {# ==========================================================================
 
    _view_more()
-
-   ==========================================================================
-
-   Description:
-
-   Creates view more markup when given:
-
-   link:      A tuple of link information.
-
-   link.url:  The link URL.
-
-   link.text: The link text.
 
    ========================================================================== #}
 

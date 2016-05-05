@@ -8,28 +8,12 @@ from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.blocks.struct_block import StructValue
 from ref import related_posts_categories
 
-def id_validator(id_string, search=re.compile(r'[^a-zA-Z0-9-_]').search):
-    if id_string:
-        return not bool(search(id_string))
-    else:
-        return False
-
-
-# example_case ==> ExampleCase
-def to_camel_case(snake_str):
-    snake_str = snake_str.capitalize()
-    components = snake_str.split('_')
-    return components[0] + "".join(x.title() for x in components[1:])
-
-
 def get_unique_id(prefix='', suffix=''):
     index = hex(int(time() * 10000000))[2:]
     return prefix + str(index) + suffix
 
-
-    # These messages are manually mirrored on the
-    # Javascript side in error-messages-config.js
-
+# These messages are manually mirrored on the
+# Javascript side in error-messages-config.js
 
 ERROR_MESSAGES = {
     'CHECKBOX_ERRORS': {
@@ -89,7 +73,7 @@ def instanceOfBrowseOrFilterablePages(page):
 
 
 # For use by Browse type pages to get the secondary navigation items
-def get_secondary_nav_items(current, hostname, exclude_siblings=False):
+def get_secondary_nav_items(current, hostname):
     from ..templatetags.share import get_page_state_url
     on_staging = os.environ.get('STAGING_HOSTNAME') == hostname
     nav_items = []

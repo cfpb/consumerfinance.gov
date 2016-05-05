@@ -8,14 +8,14 @@
 
    Creates markup for Social Media molecule.
 
-   options:       Object of optional parameters.
-
-   options.is_share_view:    Whether the "Share this" heading is shown.
-                             Default is true.
+   options:                  Object of optional parameters.
 
    options.title:            Sets the title in email subject line
                              and in the LinkedIn share post.
                              Default is "Look what I found on the CFPB!"
+
+   options.is_share_view:    Whether the "Share this" heading is shown.
+                             Default is true.
 
    options.twitter_hashtags: A comma-separated list of hashtags
                              to be appended to default Tweet text.
@@ -131,6 +131,37 @@
 </div>
 {% endmacro %}
 
+{# ==========================================================================
+
+   _share_twitter_url()
+
+   ==========================================================================
+
+   Description:
+
+   Returns a Twitter share URL when given:
+
+   parsed_url: URL-encoded URL.
+
+   title: Title for the tweet.
+
+   options:                  Object of optional parameters.
+
+   options.twitter_hashtags: (Optional) A comma-separated list of hashtags
+                             to be appended to default Tweet text.
+                             https://dev.twitter.com/web/tweet-button/parameters
+
+   options.twitter_related:  (Optional) A comma-separated list of accounts
+                             related to the content of the shared URI.
+                             https://dev.twitter.com/web/tweet-button/parameters
+                             Default is `cfpb`.
+
+   options.twitter_lang:     (Optional) Loads text components in the specified
+                             language, if other than English.
+                             https://dev.twitter.com/web/tweet-button/parameters
+
+   ========================================================================== #}
+
 {% macro _share_twitter_url(parsed_url, title, options) %}
     {%- set _share_twitter_url = 'http://twitter.com/intent/tweet' -%}
     {%- set _share_twitter_url = _share_twitter_url + '?url=' + parsed_url -%}
@@ -140,11 +171,13 @@
     {%- if options.twitter_hashtags %}
         {% set _share_twitter_url = _share_twitter_url + '&hashtags=' + options.twitter_hashtags %}
     {% endif -%}
+
     {%- if options.twitter_related %}
         {% set _share_twitter_url = _share_twitter_url + '&related=' + options.twitter_related %}
     {%- else %}
         {% set _share_twitter_url = _share_twitter_url + '&related=cfpb' %}
     {% endif -%}
+
     {%- if options.twitter_lang %}
         {% set _share_twitter_url = _share_twitter_url + '&lang=' + options.twitter_lang %}
     {% endif -%}

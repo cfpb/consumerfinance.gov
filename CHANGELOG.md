@@ -24,22 +24,35 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 3.0.0-3.3.12 - 2016-05-05
+
+### Added
+- Additional page template tests
+- RegComment organism: New option to use a generic link for commenting at
+  Regulations.gov or going directly to the specified document's comment form.
+- Additional molecule tests
+
+### Changed
+- Updated event times to show EDT.
+
+
 ## 3.0.0-3.3.11 - 2016-05-03
 
 ### Added
+- Front end: Added No Fear Act link to footer.
 
 ### Changed
-- Frontend: Added No Fear Act link to footer.
-- Frontend: Added No Fear Act link to footer.
 - RSS Feeds for all Filterable Pages
 - Animated Gif Support
 - Ensure files uploaded as .PDFs get a download icon
 - Handle govdelivery job subscriptions via a Django form
-- Refactored HousingCounselor form to use USZipCodeField() inorder to not strip leading zeros
+- Refactored HousingCounselor form to use USZipCodeField() in order to not strip leading zeros
 
-### Removed
+
+## 3.3.0-3.3.10 - 2016-04-28
 
 ### Fixed
+- Typo in reg comment form
 
 
 ## 3.0.0-3.3.9 - 2016-04-28

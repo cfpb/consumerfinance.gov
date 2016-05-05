@@ -6,9 +6,7 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
 from .base import CFGOVPage
-from . import atoms
-from . import molecules
-from . import organisms
+from ..atomic_elements import atoms, molecules, organisms
 from .snippets import Contact
 
 

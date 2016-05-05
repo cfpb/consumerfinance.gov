@@ -24,7 +24,7 @@ var API = {
   IMAGE_URL: 'https://img.youtube.com/vi/%video_id%/maxresdefault.jpg',
 
   YOUTUBE_API_CONFIG: {
-    'host': 'https://www.youtube.com'
+    host: 'https://www.youtube.com'
   },
 
   iFrameProperties: {
@@ -58,6 +58,9 @@ var API = {
 
   /**
    * Handle initializing of Youtube player and embed API script if necessary.
+   * @returns {Object|undefined}
+   *   YouTube player instance from the Google APIs or undefined if
+   *   the Google APIs have not been loaded on the window object.
    */
   initPlayer: function( ) {
     var YouTubePlayer = window.YT;
@@ -67,10 +70,12 @@ var API = {
       player = new YouTubePlayer.Player( this.iFrameProperties.id
         , this.playerOptions );
       this.state.isPlayerInitialized = true;
-    } else if( this.state.isScriptLoading === false ) {
+    } else if ( this.state.isScriptLoading === false ) {
       window.onYouTubeIframeAPIReady = this.initPlayer.bind( this );
       this.embedScript();
     }
+
+    return player;
   },
 
   /**
@@ -120,7 +125,7 @@ var API = {
    * @param {object} event - Youtube event data.
    */
   onPlayerStateChange: function( event ) {
-    if( event.data === window.YT.PlayerState.ENDED ) {
+    if ( event.data === window.YT.PlayerState.ENDED ) {
       this.stop();
     }
   },

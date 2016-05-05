@@ -1,7 +1,7 @@
 
 {# ==========================================================================
 
-   pagination()
+   Pagination
 
    ==========================================================================
 
@@ -9,21 +9,23 @@
 
    Builds pagination markup when given:
 
-   posts.page:          Current page number of the iterable list.
+   posts:                        TODO: fill in data type and description.
 
-   posts.filters:               Current filters applied to the iterable list.
+   posts.paginator:              TODO: fill in data type and description.
 
-   posts.next_button_href:      Link to the next page.
+   posts.paginator.num_pages:    Number of total pages.
 
-   posts.pages:                 Number of pages in the iterable list.
+   posts.number:                 TODO: fill in data type and description.
 
-   posts.previous_button_href:  Link to the previous page.
+   posts.previous_page_number(): Method to return previous page number.
+
+   posts.page:                   Current page number of the iterable list.
 
    ========================================================================== #}
 
+{% if posts and posts.paginator.num_pages > 1 %}
 {% from 'macros/util/url_parameters.html' import url_parameters %}
 
-{% if posts and posts.paginator.num_pages > 1 %}
     <nav class="m-pagination"
          role="navigation"
          aria-label="Pagination">

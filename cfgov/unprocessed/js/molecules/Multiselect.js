@@ -107,7 +107,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     for ( var i = 0, len = list.length; i < len; i++ ) {
       item = list[i];
 
-      // If the value isn't valid kill the script and propt the developer
+      // If the value isn't valid kill the script and prompt the developer.
       if ( !strings.stringValid( item.value ) ) {
         console.log( '\'' + item.value + '\' is not a valid value' );
 
@@ -241,8 +241,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
    * @param   {string} value The value of the option the user has chosen
    */
   function _updateSelections( value ) {
-    var optionIndex
-      = arrayHelpers.indexOfObject( _optionsData, 'value', value );
+    var optionIndex =
+      arrayHelpers.indexOfObject( _optionsData, 'value', value );
     var option = _optionsData[optionIndex] || _optionsData[_index];
 
     if ( option ) {
@@ -253,8 +253,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
           _optionsDom.classList.remove( 'max-selections' );
         }
 
-        _selectionsItemDom =_selectionsDom
-          .querySelector( '[data-option="' + option.value + '"]' );
+        var dataOptionSel = '[data-option="' + option.value + '"]';
+        _selectionsItemDom = _selectionsDom.querySelector( dataOptionSel );
 
         if ( _selectionsItemDom ) {
           _selectionsDom.removeChild( _selectionsItemDom );
