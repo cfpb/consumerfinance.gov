@@ -8,7 +8,8 @@ function SharedPage() {
   };
 
   this.getStaging = function() {
-    var baseUrl = process.env.STAGING_HOSTNAME + ':' + process.env.HTTP_PORT + '/shared-page/';
+    var baseUrl = process.env.STAGING_HOSTNAME + ':' +
+                  process.env.HTTP_PORT + '/shared-page/';
     browser.get( baseUrl );
   };
 
@@ -24,7 +25,8 @@ function SharedDraftPage() {
   };
 
   this.getStaging = function() {
-    var baseUrl = process.env.STAGING_HOSTNAME + ':' + process.env.HTTP_PORT + '/shared-draft-page/';
+    var baseUrl = process.env.STAGING_HOSTNAME + ':' +
+                  process.env.HTTP_PORT + '/shared-draft-page/';
     browser.get( baseUrl );
   };
 
