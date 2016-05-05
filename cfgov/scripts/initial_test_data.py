@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from wagtail.wagtailcore.models import Page, Site
 
+from v1.models.base import CFGOVPage
 from v1.models.home_page import HomePage
 from v1.models.landing_page import LandingPage
 from v1.models.sublanding_page import SublandingPage
@@ -111,6 +112,13 @@ def run():
 
     publish_page(sp)
 
+    # Sidefoot related Data
+    base = CFGOVPage.objects.get(id=sp.cfgovpage.id)
+    base.sidefoot = StreamValue(base.sidefoot.stream_block,
+                             [{"type": "email_signup", "value": {"text": "", "gd_code": "", "heading": "Email Sign Up", "form_field": [{"info": "", "type": "", "required": False, "label": "Email Sign up", "btn_text": "", "placeholder": ""}]}}, {"type": "rss_feed", "value": "blog_feed"}],
+                             True)
+    publish_page(base)
+
     bp = BrowsePage.objects.filter(title='Browse Page')
     if not bp:
         bp = BrowsePage(title='Browse Page', slug='browse-page', owner=admin_user)
@@ -201,6 +209,7 @@ def run():
     if not LegacyBlogPage.objects.filter(title='Legacy Blog Page'):
         lbp = LegacyBlogPage(title='Legacy Blog Page', slug='legacy-blog-page', owner=admin_user)
         publish_page(lbp, sfp)
+
 
     # Demo Page
     dp = DemoPage.objects.filter(title='Demo Page')
