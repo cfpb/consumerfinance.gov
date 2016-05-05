@@ -1,7 +1,16 @@
 import six, sys, os
-from core.services import PDFGeneratorView
+
 from django.conf import settings
 from django.http import HttpResponse
+from django import http
+from django.apps import apps
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.requests import RequestSite
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import ugettext as _
+
+from core.services import PDFGeneratorView
+from v1.db_router import cfgov_apps
 from .forms import HousingCounselorForm
 
 if six.PY2:
@@ -66,3 +75,32 @@ class HousingCounselorPDFView(PDFGeneratorView):
             response['Content-Disposition'] = 'attachment; filename={0}'.format(
                 self.get_filename())
             return response
+
+
+def dbrouter_shortcut(request, content_type_id, object_id):
+    """
+    Redirect to an object's page based on a content-type ID and an object ID.
+    """
+    # Look up the object, making sure it's got a get_absolute_url() function.
+    try:
+        content_type = ContentType.objects.get(pk=content_type_id)
+        if not content_type.model_class():
+            raise http.Http404(_("Content type %(ct_id)s object has no associated model") %
+                               {'ct_id': content_type_id})
+
+        if content_type.app_label in cfgov_apps:
+            obj = content_type.get_object_for_this_type(pk=object_id)
+        else:
+            obj = content_type.model_class().objects.db_manager('legacy').get(pk=object_id)
+
+    except (ObjectDoesNotExist, ValueError):
+        raise http.Http404(_("Content type %(ct_id)s object %(obj_id)s doesn't exist") %
+                           {'ct_id': content_type_id, 'obj_id': object_id})
+
+    try:
+        get_absolute_url = obj.get_absolute_url
+    except AttributeError:
+        raise http.Http404(_("%(ct_name)s objects don't have a get_absolute_url() method") %
+                           {'ct_name': content_type.name})
+
+    return http.HttpResponseRedirect(get_absolute_url())
