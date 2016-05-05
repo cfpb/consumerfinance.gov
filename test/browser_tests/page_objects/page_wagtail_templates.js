@@ -99,14 +99,86 @@ function EventPage() {
 
 }
 
+function NewsroomLandingPage() {
+
+  this.get = function() {
+    var baseUrl = '/newsroom-landing-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function NewsroomPage() {
+
+  this.get = function() {
+    var baseUrl = '/newsroom-landing-page/newsroom-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function LegacyNewsroomPage() {
+
+  this.get = function() {
+    var baseUrl = '/newsroom-landing-page/legacy-newsroom-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function BlogPage() {
+
+  this.get = function() {
+    var baseUrl = '/sublanding-filterable-page/blog-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function LegacyBlogPage() {
+
+  this.get = function() {
+    var baseUrl = '/sublanding-filterable-page/legacy-blog-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
+function ActivityLogPage() {
+
+  this.get = function() {
+    var baseUrl = '/activity-log-page';
+    browser.get( baseUrl );
+  };
+
+  this.pageTitle = function() { return browser.getTitle(); };
+
+}
+
 module.exports = {
-  landing:              LandingPage,
-  sublanding:           SubLandingPage,
-  browse:               BrowsePage,
-  browseFilterable:     BrowseFilterablePage,
-  sublandingFilterable: SublandingFilterablePage,
-  eventArchive:         EventArchivePage,
-  docdetail:            DocumentDetailPage,
-  learn:                LearnPage,
-  event:                EventPage
+  Landing:              LandingPage,
+  Sublanding:           SubLandingPage,
+  Browse:               BrowsePage,
+  BrowseFilterable:     BrowseFilterablePage,
+  SublandingFilterable: SublandingFilterablePage,
+  EventArchive:         EventArchivePage,
+  Docdetail:            DocumentDetailPage,
+  Learn:                LearnPage,
+  Event:                EventPage,
+  NewsroomLanding:      NewsroomLandingPage,
+  Newsroom:             NewsroomPage,
+  LegacyNewsroom:       LegacyNewsroomPage,
+  Blog:                 BlogPage,
+  LegacyBlog:           LegacyBlogPage,
+  ActivityLog:          ActivityLogPage
 };
