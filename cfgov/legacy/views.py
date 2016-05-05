@@ -34,7 +34,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
             url = '%s://%s/%s' % (request.scheme, 'localhost', api_url)
             return url
         else:
-            raise InvalidZipException(form.errors)
+            raise InvalidZipException(form.errors['zip'].as_text())
 
     def get(self, request):
 
@@ -44,9 +44,9 @@ class HousingCounselorPDFView(PDFGeneratorView):
 
         try:
             return self.generate_pdf()
-        except InvalidZipException:
+        except InvalidZipException as error:
             if not settings.DEBUG:
-                return HttpResponse(status=500)
+                return HttpResponse("That does not appear to be a valid zip code", status=400)
             raise
 
     def get_filename(self):
