@@ -20,6 +20,8 @@ if six.PY2:
     except:
         PDFreactor = None
 
+class InvalidZipException(Exception):
+    pass
 
 class HousingCounselorPDFView(PDFGeneratorView):
     def get_render_url(self):
@@ -32,7 +34,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
             url = '%s://%s/%s' % (request.scheme, 'localhost', api_url)
             return url
         else:
-            raise Exception(form.errors)
+            raise InvalidZipException(form.errors['zip'].as_text())
 
     def get(self, request):
 
@@ -40,7 +42,12 @@ class HousingCounselorPDFView(PDFGeneratorView):
         if settings.DEBUG and PDFreactor is None:
             return HttpResponse("PDF Reactor is not configured, can not render %s" % self.get_render_url())
 
-        return self.generate_pdf()
+        try:
+            return self.generate_pdf()
+        except InvalidZipException as error:
+            if not settings.DEBUG:
+                return HttpResponse("That does not appear to be a valid zip code", status=400)
+            raise
 
     def get_filename(self):
         return '%s.pdf' % self.request.GET['zip']
