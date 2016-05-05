@@ -30,7 +30,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Additional page template tests
 - RegComment organism: New option to use a generic link for commenting at
   Regulations.gov or going directly to the specified document's comment form.
-- Additional page template tests
 - Additional molecule tests
 
 ### Changed
