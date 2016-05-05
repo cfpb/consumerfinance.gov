@@ -2,6 +2,7 @@ import six, sys, os
 from core.services import PDFGeneratorView
 from django.conf import settings
 from django.http import HttpResponse
+from django.shortcuts import render
 from .forms import HousingCounselorForm
 
 if six.PY2:
@@ -25,7 +26,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
             url = '%s://%s/%s' % (request.scheme, 'localhost', api_url)
             return url
         else:
-            raise InvalidZipException(form.errors)
+            raise InvalidZipException(form.errors['zip'].as_text())
 
     def get(self, request):
 
@@ -37,7 +38,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
             return self.generate_pdf()
         except InvalidZipException:
             if not settings.DEBUG:
-                return HttpResponse(status=500)
+                return render('500.html', request, status=500)
             raise
 
     def get_filename(self):
