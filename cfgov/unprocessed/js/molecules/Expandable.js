@@ -48,9 +48,12 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   /**
    * @param {number} state
    *   Allows passing of EXPANDED flag to set expanded state.
-   * @returns {Object} The Expandable instance.
+   * @returns {Expandable|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init( state ) {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) { var inst; return inst; }
+
     _calcHeight();
     // Even if expanded is set, don't expand if in mobile window size.
     if ( !_isInMobile() &&

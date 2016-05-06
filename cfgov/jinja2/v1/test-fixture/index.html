@@ -93,13 +93,35 @@
 <body>
 
 {#
+    =====================
+    REQUIRED BACKEND DATA
+    =====================
+    Mock data needed to render a particular atomic component.
+#}
+
+{% if atomic_type == 'secondary-navigation' %}
+    {% set path = '/about-us/careers/' %}
+    {% set nav_items = [
+    (path, 'index', 'Careers at the CFPB', [
+          (path + 'working-at-cfpb/', 'working-at-cfpb', 'Working at the CFPB'),
+          (path + 'application-process/', 'application-process', 'Job Application Process'),
+          (path + 'students-and-graduates/', 'students-and-graduates', 'Students & Recent Graduates'),
+          (path + 'current-openings/', 'current-openings', 'Current Openings')
+        ])
+    ] %}
+    {% set vars = { 'nav_items': nav_items } %}
+    {% set active_nav_id = 'index' %}
+{% endif %}
+
+{#
     =================
     ONDEMAND TEMPLATE
     =================
     The jinja template and associate HTML to include for an atomic component.
 #}
 {% if atomic_type == 'header' or
-      atomic_type == 'footer' %}
+      atomic_type == 'footer' or
+      atomic_type == 'secondary-navigation' %}
     {% set atomic_type_template = 'on-demand/' + atomic_type + '.html' %}
     {% include atomic_type_template %}
 {% endif %}

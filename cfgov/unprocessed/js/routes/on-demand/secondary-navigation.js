@@ -6,5 +6,5 @@
 
 var SecondaryNavigation = require( '../../organisms/SecondaryNavigation' );
 
-var dom = document.querySelector( '.content_sidebar .o-secondary-navigation' );
+var dom = document.querySelector( '.o-secondary-navigation' );
 var secondaryNavigation = new SecondaryNavigation( dom ).init();
