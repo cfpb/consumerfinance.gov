@@ -23,6 +23,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
+- Fixed an issue where the header only had 15px of spacing instead of 30.
+
 
 ## 3.0.0-3.3.12 - 2016-05-05
 
