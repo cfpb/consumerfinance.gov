@@ -123,5 +123,4 @@ describe( 'The Blog Page', function() {
   it( 'should include a page input with value set to 1', function() {
     expect( page.paginationPageInput.getAttribute( 'value' ) === 1 );
   } );
-
 } );

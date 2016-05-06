@@ -16,8 +16,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-- Frontend: Added print styles to hide major site features that aren't
-  print applicable.
+- Added print styles to hide major site features that aren't print applicable.
+- Added base pagination browser tests.
 
 ### Changed
 
