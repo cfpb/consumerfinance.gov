@@ -7,7 +7,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=4.1.0"
+    "node": ">=5.5.0"
   },
   "dependencies": {
     "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
