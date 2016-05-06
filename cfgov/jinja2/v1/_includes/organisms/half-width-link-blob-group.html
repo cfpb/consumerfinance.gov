@@ -1,5 +1,8 @@
+
 <div class="o-info-unit-group" data-qa-hook="half-width-link-blob">
+    {% if value.heading %}
     <h2>{{ value.heading }}</h2>
+    {% endif %}
 
     <div class="content-l">
         {% for block in value.link_blobs %}
