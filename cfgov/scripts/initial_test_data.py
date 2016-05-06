@@ -110,15 +110,13 @@ def run():
                              [{"type": "contact", "value": {"body": "", "header": "Contact", "contact": contact.id}}],
                              True)
 
-    publish_page(sp)
-
-    # Sidefoot related Data
-    base = CFGOVPage.objects.get(id=sp.cfgovpage.id)
-    base.sidefoot = StreamValue(base.sidefoot.stream_block,
+    sp.cfgovpage.sidefoot = StreamValue(sp.cfgovpage.sidefoot.stream_block,
                              [{"type": "email_signup", "value": {"text": "", "gd_code": "", "heading": "Email Sign Up", "form_field": [{"info": "", "type": "", "required": False, "label": "Email Sign up", "btn_text": "", "placeholder": ""}]}}, {"type": "rss_feed", "value": "blog_feed"}],
                              True)
-    publish_page(base)
+
+    sp.save()
     publish_page(sp)
+
 
     bp = BrowsePage.objects.filter(title='Browse Page')
     if not bp:
