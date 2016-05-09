@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title%}CFPB Knowledgebase{% endblock %}</title>
+	<script type="text/javascript" src="{{ STATIC_PREFIX }}js/jquery/1.6.4/jquery.min.js"> </script>
+	{% block metadata %}
+	
+	{% endblock %}
+	
+	<link rel="stylesheet" href=""{{ STATIC_PREFIX }}blueprint/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href=""{{ STATIC_PREFIX }}blueprint/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]>
+	  <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+	<![endif]-->
+	<link rel="stylesheet" href=""{{ STATIC_PREFIX }}knowledgebase.css">
+</head>
+
+<body id="knowledgebase">
+<div class="container">
+	<img src=""{{ STATIC_PREFIX }}images/cfpblogo.png"/>
+<h1><a href="/questions/">Knowledge Base</a></h1>
+<hr/>
+
+{% block layout %}
+
+{% endblock layout %}
+</div>
+</body>

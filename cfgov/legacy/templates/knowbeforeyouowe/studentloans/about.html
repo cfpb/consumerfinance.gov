@@ -1,0 +1,79 @@
+{% extends "knowbeforeyouowe/base_kbyo.html" %}.
+
+{% block page_meta %}
+{% endblock %}
+
+{% block title %}Know Before You Owe (Student Loans){% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="/">Home</a></li>
+<li><a href="/students/">Students</a></li>
+<li><a href="/students/knowbeforeyouowe/">Know Before You Owe</a></li>
+<li>About</li>
+{% endblock %}
+
+{% block page_css %}
+<style>
+img.rightimg {
+  float: right;
+  margin: 14px 0 28px 28px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<p class="note" >
+	
+	Thanks to all who participated! Since last fall when we first published the financial aid shopping sheet “thought starter,” thousands of you have checked out this page. We have provided all of your feedback to the Department of Education, so they can finalize the model format. <a href="http://www2.ed.gov/policy/highered/guid/aid-offer/index.html">Find more information about the progress of the project.</a>
+	
+</p>
+
+<h1><img src="/static/students/kbyo_sle.png" alt="Know Before You Owe: Student Loans"></h1>
+<p>For generations, a college degree has helped Americans from all walks of life achieve a better future. But the increasing cost of higher education, the financial crisis, and continuing tough economic times mean that more students will rely on student loans to pay for tuition and make ends meet while in school. Students should be able to understand the costs, risks, and benefits of the loans they will use to help pay for the school of their choice.</p>
+<img class="rightimg" src="/static/students/disclosure.png" alt="Student loan shopping sheet">
+<p>The school financial aid offer is one of the most important ways students receive this information. But we’ve heard from students, college counselors, and community organizations that many of these offers don’t always effectively deliver this information. They may be filled with jargon or difficult to compare, and they may not clearly distinguish loans from other forms of aid.</p>
+<p>At Congress’ direction, <a href="http://www2.ed.gov/policy/highered/guid/aid-offer/index.html" target="_blank">the Department of Education plans to publish a model format that schools can use to communicate financial aid offers</a>. To the right is a potential example of how schools could present information to prospective students and their families. The CFPB sketched this out, with input from the Department of Education as a “thought starter,” not as a proposal.</p>
+<p><a href="http://files.consumerfinance.gov/f/2012/01/Memorandum_KBYOStudentLoans_FeedbackSummary_Jan2012.pdf">Read what we have heard so far</a>.</p>
+
+<h3>Why are we doing this?</h3>
+<p>CFPB started its “Know Before You Owe” initiative to make mortgage forms easy to understand and comparable. Given our shared commitment to giving students and their families clear information on how much debt they’ll be taking on in order to go to college, now we are helping the Department of Education gather feedback to improve the way schools communicate financial aid offers to students.</p>
+<p>When prospective students apply for financial aid, schools usually send letters to them that detail the financial aid they can use. Take a look at some examples of letters currently in use (<a href="http://www2.ed.gov/policy/highered/guid/aid-offer/sample-aid-offer-4.pdf" target="_blank">example 1</a>, <a href="http://www2.ed.gov/policy/highered/guid/aid-offer/sample-aid-offer-2.pdf" target="_blank">example 2</a>). For many families, these offer letters are not so easy to understand and compare.</p>
+<p>Last month, the Department of Education conducted a public meeting where community organizations, higher education professionals, trade groups, and others discussed potential improvements to financial aid offers. Most of the participants agreed that these offers need to be <em>easier to understand and comparable with other school offers</em>.</p>
+
+
+<form class="signup inlineSignup left" action="https://public.govdelivery.com/service/process_ss.xml" method="GET">
+	<fieldset>
+		<input type="hidden" name="code" value="USCFPB_7">
+		<p><label for="email">Email address</label> <input type="email" name="email"></p>
+		<p><label for="questionid_10376">ZIP code</label> <input type="text" name="questionid_10376"></p>
+		<p><button>Send me email updates</button></p>
+	</fieldset>
+</form>
+
+{% endblock %}
+
+{% block page_js %}
+<script>
+  $(document).ready(function() {
+    $(".subscribe_form_sle").each(function(){
+        var form = $(this); // this refers to individual form
+        form.submit(function(){
+            $.ajax({
+                type: "POST", 
+                url: "/gov-delivery/proxy3.php",
+                data: form.serialize(), // it creates data string handy :)
+                complete: function(req, status_msg) {
+                    if(status_msg == 'success') {
+                        $('.subscribe_form_sle').hide();
+  				        $("#kbyo_thankyou").attr("style","left: 0px;");
+                    } 
+                }
+            });
+            return false;
+        });
+    });
+  });
+</script>
+
+{% endblock %}
