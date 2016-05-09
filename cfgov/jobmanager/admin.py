@@ -1,8 +1,11 @@
 import datetime
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
+from django.contrib.admin.options import get_content_type_for_model
+from django.core.urlresolvers import reverse
 from django.db import models
 from tinymce.widgets import TinyMCE
+from django.utils import timezone
 
 from jobmanager.models import Job, ApplicantType, Grade, JobCategory, Location, JobApplicantType
 
@@ -66,6 +69,21 @@ class JobAdmin(admin.ModelAdmin):
                 'open_graph_image_url', 'twitter_text', 'utm_campaign')
         }),
     )
+
+    def get_view_on_site_url(self, obj=None):
+        if obj is None or not self.view_on_site:
+            return None
+
+        if callable(self.view_on_site):
+            return self.view_on_site(obj)
+        elif self.view_on_site and obj.active and obj.close_date >= timezone.now().date():
+            return reverse('admin:view_on_site', kwargs={
+                'content_type_id': get_content_type_for_model(obj).pk,
+                'object_id': obj.pk
+            })
+        else:
+            return None
+
 admin.site.register(Job, JobAdmin)
 
 
