@@ -262,9 +262,11 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       } else {
         _collapseEndBinded();
       }
+
       if ( _altTriggerDom ) {
-        _setAriaAttr( 'expanded', _altTriggerDom, false )
-      };
+        _setAriaAttr( 'expanded', _altTriggerDom, false );
+      }
+
       _setAriaAttr( 'expanded', _triggerDom, false );
       _setAriaAttr( 'pressed', _triggerDom, false );
       _setAriaAttr( 'expanded', _contentDom, false );
