@@ -13,17 +13,17 @@ describe( 'Pagination', function() {
   } );
 
   it( 'should navigate to the second page', function() {
-    page.paginationNextBtn.click()
+    page.paginationNextBtn.click();
     browser.sleep( 1000 );
 
     expect( browser.getCurrentUrl() ).toContain( 'page=2' );
   } );
 
   it( 'should navigate to the first page', function() {
-    page.paginationNextBtn.click()
+    page.paginationNextBtn.click();
     browser.sleep( 1000 );
 
-    page.paginationPrevBtn.click()
+    page.paginationPrevBtn.click();
     browser.sleep( 1000 );
 
     expect( browser.getCurrentUrl() ).toContain( 'page=1' );
