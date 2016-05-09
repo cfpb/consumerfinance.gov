@@ -39,8 +39,7 @@ describe( 'Pagination', function() {
     expect( browser.getCurrentUrl() ).toContain( 'at-the-cfpb' );
   } );
 
-  xit( 'should navigate to the fifth filtered page', function() {
-    // TODO: Fix the input pagination to include existing filters
+  it( 'should navigate to the fifth filtered page', function() {
     page.searchFilterBtn.click();
     browser.sleep( 1000 );
 
@@ -51,7 +50,7 @@ describe( 'Pagination', function() {
     var input = browser.element( by.css( '#m-pagination_current-page' ) );
     var btn = browser.element( by.css( '#m-pagination_submit-btn' ) );
 
-    input.sendKeys( '5' );
+    input.clear().sendKeys( '5' );
     btn.click();
     browser.sleep( 1000 );
 
