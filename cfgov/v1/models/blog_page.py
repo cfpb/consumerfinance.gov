@@ -18,6 +18,7 @@ from ..atomic_elements import molecules, organisms
 class BlogPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
+        ('image_text_50_50_group', organisms.ImageText5050Group()),
     ])
 
     content_panels = AbstractFilterPage.content_panels
