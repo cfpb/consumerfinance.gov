@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - Added print styles to hide major site features that aren't print applicable.
 - Added base pagination browser tests.
+- Image Text 50 50 Organism to Blog Page 
 
 ### Changed
 
