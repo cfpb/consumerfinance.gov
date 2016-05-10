@@ -18,7 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - Added print styles to hide major site features that aren't print applicable.
 - Added base pagination browser tests.
-- Image Text 50 50 Organism to Blog Page 
+- Image Text 50 50 Organism to Blog Page
 
 ### Changed
 
@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed an issue where the header only had 15px of spacing instead of 30.
 - Fixed the spacing around info-units groups and breadcrumbs.
 - Fixed duplicate Protractor tests.
+- Fixed issue with page jump form.
 
 ## 3.0.0-3.3.12 - 2016-05-05
 
