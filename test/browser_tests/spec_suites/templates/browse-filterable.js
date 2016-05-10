@@ -32,7 +32,7 @@ describe( 'Pagination', function() {
     page.searchFilterSubmitBtn.click();
     browser.sleep( 1000 );
 
-    page.paginationNextBtn.click()
+    page.paginationNextBtn.click();
     browser.sleep( 1000 );
 
     expect( browser.getCurrentUrl() ).toContain( 'page=2' );
