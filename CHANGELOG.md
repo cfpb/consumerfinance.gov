@@ -30,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add unit tests for filterable list functions
 - Added browser tests for the multiselect.
 - Fix category filtering
+- Ability to refresh akamai cache on page publish
 
 ### Changes
 - filterable_context.py -> filterable_list.py
