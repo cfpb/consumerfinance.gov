@@ -1,0 +1,102 @@
+{% extends "front/base_update.html" %}
+
+{% block title %}Leadership Calendar{% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="/">Home</a></li>
+<li>Leadership calendar</li>
+{% endblock %}
+
+{% block page_css %}
+<style>
+.calendar_page h2 {
+  text-align: center;
+}
+
+.calendar_page h2 img {
+  vertical-align: middle;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="calendar_page">
+			{% include "front/share_block.html" %}
+			<h1>Leadership calendar</h1>
+
+
+<p class="keep">At the Consumer Financial Protection Bureau, we are committed to letting you know how we’re working for you every day by, among other things, providing you with a view into the workday of the CFPB&#8217;s senior leadership.</p>
+<p class="keep">Richard Cordray is the Director of the CFPB. We post his calendar online, typically on a monthly basis, after reviewing it to determine whether any information contained therein must or should be withheld from public disclosure in accordance with the Freedom of Information Act. We update the calendar retrospectively; we do not post current or future calendars. Due to the time-intensive preparation process, each month’s calendar will appear on this page a few weeks after that month has concluded. We will begin updating Mr. Cordray’s calendar with his January appointments.</p>
+
+		<p>Prior to Mr. Cordray’s appointment, first Professor Elizabeth Warren and then Raj Date served as Special Advisor to the Secretary of the Treasury for the CFPB. We will continue to make archives of their calendars available online, as well.</p>
+
+		<p>In order to make the calendars as useful and transparent as possible, we have provided each month’s calendar in multiple formats. We have consistently posted these calendars in PDF format. In addition, we provide the calendar in an interactive, clickable format. This sometimes takes us more time to prepare than the PDF files.</p>
+
+
+
+		<p class="keep">We offer these calendars in four formats:</p>
+		<ul>
+			<li>the interactive web-based calendar below,</li>
+			<li><a href="/leadership-calendar/cfpb-leadership.ics">the ics file</a>, which you can import into the calendar tool of your choice,</li>
+			<li><a href="/leadership-calendar/cfpb-leadership.rss">the RSS feed</a>, or</li>
+			<li>view FOIA-compliant PDF files, which you can select from the dropdown below.<br />
+      <select id='calLinks'>
+        {% for file in pdf_files %}
+          <option value="{{ file.url }}">{{ file.title }}</option>
+        {% endfor %}
+      </select>
+			<button id="calSubmit">View Pdf</button></li>
+		</ul>
+
+		<h2>
+		    {% if has_previous %}<a class="psf" id="calendar-anchor" href="/{{ calendar_slug }}/{{ prev_month.year }}/{{ prev_month.month }}/#calendar-anchor"><img src="{{ STATIC_PREFIX }}cal/images/left_day.gif" alt="{{ prev_month|date:"f"}}"></a>{% endif %}
+		    {{ this_month|date:"F Y" }}
+		    {% if has_next %}<a class="psf" href="/{{ calendar_slug }}/{{ next_month.year }}/{{ next_month.month }}/#calendar-anchor"><img src="{{ STATIC_PREFIX }}cal/images/right_day.gif" alt="{{ next_month|date:"f"}}"></a>{% endif %}
+		</h2>
+
+
+					<table>
+					  <thead>
+					    <tr>
+					      <th>Date</th>
+					      <th width="75%">Event</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+						{% for event in events %}
+						<tr {% cycle '' 'class="alt"' %}>
+							<td>
+							    {% if not event.all_day %}
+								<b>{{ event.dtstart|date:"f A" }} - {{ event.dtend|date:"f A" }}</b><br />
+								{% else %}
+								<b>All day</b><br />
+								{% endif %}
+								{{ event.dtstart|date:"D, F j" }}
+							</td>
+							<td>
+							    {{ event.calendar }}<br />
+								<b>{{ event.summary }}</b>
+								<p>{{ event.description|linebreaks }}</p>
+							</td>
+						</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+
+
+		<!-- switch showbottom off -->
+
+
+{% endblock %}
+
+{% block page_js %}
+<script>
+$(document).ready(function() {
+  $('#calSubmit').click(function(e) {
+    e.preventDefault();
+    window.open($("#calLinks :selected").val());
+  });
+});
+</script>
+{% endblock %}

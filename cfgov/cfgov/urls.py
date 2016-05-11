@@ -121,12 +121,13 @@ urlpatterns = [
     url(r'^about-us/the-bureau/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='about-us/the-bureau/index.html'),
             name='index'),
-        url(r'^leadership-calendar/$',
-            SheerTemplateView.as_view(),
+        url(r'^leadership-calendar/',
+            include('cal.urls'),
             name='leadership-calendar'),
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
             name='page'),
+
         url(r'^leadership-calendar/pdf/$',
             LeadershipCalendarPDFView.as_view(),
             name='leadership-calendar-pdf'),
@@ -284,17 +285,6 @@ if settings.ALLOW_ADMIN_URL:
 
     urlpatterns = patterns + urlpatterns
 
-if 'cfpb_common' in settings.INSTALLED_APPS:
-    patterns= [url(r'^token-provider/', 'cfpb_common.views.token_provider'),
-               url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(template_name='knowbeforeyouowe/creditcards/tool.html'), name='cckbyo'),
-               ]
-    urlpatterns += patterns
-
-if 'cal' in settings.INSTALLED_APPS:
-    from cal.views import CalendarJSONList
-    patterns= [url(r'^leadership-calendar/cfpb-leadership.json$', CalendarJSONList.as_view()),
-               ]
-    urlpatterns += patterns
 
 if 'selfregistration' in settings.INSTALLED_APPS:
     from selfregistration.views import CompanySignup

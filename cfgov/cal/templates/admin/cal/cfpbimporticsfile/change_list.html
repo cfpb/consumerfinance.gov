@@ -1,0 +1,87 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block content %}
+  <div id="content-main">
+    <script type="text/javascript">
+    (function($) {
+        $(document).ready(function($) {
+           h1 = $( "#content" ).find( "h1" );
+           h1.text("CFPB Import ICS File");
+
+           $('input:file').change(
+            function(){
+                if ($(this).val()) {
+                    $('input:submit').attr('disabled',false);
+                }
+            }
+            );
+        });
+    })(django.jQuery);
+    </script>
+    <br/>
+
+    <form action="" method="post" name="frmUpload" enctype="multipart/form-data" >
+         {% csrf_token %}
+         <b>Leadership Calendar:</b><select name="drpLeader" >
+                                   {% for leader in leadership %}
+                                     <option value="{{ leader.id }}">{{ leader.title }}</option>
+                                   {%  endfor %}
+                                </select>
+
+        <br/><br/>
+        <b>ICS File:</b> <input type="file" name="icsfile" />
+         <br/><br/>
+
+        <input type="submit" value="UPLOAD" disabled="disabled" />
+    </form>
+
+    <br/>
+
+      {% if processed_events %}
+      Calendar Events For {{ calendar_record.title }}<br/>
+         <table  class="module">
+             <tr class="actions">
+                 <td><b>Start Time</b></td>
+                 <td><b>Summary</b></td>
+                 <td><b>Already In DB</b></td>
+                 <td><b>Saved to DB</b></td>
+             </tr>
+
+             {% for pe in processed_events  %}
+                 <tr>
+                     <td> {{ pe.e.dtstart }}</td>
+                     <td> {{ pe.e.summary }}</td>
+                     <td> {{ pe.num_dupes }}</td>
+                     <td> {{ pe.saved_event }}</td>
+                 </tr>
+             {%  endfor %}
+         </table>
+      {% endif %}
+
+      {% if error %}
+       <div style="color:red">
+         <b>ERROR</b><br/>
+         {% for obj,e  in error %}
+               {% for error_desc in e %}
+                    {{ error_desc }} <br/>
+               {% endfor %}
+
+               {{ obj }} <br/>
+               *****************************<br/>
+         {% endfor %}
+       </div>
+      {% endif %}
+
+
+    {% block object-tools %}
+      {% if has_add_permission %}
+        <ul class="object-tools">
+          {% block object-tools-items %}
+
+          {% endblock %}
+        </ul>
+      {% endif %}
+    {% endblock %}
+ </div>
+{% endblock %}
