@@ -122,7 +122,7 @@ class AgendaItemBlock(blocks.StructBlock):
 
 class EventPage(AbstractFilterPage):
     # General content fields
-    body = RichTextField(blank=True)
+    body = RichTextField('Sub-Heading',blank=True)
     archive_body = RichTextField(blank=True)
     live_body = RichTextField(blank=True)
     future_body = RichTextField(blank=True)
