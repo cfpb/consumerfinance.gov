@@ -21,10 +21,8 @@ class BlogPage(AbstractFilterPage):
         ('image_text_50_50_group', organisms.ImageText5050Group()),
     ])
 
-    content_panels = AbstractFilterPage.content_panels
-
     edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
+        ObjectList(AbstractFilterPage.content_panels, heading='General Content'),
         ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
     ])
@@ -39,13 +37,8 @@ class LegacyBlogPage(AbstractFilterPage):
 
     objects = CFGOVPageManager()
 
-    content_panels = AbstractFilterPage.content_panels + [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('content'),
-    ]
-
     edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
+        ObjectList(AbstractFilterPage.content_panels, heading='General Content'),
         ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
     ])
