@@ -302,6 +302,14 @@
         top: -9999px;
         left: -9999px;
     }
+
+    // Hide on print.
+    .respond-to-print( {
+        & {
+            // Important needed to override JS display settings.
+            display: none !important;
+        }
+    } );
 }
 
 /* topdoc

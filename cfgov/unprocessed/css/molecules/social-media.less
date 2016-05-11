@@ -65,4 +65,16 @@
         .u-link__colors( @dark-gray, @pacific-80 );
         .u-link__no-border();
     }
+
+    // Hide on print.
+    .respond-to-print( {
+        & {
+            display: none;
+        }
+    } );
 }
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

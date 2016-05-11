@@ -1,5 +1,8 @@
 <div class="o-info-unit-group" data-qa-hook="image-text-50-50">
+    {% if value.heading %}
     <h2>{{ value.heading }}</h2>
+    {% endif %}
+
     <div class="content-l">
       {% for block in value.image_texts %}
         <div class="content-l_col

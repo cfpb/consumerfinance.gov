@@ -159,9 +159,25 @@ function testA11y() {
 }
 
 /**
- * Run the protractor browser acceptance tests.
+ * Test whether we need to load the initial data for wagtail tests.
+ * @returns {boolean} Returns true if no specs arg is passed or the
+ *                    specs arg includes wagtail
  */
-function testAcceptanceBrowser() {
+function _shouldInstallInitialData() {
+  var commandLineParams = minimist( process.argv.slice( 2 ) );
+  var specs = commandLineParams.specs;
+
+  if ( specs ) {
+    return specs.match( 'wagtail' );
+  }
+
+  return true;
+}
+
+/**
+ * Spawn the appropriate acceptance tests.
+ */
+function _spawnProtractor() {
   spawn(
     fsHelper.getBinary( 'protractor' ),
     _getProtractorParams(),
@@ -172,17 +188,19 @@ function testAcceptanceBrowser() {
 }
 
 /**
- * Initialize the test database
- * and call the protractor browser acceptance tests.
+ * Run the protractor acceptance tests.
  */
-function testAcceptanceWagtail() {
-  spawn(
+function testAcceptanceBrowser() {
+  if ( _shouldInstallInitialData() ) {
+    spawn(
     './initial-test-data.sh', [], { stdio: 'inherit' }
   ).once( 'close', function() {
     $.util.log( 'Loaded Wagtail database data!' );
-    // TODO: narrow the scope to only --specs=wagtail/*
-    testAcceptanceBrowser();
+    _spawnProtractor();
   } );
+  } else {
+    _spawnProtractor();
+  }
 }
 
 /**
@@ -199,11 +217,9 @@ gulp.task( 'test:coveralls', testCoveralls );
 gulp.task( 'test:a11y', testA11y );
 
 gulp.task( 'test:acceptance:browser', testAcceptanceBrowser );
-gulp.task( 'test:acceptance:wagtail', testAcceptanceWagtail );
 gulp.task( 'test:acceptance',
   [
-    'test:acceptance:browser',
-    'test:acceptance:wagtail'
+    'test:acceptance:browser'
   ]
 );
 

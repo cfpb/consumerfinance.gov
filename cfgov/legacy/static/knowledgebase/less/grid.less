@@ -1,0 +1,86 @@
+/* 12 Column Grid
+   ========================================================================== */
+
+.row {
+    display: inline-block;
+    /* inline block hack for IE 6&7 */
+        *display: inline;
+        zoom: 1;
+    width: 100%;
+}
+.row:before, .row:after {
+    content: " ";
+    display: table;
+}
+.row:after { clear: both; }
+
+@media @respond-to-medium-screens {
+
+    [class*="span"] {
+        border: 0px solid rgba(0,0,0,0);
+        margin-left: 1.9%;
+        margin-right: -0.25em;
+        padding: 0;
+        display: inline-block;
+        vertical-align: top;
+        /* inline block hack for IE 6&7 */
+            zoom: 1;
+            *display: inline;
+
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+        -webkit-background-clip: padding-box !important;
+           -moz-background-clip: padding-box !important;
+                background-clip: padding-box !important;
+    }
+    [class*="span"]:first-child { margin-left: 0; }
+    [class*="span"].right {
+        margin-left: 0;
+        margin-right: 1.9%;
+    }
+    [class*="span"].right:first-child {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .span1 {  width: 6.6%; }
+    .span2 {  width: 15.0833333333%; }
+    .span3 {  width: 23.575%; }
+    .span4 {  width: 32.0666666667%; }
+    .span5 {  width: 40.5583333333%; }
+    .span6 {  width: 49.05%; }
+    .span7 {  width: 57.5416666667%; }
+    .span8 {  width: 66.0333333333%; }
+    .span9 {  width: 74.525%; }
+    .span10 { width: 83.0166666667%; }
+    .span11 { width: 91.5083333333%; }
+    .span12 { margin-left: 0; width: 100%; }
+
+}
+
+/* Expanding content in IE behaves strangley inside of an inline-block */
+
+@media @respond-to-medium-screens {
+
+    .lt-ie9 .row {
+        display: block;
+    }
+
+    .lt-ie9 [class*="span"] {
+        display: block;
+        float: left;
+    }
+
+}
+
+/* Helper classes */
+.lalign {
+    text-align: left;
+}
+.ralign {
+    text-align: right;
+}
+.rfloat {
+    float: right;
+}

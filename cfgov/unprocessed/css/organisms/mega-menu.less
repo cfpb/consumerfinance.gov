@@ -176,6 +176,19 @@
         }
     }
 
+    // Mobile sizes.
+    .respond-to-max( @bp-xs-max, {
+        &_trigger {
+            margin-left: -15px;
+        }
+    } );
+
+    // Tablet sizes.
+    .respond-to-range( @bp-sm-min, @bp-sm-max, {
+        &_trigger {
+            margin-left: -30px;
+        }
+    } );
 
     // Tablet/mobile sizes.
     .respond-to-max( @bp-sm-max, {
@@ -431,7 +444,7 @@
 
             &-item {
                 display: inline-block;
-                margin-right: @grid_gutter-width;
+                margin-right: unit( 25px / @base-font-size-px, em );
 
                 .no-js &:hover {
                     .o-mega-menu_content-2 {
@@ -626,6 +639,13 @@
       display: block;
     }
 }
+
+// Hide on print.
+.respond-to-print( {
+    .o-mega-menu {
+        display: none;
+    }
+} );
 
 /* topdoc
     name: EOF

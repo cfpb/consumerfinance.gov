@@ -16,8 +16,11 @@ var filter = {
 
   searchFilterHideBtn: _getFilterElement( '.m-expandable_cue-close' ),
 
-  searchFilterSubmitBtn: _getFilterElement( 'btn[type="submit"]' )
+  searchCategoryLabel: _getFilterElement(
+    'label[for="filter1_categories_at-the-cfpb"]'
+  ),
 
+  searchFilterSubmitBtn: _getFilterElement( 'input[type="submit"]' )
 };
 
 module.exports = filter;

@@ -1,3 +1,9 @@
+.wrapper__match-content {
+    .respond-to-min(@bp-sm-min, {
+        max-width: @grid_wrapper-width - ( @grid_gutter-width * 2 );
+    });
+}
+
 /* topdoc
   name: Block
   family: cf-layout
