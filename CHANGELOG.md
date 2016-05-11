@@ -16,9 +16,21 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-3.3.13 - 2016-05-11
+
+### Added
 - Added print styles to hide major site features that aren't print applicable.
 - Added base pagination browser tests.
 - Image Text 50 50 Organism to Blog Page
+- Moved django-commons into the project
 
 ### Changed
 
