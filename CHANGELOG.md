@@ -17,7 +17,22 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
-### Changed
+### Changes
+
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-3.3.14 - 2016-05-11
+
+### Added
+
+### Changes
+
+- Fixed Password Reset Flow
+- Fixed saving of Legacy Blog Pages
 
 ### Removed
 
