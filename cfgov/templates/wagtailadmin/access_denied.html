@@ -1,0 +1,11 @@
+{% overextends "wagtailadmin/login.html" %}
+{% load i18n admin_static %}
+
+
+{% block furniture %}
+    <div class="content-wrapper">
+        <h1>Sorry, you do not have permission to access the Wagtail admin page.</h1>
+        <h2>Did you mean to access the <a href="/django-admin/">{% trans 'Django admin' %} page?</h2>
+        <h2>Otherwise, you may want to <a href="/django-admin/logout/">{% trans 'Log out' %}</a> and log in as a user with the proper permissions.</h2>
+    </div>
+{% endblock %}
