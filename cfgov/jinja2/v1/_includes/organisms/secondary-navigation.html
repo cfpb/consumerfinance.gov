@@ -8,7 +8,7 @@
 
    Creates markup for Header organism.
 
-   TODO: `active_nav_id` and `vars` parameters can be removed when
+   TODO: `active_nav_id` and `nav_items` parameters can be removed when
          `_render_secondary_navigation_deprecated` is removed.
 
    active_nav_id: Name of active navigation item.
@@ -47,36 +47,30 @@
 
     {% from 'molecules/expandable.html' import expandable with context %}
     {% call() expandable(sec_nav_settings) %}
-        {{ _secondary_navigation(nav_items, active_nav_id) | safe }}
+        {% import 'molecules/nav-link.html' as nav_link %}
+        <ul class="o-secondary-navigation_list
+                   o-secondary-navigation_list__parents">
+        {%- for item in nav_items %}
+            <li data-nav-is-active="{{ request.url.startswith(item.url) }}">
+                {{ nav_link.render(item.title, item.url, true, item.url == request.url) }}
+            {%- if item.children -%}
+                <ul class="o-secondary-navigation_list
+                           o-secondary-navigation_list__children">
+                {%- for child in item.children -%}
+                    <li>
+                        {{ nav_link.render(child.title, child.url, false, child.url == request.url) }}
+                    </li>
+                {%- endfor %}
+                </ul>
+            {%- endif -%}
+            </li>
+
+        {%- endfor %}
+        </ul>
     {% endcall %}
 </nav>
 {% endmacro %}
 
-{# ==========================================================================
-
-   _secondary_navigation()
-
-   ========================================================================== #}
-{% macro _secondary_navigation(items, active_item_id) %}
-{% import 'molecules/nav-link.html' as nav_link %}
-    <ul class="o-secondary-navigation_list
-               o-secondary-navigation_list__parents">
-        {%- for item in items %}
-            <li data-nav-is-active="{{ request.url.startswith(item.url) }}">
-                {{ nav_link.render(item.title, item.url, true, item.url == request.url) }}
-                {%- for child in item.children -%}
-                    <ul class="o-secondary-navigation_list
-                               o-secondary-navigation_list__children">
-                        <li>
-                            {{ nav_link.render(child.title, child.url, false, child.url == request.url) }}
-                        </li>
-                    </ul>
-                {%- endfor %}
-            </li>
-
-        {%- endfor %}
-    </ul>
-{% endmacro %}
 
 {# TODO: Remove `_render_secondary_navigation_deprecated` and
          `_secondary_navigation_deprecated` when non-wagtail pages
@@ -98,38 +92,29 @@
 
     {% from 'molecules/expandable.html' import expandable with context %}
     {% call() expandable(sec_nav_settings) %}
-        {{ _secondary_navigation_deprecated(nav_items, active_nav_id) | safe }}
-    {% endcall %}
-</nav>
-{% endmacro %}
-
-{# ==========================================================================
-
-   _secondary_navigation_deprecated()
-
-   ========================================================================== #}
-{% macro _secondary_navigation_deprecated(items, active_item_id) %}
-{% import 'molecules/nav-link.html' as nav_link %}
-<ul class="o-secondary-navigation_list
-           o-secondary-navigation_list__parents">
-    {%- for item in items %}
-        {%- set href, id, caption, children = item[0], item[1], item[2], item[3:] %}
-
-    <li>
-        {{ nav_link.render(caption, href, true, id == active_item_id) }}
-    {%- if children -%}
-        {% set children = children[0] %}
+        {% import 'molecules/nav-link.html' as nav_link %}
         <ul class="o-secondary-navigation_list
-                   o-secondary-navigation_list__children">
-        {%- for href, id, caption in children %}
+                   o-secondary-navigation_list__parents">
+        {%- for item in nav_items %}
+            {%- set href, id, caption, children = item[0], item[1], item[2], item[3:] %}
+
             <li>
-                {{ nav_link.render(caption, href, false, id == active_item_id) }}
+                {{ nav_link.render(caption, href, true, id == active_nav_id) }}
+            {%- if children -%}
+                {% set children = children[0] %}
+                <ul class="o-secondary-navigation_list
+                           o-secondary-navigation_list__children">
+                {%- for href, id, caption in children %}
+                    <li>
+                        {{ nav_link.render(caption, href, false, id == active_nav_id) }}
+                    </li>
+                {%- endfor %}
+                </ul>
+            {%- endif %}
             </li>
+
         {%- endfor %}
         </ul>
-    {%- endif %}
-    </li>
-
-    {%- endfor %}
-</ul>
+    {% endcall %}
+</nav>
 {% endmacro %}
