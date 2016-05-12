@@ -101,17 +101,17 @@
 
         text-transform: uppercase;
 
-        .respond-to-min(@bp-med-min, {
+        .respond-to-min( @bp-med-min, {
           display: none;
-        });
+        } );
     }
 
     .m-expandable_content {
-        .respond-to-min(@bp-med-min, {
+        .respond-to-min( @bp-med-min, {
           background: none;
           border: none;
           height: auto !important;
-        });
+        } );
 
         &-animated {
           padding: 0;
@@ -123,26 +123,26 @@
         padding: 0;
 
         &__parents {
-            .respond-to-max(@bp-sm-max, {
-                padding-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-                margin-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-                margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+            .respond-to-max( @bp-sm-max, {
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+                margin-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+                margin-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
 
                 border-top: 1px solid @gray-40;
 
                 li[data-nav-is-active="False"]{
                     display: none;
                 }
-            });
+            } );
         }
 
         &__children {
-            margin-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+            margin-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
 
-            .respond-to-min(@bp-med-min, {
+            .respond-to-min( @bp-med-min, {
                 // Add 5px for the border to half the gutter
                 margin-left: unit( ( (@grid_gutter-width / 2 ) + 5px ) / @base-font-size-px, em) ;
-            });
+            } );
         }
     }
 

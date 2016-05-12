@@ -55,4 +55,20 @@ describe( 'atomic-helpers', function() {
       expect( dom ).to.be.equal( expandableDom );
     } );
   } );
+
+  describe( '.instantiateAll()', function() {
+    xit( 'should return an array of instances', function() {
+      // TODO: Implement test.
+    } );
+  } );
+
+  describe( '.setInitFlag()', function() {
+    xit( 'should return true when init flag is set', function() {
+      // TODO: Implement test.
+    } );
+
+    xit( 'should return false when init flag is already set', function() {
+      // TODO: Implement test.
+    } );
+  } );
 } );
