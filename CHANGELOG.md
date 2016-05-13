@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changes
+- Adding Validation code and url param fix for Ustream player.
 
 ### Removed
 
@@ -35,9 +36,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changes
 - filterable_context.py -> filterable_list.py
 - Refactored the filterable list logic for modularity and testability
-- Rename Events body field => Subheading 
+- Rename Events body field => Subheading
 - Switch render location of live/future body fields to under the map (new body location)
-- Change date used for post preview from date published to actual event date. 
+- Change date used for post preview from date published to actual event date.
 
 ### Removed
 
