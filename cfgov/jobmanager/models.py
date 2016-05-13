@@ -98,7 +98,7 @@ class Job(models.Model):
         ordering = ['close_date', 'title']
 
     def get_absolute_url(self):
-        return reverse('careers:detail', kwargs={'job_id': self.id})
+        return reverse('careers:detail', kwargs={'slug': self.slug})
 
     def save(self):
         if self.date_created == None:

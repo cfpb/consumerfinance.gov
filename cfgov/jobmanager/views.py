@@ -1,5 +1,5 @@
 from django.http import HttpResponseNotFound, HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
 from django.http import HttpRequest
 from django.http import Http404
@@ -39,13 +39,18 @@ def index(request):
     return render(request, "about-us/careers/index.html", context)
 
 
-def detail(request,job_id):
+def detail(request, pk=None, slug=None):
     today = timezone.now().date()
-    job_pk = int(job_id)
-    job = Job.objects.filter(pk=job_id, open_date__lte=today,
-            close_date__gte=today,active=True).get()
 
+    qs = Job.objects.filter(open_date__lte=today,
+                close_date__gte=today,active=True)
+    if pk:
+        job = get_object_or_404(qs, pk=pk)
 
+        return redirect(job.get_absolute_url())
+
+    if slug:
+        job = get_object_or_404(qs, slug=slug)
     salary_min = int(job.salary_min or min([g.salary_min 
         for g in job.grades.all()]))
     salary_max = int(job.salary_max or max([g.salary_max

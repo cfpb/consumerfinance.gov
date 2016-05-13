@@ -37,7 +37,7 @@
     {% for career in careers %}
         <tr>
             <td>
-                <a href="{{url('careers:detail',args=[career.pk])}}">{{ career.title }}</a>
+                <a href="{{url('careers:detail',args=[career.slug])}}">{{ career.title }}</a>
             </td>
             <td data-label="Posting Closes">
                 {{ time.render(career.close_date, {'date':true}) }}
