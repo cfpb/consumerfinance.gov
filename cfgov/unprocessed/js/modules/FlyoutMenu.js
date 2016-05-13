@@ -101,8 +101,9 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
     var handleTriggerOverBinded = fnBind( _handleTriggerOver, this );
     var handleTriggerOutBinded = fnBind( _handleTriggerOut, this );
 
-    // Set initial `aria-expanded="false"` attribute.
-    _setAriaExpandedAttr( _triggerDom, 'false' );
+    // Set initial aria attributes to false.
+    _setAriaAttr( 'expanded', _triggerDom, 'false' );
+    _setAriaAttr( 'pressed', _triggerDom, 'false' );
 
     _triggerDom.addEventListener( 'click', handleTriggerClickedBinded );
     _triggerDom.addEventListener( 'touchstart', _handleTouchStart );
@@ -126,8 +127,8 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
           _altTriggerDom.setAttribute( 'data-gtm_ignore', 'true' );
         }
 
-        // Set initial `aria-expanded="false"` attribute.
-        _setAriaExpandedAttr( _altTriggerDom, 'false' );
+        // Set initial aria attributes to false.
+        _setAriaAttr( 'expanded', _altTriggerDom, 'false' );
 
         // TODO: alt trigger should probably listen
         //       for a mouseover/mouseout event too.
@@ -141,15 +142,17 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   }
 
   /**
-   * Event handler for when the trigger is hovered over.
+   * Set an aria attribute on an HTML element.
+   * @param {string} type - The aria attribute to set
+   *   (without the aria- prefix).
    * @param {HTMLNode} elem - The element to set.
    * @param {boolean} value - The value to set on `aria-expanded`,
    *   casts to a string.
    * @returns {string} The cast value.
    */
-  function _setAriaExpandedAttr( elem, value ) {
+  function _setAriaAttr( type, elem, value ) {
     var strValue = String( value );
-    elem.setAttribute( 'aria-expanded', strValue );
+    elem.setAttribute( 'aria-' + type, strValue );
     return strValue;
   }
 
@@ -209,6 +212,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       _deferFunct = standardType.noopFunct;
       this.dispatchEvent( 'expandBegin',
                           { target: this, type: 'expandBegin' } );
+      _setAriaAttr( 'pressed', _triggerDom, true );
       if ( _expandTransitionMethod ) {
         var hasTransition = _expandTransition &&
                             _expandTransition.isAnimated();
@@ -258,9 +262,14 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
       } else {
         _collapseEndBinded();
       }
-      if ( _altTriggerDom ) _setAriaExpandedAttr( _altTriggerDom, false );
-      _setAriaExpandedAttr( _triggerDom, false );
-      _setAriaExpandedAttr( _contentDom, false );
+
+      if ( _altTriggerDom ) {
+        _setAriaAttr( 'expanded', _altTriggerDom, false );
+      }
+
+      _setAriaAttr( 'expanded', _triggerDom, false );
+      _setAriaAttr( 'pressed', _triggerDom, false );
+      _setAriaAttr( 'expanded', _contentDom, false );
       // TODO: Remove or uncomment when keyboard navigation is in.
       // _triggerDom.focus();
     } else {
@@ -283,9 +292,11 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         .removeEventListener( BaseTransition.END_EVENT, _expandEndBinded );
     }
     this.dispatchEvent( 'expandEnd', { target: this, type: 'expandEnd' } );
-    if ( _altTriggerDom ) _setAriaExpandedAttr( _altTriggerDom, true );
-    _setAriaExpandedAttr( _triggerDom, true );
-    _setAriaExpandedAttr( _contentDom, true );
+    if ( _altTriggerDom ) {
+      _setAriaAttr( 'expanded', _altTriggerDom, true );
+    }
+    _setAriaAttr( 'expanded', _triggerDom, true );
+    _setAriaAttr( 'expanded', _contentDom, true );
     // Call collapse, if it was called while expand was animating.
     _deferFunct();
   }

@@ -1,0 +1,9 @@
+{# ==========================================================================
+
+   Render secondary navigation, for use in the global_include used
+   in non-V1 projects.
+
+   ========================================================================== #}
+
+{% import 'organisms/secondary-navigation.html' as secondary_navigation with context %}
+{{ secondary_navigation.render( active_nav_id, vars.nav_items ) }}

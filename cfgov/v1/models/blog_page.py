@@ -18,12 +18,11 @@ from ..atomic_elements import molecules, organisms
 class BlogPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
+        ('image_text_50_50_group', organisms.ImageText5050Group()),
     ])
 
-    content_panels = AbstractFilterPage.content_panels
-
     edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
+        ObjectList(AbstractFilterPage.content_panels, heading='General Content'),
         ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
     ])
@@ -38,13 +37,8 @@ class LegacyBlogPage(AbstractFilterPage):
 
     objects = CFGOVPageManager()
 
-    content_panels = AbstractFilterPage.content_panels + [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('content'),
-    ]
-
     edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
+        ObjectList(AbstractFilterPage.content_panels, heading='General Content'),
         ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
     ])

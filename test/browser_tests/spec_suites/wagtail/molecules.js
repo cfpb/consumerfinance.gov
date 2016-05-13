@@ -44,7 +44,7 @@ describe( 'Expandable', function() {
 
 describe( 'Related Links', function() {
   beforeAll( function() {
-    browser.get( '/demo-page/' );
+    browser.get( '/landing-page/' );
   } );
   it( 'should properly load in a browser',
     function() {
@@ -113,7 +113,8 @@ describe( 'Half Width Link Blob', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect( _getQAElement( 'half-width-link-blob' ).isPresent() ).toBe( true );
+      expect( _getQAElement( 'half-width-link-blob' )
+        .isPresent() ).toBe( true );
     }
   );
 } );
@@ -146,7 +147,8 @@ describe( 'FormField With Button', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect( _getQAElement( 'formfield-with-button' ).isPresent() ).toBe( true );
+      expect( _getQAElement( 'formfield-with-button' )
+        .isPresent() ).toBe( true );
     }
   );
 } );
@@ -170,7 +172,8 @@ describe( 'RSS Feed', function() {
   } );
   it( 'should properly load in a browser',
     function() {
-      expect( _getQAElement( 'rss-subscribe-section' ).isPresent() ).toBe( true );
+      expect( _getQAElement( 'rss-subscribe-section' )
+        .isPresent() ).toBe( true );
     }
   );
 

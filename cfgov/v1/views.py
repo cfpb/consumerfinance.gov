@@ -214,8 +214,9 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
         if request.method == 'POST':
             form = CFGOVSetPasswordForm(user, request.POST)
             if form.is_valid():
-                    user.temporarylockout_set.all().delete()
-                    return HttpResponseRedirect(post_reset_redirect)
+                form.save()
+                user.temporarylockout_set.all().delete()
+                return HttpResponseRedirect(post_reset_redirect)
 
         else:
             form = CFGOVSetPasswordForm(user)

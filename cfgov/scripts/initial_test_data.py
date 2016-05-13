@@ -16,7 +16,6 @@ from v1.models.sublanding_filterable_page import SublandingFilterablePage, Activ
 from v1.models.newsroom_page import NewsroomPage, LegacyNewsroomPage
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.snippets import Contact
-from v1.models.demo import DemoPage
 from wagtail.wagtailcore.blocks import StreamValue
 from treebeard.exceptions import NodeAlreadySaved
 
@@ -99,6 +98,8 @@ def run():
                                                              "link_blobs": [{"body": "", "heading": "", "links": [
                                                                  {"url": "/", "text": "test"}]}],
                                                              "heading": "Half Width Link Blob Group"}}], True)
+    lap.sidefoot = StreamValue(lap.sidefoot.stream_block, [
+        {'type': 'related_links', 'value': {'links': [{'url': '/url', 'text': 'this is a related link'}]}}], True)
     publish_page(lap)
 
     sp = SublandingPage.objects.filter(title='Sublanding Page')
@@ -109,15 +110,10 @@ def run():
     sp.content = StreamValue(sp.content.stream_block,
                              [{"type": "contact", "value": {"body": "", "header": "Contact", "contact": contact.id}}],
                              True)
-
-    publish_page(sp)
-
-    # Sidefoot related Data
-    base = CFGOVPage.objects.get(id=sp.cfgovpage.id)
-    base.sidefoot = StreamValue(base.sidefoot.stream_block,
+    sp.sidefoot = StreamValue(sp.sidefoot.stream_block,
                              [{"type": "email_signup", "value": {"text": "", "gd_code": "", "heading": "Email Sign Up", "form_field": [{"info": "", "type": "", "required": False, "label": "Email Sign up", "btn_text": "", "placeholder": ""}]}}, {"type": "rss_feed", "value": "blog_feed"}],
                              True)
-    publish_page(base)
+
     publish_page(sp)
 
     bp = BrowsePage.objects.filter(title='Browse Page')
@@ -212,54 +208,45 @@ def run():
         publish_page(lbp, sfp)
 
 
-    # Demo Page
-    dp = DemoPage.objects.filter(title='Demo Page')
-    if not dp:
-        dp = DemoPage(title='Demo Page', slug='demo-page', owner=admin_user)
-    else:
-        dp = dp[0]
-    dp.sidefoot = StreamValue(dp.sidefoot.stream_block, [
-        {'type': 'related_links', 'value': {'links': [{'url': '/url', 'text': 'this is a related link'}]}}], True)
-    publish_page(dp)
-
     # Create and configure pages for testing page states
-    draft = DemoPage.objects.filter(slug='draft-page')
+    draft = LandingPage.objects.filter(slug='draft-page')
     if not draft:
-        draft = DemoPage(title='Draft Page', slug='draft-page', owner=admin_user, live=False, shared=False)
+        draft = LandingPage(title='Draft Page', slug='draft-page', owner=admin_user, live=False, shared=False)
         site_root.add_child(instance=draft)
     else:
         draft = draft[0]
     draft.save_revision(user=admin_user)
 
-    shared = DemoPage.objects.filter(slug='shared-page')
+    shared = LandingPage.objects.filter(slug='shared-page')
     if not shared:
-        shared = DemoPage(title='Shared Page', slug='shared-page', owner=admin_user, live=False, shared=True)
+        shared = LandingPage(title='Shared Page', slug='shared-page', owner=admin_user, live=False, shared=True)
         site_root.add_child(instance=shared)
     else:
         shared = shared[0]
     shared.save_revision(user=admin_user)
 
-    shared_draft = DemoPage.objects.filter(slug='shared-draft-page')
+    shared_draft = LandingPage.objects.filter(slug='shared-draft-page')
     if not shared_draft:
-        shared_draft = DemoPage(title='Shared Page', slug='shared-draft-page', owner=admin_user, live=False, shared=True)
+        shared_draft = LandingPage(title='Shared Page', slug='shared-draft-page', owner=admin_user, live=False, shared=True)
         site_root.add_child(instance=shared_draft)
     else:
         shared_draft = shared_draft[0]
     shared_draft.save_revision(user=admin_user)
     shared_draft.title = 'Shared Draft Page'
+    shared_draft.shared = False
     shared_draft.save()
     shared_draft.save_revision(user=admin_user)
 
-    live = DemoPage.objects.filter(slug='live-page')
+    live = LandingPage.objects.filter(slug='live-page')
     if not live:
-        live = DemoPage(title='Live Page', slug='live-page', owner=admin_user, live=True, shared=True)
+        live = LandingPage(title='Live Page', slug='live-page', owner=admin_user, live=True, shared=True)
     else:
         live = live[0]
     publish_page(live)
 
-    livedraft = DemoPage.objects.filter(slug='live-draft-page')
+    livedraft = LandingPage.objects.filter(slug='live-draft-page')
     if not livedraft:
-        livedraft = DemoPage(title='Live Draft Page', slug='live-draft-page', owner=admin_user, live=True, shared=True)
+        livedraft = LandingPage(title='Live Draft Page', slug='live-draft-page', owner=admin_user, live=True, shared=True)
     else:
         livedraft = livedraft[0]
     publish_page(livedraft)

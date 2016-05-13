@@ -87,11 +87,22 @@
         position: relative;
 
         > .wrapper {
-            // TODO: remove when Capital Framework is updated to 3.x.x. on outdated consumerfinance.gov projects.
+            // TODO: Remove when Capital Framework is updated to 3.x.x.
+            //       on outdated consumerfinance.gov projects.
             position: initial;
-          
+
             > .m-global-search {
                 float: right;
+
+                // Mobile size.
+                .respond-to-max( @bp-xs-max, {
+                    margin-right: -15px;
+                } );
+
+                // Tablet size.
+                .respond-to-range( @bp-sm-min, @bp-sm-max {
+                    margin-right: -30px;
+                } );
             }
         }
 
@@ -177,6 +188,14 @@
         padding-left: 10px;
     } );
 }
+
+// Move logo on print.
+.respond-to-print( {
+    .o-header_logo {
+        // Mega menu is hidden, so we need to remove logo offset.
+        margin-left: 15px !important;
+    }
+} );
 
 /* topdoc
     name: EOF

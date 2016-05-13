@@ -16,21 +16,79 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-- Additional page template tests
 
-- RegComment organism: New option to use a generic link for commenting at
-  Regulations.gov or going directly to the specified document's comment form.
-- Additional page template tests
-- Additional molecule tests
-
-### Changed
-
-- Frontend: Added No Fear Act link to footer.
-- Updated event times to show EDT.
+### Changes
+- Updated Capital Framework to latest.
 
 ### Removed
 
 ### Fixed
+
+
+## 3.0.0-3.3.14 - 2016-05-11
+
+### Added
+
+### Changes
+
+- Fixed Password Reset Flow
+- Fixed saving of Legacy Blog Pages
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-3.3.13 - 2016-05-11
+
+### Added
+- Added print styles to hide major site features that aren't print applicable.
+- Added base pagination browser tests.
+- Image Text 50 50 Organism to Blog Page
+- Moved django-commons into the project
+
+### Changed
+
+- Updated static version of the org chart.
+
+### Removed
+
+### Fixed
+
+- Fixed an issue where the header only had 15px of spacing instead of 30.
+- Fixed the spacing around info-units groups and breadcrumbs.
+- Fixed duplicate Protractor tests.
+- Fixed issue with page jump form.
+
+## 3.0.0-3.3.12 - 2016-05-05
+
+### Added
+- Additional page template tests
+- RegComment organism: New option to use a generic link for commenting at
+  Regulations.gov or going directly to the specified document's comment form.
+- Additional molecule tests
+
+### Changed
+- Updated event times to show EDT.
+
+
+## 3.0.0-3.3.11 - 2016-05-03
+
+### Added
+- Front end: Added No Fear Act link to footer.
+
+### Changed
+- RSS Feeds for all Filterable Pages
+- Animated Gif Support
+- Ensure files uploaded as .PDFs get a download icon
+- Handle govdelivery job subscriptions via a Django form
+- Refactored HousingCounselor form to use USZipCodeField() in order to not strip leading zeros
+
+
+## 3.3.0-3.3.10 - 2016-04-28
+
+### Fixed
+- Typo in reg comment form
 
 
 ## 3.0.0-3.3.9 - 2016-04-28
@@ -86,6 +144,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Remove inline CSS when running sheer_index.
 - Abstracted dom events for easier reuse throughout the project.
 - Added npm shrinkwrap and snyk dependency monitoring
+- Tests `share_the_page` wagtail hook and associated functions
 
 ### Changed
 
@@ -101,6 +160,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Pinned our NPM dependencies.
 - Updated Capital Framework to 3.3.0
 - Changed U.S. flag image paths to be root-relative
+- Refactored wagtail hook `share_the_page`
 
 ### Removed
 

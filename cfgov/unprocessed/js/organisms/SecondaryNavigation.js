@@ -16,15 +16,20 @@ var Expandable = require( '../molecules/Expandable' );
 function SecondaryNavigation( element ) {
   var BASE_CLASS = 'o-secondary-navigation';
 
-  var _dom = atomicHelpers.checkDom(
-    element, BASE_CLASS, 'SecondaryNavigation' );
+  var _dom =
+    atomicHelpers.checkDom( element, BASE_CLASS, 'SecondaryNavigation' );
 
   /**
-   * Initialize FilterableListControls instance.
-  */
+   * @returns {SecondaryNavigation|undefined} An instance,
+   *   or undefined if it was already initialized.
+   */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) { var inst; return inst; }
+
     var expandable = new Expandable( _dom );
     expandable.init();
+
+    return this;
   }
 
   this.init = init;

@@ -55,21 +55,21 @@ INSTALLED_APPS = (
     'v1',
     'core',
     'sheerlike',
+    'legacy',
     'django_extensions',
     'reversion',
     'tinymce'
 )
 
 OPTIONAL_APPS=[
-    {'import':'noticeandcomment','apps':('noticeandcomment','cfpb_common')},
-    {'import':'cfpb_common','apps':('cfpb_common',)},
+    {'import':'noticeandcomment','apps':('noticeandcomment',)},
     {'import':'jobmanager','apps':('jobmanager', 'reversion', 'tinymce')},
-    {'import':'cal','apps':('cal','cfpb_common')},
-    {'import':'comparisontool','apps':('comparisontool','haystack','cfpb_common')},
-    {'import':'agreements','apps':('agreements','haystack', 'cfpb_common')},
-    {'import':'knowledgebase','apps':('knowledgebase','haystack', 'cfpb_common', 'reversion', 'tinymce')},
-    {'import':'selfregistration','apps':('selfregistration','cfpb_common')},
-    {'import':'hud_api_replace','apps':('hud_api_replace','cfpb_common')},
+    {'import':'cal','apps':('cal',)},
+    {'import':'comparisontool','apps':('comparisontool','haystack',)},
+    {'import':'agreements','apps':('agreements','haystack',)},
+    {'import':'knowledgebase','apps':('knowledgebase','haystack',)},
+    {'import':'selfregistration','apps':('selfregistration',)},
+    {'import':'hud_api_replace','apps':('hud_api_replace',)},
     {'import':'retirement_api','apps':('retirement_api',)},
     {'import':'complaint','apps':('complaint','complaintdatabase','complaint_common',)},
     {'import':'ratechecker','apps':('ratechecker','rest_framework')},
@@ -222,11 +222,6 @@ SHEER_PROCESSORS = \
             "processor": "processors.django_calendar_event",
             "mappings": MAPPINGS.child("calendar_event.json")
         },
-        "contact": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=contact",
-            "processor": "processors.wordpress_contact",
-            "mappings": MAPPINGS.child("contact.json")
-        },
         "history": {
             "url": "$WORDPRESS/api/get_posts/?post_type=history",
             "processor": "processors.wordpress_history",
@@ -251,21 +246,6 @@ SHEER_PROCESSORS = \
             "url": "$WORDPRESS/api/get_posts/?post_type=page",
             "processor": "processors.wordpress_page",
             "mappings": MAPPINGS.child("pages.json")
-        },
-        "posts": {
-            "url": "$WORDPRESS/api/get_posts/",
-            "processor": "processors.wordpress_post",
-            "mappings": MAPPINGS.child("posts.json")
-        },
-        "events": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=event",
-            "processor": "processors.wordpress_event",
-            "mappings": MAPPINGS.child("events.json")
-        },
-        "newsroom": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
-            "processor": "processors.wordpress_newsroom",
-            "mappings": MAPPINGS.child("newsroom.json")
         },
         "views": {
             "url": "$WORDPRESS/api/get_posts/?post_type=view",
