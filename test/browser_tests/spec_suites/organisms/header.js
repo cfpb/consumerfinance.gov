@@ -111,7 +111,7 @@ describe( 'Header', function() {
 
         it( 'should display small Global Header CTA', function() {
           browser.driver.actions().click( _dom.megaMenuTrigger ).perform()
-            .then( function(){
+            .then( function() {
               expect( _dom.globalHeaderCtaSM.isDisplayed() ).toBe( true );
             } );
         } );
@@ -122,7 +122,7 @@ describe( 'Header', function() {
 
         it( 'should display small Global Eyebrow', function() {
           browser.driver.actions().click( _dom.megaMenuTrigger ).perform()
-            .then( function(){
+            .then( function() {
               expect( _dom.globalEyebrowSM.isDisplayed() ).toBe( true );
             } );
         } );
@@ -131,7 +131,7 @@ describe( 'Header', function() {
       describe( 'click mega menu', function() {
         it( 'should show the global overlay', function() {
           browser.driver.actions().click( _dom.megaMenuTrigger ).perform()
-            .then( function(){
+            .then( function() {
               expect( _dom.overlay.isDisplayed() ).toBe( true );
             } );
         } );
