@@ -127,9 +127,12 @@ def change_password(request):
 @sensitive_post_parameters()
 @never_cache
 def cfpb_login(request):
-    if request.user.is_authenticated() and request.user.has_perm(
-            'wagtailadmin.access_admin'):
-        return redirect('wagtailadmin_home')
+    if request.user.is_authenticated():
+        if request.user.has_perm('wagtailadmin.access_admin'):
+            return redirect('wagtailadmin_home')
+        else:
+            return render(request, "wagtailadmin/access_denied.html")
+
     else:
         return login_with_lockout(request)
 
