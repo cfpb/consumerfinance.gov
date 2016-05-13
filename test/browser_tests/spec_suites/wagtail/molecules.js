@@ -44,7 +44,7 @@ describe( 'Expandable', function() {
 
 describe( 'Related Links', function() {
   beforeAll( function() {
-    browser.get( '/demo-page/' );
+    browser.get( '/landing-page/' );
   } );
   it( 'should properly load in a browser',
     function() {
