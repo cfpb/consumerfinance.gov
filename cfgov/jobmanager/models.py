@@ -149,6 +149,10 @@ class Job(models.Model):
 
         return strip_tags(text)
 
+    @property
+    def location_names(self):
+        return [l.region_long for l in self.locations.all()]
+
 
 class JobApplicantType(models.Model):
     application_type = models.ForeignKey(ApplicantType)

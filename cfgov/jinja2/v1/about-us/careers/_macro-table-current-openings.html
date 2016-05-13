@@ -43,7 +43,7 @@
                 {{ time.render(career.close_date, {'date':true}) }}
             </td>
             <td data-label="Location">
-                {{ career.locations.all()|join(', ') }}
+                {{ career.location_names|join(', ') }}
             </td>
         </tr>
     {% endfor %}
