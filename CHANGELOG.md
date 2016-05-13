@@ -18,9 +18,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changes
+
 - Updated Capital Framework to latest.
 
 ### Removed
+
+- Removed acting Dept Directors from Leadership calendar filter
 
 ### Fixed
 
