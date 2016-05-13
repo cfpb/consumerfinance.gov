@@ -4,8 +4,13 @@
 
 {% block furniture %}
     <div class="content-wrapper">
-        <h1>Sorry, you do not have permission to access the Wagtail admin page.</h1>
-        <h2>Did you mean to access the <a href="/django-admin/">{% trans 'Django admin' %} page?</h2>
-        <h2>Otherwise, you may want to <a href="/django-admin/logout/">{% trans 'Log out' %}</a> and log in as a user with the proper permissions.</h2>
+        <h1>{% trans 'Sorry!' %} <br/>
+        	{% trans 'You do not have permission to access this page.' %}
+        </h1>
+        <h2>
+        	{% trans 'You are trying to access the' %} Wagtail admin page. <br/>
+        	{% trans 'Did you mean to access the' %} <a href="/django-admin/">Django admin page?</a>
+        </h2>
+        <h3>{% trans 'Otherwise, you may want to' %} <a href="/django-admin/logout/">{% trans 'LOG OUT ' %}</a>{% trans 'and log in as a user with the proper permissions.' %}</h3>
     </div>
 {% endblock %}
