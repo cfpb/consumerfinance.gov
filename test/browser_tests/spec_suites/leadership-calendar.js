@@ -66,6 +66,16 @@ describe( 'The Leadership Calendar Page', function() {
     }
   );
 
+  it( 'should include a visible Show button', function() {
+    browser.pause();
+    expect( page.searchFilterShowBtn.isDisplayed() ).toBe( true );
+    expect( page.searchFilterShowBtn.getText() ).toBe( 'Show' );
+  } );
+
+  xit( 'should include a hidden Hide button', function() {
+    expect( page.searchFilterHideBtn.isDisplayed() ).toBe( false );
+  } );
+
   it( 'should include pagination form',
     function() {
       expect( page.paginationForm.isPresent() ).toBe( true );

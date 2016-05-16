@@ -11,27 +11,27 @@ function TheLeadershipCalendarPage() {
   this.sideNav = element( by.css( '.o-secondary-navigation' ) );
 
   this.intro =
-  element( by.css( '[data-qa-hook="leadership-calendar-intro"]' ) );
+    element( by.css( '[data-qa-hook="leadership-calendar-intro"]' ) );
 
   this.introSummary =
-  this.intro.element(
-    by.css( '[data-qa-hook="leadership-calendar-summary"]' )
-  );
+    this.intro.element(
+      by.css( '[data-qa-hook="leadership-calendar-summary"]' )
+    );
 
   this.searchFilter =
-  element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 0 );
+    element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 0 );
 
-  this.searchFilterBtn =
-  this.searchFilter.all( by.css( '.m-expandable_target' ) ).first();
+  this.searchFilterShowBtn =
+    element.all( by.css( '.m-expandable_cue-open' ) ).get( 0 );
 
   this.downloadFilter =
-  element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 1 );
+    element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 1 );
 
   this.downloadFilterBtn =
-  this.downloadFilter.all( by.css( '.m-expandable_target' ) ).first();
+    this.downloadFilter.all( by.css( '.m-expandable_target' ) ).first();
 
   this.searchFilterResults =
-  element.all( by.css( '[data-qa-hook="leadership-calendar-filter"] tbody' ) );
+    element.all( by.css( '[data-qa-hook="leadership-calendar-filter"] tbody' ) );
 
   this.paginationForm = element( by.css( '.pagination_form' ) );
 
