@@ -17,31 +17,41 @@ from v1.models import CFGOVPage
 def share_the_page(request, page):
     page = page.specific
     parent_page = page.parent()
-    parent_page_perms = parent_page.permissions_for_user(request.user)
+    is_publishing = bool(request.POST.get('action-publish', False))
+    is_sharing = bool(request.POST.get('action-share', False))
 
-    if parent_page.slug != 'root':
-        is_publishing = bool(request.POST.get('action-publish')) and parent_page_perms.can_publish()
-        is_sharing = bool(request.POST.get('action-share')) and parent_page_perms.can_publish()
-    else:  # Giving Root page permissions to publish/share
-        is_publishing = bool(request.POST.get('action-publish'))
-        is_sharing = bool(request.POST.get('action-share'))
+    check_permissions(parent_page, request.user, is_publishing, is_sharing)
+    share(page, is_sharing, is_publishing)
+    configure_page_revision(page, is_publishing)
 
-    # If the page is being shared or published, set `shared` to True or else False
-    # and save the page.
+
+# Make sure permissions are set to perform actions
+def check_permissions(parent, user, is_publishing, is_sharing):
+    parent_perms = parent.permissions_for_user(user)
+    if parent.slug != 'root':
+        is_publishing = is_publishing and parent_perms.can_publish()
+        is_sharing = is_sharing and parent_perms.can_publish()
+
+
+# If the page is being shared or published, set `shared` to True or else False
+# and save the page.
+def share(page, is_sharing, is_publishing):
     if is_sharing or is_publishing:
         page.shared = True
     else:
         page.shared = False
     page.save()
 
-    # If the page isn't being published but the page is live and the editor
-    # wants to share updated content that doesn't show on the production site,
-    # we must set the page.live to True, delete the latest revision, and save
-    # a new revision with `live` = False. This doesn't affect the page's published
-    # status, as the saved page object in the database still has `live` equal to
-    # True and we're never commiting the change. As seen in CFGOVPage's route
-    # method, `route()` will select the latest revision of the page where `live`
-    # is set to True and return that revision as a page object to serve the request with.
+
+# If the page isn't being published but the page is live and the editor
+# wants to share updated content that doesn't show on the production site,
+# we must set the page.live to True, delete the latest revision, and save
+# a new revision with `live` = False. This doesn't affect the page's published
+# status, as the saved page object in the database still has `live` equal to
+# True and we're never commiting the change. As seen in CFGOVPage's route
+# method, `route()` will select the latest revision of the page where `live`
+# is set to True and return that revision as a page object to serve the request with.
+def configure_page_revision(page, is_publishing):
     if not is_publishing:
         page.live = False
     latest = page.get_latest_revision()

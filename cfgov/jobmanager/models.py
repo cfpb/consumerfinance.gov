@@ -98,7 +98,7 @@ class Job(models.Model):
         ordering = ['close_date', 'title']
 
     def get_absolute_url(self):
-        return reverse('careers:detail', kwargs={'job_id': self.id})
+        return reverse('careers:detail', kwargs={'slug': self.slug})
 
     def save(self):
         if self.date_created == None:
@@ -148,6 +148,10 @@ class Job(models.Model):
                 text = '%s...' % self.title[:100]
 
         return strip_tags(text)
+
+    @property
+    def location_names(self):
+        return [l.region_long for l in self.locations.all()]
 
 
 class JobApplicantType(models.Model):

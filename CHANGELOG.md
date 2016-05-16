@@ -19,10 +19,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changes
 
+- Updated Capital Framework to latest.
+- Updated stats on homepage to match CCDB landing.
 
 ### Removed
 
+- Removed acting Dept Directors from Leadership calendar filter.
+- Removed obsolete module kbclick.js.
+
 ### Fixed
+
+- Fixed a validation bug in the Multiselect.
 
 
 ## 3.0.0-3.3.14 - 2016-05-11
@@ -144,6 +151,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Remove inline CSS when running sheer_index.
 - Abstracted dom events for easier reuse throughout the project.
 - Added npm shrinkwrap and snyk dependency monitoring
+- Tests `share_the_page` wagtail hook and associated functions
 
 ### Changed
 
@@ -159,6 +167,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Pinned our NPM dependencies.
 - Updated Capital Framework to 3.3.0
 - Changed U.S. flag image paths to be root-relative
+- Refactored wagtail hook `share_the_page`
 
 ### Removed
 

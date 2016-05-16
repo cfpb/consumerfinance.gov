@@ -19,5 +19,6 @@ urlpatterns = patterns(
     # Deprecated /jobs/design-technology-fellows/. Will keep it to keep the external links functioning
     url(r'^fellowship_form_submit/$', 'fellowship_form_submit', name='fellowship_form_submit'),
 
-    url(r'^(?P<job_id>(.+?))/$', 'detail', name='detail'),
+    url(r'^(?P<pk>\d+)/$', 'detail', name='detail-id-redirect'),
+    url(r'^(?P<slug>.+?)/$', 'detail', name='detail'),
 )

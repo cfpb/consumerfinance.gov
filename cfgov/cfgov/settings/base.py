@@ -222,11 +222,6 @@ SHEER_PROCESSORS = \
             "processor": "processors.django_calendar_event",
             "mappings": MAPPINGS.child("calendar_event.json")
         },
-        "contact": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=contact",
-            "processor": "processors.wordpress_contact",
-            "mappings": MAPPINGS.child("contact.json")
-        },
         "history": {
             "url": "$WORDPRESS/api/get_posts/?post_type=history",
             "processor": "processors.wordpress_history",
@@ -251,21 +246,6 @@ SHEER_PROCESSORS = \
             "url": "$WORDPRESS/api/get_posts/?post_type=page",
             "processor": "processors.wordpress_page",
             "mappings": MAPPINGS.child("pages.json")
-        },
-        "posts": {
-            "url": "$WORDPRESS/api/get_posts/",
-            "processor": "processors.wordpress_post",
-            "mappings": MAPPINGS.child("posts.json")
-        },
-        "events": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=event",
-            "processor": "processors.wordpress_event",
-            "mappings": MAPPINGS.child("events.json")
-        },
-        "newsroom": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=cfpb_newsroom",
-            "processor": "processors.wordpress_newsroom",
-            "mappings": MAPPINGS.child("newsroom.json")
         },
         "views": {
             "url": "$WORDPRESS/api/get_posts/?post_type=view",
