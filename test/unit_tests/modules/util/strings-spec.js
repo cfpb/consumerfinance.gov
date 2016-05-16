@@ -57,6 +57,14 @@ describe( 'Strings stringValid()', function() {
     }
   );
 
+  it( 'should return false when testing a string containing a period',
+    function() {
+      string = 'Some P. Name';
+
+      expect( strings.stringValid( string ) ).to.be.false;
+    }
+  );
+
   it( 'should return false when testing a string containing a colon',
     function() {
       string = 'Person: Name';
