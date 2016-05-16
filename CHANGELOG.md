@@ -19,6 +19,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changes
 
+### Removed
+
+### Fixed
+
+
+## 3.0.0-3.3.15 - 2016-05-16
+
+### Added
+
+### Changes
+
 - Updated Capital Framework to latest.
 - Updated stats on homepage to match CCDB landing.
 
