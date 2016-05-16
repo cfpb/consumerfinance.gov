@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changes
 
 - Updated Capital Framework to latest.
+- Updated stats on homepage to match CCDB landing.
 
 ### Removed
 
