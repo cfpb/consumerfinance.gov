@@ -27,6 +27,6 @@
 
 {{ info_unit( {
     'heading': '<h3>' ~ value.heading ~ '</h3>' if value.heading else '',
-    'body':    value.body,
+    'body':    parse_links(value.body) | safe,
     'links':   value.links
 } ) }}

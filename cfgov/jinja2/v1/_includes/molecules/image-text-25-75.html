@@ -45,6 +45,6 @@
         'is_decorative': value.image.alt == ''
     },
     'heading': '<h3>' ~ value.heading ~ '</h3>',
-    'body': value.body,
+    'body': parse_links(value.body) | safe,
     'links': value.links
 } ) }}

@@ -16,6 +16,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- `parse_links` calls on rich text fields on the rest of the fields
 
 ### Changes
 
