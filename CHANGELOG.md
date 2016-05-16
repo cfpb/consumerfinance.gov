@@ -25,6 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 
 - Removed acting Dept Directors from Leadership calendar filter.
+- Removed obsolete module kbclick.js.
 
 ### Fixed
 
