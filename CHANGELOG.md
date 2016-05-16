@@ -23,9 +23,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 
-- Removed acting Dept Directors from Leadership calendar filter
+- Removed acting Dept Directors from Leadership calendar filter.
 
 ### Fixed
+
+- Fixed a validation bug in the Multiselect.
 
 
 ## 3.0.0-3.3.14 - 2016-05-11
