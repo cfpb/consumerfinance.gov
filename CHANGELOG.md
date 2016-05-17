@@ -16,8 +16,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-- `parse_links` calls on rich text fields on the rest of the fields
 
+- `parse_links` calls on rich text fields on the rest of the fields
 - Added browser tests for the multiselect.
 
 ### Changes
@@ -25,9 +25,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 
 ### Fixed
+
 - Removed wrapping `<p>` tag on a form field's description field output,
   since it's a rich text field that provides its own markup.
-
+- Fixed issue with single careers layout.
 
 ## 3.0.0-3.3.15 - 2016-05-16
 
