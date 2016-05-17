@@ -3,9 +3,10 @@
 [![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=flapjack)](https://travis-ci.org/cfpb/cfgov-refresh?branch=flapjack)
 [![Code Climate](https://codeclimate.com/github/cfpb/cfgov-refresh.png?branch=flapjack)](https://codeclimate.com/github/cfpb/cfgov-refresh?branch=flapjack)
 
-The in-progress redesign of the [consumerfinance.gov](http://consumerfinance.gov) website.
+The redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website.
 This Django project includes the front-end assets and build tools,
-[Jinja templates](http://jinja.pocoo.org) for front-end rendering.
+[Jinja templates](http://jinja.pocoo.org) for front-end rendering,
+and [Wagtail CMS](https://wagtail.io) for content administration.
 
 **Technology stack:**
 - Mac OSX.
@@ -16,14 +17,15 @@ This Django project includes the front-end assets and build tools,
 
 **This project is a work in progress.**
 Nothing presented in this repo—whether in the source code, issue tracker,
-or wiki—is a final product unless it is marked as such or appears on consumerfinance.gov.
+or wiki—is a final product unless it is marked as such or appears on www.consumerfinance.gov.
+In-progress updates may appear on beta.consumerfinance.gov.
 
-![Screenshot of cfgov-refresh](screenshot.png)
+![Screenshot of cfgov-refresh](screenshot.jpg)
 
 ## Dependencies
 - [Elasticsearch](http://www.elasticsearch.org):
   Used for full-text search capabilities and content indexing.
-- [Node](http://nodejs.org) and npm (Node Package Manager):
+- [Node](http://nodejs.org) and [npm (Node Package Manager)](https://www.npmjs.com):
   Used for downloading and managing front-end dependencies and assets.
 
 For Vagrant Virtualbox usage:
@@ -46,21 +48,26 @@ Then follow the instructions in [INSTALL](INSTALL.md).
 
 ## Configuration
 
-For necessary server-side configurations, follow instructions in
-[INSTALL - Configuration](INSTALL.md#configuration).
+If not using the vagrant box, follow instructions in
+[INSTALL - Stand alone installation](INSTALL.md#stand-alone-installation)
+for necessary server-side configurations.
 
 ## Usage
 
-Generally you will have four tabs (or windows) open in your terminal when using this project.
-These will be used for:
+If not using the vagrant box, you will generally have four tabs
+(or windows) open in your terminal, which will be used for:
  1. **Git operations**.
-    Perform Git operations and general development in the repository.
+    Perform Git operations and general development in the repository,
+    such as `git checkout flapjack`.
  2. **Elasticsearch**.
     Run an Elasticsearch (ES) instance.
-    Running `cfgov/manage.py sheer_index` will load indexes into ES.
- 3. **Django server**. Start and run the web server.
+    See instructions [below](https://github.com/cfpb/cfgov-refresh#2-run-elasticsearch).
+ 3. **Django server**. Start and stop the web server.
+    Server is started with `./runserver.sh`,
+    but see more details [below](https://github.com/cfpb/cfgov-refresh#3-load-indexes--launch-site).
  4. **Gulp watch**.
-    Run the Gulp watch task for watching for changes to content.
+    Run the Gulp watch (`gulp watch`) task to automatically re-run the gulp
+    asset compilation tasks when their source files are changed.
 
 What follows are the specific steps for each of these tabs.
 
@@ -80,6 +87,8 @@ Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
 This setup script will remove and re-install the project dependencies
 and rebuild the site's JavaScript and CSS assets.
 
+> **NOTE:** You may also run `./backend.sh` or `./frontend.sh
+  if you only want to re-build the backend or front-end, respectively.
 
 ### 2. Run Elasticsearch
 
@@ -101,7 +110,8 @@ elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch
 ```
 
 ### 3. Load Indexes & Launch Site
-To do this, run the following:
+First, move into the `cfgov-refresh` project directory
+and ready your environment:
 
 ```bash
 # Use the cfgov-refresh virtualenv.
@@ -109,89 +119,47 @@ workon cfgov-refresh
 
 # cd into this directory (if you aren't already there)
 cd cfgov-refresh
+```
 
-# Index the latest content from the API output from a WordPress and Django back-end.
-# **This requires the constants in INSTALL - Configuration to be set**
-python cfgov/manage.py sheer_index
+Index the latest content from the API output from a WordPress and Django back-end.
+**This requires the constants in [INSTALL - Stand alone installation](INSTALL.md#stand-alone-installation) to be set.**
 
-# From the Project root, start server.
-python cfgov/manage.py runserver
+```bash
+python cfgov/manage.py sheer_index -r
+```
 
-# **Note**
-# If prompted to migrate database changes, stop the server ctrl+c and run these commands
-python cfgov/manage.py migrate
-./initial-data.sh
+> **NOTE:**
+  To view the indexed content you can use a tool called
+  [elasticsearch-head](http://mobz.github.io/elasticsearch-head/).
+
+From the project root, start the Django server:
+
+```bash
 ./runserver.sh
+```
 
-# To set up a superuser in order to access the admin
+> **NOTE:** If prompted to migrate database changes,
+  stop the server with `ctrl` + `c` and run these commands:
+  ```bash
+  python cfgov/manage.py migrate
+  ./initial-data.sh
+  ./runserver.sh
+  ```
+
+To set up a superuser in order to access the Wagtail admin:
+
+```
 python cfgov/manage.py createsuperuser
 ```
 
 To view the site browse to: <http://localhost:8000>
 
-To view the project layout docs and pattern library,
-browse to <http://localhost:8000/docs>
+To view the Wagtail admin login,
+browse to: <http://localhost:8000/admin/login/>
 
-To view the indexed content you can use a tool called
-[elasticsearch-head](http://mobz.github.io/elasticsearch-head/).
-
-**Using a different port:** If you want to run the server at a different port
-than 8000 use `python cfgov/manage.py runserver <port number>`, e.g. `8001`.
-
-### Load data into Django models
-The Django management command `import-data` will import data from the specified
-source into the specified model.
-```
-usage: manage.py import-data [-h] [--version] [-v {0,1,2,3}] [--settings SETTINGS]
-        [--pythonpath PYTHONPATH] [--traceback] [--no-color] [--parent PARENT] 
-        [--snippet] -u USERNAME -p PASSWORD [--app APP] [--overwrite]
-        data_type wagtail_type
-```
-- `data_type` is the WP post type defined in the `processors.py` file.
-- `wagtail_type` is the Django model name where the data is going to go.
-- `-u` and `-p` are credentials to an admin account.
-
-Required option:
-- `--parent` is the slug of the parent page that the pages will exist
-  under.
-- `--snippet` is a flag that's used to signify that the importing data will be
-  inserted into a Django model, registered as a [Wagtail snippet](http://docs.wagtail.io/en/v1.1/topics/snippets.html).
-  One of these options must be set for the command to run.
-
-Other options:
-- `--app` is the name of the app the Django models from `wagtail_type` exist in.
-  It defaults to our app, `v1`.
-- `--overwrite` overwrites existing pages in Wagtail based on comparing slugs.
-Be careful when using this as it will overwrite the data in Wagtail with data
-from the source. Default is `False`.
-- `--verbosity` is set to 1 by default. Set it to 2 or higher and expect the
-name of the slugs to appear where appropriate.
-
-For now, in order for this command to import the data, one of the things it
-needs is a file for "sheer logic" to use to retrieve the data. For us, the
-processors are already done from our last backend. This part of the command
-will change as we move away from our dependency on "sheer logic". This is set
-by putting the file in a `processors` module in the top level of the project
-and adding it to the setting SHEER_PROCESSORS.
-
-The command needs a `processors` module in the app that's passed to it, as well
-as a file with the same name as the Django model specified that defines a class
-named `DataConverter` that subclasses either `_helpers.PageDataConverter` or
-`_helpers.SnippetDataConverter` and implements their method(s) explained below:
-- **PageDataConverter**
- - **convert(self, imported_data)**
-   For converting pages or snippets, the processor file must implement the
-   **convert()** function with one argument. That argument represents the
-   imported data dictionary. That function must take the dictionary and map it
-   to a new one that uses the keys that Wagtail's **create()** and **edit()**
-   admin/snippet view functions expect in the `request.POST` dictionary to
-   actually migrate the data over, and then returns that dictionary where it
-   will be assigned to `request.POST`.
-- **SnippetDataConverter(PageDataConverter)**
- - **get_existing_snippet()**
-   This also accepts the imported data dictionary. It's used to find an
-   existing snippet given the imported data, returning it if found or `None` if
-   not.
+> **NOTE: Using a different port.**
+  If you want to run the server at a port other than 8000
+  use `python cfgov/manage.py runserver <port number>`, e.g. `8001`.
 
 ### 4. Launch the Gulp watch task
 
@@ -220,7 +188,7 @@ gulp lint            # Lint the scripts and build files.
 gulp test            # Run linting, unit and acceptance tests (see below).
 gulp test:unit       # Run only unit tests on source code.
 gulp test:acceptance # Run only acceptance (in-browser) tests on production code.
-gulp watch           # Watch for changes in the source and launch and auto-update a browser instance.
+gulp watch           # Watch for source code changes and auto-update a browser instance.
 ```
 
 ## How to test the software
@@ -245,9 +213,90 @@ Additionally, you may want to consider
 [contributing to the Capital Framework](https://cfpb.github.io/capital-framework/contributing/),
 which is the front-end pattern library used in this project.
 
-## Working with the templates
 <!-- TODO: Perhaps we want to split this out into a separate page? -->
-### Front-End Template/Asset Locations
+## Development tips
+
+### TIP: Loading sibling projects
+Some projects fit within the cfgov-refresh architecture,
+but are not fully incorporated into the project.
+These are known as "non-v1 Django apps."
+In order to visit areas of the site locally where those projects are used,
+the sibling projects need to be installed
+and then indexed within this cfgov-refresh project.
+
+The non-v1 apps are the following:
+ - [Owning a Home](https://github.com/cfpb/owning-a-home).
+ - [Tax time savings](https://github.com/cfpb/tax-time-saving).
+ - fin-ed-resources (not public) - for the Education Resources section.
+ - know-before-you-owe (not public) - for the Consumer Tools > Know before you owe section.
+
+After installing these projects as sibling directories to the `cfgov-refresh` repository,
+build the third-party projects per their directions,
+stop the web server and return to `cfgov-refresh`
+and run `cfgov/manage.py sheer_index -r` to load the projects' data into ElasticSearch.
+
+> **NOTE:** Do not install the projects directly into the `cfgov-refresh` directory.
+  Clone and install the projects as siblings to `cfgov-refresh`,
+  so that they share the same parent directory (`~/Projects` or similar).
+
+### TIP: Loading data into Django models
+The Django management command `import-data` will import data from the specified
+source into the specified model.
+```
+usage: manage.py import-data [-h] [--version] [-v {0,1,2,3}] [--settings SETTINGS]
+        [--pythonpath PYTHONPATH] [--traceback] [--no-color] [--parent PARENT]
+        [--snippet] -u USERNAME -p PASSWORD [--app APP] [--overwrite]
+        data_type wagtail_type
+```
+- `data_type` is the WordPress post type defined in the `processors.py` file.
+- `wagtail_type` is the Django model name where the data is going to go.
+- `-u` and `-p` are credentials to an admin account.
+
+Required option:
+- `--parent` is the slug of the parent page that the pages will exist
+  under.
+- `--snippet` is a flag that's used to signify that the importing data will be
+  inserted into a Django model, registered as a [Wagtail snippet](http://docs.wagtail.io/en/v1.1/topics/snippets.html).
+  One of these options must be set for the command to run.
+
+Other options:
+- `--app` is the name of the app the Django models from `wagtail_type` exist in.
+  It defaults to our app, `v1`.
+- `--overwrite` overwrites existing pages in Wagtail based on comparing slugs.
+Be careful when using this as it will overwrite the data in Wagtail with data
+from the source. Default is `False`.
+- `--verbosity` is set to 1 by default. Set it to 2 or higher and expect the
+name of the slugs to appear where appropriate.
+
+For now, in order for this command to import the data, one of the things it
+needs is a file for "sheer logic" to use to retrieve the data. For us, the
+processors are already done from our last backend. This part of the command
+will change as we move away from our dependency on "sheer logic." This is set
+by putting the file in a `processors` module in the top level of the project
+and adding it to the setting [`SHEER_PROCESSORS`](https://github.com/cfpb/cfgov-refresh/blob/flapjack/cfgov/cfgov/settings/base.py#L218).
+
+The command needs a `processors` module in the app that's passed to it, as well
+as a file with the same name as the Django model specified that defines a class
+named `DataConverter` that subclasses either `_helpers.PageDataConverter` or
+`_helpers.SnippetDataConverter` and implements their method(s) explained below:
+- **PageDataConverter**
+ - **convert(self, imported_data)**
+   For converting pages or snippets, the processor file must implement the
+   **convert()** function with one argument. That argument represents the
+   imported data dictionary. That function must take the dictionary and map it
+   to a new one that uses the keys that Wagtail's **create()** and **edit()**
+   admin/snippet view functions expect in the `request.POST` dictionary to
+   actually migrate the data over, and then returns that dictionary where it
+   will be assigned to `request.POST`.
+- **SnippetDataConverter(PageDataConverter)**
+ - **get_existing_snippet()**
+   This also accepts the imported data dictionary. It's used to find an
+   existing snippet given the imported data, returning it if found or `None` if
+   not.
+
+### TIP: Working with the templates
+
+#### Front-End Template/Asset Locations
 
 **Templates** that are served by the Django server: `cfgov\jinja2\v1`
 
@@ -255,18 +304,18 @@ which is the front-end pattern library used in this project.
 > NOTE: After a `gulp build` they are copied over to the `cfgov\static_built` location,
   ready to be served by Django.
 
-### Simple static template setup
+#### Simple static template setup
 
 By default, Django will render pages with accordance to the URL pattern defined
 for it. For example, going to `http://localhost:8000/the-bureau/index.html`
 (or `http://localhost:8000/the-bureau/`) renders `/the-bureau/index.html` from
-the `cfgov` app folder's `jinja2` templates folder as processed by the [Jinja2](http://jinja.pocoo.org/docs)
-templating engine.
+the `cfgov` app folder's `jinja2/v1` templates folder as processed
+by the [Jinja2](http://jinja.pocoo.org/docs) templating engine.
 
-### Outputting indexed content in a Sheer template
+### TIP: Outputting indexed content in a Sheer template
 
 Most of our content is indexed from the API output of our WordPress back-end.
-This happens when the `python cfgov/manage.py sheer_index` command is run.
+This happens when the `python cfgov/manage.py sheer_index -r` command is run.
 
 There are two ways in which we use indexed content:
 repeating items (e.g., blog posts and press releases),
@@ -277,7 +326,7 @@ What follows is a deeper dive into both of these content types.
 
 For any kind of repeating content, this is the basic process:
 
-1. In the vars file for the section you're in (e.g., `blog/_vars-blog.html`),
+1. In the vars file for the section you're in (e.g., `newsroom/_vars-newsroom.html`),
   we set up a variable that holds the results of the default query we want to run.
 
   Here's how it looks for the blog:
@@ -317,8 +366,8 @@ here's how it's done:
 
 The `get_document` method can be used to retrieve a single item of any post type
 for display within a template.
-In the below example from `contact-us/promoted-contacts.html`,
-we get an instance of the non-hierarchical `contact` post type using its slug (`whistleblowers`):
+In the below example we get an instance of the non-hierarchical
+`contact` post type using its slug (`whistleblowers`):
 
 ```jinja
 {% set whistleblowers = get_document('contact', 'whistleblowers') %}
@@ -327,10 +376,10 @@ we get an instance of the non-hierarchical `contact` post type using its slug (`
 In practice, many of our templates are a Frankenstein-type mixture
 of hand-coded static content and calls to indexed content,
 as we continually try to strike the right balance of what content
-is appropriate to be edited by non-developers in WordPress,
+is appropriate to be edited by non-developers in Wagtail,
 and what is just too fragile to do any other way than by hand.
 
-### Filtering results with queries
+### TIP: Filtering results with queries
 
 Sometimes you'll want to create queries in your templates to filter the data.
 
@@ -346,9 +395,10 @@ We have a handy function `search()` that:
 
 URL query string filters can be further broken down into two types:
 
-1. Term - Used when you want to filter by whether a field matches a term.  Note that in order
-to use this type of filter, the field you are matching it against must have `"index": "not_analyzed"`
-set in the mapping.
+1. Term - Used when you want to filter by whether a field matches a term.
+Note that in order to use this type of filter,
+the field you are matching it against must have
+`"index": "not_analyzed"` set in the mapping.
 2. Range - Used for when you want to filter something by a range (e.g. dates or numbers)
 
 An example of Term is:
@@ -357,20 +407,11 @@ An example of Term is:
 
 `filter_[field]=[value]`
 
-When you go to a URL such as http://localhost:8000/blog/?filter_category=Op-Ed
-and you use `search()`,
-the queryset returned will only include objects with a category of 'Op-Ed'.
-
 An example of Range is:
 
 `?filter_range_date_gte=2014-01`
 
 `filter_range_[field]_[operator]=[value]`
-
-Continuing with the example above, if you go to a URL such as
-`http://localhost:8000/blog/?filter_range_date_gte=2014-01`
-and you use `search()`,
-you'll get a queryset of objects where the 'date' field is in January, 2014, or later.
 
 URL query string filters are convenient for many of the filtered queries you'll need to run,
 but often there are cases where you'll need more flexibility.
@@ -397,7 +438,8 @@ For example:
 
 This will return documents that have the tag Students OR Finance, AND have an author of Batman.
 
-If you need more control over your filter than that, enter it manually in the _queries/filtername.json file.
+If you need more control over your filter than that,
+enter it manually in the `cfgov/jinja2/v1/_queries/[filtername].json` file.
 
 ----
 
@@ -411,6 +453,5 @@ If you need more control over your filter than that, enter it manually in the _q
 
 ## Credits and references
 
-As mentioned in this Readme,
-the project uses the [Capital Framework](https://github.com/cfpb/capital-framework)
+This project uses the [Capital Framework](https://github.com/cfpb/capital-framework)
 for its user interface and layout components.
