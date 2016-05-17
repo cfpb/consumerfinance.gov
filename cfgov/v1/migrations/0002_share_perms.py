@@ -28,7 +28,7 @@ def create_share_permissions(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('v1', '0011_auto_20151207_1725'),
+        ('v1', '0001_initial'),
     ]
 
     operations = [
