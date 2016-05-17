@@ -67,9 +67,11 @@ def configure_page_revision(page, is_publishing):
 
             url_paths = [page.url_path.replace('cfgov/', '')]
             if url_paths[0] == '/':
-                akamai_cache_reset(url_paths, invalidate_root=True, user_email=latest.user.email)
+                is_home_page = True
             else:
-                akamai_cache_reset(url_paths, user_email=latest.user.email)
+                is_home_page = False
+
+            akamai_cache_reset(url_paths, invalidate_root=is_home_page, user_email=latest.user.email)
 
 
 @hooks.register('before_serve_page')
