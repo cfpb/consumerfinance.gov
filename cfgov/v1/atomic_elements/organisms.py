@@ -195,6 +195,9 @@ class ItemIntroduction(blocks.StructBlock):
         classname = 'block__flush-top'
 
 
+# TODO: FilterControls/Filterable List should be updated to use same
+#       atomic name used on the frontend of FilterableListControls,
+#       or vice versa.
 class FilterControls(molecules.BaseExpandable):
     form_type = blocks.ChoiceBlock(choices=[
         ('filterable-list', 'Filterable List'),
@@ -221,4 +224,4 @@ class FilterControls(molecules.BaseExpandable):
         icon = 'form'
 
     class Media:
-        js = ['notification.js', 'expandable.js', 'filterable-list-controls.js']
+        js = ['filterable-list-controls.js']
