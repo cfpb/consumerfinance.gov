@@ -28,6 +28,8 @@
                     block__sub">
         <h1>{{ career.title }}</h1>
         <dl>
+            <dt>Division/Office: </dt>
+            <dd> {{career.category}}</dd>
             <dt>Expiration Date:</dt>
             <dd>
                 {% import 'macros/time.html' as time %}
@@ -64,21 +66,15 @@
         <h2>Job Description</h2>
         {{ career.description | safe }}
 
-        {# TODO: Discuss how to break duties and departments out of
-                 the description.
-        <h2>Duties</h2>
-        <h3>As a test opening, you will:</h3>
-        <ul class="list__branded">
-            <li>Lorem ipsum...place first duty here</li>
-            <li>Lorem ipsum..place second duty here</li>
-            <li>Etc, etc, etc</li>
-        </ul>
-
-        <h2>Departments</h2>
-        <p>Multiple offices</p>
-        #}
     </section>
 
+        <section class="block">
+            <em>
+        The Consumer Financial Protection Bureau (CFPB) is an equal opportunity
+        employer and seeks to create and maintain a vibrant and diverse
+        workforce. Women, minorities, veterans, and people with disabilities
+        are encouraged to apply.</em>
+    </section>
     <section class="block
                     block__padded-top
                     block__border-top">

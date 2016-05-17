@@ -1,6 +1,6 @@
 {
   "name": "cfgov-refresh",
-  "version": "3.0.0-3.3.14",
+  "version": "3.0.0-3.3.15",
   "repository": {
     "type": "git",
     "url": "http://github.com/cfpb/cfgov-refresh.git"
@@ -10,9 +10,9 @@
     "node": ">=5.5.0"
   },
   "dependencies": {
-    "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
+    "banner-footer-webpack-plugin": "0.0.1",
     "browser-sync": "2.11.2",
-    "capital-framework": "3.3.0",
+    "capital-framework": "3.4.0",
     "del": "2.2.0",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.0",
