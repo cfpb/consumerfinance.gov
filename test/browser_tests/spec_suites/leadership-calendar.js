@@ -30,50 +30,67 @@ describe( 'The Leadership Calendar Page', function() {
     }
   );
 
-  it( 'should include a search filter',
-    function() {
-      expect( page.searchFilter.isPresent() ).toBe( true );
-    }
-  );
+  describe( 'Search Filter', function() {
 
-  it( 'should include a search filter button',
-    function() {
-      var searchFilterBtn = page.searchFilterBtn;
-      expect( searchFilterBtn.isPresent() ).toBe( true );
-      expect( searchFilterBtn.getText() ).toContain( 'Filter calendars' );
-      expect( searchFilterBtn.getText() ).toContain( 'Show' );
-    }
-  );
+    it( 'should be included',
+      function() {
+        expect( page.searchFilter.isPresent() ).toBe( true );
+      }
+    );
 
-  it( 'should include a search filter search filter results',
-    function() {
-      expect( page.searchFilterResults.count() ).toBeGreaterThan( 0 );
-    }
-  );
+    it( 'should include Filter Calendars label',
+      function() {
+        var searchFilterBtn = page.searchFilterBtn;
+        expect( searchFilterBtn.isPresent() ).toBe( true );
+        expect( searchFilterBtn.getText() ).toContain( 'Filter calendars' );
+      }
+    );
 
-  it( 'should include a download filter',
-    function() {
-      expect( page.paginationForm.isPresent() ).toBe( true );
-    }
-  );
+    it( 'should include a visible Show button', function() {
+      expect( page.searchFilterShowBtn.isDisplayed() ).toBe( true );
+      expect( page.searchFilterShowBtn.getText() ).toBe( 'Show' );
+    } );
 
-  it( 'should include a download filter button',
-    function() {
-      var downloadFilterBtn = page.downloadFilterBtn;
-      expect( downloadFilterBtn.isPresent() ).toBe( true );
-      expect( downloadFilterBtn.getText() ).toContain( 'Download options' );
-      expect( downloadFilterBtn.getText() ).toContain( 'Show' );
-    }
-  );
+    it( 'should include a visible Hide button when clicked', function() {
+      page.searchFilterBtn.click();
+      browser.sleep(1000);
+      expect( page.searchFilterHideBtn.isDisplayed() ).toBe( true );
+    } );
 
-  it( 'should include a visible Show button', function() {
-    browser.pause();
-    expect( page.searchFilterShowBtn.isDisplayed() ).toBe( true );
-    expect( page.searchFilterShowBtn.getText() ).toBe( 'Show' );
+    it( 'should include a search filter search filter results',
+      function() {
+        expect( page.searchFilterResults.count() ).toBeGreaterThan( 0 );
+      }
+    );
   } );
 
-  xit( 'should include a hidden Hide button', function() {
-    expect( page.searchFilterHideBtn.isDisplayed() ).toBe( false );
+  describe( 'Download Filter', function() {
+
+    it( 'should be included',
+      function() {
+        expect( page.paginationForm.isPresent() ).toBe( true );
+      }
+    );
+
+    it( 'should include text to download options',
+      function() {
+        var downloadFilterBtn = page.downloadFilterBtn;
+        expect( downloadFilterBtn.isPresent() ).toBe( true );
+        expect( downloadFilterBtn.getText() ).toContain( 'Download options' );
+      }
+    );
+
+    it( 'should include a visible Show button', function() {
+      expect( page.downloadFilterShowBtn.isDisplayed() ).toBe( true );
+      expect( page.downloadFilterShowBtn.getText() ).toBe( 'Show' );
+    } );
+
+    it( 'should include a visible Hide button when clicked', function() {
+      page.downloadFilterBtn.click();
+      browser.sleep(1000);
+      expect( page.downloadFilterHideBtn.isDisplayed() ).toBe( true );
+    } );
+
   } );
 
   it( 'should include pagination form',

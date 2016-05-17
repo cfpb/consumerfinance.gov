@@ -21,14 +21,38 @@ function TheLeadershipCalendarPage() {
   this.searchFilter =
     element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 0 );
 
+  this.searchFilterBtn =
+    this.searchFilter.element(
+      by.css( '.o-filterable-list-controls .m-expandable_target' )
+    );
+
   this.searchFilterShowBtn =
-    element.all( by.css( '.m-expandable_cue-open' ) ).get( 0 );
+    this.searchFilter.element(
+      by.css( '.o-filterable-list-controls .m-expandable_cue-open' )
+    );
+
+  this.searchFilterHideBtn =
+    this.searchFilter.element(
+      by.css( '.o-filterable-list-controls .m-expandable_cue-close' )
+    );
 
   this.downloadFilter =
     element.all( by.css( '[data-qa-hook="filter"]' ) ).get( 1 );
 
   this.downloadFilterBtn =
-    this.downloadFilter.all( by.css( '.m-expandable_target' ) ).first();
+    this.downloadFilter.element(
+      by.css( '.o-filterable-list-controls .m-expandable_target' )
+    );
+
+  this.downloadFilterShowBtn =
+    this.downloadFilter.element(
+      by.css( '.o-filterable-list-controls .m-expandable_cue-open' )
+    );
+
+  this.downloadFilterHideBtn =
+    this.downloadFilter.element(
+      by.css( '.o-filterable-list-controls .m-expandable_cue-close' )
+    );
 
   this.searchFilterResults =
     element.all( by.css( '[data-qa-hook="leadership-calendar-filter"] tbody' ) );
