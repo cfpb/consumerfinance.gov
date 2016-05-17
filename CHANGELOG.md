@@ -17,6 +17,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Added browser tests for the multiselect.
+
 ### Changes
 
 ### Removed
