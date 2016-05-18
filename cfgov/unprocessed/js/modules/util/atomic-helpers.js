@@ -6,6 +6,9 @@
 'use strict';
 
 var dataHook = require( './data-hook' );
+var standardType = require( './standard-type' );
+
+var INIT_FLAG = standardType.STATE_PREFIX + 'atomic_init';
 
 // TODO: Update baseClass to baseSel to handle CSS selector instead of a class.
 /**
@@ -70,11 +73,11 @@ function _verifyClassExists( element, baseClass ) {
  *   false otherwise.
  */
 function setInitFlag( element ) {
-  if ( dataHook.contains( element, 'init' ) ) {
+  if ( dataHook.contains( element, INIT_FLAG ) ) {
     return false;
   }
 
-  dataHook.add( element, 'init' );
+  dataHook.add( element, INIT_FLAG );
 
   return true;
 }
@@ -98,7 +101,7 @@ function instantiateAll( selector, Constructor ) {
 
 // Expose public methods.
 module.exports = {
-  checkDom: checkDom,
+  checkDom:       checkDom,
   instantiateAll: instantiateAll,
-  setInitFlag: setInitFlag
+  setInitFlag:    setInitFlag
 };

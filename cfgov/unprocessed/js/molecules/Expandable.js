@@ -5,6 +5,7 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var breakpointState = require( '../modules/util/breakpoint-state' );
 var EventObserver = require( '../modules/util/EventObserver' );
 var fnBind = require( '../modules/util/fn-bind' ).fnBind;
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * Expandable
@@ -52,7 +53,9 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    *   or undefined if it was already initialized.
    */
   function init( state ) {
-    if ( !atomicHelpers.setInitFlag( _dom ) ) { var inst; return inst; }
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
 
     _calcHeight();
     // Even if expanded is set, don't expand if in mobile window size.

@@ -96,6 +96,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Updated event times to show EDT.
+- Frontend: Added init flag when initializing atomic components.
 
 
 ## 3.0.0-3.3.11 - 2016-05-03
