@@ -63,12 +63,13 @@ describe( 'atomic-helpers', function() {
   } );
 
   describe( '.setInitFlag()', function() {
-    xit( 'should return true when init flag is set', function() {
-      // TODO: Implement test.
+    it( 'should return true when init flag is set', function() {
+      expect( atomicHelpers.setInitFlag( expandableDom ) ).to.be.true;
     } );
 
-    xit( 'should return false when init flag is already set', function() {
-      // TODO: Implement test.
+    it( 'should return false when init flag is already set', function() {
+      atomicHelpers.setInitFlag( expandableDom );
+      expect( atomicHelpers.setInitFlag( expandableDom ) ).to.be.false;
     } );
   } );
 } );

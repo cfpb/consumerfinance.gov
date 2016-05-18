@@ -5,9 +5,10 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var breakpointState = require( '../modules/util/breakpoint-state' );
 var ClearableInput = require( '../modules/ClearableInput' );
 var EventObserver = require( '../modules/util/EventObserver' );
-var FlyoutMenu = require( '../modules/FlyoutMenu' );
+var FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
 var fnBind = require( '../modules/util/fn-bind' ).fnBind;
 var MoveTransition = require( '../modules/transition/MoveTransition' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * GlobalSearch
@@ -36,9 +37,14 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   var KEY_TAB = 9;
 
   /**
-   * @returns {Object} The GlobalSearch instance.
+   * @returns {GlobalSearch|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     // Set initial appearance.
     var transition = new MoveTransition( _contentDom ).init();
     transition.moveRight();

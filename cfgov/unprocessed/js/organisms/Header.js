@@ -5,6 +5,7 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var GlobalBanner = require( '../molecules/GlobalBanner.js' );
 var GlobalSearch = require( '../molecules/GlobalSearch.js' );
 var MegaMenu = require( '../organisms/MegaMenu.js' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * Header
@@ -30,9 +31,14 @@ function Header( element ) {
   /**
    * @param {HTMLNode} overlay
    *   Overlay to show/hide when mobile mega menu is shown.
-   * @returns {Object} The Header instance.
+   * @returns {Header|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init( overlay ) {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     // TODO: Investigate a better method of handling optional elements.
     //       Banner is optional, so we don't want to throw a nice error
     //       when its DOM isn't found.

@@ -2,10 +2,12 @@
 
 // Required modules.
 var arrayHelpers = require( '../modules/util/array-helpers' );
-var queryOne = require( '../modules/util/dom-traverse' ).queryOne;
-var domCreate = require( '../modules/util/dom-manipulators' ).create;
-var strings = require( '../modules/util/strings' );
+var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var bindEvent = require( '../modules/util/dom-events' ).bindEvent;
+var domCreate = require( '../modules/util/dom-manipulators' ).create;
+var queryOne = require( '../modules/util/dom-traverse' ).queryOne;
+var standardType = require( '../modules/util/standard-type' );
+var strings = require( '../modules/util/strings' );
 
 /**
  * Multiselect
@@ -15,7 +17,7 @@ var bindEvent = require( '../modules/util/dom-events' ).bindEvent;
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the molecule.
- * @returns {Object} A Multiselect instance.
+ * @returns {Multiselect} An instance.
  */
 function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
@@ -55,9 +57,14 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   /**
    * Set up and create the multi-select.
-   * @returns {object} The Multiselect instance.
+   * @returns {Multiselect|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     _name = _dom.name;
     _options = _dom.options || [];
     _placeholder = _dom.getAttribute( 'placeholder' );
@@ -74,7 +81,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   /**
    * Expand the multi-select drop down.
-   * @returns {object} The Multiselect instance.
+   * @returns {Multiselect} An instance.
    */
   function expand() {
     _containerDom.classList.add( 'active' );
@@ -85,7 +92,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   /**
    * Collapse the multi-select drop down.
-   * @returns {object} The Multiselect instance.
+   * @returns {Multiselect} An instance.
    */
   function collapse() {
     _containerDom.classList.remove( 'active' );
@@ -96,9 +103,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Cleans up a list of options for saving to memory
-   * @param   {array} list The options from the parent select elem
-   * @returns {array}      An array of option objects
+   * Cleans up a list of options for saving to memory.
+   * @param   {Array} list The options from the parent select elem.
+   * @returns {Array}      An array of option objects.
    */
   function _sanitizeOptions( list ) {
     var item;
@@ -125,7 +132,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Populates and injects the markup for the custom multi-select
+   * Populates and injects the markup for the custom multi-select.
    */
   function _populateMarkup() {
     // Add a container for our markup
@@ -212,7 +219,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   /**
    * Highlights an option in the list
    * @param   {string} direction Direction to highlight compared to the
-   *                             current focus
+   *                             current focus.
    */
   function _highlight( direction ) {
     var count = _filteredData.length;
@@ -237,8 +244,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Tracks a user's selections and updates the list in the dom
-   * @param   {string} value The value of the option the user has chosen
+   * Tracks a user's selections and updates the list in the dom.
+   * @param   {string} value The value of the option the user has chosen.
    */
   function _updateSelections( value ) {
     var optionIndex =
@@ -293,8 +300,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   /**
    * Evaluates the list of options based on the user's query in the
-   * search input
-   * @param  {string} value Text the user has entered in the search query
+   * search input.
+   * @param  {string} value Text the user has entered in the search query.
    */
   function _evaluate( value ) {
     _resetFilter();
@@ -311,7 +318,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Resets the search input and filtering
+   * Resets the search input and filtering.
    */
   function _resetSearch() {
     _searchDom.value = '';
@@ -319,7 +326,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Resets the filtered option list
+   * Resets the filtered option list.
    */
   function _resetFilter() {
     _optionsDom.classList.remove( 'filtered', 'no-results' );
@@ -332,7 +339,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Filters the list of options based on the results of the evaluate function
+   * Filters the list of options based on the results of the evaluate function.
    */
   function _filterResults() {
     _optionsDom.classList.add( 'filtered' );
@@ -351,7 +358,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Updates the list of options to show the user there are no matching results
+   * Updates the list of options to show the user there
+   * are no matching results.
    */
   function _noResults() {
     _optionsDom.classList.add( 'no-results' );
@@ -359,7 +367,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Binds events to the search input, option list, and checkboxes
+   * Binds events to the search input, option list, and checkboxes.
    */
   function _bindEvents() {
     var inputs = _optionsDom.querySelectorAll( 'input' );
@@ -444,8 +452,8 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   }
 
   /**
-   * Handles the functions to trigger on the checkbox change
-   * @param   {object} event The checkbox change event
+   * Handles the functions to trigger on the checkbox change.
+   * @param   {Event} event The checkbox change event.
    */
   function _changeHandler( event ) {
     _updateSelections( event.target.value );
