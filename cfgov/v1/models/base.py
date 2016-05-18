@@ -131,11 +131,15 @@ class CFGOVPage(Page):
     ])
 
     def generate_view_more_url(self, request):
-        tags = []
+        from ..forms import ActivityLogFilterForm
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
+        form = ActivityLogFilterForm(parent=activity_log, hostname=request.site.hostname)
+        available_tags = [tag[0] for name, tags in form.fields['topics'].choices for tag in tags]
+        tags = []
         index = util.get_form_id(activity_log)
         for tag in self.tags.names():
-            tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
+            if tag in available_tags:
+                tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
         tags = '&'.join(tags)
         return get_protected_url({'request': request}, activity_log) + '?' + tags
 

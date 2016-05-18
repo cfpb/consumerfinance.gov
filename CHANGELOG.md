@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Added
 
 ### Changes
+- Check against Activity Log topics when generating View More link
 
 ### Removed
 
