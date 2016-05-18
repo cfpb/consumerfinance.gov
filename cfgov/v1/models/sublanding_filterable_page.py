@@ -12,17 +12,16 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-from . import base, ref
-from ..atomic_elements import molecules, organisms
+from .base import CFGOVPage
 from .learn_page import AbstractFilterPage
 from .. import forms
-from ..util import filterable_context
-
-from .base import CFGOVPage
+from ..atomic_elements import molecules, organisms
 from ..feeds import FilterableFeedPageMixin
+from ..util.ref import choices_for_page_type
+from ..util.filterable_list import FilterableListMixin
 
 
-class SublandingFilterablePage(FilterableFeedPageMixin, base.CFGOVPage):
+class SublandingFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
@@ -48,19 +47,18 @@ class SublandingFilterablePage(FilterableFeedPageMixin, base.CFGOVPage):
 
     template = 'sublanding-page/index.html'
 
-    def get_context(self, request, *args, **kwargs):
-        context = super(SublandingFilterablePage, self).get_context(request, *args, **kwargs)
-        return filterable_context.get_context(self, request, context)
-
-    def get_form_class(self):
-        return forms.FilterableListForm
-
-    def get_page_set(self, form, hostname):
-        return filterable_context.get_page_set(self, form, hostname)
-
 
 class ActivityLogPage(SublandingFilterablePage):
     template = 'activity-log/index.html'
+
+
+    def get_form_class(self):
+        return forms.ActivityLogFilterForm
+
+
+    def per_page_limit(self):
+        return 100
+
 
     def get_page_set(page, form, hostname):
         queries = {}
@@ -79,7 +77,7 @@ class ActivityLogPage(SublandingFilterablePage):
                             del categories[categories.index(category)]
 
         # Get Newsroom pages
-        if not categories_cache or map(lambda x: x in [c[0] for c in ref.choices_for_page_type('newsroom')], categories):
+        if not categories_cache or map(lambda x: x in [c[0] for c in choices_for_page_type('newsroom')], categories):
             try:
                 parent = CFGOVPage.objects.get(slug='newsroom')
                 queries['newsroom'] = AbstractFilterPage.objects.child_of_q(parent) & form.generate_query()
@@ -100,7 +98,3 @@ class ActivityLogPage(SublandingFilterablePage):
         final_q = reduce(lambda x,y: x|y, queries.values())
 
         return AbstractFilterPage.objects.live_shared(hostname).filter(final_q).distinct().order_by('-date_published')
-
-
-    def get_form_class(self):
-        return forms.ActivityLogFilterForm

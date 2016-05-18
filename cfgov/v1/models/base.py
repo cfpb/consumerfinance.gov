@@ -133,7 +133,7 @@ class CFGOVPage(Page):
     def generate_view_more_url(self, request):
         tags = []
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
-        index = util.get_form_id(activity_log, request.GET)
+        index = util.get_form_id(activity_log)
         for tag in self.tags.names():
             tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
         tags = '&'.join(tags)

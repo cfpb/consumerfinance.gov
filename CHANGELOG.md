@@ -16,11 +16,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-
 - `parse_links` calls on rich text fields on the rest of the fields
+- Add unit tests for filterable list functions
 - Added browser tests for the multiselect.
 
 ### Changes
+- filterable_context.py -> filterable_list.py
+- Refactored the filterable list logic for modularity and testability
 
 ### Removed
 

@@ -54,13 +54,8 @@ def most_common(lst):
         return [most] + most_common(new_list)
 
 
-def get_form_id(page, get_request):
-    from filterable_context import get_form_specific_filter_data
-
-    form_ids = []
-
-    form_ids = get_form_specific_filter_data(page, page.get_form_class(),
-                                                      get_request).keys()
+def get_form_id(page):
+    form_ids = page.get_filter_ids()
     if form_ids:
         return form_ids[0]
     else:
@@ -73,6 +68,8 @@ def instanceOfBrowseOrFilterablePages(page):
 
 
 # For use by Browse type pages to get the secondary navigation items
+# TODO: Move into BrowsePage class once BrowseFilterablePage has been merged
+# into BrowsePage
 def get_secondary_nav_items(current, hostname):
     from ..templatetags.share import get_page_state_url
     on_staging = os.environ.get('STAGING_HOSTNAME') == hostname

@@ -97,30 +97,12 @@ class FilterableListForm(forms.Form):
         'class': 'js-filter_range-date js-filter_range-date__lte',
     })
 
-    title = forms.CharField(
-        max_length=250,
-        required=False,
-        widget=widgets.TextInput(attrs=title_attrs))
-    from_date = FilterDateField(
-        required=False,
-        input_formats=['%m/%d/%Y'],
-        widget=widgets.DateInput(attrs=from_select_attrs))
-    to_date = FilterDateField(
-        required=False,
-        input_formats=['%m/%d/%Y'],
-        widget=widgets.DateInput(attrs=to_select_attrs))
-    categories = forms.MultipleChoiceField(
-        required=False,
-        choices=ref.page_type_choices,
-        widget=widgets.CheckboxSelectMultiple())
-    topics = forms.MultipleChoiceField(
-        required=False,
-        choices=[],
-        widget=widgets.SelectMultiple(attrs=topics_select_attrs))
-    authors = forms.MultipleChoiceField(
-        required=False,
-        choices=[],
-        widget=widgets.SelectMultiple(attrs=authors_select_attrs))
+    title =      forms.CharField(max_length=250, required=False, widget=widgets.TextInput(attrs=title_attrs))
+    from_date =  FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
+    to_date =    FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
+    categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
+    topics =     forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
+    authors =    forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
 
     def __init__(self, *args, **kwargs):
         parent = kwargs.pop('parent')
@@ -203,7 +185,7 @@ class FilterableListForm(forms.Form):
 
     # Returns a list of query strings to associate for each field, ordered by
     # the field declaration for the form. Note: THEY MUST BE ORDERED IN THE
-    # SAME WAY AS THEY ARE DECLARED.
+    # SAME WAY AS THEY ARE DECLARED IN THE FORM DEFINITION.
     def get_query_strings(self):
         return [
             'title__icontains',      # title
@@ -213,10 +195,6 @@ class FilterableListForm(forms.Form):
             'tags__name__in',        # topics
             'authors__name__in',     # authors
         ]
-
-    def per_page_limit(self):
-        return 10
-
 
 class EventArchiveFilterForm(FilterableListForm):
     def get_query_strings(self):
@@ -261,6 +239,3 @@ class ActivityLogFilterForm(NewsroomFilterForm):
         page_ids = CFGOVPage.objects.live_shared(hostname).filter(query).values_list('id', flat=True)
         self.set_topics(parent, page_ids, hostname)
         self.set_authors(parent, page_ids, hostname)
-
-    def per_page_limit(self):
-        return 100
