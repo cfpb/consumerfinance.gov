@@ -76,7 +76,7 @@ class ActivityLogPage(SublandingFilterablePage):
                     if not categories or category in categories:
                         selections[category] = True
                 for selection, is_selected in selections.iteritems():
-                    if is_selected:
+                    if is_selected and selection in categories:
                         del categories[categories.index(selection)]
 
         # Get Newsroom pages
