@@ -263,7 +263,6 @@ if settings.ALLOW_ADMIN_URL:
 
     if 'selfregistration' in settings.INSTALLED_APPS:
         patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
-        url(r'^token-provider/', 'cfpb_common.views.token_provider')
 
     urlpatterns = patterns + urlpatterns
 
