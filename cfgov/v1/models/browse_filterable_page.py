@@ -69,7 +69,7 @@ class NewsroomLandingPage(BrowseFilterablePage):
 
     def get_page_set(self, form, hostname):
         get_blog = False
-        categories_cache = None
+        only_blog = False
         for f in self.content:
             if 'filter_controls' in f.block_type and f.value['categories']['page_type'] == 'newsroom':
                 categories = form.cleaned_data.get('categories', [])
@@ -77,11 +77,14 @@ class NewsroomLandingPage(BrowseFilterablePage):
                     get_blog = True
                     if 'blog' in categories:
                         del categories[categories.index('blog')]
-                        categories_cache = list(categories)
+                    if not categories:
+                        only_blog = True
 
         blog_q = Q()
-        newsroom_q = AbstractFilterPage.objects.child_of_q(self)
-        newsroom_q &= form.generate_query()
+        newsroom_q = Q()
+        if not only_blog:
+            newsroom_q = AbstractFilterPage.objects.child_of_q(self)
+            newsroom_q &= form.generate_query()
         if get_blog:
             try:
                 del form.cleaned_data['categories']

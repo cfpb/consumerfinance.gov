@@ -73,8 +73,9 @@ class ActivityLogPage(SublandingFilterablePage):
                 for category in selections.keys():
                     if not categories or category in categories:
                         selections[category] = True
-                        if category in categories:
-                            del categories[categories.index(category)]
+                for selection, is_selected in selections.iteritems():
+                    if is_selected and selection in categories:
+                        del categories[categories.index(selection)]
 
         # Get Newsroom pages
         if not categories_cache or map(lambda x: x in [c[0] for c in choices_for_page_type('newsroom')], categories):
@@ -93,7 +94,6 @@ class ActivityLogPage(SublandingFilterablePage):
                     queries.update({slug: AbstractFilterPage.objects.child_of_q(parent) & form.generate_query()})
                 except CFGOVPage.DoesNotExist:
                     print slug, 'does not exist'
-
         # AND all selected queries together
         final_q = reduce(lambda x,y: x|y, queries.values())
 
