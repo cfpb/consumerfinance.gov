@@ -72,4 +72,21 @@ describe( 'atomic-helpers', function() {
       expect( atomicHelpers.setInitFlag( expandableDom ) ).to.be.false;
     } );
   } );
+
+  describe( '.destroyInitFlag()', function() {
+
+    beforeEach( function() {
+      atomicHelpers.setInitFlag( expandableDom );
+    } );
+
+    it( 'should return true when init flag is removed', function() {
+      expect( atomicHelpers.destroyInitFlag( expandableDom ) ).to.be.true;
+    } );
+
+    it( 'should return false when init ' +
+        'flag has already been removed', function() {
+      atomicHelpers.destroyInitFlag( expandableDom );
+      expect( atomicHelpers.destroyInitFlag( expandableDom ) ).to.be.false;
+    } );
+  } );
 } );

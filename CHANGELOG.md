@@ -18,10 +18,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changes
+- Frontend: Added `destroyInitFlag()` method to `atomic-helpers.js`.
+- Frontend: Added `destroy()` method to `Expandables.js` to allow
+  reversing calls to `init()`.
+- Frontend: Added extra small tests to bureau structure page.
 
 ### Removed
 
 ### Fixed
+- Frontend: Fixed issue where cloned expandables were not initializing
+  on the bureau structure page.
+- Frontend: Removed `self` references in ContentSlider.
 
 
 ## 3.0.0-3.3.17 - 2016-05-20
