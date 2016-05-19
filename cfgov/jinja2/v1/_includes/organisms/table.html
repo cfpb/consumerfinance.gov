@@ -26,9 +26,15 @@
             {% set colcount = loop.index %}
             {% for thead in value.headers %}
                 {% if colcount == loop.index %}
-                    <td data-label="{{ thead }}">
-                        {{ cell | safe }}
-                    </td>
+                    {% if 'rich_text_blob' in cell.block_type %}
+                        <td data-label="{{ thead }}">
+                            {{ parse_links(cell) | safe }}
+                        </td>
+                    {% else %}
+                        <td data-label="{{ thead }}">
+                            {{ cell | safe }}
+                        </td>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         {% endfor %}

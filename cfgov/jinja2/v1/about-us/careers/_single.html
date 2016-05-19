@@ -80,7 +80,7 @@
                     block__border-top">
         <div class="content-l">
             <div class="content-l_col content-l_col-1-2">
-                <h2 class="u-mb0" id="interested">Interested in Applying?</h2>
+                <h2 id="interested">Interested in Applying?</h2>
             </div>
             <div class="t-careers_social
                         content-l_col
@@ -94,39 +94,38 @@
                 } ) }}
             </div>
         </div>
-        <div class="block">
-            <h3>Before you apply</h3>
-            <p>
-                {# TODO: Replace with real content. #}
-            </p>
-            <ul class="list list__links">
-                <li class="list_item">
-                    <a class="jump-link"
-                       href="/about-us/careers/working-at-cfpb/">
-                        Learn about working @ CFPB
-                    </a>
-                </li>
-                <li class="list_item">
-                    <a class="jump-link"
-                       href="/about-us/careers/application-process/">
-                        Learn about the application process
-                    </a>
-                </li>
-            </ul>
-        </div>
-        {% for job_applicant_type in career.jobapplicanttype_set.all() %}
-        <div class="block block__bg block__border">
-            <h4>{{ job_applicant_type.application_type.applicant_type }}</h4>
-            <p>{{ job_applicant_type.application_type.description | striptags }}</p>
+        <h3>Before you apply</h3>
+        {# TODO: Replace with real content. #}
+        {#<p>
 
-            <p><a class="btn" href="{{ job_applicant_type.usajobs_url }}">Apply now</a></p>
-
-            <p>
-                You are about to leave consumerfinance.gov. To submit the application, you must go to USAJobs.gov.
-            </p>
-        </div>
-        {% endfor %}
+        </p>#}
+        <ul class="list list__links">
+            <li class="list_item">
+                <a class="jump-link"
+                   href="/about-us/careers/working-at-cfpb/">
+                    Learn about working @ CFPB
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="jump-link"
+                   href="/about-us/careers/application-process/">
+                    Learn about the application process
+                </a>
+            </li>
+        </ul>
     </section>
+    {% for job_applicant_type in career.jobapplicanttype_set.all() %}
+    <div class="block block__bg block__border">
+        <h4>{{ job_applicant_type.application_type.applicant_type }}</h4>
+        <p>{{ job_applicant_type.application_type.description | striptags }}</p>
+
+        <p><a class="btn" href="{{ job_applicant_type.usajobs_url }}">Apply now</a></p>
+
+        <p>
+            You are about to leave consumerfinance.gov. To submit the application, you must go to USAJobs.gov.
+        </p>
+    </div>
+    {% endfor %}
 
 {% endblock %}
 

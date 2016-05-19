@@ -7,11 +7,11 @@
         </h1>
         <p class="post_dek">
         {% if (event_state == 'past') %}
-            {{ page.archive_body | striptags }}
+            {{ parse_links(page.archive_body) | safe }}
         {% elif (event_state == 'present') %}
-            {{ page.live_body | striptags }}
+            {{ parse_links(page.live_body) | safe }}
         {% elif (event_state == 'future') %}
-            {{ page.future_body | striptags }}
+            {{ parse_links(page.future_body) | safe }}
         {% endif %}
         </p>
         <div class="t-event_details">
@@ -91,7 +91,7 @@
             </div>
         </aside>
         {% endif %}
-        {{ page.body | safe }}
+        {{ parse_links(page.body) | safe }}
     </div>
     {% if page.tags.names() | length %}
     <footer>

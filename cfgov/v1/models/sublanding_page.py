@@ -8,7 +8,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
-from ..util import filterable_context, util
+from ..util import filterable_list, util
 
 class SublandingPage(CFGOVPage):
     header = StreamField([
@@ -67,11 +67,11 @@ class SublandingPage(CFGOVPage):
                         if 'FilterablePage' in p.specific_class.__name__ and 'archive' not in p.title.lower()]
         filtered_controls = {}
         for page in filter_pages:
-            id = str(util.get_form_id(page, request.GET))
+            id = str(util.get_form_id(page))
             if id not in filtered_controls.keys():
                 filtered_controls.update({id: []})
             form_class = page.get_form_class()
-            posts = filterable_context.get_page_set(
+            posts = filterable_list.get_page_set(
                 page, form_class(parent=page, hostname=request.site.hostname), request.site.hostname)
             if filtered_controls[id]:
                 filtered_controls[id] += posts

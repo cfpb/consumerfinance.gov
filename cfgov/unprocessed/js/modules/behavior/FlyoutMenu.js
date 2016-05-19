@@ -1,11 +1,11 @@
 'use strict';
 
 // Required modules.
-var BaseTransition = require( '../modules/transition/BaseTransition' );
-var dataHook = require( '../modules/util/data-hook' );
-var EventObserver = require( '../modules/util/EventObserver' );
-var fnBind = require( '../modules/util/fn-bind' ).fnBind;
-var standardType = require( '../modules/util/standard-type' );
+var BaseTransition = require( '../../modules/transition/BaseTransition' );
+var dataHook = require( '../../modules/util/data-hook' );
+var EventObserver = require( '../../modules/util/EventObserver' );
+var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
+var standardType = require( '../../modules/util/standard-type' );
 
 /**
  * FlyoutMenu
@@ -29,7 +29,7 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
-  var BASE_CLASS = 'flyout-menu';
+  var BASE_CLASS = standardType.BEHAVIOR_PREFIX + 'flyout-menu';
   var SEL_PREFIX = '[' + standardType.JS_HOOK + '=' + BASE_CLASS;
 
   var BASE_SEL = SEL_PREFIX + ']';

@@ -32,7 +32,7 @@ describe( 'The Newsroom Press Resources Page', function() {
     expect( page.contactListEmail.getText() )
     .toBe( 'press@consumerfinance.gov' );
     expect( page.contactListEmail.getAttribute( 'href' ) )
-    .toBe( 'mailto:inquiries@consumerfinance.gov' );
+    .toBe( 'mailto:press@consumerfinance.gov' );
   } );
 
   it( 'should include a Press contact list phone number', function() {

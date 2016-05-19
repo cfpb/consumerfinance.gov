@@ -6,10 +6,10 @@ var breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
 
 describe( 'GlobalSearch', function() {
   var BASE_SEL = '.m-global-search';
-  var TRIGGER_SEL = BASE_SEL + ' [data-js-hook="flyout-menu_trigger"]';
-  var CONTENT_SEL = BASE_SEL + ' [data-js-hook="flyout-menu_content"]';
+  var TRIGGER_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_trigger"]';
+  var CONTENT_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_content"]';
   var INPUT_SEL = BASE_SEL + ' input#query';
-  var SEARCH_SEL = BASE_SEL + ' [data-js-hook="flyout-menu_content"] .btn';
+  var SEARCH_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_content"] .btn';
   var CLEAR_SEL = BASE_SEL + ' .input-contains-label_after';
   var SUGGEST_SEL = BASE_SEL + ' .m-global-search_content-suggestions';
 

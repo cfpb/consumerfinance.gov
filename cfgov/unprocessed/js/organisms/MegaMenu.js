@@ -5,12 +5,13 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var breakpointState = require( '../modules/util/breakpoint-state' );
 var dataHook = require( '../modules/util/data-hook' );
 var EventObserver = require( '../modules/util/EventObserver' );
-var FlyoutMenu = require( '../modules/FlyoutMenu' );
+var FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
 var fnBind = require( '../modules/util/fn-bind' ).fnBind;
 var MegaMenuDesktop = require( '../organisms/MegaMenuDesktop' );
 var MegaMenuMobile = require( '../organisms/MegaMenuMobile' );
 var MoveTransition = require( '../modules/transition/MoveTransition' );
 var Tree = require( '../modules/Tree' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * MegaMenu
@@ -40,9 +41,14 @@ function MegaMenu( element ) {
   var KEY_TAB = 9;
 
   /**
-   * @returns {MegaMenu} An instance.
+   * @returns {MegaMenu|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     // DOM selectors.
     var rootMenuDom = _dom;
     var rootContentDom = rootMenuDom.querySelector( FlyoutMenu.CONTENT_SEL );

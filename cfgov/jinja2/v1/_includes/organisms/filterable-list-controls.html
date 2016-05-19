@@ -179,10 +179,12 @@
 {% from 'molecules/notification.html' import render as notification with context %}
 {% from 'organisms/post-preview.html' import render as post_preview with context %}
 
-{% macro render(controls, form, index) %}
+{% macro render(controls, index) %}
     <div class="o-filterable-list-controls"
          id="o-filterable-list-controls">
-        {% set has_active_filters = has_active_filters(page, request, index) %}
+        {% set form = filter_data.forms.pop(0) %}
+        {% set posts = filter_data.page_sets.pop(0) %}
+        {% set has_active_filters = page.has_active_filters(request, index) %}
         {% if has_active_filters %}
             {% do controls.update({'is_expanded':true}) %}
         {% endif %}
