@@ -16,12 +16,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-
 - `parse_links` calls on rich text fields on the rest of the fields
+- Add unit tests for filterable list functions
 - Added browser tests for the multiselect.
 - Fix category filtering
 
 ### Changes
+- filterable_context.py -> filterable_list.py
+- Refactored the filterable list logic for modularity and testability
 
 ### Removed
 
@@ -95,6 +97,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Updated event times to show EDT.
+- Frontend: Added init flag when initializing atomic components.
 
 
 ## 3.0.0-3.3.11 - 2016-05-03

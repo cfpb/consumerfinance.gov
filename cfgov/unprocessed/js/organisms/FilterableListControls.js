@@ -7,6 +7,7 @@ var Expandable = require( '../molecules/Expandable' );
 var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
 var Multiselect = require( '../molecules/Multiselect' );
 var Notification = require( '../molecules/Notification' );
+var standardType = require( '../modules/util/standard-type' );
 var validators = require( '../modules/util/validators' );
 
 /**
@@ -17,6 +18,7 @@ var validators = require( '../modules/util/validators' );
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the organism.
+ * @returns {FilterableListControls} An instance.
  */
 function FilterableListControls( element ) {
   var BASE_CLASS = 'o-filterable-list-controls';
@@ -41,9 +43,13 @@ function FilterableListControls( element ) {
   };
 
   /**
-   * Initialize FilterableListControls instance.
+   * @returns {FilterableListControls|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
-  function init( ) {
+  function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
 
     // TODO: FilterableListControls should use expandable
     //       behavior (FlyoutMenu), not an expandable directly.
@@ -56,6 +62,8 @@ function FilterableListControls( element ) {
     atomicHelpers.instantiateAll( 'select[multiple]', Multiselect );
 
     _initEvents();
+
+    return this;
   }
 
   /**
@@ -130,7 +138,7 @@ function FilterableListControls( element ) {
    * @param {string} type The type of notification to display.
    * @param {string} msg The message to display in the notification.
    * @param {string} methodName The method to use to control visibility
-                                of the notification.
+   *                            of the notification.
    */
   function _setNotification( type, msg, methodName ) {
     methodName = methodName || 'show';
@@ -143,7 +151,7 @@ function FilterableListControls( element ) {
    * @param {HTMLNode} field A form field.
    * @param {string} type The type of field.
    * @param {boolean} isInGroup A boolean that determines if field in a group.
-   * @returns {boolean} Value indicating whether to validate a field.
+   * @returns {boolean} True if the field should be validated, false otherwise.
    */
   function shouldValidateField( field, type, isInGroup ) {
     var isDisabled = field.getAttribute( 'disabled' ) !== null;

@@ -7,7 +7,7 @@ var expect = chai.expect;
 var jsdom = require( 'jsdom' );
 var sinon = require( 'sinon' );
 
-var FlyoutMenu = require( BASE_JS_PATH + 'modules/FlyoutMenu' );
+var FlyoutMenu = require( BASE_JS_PATH + 'modules/behavior/FlyoutMenu' );
 var MoveTransition =
   require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
 
@@ -28,15 +28,16 @@ describe( 'FlyoutMenu', function() {
   var window;
   var document;
   var HTML_SNIPPET =
-    '<div data-js-hook="flyout-menu">' +
-      '<button data-js-hook="flyout-menu_trigger" ' +
+    '<div data-js-hook="behavior_flyout-menu">' +
+      '<button data-js-hook="behavior_flyout-menu_trigger" ' +
               'aria-pressed="false" ' +
               'aria-expanded="false"></button>' +
-      '<div data-js-hook="flyout-menu_content" aria-expanded="false">' +
-        '<button data-js-hook="flyout-menu_alt-trigger" ' +
+      '<div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">' +
+        '<button data-js-hook="behavior_flyout-menu_alt-trigger" ' +
                 'aria-expanded="false"></button>' +
       '</div>' +
     '</div>';
+  var SEL_PREFIX = '[data-js-hook=behavior_flyout-menu';
 
   var containerDom;
   var triggerDom;
@@ -48,14 +49,14 @@ describe( 'FlyoutMenu', function() {
     window = initdom.defaultView;
     document = window.document;
 
-    containerDom = document.querySelector( '[data-js-hook=flyout-menu]' );
+    containerDom = document.querySelector( SEL_PREFIX + ']' );
     triggerDom =
-      document.querySelector( '[data-js-hook=flyout-menu_trigger]' );
+      document.querySelector( SEL_PREFIX + '_trigger]' );
     contentDom =
-      document.querySelector( '[data-js-hook=flyout-menu_content]' );
+      document.querySelector( SEL_PREFIX + '_content]' );
     // TODO: check for cases where alt trigger is absent.
     altTriggerDom =
-      document.querySelector( '[data-js-hook=flyout-menu_alt-trigger]' );
+      document.querySelector( SEL_PREFIX + '_alt-trigger]' );
 
     flyoutMenu = new FlyoutMenu( containerDom );
   } );
@@ -64,14 +65,15 @@ describe( 'FlyoutMenu', function() {
     it( 'should have public static methods', function() {
       expect( FlyoutMenu.EXPAND_TYPE ).to.equal( 'expand' );
       expect( FlyoutMenu.COLLAPSE_TYPE ).to.equal( 'collapse' );
-      expect( FlyoutMenu.BASE_CLASS ).to.equal( 'flyout-menu' );
-      expect( FlyoutMenu.BASE_SEL ).to.equal( '[data-js-hook=flyout-menu]' );
+      expect( FlyoutMenu.BASE_CLASS ).to.equal( 'behavior_flyout-menu' );
+      expect( FlyoutMenu.BASE_SEL )
+        .to.equal( '[data-js-hook=behavior_flyout-menu]' );
       expect( FlyoutMenu.ALT_TRIGGER_SEL )
-        .to.equal( '[data-js-hook=flyout-menu_alt-trigger]' );
+        .to.equal( '[data-js-hook=behavior_flyout-menu_alt-trigger]' );
       expect( FlyoutMenu.CONTENT_SEL )
-        .to.equal( '[data-js-hook=flyout-menu_content]' );
+        .to.equal( '[data-js-hook=behavior_flyout-menu_content]' );
       expect( FlyoutMenu.TRIGGER_SEL )
-        .to.equal( '[data-js-hook=flyout-menu_trigger]' );
+        .to.equal( '[data-js-hook=behavior_flyout-menu_trigger]' );
     } );
 
     it( 'should have correct state before initializing', function() {
