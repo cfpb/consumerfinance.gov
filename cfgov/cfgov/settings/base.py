@@ -78,6 +78,7 @@ OPTIONAL_APPS=[
     {'import':'eregsip','apps':('eregsip',)},
     {'import':'regulations','apps':('regulations',)},
     {'import':'picard','apps':('picard',)},
+    {'import':'publish-eccu','apps':('publish-eccu',)},
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -497,3 +498,6 @@ ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 # Regulations.gov environment variables
 REGSGOV_BASE_URL = os.environ.get('REGSGOV_BASE_URL')
 REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
+
+# Akamai
+ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)

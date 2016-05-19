@@ -2,6 +2,7 @@ import os
 import json
 from urlparse import urlsplit
 
+from django.conf import settings
 from django.http import Http404
 from django.contrib.auth.models import Permission
 from django.utils.html import escape
@@ -61,6 +62,16 @@ def configure_page_revision(page, is_publishing):
     latest.save()
     if is_publishing:
         latest.publish()
+        if settings.ENABLE_AKAMAI_CACHE_PURGE:
+            from publish_eccu.publish import publish as akamai_cache_reset
+
+            url_paths = [page.url_path.replace('cfgov/', '')]
+            if url_paths[0] == '/':
+                is_home_page = True
+            else:
+                is_home_page = False
+
+            akamai_cache_reset(url_paths, invalidate_root=is_home_page, user_email=latest.user.email)
 
 
 @hooks.register('before_serve_page')
