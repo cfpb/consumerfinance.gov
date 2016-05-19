@@ -55,6 +55,8 @@ class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPa
 
 
 class EventArchivePage(BrowseFilterablePage):
+    template = 'browse-filterable/index.html'
+
     def get_form_class(self):
         return forms.EventArchiveFilterForm
 
@@ -62,10 +64,8 @@ class EventArchivePage(BrowseFilterablePage):
 class NewsroomLandingPage(BrowseFilterablePage):
     template = 'newsroom/index.html'
 
-
     def get_form_class(self):
         return forms.NewsroomFilterForm
-
 
     def get_page_set(self, form, hostname):
         get_blog = False
@@ -91,4 +91,5 @@ class NewsroomLandingPage(BrowseFilterablePage):
             except CFGOVPage.DoesNotExist:
                 print 'Blog does not exist'
 
-        return AbstractFilterPage.objects.live_shared(hostname).filter(newsroom_q | blog_q).distinct().order_by('-date_published')
+        return AbstractFilterPage.objects.live_shared(hostname).filter(newsroom_q | blog_q).distinct().order_by(
+            '-date_published')
