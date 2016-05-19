@@ -52,9 +52,13 @@ describe( 'The Leadership Calendar Page', function() {
     } );
 
     it( 'should include a visible Hide button when clicked', function() {
+      var expectedConditions = protractor.ExpectedConditions;
       page.searchFilterBtn.click();
-      browser.sleep(1000);
-      expect( page.searchFilterHideBtn.isDisplayed() ).toBe( true );
+      browser.driver.wait(
+        expectedConditions.elementToBeClickable( page.searchFilterHideBtn )
+      ).then( function() {
+        expect( page.searchFilterHideBtn.isDisplayed() ).toBe( true );
+      } );
     } );
 
     it( 'should include a search filter search filter results',
@@ -86,9 +90,13 @@ describe( 'The Leadership Calendar Page', function() {
     } );
 
     it( 'should include a visible Hide button when clicked', function() {
+      var expectedConditions = protractor.ExpectedConditions;
       page.downloadFilterBtn.click();
-      browser.sleep(1000);
-      expect( page.downloadFilterHideBtn.isDisplayed() ).toBe( true );
+      browser.driver.wait(
+        expectedConditions.elementToBeClickable( page.downloadFilterHideBtn )
+      ).then( function() {
+        expect( page.downloadFilterHideBtn.isDisplayed() ).toBe( true );
+      } );
     } );
 
   } );
