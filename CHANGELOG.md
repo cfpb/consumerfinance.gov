@@ -16,6 +16,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changes
+
+### Removed
+
+### Fixed
+
+## 3.0.0-3.3.16 - 2016-05-19
+
+### Added
 - `parse_links` calls on rich text fields on the rest of the fields
 - Add unit tests for filterable list functions
 - Added browser tests for the multiselect.
