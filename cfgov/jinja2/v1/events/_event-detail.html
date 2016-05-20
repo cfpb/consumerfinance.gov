@@ -6,13 +6,7 @@
             {{ page.title | safe }}
         </h1>
         <p class="post_dek">
-        {% if (event_state == 'past') %}
-            {{ parse_links(page.archive_body) | safe }}
-        {% elif (event_state == 'present') %}
-            {{ parse_links(page.live_body) | safe }}
-        {% elif (event_state == 'future') %}
-            {{ parse_links(page.future_body) | safe }}
-        {% endif %}
+            {{ parse_links(page.body) | safe }}
         </p>
         <div class="t-event_details">
             <div class="modification-date date">
@@ -91,7 +85,13 @@
             </div>
         </aside>
         {% endif %}
-        {{ parse_links(page.body) | safe }}
+        {% if (event_state == 'past') %}
+            {{ parse_links(page.archive_body) | safe }}
+        {% elif (event_state == 'present') %}
+            {{ parse_links(page.live_body) | safe }}
+        {% elif (event_state == 'future') %}
+            {{ parse_links(page.future_body) | safe }}
+        {% endif %}
     </div>
     {% if page.tags.names() | length %}
     <footer>

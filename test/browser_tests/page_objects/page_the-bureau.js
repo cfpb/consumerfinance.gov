@@ -1,9 +1,10 @@
 'use strict';
 
 var secondaryNav = require( '../shared_objects/secondary-navigation' );
+var videoPlayer = require( '../shared_objects/video-player' );
 
 function TheBureauPage() {
-  Object.assign( this, secondaryNav );
+  Object.assign( this, secondaryNav, videoPlayer );
 
   this.get = function() {
     browser.get( '/about-us/the-bureau/' );

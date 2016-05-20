@@ -12,7 +12,6 @@ describe( 'The Application Process Page', function() {
   beforeAll( function() {
     page = new ApplicationProcess();
     page.get();
-
     jasmine.addMatchers( Urlmatcher );
   } );
 
@@ -52,4 +51,56 @@ describe( 'The Application Process Page', function() {
     expect( page.relatedLinksSection.isPresent() ).toBe( true );
   } );
 
+  describe( '(Video Player)', function() {
+
+    describe( 'on page load', function() {
+      it( 'should be present', function() {
+        expect( page.videoPlayer.isPresent() ).toBe( true );
+      } );
+
+      it( 'should show the image and not the video', function() {
+        expect( page.videoPlayerImageContainer.isDisplayed() ).toBe( true );
+        expect( page.videoPlayerVideoContainer.isDisplayed() ).toBe( false );
+      } );
+    } );
+
+    describe( 'on play button click', function() {
+      beforeEach( function() {
+        page.videoPlayerPlayButton.isDisplayed().then(
+        function( playButtonIsVisible ) {
+          if( playButtonIsVisible === false ) {
+            page.videoPlayerCloseButton.click();
+          }
+          page.videoPlayerPlayButton.click();
+        } );
+      } );
+
+      it( 'should show the video and not the image', function() {
+        expect( page.videoPlayerVideoContainer.isDisplayed() ).toBe( true );
+        expect( page.videoPlayerImageContainer.isDisplayed() ).toBe( false );
+      } );
+
+      it( 'should attach an iframe', function() {
+        expect( page.getVideoPlayerIframe().isPresent() ).toBe( true );
+      } );
+    } );
+
+    describe( 'on close button click', function() {
+      beforeEach( function() {
+        page.videoPlayerCloseButton.isDisplayed().then(
+        function( closeButtonIsVisible ) {
+          if( closeButtonIsVisible === false ) {
+            page.videoPlayerPlayButton.click();
+          }
+          page.videoPlayerCloseButton.click();
+        } );
+      } );
+
+      it( 'should hide the video and show the image', function() {
+        expect( page.videoPlayerImageContainer.isDisplayed() ).toBe( true );
+        expect( page.videoPlayerVideoContainer.isDisplayed() ).toBe( false );
+      } );
+    } );
+
+  } );
 } );

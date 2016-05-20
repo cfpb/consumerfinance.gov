@@ -122,7 +122,7 @@ class AgendaItemBlock(blocks.StructBlock):
 
 class EventPage(AbstractFilterPage):
     # General content fields
-    body = RichTextField(blank=True)
+    body = RichTextField('Subheading', blank=True)
     archive_body = RichTextField(blank=True)
     live_body = RichTextField(blank=True)
     future_body = RichTextField(blank=True)
@@ -157,7 +157,10 @@ class EventPage(AbstractFilterPage):
 
     live_stream_availability = models.BooleanField("Streaming?", default=False,
                                                    blank=True)
-    live_stream_url = models.URLField("URL", blank=True)
+    live_stream_url = models.URLField("URL", blank=True,
+    help_text="Format: https://www.ustream.tv/embed/video_id.  It can be obtained by following the instructions listed here: " \
+    "https://support.ustream.tv/hc/en-us/articles/207851917-How-to-embed-a-stream-or-video-on-your-site",
+    validators=[ RegexValidator(regex='^https?:\/\/www\.ustream\.tv\/embed\/.*$')])
     live_stream_date = models.DateTimeField("Go Live Date", blank=True, null=True)
     # Venue content fields
     venue_name = models.CharField(max_length=100, blank=True)

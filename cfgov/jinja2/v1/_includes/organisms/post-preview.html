@@ -52,7 +52,12 @@
     <article class="o-post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">
-                {{ date_desc }} {{ time.render(post.date_published, {'date':true}) }}
+                {{ date_desc }}
+                {% if 'EventPage' in post.specific_class.__name__ %}
+                    {{ time.render(post.specific.start_dt, {'date':true}) }}
+                {% else %}
+                    {{ time.render(post.date_published, {'date':true}) }}
+                {% endif %}
             </span>
             {# Newsroom Blog category logic #}
             {% if show_categories %}
