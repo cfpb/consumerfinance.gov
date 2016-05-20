@@ -7,7 +7,7 @@
 var BannerFooterPlugin = require( 'banner-footer-webpack-plugin' );
 var path = require( 'path' );
 var paths = require( '../config/environment' ).paths;
-var scriptsManifest = require( '../gulp/utils/scriptsManifest' );
+var scriptsManifest = require( '../gulp/utils/scripts-manifest' );
 var webpack = require( 'webpack' );
 
 // Constants.

@@ -67,11 +67,11 @@ module.exports = {
       src:  paths.modules + '/capital-framework/src/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
     },
-    vendorfonts: {
+    vendorFonts: {
       src:  paths.unprocessed + '/fonts/pdfreactor/*',
       dest: paths.processed + '/fonts/pdfreactor'
     },
-    vendorcss: {
+    vendorCss: {
       src: [
         paths.lib + '/slick-carousel/slick/slick.css',
         paths.lib + '/slick-carousel/slick/slick.css.map',
@@ -79,13 +79,13 @@ module.exports = {
       ],
       dest: paths.processed + '/css'
     },
-    vendorimg: {
+    vendorImg: {
       src: [
         paths.lib + '/slick-carousel/slick/ajax-loader.gif'
       ],
       dest: paths.processed + '/img'
     },
-    vendorjs: {
+    vendorJs: {
       src: [
         paths.lib + '/jquery/dist/jquery.min.js',
         paths.lib + '/box-sizing-polyfill/boxsizing.htc'
