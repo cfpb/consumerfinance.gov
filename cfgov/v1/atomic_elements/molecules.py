@@ -267,6 +267,7 @@ class RSSFeed(blocks.ChoiceBlock):
 
 class SocialMedia(blocks.StructBlock):
     is_share_view = blocks.BooleanBlock(default=True,
+                                        required=False,
                                         label='Create sharing links',
                                         help_text='If deselected, links to visit CFPB profiles will be created.')
     blurb = blocks.CharBlock(required=False,
