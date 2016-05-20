@@ -67,8 +67,8 @@ function _verifyClassExists( element, baseClass ) {
  * Set a flag on an atomic component when it is initialized.
  * Use the returned boolean to handle cases where an atomic component
  * is initializing when it has already been initialized elsewhere.
- * @param {HTMLNode} element
- *   The DOM element within which to search for the atomic element class.
+ * @param {HTMLNode} element - The DOM element for the atomic component.
+ * @param {null} destroy - Pass in true to .
  * @returns {boolean} True if the init data-js-* hook attribute was set,
  *   false otherwise.
  */
@@ -78,6 +78,23 @@ function setInitFlag( element ) {
   }
 
   dataHook.add( element, INIT_FLAG );
+
+  return true;
+}
+
+/**
+ * Remove the initialization flag on an atomic component.
+ * This might be used if the DOM of an atomic element is cloned.
+ * @param {HTMLNode} element - The DOM element for the atomic component.
+ * @returns {boolean} True if the init data-js-* hook attribute was destroyed,
+ *   otherwise false if it didn't exist.
+ */
+function destroyInitFlag( element ) {
+  if ( !dataHook.contains( element, INIT_FLAG ) ) {
+    return false;
+  }
+
+  dataHook.remove( element, INIT_FLAG );
 
   return true;
 }
@@ -101,7 +118,8 @@ function instantiateAll( selector, Constructor ) {
 
 // Expose public methods.
 module.exports = {
-  checkDom:       checkDom,
-  instantiateAll: instantiateAll,
-  setInitFlag:    setInitFlag
+  checkDom:        checkDom,
+  destroyInitFlag: destroyInitFlag,
+  instantiateAll:  instantiateAll,
+  setInitFlag:     setInitFlag
 };
