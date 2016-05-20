@@ -32,15 +32,10 @@
 
    ========================================================================== #}
 
-{# from 'macros/share.html' import share_twitter_url_new as _share_twitter_url #}
-
 {% macro render( value ) %}
 
-{# TODO: Remove global page reference when moving to Wagtail. #}
-{% set blurb = value.blurb | urlencode or
-               page.seo_title | urlencode or
-               value.title | urlencode or
-               'Look what I found on the CFPB’s site!' | urlencode %}
+{% set blurb = (value.blurb or page.seo_title or value.title or
+                'Look what I found on the CFPB’s site!') | urlencode %}
 {% set parsed_url = request.url | urlencode %}
 {% set external_redirect_url = '/external-site/?ext_url=' %}
 {% set is_share_view = value.is_share_view | default( true ) %}
