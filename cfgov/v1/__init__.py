@@ -79,7 +79,7 @@ def parse_links(soup):
     for a in soup.find_all('a', href=True):
         # Sets the icon to indicate you're leaving consumerfinance.gov
         if noncfpb_pattern.match(a['href']):
-            # Sets the link to an external one if you're leaving .gov 
+            # Sets the link to an external one if you're leaving .gov
             if extlink_pattern.match(a['href']):
                 a['href'] = '/external-site/?ext_url=' + a['href']
             a.attrs.update({'class': a_class})
@@ -124,7 +124,7 @@ def render_stream_child(context, stream_child):
 def get_protected_url(context, page):
     if page is None:
         return '#'
-    
+
     request_hostname = urlparse(context['request'].url).hostname
     url = page.url
     if url is None:  # If page is not aligned to a site root return None
@@ -145,7 +145,7 @@ def related_metadata_tags(context, page):
     request = context['request']
     # Set the tags to correct data format
     tags = {'links': []}
-    # From an ancestor, get the form ids then use the first id since the 
+    # From an ancestor, get the form ids then use the first id since the
     # filterable list on the page will probably have the first id on the page.
     id, filter_page = get_filter_data(page)
     for tag in page.specific.tags.names():

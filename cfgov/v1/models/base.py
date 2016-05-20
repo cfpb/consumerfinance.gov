@@ -107,6 +107,7 @@ class CFGOVPage(Page):
         ('contact', organisms.MainContactInfo()),
         ('sidebar_contact', organisms.SidebarContactInfo()),
         ('rss_feed', molecules.RSSFeed()),
+        ('social_media', molecules.SocialMedia()),
     ], blank=True)
 
     # Panels
@@ -425,7 +426,7 @@ class PasswordHistoryItem(models.Model):
     @classmethod
     def current_for_user(cls,user):
         return user.passwordhistoryitem_set.latest()
-        
+
     def can_change_password(self):
         now = timezone.now()
         return(now > self.locked_until)
