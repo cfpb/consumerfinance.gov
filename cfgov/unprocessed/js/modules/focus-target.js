@@ -17,7 +17,7 @@ var attachBehavior = require( './util/behavior' ).attach;
  */
 function init() {
 
-  attachBehavior( 'a[href^="#"]', 'click', function behavior() {
+  attachBehavior( 'a[href^="#"]:not([href="#"])', 'click', function behavior() {
     var anchorSelector = this.getAttribute( 'href' );
     var anchorElement = document.querySelector( anchorSelector );
     if ( anchorElement ) {
