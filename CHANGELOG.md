@@ -15,16 +15,35 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Unreleased
 
-### Added
+## Added
+
+- missing publish_eccu requirements
 
 ### Changes
 
 ### Removed
 
+- Removed activities-block.html
+
 ### Fixed
 
 
-## 3.0.0-3.3.17 - 2016-05-20
+##3.0.0-3.3.18 - 2016-05-20
+
+## Added
+
+- missing publish_eccu requirements
+
+### Changes
+
+### Removed
+
+- Removed activities-block.html
+
+### Fixed
+
+
+##3.0.0-3.3.17 - 2016-05-20
 
 ### Added
 
