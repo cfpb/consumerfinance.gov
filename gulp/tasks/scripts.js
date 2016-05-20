@@ -12,7 +12,7 @@ var gulp = require( 'gulp' );
 var gulpModernizr = require( 'gulp-modernizr' );
 var gulpRename = require( 'gulp-rename' );
 var gulpUglify = require( 'gulp-uglify' );
-var handleErrors = require( '../utils/handleErrors' );
+var handleErrors = require( '../utils/handle-errors' );
 var paths = require( '../../config/environment' ).paths;
 var webpackConfig = require( '../../config/webpack-config.js' );
 var webpackStream = require( 'webpack-stream' );
@@ -103,7 +103,6 @@ function scriptsEs5Shim() {
       stream: true
     } ) );
 }
-
 
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );

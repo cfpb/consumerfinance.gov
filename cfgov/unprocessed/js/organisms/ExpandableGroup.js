@@ -40,7 +40,7 @@ function ExpandableGroup( element ) {
 
     for ( var i = 0; i < len; i++ ) {
       child = new Expandable( _domChildren[i] ).init();
-      child.addEventListener( 'beginExpand', _childBeginExpand );
+      child.addEventListener( 'expandBegin', _childBeginExpand );
     }
 
     return this;

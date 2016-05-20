@@ -1,11 +1,10 @@
 'use strict';
 
 var gulp = require( 'gulp' );
-var $ = require( 'gulp-load-plugins' )();
-var childProcess = require( 'child_process' );
-var spawn = childProcess.spawn;
-var config = require( '../config' ).test;
-var fsHelper = require( '../utils/fsHelper' );
+var plugins = require( 'gulp-load-plugins' )();
+var spawn = require( 'child_process' ).spawn;
+var configTest = require( '../config' ).test;
+var fsHelper = require( '../utils/fs-helper' );
 var minimist = require( 'minimist' );
 
 /**
@@ -13,22 +12,22 @@ var minimist = require( 'minimist' );
  * @param {Function} cb - Callback function to call on completion.
  */
 function testUnitScripts( cb ) {
-  gulp.src( config.src )
-    .pipe( $.istanbul( {
+  gulp.src( configTest.src )
+    .pipe( plugins.istanbul( {
       includeUntested: false
     } ) )
-    .pipe( $.istanbul.hookRequire() )
+    .pipe( plugins.istanbul.hookRequire() )
     .on( 'finish', function() {
-      gulp.src( config.tests + '/unit_tests/**/*.js' )
-        .pipe( $.mocha( {
+      gulp.src( configTest.tests + '/unit_tests/**/*.js' )
+        .pipe( plugins.mocha( {
           reporter: 'nyan'
         } ) )
-        .pipe( $.istanbul.writeReports( {
-          dir: config.tests + '/unit_test_coverage'
+        .pipe( plugins.istanbul.writeReports( {
+          dir: configTest.tests + '/unit_test_coverage'
         } ) )
 
         /* TODO: we want this but it breaks because we don't have good coverage
-        .pipe( $.istanbul.enforceThresholds( {
+        .pipe( plugins.istanbul.enforceThresholds( {
           thresholds: { global: 90 }
         } ) )
         */
@@ -43,10 +42,10 @@ function testUnitScripts( cb ) {
 function testUnitMacro() {
   spawn(
     'python',
-    [ config.tests + '/macro_tests/test_macros.py' ],
+    [ configTest.tests + '/macro_tests/test_macros.py' ],
     { stdio: 'inherit' }
   ).once( 'close', function() {
-    $.util.log( 'Macro unit tests done!' );
+    plugins.util.log( 'Macro unit tests done!' );
   } );
 }
 
@@ -59,7 +58,7 @@ function testUnitServer() {
     [ 'cfgov/core/tests' ],
     { stdio: 'inherit' }
   ).once( 'close', function() {
-    $.util.log( 'Tox tests done!' );
+    plugins.util.log( 'Tox tests done!' );
   } );
 }
 
@@ -127,7 +126,7 @@ function _getWCAGParams() {
   var checkerId = process.env.ACHECKER_ID || ''; // eslint-disable-line no-process-env, no-inline-comments, max-len
   var urlPath = _parsePath( commandLineParams.u );
   var url = host + ':' + port + urlPath;
-  $.util.log( 'WCAG tests checking URL: http://' + url );
+  plugins.util.log( 'WCAG tests checking URL: http://' + url );
   return [ '--u=' + url, '--id=' + checkerId ];
 }
 
@@ -154,7 +153,7 @@ function testA11y() {
     _getWCAGParams(),
     { stdio: 'inherit' }
   ).once( 'close', function() {
-    $.util.log( 'WCAG tests done!' );
+    plugins.util.log( 'WCAG tests done!' );
   } );
 }
 
@@ -183,7 +182,7 @@ function _spawnProtractor() {
     _getProtractorParams(),
     { stdio: 'inherit' }
   ).once( 'close', function() {
-    $.util.log( 'Protractor tests done!' );
+    plugins.util.log( 'Protractor tests done!' );
   } );
 }
 
@@ -195,7 +194,7 @@ function testAcceptanceBrowser() {
     spawn(
     './initial-test-data.sh', [], { stdio: 'inherit' }
   ).once( 'close', function() {
-    $.util.log( 'Loaded Wagtail database data!' );
+    plugins.util.log( 'Loaded Wagtail database data!' );
     _spawnProtractor();
   } );
   } else {
@@ -207,8 +206,8 @@ function testAcceptanceBrowser() {
  * Run coveralls reports on Travis.
  */
 function testCoveralls() {
-  gulp.src( config.tests + '/unit_test_coverage/lcov.info' )
-    .pipe( $.coveralls() );
+  gulp.src( configTest.tests + '/unit_test_coverage/lcov.info' )
+    .pipe( plugins.coveralls() );
 }
 
 // This task will only run on Travis

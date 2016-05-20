@@ -1,7 +1,6 @@
 'use strict';
 
 /* Notes:
-   - gulp/tasks/scripts.js handles js recompiling with webpack --watch flag.
    - gulp/tasks/browserSync.js watches and reloads compiled files.
 */
 
