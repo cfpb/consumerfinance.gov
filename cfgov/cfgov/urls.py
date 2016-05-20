@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
-from legacy.views import HousingCounselorPDFView, dbrouter_shortcut
+from legacy.views import HousingCounselorPDFView, dbrouter_shortcut, token_provider
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
 
@@ -224,6 +224,9 @@ urlpatterns = [
         TemplateView.as_view(template_name='jobmanager/technology-innovation-fellows.html'),
         name='technology_innovation_fellows'),
     url(r'^jobs/fellowship_form_submit/$', 'jobmanager.views.fellowship_form_submit', name='fellowship_form_submit'),
+
+    # Form crsf token provider for JS form submission
+    url(r'^token-provider/', token_provider)
 ]
 
 if settings.ALLOW_ADMIN_URL:

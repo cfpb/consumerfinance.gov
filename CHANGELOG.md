@@ -17,6 +17,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Missing token provider for forms submitted by JS
+
 ### Changes
 
 ### Removed

@@ -1,13 +1,16 @@
 import six, sys, os
 
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django import http
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.requests import RequestSite
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext as _
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 from core.services import PDFGeneratorView
 from v1.db_router import cfgov_apps
@@ -20,8 +23,10 @@ if six.PY2:
     except:
         PDFreactor = None
 
+
 class InvalidZipException(Exception):
     pass
+
 
 class HousingCounselorPDFView(PDFGeneratorView):
     def get_render_url(self):
@@ -111,3 +116,12 @@ def dbrouter_shortcut(request, content_type_id, object_id):
                            {'ct_name': content_type.name})
 
     return http.HttpResponseRedirect(get_absolute_url())
+
+
+@csrf_exempt
+def token_provider(request):
+    request.session.modified = True
+    if request.method == 'POST':
+        context = RequestContext(request)
+        return render_to_response('common/csrf.html', context)
+    return HttpResponse()
