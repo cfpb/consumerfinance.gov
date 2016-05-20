@@ -68,18 +68,17 @@ class NewsroomLandingPage(BrowseFilterablePage):
         return forms.NewsroomFilterForm
 
     def get_page_set(self, form, hostname):
-        get_blog = False
+        get_blog = True
         only_blog = False
         for f in self.content:
             if 'filter_controls' in f.block_type and f.value['categories']['page_type'] == 'newsroom':
                 categories = form.cleaned_data.get('categories', [])
-                if not categories or 'blog' in categories:
-                    get_blog = True
-                    if 'blog' in categories:
-                        del categories[categories.index('blog')]
-                    if not categories:
-                        only_blog = True
-
+                if categories:
+                    if 'blog' not in categories:
+                        get_blog = False
+                    else:
+                        if len(categories) == 1:
+                            only_blog = True
         blog_q = Q()
         newsroom_q = Q()
         if not only_blog:
