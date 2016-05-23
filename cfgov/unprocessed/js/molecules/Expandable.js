@@ -46,6 +46,12 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   var _collapseBinded = fnBind( collapse, this );
   var _expandBinded = fnBind( expand, this );
 
+  // Reference to MutationObserver for watching DOM changes within the content.
+  // No-op Function for MutationObserver.disconnect() is set in case destroy()
+  // is called on a DOM node that was copied with the atomic init flag set,
+  // implying it had been initialized when it hadn't.
+  var _observer = { disconnect: standardType.noopFunct };
+
   /**
    * @param {number} state
    *   Allows passing of EXPANDED flag to set expanded state.
@@ -85,39 +91,65 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   }
 
   /**
+   * Reverse a call to init() to teardown an instance initialization.
+   * @returns {Expandable} An instance.
+   */
+  function destroy() {
+    if ( atomicHelpers.destroyInitFlag( _dom ) ) {
+      _target.removeEventListener( 'click', _handleClick );
+      window.removeEventListener( 'resize', _resizeHandler );
+      _content.removeEventListener( 'DOMNodeInserted', _refreshHeight, false );
+      _content.removeEventListener( 'DOMNodeRemoved', _refreshHeight, false );
+      _observer.disconnect();
+    }
+
+    return this;
+  }
+
+  /**
    * Watch for the insertion/removal of DOM nodes.
-   * @returns {Object} The Expandable instance.
+   * @returns {Expandable} An instance.
    */
   function _initObserver() {
     var MutationObserver = window.MutationObserver ||
                            window.WebKitMutationObserver ||
                            window.MozMutationObserver;
-    var observeDOM;
+    var addObserver;
 
     if ( MutationObserver ) {
-      observeDOM = function() {
-        var observer = new MutationObserver( function( mutations ) {
-          mutations.forEach( _refreshHeight );
-        } );
-
-        observer.observe( _content, { childList: true, subtree: true } );
-      };
+      addObserver = _addMutationObserverEvents;
     } else {
-      observeDOM = function() {
-        _content.addEventListener( 'DOMNodeInserted', _refreshHeight, false );
-        _content.addEventListener( 'DOMNodeRemoved', _refreshHeight, false );
-      };
+      addObserver = _addMutationObserverEventsLegacy;
     }
 
-    window.setTimeout( observeDOM, 0 );
+    window.setTimeout( addObserver, 0 );
 
     return _that;
   }
 
   /**
+   * Add mutation observer events.
+   */
+  function _addMutationObserverEvents() {
+    _observer = new MutationObserver( function( mutations ) {
+      mutations.forEach( _refreshHeight );
+    } );
+
+    _observer.observe( _content, { childList: true, subtree: true } );
+  }
+
+  /**
+   * Add mutation observer events for when MutationObserver is not supported.
+   */
+  function _addMutationObserverEventsLegacy() {
+    _content.addEventListener( 'DOMNodeInserted', _refreshHeight );
+    _content.addEventListener( 'DOMNodeRemoved', _refreshHeight );
+  }
+
+  /**
    * @param {number} duration
    *   The duration of the sliding animation in milliseconds.
-   * @returns {Object} The Expandable instance.
+   * @returns {Expandable} An instance.
    */
   function toggle( duration ) {
     if ( _isExpanded() ) {
@@ -131,7 +163,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   /**
    * @param {number} duration
    *   The duration of the sliding animation in milliseconds.
-   * @returns {Object} The Expandable instance.
+   * @returns {Expandable} An instance.
    */
   function expand( duration ) {
     if ( _isExpanded() || _isExpanding() ) {
@@ -141,7 +173,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     duration = duration || _calculateExpandDuration( _contentHeight );
 
     _setStateTo( EXPANDING );
-    this.dispatchEvent( 'beginExpand', { target: _that } );
+    this.dispatchEvent( 'expandBegin', { target: _that } );
     _setMaxHeight();
     _transitionHeight( _expandComplete, duration );
     return this;
@@ -150,7 +182,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   /**
    * @param {number} duration
    *   The duration of the sliding animation in milliseconds.
-   * @returns {Object} The Expandable instance.
+   * @returns {Expandable} An instance.
    */
   function collapse( duration ) {
     if ( _isCollapsed() || _isCollapsing() ) {
@@ -160,7 +192,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     duration = duration || _calculateCollapseDuration( _contentHeight );
 
     _setStateTo( COLLAPSING );
-    this.dispatchEvent( 'beginCollapse', { target: _that } );
+    this.dispatchEvent( 'collapseBegin', { target: _that } );
     _setMinHeight();
     _transitionHeight( _collapseComplete, duration );
     return this;
@@ -209,7 +241,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function _expandComplete() {
     _content.removeEventListener( _transitionEndEvent, _expandComplete );
     _setExpandedState();
-    _that.dispatchEvent( 'endExpand', { target: _that } );
+    _that.dispatchEvent( 'expandEnd', { target: _that } );
   }
 
   /**
@@ -218,7 +250,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   function _collapseComplete() {
     _content.removeEventListener( _transitionEndEvent, _collapseComplete );
     _setCollapsedState();
-    _that.dispatchEvent( 'endCollapse', { target: _that } );
+    _that.dispatchEvent( 'collapseEnd', { target: _that } );
   }
 
   /**
@@ -340,6 +372,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   this.toggle = toggle;
   this.expand = expand;
   this.collapse = collapse;
+  this.destroy = destroy;
 
   // Export constants so initialization signature can support, e.g.
   // var item = new Expandable( '.item' );
