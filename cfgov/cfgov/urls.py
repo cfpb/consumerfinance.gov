@@ -201,6 +201,7 @@ urlpatterns = [
     ],
         namespace='transcripts')),
     url(r'^paying-for-college/', include_if_app_enabled('comparisontool','comparisontool.urls')),
+    url(r'^paying-for-college2/', include_if_app_enabled('paying_for_college','paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/', include_if_app_enabled('agreements','agreements.urls')),
     url(r'^(?i)askcfpb/', include_if_app_enabled('knowledgebase','knowledgebase.urls')),
     url(r'^es/obtener-respuestas/', include_if_app_enabled('knowledgebase','knowledgebase.babel_urls')),
