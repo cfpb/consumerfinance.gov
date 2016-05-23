@@ -17,16 +17,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Added
 
-- missing publish_eccu requirements
-
 ### Changes
 
 ### Removed
 
-- Removed activities-block.html
-
 ### Fixed
 
+##3.0.0-3.3.19 - 2016-05-23
+
+### Changes
+- Frontend: Added `destroyInitFlag()` method to `atomic-helpers.js`.
+- Frontend: Added `destroy()` method to `Expandables.js` to allow
+  reversing calls to `init()`.
+- Frontend: Added extra small tests to bureau structure page.
+
+### Fixed
+- Frontend: Fixed issue where cloned expandables were not initializing
+  on the bureau structure page.
+- Frontend: Removed `self` references in ContentSlider.
+- Newsroom fixed to render all categories when no filters are selected.
 
 ##3.0.0-3.3.18 - 2016-05-20
 
