@@ -34,7 +34,7 @@
 
 {% macro render( value ) %}
 
-{% set blurb = (value.blurb or page.seo_title or value.title or
+{% set blurb = (value.blurb or (page.seo_title if page) or value.title or
                 'Look what I found on the CFPB’s site!') | urlencode %}
 {% set parsed_url = request.url | urlencode %}
 {% set external_redirect_url = '/external-site/?ext_url=' %}
@@ -112,7 +112,8 @@
             {% if is_share_view %}
                 <li class="list_item">
                     <a class="m-social-media_icon"
-                       href="{{ external_redirect_url ~ link.share_url | trim }}"
+                       href="{{ external_redirect_url ~ link.share_url if link.name != 'email'
+                                else link.share_url | trim }}"
                        {{ 'target=_blank' if link.name != 'email' else '' }}>
                         <span class="cf-icon {{ link.class }}"></span>
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
