@@ -149,7 +149,7 @@ function _parsePath( urlPath ) {
  */
 function testA11y() {
   spawn(
-    fsHelper.getBinary( 'wcag', '.bin' ),
+    fsHelper.getBinary( 'wcag', 'wcag', '../.bin' ),
     _getWCAGParams(),
     { stdio: 'inherit' }
   ).once( 'close', function() {
@@ -178,7 +178,7 @@ function _shouldInstallInitialData() {
  */
 function _spawnProtractor() {
   spawn(
-    fsHelper.getBinary( 'protractor' ),
+    fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
     _getProtractorParams(),
     { stdio: 'inherit' }
   ).once( 'close', function() {

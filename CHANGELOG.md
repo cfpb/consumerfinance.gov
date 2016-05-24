@@ -17,11 +17,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Added
 
+- Frontend: Added task for generating JavaScript code docs with `gulp docs`.
+
 ### Changes
+- Use bare value of RichText field if value type is not RichText
+- Check against Activity Log topics when generating View More link
 
 ### Removed
 
 ### Fixed
+- get_browsefilterable_posts() call to get_page_set
 
 ##3.0.0-3.3.19 - 2016-05-23
 

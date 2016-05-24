@@ -93,7 +93,8 @@ def parse_links(soup):
 def external_links_filter(value):
     if isinstance(value, RichText):
         return parse_links(BeautifulSoup(expand_db_html(value.source), 'html.parser'))
-    return value
+    else:
+        return parse_links(BeautifulSoup(expand_db_html(value), 'html.parser'))
 
 
 @contextfunction
