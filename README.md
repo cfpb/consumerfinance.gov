@@ -185,6 +185,7 @@ The important ones are listed below:
 gulp build           # Concatenate, optimize, and copy source files to the production /dist/ directory.
 gulp clean           # Remove the contents of the production /dist/ directory.
 gulp lint            # Lint the scripts and build files.
+gulp docs            # Generate JSDocs from the scripts.
 gulp test            # Run linting, unit and acceptance tests (see below).
 gulp test:unit       # Run only unit tests on source code.
 gulp test:acceptance # Run only acceptance (in-browser) tests on production code.

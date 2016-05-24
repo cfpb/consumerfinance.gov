@@ -17,6 +17,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Added
 
+- Frontend: Added task for generating JavaScript code docs with `gulp docs`.
+
 ### Changes
 - Check against Activity Log topics when generating View More link
 
