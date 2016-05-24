@@ -71,8 +71,7 @@ class SublandingPage(CFGOVPage):
             if id not in filtered_controls.keys():
                 filtered_controls.update({id: []})
             form_class = page.get_form_class()
-            posts = filterable_list.get_page_set(
-                page, form_class(parent=page, hostname=request.site.hostname), request.site.hostname)
+            posts = page.get_page_set(form_class(parent=page, hostname=request.site.hostname), request.site.hostname)
             if filtered_controls[id]:
                 filtered_controls[id] += posts
             else:
