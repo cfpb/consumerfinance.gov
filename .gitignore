@@ -75,8 +75,9 @@ vendor/
 ############
 .floo*
 
-# Topdoc #
+# Documentation #
 ##########
+docs/scripts
 docs/*/slick.html
 docs/*/pdfreactor-fonts.html
 
