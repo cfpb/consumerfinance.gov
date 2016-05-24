@@ -29,7 +29,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - get_browsefilterable_posts() call to get_page_set
 
 
-##3.0.0-3.3.19 - 2016-05-24
+##3.0.0-3.3.20 - 2016-05-24
 
 ## Added
 
