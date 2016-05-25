@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Check against Activity Log topics when generating View More link
 
 ### Removed
+- Event RSVP email link button
 
 ### Fixed
 - get_browsefilterable_posts() call to get_page_set
