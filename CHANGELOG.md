@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changes
 - Use bare value of RichText field if value type is not RichText
 - Check against Activity Log topics when generating View More link
+- Validation for Event live stream URLs does not check for the word "embed"
 
 ### Removed
 
