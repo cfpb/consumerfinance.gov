@@ -85,7 +85,7 @@ docs/*/pdfreactor-fonts.html
 #################
 *.egg-info
 .installed.cfg
-static/
+/static/
 cfgov/static_built/*
 cfgov/f/
 images/
