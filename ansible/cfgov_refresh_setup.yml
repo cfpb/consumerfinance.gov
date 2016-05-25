@@ -37,6 +37,8 @@
         - "mysql-devel.x86_64"
         - "alsa-lib-devel"
         - "libnotify"
+        - "libxslt-devel"
+        - "libxml2-devel"
 
     - name: Import CERN's GPG key
       shell: "rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/x86_64/RPM-GPG-KEYs/RPM-GPG-KEY-cern"
