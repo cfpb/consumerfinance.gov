@@ -278,7 +278,7 @@ class SocialMedia(blocks.StructBlock):
     twitter_hashtags = blocks.CharBlock(required=False,
                                         help_text='A comma-separated list of hashtags to be appended to default tweet text.')
     twitter_lang = blocks.CharBlock(required=False,
-                                    help_text='Loads text components in the specified language, if other than English. E.g., use "es" for Spanish.')
+                                    help_text='Loads text components in the specified language, if other than English. E.g., use "es" for Spanish. See https://dev.twitter.com/web/overview/languages for a list of supported language codes.')
 
     class Meta:
         icon = 'site'
