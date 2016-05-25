@@ -80,7 +80,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ##3.0.0-3.3.17 - 2016-05-20
 
 ### Added
-
+- Ability to use Social Media molecule as a Wagtail module in the Sidefoot
 - Missing token provider for forms submitted by JS
 - Ability to refresh akamai cache on page publish
 - Adding Acceptance tests for the Video Player

@@ -41,16 +41,22 @@
     // This could be wrapped in the `m-social-media__share` modifier,
     // but it's ok on its own too.
     &_heading {
+        .heading-5();
         display: inline-block;
-        padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+        // 0.25em subtracted to compensate for inline spacing
+        padding-right: unit( @grid_gutter-width / @font-size - 0.25em, em );
+        margin-bottom: 0;
         vertical-align: middle;
     }
 
     .list {
         display: inline-block;
+        vertical-align: middle;
 
         .list_item {
-            margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+            // 0.25em subtracted to compensate for inline spacing
+            margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px - 0.25em, em );
+            margin-bottom: 0;
         }
 
         .list_item:last-child {
