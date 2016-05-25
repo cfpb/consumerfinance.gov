@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changes
 - Check against Activity Log topics when generating View More link
+- Validation for Event live stream URLs does not check for the word "embed"
 
 ### Removed
 

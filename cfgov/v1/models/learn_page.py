@@ -160,7 +160,7 @@ class EventPage(AbstractFilterPage):
     live_stream_url = models.URLField("URL", blank=True,
     help_text="Format: https://www.ustream.tv/embed/video_id.  It can be obtained by following the instructions listed here: " \
     "https://support.ustream.tv/hc/en-us/articles/207851917-How-to-embed-a-stream-or-video-on-your-site",
-    validators=[ RegexValidator(regex='^https?:\/\/www\.ustream\.tv\/embed\/.*$')])
+    validators=[ RegexValidator(regex='^https?:\/\/www\.ustream\.tv\/.*$')])
     live_stream_date = models.DateTimeField("Go Live Date", blank=True, null=True)
     # Venue content fields
     venue_name = models.CharField(max_length=100, blank=True)
