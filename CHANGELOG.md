@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changes
 - Use bare value of RichText field if value type is not RichText
 - Check against Activity Log topics when generating View More link
+- Breadcrumb and sidenav link generation gets most appropriate version of page
 
 ### Removed
 
