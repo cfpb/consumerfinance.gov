@@ -19,7 +19,7 @@ function ExpandableGroup( element ) {
 
   var BASE_CLASS = 'o-expandable-group';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'ExpandableGroup' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _domChildren = _dom.querySelectorAll( '.m-expandable' );
   var _lastOpenChild;
   var _isAccordion;

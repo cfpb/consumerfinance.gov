@@ -26,7 +26,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   // Constants for the Notification modifiers.
   var MODIFIER_VISIBLE = BASE_CLASS + '__visible';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Notification' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
 
   var _currentType;

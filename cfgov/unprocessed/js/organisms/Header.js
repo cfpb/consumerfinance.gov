@@ -21,7 +21,7 @@ function Header( element ) {
 
   var BASE_CLASS = 'o-header';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Header' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   var _globalbanner;
   var _globalSearch;

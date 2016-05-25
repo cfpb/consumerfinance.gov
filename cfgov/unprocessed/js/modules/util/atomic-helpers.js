@@ -14,14 +14,12 @@ var INIT_FLAG = standardType.STATE_PREFIX + 'atomic_init';
 /**
  * @param {HTMLNode} element
  *   The DOM element within which to search for the atomic element class.
- * @param {string} baseClass The CSS class name for the atomic element.
- * @param {string} atomicName
- *   The name of the atomic element in CapitalizedCamelCase.
+ * @param {string} baseClass - The CSS class name for the atomic element.
  * @returns {HTMLNode} The DOM element for the atomic element.
  * @throws {Error} If DOM element passed into the atomic element is not valid.
  */
-function checkDom( element, baseClass, atomicName ) {
-  _verifyElementExists( element, atomicName );
+function checkDom( element, baseClass ) {
+  _verifyElementExists( element, baseClass);
   var dom = _verifyClassExists( element, baseClass );
 
   return dom;
@@ -30,15 +28,15 @@ function checkDom( element, baseClass, atomicName ) {
 /**
  * @param {HTMLNode} element
  *   The DOM element within which to search for the atomic element class.
- * @param {string} atomicName
- *   The name of the atomic element in CapitalizedCamelCase.
+ * @param {string} baseClass - The CSS class name for the atomic element.
  * @returns {HTMLNode} The DOM element for the atomic element.
  * @throws {Error} If DOM element passed into the atomic element is not valid.
  */
-function _verifyElementExists( element, atomicName ) {
+function _verifyElementExists( element, baseClass ) {
   if ( !element || !element.classList ) {
-    var msg = element + ' passed to ' + atomicName + '.js is not valid. ' +
-              'Check that element is a valid DOM node';
+    var msg = element + ' is not valid. ' +
+              'Check that element is a DOM node with class "' +
+              baseClass + '"';
     throw new Error( msg );
   }
 
