@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changes
 
 ### Removed
+- Event RSVP email link button
 
 ### Fixed
 
