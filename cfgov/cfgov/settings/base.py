@@ -183,7 +183,6 @@ MEDIA_URL = '/f/'
 # various locations.
 STATICFILES_FINDERS = (
     'sheerlike.finders.SheerlikeStaticFinder',
-    'transition_utilities.finders.NoPHPFileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
@@ -196,11 +195,6 @@ STATICFILES_DIRS = [
     PROJECT_ROOT.child('static_built')
 ]
 
-NEMO_PATH = Path(os.environ.get('NEMO_PATH') or
-        Path(REPOSITORY_ROOT, '../cfpb_nemo'))
-
-if NEMO_PATH.exists():
-    STATICFILES_DIRS.append(('nemo', NEMO_PATH))
 
 ALLOWED_HOSTS = ['*']
 

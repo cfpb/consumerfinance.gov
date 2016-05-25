@@ -1,0 +1,196 @@
+
+.o-footer {
+    min-width: 1020px;
+    padding-top: 3.125em;
+    padding-bottom: 3.125em;
+    border-top: 5px solid #20aa3f;
+    background: #f7f8f9;
+
+    font-family: 'Avenir Next', 'AvenirNextLTW01-Regular',Arial,sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.o-footer .o-footer_top-button {
+    display: none;
+}
+
+.o-footer .list__unstyled {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.wrapper__match-content, .content_wrapper__match-content {
+    padding-left: 30px;
+    padding-right: 30px;
+    max-width: 1170px;
+}
+
+.o-footer_pre {
+    position: relative;
+    padding-bottom: 1.875em;
+    margin-bottom: 1.875em;
+    border-bottom: 1px solid #b4b5b6;
+}
+
+.o-footer_pre .o-footer_nav-list .list_item {
+    margin-bottom: 0;
+    margin-right: .25em;
+    margin-left: 0;
+    display: inline-block;
+}
+
+.o-footer_nav-list .list_link {
+    margin-right: 1.36363636em;
+    font-size: 1.25em;
+    border-bottom-width: 0 !important;
+    color: #101820;
+    border-color: #101820;
+}
+
+.o-footer_nav-list .list_link:visited,
+.o-footer_nav-list .list_link.visited {
+    color: #101820;
+}
+
+.o-footer .m-social-media {
+    padding-top: 1.875em;
+}
+
+.m-social-media .list .list_item {
+    margin-right: .9375em;
+}
+
+.m-social-media_icon {
+    font-size: 1.875em;
+    line-height: 1;
+    color: #43484e;
+    border-color: #43484e;
+    border-bottom-width: 0 !important;
+}
+
+.m-social-media_icon:visited,
+.m-social-media_icon.visited {
+    border-color: #43484e;
+    color: #43484e;
+}
+
+.cf-icon {
+    font-family: 'CFPB Minicons';
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+.cf-icon-facebook-square:before {
+    content: "\e205";
+}
+
+.cf-icon-twitter-square:before {
+    content: "\e209";
+}
+
+.cf-icon-linkedin-square:before {
+    content: "\e203";
+}
+
+.cf-icon-youtube-square:before {
+    content: "\e201";
+}
+
+.cf-icon-flickr-square:before {
+    content: "\e207";
+}
+
+.o-footer-middle-left {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 66.66666667%;
+    border-right: 1px solid #b4b5b6;
+    border-left: 0;
+}
+
+.o-footer-middle-right {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 33.33333333%;
+}
+
+.o-footer-post {
+    margin-top: 1.875em;
+    padding-top: 1.875em;
+    border-top: 1px solid #b4b5b6;
+}
+
+.o-footer-middle-left .o-footer_col {
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: solid transparent;
+    border-width: 0 15px;
+    margin-right: -0.25em;
+    vertical-align: top;
+    width: 50%;
+    border-left: 0;
+    border-right: 0;
+    padding-right: .9375em;
+}
+
+.o-footer-middle-left .o-footer_list {
+    margin: 0;
+}
+
+.o-footer_list .list_item {
+    margin-left: 0;
+    margin-bottom: .625em;
+}
+
+.o-footer_list .list_link {
+    color: #43484e;
+    border-color: #43484e;
+    background: transparent;
+}
+
+.o-footer_list .list_link:visited,
+.o-footer_list .list_link.visited {
+    border-color: #43484e;
+    color: #43484e;
+}
+
+.icon-link {
+    border-bottom-width: 0;
+}
+
+.icon-link__external-link:after,
+.icon-link__external-link.icon-link__before:before {
+    font-family: 'CFPB Minicons';
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    content: "\e610";
+}
+
+.icon-link_text {
+    border-bottom: 1px dotted;
+}
+
+.o-footer-post .o-footer_official-website {
+    padding-left: 37px;
+    background: url('/static/img/us-flag_22x13.png') no-repeat 0 4px;
+}
