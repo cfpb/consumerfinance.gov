@@ -32,7 +32,7 @@
 
    ========================================================================== #}
 
-{% macro render( value ) %}
+{% macro render( value={} ) %}
 
 {% set blurb = (value.blurb or (page.seo_title if page) or value.title or
                 'Look what I found on the CFPB’s site!') | urlencode %}
