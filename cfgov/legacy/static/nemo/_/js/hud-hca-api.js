@@ -233,7 +233,7 @@ cfpb_hud_hca = (function() {
 				}
 				marker_array[i] = new google.maps.Marker({
 					position: position,
-					icon: "/wp-content/themes/cfpb_nemo/_/img/hud_gmap/agc_" + number + ".png",
+					icon: "/static/nemo/_/img/hud_gmap/agc_" + number + ".png",
 					map: gmap,
 					title: val.nme,
 					zIndex: z
@@ -265,7 +265,7 @@ cfpb_hud_hca = (function() {
 		else {
 			var results = "";
 			// Testing url
-			// var qurl = "/wp-content/themes/cfpb_nemo/_/inc/hud-build-proxy.php?z=" + zip;
+			// var qurl = "/static/nemo/_/inc/hud-build-proxy.php?z=" + zip;
 
 			// Prod url
 			var qurl = "/hud-api-replace/" + zip + "/";

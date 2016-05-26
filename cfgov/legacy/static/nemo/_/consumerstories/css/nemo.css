@@ -624,7 +624,7 @@
   width: 40%;
 }
 #search_form button {
-  background: #50b948 url(http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/search_bg.png) no-repeat center left;
+  background: #50b948 url(/static/nemo/_/img/search_bg.png) no-repeat center left;
   text-indent: -9999px;
   width: 3em;
 }
@@ -784,7 +784,7 @@
   background-color: transparent;
 }
 .share {
-  background: url( http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/diagonal_texture.png );
+  background: url( /static/nemo/_/img/diagonal_texture.png );
   text-align: center;
   border: 1px solid #eee;
   width: 9em;

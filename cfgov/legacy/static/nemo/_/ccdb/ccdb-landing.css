@@ -788,8 +788,8 @@ button#ccdb-landing .expandable_header {
 }
 @font-face {
   font-family: 'CFPB Minicons';
-  src: url('/wp-content/themes/cfpb_nemo/_/cfpb-icon-font/fonts/cf-icons.eot');
-  src: url('/wp-content/themes/cfpb_nemo/_/cfpb-icon-font/fonts/cf-icons.eot?#iefix') format('embedded-opentype'), url('/wp-content/themes/cfpb_nemo/_/cfpb-icon-font/fonts/cf-icons.woff') format('woff'), url('/wp-content/themes/cfpb_nemo/_/cfpb-icon-font/fonts/cf-icons.ttf') format('truetype'), url('/wp-content/themes/cfpb_nemo/_/cfpb-icon-font/fonts/cf-icons.svg') format('svg');
+  src: url('/static/nemo/_/cfpb-icon-font/fonts/cf-icons.eot');
+  src: url('/static/nemo/_/cfpb-icon-font/fonts/cf-icons.eot?#iefix') format('embedded-opentype'), url('/static/nemo/_/cfpb-icon-font/fonts/cf-icons.woff') format('woff'), url('/static/nemo/_/cfpb-icon-font/fonts/cf-icons.ttf') format('truetype'), url('/static/nemo/_/cfpb-icon-font/fonts/cf-icons.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -4797,7 +4797,7 @@ body {
 }
 
 #ccdb-landing .ccdb-hero {
-  background-image: url('/wp-content/themes/cfpb_nemo/_/ccdb/ccdb-hero.png');
+  background-image: url('/static/nemo/_/ccdb/ccdb-hero.png');
   background-position: 740px 20px;
   background-repeat: no-repeat;
   color: #fff;
@@ -5085,7 +5085,7 @@ body {
 #ccdb-landing .select-wrapper {
     overflow: hidden;
     position: relative;
-    background: #ffffff url('/wp-content/themes/cfpb_nemo/_/ccdb/select.png') no-repeat right 0;
+    background: #ffffff url('/static/nemo/_/ccdb/select.png') no-repeat right 0;
     border: solid 1px #d0d0ce;
     height: 32px;
     font-family: "AvenirNextLTW01-Medium", Arial, sans-serif;

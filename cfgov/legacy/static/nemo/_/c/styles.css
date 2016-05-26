@@ -2950,7 +2950,7 @@ body.page-template-page-mortgage-php {
 }
 
 .mortgages_sidekick a.mortgages_sidekick_link .not-icon-mortgage-alt {
-	background: url('/wp-content/themes/cfpb_nemo/_/img/mortgage-sign-icon.png');
+	background: url('/static/nemo/_/img/mortgage-sign-icon.png');
 	background-position: 0px 10px;
 	background-repeat: no-repeat;
 	display: block;

@@ -14,10 +14,15 @@ class SheerlikeStaticFinder(BaseFinder):
                          for slug, root in self.sites.items()}
 
     def find(self, path, all=False):
+        matches = []
         for slug, site_path in self.sites.items():
             if path.startswith(slug):
                 corrected_path = path[len(slug) + 1:]
-                return Path(site_path, corrected_path)
+                complete_path = Path(site_path, corrected_path)
+                if complete_path.exists:
+                    matches.append(complete_path)
+
+        return matches
 
     def list(self, ignore_patterns):
         for slug, site_path in self.sites.items():
