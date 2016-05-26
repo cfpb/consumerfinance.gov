@@ -27,6 +27,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - Event RSVP email link button
 - `atomicName` parameter from `checkDom` atomic helper.
+- Unused gov delivery view function in jobmanager
 
 ### Fixed
 - get_browsefilterable_posts() call to get_page_set
