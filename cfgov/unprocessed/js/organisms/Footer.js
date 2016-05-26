@@ -19,7 +19,7 @@ function Footer( element ) {
 
   var BASE_CLASS = 'o-footer';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Footer' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   /**
    * @returns {Footer|undefined} An instance,

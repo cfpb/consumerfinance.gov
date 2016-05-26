@@ -25,10 +25,10 @@ describe( 'atomic-helpers', function() {
 
   describe( '.checkDom()', function() {
     it( 'should throw an error if element DOM not found', function() {
-      var errMsg = 'null passed to Expandable.js is not valid. ' +
-                   'Check that element is a valid DOM node';
+      var errMsg = 'null is not valid. ' +
+                   'Check that element is a DOM node with class ".m-expandable"';
       function errFunc() {
-        atomicHelpers.checkDom( null, '.m-expandable', 'Expandable' );
+        atomicHelpers.checkDom( null, '.m-expandable' );
       }
       expect( errFunc ).to.throw( Error, errMsg );
     } );
@@ -36,7 +36,7 @@ describe( 'atomic-helpers', function() {
     it( 'should throw an error if element class not found', function() {
       var errMsg = 'mock-class not found on or in passed DOM node.';
       function errFunc() {
-        atomicHelpers.checkDom( expandableDom, 'mock-class', 'Expandable' );
+        atomicHelpers.checkDom( expandableDom, 'mock-class' );
       }
       expect( errFunc ).to.throw( Error, errMsg );
     } );
@@ -44,14 +44,14 @@ describe( 'atomic-helpers', function() {
     it( 'should return the correct HTMLElement ' +
         'when direct element is searched', function() {
       var dom =
-        atomicHelpers.checkDom( expandableDom, 'm-expandable', 'Expandable' );
+        atomicHelpers.checkDom( expandableDom, 'm-expandable' );
       expect( dom ).to.be.equal( expandableDom );
     } );
 
     it( 'should return the correct HTMLElement ' +
         'when parent element is searched', function() {
       var dom =
-        atomicHelpers.checkDom( containerDom, 'm-expandable', 'Expandable' );
+        atomicHelpers.checkDom( containerDom, 'm-expandable' );
       expect( dom ).to.be.equal( expandableDom );
     } );
   } );

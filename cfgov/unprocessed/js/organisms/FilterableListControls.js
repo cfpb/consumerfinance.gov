@@ -22,8 +22,7 @@ var validators = require( '../modules/util/validators' );
  */
 function FilterableListControls( element ) {
   var BASE_CLASS = 'o-filterable-list-controls';
-  var _dom = atomicHelpers.checkDom(
-    element, BASE_CLASS, 'FilterableListControls' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _form = _dom.querySelector( 'form' );
   var _notification;
   var _fieldGroups;

@@ -26,7 +26,7 @@ var standardType = require( '../modules/util/standard-type' );
 function MegaMenu( element ) {
   var BASE_CLASS = 'o-mega-menu';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'MegaMenu' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   // Tree data model.
   var _menus;

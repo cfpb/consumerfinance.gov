@@ -29,7 +29,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
   // The Expandable element will directly be the Expandable
   // when used in an ExpandableGroup, otherwise it can be the parent container.
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Expandable' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
   var _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   var _contentAnimated =
