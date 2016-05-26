@@ -1,5 +1,6 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main_modifiers -%}
@@ -17,20 +18,11 @@
 {% block content_main %}
     {% for block in page.header -%}
         {% if block.block_type != 'hero' %}
-            {% import 'templates/render_block.html' as render_block with context %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
     {% for block in page.content -%}
-        {% if loop.index == 1 %}
-            <div class="block
-                        block__flush-top">
-                {{ render_stream_child(block) }}
-            </div>
-        {% else %}
-             {% import 'templates/render_block.html' as render_block with context %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
+        {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 {% endblock %}
 

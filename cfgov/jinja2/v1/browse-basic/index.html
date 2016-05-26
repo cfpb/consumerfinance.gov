@@ -1,6 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 
 {% import 'molecules/featured-content.html' as featured_content %}
+{% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main_modifiers -%}
@@ -14,20 +15,12 @@
                         block__flush-sides">
                 {{ featured_content.render(block.value) }}
             </div>
-        {% elif loop.index == 1 %}
-            <div class="block
-                        block__flush-top">
-                {{ render_stream_child(block) }}
-            </div>
         {% else %}
-            <div class="block">
-                {{ render_stream_child(block) }}
-            </div>
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
 
     {% for block in page.content -%}
-        {% import 'templates/render_block.html' as render_block with context %}
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 
@@ -37,4 +30,3 @@
         </aside>
     {% endif %}
 {% endblock %}
-
