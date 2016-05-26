@@ -1,6 +1,12 @@
 /* ==========================================================================
    Atomic Helpers.
    Utilities for helping validate atomic design element architecture.
+   In descending order of scope, atomic components are:
+   - Page
+   - Template
+   - Organism
+   - Molecule
+   - Atom
    ========================================================================= */
 
 'use strict';
@@ -8,10 +14,20 @@
 var dataHook = require( './data-hook' );
 var standardType = require( './standard-type' );
 
+/**
+ * @constant
+ * @type {string}
+ * Flag that gets set on an atomic component after its .init()
+ * method has been called. This is used so that an atomic
+ * component won't get initialized a second time after it
+ * has already been initialized.
+ */
 var INIT_FLAG = standardType.STATE_PREFIX + 'atomic_init';
 
-// TODO: Update baseClass to baseSel to handle CSS selector instead of a class.
 /**
+ * Check that a particular element passed into the constructor of
+ * an atomic component exists and that the correct atomic class
+ * is present on the element.
  * @param {HTMLNode} element
  *   The DOM element within which to search for the atomic element class.
  * @param {string} baseClass The CSS class name for the atomic element.
