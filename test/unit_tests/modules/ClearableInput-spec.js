@@ -84,7 +84,6 @@ describe( 'ClearableInput', function() {
 
       // Event code 65 is the `a` character.
       triggerEvent( inputDom, 'keyup', 65 );
-      console.log( inputDom.value, 'value')
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).to.equal( false );
     } );
 
