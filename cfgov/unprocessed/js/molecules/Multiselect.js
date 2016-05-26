@@ -21,6 +21,14 @@ var strings = require( '../modules/util/strings' );
  */
 function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
+  var BASE_CLASS = 'cf-multi-select';
+
+  // TODO: Add 'cf-multi-select' class to <select> menu markup
+  //       and remove the line below so that Multiselect won't
+  //       globally take over multi select menus
+  //       unless the markup author tells it to.
+  element.classList.add( BASE_CLASS );
+
   // Constants for direction.
   var DIR_PREV = 'prev';
   var DIR_NEXT = 'next';
@@ -37,7 +45,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   var MAX_SELECTIONS = 5;
 
   // Internal vars.
-  var _dom = element;
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _index = -1;
   var _isBlurSkipped = false;
   var _selectionsCount = 0;
@@ -71,9 +79,17 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _filteredData = _optionsData = _sanitizeOptions( _options );
 
     if ( _optionsData.length > 0 ) {
-      _populateMarkup();
-      _bindEvents();
+      var newDom = _populateMarkup();
+
+      // Removes <select> element,
+      // and re-assign DOM reference.
       _dom.parentNode.removeChild( _dom );
+      _dom = newDom;
+      // We need to set init flag again since we've created a new <div>
+      // to replace the <select> element.
+      atomicHelpers.setInitFlag( _dom );
+
+      _bindEvents();
     }
 
     return this;
@@ -133,26 +149,27 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
   /**
    * Populates and injects the markup for the custom multi-select.
+   * @returns {HTMLNode} Newly created <div> element to hold the multiselect.
    */
   function _populateMarkup() {
     // Add a container for our markup
     _containerDom = domCreate( 'div', {
-      className: 'cf-multi-select',
+      className: BASE_CLASS,
       around:    _dom
     } );
 
     // Create all our markup but wait to manipulate the DOM just once
     _selectionsDom = domCreate( 'ul', {
-      className: 'list__unstyled cf-multi-select_choices',
+      className: 'list__unstyled ' + BASE_CLASS + '_choices',
       inside:    _containerDom
     } );
 
     _headerDom = domCreate( 'header', {
-      className: 'cf-multi-select_header'
+      className: BASE_CLASS + '_header'
     } );
 
     _searchDom = domCreate( 'input', {
-      className:   'cf-multi-select_search',
+      className:   BASE_CLASS + '_search',
       type:        'text',
       placeholder: _placeholder || 'Choose up to five',
       inside:      _headerDom,
@@ -160,12 +177,12 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     } );
 
     _fieldsetDom = domCreate( 'fieldset', {
-      'className':   'cf-multi-select_fieldset u-invisible',
+      'className':   BASE_CLASS + '_fieldset u-invisible',
       'aria-hidden': 'true'
     } );
 
     _optionsDom = domCreate( 'ul', {
-      className: 'list__unstyled cf-multi-select_options',
+      className: 'list__unstyled ' + BASE_CLASS + '_options',
       inside:    _fieldsetDom
     } );
 
@@ -180,7 +197,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         'type':    'checkbox',
         'value':   option.value,
         'name':    _name,
-        'class':   'cf-input cf-multi-select_checkbox',
+        'class':   'cf-input ' + BASE_CLASS + '_checkbox',
         'inside':  _optionsItemDom,
         'checked': option.checked
       } );
@@ -188,7 +205,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       domCreate( 'label', {
         'for':         option.value,
         'textContent': option.text,
-        'className':   'cf-multi-select_label',
+        'className':   BASE_CLASS + '_label',
         'inside':      _optionsItemDom
       } );
 
@@ -202,7 +219,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         domCreate( 'label', {
           'for':         option.value,
           'textContent': option.text,
-          'className':   'cf-multi-select_label',
+          'className':   BASE_CLASS + '_label',
           'inside':      selectionsItemDom
         } );
 
@@ -211,13 +228,15 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       }
     } );
 
-    // Write our new markup to the DOM
+    // Write our new markup to the DOM.
     _containerDom.appendChild( _headerDom );
     _containerDom.appendChild( _fieldsetDom );
+
+    return _containerDom;
   }
 
   /**
-   * Highlights an option in the list
+   * Highlights an option in the list.
    * @param   {string} direction Direction to highlight compared to the
    *                             current focus.
    */
