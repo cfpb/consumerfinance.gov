@@ -19,6 +19,9 @@ from v1.models.snippets import Contact
 from wagtail.wagtailcore.blocks import StreamValue
 from treebeard.exceptions import NodeAlreadySaved
 
+import ._atomic_helpers as atomic
+
+
 def run():
     print 'Running script \'scripts.initial_test_data\' ...'
 
@@ -70,12 +73,7 @@ def run():
         contact = Contact(heading='Test User')
     else:
         contact = contact[0]
-    contact.contact_info = StreamValue(contact.contact_info.stream_block, [
-        {"type": "email", "value": {"emails": [{"url": "/", "text": "test@example.com"}]}},
-        {"type": "phone", "value": {"phones": [{"tty": "", "number": "1234567890", "vanity": ""}], "fax": True}},
-        {"type": "address",
-         "value": {"city": "Washington", "title": "", "label": "Address", "state": "DC", "street": "123 abc street",
-                   "zip_code": "20012"}}], True)
+    contact.contact_info = StreamValue(contact.contact_info.stream_block, [atomic.contact_email, atomic.contact_phone, atomic.contact_address], True)
     contact.save()
 
     lap = LandingPage.objects.filter(title='Landing Page')
@@ -83,23 +81,8 @@ def run():
         lap = LandingPage(title='Landing Page', slug='landing-page', owner=admin_user)
     else:
         lap = lap[0]
-    lap.content = StreamValue(lap.content.stream_block, [{"type": "image_text_25_75_group",
-                                                          "value": {"heading": "Image 25 75 Group", "image_texts": [
-                                                              {"body": "", "has_rule": False,
-                                                               "image": {"alt": "", "upload": 84}, "heading": "",
-                                                               "links": [{"url": "/", "text": "test"}]}]}},
-                                                         {"type": "image_text_50_50_group",
-                                                          "value": {"heading": "Image 50 50 Group", "image_texts": [
-                                                              {"body": "", "links": [{"url": "/", "text": "test"}],
-                                                               "image": {"alt": "", "upload": 84},
-                                                               "is_widescreen": False, "is_button": False,
-                                                               "heading": ""}]}},
-                                                         {"type": "half_width_link_blob_group", "value": {
-                                                             "link_blobs": [{"body": "", "heading": "", "links": [
-                                                                 {"url": "/", "text": "test"}]}],
-                                                             "heading": "Half Width Link Blob Group"}}], True)
-    lap.sidefoot = StreamValue(lap.sidefoot.stream_block, [
-        {'type': 'related_links', 'value': {'links': [{'url': '/url', 'text': 'this is a related link'}]}}], True)
+    lap.content = StreamValue(lap.content.stream_block, [atomic.image_text_25_75_group, atomic.image_text_50_50_group, atomic.half_width_link_blob_group], True)
+    lap.sidefoot = StreamValue(lap.sidefoot.stream_block, [atomic.related_links], True)
     publish_page(lap)
 
     sp = SublandingPage.objects.filter(title='Sublanding Page')
@@ -107,12 +90,8 @@ def run():
         sp = SublandingPage(title='Sublanding Page', slug='sublanding-page', owner=admin_user)
     else:
         sp = sp[0]
-    sp.content = StreamValue(sp.content.stream_block,
-                             [{"type": "contact", "value": {"body": "", "header": "Contact", "contact": contact.id}}],
-                             True)
-    sp.sidefoot = StreamValue(sp.sidefoot.stream_block,
-                             [{"type": "email_signup", "value": {"text": "", "gd_code": "", "heading": "Email Sign Up", "form_field": [{"info": "", "type": "", "required": False, "label": "Email Sign up", "btn_text": "", "placeholder": ""}]}}, {"type": "rss_feed", "value": "blog_feed"}],
-                             True)
+    sp.content = StreamValue(sp.content.stream_block, [atomic.contact(contact.id)], True)
+    sp.sidefoot = StreamValue(sp.sidefoot.stream_block, [atomic.email_signup, atomic.rss_feed], True)
 
     publish_page(sp)
 
@@ -121,10 +100,8 @@ def run():
         bp = BrowsePage(title='Browse Page', slug='browse-page', owner=admin_user)
     else:
         bp = bp[0]
-    bp.header = StreamValue(bp.header.stream_block, [
-        {'type': 'featured_content', 'value': {'body': "<p>this is a featured content body</p>"}}], True)
-    bp.content = StreamValue(bp.content.stream_block,
-                             [{'type': 'expandable', 'value': {'label': 'this is an expandable'}}], True)
+    bp.header = StreamValue(bp.header.stream_block, [atomic.featured_content], True)
+    bp.content = StreamValue(bp.content.stream_block, [atomic.expandable], True)
     publish_page(bp)
 
     # Filterable Pages
@@ -133,8 +110,7 @@ def run():
         bfp = BrowseFilterablePage(title='Browse Filterable Page', slug='browse-filterable-page', owner=admin_user)
     else:
         bfp = bfp[0]
-    bfp.header = StreamValue(bfp.header.stream_block,
-                             [{'type': 'text_introduction', 'value': {'intro': 'this is an intro'}}], True)
+    bfp.header = StreamValue(bfp.header.stream_block, [atomic.text_introduction], True)
     publish_page(bfp)
 
     sfp = SublandingFilterablePage.objects.filter(title='Sublanding Filterable Page')
@@ -143,8 +119,7 @@ def run():
                                        owner=admin_user)
     else:
         sfp = sfp[0]
-    sfp.header = StreamValue(sfp.header.stream_block,
-                             [{'type': 'hero', 'value': {'heading': "this is a hero heading"}}], True)
+    sfp.header = StreamValue(sfp.header.stream_block, [atomic.hero], True)
     publish_page(sfp)
 
     eap = EventArchivePage.objects.filter(title='Event Archive Page')
@@ -171,8 +146,7 @@ def run():
         ddp = DocumentDetailPage(title='Document Detail Page', slug='document-detail-page', owner=admin_user)
     else:
         ddp = ddp[0]
-    ddp.sidefoot = StreamValue(ddp.sidefoot.stream_block, [{'type': 'related_metadata', 'value': {
-        'content': [{'type': 'text', 'value': {'heading': 'this is a related metadata heading'}}]}}], True)
+    ddp.sidefoot = StreamValue(ddp.sidefoot.stream_block, [atomic.related_metadata], True)
     publish_page(ddp, bfp)
 
     lp = LearnPage.objects.filter(title='Learn Page')
@@ -180,11 +154,7 @@ def run():
         lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
     else:
         lp = lp[0]
-    lp.content = StreamValue(lp.content.stream_block, [{'type': 'full_width_text', 'value': [
-        {'type': 'quote', 'value': {'body': 'this is a quote', 'citation': 'a citation'}}]},
-                                                       {'type': 'call_to_action',
-                                                        'value': {'paragraph_text': 'this is a call to action'}}],
-                             True)
+    lp.content = StreamValue(lp.content.stream_block, [atomic.full_width_text, atomic.call_to_action], True)
     publish_page(lp, bfp)
 
     if not ActivityLogPage.objects.filter(title='Activity Log Page'):
