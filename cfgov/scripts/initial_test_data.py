@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from wagtail.wagtailcore.models import Page, Site
 
+from scripts import _atomic_helpers as atomic
 from v1.models.base import CFGOVPage
 from v1.models.home_page import HomePage
 from v1.models.landing_page import LandingPage
@@ -19,7 +20,6 @@ from v1.models.snippets import Contact
 from wagtail.wagtailcore.blocks import StreamValue
 from treebeard.exceptions import NodeAlreadySaved
 
-import ._atomic_helpers as atomic
 
 
 def run():
@@ -67,22 +67,38 @@ def run():
         )
         revision.publish()
 
-    # Create each Page Type
+    # Create snippets
     contact = Contact.objects.filter(heading='Test User')
     if not contact:
         contact = Contact(heading='Test User')
     else:
         contact = contact[0]
-    contact.contact_info = StreamValue(contact.contact_info.stream_block, [atomic.contact_email, atomic.contact_phone, atomic.contact_address], True)
+    contact.contact_info = StreamValue(contact.contact_info.stream_block,
+        [
+            atomic.contact_email,
+            atomic.contact_phone,
+            atomic.contact_address
+        ], True)
     contact.save()
 
+    # Create each Page Type
     lap = LandingPage.objects.filter(title='Landing Page')
     if not lap:
         lap = LandingPage(title='Landing Page', slug='landing-page', owner=admin_user)
     else:
         lap = lap[0]
-    lap.content = StreamValue(lap.content.stream_block, [atomic.image_text_25_75_group, atomic.image_text_50_50_group, atomic.half_width_link_blob_group], True)
-    lap.sidefoot = StreamValue(lap.sidefoot.stream_block, [atomic.related_links], True)
+    lap.content = StreamValue(lap.content.stream_block,
+        [
+            atomic.image_text_25_75_group,
+            atomic.image_text_50_50_group,
+            atomic.half_width_link_blob_group,
+            atomic.well
+        ], True)
+    lap.sidefoot = StreamValue(lap.sidefoot.stream_block,
+        [
+            atomic.related_links,
+            atomic.sidebar_contact(contact.id)
+        ], True)
     publish_page(lap)
 
     sp = SublandingPage.objects.filter(title='Sublanding Page')
@@ -90,8 +106,16 @@ def run():
         sp = SublandingPage(title='Sublanding Page', slug='sublanding-page', owner=admin_user)
     else:
         sp = sp[0]
-    sp.content = StreamValue(sp.content.stream_block, [atomic.contact(contact.id)], True)
-    sp.sidefoot = StreamValue(sp.sidefoot.stream_block, [atomic.email_signup, atomic.rss_feed], True)
+    sp.content = StreamValue(sp.content.stream_block,
+        [
+            atomic.main_contact_info(contact.id),
+            atomic.reg_comment
+        ], True)
+    sp.sidefoot = StreamValue(sp.sidefoot.stream_block,
+        [
+            atomic.email_signup,
+            atomic.rss_feed
+        ], True)
 
     publish_page(sp)
 
@@ -100,8 +124,15 @@ def run():
         bp = BrowsePage(title='Browse Page', slug='browse-page', owner=admin_user)
     else:
         bp = bp[0]
-    bp.header = StreamValue(bp.header.stream_block, [atomic.featured_content], True)
-    bp.content = StreamValue(bp.content.stream_block, [atomic.expandable], True)
+    bp.header = StreamValue(bp.header.stream_block,
+        [
+            atomic.featured_content
+        ], True)
+    bp.content = StreamValue(bp.content.stream_block,
+        [
+            atomic.expandable,
+            atomic.expandable_group
+        ], True)
     publish_page(bp)
 
     # Filterable Pages
@@ -136,6 +167,13 @@ def run():
         nlp = nlp[0]
     publish_page(nlp)
 
+    alp = ActivityLogPage.objects.filter(title='Activity Log Page')
+    if not alp:
+        alp = ActivityLogPage(title='Activity Log Page', slug='activity-log-page', owner=admin_user)
+    else:
+        alp = alp[0]
+    publish_page(alp)
+
     # Filter Pages
     if not EventPage.objects.filter(title='Event Page'):
         ep = EventPage(title='Event Page', slug='event-page', owner=admin_user)
@@ -154,12 +192,14 @@ def run():
         lp = LearnPage(title='Learn Page', slug='learn-page', owner=admin_user)
     else:
         lp = lp[0]
-    lp.content = StreamValue(lp.content.stream_block, [atomic.full_width_text, atomic.call_to_action], True)
+    lp.header = StreamValue(lp.header.stream_block, [atomic.item_introduction], True)
+    lp.content = StreamValue(lp.content.stream_block,
+        [
+            atomic.full_width_text,
+            atomic.call_to_action,
+            atomic.table
+        ], True)
     publish_page(lp, bfp)
-
-    if not ActivityLogPage.objects.filter(title='Activity Log Page'):
-        alp = ActivityLogPage(title='Activity Log Page', slug='activity-log-page', owner=admin_user)
-        publish_page(alp)
 
     if not NewsroomPage.objects.filter(title='Newsroom Page'):
         np = NewsroomPage(title='Newsroom Page', slug='newsroom-page', owner=admin_user)

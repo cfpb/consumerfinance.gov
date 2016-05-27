@@ -1,3 +1,7 @@
+#############
+# Molecules #
+#############
+
 contact_email = {
     "type": "email",
     "value": {
@@ -33,70 +37,6 @@ contact_address = {
         "zip_code": "20012"
     }
 }
-image_text_25_75_group = {
-    "type": "image_text_25_75_group",
-     "value": {
-        "heading": "Image 25 75 Group", "image_texts": [
-            {
-                "heading": "",
-                "body": "",
-                "has_rule": False,
-                "image": {
-                    "alt": "",
-                    "upload": 84
-                },
-                "links": [
-                    {
-                        "url": "/",
-                        "text": "test"
-                    }
-                ]
-            }
-        ]
-    }
-},
-image_text_50_50_group = {
-    "type": "image_text_50_50_group",
-    "value": {
-        "heading": "Image 50 50 Group",
-        "image_texts": [
-            {
-                "heading": "",
-                "body": "",
-                "links": [
-                    {
-                        "url": "/",
-                        "text": "test"
-                    }
-                ],
-                "image": {
-                    "alt": "",
-                    "upload": 84
-                },
-                "is_widescreen": False,
-                "is_button": False
-            }
-        ]
-    }
-},
-half_width_link_blob_group = {
-    "type": "half_width_link_blob_group",
-    "value": {
-        "heading": "Half Width Link Blob Group",
-        "link_blobs": [
-            {
-                "body": "",
-                "heading": "",
-                "links": [
-                    {
-                        "url": "/",
-                        "text": "test"
-                    }
-                ]
-            }
-        ]
-    }
-}
 related_links = {
     'type': 'related_links',
     'value': {
@@ -108,32 +48,6 @@ related_links = {
         ]
     }
 }
-contact = lambda contact_id: {
-    "type": "contact",
-    "value": {
-        "body": "",
-        "header": "Contact",
-        "contact": contact_id
-    }
-}
-email_signup = {
-    "type": "email_signup",
-    "value": {
-        "text": "",
-        "gd_code": "",
-        "heading": "Email Sign Up",
-        "form_field": [
-            {
-                "info": "",
-                "type": "",
-                "required": False,
-                "label": "Email Sign up",
-                "btn_text": "",
-                "placeholder": ""
-            }
-        ]
-    }
-},
 rss_feed = {
     "type": "rss_feed",
     "value": "blog_feed"
@@ -175,6 +89,33 @@ related_metadata = {
         ]
     }
 }
+call_to_action = {
+    'type': 'call_to_action',
+    'value': {
+        'paragraph_text': 'this is a call to action'
+    }
+}
+
+
+#############
+# Organisms #
+#############
+
+main_contact_info = lambda contact_id: {
+    "type": "contact",
+    "value": {
+        "body": "",
+        "header": "Contact",
+        "contact": contact_id
+    }
+}
+sidebar_contact = main_contact_info
+well = {
+    'type': 'well',
+    'value': {
+        'content': "<p>this is well content</p>"
+    }
+}
 full_width_text = {
     'type': 'full_width_text',
     'value': [
@@ -184,12 +125,155 @@ full_width_text = {
                 'body': 'this is a quote',
                 'citation': 'a citation'
             }
+        },
+        {
+            'type': 'content',
+            'value': '<p>Full width text content.</p>'
         }
     ]
-},
-call_to_action = {
-    'type': 'call_to_action',
+}
+image_text_25_75_group = {
+    "type": "image_text_25_75_group",
+    "value": {
+        "heading": "Image 25 75 Group",
+        "image_texts": [
+            {
+                "heading": "",
+                "body": "",
+                "has_rule": False,
+                "image": {
+                    "alt": "",
+                    "upload": 84
+                },
+                "links": [
+                    {
+                        "url": "/",
+                        "text": "test"
+                    }
+                ]
+            }
+        ]
+    }
+}
+image_text_50_50_group = {
+    "type": "image_text_50_50_group",
+    "value": {
+        "heading": "Image 50 50 Group",
+        "image_texts": [
+            {
+                "heading": "",
+                "body": "",
+                "links": [
+                    {
+                        "url": "/",
+                        "text": "test"
+                    }
+                ],
+                "image": {
+                    "alt": "",
+                    "upload": 84
+                },
+                "is_widescreen": False,
+                "is_button": False
+            }
+        ]
+    }
+}
+half_width_link_blob_group = {
+    "type": "half_width_link_blob_group",
+    "value": {
+        "heading": "Half Width Link Blob Group",
+        "link_blobs": [
+            {
+                "body": "",
+                "heading": "",
+                "links": [
+                    {
+                        "url": "/",
+                        "text": "test"
+                    }
+                ]
+            }
+        ]
+    }
+}
+email_signup = {
+    "type": "email_signup",
+    "value": {
+        "text": "",
+        "gd_code": "",
+        "heading": "Email Sign Up",
+        "form_field": [
+            {
+                "info": "",
+                "type": "",
+                "required": False,
+                "label": "Email Sign up",
+                "btn_text": "",
+                "placeholder": ""
+            }
+        ]
+    }
+}
+reg_comment = {
+    "type": "reg_comment",
+    "value": {
+        'document_id': 'test document id',
+        'generic_regs_link': True,
+        'id': 'test id',
+    }
+}
+table = {
+    'type': 'table',
     'value': {
-        'paragraph_text': 'this is a call to action'
+        'headers': [
+            'One',
+            'Two',
+            'Three',
+            'Four'
+        ],
+        'rows': [
+            [
+                {
+                    'type': 'hyperlink',
+                    'value': {
+                        'text': 'table hyperlink',
+                        'url': '/'
+                    }
+                },
+                {
+                    'type': 'text',
+                    'value': 'table text'
+                },
+                {
+                    'type': 'text_blob',
+                    'value': 'table text blob',
+                },
+                {
+                    'type': 'rich_text_blob',
+                    'value': '<p>table rich text blob</p>',
+                }
+            ]
+        ]
+    }
+}
+expandable_group = {
+    'type': 'expandable_group',
+    'value': {
+        'heading': 'Expandable Group',
+        'body': '<p>Expandable group body.</p>',
+        'is_accordion': False,
+        'has_rule': False,
+        'expandables': [expandable] * 3
+    }
+}
+item_introduction = {
+    'type': 'item_introduction',
+    'value': {
+        'category': 'testimony',
+        'heading': 'Item Introduction',
+        'paragraph': '<p>Item introduction body.</p>',
+        'date': '2016-05-18T16:49:00Z',
+        'has_social': False
     }
 }

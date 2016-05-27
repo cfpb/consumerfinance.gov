@@ -153,19 +153,6 @@ describe( 'FormField With Button', function() {
   );
 } );
 
-describe( 'Contact', function() {
-  beforeAll( function() {
-    browser.get( '/sublanding-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( _getQAElement( 'contact-address' ).isPresent() ).toBe( true );
-      expect( _getQAElement( 'contact-email' ).isPresent() ).toBe( true );
-      expect( _getQAElement( 'contact-phone' ).isPresent() ).toBe( true );
-    }
-  );
-} );
-
 describe( 'RSS Feed', function() {
   beforeAll( function() {
     browser.get( '/sublanding-page/' );
