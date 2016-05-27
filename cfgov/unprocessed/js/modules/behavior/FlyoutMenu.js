@@ -2,6 +2,7 @@
 
 // Required modules.
 var BaseTransition = require( '../../modules/transition/BaseTransition' );
+var behavior = require( '../../modules/util/behavior' );
 var dataHook = require( '../../modules/util/data-hook' );
 var EventObserver = require( '../../modules/util/EventObserver' );
 var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
@@ -12,13 +13,16 @@ var standardType = require( '../../modules/util/standard-type' );
  * @class
  *
  * @classdesc Initializes new FlyoutMenu behavior.
+ * Behaviors are functionality that can be shared between different pieces
+ * of markup. They are not strictly atomic, though they likely are used
+ * on atomic components.
  * As added JS behavior, this is added through HTML data-js-hook attributes.
  *
  * Structure is:
- * flyout-menu
- *   flyout-menu_trigger
- *   flyout-menu_content
- *     flyout-menu_alt-trigger
+ * behavior_flyout-menu
+ *   behavior_flyout-menu_trigger
+ *   behavior_flyout-menu_content
+ *     behavior_flyout-menu_alt-trigger
  *
  * The alt-trigger is for a back button, which may obscure the first trigger.
  * The flyout can be triggered three ways: through a click of the trigger or
@@ -31,24 +35,14 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
 
   var BASE_CLASS = standardType.BEHAVIOR_PREFIX + 'flyout-menu';
   var SEL_PREFIX = '[' + standardType.JS_HOOK + '=' + BASE_CLASS;
-
   var BASE_SEL = SEL_PREFIX + ']';
-  var ALT_TRIGGER_SEL = SEL_PREFIX + '_alt-trigger]';
-  var CONTENT_SEL = SEL_PREFIX + '_content]';
-  var TRIGGER_SEL = SEL_PREFIX + '_trigger]';
 
-  // TODO: Update atomic-helpers to support CSS selectors for validity check.
-  var _dom = dataHook.contains( element, BASE_CLASS ) ? element : null;
-  if ( !_dom ) { _dom = element.parentNode.querySelector( BASE_SEL ); }
-  if ( !_dom ) { throw new Error( 'Selector not found on passed node!' ); }
+  // Verify that the expected dom attributes are present.
+  var _dom = behavior.checkBehaviorDom( element, BASE_CLASS );
+  var _triggerDom = behavior.checkBehaviorDom( element, BASE_CLASS + '_trigger' );
+  var _contentDom = behavior.checkBehaviorDom( element, BASE_CLASS + '_content' );
 
-  var _triggerDom = _dom.querySelector( TRIGGER_SEL );
-  var _contentDom = _dom.querySelector( CONTENT_SEL );
-
-  if ( !_triggerDom ) { throw new Error( TRIGGER_SEL + ' is missing!' ); }
-  if ( !_contentDom ) { throw new Error( CONTENT_SEL + ' is missing!' ); }
-
-  var _altTriggerDom = _dom.querySelector( ALT_TRIGGER_SEL );
+  var _altTriggerDom = _dom.querySelector( SEL_PREFIX + '_alt-trigger]' );
 
   var _isExpanded = false;
   var _isAnimating = false;
@@ -475,10 +469,6 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   FlyoutMenu.EXPAND_TYPE = 'expand';
   FlyoutMenu.COLLAPSE_TYPE = 'collapse';
   FlyoutMenu.BASE_CLASS = BASE_CLASS;
-  FlyoutMenu.BASE_SEL = BASE_SEL;
-  FlyoutMenu.ALT_TRIGGER_SEL = ALT_TRIGGER_SEL;
-  FlyoutMenu.CONTENT_SEL = CONTENT_SEL;
-  FlyoutMenu.TRIGGER_SEL = TRIGGER_SEL;
 
   return this;
 }
