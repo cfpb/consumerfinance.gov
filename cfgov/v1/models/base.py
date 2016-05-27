@@ -194,12 +194,12 @@ class CFGOVPage(Page):
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
 
-    def get_breadcrumbs(self, site):
+    def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
-        home_page_children = site.root_page.get_children()
+        home_page_children = request.site.root_page.get_children()
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
-                return ancestors[i+1:]
+                return [util.get_appropriate_page_version(request, ancestor) for ancestor in ancestors[i+1:]]
         return []
 
     def get_appropriate_descendants(self, hostname, inclusive=True):
@@ -270,19 +270,9 @@ class CFGOVPage(Page):
 
         else:
             # Request is for this very page.
-            # If we're on the production site, make sure the version of the page
-            # displayed is the latest version that has `live` set to True for
-            # the live site or `shared` set to True for the staging site.
-            staging_hostname = os.environ.get('STAGING_HOSTNAME')
-            revisions = self.revisions.all().order_by('-created_at')
-            for revision in revisions:
-                page_version = json.loads(revision.content_json)
-                if request.site.hostname != staging_hostname:
-                    if page_version['live']:
-                        return RouteResult(revision.as_page_object())
-                else:
-                    if page_version['shared']:
-                        return RouteResult(revision.as_page_object())
+            page = util.get_appropriate_page_version(request, self)
+            if page:
+                return RouteResult(page)
             raise Http404
 
     def permissions_for_user(self, user):
