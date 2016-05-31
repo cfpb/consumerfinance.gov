@@ -182,8 +182,9 @@ MEDIA_URL = '/f/'
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
+    'sheerlike.finders.SheerlikeStaticFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #'sheerlike.finders.SheerlikeStaticFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
     #'compressor.finders.CompressorFinder',
 )
 

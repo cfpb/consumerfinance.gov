@@ -1490,7 +1490,7 @@
    */
   function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
-    var BASE_CLASS = 'flyout-menu';
+    var BASE_CLASS = 'behavior_flyout-menu';
     var SEL_PREFIX = '[' + standardType.JS_HOOK + '=' + BASE_CLASS;
 
     var BASE_SEL = SEL_PREFIX + ']';

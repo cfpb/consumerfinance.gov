@@ -20,7 +20,9 @@ class SheerlikeStaticFinder(BaseFinder):
                 corrected_path = path[len(slug) + 1:]
                 complete_path = Path(site_path, corrected_path)
                 if complete_path.exists:
-                    matches.append(complete_path)
+                    if not all:
+                        return str(complete_path)
+                    matches.append(str(complete_path))
 
         return matches
 
