@@ -34,27 +34,27 @@
                 m-nav-link
     - name: Secondary nav mixed with atomic expandable
       markup: |
-        <nav class="m-expandable
+        <nav class="o-expandable
                     o-secondary-navigation">
-            <div class="m-expandable_header">
-                <button class="m-expandable_target
+            <div class="o-expandable_header">
+                <button class="o-expandable_target
                                o-secondary-navigation_button">
-                    <span class="m-expandable_header-left">
+                    <span class="o-expandable_header-left">
                         Nav Button
                     </span>
-                    <span class="m-expandable_header-right">
-                        <span class="m-expandable_cue-open">
+                    <span class="o-expandable_header-right">
+                        <span class="o-expandable_cue-open">
                             <span class="cf-icon
                                          cf-icon-down"></span>
                         </span>
-                        <span class="m-expandable_cue-close">
+                        <span class="o-expandable_cue-close">
                             <span class="cf-icon
                                          cf-icon-up"></span>
                         </span>
                     </span>
                 </button>
             </div>
-            <div class="m-expandable_content">
+            <div class="o-expandable_content">
                 <ul class="o-secondary-navigation_list
                            o-secondary-navigation_list__parents">
                     li
@@ -70,16 +70,16 @@
         - |
           Structural cheat sheet:
           -----------------------
-          .m-expandable.o-secondary-navigation
-            .m-expandable_header
-              .m-expandable_target.o-secondary-navigation_button
-                .m-expandable_header-left
-                .m-expandable_header-right
-                  .m-expandable_cue-open
+          .o-expandable.o-secondary-navigation
+            .o-expandable_header
+              .o-expandable_target.o-secondary-navigation_button
+                .o-expandable_header-left
+                .o-expandable_header-right
+                  .o-expandable_cue-open
                     .cf-icon.cf-icon-down
-                  .m-expandable_cue-close
+                  .o-expandable_cue-close
                     .cf-icon.cf-icon-up
-            .m-expandable_content
+            .o-expandable_content
               .o-secondary-navigation_list.o-secondary-navigation_list__parents
                 li
                   m-nav-link
@@ -96,12 +96,12 @@
       } );
     }
 
-    // TODO: If secondary navigation is overriding m-expandables appearance,
+    // TODO: If secondary navigation is overriding o-expandables appearance,
     //       they aren't atomic expandables anymore per the design spec.
     //       Secondary navigation should use FlyoutMenu for expandable-like
     //       behavior and handle its own styling
     //       (possibly shared with expandables).
-    .m-expandable_target {
+    .o-expandable_target {
         .webfont-demi();
 
         text-transform: uppercase;
@@ -111,7 +111,7 @@
         } );
     }
 
-    .m-expandable_content {
+    .o-expandable_content {
         .respond-to-min( @bp-med-min, {
           background: none;
           border: none;

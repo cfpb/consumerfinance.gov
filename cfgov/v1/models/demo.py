@@ -20,7 +20,7 @@ class DemoPage(CFGOVPage):
         ('hero', molecules.Hero()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('call_to_action', molecules.CallToAction()),
-        ('expandable', molecules.Expandable()),
+        ('expandable', organisms.Expandable()),
         ('featured_content', molecules.FeaturedContent()),
 
     ], blank=True)

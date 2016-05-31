@@ -13,20 +13,20 @@
 
     // TODO: Refactor to use flyout menu behavior and not include an expandable,
     //       so that these style overrides aren't necessary.
-    .m-expandable {
+    .o-expandable {
         transition: padding 0.2s ease-out;
     }
 
-    .m-expandable__expanded {
+    .o-expandable__expanded {
         padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
         padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
     }
 
-    .m-expandable_content {
+    .o-expandable_content {
         border-bottom: none;
     }
 
-    .m-expandable_target {
+    .o-expandable_target {
         border-top: none;
     }
 
@@ -38,7 +38,7 @@
         .h4();
         margin-bottom: 0;
 
-        .m-expandable__expanded & {
+        .o-expandable__expanded & {
             margin-bottom: unit( 5px / @base-font-size-px, em );
         }
     }

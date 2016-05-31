@@ -16,7 +16,7 @@
    index:    A unique number given to render the form and its fields with.
 
    ========================================================================== #}
-{% from 'molecules/expandable.html' import expandable with context %}
+{% from 'organisms/expandable.html' import expandable with context %}
 
 {% macro _filter_selectable(type, index, label_text, id, name, value, required=None, group=None) %}
     <input class="cf-input"

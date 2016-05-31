@@ -133,33 +133,33 @@
                      and options.show_current_filters
 %}
 
-<div class="m-expandable
-            m-expandable__borders
-            m-expandable__midtone
-            m-expandable__expanded"
+<div class="o-expandable
+            o-expandable__borders
+            o-expandable__midtone
+            o-expandable__expanded"
       data-qa-hook="filter">
-    <button class="m-expandable_target" aria-pressed="true">
-        <div class="m-expandable_header">
-            <span class="m-expandable_header-left
-                         m-expandable_label">
+    <button class="o-expandable_target" aria-pressed="true">
+        <div class="o-expandable_header">
+            <span class="o-expandable_header-left
+                         o-expandable_label">
                 {{ options.expand_label }}
             </span>
-            <span class="m-expandable_header-right m-expandable_link">
-                <span class="m-expandable_cue
-                             m-expandable_cue-open">
-                    <span class="m-expandable_cue-label">Show</span>
+            <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue
+                             o-expandable_cue-open">
+                    <span class="o-expandable_cue-label">Show</span>
                     <span class="cf-icon cf-icon-plus-round"></span>
                 </span>
-                <span class="m-expandable_cue
-                             m-expandable_cue-close">
-                    <span class="m-expandable_cue-label">Hide</span>
+                <span class="o-expandable_cue
+                             o-expandable_cue-close">
+                    <span class="o-expandable_cue-label">Hide</span>
                     <span class="cf-icon cf-icon-minus-round"></span>
                 </span>
             </span>
         </div>
     </button>
-    <div class="m-expandable_content" aria-expanded="false">
-        <div class="m-expandable_content-animated">
+    <div class="o-expandable_content" aria-expanded="false">
+        <div class="o-expandable_content-animated">
             {%- if options.show_errors -%}
                 {{ _errors() }}
             {% endif %}

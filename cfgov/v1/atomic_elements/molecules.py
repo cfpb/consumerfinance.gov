@@ -200,33 +200,6 @@ class Quote(blocks.StructBlock):
         template = '_includes/molecules/quote.html'
 
 
-class BaseExpandable(blocks.StructBlock):
-    label = blocks.CharBlock(required=False)
-    is_bordered = blocks.BooleanBlock(required=False)
-    is_midtone = blocks.BooleanBlock(required=False)
-    is_expanded = blocks.BooleanBlock(required=False)
-
-    class Meta:
-        icon = 'list-ul'
-        template = '_includes/molecules/expandable.html'
-        label = 'Expandable'
-
-    class Media:
-        js = ["expandable.js"]
-
-
-class Expandable(BaseExpandable):
-    content = blocks.StreamBlock(
-        [
-            ('paragraph', blocks.RichTextBlock(required=False)),
-            ('links', atoms.Hyperlink()),
-            ('email', ContactEmail()),
-            ('phone', ContactPhone()),
-            ('address', ContactAddress()),
-        ], blank=True
-    )
-
-
 class RelatedMetadata(blocks.StructBlock):
     slug = blocks.CharBlock(max_length=100)
     content = blocks.StreamBlock([

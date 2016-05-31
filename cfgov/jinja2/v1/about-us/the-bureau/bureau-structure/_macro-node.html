@@ -18,29 +18,29 @@
 {% macro render(tagName="div", org, sub_title="text") -%}
 {% set has_children = org.children | list | length %}
 <{{ tagName }} class="org-chart_node
-       {{ 'm-expandable
-           m-expandable__expanded'
+       {{ 'o-expandable
+           o-expandable__expanded'
           if has_children else '' }}">
     {% if has_children %}
     {{ role.render(org) }}
-    <button class="m-expandable_target">
-        <div class="m-expandable_header">
+    <button class="o-expandable_target">
+        <div class="o-expandable_header">
             <div class="org-chart_node_expander">
-                <span class="m-expandable_header-left
-                             m-expandable_label
+                <span class="o-expandable_header-left
+                             o-expandable_label
                              org-chart_node_label">
                     {{ sub_title }}
                 </span>
-                <span class="m-expandable_header-right
-                             m-expandable_link">
-                    <span class="m-expandable_cue
-                                 m-expandable_cue-open">
-                        <span class="m-expandable_cue-label">Show</span>
+                <span class="o-expandable_header-right
+                             o-expandable_link">
+                    <span class="o-expandable_cue
+                                 o-expandable_cue-open">
+                        <span class="o-expandable_cue-label">Show</span>
                         <span class="cf-icon cf-icon-plus-round"></span>
                     </span>
-                    <span class="m-expandable_cue
-                                 m-expandable_cue-close">
-                        <span class="m-expandable_cue-label">Hide</span>
+                    <span class="o-expandable_cue
+                                 o-expandable_cue-close">
+                        <span class="o-expandable_cue-label">Hide</span>
                         <span class="cf-icon cf-icon-minus-round"></span>
                     </span>
                 </span>
@@ -48,8 +48,8 @@
         </div>
     </button>
     <div class="org-chart_nodes
-                m-expandable_content">
-        <ul class="m-expandable_content-animated
+                o-expandable_content">
+        <ul class="o-expandable_content-animated
                    list list__unstyled
                    list__spaced">
             {% for child_org in org.children %}
