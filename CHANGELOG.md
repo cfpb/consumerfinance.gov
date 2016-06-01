@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Added
 
 - Frontend: Added task for generating JavaScript code docs with `gulp docs`.
+- Test for `most_common` util
 
 ### Changes
 - Use bare value of RichText field if value type is not RichText
@@ -27,6 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - Event RSVP email link button
 - `atomicName` parameter from `checkDom` atomic helper.
+- Unused function `get_related_posts_categories`
 
 ### Fixed
 - get_browsefilterable_posts() call to get_page_set
