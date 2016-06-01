@@ -4,6 +4,10 @@ var ActivityLog = require(
     '../page_objects/page_activity-log.js'
   );
 
+var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+
+var breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
+
 describe( 'The Activity Log Page', function() {
   var page;
 
@@ -14,10 +18,6 @@ describe( 'The Activity Log Page', function() {
 
   it( 'should properly load in a browser', function() {
     expect( page.pageTitle() ).toContain( 'Activity Log' );
-  } );
-
-  xit( 'should include a main title', function() {
-    expect( page.mainTitle.getText() ).toBe( 'Activity Log' );
   } );
 
   it( 'should include a main summary', function() {
@@ -39,9 +39,16 @@ describe( 'The Activity Log Page', function() {
   it( 'should include a visible Show button',
     function() {
       expect( page.searchFilterShowBtn.isDisplayed() ).toBe( true );
-      expect( page.searchFilterShowBtn.getText() ).toBe( 'Show' );
     }
   );
+
+  if ( browser.params.windowWidth > breakpointsConfig.bpMED.min ) {
+    it( 'should say "Show" on medium/large screens',
+      function() {
+        expect( page.searchFilterShowBtn.getText() ).toBe( 'Show' );
+      }
+    );
+  }
 
   it( 'should include a hidden Hide button',
     function() {
