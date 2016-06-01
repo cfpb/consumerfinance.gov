@@ -16,19 +16,21 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ## Added
-- Ability to use Social Media molecule as a Wagtail module in the Sidefoot
+- Ability to use Social Media molecule as a Wagtail module in the Sidefoot.
 - Frontend: Added task for generating JavaScript code docs with `gulp docs`.
 
 ### Changes
-- Use bare value of RichText field if value type is not RichText
-- Check against Activity Log topics when generating View More link
-- Breadcrumb and sidenav link generation gets most appropriate version of page
-- Made Text Introduction's `has_rule` option have an effect
-- Tidied up some of the template logic around using `render_block`
-- Changed class of FCM category slug to remove extra spacing
+- Use bare value of RichText field if value type is not RichText.
+- Check against Activity Log topics when generating View More link.
+- Breadcrumb and sidenav link generation gets most appropriate version of page.
+- Made Text Introduction's `has_rule` option have an effect.
+- Tidied up some of the template logic around using `render_block`.
+- Changed class of FCM category slug to remove extra spacing.
+- Updated gulp task to write both responsive and non-responsive styles for ondemand needs.
+- Updated the test fixture for ondemand includes to allow for the nonresponsive stylesheet to be loaded for visual testing.
 
 ### Removed
-- Event RSVP email link button
+- Event RSVP email link button.
 - `atomicName` parameter from `checkDom` atomic helper.
 
 ### Fixed
