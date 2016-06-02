@@ -14,7 +14,7 @@ mysql_users:
     priv: "{{ mysql_database }}.*:ALL"
 
 mysql_packages:
-  - mysql-5.1.73-5.el6_6
+  - mysql
   - mysql-server
   - mysql-libs
   - MySQL-python
