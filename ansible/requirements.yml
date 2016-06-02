@@ -1,5 +1,6 @@
-# Install a role from the Ansible Galaxy
-- src: geerlingguy.mysql
+- src: https://github.com/vickumar1981/ansible-role-mysql.git
+  version: origin/version_fix
+  name: vickumar1981.mysql
 
 - src: geerlingguy.git
 
@@ -9,7 +10,7 @@
 
 - src: https://github.com/vickumar1981/ansible-role-nodejs.git
   version: origin/version_fix
-  name: juwai.nodejs
+  name: vickumar1981.nodejs
 
 - src: https://github.com/Ken24/ansible-role-python.git
   version: master
