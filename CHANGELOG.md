@@ -23,6 +23,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Use bare value of RichText field if value type is not RichText
 - Check against Activity Log topics when generating View More link
 - Breadcrumb and sidenav link generation gets most appropriate version of page
+- Promotes Expandables from molecule to organism
+- Changes global banner expandable Less to resolve cascade issue
 
 ### Removed
 - Event RSVP email link button
@@ -90,9 +92,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Adding Validation code and url param fix for Ustream player
 
 ### Changes
-- Rename Events body field => Subheading 
+- Rename Events body field => Subheading
 - Switch render location of live/future body fields to under the map (new body location)
-- Change date used for post preview from date published to actual event date. 
+- Change date used for post preview from date published to actual event date.
 - Fixes issue with spacing after the last item in a full-width component
 - Adding Validation code and url param fix for Ustream player.
 

@@ -24,42 +24,27 @@
 
     .o-expandable_content {
         border-bottom: none;
+        background: transparent;
+    }
+
+    .o-expandable_content-animated {
+        // Don't want the extra bottom padding for this use.
+        padding-bottom: 0;
+        // Increase padding left to line up with text in heading above.
+        // Magic number derived from 1em block (roughly the width of the icon)
+        // at 18px, the font size of the heading, plus 4.5px for the
+        // standard inline word space (~ 0.25em) between the icon and the text.
+        padding-left: unit( 22.5px / @base-font-size-px, em );
     }
 
     .o-expandable_target {
-        border-top: none;
-    }
-
-    .respond-to-min(@bp-sm-min, {
-        font-size: 1em;
-    });
-
-    &_head {
-        .h4();
-        margin-bottom: 0;
-
-        .o-expandable__expanded & {
-            margin-bottom: unit( 5px / @base-font-size-px, em );
-        }
-    }
-
-    &_icon {
-        color: @gold;
-    }
-
-    &_desc {
-        margin-bottom: 0;
-        padding: 0;
-        background: @gold-20;
-    }
-
-    &_btn {
         .btn__secondary();
         width: 100%;
         // Restore standard btn padding, which is removed by .expandable_target.
         padding:
             unit( @btn-v-padding / @btn-font-size, em )
             unit( 14px / @btn-font-size, em );
+        border-top: none;
         margin-top: @grid_gutter-width / 2;
 
         .respond-to-min(@bp-sm-min, {
@@ -90,6 +75,29 @@
             // so the button position has to be adjusted accordingly.
             top: unit( -12px / @base-font-size-px, em );
         } );
+    }
+
+    .respond-to-min(@bp-sm-min, {
+        font-size: 1em;
+    });
+
+    &_head {
+        .h4();
+        margin-bottom: 0;
+
+        .o-expandable__expanded & {
+            margin-bottom: unit( 5px / @base-font-size-px, em );
+        }
+    }
+
+    &_icon {
+        color: @gold;
+    }
+
+    &_desc {
+        margin-bottom: 0;
+        padding: 0;
+        background: @gold-20;
     }
 }
 
