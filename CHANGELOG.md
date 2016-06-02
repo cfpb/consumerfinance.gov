@@ -16,23 +16,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ## Added
-
+- Ability to use Social Media molecule as a Wagtail module in the Sidefoot
 - Frontend: Added task for generating JavaScript code docs with `gulp docs`.
 
 ### Changes
 - Use bare value of RichText field if value type is not RichText
 - Check against Activity Log topics when generating View More link
 - Breadcrumb and sidenav link generation gets most appropriate version of page
+- Made Text Introduction's `has_rule` option have an effect
+- Tidied up some of the template logic around using `render_block`
+- Changed class of FCM category slug to remove extra spacing
 
 ### Removed
 - Event RSVP email link button
 - `atomicName` parameter from `checkDom` atomic helper.
 
 ### Fixed
-- get_browsefilterable_posts() call to get_page_set
 
 
-##3.0.0-3.3.20 - 2016-05-24
+## 3.0.0-3.3.20 - 2016-05-24
 
 ## Added
 
@@ -44,7 +46,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 - get_browsefilterable_posts() call to get_page_set
 
-##3.0.0-3.3.19 - 2016-05-23
+## 3.0.0-3.3.19 - 2016-05-23
 
 ### Changes
 - Frontend: Added `destroyInitFlag()` method to `atomic-helpers.js`.
@@ -58,10 +60,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: Removed `self` references in ContentSlider.
 - Newsroom fixed to render all categories when no filters are selected.
 
-##3.0.0-3.3.18 - 2016-05-20
+## 3.0.0-3.3.18 - 2016-05-20
 
 ## Added
-
 - missing publish_eccu requirements
 
 ### Changes
@@ -80,19 +81,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: Removed `self` references in ContentSlider.
 
 
-##3.0.0-3.3.17 - 2016-05-20
+## 3.0.0-3.3.17 - 2016-05-20
 
 ### Added
-- Ability to use Social Media molecule as a Wagtail module in the Sidefoot
 - Missing token provider for forms submitted by JS
 - Ability to refresh akamai cache on page publish
 - Adding Acceptance tests for the Video Player
 - Adding Validation code and url param fix for Ustream player
 
 ### Changes
-- Rename Events body field => Subheading 
+- Rename Events body field => Subheading
 - Switch render location of live/future body fields to under the map (new body location)
-- Change date used for post preview from date published to actual event date. 
+- Change date used for post preview from date published to actual event date.
 - Fixes issue with spacing after the last item in a full-width component
 - Adding Validation code and url param fix for Ustream player.
 
