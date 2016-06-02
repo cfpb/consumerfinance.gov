@@ -182,7 +182,7 @@ class Expandable(BaseExpandable):
     content = blocks.StreamBlock(
         [
             ('paragraph', blocks.RichTextBlock(required=False)),
-            ('Well', Well()),
+            ('well', Well()),
             ('links', atoms.Hyperlink()),
             ('email', molecules.ContactEmail()),
             ('phone', molecules.ContactPhone()),
