@@ -60,7 +60,7 @@ export CFGOV_HOME=path/to/cfgov-refresh
 export PATH=$PATH:$CFGOV_HOME/bin
 cfgov init
 cfgov assets
-cfgov django start
+cfgov start django
 ```
 
 ## Stand-alone installation
