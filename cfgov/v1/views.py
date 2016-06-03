@@ -28,11 +28,9 @@ from wagtail.wagtailadmin.views import account
 from wagtail.wagtailusers.views.users import add_user_perm, change_user_perm
 from wagtail.wagtailadmin.utils import permission_required
 
-from .auth_forms import CFGOVUserCreationForm, CFGOVUserEditForm,\
-    CFGOVSetPasswordForm, CFGOVPasswordChangeForm, LoginForm
+from .auth_forms import CFGOVSetPasswordForm, CFGOVPasswordChangeForm, LoginForm
 
 from .signals import page_unshared
-
 
 class LeadershipCalendarPDFView(PDFGeneratorView):
     render_url = 'http://localhost/about-us/the-bureau/leadership-calendar/print/'
@@ -236,49 +234,4 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
 
 password_reset_confirm = account._wrap_password_reset_view(custom_password_reset_confirm)
 
-## User Creation
 
-
-
-
-@permission_required(add_user_perm)
-def create_user(request):
-    if request.POST:
-        form = CFGOVUserCreationForm(request.POST)
-        if form.is_valid():
-                user = form.save()
-                wagtail_messages.success(request, _("User '{0}' created.").format(user), buttons=[
-                    wagtail_messages.button(reverse('wagtailusers_users:edit', args=(user.id,)), _('Edit'))
-                ])
-                return redirect('wagtailusers_users:index')
-        elif '__all__' in form.errors:
-                wagtail_messages.error(request,form.errors['__all__'])
-    else:
-        form = CFGOVUserCreationForm()
-
-    return render(request, 'wagtailusers/users/create.html', {
-        'form': form,
-    })
-
-@permission_required(change_user_perm)
-def edit_user(request, user_id):
-    user = get_object_or_404(get_user_model(), id=user_id)
-    if request.POST:
-        form = CFGOVUserEditForm(request.POST, instance=user)
-        if form.is_valid():
-            user = form.save()
-            user.temporarylockout_set.all().delete()
-            wagtail_messages.success(request, _("User '{0}' updated.").format(user), buttons=[
-                wagtail_messages.button(reverse('wagtailusers_users:edit', args=(user.id,)), _('Edit'))
-            ])
-            return redirect('wagtailusers_users:index')
-        else:
-            if '__all__' in form.errors:
-                wagtail_messages.error(request,form.errors['__all__'])
-    else:
-        form = CFGOVUserEditForm(instance=user)
-
-    return render(request, 'wagtailusers/users/edit.html', {
-        'user': user,
-        'form': form,
-    })
