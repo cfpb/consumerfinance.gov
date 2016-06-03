@@ -81,8 +81,7 @@ describe( 'Header', function() {
         } );
       } );
     } );
-  } else if ( browser.params.windowWidth > breakpointsConfig.bpSM.min &&
-              browser.params.windowWidth < breakpointsConfig.bpSM.max ) {
+  } else if ( browser.params.windowWidth < breakpointsConfig.bpSM.max ) {
     describe( 'small size', function() {
       describe( 'at page load', function() {
         it( 'should display Header', function() {
@@ -135,11 +134,31 @@ describe( 'Header', function() {
               expect( _dom.overlay.isDisplayed() ).toBe( true );
             } );
         } );
+
+        describe( 'then click search', function() {
+          it( 'should show the search and hide menu', function() {
+            browser.driver.actions().click( _dom.megaMenuTrigger ).perform();
+            browser.driver.wait( _dom.megaMenuContent.isDisplayed() );
+            browser.driver.actions().click( _dom.globalSearchTrigger ).perform()
+              .then( function() {
+                expect( _dom.globalSearch.isDisplayed() ).toBe( true );
+
+              } );
+          } );
+        } );
       } );
 
-      // TODO: Add tests for clicking between menu and search.
-      // describe( 'click search when mega menu is showing', function() {} );
-      // describe( 'click mega menu when search is showing', function() {} );
+      describe( 'click search, then click mega menu', function() {
+        it( 'should show the megamenu and hide search', function() {
+          browser.driver.actions().click( _dom.globalSearchTrigger ).perform();
+          browser.driver.wait( _dom.megaMenuContent.isDisplayed() );
+          browser.driver.actions().click( _dom.megaMenuTrigger ).perform()
+            .then( function() {
+              expect( _dom.megaMenuContent.isDisplayed() ).toBe( true );
+            } );
+        } );
+      } );
+
     } );
   }
 } );
