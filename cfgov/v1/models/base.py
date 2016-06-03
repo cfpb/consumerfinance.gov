@@ -107,6 +107,7 @@ class CFGOVPage(Page):
         ('contact', organisms.MainContactInfo()),
         ('sidebar_contact', organisms.SidebarContactInfo()),
         ('rss_feed', molecules.RSSFeed()),
+        ('social_media', molecules.SocialMedia()),
     ], blank=True)
 
     # Panels
@@ -131,11 +132,15 @@ class CFGOVPage(Page):
     ])
 
     def generate_view_more_url(self, request):
-        tags = []
+        from ..forms import ActivityLogFilterForm
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
+        form = ActivityLogFilterForm(parent=activity_log, hostname=request.site.hostname)
+        available_tags = [tag[0] for name, tags in form.fields['topics'].choices for tag in tags]
+        tags = []
         index = util.get_form_id(activity_log)
         for tag in self.tags.names():
-            tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
+            if tag in available_tags:
+                tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
         tags = '&'.join(tags)
         return get_protected_url({'request': request}, activity_log) + '?' + tags
 
@@ -189,12 +194,12 @@ class CFGOVPage(Page):
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
 
-    def get_breadcrumbs(self, site):
+    def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
-        home_page_children = site.root_page.get_children()
+        home_page_children = request.site.root_page.get_children()
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
-                return ancestors[i+1:]
+                return [util.get_appropriate_page_version(request, ancestor) for ancestor in ancestors[i+1:]]
         return []
 
     def get_appropriate_descendants(self, hostname, inclusive=True):
@@ -265,19 +270,9 @@ class CFGOVPage(Page):
 
         else:
             # Request is for this very page.
-            # If we're on the production site, make sure the version of the page
-            # displayed is the latest version that has `live` set to True for
-            # the live site or `shared` set to True for the staging site.
-            staging_hostname = os.environ.get('STAGING_HOSTNAME')
-            revisions = self.revisions.all().order_by('-created_at')
-            for revision in revisions:
-                page_version = json.loads(revision.content_json)
-                if request.site.hostname != staging_hostname:
-                    if page_version['live']:
-                        return RouteResult(revision.as_page_object())
-                else:
-                    if page_version['shared']:
-                        return RouteResult(revision.as_page_object())
+            page = util.get_appropriate_page_version(request, self)
+            if page:
+                return RouteResult(page)
             raise Http404
 
     def permissions_for_user(self, user):
@@ -421,7 +416,7 @@ class PasswordHistoryItem(models.Model):
     @classmethod
     def current_for_user(cls,user):
         return user.passwordhistoryitem_set.latest()
-        
+
     def can_change_password(self):
         now = timezone.now()
         return(now > self.locked_until)

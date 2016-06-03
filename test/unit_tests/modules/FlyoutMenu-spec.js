@@ -66,14 +66,6 @@ describe( 'FlyoutMenu', function() {
       expect( FlyoutMenu.EXPAND_TYPE ).to.equal( 'expand' );
       expect( FlyoutMenu.COLLAPSE_TYPE ).to.equal( 'collapse' );
       expect( FlyoutMenu.BASE_CLASS ).to.equal( 'behavior_flyout-menu' );
-      expect( FlyoutMenu.BASE_SEL )
-        .to.equal( '[data-js-hook=behavior_flyout-menu]' );
-      expect( FlyoutMenu.ALT_TRIGGER_SEL )
-        .to.equal( '[data-js-hook=behavior_flyout-menu_alt-trigger]' );
-      expect( FlyoutMenu.CONTENT_SEL )
-        .to.equal( '[data-js-hook=behavior_flyout-menu_content]' );
-      expect( FlyoutMenu.TRIGGER_SEL )
-        .to.equal( '[data-js-hook=behavior_flyout-menu_trigger]' );
     } );
 
     it( 'should have correct state before initializing', function() {

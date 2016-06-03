@@ -263,3 +263,23 @@ class RSSFeed(blocks.ChoiceBlock):
     class Meta:
         icon = 'plus'
         template = '_includes/molecules/rss-feed.html'
+
+
+class SocialMedia(blocks.StructBlock):
+    is_share_view = blocks.BooleanBlock(default=True,
+                                        required=False,
+                                        label='Create sharing links',
+                                        help_text='If deselected, links to visit CFPB profiles will be created.')
+    blurb = blocks.CharBlock(required=False,
+                             default='Look what I found on the CFPB\'s site!',
+                             help_text='Sets the tweet text, email subject line, and LinkedIn post text.')
+    twitter_related = blocks.CharBlock(required=False,
+                                       help_text='A comma-separated list of accounts related to the content of the shared URL. Do not enter the @ symbol. If blank, it will default to just "cfpb".')
+    twitter_hashtags = blocks.CharBlock(required=False,
+                                        help_text='A comma-separated list of hashtags to be appended to default tweet text.')
+    twitter_lang = blocks.CharBlock(required=False,
+                                    help_text='Loads text components in the specified language, if other than English. E.g., use "es" for Spanish. See https://dev.twitter.com/web/overview/languages for a list of supported language codes.')
+
+    class Meta:
+        icon = 'site'
+        template = '_includes/molecules/social-media.html'
