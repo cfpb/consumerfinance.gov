@@ -8,6 +8,9 @@
 {# Set to the Header organism by default. #}
 {% set atomic_type = 'header' if atomic_type == None else atomic_type %}
 
+{% set suffix = request.GET.get( 'suffix' ) %}
+{% set suffix = '' if suffix == None else '.' + suffix %}
+
 <!DOCTYPE html>
 
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie10 lt-ie9"> <![endif]-->
@@ -41,7 +44,7 @@
     ============
     The atomic CSS file. This includes legacy IE-specific prefixing.
 #}
-<link rel="stylesheet" href="{{ static('css/' + atomic_type + '.css') }}">
+<link rel="stylesheet" href="{{ static('css/' + atomic_type + suffix + '.css') }}">
 
 {#
     ================
