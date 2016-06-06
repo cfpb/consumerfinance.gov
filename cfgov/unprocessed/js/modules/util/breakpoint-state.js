@@ -40,5 +40,23 @@ function get( width ) {
   return breakpointState;
 }
 
+/**
+ * Whether currently in the desktop view.
+ * @returns {boolean} True if in the desktop view, otherwise false.
+ */
+function isInDesktop() {
+  var response = false;
+  var currentBreakpoint = get();
+  if ( currentBreakpoint.isBpMED ||
+       currentBreakpoint.isBpLG ||
+       currentBreakpoint.isBpXL ) {
+    response = true;
+  }
+  return response;
+}
+
 // Expose public methods.
-module.exports = { get: get };
+module.exports = {
+  get: get,
+  isInDesktop: isInDesktop
+};
