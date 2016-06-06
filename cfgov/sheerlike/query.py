@@ -23,6 +23,7 @@ from unipath import Path
 from .filters import filter_dsl_from_multidict
 
 from .middleware import get_request
+from .templates import _convert_date
 
 
 ALLOWED_SEARCH_PARAMS = (
@@ -400,20 +401,12 @@ def get_document(doctype, docid):
     raw_results = es.get(index=es_index, doc_type=doctype, id=docid)
     return QueryHit(raw_results, es, es_index)
 
-
-def convert_to_datetime(timestamp):
-    date = parser.parse(timestamp)
-    if not date.tzinfo:
-        date = date.replace(tzinfo=timezone('America/New_York'))
-    return date.astimezone(timezone('UTC'))
-
-
 def when(starttime, endtime):
-    start = convert_to_datetime(starttime)
-    end = convert_to_datetime(endtime)
-    if start >= datetime.datetime.now(timezone('UTC')):
+    start = _convert_date(starttime, 'America/New_York')
+    end = _convert_date(endtime,'America/New_York')
+    if start > datetime.datetime.now(timezone('America/New_York')):
         return 'future'
-    elif end <= datetime.datetime.now(timezone('UTC')):
+    elif end < datetime.datetime.now(timezone('America/New_York')):
         return 'past'
     else:
         return 'present'

@@ -24,7 +24,7 @@
 {% block content_main %}
     {% include 'events/_event-detail.html' %}
     {% from 'events/_macros.html' import event_media as event_media %}
-    {% if event_state and event_state == 'past' %}
+    {% if event_state and event_state != 'future' %}
         {{ event_media(page) }}
     {% endif %}
 
