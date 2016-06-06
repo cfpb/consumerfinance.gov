@@ -28,7 +28,7 @@
                 {% if colcount == loop.index %}
                     {% if 'rich_text_blob' in cell.block_type %}
                         <td data-label="{{ thead }}">
-                            {{ parse_links(cell) | safe }}
+                            {{ parse_links(cell.value) | safe }}
                         </td>
                     {% else %}
                         <td data-label="{{ thead }}">
