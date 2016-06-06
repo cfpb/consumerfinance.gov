@@ -66,8 +66,19 @@ var onDemandConf = {
   ]
 };
 
+var nonResponsiveConf = {
+  context: path.join( __dirname, '/../', paths.unprocessed,
+                      JS_ROUTES_PATH + '/on-demand' ),
+  entry:   './header.js',
+  output: {
+    path:     path.join( __dirname, 'js' ),
+    filename: '[name]'
+  }
+};
+
 module.exports = {
-  onDemandConf: onDemandConf,
-  ieConf:       ieConf,
-  modernConf:   modernConf
+  nonResponsiveConf: nonResponsiveConf,
+  onDemandConf:      onDemandConf,
+  ieConf:            ieConf,
+  modernConf:        modernConf
 };
