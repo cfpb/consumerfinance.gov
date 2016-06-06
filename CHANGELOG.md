@@ -755,6 +755,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Disabled JavaScript in IE8 and earlier.
 - Removed max_length validation until [later review](https://github.com/cfpb/cfgov-refresh/issues/1258) after release
 - Refactored beta-banner.js to demonstrate general lifecycle.
+- Squash migrations but keep add_share_perms in it's own script
 
 ### Removed
 - Removed unused exportsOverride section,
