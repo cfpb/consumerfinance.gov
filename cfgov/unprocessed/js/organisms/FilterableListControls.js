@@ -3,7 +3,7 @@
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
-var Expandable = require( '../molecules/Expandable' );
+var Expandable = require( '../organisms/Expandable' );
 var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
 var Multiselect = require( '../molecules/Multiselect' );
 var Notification = require( '../molecules/Notification' );

@@ -30,9 +30,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changed class of FCM category slug to remove extra spacing.
 - Updated gulp task to write both responsive and non-responsive styles for ondemand needs.
 - Updated the test fixture for ondemand includes to allow for the nonresponsive stylesheet to be loaded for visual testing.
-- Use bare value of RichText field if value type is not RichText
-- Check against Activity Log topics when generating View More link
-- initial_test_data script now uses streamfield block data from a new file called _atomic_helpers.py.
+- Promotes Expandables from molecule to organism
+- Changes global banner expandable Less to resolve cascade issue
+- Maintain order and uniqueness in JS file lists by using `OrderedDict` instead of `set`
+- initial_test_data script now uses streamfield block data from a new file called `_atomic_helpers.py`
 
 ### Removed
 - Event RSVP email link button.

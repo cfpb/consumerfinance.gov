@@ -8,7 +8,7 @@ function _getFilterableElement( selector ) {
 }
 
 var oFilterableListControls = {
-  mExpandable: _getFilterableElement( '.m-expandable' ),
+  mExpandable: _getFilterableElement( '.o-expandable' ),
 
   mNotification: _getFilterableElement( '.m-notification' ),
 
