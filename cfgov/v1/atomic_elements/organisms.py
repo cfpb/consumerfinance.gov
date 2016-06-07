@@ -43,20 +43,6 @@ class HalfWidthLinkBlobGroup(blocks.StructBlock):
         template = '_includes/organisms/half-width-link-blob-group.html'
 
 
-class PostPreview(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-    image = atoms.ImageBasic(required=False)
-
-    post = blocks.PageChooserBlock(required=False)
-
-    link = atoms.Hyperlink(required=False)
-
-    class Meta:
-        icon = 'view'
-        template = '_includes/organisms/post-preview.html'
-
-
 class PostPreviewSnapshot(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit',
                              help_text='How many posts do you want to show?')
@@ -125,13 +111,8 @@ class MainContactInfo(blocks.StructBlock):
         template = '_includes/organisms/main-contact-info.html'
 
 
-class SidebarContactInfo(blocks.StructBlock):
-    header = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-    contact = SnippetChooserBlock(ContactSnippetClass)
-
+class SidebarContactInfo(MainContactInfo):
     class Meta:
-        icon = 'wagtail'
         template = '_includes/organisms/sidebar-contact-info.html'
 
 

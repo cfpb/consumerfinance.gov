@@ -28,7 +28,6 @@ class DemoPage(CFGOVPage):
     organisms = StreamField([
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
-        ('post_preview', organisms.PostPreview()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('item_intro', organisms.ItemIntroduction()),
     ], blank=True)

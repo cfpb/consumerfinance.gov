@@ -71,18 +71,3 @@ def current_openings(request):
     
     return render(request, "about-us/careers/current-openings/index.html",
         {'careers':jobs})
-
-
-# This function is used to submit to Gov-Delivery
-@csrf_exempt
-def submit_govdelivery(request):
-    code = request.POST.get('code')
-    email = request.POST.get('email')
-    import urllib
-    try:
-        res = urllib.urlopen('https://public.govdelivery.com/service/process_ss.xml?code=%s&email=%s' % (code, email))
-    except:
-        # todo: log error
-        res = '<response code="500" message="Unknown Server Error"/>'
-
-    return HttpResponse(res, content_type="application/xhtml+xml")

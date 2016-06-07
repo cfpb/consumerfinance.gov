@@ -153,7 +153,7 @@ class FilterableListForm(forms.Form):
     # render the field with.
     def render_with_id(self, field, attr_id):
         for f in self.fields:
-            if field.html_name in f:
+            if field.html_name == f:
                 self.fields[f].widget.attrs.update({'id': attr_id})
                 self.set_field_html_name(self.fields[f], attr_id)
                 return self[f]
