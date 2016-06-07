@@ -60,11 +60,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function init( state ) {
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
-      // return standardType.UNDEFINED;
-      // TODO: Find a solution for initializing expandables AFTER
-      // expandable groups, or propagate the `return this` to all
-      // initializations of atomic components.
-      return this;
+      return standardType.UNDEFINED;
     }
     _calcHeight();
     // Even if expanded is set, don't expand if in mobile window size.
