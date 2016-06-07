@@ -30,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the test fixture for ondemand includes to allow for the nonresponsive stylesheet to be loaded for visual testing.
 - Promotes Expandables from molecule to organism
 - Changes global banner expandable Less to resolve cascade issue
+- Maintain order and uniqueness in JS file lists by using `OrderedDict` instead of `set`
 
 ### Removed
 - Event RSVP email link button.
