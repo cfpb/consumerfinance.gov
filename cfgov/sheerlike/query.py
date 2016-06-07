@@ -401,8 +401,10 @@ def get_document(doctype, docid):
     raw_results = es.get(index=es_index, doc_type=doctype, id=docid)
     return QueryHit(raw_results, es, es_index)
 
-def when(starttime, endtime):
+def when(starttime, endtime, streamtime=None):
     start = _convert_date(starttime, 'America/New_York')
+    if streamtime:
+        start = _convert_date(streamtime, 'America/New_York')
     end = _convert_date(endtime,'America/New_York')
     if start > datetime.datetime.now(timezone('America/New_York')):
         return 'future'
