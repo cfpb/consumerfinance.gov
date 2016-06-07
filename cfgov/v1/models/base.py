@@ -337,7 +337,7 @@ class CFGOVPage(Page):
         self.add_page_js(js)
         self._add_streamfield_js(js)
         for key, js_files in js.iteritems():
-            js[key] = list(set(js_files))
+            js[key] = OrderedDict.fromkeys(js_files).keys()
         return js
 
 
