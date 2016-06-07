@@ -2,7 +2,7 @@
 
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var Expandable = require( '../molecules/Expandable' );
+var Expandable = require( '../organisms/Expandable' );
 var standardType = require( '../modules/util/standard-type' );
 
 /**

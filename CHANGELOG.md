@@ -36,6 +36,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - initial_test_data script now uses streamfield block data from a new file called _atomic_helpers.py.
 - `when` now compares datetimes against the current time in ET, not UTC
 - `when` optionally uses the event stream's start time, if there is one 
+- Promotes Expandables from molecule to organism
+- Changes global banner expandable Less to resolve cascade issue
+- Maintain order and uniqueness in JS file lists by using `OrderedDict` instead of `set`
 
 ### Removed
 - Event RSVP email link button.

@@ -25,7 +25,7 @@ class BrowsePage(CFGOVPage):
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
-        ('expandable', molecules.Expandable()),
+        ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
     ], blank=True)

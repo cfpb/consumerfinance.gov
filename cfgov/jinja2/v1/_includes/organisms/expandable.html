@@ -30,37 +30,37 @@
 
 {% macro expandable(value) %}
 
-<div data-qa-hook="expandable" class="m-expandable
-            m-expandable__expanded
-            {{ 'm-expandable__borders' if value.is_bordered else '' }}
-            {{ 'm-expandable__midtone' if value.is_midtone else '' }}"
+<div data-qa-hook="expandable" class="o-expandable
+            o-expandable__expanded
+            {{ 'o-expandable__borders' if value.is_bordered else '' }}
+            {{ 'o-expandable__midtone' if value.is_midtone else '' }}"
             {{ 'data-state=expanded' if value.is_expanded else '' }}>
 
-    <button class="m-expandable_target">
-        <div class="m-expandable_header">
-            <span class="m-expandable_header-left
-                         m-expandable_label">
+    <button class="o-expandable_target">
+        <div class="o-expandable_header">
+            <span class="o-expandable_header-left
+                         o-expandable_label">
                 {{ value.label }}
             </span>
-            <span class="m-expandable_header-right
-                         m-expandable_link
+            <span class="o-expandable_header-right
+                         o-expandable_link
                          u-hidden">
-                <span class="m-expandable_cue
-                             m-expandable_cue-open">
-                    <span class="m-expandable_cue-label">Show</span>
+                <span class="o-expandable_cue
+                             o-expandable_cue-open">
+                    <span class="o-expandable_cue-label">Show</span>
                     <span class="cf-icon cf-icon-plus-round"></span>
                 </span>
-                <span class="m-expandable_cue
-                             m-expandable_cue-close">
-                    <span class="m-expandable_cue-label">Hide</span>
+                <span class="o-expandable_cue
+                             o-expandable_cue-close">
+                    <span class="o-expandable_cue-label">Hide</span>
                     <span class="cf-icon cf-icon-minus-round"></span>
                 </span>
             </span>
         </div>
     </button>
-    <div class="m-expandable_content"
+    <div class="o-expandable_content"
             {{ 'aria-expanded=true' if value.is_expanded else '' }}>
-        <div class="m-expandable_content-animated">
+        <div class="o-expandable_content-animated">
             {% if caller is defined %}
                 {{ caller() }}
             {% else %}

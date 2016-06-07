@@ -22,14 +22,12 @@
 */
 
 // Color variables
-// $color- variables are from 18F's US Web Design Standards
-// https://github.com/18F/web-design-standards/blob/18f-pages/assets/_scss/core/_variables.scss
 
 // .expandable_label
-@expandable_label-text:         #000000;
+@expandable_label-text:         @black;
 
 // .expandable_link
-@expandable_link-text:          #046b99; // $color-primary-alt-darkest
+@expandable_link-text:          @pacific;
 
 // Sizing variables
 
@@ -48,66 +46,66 @@
   patterns:
   - name: Expandable molecule
     markup: |
-      <div class="m-expandable">
-          <button class="m-expandable_target" aria-pressed="false">
-              <div class="m-expandable_header">
-                  <span class="m-expandable_header-left
-                               m-expandable_label">
+      <div class="o-expandable">
+          <button class="o-expandable_target" aria-pressed="false">
+              <div class="o-expandable_header">
+                  <span class="o-expandable_header-left
+                               o-expandable_label">
                       Default Expandable
                   </span>
-                  <span class="m-expandable_header-right
-                               m-expandable_link">
-                      <span class="m-expandable_cue
-                                   m-expandable_cue-open">
-                          <span class="m-expandable_cue-label">Show</span>
+                  <span class="o-expandable_header-right
+                               o-expandable_link">
+                      <span class="o-expandable_cue
+                                   o-expandable_cue-open">
+                          <span class="o-expandable_cue-label">Show</span>
                           <span class="cf-icon cf-icon-plus-round"></span>
                       </span>
-                      <span class="m-expandable_cue
-                                   m-expandable_cue-close u-hidden">
-                          <span class="m-expandable_cue-label">Hide</span>
+                      <span class="o-expandable_cue
+                                   o-expandable_cue-close u-hidden">
+                          <span class="o-expandable_cue-label">Hide</span>
                           <span class="cf-icon cf-icon-minus-round"></span>
                       </span>
                   </span>
               </div>
           </button>
-          <div class="m-expandable_content" aria-expanded="false">
+          <div class="o-expandable_content" aria-expanded="false">
           </div>
       </div>
     codenotes:
       - |
         Pattern structure
         -----------------
-        .m-expandable
-          button.m-expandable_target
-            .m-expandable_header
-              .m-expandable_header-left.m-expandable_label
-              .m-expandable_header-right.m-expandable_link
-                .m-expandable_cue-open
-                  .m-expandable_cue-label
-                .m-expandable_cue-close
-                  .m-expandable_cue-label
-          .m-expandable_content
+        .o-expandable
+          button.o-expandable_target
+            .o-expandable_header
+              .o-expandable_header-left.o-expandable_label
+              .o-expandable_header-right.o-expandable_link
+                .o-expandable_cue-open
+                  .o-expandable_cue-label
+                .o-expandable_cue-close
+                  .o-expandable_cue-label
+          .o-expandable_content
     notes:
       - "Use the button tag for the .expandable_target element to allow for
          keyboard access."
       - "The 'Show' and 'Hide' messages can be customized directly in the HTML
-         by editing the contents of .m-expandable_cue-label."
-      - "The aria-pressed attribute on .m-expandable_target gets automatically
+         by editing the contents of .o-expandable_cue-label."
+      - "The aria-pressed attribute on .o-expandable_target gets automatically
          added and updated by JavaScript."
-      - "The aria-expanded attribute on .m-expandable_content gets automatically
+      - "The aria-expanded attribute on .o-expandable_content gets automatically
          updated by JavaScript."
-  - name: .m-expandable__expanded (modifier)
+  - name: .o-expandable__expanded (modifier)
     codenotes:
       - |
-        .m-expandable__expanded
+        .o-expandable__expanded
     notes:
       - "Sometimes you may want the expandable to be open by default. This
-         is as easy as adding the .m-expandable__expanded modifier to the
-         .m-expandable block."
+         is as easy as adding the .o-expandable__expanded modifier to the
+         .o-expandable block."
   tags:
   - cf-molecules
 */
-.m-expandable {
+.o-expandable {
     &_target,
     &_content-animated {
         padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
@@ -131,6 +129,10 @@
         height: 0;
         overflow: hidden;
         position: relative;
+
+        .o-well {
+            margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+        }
     }
 
     &_content-animated {
@@ -139,61 +141,61 @@
         bottom: 0;
     }
 
-    &__expanded .m-expandable_content {
+    &__expanded .o-expandable_content {
         height: 100%;
     }
 
     // Show/hide cues
-    .m-expandable_cue-open {
+    .o-expandable_cue-open {
         display: block;
     }
 
-    .m-expandable_cue-close {
+    .o-expandable_cue-close {
         display: none;
     }
 
     &__expanded {
-        .m-expandable_cue-open {
+        .o-expandable_cue-open {
             display: none;
         }
 
-        .m-expandable_cue-close {
+        .o-expandable_cue-close {
             display: block;
         }
     }
 }
 
 // Setting height to prevent flash on load.
-.m-expandable_content:not([aria-expanded='true']) {
+.o-expandable_content:not([aria-expanded='true']) {
     height: 0;
 }
 
 .no-js {
-    .m-expandable_content:not([aria-expanded='true']) {
+    .o-expandable_content:not([aria-expanded='true']) {
         height: 100%;
     }
 }
 
-.m-expandable {
+.o-expandable {
     // Modifiers
     &__borders {
-        .m-expandable_target,
-        .m-expandable_content {
+        .o-expandable_target,
+        .o-expandable_content {
             border: 1px solid @gray-40;
         }
 
-        .m-expandable_target {
+        .o-expandable_target {
             border-bottom: none;
         }
 
-        .m-expandable_content {
+        .o-expandable_content {
             border-top: none;
         }
     }
 
     &__midtone {
-        .m-expandable_target,
-        .m-expandable_content {
+        .o-expandable_target,
+        .o-expandable_content {
             background: @gray-5;
             border-color: @gray-40;
         }
@@ -208,34 +210,34 @@
     - |
       Pattern structure
       -----------------
-      .m-expandable_header
-        .m-expandable_header-left.m-expandable_label
-        .m-expandable_header-right.m-expandable_link
-          .m-expandable_cue-open
-            .m-expandable_cue-label
-          .m-expandable_cue-close
-            .m-expandable_cue-label
+      .o-expandable_header
+        .o-expandable_header-left.o-expandable_label
+        .o-expandable_header-right.o-expandable_link
+          .o-expandable_cue-open
+            .o-expandable_cue-label
+          .o-expandable_cue-close
+            .o-expandable_cue-label
   patterns:
-  - name: .m-expandable_header (element)
+  - name: .o-expandable_header (element)
     codenotes:
       - |
-        .m-expandable_header
-          .m-expandable_header-left.m-expandable_label
-          .m-expandable_header-right.m-expandable_link
-            .m-expandable_cue-open
-              .m-expandable_cue-label
-            .m-expandable_cue-close
-              .m-expandable_cue-label
+        .o-expandable_header
+          .o-expandable_header-left.o-expandable_label
+          .o-expandable_header-right.o-expandable_link
+            .o-expandable_cue-open
+              .o-expandable_cue-label
+            .o-expandable_cue-close
+              .o-expandable_cue-label
     notes:
       - "Creates a full-width container to house information that is always
          visible."
-      - "Combine .m-expandable_header with .m-expandable_target for a full-width
+      - "Combine .o-expandable_header with .o-expandable_target for a full-width
          trigger."
       - "Allows you to float information left and right."
   tags:
   - cf-molecules
 */
-.m-expandable {
+.o-expandable {
     &_header-left {
         width: 78%;
         float: left;

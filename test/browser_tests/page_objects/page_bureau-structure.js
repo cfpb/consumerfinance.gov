@@ -32,22 +32,22 @@ function TheBureauStructurePage() {
     this.downloadInfo.element( by.css( 'a.btn' ) );
 
   this.getExpandableOffice = function() {
-    return element( by.css( '.slick-slider .m-expandable' ) );
+    return element( by.css( '.slick-slider .o-expandable' ) );
   };
 
   this.getExpandableTarget = function() {
     var expandable = this.getExpandableOffice();
-    return expandable.element( by.css( '.m-expandable_target' ) );
+    return expandable.element( by.css( '.o-expandable_target' ) );
   };
 
   this.getExpandableShowBtn = function() {
     var expandable = this.getExpandableOffice();
-    return expandable.element( by.css( '.m-expandable_cue-open' ) );
+    return expandable.element( by.css( '.o-expandable_cue-open' ) );
   };
 
   this.getExpandableHideBtn = function() {
     var expandable = this.getExpandableOffice();
-    return expandable.element( by.css( '.m-expandable_cue-close' ) );
+    return expandable.element( by.css( '.o-expandable_cue-close' ) );
   };
 }
 
