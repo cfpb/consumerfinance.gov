@@ -6,7 +6,10 @@ _active = local()
 
 
 def get_request():
-    return _active.request
+    try:
+        return _active.request
+    except AttributeError:
+        return None
 
 
 class FlaskyHeaderGetter(object):

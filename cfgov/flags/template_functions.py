@@ -8,6 +8,8 @@ from .models import Flag
 
 def flag_enabled(key):
     request = get_request()
+    if not request:
+        return False
     site = Site.find_for_request(request)
     state_for_site = site.flagstate_set.filter(flag_id=key, \
             ).first()
