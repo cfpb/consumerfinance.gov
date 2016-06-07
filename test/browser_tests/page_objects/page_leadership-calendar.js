@@ -23,17 +23,17 @@ function TheLeadershipCalendarPage() {
 
   this.searchFilterBtn =
     this.searchFilter.element(
-      by.css( '.o-filterable-list-controls .m-expandable_target' )
+      by.css( '.o-filterable-list-controls .o-expandable_target' )
     );
 
   this.searchFilterShowBtn =
     this.searchFilter.element(
-      by.css( '.o-filterable-list-controls .m-expandable_cue-open' )
+      by.css( '.o-filterable-list-controls .o-expandable_cue-open' )
     );
 
   this.searchFilterHideBtn =
     this.searchFilter.element(
-      by.css( '.o-filterable-list-controls .m-expandable_cue-close' )
+      by.css( '.o-filterable-list-controls .o-expandable_cue-close' )
     );
 
   this.downloadFilter =
@@ -41,17 +41,17 @@ function TheLeadershipCalendarPage() {
 
   this.downloadFilterBtn =
     this.downloadFilter.element(
-      by.css( '.o-filterable-list-controls .m-expandable_target' )
+      by.css( '.o-filterable-list-controls .o-expandable_target' )
     );
 
   this.downloadFilterShowBtn =
     this.downloadFilter.element(
-      by.css( '.o-filterable-list-controls .m-expandable_cue-open' )
+      by.css( '.o-filterable-list-controls .o-expandable_cue-open' )
     );
 
   this.downloadFilterHideBtn =
     this.downloadFilter.element(
-      by.css( '.o-filterable-list-controls .m-expandable_cue-close' )
+      by.css( '.o-filterable-list-controls .o-expandable_cue-close' )
     );
 
   this.searchFilterResults =
