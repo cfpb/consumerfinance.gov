@@ -34,12 +34,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Changes global banner expandable Less to resolve cascade issue
 - Maintain order and uniqueness in JS file lists by using `OrderedDict` instead of `set`
 - initial_test_data script now uses streamfield block data from a new file called `_atomic_helpers.py`
+- `user_save_callback` updated to expire a password if it's for a new user
 
 ### Removed
 - Event RSVP email link button.
 - `atomicName` parameter from `checkDom` atomic helper.
 - Unused gov delivery view function in jobmanager
 - PostPreview organism from streamfield block choices since it was unused
+- Custom classes `CFGOVUserEditForm`, `CFGOVUserCreationForm` and functions `create_user` and `edit_user`
+- Custom redirects for creating a user and resetting the password
 
 ### Fixed
 
