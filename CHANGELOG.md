@@ -40,6 +40,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Promotes Expandables from molecule to organism
 - Changes global banner expandable Less to resolve cascade issue
 - Maintain order and uniqueness in JS file lists by using `OrderedDict` instead of `set`
+- `user_save_callback` updated to expire a password if it's for a new user
 
 ### Removed
 - Event RSVP email link button.
@@ -47,6 +48,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Unused function `get_related_posts_categories`
 - Unused gov delivery view function in jobmanager
 - PostPreview organism from streamfield block choices since it was unused
+- Custom classes `CFGOVUserEditForm`, `CFGOVUserCreationForm` and functions `create_user` and `edit_user`
+- Custom redirects for creating a user and resetting the password
 - `convert_to_datetime` since it duplicated logic in `_convert_date`
 
 ### Fixed
