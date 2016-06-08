@@ -43,20 +43,6 @@ class HalfWidthLinkBlobGroup(blocks.StructBlock):
         template = '_includes/organisms/half-width-link-blob-group.html'
 
 
-class PostPreview(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-    image = atoms.ImageBasic(required=False)
-
-    post = blocks.PageChooserBlock(required=False)
-
-    link = atoms.Hyperlink(required=False)
-
-    class Meta:
-        icon = 'view'
-        template = '_includes/organisms/post-preview.html'
-
-
 class PostPreviewSnapshot(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit',
                              help_text='How many posts do you want to show?')
@@ -125,13 +111,8 @@ class MainContactInfo(blocks.StructBlock):
         template = '_includes/organisms/main-contact-info.html'
 
 
-class SidebarContactInfo(blocks.StructBlock):
-    header = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
-    contact = SnippetChooserBlock(ContactSnippetClass)
-
+class SidebarContactInfo(MainContactInfo):
     class Meta:
-        icon = 'wagtail'
         template = '_includes/organisms/sidebar-contact-info.html'
 
 
@@ -163,6 +144,34 @@ class FullWidthText(blocks.StreamBlock):
         template = '_includes/organisms/full-width-text.html'
 
 
+class BaseExpandable(blocks.StructBlock):
+    label = blocks.CharBlock(required=False)
+    is_bordered = blocks.BooleanBlock(required=False)
+    is_midtone = blocks.BooleanBlock(required=False)
+    is_expanded = blocks.BooleanBlock(required=False)
+
+    class Meta:
+        icon = 'list-ul'
+        template = '_includes/organisms/expandable.html'
+        label = 'Expandable'
+
+    class Media:
+        js = ["expandable.js"]
+
+
+class Expandable(BaseExpandable):
+    content = blocks.StreamBlock(
+        [
+            ('paragraph', blocks.RichTextBlock(required=False)),
+            ('well', Well()),
+            ('links', atoms.Hyperlink()),
+            ('email', molecules.ContactEmail()),
+            ('phone', molecules.ContactPhone()),
+            ('address', molecules.ContactAddress()),
+        ], blank=True
+    )
+
+
 class ExpandableGroup(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
@@ -170,7 +179,7 @@ class ExpandableGroup(blocks.StructBlock):
     is_accordion = blocks.BooleanBlock(required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
-    expandables = blocks.ListBlock(molecules.Expandable())
+    expandables = blocks.ListBlock(Expandable())
 
     class Meta:
         icon = 'list-ul'
@@ -198,7 +207,7 @@ class ItemIntroduction(blocks.StructBlock):
 # TODO: FilterControls/Filterable List should be updated to use same
 #       atomic name used on the frontend of FilterableListControls,
 #       or vice versa.
-class FilterControls(molecules.BaseExpandable):
+class FilterControls(BaseExpandable):
     form_type = blocks.ChoiceBlock(choices=[
         ('filterable-list', 'Filterable List'),
         ('pdf-generator', 'PDF Generator'),

@@ -20,7 +20,7 @@ class DemoPage(CFGOVPage):
         ('hero', molecules.Hero()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('call_to_action', molecules.CallToAction()),
-        ('expandable', molecules.Expandable()),
+        ('expandable', organisms.Expandable()),
         ('featured_content', molecules.FeaturedContent()),
 
     ], blank=True)
@@ -28,7 +28,6 @@ class DemoPage(CFGOVPage):
     organisms = StreamField([
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
-        ('post_preview', organisms.PostPreview()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('item_intro', organisms.ItemIntroduction()),
     ], blank=True)

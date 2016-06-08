@@ -135,15 +135,6 @@ Protractor was created by the Angular team to do end-to-end testing of angular s
 Enjoy! :relieved:
 
 
-# Template Macro Tests
-
-Test the Jinja2 templates. From within the root project directory run `gulp test:unit:macro`.
-
-## Writing Tests
-
-Please see [Macro Polo](https://github.com/cfpb/macropolo) for
-documentation about writing tests.
-
 # Performance Testing
 
 To audit if the site complies with performance best practices and guidelines,

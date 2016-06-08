@@ -1,1 +1,0 @@
--e git://github.com/cfpb/macropolo#egg=macropolo

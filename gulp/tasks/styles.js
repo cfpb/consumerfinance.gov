@@ -77,6 +77,16 @@ function stylesOnDemand() {
     } ) )
     .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
     .pipe( gulp.dest( configStyles.dest ) )
+    .pipe( mqr( {
+      width: '75em'
+    } ) )
+    // mqr expands the minified file
+    .pipe( plugins.cssmin() )
+    .pipe( plugins.rename( {
+      suffix:  '.nonresponsive',
+      extname: '.css'
+    } ) )
+    .pipe( gulp.dest( configStyles.dest ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );
