@@ -138,11 +138,11 @@ describe( 'Header', function() {
         describe( 'then click search', function() {
           it( 'should show the search and hide menu', function() {
             browser.driver.actions().click( _dom.megaMenuTrigger ).perform();
-            browser.driver.wait( _dom.megaMenuContent.isDisplayed() );
-            browser.driver.actions().click( _dom.globalSearchTrigger ).perform()
-              .then( function() {
-                expect( _dom.globalSearch.isDisplayed() ).toBe( true );
-
+            browser.driver.actions().click( _dom.globalSearchTrigger ).perform();
+            browser.driver.wait( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
+              .then( function( isTrue ) {
+                expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+                return isTrue == 'true'
               } );
           } );
         } );
@@ -151,14 +151,18 @@ describe( 'Header', function() {
       describe( 'click search, then click mega menu', function() {
         it( 'should show the megamenu and hide search', function() {
           browser.driver.actions().click( _dom.globalSearchTrigger ).perform();
-          browser.driver.wait( _dom.megaMenuContent.isDisplayed() );
           browser.driver.actions().click( _dom.megaMenuTrigger ).perform()
-            .then( function() {
-              expect( _dom.megaMenuContent.isDisplayed() ).toBe( true );
-            } );
+          browser.driver.wait( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
+              .then( function( isTrue ) {
+                expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+                return isTrue == 'true'
+              } );
+
         } );
       } );
 
     } );
   }
 } );
+
+//expect( _dom.globalSearch.getAttribute('aria-expanded') ).toBe( true );
