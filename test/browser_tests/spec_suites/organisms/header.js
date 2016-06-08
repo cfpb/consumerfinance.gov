@@ -136,7 +136,7 @@ describe( 'Header', function() {
         } );
 
         describe( 'then click search', function() {
-          it( 'should show the search and hide menu', function() {
+          it( 'should show the search and hide megamenu', function() {
             browser.driver.actions().click( _dom.megaMenuTrigger ).perform();
             browser.driver.actions().click( _dom.globalSearchTrigger ).perform();
             browser.driver.wait( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
@@ -157,12 +157,8 @@ describe( 'Header', function() {
                 expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
                 return isTrue == 'true'
               } );
-
         } );
       } );
-
     } );
   }
 } );
-
-//expect( _dom.globalSearch.getAttribute('aria-expanded') ).toBe( true );
