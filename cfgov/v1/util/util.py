@@ -24,19 +24,6 @@ ERROR_MESSAGES = {
 }
 
 
-def get_related_posts_categories(category):
-    if category:
-        cats = dict(related_posts_categories)
-        for key, value in cats.iteritems():
-            sub_cats = dict(value)
-
-            if category in sub_cats:
-                if key == 'Blog':
-                    return 'posts'
-                elif key == 'Newsroom':
-                    return 'newsroom'
-
-
 # Orders by most to least common in the given list.
 def most_common(lst):
     # Returns the lst if empty or there's just one element in it.
