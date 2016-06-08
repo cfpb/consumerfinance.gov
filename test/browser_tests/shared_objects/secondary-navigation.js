@@ -7,7 +7,7 @@ var secondaryNav = {
   secondaryNav: _secondaryNav,
 
   expandableTarget:
-    _secondaryNav.element( by.css( '.m-expandable_target' ) ),
+    _secondaryNav.element( by.css( '.o-expandable_target' ) ),
 
   showButton:
     _secondaryNav.element( by.css( '.cf-icon-plus-round' ) ),

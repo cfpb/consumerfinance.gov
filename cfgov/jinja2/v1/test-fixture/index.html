@@ -8,6 +8,9 @@
 {# Set to the Header organism by default. #}
 {% set atomic_type = 'header' if atomic_type == None else atomic_type %}
 
+{% set suffix = request.GET.get( 'suffix' ) %}
+{% set suffix = '' if suffix == None else '.' + suffix %}
+
 <!DOCTYPE html>
 
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie10 lt-ie9"> <![endif]-->
@@ -35,33 +38,13 @@
 -->
 
     <title>{% block title %}MISSING TITLE{% endblock title %}</title>
-    <meta name="description"
-          content="{% block desc %}Prototyping for the consumerfinance.gov refresh{% endblock %}">
-
-    <!-- Open Graph properties -->
-        <!--   Required  -->
-        <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
-        <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-        <meta property="og:url" content="{{ request.url }}">
-        <meta property="og:image"
-              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
-        <!--   Optional -->
-        <meta property="og:description" content="{% block og_desc %}{{ self.desc() }}{% endblock %}">
-        <meta property="og:site_name" content="Consumer Financial Protection Bureau">
-        <!--   Facebook -->
-        <meta property="fb:app_id" content="210516218981921">
-        {% block og_article_author %}{% endblock %}
-    <!-- End of Open Graph properties -->
-
-    {# TODO: Explicit favicon link needed for testing. Remove for production. #}
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 {#
     ============
     ONDEMAND CSS
     ============
     The atomic CSS file. This includes legacy IE-specific prefixing.
 #}
-<link rel="stylesheet" href="{{ static('css/' + atomic_type + '.css') }}">
+<link rel="stylesheet" href="{{ static('css/' + atomic_type + suffix + '.css') }}">
 
 {#
     ================

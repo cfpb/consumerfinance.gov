@@ -8,40 +8,42 @@
 
    Creates markup for Social Media molecule.
 
-   options:                  Object of optional parameters.
+   value:                   Object of optional parameters.
 
-   options.title:            Sets the title in email subject line
-                             and in the LinkedIn share post.
-                             Default is "Look what I found on the CFPB!"
+   value.blurb:             Sets the text of a tweet, the subject of an email,
+                            or the title of a LinkedIn post.
+                            Default is "Look what I found on the CFPB's site!"
 
-   options.is_share_view:    Whether the "Share this" heading is shown.
-                             Default is true.
+   value.is_share_view:     Whether the "Share this" heading is shown.
+                            Default is true.
 
-   options.twitter_hashtags: A comma-separated list of hashtags
-                             to be appended to default Tweet text.
-                             https://dev.twitter.com/web/tweet-button/parameters
+   value.twitter_hashtags:  A comma-separated list of hashtags
+                            to be appended to default Tweet text.
+                            https://dev.twitter.com/web/tweet-button/parameters
 
-   options.twitter_related:  A comma-separated list of accounts
-                             related to the content of the shared URI.
-                             https://dev.twitter.com/web/tweet-button/parameters
-                             Default is `cfpb`.
+   value.twitter_related:   A comma-separated list of accounts
+                            related to the content of the shared URI.
+                            https://dev.twitter.com/web/tweet-button/parameters
+                            Default is `cfpb`.
 
-   options.twitter_lang:     Loads text components in the specified language,
-                             if other than English.
-                             https://dev.twitter.com/web/tweet-button/parameters
+   value.twitter_lang:      Loads text components in the specified language,
+                            if other than English.
+                            https://dev.twitter.com/web/tweet-button/parameters
 
    ========================================================================== #}
 
-{# TODO: Remove global page reference when moving to Wagtail. #}
-{% macro render( options={} ) %}
-{% set title = options.title | urlencode or ( page or {} ).seo_title | urlencode  %}
+{% macro render( value={} ) %}
+
+{% set blurb = (value.blurb or (page.seo_title if page) or value.title or
+                'Look what I found on the CFPB’s site!') | urlencode %}
 {% set parsed_url = request.url | urlencode %}
 {% set external_redirect_url = '/external-site/?ext_url=' %}
-{% set is_share_view = options.is_share_view | default( true ) %}
+{% set is_share_view = value.is_share_view | default( true ) %}
+
 <div class="m-social-media
             m-social-media__{{ 'share' if is_share_view else 'follow' }}">
     {% if is_share_view %}
-        <p class="h5 m-social-media_heading">Share this</p>
+        <div class="h5 m-social-media_heading">Share this</div>
     {% endif %}
 
     <ul class="list
@@ -59,20 +61,20 @@
         {% set twitter_info = {
             'name': 'Twitter',
             'homepage': 'https://twitter.com/cfpb',
-            'share_url': _share_twitter_url(parsed_url, title, options),
+            'share_url': _share_twitter_url(parsed_url, blurb, value),
             'class': 'cf-icon-twitter-square'
         } %}
 
         {% set linkedin_info = {
             'name': 'LinkedIn',
             'homepage': 'https://www.linkedin.com/company/consumer-financial-protection-bureau',
-            'share_url': 'https://www.linkedin.com/shareArticle?mini=true&url=' ~ parsed_url ~ '&title=' ~ title ~ '%20Developer%20Network',
+            'share_url': 'https://www.linkedin.com/shareArticle?mini=true&url=' ~ parsed_url ~ '&title=' ~ blurb,
             'class': 'cf-icon-linkedin-square'
         } %}
 
         {% set email_info = {
             'name': 'email',
-            'share_url': 'mailto:?subject=' ~ title ~ '&body=Check out this page from the CFPB - ' ~ parsed_url,
+            'share_url': 'mailto:?subject=' ~ blurb ~ '&body=Check out this page from the CFPB - ' ~ parsed_url,
             'class': 'cf-icon-email-social-square'
         } %}
 
@@ -110,7 +112,8 @@
             {% if is_share_view %}
                 <li class="list_item">
                     <a class="m-social-media_icon"
-                       href="{{ external_redirect_url ~ link.share_url | trim }}"
+                       href="{{ external_redirect_url ~ link.share_url if link.name != 'email'
+                                else link.share_url | trim }}"
                        {{ 'target=_blank' if link.name != 'email' else '' }}>
                         <span class="cf-icon {{ link.class }}"></span>
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
@@ -141,9 +144,9 @@
 
    Returns a Twitter share URL when given:
 
-   parsed_url: URL-encoded URL.
+   parsed_url:               URL-encoded URL.
 
-   title: Title for the tweet.
+   blurb:                    Suggested text for the tweet.
 
    options:                  Object of optional parameters.
 
@@ -162,11 +165,11 @@
 
    ========================================================================== #}
 
-{% macro _share_twitter_url(parsed_url, title, options) %}
+{% macro _share_twitter_url(parsed_url, blurb, options) %}
     {%- set _share_twitter_url = 'http://twitter.com/intent/tweet' -%}
     {%- set _share_twitter_url = _share_twitter_url + '?url=' + parsed_url -%}
     {%- set _share_twitter_url = _share_twitter_url + '&via=CFPB' -%}
-    {%- set _share_twitter_url = _share_twitter_url + '&text=' + title + '%20--' -%}
+    {%- set _share_twitter_url = _share_twitter_url + '&text=' + blurb + '%20--' -%}
 
     {%- if options.twitter_hashtags %}
         {% set _share_twitter_url = _share_twitter_url + '&hashtags=' + options.twitter_hashtags %}

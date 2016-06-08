@@ -12,7 +12,7 @@ require( 'slick' );
 
 var ContentSlider = require( '../../../../modules/ContentSlider' );
 var BreakpointHandler = require( '../../../../modules/BreakpointHandler' );
-var Expandable = require( '../../../../molecules/Expandable' );
+var Expandable = require( '../../../../organisms/Expandable' );
 var dataHook = require( '../../../../modules/util/data-hook' );
 var standardType = require( '../../../../modules/util/standard-type' );
 
@@ -34,7 +34,7 @@ function init() {
 var _expandables = [];
 function _initExpandables() {
   // Initialize the Expandable.
-  var selector = '.m-expandable';
+  var selector = '.o-expandable';
   var expandablesDom = document.querySelectorAll( selector );
   var expandable;
   for ( var i = 0, len = expandablesDom.length; i < len; i++ ) {

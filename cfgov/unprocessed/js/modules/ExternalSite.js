@@ -21,7 +21,7 @@ function ExternalSite( element ) {
   var TOTAL_DURATION = 5;
   var INTERVAL = 1000;
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'ExternalSite' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _durationEl = _dom.querySelector( '.external-site_reload-container' );
   var _directEl = _dom.querySelector( '.external-site_proceed-btn' );
   var _duration = TOTAL_DURATION;

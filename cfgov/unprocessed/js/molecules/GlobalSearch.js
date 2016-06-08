@@ -23,7 +23,7 @@ var standardType = require( '../modules/util/standard-type' );
 function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
   var BASE_CLASS = 'm-global-search';
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'GlobalSearch' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   var _flyoutMenu = new FlyoutMenu( _dom );
   var _searchInputDom;

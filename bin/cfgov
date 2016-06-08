@@ -53,7 +53,7 @@ if ($#ARGV >= 0) {
 		print("\nInitializing npm and node js...\n");
 		`vagrant ssh -c "cd /vagrant/bin/; cfgovd init" 2>/dev/null`;
 		print("\nInitializing local node js modules (takes ~20-25 min.)...\n");
-		exec("vagrant ssh -c \"cd /vagrant; source /opt/rh/devtoolset-2/enable; sh frontend.sh init\"");
+		exec("vagrant ssh -c \"cd /vagrant; sudo webdriver-manager update; sh frontend.sh init\"");
 	}
 	elsif ($ARGV[0] eq 'assets') {
 		print("\nRebuilding frontend assets (takes ~5-10 min)...\n");

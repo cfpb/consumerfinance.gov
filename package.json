@@ -39,6 +39,7 @@
     "browser-sync": "2.11.2",
     "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
     "chai": "3.5.0",
+    "documentation": "4.0.0-beta2",
     "es5-shim": "4.5.7",
     "glob-all": "3.0.1",
     "gulp-concat": "2.6.0",

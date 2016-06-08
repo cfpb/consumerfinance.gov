@@ -19,7 +19,7 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function Expandable( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  var BASE_CLASS = 'm-expandable';
+  var BASE_CLASS = 'o-expandable';
 
   // Bitwise flags for the state of this Expandable.
   var COLLAPSED = 0;
@@ -29,7 +29,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
   // The Expandable element will directly be the Expandable
   // when used in an ExpandableGroup, otherwise it can be the parent container.
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Expandable' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
   var _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   var _contentAnimated =
@@ -62,7 +62,6 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
       return standardType.UNDEFINED;
     }
-
     _calcHeight();
     // Even if expanded is set, don't expand if in mobile window size.
     if ( !_isInMobile() &&

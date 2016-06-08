@@ -2,7 +2,7 @@
 
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var Expandable = require( '../molecules/Expandable' );
+var Expandable = require( '../organisms/Expandable' );
 var standardType = require( '../modules/util/standard-type' );
 
 /**
@@ -17,8 +17,7 @@ var standardType = require( '../modules/util/standard-type' );
 function SecondaryNavigation( element ) {
   var BASE_CLASS = 'o-secondary-navigation';
 
-  var _dom =
-    atomicHelpers.checkDom( element, BASE_CLASS, 'SecondaryNavigation' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   /**
    * @returns {SecondaryNavigation|undefined} An instance,

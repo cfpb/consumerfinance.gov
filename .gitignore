@@ -75,8 +75,9 @@ vendor/
 ############
 .floo*
 
-# Topdoc #
+# Documentation #
 ##########
+docs/scripts
 docs/*/slick.html
 docs/*/pdfreactor-fonts.html
 
@@ -98,7 +99,6 @@ ansible/roles/*
 
 # Unit test / coverage reports
 #################
-test/macro_tests/src/
 test/unit_test_coverage/
 test/perf_test_results/
 test/screenshot.png

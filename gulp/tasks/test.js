@@ -37,19 +37,6 @@ function testUnitScripts( cb ) {
 }
 
 /**
- * Run jinja macro unit tests.
- */
-function testUnitMacro() {
-  spawn(
-    'python',
-    [ configTest.tests + '/macro_tests/test_macros.py' ],
-    { stdio: 'inherit' }
-  ).once( 'close', function() {
-    plugins.util.log( 'Macro unit tests done!' );
-  } );
-}
-
-/**
  * Run tox unit tests.
  */
 function testUnitServer() {
@@ -149,7 +136,7 @@ function _parsePath( urlPath ) {
  */
 function testA11y() {
   spawn(
-    fsHelper.getBinary( 'wcag', '.bin' ),
+    fsHelper.getBinary( 'wcag', 'wcag', '../.bin' ),
     _getWCAGParams(),
     { stdio: 'inherit' }
   ).once( 'close', function() {
@@ -178,7 +165,7 @@ function _shouldInstallInitialData() {
  */
 function _spawnProtractor() {
   spawn(
-    fsHelper.getBinary( 'protractor' ),
+    fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
     _getProtractorParams(),
     { stdio: 'inherit' }
   ).once( 'close', function() {
@@ -223,13 +210,11 @@ gulp.task( 'test:acceptance',
 );
 
 gulp.task( 'test:unit:scripts', testUnitScripts );
-gulp.task( 'test:unit:macro', testUnitMacro );
 gulp.task( 'test:unit:server', testUnitServer );
 
 gulp.task( 'test:unit',
   [
     'test:unit:scripts',
-    'test:unit:macro',
     'test:unit:server'
   ]
 );

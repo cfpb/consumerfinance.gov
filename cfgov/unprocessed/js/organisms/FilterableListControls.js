@@ -3,7 +3,7 @@
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
-var Expandable = require( '../molecules/Expandable' );
+var Expandable = require( '../organisms/Expandable' );
 var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
 var Multiselect = require( '../molecules/Multiselect' );
 var Notification = require( '../molecules/Notification' );
@@ -22,8 +22,7 @@ var validators = require( '../modules/util/validators' );
  */
 function FilterableListControls( element ) {
   var BASE_CLASS = 'o-filterable-list-controls';
-  var _dom = atomicHelpers.checkDom(
-    element, BASE_CLASS, 'FilterableListControls' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _form = _dom.querySelector( 'form' );
   var _notification;
   var _fieldGroups;

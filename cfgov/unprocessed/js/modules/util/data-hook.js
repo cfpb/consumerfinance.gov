@@ -52,6 +52,7 @@ function remove( element, value ) {
  * @returns {boolean} True if the data-* hook value exists, false otherwise.
  */
 function contains( element, value ) {
+  if ( !element ) { return false; }
   var values = element.getAttribute( standardType.JS_HOOK );
   // If JS data-* hook is not set return immediately.
   if ( !values ) { return false; }

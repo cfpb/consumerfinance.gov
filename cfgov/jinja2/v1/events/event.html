@@ -2,7 +2,7 @@
 {% import '_vars-events.html' as vars with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% if page.start_dt and page.end_dt %}
-    {% set event_state = when(page.start_dt | date('%c'), page.end_dt | date('%c')) %}
+    {% set event_state = when(page.start_dt, page.end_dt, page.live_stream_date) %}
 {% endif %}
 
 {% block desc -%}
@@ -24,7 +24,7 @@
 {% block content_main %}
     {% include 'events/_event-detail.html' %}
     {% from 'events/_macros.html' import event_media as event_media %}
-    {% if event_state and event_state == 'past' %}
+    {% if event_state and event_state != 'future' %}
         {{ event_media(page) }}
     {% endif %}
 
