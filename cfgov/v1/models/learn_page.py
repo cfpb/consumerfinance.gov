@@ -82,7 +82,7 @@ class LearnPage(AbstractFilterPage):
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
-        ('expandable', molecules.Expandable()),
+        ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
         ('call_to_action', molecules.CallToAction()),
@@ -96,7 +96,7 @@ class LearnPage(AbstractFilterPage):
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
-        ('expandable', molecules.Expandable()),
+        ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
     ], blank=True)

@@ -62,9 +62,6 @@ build(){
   fi
 
   # Update test dependencies.
-  # Macro Polo - Jinja template unit testing.
-  pip install -r ./test/macro_tests/requirements.txt
-
   # Tox - Django server unit testing.
   pip install tox
 
