@@ -362,18 +362,17 @@ GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 # code from https://gist.github.com/msabramo/945406
 
 for app in OPTIONAL_APPS:
-    if app.get("condition", True):
-	try:
-	    __import__(app["import"])
-	except ImportError:
-	    pass
-	else:
-	    for name in app.get("apps",()):
-		if name not in INSTALLED_APPS:
-		    INSTALLED_APPS+=(name,)
-	    MIDDLEWARE_CLASSES += app.get("middleware", ())
-	    if 'TEMPLATE_CONTEXT_PROCESSORS' in locals():
-		TEMPLATE_CONTEXT_PROCESSORS += app.get("context_processors", ())
+    try:
+        __import__(app["import"])
+        for name in app.get("apps",()):
+            if name not in INSTALLED_APPS:
+                INSTALLED_APPS+=(name,)
+        MIDDLEWARE_CLASSES += app.get("middleware", ())
+        if 'TEMPLATE_CONTEXT_PROCESSORS' in locals():
+            TEMPLATE_CONTEXT_PROCESSORS += app.get("context_processors", ())
+    except ImportError:
+        pass
+
 WAGTAIL_ENABLE_UPDATE_CHECK = False  # Removes wagtail version update check banner from admin page.
 
 # Email
