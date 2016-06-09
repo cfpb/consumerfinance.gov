@@ -15,7 +15,30 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Unreleased
 
-## Added
+### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-3.3.21 – 2016-06-09
+
+### Added
+- Added "Getting an Auto Loan" to the mega menu
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 3.0.0-3.3.21 – 2016-06-08
+
+### Added
 - Ability to use Social Media molecule as a Wagtail module in the Sidefoot.
 - Frontend: Added task for generating JavaScript code docs with `gulp docs`.
 - Test for `most_common` util
@@ -34,9 +57,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the test fixture for ondemand includes to allow for the nonresponsive stylesheet to be loaded for visual testing.
 - Use bare value of RichText field if value type is not RichText
 - Check against Activity Log topics when generating View More link
-- initial_test_data script now uses streamfield block data from a new file called _atomic_helpers.py.
+- initial_test_data script now uses streamfield block data from a new file called `_atomic_helpers.py`
 - `when` now compares datetimes against the current time in ET, not UTC
-- `when` optionally uses the event stream's start time, if there is one 
+- `when` optionally uses the event stream's start time, if there is one
 - Promotes Expandables from molecule to organism
 - Changes global banner expandable Less to resolve cascade issue
 - Maintain order and uniqueness in JS file lists by using `OrderedDict` instead of `set`
@@ -57,7 +80,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## 3.0.0-3.3.20 - 2016-05-24
 
-## Added
+### Added
 
 ### Changes
 
