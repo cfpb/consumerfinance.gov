@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.conf import settings
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.contrib.auth.forms import AuthenticationForm
 
 from wagtail.wagtailadmin import forms as wagtail_adminforms
 from wagtail.wagtailusers.forms import UserCreationForm, UserEditForm
@@ -48,7 +49,7 @@ class CFGOVSetPasswordForm(PasswordValidationMixin, SetPasswordForm):
     pass
 
 
-class LoginForm(wagtail_adminforms.LoginForm):
+class LoginForm(AuthenticationForm):
 
     def clean(self):
         username = self.cleaned_data.get('username')

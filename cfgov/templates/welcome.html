@@ -1,13 +1,12 @@
 {% overextends "wagtailadmin/login.html" %}
 {% load i18n admin_static %}
 
-
 {% block furniture %}
     <div class="content-wrapper">
-        <h1>{% trans 'Sorry!' %} <br/>
-        	{% trans 'You do not have permission to access this page.' %}
+        <h1>{% trans 'Welcome' %} <br/>
+        You've logged in to the consumerfinance.gov editorial tools.	
         </h1>
-        <h2>Perhaps you could try:</h2>
+        <h2>Continue on to...</h2>
         <ul>
         {% for name, url in destinations %}
             <li><a href="{{url}}"> {{name}}</a></li>

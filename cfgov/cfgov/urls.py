@@ -10,8 +10,11 @@ from legacy.views import HousingCounselorPDFView, dbrouter_shortcut, token_provi
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
 
-from v1.views import LeadershipCalendarPDFView, unshare, change_password, cfpb_login, password_reset_confirm
-from v1.auth_forms import CFGOVSetPasswordForm, CFGOVPasswordChangeForm
+from v1.views import LeadershipCalendarPDFView, unshare, change_password, \
+                     password_reset_confirm, login_with_lockout,\
+                     check_permissions, welcome
+from v1.auth_forms import CFGOVPasswordChangeForm
+
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
@@ -232,8 +235,18 @@ urlpatterns = [
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
+        url(r'^login/$', login_with_lockout, name='cfpb_login'),
+        url(r'^login/check_permissions/$', check_permissions, name='check_permissions'),
+        url(r'^login/welcome/$', welcome, name='welcome'),
+        url('admin/login/$', RedirectView.as_view(url='/login/', permanent=True, query_string=True)),
+        url('django-admin/login/$', RedirectView.as_view(url='/login/', permanent=True, query_string=True)),
+
         url(r'^d/admin/(?P<path>.*)$', RedirectView.as_view(url='/django-admin/%(path)s',permanent=True)),
         url(r'^picard/(?P<path>.*)$', RedirectView.as_view(url='/tasks/%(path)s',permanent=True)),
+        url(r'^django-admin/password_change', change_password, name='django_admin_account_change_password'),
+        url(r'^django-admin/', include(admin.site.urls)),
+        url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
+
         # - Override Django and Wagtail password views with our password policy - #
         url(r'^admin/password_reset/', include([
             url(
@@ -247,8 +260,6 @@ if settings.ALLOW_ADMIN_URL:
             auth_views.password_change_done,
             name='password_change_done'),
         url(r'^admin/account/change_password/$', change_password, name='wagtailadmin_account_change_password'),
-        url(r'^django-admin/login', cfpb_login, name='django_admin_login'),
-        url(r'^admin/login/$', cfpb_login, name='wagtailadmin_login'),
         url(r'^django-admin/', include(admin.site.urls)),
         url(r'^admin/', include(wagtailadmin_urls)),
         url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
