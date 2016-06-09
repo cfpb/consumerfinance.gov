@@ -238,6 +238,7 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^login/$', login_with_lockout, name='cfpb_login'),
         url(r'^login/check_permissions/$', check_permissions, name='check_permissions'),
         url(r'^login/welcome/$', welcome, name='welcome'),
+        url(r'^logout/$', auth_views.logout),
         url('admin/login/$', RedirectView.as_view(url='/login/', permanent=True, query_string=True)),
         url('django-admin/login/$', RedirectView.as_view(url='/login/', permanent=True, query_string=True)),
 
