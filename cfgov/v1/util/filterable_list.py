@@ -45,7 +45,7 @@ class FilterableListMixin(object):
 
                 filter_data['page_sets'].append(pages)
             else:
-                filter_data['page_sets'].append([])
+                filter_data['page_sets'] = None
             filter_data['forms'].append(form)
         return filter_data
 
