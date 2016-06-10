@@ -45,7 +45,8 @@ class FilterableListMixin(object):
 
                 filter_data['page_sets'].append(pages)
             else:
-                filter_data['page_sets'].append([])
+                paginator = Paginator(AbstractFilterPage.objects.none(), self.per_page_limit())
+                filter_data['page_sets'].append(paginator.page(1))
             filter_data['forms'].append(form)
         return filter_data
 
