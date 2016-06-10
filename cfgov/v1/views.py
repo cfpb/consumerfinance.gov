@@ -6,7 +6,7 @@ from wagtail.wagtailadmin import messages as wagtail_messages
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 from django.contrib.auth import get_user_model
 from django.contrib import messages
@@ -23,6 +23,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.encoding import force_text
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.template.response import TemplateResponse
+from django.core.urlresolvers import resolve
 
 from wagtail.wagtailadmin.views import account
 from wagtail.wagtailusers.views.users import add_user_perm, change_user_perm
@@ -30,6 +31,8 @@ from wagtail.wagtailadmin.utils import permission_required
 
 from .auth_forms import CFGOVSetPasswordForm, CFGOVPasswordChangeForm, LoginForm
 
+from .util.util import valid_destination_for_request,\
+                       all_valid_destinations_for_request
 from .signals import page_unshared
 
 class LeadershipCalendarPDFView(PDFGeneratorView):
@@ -122,18 +125,6 @@ def change_password(request):
     })
 
 
-@sensitive_post_parameters()
-@never_cache
-def cfpb_login(request):
-    if request.user.is_authenticated():
-        if request.user.has_perm('wagtailadmin.access_admin'):
-            return redirect('wagtailadmin_home')
-        else:
-            return render(request, "wagtailadmin/access_denied.html")
-
-    else:
-        return login_with_lockout(request)
-
 
 @sensitive_post_parameters()
 @csrf_protect
@@ -166,8 +157,10 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
 
             login(request, form.get_user())
 
-            return HttpResponseRedirect(redirect_to)
+            return HttpResponseRedirect('/login/check_permissions/?next=' + redirect_to)
     else:
+	if request.user.is_authenticated():
+            return HttpResponseRedirect('/login/check_permissions/?next=' + redirect_to)
         form = LoginForm(request)
 
     current_site = get_current_site(request)
@@ -184,6 +177,31 @@ def login_with_lockout(request, template_name='wagtailadmin/login.html'):
 
     return TemplateResponse(request, template_name, context)
 
+
+@never_cache
+def check_permissions(request):
+    redirect_to = request.POST.get(REDIRECT_FIELD_NAME,
+                                   request.GET.get(REDIRECT_FIELD_NAME, ''))
+
+    if not request.user.is_authenticated():
+       return HttpResponseRedirect("%s?%s=%s" % (settings.LOGIN_URL,
+          REDIRECT_FIELD_NAME, redirect_to))
+    view, args, kwargs = resolve(redirect_to)
+    kwargs['request'] = request
+    try:
+        response = view(*args, **kwargs)
+    except (Http404, TypeError):
+        return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+
+    if isinstance(response, HttpResponseRedirect):
+        # this indicates a permissions problem
+        # (there may be a better way)
+        if REDIRECT_FIELD_NAME + '=' in response.url:
+            return render(request, "wagtailadmin/access_denied.html",
+            context= {'attempted_to_reach': redirect_to,
+                      'destinations': all_valid_destinations_for_request(request)})
+
+    return HttpResponseRedirect(redirect_to)
 
 
 @sensitive_post_parameters()
@@ -231,6 +249,18 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
 
     return TemplateResponse(request, template_name, context)
 
+@never_cache
+@login_required
+def welcome(request):
+    valid_destinations = all_valid_destinations_for_request(request)
+
+    
+    if len(valid_destinations) == 1:
+        redirect_to = valid_destinations[0][1]
+        return HttpResponseRedirect(redirect_to)
+
+    else:
+        return render(request, 'welcome.html', {'destinations': valid_destinations})
 
 password_reset_confirm = account._wrap_password_reset_view(custom_password_reset_confirm)
 

@@ -2,6 +2,9 @@ import collections, json, os, re
 from itertools import chain
 from time import time
 from django.conf import settings
+from django.http import Http404, HttpResponseRedirect
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.core.urlresolvers import resolve
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.blocks.struct_block import StructValue
 from ref import related_posts_categories
@@ -128,3 +131,28 @@ def get_appropriate_page_version(request, page):
         else:
             if page_version['shared']:
                 return revision.as_page_object()
+
+def valid_destination_for_request(request, url):
+
+    view, args, kwargs = resolve(url)
+    kwargs['request'] = request
+    try:
+        response = view(*args, **kwargs)
+    except (Http404, TypeError):
+        return False
+
+    if isinstance(response, HttpResponseRedirect):
+        # this indicates a permissions problem
+        # (there may be a better way)
+        if REDIRECT_FIELD_NAME + '=' in response.url:
+            return False
+
+    return True
+
+
+def all_valid_destinations_for_request(request):
+    possible_destinations = (('Wagtail','/admin/'), ('Django admin', '/django-admin/'))
+    valid_destinations = [pair for pair in possible_destinations if 
+                            valid_destination_for_request(request, pair[1])]
+
+    return valid_destinations 

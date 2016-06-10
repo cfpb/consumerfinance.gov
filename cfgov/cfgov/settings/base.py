@@ -16,6 +16,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
+
 try:
     import mysql
     MYSQL_ENGINE = 'mysql.connector.django'
@@ -398,8 +399,8 @@ CFPB_COMMON_PASSWORD_RULES = [
 LOGIN_FAIL_TIME_PERIOD = os.environ.get('LOGIN_FAIL_TIME_PERIOD', 120 * 60)
 # number of failed attempts
 LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
-LOGIN_REDIRECT_URL='/admin/'
-LOGIN_URL = "/admin/login/"
+LOGIN_REDIRECT_URL='/login/welcome/'
+LOGIN_URL = "/login/"
 
 
 SHEER_SITES = {
