@@ -183,7 +183,9 @@
     <div class="o-filterable-list-controls"
          id="o-filterable-list-controls">
         {% set form = filter_data.forms.pop(0) %}
-        {% set posts = filter_data.page_sets.pop(0) %}
+        {% if filter_data.page_sets %}
+            {% set posts = filter_data.page_sets.pop(0) %}
+        {% endif %}
         {% set has_active_filters = page.has_active_filters(request, index) %}
         {% if has_active_filters %}
             {% do controls.update({'is_expanded':true}) %}
