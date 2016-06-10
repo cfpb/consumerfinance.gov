@@ -24,12 +24,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
-## 3.0.0-3.3.21 – 2016-06-09
+## 3.0.0-3.3.21-hotfix – 2016-06-10
 
 ### Added
 - Added "Getting an Auto Loan" to the mega menu
 
 ### Changed
+- Invalid filterable list input returns empty paginated object instead of empty list in page_sets
 
 ### Removed
 
