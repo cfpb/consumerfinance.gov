@@ -11,13 +11,13 @@ from wagtail.wagtailcore.signals import page_unpublished
 page_unshared = Signal(providing_args=['instance'])
 
 
-def new_phi(user):
+def new_phi(user, expiration_days=90, locked_days=1):
 
     from .models import PasswordHistoryItem
 
     now = timezone.now()
-    locked_until = now + timedelta(days=1)
-    expires_at = now + timedelta(days=90)
+    locked_until = now + timedelta(days=locked_days)
+    expires_at = now + timedelta(days=expiration_days)
 
     password_history = PasswordHistoryItem(user=user,
             encrypted_password=user.password,
@@ -29,16 +29,12 @@ def new_phi(user):
 
 def user_save_callback(sender, **kwargs):
     user = kwargs['instance']    
-
-    try:
-        current_password_data = user.passwordhistoryitem_set.latest()
-    
-        if user.password != current_password_data.encrypted_password:
+    if kwargs['created']:
+        # If user was just created, expire the password and unlock it
+        new_phi(user, expiration_days=0, locked_days=0)
+    else:
+        if user.password != user.passwordhistoryitem_set.latest().encrypted_password:
             new_phi(user)
-
-    except ObjectDoesNotExist:
-        new_phi(user)
-
 
 # Sets all the revisions for a page's attribute to False when it's called
 def update_all_revisions(instance, attr):

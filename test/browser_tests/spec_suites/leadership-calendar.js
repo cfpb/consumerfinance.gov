@@ -3,6 +3,10 @@
 var TheLeadershipCalendarPage =
 require( '../page_objects/page_leadership-calendar.js' );
 
+var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+
+var breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
+
 describe( 'The Leadership Calendar Page', function() {
   var page;
 
@@ -48,8 +52,15 @@ describe( 'The Leadership Calendar Page', function() {
 
     it( 'should include a visible Show button', function() {
       expect( page.searchFilterShowBtn.isDisplayed() ).toBe( true );
-      expect( page.searchFilterShowBtn.getText() ).toBe( 'Show' );
     } );
+
+    if ( browser.params.windowWidth > breakpointsConfig.bpMED.min ) {
+      it( 'should say "Show" on medium/large screens',
+        function() {
+          expect( page.searchFilterShowBtn.getText() ).toBe( 'Show' );
+        }
+      );
+    }
 
     it( 'should include a visible Hide button when clicked', function() {
       var expectedConditions = protractor.ExpectedConditions;
@@ -86,7 +97,6 @@ describe( 'The Leadership Calendar Page', function() {
 
     it( 'should include a visible Show button', function() {
       expect( page.downloadFilterShowBtn.isDisplayed() ).toBe( true );
-      expect( page.downloadFilterShowBtn.getText() ).toBe( 'Show' );
     } );
 
     it( 'should include a visible Hide button when clicked', function() {

@@ -36,14 +36,6 @@ class UserEditValidationMixin(PasswordValidationMixin):
     user_attribute = 'instance'
 
 
-class CFGOVUserCreationForm(UserEditValidationMixin, UserCreationForm):
-    pass
-
-
-class CFGOVUserEditForm(UserEditValidationMixin, UserEditForm):
-    pass
-
-
 class CFGOVPasswordChangeForm(PasswordValidationMixin, PasswordChangeForm):
     pass
 
