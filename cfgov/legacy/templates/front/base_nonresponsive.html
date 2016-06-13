@@ -85,12 +85,11 @@ please send an email with your full name to tech@cfpb.gov.
 
     {% block page_css %}
     {% endblock %}
-    <link rel="stylesheet" href="{% static 'nemo/_/c/v1-nonresponsive-header.css?ver=all' %}"/>
-    <link rel="stylesheet" href="{% static 'nemo/_/c/v1-nonresponsive-footer.css?ver=all' %}"/>
+    <link rel="stylesheet" href="{% static 'css/header.nonresponsive.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/footer.nonresponsive.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/secondary-navigation.nonresponsive.css' %}"/>
 
     <!-- Feeds -->
-    <link rel="alternate" type="application/rss+xml" title="Consumer Financial Protection Bureau &raquo; Feed" href="/feed/" />
-    <link rel="alternate" type="application/rss+xml" title="Consumer Financial Protection Bureau &raquo; Comments Feed" href="/comments/feed/" />
     {% block page_feeds %}
     {% endblock %}
 
@@ -162,8 +161,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {% endblock %}
 
 {% block nemo_js %}
-<script src="/static/nemo/_/js/functions.js{{ STATIC_VERSION }}"></script>
-<script type="text/javascript" src="/static/agreements/js/chosen.jquery.js{{ STATIC_VERSION }}"></script>
+<script src="/static/nemo/_/js/functions.js"></script>
+<script type="text/javascript" src="/static/agreements/js/chosen.jquery.js"></script>
 {% endblock %}
 
 
@@ -194,6 +193,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
     });
 </script>
-<script type="text/javascript" src="{% static "nemo/_/js/v1-nonresponsive-header.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/atomic/header.nonresponsive.js" %}"></script>
 </body>
 </html>
