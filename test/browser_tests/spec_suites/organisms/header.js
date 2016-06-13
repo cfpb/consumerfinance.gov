@@ -43,6 +43,7 @@ describe( 'Header', function() {
 
   beforeEach( function() {
     browser.get( '/' );
+    browser.executeScript('document.body.className = "u-move-transition__disabled";');
   } );
 
   if ( browser.params.windowWidth > breakpointsConfig.bpLG.min ) {
@@ -139,11 +140,7 @@ describe( 'Header', function() {
           it( 'should show the search and hide megamenu', function() {
             browser.driver.actions().click( _dom.megaMenuTrigger ).perform();
             browser.driver.actions().click( _dom.globalSearchTrigger ).perform();
-            browser.driver.wait( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
-              .then( function( isTrue ) {
-                expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-                return isTrue == 'true'
-              } );
+            expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
           } );
         } );
       } );
@@ -152,11 +149,7 @@ describe( 'Header', function() {
         it( 'should show the megamenu and hide search', function() {
           browser.driver.actions().click( _dom.globalSearchTrigger ).perform();
           browser.driver.actions().click( _dom.megaMenuTrigger ).perform()
-          browser.driver.wait( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
-              .then( function( isTrue ) {
-                expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
-                return isTrue == 'true'
-              } );
+          expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
         } );
       } );
     } );

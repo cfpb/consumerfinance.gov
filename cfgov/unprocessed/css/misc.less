@@ -664,6 +664,8 @@
   notes:
     - "Adds transitions utilty classes for transform, opacity,
        and for the removing the transition duration."
+    - "`.u-move-transition__disabled` is used for disabling tests
+        in protractor tess"
   tags:
     - cfgov-misc
 */
@@ -677,6 +679,10 @@
 
 .u-no-animation {
     transition-duration: 0s;
+}
+
+.u-move-transition__disabled * {
+  transition: none !important;
 }
 
 /* topdoc
