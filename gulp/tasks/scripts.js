@@ -93,7 +93,7 @@ function scriptsOnDemand() {
  */
 function scriptsNonResponsive() {
   return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
-    .pipe( webpackStream( webpackConfig.nonResponsiveConf ) )
+    .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf ) )
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
