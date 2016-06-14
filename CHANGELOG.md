@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Datetimes are now saved in UTC and rendered in Eastern timezone when displayed in templates.
 - Django timezone setting changed to America/New_York.
 - Updated home page stats and date.
+- Rebuilt Nemo Grunt tasks in Gulp and moved built files to static_built directory.
 
 ### Removed
 
