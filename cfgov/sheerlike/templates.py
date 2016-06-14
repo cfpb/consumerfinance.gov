@@ -4,18 +4,9 @@ from pytz import timezone
 
 
 def _convert_date(date, tz):
-    if date:
-        if isinstance(date, basestring):
-            date = parser.parse(date,
-                                default=datetime.datetime.today().replace(day=1))
-        # TODO: Event times are currently stored as UTC in the database, but they're actually ET times. 
-        # We will need to fix this once Wagtail fixes its handling of TIME_ZONE. 
-        if type(date) in [datetime.datetime, datetime.date]:
-            if isinstance(date, datetime.datetime):
-                pytzone = timezone(tz)
-                if date.tzinfo:
-                    date = date.replace(tzinfo=None)
-                date = pytzone.localize(date)
+    if date and isinstance(date, basestring):
+        date = parser.parse(date,
+                            default=datetime.datetime.today().replace(day=1))
     return date
 
 

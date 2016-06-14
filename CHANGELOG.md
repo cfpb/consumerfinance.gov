@@ -18,6 +18,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
+- Datetimes are now saved in UTC and rendered in Eastern timezone when displayed in templates
+- Django timezone setting changed to America/New_York
 
 ### Removed
 

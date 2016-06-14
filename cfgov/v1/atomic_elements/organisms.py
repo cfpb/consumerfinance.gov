@@ -195,7 +195,7 @@ class ItemIntroduction(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
 
-    date = blocks.DateTimeBlock(required=False)
+    date = blocks.DateBlock(required=False)
     has_social = blocks.BooleanBlock(required=False, help_text="Whether to show the share icons or not.")
 
     class Meta:
