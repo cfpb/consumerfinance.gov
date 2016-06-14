@@ -17,6 +17,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- Added nonresponsive header script for non-v1 sections of the site
+
 ### Changed
 
 ### Removed

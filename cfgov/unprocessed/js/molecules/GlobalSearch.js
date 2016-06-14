@@ -88,27 +88,11 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   function _handleBodyClick( event ) {
     var target = event.target;
 
-    var isInDesktop = _isInDesktop();
+    var isInDesktop = breakpointState.isInDesktop();
     if ( isInDesktop && !_isDesktopTarget( target ) ||
          !isInDesktop && !_isMobileTarget( target ) ) {
       collapse();
     }
-  }
-
-  // TODO: Move this to breakpoint-state.js.
-  /**
-   * Whether currently in the desktop view.
-   * @returns {boolean} True if in the desktop view, otherwise false.
-   */
-  function _isInDesktop() {
-    var isInDesktop = false;
-    var currentBreakpoint = breakpointState.get();
-    if ( currentBreakpoint.isBpMED ||
-         currentBreakpoint.isBpLG ||
-         currentBreakpoint.isBpXL ) {
-      isInDesktop = true;
-    }
-    return isInDesktop;
   }
 
   /**
