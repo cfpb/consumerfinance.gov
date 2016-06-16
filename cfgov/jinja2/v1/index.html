@@ -173,7 +173,7 @@
                         <section class="content-l_col
                                         content-l_col-1-3">
                             {% for block in sections.value %}
-                                <div>
+                                <div class="m-related-posts_list-container">
                                     <h3 class="h4">
                                          <span class="cf-icon cf-icon-{{ block.categories }}"></span>
                                         {{ page.get_category_name(block.categories) }}
@@ -192,7 +192,7 @@
                                 </div>
                             {% endfor %}
                         {% if loop.last %}
-                            <div>
+                            <div class="m-related-posts_list-container">
                                 <a class="jump-link
                                           jump-link__underline"
                                    href="/activity-log/">
