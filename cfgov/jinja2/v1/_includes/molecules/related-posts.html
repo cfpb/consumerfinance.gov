@@ -78,7 +78,8 @@
     {% import 'macros/time.html' as time %}
     {% set limit = limit | int if posts | length >= limit | int else posts | length %}
     <ul class="m-related-posts_list
-               list list__unstyled
+               list
+               list__unstyled
                list__spaced">
         {% for i in range(limit) %}
             {% set post_url = slugurl(posts[i].slug) or '' %}
