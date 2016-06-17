@@ -11,7 +11,7 @@ from django.core.exceptions import ImproperlyConfigured
 from pytz import timezone
 from dateutil.parser import parse
 from v1.forms import CalenderPDFFilterForm
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, resolve
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.conf import settings
@@ -78,6 +78,7 @@ class PDFGeneratorView(View):
                 query_opts['filter_range_date_gte'],
                 query_opts['filter_range_date_lte'])
 
+        import pdb;pdb.set_trace()
         result = pdf_reactor.renderDocumentFromURL(url)
 
         # Check if successful

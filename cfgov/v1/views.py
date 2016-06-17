@@ -35,11 +35,6 @@ from .util.util import valid_destination_for_request,\
                        all_valid_destinations_for_request
 from .signals import page_unshared
 
-class LeadershipCalendarPDFView(PDFGeneratorView):
-    render_url = 'http://localhost/about-us/the-bureau/leadership-calendar/print/'
-    stylesheet_url = 'http://localhost/static/css/pdfreactor-fonts.css'
-    filename = 'cfpb_leadership-calendar.pdf'
-
 
 class EventICSView(ICSView):
     """

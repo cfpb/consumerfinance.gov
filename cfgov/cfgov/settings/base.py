@@ -217,11 +217,6 @@ ELASTICSEARCH_BIGINT = 50000
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
 SHEER_PROCESSORS = \
     {
-        "calendar_event": {
-            "url": "$WORDPRESS/leadership-calendar/cfpb-leadership.json",
-            "processor": "processors.django_calendar_event",
-            "mappings": MAPPINGS.child("calendar_event.json")
-        },
         "history": {
             "url": "$WORDPRESS/api/get_posts/?post_type=history",
             "processor": "processors.wordpress_history",

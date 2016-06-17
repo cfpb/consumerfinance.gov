@@ -24,18 +24,17 @@
         <div class="content_wrapper">
             <div class="content_main">
                 <div class="print-header">
-                    {% set query = queries.calendar_event %}
-                    {% set posts = query.search(pdf_print=True) %}
 
-                    {% import 'macros/active-filters.html' as active_filters with context %}
                     <h1 class="superheader">Leadership Calendar</h1>
-                    {{ active_filters.render(posts, ['calendar', 'range_date'], {
-                        'show_filters_label': true,
-                        'show_unfiltered_count': true,
-                        'use_list': true
-                    }) }}
+                    {% if form.cleaned_data['filter_calendar']%}
+                    {{events|length}} events for {{ form.cleaned_data['filter_calendar']|join(', ') }}
+                    {% endif %}
+                    from {{ range_start|date("%B %d, %Y") }}
+                    to {{ range_end|date("%B %d, %Y") }}
+
+
                 </div>
-                {{ calendar.render(posts, {
+                {{ calendar.render(events, {
                     'time_col_classes': 'u-w30pct',
                     'name_col_classes': 'u-w30pct',
                     'desc_col_classes': 'u-w40pct'

@@ -15,7 +15,7 @@ from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
 from sheerlike.middleware import GlobalRequestMiddleware
 
-from v1.views import LeadershipCalendarPDFView, unshare, change_password, \
+from v1.views import unshare, change_password, \
                      password_reset_confirm, login_with_lockout,\
                      check_permissions, welcome
 from v1.auth_forms import CFGOVPasswordChangeForm
@@ -127,13 +127,7 @@ urlpatterns = [
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
             name='page'),
-
-        url(r'^leadership-calendar/pdf/$',
-            LeadershipCalendarPDFView.as_view(),
-            name='leadership-calendar-pdf'),
-        url(r'^leadership-calendar/print/$',
-            SheerTemplateView.as_view(template_name='about-us/the-bureau/leadership-calendar/print/index.html'),
-            name='leadership-calendar-print')],
+        ],
         namespace='the-bureau')),
 
 
