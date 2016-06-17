@@ -65,7 +65,6 @@ INSTALLED_APPS = (
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
     {'import': 'jobmanager', 'apps': ('jobmanager', 'reversion', 'tinymce')},
-    {'import': 'cal', 'apps': ('cal',)},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
@@ -299,8 +298,7 @@ PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/pyth
 #LEGACY APPS
 
 STATIC_VERSION = ''
-LEGACY_APP_URLS={ 'cal':False,
-                 'comparisontool':True,
+LEGACY_APP_URLS={'comparisontool':True,
                  'agreements':True,
                  'knowledgebase':True,
                  'selfregistration':True,
