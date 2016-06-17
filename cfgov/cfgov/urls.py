@@ -230,6 +230,9 @@ urlpatterns = [
         name='technology_innovation_fellows'),
     url(r'^jobs/fellowship_form_submit/$', 'jobmanager.views.fellowship_form_submit', name='fellowship_form_submit'),
 
+    # credit cards KBYO
+
+    url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(template_name='knowbeforeyouowe/creditcards/tool.html'), name='cckbyo'),
     # Form crsf token provider for JS form submission
     url(r'^token-provider/', token_provider)
 ]

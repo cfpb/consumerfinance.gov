@@ -78,7 +78,6 @@ class PDFGeneratorView(View):
                 query_opts['filter_range_date_gte'],
                 query_opts['filter_range_date_lte'])
 
-        import pdb;pdb.set_trace()
         result = pdf_reactor.renderDocumentFromURL(url)
 
         # Check if successful
