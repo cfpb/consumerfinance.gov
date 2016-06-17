@@ -36,12 +36,6 @@ class CFPBCalendarEvent(models.Model):
     def __unicode__(self):
         return "%s: %s (%s)" % (self.dtstart, self.summary, self.location)
 
-class CFPBPDFFile(models.Model):
-    url = models.CharField(max_length=255, blank=False)
-    title = models.CharField(max_length=255, blank=False)
-
-    def __unicode__(self):
-        return "%s" % (self.title)
 
 class CFPBImportICSFile(CFPBCalendar):
     class Meta:

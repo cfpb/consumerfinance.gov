@@ -1,4 +1,4 @@
-from cal.models import CFPBCalendar, CFPBCalendarEvent, CFPBPDFFile, CFPBImportICSFile
+from cal.models import CFPBCalendar, CFPBCalendarEvent, CFPBImportICSFile
 from cal import event
 from datetime import datetime
 from django.conf import settings
@@ -95,5 +95,4 @@ class CFPBCalendarImportICSFileAdmin(admin.ModelAdmin):
 
 admin.site.register(CFPBCalendar, admin.ModelAdmin)
 admin.site.register(CFPBCalendarEvent, CalendarEventAdmin)
-admin.site.register(CFPBPDFFile, CFPBPDFFileAdmin)
 admin.site.register(CFPBImportICSFile, CFPBCalendarImportICSFileAdmin)
