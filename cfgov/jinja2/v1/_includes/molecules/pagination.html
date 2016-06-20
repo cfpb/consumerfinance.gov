@@ -77,7 +77,11 @@
             <label for="m-pagination_current-page-{{ index | string }}">
             {% endif -%}
                 <span class="m-pagination_label">
+                {%- if is_stepper %}
+                Step
+                {% else %}
                 Page
+                {% endif -%}
                 </span>
                 <span class="u-visually-hidden">
                     {{ curr_page }} out of {{ total_pages }} total pages
