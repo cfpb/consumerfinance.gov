@@ -7,6 +7,9 @@ def _convert_date(date, tz):
     if date and isinstance(date, basestring):
         date = parser.parse(date,
                             default=datetime.datetime.today().replace(day=1))
+    if isinstance(date, datetime.datetime) and tz:
+        this_tz = timezone(tz)
+        return date.astimezone(this_tz)
     return date
 
 
