@@ -4,7 +4,9 @@
 
    ========================================================================== #}
 
-{% set atomic_type = request.GET.get( 'atomic' ) %}
+{% set command = request.GET.get( 'atomic' ).split('.') %}
+{% set atomic_type = command[0] %}
+{% set modifier = command[1] %}
 {# Set to the Header organism by default. #}
 {% set atomic_type = 'header' if atomic_type == None else atomic_type %}
 
@@ -94,6 +96,12 @@
     ] %}
     {% set vars = { 'nav_items': nav_items } %}
     {% set active_nav_id = 'index' %}
+{% elif atomic_type == 'pagination' %}
+    {% set total_pages = 5 %}
+    {% set curr_page = 1 %}
+    {% set prev_page = null %}
+    {% set next_page = 2 %}
+    {% set is_stepper = true if modifier == 'is_stepper' else false %}
 {% endif %}
 
 {#
@@ -104,7 +112,8 @@
 #}
 {% if atomic_type == 'header' or
       atomic_type == 'footer' or
-      atomic_type == 'secondary-navigation' %}
+      atomic_type == 'secondary-navigation' or
+      atomic_type == 'pagination' %}
     {% set atomic_type_template = 'on-demand/' + atomic_type + '.html' %}
     {% include atomic_type_template %}
 {% endif %}
@@ -118,7 +127,8 @@
     (b) In the <head> with the `defer` and `async` attributes
         set on the <script> tag.
 #}
-<script type="text/javascript" src="{{ static('js/atomic/' + atomic_type + suffix + '.js') }}"></script>
+<script type="text/javascript" src="{{ static('js/atomic/' + atomic_type + suffix + '.js') }}">
+</script>
 
 </body>
 
