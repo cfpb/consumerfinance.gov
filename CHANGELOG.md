@@ -27,6 +27,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 - Fixed layout bug in Latest Updates on Home Page.
 - Fixed spacing of Home Hero content.
+- Fixed spacing issues in the pre-footer.
 
 
 ## 3.0.0-3.3.21-hotfix – 2016-06-10
