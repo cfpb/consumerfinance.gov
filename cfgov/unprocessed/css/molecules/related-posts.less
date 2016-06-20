@@ -47,6 +47,8 @@
 
 @list_half-width: {
 
+    .grid_nested-col-group();
+
     .list_item {
         .grid_column(6);
     }
@@ -65,13 +67,6 @@
         }
     }
 };
-
-.m-related-posts {
-
-    .respond-to-range(@bp-sm-min, @bp-sm-max, {
-        .grid_column(12);
-    });
-}
 
 .m-related-posts__half-width {
     .m-related-posts_list {
