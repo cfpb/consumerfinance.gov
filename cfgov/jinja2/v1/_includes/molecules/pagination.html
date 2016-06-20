@@ -77,18 +77,17 @@
             <label for="m-pagination_current-page-{{ index | string }}">
             {% endif -%}
                 <span class="m-pagination_label">
-                {%- if is_stepper %}
-                Step
-                {% else %}
-                Page
-                {% endif -%}
+                    {{ 'Step' if is_stepper else 'Page' }}
                 </span>
                 <span class="u-visually-hidden">
-                    {{ curr_page }} out of {{ total_pages }} total pages
+                    {{ curr_page }} out of {{ total_pages }} total {{ 'steps' if is_stepper else 'pages' }}
                 </span>
-            {%- if not is_stepper %}
+            {%- if is_stepper %}
+            <span class="m-pagination_label">
+                {{ curr_page }}
+            </span>
+            {% else %}
             </label>
-            {% endif -%}
             {% for (key, value) in request.GET.items() %}
                 {% if value != '' %}
                     <input type="hidden"
@@ -96,11 +95,6 @@
                            value="{{ value }}">
                 {% endif %}
             {% endfor %}
-            {%- if is_stepper %}
-            <span class="m-pagination_label">
-            {{ curr_page }}
-            </span>
-            {% else %}
             <input id="m-pagination_current-page-{{ index | string }}"
                    class="m-pagination_current-page"
                    name="page"
@@ -119,7 +113,7 @@
                            btn__link
                            m-pagination_submit-btn"
                     type="submit">
-            Go
+                Go
             </button>
             {% endif -%}
         </form>
