@@ -7,6 +7,7 @@
 var paths = {
   unprocessed: './cfgov/unprocessed',
   processed:   './cfgov/static_built',
+  legacy: 	   './cfgov/legacy/static',
   lib:         './vendor',
   modules:     './node_modules',
   test:        './test'

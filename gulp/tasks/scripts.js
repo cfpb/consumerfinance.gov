@@ -9,6 +9,7 @@
 
 var browserSync = require( 'browser-sync' );
 var gulp = require( 'gulp' );
+var gulpConcat = require( 'gulp-concat' );
 var gulpModernizr = require( 'gulp-modernizr' );
 var gulpRename = require( 'gulp-rename' );
 var gulpReplace = require( 'gulp-replace' );
@@ -17,6 +18,7 @@ var handleErrors = require( '../utils/handle-errors' );
 var paths = require( '../../config/environment' ).paths;
 var webpackConfig = require( '../../config/webpack-config.js' );
 var webpackStream = require( 'webpack-stream' );
+var configLegacy = require( '../config.js').legacy;
 
 /**
  * Standardize webpack workflow for handling script
@@ -105,6 +107,22 @@ function scriptsNonResponsive() {
 }
 
 /**
+ * Process Nemo JS files.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsNemo() {
+  return gulp.src( configLegacy.scripts )
+    .pipe( gulpConcat( 'scripts.js' ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpUglify() )
+    .pipe( gulpRename( 'scripts.min.js' ) )
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
+/**
  * Bundle Es5 shim scripts.
  * @returns {PassThrough} A source stream.
  */
@@ -133,11 +151,13 @@ gulp.task( 'scripts:ondemand', [
   'scripts:ondemand:base',
   'scripts:ondemand:nonresponsive'
 ] );
+gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
   'scripts:ie',
+  'scripts:nemo',
   'scripts:es5-shim'
 ] );
