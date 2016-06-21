@@ -43,7 +43,7 @@
                       </span>
                       {{ time.render(
                           page.live_stream_date,
-                          timezone='America/New_York'
+                          timezone=page.live_stream_date.tzinfo | string
                       ) }}
                   </p>
                 </div>

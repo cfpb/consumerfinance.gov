@@ -156,7 +156,7 @@
                     {% if event.start_dt %}
                         {{ time.render(
                             event.start_dt,
-                            timezone='America/New_York'
+                            timezone=event.start_dt.tzinfo | string
                         ) }}
                     {% endif %}
                 {% endif %}
@@ -255,11 +255,11 @@
                 <td class="{{ options.time_col_classes }}">
                     {% import 'macros/time.html' as time %}
                     {{ time.render(
-                        bound.start_dt.render(),
+                        bound.start_time.render(),
                         {'date':false,'time':true,'timezone':false}
                     ) }}
                     &ndash;
-                    {{ time.render(bound.end_dt.render(), {'time':true, 'timezone':true}) }}
+                    {{ time.render(bound.end_time.render(), {'time':true, 'timezone':true}) }}
                 </td>
                 <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
                     {{ bound.description.render() }}
