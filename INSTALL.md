@@ -238,13 +238,6 @@ npm install -g gulp bower
   npm install -g protractor && webdriver-manager update
   ```
 
-
-Next, install dependencies with:
-
-```bash
-./setup.sh
-```
-
 > **NOTE:**
   To re-install and rebuild all the site’s assets run `./setup.sh` again.
   See the usage section
