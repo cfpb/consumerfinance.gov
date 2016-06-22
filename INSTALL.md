@@ -69,7 +69,18 @@ cfgov start django
 
 ## Stand-alone installation
 
-### 1. Back-end setup
+### 1. Environment variables setup
+
+The project uses a number of environment variables.
+The `setup.sh` script will create a `.env` file for you
+from the `.env_SAMPLE` file found in the repository,
+if you don't already have one:
+
+```sh
+./setup.sh
+```
+
+### 2. Back-end setup
 
 #### Virtualenv & Virtualenvwrapper Python modules
 
@@ -196,7 +207,7 @@ pip install git+git://github.com/rosskarchner/govdelivery
   in the [Project Configuration](https://github.com/cfpb/cfgov-refresh/blob/flapjack/INSTALL.md#4-project-configuration).
 
 
-## 2. Front-end setup
+## 3. Front-end setup
 
 The cfgov-refresh front-end currently uses the following frameworks / tools:
 
@@ -217,7 +228,7 @@ The cfgov-refresh front-end currently uses the following frameworks / tools:
 npm install -g gulp bower
 ```
 
-## 3. Install dependencies
+## 4. Install dependencies
 
 > **NOTE:**
   Protractor (for the test suite)
@@ -240,7 +251,7 @@ Next, install dependencies with:
   [updating all the project dependencies](README.md#updating-all-dependencies).
 
 
-## 4. Project configuration
+## 5. Project configuration
 
 The project uses a number of environment variables.
 The `setup.sh` script will create a `.env` file for you
@@ -268,6 +279,6 @@ by directly setting its value from the command-line with:
 export [CONSTANTNAME]=[CONSTANTVALUE]
 ```
 
-### 5. Usage
+### 6. Usage
 
 Continue following the [Usage instructions](README.md#usage) in the README.
