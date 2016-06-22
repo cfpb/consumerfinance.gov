@@ -221,7 +221,7 @@ The cfgov-refresh front-end currently uses the following frameworks / tools:
 > **NOTE:** If you’re new to Capital Framework, we encourage you to
   [start here](https://cfpb.github.io/capital-framework/getting-started).
 
-1. Install [Node.js](http://nodejs.org) however you’d like.
+1. Install [Node.js](http://nodejs.org) however you’d like. This project requires version 5.5.0 and up.
 2. Install [Gulp](http://gulpjs.com) and [Bower](http://bower.io):
 
 ```bash
