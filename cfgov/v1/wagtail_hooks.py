@@ -16,17 +16,16 @@ from v1.models import CFGOVPage
 @hooks.register('after_create_page')
 @hooks.register('after_edit_page')
 def share_the_page(request, page):
-    page = page.specific
+    page = Page.objects.get(id=page.id).specific
     parent_page = page.parent()
     is_publishing = bool(request.POST.get('action-publish', False))
     is_sharing = bool(request.POST.get('action-share', False))
 
     check_permissions(parent_page, request.user, is_publishing, is_sharing)
     share(page, is_sharing, is_publishing)
-    configure_page_revision(page, is_publishing)
+    configure_page_revision(page, is_sharing, is_publishing)
 
 
-# Make sure permissions are set to perform actions
 def check_permissions(parent, user, is_publishing, is_sharing):
     parent_perms = parent.permissions_for_user(user)
     if parent.slug != 'root':
@@ -34,30 +33,23 @@ def check_permissions(parent, user, is_publishing, is_sharing):
         is_sharing = is_sharing and parent_perms.can_publish()
 
 
-# If the page is being shared or published, set `shared` to True or else False
-# and save the page.
 def share(page, is_sharing, is_publishing):
     if is_sharing or is_publishing:
         page.shared = True
+        page.has_unshared_changes = False
     else:
-        page.shared = False
+        page.has_unshared_changes = True
     page.save()
 
 
-# If the page isn't being published but the page is live and the editor
-# wants to share updated content that doesn't show on the production site,
-# we must set the page.live to True, delete the latest revision, and save
-# a new revision with `live` = False. This doesn't affect the page's published
-# status, as the saved page object in the database still has `live` equal to
-# True and we're never commiting the change. As seen in CFGOVPage's route
-# method, `route()` will select the latest revision of the page where `live`
-# is set to True and return that revision as a page object to serve the request with.
-def configure_page_revision(page, is_publishing):
-    if not is_publishing:
-        page.live = False
+# Sets the latest revision with a state depending on if the request is to
+# publish, share, or save the page.
+def configure_page_revision(page, is_sharing, is_publishing):
     latest = page.get_latest_revision()
     content_json = json.loads(latest.content_json)
-    content_json['live'], content_json['shared'] = page.live, page.shared
+    content_json['live'] = is_publishing
+    content_json['shared'] = is_sharing or is_publishing
+    content_json['has_unshared_changes'] = page.has_unshared_changes
     latest.content_json = json.dumps(content_json)
     latest.save()
     if is_publishing:

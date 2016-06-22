@@ -88,7 +88,7 @@ class CFGOVPage(Page):
     tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
                                   related_name='tagged_pages')
     shared = models.BooleanField(default=False)
-
+    has_unshared_changes = models.BooleanField(default=False)
     language = models.CharField(choices=ref.supported_languagues, default='en', max_length=2)
 
     # This is used solely for subclassing pages we want to make at the CFPB.
@@ -216,20 +216,32 @@ class CFGOVPage(Page):
 
     @property
     def status_string(self):
-        if not self.live:
-            if self.expired:
-                return _("expired")
-            elif self.approved_schedule:
-                return _("scheduled")
-            elif self.shared:
-                return _("shared")
-            else:
-                return _("draft")
-        else:
-            if self.has_unpublished_changes:
-                return _("live + draft")
+        page = CFGOVPage.objects.get(id=self.id)
+        if page.live and page.shared:
+            if page.has_unpublished_changes:
+                if page.has_unshared_changes:
+                    for revision in page.revisions.order_by('-created_at', '-id'):
+                        content = json.loads(revision.content_json)
+                        if content['shared']:
+                            if content['live']:
+                                return _('live + draft')
+                            else:
+                                return _('live + (shared + draft)')
+                else:
+                    return _("live + shared")
             else:
                 return _("live")
+        elif page.shared:
+            if page.has_unshared_changes:
+                return _("shared + draft")
+            else:
+                return _("shared")
+        elif page.expired:
+            return _("expired")
+        elif page.approved_schedule:
+            return _("scheduled")
+        else:
+            return _("draft")
 
     def sharable_pages(self):
         """
