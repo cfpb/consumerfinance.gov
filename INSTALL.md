@@ -11,7 +11,11 @@ There are two ways to install:
 The project uses a number of environment variables.
 The `setup.sh` script will create a `.env` file for you
 from the `.env_SAMPLE` file found in the repository,
-if you don't already have one.
+if you don't already have one:
+
+```sh
+./setup.sh
+```
 
 Inside the `.env` file you can customize the project environment configuration.
 
