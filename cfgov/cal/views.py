@@ -117,9 +117,10 @@ def display(request, pdf=False):
 
     if pdf and PDFreactor:
         license = os.environ.get('PDFREACTOR_LICENSE')
-        stylesheet_url = 'http://localhost/static/css/pdfreactor-fonts.css'
+        stylesheet_url = '/static/css/pdfreactor-fonts.css'
         pdf_reactor = PDFreactor()
 
+        pdf_reactor.setBaseURL("%s://%s/" % (request.scheme, request.get_host()))
         pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_WARN)
         pdf_reactor.setLicenseKey(str(license))
         pdf_reactor.setAuthor('CFPB')
