@@ -128,7 +128,7 @@ def convert_datetimes(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0089_auto_20160607_1826'),
+        ('v1', '0090_cfgovpage_has_unshared_changes'),
     ]
 
     operations = [
