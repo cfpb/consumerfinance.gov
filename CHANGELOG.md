@@ -24,6 +24,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 3.0.0-3.3.22-hotfix1 – 2016-06-28
+
+### Added
+- Data migration to publish live pages due to Wagtail routing page object instead of revision
+
+
 ## 3.0.0-3.3.22 – 2016-06-22
 
 ### Added
