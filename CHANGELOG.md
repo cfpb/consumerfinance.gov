@@ -24,6 +24,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 3.0.0-3.3.22-hotfix1 – 2016-06-28
+
+### Added
+- Migration script to update live pages with their published revisions
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
 ## 3.0.0-3.3.22 – 2016-06-22
 
 ### Added
