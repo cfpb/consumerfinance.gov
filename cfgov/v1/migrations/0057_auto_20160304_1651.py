@@ -23,15 +23,17 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(
-            model_name='abstractfilterpage',
-            old_name='preview_link_text',
-            new_name='secondary_link_text',
-        ),
-        migrations.RenameField(
-            model_name='abstractfilterpage',
-            old_name='preview_link_url',
-            new_name='secondary_link_url',
-        ),
-        migrations.RunPython(save_revisions),
+        # THIS IS NO LONGER NEEDED
+        #
+        # migrations.RenameField(
+        #     model_name='abstractfilterpage',
+        #     old_name='preview_link_text',
+        #     new_name='secondary_link_text',
+        # ),
+        # migrations.RenameField(
+        #     model_name='abstractfilterpage',
+        #     old_name='preview_link_url',
+        #     new_name='secondary_link_url',
+        # ),
+        # migrations.RunPython(save_revisions),
     ]
