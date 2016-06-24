@@ -111,9 +111,9 @@ brew info autoenv
 [Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
 however you’d like. (We use [Homebrew](http://brew.sh)):
 ```bash
-$ brew tap homebrew/versions
-$ brew search elasticsearch
-$ brew install homebrew/versions/elasticsearch17
+brew tap homebrew/versions
+brew search elasticsearch
+brew install homebrew/versions/elasticsearch17
 ```
 
 Just as with autoenv, Homebrew will output similar instructions after installation:
@@ -130,7 +130,7 @@ If you’ll be working on the project consistently, we suggest using the first o
 
 If you need to find this info again later, you can run:
 ```bash
-$ brew info elasticsearch17
+brew info elasticsearch17
 ```
 
 ### MYSQL Database
