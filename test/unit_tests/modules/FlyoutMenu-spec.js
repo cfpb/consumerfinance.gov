@@ -237,7 +237,7 @@ describe( 'FlyoutMenu', function() {
           var hasClass = contentDom.classList.contains( 'u-move-transition' );
           expect( hasClass ).to.be.true;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );
@@ -256,7 +256,7 @@ describe( 'FlyoutMenu', function() {
           var hasClass = contentDom.classList.contains( 'u-move-transition' );
           expect( hasClass ).to.be.true;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );
@@ -368,7 +368,7 @@ describe( 'FlyoutMenu', function() {
         try {
           expect( flyoutMenu.isAnimating() ).to.be.true;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );
@@ -381,7 +381,7 @@ describe( 'FlyoutMenu', function() {
         try {
           expect( flyoutMenu.isAnimating() ).to.be.false;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );
@@ -394,7 +394,7 @@ describe( 'FlyoutMenu', function() {
         try {
           expect( flyoutMenu.isAnimating() ).to.be.true;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );
@@ -408,7 +408,7 @@ describe( 'FlyoutMenu', function() {
         try {
           expect( flyoutMenu.isAnimating() ).to.be.false;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );
@@ -424,7 +424,7 @@ describe( 'FlyoutMenu', function() {
         try {
           expect( flyoutMenu.isExpanded() ).to.be.false;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );
@@ -437,7 +437,7 @@ describe( 'FlyoutMenu', function() {
         try {
           expect( flyoutMenu.isExpanded() ).to.be.true;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );
@@ -451,7 +451,7 @@ describe( 'FlyoutMenu', function() {
         try {
           expect( flyoutMenu.isExpanded() ).to.be.true;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );
@@ -464,7 +464,7 @@ describe( 'FlyoutMenu', function() {
         try {
           expect( flyoutMenu.isExpanded() ).to.be.false;
           done();
-        } catch( err ) {
+        } catch ( err ) {
           done( err );
         }
       } );

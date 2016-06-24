@@ -44,7 +44,7 @@ function bfs( node, callback ) {
   var queue = [ node ];
   var currNode;
   var children;
-  while( queue.length > 0 ) {
+  while ( queue.length > 0 ) {
     currNode = queue.shift();
     children = currNode.children;
     if ( children.length > 0 ) {

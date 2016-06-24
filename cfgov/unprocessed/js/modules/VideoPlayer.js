@@ -113,7 +113,7 @@ function _attachIFrame() {
     iFrameElement.onload =
       function oniFrameLoad() { _this.state.setIsIframeLoaded( true ); };
     iFrameContainerElement.appendChild( iFrameElement );
-  } else if( _this.childElements.iframeContainer === null ) {
+  } else if ( _this.childElements.iframeContainer === null ) {
     throw new Error( 'No iframe container element found.' );
   }
 
@@ -147,7 +147,7 @@ function _createElement( tagName, properties ) {
 * @returns {HTMLNode} A dom element.
 */
 function _ensureElement( domElement, msg ) {
-  if( domElement instanceof HTMLElement === false ) {
+  if ( domElement instanceof HTMLElement === false ) {
     msg = msg || DOM_INVALID;
     throw new Error( msg );
   }
@@ -275,7 +275,7 @@ var API = {
   * Function used to play the video player.
   */
   play: function play( ) {
-    if( _isIframeLoaded === false ) {
+    if ( _isIframeLoaded === false ) {
       _attachIFrame();
     }
     this.baseElement.classList.add( CLASSES.VIDEO_PLAYING_STATE );

@@ -43,7 +43,8 @@ describe( 'Header', function() {
 
   beforeEach( function() {
     browser.get( '/' );
-    browser.executeScript('document.body.className = "u-move-transition__disabled";');
+    var script = 'document.body.className = "u-move-transition__disabled";';
+    browser.executeScript( script );
   } );
 
   if ( browser.params.windowWidth > breakpointsConfig.bpLG.min ) {
@@ -150,7 +151,7 @@ describe( 'Header', function() {
             .perform();
           // Since the code doesn't work when .u-move-transition__disabled is
           // set to 0ms, we still need a quick sleep.
-          browser.sleep(2);
+          browser.sleep( 2 );
           expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
             .toBe( 'true' );
           expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )

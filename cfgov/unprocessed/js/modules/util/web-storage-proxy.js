@@ -104,7 +104,7 @@ function _getStorageType( storage ) {
     if ( typeof _storage === 'undefined' ) {
       try {
         storage = window.sessionStorage;
-      } catch( err ) {
+      } catch ( err ) {
         // SecurityError was thrown if cookies are off.
         storage = {};
       }

@@ -33,7 +33,8 @@ function _sendError( elem, field ) {
   var type;
 
   for ( var key in field.status ) {
-    if ( field.status.hasOwnProperty( key ) && field.status[key] === false ) {
+    if ( field.status.hasOwnProperty( key ) &&
+         field.status[key] === false ) {
       type = key;
     }
   }

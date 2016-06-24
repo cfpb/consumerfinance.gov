@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
+- Updated ESLint to `2.13.1` from `2.7.0`.
 
 ### Removed
 
