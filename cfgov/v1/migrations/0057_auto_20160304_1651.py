@@ -2,19 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-from v1.models.learn_page import DocumentDetailPage
-from itertools import chain
-
-
-def save_revisions(apps, schema_editor):
-    from v1.models.learn_page import DocumentDetailPage, EventPage, LearnPage
-
-    pages = list(chain(DocumentDetailPage.objects.all(),
-                       EventPage.objects.all(),
-                       LearnPage.objects.all()))
-
-    for page in pages:
-        page.save_revision()
 
 
 class Migration(migrations.Migration):
@@ -23,17 +10,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # THIS IS NO LONGER NEEDED
-        #
-        # migrations.RenameField(
-        #     model_name='abstractfilterpage',
-        #     old_name='preview_link_text',
-        #     new_name='secondary_link_text',
-        # ),
-        # migrations.RenameField(
-        #     model_name='abstractfilterpage',
-        #     old_name='preview_link_url',
-        #     new_name='secondary_link_url',
-        # ),
-        # migrations.RunPython(save_revisions),
+        migrations.RenameField(
+            model_name='abstractfilterpage',
+            old_name='preview_link_text',
+            new_name='secondary_link_text',
+        ),
+        migrations.RenameField(
+            model_name='abstractfilterpage',
+            old_name='preview_link_url',
+            new_name='secondary_link_url',
+        ),
     ]
