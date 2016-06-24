@@ -1,3 +1,5 @@
+import datetime
+
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -53,6 +55,11 @@ class TestMinimumPasswordAge(TestWithUser):
 
     def test_too_soon(self):
         user = self.get_user()
+        history_item = user.passwordhistoryitem_set.latest()
+        current_locked_until = history_item.locked_until
+        new_locked_until = current_locked_until.replace(year=datetime.MAXYEAR)
+        history_item.locked_until = new_locked_until
+        history_item.save()
         with self.assertRaises(ValidationError):
             password_policy.validate_password_age(user)
 
