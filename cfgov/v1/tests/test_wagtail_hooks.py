@@ -156,56 +156,40 @@ class TestConfigurePageRevision(TestCase):
 
     def setUp(self):
         self.page = mock.Mock()
+        self.page.has_unshared_changes = True
         revision = mock.Mock()
         revision.content_json = '{"live": false, "shared": false}'
         self.page.get_latest_revision.return_value = revision
         self.page.live, self.page.shared = False, False
 
     def test_calls_get_latest_revision(self):
-        configure_page_revision(self.page, False)
+        configure_page_revision(self.page, False, False)
         assert self.page.get_latest_revision.called
 
     def test_calls_save(self):
-        configure_page_revision(self.page, False)
+        configure_page_revision(self.page, False, False)
         revision = self.page.get_latest_revision()
         assert revision.save.called
 
-    def test_calls_publish(self):
-        configure_page_revision(self.page, True)
-        revision = self.page.get_latest_revision()
-        assert revision.publish.called
-
-    def test_does_not_call_publish(self):
-        configure_page_revision(self.page, False)
-        revision = self.page.get_latest_revision()
-        assert not revision.publish.called
-
     def test_save_a_draft(self):
-        configure_page_revision(self.page, False)
+        configure_page_revision(self.page, False, False)
         latest = self.page.get_latest_revision()
         latest_content = json.loads(latest.content_json)
-        assert not self.page.shared
-        assert not self.page.live
         assert not latest_content['shared']
         assert not latest_content['live']
 
     def test_sharing_a_page(self):
-        self.page.shared = True
-        configure_page_revision(self.page, False)
+        self.page.has_unshared_changes = False
+        configure_page_revision(self.page, True, False)
         latest = self.page.get_latest_revision()
         latest_content = json.loads(latest.content_json)
-        assert self.page.shared
-        assert not self.page.live
         assert latest_content['shared']
         assert not latest_content['live']
 
     def test_publishing_a_page(self):
-        self.page.shared = True
-        self.page.live = True
-        configure_page_revision(self.page, True)
+        self.page.has_unshared_changes = False
+        configure_page_revision(self.page, False, True)
         latest = self.page.get_latest_revision()
         latest_content = json.loads(latest.content_json)
-        assert self.page.shared
-        assert self.page.live
         assert latest_content['shared']
         assert latest_content['live']
