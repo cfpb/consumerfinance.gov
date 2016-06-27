@@ -9,7 +9,10 @@
 # Set script to exit on any errors.
 set -e
 
-./env-var-setup.sh
-./activate-virtualenv.sh
-./frontend.sh $1
-./backend.sh $1
+# Presumes the varialble VIRTUAL_ENV is already set to the name of the venv
+
+# Activate virtualenv, if not already activated
+if ! type "$workon" &>/dev/null; then
+  workon $VIRTUAL_ENV && echo "Virtualenv $VIRTUAL_ENV activated." ||
+  echo 'Virtualenv was not activated.' && exit
+fi

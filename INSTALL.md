@@ -63,64 +63,58 @@ cfgov assets
 cfgov start django
 ```
 
+
 ## Stand-alone installation
 
 ### 1. Back-end setup
 
-#### Virtualenv & Virtualenvwrapper Python modules
+#### virtualenv & virtualenvwrapper Python modules
 
-Install [Virtualenv](https://virtualenv.pypa.io/en/latest/index.html) and
+Install [virtualenv](https://virtualenv.pypa.io/en/latest/index.html) and
 [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/)
-to create a local environment for your server:
+to be able to create a local environment for your server:
+
 ```bash
 pip install virtualenv virtualenvwrapper
 ```
 
 #### Autoenv module
 
-To automatically define environment variables, [install Autoenv](https://github.com/kennethreitz/autoenv#install).
-(We use [Homebrew](http://brew.sh)):
+This project uses a large number of environment variables.
 
-Run:
+To automatically define environment variables and launch the virtualenv
+upon `cd`ing to the project folder,
+[install Autoenv](https://github.com/kennethreitz/autoenv#install).
+We recommend using [Homebrew](http://brew.sh):
+
 ```bash
 brew install autoenv
 ```
 
 After installation, Homebrew will output instructions similar to:
+
 ```bash
 To finish the installation, source activate.sh in your shell:
-  source /Users/[YOUR MAC OSX USERNAME]/homebrew/opt/autoenv/activate.sh
+  source /Users/[YOUR MAC OS X USERNAME]/homebrew/opt/autoenv/activate.sh
 ```
 
-Any time you run the project you’ll need to run that last line. If you’ll be working with
-the project consistently, we suggest adding it to your bash profile by running:
+Any time you run the project you’ll need to run that last line.
+If you’ll be working with the project consistently,
+we suggest adding it to your Bash profile by running:
+
 ```bash
-echo 'source /Users/[YOUR MAC OSX USERNAME]/homebrew/opt/autoenv/activate.sh' >> ~/.bash_profile
+echo 'source /Users/[YOUR MAC OS X USERNAME]/homebrew/opt/autoenv/activate.sh' >> ~/.bash_profile
 ```
 
 If you need to find this info again later, you can run:
+
 ```bash
 brew info autoenv
 ```
 
-> **NOTE:** If you use ZSH you’ll need to use [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
+> **NOTE:** If you use Zsh you’ll need to use
+  [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
   but we can’t provide support for issues that may arise.
-
-#### Environment variables
-
-The project uses a number of environment variables.
-Inside the `.env` file you can customize the project environment configuration.
-
-Copy the `.env_SAMPLE` file and un-comment each variable after
-adding your own values.
-```bash
-cp -a .env_SAMPLE .env && open .env
-```
-
-Then load the environment variables with:
-```bash
-source .env
-```
 
 #### Elasticsearch
 
@@ -151,6 +145,7 @@ brew info elasticsearch17
 
 ### MYSQL Database
 Start MYSQL with the following command:
+
 ```
 mysql.server start
 ```

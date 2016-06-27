@@ -9,7 +9,14 @@
 # Set script to exit on any errors.
 set -e
 
-./env-var-setup.sh
-./activate-virtualenv.sh
-./frontend.sh $1
-./backend.sh $1
+ENVVAR_SAMPLE=.env_SAMPLE
+ENVVAR=.env
+
+# Copy and activate sample environment variables, if not already done.
+if [ ! -f $ENVVAR ]; then
+  echo 'Setting default environment variables...'
+  cp -a $ENVVAR_SAMPLE $ENVVAR
+fi
+
+source $ENVVAR
+echo "Environment variables from $ENVVAR activated."
