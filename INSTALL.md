@@ -108,29 +108,29 @@ brew info autoenv
 
 #### Elasticsearch
 
-[Install Elasticsearch](http://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html)
+[Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
 however you’d like. (We use [Homebrew](http://brew.sh)):
 ```bash
-brew install elasticsearch
+brew tap homebrew/versions
+brew search elasticsearch
+brew install homebrew/versions/elasticsearch17
 ```
 
 Just as with autoenv, Homebrew will output similar instructions after installation:
+
 ```bash
-To have launchd start elasticsearch at login:
-    ln -sfv /Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/*.plist ~/Library/LaunchAgents
-Then to load elasticsearch now:
-    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.elasticsearch.plist
-Or, if you don’t want/need launchctl, you can just run:
-    elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch/config/elasticsearch.yml
+To have launchd start homebrew/versions/elasticsearch17 now and restart at login:
+  brew services start homebrew/versions/elasticsearch17
+Or, if you don't want/need a background service you can just run:
+  elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch17/config/elasticsearch.yml
 ```
 
 Any time you work on the project, you’ll need to open a new tab and run that last line.
-If you’ll be working on the project consistently, we suggest using the first option
-utilizing `launchd`.
+If you’ll be working on the project consistently, we suggest using the first option. Note that some older versions of Homebrew may suggest using `launchctl` instead of `brew services`.
 
 If you need to find this info again later, you can run:
 ```bash
-brew info elasticsearch
+brew info elasticsearch17
 ```
 
 ### MYSQL Database
