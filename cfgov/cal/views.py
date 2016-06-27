@@ -19,7 +19,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max, Min
 
-from cal.calendar_utils import tz_convert, EventCalendar
 from cal.models import CFPBCalendar, CFPBCalendarEvent
 
 
