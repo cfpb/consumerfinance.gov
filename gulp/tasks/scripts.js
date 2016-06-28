@@ -18,7 +18,7 @@ var handleErrors = require( '../utils/handle-errors' );
 var paths = require( '../../config/environment' ).paths;
 var webpackConfig = require( '../../config/webpack-config.js' );
 var webpackStream = require( 'webpack-stream' );
-var configLegacy = require( '../config.js').legacy;
+var configLegacy = require( '../config.js' ).legacy;
 
 /**
  * Standardize webpack workflow for handling script

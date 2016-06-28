@@ -35,7 +35,7 @@ var INIT_FLAG = standardType.STATE_PREFIX + 'atomic_init';
  * @throws {Error} If DOM element passed into the atomic element is not valid.
  */
 function checkDom( element, baseClass ) {
-  _verifyElementExists( element, baseClass);
+  _verifyElementExists( element, baseClass );
   var dom = _verifyClassExists( element, baseClass );
 
   return dom;

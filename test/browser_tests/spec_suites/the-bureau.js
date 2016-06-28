@@ -44,7 +44,7 @@ describe( 'The Bureau Page', function() {
       beforeEach( function() {
         page.videoPlayerPlayButton.isDisplayed().then(
         function( playButtonIsVisible ) {
-          if( playButtonIsVisible === false ) {
+          if ( playButtonIsVisible === false ) {
             page.videoPlayerCloseButton.click();
           }
           page.videoPlayerPlayButton.click();
@@ -65,7 +65,7 @@ describe( 'The Bureau Page', function() {
       beforeEach( function() {
         page.videoPlayerCloseButton.isDisplayed().then(
         function( closeButtonIsVisible ) {
-          if( closeButtonIsVisible === false ) {
+          if ( closeButtonIsVisible === false ) {
             page.videoPlayerPlayButton.click();
           }
           page.videoPlayerCloseButton.click();

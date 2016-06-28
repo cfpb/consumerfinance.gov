@@ -3,7 +3,6 @@
 // Required modules.
 var BaseTransition = require( '../../modules/transition/BaseTransition' );
 var behavior = require( '../../modules/util/behavior' );
-var dataHook = require( '../../modules/util/data-hook' );
 var EventObserver = require( '../../modules/util/EventObserver' );
 var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 var standardType = require( '../../modules/util/standard-type' );

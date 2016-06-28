@@ -25,7 +25,7 @@ var HTML_SNIPPET =
 
 function triggerEvent( target, eventType, eventOption ) {
   var event = document.createEvent( 'Event' );
-  if( eventType === 'keyup' ) {
+  if ( eventType === 'keyup' ) {
     event.keyCode = eventOption || '';
   }
   event.initEvent( eventType, true, true );

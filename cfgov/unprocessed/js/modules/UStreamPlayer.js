@@ -27,7 +27,7 @@ var API = {
       this.player = new UstreamPlayer( this.iFrameProperties.id );
       this.initPlayerEvents();
       this.state.isPlayerInitialized = true;
-    } else if( this.state.isScriptLoading === false ) {
+    } else if ( this.state.isScriptLoading === false ) {
       this.embedScript( this.SCRIPT_API, this.initPlayer.bind( this ) );
     }
   },
