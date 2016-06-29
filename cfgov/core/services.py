@@ -11,7 +11,7 @@ from django.core.exceptions import ImproperlyConfigured
 from pytz import timezone
 from dateutil.parser import parse
 from v1.forms import CalenderPDFFilterForm
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, resolve
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.conf import settings

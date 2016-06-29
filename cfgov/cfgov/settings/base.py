@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     'v1',
     'core',
     'sheerlike',
+    'cal',
     'legacy',
     'django_extensions',
     'reversion',
@@ -65,7 +66,6 @@ INSTALLED_APPS = (
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
     {'import': 'jobmanager', 'apps': ('jobmanager', 'reversion', 'tinymce')},
-    {'import': 'cal', 'apps': ('cal',)},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
@@ -217,11 +217,6 @@ ELASTICSEARCH_BIGINT = 50000
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
 SHEER_PROCESSORS = \
     {
-        "calendar_event": {
-            "url": "$WORDPRESS/leadership-calendar/cfpb-leadership.json",
-            "processor": "processors.django_calendar_event",
-            "mappings": MAPPINGS.child("calendar_event.json")
-        },
         "history": {
             "url": "$WORDPRESS/api/get_posts/?post_type=history",
             "processor": "processors.wordpress_history",
@@ -304,8 +299,7 @@ PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/pyth
 #LEGACY APPS
 
 STATIC_VERSION = ''
-LEGACY_APP_URLS={ 'cal':False,
-                 'comparisontool':True,
+LEGACY_APP_URLS={'comparisontool':True,
                  'agreements':True,
                  'knowledgebase':True,
                  'selfregistration':True,
