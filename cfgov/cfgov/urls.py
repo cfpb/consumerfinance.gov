@@ -20,7 +20,6 @@ from v1.views import unshare, change_password, \
                      check_permissions, welcome
 from v1.auth_forms import CFGOVPasswordChangeForm
 
-
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
