@@ -11,13 +11,15 @@ set -e
 
 # Initialize project dependency directories.
 init() {
-  ./env-flag-init.sh $1
-  ./env-var-setup.sh
+  # Set cli_flag variable.
+  source env-flag-init.sh 'Back end' $1
+  # Ensure env vars are set and virtualenv is activated.
+  source env-var-setup.sh
 }
 
 # Build project dependencies.
 install_deps() {
-  echo 'Installing project dependencies...'
+  echo 'Installing back-end dependencies...'
 
   # Install requirements for Django Server or tox.
   if [ "$cli_flag" = "development" ]; then
@@ -47,7 +49,6 @@ db_setup() {
     echo 'Error: MySQL not found. Please install MySQL.'
     echo 'The easiest way to do this is probably by running'
     echo '$ brew install mysql'
-    exit
   fi
 }
 

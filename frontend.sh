@@ -11,8 +11,8 @@ set -e
 
 # Initialize project dependency directories.
 init() {
-  ./env-flag-init.sh $1
-  ./env-var-setup.sh
+  # Set cli_flag variable.
+  source env-flag-init.sh 'Front end' $1
 
   NODE_DIR=node_modules
   BOWER_DIR=bower_components
@@ -42,7 +42,7 @@ clean() {
 
 # Install project dependencies.
 install() {
-  echo 'Installing project dependencies...'
+  echo 'Installing front-end dependencies...'
 
   # Copy globally-installed packages.
   # Protractor - JavaScript acceptance testing.
