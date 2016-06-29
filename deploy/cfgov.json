@@ -1,0 +1,56 @@
+{
+  "id": “cfgov”,
+  "instances": 1,
+  "mem": 500,
+  "cpus": 0.50,
+  "disk": 1024,
+  "uris": [
+  ],
+  "container": {
+"type": "DOCKER",
+
+"docker": {
+
+  "image": "{{DOCKER_REGISTRY}}/{{DOCKER_REPO}}:{{DOCKER_IMAGE_TAG}}",
+
+  "network": "BRIDGE",
+
+  "portMappings": [
+
+    {
+
+      "containerPort": 8000,
+
+      "hostPort": 0,
+
+      "servicePort": 84435,
+
+      "protocol": "tcp"
+
+    }
+
+  ]
+
+}
+  },
+  "healthChecks": [
+{
+
+  "protocol": "HTTP",
+
+  "portIndex": 0,
+
+  "path": "/",
+
+  "gracePeriod": 5,
+
+  "intervalSeconds": 20,
+
+  "maxConsecutiveFailures": 3
+
+}
+  ],
+  "labels": {
+ "HAPROXY_GROUP": "internal"
+  }
+}]}
