@@ -3,4 +3,4 @@ from localflavor.us.forms import USZipCodeField
 
 
 class HousingCounselorForm(forms.Form):
-    zip = USZipCodeField()
+    zip = USZipCodeField(max_length=5)

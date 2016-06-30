@@ -32,27 +32,22 @@ class HousingCounselorPDFView(PDFGeneratorView):
     def get_render_url(self):
         request = self.request
 
-        form = HousingCounselorForm(request.GET)
-        if form.is_valid():
-            zip = form.cleaned_data['zip']
-            api_url = 'hud-api-replace/%s.html/' % zip
-            url = '%s://%s/%s' % (request.scheme, 'localhost', api_url)
-            return url
-        else:
-            raise InvalidZipException(form.errors['zip'].as_text())
+        zip = self.form.cleaned_data['zip']
+        api_url = 'hud-api-replace/%s.html/' % zip
+        url = '%s://%s/%s' % (request.scheme, 'localhost', api_url)
+        return url
 
     def get(self, request):
 
         self.request = request
+        self.form = HousingCounselorForm(request.GET)
+        if not self.form.is_valid():
+            return HttpResponse("That does not appear to be a valid zip code", status=400)
+
         if settings.DEBUG and PDFreactor is None:
             return HttpResponse("PDF Reactor is not configured, can not render %s" % self.get_render_url())
 
-        try:
-            return self.generate_pdf()
-        except InvalidZipException as error:
-            if not settings.DEBUG:
-                return HttpResponse("That does not appear to be a valid zip code", status=400)
-            raise
+        return self.generate_pdf()
 
     def get_filename(self):
         return '%s.pdf' % self.request.GET['zip']
