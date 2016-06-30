@@ -9,7 +9,6 @@
 # Set script to exit on any errors.
 set -e
 
-source env-var-setup.sh
-source activate-virtualenv.sh
+source env-setup.sh
 source frontend.sh $1
 source backend.sh $1

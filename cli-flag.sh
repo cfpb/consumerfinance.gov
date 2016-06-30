@@ -23,17 +23,17 @@ fi
 if [ "$cli_flag" != "development" ] &&
    [ "$cli_flag" != "test" ] &&
    [ "$cli_flag" != "production" ]; then
-  echo "\033[33;33mWARNING: '$cli_flag' flag not found, reverting to development environment.\033[0m"
+  echo "WARNING: '$cli_flag' flag not found, reverting to development environment."
   cli_flag='development'
 fi
 
 # Notify of environment that user is in.
 if [ "$cli_flag" = "development" ]; then
-  echo "$end:\033[33;33m development\033[0m."
+  echo "$end: development"
 elif [ "$cli_flag" = "test" ]; then
-  echo "$end:\033[33;1m test\033[0m."
+  echo "$end: test"
 elif [ "$cli_flag" = "production" ]; then
-  echo "$end:\033[32;1m production\033[0m."
+  echo "$end: production"
 fi
 
 export cli_flag=$cli_flag

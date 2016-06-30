@@ -54,7 +54,7 @@ for necessary server-side configurations.
 
 ## Usage
 
-If not using the vagrant box, you will generally have four tabs
+If not using the Vagrant box, you will generally have four tabs
 (or windows) open in your terminal, which will be used for:
  1. **Git operations**.
     Perform Git operations and general development in the repository,
@@ -87,7 +87,7 @@ Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
 This setup script will remove and re-install the project dependencies
 and rebuild the site's JavaScript and CSS assets.
 
-> **NOTE:** You may also run `./backend.sh` or `./frontend.sh
+> **NOTE:** You may also run `./backend.sh` or `./frontend.sh`
   if you only want to re-build the backend or front-end, respectively.
 
 ### 2. Run Elasticsearch

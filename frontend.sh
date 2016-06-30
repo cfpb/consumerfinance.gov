@@ -12,7 +12,7 @@ set -e
 # Initialize project dependency directories.
 init() {
   # Set cli_flag variable.
-  source env-flag-init.sh 'Front end' $1
+  source cli-flag.sh 'Front end' $1
 
   NODE_DIR=node_modules
   BOWER_DIR=bower_components

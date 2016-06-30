@@ -66,7 +66,7 @@ cfgov start django
 
 ## Stand-alone installation
 
-### 1. Back-end setup
+### 1. Install system-level requirements
 
 #### virtualenv & virtualenvwrapper Python modules
 
@@ -98,8 +98,9 @@ To finish the installation, source activate.sh in your shell:
   source /Users/[YOUR MAC OS X USERNAME]/homebrew/opt/autoenv/activate.sh
 ```
 
-Any time you run the project you’ll need to run that last line.
-If you’ll be working with the project consistently,
+Run that now for your initial setup.
+Any time you run the project you’ll need to run that last line, so
+if you’ll be working with the project consistently,
 we suggest adding it to your Bash profile by running:
 
 ```bash
@@ -116,96 +117,48 @@ brew info autoenv
   [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
   but we can’t provide support for issues that may arise.
 
+#### MySQL
+
+If you're developing on OS X, this should be installed by default,
+and you shouldn't have to do anything else to get it working.
+You can optionally install a different version with Homebrew.
+
 #### Elasticsearch
 
 [Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
 however you’d like. (We use [Homebrew](http://brew.sh)):
+
 ```bash
 brew tap homebrew/versions
 brew search elasticsearch
 brew install homebrew/versions/elasticsearch17
 ```
 
-Just as with autoenv, Homebrew will output similar instructions after installation:
+Just as with Autoenv, Homebrew will output similar instructions after installation:
 
 ```bash
-To have launchd start homebrew/versions/elasticsearch17 now and restart at login:
+# To have launchd start homebrew/versions/elasticsearch17 now and restart at login:
   brew services start homebrew/versions/elasticsearch17
-Or, if you don't want/need a background service you can just run:
+# Or, if you don't want/need a background service you can just run:
   elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch17/config/elasticsearch.yml
 ```
 
-Any time you work on the project, you’ll need to open a new tab and run that last line.
-If you’ll be working on the project consistently, we suggest using the first option. Note that some older versions of Homebrew may suggest using `launchctl` instead of `brew services`.
+Any time you resume work on the project after restarting your machine,
+you’ll need to open a new tab and run that last line.
+If you’ll be working on the project consistently,
+we suggest using the first option, so you don't have to worry about that.
+Note that some older versions of Homebrew may suggest
+using `launchctl` instead of `brew services`.
 
 If you need to find this info again later, you can run:
+
 ```bash
 brew info elasticsearch17
 ```
 
-### MYSQL Database
-Start MYSQL with the following command:
+#### Front-end dependencies
 
-```
-mysql.server start
-```
-
-Then run the MYSQL creation script from project root directory:
-```
-./create-mysql-db.sh
-```
-
-If you would like to have a custom database setup
-then you can pass in the necessary arguments:
-
-```
-./create-mysql-db.sh <dbname> <username> <password>
-```
-
-> **NOTE:** Be sure to update your local settings in
-  `cfgov/cfgov/settings/local.py` to account for these changes.
-
-
-If something goes wrong and you'd like to delete the database
-and start again, you can do so with:
-
-```
-mysql v1 -u root -p -e 'drop database v1;'
-```
-
-#### Virtual Environment
-In the project root directory,
-create a virtualenv that you’ll name `cfgov-refresh`:
-```bash
-mkvirtualenv cfgov-refresh
-```
-
-The new virtualenv will activate right away. To activate it later on
-(say, in a new terminal session) use the command `workon cfgov-refresh`.
-You’ll know you have a virtual environment activated if you see the name of it in
-parentheses before your terminal prompt. Ex:
-```bash
-(cfgov-refresh)$
-```
-
-#### GovDelivery
-
-Install the following GovDelivery dependencies into your virtual environment:
-```bash
-pip install git+git://github.com/dpford/flask-govdelivery
-pip install git+git://github.com/rosskarchner/govdelivery
-```
-
-> **NOTE:** GovDelivery is a third-party web service that powers our subscription forms.
-  Users may decide to swap this tool out for another third-party service.
-  The application will throw an error
-  if the GovDelivery environment variables are not set
-  in the [Project Configuration](https://github.com/cfpb/cfgov-refresh/blob/flapjack/INSTALL.md#4-project-configuration).
-
-
-## 3. Front-end setup
-
-The cfgov-refresh front-end currently uses the following frameworks / tools:
+The cfgov-refresh front end currently uses the following frameworks / tools:
 
 - [Gulp](http://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
@@ -218,35 +171,147 @@ The cfgov-refresh front-end currently uses the following frameworks / tools:
   [start here](https://cfpb.github.io/capital-framework/getting-started).
 
 1. Install [Node.js](http://nodejs.org) however you’d like.
+   We recommend using [nvm](https://github.com/creationix/nvm), though.
+
+   _NOTE: This project requires Node.js v5.5 or higher, and npm v3 or higher._
 2. Install [Gulp](http://gulpjs.com) and [Bower](http://bower.io):
 
 ```bash
 npm install -g gulp bower
 ```
 
-## 4. Install dependencies
 
-> **NOTE:**
-  Protractor (for the test suite)
-  can be installed globally to avoid downloading Chromedriver repeatedly.
-  To do so, run:
-  ```bash
-  npm install -g protractor && webdriver-manager update
-  ```
+### 2. Run `setup.sh`
 
+At this point, your machine should have everything it needs to automate the
+rest of the setup process.
 
-Next, install dependencies with:
+If you haven't cloned this repo yet, clone it to a local folder.
+Because related projects will need to be installed as siblings to this project,
+we recommend putting them all in their own folder, e.g., `~/Projects/cf.gov`.
+
+Once cloned, from the project root (`~/Projects/cf.gov/cfgov-refresh/`),
+run this command to complete the setup process:
 
 ```bash
-./setup.sh
+source setup.sh
 ```
 
-> **NOTE:**
-  To re-install and rebuild all the site’s assets run `./setup.sh` again.
-  See the usage section
-  [updating all the project dependencies](README.md#updating-all-dependencies).
+This will take several minutes, going through the steps in these scripts:
+
+1. `env-var-setup.sh`
+1. `frontend.sh`
+1. `backend.sh`
+
+Once complete, you should have a fully functioning local environment,
+ready for you to develop against!
+
+**Continue following the [usage instructions](README.md#usage) in the README.**
 
 
-### 5. Usage
+## Optional steps
 
-Continue following the [Usage instructions](README.md#usage) in the README.
+### Load a database dump from the Build server
+
+If you're installing this fresh, the initial data you receive will not be
+as extensive as you'd probably like it to be.
+You can get a database dump from the Build server by running the Jenkins job
+"flapjack-demo-refresh-mysql-dump".
+You'll get a download of `refresh_dump.sql.gz`; unzip that, then run:
+
+```bash
+./refesh-data.sh /path/to/refresh_dump.sql
+```
+
+This will remove the initial Wagtail admin user that was created by
+the `initial-data.sh` script that was called by `backen.sh`.
+If you need to access the Wagtail admin, create a new user with the following:
+
+```
+./cfgov/manage.py createsuperuser
+```
+
+### Install Protractor locally
+
+Protractor (for the test suite) can be installed globally
+to avoid downloading Chromedriver repeatedly.
+To do so, run:
+
+```bash
+npm install -g protractor && webdriver-manager update
+```
+
+### Install dependencies for working with the GovDelivery API
+
+Install the following GovDelivery dependencies into your virtual environment:
+
+```bash
+pip install git+git://github.com/dpford/flask-govdelivery
+pip install git+git://github.com/rosskarchner/govdelivery
+```
+
+Uncomment and set the GovDelivery environment variables in your `.env` file.
+
+> **NOTE:** GovDelivery is a third-party web service that powers our emails.
+  The API is used by subscribe forms on our website.
+  Users may decide to swap this tool out for another third-party service.
+
+---
+
+## Curious about what the setup scripts are doing?
+
+Here's a rundown of each of the scripts called by `setup.sh` and what they do.
+
+### 1. `env-var-setup.sh` – environment variable setup
+
+The script will first check for the presence of a `.env` file in your folder.
+If it does not exist, it will copy `.env_SAMPLE` to `.env` and `source` it.
+This will export the minimum required environment variables,
+and then call `activate-virtualenv.sh`, activate the virtualenv
+(creating it first, if necessary).
+
+### 2. `frontend.sh`
+
+1. **Initialize project dependency directories** (`init`)
+
+   This script first checks for an argument passed from the command line
+   that can trigger different options for different environments.
+   Since you ran it with no arguments, it will set up the dev environment.
+
+   It will then set some env vars for the Node and Bower dependency directories.
+1. **Clean project dependencies** (`clean`)
+
+   The script will now empty out all installed dependencies,
+   so the new installation can start fresh.
+1. **Install project dependencies** (`install`)
+
+   Node and Bower dependencies are installed.
+   The `devDependencies` from `package.json` are not installed
+   if the environment is production, and if it's the dev or test environment,
+   it checks to see if Protractor is globally installed.
+1. **Run tasks to build the project for distribution** (`build`)
+
+   Finally, the script executes `gulp clean` to wipe out any lingering
+   `dist` files, then runs `gulp build` to rebuild everything.
+
+### 3. `backend.sh`
+
+1. **Confirm environment** (`init`)
+
+   This script first checks for an argument passed from the command line
+   that can trigger different options for different environments.
+   Since you ran it with no arguments, it will set up the dev environment.
+
+   It will then run `env-var-setup.sh` to ensure that the environment variables
+   are set and the virtualenv is activated.
+1. **Install project dependencies** (`install`)
+
+   Python dependencies are installed into the virtualenv via pip.
+   Dependencies vary slightly depending on whether we're in dev, test, or prod.
+1. **Setup MySQL server** (`db_setup`)
+
+   Finally, the script will start the MySQL server, if it's not already running,
+   run `create-mysql-db.sh` to create the database using
+   the variables given in `.env`, if it's not already there,
+   and will run `initial-data.sh` to create the first Wagtail user
+   and load some basic initial data.

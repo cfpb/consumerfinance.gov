@@ -9,16 +9,16 @@
 # Set script to exit on any errors.
 set -e
 
-# Initialize project dependency directories.
+# Confirm environment.
 init() {
   # Set cli_flag variable.
-  source env-flag-init.sh 'Back end' $1
+  source cli-flag.sh 'Back end' $1
   # Ensure env vars are set and virtualenv is activated.
   source env-var-setup.sh
 }
 
-# Build project dependencies.
-install_deps() {
+# Install project dependencies.
+install() {
   echo 'Installing back-end dependencies...'
 
   # Install requirements for Django Server or tox.
@@ -65,5 +65,5 @@ is_installed() {
 }
 
 init "$1"
-install_deps
+install
 db_setup
