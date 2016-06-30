@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ==========================================================================
-# Setup script for installing project dependencies.
+# Script for activating the virtualenv (creating it first, if necessary).
 # NOTE: Run this script while in the project root directory.
 #       It will not run correctly when run from another directory.
 # ==========================================================================

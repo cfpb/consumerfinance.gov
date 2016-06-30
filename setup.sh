@@ -9,6 +9,6 @@
 # Set script to exit on any errors.
 set -e
 
-source env-setup.sh
+source load-env.sh
 source frontend.sh $1
 source backend.sh $1

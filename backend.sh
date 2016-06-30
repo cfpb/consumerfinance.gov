@@ -14,7 +14,7 @@ init() {
   # Set cli_flag variable.
   source cli-flag.sh 'Back end' $1
   # Ensure env vars are set and virtualenv is activated.
-  source env-var-setup.sh
+  source load-env.sh
 }
 
 # Install project dependencies.

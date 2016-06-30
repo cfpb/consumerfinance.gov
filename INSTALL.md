@@ -206,6 +206,11 @@ This will take several minutes, going through the steps in these scripts:
 Once complete, you should have a fully functioning local environment,
 ready for you to develop against!
 
+Want to know more about what the setup scripts are doing?
+[Read the detailed rundown.](#curious-about-what-the-setup-scripts-are-doing)
+
+Get any errors? [See our troubleshooting tips.](#troubleshooting)
+
 **Continue following the [usage instructions](README.md#usage) in the README.**
 
 
@@ -256,7 +261,6 @@ Uncomment and set the GovDelivery environment variables in your `.env` file.
   The API is used by subscribe forms on our website.
   Users may decide to swap this tool out for another third-party service.
 
----
 
 ## Curious about what the setup scripts are doing?
 
@@ -315,3 +319,21 @@ and then call `activate-virtualenv.sh`, activate the virtualenv
    the variables given in `.env`, if it's not already there,
    and will run `initial-data.sh` to create the first Wagtail user
    and load some basic initial data.
+
+
+## Troubleshooting
+
+Here are some common issues and how you can fix them:
+
+### Errors referencing South, or other Python errors:
+
+Since moving to Django 1.8, we use Django's built-in migration engine,
+and we no longer use South.
+If you're getting South errors, you probably have it installed globally.
+To solve this, from outside the virtual environment, run `pip uninstall south`.
+
+If you're getting other kinds of Python errors (for example, when running tox),
+you may even want to go as far as uninstalling all globally-installed
+Python packages: `pip freeze | grep -v "^-e" | xargs pip uninstall -y`.
+After doing that, you'll need to reinstall virtualenv:
+`pip install virtualenv virtualenvwrapper`.
