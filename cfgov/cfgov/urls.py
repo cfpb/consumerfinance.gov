@@ -316,17 +316,18 @@ from django.shortcuts import render
 
 def handle_error(code, request):
     try:
-        return render(request, '%s.html' % code, context={'request': request})
+        return render(request, '%s.html' % code, context={'request': request},
+                      status=code)
     except AttributeError:
         # for certain URL's, it seems like our middleware doesn't run
         # Thankfully, these are probably not errors real users see -- usually
         # the results of a security scan, or a malformed static file reference.
 
         return HttpResponse("This request could not be processed, "
-                            "HTTP Error %s." % code)
+                            "HTTP Error %s." % str(code), status=code)
 
-handler404 = partial(handle_error, '404')
-handler500 = partial(handle_error, '500')
+handler404 = partial(handle_error, 404)
+handler500 = partial(handle_error, 500)
 
 
 register_permalink('posts', 'blog:detail')
