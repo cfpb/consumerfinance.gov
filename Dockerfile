@@ -21,12 +21,10 @@ ENV SHEER_ELASTICSEARCH_INDEX "content"
 ENV VIRTUAL_ENV "v1"
 ENV OAH_SHEER_PATH "/code/cfgov-refreshapps/owning-a-home/dist"
 ENV TAX_TIME_SHEER_PATH "/code/cfgov-refreshapps/tax-time-saving/dist"
-ENV KBYO_SHEER_PATH "apps/know-before-you-owe/dist"
+ENV KBYO_SHEER_PATH "/code/apps/know-before-you-owe/dist"
 
 ENV PYTHONPATH "$PYTHONPATH:/code/apps/agreement_database:/code/apps/ccdb-content:/code/apps/college-costs:/code/apps/django-college-cost-comparison:/code/apps/django-hud:/code/apps/eregs:/code/apps/knowledgebase:/code/apps/leadership-calendar:/code/apps/owning-a-home-api:/code/apps/picard:/code/apps/regulations-core:/code/apps/regulations-site:/code/apps/retirement:/code/apps/selfregistration"
 
-RUN mkdir -p /code
-RUN mkdir -p /collectstatic
 WORKDIR /code
 ADD . /code
 EXPOSE 8000
