@@ -5,6 +5,7 @@ from django.http import HttpRequest
 from django.http import Http404
 from django.db.models import Count, Min, Max
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import ListView
 from django.core.context_processors import csrf
 from django.utils import timezone
 import re
@@ -30,14 +31,6 @@ def fellowship_form_submit(request):
 
     return HttpResponse('OK')
 
-def index(request):
-    today = timezone.now().date()
-    jobs = Job.objects.filter(open_date__lte=today,close_date__gte=today,           
-            active=True).order_by('-open_date')[:5]
-    
-    context = {'newest_careers':jobs}
-    return render(request, "about-us/careers/index.html", context)
-
 
 def detail(request, pk=None, slug=None):
     today = timezone.now().date()
@@ -51,7 +44,7 @@ def detail(request, pk=None, slug=None):
 
     if slug:
         job = get_object_or_404(qs, slug=slug)
-    salary_min = int(job.salary_min or min([g.salary_min 
+    salary_min = int(job.salary_min or min([g.salary_min
         for g in job.grades.all()]))
     salary_max = int(job.salary_max or max([g.salary_max
         for g in job.grades.all()]))
@@ -62,12 +55,29 @@ def detail(request, pk=None, slug=None):
             'salary_max': salary_max})
 
 
-def current_openings(request):
-    today = datetime.date.today()
+class JobListView(ListView):
+    model = Job
+    ordering = ('close_date', 'title')
 
-    today = timezone.now().date()
-    jobs = Job.objects.filter(open_date__lte=today,close_date__gte=today,           
-            active=True).order_by('close_date','title')
-    
-    return render(request, "about-us/careers/current-openings/index.html",
-        {'careers':jobs})
+    def get_queryset(self):
+        qs = super(JobListView, self).get_queryset()
+        today = timezone.now().date()
+        return qs.filter(
+            open_date__lte=today,
+            close_date__gte=today,
+            active=True
+        )
+
+
+class IndexView(JobListView):
+    context_object_name = 'newest_careers'
+    template_name = 'about-us/careers/index.html'
+    jobs_to_show = 5
+
+    def get_queryset(self):
+        return super(IndexView, self).get_queryset()[:self.jobs_to_show]
+
+
+class CurrentOpeningsView(JobListView):
+    context_object_name = 'careers'
+    template_name = 'about-us/careers/current-openings/index.html'

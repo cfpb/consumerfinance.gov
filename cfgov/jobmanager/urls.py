@@ -4,11 +4,14 @@ from django.core.context_processors import csrf
 from django.conf import settings
 from django.views.generic import TemplateView, RedirectView
 
+from jobmanager.views import CurrentOpeningsView, IndexView
+
+
 urlpatterns = patterns(
     'jobmanager.views',
-    url(r'^$', 'index', name='jobs'),
-    url(r'^current-openings/$', 'current_openings', name='current_openings'),
-
+    url(r'^$', IndexView.as_view(), name='jobs'),
+    url(r'^current-openings/$', CurrentOpeningsView.as_view(),
+        name='current_openings'),
     url(r'application-process',
         TemplateView.as_view(template_name='about-us/careers/application-process/index.html')),
     url(r'working-at-cfpb/$',
