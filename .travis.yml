@@ -22,6 +22,7 @@ install:
   # Project initialization.
   - chmod +x ./setup.sh
   - ./setup.sh test
+  - workon cfgov-refresh
   - python cfgov/manage.py sheer_index
   - python cfgov/manage.py migrate
 
