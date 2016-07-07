@@ -6,9 +6,6 @@
 #       It will not run correctly when run from another directory.
 # ==========================================================================
 
-# Set script to exit on any errors.
-set -e
-
 ENVVAR_SAMPLE=.env_SAMPLE
 ENVVAR=.env
 

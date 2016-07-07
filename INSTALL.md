@@ -140,7 +140,7 @@ Just as with Autoenv, Homebrew will output similar instructions after installati
 # To have launchd start homebrew/versions/elasticsearch17 now and restart at login:
   brew services start homebrew/versions/elasticsearch17
 # Or, if you don't want/need a background service you can just run:
-  elasticsearch --config=/Users/[YOUR MAC OSX USERNAME]/homebrew/opt/elasticsearch17/config/elasticsearch.yml
+  elasticsearch --config=/Users/[YOUR MAC OS X USERNAME]/homebrew/opt/elasticsearch17/config/elasticsearch.yml
 ```
 
 Any time you resume work on the project after restarting your machine,
@@ -229,7 +229,7 @@ You'll get a download of `refresh_dump.sql.gz`; unzip that, then run:
 ```
 
 This will remove the initial Wagtail admin user that was created by
-the `initial-data.sh` script that was called by `backen.sh`.
+the `initial-data.sh` script that was called by `backend.sh`.
 If you need to access the Wagtail admin, create a new user with the following:
 
 ```
@@ -238,7 +238,7 @@ If you need to access the Wagtail admin, create a new user with the following:
 
 ### Install Protractor locally
 
-Protractor (for the test suite) can be installed globally
+Protractor (for the test suites) can be installed globally
 to avoid downloading Chromedriver repeatedly.
 To do so, run:
 
