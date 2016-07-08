@@ -18,7 +18,7 @@ refresh_data(){
 	echo 'Importing refresh db'
 	mysql v1 -u root -p < $refresh_dump_name
     echo 'Running migrations'
-    ./cfgov/manage.py migrate
+    ./cfgov/manage.py migrate --fake
     echo 'Setting up Sites'
     ./cfgov/manage.py runscript setup_sites
 }
