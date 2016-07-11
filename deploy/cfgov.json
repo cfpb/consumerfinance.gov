@@ -1,9 +1,9 @@
 {
   "id": "cfgov",
   "instances": 1,
-  "mem": 500,
-  "cpus": 0.50,
-  "disk": 1024,
+  "mem": 5000,
+  "cpus": 5,
+  "disk": 2048,
   "uris": [],
   "container": {
     "type": "DOCKER",
