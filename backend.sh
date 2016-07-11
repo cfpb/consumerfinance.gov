@@ -14,9 +14,6 @@ init() {
   # Set cli_flag variable.
   source cli-flag.sh 'Back end' $1
 
-  # Ensure env vars are set and virtualenv is activated.
-  # source load-env.sh
-
   # Ensure that we're in a virtualenv
   python -c 'import sys; sys.real_prefix' 2>/dev/null || (
     echo 'Please activate your virtualenv before running this script:' \

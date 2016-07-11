@@ -95,7 +95,7 @@ After installation, Homebrew will output instructions similar to:
 
 ```bash
 To finish the installation, source activate.sh in your shell:
-  source /Users/[YOUR MAC OS X USERNAME]/homebrew/opt/autoenv/activate.sh
+  source /Users/[YOUR USERNAME]/homebrew/opt/autoenv/activate.sh
 ```
 
 Run that now for your initial setup.
@@ -104,7 +104,7 @@ if you’ll be working with the project consistently,
 we suggest adding it to your Bash profile by running:
 
 ```bash
-echo 'source /Users/[YOUR MAC OS X USERNAME]/homebrew/opt/autoenv/activate.sh' >> ~/.bash_profile
+echo 'source /Users/[YOUR USERNAME]/homebrew/opt/autoenv/activate.sh' >> ~/.bash_profile
 ```
 
 If you need to find this info again later, you can run:
@@ -126,7 +126,7 @@ You can optionally install a different version with Homebrew.
 #### Elasticsearch
 
 [Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
-however you’d like. (We use [Homebrew](http://brew.sh)):
+however you’d like. We use [Homebrew](http://brew.sh) for developing on OS X):
 
 ```bash
 brew tap homebrew/versions
@@ -140,7 +140,7 @@ Just as with Autoenv, Homebrew will output similar instructions after installati
 # To have launchd start homebrew/versions/elasticsearch17 now and restart at login:
   brew services start homebrew/versions/elasticsearch17
 # Or, if you don't want/need a background service you can just run:
-  elasticsearch --config=/Users/[YOUR MAC OS X USERNAME]/homebrew/opt/elasticsearch17/config/elasticsearch.yml
+  elasticsearch --config=/Users/[YOUR USERNAME]/homebrew/opt/elasticsearch17/config/elasticsearch.yml
 ```
 
 Any time you resume work on the project after restarting your machine,
@@ -180,8 +180,25 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 npm install -g gulp bower
 ```
 
+### 2. Set up your environment
 
-### 2. Run `setup.sh`
+If this is the first time you're setting up the project, run the following
+script to copy `.env_SAMPLE` to `.env`, export your environment variables,
+and activate your virtualenv for the first time.
+
+```bash
+source load-env.sh
+```
+
+Each time you start a new session for working on this project, you'll need to
+get those environment variables and get your virtualenv running again.
+If you setup Autoenv earlier, this will happen for you automatically when you
+`cd` into the project directory.
+
+If you prefer not to use Autoenv, just be sure to `source .env` every time
+you start a new session of work on the project.
+
+### 3. Run `setup.sh`
 
 At this point, your machine should have everything it needs to automate the
 rest of the setup process.
@@ -199,7 +216,6 @@ source setup.sh
 
 This will take several minutes, going through the steps in these scripts:
 
-1. `env-var-setup.sh`
 1. `frontend.sh`
 1. `backend.sh`
 
@@ -266,15 +282,7 @@ Uncomment and set the GovDelivery environment variables in your `.env` file.
 
 Here's a rundown of each of the scripts called by `setup.sh` and what they do.
 
-### 1. `env-var-setup.sh` – environment variable setup
-
-The script will first check for the presence of a `.env` file in your folder.
-If it does not exist, it will copy `.env_SAMPLE` to `.env` and `source` it.
-This will export the minimum required environment variables,
-and then call `activate-virtualenv.sh`, activate the virtualenv
-(creating it first, if necessary).
-
-### 2. `frontend.sh`
+### 1. `frontend.sh`
 
 1. **Initialize project dependency directories** (`init`)
 
@@ -298,7 +306,7 @@ and then call `activate-virtualenv.sh`, activate the virtualenv
    Finally, the script executes `gulp clean` to wipe out any lingering
    `dist` files, then runs `gulp build` to rebuild everything.
 
-### 3. `backend.sh`
+### 2. `backend.sh`
 
 1. **Confirm environment** (`init`)
 
@@ -306,8 +314,9 @@ and then call `activate-virtualenv.sh`, activate the virtualenv
    that can trigger different options for different environments.
    Since you ran it with no arguments, it will set up the dev environment.
 
-   It will then run `env-var-setup.sh` to ensure that the environment variables
-   are set and the virtualenv is activated.
+   It will then run a script to ensure that you're in a virtualenv.
+   If not, the script will end, to prevent you from accidentally installing
+   your Python dependencies globally.
 1. **Install project dependencies** (`install`)
 
    Python dependencies are installed into the virtualenv via pip.
