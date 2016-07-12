@@ -1,5 +1,4 @@
 from jinja2.loaders import FileSystemLoader
-import fslib
 
 
 class FslibLoader(FileSystemLoader):
