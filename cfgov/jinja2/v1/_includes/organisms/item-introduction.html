@@ -32,38 +32,35 @@
 {% set page_url = get_protected_url(ancestor) %}
 
 <div class="o-item-introduction">
-    <div class="h4">
-        {{ category_slug.render(value.category, page_url, index=form_id) }}
-    </div>
+    {{ category_slug.render(value.category, page_url, index=form_id) }}
     <h1>{{ value.heading }}</h1>
 
     {% if value.paragraph %}
         <div class="lead-paragraph">{{ parse_links(value.paragraph) | safe }}</div>
     {% endif %}
+
     {% if value.date or page.authors.all() %}
-        <p>
+        <div class="meta">
     {% endif %}
-    {% for author in page.authors.names() %}
-        {% if loop.index == 1  %}
-            By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                {{ author }}
+    {% set num_authors = page.authors.all()|length %}
+        {% if num_authors %}
+            <span class="byline">
+            {%- for author in page.authors.names() -%}
+                {{- 'By ' if loop.index == 1 else ' and ' }}
+                <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
+                    {{ author }}
                 </a>
-        {% elif loop.last == true %}
-            and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                {{ author }}
-                </a>
-        {% else %}
-            , <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                {{ author }}
-                </a>
+            {%- endfor -%}
+                &ndash;
+            </span>
         {% endif %}
-    {% endfor %}
-    {% if value.date %}
-        {{ time.render(value.date, {'date':true}) }}
-    {% endif %}
+        <span class="date">
+            {{ time.render(value.date, {'date':true}) }}
+        </span>
     {% if value.date or page.authors.all() %}
-        </p>
+        </div>
     {% endif %}
+
     {% if value.has_social %}
         {{ social_media.render() }}
     {% endif %}

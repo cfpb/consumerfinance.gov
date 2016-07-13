@@ -31,11 +31,11 @@
 {%- import 'tags.html' as tags -%}
 
 <article class="post">
-    <header>
+    <header class="post_header">
         {% set index, ancestor = get_filter_data(page) %}
         {% for category in page.categories.all() %}
             {{ '|' if loop.index > 1 else '' }}
-            {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug meta-header_left', index=index) }}
+            {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug', index=index) }}
         {% endfor %}
         <h1 class="post_heading">
             {{ page.title|safe }}
@@ -58,31 +58,33 @@
         <div class="post_meta">
         {% set num_authors = page.authors.all()|length %}
         {% if num_authors %}
+
             <span class="post_byline">
             {%- for author in page.authors.names() -%}
-                {{- 'By ' if loop.index == 1 else ', ' if num_authors > 2 and not loop.index == num_authors else ' ' }}
+                {{- 'By ' if loop.index == 1 else ' and ' }}
                 <a href="{{ get_protected_url(ancestor) }}?filter{{ index }}_authors={{ author }}">
                     {{ author }}
                 </a>
             {%- endfor -%}
                 &ndash;
             </span>
+
         {% endif %}
         <span class="date">
             {{ time.render(page.date_published, {'date':true}) }}
         </span>
         </div>
         {{ social_media.render({'title': page.title}) }}
-        <div class="post_body">
-            {% for block in page.content %}
-                {% if block.block_type == 'content' %}
-                    {{ parse_links(block.value) | safe }}
-                {% else %}
-                    {{ render_block.render(block, loop.index) }}
-                {% endif %}
-            {% endfor %}
-        </div>
     </header>
+    <div class="post_body">
+        {% for block in page.content %}
+            {% if block.block_type == 'content' %}
+                {{ parse_links(block.value) | safe }}
+            {% else %}
+                {{ render_block.render(block, loop.index) }}
+            {% endif %}
+        {% endfor %}
+    </div>
     {% if page.tags.all() | length %}
         <footer>
             {{ tags.render( related_metadata_tags(page), '', is_wagtail=True) }}

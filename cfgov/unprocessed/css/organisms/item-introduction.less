@@ -35,10 +35,27 @@
 */
 
 .o-item-introduction {
+    // visually approximates 60px
+    margin-bottom: unit( 55px / @base-font-size-px, em);
+
     .short-desc {
-        padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em)
+        padding-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+    }
+
+    .lead-paragraph {
+        margin-top: 0;
+    }
+
+    .meta {
+        .byline {
+          .heading-4();
+        }
+
+        // visually approximates 30px
+        margin-bottom: unit(20px / @base-font-size-px, em);
     }
 }
+
 
 /* topdoc
     name: EOF
