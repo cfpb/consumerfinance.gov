@@ -1,7 +1,8 @@
+import django
 import json
 import sys
 
-from mock import call, patch
+from mock import Mock, call, patch
 
 if sys.version_info[0] < 3:
     from urlparse import urlparse
@@ -17,110 +18,122 @@ from django.contrib.messages.storage.cookie import CookieStorage
 from django.contrib.messages import SUCCESS
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
+from core.utils import extract_answers_from_request
 from core.views import govdelivery_subscribe, submit_comment
 
 
+django.setup()
+
+
 class GovDeliverySubscribeTest(TestCase):
-    """
-    This TestCase mocks the following:
-    authenticated_session - removes the external govdelivery call
-    set_subscriber_topics - removes another external govdelivery call
-    assertEquals(urlparse(url).path, reverse(route_name)) was used over
-    assertRedirects because the former doesn't require the templates to exist
-    """
     def setUp(self):
         self.factory = RequestFactory()
-        self.request_path = reverse('govdelivery')
-        self.error_path = reverse('govdelivery:user_error')
 
-    def post(self, *args, **kwargs):
-        request = self.factory.post(self.request_path, *args, **kwargs)
+    def post(self, post, ajax=False):
+        kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'} if ajax else {}
+        request = self.factory.post(reverse('govdelivery'), post, **kwargs)
         return govdelivery_subscribe(request)
 
-    def assertErrorRedirect(self, response):
+    def assertRedirect(self, response, redirect):
         self.assertEqual(
-            urlparse(response['Location']).path,
-            self.error_path
+            (response['Location'], response.status_code),
+            (reverse(redirect), 302)
         )
 
-    def assertErrorJSON(self, response):
+    def assertRedirectSuccess(self, response):
+        self.assertRedirect(response, 'govdelivery:success')
+
+    def assertRedirectUserError(self, response):
+        self.assertRedirect(response, 'govdelivery:user_error')
+
+    def assertRedirectServerError(self, response):
+        self.assertRedirect(response, 'govdelivery:server_error')
+
+    def assertJSON(self, response, result):
         self.assertEqual(
             response.content.decode('utf-8'),
-            json.dumps({'result': 'fail'})
+            json.dumps({'result': result})
         )
+
+    def assertJSONSuccess(self, response):
+        return self.assertJSON(response, 'pass')
+
+    def assertJSONError(self, response):
+        return self.assertJSON(response, 'fail')
+
+    def mock_govdelivery(self, status_code=200):
+        gd = Mock(set_subscriber_topics=Mock(
+            return_value=Mock(status_code=status_code)
+        ))
+
+        patcher = patch('core.views.GovDelivery', return_value=gd)
+        patched = patcher.start()
+        self.addCleanup(patcher.stop)
+
+        return gd
+
+    def check_post(self, post, response_check, ajax=False):
+        response_check(self.post(post, ajax=ajax))
 
     def test_missing_email_address(self):
         post = {'code': 'FAKE_CODE'}
-        self.assertErrorRedirect(self.post(post))
+        self.check_post(post, self.assertRedirectUserError)
 
     def test_missing_gd_code(self):
         post = {'email': 'fake@example.com'}
-        self.assertErrorRedirect(self.post(post))
+        self.check_post(post, self.assertRedirectUserError)
 
     def test_missing_email_address_ajax(self):
         post = {'code': 'FAKE_CODE'}
-        response = self.post(post, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertErrorJSON(response)
+        self.check_post(post, self.assertJSONError, ajax=True)
 
     def test_missing_gd_code_ajax(self):
         post = {'email': 'fake@example.com'}
-        response = self.post(post, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertErrorJSON(response)
+        self.check_post(post, self.assertJSONError, ajax=True)
 
-    @patch('govdelivery.api.authenticated_session')
-    @patch('core.views.GovDelivery.set_subscriber_topics')
-    def test_successful_subscribe(self, mock_gd, mock_auth_session):
-        mock_gd.return_value.status_code = 200
-        response = self.client.post(reverse('govdelivery'),
-                                    {'code': 'FAKE_CODE',
-                                     'email': 'fake@example.com'})
-        mock_gd.assert_called_with('fake@example.com',
-                                   ['FAKE_CODE'])
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('govdelivery:success'))
+    def check_subscribe(self, response_check, ajax=False, status_code=200,
+                        include_answers=False):
+        post = {
+            'code': 'FAKE_CODE',
+            'email': 'fake@example.com',
+        }
 
-    @patch('govdelivery.api.authenticated_session')
-    @patch('core.views.GovDelivery.set_subscriber_topics')
-    def test_successful_subscribe_ajax(self, mock_gd, mock_auth_session):
-        mock_gd.return_value.status_code = 200
-        response = self.client.post(reverse('govdelivery'),
-                                    {'code': 'FAKE_CODE',
-                                     'email': 'fake@example.com'},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        mock_gd.assert_called_with('fake@example.com',
-                                   ['FAKE_CODE'])
-        self.assertEqual(response.content.decode('utf-8'),
-                         json.dumps({'result': 'pass'}))
+        answers = [
+            ('batman', 'robin'),
+            ('hello', 'goodbye'),
+        ]
 
-    @patch('govdelivery.api.authenticated_session')
-    @patch('core.views.GovDelivery.set_subscriber_topics')
-    def test_server_error(self, mock_gd, mock_auth_session):
-        mock_gd.return_value.status_code = 500
-        response = self.client.post(reverse('govdelivery'),
-                                    {'code': 'FAKE_CODE',
-                                     'email': 'fake@example.com'})
-        mock_gd.assert_called_with('fake@example.com',
-                                   ['FAKE_CODE'])
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('govdelivery:server_error'))
+        if include_answers:
+            post.update({'questionid_' + q: a for q, a in answers})
 
-    @patch('govdelivery.api.authenticated_session')
-    @patch('core.views.GovDelivery.set_subscriber_topics')
-    @patch('core.views.GovDelivery.set_subscriber_answers_to_question')
-    def test_setting_subscriber_answers_to_questions(self,
-                                                     mock_set_answers,
-                                                     mock_set_topics,
-                                                     mock_auth_session):
-        mock_set_topics.return_value.status_code = 200
-        response = self.client.post(reverse('govdelivery'),
-                                    {'code': 'FAKE_CODE',
-                                     'email': 'fake@example.com',
-                                     'questionid_batman': 'robin',
-                                     'questionid_hello': 'goodbye'})
-        calls = [call('fake@example.com', 'batman', 'robin'),
-                 call('fake@example.com', 'hello', 'goodbye')]
-        mock_set_answers.assert_has_calls(calls, any_order=True)
-        self.assertEqual(mock_set_answers.call_count, 2)
+        gd = self.mock_govdelivery(status_code=status_code)
+        self.check_post(post, response_check, ajax=ajax)
+        gd.set_subscriber_topics.assert_called_with(
+            post['email'],
+            [post['code']]
+        )
+
+        if include_answers:
+            gd.set_subscriber_answers_to_question.assert_has_calls(
+                [call(post['email'], q, a) for q, a in answers],
+                any_order=True
+            )
+
+    def test_successful_subscribe(self):
+        self.check_subscribe(self.assertRedirectSuccess)
+
+    def test_successful_subscribe_ajax(self):
+        self.check_subscribe(self.assertJSONSuccess, ajax=True)
+
+    def test_server_error(self):
+        self.check_subscribe(self.assertRedirectServerError, status_code=500)
+
+    def test_server_error_ajax(self):
+        self.check_subscribe(self.assertJSONError, ajax=True, status_code=500)
+
+    def test_setting_subscriber_answers_to_questions(self):
+        self.check_subscribe(self.assertRedirectSuccess, include_answers=True)
+
 
 class RegsgovCommentTest(TestCase):
     def test_missing_comment_on(self):
