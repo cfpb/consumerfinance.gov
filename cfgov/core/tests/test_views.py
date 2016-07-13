@@ -9,14 +9,15 @@ else:
     from urllib.parse import urlparse
 
 from urllib import urlencode
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from django.core.urlresolvers import reverse
 from django.http import QueryDict
 
 from django.contrib.messages.storage.cookie import CookieStorage
 from django.contrib.messages import SUCCESS
 from requests_toolbelt.multipart.encoder import MultipartEncoder
-from core.views import submit_comment
+
+from core.views import govdelivery_subscribe, submit_comment
 
 
 class GovDeliverySubscribeTest(TestCase):
@@ -27,32 +28,44 @@ class GovDeliverySubscribeTest(TestCase):
     assertEquals(urlparse(url).path, reverse(route_name)) was used over
     assertRedirects because the former doesn't require the templates to exist
     """
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.request_path = reverse('govdelivery')
+        self.error_path = reverse('govdelivery:user_error')
+
+    def post(self, *args, **kwargs):
+        request = self.factory.post(self.request_path, *args, **kwargs)
+        return govdelivery_subscribe(request)
+
+    def assertErrorRedirect(self, response):
+        self.assertEqual(
+            urlparse(response['Location']).path,
+            self.error_path
+        )
+
+    def assertErrorJSON(self, response):
+        self.assertEqual(
+            response.content.decode('utf-8'),
+            json.dumps({'result': 'fail'})
+        )
 
     def test_missing_email_address(self):
-        response = self.client.post(reverse('govdelivery'),
-                                    {'code': 'FAKE_CODE'})
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('govdelivery:user_error'))
+        post = {'code': 'FAKE_CODE'}
+        self.assertErrorRedirect(self.post(post))
 
     def test_missing_gd_code(self):
-        response = self.client.post(reverse('govdelivery'),
-                                    {'email': 'fake@example.com'})
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('govdelivery:user_error'))
+        post = {'email': 'fake@example.com'}
+        self.assertErrorRedirect(self.post(post))
 
     def test_missing_email_address_ajax(self):
-        response = self.client.post(reverse('govdelivery'),
-                                    {'code': 'FAKE_CODE'},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.content.decode('utf-8'),
-                         json.dumps({'result': 'fail'}))
+        post = {'code': 'FAKE_CODE'}
+        response = self.post(post, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertErrorJSON(response)
 
     def test_missing_gd_code_ajax(self):
-        response = self.client.post(reverse('govdelivery'),
-                                    {'code': 'FAKE_CODE'},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.content.decode('utf-8'),
-                         json.dumps({'result': 'fail'}))
+        post = {'email': 'fake@example.com'}
+        response = self.post(post, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertErrorJSON(response)
 
     @patch('govdelivery.api.authenticated_session')
     @patch('core.views.GovDelivery.set_subscriber_topics')
