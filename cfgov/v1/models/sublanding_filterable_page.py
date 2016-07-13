@@ -14,7 +14,6 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
 from .learn_page import AbstractFilterPage
-from .. import forms
 from ..atomic_elements import molecules, organisms
 from ..feeds import FilterableFeedPageMixin
 from ..util.ref import choices_for_page_type
@@ -52,7 +51,9 @@ class ActivityLogPage(SublandingFilterablePage):
     template = 'activity-log/index.html'
 
 
-    def get_form_class(self):
+    @staticmethod
+    def get_form_class():
+        from .. import forms
         return forms.ActivityLogFilterForm
 
 
