@@ -39,7 +39,7 @@
 
         {% for block in page.header -%}
             {% if block.block_type == 'article_subheader' %}
-                {% do data.update({paragraph: block.value}) %}
+                {% do data.update({'paragraph': block.value}) %}
             {% endif %}
         {% endfor %}
 
