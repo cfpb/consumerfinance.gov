@@ -39,7 +39,7 @@ def run():
     site_root = HomePage.objects.filter(title='CFGOV')
     if not site_root:
         root = Page.objects.first()
-        site_root = HomePage(title='CFGOV', slug='home', depth=2, owner=admin_user)
+        site_root = HomePage(title='CFGOV', slug='home-page', depth=2, owner=admin_user)
         site_root.live = True
         root.add_child(instance=site_root)
         latest = site_root.save_revision(user=admin_user, submitted_for_moderation=False)
