@@ -32,8 +32,15 @@
 {% set page_url = get_protected_url(ancestor) %}
 
 <div class="o-item-introduction">
-    {{ category_slug.render(value.category, page_url, index=form_id) }}
-    <h1>{{ value.heading }}</h1>
+    {% if value.category is string %}
+        {{ category_slug.render(value.category, page_url, index=form_id) }}
+    {% else %}
+        {% for category in page.categories.all() %}
+            {{ '|' if loop.index > 1 else '' }}
+            {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug', index=index) }}
+        {% endfor %}
+    {% endif %}
+    <h1>{{ value.heading | safe }}</h1>
 
     {% if value.paragraph %}
         <div class="lead-paragraph">{{ parse_links(value.paragraph) | safe }}</div>

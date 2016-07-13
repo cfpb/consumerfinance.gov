@@ -373,33 +373,6 @@
     - cfgov-post
 */
 
-.post_header {
-    // Eyeballed to 60px.
-    margin-bottom: unit( 55px / @base-font-size-px, em);
-}
-
-.post_heading {
-    .h2();
-    .respond-to-min(@bp-sm-min, {
-        .h1();
-    });
-}
-
-.post_dek {
-    .h4();
-    // Eyeballed to 30px.
-    margin-bottom: unit(20px / @font-size, em);
-}
-
-.post_meta {
-    // Eyeballed to 30px.
-    margin-bottom: unit(22px / @base-font-size-px, em);
-}
-
-.post_byline {
-    .h4();
-}
-
 .post_featured-img {
     display: block;
     margin: unit(16px / @base-font-size-px, em) 0;
