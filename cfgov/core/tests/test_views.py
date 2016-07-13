@@ -19,7 +19,7 @@ from django.contrib.messages import SUCCESS
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.utils import extract_answers_from_request
-from core.views import govdelivery_subscribe, submit_comment
+from core.views import govdelivery_subscribe, regsgov_comment, submit_comment
 
 
 django.setup()
@@ -61,6 +61,9 @@ class GovDeliverySubscribeTest(TestCase):
     def assertJSONError(self, response):
         return self.assertJSON(response, 'fail')
 
+    def check_post(self, post, response_check, ajax=False):
+        response_check(self.post(post, ajax=ajax))
+
     def mock_govdelivery(self, status_code=200):
         gd = Mock(set_subscriber_topics=Mock(
             return_value=Mock(status_code=status_code)
@@ -71,25 +74,6 @@ class GovDeliverySubscribeTest(TestCase):
         self.addCleanup(patcher.stop)
 
         return gd
-
-    def check_post(self, post, response_check, ajax=False):
-        response_check(self.post(post, ajax=ajax))
-
-    def test_missing_email_address(self):
-        post = {'code': 'FAKE_CODE'}
-        self.check_post(post, self.assertRedirectUserError)
-
-    def test_missing_gd_code(self):
-        post = {'email': 'fake@example.com'}
-        self.check_post(post, self.assertRedirectUserError)
-
-    def test_missing_email_address_ajax(self):
-        post = {'code': 'FAKE_CODE'}
-        self.check_post(post, self.assertJSONError, ajax=True)
-
-    def test_missing_gd_code_ajax(self):
-        post = {'email': 'fake@example.com'}
-        self.check_post(post, self.assertJSONError, ajax=True)
 
     def check_subscribe(self, response_check, ajax=False, status_code=200,
                         include_answers=False):
@@ -119,6 +103,22 @@ class GovDeliverySubscribeTest(TestCase):
                 any_order=True
             )
 
+    def test_missing_email_address(self):
+        post = {'code': 'FAKE_CODE'}
+        self.check_post(post, self.assertRedirectUserError)
+
+    def test_missing_gd_code(self):
+        post = {'email': 'fake@example.com'}
+        self.check_post(post, self.assertRedirectUserError)
+
+    def test_missing_email_address_ajax(self):
+        post = {'code': 'FAKE_CODE'}
+        self.check_post(post, self.assertJSONError, ajax=True)
+
+    def test_missing_gd_code_ajax(self):
+        post = {'email': 'fake@example.com'}
+        self.check_post(post, self.assertJSONError, ajax=True)
+
     def test_successful_subscribe(self):
         self.check_subscribe(self.assertRedirectSuccess)
 
@@ -136,112 +136,122 @@ class GovDeliverySubscribeTest(TestCase):
 
 
 class RegsgovCommentTest(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.data = {
+            'comment_on': 'FAKE_DOC_NUM',
+            'general_comment': 'FAKE_COMMENT',
+            'first_name': 'FAKE_FIRST',
+            'last_name': 'FAKE_LAST',
+        }
+        self.tracking_number = 'FAKE_TRACKING_NUMBER'
+
+    def post(self, post, ajax=False):
+        kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'} if ajax else {}
+        request = self.factory.post(reverse('reg_comment'), post, **kwargs)
+        response = regsgov_comment(request)
+        return request, response
+
+    def assertRedirect(self, response, redirect):
+        self.assertEqual(
+            (response['Location'], response.status_code),
+            (reverse(redirect), 302)
+        )
+
+    def assertRedirectSuccess(self, response):
+        self.assertRedirect(response, 'reg_comment:success')
+
+    def assertRedirectUserError(self, response):
+        self.assertRedirect(response, 'reg_comment:user_error')
+
+    def assertRedirectServerError(self, response):
+        self.assertRedirect(response, 'reg_comment:server_error')
+
+    def assertJSON(self, response, result, has_tracking_num=False):
+        expected = {'result': result}
+        if has_tracking_num:
+            expected.update({'tracking_number': self.tracking_number})
+
+        self.assertEqual(
+            response.content.decode('utf-8'),
+            json.dumps(expected)
+        )
+
+    def assertJSONSuccess(self, response):
+        return self.assertJSON(response, 'success')
+
+    def assertJSONSuccessCommented(self, response):
+        return self.assertJSON(response, 'pass', has_tracking_num=True)
+
+    def assertJSONError(self, response):
+        return self.assertJSON(response, 'fail')
+
+    def check_post(self, post, response_check, ajax=False):
+        request, response = self.post(post, ajax=ajax)
+        response_check(response)
+        return request, response
+
+    def mock_submit_data(self, status_code=201):
+        submit = Mock(
+            status_code=status_code,
+            text=json.dumps({'trackingNumber': self.tracking_number})
+        )
+
+        patcher = patch('core.views.submit_comment', return_value=submit)
+        patched = patcher.start()
+        self.addCleanup(patcher.stop)
+        return patched
+
+    def mock_messages(self):
+        patcher = patch('core.views.messages.success')
+        patched = patcher.start()
+        self.addCleanup(patcher.stop)
+        return patched
+
+    def check_comment(self, response_check, ajax=False, status_code=201):
+        submit = self.mock_submit_data(status_code=status_code)
+        messages = self.mock_messages()
+
+        request, response = self.check_post(self.data, response_check,
+                                            ajax=ajax)
+
+        submit.assert_called_with(request.POST)
+
+        if 201 == status_code:
+            messages.assert_called_with(request, self.tracking_number)
+
     def test_missing_comment_on(self):
-        response = self.client.post(reverse('reg_comment'),
-                                    {'general_comment': 'FAKE_COMMENT',
-                                    'first_name': 'FAKE_FIRST',
-                                    'last_name': 'FAKE_LAST'})
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('reg_comment:server_error'))
+        del self.data['comment_on']
+        self.check_post(self.data, self.assertRedirectServerError)
 
     def test_missing_general_comment(self):
-        response = self.client.post(reverse('reg_comment'),
-                                    {'comment_on': 'FAKE_DOC_NUM',
-                                    'first_name': 'FAKE_FIRST',
-                                    'last_name': 'FAKE_LAST'})
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('reg_comment:user_error'))
+        del self.data['general_comment']
+        self.check_post(self.data, self.assertRedirectUserError)
 
     def test_missing_comment_on_ajax(self):
-        response = self.client.post(reverse('reg_comment'),
-                                    {'general_comment': 'FAKE_COMMENT',
-                                    'first_name': 'FAKE_FIRST',
-                                    'last_name': 'FAKE_LAST'},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.content.decode('utf-8'),
-                         json.dumps({'result': 'fail'}))
+        del self.data['comment_on']
+        self.check_post(self.data, self.assertJSONError, ajax=True)
 
     def test_missing_general_comment_ajax(self):
-        response = self.client.post(reverse('reg_comment'),
-                                    {'comment_on': 'FAKE_DOC_NUM',
-                                    'first_name': 'FAKE_FIRST',
-                                    'last_name': 'FAKE_LAST'},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.content.decode('utf-8'),
-                         json.dumps({'result': 'fail'}))
+        del self.data['general_comment']
+        self.check_post(self.data, self.assertJSONError, ajax=True)
 
     def test_missing_first_name_ajax(self):
-        response = self.client.post(reverse('reg_comment'),
-                                    {'comment_on': 'FAKE_DOC_NUM',
-                                    'general_comment': 'FAKE_COMMENT',
-                                    'last_name': 'FAKE_LAST'},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.content.decode('utf-8'),
-                         json.dumps({'result': 'fail'}))
-
+        del self.data['first_name']
+        self.check_post(self.data, self.assertJSONError, ajax=True)
 
     def test_missing_last_name_ajax(self):
-        response = self.client.post(reverse('reg_comment'),
-                                    {'comment_on': 'FAKE_DOC_NUM',
-                                    'general_comment': 'FAKE_COMMENT',
-                                    'first_name': 'FAKE_FIRST'},
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(response.content.decode('utf-8'),
-                         json.dumps({'result': 'fail'}))
+        del self.data['last_name']
+        self.check_post(self.data, self.assertJSONError, ajax=True)
 
-    @patch('core.views.submit_comment')
-    def test_successful_comment(self, mock_submit):
-        mock_submit.return_value.status_code = 201
-        mock_submit.return_value.text = '{"trackingNumber": "FAKE_TRACK_NUM"}'
-        data = {'comment_on': 'FAKE_DOC_NUM',
-                'general_comment': 'FAKE_COMMENT',
-                'first_name': 'FAKE_FIRST',
-                'last_name': 'FAKE_LAST'}
-        response = self.client.post(reverse('reg_comment'), data)
+    def test_successful_comment(self):
+        self.check_comment(self.assertRedirectSuccess)
 
-        mock_submit.assert_called_with(QueryDict(urlencode(data)))
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('reg_comment:success'))
-        # TODO: There may be a better way to get messages_list,
-        # fix if possible
-        messages_list = CookieStorage(response)._decode(
-                            response.cookies['messages'].value)
-        self.assertEqual(len(messages_list), 1)
-        self.assertEqual(messages_list[0].message, 'FAKE_TRACK_NUM')
-        self.assertEqual(messages_list[0].level, SUCCESS)
+    def test_successful_comment_ajax(self):
+        self.check_comment(self.assertJSONSuccessCommented, ajax=True)
 
-    @patch('core.views.submit_comment')
-    def test_successful_comment_ajax(self, mock_submit):
-        mock_submit.return_value.status_code = 201
-        mock_submit.return_value.text = '{"trackingNumber": "FAKE_TRACK_NUM"}'
-        data = {'comment_on': 'FAKE_DOC_NUM',
-                'general_comment': 'FAKE_COMMENT',
-                'first_name': 'FAKE_FIRST',
-                'last_name': 'FAKE_LAST'}
-        response = self.client.post(reverse('reg_comment'), data,
-                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        mock_submit.assert_called_with(QueryDict(urlencode(data)))
-        self.assertEqual(response.content.decode('utf-8'),
-                         json.dumps({'result': 'pass', 'tracking_number': 'FAKE_TRACK_NUM'}))
-
-
-    @patch('core.views.submit_comment')
-    def test_server_error(self, mock_submit):
-        mock_submit.return_value.status_code = 500
-        data = {'comment_on': 'FAKE_DOC_NUM',
-                'general_comment': 'FAKE_COMMENT',
-                'first_name': 'FAKE_FIRST',
-                'last_name': 'FAKE_LAST'}
-        response = self.client.post(reverse('reg_comment'), data)
-
-        mock_submit.assert_called_with(QueryDict(urlencode(data)))
-        self.assertEquals(urlparse(response['Location']).path,
-                          reverse('reg_comment:server_error'))
-
-
-    # Test that throws an exception to go to server server_error
-
-    # Test to submit comment
+    def test_server_error(self):
+        self.check_comment(self.assertRedirectServerError, status_code=500)
 
     @patch('requests.post')
     @patch('django.conf.settings.REGSGOV_BASE_URL', 'FAKE_URL')
