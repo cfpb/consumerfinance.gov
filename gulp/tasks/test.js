@@ -42,7 +42,6 @@ function testUnitScripts( cb ) {
 function testUnitServer() {
   spawn(
     'tox',
-    [ 'cfgov/core/tests' ],
     { stdio: 'inherit' }
   ).once( 'close', function() {
     plugins.util.log( 'Tox tests done!' );
