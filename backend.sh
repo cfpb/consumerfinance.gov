@@ -28,11 +28,11 @@ init(){
 
   # Notify of environment that user is in.
   if [ "$cli_flag" = "development" ]; then
-    echo 'Frontend:\033[33;33m development environment\033[0m.'
+    echo 'Backend:\033[33;33m development environment\033[0m.'
   elif [ "$cli_flag" = "test" ]; then
-    echo 'Frontend:\033[33;1m test environment\033[0m.'
+    echo 'Backend:\033[33;1m test environment\033[0m.'
   elif [ "$cli_flag" = "production" ]; then
-    echo 'Frontend:\033[32;1m production environment\033[0m.'
+    echo 'Backend:\033[32;1m production environment\033[0m.'
   fi
 
   ENVVAR_SAMPLE=.env_SAMPLE
