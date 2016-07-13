@@ -1,14 +1,15 @@
-import datetime
-
+from datetime import timedelta
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 
-from mock import patch
+from mock import Mock, patch
 
-from ..util import password_policy
+from v1.models import PasswordHistoryItem
+from v1.util import password_policy
+
 
 PASSWORD_RULES = [
     [r'.{12,}', 'Minimum allowed length is 12 characters'],
@@ -40,47 +41,51 @@ class TestPasswordValidation(TestCase):
 
 
 class TestWithUser(TestCase):
-    def setUp(self):
-        user = User(username='testuser', password=make_password('password')) 
-        user.save()
+    def get_user(self, last_password='password', pw_locked_until=None):
+        encrypted_password = make_password(last_password)
 
-    def tearDown(self):
-        User.objects.get(username='testuser').delete()
+        if not pw_locked_until:
+            pw_locked_until = timezone.now()
 
-    def get_user(self):
-        return User.objects.get(username='testuser')
+        last_password_change = PasswordHistoryItem(
+            encrypted_password=encrypted_password,
+            locked_until=pw_locked_until
+        )
+
+        password_history = Mock(spec=PasswordHistoryItem.objects)
+        password_history.latest.return_value = last_password_change
+        password_history.order_by.return_value = [last_password_change]
+
+        return Mock(
+            username='testuser',
+            password=encrypted_password,
+            passwordhistoryitem_set=password_history
+        )
 
 
 class TestMinimumPasswordAge(TestWithUser):
-
     def test_too_soon(self):
-        user = self.get_user()
-        history_item = user.passwordhistoryitem_set.latest()
-        current_locked_until = history_item.locked_until
-        new_locked_until = current_locked_until.replace(year=datetime.MAXYEAR)
-        history_item.locked_until = new_locked_until
-        history_item.save()
-        with self.assertRaises(ValidationError):
-            password_policy.validate_password_age(user)
+        self.assertRaises(
+            ValidationError,
+            password_policy.validate_password_age,
+            self.get_user(pw_locked_until=timezone.now() + timedelta(days=1))
+        )
 
     def test_old_enough_to_change(self):
-        user = self.get_user()
-        history_item = user.passwordhistoryitem_set.get()
-
-        current_lock_expires = history_item.locked_until
-        new_expiration = current_lock_expires.replace(year=2013)
-        history_item.locked_until = new_expiration
-        history_item.save()
-
-        password_policy.validate_password_age(user)
+        password_policy.validate_password_age(self.get_user())
 
 
 class TestPasswordReusePolicy(TestWithUser):
     def test_reuse_password(self):
-        user = self.get_user()
-        with self.assertRaises(ValidationError):
-            password_policy.validate_password_history(user, 'password')
+        password = 'password'
+        user = self.get_user(password)
+        self.assertRaises(
+            ValidationError,
+            password_policy.validate_password_history,
+            user,
+            password
+        )
 
     def test_new_password(self):
-        user = self.get_user()
-        password_policy.validate_password_history(user, 'new_password')
+        user = self.get_user('password1')
+        password_policy.validate_password_history(user, 'password2')
