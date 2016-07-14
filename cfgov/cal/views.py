@@ -17,7 +17,7 @@ from django.template import RequestContext
 from django.template.loader import get_template
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Max, Min
+from django.db.models import Max, Min, Q
 
 from cal.models import CFPBCalendar, CFPBCalendarEvent
 
@@ -63,81 +63,91 @@ def display(request, pdf=False):
     """
     display (potentially filtered) html view of the calendar
     """
-
+    template_name='about-us/the-bureau/leadership-calendar/index.html'
     form = CalendarFilterForm(request.GET)
-
-    filtered_events = CFPBCalendarEvent.objects.filter(active=True)\
-        .order_by('-dtstart')
+    context = {'form': form}
 
     if form.is_valid():
+        cal_q = Q(('active', True))
         if form.cleaned_data.get('filter_calendar', None):
             calendars = form.cleaned_data['filter_calendar']
-
-            filtered_events = filtered_events.filter(calendar__in=calendars)
+            cal_q &= Q(('calendar__in', calendars))
 
         if form.cleaned_data.get('filter_range_date_gte'):
             gte = form.cleaned_data['filter_range_date_gte']
-            filtered_events = filtered_events.filter(dtstart__gte=gte)
+            cal_q &= Q(('dtstart__gte', gte))
 
         if form.cleaned_data.get('filter_range_date_lte'):
             # adding timedelta(days=1) makes the end of the range inclusive
             lte = form.cleaned_data['filter_range_date_lte']+ timedelta(days=1)
-            filtered_events = filtered_events.filter(dtend__lte=lte)
-    else:
-        import pdb;pdb.set_trace()
-    paginator = PaginatorForSheerTemplates(request, filtered_events, 20)
+            cal_q &= Q(('dtend__lte', lte))
 
-    page = int(request.GET.get('page', 1))
 
-    if pdf:
-        events = filtered_events
-        template_name = 'about-us/the-bureau/leadership-calendar/print/index.html'
-        paginator = None
-    else:
+        events = CFPBCalendarEvent.objects.filter(cal_q).order_by('-dtstart')
+        datetimes = events.datetimes('dtstart', 'day', order='DESC')
+        paginator = PaginatorForSheerTemplates(request, datetimes, 5)
+        page_num = int(request.GET.get('page', 1))
+
         try:
-            events = paginator.page(page)
-            paginator.current_page = page
+            page_days = paginator.page(page_num)
+            paginator.current_page = page_num
         except PageNotAnInteger:
             # If page is not an integer, deliver first page.
-            events = paginator.page(1)
+            page_days = paginator.page(1)
             paginator.current_page = 1
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
-            events = paginator.page(paginator.num_pages)
+            page_days = paginator.page(paginator.num_pages)
             paginator.current_page = paginator.num_pages
-        template_name='about-us/the-bureau/leadership-calendar/index.html'
 
-    stats = filtered_events.aggregate(Min('dtstart'), Max('dtend'))
-    range_start = form.cleaned_data.get('filter_range_date_gte') or stats['dtstart__min']
-    range_end = form.cleaned_data.get('filter_range_date_lte') or stats['dtend__max']
+        stats = events.aggregate(Min('dtstart'), Max('dtend'))
+        range_start = form.cleaned_data.get('filter_range_date_gte') or stats['dtstart__min']
+        range_end = form.cleaned_data.get('filter_range_date_lte') or stats['dtend__max']
 
-    context = {'events':events, 'paginator':paginator,
-            'form':form, 'range_start': range_start, 'range_end':range_end}
+        # The first date in the list needs to include all the events for that day
+        object_list = list(page_days.object_list)
+        if len(object_list) == 1:
+            day_range = [object_list[0] + timedelta(hours=23, minutes=59, seconds=59),
+                         object_list[0]]
+            context.update({'day_range': day_range})
+        else:
+            object_list[0] += timedelta(hours=23, minutes=59, seconds=59)
+            page_days.object_list = object_list
 
-    if pdf and PDFreactor:
-        license = os.environ.get('PDFREACTOR_LICENSE')
-        stylesheet_url = '/static/css/pdfreactor-fonts.css'
-        pdf_reactor = PDFreactor()
+        context.update({
+            'paginator': paginator,
+            'events': events,
+            'page_days': page_days,
+            'range_start': range_start,
+            'range_end':range_end,
+        })
 
-        pdf_reactor.setBaseURL("%s://%s/" % (request.scheme, request.get_host()))
-        pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_WARN)
-        pdf_reactor.setLicenseKey(str(license))
-        pdf_reactor.setAuthor('CFPB')
-        pdf_reactor.setAddTags(True)
-        pdf_reactor.setAddBookmarks(True)
-        pdf_reactor.addUserStyleSheet('', '', '', stylesheet_url)
+        if pdf and PDFreactor:
+            return pdf_response(request, context)
 
-        template = get_template(template_name)
-        html = template.render(context)
-        html = html.replace(u"\u2018", "'").replace(u"\u2019", "'")
-        try:
-            pdf = pdf_reactor.renderDocumentFromContent(html.encode('utf-8'))
-            response = HttpResponse(pdf, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename=cfpb-leadership.pdf'
-            return response
-        except (urllib2.HTTPError, urllib2.URLError, BadStatusLine):
-            pass
+    return render(request, template_name, context)
 
+def pdf_response(request, context):
+    template_name = 'about-us/the-bureau/leadership-calendar/print/index.html'
+    license = os.environ.get('PDFREACTOR_LICENSE')
+    stylesheet_url = '/static/css/pdfreactor-fonts.css'
+    pdf_reactor = PDFreactor()
 
-    return render(request, template_name,
-       context )
+    pdf_reactor.setBaseURL("%s://%s/" % (request.scheme, request.get_host()))
+    pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_WARN)
+    pdf_reactor.setLicenseKey(str(license))
+    pdf_reactor.setAuthor('CFPB')
+    pdf_reactor.setAddTags(True)
+    pdf_reactor.setAddBookmarks(True)
+    pdf_reactor.addUserStyleSheet('', '', '', stylesheet_url)
+
+    template = get_template(template_name)
+    html = template.render(context)
+    html = html.replace(u"\u2018", "'").replace(u"\u2019", "'")
+    try:
+        pdf = pdf_reactor.renderDocumentFromContent(html.encode('utf-8'))
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename=cfpb-leadership.pdf'
+        return response
+    except (urllib2.HTTPError, urllib2.URLError, BadStatusLine):
+        pass
