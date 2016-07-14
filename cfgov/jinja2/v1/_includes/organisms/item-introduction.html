@@ -30,6 +30,9 @@
 
 {% set form_id, ancestor = get_filter_data(page) %}
 {% set page_url = get_protected_url(ancestor) %}
+{% set published_date = value.date %}
+{% set page_authors = page.authors.all() %}
+{% set has_authors = page_authors|length > 0 %}
 
 <div class="o-item-introduction">
     {% if value.category is string %}
@@ -46,13 +49,12 @@
         <div class="lead-paragraph">{{ parse_links(value.paragraph) | safe }}</div>
     {% endif %}
 
-    {% if value.date or page.authors.all() %}
+    {% if published_date or has_authors %}
         <div class="meta">
     {% endif %}
-    {% set num_authors = page.authors.all()|length %}
-        {% if num_authors %}
+        {% if has_authors %}
             <span class="byline">
-            {%- for author in page.authors.names() -%}
+            {%- for author in page_authors -%}
                 {{- 'By ' if loop.index == 1 else ' and ' }}
                 <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
                     {{ author }}
@@ -62,9 +64,9 @@
             </span>
         {% endif %}
         <span class="date">
-            {{ time.render(value.date, {'date':true}) }}
+            {{ time.render(published_date, {'date':true}) }}
         </span>
-    {% if value.date or page.authors.all() %}
+    {% if published_date or has_authors %}
         </div>
     {% endif %}
 
