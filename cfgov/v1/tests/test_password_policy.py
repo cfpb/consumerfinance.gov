@@ -64,19 +64,27 @@ class TestWithUser(TestCase):
 
 
 class TestMinimumPasswordAge(TestWithUser):
-    def test_too_soon(self):
+    def test_can_set_password_if_unlocked(self):
+        yesterday = timezone.now() - timedelta(days=1)
+        user = self.get_user(pw_locked_until=yesterday)
+        password_policy.validate_password_age(user)
+
+    def test_cant_set_password_if_locked(self):
+        tomorrow = timezone.now() + timedelta(days=1)
+        user = self.get_user(pw_locked_until=tomorrow)
         self.assertRaises(
             ValidationError,
             password_policy.validate_password_age,
-            self.get_user(pw_locked_until=timezone.now() + timedelta(days=1))
+            user
         )
-
-    def test_old_enough_to_change(self):
-        password_policy.validate_password_age(self.get_user())
 
 
 class TestPasswordReusePolicy(TestWithUser):
-    def test_reuse_password(self):
+    def test_can_set_new_password(self):
+        user = self.get_user('password1')
+        password_policy.validate_password_history(user, 'password2')
+
+    def test_cant_reuse_password(self):
         password = 'password'
         user = self.get_user(password)
         self.assertRaises(
@@ -85,7 +93,3 @@ class TestPasswordReusePolicy(TestWithUser):
             user,
             password
         )
-
-    def test_new_password(self):
-        user = self.get_user('password1')
-        password_policy.validate_password_history(user, 'password2')
