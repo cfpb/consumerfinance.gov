@@ -81,12 +81,12 @@ class TestMinimumPasswordAge(TestWithUser):
 
 class TestPasswordReusePolicy(TestWithUser):
     def test_can_set_new_password(self):
-        user = self.get_user('password1')
+        user = self.get_user(last_password='password1')
         password_policy.validate_password_history(user, 'password2')
 
     def test_cant_reuse_password(self):
         password = 'password'
-        user = self.get_user(password)
+        user = self.get_user(last_password=password)
         self.assertRaises(
             ValidationError,
             password_policy.validate_password_history,
