@@ -1,70 +1,16 @@
 # Installation and Configuration for cfgov-refresh
 
 There are two ways to install:
- - [Vagrant-box installation](INSTALL.md#vagrant-box-installation)
- - [Stand-alone installation](INSTALL.md#stand-alone-installation)
-
-## Vagrant-box installation
-
-### 1. Environment variables setup
-
-The project uses a number of environment variables.
-The `setup.sh` script will create a `.env` file for you
-from the `.env_SAMPLE` file found in the repository,
-if you don't already have one.
-
-Inside the `.env` file you can customize the project environment configuration.
-
-If you would like to manually copy the environment settings,
-copy the `.env_SAMPLE` file and un-comment each variable after
-adding your own values.
-```bash
-cp -a .env_SAMPLE .env && open -t .env
-```
-
-Then load the environment variables with:
-```bash
-. ./.env
-```
-
-### 2. Fetch extra playbooks
-
-The project pulls together various open source and closed source plays. The plays are
-managed through ansible-galaxy, a core module for this exact purpose. To download all
-the dependencies, use this command:
-
-```bash
-ansible-galaxy install -r ansible/requirements.yml
-```
-
-### 3. Launch Vagrant virtual environment
-
-The project uses Vagrant to create the simulated virtual environment allowing the developer
-to work on a production-like environment while maintaining development work on the
-local machine. To create this virtual environment, you need to execute the following command.
-
-```bash
-vagrant up
-```
-
-> **NOTE:** Please be patient the first time you run this step.
-
-### 4. Front-end Tools
-
-In order to run the application, we must generate the front-end assets.
-After running the following commands, visit http://localhost:8001 to see the site running.
-You can also place the first two export commands into your `.bashrc` to simplify things later.
-
-```bash
-export CFGOV_HOME=path/to/cfgov-refresh
-export PATH=$PATH:$CFGOV_HOME/bin
-cfgov init
-cfgov assets
-cfgov start django
-```
+- [Stand-alone installation](#stand-alone-installation)
+- [Vagrant-box installation](#vagrant-box-installation)
+  :warning: These instructions are not currently working.
 
 
 ## Stand-alone installation
+
+These instructions are somewhat specific to developing on Mac OS X,
+but if you're familiar with other Unix-based systems,
+it should be fairly easy to adapt them to your needs.
 
 ### 1. Install system-level requirements
 
@@ -222,12 +168,78 @@ This will take several minutes, going through the steps in these scripts:
 Once complete, you should have a fully functioning local environment,
 ready for you to develop against!
 
+There are some [optional setup steps](#optional-steps)
+that you may want to perform before continuing.
+
 Want to know more about what the setup scripts are doing?
 [Read the detailed rundown.](#curious-about-what-the-setup-scripts-are-doing)
 
 Get any errors? [See our troubleshooting tips.](#troubleshooting)
 
 **Continue following the [usage instructions](README.md#usage) in the README.**
+
+
+## Vagrant-box installation
+
+:warning: **These instructions are not currently working,**
+but we'd like to get them working soon. [PRs welcome :)](CONTRIBUTING.md)
+
+### 1. Environment variables setup
+
+The project uses a number of environment variables.
+The `setup.sh` script will create a `.env` file for you
+from the `.env_SAMPLE` file found in the repository,
+if you don't already have one.
+
+Inside the `.env` file you can customize the project environment configuration.
+
+If you would like to manually copy the environment settings,
+copy the `.env_SAMPLE` file and un-comment each variable after
+adding your own values.
+```bash
+cp -a .env_SAMPLE .env && open -t .env
+```
+
+Then load the environment variables with:
+```bash
+. ./.env
+```
+
+### 2. Fetch extra playbooks
+
+The project pulls together various open source and closed source plays. The plays are
+managed through ansible-galaxy, a core module for this exact purpose. To download all
+the dependencies, use this command:
+
+```bash
+ansible-galaxy install -r ansible/requirements.yml
+```
+
+### 3. Launch Vagrant virtual environment
+
+The project uses Vagrant to create the simulated virtual environment allowing the developer
+to work on a production-like environment while maintaining development work on the
+local machine. To create this virtual environment, you need to execute the following command.
+
+```bash
+vagrant up
+```
+
+> **NOTE:** Please be patient the first time you run this step.
+
+### 4. Front-end Tools
+
+In order to run the application, we must generate the front-end assets.
+After running the following commands, visit http://localhost:8001 to see the site running.
+You can also place the first two export commands into your `.bashrc` to simplify things later.
+
+```bash
+export CFGOV_HOME=path/to/cfgov-refresh
+export PATH=$PATH:$CFGOV_HOME/bin
+cfgov init
+cfgov assets
+cfgov start django
+```
 
 
 ## Optional steps
