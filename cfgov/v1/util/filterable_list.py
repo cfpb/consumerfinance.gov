@@ -1,6 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from .. import forms
 from ..models.learn_page import AbstractFilterPage
 from ..util.util import get_secondary_nav_items
 
@@ -13,6 +12,7 @@ class FilterableListMixin(object):
 
     # Returns a form class to use for the filterable list
     def get_form_class(self):
+        from .. import forms
         return forms.FilterableListForm
 
 

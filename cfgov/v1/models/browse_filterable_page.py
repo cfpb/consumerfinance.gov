@@ -12,7 +12,6 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
 from .base import CFGOVPage
 from .learn_page import AbstractFilterPage
-from .. import forms
 from ..atomic_elements import molecules, organisms
 from ..feeds import FilterableFeedPageMixin
 from ..util.filterable_list import FilterableListMixin
@@ -57,14 +56,18 @@ class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPa
 class EventArchivePage(BrowseFilterablePage):
     template = 'browse-filterable/index.html'
 
-    def get_form_class(self):
+    @staticmethod
+    def get_form_class():
+        from .. import forms
         return forms.EventArchiveFilterForm
 
 
 class NewsroomLandingPage(BrowseFilterablePage):
     template = 'newsroom/index.html'
 
-    def get_form_class(self):
+    @staticmethod
+    def get_form_class():
+        from .. import forms
         return forms.NewsroomFilterForm
 
     def get_page_set(self, form, hostname):

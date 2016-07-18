@@ -37,16 +37,16 @@ urlpatterns = [
 
     url(r'^home/(?P<path>.*)$', RedirectView.as_view(url='/%(path)s', permanent=True)),
 
-    url(r'^owning-a-home/static/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/static/%(path)s')),
-    url(r'^owning-a-home/resources/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/resources/%(path)s')),
+    url(r'^owning-a-home/static/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/static/%(path)s', permanent=True)),
+    url(r'^owning-a-home/resources/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/resources/%(path)s', permanent=True)),
     url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
 
     # the two redirects are an unfortunate workaround, could be resolved by
     # using static('path/to/asset') in the source template
 
-    url(r'^tax-time-saving/static/(?P<path>.*)$', RedirectView.as_view(url='/static/tax-time-saving/static/%(path)s')),
+    url(r'^tax-time-saving/static/(?P<path>.*)$', RedirectView.as_view(url='/static/tax-time-saving/static/%(path)s', permanent=True)),
     url(r'^tax-time-saving/', include(SheerSite('tax-time-saving').urls)),
-    url(r'^know-before-you-owe/static/(?P<path>.*)$', RedirectView.as_view(url='/static/know-before-you-owe/static/%(path)s')),
+    url(r'^know-before-you-owe/static/(?P<path>.*)$', RedirectView.as_view(url='/static/know-before-you-owe/static/%(path)s', permanent=True)),
     url(r'^know-before-you-owe/', include(SheerSite('know-before-you-owe').urls)),
 
     url(r'^adult-financial-education/', include(fin_ed.urls_for_prefix('adult-financial-education'))),
@@ -186,10 +186,10 @@ urlpatterns = [
             template_name='regulation-comment/reg-comment-form-test.html'),
         name='reg-comment-form-test'),
 
-    url(r'^feed/$', RedirectView.as_view(url='/about-us/blog/feed/')),
-    url(r'^feed/blog/$', RedirectView.as_view(url='/about-us/blog/feed/')),
-    url(r'^feed/newsroom/$', RedirectView.as_view(url='/about-us/newsroom/feed/')),
-    url(r'^newsroom-feed/$', RedirectView.as_view(url='/about-us/newsroom/feed/')),
+    url(r'^feed/$', RedirectView.as_view(url='/about-us/blog/feed/', permanent=True)),
+    url(r'^feed/blog/$', RedirectView.as_view(url='/about-us/blog/feed/', permanent=True)),
+    url(r'^feed/newsroom/$', RedirectView.as_view(url='/about-us/newsroom/feed/', permanent=True)),
+    url(r'^newsroom-feed/$', RedirectView.as_view(url='/about-us/newsroom/feed/', permanent=True)),
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 
