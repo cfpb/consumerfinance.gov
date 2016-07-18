@@ -373,6 +373,31 @@
     - cfgov-post
 */
 
+.post_heading {
+    .h2();
+    // Eyeballed to 24px.
+    margin-bottom: unit(13px / @font-size, em);
+    .respond-to-min(@bp-sm-min, {
+        .h1();
+        // Eyeballed to 24px.
+        margin-bottom: unit(10px / @font-size, em);
+    });
+}
+
+.post_dek {
+    .h4();
+    // Eyeballed to 30px.
+    margin-bottom: unit(20px / @font-size, em);
+}
+
+.post_meta {
+    margin-bottom: unit(18px / @base-font-size-px, em);
+}
+
+.post_byline {
+    .h4();
+}
+
 .post_featured-img {
     display: block;
     margin: unit(16px / @base-font-size-px, em) 0;
@@ -387,6 +412,7 @@
 
 .post_body {
     .u-clearfix();
+    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     color: @dark-gray;
 
     // Spacing has been eyeballed to be 30px.
