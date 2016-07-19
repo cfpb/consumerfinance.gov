@@ -24,65 +24,37 @@
 
    ========================================================================== #}
 
-{%- import 'macros/category-slug.html' as category_slug -%}
-{%- import 'macros/time.html' as time -%}
-{%- import 'molecules/social-media.html' as social_media with context -%}
+{% import 'organisms/item-introduction.html' as item_introduction with context %}
 {%- import 'templates/render_block.html' as render_block with context -%}
 {%- import 'tags.html' as tags -%}
 
 <article class="post">
     <header>
-        {% set index, ancestor = get_filter_data(page) %}
-        {% for category in page.categories.all() %}
-            {{ '|' if loop.index > 1 else '' }}
-            {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug meta-header_left', index=index) }}
-        {% endfor %}
-        <h1 class="post_heading">
-            {{ page.title|safe }}
-        </h1>
+        {% set data = {
+            'category': page.categories.all(),
+            'heading': page.title,
+            'date': page.date_published,
+            'has_social': True
+        } %}
+
         {% for block in page.header -%}
-            {% if block.block_type == 'item_introduction' %}
-                {% import 'organisms/item-introduction.html' as item_introduction with context %}
-                {{ item_introduction.render(block.value) }}
-            {% elif block.block_type == 'article_subheader' %}
-                <div class="post_dek">
-                  {{ parse_links(block.value) | safe }}
-                </div>
-            {% else %}
-                <div class="block
-                            block__flush-top">
-                    {{ render_stream_child(block) }}
-                </div>
+            {% if block.block_type == 'article_subheader' %}
+                {% do data.update({'paragraph': block.value}) %}
             {% endif %}
         {% endfor %}
-        <div class="post_meta">
-        {% set num_authors = page.authors.all()|length %}
-        {% if num_authors %}
-            <span class="post_byline">
-            {%- for author in page.authors.names() -%}
-                {{- 'By ' if loop.index == 1 else ', ' if num_authors > 2 and not loop.index == num_authors else ' ' }}
-                <a href="{{ get_protected_url(ancestor) }}?filter{{ index }}_authors={{ author }}">
-                    {{ author }}
-                </a>
-            {%- endfor -%}
-                &ndash;
-            </span>
-        {% endif %}
-        <span class="date">
-            {{ time.render(page.date_published, {'date':true}) }}
-        </span>
-        </div>
-        {{ social_media.render({'title': page.title}) }}
-        <div class="post_body">
-            {% for block in page.content %}
-                {% if block.block_type == 'content' %}
-                    {{ parse_links(block.value) | safe }}
-                {% else %}
-                    {{ render_block.render(block, loop.index) }}
-                {% endif %}
-            {% endfor %}
-        </div>
+
+        {{ item_introduction.render(data) }}
     </header>
+
+    <div class="post_body">
+        {% for block in page.content %}
+            {% if block.block_type == 'content' %}
+                {{ parse_links(block.value) | safe }}
+            {% else %}
+                {{ render_block.render(block, loop.index) }}
+            {% endif %}
+        {% endfor %}
+    </div>
     {% if page.tags.all() | length %}
         <footer>
             {{ tags.render( related_metadata_tags(page), '', is_wagtail=True) }}
