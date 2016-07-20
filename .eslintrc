@@ -705,16 +705,19 @@ rules:
     - 1
     - 5
 
-  # Specifies maximum number of statement allowed in a function.
-  max-statements:
-    - 1
-    - 25
-
   # Enforce a maximum number of statements allowed per line.
   max-statements-per-line:
     - 1
     -
       max: 2
+
+  # Specifies maximum number of statement allowed in a function.
+  max-statements:
+    - 1
+    - 25
+
+  # Enforce newlines between operands of ternary expressions.
+  multiline-ternary: 0
 
   # Require a capital letter for constructors.
   new-cap:
@@ -928,11 +931,18 @@ rules:
     - 2
     - always
     -
-      exceptions:
-        - '-'
-        - +
-      markers:
-        - /
+      line:
+        markers:
+          - '/'
+        exceptions:
+          - '-'
+          - '+'
+      block:
+        markers:
+          - '!'
+        exceptions:
+          - '*'
+        balanced: true
 
   # Require or disallow the Unicode BOM.
   unicode-bom:
