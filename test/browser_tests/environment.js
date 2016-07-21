@@ -26,12 +26,14 @@ module.exports = {
 
   suites: {
     functional: [
+      specsRoot + 'wagtail/**/*.js'
+    ],
+    content: [
+      specsRoot + 'content/**/*.js',
       specsRoot + 'molecules/**/*.js',
       specsRoot + 'organisms/**/*.js',
-      specsRoot + 'templates/**/*.js',
-      specsRoot + 'wagtail/**/*.js',
-    ],
-    content: specsRoot + 'content/**/*.js',
+      specsRoot + 'templates/**/*.js'
+    ]
   },
 
   // The default window width and height.
