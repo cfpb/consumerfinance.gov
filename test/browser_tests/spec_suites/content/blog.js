@@ -1,10 +1,10 @@
 'use strict';
 
 var Blog = require(
-    '../page_objects/page_blog.js'
+    '../../page_objects/page_blog.js'
   );
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 var breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
 

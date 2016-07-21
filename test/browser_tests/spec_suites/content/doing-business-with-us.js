@@ -1,9 +1,9 @@
 'use strict';
 
 var DoingBusinessWithUs =
-require( '../page_objects/page_doing-business-with-us.js' );
+require( '../../page_objects/page_doing-business-with-us.js' );
 
-var Urlmatcher = require( '../util/url-matcher' );
+var Urlmatcher = require( '../../util/url-matcher' );
 
 describe( 'The Doing Business with Us Page', function() {
   var page;

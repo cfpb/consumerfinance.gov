@@ -1,7 +1,7 @@
 'use strict';
 
 var StudentsAndGraduates = require(
-    '../page_objects/page_careers-students-and-graduates.js'
+    '../../page_objects/page_careers-students-and-graduates.js'
   );
 
 describe( 'Careers/Student-and-graduates', function() {
