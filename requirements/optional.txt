@@ -1,4 +1,4 @@
-# some of dependencies live on a private git server. If you have the address,
+# some of these dependencies live on a private git server. If you have the address,
 # configure git with:
 # git config --global url.https://<private hostname>/.insteadOf https://private.repo/
 
