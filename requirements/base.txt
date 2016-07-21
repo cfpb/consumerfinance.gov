@@ -4,7 +4,6 @@ django-simple-feedback-collector==0.0.4
 django-braces==1.0.0
 jsonschema==2.0.0
 pyelasticsearch==0.6
-django-reversion==1.10.1
 django-tinymce==2.2.0
 vobject==0.9.1
 simplejson==3.8.2
