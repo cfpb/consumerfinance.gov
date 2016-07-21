@@ -53,10 +53,10 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 A number of command-line arguments can be set to test particular configurations:
 
- - `--specs`: Choose a particular spec suite to run.
-   For example, `gulp test:acceptance --specs=contact-us.js`.
-   Multiple tests can be run by passing in a comma-separated list of test suite filenames.
-   For example, `gulp test:acceptance --specs=contact-us.js,about-us.js`.
+ - `--suite`: Choose a particular suite or suites to run.
+   For example, `gulp test:acceptance --suite=content` or `gulp test:acceptance --suite=content,functional`.
+ - `--specs`: Choose a particular spec or specs to run.
+   For example, `gulp test:acceptance --specs=contact-us.js`, `gulp test:acceptance --specs=contact-us.js,about-us.js`, or `gulp test:acceptance --specs=foo*.js`. If `--suite` is specified, this argument will be ignored. If neither `--suite` nor `--specs` are specified, all specs will be run.
  - `--windowSize`: Set the window size in pixels in `w,h` format.
    For example, `gulp test:acceptance --windowSize=900,400`.
  - `--browserName`: Set the browser to run.
@@ -91,7 +91,7 @@ module.exports = TheBureauPage;
 
 ## Tests
 
-Tests are organized into suites. Common tests are in the `test/browser_tests/spec_suites/shared` directory and any non-standard test should be added to an existing additional suite or placed into a new suite directory. An example shared suite for our the-bureau example page above would be:
+Tests are organized into suites under the `test/browser_tests/spec_suites/` directory. Any new tests should be added to an existing suite or placed into a new suite directory. An example test for our the-bureau example page above would be:
 
 ```js
 var TheBureauPage = require( '../../page_objects/page_the-bureau.js' );
