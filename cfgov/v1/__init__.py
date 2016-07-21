@@ -15,7 +15,7 @@ from flags.template_functions import flag_enabled, flag_disabled
 from .util.util import get_unique_id, get_secondary_nav_items
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 from django.conf import settings
 from processors.processors_common import fix_link
 
@@ -61,7 +61,9 @@ def parse_links(soup):
     extlink_pattern = re.compile(settings.EXTERNAL_LINK_PATTERN)
     noncfpb_pattern = re.compile(settings.NONCFPB_LINK_PATTERN)
     files_pattern = re.compile(settings.FILES_LINK_PATTERN)
-    a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
+    download_pattern = re.compile(settings.DOWNLOAD_LINK_PATTERN)
+    external_a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
+    download_a_class = os.environ.get('DOWNLOAD_A_CSS', 'icon-link icon-link__download')
     span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
 
     # This removes style tags <style>
@@ -77,16 +79,28 @@ def parse_links(soup):
             pass
 
     for a in soup.find_all('a', href=True):
-        # Sets the icon to indicate you're leaving consumerfinance.gov
-        if noncfpb_pattern.match(a['href']):
-            # Sets the link to an external one if you're leaving .gov
-            if extlink_pattern.match(a['href']):
-                a['href'] = '/external-site/?ext_url=' + a['href']
-            a.attrs.update({'class': a_class})
-            a.append(' ')  # We want an extra space before the icon
-            a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
-        elif not files_pattern.match(a['href']):
-            fix_link(a)
+        needs_icon = True
+        for child in a.children:
+            if child.name in ['img', 'svg']:
+                needs_icon = False
+                break
+        if needs_icon:
+            if not a.attrs.get('class', None):
+                a.attrs.update({'class': ''})
+            if download_pattern.match(a['href']):
+                a.attrs['class'] = ' '.join([download_a_class, a.attrs['class']])
+            if noncfpb_pattern.match(a['href']): # Sets the icon to indicate you're leaving consumerfinance.gov
+                a.attrs['class'] = ' '.join([external_a_class, a.attrs['class']])
+                if extlink_pattern.match(a['href']): # Sets the link to an external one if you're leaving .gov
+                    a['href'] = '/external-site/?ext_url=' + a['href']
+            if download_pattern.match(a['href']) or noncfpb_pattern.match(a['href']):
+                contents = a.contents
+                span = soup.new_tag('span')
+                span['class'] = span_class
+                span.contents = contents
+                a.contents = [span, NavigableString(' ')]
+            elif not files_pattern.match(a['href']):
+                fix_link(a)
     return soup
 
 
