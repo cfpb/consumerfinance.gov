@@ -80,7 +80,7 @@ function _retrieveProtractorParams( params ) { // eslint-disable-line complexity
           specsArray.push( suiteSpecs[j] );
         }
       } else {
-        specsArray.push(suiteSpecs);
+        specsArray.push( suiteSpecs );
       }
     }
     parsedParams.specs = specsArray;
