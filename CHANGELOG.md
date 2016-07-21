@@ -17,7 +17,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - leadership calendar Django app
-- 
+- Frontend: Added ability to auto-fix linter error with the `--fix`
+  flag on the linter task.
+
 ### Changed
 - Updated ESLint to `2.13.1` from `2.7.0`.
 - Fixed job ordering on Careers home page to be consistent with Current Openings page.
