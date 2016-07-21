@@ -95,6 +95,9 @@ function _getProtractorParams() {
   // If --version=number flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'version' );
 
+  // If --suite=suite1,suite2 flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'suite' );
+
   return params;
 }
 
@@ -145,28 +148,14 @@ function testA11y() {
 }
 
 /**
- * Test whether we need to load the initial data for wagtail tests.
- * @returns {boolean} Returns true if no specs arg is passed or the
- *                    specs arg includes wagtail
- */
-function _shouldInstallInitialData() {
-  var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var specs = commandLineParams.specs;
-
-  if ( specs ) {
-    return specs.match( 'wagtail' );
-  }
-
-  return true;
-}
-
-/**
  * Spawn the appropriate acceptance tests.
  */
 function _spawnProtractor() {
+  var params = _getProtractorParams();
+  plugins.util.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
-    _getProtractorParams(),
+    params,
     { stdio: 'inherit' }
   ).once( 'close', function() {
     plugins.util.log( 'Protractor tests done!' );
@@ -177,16 +166,12 @@ function _spawnProtractor() {
  * Run the protractor acceptance tests.
  */
 function testAcceptanceBrowser() {
-  if ( _shouldInstallInitialData() ) {
-    spawn(
+  spawn(
     './initial-test-data.sh', [], { stdio: 'inherit' }
   ).once( 'close', function() {
     plugins.util.log( 'Loaded Wagtail database data!' );
     _spawnProtractor();
   } );
-  } else {
-    _spawnProtractor();
-  }
 }
 
 /**

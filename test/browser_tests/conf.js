@@ -69,12 +69,31 @@ function _isSauceCredentialSet() {
 function _retrieveProtractorParams( params ) { // eslint-disable-line complexity, no-inline-comments, max-len
   var parsedParams = {};
 
-  if ( _paramIsSet( params.specs ) ) {
+  // If one or more suites are specified, use their specs.
+  if ( _paramIsSet( params.suite ) ) {
+    var suitesArray = params.suite.split( ',' );
+    var specsArray = [];
+    for ( var i = 0, suite; suite = suitesArray[i++]; ) {
+      var suiteSpecs = environment.suites[suite];
+      if ( suiteSpecs.constructor === Array ) {
+        for ( var j = 0, len = suiteSpecs.length; j < len; j++ ) {
+          specsArray.push( suiteSpecs[j] );
+        }
+      } else {
+        specsArray.push(suiteSpecs);
+      }
+    }
+    parsedParams.specs = specsArray;
+  // Otherwise if specs are specified, use them.
+  } else if ( _paramIsSet( params.specs ) ) {
     var specsArray = params.specs.split( ',' );
     for ( var i = 0, len = specsArray.length; i < len; i++ ) {
       specsArray[i] = environment.specsBasePath + specsArray[i];
     }
     parsedParams.specs = specsArray;
+  // If neither a suite or specs are specified, use all specs.
+  } else {
+    parsedParams.specs = environment.specsBasePath + '.js';
   }
 
   if ( _paramIsSet( params.browserName ) ) {
