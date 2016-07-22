@@ -20,7 +20,7 @@
 
 {% block content_main %}
 
-    {% import 'leadership-calendar-table.html' as calendar %}
+    {% import 'leadership-calendar-table.html' as calendar with context %}
     {% import 'molecules/social-media.html' as social_media %}
     {% from 'post-macros.html' import pagination as pagination with context %}
 
@@ -55,7 +55,7 @@
 
             {# Set the filters #}
 
-		{% set filter_by = {
+    		{% set filter_by = {
                 'calendar':   true,
                 'range_date': true
             } %}
@@ -65,11 +65,15 @@
                 paginator,
                 events,
                 'calendar_event',
-                { 'expand_label': 'Filter calendars' }
+                { 'expand_label': 'Filter calendars', 'show_errors': true }
             ) }}
-            {{ calendar.render(events) }}
+            {% if events is defined and page_days is defined %}
+                {{ calendar.render() }}
+            {% endif %}
 
-            {{ pagination(paginator, ['calendar', 'range_date_gte', 'range_date_lte']) }}
+            {% if paginator is defined %}
+                {{ pagination(paginator, ['calendar', 'range_date_gte', 'range_date_lte']) }}
+            {% endif %}
         </div>
     </div>
 
@@ -98,7 +102,6 @@
                     'show_current_filters': false,
                     'action'              : 'pdf/',
                     'submit_label'        : 'Download PDF',
-                    'additional_classes'  : 'js-validate_require-date',
                     'form_method'         : 'get',
                     'show_errors'         :  True
                 }

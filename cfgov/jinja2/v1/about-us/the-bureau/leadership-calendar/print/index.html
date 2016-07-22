@@ -27,10 +27,10 @@
 
                     <h1 class="superheader">Leadership Calendar</h1>
                     {% if form.cleaned_data['filter_calendar']%}
-                    {{events|length}} events for {{ form.cleaned_data['filter_calendar']|join(', ') }}
+                    {{ events | length }} events for {{ form.cleaned_data['filter_calendar']|join(', ') }}
                     {% endif %}
-                    from {{ range_start|date("%B %d, %Y") }}
-                    to {{ range_end|date("%B %d, %Y") }}
+                    from {{ range_start | date("%B %d, %Y") }}
+                    to {{ range_end | date("%B %d, %Y") }}
 
 
                 </div>
