@@ -75,7 +75,7 @@ function _retrieveProtractorParams( params ) { // eslint-disable-line complexity
     var specsArray = [];
     for ( var i = 0, suite; suite = suitesArray[i++]; ) {
       var suiteSpecs = environment.suites[suite];
-      if ( suiteSpecs.constructor === Array ) {
+      if ( Array.isArray(suiteSpecs) ) {
         for ( var j = 0, len = suiteSpecs.length; j < len; j++ ) {
           specsArray.push( suiteSpecs[j] );
         }
