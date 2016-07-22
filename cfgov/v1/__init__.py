@@ -86,11 +86,11 @@ def parse_links(soup):
                 break
         if needs_icon:
             if not a.attrs.get('class', None):
-                a.attrs.update({'class': ''})
+                a.attrs.update({'class': []})
             if download_pattern.match(a['href']):
-                a.attrs['class'] = ' '.join([download_a_class, a.attrs['class']])
+                a.attrs['class'].append(download_a_class)
             if noncfpb_pattern.match(a['href']): # Sets the icon to indicate you're leaving consumerfinance.gov
-                a.attrs['class'] = ' '.join([external_a_class, a.attrs['class']])
+                a.attrs['class'].append(external_a_class)
                 if extlink_pattern.match(a['href']): # Sets the link to an external one if you're leaving .gov
                     a['href'] = '/external-site/?ext_url=' + a['href']
             if download_pattern.match(a['href']) or noncfpb_pattern.match(a['href']):
