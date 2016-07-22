@@ -95,7 +95,7 @@ def parse_links(soup):
                 if extlink_pattern.match(a['href']):
                     # Sets the link to an external one if you're leaving .gov
                     a['href'] = '/external-site/?ext_url=' + a['href']
-                    add_external_icon = True
+                add_external_icon = True
             elif download_pattern.search(a['href']):
                 # Sets the icon to indicate you're downloading a file
                 a.attrs['class'].append(download_a_class)
