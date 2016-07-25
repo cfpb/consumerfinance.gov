@@ -39,6 +39,16 @@ To view the website, please navigate to your docker machine's IP address on port
 
 Ex.: `http://192.168.99.100:8000`
 
+# Common Docker Commands
+
+To enter into one of the containers, use the bash command.
+
+Ex: `docker-compose run --rm web bash`
+
+To connect to the mysql database, use the mysql command with the appropriate credentials.
+
+Ex: `docker-compose run --rm mysql mysql --host=mysql --database=v1 --user=v1 --password=password`
+
 # Making code changes locally
 
 After running `docker-compose up`, you should have a local folder apps/ with each of the optional cf-gov applications loaded.
