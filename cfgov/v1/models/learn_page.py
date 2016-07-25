@@ -37,10 +37,6 @@ class AbstractFilterPage(CFGOVPage):
     date_filed = models.DateField(null=True, blank=True)
     comments_close_by = models.DateField(null=True, blank=True)
 
-    # General content tab panels
-    content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('header'),
-    ]
 
     # Configuration tab panels
     settings_panels = [
@@ -65,7 +61,6 @@ class AbstractFilterPage(CFGOVPage):
     ]
 
     edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
         ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(settings_panels, heading='Configuration'),
     ])
@@ -87,7 +82,18 @@ class LearnPage(AbstractFilterPage):
         ('call_to_action', molecules.CallToAction()),
     ], blank=True)
 
-    edit_handler = AbstractFilterPage.edit_handler
+    # General content tab
+    content_panels = [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(AbstractFilterPage.content_panels + content_panels, heading='General Content'),
+        ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
+    ])
+
 
     template = 'learn-page/index.html'
 
@@ -100,7 +106,18 @@ class DocumentDetailPage(AbstractFilterPage):
         ('table', organisms.Table()),
     ], blank=True)
 
-    edit_handler = AbstractFilterPage.edit_handler
+        # General content tab
+    content_panels = [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(AbstractFilterPage.content_panels + content_panels, heading='General Content'),
+        ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
+    ])
+
 
     template = 'document-detail/index.html'
 

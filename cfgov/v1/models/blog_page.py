@@ -14,15 +14,20 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from . import AbstractFilterPage, CFGOVPageManager
 from ..atomic_elements import molecules, organisms
 
-
 class BlogPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
     ])
 
+    # General content tab
+    content_panels = [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
+    ]
+
     edit_handler = TabbedInterface([
-        ObjectList(AbstractFilterPage.content_panels, heading='General Content'),
+        ObjectList(AbstractFilterPage.content_panels + content_panels, heading='General Content'),
         ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
     ])
@@ -30,15 +35,22 @@ class BlogPage(AbstractFilterPage):
     template = 'blog/blog_page.html'
 
 
+
 class LegacyBlogPage(AbstractFilterPage):
     content = StreamField([
         ('content', blocks.RawHTMLBlock(help_text='Content from WordPress unescaped.')),
     ])
 
+    # General content tab
+    content_panels = [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
+    ]
+    
     objects = CFGOVPageManager()
 
     edit_handler = TabbedInterface([
-        ObjectList(AbstractFilterPage.content_panels, heading='General Content'),
+        ObjectList(AbstractFilterPage.content_panels + content_panels, heading='General Content'),
         ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
     ])
