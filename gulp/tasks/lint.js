@@ -4,6 +4,7 @@ var gulp = require( 'gulp' );
 var plugins = require( 'gulp-load-plugins' )();
 var configLint = require( '../config' ).lint;
 var handleErrors = require( '../utils/handle-errors' );
+var minimist = require( 'minimist' );
 
 /**
  * Generic lint a script source.
@@ -11,9 +12,13 @@ var handleErrors = require( '../utils/handle-errors' );
  * @returns {Object} An output stream from gulp.
  */
 function _genericLint( src ) {
-  return gulp.src( src )
-    .pipe( plugins.eslint() )
+  // Grab the --fix flag from the command-line, if available.
+  var commandLineParams = minimist( process.argv.slice( 2 ) );
+  var willFix = commandLineParams.fix || false;
+  return gulp.src( src, { base: './' } )
+    .pipe( plugins.eslint( { fix: willFix } ) )
     .pipe( plugins.eslint.format() )
+    .pipe( gulp.dest( './' ) )
     .on( 'error', handleErrors );
 }
 

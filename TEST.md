@@ -162,3 +162,19 @@ To audit a page's WCAG and Section 508 accessibility:
   4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
      For example, `gulp test:a11y --u=contact-us`
      or `gulp test:a11y --u=the-bureau/bureau-structure/`.
+
+# Source code linting
+
+The default test task includes linting of the JavaScript source, build,
+and test files.
+Use the `gulp lint` command from the command-line to run the ESLint linter,
+which checks the JavaScript against the rules configured in `.eslintrc`.
+[See the ESLint docs](http://eslint.org/docs/rules/)
+for detailed rule descriptions.
+
+There are a number of options to the command:
+ - Use `gulp lint:build` to only lint the build scripts.
+ - Use `gulp lint:test` to only lint the test scripts.
+ - Use `gulp lint:scripts` to only lint the project source scripts.
+ - Add the `--fix` flag (like `gulp lint --fix`) to auto-fix
+   some errors, where ESLint has support to do so.
