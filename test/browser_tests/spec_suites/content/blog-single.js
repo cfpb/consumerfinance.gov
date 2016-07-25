@@ -1,7 +1,7 @@
 'use strict';
 
 var BlogSingle = require(
-    '../page_objects/page_blog-single.js'
+    '../../page_objects/page_blog-single.js'
   );
 
 describe( 'The Blog single Page', function() {

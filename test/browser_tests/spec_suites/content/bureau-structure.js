@@ -1,11 +1,11 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 var breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
 
 var TheBureauStructurePage =
-  require( '../page_objects/page_bureau-structure.js' );
+  require( '../../page_objects/page_bureau-structure.js' );
 
 describe( 'The Bureau Structure Page', function() {
   var page;

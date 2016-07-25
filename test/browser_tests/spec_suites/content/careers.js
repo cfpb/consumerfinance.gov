@@ -1,10 +1,10 @@
 'use strict';
 
 var Careers = require(
-    '../page_objects/page_careers.js'
+    '../../page_objects/page_careers.js'
   );
 
-var Urlmatcher = require( '../util/url-matcher' );
+var Urlmatcher = require( '../../util/url-matcher' );
 
 describe( 'The Careers Page', function() {
   var page;

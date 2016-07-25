@@ -67,9 +67,10 @@ function _addCommandLineFlag( protractorParams, commandLineParams, value ) {
 
 /**
  * Format and return parameters for Protractor binary.
+ * @param {string} suite Name of specific suite or suites to run, if any.
  * @returns {Array} List of Protractor binary parameters as strings.
  */
-function _getProtractorParams() {
+function _getProtractorParams( suite ) {
 
   // Set default configuration command-line parameter.
   var params = [ 'test/browser_tests/conf.js' ];
@@ -93,6 +94,11 @@ function _getProtractorParams() {
 
   // If --version=number flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'version' );
+
+  // If the --suite=suite1,suite2 flag is added on the command-line
+  // or, if not, if a suite is passed as part of the gulp task definition.
+  var suiteParam = { suite: commandLineParams.suite || suite };
+  params = _addCommandLineFlag( params, suiteParam, 'suite' );
 
   return params;
 }
@@ -144,28 +150,15 @@ function testA11y() {
 }
 
 /**
- * Test whether we need to load the initial data for wagtail tests.
- * @returns {boolean} Returns true if no specs arg is passed or the
- *                    specs arg includes wagtail
- */
-function _shouldInstallInitialData() {
-  var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var specs = commandLineParams.specs;
-
-  if ( specs ) {
-    return specs.match( 'wagtail' );
-  }
-
-  return true;
-}
-
-/**
  * Spawn the appropriate acceptance tests.
+ * @param {string} suite Name of specific suite or suites to run, if any.
  */
-function _spawnProtractor() {
+function _spawnProtractor( suite ) {
+  var params = _getProtractorParams( suite );
+  plugins.util.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
-    _getProtractorParams(),
+    params,
     { stdio: 'inherit' }
   ).once( 'close', function() {
     plugins.util.log( 'Protractor tests done!' );
@@ -174,18 +167,15 @@ function _spawnProtractor() {
 
 /**
  * Run the protractor acceptance tests.
+ * @param {string} suite Name of specific suite or suites to run, if any.
  */
-function testAcceptanceBrowser() {
-  if ( _shouldInstallInitialData() ) {
-    spawn(
+function testAcceptanceBrowser( suite ) {
+  spawn(
     './initial-test-data.sh', [], { stdio: 'inherit' }
   ).once( 'close', function() {
     plugins.util.log( 'Loaded Wagtail database data!' );
-    _spawnProtractor();
+    _spawnProtractor( suite );
   } );
-  } else {
-    _spawnProtractor();
-  }
 }
 
 /**
@@ -201,10 +191,16 @@ gulp.task( 'test:coveralls', testCoveralls );
 
 gulp.task( 'test:a11y', testA11y );
 
-gulp.task( 'test:acceptance:browser', testAcceptanceBrowser );
+gulp.task( 'test:acceptance:full', function() {
+  testAcceptanceBrowser();
+} );
+gulp.task( 'test:acceptance:functional', function() {
+  testAcceptanceBrowser( 'functional' );
+} );
+
 gulp.task( 'test:acceptance',
   [
-    'test:acceptance:browser'
+    'test:acceptance:full'
   ]
 );
 
@@ -222,6 +218,6 @@ gulp.task( 'test',
   [
     'lint',
     'test:unit',
-    'test:acceptance'
+    'test:acceptance:functional'
   ]
 );

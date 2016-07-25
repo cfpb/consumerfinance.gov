@@ -1,9 +1,9 @@
 'use strict';
 
 var TheLeadershipCalendarPage =
-require( '../page_objects/page_leadership-calendar.js' );
+require( '../../page_objects/page_leadership-calendar.js' );
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 var breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
 

@@ -1,10 +1,10 @@
 'use strict';
 
 var ActivityLog = require(
-    '../page_objects/page_activity-log.js'
+    '../../page_objects/page_activity-log.js'
   );
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 var breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
 

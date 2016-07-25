@@ -1,10 +1,10 @@
 'use strict';
 
 var CurrentOpenings = require(
-    '../page_objects/page_careers-current-openings.js'
+    '../../page_objects/page_careers-current-openings.js'
   );
 
-var Urlmatcher = require( '../util/url-matcher' );
+var Urlmatcher = require( '../../util/url-matcher' );
 
 describe( 'The Current Openings Page', function() {
   var page;

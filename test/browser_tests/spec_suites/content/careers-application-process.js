@@ -1,31 +1,55 @@
 'use strict';
 
-var TheBureauPage = require( '../page_objects/page_the-bureau.js' );
+var ApplicationProcess = require(
+    '../../page_objects/page_careers-application-process.js'
+  );
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+var Urlmatcher = require( '../../util/url-matcher' );
 
-var breakpointsConfig =
-  require( BASE_JS_PATH + 'config/breakpoints-config' );
-
-describe( 'The Bureau Page', function() {
+describe( 'The Application Process Page', function() {
   var page;
 
   beforeAll( function() {
-    page = new TheBureauPage();
+    page = new ApplicationProcess();
     page.get();
+    jasmine.addMatchers( Urlmatcher );
   } );
 
-  it( 'should properly load in a browser',
-    function() {
-      expect( page.pageTitle() ).toContain( 'The Bureau' );
-    }
-  );
+  it( 'should properly load in a browser', function() {
+    expect( page.pageTitle() ).toContain( 'Job Application Process' );
+  } );
 
-  it( 'should have a secondary nav',
-    function() {
-      expect( page.secondaryNav.isPresent() ).toBe( true );
-    }
-  );
+  it( 'should have a sideNav', function() {
+    expect( page.sideNav.isPresent() ).toBe( true );
+  } );
+
+  it( 'should have three job application interfaces ', function() {
+    expect( page.jobApplicationsInterfaces.count() ).toEqual( 3 );
+  } );
+
+  it( 'should have an ethics link ', function() {
+    expect( page.ethicsLink.isPresent() ).toBe( true );
+  } );
+
+  it( 'should have a career info section', function() {
+    var infoSectionTitles =
+    [ 'Current openings', 'Working at the CFPB',
+    'Students & recent graduates' ];
+    var infoSectionLinks =
+    [ '/about-us/careers/current-openings/',
+      '/about-us/careers/working-at-cfpb/',
+      '/about-us/careers/students-and-graduates/' ];
+
+    expect( page.infoSectionTitles.getText() )
+    .toEqual( infoSectionTitles );
+    expect( page.infoSectionDescriptions.count() ).toEqual( 5 );
+    expect( page.infoSectionLinks.getAttribute( 'href' ) )
+    .toEqualUrl( infoSectionLinks );
+  } );
+
+  it( 'should have a Related Links section', function() {
+    expect( page.relatedLinksSection.isPresent() ).toBe( true );
+  } );
 
   describe( '(Video Player)', function() {
 
@@ -79,20 +103,4 @@ describe( 'The Bureau Page', function() {
     } );
 
   } );
-
-  if ( browser.params.windowWidth > breakpointsConfig.bpSM.min &&
-       browser.params.windowWidth < breakpointsConfig.bpSM.max ) {
-    describe( '(mobile)', function() {
-      it( 'should show the show button', function() {
-        expect( page.showButton.isDisplayed() ).toBe( true );
-      } );
-
-      it( 'should show the hide button after clicked', function() {
-        page.expandableTarget.click();
-        browser.wait( page.hideButton.isDisplayed() );
-
-      } );
-    } );
-  }
-
 } );

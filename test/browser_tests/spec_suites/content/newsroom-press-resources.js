@@ -1,7 +1,7 @@
 'use strict';
 
 var PressResources = require(
-    '../page_objects/page_newsroom-press-resources.js'
+    '../../page_objects/page_newsroom-press-resources.js'
   );
 
 describe( 'The Newsroom Press Resources Page', function() {

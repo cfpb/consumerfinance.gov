@@ -61,6 +61,37 @@ function _isSauceCredentialSet() {
 }
 
 /**
+ * Choose test specs based on passed parameters.
+ * @param {object} params Set of parameters from the command-line.
+ * @returns {Array} List of specs or spec patterns to execute.
+ */
+function _chooseProtractorSpecs( params ) {
+  var i, len, specs = [];
+
+  // If one or more suites are specified, use their specs.
+  if ( _paramIsSet( params.suite ) ) {
+    var suiteNames = params.suite.split( ',' );
+    for ( i = 0, len = suiteNames.length; i < len; i++) {
+      var suiteSpecs = environment.suites[suiteNames[i]];
+      if ( suiteSpecs ) {
+        specs = specs.concat( suiteSpecs );
+      }
+    }
+  // Otherwise if specs are specified, use them.
+  } else if ( _paramIsSet( params.specs ) ) {
+    var specPatterns = params.specs.split( ',' );
+    for ( i = 0, len = specPatterns.length; i < len; i++ ) {
+      specs = specs.concat( environment.specsBasePath + specPatterns[i] );
+    }
+  // If neither a suite or specs are specified, use all specs.
+  } else {
+    specs = specs.concat( environment.specsBasePath + '.js' );
+  }
+
+  return specs;
+}
+
+/**
  * Params that need to be passed to protractor config.
  * @param {object} params Set of parameters from the command-line.
  * @returns {object} Parsed parameters from the command-line,
@@ -69,13 +100,7 @@ function _isSauceCredentialSet() {
 function _retrieveProtractorParams( params ) { // eslint-disable-line complexity, no-inline-comments, max-len
   var parsedParams = {};
 
-  if ( _paramIsSet( params.specs ) ) {
-    var specsArray = params.specs.split( ',' );
-    for ( var i = 0, len = specsArray.length; i < len; i++ ) {
-      specsArray[i] = environment.specsBasePath + specsArray[i];
-    }
-    parsedParams.specs = specsArray;
-  }
+  parsedParams.specs = _chooseProtractorSpecs( params );
 
   if ( _paramIsSet( params.browserName ) ) {
     parsedParams.browserName = params.browserName;

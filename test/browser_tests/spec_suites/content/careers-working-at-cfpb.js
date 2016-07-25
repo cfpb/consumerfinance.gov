@@ -1,10 +1,10 @@
 'use strict';
 
 var WorkingAtCFPB = require(
-    '../page_objects/page_careers-working-at-cfpb.js'
+    '../../page_objects/page_careers-working-at-cfpb.js'
   );
 
-var Urlmatcher = require( '../util/url-matcher' );
+var Urlmatcher = require( '../../util/url-matcher' );
 
 describe( 'The Working At CFPB Page', function() {
   var page;
