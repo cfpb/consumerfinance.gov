@@ -85,8 +85,7 @@ def parse_links(soup):
                 needs_icon = False
                 break
         if needs_icon:
-            add_download_icon = False
-            add_external_icon = False
+            added_icon = False
             if not a.attrs.get('class', None):
                 a.attrs.update({'class': []})
             if noncfpb_pattern.match(a['href']):
@@ -95,12 +94,12 @@ def parse_links(soup):
                 if extlink_pattern.match(a['href']):
                     # Sets the link to an external one if you're leaving .gov
                     a['href'] = '/external-site/?ext_url=' + a['href']
-                add_external_icon = True
+                added_icon = True
             elif download_pattern.search(a['href']):
                 # Sets the icon to indicate you're downloading a file
                 a.attrs['class'].append(download_a_class)
-                add_download_icon = True
-            if add_download_icon or add_external_icon:
+                added_icon = True
+            if added_icon:
                 # Wraps the link text in a span that provides the underline
                 contents = a.contents
                 span = soup.new_tag('span')
