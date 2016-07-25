@@ -1,6 +1,6 @@
 FROM vickumar/python-nodejs
 
-RUN git clone https://github.com/cfpb/regulations-core.git /apps/regulations-core/
+RUN git clone $REG_CORE_GIT /apps/regulations-core/
 RUN rm -rf /apps/regulations-core/.git
 RUN pip install -e /apps/regulations-core
 VOLUME /apps/regulations-core
