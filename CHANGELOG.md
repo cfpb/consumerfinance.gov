@@ -12,6 +12,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## UNRELEASED
+
+### Added
+
+### Changed
+
+### Removed
+- Removed unused `interactiveTestPort` test variable.
+
+### Fixed
+
 
 ## 3.4.0 2016-07-12
 

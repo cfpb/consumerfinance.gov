@@ -13,9 +13,6 @@ module.exports = {
   // Default http port to host the web server
   webServerDefaultPort: webServerDefaultPort,
 
-  // Protractor interactive tests
-  interactiveTestPort: 6969,
-
   // A base URL for your application under test.
   baseUrl:
     'http://' + ( process.env.HTTP_HOST || 'localhost' ) +
