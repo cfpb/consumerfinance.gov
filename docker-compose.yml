@@ -42,7 +42,7 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password  
   search:
-    image: elasticsearch:2.3
+    image: elasticsearch:1.7
     expose:
       - "9200"
     ports:
