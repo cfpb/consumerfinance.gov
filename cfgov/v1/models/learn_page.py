@@ -60,15 +60,22 @@ class AbstractFilterPage(CFGOVPage):
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
     ]
 
-    edit_handler = TabbedInterface([
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(settings_panels, heading='Configuration'),
-    ])
-
     # This page class cannot be created.
     is_creatable = False
 
     objects = CFGOVPageManager()
+
+    @classmethod
+    def generate_edit_handler(self, content_panel):
+        content_panels = [
+            StreamFieldPanel('header'),
+            content_panel,
+        ]
+        return TabbedInterface([
+            ObjectList(self.content_panels + content_panels, heading='General Content'),
+            ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+            ObjectList(self.settings_panels, heading='Configuration'),
+        ])
 
 
 class LearnPage(AbstractFilterPage):
@@ -81,22 +88,10 @@ class LearnPage(AbstractFilterPage):
         ('table', organisms.Table()),
         ('call_to_action', molecules.CallToAction()),
     ], blank=True)
-
-    # General content tab
-    content_panels = [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('content'),
-    ]
-
-    edit_handler = TabbedInterface([
-        ObjectList(AbstractFilterPage.content_panels + content_panels, heading='General Content'),
-        ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
-    ])
-
-
+    edit_handler = AbstractFilterPage.generate_edit_handler(
+        content_panel = StreamFieldPanel('content')
+    )
     template = 'learn-page/index.html'
-
 
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField([
@@ -105,20 +100,9 @@ class DocumentDetailPage(AbstractFilterPage):
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
     ], blank=True)
-
-        # General content tab
-    content_panels = [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('content'),
-    ]
-
-    edit_handler = TabbedInterface([
-        ObjectList(AbstractFilterPage.content_panels + content_panels, heading='General Content'),
-        ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
-    ])
-
-
+    edit_handler = AbstractFilterPage.generate_edit_handler(
+        content_panel = StreamFieldPanel('content')
+    )
     template = 'document-detail/index.html'
 
 
