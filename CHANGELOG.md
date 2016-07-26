@@ -16,6 +16,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.4.0 2016-07-12
 
 ### Added
+- Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management - available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/ 
+- Redesigned userbar: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#redesigned-userbar
+- Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader 
+- Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
 - leadership calendar Django app
 - Frontend: Added ability to auto-fix linter error with the `--fix`
   flag on the linter task.
