@@ -7,7 +7,7 @@ globals:
   browser: true
   element: true
 rules:
-  no-process-env: 0
+  no-console: 0
   no-unused-expressions: 0
   max-nested-callbacks: 0
   require-jsdoc: 0

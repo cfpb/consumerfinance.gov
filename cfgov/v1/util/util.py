@@ -60,7 +60,7 @@ def instanceOfBrowseOrFilterablePages(page):
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
     from ..templatetags.share import get_page_state_url
-    on_staging = os.environ.get('STAGING_HOSTNAME') == request.site.hostname
+    on_staging = os.environ.get('DJANGO_STAGING_HOSTNAME') == request.site.hostname
     nav_items = []
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
@@ -121,7 +121,7 @@ def get_appropriate_page_version(request, page):
     # If we're on the production site, make sure the version of the page
     # displayed is the latest version that has `live` set to True for
     # the live site or `shared` set to True for the staging site.
-    staging_hostname = os.environ.get('STAGING_HOSTNAME')
+    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
     revisions = page.revisions.all().order_by('-created_at')
     for revision in revisions:
         page_version = json.loads(revision.content_json)

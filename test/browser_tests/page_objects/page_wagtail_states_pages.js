@@ -1,5 +1,7 @@
 'use strict';
 
+var envvars = require( '../../../config/environment' ).envvars;
+
 function SharedPage() {
 
   this.get = function() {
@@ -8,8 +10,8 @@ function SharedPage() {
   };
 
   this.getStaging = function() {
-    var baseUrl = process.env.STAGING_HOSTNAME + ':' +
-                  process.env.HTTP_PORT + '/shared-page/';
+    var baseUrl = envvars.DJANGO_STAGING_HOSTNAME + ':' +
+                  envvars.TEST_HTTP_PORT + '/shared-page/';
     browser.get( baseUrl );
   };
 
@@ -25,8 +27,8 @@ function SharedDraftPage() {
   };
 
   this.getStaging = function() {
-    var baseUrl = process.env.STAGING_HOSTNAME + ':' +
-                  process.env.HTTP_PORT + '/shared-draft-page/';
+    var baseUrl = envvars.DJANGO_STAGING_HOSTNAME + ':' +
+                  envvars.TEST_HTTP_PORT + '/shared-draft-page/';
     browser.get( baseUrl );
   };
 

@@ -166,7 +166,7 @@ def get_protected_url(context, page):
     if url is None:  # If page is not aligned to a site root return None
         return None
     page_hostname = urlparse(url).hostname
-    staging_hostname = os.environ.get('STAGING_HOSTNAME')
+    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
     if page.live:
         return url
     elif page.specific.shared:
