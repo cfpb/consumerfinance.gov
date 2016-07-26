@@ -1,10 +1,11 @@
 import mock
 import json
+import publish_eccu
 
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from ..wagtail_hooks import share_the_page, check_permissions, share, configure_page_revision
+from ..wagtail_hooks import share_the_page, check_permissions, share, configure_page_revision, flush_akamai
 
 
 class TestShareThePage(TestCase):
@@ -28,7 +29,8 @@ class TestShareThePage(TestCase):
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    def test_save_draft(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
+    @mock.patch('v1.wagtail_hooks.flush_akamai')
+    def test_save_draft(self, mock_flush_akamai, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure 'Save Draft' request sets correct values for
             is_publishing and is_sharing.
@@ -42,7 +44,8 @@ class TestShareThePage(TestCase):
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    def test_share_on_content(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
+    @mock.patch('v1.wagtail_hooks.flush_akamai')
+    def test_share_on_content(self, mock_flush_akamai, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure 'Share on Content' request sets correct values for
             is_publishing and is_sharing.
@@ -56,7 +59,8 @@ class TestShareThePage(TestCase):
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    def test_publish_to_www(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
+    @mock.patch('v1.wagtail_hooks.flush_akamai')
+    def test_publish_to_www(self, mock_flush_akamai, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure 'Publish to WWW' request sets correct values for
             is_publishing and is_sharing.
@@ -70,12 +74,14 @@ class TestShareThePage(TestCase):
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    def test_function_calls(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
+    @mock.patch('v1.wagtail_hooks.flush_akamai')
+    def test_function_calls(self, mock_flush_akamai, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure all functions are called once.
         """
         mock_page.objects.get.return_value = self.page
         share_the_page(self.mock_request['publishing'], self.page)
+        assert mock_flush_akamai.call_count == 1
         assert mock_configure_page_revision.call_count == 1
         assert mock_share.call_count == 1
         assert mock_check_permissions.call_count == 1
@@ -179,7 +185,6 @@ class TestConfigurePageRevision(TestCase):
         assert not latest_content['live']
 
     def test_sharing_a_page(self):
-        self.page.has_unshared_changes = False
         configure_page_revision(self.page, True, False)
         latest = self.page.get_latest_revision()
         latest_content = json.loads(latest.content_json)
@@ -187,9 +192,29 @@ class TestConfigurePageRevision(TestCase):
         assert not latest_content['live']
 
     def test_publishing_a_page(self):
-        self.page.has_unshared_changes = False
         configure_page_revision(self.page, False, True)
         latest = self.page.get_latest_revision()
         latest_content = json.loads(latest.content_json)
         assert latest_content['shared']
         assert latest_content['live']
+
+
+class TestFlushAkamai(TestCase):
+
+    def setUp(self):
+        self.page = mock.Mock()
+        self.page.owner.email = 'test@mail.com'
+
+    @mock.patch('v1.wagtail_hooks.settings')
+    @mock.patch('publish_eccu.publish.publish')
+    def test_not_publishing_a_page(self, mock_publish, mock_settings):
+        mock_settings.ENABLE_AKAMAI_CACHE_PURGE = True
+        flush_akamai(self.page, False)
+        assert not mock_publish.called
+
+    @mock.patch('v1.wagtail_hooks.settings')
+    @mock.patch('publish_eccu.publish.publish')
+    def test_publishing_a_page(self, mock_publish, mock_settings):
+        mock_settings.ENABLE_AKAMAI_CACHE_PURGE = True
+        flush_akamai(self.page, True)
+        assert mock_publish.called

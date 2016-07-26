@@ -217,7 +217,11 @@ class CFGOVPage(Page):
     @property
     def status_string(self):
         page = CFGOVPage.objects.get(id=self.id)
-        if page.live and page.shared:
+        if page.expired:
+            return _("expired")
+        elif page.approved_schedule:
+            return _("scheduled")
+        elif page.live and page.shared:
             if page.has_unpublished_changes:
                 if page.has_unshared_changes:
                     for revision in page.revisions.order_by('-created_at', '-id'):
@@ -236,10 +240,6 @@ class CFGOVPage(Page):
                 return _("shared + draft")
             else:
                 return _("shared")
-        elif page.expired:
-            return _("expired")
-        elif page.approved_schedule:
-            return _("scheduled")
         else:
             return _("draft")
 

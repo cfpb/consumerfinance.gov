@@ -24,6 +24,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated ESLint to `2.13.1` from `2.7.0`.
 - Fixed job ordering on Careers home page to be consistent with Current Openings page.
 
+### Removed
+
+### Fixed
+- Fix scheduled publishing
 
 
 ## 3.0.0-3.3.22 – 2016-06-22
