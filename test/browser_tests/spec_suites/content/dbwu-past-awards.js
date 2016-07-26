@@ -1,9 +1,9 @@
 'use strict';
 
 var PastAwards =
-require( '../page_objects/page_dbwu-past-awards.js' );
+require( '../../page_objects/page_dbwu-past-awards.js' );
 
-var Urlmatcher = require( '../util/url-matcher' );
+var Urlmatcher = require( '../../util/url-matcher' );
 
 describe( 'The Past Awards Page', function() {
   var page;

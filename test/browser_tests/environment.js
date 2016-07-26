@@ -3,6 +3,8 @@
 // Common configuration files with defaults plus overrides from environment vars
 var webServerDefaultPort = 8000;
 
+var specsRoot = 'spec_suites/';
+
 module.exports = {
   // The address of a running selenium server.
   seleniumAddress:
@@ -20,7 +22,19 @@ module.exports = {
           ':' + ( process.env.HTTP_PORT || webServerDefaultPort ),
 
   // The base path where the spec suites are located.
-  specsBasePath: 'spec_suites/**/*',
+  specsBasePath: specsRoot + '**/*',
+
+  suites: {
+    functional: [
+      specsRoot + 'wagtail/**/*.js'
+    ],
+    content: [
+      specsRoot + 'content/**/*.js',
+      specsRoot + 'molecules/**/*.js',
+      specsRoot + 'organisms/**/*.js',
+      specsRoot + 'templates/**/*.js'
+    ]
+  },
 
   // The default window width and height.
   // Can be overridden with the --windowSize=w,h command-line flag.

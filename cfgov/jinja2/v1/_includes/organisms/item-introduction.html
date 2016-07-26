@@ -63,9 +63,11 @@
                 &ndash;
             </span>
         {% endif %}
-        <span class="date">
-            {{ time.render(published_date, {'date':true}) }}
-        </span>
+        {% if published_date %}
+            <span class="date">
+                {{ time.render(published_date, {'date':true}) }}
+            </span>
+        {% endif %}
     {% if published_date or has_authors %}
         </div>
     {% endif %}

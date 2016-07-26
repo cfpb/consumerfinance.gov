@@ -19,7 +19,7 @@ from unipath import Path
 
 from .query import QueryFinder, more_like_this, get_document, when
 from .filters import selected_filters_for_field, is_filter_selected
-from .templates import get_date_string
+from .templates import get_date_string, get_date_obj
 from .middleware import get_request
 
 
@@ -112,6 +112,7 @@ def environment(**options):
         'global_include': global_render_template,
     })
     env.filters.update({
-        'date': get_date_string
+        'date': get_date_string,
+        'dateobj': get_date_obj
     })
     return env

@@ -1,6 +1,6 @@
 'use strict';
 
-var TheAboutDirectorPage = require( '../page_objects/page_about-director.js' );
+var TheAboutDirectorPage = require( '../../page_objects/page_about-director.js' );
 
 describe( 'The About Deputy Director Page', function() {
   var page;

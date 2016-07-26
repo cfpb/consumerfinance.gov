@@ -1,9 +1,9 @@
 'use strict';
 
 var UpcomingProcurementNeeds =
-require( '../page_objects/page_dbwu-upcoming-procurement-needs.js' );
+require( '../../page_objects/page_dbwu-upcoming-procurement-needs.js' );
 
-var Urlmatcher = require( '../util/url-matcher' );
+var Urlmatcher = require( '../../util/url-matcher' );
 
 describe( 'The Upcoming Procurement Needs Page', function() {
   var page;
