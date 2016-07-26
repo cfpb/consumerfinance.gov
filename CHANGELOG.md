@@ -13,21 +13,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased
+## 3.4.0 2016-07-12
 
 ### Added
 - Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management - available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/ 
 - Redesigned userbar: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#redesigned-userbar
 - Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader 
 - Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
+- leadership calendar Django app
 
 ### Changed
 - Updated ESLint to `2.13.1` from `2.7.0`.
 - Fixed job ordering on Careers home page to be consistent with Current Openings page.
 
-### Removed
-
-### Fixed
 
 
 ## 3.0.0-3.3.22 – 2016-06-22

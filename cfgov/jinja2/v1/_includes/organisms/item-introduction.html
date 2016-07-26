@@ -30,40 +30,46 @@
 
 {% set form_id, ancestor = get_filter_data(page) %}
 {% set page_url = get_protected_url(ancestor) %}
+{% set published_date = value.date %}
+{% set page_authors = page.authors.all() %}
+{% set has_authors = page_authors|length > 0 %}
 
 <div class="o-item-introduction">
-    <div class="h4">
+    {% if value.category is string %}
         {{ category_slug.render(value.category, page_url, index=form_id) }}
-    </div>
-    <h1>{{ value.heading }}</h1>
+    {% else %}
+        {% for category in page.categories.all() %}
+            {{ '|' if loop.index > 1 else '' }}
+            {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug', index=index) }}
+        {% endfor %}
+    {% endif %}
+    <h1>{{ value.heading | safe }}</h1>
 
     {% if value.paragraph %}
         <div class="lead-paragraph">{{ parse_links(value.paragraph) | safe }}</div>
     {% endif %}
-    {% if value.date or page.authors.all() %}
-        <p>
+
+    {% if published_date or has_authors %}
+        <div class="meta">
     {% endif %}
-    {% for author in page.authors.names() %}
-        {% if loop.index == 1  %}
-            By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                {{ author }}
+        {% if has_authors %}
+            <span class="byline">
+            {%- for author in page_authors -%}
+                {{- 'By ' if loop.index == 1 else ' and ' }}
+                <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
+                    {{ author }}
                 </a>
-        {% elif loop.last == true %}
-            and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                {{ author }}
-                </a>
-        {% else %}
-            , <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                {{ author }}
-                </a>
+            {%- endfor -%}
+                &ndash;
+            </span>
         {% endif %}
-    {% endfor %}
-    {% if value.date %}
-        {{ time.render(value.date, {'date':true}) }}
+        <span class="date">
+            {{ time.render(published_date, {'date':true}) }}
+        </span>
+    {% if published_date or has_authors %}
+        </div>
     {% endif %}
-    {% if value.date or page.authors.all() %}
-        </p>
-    {% endif %}
+
     {% if value.has_social %}
         {{ social_media.render() }}
     {% endif %}

@@ -35,10 +35,25 @@
 */
 
 .o-item-introduction {
+    margin-bottom: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
+
     .short-desc {
-        padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em)
+        padding-bottom: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+    }
+
+    .lead-paragraph {
+        margin-top: 0;
+    }
+
+    .meta {
+      margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+
+        .byline {
+          .heading-4();
+        }
     }
 }
+
 
 /* topdoc
     name: EOF

@@ -13,13 +13,13 @@ function BlogSingle() {
 
   this.pageTitle = function() { return browser.getTitle(); };
 
-  this.postTitle = element( by.css( 'header .post_heading' ) );
+  this.postTitle = element( by.css( 'header h1' ) );
 
-  this.postByLine = element( by.css( 'header .post_byline' ) );
+  this.postByLine = element( by.css( 'header .byline' ) );
 
   this.postBody = element( by.css( '.post .post_body' ) );
 
-  this.share = element( by.css( 'header .share' ) );
+  this.share = element( by.css( 'header .m-social-media__share' ) );
 
   this.breadcrumbs = element( by.css( '.breadcrumbs' ) );
 
