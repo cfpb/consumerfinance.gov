@@ -1,6 +1,7 @@
 import os
 import json
 from urlparse import urlsplit
+from django.utils import timezone
 
 from django.conf import settings
 from django.http import Http404
@@ -22,8 +23,14 @@ def share_the_page(request, page):
     is_sharing = bool(request.POST.get('action-share', False))
 
     check_permissions(parent_page, request.user, is_publishing, is_sharing)
-    share(page, is_sharing, is_publishing)
-    configure_page_revision(page, is_sharing, is_publishing)
+
+    is_live = False
+    if is_publishing and not (page.go_live_at and page.go_live_at > timezone.now()):
+        is_live = True
+
+    share(page, is_sharing, is_live)
+    configure_page_revision(page, is_sharing, is_live)
+    flush_akamai(page, is_live)
 
 
 def check_permissions(parent, user, is_publishing, is_sharing):
@@ -33,8 +40,8 @@ def check_permissions(parent, user, is_publishing, is_sharing):
         is_sharing = is_sharing and parent_perms.can_publish()
 
 
-def share(page, is_sharing, is_publishing):
-    if is_sharing or is_publishing:
+def share(page, is_sharing, is_live):
+    if is_sharing or is_live:
         page.shared = True
         page.has_unshared_changes = False
     else:
@@ -42,28 +49,33 @@ def share(page, is_sharing, is_publishing):
     page.save()
 
 
-# Sets the latest revision with a state depending on if the request is to
-# publish, share, or save the page.
-def configure_page_revision(page, is_sharing, is_publishing):
+# `CFGOVPage.route()` will select the latest revision of the page where `live`
+# is set to True and return that revision as a page object to serve the request
+# so here we configure the latest revision to fall in line with that logic.
+#
+# This is also used as a signal callback when publishing in code or via
+# management command like publish_scheduled_pages.
+def configure_page_revision(page, is_sharing, is_live):
     latest = page.get_latest_revision()
     content_json = json.loads(latest.content_json)
-    content_json['live'] = is_publishing
-    content_json['shared'] = is_sharing or is_publishing
-    content_json['has_unshared_changes'] = page.has_unshared_changes
+    content_json['live'] = is_live
+    content_json['shared'] = is_sharing or is_live
+    content_json['has_unshared_changes'] = not is_sharing and not is_live
     latest.content_json = json.dumps(content_json)
     latest.save()
-    if is_publishing:
-        latest.publish()
-        if settings.ENABLE_AKAMAI_CACHE_PURGE:
-            from publish_eccu.publish import publish as akamai_cache_reset
 
-            url_paths = [page.url_path.replace('cfgov/', '')]
-            if url_paths[0] == '/':
-                is_home_page = True
-            else:
-                is_home_page = False
 
-            akamai_cache_reset(url_paths, invalidate_root=is_home_page, user_email=latest.user.email)
+def flush_akamai(page, is_live):
+    if is_live and settings.ENABLE_AKAMAI_CACHE_PURGE:
+        from publish_eccu.publish import publish as akamai_cache_reset
+
+        url_paths = [page.url_path.replace('cfgov/', '')]
+        if url_paths[0] == '/':
+            is_home_page = True
+        else:
+            is_home_page = False
+
+        akamai_cache_reset(url_paths, invalidate_root=is_home_page, user_email=page.owner.email)
 
 
 @hooks.register('before_serve_page')
