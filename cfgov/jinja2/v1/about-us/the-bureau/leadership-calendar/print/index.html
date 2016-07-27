@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block body %}
-    {% import 'leadership-calendar-table.html' as calendar %}
+    {% import 'leadership-calendar-table.html' as calendar with context %}
 
     <main class="content print" id="main" role="main">
         <div class="content_wrapper">
@@ -34,11 +34,13 @@
 
 
                 </div>
-                {{ calendar.render(events, {
-                    'time_col_classes': 'u-w30pct',
-                    'name_col_classes': 'u-w30pct',
-                    'desc_col_classes': 'u-w40pct'
-                }) }}
+                {% if events and page_days %}
+                    {{ calendar.render({
+                        'time_col_classes': 'u-w30pct',
+                        'name_col_classes': 'u-w30pct',
+                        'desc_col_classes': 'u-w40pct'
+                    }, is_pdf=True) }}
+                {% endif %}
             </div>
         </div><!-- END .wrapper -->
     </main><!-- END .content -->

@@ -67,7 +67,7 @@
                 'calendar_event',
                 { 'expand_label': 'Filter calendars', 'show_errors': true }
             ) }}
-            {% if events is defined and page_days is defined %}
+            {% if events and page_days %}
                 {{ calendar.render() }}
             {% endif %}
 

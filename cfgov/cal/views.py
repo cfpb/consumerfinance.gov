@@ -110,7 +110,7 @@ def display(request, pdf=False):
             day_range = [object_list[0] + timedelta(hours=23, minutes=59, seconds=59),
                          object_list[0]]
             context.update({'day_range': day_range})
-        else:
+        elif object_list:
             object_list[0] += timedelta(hours=23, minutes=59, seconds=59)
             page_days.object_list = object_list
 
@@ -150,4 +150,4 @@ def pdf_response(request, context):
         response['Content-Disposition'] = 'attachment; filename=cfpb-leadership.pdf'
         return response
     except (urllib2.HTTPError, urllib2.URLError, BadStatusLine):
-        pass
+        return render(request, template_name, context)
