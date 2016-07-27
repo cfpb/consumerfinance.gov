@@ -45,7 +45,7 @@ function Header( element ) {
     try {
       _globalbanner = new GlobalBanner( _dom );
       _globalbanner.init();
-    } catch( err ) {
+    } catch ( err ) {
       // No Banner to initialize.
     }
 
