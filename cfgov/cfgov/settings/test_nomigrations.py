@@ -9,4 +9,3 @@ class NoMigrations(object):
         return 'nomigrations'
 
 MIGRATION_MODULES = NoMigrations()
-
