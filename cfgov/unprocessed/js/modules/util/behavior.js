@@ -30,6 +30,60 @@
 var standardType = require( './standard-type' );
 var dataHook = require( '../../modules/util/data-hook' );
 
+
+/**
+ * @param {string} behaviorSelector
+ *  Behavior type used to find the element within the dom.
+ * @param {HTMLNode} baseElement Containing element for the behavior element.
+ * @returns {HTMLNodeList} behaviorElements if it exists in the dom,
+ *                         null otherwise.
+ */
+function _findElements( behaviorSelector, baseElement ) {
+  baseElement = baseElement || document;
+  var behaviorElements = [];
+
+  try {
+    behaviorElements = baseElement.querySelectorAll( behaviorSelector );
+  } catch ( error ) {
+    var msg = behaviorSelector + ' not found in DOM!';
+    throw new Error( msg );
+  }
+
+  if ( behaviorElements.length === 0 &&
+       behaviorSelector.indexOf( standardType.BEHAVIOR_PREFIX ) === -1 ) {
+    behaviorElements = find( behaviorSelector, baseElement );
+  }
+
+  return behaviorElements;
+}
+
+
+/**
+ * @param {( string|HTMLNode|HTMLNodeList )} behaviorElement
+ *  Used to query dom for elements.
+ * @param {string} event Event type to add to element.
+ * @param {Function} eventHandler Callback for event.
+ * @param {HTMLNode} baseElement Containing element for the behavior element.
+ * @returns {HTMLNodeList} if it exists in the dom, null otherwise.
+ */
+function attach( behaviorElement, event, eventHandler, baseElement ) {
+  var behaviorElements = [];
+
+  if ( behaviorElement instanceof NodeList === true ) {
+    behaviorElements = behaviorElement;
+  } else if ( behaviorElement instanceof Node === true ) {
+    behaviorElements = [ behaviorElement ];
+  } else if ( typeof behaviorElement === 'string' ) {
+    behaviorElements = _findElements( behaviorElement, baseElement );
+  }
+
+  for ( var i = 0, len = behaviorElements.length; i < len; i++ ) {
+    behaviorElements[i].addEventListener( event, eventHandler, false );
+  }
+
+  return behaviorElements;
+}
+
 /**
  * @param {HTMLNode} element
  *   The DOM element within which to search for the behavior
@@ -64,7 +118,33 @@ function checkBehaviorDom( element, behaviorDataAttr ) {
   return dom;
 }
 
+/**
+ * @param {string} behaviorSelector
+ *  Behavior type used to find the element within the dom.
+ * @param {HTMLNode} baseElement Containing element for the behavior element.
+ * @returns {HTMLNodeList} if it exists in the dom, null otherwise.
+ */
+function find( behaviorSelector, baseElement ) {
+  behaviorSelector =
+  standardType.JS_HOOK + '*=' + standardType.BEHAVIOR_PREFIX + behaviorSelector;
+  behaviorSelector = '[' + behaviorSelector + ']';
+
+  return _findElements( behaviorSelector, baseElement );
+}
+
+/**
+ * @param {HTMLNode} behaviorElement Element in which to remove the event.
+ * @param {string} event Event type to remove from the element.
+ * @param {Function} eventHandler Callback for event.
+ */
+function remove( behaviorElement, event, eventHandler ) {
+  behaviorElement.removeEventListener( event, eventHandler );
+}
+
 // Expose public methods.
 module.exports = {
-  checkBehaviorDom: checkBehaviorDom
+  attach: attach,
+  checkBehaviorDom: checkBehaviorDom,
+  find: find,
+  remove: remove
 };

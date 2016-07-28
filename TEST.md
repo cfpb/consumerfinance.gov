@@ -154,7 +154,11 @@ run `gulp test:unit:server` from the command-line in the project root.
 
 # Accessibility Testing
 
-To audit a page's WCAG and Section 508 accessibility:
+Whenever `gulp test:acceptance` is run, every webpage is checked for WCAG and
+Section 508 compliancy using Protractor's
+[accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
+
+If you'd like to audit a specific page, use `gulp test:a11y`:
   1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
      Get a free [AChecker API ID](http://achecker.ca/register.php) for the value.
   2. Reload your `.env` with `. ./.env` while in the project root directory.

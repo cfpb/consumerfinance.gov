@@ -10,15 +10,20 @@
 
 'use strict';
 
-var $ = require( 'jquery' );
+var attachBehavior = require( './util/behavior' ).attach;
 
 /**
  * Parse links to handle webkit bug with keyboard focus.
  */
 function init() {
-  $( 'a[href^="#"]' ).click( function() {
-    var anchor = $( this ).attr( 'href' );
-    $( anchor ).attr( 'tabindex', -1 ).focus();
+
+  attachBehavior( 'a[href^="#"]', 'click', function behavior() {
+    var anchorSelector = this.getAttribute( 'href' );
+    var anchorElement = document.querySelector( anchorSelector );
+    if ( anchorElement ) {
+      anchorElement.setAttribute( 'tabindex', -1 );
+      anchorElement.focus();
+    }
   } );
 }
 

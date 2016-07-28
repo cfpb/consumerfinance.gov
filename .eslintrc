@@ -63,12 +63,6 @@ rules:
 
   # Rules for flagging POSSIBLE ERRORS.
 
-  # Consistent use of trailing commas in object and array literals.
-  # This rule is needed for IE8- support.
-  comma-dangle:
-    - 2
-    - never
-
   # Disallows assignment in conditional expressions.
   no-cond-assign:
     - 2
@@ -95,11 +89,11 @@ rules:
   # Disallow a duplicate case label.
   no-duplicate-case: 2
 
-  # Disallows empty statements.
-  no-empty: 2
-
   # Disallow the use of empty character classes in regular expressions.
   no-empty-character-class: 2
+
+  # Disallows empty statements.
+  no-empty: 2
 
   # Disallows assigning to the exception in a catch block.
   no-ex-assign: 2
@@ -145,7 +139,7 @@ rules:
   # Array values should be explicitly defined.
   no-sparse-arrays: 2
 
-  # Avoid code that looks like two expressions but is actually one.
+  # Disallow confusing multiline expressions.
   no-unexpected-multiline: 2
 
   # Disallows unreachable statements after a return, throw, continue, or break.
@@ -318,20 +312,20 @@ rules:
   # Disallows reassignments of native objects.
   no-native-reassign: 2
 
-  # Disallows use of new operator when not part of the assignment or comparison.
-  no-new: 1
-
   # Disallows use of new operator for Function object.
   no-new-func: 2
 
   # Disallows creating new instances of String, Number, and Boolean.
   no-new-wrappers: 2
 
-  # Disallows use of octal literals.
-  no-octal: 2
+  # Disallows use of new operator when not part of the assignment or comparison.
+  no-new: 1
 
   # Disallows use of octal escape sequences in string literals, e.g. "\251".
   no-octal-escape: 2
+
+  # Disallows use of octal literals.
+  no-octal: 2
 
   # Disallow reassignment of function parameters.
   no-param-reassign:
@@ -450,22 +444,22 @@ rules:
   # Disallow specified global variables.
   no-restricted-globals: 2
 
+  # Disallows shadowing of names such as arguments.
+  no-shadow-restricted-names: 2
+
   # Disallows declaring variables already declared in the outer scope.
   no-shadow:
     - 1
     -
       hoist: functions
 
-  # Disallows shadowing of names such as arguments.
-  no-shadow-restricted-names: 2
+  # Disallows use of undefined when initializing variables.
+  no-undef-init: 2
 
   # Disallows use of undeclared vars unless mentioned in a /*global */ block.
   no-undef:
     - 2
     - typeof: true
-
-  # Disallows use of undefined when initializing variables.
-  no-undef-init: 2
 
   # Disallows use of undefined variable.
   no-undefined: 2
@@ -562,6 +556,12 @@ rules:
     - 1
     -
       properties: always
+
+  # Consistent use of trailing commas in object and array literals.
+  # This rule is needed for IE8- support.
+  comma-dangle:
+    - 2
+    - never
 
   # Enforce spacing before and after comma.
   comma-spacing:
@@ -705,16 +705,19 @@ rules:
     - 1
     - 5
 
-  # Specifies maximum number of statement allowed in a function.
-  max-statements:
-    - 1
-    - 25
-
   # Enforce a maximum number of statements allowed per line.
   max-statements-per-line:
     - 1
     -
       max: 2
+
+  # Specifies maximum number of statement allowed in a function.
+  max-statements:
+    - 1
+    - 25
+
+  # Enforce newlines between operands of ternary expressions.
+  multiline-ternary: 0
 
   # Require a capital letter for constructors.
   new-cap:
@@ -831,15 +834,15 @@ rules:
     -
       allowMultiplePropertiesPerLine: true
 
-  # Disallows multiple var statements per function.
-  one-var:
-    - 0
-    - always
-
   # Require or disallow an newline around variable declarations.
   one-var-declaration-per-line:
     - 2
     - initializations
+
+  # Disallows multiple var statements per function.
+  one-var:
+    - 0
+    - always
 
   # Requires assignment operator shorthand or prohibit it entirely.
   operator-assignment:
@@ -875,17 +878,17 @@ rules:
   require-jsdoc:
     - 1
 
-  # Requires or disallows use of semicolons instead of ASI.
-  semi:
-    - 2
-    - always
-
   # Disallows space before semicolon.
   semi-spacing:
     - 2
     -
       before: false
       after: true
+
+  # Requires or disallows use of semicolons instead of ASI.
+  semi:
+    - 2
+    - always
 
   # Enforces sorting variables within the same declaration block.
   sort-vars: 0
@@ -928,11 +931,18 @@ rules:
     - 2
     - always
     -
-      exceptions:
-        - '-'
-        - +
-      markers:
-        - /
+      line:
+        markers:
+          - '/'
+        exceptions:
+          - '-'
+          - '+'
+      block:
+        markers:
+          - '!'
+        exceptions:
+          - '*'
+        balanced: true
 
   # Require or disallow the Unicode BOM.
   unicode-bom:
