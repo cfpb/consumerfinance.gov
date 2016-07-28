@@ -122,8 +122,10 @@ def display(request, pdf=False):
             'range_end':range_end,
         })
 
-        if pdf and PDFreactor:
-            return pdf_response(request, context)
+        if pdf:
+            template_name = 'about-us/the-bureau/leadership-calendar/print/index.html'
+            if PDFreactor:
+                return pdf_response(request, context)
 
     return render(request, template_name, context)
 
