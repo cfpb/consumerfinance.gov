@@ -15,11 +15,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## UNRELEASED
 
 ### Added
+- Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management,available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/ 
+- Redesigned userbar: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#redesigned-userbar
+- Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader 
+- Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
 
 ### Changed
+- `content_panels` are no longer defined in `AbstractFilterPage`; defined in its subclasses instead
+- Upgraded Wagtail from 1.3 to 1.5.2
 
 ### Removed
 - Removed unused `interactiveTestPort` test variable.
+- Squashed all migrations
 
 ### Fixed
 
@@ -27,10 +34,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.4.0 2016-07-12
 
 ### Added
-- Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management - available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/ 
-- Redesigned userbar: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#redesigned-userbar
-- Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader 
-- Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
 - leadership calendar Django app
 - Frontend: Added ability to auto-fix linter error with the `--fix`
   flag on the linter task.
