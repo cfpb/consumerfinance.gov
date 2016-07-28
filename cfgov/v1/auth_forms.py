@@ -11,9 +11,9 @@ from django.conf import settings
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.contrib.auth.forms import AuthenticationForm
 
-from wagtail.wagtailadmin import forms as wagtail_adminforms
-from wagtail.wagtailusers.forms import UserCreationForm, UserEditForm
+from wagtail.wagtailusers import forms as wagtailforms
 
+from .email import send_password_reset_email
 from .models import base
 from .util import password_policy
 
@@ -122,4 +122,11 @@ class LoginForm(AuthenticationForm):
             raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
 
 
+class UserCreationForm(wagtailforms.UserCreationForm):
+    def save(self, commit=True):
+        user = super(UserCreationForm, self).save(commit=commit)
 
+        if commit:
+            send_password_reset_email(user.email)
+
+        return user
