@@ -161,7 +161,10 @@ var config = {
   jasmineNodeOpts: {
     defaultTimeoutInterval: 60000
   },
-
+  plugins: [{
+    axe: true,
+    package: 'protractor-accessibility-plugin'
+  }],
   getMultiCapabilities: function() {
     var params = this.params;
 
