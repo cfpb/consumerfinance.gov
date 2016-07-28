@@ -19,24 +19,24 @@
 {% endif %}
 
 {% if is_pdf %}
-    {% for days_of_events in events|groupby('day')|reverse %}
-        {{ render_table(days_of_events, is_pdf, options) }}
+    {% for day_of_events in events|groupby('day')|reverse %}
+        {{ render_table(day_of_events, is_pdf, options) }}
     {% endfor %}
 {% else %}
-    {% for days in page_days %}
-        {{ render_table(days, is_pdf, options) }}
+    {% for day in page_days %}
+        {{ render_table(day, is_pdf, options) }}
     {% endfor %}
 {% endif %}
 
 {% endmacro %}
 
-{% macro render_table(days, is_pdf, options) %}
+{% macro render_table(day_of_events, is_pdf, options) %}
     <table class="u-w100pct block block__flush-top">
         <thead>
             <tr>
                 <th colspan="3">
-                    {% set day = days.grouper if is_pdf else days %}
-                    {# {% import 'macros/time.html' as time %} #}
+                    {% set day = day_of_events.grouper if is_pdf else day_of_events %}
+                    {% set events = day_of_events.list if is_pdf else events %}
                     {{ time.render(day, {'date':true}) }}
                 </th>
             </tr>
@@ -52,7 +52,7 @@
         {% set day = day.date() %}
     {% endif %}
     {% for event in calendar_events|sort(attribute='dtstart') %}
-        {% set start = event.dtstart | dateobj %}
+        {% set start = event.dtstart %}
         {% if start.date() == day %}
             <tr>
                 <td class="{{ options.time_col_classes }}">
