@@ -11,6 +11,7 @@
 'use strict';
 
 var attachBehavior = require( './util/behavior' ).attach;
+
 /**
  * Parse links to handle webkit bug with keyboard focus.
  */

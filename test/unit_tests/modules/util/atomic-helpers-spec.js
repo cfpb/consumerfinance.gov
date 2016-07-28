@@ -26,7 +26,8 @@ describe( 'atomic-helpers', function() {
   describe( '.checkDom()', function() {
     it( 'should throw an error if element DOM not found', function() {
       var errMsg = 'null is not valid. ' +
-                   'Check that element is a DOM node with class ".o-expandable"';
+                   'Check that element is a DOM node with ' +
+                   'class ".o-expandable"';
       function errFunc() {
         atomicHelpers.checkDom( null, '.o-expandable' );
       }

@@ -53,10 +53,10 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 A number of command-line arguments can be set to test particular configurations:
 
- - `--specs`: Choose a particular spec suite to run.
-   For example, `gulp test:acceptance --specs=contact-us.js`.
-   Multiple tests can be run by passing in a comma-separated list of test suite filenames.
-   For example, `gulp test:acceptance --specs=contact-us.js,about-us.js`.
+ - `--suite`: Choose a particular suite or suites to run.
+   For example, `gulp test:acceptance --suite=content` or `gulp test:acceptance --suite=content,functional`.
+ - `--specs`: Choose a particular spec or specs to run.
+   For example, `gulp test:acceptance --specs=contact-us.js`, `gulp test:acceptance --specs=contact-us.js,about-us.js`, or `gulp test:acceptance --specs=foo*.js`. If `--suite` is specified, this argument will be ignored. If neither `--suite` nor `--specs` are specified, all specs will be run.
  - `--windowSize`: Set the window size in pixels in `w,h` format.
    For example, `gulp test:acceptance --windowSize=900,400`.
  - `--browserName`: Set the browser to run.
@@ -91,7 +91,7 @@ module.exports = TheBureauPage;
 
 ## Tests
 
-Tests are organized into suites. Common tests are in the `test/browser_tests/spec_suites/shared` directory and any non-standard test should be added to an existing additional suite or placed into a new suite directory. An example shared suite for our the-bureau example page above would be:
+Tests are organized into suites under the `test/browser_tests/spec_suites/` directory. Any new tests should be added to an existing suite or placed into a new suite directory. An example test for our the-bureau example page above would be:
 
 ```js
 var TheBureauPage = require( '../../page_objects/page_the-bureau.js' );
@@ -154,7 +154,11 @@ run `gulp test:unit:server` from the command-line in the project root.
 
 # Accessibility Testing
 
-To audit a page's WCAG and Section 508 accessibility:
+Whenever `gulp test:acceptance` is run, every webpage is checked for WCAG and
+Section 508 compliancy using Protractor's
+[accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
+
+If you'd like to audit a specific page, use `gulp test:a11y`:
   1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
      Get a free [AChecker API ID](http://achecker.ca/register.php) for the value.
   2. Reload your `.env` with `. ./.env` while in the project root directory.
@@ -162,3 +166,19 @@ To audit a page's WCAG and Section 508 accessibility:
   4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
      For example, `gulp test:a11y --u=contact-us`
      or `gulp test:a11y --u=the-bureau/bureau-structure/`.
+
+# Source code linting
+
+The default test task includes linting of the JavaScript source, build,
+and test files.
+Use the `gulp lint` command from the command-line to run the ESLint linter,
+which checks the JavaScript against the rules configured in `.eslintrc`.
+[See the ESLint docs](http://eslint.org/docs/rules/)
+for detailed rule descriptions.
+
+There are a number of options to the command:
+ - Use `gulp lint:build` to only lint the build scripts.
+ - Use `gulp lint:test` to only lint the test scripts.
+ - Use `gulp lint:scripts` to only lint the project source scripts.
+ - Add the `--fix` flag (like `gulp lint --fix`) to auto-fix
+   some errors, where ESLint has support to do so.

@@ -77,7 +77,7 @@ function attach( behaviorElement, event, eventHandler, baseElement ) {
     behaviorElements = _findElements( behaviorElement, baseElement );
   }
 
-  for( var i = 0, len = behaviorElements.length; i < len; i++ ) {
+  for ( var i = 0, len = behaviorElements.length; i < len; i++ ) {
     behaviorElements[i].addEventListener( event, eventHandler, false );
   }
 

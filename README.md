@@ -28,7 +28,7 @@ In-progress updates may appear on beta.consumerfinance.gov.
 - [Node](http://nodejs.org) and [npm (Node Package Manager)](https://www.npmjs.com):
   Used for downloading and managing front-end dependencies and assets.
 
-For Vagrant Virtualbox usage:
+For Vagrant Virtualbox usage (:warning: The Vagrant box is not currently working.):
 - [VirtualBox](https://www.virtualbox.org)
 - [Vagrant](https://www.vagrantup.com)
 - python >=  2.6
