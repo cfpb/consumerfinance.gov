@@ -37,11 +37,6 @@ class AbstractFilterPage(CFGOVPage):
     date_filed = models.DateField(null=True, blank=True)
     comments_close_by = models.DateField(null=True, blank=True)
 
-    # General content tab panels
-    content_panels = CFGOVPage.content_panels + [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('content'),
-    ]
 
     # Configuration tab panels
     settings_panels = [
@@ -65,16 +60,22 @@ class AbstractFilterPage(CFGOVPage):
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
     ]
 
-    edit_handler = TabbedInterface([
-        ObjectList(content_panels, heading='General Content'),
-        ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(settings_panels, heading='Configuration'),
-    ])
-
     # This page class cannot be created.
     is_creatable = False
 
     objects = CFGOVPageManager()
+
+    @classmethod
+    def generate_edit_handler(self, content_panel):
+        content_panels = [
+            StreamFieldPanel('header'),
+            content_panel,
+        ]
+        return TabbedInterface([
+            ObjectList(self.content_panels + content_panels, heading='General Content'),
+            ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
+            ObjectList(self.settings_panels, heading='Configuration'),
+        ])
 
 
 class LearnPage(AbstractFilterPage):
@@ -87,11 +88,10 @@ class LearnPage(AbstractFilterPage):
         ('table', organisms.Table()),
         ('call_to_action', molecules.CallToAction()),
     ], blank=True)
-
-    edit_handler = AbstractFilterPage.edit_handler
-
+    edit_handler = AbstractFilterPage.generate_edit_handler(
+        content_panel = StreamFieldPanel('content')
+    )
     template = 'learn-page/index.html'
-
 
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField([
@@ -100,9 +100,9 @@ class DocumentDetailPage(AbstractFilterPage):
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
     ], blank=True)
-
-    edit_handler = AbstractFilterPage.edit_handler
-
+    edit_handler = AbstractFilterPage.generate_edit_handler(
+        content_panel = StreamFieldPanel('content')
+    )
     template = 'document-detail/index.html'
 
 
