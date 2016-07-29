@@ -12,7 +12,8 @@ var selectDom;
 var multiselectDom;
 var sandbox;
 var HTML_SNIPPET =
-    '<select name="test-select" id="test-select" multiple>' +
+    '<select class="cf-multi-select" ' +
+            'name="test-select" id="test-select" multiple>' +
       '<option value="Debt collection">Debt collection</option>' +
       '<option value="Nonbanks">Nonbanks</option>' +
       '<option value="Mortgage disclosure">Mortgage disclosure</option>' +
@@ -59,7 +60,8 @@ describe( 'Multiselect', function() {
         var option = document.querySelector( 'option' );
         option.defaultSelected = true;
         multiselect.init();
-        var choices = document.querySelectorAll( '.cf-multi-select_choices li' );
+        var choices =
+          document.querySelectorAll( '.cf-multi-select_choices li' );
 
         expect( choices.length ).to.equal( 1 );
         expect( choices[0].innerHTML ).to.contain( 'Debt collection' );
@@ -71,7 +73,7 @@ describe( 'Multiselect', function() {
       option.value = 'Foo\'';
       multiselect.init();
       selectDom = document.querySelectorAll( 'select[multiple]' );
-      multiselectDom = document.querySelectorAll( '.cf-multi-select' );
+      multiselectDom = document.querySelectorAll( 'div.cf-multi-select' );
 
       expect( selectDom.length ).to.equal( 1 );
       expect( multiselectDom.length ).to.equal( 0 );
@@ -87,7 +89,8 @@ describe( 'Multiselect', function() {
       multiselect.init();
       multiselect.expand();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset = multiselectDom.querySelector( '.cf-multi-select_fieldset' );
+      var fieldset =
+        multiselectDom.querySelector( '.cf-multi-select_fieldset' );
 
       expect( multiselectDom.className ).to.equal( 'cf-multi-select active' );
       expect( fieldset.getAttribute( 'aria-hidden' ) ).to.equal( 'false' );
@@ -98,7 +101,8 @@ describe( 'Multiselect', function() {
       multiselect.expand();
       multiselect.collapse();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset = multiselectDom.querySelector( '.cf-multi-select_fieldset' );
+      var fieldset =
+        multiselectDom.querySelector( '.cf-multi-select_fieldset' );
 
       expect( multiselectDom.className ).to.equal( 'cf-multi-select' );
       expect( fieldset.getAttribute( 'aria-hidden' ) ).to.equal( 'true' );
@@ -109,7 +113,8 @@ describe( 'Multiselect', function() {
     xit( 'should open when the search input is clicked', function() {
       multiselect.init();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset = multiselectDom.querySelector( '.cf-multi-select_fieldset' );
+      var fieldset =
+        multiselectDom.querySelector( '.cf-multi-select_fieldset' );
       var search = document.querySelector( '#test-select' );
       search.click();
 
@@ -131,7 +136,8 @@ describe( 'Multiselect', function() {
       multiselect.init();
       multiselect.expand();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset = multiselectDom.querySelector( '.cf-multi-select_fieldset' );
+      var fieldset =
+        multiselectDom.querySelector( '.cf-multi-select_fieldset' );
       document.click();
 
       expect( multiselectDom.className ).to.equal( 'cf-multi-select' );

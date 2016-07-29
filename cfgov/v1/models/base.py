@@ -65,7 +65,7 @@ class CFGOVPageQuerySet(PageQuerySet):
         return self.live_q() | self.shared_q()
 
     def live_shared(self, hostname):
-        staging_hostname = os.environ.get('STAGING_HOSTNAME')
+        staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
         if staging_hostname in hostname:
             return self.filter(self.live_shared_q())
         else:

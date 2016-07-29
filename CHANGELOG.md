@@ -15,20 +15,27 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## UNRELEASED
 
 ### Added
-- Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management,available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/ 
+- Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management,available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/
 - Redesigned userbar: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#redesigned-userbar
-- Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader 
+- Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader
 - Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
 
 ### Changed
 - `content_panels` are no longer defined in `AbstractFilterPage`; defined in its subclasses instead
 - Upgraded Wagtail from 1.3 to 1.5.2
+- Consolidated all environment variables in config/environment.js.
+- Ignored `console.log` in tests and enforced `no-process`.
+- Updated `STAGING_HOSTNAME` to `DJANGO_STAGING_HOSTNAME` environment var.
+- Allows passing of port to `runserver.sh`.
 
 ### Removed
+- Unused `SELENIUM_URL` environment variable.
 - Removed unused `interactiveTestPort` test variable.
 - Squashed all migrations
 
 ### Fixed
+
+- Added misnamed and unreferenced environment variables to .env.
 
 
 ## 3.4.0 2016-07-12
@@ -46,7 +53,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fix scheduled publishing
-
 
 ## 3.0.0-3.3.22 – 2016-06-22
 

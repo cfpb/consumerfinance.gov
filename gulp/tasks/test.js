@@ -1,5 +1,6 @@
 'use strict';
 
+var envvars = require( '../../config/environment' ).envvars;
 var gulp = require( 'gulp' );
 var plugins = require( 'gulp-load-plugins' )();
 var spawn = require( 'child_process' ).spawn;
@@ -20,7 +21,7 @@ function testUnitScripts( cb ) {
     .on( 'finish', function() {
       gulp.src( configTest.tests + '/unit_tests/**/*.js' )
         .pipe( plugins.mocha( {
-          reporter: 'nyan'
+          reporter: process.env.CONTINUOUS_INTEGRATION ? 'spec' : 'nyan'
         } ) )
         .pipe( plugins.istanbul.writeReports( {
           dir: configTest.tests + '/unit_test_coverage'
@@ -43,7 +44,11 @@ function testUnitServer() {
   spawn(
     'tox',
     { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'Tox tests exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'Tox tests done!' );
   } );
 }
@@ -113,12 +118,13 @@ function _getProtractorParams( suite ) {
  */
 function _getWCAGParams() {
   var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var host = process.env.HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
-  var port = process.env.HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
-  var checkerId = process.env.ACHECKER_ID || ''; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var host = envvars.TEST_HTTP_HOST;
+  var port = envvars.TEST_HTTP_PORT;
+  var checkerId = envvars.ACHECKER_ID;
   var urlPath = _parsePath( commandLineParams.u );
   var url = host + ':' + port + urlPath;
   plugins.util.log( 'WCAG tests checking URL: http://' + url );
+
   return [ '--u=' + url, '--id=' + checkerId ];
 }
 
@@ -133,6 +139,7 @@ function _parsePath( urlPath ) {
   if ( urlPath.charAt( 0 ) !== '/' ) {
     urlPath = '/' + urlPath;
   }
+
   return urlPath;
 }
 
@@ -144,7 +151,11 @@ function testA11y() {
     fsHelper.getBinary( 'wcag', 'wcag', '../.bin' ),
     _getWCAGParams(),
     { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'WCAG tests exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'WCAG tests done!' );
   } );
 }
@@ -160,7 +171,11 @@ function _spawnProtractor( suite ) {
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
     params,
     { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'Protractor tests exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'Protractor tests done!' );
   } );
 }
@@ -172,7 +187,11 @@ function _spawnProtractor( suite ) {
 function testAcceptanceBrowser( suite ) {
   spawn(
     './initial-test-data.sh', [], { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'Initial test data script exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'Loaded Wagtail database data!' );
     _spawnProtractor( suite );
   } );

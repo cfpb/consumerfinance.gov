@@ -80,7 +80,7 @@ def flush_akamai(page, is_live):
 
 @hooks.register('before_serve_page')
 def check_request_site(page, request, serve_args, serve_kwargs):
-    if request.site.hostname == os.environ.get('STAGING_HOSTNAME'):
+    if request.site.hostname == os.environ.get('DJANGO_STAGING_HOSTNAME'):
         if isinstance(page, CFGOVPage):
             if not page.shared:
                 raise Http404
