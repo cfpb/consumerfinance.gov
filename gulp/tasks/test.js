@@ -44,7 +44,11 @@ function testUnitServer() {
   spawn(
     'tox',
     { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'Tox tests exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'Tox tests done!' );
   } );
 }
@@ -147,7 +151,11 @@ function testA11y() {
     fsHelper.getBinary( 'wcag', 'wcag', '../.bin' ),
     _getWCAGParams(),
     { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'WCAG tests exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'WCAG tests done!' );
   } );
 }
@@ -163,7 +171,11 @@ function _spawnProtractor( suite ) {
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
     params,
     { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'Protractor tests exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'Protractor tests done!' );
   } );
 }
@@ -175,7 +187,11 @@ function _spawnProtractor( suite ) {
 function testAcceptanceBrowser( suite ) {
   spawn(
     './initial-test-data.sh', [], { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'Initial test data script exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'Loaded Wagtail database data!' );
     _spawnProtractor( suite );
   } );
