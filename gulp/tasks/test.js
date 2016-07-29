@@ -7,6 +7,7 @@ var configTest = require( '../config' ).test;
 var fsHelper = require( '../utils/fs-helper' );
 var minimist = require( 'minimist' );
 var localtunnel = require( 'localtunnel' );
+var isReachable = require('is-reachable');
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -137,12 +138,17 @@ function _createPSITunnel( callback ) {
   var path = _parsePath( commandLineParams.u );
   var url = host + ':' + port + path;
   var strategy = commandLineParams.s || 'mobile';
-  localtunnel( port, function( err, tunnel ) {
-    url = tunnel.url + path;
-    if ( err ) {
-      callback( 'Error creating local tunnel for PSI: ' + err, null, tunnel );
+  isReachable( url, function( err, reachable ) {
+    if ( err || !reachable ) {
+      return callback( url + ' is not reachable. Is your local server running?' );
     }
-    callback( null, [ url, '--strategy=' + strategy ], tunnel );
+    localtunnel( port, function( err, tunnel ) {
+      url = tunnel.url + path;
+      if ( err ) {
+        callback( 'Error creating local tunnel for PSI: ' + err, null, tunnel );
+      }
+      callback( null, [ url, '--strategy=' + strategy ], tunnel );
+    } );
   } );
   return plugins.util.log( 'PSI tests checking URL: http://' + url );
 }
