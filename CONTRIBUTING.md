@@ -25,8 +25,16 @@ guidance below.
 ## Changing the code-base
 
 Generally speaking, you should fork this repository, make changes in your
-own fork, and then submit a pull-request. All new code should have associated unit
-tests that validate implemented features and the presence or lack of defects. 
-Additionally, the code should follow any stylistic and architectural guidelines 
-prescribed by the project. In the absence of such guidelines, mimic the styles
-and patterns in the existing code-base.
+own fork, and then submit a pull-request. For timely code reviews,
+please tag @cfpb/cfgov-backends and @cfpb/cfgov-frontends as appropriate
+for your changes.
+
+All new code should have associated unit tests and/or functional tests that 
+validate implemented features and the presence or lack of defects. The
+overall test coverage of the code-base should not decrease.
+
+Python code is expected to follow PEP8 and 
+[not commit atrocities](https://www.youtube.com/watch?v=wf-BqAjZb8M). 
+JavaScript should follow our 
+[JavaScript style guide](https://github.com/cfpb/front-end/blob/master/javascript.md). 
+When in doubt, mimic the styles and patterns in the existing code-base.
