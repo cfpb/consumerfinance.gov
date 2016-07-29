@@ -21,6 +21,13 @@ var CLASSES = Object.freeze( {
   CLOSE_BTN_SELECTOR:        '.video-player_close-btn'
 } );
 
+var childElements = Object.freeze( {
+  image:           CLASSES.IMAGE_SELECTOR,
+  iFrame:          CLASSES.IFRAME_SELECTOR,
+  iFrameContainer: CLASSES.IFRAME_CONTAINER_SELECTOR,
+  playBtn:         CLASSES.PLAY_BTN_SELECTOR,
+  closeBtn:        CLASSES.CLOSE_BTN_SELECTOR
+} );
 
 // Private properties.
 var _isIframeLoaded = false;
@@ -40,9 +47,10 @@ var _this;
 function VideoPlayer( element, options ) {
   _this = this;
   options = options || {};
-  this.baseElement = _ensureElement( element, options.createIFrame );
+  this.baseElement = _ensureElement( element );
   this.iFrameProperties = _assign( _dataSet( this.baseElement ) ||
     {}, this.iFrameProperties );
+  this.childElements = _assign( {}, childElements );
 
   _setChildElements( this.childElements );
   _initEvents();
@@ -184,7 +192,7 @@ function _onAction( actionType, event ) {
 */
 function _setChildElements( elements ) {
   var elementName;
-  var hasOwnProperty = Object.hasOwnProperty.bind( _this.childElements );
+  var hasOwnProperty = Object.hasOwnProperty.bind( elements );
   var querySelector = _this.baseElement.querySelector
     .bind( _this.baseElement );
 
@@ -204,13 +212,7 @@ var API = {
 
   baseElement: null,
 
-  childElements: {
-    image:           CLASSES.IMAGE_SELECTOR,
-    iFrame:          CLASSES.IFRAME_SELECTOR,
-    iFrameContainer: CLASSES.IFRAME_CONTAINER_SELECTOR,
-    playBtn:         CLASSES.PLAY_BTN_SELECTOR,
-    closeBtn:        CLASSES.CLOSE_BTN_SELECTOR
-  },
+  childElements: {},
 
   /**
   * Function used to set cached child elements.
