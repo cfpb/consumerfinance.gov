@@ -21,7 +21,7 @@ function testUnitScripts( cb ) {
     .on( 'finish', function() {
       gulp.src( configTest.tests + '/unit_tests/**/*.js' )
         .pipe( plugins.mocha( {
-          reporter: process.env.CONTINUOUS_INTEGRATION ? 'spec' : 'nyan'
+          reporter: configTest.reporter ? 'spec' : 'nyan'
         } ) )
         .pipe( plugins.istanbul.writeReports( {
           dir: configTest.tests + '/unit_test_coverage'
@@ -77,9 +77,12 @@ function _addCommandLineFlag( protractorParams, commandLineParams, value ) {
  */
 function _getProtractorParams( suite ) {
 
-  // Set default configuration command-line parameter.
-  var params = [ 'test/browser_tests/conf.js' ];
   var commandLineParams = minimist( process.argv.slice( 2 ) );
+
+  var configFile = commandLineParams.a11y ? 'test/browser_tests/a11y_conf.js' : 'test/browser_tests/conf.js';
+
+  // Set default configuration command-line parameter.
+  var params = [ configFile ];
 
   // If --sauce=false flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'sauce' );
