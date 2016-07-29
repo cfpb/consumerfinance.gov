@@ -21,7 +21,7 @@ function testUnitScripts( cb ) {
     .on( 'finish', function() {
       gulp.src( configTest.tests + '/unit_tests/**/*.js' )
         .pipe( plugins.mocha( {
-          reporter: 'nyan'
+          reporter: process.env.CONTINUOUS_INTEGRATION ? 'spec' : 'nyan'
         } ) )
         .pipe( plugins.istanbul.writeReports( {
           dir: configTest.tests + '/unit_test_coverage'
