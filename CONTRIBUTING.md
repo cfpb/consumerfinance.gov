@@ -33,8 +33,9 @@ All new code should have associated unit tests and/or functional tests that
 validate implemented features and the presence or lack of defects. The
 overall test coverage of the code-base should not decrease.
 
-Python code is expected to follow PEP8 and 
+Python code is expected to follow 
+[PEP8](https://www.python.org/dev/peps/pep-0008/) and 
 [not commit atrocities](https://www.youtube.com/watch?v=wf-BqAjZb8M). 
-JavaScript should follow our 
-[JavaScript style guide](https://github.com/cfpb/front-end/blob/master/javascript.md). 
+JavaScript, CSS/Less, and markup should follow our 
+[front-end standards](https://github.com/cfpb/front-end). 
 When in doubt, mimic the styles and patterns in the existing code-base.
