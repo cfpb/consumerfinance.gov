@@ -55,6 +55,7 @@
     "jasmine-spec-reporter": "2.4.0",
     "jquery": "1.11.3",
     "jsdom": "8.3.0",
+    "localtunnel": "1.8.1",
     "map-stream": "0.0.4",
     "minimist": "1.2.0",
     "mkdirp": "0.3.0",
@@ -62,6 +63,8 @@
     "mocha-jsdom": "1.1.0",
     "protractor": "3.2.1",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
+    "psi": "2.0.4",
+    "selenium-webdriver": "2.53.3",
     "sinon": "1.17.3",
     "sinon-chai": "2.8.0",
     "wcag": "0.2.2"

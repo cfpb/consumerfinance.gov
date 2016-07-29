@@ -140,10 +140,12 @@ Enjoy! :relieved:
 To audit if the site complies with performance best practices and guidelines,
 run `gulp test:perf`.
 
-The audit will run against [sitespeed.io performance rules](https://www.sitespeed.io/rules/)
-and crawl the website from the homepage.
-You can adjust the settings to skip rules and change the crawling depth
-by editing `/gulp/tasks/test.js`.
+It will run the homepage (localhost:8000) through Google's [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights)
+and generate a report. Use the `--u` option to test other URLs, e.g.
+`gulp test:perf --u=about-us` will test http://localhost:8000/about-us.
+
+By default, PSI will test the page from the perspective of a mobile device.
+To test as a desktop, do `gulp test:perf --s=desktop`.
 
 # Django Server Unit Tests
 

@@ -6,6 +6,7 @@ var spawn = require( 'child_process' ).spawn;
 var configTest = require( '../config' ).test;
 var fsHelper = require( '../utils/fs-helper' );
 var minimist = require( 'minimist' );
+var localtunnel = require( 'localtunnel' );
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -123,6 +124,30 @@ function _getWCAGParams() {
 }
 
 /**
+ * Processes command-line and environment variables
+ * for passing to the psi executable.
+ * An optional URL path comes from the command-line `--u=` flag.
+ * A PSI "strategy" (mobile vs desktop) can be specified with the `--s=` flag.
+ * @returns {Array} Array of command-line arguments for psi binary.
+ */
+function _getPSIParams( callback ) {
+  var commandLineParams = minimist( process.argv.slice( 2 ) );
+  var host = process.env.HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var port = process.env.HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var urlPath = _parsePath( commandLineParams.u );
+  var url = host + ':' + port + urlPath;
+  var strategy = commandLineParams.s || 'mobile';
+  localtunnel( port, function( err, tunnel ) {
+    url = tunnel.url + urlPath;
+    if ( err ) {
+      callback( 'Error creating local tunnel for PSI: ' + err, null, tunnel );
+    }
+    callback( null, [ url, '--strategy=' + strategy ], tunnel );
+  } );
+  return plugins.util.log( 'PSI tests checking URL: http://' + url );
+}
+
+/**
  * Process a path and set it to an empty string if it's undefined
  * and add a leading slash if one is not present.
  * @param {string} urlPath The unprocessed path.
@@ -146,6 +171,25 @@ function testA11y() {
     { stdio: 'inherit' }
   ).once( 'close', function() {
     plugins.util.log( 'WCAG tests done!' );
+  } );
+}
+
+/**
+ * Run PageSpeed Insight tests.
+ */
+function testPerf() {
+  _getPSIParams( function( err, url, tunnel ) {
+    if ( err ) {
+      return plugins.util.log( err );
+    }
+    spawn(
+      fsHelper.getBinary( 'psi', 'psi', '../.bin' ),
+      url,
+      { stdio: 'inherit' }
+    ).once( 'close', function() {
+      plugins.util.log( 'PSI tests done!' );
+      tunnel.close();
+    } );
   } );
 }
 
@@ -190,6 +234,7 @@ function testCoveralls() {
 gulp.task( 'test:coveralls', testCoveralls );
 
 gulp.task( 'test:a11y', testA11y );
+gulp.task( 'test:perf', testPerf );
 
 gulp.task( 'test:acceptance:full', function() {
   testAcceptanceBrowser();
