@@ -130,15 +130,15 @@ function _getWCAGParams() {
  * A PSI "strategy" (mobile vs desktop) can be specified with the `--s=` flag.
  * @returns {Array} Array of command-line arguments for psi binary.
  */
-function _getPSIParams( callback ) {
+function _createPSITunnel( callback ) {
   var commandLineParams = minimist( process.argv.slice( 2 ) );
   var host = process.env.HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
   var port = process.env.HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
-  var urlPath = _parsePath( commandLineParams.u );
-  var url = host + ':' + port + urlPath;
+  var path = _parsePath( commandLineParams.u );
+  var url = host + ':' + port + path;
   var strategy = commandLineParams.s || 'mobile';
   localtunnel( port, function( err, tunnel ) {
-    url = tunnel.url + urlPath;
+    url = tunnel.url + path;
     if ( err ) {
       callback( 'Error creating local tunnel for PSI: ' + err, null, tunnel );
     }
@@ -178,7 +178,7 @@ function testA11y() {
  * Run PageSpeed Insight tests.
  */
 function testPerf() {
-  _getPSIParams( function( err, url, tunnel ) {
+  _createPSITunnel( function( err, url, tunnel ) {
     if ( err ) {
       return plugins.util.log( err );
     }
