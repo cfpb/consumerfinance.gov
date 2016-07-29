@@ -154,8 +154,8 @@ run `gulp test:unit:server` from the command-line in the project root.
 
 # Accessibility Testing
 
-Whenever `gulp test:acceptance` is run, every webpage is checked for WCAG and
-Section 508 compliancy using Protractor's
+Run the acceptance tests with an `--a11y` flag (i.e. `gulp test:acceptance --a11y`)
+to check every webpage for WCAG and Section 508 compliancy using Protractor's
 [accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
 
 If you'd like to audit a specific page, use `gulp test:a11y`:
