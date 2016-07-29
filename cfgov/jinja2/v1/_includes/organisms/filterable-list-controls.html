@@ -181,7 +181,7 @@
 
 {% macro render(controls, index) %}
     <div class="o-filterable-list-controls"
-         id="o-filterable-list-controls">
+         id="o-filterable-list-controls-{{ index | string }}">
         {% set form = filter_data.forms.pop(0) %}
         {% set posts = filter_data.page_sets.pop(0) %}
         {% set has_active_filters = page.has_active_filters(request, index) %}
@@ -223,6 +223,8 @@
                 {{ post_preview(post, controls, form_id=index) }}
             {% endfor %}
         {% endif %}
-        {% include 'molecules/pagination.html' %}
+        {% import 'molecules/pagination.html' as pagination with context %}
+        {% set fragment_id = 'o-filterable-list-controls-' + index | string %}
+        {{ pagination.render( posts.paginator.num_pages, posts.number, false, fragment_id, index ) }}
     </div>
 {% endmacro %}

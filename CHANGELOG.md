@@ -60,6 +60,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated home page stats and date.
 - Rebuilt Nemo Grunt tasks in Gulp and moved built files to static_built directory.
 
+- Updated pagination to support "stepper" modifier.
+- Updated pagination to work in on-demand workflow.
+- Updated pagination to support multiple pagination molecules on a single page.
+
 ### Removed
 
 ### Fixed
@@ -67,6 +71,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed layout bug in Latest Updates on Home Page.
 - Fixed spacing of Home Hero content.
 - Fixed spacing issues in the pre-footer.
+- Moved pagination tests from /organisms/ to /molecules/ where they belong.
 
 
 ## 3.0.0-3.3.21-hotfix – 2016-06-10

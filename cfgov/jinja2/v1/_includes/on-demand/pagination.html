@@ -1,0 +1,9 @@
+{# ==========================================================================
+
+   Render secondary navigation, for use in
+   test-fixture/?atomic=pagination used in non-V1 projects.
+
+   ========================================================================== #}
+
+{% import 'molecules/pagination.html' as pagination with context %}
+{{ pagination.render( total_pages, curr_page, is_stepper ) }}

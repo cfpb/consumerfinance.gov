@@ -71,8 +71,8 @@
     }
 
     form {
+        min-height: @pagination-height__px;
         display: block;
-        padding: unit( 5px / @base-font-size-px, em );
         border-radius: unit( 4px / @base-font-size-px, em );
         background: @pagination-bg-color;
         color: @pagination-text;
@@ -92,6 +92,7 @@
 
     label,
     &_label {
+        line-height: @pagination-height__px;
         display: inline-block;
         margin: 0;
         vertical-align: middle;
@@ -108,7 +109,7 @@
         .webfont-medium();
 
         &.btn__disabled {
-          background-color: @pagination-bg-color;
+            background-color: @pagination-bg-color;
         }
     }
 
@@ -118,14 +119,14 @@
         right: 0;
     }
 
-    .respond-to-max(@bp-xs-max, {
+    .respond-to-max( @bp-xs-max, {
         &_btn-prev,
         &_btn-next {
             margin-bottom: @pagination-font-size__em / 2;
         }
-    });
+    } );
 
-    .respond-to-min(@bp-sm-min, {
+    .respond-to-min( @bp-sm-min, {
         &_btn-prev {
             position: absolute;
             top: 0;
@@ -143,11 +144,11 @@
             &,
             &:link,
             &:visited {
-                  border-top-left-radius: 0;
-                  border-bottom-left-radius: 0;
-              }
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
         }
-    });
+    } );
 }
 
 /* topdoc
