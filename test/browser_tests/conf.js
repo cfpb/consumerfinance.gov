@@ -66,7 +66,9 @@ function _isSauceCredentialSet() {
  * @returns {Array} List of specs or spec patterns to execute.
  */
 function _chooseProtractorSpecs( params ) {
-  var i, len, specs = [];
+  var i;
+  var len;
+  var specs = [];
 
   // If one or more suites are specified, use their specs.
   if ( _paramIsSet( params.suite ) ) {
