@@ -19,7 +19,7 @@ class UserAdmin(UserAdmin):
 
     def send_password_reset_email(self, request, queryset):
         for user in queryset:
-            send_password_reset_email(user.email, request)
+            send_password_reset_email(user.email, request=request)
         self.message_user(
             request,
             '{} password reset email(s) sent'.format(queryset.count())
