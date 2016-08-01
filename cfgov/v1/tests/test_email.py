@@ -11,7 +11,8 @@ from v1.email import create_request_for_email, send_password_reset_email
 
 class CreateEmailRequestTestCase(TestCase):
     def test_no_sites_raises_exception(self):
-        self.assertRaises(RuntimeError, create_request_for_email)
+        with patch('v1.email.Site.objects.get', side_effect=Site.DoesNotExist):
+            self.assertRaises(RuntimeError, create_request_for_email)
 
     def assertRequestMatches(self, request, hostname, port, is_secure):
         self.assertEqual(
@@ -46,6 +47,9 @@ class SendEmailTestCase(TestCase):
         self.request = HttpRequest()
         self.request.META['SERVER_NAME'] = 'testhost'
         self.request.META['SERVER_PORT'] = 1234
+
+    def tearDown(self):
+        self.user.delete()
 
     def test_send_password_reset_email(self):
         send_password_reset_email(self.email, request=self.request)
