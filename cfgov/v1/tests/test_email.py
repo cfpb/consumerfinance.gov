@@ -2,8 +2,38 @@ from django.contrib.auth.models import User
 from django.core import mail
 from django.http import HttpRequest
 from django.test import TestCase
+from mock import patch
+from model_mommy import mommy
+from wagtail.wagtailcore.models import Site
 
-from v1.email import send_password_reset_email
+from v1.email import create_request_for_email, send_password_reset_email
+
+
+class CreateEmailRequestTestCase(TestCase):
+    def test_no_sites_raises_exception(self):
+        self.assertRaises(RuntimeError, create_request_for_email)
+
+    def assertRequestMatches(self, request, hostname, port, is_secure):
+        self.assertEqual(
+            (hostname, port, is_secure),
+            (
+                request.META['SERVER_NAME'],
+                request.META['SERVER_PORT'],
+                request.is_secure(),
+            )
+        )
+
+    def test_http_site(self):
+        site = mommy.prepare(Site, is_default_site=True, port=80)
+        with patch('v1.email.Site.objects.get', return_value=site):
+            request = create_request_for_email()
+        self.assertRequestMatches(request, site.hostname, site.port, False)
+
+    def test_https_site(self):
+        site = mommy.prepare(Site, is_default_site=True, port=443)
+        with patch('v1.email.Site.objects.get', return_value=site):
+            request = create_request_for_email()
+        self.assertRequestMatches(request, site.hostname, site.port, True)
 
 
 class SendEmailTestCase(TestCase):
@@ -18,7 +48,7 @@ class SendEmailTestCase(TestCase):
         self.request.META['SERVER_PORT'] = 1234
 
     def test_send_password_reset_email(self):
-        send_password_reset_email(self.request, self.email)
+        send_password_reset_email(self.email, request=self.request)
         self.assertEqual(len(mail.outbox), 1)
 
         message = mail.outbox[0]
@@ -34,6 +64,11 @@ class SendEmailTestCase(TestCase):
         self.assertRaises(
             User.DoesNotExist,
             send_password_reset_email,
-            self.request,
-            'invalid_email@example.com'
+            'invalid_email@example.com',
+            request=self.request
         )
+
+    def test_send_with_no_request(self):
+        with patch('v1.email.create_request_for_email') as p:
+            send_password_reset_email(self.email)
+            p.assert_called_once_with()
