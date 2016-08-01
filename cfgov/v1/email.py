@@ -1,5 +1,3 @@
-import os
-
 from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
 from wagtail.wagtailadmin.forms import PasswordResetForm
