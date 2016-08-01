@@ -137,32 +137,33 @@ describe( 'The Blog Page', function() {
 
   it( 'should set an initial height on filter expandable that does not cut off submit button when page loads with 5 filter options selected', function() {
     // open filter and select 5 options
-    page.searchFilterShowBtn.click();
-    browser.sleep( 1000 );
+    page.searchFilterShowBtn.click().then(function () {
+      page.multiSelectSearch.isDisplayed().then(function () {
+        page.multiSelectSearch.click().then(function () {
+          var options = browser.element.all( by.css( '.cf-multi-select_label' ) );
+          for ( var i = 0; i < 5; i++ ) {
+            options.get(i).click();
+          }
 
-    page.multiSelectSearch.click();
-    browser.sleep( 1000 );
+          // 5 choices should appear
+          var choices = browser.element.all( by.css( '.cf-multi-select_choices label' ) );
+          expect( choices.count() ).toBe( 5 );
 
-    var options = browser.element.all( by.css( '.cf-multi-select_label' ) );
-    for ( var i = 0; i < 5; i++ ) {
-      options.get(i).click();
-    }
+          // submit choices
+          browser.executeScript( 'arguments[0].scrollIntoView();', page.searchFilterSubmitBtn.getWebElement() );
+          page.searchFilterSubmitBtn.click().then(function () {
+            // submit button should be visible in open filter expandable
+            // after page is reloaded
+            browser.getCurrentUrl().then(function(newUrl) {
+              browser.get( newUrl );
+              browser.sleep( 1000 );
+              expect( page.searchFilterSubmitBtn.isDisplayed() ).toBe( true );
+            } );
+          } );
 
-    // 5 choices should appear
-    var choices = browser.element.all( by.css( '.cf-multi-select_choices label' ) );
-    expect( choices.count() ).toBe( 5 );
-
-    // submit choices
-    browser.executeScript( 'arguments[0].scrollIntoView();', page.searchFilterSubmitBtn.getWebElement() );
-    page.searchFilterSubmitBtn.click();
-    browser.sleep( 1000 );
-
-    // submit button should be visible in open filter expandable
-    // after page is reloaded
-    browser.getCurrentUrl().then(function(newUrl) {
-      browser.get( newUrl );
-      browser.sleep( 1000 );
-      expect( page.searchFilterSubmitBtn.isDisplayed() ).toBe( true );
+        } );
+      } );
     } );
   } );
+
 } );
