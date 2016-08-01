@@ -55,7 +55,7 @@ rss_feed = {
 featured_content = {
     'type': 'featured_content',
     'value': {
-        'body': "<p>this is a featured content body</p>"
+        'body': "this is a featured content body"
     }
 }
 expandable = {
