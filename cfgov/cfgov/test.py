@@ -29,4 +29,3 @@ class TestDataTestRunner(DiscoverRunner):
 
         module = importlib.import_module(migration)
         module.initial_data(apps, None)
-
