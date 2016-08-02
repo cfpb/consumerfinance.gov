@@ -33,8 +33,8 @@
             <ul>
                 <li class="actions">
                     <div class="dropdown dropup dropdown-button match-width">
-                        <button type="submit" class="action-save button-longrunning" tabindex="3" data-clicked-text="{% trans 'Saving...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% if page.locked %}{% trans 'Page locked' %}{% else %}{% trans 'Save draft' %}{% endif %}</em></button>
-                        
+                        <button type="submit" class="action-save button button-longrunning" tabindex="3" data-clicked-text="{% trans 'Saving...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% if page.locked %}{% trans 'Page locked' %}{% else %}{% trans 'Save draft' %}{% endif %}</em></button>
+
                         {% if not page.locked %}
                             <div class="dropdown-toggle icon icon-arrow-up"></div>
                             <ul role="menu">
@@ -49,12 +49,12 @@
                                 {% endif %}
                                 {% if page_perms.can_publish %}
                                     <li>
-                                        <button type="submit" name="action-publish" value="action-publish" class="button-longrunning" tabindex="3" data-clicked-text="{% trans 'Publishing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% trans 'Publish to WWW' %}</em></button>
+                                        <button type="submit" name="action-publish" value="action-publish" class="button button-longrunning" tabindex="3" data-clicked-text="{% trans 'Publishing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% trans 'Publish to WWW' %}</em></button>
                                     </li>
                                 {% endif %}
                                 {% if page_perms.can_share %}
                                     <li>
-                                        <button type="submit" name="action-share" value="action-share" class="button-longrunning" tabindex="3" data-clicked-text="{% trans 'Sharing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% trans 'Share on Content' %}</em></button>
+                                        <button type="submit" name="action-share" value="action-share" class="button button-longrunning" tabindex="3" data-clicked-text="{% trans 'Sharing...' %}" {% if page.locked %}disabled {% endif %}><span class="icon icon-spinner"></span><em>{% trans 'Share on Content' %}</em></button>
                                     </li>
                                 {% endif %}
                                 <li><input type="submit" name="action-submit" value="{% trans 'Submit for moderation' %}" class="button" /></li>

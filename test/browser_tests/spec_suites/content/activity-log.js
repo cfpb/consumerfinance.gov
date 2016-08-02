@@ -1,8 +1,6 @@
 'use strict';
 
-var ActivityLog = require(
-    '../../page_objects/page_activity-log.js'
-  );
+var ActivityLog = require( '../../page_objects/page_activity-log.js' );
 
 var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 

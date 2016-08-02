@@ -1,12 +1,13 @@
 'use strict';
 
-var gulp = require( 'gulp' );
-var util = require( 'gulp-util' );
 var browserSync = require( 'browser-sync' );
+var envvars = require( '../../config/environment' ).envvars;
+var gulp = require( 'gulp' );
 
 gulp.task( 'browsersync', function() {
-  var port = util.env.port || process.env.HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var host = envvars.TEST_HTTP_HOST;
+  var port = envvars.TEST_HTTP_PORT;
   browserSync.init( {
-    proxy: 'localhost:' + port
+    proxy: host + ':' + port
   } );
 } );

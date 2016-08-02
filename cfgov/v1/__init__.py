@@ -15,7 +15,7 @@ from flags.template_functions import flag_enabled, flag_disabled
 from .util.util import get_unique_id, get_secondary_nav_items
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 from django.conf import settings
 from processors.processors_common import fix_link
 
@@ -45,7 +45,7 @@ def environment(**options):
         'is_blog': ref.is_blog,
         'is_report': ref.is_report,
         'get_page_state_url': share.get_page_state_url,
-        'parse_links': external_links_filter,
+        'parse_links': parse_links,
         'get_protected_url': get_protected_url,
         'related_metadata_tags': related_metadata_tags,
         'get_filter_data': get_filter_data,
@@ -57,12 +57,11 @@ def environment(**options):
     return env
 
 
-def parse_links(soup):
-    extlink_pattern = re.compile(settings.EXTERNAL_LINK_PATTERN)
-    noncfpb_pattern = re.compile(settings.NONCFPB_LINK_PATTERN)
-    files_pattern = re.compile(settings.FILES_LINK_PATTERN)
-    a_class = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
-    span_class = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
+def parse_links(value):
+    if isinstance(value, RichText):
+        soup = BeautifulSoup(expand_db_html(value.source), 'html.parser')
+    else:
+        soup = BeautifulSoup(expand_db_html(value), 'html.parser')
 
     # This removes style tags <style>
     for s in soup('style'):
@@ -76,25 +75,62 @@ def parse_links(soup):
             # 'NavigableString' object has does not have attr's
             pass
 
-    for a in soup.find_all('a', href=True):
-        # Sets the icon to indicate you're leaving consumerfinance.gov
-        if noncfpb_pattern.match(a['href']):
-            # Sets the link to an external one if you're leaving .gov
-            if extlink_pattern.match(a['href']):
-                a['href'] = '/external-site/?ext_url=' + a['href']
-            a.attrs.update({'class': a_class})
-            a.append(' ')  # We want an extra space before the icon
-            a.append(soup.new_tag('span', attrs='class="%s"' % span_class))
-        elif not files_pattern.match(a['href']):
-            fix_link(a)
+    # This adds the link markup
+    link_tags = get_link_tags(soup)
+    add_link_markup(link_tags)
+
     return soup
 
 
-def external_links_filter(value):
-    if isinstance(value, RichText):
-        return parse_links(BeautifulSoup(expand_db_html(value.source), 'html.parser'))
-    else:
-        return parse_links(BeautifulSoup(expand_db_html(value), 'html.parser'))
+def get_link_tags(soup):
+    tags = []
+    for a in soup.find_all('a', href=True):
+        if not is_image_tag(a):
+            tags.append(a)
+    return tags
+
+
+def is_image_tag(tag):
+    for child in tag.children:
+        if child.name in ['img', 'svg']:
+            return True
+    return False
+
+
+EXTERNAL_LINK_PATTERN = re.compile(settings.EXTERNAL_LINK_PATTERN)
+NONCFPB_LINK_PATTERN = re.compile(settings.NONCFPB_LINK_PATTERN)
+FILES_LINK_PATTERN = re.compile(settings.FILES_LINK_PATTERN)
+DOWNLOAD_LINK_PATTERN = re.compile(settings.DOWNLOAD_LINK_PATTERN)
+EXTERNAL_A_CSS = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
+DOWNLOAD_A_CSS = os.environ.get('DOWNLOAD_A_CSS', 'icon-link icon-link__download')
+EXTERNAL_SPAN_CSS = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
+
+
+def add_link_markup(tags):
+    for tag in tags:
+        added_icon = False
+        if not tag.attrs.get('class', None):
+            tag.attrs.update({'class': []})
+        if NONCFPB_LINK_PATTERN.match(tag['href']):
+            # Sets the icon to indicate you're leaving consumerfinance.gov
+            tag.attrs['class'].append(EXTERNAL_A_CSS)
+            if EXTERNAL_LINK_PATTERN.match(tag['href']):
+                # Sets the link to an external one if you're leaving .gov
+                tag['href'] = '/external-site/?ext_url=' + tag['href']
+            added_icon = True
+        elif DOWNLOAD_LINK_PATTERN.search(tag['href']):
+            # Sets the icon to indicate you're downloading a file
+            tag.attrs['class'].append(DOWNLOAD_A_CSS)
+            added_icon = True
+        if added_icon:
+            # Wraps the link text in a span that provides the underline
+            contents = tag.contents
+            span = BeautifulSoup('').new_tag('span')
+            span['class'] = EXTERNAL_SPAN_CSS
+            span.contents = contents
+            tag.contents = [span, NavigableString(' ')]
+        elif not FILES_LINK_PATTERN.match(tag['href']):
+            fix_link(tag)
 
 
 @contextfunction
@@ -130,7 +166,7 @@ def get_protected_url(context, page):
     if url is None:  # If page is not aligned to a site root return None
         return None
     page_hostname = urlparse(url).hostname
-    staging_hostname = os.environ.get('STAGING_HOSTNAME')
+    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
     if page.live:
         return url
     elif page.specific.shared:
