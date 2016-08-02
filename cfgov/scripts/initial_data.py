@@ -1,4 +1,7 @@
-import os, json
+from __future__ import print_function
+
+import json
+import os
 
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
@@ -9,7 +12,7 @@ from v1.models import HomePage, BrowseFilterablePage
 
 
 def run():
-    print 'Running script \'scripts.initial_data\' ...'
+    print('Running script \'scripts.initial_data\' ...')
     admin_user = None
     site_root = None
     events = None
