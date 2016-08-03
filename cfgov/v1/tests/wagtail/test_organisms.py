@@ -162,3 +162,21 @@ class OrganismsTestCase(TestCase):
 		response = c.get('/sublanding/')
 		self.assertContains(response, 'Enter your comments')
 
+	def test_table(self):
+		"""Table correctly displays on a Learn Page"""
+		learn_page = LearnPage(
+				title='Learn Page', 
+				slug='learn', 
+		)
+		learn_page.content = StreamValue(
+			learn_page.content.stream_block, 
+			[atomic.table],
+			True
+		)
+		publish_page(child=learn_page)
+		response = c.get('/learn/')
+		self.assertContains(response, 'table hyperlink')
+		self.assertContains(response, 'table text')
+		self.assertContains(response, 'table text blob')
+		self.assertContains(response, 'table rich text blob')
+
