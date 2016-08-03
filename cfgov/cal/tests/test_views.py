@@ -7,8 +7,10 @@ from django.http import HttpResponse
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from .views import display, set_cal_events_context, set_pagination_context, \
-    get_calendar_events_query, pdf_response
+from cal.views import (
+    display, get_calendar_events_query, pdf_response, set_cal_events_context,
+    set_pagination_context
+)
 
 
 class TestCalendarEvents(TestCase):
@@ -154,8 +156,3 @@ class TestPDFResponse(TestCase):
         mock_HttpResponse.side_effect = urllib2.URLError(1)
         pdf_response(self.request, self.context)
         assert mock_render.called
-
-
-
-
-
