@@ -68,7 +68,7 @@ class CalendarFilterForm(forms.Form):
 
 class CalendarPDFForm(forms.Form):
     filter_calendar = FilterCheckboxList(
-            choices = [(c.title, c.title) for c in CFPBCalendar.objects.all()],
+            choices = [],
             required=True,
             label='Calendar',
             error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS'])
@@ -89,9 +89,9 @@ class CalendarPDFForm(forms.Form):
     def clean(self):
         cleaned_data = super(CalendarPDFForm, self).clean()
         from_date_empty = 'filter_range_date_gte' in cleaned_data and \
-                          cleaned_data['filter_range_date_gte'] is None
+                          not cleaned_data['filter_range_date_gte']
         to_date_empty = 'filter_range_date_lte' in cleaned_data and \
-                        cleaned_data['filter_range_date_lte'] is None
+                        not cleaned_data['filter_range_date_lte']
 
         if from_date_empty and to_date_empty :
             raise forms.ValidationError(ERROR_MESSAGES['DATE_ERRORS']['one_required'])
