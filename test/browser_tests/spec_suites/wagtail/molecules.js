@@ -43,19 +43,6 @@ describe( 'Related Metadata', function() {
 } );
 
 
-describe( 'Hero', function() {
-  beforeAll( function() {
-    browser.get( '/sublanding-filterable-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'this is a hero heading' );
-    }
-  );
-
-} );
-
 describe( 'Half Width Link Blob', function() {
   beforeAll( function() {
     browser.get( '/landing-page/' );
