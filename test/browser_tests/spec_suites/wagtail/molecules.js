@@ -15,20 +15,6 @@ describe( 'Expandable', function() {
 
 } );
 
-
-describe( 'Related Links', function() {
-  beforeAll( function() {
-    browser.get( '/landing-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'this is a related link' );
-    }
-  );
-
-} );
-
 describe( 'Related Metadata', function() {
   beforeAll( function() {
     browser.get( '/browse-filterable-page/document-detail-page' );
