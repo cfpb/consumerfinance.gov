@@ -118,4 +118,18 @@ class MoleculesTestCase(TestCase):
 		self.assertContains(response, 'this is a hero heading')
 
 
+	def test_related_links(self):
+		"""Related links value correctly displays on a Landing Page"""
+		landing_page = LandingPage(
+			title='Landing Page', 
+			slug='landing', 
+		)
+		landing_page.sidefoot = StreamValue(
+			landing_page.sidefoot.stream_block,
+			[atomic.related_links], 
+			True
+		)
+		self.publish_page(child=landing_page)
+		response = c.get('/landing/')
+		self.assertContains(response, 'this is a related link')
 
