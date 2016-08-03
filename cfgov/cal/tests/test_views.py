@@ -16,7 +16,14 @@ from cal.views import (
 
 class TestCalendarEvents(TestCase):
     def setUp(self):
-        self.request = mock.Mock()
+        self.url = reverse('the-bureau:leadership-calendar')
+        self.hash = '#leadership-pdf-calendar'
+        self.request = RequestFactory().get(self.url)
+
+        self.context = {
+            'request': self.request,
+            'form': MagicMock(),
+        }
 
     @mock.patch('cal.views.render')
     @mock.patch('cal.views.CalendarFilterForm')
@@ -27,33 +34,28 @@ class TestCalendarEvents(TestCase):
         display(self.request)
         assert mock_form.is_valid.called
 
-    @mock.patch('cal.views.render')
-    @mock.patch('cal.views.CalendarFilterForm')
-    @mock.patch('cal.views.pdf_response')
-    @mock.patch('cal.views.set_cal_events_context')
     @mock.patch('cal.views.PDFreactor')
-    def test_display_calls_pdf_response(self, mock_PDFreactor,
-            mock_set_cal_events_context, mock_pdf_response, mock_form_class,
-            mock_render):
-        mock_form = mock.Mock()
-        mock_form.is_valid.return_value = True
-        mock_form_class.return_value = mock_form
+    @mock.patch('cal.views.pdf_response')
+    @mock.patch('cal.views.CalendarPDFForm')
+    @mock.patch('cal.views.set_cal_events_context')
+    def test_display_calls_pdf_response(self, context, form, pdf_response,
+                                        pdfreactor):
         display(self.request, pdf=True)
-        assert mock_set_cal_events_context.called
-        assert mock_pdf_response.called
+        self.assertEqual(pdf_response.call_count, 1)
 
     @mock.patch('cal.views.render')
-    @mock.patch('cal.views.CalendarFilterForm')
-    @mock.patch('cal.views.pdf_response')
+    @mock.patch('cal.views.CalendarPDFForm')
     @mock.patch('cal.views.set_cal_events_context')
-    def test_display_calls_render_for_print(self, mock_set_cal_events_context,
-            mock_pdf_response, mock_form_class, mock_render):
-        mock_form = mock.Mock()
-        mock_form.is_valid.return_value = True
-        mock_form_class.return_value = mock_form
-        template_name = 'about-us/the-bureau/leadership-calendar/print/index.html'
+    def test_display_calls_render_if_no_pdfreactor(self, context, form, render):
         display(self.request, pdf=True)
-        mock_render.assert_called_with(self.request, template_name, {'form': mock_form})
+        self.assertEqual(render.call_count, 1)
+        self.assertEqual(
+            render.call_args[0][0:2],
+            (
+                self.request,
+                'about-us/the-bureau/leadership-calendar/print/index.html',
+            )
+        )
 
     @mock.patch('cal.views.render')
     @mock.patch('cal.views.CalendarFilterForm')
