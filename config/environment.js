@@ -5,6 +5,9 @@
 
 'use strict';
 
+/**
+ * Environment variable mappings in JavaScript from the project root .env file.
+ */
 var envvars = {
   /* eslint-disable no-process-env */
   DJANGO_STAGING_HOSTNAME: process.env.DJANGO_STAGING_HOSTNAME,
@@ -17,6 +20,9 @@ var envvars = {
   /* eslint-enable no-process-env */
 };
 
+/**
+ * Convenience settings for various project directory paths.
+ */
 var paths = {
   unprocessed: './cfgov/unprocessed',
   processed:   './cfgov/static_built',
