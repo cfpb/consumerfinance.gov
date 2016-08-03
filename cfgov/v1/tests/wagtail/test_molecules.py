@@ -73,25 +73,39 @@ class MoleculesTestCase(TestCase):
 		self.assertContains(response, 'this is a featured content body')
 
 	def test_quote(self):
-		"""Full width text correctly displays on a Learn Page"""
-		lp = LearnPage(
-			title='Learn Page', 
-			slug='learn-page'
+		"""Quote value correctly displays on a Learn Page"""
+		learn_page = LearnPage(
+			title='Learn', 
+			slug='learn'
 		)
-		lp.header = StreamValue(
-			lp.header.stream_block, 
-			[atomic.item_introduction], 
+		learn_page.content = StreamValue(
+			learn_page.content.stream_block,
+			[atomic.full_width_text], 
 			True
 		)
-		lp.content = StreamValue(
-			lp.content.stream_block,
-			[
-				atomic.full_width_text,
-				atomic.call_to_action,
-				atomic.table
-			], 
-			True
-		)
-		self.publish_page(child=lp)
-		response = c.get('/learn-page/')
+		self.publish_page(child=learn_page)
+		response = c.get('/learn/')
 		self.assertContains(response, 'this is a quote')
+
+	def test_call_to_action(self):
+		"""Call to action value correctly displays on a Learn Page"""
+		learn_page = LearnPage(
+			title='Learn',
+			slug='learn',
+		)
+		learn_page.content = StreamValue(
+			learn_page.content.stream_block,
+			[atomic.call_to_action],
+			True
+		)
+		self.publish_page(child=learn_page)
+		response = c.get('/learn/')
+		self.assertContains(response, 'this is a call to action')
+
+
+
+
+
+
+
+
