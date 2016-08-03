@@ -193,4 +193,17 @@ class MoleculesTestCase(TestCase):
 		response = c.get('/ddp/')
 		self.assertContains(response, 'this is a related metadata heading')
 
-
+	def test_image_text_50_50(self):
+		"""Image Text 50 50 value correctly displays on a Landing Page"""
+		landing_page = LandingPage(
+			title='Landing Page', 
+			slug='landing',
+		)
+		landing_page.content = StreamValue(
+			landing_page.content.stream_block,
+			[atomic.image_text_50_50_group],
+			True,
+		)
+		self.publish_page(child=landing_page)
+		response = c.get('/landing/')
+		self.assertContains(response, 'this is an image text 50 50 group')
