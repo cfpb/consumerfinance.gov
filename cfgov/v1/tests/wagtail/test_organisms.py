@@ -130,6 +130,7 @@ class OrganismsTestCase(TestCase):
 		response = c.get('/landing/')
 		self.assertContains(response, 'Half Width Link Blob Group')
 
+	# TODO: More comprehensive test for this organism
 	def test_email_signup(self):
 		"""Email signup correctly displays on a Sublanding Page"""
 		sublanding_page = SublandingPage(
@@ -144,3 +145,20 @@ class OrganismsTestCase(TestCase):
 		publish_page(child=sublanding_page)
 		response = c.get('/sublanding/')
 		self.assertContains(response, 'Email Sign up')
+
+	# TODO: More comprehensive test for this organism
+	def test_reg_comment(self):
+		"""RegComment correctly displays on a Sublanding Page"""
+		sublanding_page = SublandingPage(
+			title='Sublanding Page', 
+			slug='sublanding', 
+		)
+		sublanding_page.content = StreamValue(
+			sublanding_page.content.stream_block,
+			[atomic.reg_comment],
+			True
+		)
+		publish_page(child=sublanding_page)
+		response = c.get('/sublanding/')
+		self.assertContains(response, 'Enter your comments')
+
