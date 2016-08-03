@@ -193,17 +193,36 @@ class MoleculesTestCase(TestCase):
 		response = c.get('/ddp/')
 		self.assertContains(response, 'this is a related metadata heading')
 
-	def test_image_text_50_50(self):
-		"""Image Text 50 50 value correctly displays on a Landing Page"""
+	def test_image_text(self):
+		"""Image Text molecules correctl displays on a Landing Page"""
 		landing_page = LandingPage(
 			title='Landing Page', 
 			slug='landing',
 		)
 		landing_page.content = StreamValue(
 			landing_page.content.stream_block,
-			[atomic.image_text_50_50_group],
+			[
+				atomic.image_text_50_50_group,
+				atomic.image_text_25_75_group
+			],
 			True,
 		)
 		self.publish_page(child=landing_page)
 		response = c.get('/landing/')
 		self.assertContains(response, 'this is an image text 50 50 group')
+		self.assertContains(response, 'this is an image text 25 75 group')
+
+	def test_formfield_with_button(self):
+		"""FormField with Button correctly displays on a Sublanding Page"""
+		sublanding_page = DocumentDetailPage(
+			title='Sublanding Page', 
+			slug='sublanding',
+		)
+		sublanding_page.sidefoot = StreamValue(
+			sublanding_page.sidefoot.stream_block,
+			[atomic.email_signup],
+			True,
+		)
+		self.publish_page(child=sublanding_page)
+		response = c.get('/sublanding/')
+		self.assertContains(response, 'this is a form field with button')

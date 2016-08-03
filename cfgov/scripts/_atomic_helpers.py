@@ -139,7 +139,7 @@ image_text_25_75_group = {
         "image_texts": [
             {
                 "heading": "",
-                "body": "",
+                "body": "this is an image text 25 75 group",
                 "has_rule": False,
                 "image": {
                     "alt": "",
@@ -209,7 +209,7 @@ email_signup = {
                 "type": "",
                 "required": False,
                 "label": "Email Sign up",
-                "btn_text": "",
+                "btn_text": "this is a form field with button",
                 "placeholder": ""
             }
         ]
