@@ -11,25 +11,6 @@ var _getQAElement = require( '../../util/qa-element' ).get;
 
 
 
-describe( 'Table', function() {
-  beforeAll( function() {
-    browser.get( '/browse-filterable-page/learn-page/' );
-  } );
-
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'table hyperlink' );
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'table text' );
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'table text blob' );
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'table rich text blob' );
-    }
-  );
-} );
-
 describe( 'Expandable Group', function() {
   beforeAll( function() {
     browser.get( '/browse-page/' );
