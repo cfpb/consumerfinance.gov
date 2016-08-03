@@ -20,47 +20,19 @@ from v1.models.newsroom_page import NewsroomPage, LegacyNewsroomPage
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.snippets import Contact
 from wagtail.wagtailcore.blocks import StreamValue
+
 c = Client()
 
 class MoleculesTestCase(TestCase):
 
-	@classmethod
-	def setUpClass(cls):
-		super(MoleculesTestCase, cls).setUpClass()
-		admin_user = User(
-			username='admin',
-			password=make_password(os.environ.get('WAGTAIL_ADMIN_PW')),
-			is_superuser=True, is_active=True, is_staff=True
-		)
-		admin_user.save()
-		cls.admin_user = admin_user
-		root = Page.objects.first()
-		site_root = HomePage(
-			title='CFGOV', slug='home-page', depth=2, owner=admin_user
-		)
-		site_root.live = True
-		root.add_child(instance=site_root)
-		latest = site_root.save_revision(
-			user=admin_user, submitted_for_moderation=False
-		)
-		latest.save()
-		cls.site_root = site_root
+	def publish_page(self, child, root=None):
+		if not root:
+			root = HomePage.objects.get(title='CFGOV')
+		admin_user = User.objects.get(username='admin')
 
-		# Setting new site root
-		site = Site.objects.first()
-		site.port = 8000
-		site.root_page_id = site_root.id
-		site.save()
-		content_site = Site(
-			hostname='content.localhost', port=8000, root_page_id=site_root.id
-		)
-		content_site.save()
-
-	@classmethod
-	def publish_page(cls, child):
-		cls.site_root.add_child(instance=child)
+		root.add_child(instance = child)
 		revision = child.save_revision(
-			user=cls.admin_user,
+			user=admin_user,
 			submitted_for_moderation=False,
 		)
 		revision.publish()
@@ -71,7 +43,6 @@ class MoleculesTestCase(TestCase):
 		bfp = BrowseFilterablePage(
 			title='Browse Filterable Page', 
 			slug='browse-filterable-page', 
-			owner=self.admin_user
 		)
 		bfp.header = StreamValue(
 			bfp.header.stream_block, 
@@ -82,22 +53,45 @@ class MoleculesTestCase(TestCase):
 		response = c.get('/browse-filterable-page/')
 		self.assertContains(response, 'this is an intro')
 
-	# def test_featured_content(self):
-	# 	"""Featured content value correctly displays on a Browse Page"""
-	# 	bp = BrowsePage(
-	# 		title='Browse Page',
-	# 		slug='browse-page', 
-	# 		owner=self.admin_user
-	# 	)
-	# 	bp.header = StreamValue(bp.header.stream_block,
-	# 	[
-	# 		atomic.featured_content
-	# 	], True)
-	# 	bp.content = StreamValue(bp.content.stream_block,
-	# 	[
-	# 		atomic.expandable,
-	# 		atomic.expandable_group
-	# 	], True)
-	# 	self.publish_page(bp)
-	# 	response = c.get('/browse-page/')
-	# 	self.assertContains(response, 'this is a featured content body')
+	def test_featured_content(self):
+		"""Featured content value correctly displays on a Browse Page"""
+		bp = BrowsePage(
+			title='Browse Page',
+			slug='browse-page', 
+		)
+		bp.header = StreamValue(bp.header.stream_block,
+		[
+			atomic.featured_content
+		], True)
+		bp.content = StreamValue(bp.content.stream_block,
+		[
+			atomic.expandable,
+			atomic.expandable_group
+		], True)
+		self.publish_page(child=bp)
+		response = c.get('/browse-page/')
+		self.assertContains(response, 'this is a featured content body')
+
+	def test_quote(self):
+		"""Full width text correctly displays on a Learn Page"""
+		lp = LearnPage(
+			title='Learn Page', 
+			slug='learn-page'
+		)
+		lp.header = StreamValue(
+			lp.header.stream_block, 
+			[atomic.item_introduction], 
+			True
+		)
+		lp.content = StreamValue(
+			lp.content.stream_block,
+			[
+				atomic.full_width_text,
+				atomic.call_to_action,
+				atomic.table
+			], 
+			True
+		)
+		self.publish_page(child=lp)
+		response = c.get('/learn-page/')
+		self.assertContains(response, 'this is a quote')

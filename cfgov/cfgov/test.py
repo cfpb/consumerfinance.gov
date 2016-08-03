@@ -17,7 +17,6 @@ class TestDataTestRunner(DiscoverRunner):
             self.setup_wagtail_root()
 
         initial_data.run()
-        initial_test_data.run()
         return dbs
 
     def check_for_wagtail_root(self):
