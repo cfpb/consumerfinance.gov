@@ -113,3 +113,21 @@ class OrganismsTestCase(TestCase):
 		response = c.get('/landing/')
 		self.assertContains(response, 'Image 25 75 Group')
 		self.assertContains(response, 'Image 50 50 Group')
+
+
+	def test_half_width_link_blob_group(self):
+		"""Half width link blob group correctly displays on a Landing Page"""
+		landing_page = LandingPage(
+			title='Landing Page', 
+			slug='landing', 
+		)
+		landing_page.content = StreamValue(
+			landing_page.content.stream_block,
+			[atomic.half_width_link_blob_group],
+			True
+		)
+		publish_page(child=landing_page)
+		response = c.get('/landing/')
+		self.assertContains(response, 'Half Width Link Blob Group')
+
+
