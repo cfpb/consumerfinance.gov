@@ -178,3 +178,19 @@ class MoleculesTestCase(TestCase):
 		response = c.get('/browse/')
 		self.assertContains(response, 'this is an expandable')
 
+	def test_related_metadata(self):
+		"""Related metadata heading correctly displays on a Document Detail Page"""
+		ddp = DocumentDetailPage(
+			title='Document Detail Page', 
+			slug='ddp',
+		)
+		ddp.sidefoot = StreamValue(
+			ddp.sidefoot.stream_block,
+			[atomic.related_metadata],
+			True,
+		)
+		self.publish_page(child=ddp)
+		response = c.get('/ddp/')
+		self.assertContains(response, 'this is a related metadata heading')
+
+
