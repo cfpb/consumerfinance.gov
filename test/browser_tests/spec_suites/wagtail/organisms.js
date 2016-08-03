@@ -9,18 +9,7 @@ var _getQAElement = require( '../../util/qa-element' ).get;
           - RelatedPosts
 */
 
-describe( 'Well', function() {
-  beforeAll( function() {
-    browser.get( '/landing-page/' );
-  } );
 
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'this is well content' );
-    }
-  );
-} );
 
 describe( 'Main Contact Info', function() {
   beforeAll( function() {

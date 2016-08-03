@@ -113,7 +113,7 @@ sidebar_contact = main_contact_info
 well = {
     'type': 'well',
     'value': {
-        'content': "<p>this is well content</p>"
+        'content': "this is well content"
     }
 }
 full_width_text = {
