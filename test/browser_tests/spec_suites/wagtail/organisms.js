@@ -10,20 +10,6 @@ var _getQAElement = require( '../../util/qa-element' ).get;
 */
 
 
-describe( 'Half Width Link Blob Group', function() {
-  beforeAll( function() {
-    browser.get( '/landing-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'Half Width Link Blob Group' );
-      expect( _getQAElement( 'half-width-link-blob' )
-        .isPresent() ).toBe( true );
-    }
-  );
-} );
-
 /* TODO: More comprehensive test for this organism. */
 describe( 'Email Signup', function() {
   beforeAll( function() {
