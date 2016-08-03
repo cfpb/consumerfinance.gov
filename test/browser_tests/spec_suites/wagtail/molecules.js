@@ -3,17 +3,6 @@
 var _getQAElement = require( '../../util/qa-element' ).get;
 
 
-describe( 'Expandable', function() {
-  beforeAll( function() {
-    browser.get( '/browse-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( _getQAElement( 'expandable' ).isPresent() ).toBe( true );
-    }
-  );
-
-} );
 
 describe( 'Related Metadata', function() {
   beforeAll( function() {
