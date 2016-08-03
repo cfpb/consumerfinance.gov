@@ -5,6 +5,7 @@ from django.test import Client
 from scripts import _atomic_helpers as atomic
 from v1.models.landing_page import LandingPage
 from v1.models.sublanding_page import SublandingPage
+from v1.models.learn_page import LearnPage
 from wagtail.wagtailcore.blocks import StreamValue
 from helpers import publish_page
 from v1.models.snippets import Contact
@@ -77,5 +78,20 @@ class OrganismsTestCase(TestCase):
 		# self.assertContains(response, 'test@example.com')
 		self.assertContains(response, '(515) 123-4567')
 		self.assertContains(response, '123 abc street')
+
+	def test_sidebar_contact_info(self):
+		"""Full width text content correctly displays on a Learn Page"""
+		learn_page = LearnPage(
+				title='Learn Page', 
+				slug='learn', 
+		)
+		learn_page.content = StreamValue(
+			learn_page.content.stream_block, 
+			[atomic.full_width_text],
+			True
+		)
+		publish_page(child=learn_page)
+		response = c.get('/learn/')
+		self.assertContains(response, 'Full width text content')
 
 

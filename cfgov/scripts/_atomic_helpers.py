@@ -128,7 +128,7 @@ full_width_text = {
         },
         {
             'type': 'content',
-            'value': '<p>Full width text content.</p>'
+            'value': 'Full width text content'
         }
     ]
 }
