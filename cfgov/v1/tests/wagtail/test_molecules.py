@@ -163,4 +163,18 @@ class MoleculesTestCase(TestCase):
 		response = c.get('/sublanding/')
 		self.assertContains(response, 'rss-subscribe-section')
 
+	def test_expandable(self):
+		"""Expandable label value correctly displays on a Browse Page"""
+		browse_page = BrowsePage(
+			title='Browse Page', 
+			slug='browse',
+		)
+		browse_page.content = StreamValue(
+			browse_page.content.stream_block,
+			[atomic.expandable],
+			True,
+		)
+		self.publish_page(child=browse_page)
+		response = c.get('/browse/')
+		self.assertContains(response, 'this is an expandable')
 
