@@ -3,13 +3,8 @@ from django.test import TestCase
 from django.test import Client
 
 from django.conf import settings
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
-from wagtail.wagtailcore.models import Page, Site
 
 from scripts import _atomic_helpers as atomic
-from v1.models.base import CFGOVPage
-from v1.models.home_page import HomePage
 from v1.models.landing_page import LandingPage
 from v1.models.sublanding_page import SublandingPage
 from v1.models.learn_page import EventPage, LearnPage, DocumentDetailPage
@@ -20,23 +15,11 @@ from v1.models.newsroom_page import NewsroomPage, LegacyNewsroomPage
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 from v1.models.snippets import Contact
 from wagtail.wagtailcore.blocks import StreamValue
+from helpers import publish_page
 
 c = Client()
 
 class MoleculesTestCase(TestCase):
-
-	def publish_page(self, child, root=None):
-		if not root:
-			root = HomePage.objects.get(title='CFGOV')
-		admin_user = User.objects.get(username='admin')
-
-		root.add_child(instance = child)
-		revision = child.save_revision(
-			user=admin_user,
-			submitted_for_moderation=False,
-		)
-		revision.publish()
-
 
 	def test_text_intro(self):
 		"""Text introduction value correctly displays on a Browse Filterable Page"""
@@ -49,7 +32,7 @@ class MoleculesTestCase(TestCase):
 			[atomic.text_introduction], 
 			True
 		)
-		self.publish_page(child=bfp)
+		publish_page(child=bfp)
 		response = c.get('/browse-filterable-page/')
 		self.assertContains(response, 'this is an intro')
 
@@ -68,7 +51,7 @@ class MoleculesTestCase(TestCase):
 			atomic.expandable,
 			atomic.expandable_group
 		], True)
-		self.publish_page(child=bp)
+		publish_page(child=bp)
 		response = c.get('/browse-page/')
 		self.assertContains(response, 'this is a featured content body')
 
@@ -83,7 +66,7 @@ class MoleculesTestCase(TestCase):
 			[atomic.full_width_text], 
 			True
 		)
-		self.publish_page(child=learn_page)
+		publish_page(child=learn_page)
 		response = c.get('/learn/')
 		self.assertContains(response, 'this is a quote')
 
@@ -98,7 +81,7 @@ class MoleculesTestCase(TestCase):
 			[atomic.call_to_action],
 			True
 		)
-		self.publish_page(child=learn_page)
+		publish_page(child=learn_page)
 		response = c.get('/learn/')
 		self.assertContains(response, 'this is a call to action')
 
@@ -113,7 +96,7 @@ class MoleculesTestCase(TestCase):
 			[atomic.hero], 
 			True
 		)
-		self.publish_page(child=sfp)
+		publish_page(child=sfp)
 		response = c.get('/sfp/')
 		self.assertContains(response, 'this is a hero heading')
 
@@ -129,7 +112,7 @@ class MoleculesTestCase(TestCase):
 			[atomic.related_links], 
 			True
 		)
-		self.publish_page(child=landing_page)
+		publish_page(child=landing_page)
 		response = c.get('/landing/')
 		self.assertContains(response, 'this is a related link')
 
@@ -144,7 +127,7 @@ class MoleculesTestCase(TestCase):
 			[atomic.half_width_link_blob_group],
 			True
 		)
-		self.publish_page(child=landing_page)
+		publish_page(child=landing_page)
 		response = c.get('/landing/')
 		self.assertContains(response, 'this is a half width link blob')
 
@@ -159,7 +142,7 @@ class MoleculesTestCase(TestCase):
 			[atomic.rss_feed], 
 			True
 		)
-		self.publish_page(sublanding_page)
+		publish_page(sublanding_page)
 		response = c.get('/sublanding/')
 		self.assertContains(response, 'rss-subscribe-section')
 
@@ -174,7 +157,7 @@ class MoleculesTestCase(TestCase):
 			[atomic.expandable],
 			True,
 		)
-		self.publish_page(child=browse_page)
+		publish_page(child=browse_page)
 		response = c.get('/browse/')
 		self.assertContains(response, 'this is an expandable')
 
@@ -189,7 +172,7 @@ class MoleculesTestCase(TestCase):
 			[atomic.related_metadata],
 			True,
 		)
-		self.publish_page(child=ddp)
+		publish_page(child=ddp)
 		response = c.get('/ddp/')
 		self.assertContains(response, 'this is a related metadata heading')
 
@@ -207,7 +190,7 @@ class MoleculesTestCase(TestCase):
 			],
 			True,
 		)
-		self.publish_page(child=landing_page)
+		publish_page(child=landing_page)
 		response = c.get('/landing/')
 		self.assertContains(response, 'this is an image text 50 50 group')
 		self.assertContains(response, 'this is an image text 25 75 group')
@@ -223,6 +206,6 @@ class MoleculesTestCase(TestCase):
 			[atomic.email_signup],
 			True,
 		)
-		self.publish_page(child=sublanding_page)
+		publish_page(child=sublanding_page)
 		response = c.get('/sublanding/')
 		self.assertContains(response, 'this is a form field with button')
