@@ -32,7 +32,6 @@ describe( 'Multiselect', function() {
 
   beforeEach( function() {
     sandbox = sinon.sandbox.create();
-    sandbox.stub( window.console, 'log' );
 
     document.body.innerHTML = HTML_SNIPPET;
 
@@ -59,7 +58,8 @@ describe( 'Multiselect', function() {
         var option = document.querySelector( 'option' );
         option.defaultSelected = true;
         multiselect.init();
-        var choices = document.querySelectorAll( '.cf-multi-select_choices li' );
+        var choices =
+          document.querySelectorAll( '.cf-multi-select_choices li' );
 
         expect( choices.length ).to.equal( 1 );
         expect( choices[0].innerHTML ).to.contain( 'Debt collection' );
@@ -67,6 +67,10 @@ describe( 'Multiselect', function() {
     );
 
     it( 'should log a helpful tip if passed a bad option value', function() {
+      // TODO: Remove console.log in favor of throwing an error.
+      //       sandbox.stub console.log will prevent regular `console.log(…)`
+      //       calls in this suite.
+      sandbox.stub( window.console, 'log' );
       var option = document.querySelector( 'option' );
       option.value = 'Foo\'';
       multiselect.init();
@@ -87,7 +91,8 @@ describe( 'Multiselect', function() {
       multiselect.init();
       multiselect.expand();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset = multiselectDom.querySelector( '.cf-multi-select_fieldset' );
+      var fieldset =
+        multiselectDom.querySelector( '.cf-multi-select_fieldset' );
 
       expect( multiselectDom.className ).to.equal( 'cf-multi-select active' );
       expect( fieldset.getAttribute( 'aria-hidden' ) ).to.equal( 'false' );
@@ -98,7 +103,8 @@ describe( 'Multiselect', function() {
       multiselect.expand();
       multiselect.collapse();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset = multiselectDom.querySelector( '.cf-multi-select_fieldset' );
+      var fieldset =
+        multiselectDom.querySelector( '.cf-multi-select_fieldset' );
 
       expect( multiselectDom.className ).to.equal( 'cf-multi-select' );
       expect( fieldset.getAttribute( 'aria-hidden' ) ).to.equal( 'true' );
@@ -109,7 +115,8 @@ describe( 'Multiselect', function() {
     xit( 'should open when the search input is clicked', function() {
       multiselect.init();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset = multiselectDom.querySelector( '.cf-multi-select_fieldset' );
+      var fieldset =
+        multiselectDom.querySelector( '.cf-multi-select_fieldset' );
       var search = document.querySelector( '#test-select' );
       search.click();
 
@@ -131,7 +138,8 @@ describe( 'Multiselect', function() {
       multiselect.init();
       multiselect.expand();
       multiselectDom = document.querySelector( '.cf-multi-select' );
-      var fieldset = multiselectDom.querySelector( '.cf-multi-select_fieldset' );
+      var fieldset =
+        multiselectDom.querySelector( '.cf-multi-select_fieldset' );
       document.click();
 
       expect( multiselectDom.className ).to.equal( 'cf-multi-select' );
