@@ -162,7 +162,7 @@ image_text_50_50_group = {
         "image_texts": [
             {
                 "heading": "",
-                "body": "",
+                "body": "this is an image text 50 50 group",
                 "links": [
                     {
                         "url": "/",
