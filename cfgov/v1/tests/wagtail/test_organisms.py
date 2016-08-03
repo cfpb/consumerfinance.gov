@@ -6,6 +6,7 @@ from scripts import _atomic_helpers as atomic
 from v1.models.landing_page import LandingPage
 from v1.models.sublanding_page import SublandingPage
 from v1.models.learn_page import LearnPage
+from v1.models.browse_page import BrowsePage
 from wagtail.wagtailcore.blocks import StreamValue
 from helpers import publish_page
 from v1.models.snippets import Contact
@@ -179,4 +180,20 @@ class OrganismsTestCase(TestCase):
 		self.assertContains(response, 'table text')
 		self.assertContains(response, 'table text blob')
 		self.assertContains(response, 'table rich text blob')
+
+	def test_expandable_group(self):
+		"""Expandable group correctly displays on a Browse Page"""
+		browse_page = BrowsePage(
+			title='Browse Page', 
+			slug='browse', 
+		)
+		browse_page.content = StreamValue(
+			browse_page.content.stream_block,
+			[atomic.expandable_group],
+			True
+		)
+		publish_page(child=browse_page)
+		response = c.get('/browse/')
+		self.assertContains(response, 'Expandable Group')
+		self.assertContains(response, 'Expandable group body')
 
