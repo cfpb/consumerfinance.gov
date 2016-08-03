@@ -68,10 +68,9 @@ class CalendarFilterForm(forms.Form):
 
 class CalendarPDFForm(forms.Form):
     filter_calendar = FilterCheckboxList(
-            choices = [],
-            required=True,
-            label='Calendar',
-            error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS'])
+        required=True,
+        label='Calendar',
+        error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS'])
     filter_range_date_gte = FilterDateField(required=False,
         error_messages=ERROR_MESSAGES['DATE_ERRORS'])
     filter_range_date_lte = FilterDateField(required=False,
@@ -80,6 +79,9 @@ class CalendarPDFForm(forms.Form):
     def __init__(self, *args, **kwargs):
         kwargs['error_class'] = FilterErrorList
         super(CalendarPDFForm, self).__init__(*args, **kwargs)
+        self.fields['filter_calendar'].choices = [
+            (c.title, c.title) for c in CFPBCalendar.objects.all()
+        ]
 
     def clean_filter_calendar(self):
         calendar_names = self.cleaned_data['filter_calendar']
