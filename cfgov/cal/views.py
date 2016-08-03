@@ -43,13 +43,14 @@ class FilterDateField(forms.DateField):
     def clean(self, value):
         if value:
             try:
-                value = get_date_string(value)
+                get_date_string(value)
             except ValueError:
                 msg = self.error_messages['invalid']
                 if '%s'in msg:
                     msg = msg % value
                 raise forms.ValidationError(msg , code='invalid')
-        return value
+
+        return super(FilterDateField, self).clean(value)
 
 class CalendarFilterForm(forms.Form):
     filter_calendar = forms.MultipleChoiceField(choices=[], required=False)
