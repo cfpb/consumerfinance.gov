@@ -10,22 +10,6 @@ var _getQAElement = require( '../../util/qa-element' ).get;
 */
 
 
-
-describe( 'Expandable Group', function() {
-  beforeAll( function() {
-    browser.get( '/browse-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'Expandable Group' );
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'Expandable group body' );
-      expect( _getQAElement( 'expandable' ).isPresent() ).toBe( true );
-    }
-  );
-} );
-
 describe( 'Item Introduction', function() {
   beforeAll( function() {
     browser.get( '/browse-filterable-page/learn-page/' );
