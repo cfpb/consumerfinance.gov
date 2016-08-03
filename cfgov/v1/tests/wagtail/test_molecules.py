@@ -63,6 +63,7 @@ class MoleculesTestCase(TestCase):
 		publish_page(child=learn_page)
 		response = c.get('/learn/')
 		self.assertContains(response, 'this is a quote')
+		self.assertContains(response, 'a citation')
 
 	def test_call_to_action(self):
 		"""Call to action value correctly displays on a Learn Page"""

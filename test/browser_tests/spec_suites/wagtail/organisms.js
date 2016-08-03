@@ -9,22 +9,6 @@ var _getQAElement = require( '../../util/qa-element' ).get;
           - RelatedPosts
 */
 
-describe( 'Full Width Text', function() {
-  beforeAll( function() {
-    browser.get( '/browse-filterable-page/learn-page/' );
-  } );
-
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'Full width text content' );
-      expect( element( by.css( '.o-full-width-text-group' ) ).getText() )
-        .toContain( 'this is a quote' );
-      expect( element( by.css( '.o-full-width-text-group' ) ).getText() )
-        .toContain( 'A CITATION' );
-    }
-  );
-} );
 
 describe( 'Image Text 25 75 Group', function() {
   beforeAll( function() {
