@@ -171,8 +171,8 @@ class MoleculesTestCase(TestCase):
 		response = c.get('/ddp/')
 		self.assertContains(response, 'this is a related metadata heading')
 
-	def test_image_text(self):
-		"""Image Text molecules correctl displays on a Landing Page"""
+	def test_image_texts(self):
+		"""Image Text molecules correctly display on a Landing Page"""
 		landing_page = LandingPage(
 			title='Landing Page', 
 			slug='landing',
@@ -187,8 +187,8 @@ class MoleculesTestCase(TestCase):
 		)
 		publish_page(child=landing_page)
 		response = c.get('/landing/')
-		self.assertContains(response, 'this is an image text 50 50 group')
-		self.assertContains(response, 'this is an image text 25 75 group')
+		self.assertContains(response, 'this is an image text in a 50 50 group')
+		self.assertContains(response, 'this is an image text in a 25 75 group')
 
 	def test_formfield_with_button(self):
 		"""FormField with Button correctly displays on a Sublanding Page"""

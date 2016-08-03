@@ -139,7 +139,7 @@ image_text_25_75_group = {
         "image_texts": [
             {
                 "heading": "",
-                "body": "this is an image text 25 75 group",
+                "body": "this is an image text in a 25 75 group",
                 "has_rule": False,
                 "image": {
                     "alt": "",
@@ -162,7 +162,7 @@ image_text_50_50_group = {
         "image_texts": [
             {
                 "heading": "",
-                "body": "this is an image text 50 50 group",
+                "body": "this is an image text in a 50 50 group",
                 "links": [
                     {
                         "url": "/",

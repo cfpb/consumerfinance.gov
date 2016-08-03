@@ -10,32 +10,6 @@ var _getQAElement = require( '../../util/qa-element' ).get;
 */
 
 
-describe( 'Image Text 25 75 Group', function() {
-  beforeAll( function() {
-    browser.get( '/landing-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'Image 25 75 Group' );
-      expect( _getQAElement( 'image-text-25-75' ).isPresent() ).toBe( true );
-    }
-  );
-} );
-
-describe( 'Image Text 50 50 Group', function() {
-  beforeAll( function() {
-    browser.get( '/landing-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'Image 50 50 Group' );
-      expect( _getQAElement( 'image-text-50-50' ).isPresent() ).toBe( true );
-    }
-  );
-} );
-
 describe( 'Half Width Link Blob Group', function() {
   beforeAll( function() {
     browser.get( '/landing-page/' );
