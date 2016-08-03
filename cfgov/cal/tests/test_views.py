@@ -2,10 +2,11 @@ import mock
 import json
 import urllib2
 
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse
-from django.test import TestCase
-from django.test.client import RequestFactory
+from django.test import RequestFactory, TestCase
+from mock import MagicMock, Mock, patch
 
 from cal.views import (
     display, get_calendar_events_query, pdf_response, set_cal_events_context,
@@ -135,24 +136,44 @@ class TestSetPaginationContext(TestCase):
 
 class TestPDFResponse(TestCase):
     def setUp(self):
-        self.request = mock.Mock()
-        self.context = mock.Mock()
+        self.url = reverse('the-bureau:leadership-calendar')
+        self.hash = '#leadership-pdf-calendar'
+        self.request = RequestFactory().get(self.url)
 
-    @mock.patch('cal.views.render')
-    @mock.patch('cal.views.get_template')
-    @mock.patch('cal.views.PDFreactor')
-    def test_returns_http_response(self, mock_pdf_reactor, mock_get_template,
-            mock_render):
-        pdf_reactor = mock.MagicMock()
-        result = pdf_response(self.request, self.context)
-        assert type(result) is HttpResponse
+        self.context = {
+            'request': self.request,
+            'form': MagicMock(),
+        }
 
-    @mock.patch('cal.views.render')
-    @mock.patch('cal.views.HttpResponse')
-    @mock.patch('cal.views.get_template')
     @mock.patch('cal.views.PDFreactor')
-    def test_calls_render(self, mock_pdf_reactor, mock_get_template,
-            mock_HttpResponse, mock_render):
-        mock_HttpResponse.side_effect = urllib2.URLError(1)
+    def test_returns_http_response(self, pdfreactor):
+        response = pdf_response(self.request, self.context)
+        self.assertIsInstance(response, HttpResponse)
+
+    @mock.patch('cal.views.PDFreactor')
+    def test_returns_file(self, pdfreactor):
+        response = pdf_response(self.request, self.context)
+        self.assertEqual(
+            response['Content-Disposition'],
+            'attachment; filename=cfpb-leadership.pdf'
+        )
+
+    @patch('cal.views.messages')
+    @patch('cal.views.PDFreactor', return_value=Mock(
+        renderDocumentFromContent=Mock(side_effect=urllib2.URLError(1))
+    ))
+    def test_pdfreactor_error_sets_message(self, pdfreactor, messages):
         pdf_response(self.request, self.context)
-        assert mock_render.called
+        self.assertEqual(messages.error.call_count, 1)
+
+
+    @patch('cal.views.messages')
+    @patch('cal.views.PDFreactor', return_value=Mock(
+        renderDocumentFromContent=Mock(side_effect=urllib2.URLError(1))
+    ))
+    def test_pdfreactor_error_redirects(self, pdfreactor, messages):
+        response = pdf_response(self.request, self.context)
+        self.assertEqual(
+            (response['Location'], response.status_code),
+            (self.url + self.hash, 302)
+        )
