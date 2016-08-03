@@ -185,7 +185,7 @@ half_width_link_blob_group = {
         "heading": "Half Width Link Blob Group",
         "link_blobs": [
             {
-                "body": "",
+                "body": "this is a half width link blob",
                 "heading": "",
                 "links": [
                     {

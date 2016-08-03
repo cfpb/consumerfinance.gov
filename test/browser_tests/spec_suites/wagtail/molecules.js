@@ -29,18 +29,6 @@ describe( 'Related Metadata', function() {
 } );
 
 
-describe( 'Half Width Link Blob', function() {
-  beforeAll( function() {
-    browser.get( '/landing-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( _getQAElement( 'half-width-link-blob' )
-        .isPresent() ).toBe( true );
-    }
-  );
-} );
-
 describe( 'Image Text 50 50', function() {
   beforeAll( function() {
     browser.get( '/landing-page/' );

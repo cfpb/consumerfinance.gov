@@ -133,3 +133,18 @@ class MoleculesTestCase(TestCase):
 		response = c.get('/landing/')
 		self.assertContains(response, 'this is a related link')
 
+	def test_half_width_link_blob(self):
+		"""Half width link blob value correctly displays on a Landing Page"""
+		landing_page = LandingPage(
+			title='Landing Page', 
+			slug='landing', 
+		)
+		landing_page.content = StreamValue(
+			landing_page.content.stream_block,
+			[atomic.half_width_link_blob_group],
+			True
+		)
+		self.publish_page(child=landing_page)
+		response = c.get('/landing/')
+		self.assertContains(response, 'this is a half width link blob')
+
