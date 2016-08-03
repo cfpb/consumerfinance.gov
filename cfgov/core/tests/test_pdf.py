@@ -1,31 +1,31 @@
 from mock import Mock, patch
 from unittest import TestCase
 
-from cal.pdf import PDFGenerator
+from core.pdf import PDFGenerator
 
 
 class PDFGeneratorTestCase(TestCase):
     def setUp(self):
         self.base_url = 'http://localhost:8000'
 
-    @patch('cal.pdf.os.environ.get', return_value='/not/a/real/path')
+    @patch('core.pdf.os.environ.get', return_value='/not/a/real/path')
     def test_imports_from_environment_variable(self, environ_get):
         pdfreactor = PDFGenerator._try_pdfreactor_import()
         environ_get.assert_called_once_with('PDFREACTOR_LIB')
 
-    @patch('cal.pdf.os.environ.get', return_value='/not/a/real/path')
+    @patch('core.pdf.os.environ.get', return_value='/not/a/real/path')
     def test_failed_import_returns_null(self, environ_get):
         pdfreactor = PDFGenerator._try_pdfreactor_import()
         self.assertIsNone(pdfreactor)
 
-    @patch('cal.pdf.importlib.import_module')
+    @patch('core.pdf.importlib.import_module')
     def test_imports_pdfreactor_class(self, import_module):
         mock_pdfreactor = object()
         import_module.return_value = Mock(PDFreactor=mock_pdfreactor)
         pdfreactor = PDFGenerator._try_pdfreactor_import()
         self.assertEqual(pdfreactor, mock_pdfreactor)
 
-    @patch('cal.pdf.importlib.import_module')
+    @patch('core.pdf.importlib.import_module')
     def test_missing_pdfreactor_class_returns_none(self, import_module):
         import_module.return_value = object()
         pdfreactor = PDFGenerator._try_pdfreactor_import()
@@ -40,7 +40,7 @@ class PDFGeneratorTestCase(TestCase):
         )
         self.assertEqual(pdfreactor, mock_pdfreactor)
 
-    @patch('cal.pdf.os.environ.get', return_value='abc123')
+    @patch('core.pdf.os.environ.get', return_value='abc123')
     def test_pdfreactor_build_sets_license(self, environ_get):
         mock_pdfreactor = Mock()
         pdfreactor_cls = Mock(return_value=mock_pdfreactor)
@@ -73,15 +73,15 @@ class PDFGeneratorTestCase(TestCase):
         str = u'abc\u2019def'
         self.assertEqual(PDFGenerator._prep_html(str), "abc'def")
 
-    @patch('cal.pdf.PDFGenerator._try_pdfreactor_import')
+    @patch('core.pdf.PDFGenerator._try_pdfreactor_import')
     def test_valid_pdfreactor_enabled(self, pdfreactor_import):
         self.assertTrue(PDFGenerator(self.base_url).enabled)
 
-    @patch('cal.pdf.PDFGenerator._try_pdfreactor_import', return_value=None)
+    @patch('core.pdf.PDFGenerator._try_pdfreactor_import', return_value=None)
     def test_invalid_pdfreactor_not_enabled(self, pdfreactor_import):
         self.assertFalse(PDFGenerator(self.base_url).enabled)
 
-    @patch('cal.pdf.PDFGenerator._try_build_pdfreactor')
+    @patch('core.pdf.PDFGenerator._try_build_pdfreactor')
     def test_generate_pdf_calls_pdfreactor(self, try_build_pdfreactor):
         pdfreactor = Mock()
         try_build_pdfreactor.return_value = pdfreactor
@@ -89,7 +89,7 @@ class PDFGeneratorTestCase(TestCase):
         pdf = PDFGenerator(self.base_url).generate_pdf(html)
         pdfreactor.renderDocumentFromContent.assert_called_once_with(html)
 
-    @patch('cal.pdf.PDFGenerator._try_build_pdfreactor')
+    @patch('core.pdf.PDFGenerator._try_build_pdfreactor')
     def test_generate_pdf_returns_pdfreactor(self, try_build_pdfreactor):
         pdfreactor = Mock()
         try_build_pdfreactor.return_value = pdfreactor
