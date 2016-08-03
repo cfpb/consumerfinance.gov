@@ -55,7 +55,26 @@ class OrganismsTestCase(TestCase):
 		)
 		publish_page(child=sublanding_page)
 		response = c.get('/sublanding/')
-		self.assertContains(response, 'test@example.com')
+		# self.assertContains(response, 'test@example.com')
+		self.assertContains(response, '(515) 123-4567')
+		self.assertContains(response, '123 abc street')
+
+
+	def test_sidebar_contact_info(self):
+		"""Sidebar contact info correctly displays on a Landing Page"""
+		landing_page = LandingPage(
+				title='Landing Page', 
+				slug='landing', 
+		)
+		contact = self.get_contact()
+		landing_page.sidefoot = StreamValue(
+			landing_page.sidefoot.stream_block, 
+			[atomic.sidebar_contact(contact.id)],
+			True
+		)
+		publish_page(child=landing_page)
+		response = c.get('/landing/')
+		# self.assertContains(response, 'test@example.com')
 		self.assertContains(response, '(515) 123-4567')
 		self.assertContains(response, '123 abc street')
 

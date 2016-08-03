@@ -9,20 +9,6 @@ var _getQAElement = require( '../../util/qa-element' ).get;
           - RelatedPosts
 */
 
-
-describe( 'Sidebar Contact Info', function() {
-  beforeAll( function() {
-    browser.get( '/landing-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( _getQAElement( 'contact-address' ).isPresent() ).toBe( true );
-      expect( _getQAElement( 'contact-email' ).isPresent() ).toBe( true );
-      expect( _getQAElement( 'contact-phone' ).isPresent() ).toBe( true );
-    }
-  );
-} );
-
 describe( 'Full Width Text', function() {
   beforeAll( function() {
     browser.get( '/browse-filterable-page/learn-page/' );
