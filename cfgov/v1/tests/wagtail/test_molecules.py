@@ -102,10 +102,20 @@ class MoleculesTestCase(TestCase):
 		response = c.get('/learn/')
 		self.assertContains(response, 'this is a call to action')
 
-
-
-
-
+	def test_hero(self):
+		"""Hero heading correctly displays on a Sublanding Filterable Page"""
+		sfp = SublandingFilterablePage(
+			title='Sublanding Filterable Page', 
+			slug='sfp',
+		)
+		sfp.header = StreamValue(
+			sfp.header.stream_block, 
+			[atomic.hero], 
+			True
+		)
+		self.publish_page(child=sfp)
+		response = c.get('/sfp/')
+		self.assertContains(response, 'this is a hero heading')
 
 
 
