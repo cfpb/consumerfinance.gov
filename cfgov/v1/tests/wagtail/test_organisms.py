@@ -13,6 +13,15 @@ from v1.models.snippets import Contact
 
 c = Client()
 
+'''
+TODO: Create tests for the following organisms:
+          - FilterableListControls
+          - Sidebar Breakout
+          - PostPreviewSnapshot
+          - RelatedPosts
+'''
+
+
 class OrganismsTestCase(TestCase):
 	def get_contact(self):
 		contact = Contact(heading='Test User')
@@ -196,4 +205,20 @@ class OrganismsTestCase(TestCase):
 		response = c.get('/browse/')
 		self.assertContains(response, 'Expandable Group')
 		self.assertContains(response, 'Expandable group body')
+
+	def test_item_introduction(self):
+		"""Item introduction correctly displays on a Learn Page"""
+		learn_page = LearnPage(
+				title='Learn Page', 
+				slug='learn', 
+		)
+		learn_page.header = StreamValue(
+			learn_page.header.stream_block, 
+			[atomic.item_introduction],
+			True
+		)
+		publish_page(child=learn_page)
+		response = c.get('/learn/')
+		self.assertContains(response, 'Item Introduction')
+		self.assertContains(response, 'Item introduction body')
 
