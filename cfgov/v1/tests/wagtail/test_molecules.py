@@ -148,3 +148,19 @@ class MoleculesTestCase(TestCase):
 		response = c.get('/landing/')
 		self.assertContains(response, 'this is a half width link blob')
 
+	def test_rss_feed(self):
+		"""RSS feed correctly displays on a Sublanding Page"""
+		sublanding_page = SublandingPage(
+			title='Sublanding Page', 
+			slug='sublanding',
+		)
+		sublanding_page.sidefoot = StreamValue(
+			sublanding_page.sidefoot.stream_block,
+			[atomic.rss_feed], 
+			True
+		)
+		self.publish_page(sublanding_page)
+		response = c.get('/sublanding/')
+		self.assertContains(response, 'rss-subscribe-section')
+
+

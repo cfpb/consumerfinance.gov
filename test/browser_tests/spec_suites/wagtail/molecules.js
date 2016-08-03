@@ -63,15 +63,3 @@ describe( 'FormField With Button', function() {
   );
 } );
 
-describe( 'RSS Feed', function() {
-  beforeAll( function() {
-    browser.get( '/sublanding-page/' );
-  } );
-  it( 'should properly load in a browser',
-    function() {
-      expect( _getQAElement( 'rss-subscribe-section' )
-        .isPresent() ).toBe( true );
-    }
-  );
-
-} );
