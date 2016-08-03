@@ -10,19 +10,6 @@ var _getQAElement = require( '../../util/qa-element' ).get;
 */
 
 
-/* TODO: More comprehensive test for this organism. */
-describe( 'Regulation Comments', function() {
-  beforeAll( function() {
-    browser.get( '/sublanding-page/' );
-  } );
-
-  it( 'should properly load in a browser',
-    function() {
-      expect( element( by.css( 'body' ) ).getText() )
-        .toContain( 'Enter your comments' );
-    }
-  );
-} );
 
 describe( 'Table', function() {
   beforeAll( function() {
