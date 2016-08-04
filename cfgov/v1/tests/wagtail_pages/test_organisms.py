@@ -89,7 +89,7 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, '(515) 123-4567')
         self.assertContains(response, '123 abc street')
 
-    def test_sidebar_contact_info(self):
+    def test_full_width_text(self):
         """Full width text content correctly displays on a Learn Page"""
         learn_page = LearnPage(
                 title='Learn Page', 
