@@ -11,14 +11,11 @@ module.exports = {
   specsBasePath: specsRoot + '**/*',
 
   suites: {
-    functional: [
-      specsRoot + 'wagtail/**/*.js'
+    integration: [
+      specsRoot + 'integration/**/*.js'
     ],
     content: [
-      specsRoot + 'content/**/*.js',
-      specsRoot + 'molecules/**/*.js',
-      specsRoot + 'organisms/**/*.js',
-      specsRoot + 'templates/**/*.js'
+      specsRoot + 'molecules/**/*.js'
     ]
   },
 
