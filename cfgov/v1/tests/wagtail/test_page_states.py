@@ -58,7 +58,7 @@ class PageStatesTestCase(TestCase):
 		shared_draft.shared = False
 		save_page(page=shared_draft)
 
-		www_response = c.get('/shared/')
+		www_response = c.get('/page/')
 		self.assertEqual(www_response.status_code, 404)
 
 		staging_response = c.get(
@@ -69,6 +69,7 @@ class PageStatesTestCase(TestCase):
 		self.assertNotContains(staging_response, 'Draft Page Updates')
 
 	def test_live_page(self):
+		""" Live page should load in www"""
 		live_page = LandingPage(
 			title='Live',
 			slug='live',
@@ -78,3 +79,21 @@ class PageStatesTestCase(TestCase):
 
 		www_response = c.get('/live/')
 		self.assertEqual(www_response.status_code, 200)
+
+
+	def test_live_draft_page(self):
+		""" Live draft page should not display unpublished content"""
+		live_draft = LandingPage(
+			title='Page Before Updates',
+			slug='page',
+			live=True
+		)
+		publish_page(child=live_draft)
+		live_draft.live = False
+		live_draft.title = 'Draft Page Updates'
+		save_page(page=live_draft)
+
+		www_response = c.get('/page/')
+		self.assertContains(www_response, 'Page Before Updates')
+		self.assertNotContains(www_response, 'Draft Page Updates')
+
