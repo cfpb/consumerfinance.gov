@@ -15,7 +15,7 @@ module.exports = {
       specsRoot + 'integration/**/*.js'
     ],
     content: [
-      specsRoot + 'molecules/**/*.js'
+      specsRoot + 'content/**/*.js'
     ]
   },
 

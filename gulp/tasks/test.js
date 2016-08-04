@@ -183,6 +183,13 @@ function _spawnProtractor( suite ) {
   } );
 }
 
+/**
+ * Run the protractor acceptance tests.
+ * @param {string} suite Name of specific suite or suites to run, if any.
+ */
+function testAcceptanceBrowser( suite ) {
+    _spawnProtractor( suite );
+}
 
 /**
  * Run coveralls reports on Travis.
@@ -214,3 +221,8 @@ gulp.task( 'test',
     'test:unit'
   ]
 );
+
+gulp.task( 'test:acceptance', function() {
+  testAcceptanceBrowser();
+} );
+
