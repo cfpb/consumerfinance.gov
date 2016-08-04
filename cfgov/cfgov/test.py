@@ -6,7 +6,7 @@ from django.apps import apps
 from django.test.runner import DiscoverRunner
 from wagtail.wagtailcore.models import Page
 
-from scripts import initial_data, initial_test_data
+from scripts import initial_data
 
 
 class TestDataTestRunner(DiscoverRunner):

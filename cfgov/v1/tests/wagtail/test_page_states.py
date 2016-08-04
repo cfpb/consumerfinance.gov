@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.test import Client
 
-from scripts import _atomic_helpers as atomic
 from v1.models.landing_page import LandingPage
 from helpers import publish_page, save_page, save_new_page
 import os
