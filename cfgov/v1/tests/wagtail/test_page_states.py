@@ -68,3 +68,13 @@ class PageStatesTestCase(TestCase):
 		self.assertContains(staging_response, 'Page Before Updates')
 		self.assertNotContains(staging_response, 'Draft Page Updates')
 
+	def test_live_page(self):
+		live_page = LandingPage(
+			title='Live',
+			slug='live',
+			live=True,
+		)
+		publish_page(child=live_page)
+
+		www_response = c.get('/live/')
+		self.assertEqual(www_response.status_code, 200)
