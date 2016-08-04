@@ -8,38 +8,6 @@ var SharedDraftPage = statePages.shareddraftpage;
 var TITLE_TAGLINE = ' | Consumer Financial Protection Bureau';
 
 
-
-describe( 'Wagtail Shared Draft Page', function() {
-  var page;
-
-  beforeAll( function() {
-    page = new SharedDraftPage();
-  } );
-
-  it( 'should not load in a browser',
-    function() {
-      page.get();
-      expect( !page );
-    }
-  );
-
-  it( 'should properly load in a browser',
-    function() {
-      page.getStaging();
-      expect( page.pageTitle() ).toEqual( 'Shared Page' + TITLE_TAGLINE );
-    }
-  );
-
-  it( 'should not display unshared content',
-    function() {
-      page.getStaging();
-      expect( page.pageTitle() ).not.toEqual(
-        'Shared Draft Page' + TITLE_TAGLINE );
-    }
-  );
-
-} );
-
 describe( 'Wagtail Live Page', function() {
   beforeAll( function() {
     browser.get( '/live-page/' );
