@@ -29,16 +29,14 @@ class FilterCheckboxListTestCase(TestCase):
         field = self.get_field()
         self.assertRaises(forms.ValidationError, field.validate, None)
 
-    def test_invalid_value(self):
-        field = self.get_field()
-        self.assertRaises(forms.ValidationError, field.validate, 'd')
+    def test_invalid_value_passes(self):
+        self.get_field().validate('d')
 
     def test_multiple_values(self):
         self.get_field().validate(['a', 'b'])
 
-    def test_multiple_invalid_values(self):
-        field = self.get_field()
-        self.assertRaises(forms.ValidationError, field.validate, ['a', 'd'])
+    def test_multiple_values_invalid_passes(self):
+        self.get_field().validate(['a', 'd'])
 
     def test_validation_error_uses_message(self):
         try:
@@ -128,26 +126,38 @@ class CalendarFormTestCaseMixin(object):
         )
         self.assertTrue(form.is_valid())
 
-    def test_bad_calendar_is_invalid(self):
+    def test_bad_calendar_is_valid(self):
         form = self.get_form(
             filter_calendar=['purple'],
             filter_range_date_gte='2015-01-02',
             filter_range_date_lte='2016-01-02'
         )
-        self.assertFalse(form.is_valid())
+        self.assertTrue(form.is_valid())
 
-    def test_clean_returns_cfpbcalendars(self):
+    def test_cleaned_calendars(self):
         titles = ['red', 'blue']
         form = self.get_form(
             filter_calendar=titles,
             filter_range_date_gte='2015-01-02'
         )
-        form.is_valid()
+        self.assertTrue(form.is_valid())
 
         calendars = form.cleaned_data['filter_calendar']
         for title, calendar in zip(titles, calendars):
             self.assertIsInstance(calendar, CFPBCalendar)
             self.assertEqual(calendar.title, title)
+
+    def test_cleaned_bad_calendar(self):
+        form = self.get_form(
+            filter_calendar=['red', 'purple'],
+            filter_range_date_gte='2015-01-02',
+            filter_range_date_lte='2016-01-02'
+        )
+        self.assertTrue(form.is_valid())
+
+        calendars = form.cleaned_data['filter_calendar']
+        self.assertEqual(len(calendars), 1)
+        self.assertEqual(calendars[0].title, 'red')
 
 
 class CalendarFilterFormTestCase(CalendarFormTestCaseMixin, TestCase):

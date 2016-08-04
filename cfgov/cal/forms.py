@@ -18,8 +18,6 @@ class FilterCheckboxList(forms.MultipleChoiceField):
                 msg = msg % self.label
             raise forms.ValidationError(msg, code='required')
 
-        super(FilterCheckboxList, self).validate(value)
-
 
 class FilterDateField(forms.DateField):
     def clean(self, value):
