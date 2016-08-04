@@ -27,6 +27,8 @@
 
    value.heading:             A string containing title of module.
 
+   value.sub_heading:         A string containing the subtitle of module.
+
    value.body:                A string containing the content to display below
                               the heading (typically a paragraph).
 
@@ -64,6 +66,8 @@
 
     <div class="m-info-unit_content">
         {{ value.heading | safe if value.heading else '' }}
+
+        {{ value.sub_heading | safe if value.sub_heading else '' }}
 
         {{ value.body | safe }}
 
