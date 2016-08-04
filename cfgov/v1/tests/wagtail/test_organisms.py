@@ -186,7 +186,6 @@ class OrganismsTestCase(TestCase):
 		publish_page(child=learn_page)
 		response = c.get('/learn/')
 		self.assertContains(response, 'table hyperlink')
-		self.assertContains(response, 'table text')
 		self.assertContains(response, 'table text blob')
 		self.assertContains(response, 'table rich text blob')
 
