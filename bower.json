@@ -1,7 +1,7 @@
 {
   "name": "cfgov-refresh",
-  "version": "3.0.0-3.3.20",
-  "description": "Refreshing consumerfinance.gov.",
+  "version": "3.6",
+  "description": "The consumerfinance.gov website.",
   "keywords": [
     "cfpb",
     "consumerfinance.gov",
