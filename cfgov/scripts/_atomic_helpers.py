@@ -7,8 +7,8 @@ contact_email = {
     "value": {
         "emails": [
             {
-                "url": "/",
-                "text": "test@example.com"
+                "url": "test@example.com",
+                "text": "e-mail"
             }
         ]
     }
