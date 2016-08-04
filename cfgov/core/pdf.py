@@ -30,8 +30,9 @@ class PDFGenerator(object):
     @staticmethod
     def _try_pdfreactor_import():
         try:
-            pdfreactor_module = os.environ.get('PDFREACTOR_LIB')
-            module = importlib.import_module(pdfreactor_module)
+            pdfreactor_lib = os.environ.get('PDFREACTOR_LIB')
+            sys.path.append(pdfreactor_lib)
+            module = importlib.import_module('PDFreactor')
             return getattr(module, 'PDFreactor')
         except (AttributeError, ImportError):
             pass
