@@ -11,7 +11,7 @@ from wagtail.wagtailcore.blocks import StreamValue
 from helpers import publish_page
 from v1.models.snippets import Contact
 
-c = Client()
+django_client = Client()
 
 '''
 TODO: Create tests for the following organisms:
@@ -49,7 +49,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=landing_page)
-		response = c.get('/landing/')
+		response = django_client.get('/landing/')
 		self.assertContains(response, 'this is well content')
 
 	def test_main_contact_info(self):
@@ -65,7 +65,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=sublanding_page)
-		response = c.get('/sublanding/')
+		response = django_client.get('/sublanding/')
 		# self.assertContains(response, 'test@example.com')
 		self.assertContains(response, '(515) 123-4567')
 		self.assertContains(response, '123 abc street')
@@ -84,7 +84,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=landing_page)
-		response = c.get('/landing/')
+		response = django_client.get('/landing/')
 		# self.assertContains(response, 'test@example.com')
 		self.assertContains(response, '(515) 123-4567')
 		self.assertContains(response, '123 abc street')
@@ -101,7 +101,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=learn_page)
-		response = c.get('/learn/')
+		response = django_client.get('/learn/')
 		self.assertContains(response, 'Full width text content')
 
 
@@ -120,7 +120,7 @@ class OrganismsTestCase(TestCase):
 			True,
 		)
 		publish_page(child=landing_page)
-		response = c.get('/landing/')
+		response = django_client.get('/landing/')
 		self.assertContains(response, 'Image 25 75 Group')
 		self.assertContains(response, 'Image 50 50 Group')
 
@@ -137,7 +137,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=landing_page)
-		response = c.get('/landing/')
+		response = django_client.get('/landing/')
 		self.assertContains(response, 'Half Width Link Blob Group')
 
 	# TODO: More comprehensive test for this organism
@@ -153,7 +153,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=sublanding_page)
-		response = c.get('/sublanding/')
+		response = django_client.get('/sublanding/')
 		self.assertContains(response, 'Email Sign up')
 
 	# TODO: More comprehensive test for this organism
@@ -169,7 +169,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=sublanding_page)
-		response = c.get('/sublanding/')
+		response = django_client.get('/sublanding/')
 		self.assertContains(response, 'Enter your comments')
 
 	def test_table(self):
@@ -184,7 +184,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=learn_page)
-		response = c.get('/learn/')
+		response = django_client.get('/learn/')
 		self.assertContains(response, 'table hyperlink')
 		self.assertContains(response, 'table text blob')
 		self.assertContains(response, 'table rich text blob')
@@ -201,7 +201,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=browse_page)
-		response = c.get('/browse/')
+		response = django_client.get('/browse/')
 		self.assertContains(response, 'Expandable Group')
 		self.assertContains(response, 'Expandable group body')
 
@@ -217,7 +217,7 @@ class OrganismsTestCase(TestCase):
 			True
 		)
 		publish_page(child=learn_page)
-		response = c.get('/learn/')
+		response = django_client.get('/learn/')
 		self.assertContains(response, 'Item Introduction')
 		self.assertContains(response, 'Item introduction body')
 
