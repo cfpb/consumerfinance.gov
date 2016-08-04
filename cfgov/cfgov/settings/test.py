@@ -7,4 +7,6 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+
 TEST_RUNNER = 'cfgov.test.TestDataTestRunner'
