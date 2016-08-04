@@ -7,20 +7,6 @@ var SharedDraftPage = statePages.shareddraftpage;
 
 var TITLE_TAGLINE = ' | Consumer Financial Protection Bureau';
 
-
-describe( 'Wagtail Live Page', function() {
-  beforeAll( function() {
-    browser.get( '/live-page/' );
-  } );
-
-  it( 'should properly load in a browser',
-    function() {
-      expect( browser.getTitle() ).toEqual( 'Live Page' + TITLE_TAGLINE );
-    }
-  );
-
-} );
-
 describe( 'Wagtail Live Draft Page', function() {
   beforeAll( function() {
     browser.get( '/live-draft-page/' );
