@@ -5,7 +5,7 @@ from v1.models.landing_page import LandingPage
 from helpers import publish_page, save_page, save_new_page
 import os
 
-c = Client()
+django_client = Client()
 
 class PageStatesTestCase(TestCase):
 
@@ -18,9 +18,9 @@ class PageStatesTestCase(TestCase):
 			shared=False
 		)
 		save_new_page(child=draft)
-		www_response = c.get('/draft/')
+		www_response = django_client.get('/draft/')
 		self.assertEqual(www_response.status_code, 404)
-		staging_response = c.get(
+		staging_response = django_client.get(
 			'/draft/', 
 			HTTP_HOST=os.environ.get('DJANGO_STAGING_HOSTNAME')
 		)
@@ -35,9 +35,9 @@ class PageStatesTestCase(TestCase):
 			shared=True,
 		)
 		save_new_page(child=shared)
-		www_response = c.get('/shared/')
+		www_response = django_client.get('/shared/')
 		self.assertEqual(www_response.status_code, 404)
-		staging_response = c.get(
+		staging_response = django_client.get(
 			'/shared/', 
 			HTTP_HOST=os.environ.get('DJANGO_STAGING_HOSTNAME')
 		)
@@ -57,10 +57,10 @@ class PageStatesTestCase(TestCase):
 		shared_draft.shared = False
 		save_page(page=shared_draft)
 
-		www_response = c.get('/page/')
+		www_response = django_client.get('/page/')
 		self.assertEqual(www_response.status_code, 404)
 
-		staging_response = c.get(
+		staging_response = django_client.get(
 			'/page/', 
 			HTTP_HOST=os.environ.get('DJANGO_STAGING_HOSTNAME')
 		)
@@ -76,7 +76,7 @@ class PageStatesTestCase(TestCase):
 		)
 		publish_page(child=live_page)
 
-		www_response = c.get('/live/')
+		www_response = django_client.get('/live/')
 		self.assertEqual(www_response.status_code, 200)
 
 
@@ -92,7 +92,7 @@ class PageStatesTestCase(TestCase):
 		live_draft.title = 'Draft Page Updates'
 		save_page(page=live_draft)
 
-		www_response = c.get('/page/')
+		www_response = django_client.get('/page/')
 		self.assertContains(www_response, 'Page Before Updates')
 		self.assertNotContains(www_response, 'Draft Page Updates')
 

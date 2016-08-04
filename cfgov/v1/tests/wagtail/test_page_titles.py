@@ -36,7 +36,7 @@ ActivityLogPage
  
 '''
 
-c = Client()
+django_client = Client()
 
 class PageTitlesTestCase(TestCase):
 	""" Tests that all Wagtail page types load and display the title correctly """
@@ -48,7 +48,7 @@ class PageTitlesTestCase(TestCase):
 				slug = 'page',
 			)
 		)
-		response = c.get('/page/')
+		response = django_client.get('/page/')
 		self.assertContains(response, 'Title ABCD')
 
 	def test_sublanding_page(self):

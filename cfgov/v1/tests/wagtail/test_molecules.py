@@ -11,7 +11,7 @@ from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from wagtail.wagtailcore.blocks import StreamValue
 from helpers import publish_page
 
-c = Client()
+django_client = Client()
 
 class MoleculesTestCase(TestCase):
 
@@ -27,7 +27,7 @@ class MoleculesTestCase(TestCase):
 			True
 		)
 		publish_page(child=bfp)
-		response = c.get('/browse-filterable-page/')
+		response = django_client.get('/browse-filterable-page/')
 		self.assertContains(response, 'this is an intro')
 
 	def test_featured_content(self):
@@ -46,7 +46,7 @@ class MoleculesTestCase(TestCase):
 			atomic.expandable_group
 		], True)
 		publish_page(child=bp)
-		response = c.get('/browse-page/')
+		response = django_client.get('/browse-page/')
 		self.assertContains(response, 'this is a featured content body')
 
 	def test_quote(self):
@@ -61,7 +61,7 @@ class MoleculesTestCase(TestCase):
 			True
 		)
 		publish_page(child=learn_page)
-		response = c.get('/learn/')
+		response = django_client.get('/learn/')
 		self.assertContains(response, 'this is a quote')
 		self.assertContains(response, 'a citation')
 
@@ -77,7 +77,7 @@ class MoleculesTestCase(TestCase):
 			True
 		)
 		publish_page(child=learn_page)
-		response = c.get('/learn/')
+		response = django_client.get('/learn/')
 		self.assertContains(response, 'this is a call to action')
 
 	def test_hero(self):
@@ -92,7 +92,7 @@ class MoleculesTestCase(TestCase):
 			True
 		)
 		publish_page(child=sfp)
-		response = c.get('/sfp/')
+		response = django_client.get('/sfp/')
 		self.assertContains(response, 'this is a hero heading')
 
 
@@ -108,7 +108,7 @@ class MoleculesTestCase(TestCase):
 			True
 		)
 		publish_page(child=landing_page)
-		response = c.get('/landing/')
+		response = django_client.get('/landing/')
 		self.assertContains(response, 'this is a related link')
 
 	def test_half_width_link_blob(self):
@@ -123,7 +123,7 @@ class MoleculesTestCase(TestCase):
 			True
 		)
 		publish_page(child=landing_page)
-		response = c.get('/landing/')
+		response = django_client.get('/landing/')
 		self.assertContains(response, 'this is a half width link blob')
 
 	def test_rss_feed(self):
@@ -138,7 +138,7 @@ class MoleculesTestCase(TestCase):
 			True
 		)
 		publish_page(sublanding_page)
-		response = c.get('/sublanding/')
+		response = django_client.get('/sublanding/')
 		self.assertContains(response, 'rss-subscribe-section')
 
 	def test_expandable(self):
@@ -153,7 +153,7 @@ class MoleculesTestCase(TestCase):
 			True,
 		)
 		publish_page(child=browse_page)
-		response = c.get('/browse/')
+		response = django_client.get('/browse/')
 		self.assertContains(response, 'this is an expandable')
 
 	def test_related_metadata(self):
@@ -168,7 +168,7 @@ class MoleculesTestCase(TestCase):
 			True,
 		)
 		publish_page(child=ddp)
-		response = c.get('/ddp/')
+		response = django_client.get('/ddp/')
 		self.assertContains(response, 'this is a related metadata heading')
 
 	def test_image_texts(self):
@@ -186,7 +186,7 @@ class MoleculesTestCase(TestCase):
 			True,
 		)
 		publish_page(child=landing_page)
-		response = c.get('/landing/')
+		response = django_client.get('/landing/')
 		self.assertContains(response, 'this is an image text in a 50 50 group')
 		self.assertContains(response, 'this is an image text in a 25 75 group')
 
@@ -202,5 +202,5 @@ class MoleculesTestCase(TestCase):
 			True,
 		)
 		publish_page(child=sublanding_page)
-		response = c.get('/sublanding/')
+		response = django_client.get('/sublanding/')
 		self.assertContains(response, 'this is a form field with button')
