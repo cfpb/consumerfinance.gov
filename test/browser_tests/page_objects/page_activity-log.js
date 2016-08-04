@@ -2,12 +2,11 @@
 
 var filter = require( '../shared_objects/filter.js' );
 var filterableListControl =
-require( '../shared_objects/filterable-list-control.js' );
+  require( '../shared_objects/filterable-list-control.js' );
 var pagination = require( '../shared_objects/pagination' );
 
 function ActivityLog() {
-  Object.assign( this, filter, filterableListControl,
-    pagination );
+  Object.assign( this, filter, filterableListControl, pagination );
 
   this.get = function() {
     browser.get( '/activity-log/' );
