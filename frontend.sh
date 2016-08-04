@@ -44,8 +44,6 @@ clean() {
 install() {
   echo 'Installing front-end dependencies...'
 
-  # Copy globally-installed packages.
-  # Protractor - JavaScript acceptance testing.
   if [ "$cli_flag" = "development" ] ||
      [ "$cli_flag" = "test" ]; then
 
@@ -102,7 +100,7 @@ is_installed() {
   echo "$return_"
 }
 
-# Execute requested (or all) functions
+# Execute requested (or all) functions.
 if [ "$1" == "init" ] || [ "$1" == "build" ]; then
   if [ "$1" == "init" ]; then
     init ""

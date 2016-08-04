@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Redesigned userbar: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#redesigned-userbar
 - Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader
 - Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
+- New users created via the Wagtail admin will automatically receive a password reset email.
 
 ### Changed
 - `content_panels` are no longer defined in `AbstractFilterPage`; defined in its subclasses instead
