@@ -21,6 +21,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
 
 ### Changed
+- Many browser tests have been rewritten as Python unit tests
+- A new spec suite "integration" encompasses tests from a few directories that were not named appropriately.
+- Gulp test has been updated as there are no longer any browser tests to run by default
 - `content_panels` are no longer defined in `AbstractFilterPage`; defined in its subclasses instead
 - Upgraded Wagtail from 1.3 to 1.5.2
 - Consolidated all environment variables in config/environment.js.
@@ -32,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Unused `SELENIUM_URL` environment variable.
 - Removed unused `interactiveTestPort` test variable.
 - Squashed all migrations
+- `initial_test_data.py` as the tests create the data they need now.
 
 ### Fixed
 
