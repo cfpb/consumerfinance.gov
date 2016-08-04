@@ -66,7 +66,7 @@ class OrganismsTestCase(TestCase):
 		)
 		publish_page(child=sublanding_page)
 		response = django_client.get('/sublanding/')
-		# self.assertContains(response, 'test@example.com')
+		self.assertContains(response, 'test@example.com')
 		self.assertContains(response, '(515) 123-4567')
 		self.assertContains(response, '123 abc street')
 
@@ -85,7 +85,7 @@ class OrganismsTestCase(TestCase):
 		)
 		publish_page(child=landing_page)
 		response = django_client.get('/landing/')
-		# self.assertContains(response, 'test@example.com')
+		self.assertContains(response, 'test@example.com')
 		self.assertContains(response, '(515) 123-4567')
 		self.assertContains(response, '123 abc street')
 
