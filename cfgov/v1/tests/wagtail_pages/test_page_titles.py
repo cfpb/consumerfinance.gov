@@ -52,48 +52,48 @@ class PageTitlesTestCase(TestCase):
         self.assertContains(response, 'Title ABCD')
 
     def test_sublanding_page(self):
-        self.page_loads_with_correct_title(page_cls = SublandingPage)
+        self.page_loads_with_correct_title(page_cls=SublandingPage)
 
     def test_landing_page(self):
-        self.page_loads_with_correct_title(page_cls = LandingPage)
+        self.page_loads_with_correct_title(page_cls=LandingPage)
 
     def test_browse_page(self):
-        self.page_loads_with_correct_title(page_cls = BrowsePage)
+        self.page_loads_with_correct_title(page_cls=BrowsePage)
 
     def test_browse_filterable_page(self):
-        self.page_loads_with_correct_title(page_cls = BrowseFilterablePage)
+        self.page_loads_with_correct_title(page_cls=BrowseFilterablePage)
 
     def test_sublanding_filterable_page(self):
-        self.page_loads_with_correct_title(page_cls = SublandingFilterablePage)
+        self.page_loads_with_correct_title(page_cls=SublandingFilterablePage)
 
     def test_event_archive_page(self):
-        self.page_loads_with_correct_title(page_cls = EventArchivePage)
+        self.page_loads_with_correct_title(page_cls=EventArchivePage)
 
     def test_event_page(self):
-        self.page_loads_with_correct_title(page_cls = EventPage)
+        self.page_loads_with_correct_title(page_cls=EventPage)
 
     def test_learn_page(self):
-        self.page_loads_with_correct_title(page_cls = LearnPage)
+        self.page_loads_with_correct_title(page_cls=LearnPage)
 
     def test_document_detail_page(self):
-        self.page_loads_with_correct_title(page_cls = DocumentDetailPage)
+        self.page_loads_with_correct_title(page_cls=DocumentDetailPage)
 
     def test_newsroom_landing_page(self):
-        self.page_loads_with_correct_title(page_cls = NewsroomLandingPage)
+        self.page_loads_with_correct_title(page_cls=NewsroomLandingPage)
 
     def test_newsroom_page(self):
-        self.page_loads_with_correct_title(page_cls = NewsroomPage)
+        self.page_loads_with_correct_title(page_cls=NewsroomPage)
 
     def test_legacy_newsroom_page(self):
-        self.page_loads_with_correct_title(page_cls = LegacyNewsroomPage)
+        self.page_loads_with_correct_title(page_cls=LegacyNewsroomPage)
 
     def test_legacy_blog_page(self):
-        self.page_loads_with_correct_title(page_cls = LegacyBlogPage)
+        self.page_loads_with_correct_title(page_cls=LegacyBlogPage)
 
     def test_blog_page(self):
-        self.page_loads_with_correct_title(page_cls = BlogPage)
+        self.page_loads_with_correct_title(page_cls=BlogPage)
 
     def test_activity_log_page(self):
-        self.page_loads_with_correct_title(page_cls = ActivityLogPage)
+        self.page_loads_with_correct_title(page_cls=ActivityLogPage)
 
     
