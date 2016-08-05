@@ -66,14 +66,13 @@ class CalendarPDFForm(CalendarFilterForm):
         super(CalendarPDFForm, self).__init__(*args, **kwargs)
         self.fields['filter_calendar'].required = True
 
-    def cleaned_data_is_none(self, key):
-        return key in self.cleaned_data and self.cleaned_data[key] is None
-
     def clean(self):
         super(CalendarPDFForm, self).clean()
         if (
-            self.cleaned_data_is_none('filter_range_date_gte') and
-            self.cleaned_data_is_none('filter_range_date_lte')
+            not self.cleaned_data.get('filter_range_date_gte') and
+            not self.cleaned_data.get('filter_range_date_lte') and
+            not self.has_error('filter_range_date_gte') and
+            not self.has_error('filter_range_date_lte')
         ):
             raise forms.ValidationError(
                 ERROR_MESSAGES['DATE_ERRORS']['one_required']
