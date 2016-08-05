@@ -174,12 +174,22 @@ class CalendarFilterFormTestCase(CalendarFormTestCaseMixin, TestCase):
         self.assertTrue(form.is_valid())
 
     def test_only_date_is_valid(self):
-        form = self.get_form(filter_range_date_get='2015-01-02')
+        form = self.get_form(filter_range_date_gte='2015-01-02')
         self.assertTrue(form.is_valid())
 
 
 class CalendarPDFFormTestCase(CalendarFormTestCaseMixin, TestCase):
     form_cls = CalendarPDFForm
+
+    def test_cleaned_data_is_none(self):
+        form = self.form_cls()
+        form.cleaned_data = {'a': None}
+        self.assertTrue(form.cleaned_data_is_none('a'))
+
+    def test_cleaned_data_is_none_not_none(self):
+        form = self.form_cls()
+        form.cleaned_data = {'a': 'x'}
+        self.assertFalse(form.cleaned_data_is_none('a'))
 
     def test_calendar_choices_required(self):
         self.assertTrue(self.get_form().fields['filter_calendar'].required)
@@ -192,12 +202,19 @@ class CalendarPDFFormTestCase(CalendarFormTestCaseMixin, TestCase):
         self.assertFalse(form.is_valid())
 
     def test_only_date_invalid(self):
-        form = self.get_form(filter_range_date_get='2015-01-02')
+        form = self.get_form(filter_range_date_gte='2015-01-02')
         self.assertFalse(form.is_valid())
 
     def test_single_date_valid(self):
         form = self.get_form(
             filter_calendar=['red'],
-            filter_range_date_get='2015-01-02'
+            filter_range_date_gte='2015-01-02'
         )
-        self.assertFalse(form.is_valid())
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_date_single_error(self):
+        form = self.get_form(
+            filter_calendar=['red'],
+            filter_range_date_gte='abcde'
+        )
+        self.assertEqual(len(form.errors), 1)
