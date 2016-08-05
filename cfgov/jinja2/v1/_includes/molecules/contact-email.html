@@ -21,7 +21,7 @@
     <p>
         {% for email in value.emails %}
             <a href="mailto:{{ email.url }}">
-                {{ email.text or email.url }}
+                {{ email.url }}
             </a><br>
         {% endfor %}
     </p>
