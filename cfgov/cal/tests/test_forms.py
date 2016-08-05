@@ -181,16 +181,6 @@ class CalendarFilterFormTestCase(CalendarFormTestCaseMixin, TestCase):
 class CalendarPDFFormTestCase(CalendarFormTestCaseMixin, TestCase):
     form_cls = CalendarPDFForm
 
-    def test_cleaned_data_is_none(self):
-        form = self.form_cls()
-        form.cleaned_data = {'a': None}
-        self.assertTrue(form.cleaned_data_is_none('a'))
-
-    def test_cleaned_data_is_none_not_none(self):
-        form = self.form_cls()
-        form.cleaned_data = {'a': 'x'}
-        self.assertFalse(form.cleaned_data_is_none('a'))
-
     def test_calendar_choices_required(self):
         self.assertTrue(self.get_form().fields['filter_calendar'].required)
 
