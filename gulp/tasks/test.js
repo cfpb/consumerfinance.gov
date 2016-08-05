@@ -188,16 +188,7 @@ function _spawnProtractor( suite ) {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function testAcceptanceBrowser( suite ) {
-  spawn(
-    './initial-test-data.sh', [], { stdio: 'inherit' }
-  ).once( 'close', function( code ) {
-    if ( code ) {
-      plugins.util.log( 'Initial test data script exited with code ' + code );
-      process.exit( 1 );
-    }
-    plugins.util.log( 'Loaded Wagtail database data!' );
     _spawnProtractor( suite );
-  } );
 }
 
 /**
@@ -213,18 +204,6 @@ gulp.task( 'test:coveralls', testCoveralls );
 
 gulp.task( 'test:a11y', testA11y );
 
-gulp.task( 'test:acceptance:full', function() {
-  testAcceptanceBrowser();
-} );
-gulp.task( 'test:acceptance:functional', function() {
-  testAcceptanceBrowser( 'functional' );
-} );
-
-gulp.task( 'test:acceptance',
-  [
-    'test:acceptance:full'
-  ]
-);
 
 gulp.task( 'test:unit:scripts', testUnitScripts );
 gulp.task( 'test:unit:server', testUnitServer );
@@ -239,7 +218,11 @@ gulp.task( 'test:unit',
 gulp.task( 'test',
   [
     'lint',
-    'test:unit',
-    'test:acceptance:functional'
+    'test:unit'
   ]
 );
+
+gulp.task( 'test:acceptance', function() {
+  testAcceptanceBrowser();
+} );
+
