@@ -47,6 +47,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Ignored `console.log` in tests and enforced `no-process`.
 - Updated `STAGING_HOSTNAME` to `DJANGO_STAGING_HOSTNAME` environment var.
 - Allows passing of port to `runserver.sh`.
+- Updated browse-filterable test suite to properly nest pagination tests.
+- Updated pagination to support multiple pagination molecules on a single page.
 
 ### Removed
 - Unused `SELENIUM_URL` environment variable.
@@ -55,8 +57,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `initial_test_data.py` as the tests create the data they need now.
 
 ### Fixed
-
 - Added misnamed and unreferenced environment variables to .env.
+- Moved pagination tests from /organisms/ to /molecules/ where they belong.
 
 
 ## 3.4.0 2016-07-12
