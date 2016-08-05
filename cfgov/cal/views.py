@@ -2,24 +2,19 @@ import sys
 import os
 import six
 import urllib2
-from httplib import BadStatusLine
 
 from datetime import date, datetime, timedelta
-from dateutil.relativedelta import relativedelta
-
-from rest_framework import generics
-
-from django.shortcuts import render, render_to_response
-from django.http import HttpResponse
-from django import forms
-from django.utils.safestring import mark_safe
-from django.template import RequestContext
-from django.template.loader import get_template
+from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.db.models import Max, Min, Q
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, render_to_response
+from django.template.loader import get_template
+from httplib import BadStatusLine
 
-from cal.models import CFPBCalendar, CFPBCalendarEvent
+from cal.forms import CalendarFilterForm, CalendarPDFForm
+from cal.models import CFPBCalendarEvent
 
 
 ## TODO: Update to python 3 when PDFreactor's python wrapper supports it.
@@ -29,22 +24,6 @@ if six.PY2:
         from PDFreactor import *
     except ImportError:
        PDFreactor = None
-
-
-class CalendarFilterForm(forms.Form):
-    filter_calendar = forms.MultipleChoiceField(choices=[], required=False)
-    filter_range_date_gte = forms.DateField(required=False)
-    filter_range_date_lte = forms.DateField(required=False)
-
-    def __init__(self, *args, **kwargs):
-        super(CalendarFilterForm, self).__init__(*args, **kwargs)
-        self.fields['filter_calendar'].choices = [(c.title, c.title) for c in
-                                                  CFPBCalendar.objects.all()]
-
-    def clean_filter_calendar(self):
-        calendar_names = self.cleaned_data['filter_calendar']
-        calendars = CFPBCalendar.objects.filter(title__in=calendar_names)
-        return calendars
 
 
 class PaginatorForSheerTemplates(Paginator):
@@ -66,9 +45,11 @@ def display(request, pdf=False):
     """
     display (potentially filtered) html view of the calendar
     """
+
     template_name='about-us/the-bureau/leadership-calendar/index.html'
-    form = CalendarFilterForm(request.GET)
+    form = CalendarPDFForm(request.GET) if pdf else CalendarFilterForm(request.GET)
     context = {'form': form}
+    form_is_valid = form.is_valid()
 
     if form.is_valid():
         set_cal_events_context(context)
@@ -81,6 +62,13 @@ def display(request, pdf=False):
                 return render(request, template_name, context)
 
         set_pagination_context(request, context)
+
+    elif not form_is_valid and pdf:
+        for error in form.errors.itervalues():
+            messages.error(request,
+                           u''.join(error).encode('utf-8',errors='ignore'),
+                           extra_tags='leadership-calendar')
+        return redirect_to_leadership_view()
 
     return render(request, template_name, context)
 
@@ -175,4 +163,10 @@ def pdf_response(request, context):
         response['Content-Disposition'] = 'attachment; filename=cfpb-leadership.pdf'
         return response
     except (urllib2.HTTPError, urllib2.URLError, BadStatusLine):
-        return render(request, template_name, context)
+        messages.error(request, 'Error Creating PDF', extra_tags='leadership-calendar')
+        return redirect_to_leadership_view()
+
+def redirect_to_leadership_view():
+    view_name = 'the-bureau:leadership-calendar'
+    anchor_hash = '#leadership-pdf-calendar'
+    return HttpResponseRedirect(reverse(view_name) + anchor_hash)

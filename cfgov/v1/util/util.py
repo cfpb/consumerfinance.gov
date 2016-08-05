@@ -21,7 +21,7 @@ ERROR_MESSAGES = {
         'required': 'Please select at least one of the "%s" options.'
     },
     'DATE_ERRORS': {
-        'invalid': 'You have entered an invalid date.',
+        'invalid': 'You have entered an invalid date: %s.',
         'one_required': 'Please enter at least one date.'
     }
 }
@@ -152,7 +152,7 @@ def valid_destination_for_request(request, url):
 
 def all_valid_destinations_for_request(request):
     possible_destinations = (('Wagtail','/admin/'), ('Django admin', '/django-admin/'))
-    valid_destinations = [pair for pair in possible_destinations if 
+    valid_destinations = [pair for pair in possible_destinations if
                             valid_destination_for_request(request, pair[1])]
 
-    return valid_destinations 
+    return valid_destinations
