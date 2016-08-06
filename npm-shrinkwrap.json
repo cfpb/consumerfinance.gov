@@ -8698,11 +8698,6 @@
       "from": "sinon@1.17.3",
       "resolved": "http://registry.npmjs.org/sinon/-/sinon-1.17.3.tgz"
     },
-    "sinon-chai": {
-      "version": "2.8.0",
-      "from": "sinon-chai@2.8.0",
-      "resolved": "http://registry.npmjs.org/sinon-chai/-/sinon-chai-2.8.0.tgz"
-    },
     "slash": {
       "version": "1.0.0",
       "from": "slash@>=1.0.0 <2.0.0",

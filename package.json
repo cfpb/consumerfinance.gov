@@ -70,7 +70,6 @@
     "protractor": "3.2.1",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "sinon": "1.17.3",
-    "sinon-chai": "2.8.0",
     "wcag": "0.2.2"
   },
   "browser": {
