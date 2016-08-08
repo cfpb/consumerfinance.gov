@@ -2,7 +2,7 @@
 
 var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 var simpleTableRowLinks =
-  require( BASE_JS_PATH + 'modules/simple-table-row-links' );
+  require( BASE_JS_PATH + 'modules/o-table-row-links' );
 
 var chai = require( 'chai' );
 var expect = chai.expect;
@@ -15,7 +15,7 @@ var linkRowCellDom;
 var nonLinkRowCellDom;
 
 var HTML_SNIPPET =
-  '<table class="simple-table__row-links">' +
+  '<table class="o-table__row-links">' +
   '<tbody>' +
     '<tr>' +
       '<th>cell1</th>' +
@@ -39,14 +39,14 @@ function triggerClickEvent( target ) {
 }
 
 
-describe( 'simple-table-row-links', function() {
+describe( 'o-table-row-links', function() {
   jsdom();
   beforeEach( function() {
     var windowLocation;
     sandbox = sinon.sandbox.create();
 
     document.body.innerHTML = HTML_SNIPPET;
-    tableDom = document.querySelector( '.simple-table__row-links' );
+    tableDom = document.querySelector( '.o-table__row-links' );
     linkDom = tableDom.querySelector( 'a' );
     linkRowCellDom = tableDom.querySelector( '.linkRowCell' );
     nonLinkRowCellDom = tableDom.querySelector( '.nonLinkRowCell' );
