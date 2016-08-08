@@ -21,6 +21,33 @@
 
 {% block content_main %}
 
+{% set prototype = true %}
+<form class="js-validate-filters" id="registration-form">
+    <h2>Register for the conference</h2>
+    <section class="o-form-section">
+        {% do global_dict.update({
+            'input': {
+                'label':    'Name',
+                'type':     'text',
+                'size':     '1',
+                'required': true,
+                'disabled': false
+            }
+        }) %}
+        {% set value = global_dict.input %}
+        {% include 'atoms/input.html' with context %}
+
+        {% import 'molecules/big-checkbox.html' as big_checkbox %}
+        {{ big_checkbox.render({
+            "legend":   'Which days will you be attending?',
+            "fields":    [ 'Thursday afternoon',
+                           'Friday morning',
+                           'Friday lunch',
+                           'Friday afternoon']
+        },{}) }}
+    </section>
+</form>
+
     <h1>The Bureau</h1>
     <p class="lead-paragraph">
         We aim to make consumer financial markets work for consumers,
