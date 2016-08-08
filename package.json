@@ -1,6 +1,13 @@
 {
   "name": "cfgov-refresh",
-  "version": "3.6",
+  "version": "3.6.0",
+  "description": "The consumerfinance.gov website.",
+  "homepage": "http://www.consumerfinance.gov/",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
   "repository": {
     "type": "git",
     "url": "http://github.com/cfpb/cfgov-refresh.git"
