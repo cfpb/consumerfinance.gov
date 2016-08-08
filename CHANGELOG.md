@@ -12,6 +12,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## UNRELEASED
+
+### Added
+
+### Changed
+
+### Removed
+- Unused `sinon-chai` npm package.
+
+### Fixed
+
+
 ## 3.6.0
 
 ### Added
