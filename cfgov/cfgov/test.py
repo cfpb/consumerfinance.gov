@@ -6,7 +6,7 @@ from django.apps import apps
 from django.test.runner import DiscoverRunner
 from wagtail.wagtailcore.models import Page
 
-from scripts import initial_data, initial_test_data
+from scripts import initial_data
 
 
 class TestDataTestRunner(DiscoverRunner):
@@ -17,7 +17,6 @@ class TestDataTestRunner(DiscoverRunner):
             self.setup_wagtail_root()
 
         initial_data.run()
-        initial_test_data.run()
         return dbs
 
     def check_for_wagtail_root(self):

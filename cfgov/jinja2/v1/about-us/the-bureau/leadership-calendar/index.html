@@ -51,7 +51,7 @@
     <div class="block block__flush-top"
          data-qa-hook="leadership-calendar-filter">
          <div class="a-rule-break"></div>
-         <div class="o-filterable-list-controls">
+         <div class="o-filterable-list-controls" id="leadership-calendar">
 
             {# Set the filters #}
 
@@ -65,7 +65,10 @@
                 paginator,
                 events,
                 'calendar_event',
-                { 'expand_label': 'Filter calendars', 'show_errors': true }
+                { 'expand_label': 'Filter calendars',
+                  'show_errors': false,
+                  'action': './#leadership-calendar'
+                }
             ) }}
             {% if events and page_days %}
                 {{ calendar.render() }}
@@ -85,7 +88,7 @@
             only available for months when someone was serving in Bureau leadership. We’ll
             generate a PDF of the results for you. Very large requests may take a while.
         </p>
-        <div class="o-filterable-list-controls">
+        <div class="o-filterable-list-controls" id="leadership-pdf-calendar">
             {% set filter_by = {
                 'calendar':   true,
                 'range_date': true
@@ -98,12 +101,13 @@
                 'calendar_event',
                 {
                     'id_prefix'           : '',
+                    'calendar_required'   : true,
                     'expand_label'        : 'Download options',
                     'show_current_filters': false,
                     'action'              : 'pdf/',
                     'submit_label'        : 'Download PDF',
                     'form_method'         : 'get',
-                    'show_errors'         :  True
+                    'show_errors'         :  true
                 }
             ) }}
             {% import 'molecules/notification.html' as notification %}
