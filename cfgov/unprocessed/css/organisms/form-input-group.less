@@ -1,0 +1,22 @@
+.o-form-input-group {
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    .m-big-checkbox {
+      .respond-to-min(@bp-sm-min, {
+          .grid_column(12);
+      });
+    }
+
+    &__two-column .m-big-checkbox {
+        .respond-to-min(@bp-sm-min, {
+            .grid_column(6);
+            border-right-width: 7.5px;
+
+            &:nth-child(odd) {
+                margin-left: -7.5px;
+            }
+        });
+    }
+}

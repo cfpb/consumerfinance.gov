@@ -1,8 +1,8 @@
 .m-big-checkbox {
-    margin-bottom: 15px;
+    margin-bottom: unit( 15px / @base-font-size-px, em);
 
     &:last-child {
-        margin-bottom: 30px;
+        margin-bottom: unit( 30px / @base-font-size-px, em);
     }
     .a-input {
         @checkbox-width: unit( 18px / @base-font-size-px, em);
@@ -84,22 +84,6 @@
     &.selected label,
     input:checked + label {
         background-color: @input-inset-selected;
-    }
-
-    &__1 {
-      .respond-to-min(@bp-sm-min, {
-          .grid_column(12);
-      });
-    }
-    &__1-2 {
-        .respond-to-min(@bp-sm-min, {
-            .grid_column(6);
-            border-right-width: 7.5px;
-
-            &:nth-child(odd) {
-                margin-left: -7.5px;
-            }
-        });
     }
 
     &_container {
