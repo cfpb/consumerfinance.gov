@@ -1,9 +1,12 @@
+from __future__ import absolute_import
+
+import re
+
+from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.html import strip_tags
-from datetime import datetime
 
-import re
 
 class ApplicantType(models.Model):
     applicant_type = models.CharField(max_length=255)
