@@ -10,9 +10,12 @@ cd cfgov-refresh
 You may also wish to fork the repository on Github and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
 
 There are two ways to install cfgov-refresh:
+
 - [Stand-alone installation](#stand-alone-installation)
 - [Vagrant-box installation](#vagrant-box-installation)
-  :warning: These instructions are not currently working.
+
+!!! danger
+    The instruction for Vagrant are not currently working.
 
 # Stand-alone installation
 
@@ -67,9 +70,11 @@ If you need to find this info again later, you can run:
 brew info autoenv
 ```
 
-> **NOTE:** If you use Zsh you’ll need to use
-  [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
-  but we can’t provide support for issues that may arise.
+
+!!! note
+    If you use Zsh you’ll need to use
+	[zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
+	but we can’t provide support for issues that may arise.
 
 #### MySQL
 
@@ -121,18 +126,22 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 - [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
   User interface pattern-library produced by the CFPB.
 
-> **NOTE:** If you’re new to Capital Framework, we encourage you to
-  [start here](https://cfpb.github.io/capital-framework/getting-started).
+!!! note
+    If you’re new to Capital Framework, we encourage you to
+	[start here](https://cfpb.github.io/capital-framework/getting-started).
 
 1. Install [Node.js](http://nodejs.org) however you’d like.
    We recommend using [nvm](https://github.com/creationix/nvm), though.
-
-   _NOTE: This project requires Node.js v5.5 or higher, and npm v3 or higher._
+	
 2. Install [Gulp](http://gulpjs.com) and [Bower](http://bower.io):
 
 ```bash
 npm install -g gulp bower
 ```
+
+!!! note
+	This project requires Node.js v5.5 or higher, and npm v3 or higher.
+
 
 #### Set up your environment ####
 
@@ -184,13 +193,13 @@ Want to know more about what the setup scripts are doing?
 
 Get any errors? [See our troubleshooting tips.](#troubleshooting)
 
-**Continue following the [usage instructions](README.md#usage) in the README.**
+**Continue following the [usage instructions](usage).**
 
 
 ## Vagrant-box installation
 
 !!! danger
-	These instructions are not currently working, but we'd like to get them working soon. [PRs welcome :)](CONTRIBUTING.md)
+	These instructions are not currently working, but we'd like to get them working soon. [PRs welcome](contributing).
 
 ### 1. Environment variables setup
 
@@ -233,7 +242,8 @@ local machine. To create this virtual environment, you need to execute the follo
 vagrant up
 ```
 
-> **NOTE:** Please be patient the first time you run this step.
+!!! note
+	Please be patient the first time you run this step.
 
 ### 4. Front-end Tools
 
@@ -293,9 +303,10 @@ pip install git+git://github.com/rosskarchner/govdelivery
 
 Uncomment and set the GovDelivery environment variables in your `.env` file.
 
-> **NOTE:** GovDelivery is a third-party web service that powers our emails.
-  The API is used by subscribe forms on our website.
-  Users may decide to swap this tool out for another third-party service.
+!!! note
+	GovDelivery is a third-party web service that powers our emails.
+	The API is used by subscribe forms on our website.
+	Users may decide to swap this tool out for another third-party service.
 
 
 ## Curious about what the setup scripts are doing?
