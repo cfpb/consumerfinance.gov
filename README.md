@@ -43,6 +43,8 @@ The `-a` argument is optional; if you leave it off, `mkdocs` will serve the manu
 
 Once the manual is up and running, you should continue by reading the installation and usage sections to understand how to get the full project up and running.
 
+Alternatively, if for whatever reason you don't want to browse the documentation locally, you can find the manual on the `gh-pages` branch of `cfgov-refresh`. It can be accessed at [http://cfpb.github.io/cfgov-refresh/](http://cfpb.github.io/cfgov-refresh/).
+
 ## Getting help
 
 Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues) to follow the
