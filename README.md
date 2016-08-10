@@ -10,40 +10,43 @@ and [Wagtail CMS](https://wagtail.io) for content administration.
 
 ![Screenshot of cfgov-refresh](screenshot.jpg)
 
-The instructions for using this project are contained in the `docs` subfolder of this repository. You should get started by checking out the repository by doing
+
+## Quickstart
+
+Full [installation](http://cfpb.github.io/cfgov-refresh/installation/)
+and [usage](http://cfpb.github.io/cfgov-refresh/usage/) instructions 
+are available in [our documentation](http://cfpb.github.io/cfgov-refresh).
+
+Ensure that Elasticsearch and MySQL are installed and that MySQL is
+either runable by our [backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41) and our [runserver.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/runserver.sh#L12).
+
 ```
 git clone git@github.com:cfpb/cfgov-refresh.git
-```
-in whatever directory you keep your projects. This will create a `cfgov-refresh` directory there. Create a `virtualenv` in that directory via
-```
 cd cfgov-refresh
-virtualenv .
-```
-All development on `cfgov-refresh` must take place inside a virtual environment. If you are missing `virtualenv` install it via `pip`:
-```
-pip install virtualenv
+pip install virtualenv virtualenvwrapper
+npm install -g gulp bower
+cp .env_SAMPLE .env
+source load-env.sh
+source setup.sh
+./runserver.sh
 ```
 
-Switch to the `virtualenv` by running
-```
-source ./bin/activate
-```
-Note that there are several `activate` files in `bin`, so you'll need to run the one that is appropriate for your shell. This document assumes that you are using `bash` but if you are using e.g. `fish`, you'll need to run `. /bin/activate.fish`. If you have `virtualenvwrapper` installed, you should be able to switch via `workon cfgov-refresh`.
+## Documentation
 
-Once you have done that, to read the online documentation in a convenient format, you will need to install the `mkdocs` package via `pip`:
+Documentation for this project is available in the [docs](docs/) directory 
+and online: http://cfpb.github.io/cfgov-refresh/
+
+If you would like to browse the documentation locally, you can do so
+with `mkdocs`:
+
 ```
+git clone git@github.com:cfpb/cfgov-refresh.git
+cd cfgov-refresh
+pip install virtualenv virtualenvwrapper
+source activate-virtualenv.sh
 pip install mkdocs
+mkdocs serve
 ```
-`mkdocs` comes with a convenient server that will serve the docs for you locally. To run it, do
-```
-cd docs
-mkdocs serve [-a host:port]
-```
-The `-a` argument is optional; if you leave it off, `mkdocs` will serve the manual on `localhost:8000` and you can then navigate there in the browser and read the documentation.
-
-Once the manual is up and running, you should continue by reading the installation and usage sections to understand how to get the full project up and running.
-
-Alternatively, if for whatever reason you don't want to browse the documentation locally, you can find the manual on the `gh-pages` branch of `cfgov-refresh`. It can be accessed at [http://cfpb.github.io/cfgov-refresh/](http://cfpb.github.io/cfgov-refresh/).
 
 ## Getting help
 
