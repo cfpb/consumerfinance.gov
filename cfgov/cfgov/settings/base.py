@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     'flags',
     'v1',
     'core',
+    'data_research',
     'sheerlike',
     'cal',
     'legacy',

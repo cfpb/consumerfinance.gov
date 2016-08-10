@@ -127,6 +127,13 @@ urlpatterns = [
             name='server_error')],
         namespace='govdelivery')),
 
+    url(r'^data-research/',
+        include([
+            url(r'^conference/register/$',
+                'data_research.views.register',
+                name='register')
+        ], namespace='register_conference')),
+
     url(r'^regulation-comment/new/$',
         'core.views.regsgov_comment',
         name='reg_comment'),

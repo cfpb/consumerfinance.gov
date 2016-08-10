@@ -21,9 +21,13 @@
 
    ========================================================================== #}
 {% from 'macros/util/format/url.html' import slugify as slugify %}
-{% set id = get_unique_id('input_', '_') ~ slugify( value.label ) %}
-{% set ht_id = get_unique_id('input_ht_', '_') ~ slugify( value.label ) %}
-<div class="form-l_col form-l_col-{{ value.size if value.size else '1'}}">
+
+{% macro render(value) -%}
+
+{%- set id = get_unique_id('input_', '_') ~ slugify( value.label ) -%}
+{%- set ht_id = get_unique_id('input_ht_', '_') ~ slugify( value.label ) -%}
+
+<div class="form-l_col form-l_col-{{ value.size if value.size else '1' }}">
     <label class="form-label-header" for="{{ id }}">
         {{ value.label }}
         {%- if value.required == false -%}
@@ -40,3 +44,5 @@
            {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}
            {{ 'placeholder="' ~ value.placeholder ~ '"' if value.placeholder else '' }}>
 </div>
+
+{%- endmacro %}

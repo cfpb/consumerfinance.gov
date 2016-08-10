@@ -1,0 +1,76 @@
+{% import 'atoms/input.html' as input %}
+{% import 'atoms/textarea.html' as textarea %}
+{% import 'atoms/submit-button.html' as submit_button %}
+
+<form id="registration-form"
+      action="/data-research/conference/register/"
+      class="js-validate-filters">
+
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+    {# Form heading #}
+    {% if value.heading %}
+        <h2>{{ value.heading }}</h2>
+    {% endif %}
+
+    <section class="o-form-section">
+
+        {# Name #}
+        {{ input.render({
+            'label':    'Name',
+            'type':     'text',
+            'size':     '1',
+            'required': true,
+            'disabled': false
+        }) }}
+
+        {# Organization #}
+        {{ input.render({
+            'label':    'Organization',
+            'type':     'text',
+            'size':     '1',
+            'required': true,
+            'disabled': false
+        }) }}
+
+        {# Email #}
+        {{ input.render({
+            'label':   'Email',
+            'type':    'email',
+            'size':    '1',
+            'required': true,
+            'disabled': false
+        }) }}
+
+        {# Days attending #}
+        {% set checkbox_fields = [] %}
+        {% for field in value.days %}
+            {% do checkbox_fields.append(field) %}
+        {% endfor %}
+        {{ large_checkbox.render({
+            "legend":   'Which days will you be attending?',
+            "fields":    checkbox_fields,
+            "size" : '1'
+        }, {}) }}
+
+        {# Food/allergies/restrictions #}
+        {{ textarea.render({
+            'label':      'Do you have food allergies/restrictions?',
+            'helperText': false,
+            'required':   true,
+            'disabled':   false
+        }) }}
+
+        {# Other accomodations #}
+        {{ textarea.render({
+            'label':      'Will you require any accomodations to attend?',
+            'helperText': 'Examples: hearing, parking space, breastfeeding',
+            'required':   true,
+            'disabled':   false
+        }) }}
+
+    </section>
+
+    {{ submit_button.render({'button_text': 'Register'})}}
+
+</form>

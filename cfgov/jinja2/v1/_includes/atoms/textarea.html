@@ -15,10 +15,13 @@
    disabled:    Whether the field is disabled. Defaults to false.
 
    ========================================================================== #}
-
 {% from 'macros/util/format/url.html' import slugify as slugify %}
-{% set id = get_unique_id('textarea_', '_') ~ slugify( value.label ) %}
-{% set ht_id = get_unique_id('textarea_ht_', '_') ~ slugify( value.label ) %}
+
+{% macro render(value) -%}
+
+{%- set id = get_unique_id('textarea_', '_') ~ slugify( value.label ) -%}
+{%- set ht_id = get_unique_id('textarea_ht_', '_') ~ slugify( value.label ) -%}
+
 <div class="form-l_col form-l_col-1">
     <label for="{{ id }}" class="form-label-header">
         {{ value.label }}
@@ -35,3 +38,5 @@
               {{ 'disabled' if value.disabled else '' }}
               {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}></textarea>
 </div>
+
+{%- endmacro %}
