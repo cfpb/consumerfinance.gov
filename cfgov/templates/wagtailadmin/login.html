@@ -3,14 +3,6 @@
 
 {% block furniture %}
     <div class="content-wrapper">
-        <div style="float:right">
-        {% if '/django-admin/' in request.path %}
-            <h2><a href="/admin/">Log into Wagtail Admin</a></h2>
-        {% else %}
-            <h2><a href="/django-admin/">Log into Django Admin</a></h2>
-        {% endif %}
-        </div>
-
         {% if messages  or form.non_field_errors %}
             <div class="messages">
                 <ul>
@@ -24,21 +16,13 @@
             </div>
         {% endif %}
 
-        <form action="{% url 'wagtailadmin_login' %}" method="post" autocomplete="off">
+        <h1>Log in to consumerfinance.gov</h1>
+        <form action="{% url 'cfpb_login' %}" method="post" autocomplete="off">
             {% csrf_token %}
 
-            {% url 'wagtailadmin_home' as home_url %}
+            {% url 'user_welcome' as home_url %}
             <input type="hidden" name="next" value="{{ next|default:home_url }}" />
 
-            {% block branding_login %}
-            <h1>
-            {% if '/django-admin/' in request.path %}
-                {% trans "Sign in to consumerfinance.gov" %}
-            {% else %}
-                <img class="wagtail-logo" src="{% static 'wagtailadmin/images/wagtail-logo.svg' %}" alt="Wagtail" width="30" /> {% trans "Sign in to consumerfinance.gov" %}
-            {% endif %}
-            </h1>
-            {% endblock %}
 
             <ul class="fields">
                 <li class="full">

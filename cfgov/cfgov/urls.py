@@ -1,16 +1,25 @@
 import os
 
+from functools import partial
+
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
+from django.http import HttpResponse
+
 from legacy.views import HousingCounselorPDFView, dbrouter_shortcut, token_provider
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
+from sheerlike.middleware import GlobalRequestMiddleware
 
 from v1.views import LeadershipCalendarPDFView, unshare, change_password, \
-                     password_reset_confirm, cfpb_login, create_user, edit_user
+                     password_reset_confirm, login_with_lockout,\
+                     check_permissions, welcome
+from v1.auth_forms import CFGOVPasswordChangeForm
+
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
@@ -232,28 +241,36 @@ urlpatterns = [
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
+        url(r'^login/$', login_with_lockout, name='cfpb_login'),
+        url(r'^login/check_permissions/$', check_permissions, name='check_permissions'),
+        url(r'^login/welcome/$', welcome, name='welcome'),
+        url(r'^logout/$', auth_views.logout),
+        url('admin/login/$', RedirectView.as_view(url='/login/', permanent=True, query_string=True)),
+        url('django-admin/login/$', RedirectView.as_view(url='/login/', permanent=True, query_string=True)),
+
         url(r'^d/admin/(?P<path>.*)$', RedirectView.as_view(url='/django-admin/%(path)s',permanent=True)),
         url(r'^picard/(?P<path>.*)$', RedirectView.as_view(url='/tasks/%(path)s',permanent=True)),
-        url(r'^django-admin/login', cfpb_login, name='django_admin_login'),
-        url(r'^django-admin/auth/user/add/', create_user, name='django_admin_create_user'),
         url(r'^django-admin/password_change', change_password, name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
         url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
-        # - Overridded Wagtail Password views - #
-        url(r'^admin/login/$', cfpb_login, name='wagtailadmin_login'),
+        # - Override Django and Wagtail password views with our password policy - #
         url(r'^admin/password_reset/', include([
             url(
                 r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-                password_reset_confirm, name='wagtailadmin_password_reset_confirm',
+                password_reset_confirm, name='password_reset_confirm',
             )
         ])),
+        url(r'^django-admin/password_change', 'django.contrib.auth.views.password_change',
+            {'password_change_form': CFGOVPasswordChangeForm}),
+        url(r'^password/change/done/$',
+            auth_views.password_change_done,
+            name='password_change_done'),
         url(r'^admin/account/change_password/$', change_password, name='wagtailadmin_account_change_password'),
-        url(r'^admin/users/add/$', create_user, name='create_user'),
-        url(r'^admin/users/([^\/]+)/$', edit_user, name='edit_user'),
-        # ----------------x-------------------- #
-
+        url(r'^django-admin/', include(admin.site.urls)),
         url(r'^admin/', include(wagtailadmin_urls)),
+        url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
+
     ]
 
     if os.environ.get('DATABASE_ROUTING', False):
@@ -293,6 +310,24 @@ if settings.DEBUG :
 urlpatterns.append(url(r'', include(wagtail_urls)))
 
 from sheerlike import register_permalink
+
+from django.shortcuts import render
+
+
+def handle_error(code, request):
+    try:
+        return render(request, '%s.html' % code, context={'request': request})
+    except AttributeError:
+        # for certain URL's, it seems like our middleware doesn't run
+        # Thankfully, these are probably not errors real users see -- usually
+        # the results of a security scan, or a malformed static file reference.
+
+        return HttpResponse("This request could not be processed, "
+                            "HTTP Error %s." % code)
+
+handler404 = partial(handle_error, '404')
+handler500 = partial(handle_error, '500')
+
 
 register_permalink('posts', 'blog:detail')
 register_permalink('newsroom', 'newsroom:detail')

@@ -85,6 +85,10 @@
     } );
 
     &_content {
+        .respond-to-max( @bp-xs-max, {
+            margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+
         .respond-to-min( @bp-sm-min, {
             .grid_column( 1, 1 );
         } );

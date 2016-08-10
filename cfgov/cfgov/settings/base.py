@@ -16,6 +16,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
+
 try:
     import mysql
     MYSQL_ENGINE = 'mysql.connector.django'
@@ -160,7 +161,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -183,8 +184,8 @@ MEDIA_URL = '/f/'
 # various locations.
 STATICFILES_FINDERS = (
     'sheerlike.finders.SheerlikeStaticFinder',
-    'transition_utilities.finders.NoPHPFileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
     'compressor.finders.CompressorFinder',
 )
 
@@ -196,11 +197,6 @@ STATICFILES_DIRS = [
     PROJECT_ROOT.child('static_built')
 ]
 
-NEMO_PATH = Path(os.environ.get('NEMO_PATH') or
-        Path(REPOSITORY_ROOT, '../cfpb_nemo'))
-
-if NEMO_PATH.exists():
-    STATICFILES_DIRS.append(('nemo', NEMO_PATH))
 
 ALLOWED_HOSTS = ['*']
 
@@ -362,18 +358,17 @@ GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 # code from https://gist.github.com/msabramo/945406
 
 for app in OPTIONAL_APPS:
-    if app.get("condition", True):
-	try:
-	    __import__(app["import"])
-	except ImportError:
-	    pass
-	else:
-	    for name in app.get("apps",()):
-		if name not in INSTALLED_APPS:
-		    INSTALLED_APPS+=(name,)
-	    MIDDLEWARE_CLASSES += app.get("middleware", ())
-	    if 'TEMPLATE_CONTEXT_PROCESSORS' in locals():
-		TEMPLATE_CONTEXT_PROCESSORS += app.get("context_processors", ())
+    try:
+        __import__(app["import"])
+        for name in app.get("apps",()):
+            if name not in INSTALLED_APPS:
+                INSTALLED_APPS+=(name,)
+        MIDDLEWARE_CLASSES += app.get("middleware", ())
+        if 'TEMPLATE_CONTEXT_PROCESSORS' in locals():
+            TEMPLATE_CONTEXT_PROCESSORS += app.get("context_processors", ())
+    except ImportError:
+        pass
+
 WAGTAIL_ENABLE_UPDATE_CHECK = False  # Removes wagtail version update check banner from admin page.
 
 # Email
@@ -399,8 +394,8 @@ CFPB_COMMON_PASSWORD_RULES = [
 LOGIN_FAIL_TIME_PERIOD = os.environ.get('LOGIN_FAIL_TIME_PERIOD', 120 * 60)
 # number of failed attempts
 LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
-LOGIN_REDIRECT_URL='/admin/'
-LOGIN_URL = "/admin/login/"
+LOGIN_REDIRECT_URL='/login/welcome/'
+LOGIN_URL = "/login/"
 
 
 SHEER_SITES = {

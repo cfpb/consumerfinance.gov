@@ -23,46 +23,58 @@ class TestShareThePage(TestCase):
         for key in self.mock_request.keys():
             self.mock_request[key].user = mock.Mock()
 
+
+    @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    def test_save_draft(self, mock_configure_page_revision, mock_share, mock_check_permissions):
+    def test_save_draft(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure 'Save Draft' request sets correct values for
             is_publishing and is_sharing.
         """
+        mock_page.objects.get.return_value = self.page
         share_the_page(self.mock_request['saving'], self.page)
         mock_share.assert_called_once_with(self.page.specific, False, False)
 
+
+    @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    def test_share_on_content(self, mock_configure_page_revision, mock_share, mock_check_permissions):
+    def test_share_on_content(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure 'Share on Content' request sets correct values for
             is_publishing and is_sharing.
         """
+        mock_page.objects.get.return_value = self.page
         share_the_page(self.mock_request['sharing'], self.page)
         mock_share.assert_called_once_with(self.page.specific, True, False)
 
+
+    @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    def test_publish_to_www(self, mock_configure_page_revision, mock_share, mock_check_permissions):
+    def test_publish_to_www(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure 'Publish to WWW' request sets correct values for
             is_publishing and is_sharing.
         """
+        mock_page.objects.get.return_value = self.page
         share_the_page(self.mock_request['publishing'], self.page)
         mock_share.assert_called_once_with(self.page.specific, False, True)
 
+
+    @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    def test_function_calls(self, mock_configure_page_revision, mock_share, mock_check_permissions):
+    def test_function_calls(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure all functions are called once.
         """
+        mock_page.objects.get.return_value = self.page
         share_the_page(self.mock_request['publishing'], self.page)
         assert mock_configure_page_revision.call_count == 1
         assert mock_share.call_count == 1

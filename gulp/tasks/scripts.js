@@ -9,13 +9,16 @@
 
 var browserSync = require( 'browser-sync' );
 var gulp = require( 'gulp' );
+var gulpConcat = require( 'gulp-concat' );
 var gulpModernizr = require( 'gulp-modernizr' );
 var gulpRename = require( 'gulp-rename' );
+var gulpReplace = require( 'gulp-replace' );
 var gulpUglify = require( 'gulp-uglify' );
 var handleErrors = require( '../utils/handle-errors' );
 var paths = require( '../../config/environment' ).paths;
 var webpackConfig = require( '../../config/webpack-config.js' );
 var webpackStream = require( 'webpack-stream' );
+var configLegacy = require( '../config.js').legacy;
 
 /**
  * Standardize webpack workflow for handling script
@@ -85,6 +88,41 @@ function scriptsOnDemand() {
 }
 
 /**
+ * Bundle atomic component scripts for non-responsive pages.
+ * Provides a means to bundle JS for specific atomic components,
+ * which then can be carried over to other projects.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsNonResponsive() {
+  return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
+    .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpRename( 'header.nonresponsive.js' ) )
+    .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
+    .pipe( gulpUglify() )
+    .pipe( gulp.dest( paths.processed + '/js/atomic/' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
+/**
+ * Process Nemo JS files.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsNemo() {
+  return gulp.src( configLegacy.scripts )
+    .pipe( gulpConcat( 'scripts.js' ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpUglify() )
+    .pipe( gulpRename( 'scripts.min.js' ) )
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/js' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
+/**
  * Bundle Es5 shim scripts.
  * @returns {PassThrough} A source stream.
  */
@@ -107,12 +145,19 @@ function scriptsEs5Shim() {
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:ie', scriptsIE );
-gulp.task( 'scripts:ondemand', scriptsOnDemand );
+gulp.task( 'scripts:ondemand:base', scriptsOnDemand );
+gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
+gulp.task( 'scripts:ondemand', [
+  'scripts:ondemand:base',
+  'scripts:ondemand:nonresponsive'
+] );
+gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
   'scripts:ie',
+  'scripts:nemo',
   'scripts:es5-shim'
 ] );

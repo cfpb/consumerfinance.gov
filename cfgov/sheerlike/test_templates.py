@@ -8,13 +8,13 @@ class TestTemplates(TestCase):
     def test_get_date_obj(self):
         date_string = '2012-02'
         result = get_date_string(date_string)
-        assert(result == '2012-02-01')
+        self.assertEqual(result, '2012-02-01')
 
     def test_different_date_format(self):
         date_string = '2015-02-01T22:00:00'
         date_format = '%-I:%M%p %B %-d, %Y'
         result = get_date_string(date_string, date_format)
-        assert(result == '10:00PM February 1, 2015')
+        self.assertEqual(result, '10:00PM February 1, 2015')
 
     def test_default_timezone_is_eastern(self):
         date_string = '2015-02-01T22:00:00'
@@ -27,4 +27,4 @@ class TestTemplates(TestCase):
         date_format = '%Y-%m-%d %Z'
         tz = 'America/Chicago'
         result = get_date_string(date_string, date_format, tz)
-        assert(result == '2015-02-01 CST')
+        self.assertEqual(result, '2015-02-01 CST')

@@ -1,0 +1,132 @@
+/***** WEBFONTS *****/
+
+/* 
+ * CSS as specified in the following article until IE8 support is dropped:
+ * http://coding.smashingmagazine.com/2013/02/14/setting-weights-and-styles-at-font-face-declaration/
+ *
+ * Only the esential variants are on, by default. Uncomment any others if 
+ * you determine that you truly need them.
+ * 
+ * Formats:
+ * .woff - Modern browsers
+ * .ttf - Safari, Android, iOS
+ * .svg - Legacy iOS
+ *
+ * EOTs for internet explorer are served seprately in eot.css.
+ */
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/f26faddb-86cc-4477-a253-1e1287684336.woff") format("woff"),
+         url("../f/6de0ce4d-9278-467b-b96f-c1f5f0a4c375.ttf") format("truetype"),
+         url("../f/9fd4ea0c-b19a-4b21-9fdf-37045707dd78.svg#9fd4ea0c-b19a-4b21-9fdf-37045707dd78") format("svg");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/8344e877-560d-44d4-82eb-9822766676f9.woff") format("woff"),
+         url("../f/3a561c83-40d4-4868-8255-e8455eb009c4.ttf") format("truetype"),
+         url("../f/3966f856-9dcf-48e7-88e7-7400f1b7d619.svg#3966f856-9dcf-48e7-88e7-7400f1b7d619") format("svg");
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/1e9892c0-6927-4412-9874-1b82801ba47a.woff") format("woff"),
+         url("../f/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf") format("truetype"),
+         url("../f/52a192b1-bea5-4b48-879f-107f009b666f.svg#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/92b66dbd-4201-4ac2-a605-4d4ffc8705cc.woff") format("woff"),
+         url("../f/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf") format("truetype"),
+         url("../f/1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585.svg#1de7e6f4-9d4d-47e7-ab23-7d5cf10ab585") format("svg");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/f26faddb-86cc-4477-a253-1e1287684336.woff") format("woff"),
+         url("../f/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf") format("truetype"),
+         url("../f/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg#a89d6ad1-a04f-4a8f-b140-e55478dbea80") format("svg");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/8344e877-560d-44d4-82eb-9822766676f9.woff") format("woff"),
+         url("../f/b28b01d9-78c5-46c6-a30d-9a62c8f407c5.ttf") format("truetype"),
+         url("../f/ed4d3c45-af64-4992-974b-c37cd12a9570.svg#ed4d3c45-af64-4992-974b-c37cd12a9570") format("svg");
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/91b50bbb-9aa1-4d54-9159-ec6f19d14a7c.woff") format("woff"),
+         url("../f/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf") format("truetype"),
+         url("../f/99affa9a-a5e9-4559-bd07-20cf0071852d.svg#99affa9a-a5e9-4559-bd07-20cf0071852d") format("svg");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/bc350df4-3100-4ce1-84ce-4a5363dbccfa.woff") format("woff"),
+         url("../f/bc13ae80-cd05-42b4-b2a9-c123259cb166.ttf") format("truetype"),
+         url("../f/4862b373-2643-46b1-b0b5-88537c52d15c.svg#4862b373-2643-46b1-b0b5-88537c52d15c") format("svg");
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/b8e906a1-f5e8-4bf1-8e80-82c646ca4d5f.woff") format("woff"),
+         url("../f/890bd988-5306-43ff-bd4b-922bc5ebdeb4.ttf") format("truetype"),
+         url("../f/ed104d8c-7f39-4e8b-90a9-4076be06b857.svg#ed104d8c-7f39-4e8b-90a9-4076be06b857") format("svg");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/25e83bf5-47e3-4da7-98b1-755efffb0089.woff") format("woff"),
+         url("../f/4112ec87-6ded-438b-83cf-aaff98f7e987.ttf") format("truetype"),
+         url("../f/ab1835cb-df6f-4d8d-b8ee-3075f5ba758d.svg#ab1835cb-df6f-4d8d-b8ee-3075f5ba758d") format("svg");
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/b8e906a1-f5e8-4bf1-8e80-82c646ca4d5f.woff") format("woff"),
+         url("../f/045d1654-97f2-4ff0-9d24-21ba9dfee219.ttf") format("truetype"),
+         url("../f/3c111f4f-c9f7-45d4-b35f-4f4ed018842f.svg#3c111f4f-c9f7-45d4-b35f-4f4ed018842f") format("svg");
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir Next";
+    src: url("../f/25e83bf5-47e3-4da7-98b1-755efffb0089.woff") format("woff"),
+         url("../f/2b4885a7-fc02-4aa0-b998-5b008a589c80.ttf") format("truetype"),
+         url("../f/9b40a6ef-0ef5-49c0-aa8d-5ba7e8e7d9b7.svg#9b40a6ef-0ef5-49c0-aa8d-5ba7e8e7d9b7") format("svg");
+    font-weight: 800;
+    font-style: italic;
+}
+
+/*
+ * This CSS resource incorporates links to font software which is
+ * the valuable copyrighted property of Monotype Imaging and/or
+ * its suppliers. You may not attempt to copy, install, redistribute, convert,
+ * modify or reverse engineer this font software. Please contact Monotype Imaging
+ * with any questions regarding Web Fonts:  http://webfonts.fonts.com
+ */

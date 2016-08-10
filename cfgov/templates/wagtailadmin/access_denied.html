@@ -7,10 +7,12 @@
         <h1>{% trans 'Sorry!' %} <br/>
         	{% trans 'You do not have permission to access this page.' %}
         </h1>
-        <h2>
-        	{% trans 'You are trying to access the' %} Wagtail admin page. <br/>
-        	{% trans 'Did you mean to access the' %} <a href="/django-admin/">Django admin page?</a>
-        </h2>
-        <h3>{% trans 'Otherwise, you may want to' %} <a href="/django-admin/logout/">{% trans 'LOG OUT ' %}</a>{% trans 'and log in as a user with the proper permissions.' %}</h3>
+        <h2>Perhaps you could try:</h2>
+        <ul>
+        {% for name, url in destinations %}
+            <li><a href="{{url}}"> {{name}}</a></li>
+        {% endfor %}
+        </ul>
+        <p>{% trans 'Otherwise, you may want to' %} <a href="/logout/">{% trans 'LOG OUT ' %}</a></p>
     </div>
 {% endblock %}

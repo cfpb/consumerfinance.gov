@@ -107,8 +107,8 @@ class DocumentDetailPage(AbstractFilterPage):
 
 
 class AgendaItemBlock(blocks.StructBlock):
-    start_dt = blocks.DateTimeBlock(label="Start", required=False)
-    end_dt = blocks.DateTimeBlock(label="End", required=False)
+    start_time = blocks.TimeBlock(label="Start", required=False)
+    end_time = blocks.TimeBlock(label="End", required=False)
     description = blocks.CharBlock(max_length=100, required=False)
     location = blocks.CharBlock(max_length=100, required=False)
     speakers = blocks.ListBlock(blocks.StructBlock([

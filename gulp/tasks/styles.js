@@ -7,6 +7,7 @@ var config = require( '../config' );
 var configPkg = config.pkg;
 var configBanner = config.banner;
 var configStyles = config.styles;
+var configLegacy = config.legacy;
 var handleErrors = require( '../utils/handle-errors' );
 var browserSync = require( 'browser-sync' );
 
@@ -92,11 +93,65 @@ function stylesOnDemand() {
     } ) );
 }
 
+/**
+ * Process Nemo CSS.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesNemoProd() {
+  return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles.less' )
+    .pipe( plugins.less( { compress: true } ) )
+    .on( 'error', handleErrors )
+    .pipe( plugins.autoprefixer( {
+      browsers: [ 'last 2 version',
+                  'not ie <= 8',
+                  'android 4',
+                  'BlackBerry 7',
+                  'BlackBerry 10' ]
+    } ) )
+    .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
+    .pipe( plugins.rename( 'es-styles.min.css' ) )
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
+/**
+ * Process Nemo IE CSS.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesNemoIE() {
+  return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles-ie.less' )
+    .pipe( plugins.less( { compress: true } ) )
+    .on( 'error', handleErrors )
+    .pipe( plugins.autoprefixer( {
+      browsers: [ 'last 2 version',
+                  'not ie <= 8',
+                  'android 4',
+                  'BlackBerry 7',
+                  'BlackBerry 10' ]
+    } ) )
+    .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
+    .pipe( plugins.rename( 'es-styles-ie.min.css' ) )
+    .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:ie', stylesIe );
 gulp.task( 'styles:ondemand', stylesOnDemand );
+gulp.task( 'styles:nemoProd', stylesNemoProd );
+gulp.task( 'styles:nemoIE', stylesNemoIE );
+gulp.task( 'styles:nemo', [
+  'styles:nemoProd',
+  'styles:nemoIE'
+] );
 
 gulp.task( 'styles', [
   'styles:modern',
-  'styles:ie'
+  'styles:ie',
+  'styles:ondemand',
+  'styles:nemo'
 ] );

@@ -1,0 +1,39 @@
+/* CSS customization for the WordPress Admin Dashboard */
+
+
+/*
+ * Fixes display of long post type names in the sidebar menu.
+ * Provides right padding so that words don't collide with the arrow when in
+ * that post type's section of the Dashboard.
+ */
+
+#adminmenu div.wp-menu-name {
+    padding-right: 8px;
+}
+
+
+/*
+ * Unsure what the section below is for. Can't find any use of these classes in
+ * the current WordPress Dashboard markup (as ov v4.1.1). Leaving them around
+ * just in case.
+ */
+
+.box {
+    width: 200px;
+    padding: 5px;
+    margin: 5px;
+    position: relative;
+    float: left;
+    background: #e3e0e0;
+}
+
+.close_box {
+    display: inline;
+    padding: 0 3px 0 1px;
+    border-radius: 3px;
+    position: absolute;
+    right: 15px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+}

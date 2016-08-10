@@ -311,16 +311,3 @@ class TestFilterableListMixin(TestCase):
         forms = self.mixin.get_forms(mock_request)
         assert type(forms) is list
         assert mock_form.called
-
-
-
-
-
-
-
-
-
-
-
-
-

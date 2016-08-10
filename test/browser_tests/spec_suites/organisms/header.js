@@ -43,10 +43,11 @@ describe( 'Header', function() {
 
   beforeEach( function() {
     browser.get( '/' );
+    browser.executeScript('document.body.className = "u-move-transition__disabled";');
   } );
 
   if ( browser.params.windowWidth > breakpointsConfig.bpLG.min ) {
-    describe( 'large size', function() {
+    describe( '(desktop)', function() {
       describe( 'at page load', function() {
         it( 'should display Header', function() {
           expect( _dom.header.isDisplayed() ).toBe( true );
@@ -81,9 +82,8 @@ describe( 'Header', function() {
         } );
       } );
     } );
-  } else if ( browser.params.windowWidth > breakpointsConfig.bpSM.min &&
-              browser.params.windowWidth < breakpointsConfig.bpSM.max ) {
-    describe( 'small size', function() {
+  } else if ( browser.params.windowWidth < breakpointsConfig.bpSM.max ) {
+    describe( '(mobile):', function() {
       describe( 'at page load', function() {
         it( 'should display Header', function() {
           expect( _dom.header.isDisplayed() ).toBe( true );
@@ -110,10 +110,8 @@ describe( 'Header', function() {
         } );
 
         it( 'should display small Global Header CTA', function() {
-          browser.driver.actions().click( _dom.megaMenuTrigger ).perform()
-            .then( function() {
-              expect( _dom.globalHeaderCtaSM.isDisplayed() ).toBe( true );
-            } );
+          browser.driver.actions().click( _dom.megaMenuTrigger ).perform();
+          expect( _dom.globalHeaderCtaSM.isDisplayed() ).toBe( true );
         } );
 
         it( 'should NOT display large Global Eyebrow', function() {
@@ -121,25 +119,44 @@ describe( 'Header', function() {
         } );
 
         it( 'should display small Global Eyebrow', function() {
-          browser.driver.actions().click( _dom.megaMenuTrigger ).perform()
-            .then( function() {
-              expect( _dom.globalEyebrowSM.isDisplayed() ).toBe( true );
-            } );
+          browser.driver.actions().click( _dom.megaMenuTrigger ).perform();
+          expect( _dom.globalEyebrowSM.isDisplayed() ).toBe( true );
         } );
       } );
 
-      describe( 'click mega menu', function() {
-        it( 'should show the global overlay', function() {
-          browser.driver.actions().click( _dom.megaMenuTrigger ).perform()
-            .then( function() {
-              expect( _dom.overlay.isDisplayed() ).toBe( true );
-            } );
+      describe( 'if you click mega menu', function() {
+        it( 'it should show the global overlay', function() {
+          browser.driver.actions().click( _dom.megaMenuTrigger ).perform();
+          expect( _dom.overlay.isDisplayed() ).toBe( true );
+        } );
+
+        describe( 'then click search', function() {
+          it( 'it should show the search and hide megamenu', function() {
+            browser.driver.actions().click( _dom.megaMenuTrigger )
+              .click( _dom.globalSearchTrigger )
+              .perform();
+            expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
+              .toBe( 'true' );
+            expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
+              .toBe( 'false' );
+          } );
         } );
       } );
 
-      // TODO: Add tests for clicking between menu and search.
-      // describe( 'click search when mega menu is showing', function() {} );
-      // describe( 'click mega menu when search is showing', function() {} );
+      describe( 'if you click search, then click mega menu', function() {
+        it( 'it should show the mega menu and hide search', function() {
+          browser.driver.actions().click( _dom.globalSearchTrigger )
+            .click( _dom.megaMenuTrigger )
+            .perform();
+          // Since the code doesn't work when .u-move-transition__disabled is
+          // set to 0ms, we still need a quick sleep.
+          browser.sleep(2);
+          expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
+            .toBe( 'true' );
+          expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
+            .toBe( 'false' );
+        } );
+      } );
     } );
   }
 } );

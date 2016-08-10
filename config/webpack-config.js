@@ -66,8 +66,19 @@ var onDemandConf = {
   ]
 };
 
+var onDemandHeaderRawConf = {
+  context: path.join( __dirname, '/../', paths.unprocessed,
+                      JS_ROUTES_PATH + '/on-demand' ),
+  entry:   './header.js',
+  output: {
+    path:     path.join( __dirname, 'js' ),
+    filename: '[name]'
+  }
+};
+
 module.exports = {
-  onDemandConf: onDemandConf,
-  ieConf:       ieConf,
-  modernConf:   modernConf
+  onDemandHeaderRawConf: onDemandHeaderRawConf,
+  onDemandConf:          onDemandConf,
+  ieConf:                ieConf,
+  modernConf:            modernConf
 };

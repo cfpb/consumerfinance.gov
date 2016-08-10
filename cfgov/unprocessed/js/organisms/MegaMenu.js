@@ -83,7 +83,7 @@ function MegaMenu( element ) {
       window.addEventListener( 'orientationchange', _resizeHandler );
     }
 
-    if ( _isInDesktop() ) {
+    if ( breakpointState.isInDesktop() ) {
       _desktopNav.resume();
     } else {
       _mobileNav.resume();
@@ -159,7 +159,7 @@ function MegaMenu( element ) {
    * @param {Object} event - A FlyoutMenu event object.
    */
   function _handleEvent( event ) {
-    var activeNav = _isInDesktop() ? _desktopNav : _mobileNav;
+    var activeNav = breakpointState.isInDesktop() ? _desktopNav : _mobileNav;
     activeNav.handleEvent( event );
   }
 
@@ -168,29 +168,13 @@ function MegaMenu( element ) {
    * suspends or resumes the mobile or desktop menu behaviors.
    */
   function _resizeHandler() {
-    if ( _isInDesktop() ) {
+    if ( breakpointState.isInDesktop() ) {
       _mobileNav.suspend();
       _desktopNav.resume();
     } else {
       _desktopNav.suspend();
       _mobileNav.resume();
     }
-  }
-
-  // TODO: Move this to breakpoint-state.js.
-  /**
-   * Whether currently in the desktop view.
-   * @returns {boolean} True if in the desktop view, otherwise false.
-   */
-  function _isInDesktop() {
-    var isInDesktop = false;
-    var currentBreakpoint = breakpointState.get();
-    if ( currentBreakpoint.isBpMED ||
-         currentBreakpoint.isBpLG ||
-         currentBreakpoint.isBpXL ) {
-      isInDesktop = true;
-    }
-    return isInDesktop;
   }
 
   /**
@@ -209,7 +193,7 @@ function MegaMenu( element ) {
    * @returns {MegaMenu} An instance.
    */
   function collapse() {
-    if ( !_isInDesktop() ) {
+    if ( !breakpointState.isInDesktop() ) {
       _mobileNav.collapse();
     }
 
