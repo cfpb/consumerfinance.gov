@@ -5,7 +5,7 @@
 Using the console, navigate to the root directory in which your projects live and clone this project's repository:
 
 ```bash
-git clone git@github.com:cfpb/cfgov-refresh.git
+git clone https://github.com/cfpb/cfgov-refresh.git
 cd cfgov-refresh
 ```
 

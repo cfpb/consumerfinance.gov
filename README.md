@@ -21,7 +21,7 @@ Ensure that Elasticsearch and MySQL are installed and that MySQL is
 either runable by our [backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41) and our [runserver.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/runserver.sh#L12).
 
 ```
-git clone git@github.com:cfpb/cfgov-refresh.git
+git clone https://github.com/cfpb/cfgov-refresh.git
 cd cfgov-refresh
 pip install virtualenv virtualenvwrapper
 npm install -g gulp bower
@@ -40,7 +40,7 @@ If you would like to browse the documentation locally, you can do so
 with `mkdocs`:
 
 ```
-git clone git@github.com:cfpb/cfgov-refresh.git
+git clone https://github.com/cfpb/cfgov-refresh.git
 cd cfgov-refresh
 pip install virtualenv virtualenvwrapper
 source activate-virtualenv.sh
