@@ -36,7 +36,6 @@ def get_page_state_url(context, page):
 
 @register.assignment_tag(takes_context=True)
 def v1page_permissions(context, page):
-    page = page.specific
     if 'user_page_permissions' not in context:
         context['user_page_permissions'] = CFGOVUserPagePermissionsProxy(context['request'].user)
 
