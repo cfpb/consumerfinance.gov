@@ -52,6 +52,7 @@
     padding-bottom: unit( ( @grid_gutter-width * 2 )  / @base-font-size-px, em );
     padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     border: 1px solid @o-well_border;
+    border-right: 0;
     background-color: @o-well_bg;
 
     .respond-to-min( @bp-sm-min, {
@@ -72,6 +73,18 @@
     }
 }
 
+
+.block {
+    .o-well {
+        margin-left: unit( ( @grid_gutter-width / -2) / @base-font-size-px, em );
+        margin-right: unit( ( @grid_gutter-width / -2 ) / @base-font-size-px, em );
+
+        .respond-to-min( @bp-sm-min, {
+            margin-left: unit( ( -@grid_gutter-width ) / @base-font-size-px, em );
+            margin-right: unit( ( -@grid_gutter-width ) / @base-font-size-px, em );
+        } );
+    }
+}
 /* topdoc
     name: EOF
     eof: true
