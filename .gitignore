@@ -9,6 +9,10 @@ _build/
 cfgov/static_built/*
 cfgov-refresh/
 
+# Optional Apps #
+#################
+/apps
+
 # Packages #
 ############
 # It's better to unpack these files and commit the raw source
