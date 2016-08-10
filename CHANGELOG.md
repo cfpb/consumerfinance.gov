@@ -17,6 +17,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
+- Updated Protractor to version `4.0.2` from `3.2.1`.
 
 ### Removed
 - Unused `sinon-chai` npm package.

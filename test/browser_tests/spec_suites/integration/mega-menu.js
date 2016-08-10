@@ -62,28 +62,20 @@ describe( 'MegaMenu', function() {
                 'to another after a delay', function() {
         beforeEach( function() {
           browser.driver.actions().mouseMove( _dom.triggerPolyCom ).perform();
-          // Wait for delay to show menu
+          // The menu has a built-in delay before it expands.
+          // This waits for that delay.
           browser.sleep( 500 );
           browser.driver.actions().mouseMove( _dom.triggerAboutUs ).perform();
         } );
 
         it( 'should ONLY show second link content', function() {
-          // TODO: Look up contentPolyCom to pass to elementIsNotVisible().
-          //       It would be nice to be able to _dom.contentPolyCom.
-          //       Investigate having only _dom.contentPolyCom.
-          var elem;
-          browser.driver.findElements( by.css( CONTENT_2_SEL ) )
-            .then( function( value ) {
-              // PolyCom content.
-              elem = value[3];
-
-              browser.wait(
-                protractor.until.elementIsNotVisible( elem )
-              ).then( function() {
-                expect( _dom.contentPolyCom.isDisplayed() ).toBe( false );
-                expect( _dom.contentAboutUs.isDisplayed() ).toBe( true );
-              } );
-            } );
+          var EC = ExpectedConditions;
+          browser.wait(
+            EC.not( EC.elementToBeClickable( _dom.contentPolyCom ) )
+          ).then( function() {
+            expect( _dom.contentPolyCom.isDisplayed() ).toBe( false );
+            expect( _dom.contentAboutUs.isDisplayed() ).toBe( true );
+          } );
         } );
       } );
     } );
