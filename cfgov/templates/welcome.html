@@ -1,27 +1,44 @@
 {% overextends "wagtailadmin/login.html" %}
 {% load i18n admin_static %}
 
-<!-- Build server-specific links -->
-{% buildlinks = {"Design Manual - Global Elements": "https://cfpb.github.io/design-manual/global-elements/global-elements.html",
-               "Design Manual - Page Components": "https://cfpb.github.io/design-manual/page-components/page-components.html",
-               "Wagtail How-to": "https://github.cfpb.gov/pages/flapjack/wagtail-documentation/"} %}
-
 {% block furniture %}
     <div class="content-wrapper">
+
         <h1>{% trans 'Welcome' %} <br/>
-        You've logged in to the consumerfinance.gov editorial tools.    
-        </h1>
-        <h2>Continue on to...</h2>
-        <ul>
-        {% for name, url in destinations %}
-            <li><a href="{{url}}"> {{name}}</a></li>
-        {% endfor %}
         {% if 'build' in request.site.hostname %}
-            {% for name, url in linkdict %} 
+            You've logged in to the demo Wagtail.    
+        {% else %}
+            You've logged in to the consumerfinance.gov editorial tools.    
+        {% endif %}
+        </h1>
+
+        <h2>Choose which admin interface you'd like to go to</h2>
+        <ul>
+            {% for name, url in destinations %}
                 <li><a href="{{url}}"> {{name}}</a></li>
             {% endfor %}
-        {% endif %}
         </ul>
-        {% endfor %}
+
+        {% if 'build' in request.site.hostname %}
+            <h2>Helpful links</h2>
+            <ul>
+                <li>
+                    <a href="https://github.cfpb.gov/pages/flapjack/wagtail-documentation/">
+                        Wagtail How-to
+                    </a>
+                </li>
+                <li>
+                    <a href="https://cfpb.github.io/design-manual/global-elements/global-elements.html">
+                        Design Manual - Global Elements
+                    </a>
+                </li>
+                <li>
+                    <a href="https://cfpb.github.io/design-manual/page-components/page-components.html">
+                        Design Manual - Page Components
+                    </a>
+                </li>
+            </ul>
+        {% endif %}
+
     </div>
 {% endblock %}
