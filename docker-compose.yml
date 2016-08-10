@@ -1,0 +1,75 @@
+version: "2"
+
+services:
+  agreement_database:
+    build: ./docker/apps/agreement_database/
+  ccdb-content:
+    build: ./docker/apps/ccdb-content/
+  college-costs:
+    build: ./docker/apps/college-costs/
+  django-college-cost-comparison:
+    build: ./docker/apps/django-college-cost-comparison
+  django-hud:
+    build: ./docker/apps/django-hud/
+  eregs:
+    build: ./docker/apps/eregs/
+  knowledgebase:
+    build: ./docker/apps/knowledgebase/
+  leadership-calendar:
+    build: ./docker/apps/leadership-calendar/
+  owning-a-home-api:
+    build: ./docker/apps/owning-a-home-api/
+  picard:
+    build: ./docker/apps/picard/
+  regulations-core:
+    build: ./docker/apps/regulations-core/
+  regulations-site:
+    build: ./docker/apps/regulations-site/
+  retirement:
+    build: ./docker/apps/retirement/
+  selfregistration:
+    build: ./docker/apps/selfregistration/
+
+  mysql:
+    image: mysql:5.5
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: v1
+      MYSQL_USER: v1
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password  
+  search:
+    image: elasticsearch:2.3
+    expose:
+      - "9200"
+    ports:
+      - "9200:9200"
+
+  web:
+    build: .
+    command: sh docker/local.sh 
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    links:
+      - mysql
+      - search
+    volumes_from:
+      - agreement_database
+      - ccdb-content
+      - college-costs
+      - django-college-cost-comparison
+      - django-hud
+      - eregs
+      - knowledgebase
+      - leadership-calendar
+      - owning-a-home-api
+      - picard
+      - regulations-core
+      - regulations-site
+      - retirement
+      - selfregistration
