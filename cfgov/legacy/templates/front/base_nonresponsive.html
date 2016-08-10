@@ -76,7 +76,7 @@ please send an email with your full name to tech@cfpb.gov.
     <link rel="stylesheet" href="/static/nemo/_/c/eot.css">
     <![endif]-->
     <link rel="stylesheet" href="/static/nemo/_/c/styles.css{{ STATIC_VERSION }}">
-   
+
 
     {% endblock %}
 
@@ -97,15 +97,6 @@ please send an email with your full name to tech@cfpb.gov.
 
     <!-- this is where we put our custom analytics -->
     <script src="/static/nemo/_/js/analytics-global.js{{ STATIC_VERSION }}"></script>
-
-    <!-- H5BP's Asynchronous Google Analytics snippet. -->
-    <script>
-      var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
-
     {% endblock %}
 </head>
 
@@ -154,7 +145,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
     </div><!-- /#page -->
-        {% global_include "on-demand/footer.html" %}    
+        {% global_include "on-demand/footer.html" %}
 
     {% block app_modal %}
     {% endblock %}
