@@ -268,12 +268,13 @@ cfgov start django
 
 If you're installing this fresh, the initial data you receive will not be
 as extensive as you'd probably like it to be.
-You can get a database dump from the Build server by running the Jenkins job
-"flapjack-demo-refresh-mysql-dump".
-You'll get a download of `refresh_dump.sql.gz`; unzip that, then run:
+
+You can get a database dump the appropriate `cf.gov-database-dump`
+Jenkins job for the environment you need. Download the `sql.gz` file,
+unzip it, and then run:
 
 ```bash
-./refesh-data.sh /path/to/refresh_dump.sql
+./refesh-data.sh /path/to/dump.sql
 ```
 
 This will remove the initial Wagtail admin user that was created by

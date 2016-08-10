@@ -5,7 +5,7 @@ If not using the Vagrant box, you will generally have four tabs
 
  1. **Git operations**.
     Perform Git operations and general development in the repository,
-    such as `git checkout flapjack`.
+    such as `git checkout master`.
  2. **Elasticsearch**.
     Run an Elasticsearch (ES) instance.
     See instructions [below](https://github.com/cfpb/cfgov-refresh#2-run-elasticsearch).
@@ -20,12 +20,11 @@ What follows are the specific steps for each of these tabs.
 
 ### 1. Git operations
 
-From this tab you can do Git operations,
-such as checking out our development branches:
+From this tab you can do Git operations, such as checking out our master
+branch:
 
 ```bash
-git checkout flapjack # Branch for our staging-development server.
-git checkout refresh  # Branch for our staging-stable server.
+git checkout master
 ```
 
 #### Updating all dependencies
