@@ -78,19 +78,23 @@ class PDFGeneratorView(View):
                 query_opts['filter_range_date_gte'],
                 query_opts['filter_range_date_lte'])
 
-        result = pdf_reactor.renderDocumentFromURL(url)
+        try:
+            result = pdf_reactor.renderDocumentFromURL(url)
 
-        # Check if successful
-        if result is None:
-            # Not successful, return 500
-            raise Exception('Error while rendering PDF: {}'.format(
-                pdf_reactor.getError()))
-        else:
-            # Set the correct header for PDF output
-            response = HttpResponse(result, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename={0}'.format(
-                self.get_filename())
-            return response
+            # Check if successful
+            if result is None:
+                # Not successful, return 500
+                raise Exception('Error while rendering PDF: {}'.format(
+                    pdf_reactor.getError()))
+            else:
+                # Set the correct header for PDF output
+                response = HttpResponse(result, content_type='application/pdf')
+                response['Content-Disposition'] = 'attachment; filename={0}'.format(
+                    self.get_filename())
+                return response
+        except:
+            return HttpResponseRedirect(url)
+
 
     def post(self, request):
         index = request.POST.get('form-id')

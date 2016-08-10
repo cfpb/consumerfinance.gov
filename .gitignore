@@ -87,6 +87,7 @@ docs/*/pdfreactor-fonts.html
 .installed.cfg
 /static/
 cfgov/static_built/*
+cfgov/static/
 cfgov/f/
 images/
 documents/
