@@ -14,8 +14,11 @@ class JobTestCase(TestCase):
             mommy.make(Job, slug='abcde')
 
     def test_slug_case_sensitive_uniqueness(self):
-        mommy.make(Job, slug='abcde')
-        mommy.make(Job, slug='ABCDE')
+        try:
+            mommy.make(Job, slug='abcde')
+            mommy.make(Job, slug='ABCDE')
+        except IntegrityError:
+            self.fail('slugs differing by case should not violate uniqueness')
 
     def test_save_sets_date_created_if_none(self):
         now = timezone.now()
