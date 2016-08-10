@@ -1,1 +1,2 @@
-from django import *
+from .django import *
+from .snippets import *
