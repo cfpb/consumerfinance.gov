@@ -1,4 +1,6 @@
-# Clone the repository
+# Installation and Configuration for cfgov-refresh
+
+## Clone the repository
 
 Using the console, navigate to the root directory in which your projects live and clone this project's repository:
 
@@ -17,13 +19,13 @@ There are two ways to install cfgov-refresh:
 !!! danger
     The instruction for Vagrant are not currently working.
 
-# Stand-alone installation
+## Stand-alone installation
 
 These instructions are somewhat specific to developing on Mac OS X,
 but if you're familiar with other Unix-based systems,
 it should be fairly easy to adapt them to your needs.
 
-## Install system-level requirements ##
+### Install system-level requirements ##
 
 #### virtualenv & virtualenvwrapper Python modules ####
 
