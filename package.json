@@ -17,9 +17,9 @@
     "node": ">=5.5.0"
   },
   "dependencies": {
-    "banner-footer-webpack-plugin": "0.0.1",
+    "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "browser-sync": "2.11.2",
-    "capital-framework": "3.4.0",
+    "capital-framework": "3.6.1",
     "del": "2.2.0",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.0",

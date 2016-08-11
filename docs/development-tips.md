@@ -1,5 +1,20 @@
 ## Development tips
 
+### TIP: Updating npm shrinkwrapped dependencies
+For [security reasons](http://www.infoworld.com/article/3048526/security/nodejs-alert-google-engineer-finds-flaw-in-npm-scripts.html),
+the dependencies in [`package.json`](/package.json) are pinned to a version
+in [`npm-shrinkwrap.json`](/npm-shrinkwrap.json).
+This means updating a project dependency requires updating both files.
+The easiest way to do this is the following steps:
+
+ 1. Update the version of the dependency in `package.json`.
+ 2. Delete the `node_modules` directory.
+ 3. Delete the `npm-shrinkwrap.json` file.
+ 4. Run `npm install`.
+ 5. Run `npm shrinkwrap --dev`.
+
+Congrats! The dependency has been updated.
+
 ### TIP: Loading sibling projects
 Some projects fit within the cfgov-refresh architecture,
 but are not fully incorporated into the project.
