@@ -8,7 +8,7 @@ then tell gulp to start the tests:
 ```sh
 gulp build
 gulp test:acceptance --suite=integration
-gulp test:acceptance —suite=content
+gulp test:acceptance --suite=content
 
 ```
 
