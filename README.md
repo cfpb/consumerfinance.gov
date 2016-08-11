@@ -63,7 +63,7 @@ please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new?body
 ## Getting involved
 
 We welcome your feedback and contributions.
-See the contribution guidelines in the manual for more details.
+See the [contribution guidelines](CONTRIBUTING.md) for more details.
 
 Additionally, you may want to consider
 [contributing to the Capital Framework](https://cfpb.github.io/capital-framework/contributing/),
