@@ -25,7 +25,6 @@ git clone https://github.com/cfpb/cfgov-refresh.git
 cd cfgov-refresh
 pip install virtualenv virtualenvwrapper
 npm install -g gulp bower
-cp .env_SAMPLE .env
 source load-env.sh
 source setup.sh
 ./runserver.sh
