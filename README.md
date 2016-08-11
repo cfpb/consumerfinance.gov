@@ -31,6 +31,7 @@ source setup.sh
 ./runserver.sh
 ```
 
+
 ## Documentation
 
 Documentation for this project is available in the [docs](docs/) directory 
@@ -48,6 +49,7 @@ pip install mkdocs
 mkdocs serve
 ```
 
+
 ## Getting help
 
 Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues) to follow the
@@ -56,6 +58,7 @@ If you find a bug not listed in the issue tracker,
 please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new?body=
 %23%23%20URL%0D%0D%0D%23%23%20Actual%20Behavior%0D%0D%0D%23%23%20Expected%20Behavior
 %0D%0D%0D%23%23%20Steps%20to%20Reproduce%0D%0D%0D%23%23%20Screenshot&labels=bug).
+
 
 ## Getting involved
 
@@ -66,15 +69,12 @@ Additionally, you may want to consider
 [contributing to the Capital Framework](https://cfpb.github.io/capital-framework/contributing/),
 which is the front-end pattern library used in this project.
 
-----
 
 ## Open source licensing info
 1. [TERMS](TERMS.md)
 2. [LICENSE](LICENSE)
 3. [CFPB Source Code Policy](https://github.com/cfpb/source-code-policy/)
 
-
-----
 
 ## Credits and references
 
