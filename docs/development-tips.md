@@ -62,7 +62,7 @@ needs is a file for "sheer logic" to use to retrieve the data. For us, the
 processors are already done from our last backend. This part of the command
 will change as we move away from our dependency on "sheer logic." This is set
 by putting the file in a `processors` module in the top level of the project
-and adding it to the setting [`SHEER_PROCESSORS`](https://github.com/cfpb/cfgov-refresh/blob/flapjack/cfgov/cfgov/settings/base.py#L218).
+and adding it to the setting [`SHEER_PROCESSORS`](https://github.com/cfpb/cfgov-refresh/blob/master/cfgov/cfgov/settings/base.py#L218).
 
 The command needs a `processors` module in the app that's passed to it, as well
 as a file with the same name as the Django model specified that defines a class
@@ -236,3 +236,15 @@ This will return documents that have the tag Students OR Finance, AND have an au
 
 If you need more control over your filter than that,
 enter it manually in the `cfgov/jinja2/v1/_queries/[filtername].json` file.
+
+### TIP: Updating the documentation
+
+Our documentation is written as Markdown files and served in GitHub pages 
+by [mkdocs](http://www.mkdocs.org/user-guide/deploying-your-docs/).
+
+To update the docs in GitHub Pages once a pull request has been merged, 
+mkdocs provides [a helpful command](http://www.mkdocs.org/user-guide/deploying-your-docs/):
+
+```
+mkdocs gh-deploy --clean
+```

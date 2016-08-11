@@ -18,30 +18,38 @@ and reload the settings with `cd .. && cd cfgov-refresh`. Type `y` if prompted.
 
 Sauce Labs can be used to run tests remotely in the cloud.
 
-1. Log into [http://saucelabs.com/account](Log into http://saucelabs.com/account).
-2. [Download Sauce Connect](https://docs.saucelabs.com/reference/sauce-connect/#basic-setup)
-3. Open a new Terminal window or tab and navigate to the downloaded SauceConnect folder.
-   If you place the folder in your Application's folder this might look like:
+1. Log into [http://saucelabs.com/account](http://saucelabs.com/account).
 
-   ```
-   cd /Users/<YOUR MAC OSX USERNAME>/Applications/SauceConnect
-   ```
+2. [Download Sauce Connect](https://docs.saucelabs.com/reference/sauce-connect/#basic-setup)
+
+3. Open a new Terminal window or tab and navigate to the downloaded SauceConnect folder.
+    If you place the folder in your Application's folder this might look like:
+
+    ```
+    cd /Users/<YOUR MAC OSX USERNAME>/Applications/SauceConnect
+    ```
+
 4. Copy step 3 from the the SauceLabs
    [Basic Setup instructions](https://wiki.saucelabs.com/display/DOCS/Basic+Sauce+Connect+Setup#BasicSauceConnectSetup-SettingUpSauceConnect)
    and run that in your Terminal window.
    Once you see `Sauce Connect is up` in the Terminal,
    that means the tunnel has successfully been established
 
-   > The Terminal command should already have your Sauce username and access key filled in.
-     If it doesn't, make sure you're logged in.
+    > The Terminal command should already have your Sauce username and access key filled in.
+      If it doesn't, make sure you're logged in.
+
 5. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
    and `SAUCE_SELENIUM_URL` values in your `.env` file.
    The access key can be found in lower-left on the Sauce Labs
    [account profile page](https://saucelabs.com/account/profile).
+
 6. Reload the settings with `cd .. && cd cfgov-refresh`. Type `y` if prompted.
+
 7. Run the tests with `gulp test:acceptance`.
-   > Note: If you want to temporarily disable testing on Sauce Labs,
-   run the command as: `gulp test:acceptance --sauce=false`.
+
+    > Note: If you want to temporarily disable testing on Sauce Labs,
+    run the command as: `gulp test:acceptance --sauce=false`.
+
 8. Monitor progress of the tests
    on the [Sauce Labs dashboard](https://saucelabs.com/dashboard) Automated Tests tab.
 
