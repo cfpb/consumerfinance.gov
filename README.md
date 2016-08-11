@@ -18,7 +18,10 @@ and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions
 are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
 
 Ensure that Elasticsearch and MySQL are installed and that MySQL is
-either runnable by our [backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41) and our [runserver.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/runserver.sh#L12).
+either running or runnable by our 
+[backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41) 
+and our 
+[runserver.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/runserver.sh#L12).
 
 ```
 git clone git@github.com:cfpb/cfgov-refresh.git

@@ -1,4 +1,4 @@
-# Installation and Configuration for cfgov-refresh
+# Installation and configuration for cfgov-refresh
 
 ## Clone the repository
 
@@ -163,7 +163,7 @@ If you setup Autoenv earlier, this will happen for you automatically when you
 If you prefer not to use Autoenv, just be sure to `source .env` every time
 you start a new session of work on the project.
 
-#### Run `setup.sh`
+#### Run the setup script
 
 At this point, your machine should have everything it needs to automate the
 rest of the setup process.
