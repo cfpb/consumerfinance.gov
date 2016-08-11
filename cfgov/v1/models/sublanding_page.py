@@ -9,6 +9,8 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
 from ..util import filterable_list, util
+from wagtail.contrib.table_block.blocks import TableBlock
+
 
 class SublandingPage(CFGOVPage):
     header = StreamField([
@@ -23,7 +25,8 @@ class SublandingPage(CFGOVPage):
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
         ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', TableBlock(table_options={'renderer':'html'})),
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),

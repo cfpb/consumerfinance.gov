@@ -5,6 +5,7 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from . import atoms, molecules
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
+from wagtail.contrib.table_block.blocks import TableBlock
 
 
 class Well(blocks.StructBlock):
@@ -137,7 +138,8 @@ class FullWidthText(blocks.StreamBlock):
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
-    table = Table()
+    table = Table(editable=False)
+    table_block = TableBlock(table_options={'renderer':'html'})
 
     class Meta:
         icon = 'edit'

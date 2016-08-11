@@ -11,6 +11,7 @@ from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
 from ..util.util import get_secondary_nav_items
+from wagtail.contrib.table_block.blocks import TableBlock
 
 
 class BrowsePage(CFGOVPage):
@@ -27,7 +28,8 @@ class BrowsePage(CFGOVPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', TableBlock(table_options={'renderer':'html'})),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
