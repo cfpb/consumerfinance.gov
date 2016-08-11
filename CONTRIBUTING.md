@@ -24,10 +24,10 @@ guidance below.
 ## Changing the codebase
 
 If you are a contributor from outside of CFPB, you should fork this 
-repository, make changes in your own fork, and then submit a pull-request. 
+repository, make changes in your own fork, and then submit a pull request. 
 
 If you are a contributor within CFPB, you may also fork, or follow our 
-[documentation for branching](http://cfpb.github.io/cfgov-refresh/branching-merging/).
+[documentation for branching](https://cfpb.github.io/cfgov-refresh/branching-merging/).
 
 For timely code reviews of pull requests, please tag @cfpb/cfgov-backends and 
 @cfpb/cfgov-frontends as appropriate for your changes.

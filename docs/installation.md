@@ -5,7 +5,7 @@
 Using the console, navigate to the root directory in which your projects live and clone this project's repository:
 
 ```bash
-git clone https://github.com/cfpb/cfgov-refresh.git
+git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 ```
 
@@ -25,9 +25,9 @@ These instructions are somewhat specific to developing on Mac OS X,
 but if you're familiar with other Unix-based systems,
 it should be fairly easy to adapt them to your needs.
 
-### Install system-level requirements ##
+### Install system-level requirements
 
-#### virtualenv & virtualenvwrapper Python modules ####
+#### virtualenv & virtualenvwrapper Python modules
 
 Install [virtualenv](https://virtualenv.pypa.io/en/latest/index.html)
 and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/)
@@ -37,7 +37,7 @@ to be able to create a local environment for your server:
 pip install virtualenv virtualenvwrapper
 ```
 
-#### Autoenv module ####
+#### Autoenv module
 
 This project uses a large number of environment variables.
 
@@ -145,7 +145,7 @@ npm install -g gulp bower
 	This project requires Node.js v5.5 or higher, and npm v3 or higher.
 
 
-#### Set up your environment ####
+#### Set up your environment
 
 If this is the first time you're setting up the project, run the following
 script to copy `.env_SAMPLE` to `.env`, export your environment variables,
@@ -163,7 +163,7 @@ If you setup Autoenv earlier, this will happen for you automatically when you
 If you prefer not to use Autoenv, just be sure to `source .env` every time
 you start a new session of work on the project.
 
-#### Run `setup.sh` ####
+#### Run `setup.sh`
 
 At this point, your machine should have everything it needs to automate the
 rest of the setup process.
