@@ -12,7 +12,20 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-## 3.6
+## UNRELEASED
+
+### Added
+
+### Changed
+- Updated Protractor to version `4.0.2` from `3.2.1`.
+
+### Removed
+- Unused `sinon-chai` npm package.
+
+### Fixed
+
+
+## 3.6.0
 
 ### Added
 - Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management,available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/

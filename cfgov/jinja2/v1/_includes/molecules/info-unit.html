@@ -71,6 +71,12 @@
             <ul class="list list__links">
             {% for link in value.links %}
                 <li class="list_item">
+                    {% if link.text is defined and link.text.find('@') > -1 %}
+                        {% if not value.emails is defined %}
+                            {% do value.update({'emails':[{'url':link.text}]}) %}
+                        {% endif %}
+                        {% include 'contact-email.html' with context %}
+                    {% else %}
                     <a class="{{ 'btn m-info-unit_btn' if value.is_button
                                   else 'list_link' }}"
                        href="{{ link.url }}">
@@ -78,6 +84,7 @@
                                  after testing is completed #}
                         {{ link.text if link.text else 'Learn More' }}
                     </a>
+                    {% endif %}
                 </li>
             {% endfor %}
             </ul>

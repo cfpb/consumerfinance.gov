@@ -1,6 +1,13 @@
 {
   "name": "cfgov-refresh",
-  "version": "3.6",
+  "version": "3.6.0",
+  "description": "The consumerfinance.gov website.",
+  "homepage": "http://www.consumerfinance.gov/",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
   "repository": {
     "type": "git",
     "url": "http://github.com/cfpb/cfgov-refresh.git"
@@ -60,10 +67,9 @@
     "mkdirp": "0.3.0",
     "mocha": "2.4.5",
     "mocha-jsdom": "1.1.0",
-    "protractor": "3.2.1",
+    "protractor": "4.0.2",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "sinon": "1.17.3",
-    "sinon-chai": "2.8.0",
     "wcag": "0.2.2"
   },
   "browser": {
