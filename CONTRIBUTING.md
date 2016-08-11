@@ -5,7 +5,6 @@
 > feature request, you are agreeing to comply with this waiver of copyright interest.
 > Details can be found in our [TERMS](TERMS.md) and [LICENCE](LICENSE).
 
-
 There are two primary ways to help:
  - Using the issue tracker, and…
  - Changing the codebase.
@@ -24,10 +23,14 @@ guidance below.
 
 ## Changing the codebase
 
-Generally speaking, you should fork this repository, make changes in your
-own fork, and then submit a pull-request. For timely code reviews,
-please tag @cfpb/cfgov-backends and @cfpb/cfgov-frontends as appropriate
-for your changes.
+If you are a contributor from outside of CFPB, you should fork this 
+repository, make changes in your own fork, and then submit a pull-request. 
+
+If you are a contributor within CFPB, you may also fork, or follow our 
+[documentation for branching](http://cfpb.github.io/cfgov-refresh/branching-merging/).
+
+For timely code reviews of pull requests, please tag @cfpb/cfgov-backends and 
+@cfpb/cfgov-frontends as appropriate for your changes.
 
 All new code should have associated unit tests and/or functional tests that
 validate implemented features and the presence or lack of defects. The
