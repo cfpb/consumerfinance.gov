@@ -19,9 +19,11 @@ class Command(BaseCommand):
 
     def convert_applicant_types(self, commit=False):
         snippets = [
-            ApplicantTypeSnippet(**{k: getattr(at, k) for k in (
-                'applicant_type', 'slug', 'description', 'active',
-            )}) for at in ApplicantType.objects.all()
+            ApplicantTypeSnippet(
+                applicant_type_label=at.applicant_type,
+                description=at.description,
+                active=at.active
+            ) for at in ApplicantType.objects.all()
         ]
 
         count = len(snippets)

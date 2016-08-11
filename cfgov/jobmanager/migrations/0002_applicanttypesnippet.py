@@ -15,13 +15,12 @@ class Migration(migrations.Migration):
             name='ApplicantTypeSnippet',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('applicant_type', models.CharField(max_length=255)),
-                ('slug', models.SlugField()),
+                ('applicant_type_label', models.CharField(max_length=255)),
                 ('description', models.TextField()),
                 ('active', models.BooleanField(default=True)),
             ],
             options={
-                'ordering': ['applicant_type'],
+                'ordering': ['applicant_type_label'],
                 'verbose_name': 'Job applicant type',
                 'verbose_name_plural': 'Job applicant types',
             },
