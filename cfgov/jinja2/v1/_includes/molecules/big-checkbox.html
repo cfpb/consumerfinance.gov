@@ -24,7 +24,7 @@
     {% from 'macros/util/format/url.html' import slugify as slugify %}
     {% set id_slug = slugify( settings.legend ) %}
     <fieldset class="o-form-input-group
-                    {{ 'o-form-input-group__two-column'  if settings.fields | length == 2 else '' }}">
+                    {{ 'o-form-input-group__two-column' if settings.fields | length == 2 else '' }}">
         <div class="form-l_col
                     form-l_col-1
                     u-mb0">

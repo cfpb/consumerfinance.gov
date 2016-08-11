@@ -1,11 +1,11 @@
 .m-big-checkbox {
-    margin-bottom: unit( 15px / @base-font-size-px, em);
+    margin-bottom: unit( 15px / @base-font-size-px, em );
 
     &:last-child {
-        margin-bottom: unit( 30px / @base-font-size-px, em);
+        margin-bottom: unit( 30px / @base-font-size-px, em );
     }
     .a-input {
-        @checkbox-width: unit( 18px / @base-font-size-px, em);
+        @checkbox-width: unit( 18px / @base-font-size-px, em );
 
         &[type="checkbox"] {
             .u-visually-hidden();
@@ -30,8 +30,8 @@
             background: white;
             content: '\a0';
             display: inline-block;
-            margin-top: unit( 2px / @base-font-size-px, em);
-            margin-right: .6em;
+            margin-top: unit( 2px / @base-font-size-px, em );
+            margin-right: 0.6em;
         }
 
         &[type="checkbox"] + label::before {
@@ -43,7 +43,7 @@
         &[type="checkbox"]:checked + label::before {
             content: @cf-icon-approved;
             font-family: 'CFPB Minicons';
-            font-size: unit( 16px / @base-font-size-px, em);
+            font-size: unit( 16px / @base-font-size-px, em );
             box-shadow: 0 0 0 1px @input-bg, 0 0 0 2px @input-active;
             text-align: center;
         }
