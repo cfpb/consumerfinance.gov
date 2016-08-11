@@ -269,8 +269,8 @@ cfgov start django
 If you're installing this fresh, the initial data you receive will not be
 as extensive as you'd probably like it to be.
 
-You can get a database dump the appropriate `cf.gov-database-dump`
-Jenkins job for the environment you need. Download the `sql.gz` file,
+You can get a database dump using the `cf.gov-dump-rdbms`
+Jenkins job. Download the `sql.gz` file,
 unzip it, and then run:
 
 ```bash
