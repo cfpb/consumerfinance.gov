@@ -1,6 +1,6 @@
 # Introduction
 
-This is the documentation for everything that has to do with the `cfgov-refresh` project, a redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all knowledge and information pertaining to cfgov-refresh.
+This is the documentation for the `cfgov-refresh` project, a redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website. It is organized thematically in order to create a central repository for all information pertaining to cfgov-refresh.
 
 # Disclaimer
 
@@ -25,7 +25,7 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 - [Node](http://nodejs.org) and [npm (Node Package Manager)](https://www.npmjs.com):
   Used for downloading and managing front-end dependencies and assets.
 
-For Vagrant Virtualbox usage (:warning: The Vagrant box is not currently working.):
+For Vagrant Virtualbox usage (:warning: The Vagrant box is not currently working.)
 - [VirtualBox](https://www.virtualbox.org)
 - [Vagrant](https://www.vagrantup.com)
 - python >=  2.6
