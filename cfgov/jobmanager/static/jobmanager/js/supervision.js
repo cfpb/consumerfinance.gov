@@ -13,7 +13,7 @@ function smooth_scroll(id){
 $(document).ready(function(){
     $('.goto-jobs').click(function(){
         smooth_scroll('featured_positions');
-    })
+    });
 
 
     $('#email_collection_form #email').focus(function(){
