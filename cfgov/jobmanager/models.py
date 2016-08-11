@@ -1,9 +1,10 @@
+import re
+
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import timezone
 from django.utils.html import strip_tags
-from datetime import datetime
 
-import re
 
 class ApplicantType(models.Model):
     applicant_type = models.CharField(max_length=255)
@@ -101,9 +102,9 @@ class Job(models.Model):
         return reverse('careers:detail', kwargs={'slug': self.slug})
 
     def save(self):
-        if self.date_created == None:
-            self.date_created = datetime.now()
-        self.date_modified = datetime.now()
+        if self.date_created is None:
+            self.date_created = timezone.now()
+        self.date_modified = timezone.now()
         super(Job, self).save()
 
     def clean(self):
