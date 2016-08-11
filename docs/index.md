@@ -6,7 +6,7 @@ This is the documentation for the `cfgov-refresh` project, a redesign of the [ww
 
 **This project is a work in progress.** Nothing presented in this repo—whether in the source code, issue tracker, or wiki—is a final product unless it is marked as such or appears on [www.consumerfinance.gov](http://www.consumerfinance.gov). In-progress updates may appear on [beta.consumerfinance.gov](http://beta.consumerfinance.gov).
 
-# Technology stack #
+# Technology stack
 
 The standard technology stack for development of cfgov-refresh within the CFPB consists of the following base:
 
@@ -18,7 +18,7 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
 - [Wagtail CMS](https://wagtail.io) for content administration
 - Dependencies, listed below
 
-# Dependencies #
+# Dependencies
 
 - [Elasticsearch](http://www.elasticsearch.org):
   Used for full-text search capabilities and content indexing.
@@ -26,6 +26,7 @@ The standard technology stack for development of cfgov-refresh within the CFPB c
   Used for downloading and managing front-end dependencies and assets.
 
 For Vagrant Virtualbox usage (:warning: The Vagrant box is not currently working.)
+
 - [VirtualBox](https://www.virtualbox.org)
 - [Vagrant](https://www.vagrantup.com)
 - python >=  2.6
