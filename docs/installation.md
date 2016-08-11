@@ -274,7 +274,7 @@ Jenkins job for the environment you need. Download the `sql.gz` file,
 unzip it, and then run:
 
 ```bash
-./refesh-data.sh /path/to/dump.sql
+./refresh-data.sh /path/to/dump.sql
 ```
 
 This will remove the initial Wagtail admin user that was created by
