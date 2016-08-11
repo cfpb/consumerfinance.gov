@@ -30,7 +30,7 @@ lxml==3.6.0
 pbr==1.9.1
 py==1.4.31
 python-dateutil==2.1
-pytz
+https://pypi.python.org/packages/ba/c7/3d54cad4fb6cf7bf375d39771e67680ec779a541c68459210fcfdc3ba952/pytz-2016.6.1-py2.py3-none-any.whl#md5=735126cd1c1ddc824b7c94e091d7173e
 rcssmin==1.0.6
 requests==2.7.0
 requests_toolbelt==0.6.0
