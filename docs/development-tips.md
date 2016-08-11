@@ -236,3 +236,15 @@ This will return documents that have the tag Students OR Finance, AND have an au
 
 If you need more control over your filter than that,
 enter it manually in the `cfgov/jinja2/v1/_queries/[filtername].json` file.
+
+### TIP: Updating the documentation
+
+Our documentation is written as Markdown files and served in GitHub pages 
+by [mkdocs](http://www.mkdocs.org/user-guide/deploying-your-docs/).
+
+To update the docs in GitHub Pages once a pull request has been merged, 
+mkdocs provides [a helpful command](http://www.mkdocs.org/user-guide/deploying-your-docs/):
+
+```
+mkdocs gh-deploy --clean
+```
