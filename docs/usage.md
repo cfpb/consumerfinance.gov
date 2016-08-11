@@ -20,8 +20,8 @@ What follows are the specific steps for each of these tabs.
 
 ### 1. Git operations
 
-From this tab you can do Git operations, such as checking out our master
-branch:
+From this tab you can do Git operations,
+such as checking out our master branch:
 
 ```bash
 git checkout master
