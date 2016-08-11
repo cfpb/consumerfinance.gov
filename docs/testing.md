@@ -2,12 +2,14 @@
 
 ## Quick start:
 
-Open a new Terminal window or tab and change to the project directory,
+Many of our browser tests have been rewritten as Python unit tests. The remaining rely on data that is not generated during testing, so please note many of these tests might fail if you do not have a production database locally. If you do, open a new Terminal window or tab and change to the project directory,
 then tell gulp to start the tests:
 
 ```sh
 gulp build
-gulp test:acceptance
+gulp test:acceptance --suite=integration
+gulp test:acceptance --suite=content
+
 ```
 
 If you want to test a server other than your local instance,
@@ -47,15 +49,17 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 7. Run the tests with `gulp test:acceptance`.
 
-    > Note: If you want to temporarily disable testing on Sauce Labs,
-    run the command as: `gulp test:acceptance --sauce=false`.
+    !!! Note: 
+        If you want to temporarily disable testing on Sauce Labs,
+        run the command as: `gulp test:acceptance --sauce=false`.
 
 8. Monitor progress of the tests
    on the [Sauce Labs dashboard](https://saucelabs.com/dashboard) Automated Tests tab.
 
-> Note: If you get the error `Error: ENOTFOUND getaddrinfo ENOTFOUND`
-  while running a test, it likely means that Sauce Connect is not running.
-  See step 4 above.
+!!! Note 
+    If you get the error `Error: ENOTFOUND getaddrinfo ENOTFOUND`
+    while running a test, it likely means that Sauce Connect is not running.
+    See step 4 above.
 
 ## Manual test configuration
 
@@ -76,26 +80,6 @@ A number of command-line arguments can be set to test particular configurations:
  - `--sauce`: Whether to run on Sauce Labs or not.
    For example, `gulp test:acceptance --sauce=false`.
 
-## Pages
-
-Pages are organized in `page_objects`. To add new tests start with adding a new page file and include the elements you'll want to query the page for. For example, if you wanted to test the page title and all the `h2` elements on the about page you'd write:
-
-```js
-function TheBureauPage() {
-  this.get = function() {
-    // Always use the relative url because the baseUrl is set for us
-    browser.get( '/the-bureau/' );
-  };
-
-  // Page titles are available to the browser global
-  this.pageTitle = function() { return browser.getTitle() };
-  // We want all the `bureau-mission_section` so we'll use .all()
-  this.missions = element.all( by.css( '.bureau-mission_section h1' ) );
-  // For a list of all locators see http://angular.github.io/protractor/#/api?view=webdriver.By
-}
-
-module.exports = TheBureauPage;
-```
 
 ## Tests
 
