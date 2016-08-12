@@ -53,22 +53,22 @@
             </div>
         </div>
     {% endif %}
-    {% if controls.categories.filter_category %}
+    {% if controls.categories.filter_category and controls.page_type %}
         <div class="form-l_col
                     form-l_col-1-3">
             <div class="form-group">
                 <label class="form-label-header"
                        for="categories">
-                    {% if 'leadership-calendar' in controls.categories.page_type %}
+                    {% if 'leadership-calendar' in controls.page_type %}
                         Calendars
                         </label>
-                        {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
+                        {% for slug, name in choices_for_page_type(controls.page_type) %}
                             {{ _filter_selectable('radio', index, category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
                         {% endfor %}
                     {% else %}
                         Category
                         </label>
-                        {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
+                        {% for slug, name in choices_for_page_type(controls.page_type) %}
                             {{ _filter_selectable('checkbox', index, category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
                         {% endfor %}
                     {% endif %}
@@ -181,10 +181,10 @@
 {% macro render(controls, index) %}
     <div class="o-filterable-list-controls"
          id="o-filterable-list-controls-{{ index | string }}">
-        {% set form = filter_data.forms.pop(0) %}
-        {% set posts = filter_data.page_sets.pop(0) %}
-        {% set has_active_filters = page.has_active_filters(request, index) %}
-        {% if has_active_filters %}
+        {% set form = filters.forms.pop(0) %}
+        {% set posts = filters.page_sets.pop(0) %}
+        {% set is_active = has_active_filters(request, index) %}
+        {% if is_active %}
             {% do controls.update({'is_expanded':true}) %}
         {% endif %}
         {% set form_markup = _filters_form(controls, form, index) %}
@@ -204,7 +204,7 @@
             {% endfor %}
         {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
-            {% if has_active_filters == false %}
+            {% if not is_active %}
                 {{ notification('success', false, posts.paginator.count ~ ' filtered results') }}
             {% elif posts.paginator.count == 0 %}
                 {{ notification('warning', true,
@@ -214,7 +214,7 @@
                 {{ notification('success', true, posts.paginator.count ~ ' filtered results') }}
             {% endif %}
         {% endif %}
-        {% if controls.categories.page_type == 'activity-log' %}
+        {% if controls.page_type == 'activity-log' %}
             {% import 'activity-log/_activity-list.html' as activity_list with context %}
             {{ activity_list.render(posts, index) }}
         {% else %}

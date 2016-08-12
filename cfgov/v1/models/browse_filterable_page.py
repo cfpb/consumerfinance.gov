@@ -14,17 +14,16 @@ from .base import CFGOVPage
 from .learn_page import AbstractFilterPage
 from ..atomic_elements import molecules, organisms
 from ..feeds import FilterableFeedPageMixin
-from ..util.filterable_list import FilterableListMixin
 
 
-class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
+class BrowseFilterablePage(FilterableFeedPageMixin, CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', molecules.FeaturedContent()),
     ])
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
-        ('filter_controls', organisms.FilterControls()),
+        ('filter_controls', organisms.FilterableListControls()),
     ])
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

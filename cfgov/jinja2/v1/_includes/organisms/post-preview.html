@@ -45,8 +45,7 @@
 
 {% macro render(post, controls, form_id=0, url='', post_date_description='') %}
     {% set date_desc = controls.post_date_description  or post_date_description or 'Published' %}
-    {% set cat_controls = controls.categories %}
-    {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
+    {% set show_categories = controls.categories.show_preview_categories if controls.categories is defined else true %}
     {% set page_url = url or get_protected_url(page) %}
     {% set post_url = get_protected_url(post) %}
     <article class="o-post-preview">
@@ -61,7 +60,7 @@
             </span>
             {# Newsroom Blog category logic #}
             {% if show_categories %}
-                {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
+                {% if controls and 'newsroom' in controls.page_type and is_blog(post) %}
                     {{ category_slug.render('blog',
                             page_url,
                             'post_slug meta-header_left',

@@ -1,10 +1,7 @@
 import json
 import os
 import urllib
-from itertools import chain
-from collections import OrderedDict
 
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_delete
@@ -16,10 +13,8 @@ from django.contrib.auth.models import User
 
 from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
+
+from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Page, PagePermissionTester, \
     UserPagePermissionsProxy, Orderable, PageManager, PageQuerySet
@@ -32,12 +27,10 @@ from modelcluster.tags import ClusterTaggableManager
 
 from sheerlike.query import QueryFinder
 
-from .handlers import JSHandler
 from .. import get_protected_url
 from ..atomic_elements import molecules, organisms
 from ..util import util, ref
 
-PAGE_HANDLERS = [JSHandler]
 
 
 
@@ -216,11 +209,14 @@ class CFGOVPage(Page):
                 return [util.get_appropriate_page_version(request, ancestor) for ancestor in ancestors[i+1:]]
         return []
 
+    def get_appropriate_children(self, hostname, inclusive=False):
+        return CFGOVPage.objects.child_of(self).live_shared(hostname)
+
     def get_appropriate_descendants(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).descendant_of(self, inclusive)
+        return CFGOVPage.objects.descendant_of(self, inclusive).live_shared(hostname)
 
     def get_appropriate_siblings(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).sibling_of(self, inclusive)
+        return CFGOVPage.objects.sibling_of(self, inclusive).live_shared(hostname)
 
     def get_next_appropriate_siblings(self, hostname, inclusive=False):
         return self.get_appropriate_siblings(hostname=hostname, inclusive=inclusive).filter(path__gte=self.path).order_by('path')
@@ -230,9 +226,8 @@ class CFGOVPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
-        for handler_class in PAGE_HANDLERS:
-            handler = handler_class(self, request)
-            handler.process(context)
+        for hook in hooks.get_hooks('cfgov_context_handlers'):
+            hook(self, request, context)
         return context
 
     @property

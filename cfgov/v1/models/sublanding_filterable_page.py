@@ -20,14 +20,14 @@ from ..util.ref import choices_for_page_type
 from ..util.filterable_list import FilterableListMixin
 
 
-class SublandingFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
+class SublandingFilterablePage(FilterableFeedPageMixin, CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
     content = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('full_width_text', organisms.FullWidthText()),
-        ('filter_controls', organisms.FilterControls()),
+        ('filter_controls', organisms.FilterableListControls()),
         ('featured_content', molecules.FeaturedContent()),
     ])
 

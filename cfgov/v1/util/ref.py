@@ -28,15 +28,16 @@ page_types = [
     ('activity-log', 'Activity Log'),
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
+    ('event-archive', 'Event Archive'),
     ('enforcement', 'Enforcement action'),
     ('final-rule', 'Final Rule'),
     ('foia-freq-req-record', 'FOIA Frequently Requested Record'),
     ('impl-resource', 'Implementation Resource'),
+    ('leadership-calendar', 'Leadership Calendar'),
     ('newsroom', 'Newsroom'),
     ('notice-opportunity-comment', 'Notice and Opportunity for Comment'),
     ('research-reports', 'Research Report'),
     ('rule-under-dev', 'Rule under development'),
-    ('leadership-calendar', 'Leadership Calendar'),
 ]
 
 fcm_types = [

@@ -31,6 +31,7 @@ class BrowsePage(CFGOVPage):
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
         ('job_listing_table', JobListingTable()),
+        ('filter_controls', organisms.FilterableListControls()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
