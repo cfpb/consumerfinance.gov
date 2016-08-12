@@ -1,18 +1,40 @@
 import mock
 from collections import OrderedDict
 from unittest import TestCase
-from ...models.handlers import JSHandler
+from ...models.handlers import Handler, JSHandler
+
+
+class TestHandler(TestCase):
+    def setUp(self):
+        self.page = mock.Mock()
+        self.request = mock.Mock()
+        self.handler = Handler(self.page, self.request)
+
+    def test_process_raises_NotImplementedError(self):
+        with self.assertRaises(NotImplementedError) as nie:
+            self.handler.process({})
+
+    def test_get_streamfield_blocks_returns_list(self):
+        assert type(self.handler.get_streamfield_blocks()) is list
 
 
 class TestJSHandler(TestCase):
     def setUp(self):
         self.page = mock.Mock()
-        self.js_handler = JSHandler(self.page)
+        self.request = mock.Mock()
+        self.js_handler = JSHandler(self.page, self.request)
 
     @mock.patch('v1.models.handlers.JSHandler.generate_js_dict')
-    def test_generate_js_dict_returns_OrderedDict(self, mock_generate_js_dict):
-        js_handler = JSHandler(self.page)
+    def test_process_calls_generate_js_dict(self, mock_generate_js_dict):
+        self.js_handler.process({})
         assert mock_generate_js_dict.called
+
+    @mock.patch('v1.models.handlers.JSHandler.generate_js_dict')
+    def test_process_sets_context_media_od(self, mock_generate_js_dict):
+        context = {}
+        self.js_handler.process(context)
+        assert 'media' in context
+        assert type(context['media']) is OrderedDict
 
     @mock.patch('v1.models.handlers.JSHandler.add_streamfield_js')
     def test_generate_js_dict_returns_OrderedDict(self, mock_add_sf_js):
@@ -27,10 +49,6 @@ class TestJSHandler(TestCase):
     def test_generate_js_dict_calls_add_streamfield_js(self, mock_add_sf_js):
         js_dict = self.js_handler.generate_js_dict()
         assert mock_add_sf_js.called
-
-    def test_get_js_dict_returns_OrderedDict(self):
-        self.js_handler.js_dict = OrderedDict()
-        assert type(self.js_handler.get_js_dict()) is OrderedDict
 
     @mock.patch('v1.models.handlers.JSHandler.get_streamfield_blocks')
     @mock.patch('v1.models.handlers.JSHandler.add_block_js')

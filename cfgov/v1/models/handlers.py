@@ -14,6 +14,12 @@ class Handler(object):
     def process(self, context):
         raise NotImplementedError
 
+    # Retrieves the stream values on a page from it's Streamfield
+    def get_streamfield_blocks(self):
+        lst = [value for key, value in vars(self.page).iteritems()
+               if type(value) is StreamValue]
+        return list(chain(*lst))
+
 
 class JSHandler(Handler):
     """
@@ -41,12 +47,6 @@ class JSHandler(Handler):
         # Create a dictionary with keys ordered organisms, molecules, then atoms
         for child in self.get_streamfield_blocks():
             self.add_block_js(child.block)
-
-    # Retrieves the stream values on a page from it's Streamfield
-    def get_streamfield_blocks(self):
-        lst = [value for key, value in vars(self.page).iteritems()
-               if type(value) is StreamValue]
-        return list(chain(*lst))
 
     # Recursively search the blocks and classes for declared Media.js
     def add_block_js(self, block):
