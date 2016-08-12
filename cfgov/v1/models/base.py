@@ -1,5 +1,6 @@
-import os
 import json
+import os
+import urllib
 from itertools import chain
 from collections import OrderedDict
 
@@ -36,7 +37,8 @@ from .. import get_protected_url
 from ..atomic_elements import molecules, organisms
 from ..util import util, ref
 
-import urllib
+PAGE_HANDLERS = [JSHandler]
+
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -215,6 +217,13 @@ class CFGOVPage(Page):
     def get_prev_appropriate_siblings(self, hostname, inclusive=False):
         return self.get_appropriate_siblings(hostname=hostname, inclusive=inclusive).filter(path__lte=self.path).order_by('-path')
 
+    def get_context(self, request, *args, **kwargs):
+        context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+        for handler_class in PAGE_HANDLERS:
+            handler = handler_class(self, request)
+            handler.process(context)
+        return context
+
     @property
     def status_string(self):
         page = CFGOVPage.objects.get(id=self.id)
@@ -307,12 +316,6 @@ class CFGOVPage(Page):
     # 'template' is used as the key for front-end consistency
     def add_page_js(self, js):
         js['template'] = []
-
-    # Returns all the JS files specific to this page and it's current Streamfield's blocks
-    @property
-    def media(self):
-        js_handler = JSHandler(self)
-        return js_handler.get_js_dict()
 
 
 class CFGOVPageCategory(Orderable):

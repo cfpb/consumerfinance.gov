@@ -6,11 +6,27 @@ from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from ..atomic_elements import ATOMIC_JS
 
 
-class JSHandler:
-    def __init__(self, page):
+class Handler(object):
+    def __init__(self, page, request):
         self.page = page
+        self.request = request
+
+    def process(self, context):
+        raise NotImplementedError
+
+
+class JSHandler(Handler):
+    """
+        Gathers all the JS files specific to this page and it's current
+        Streamfield's blocks and puts them in the template context.
+    """
+    def __init__(self, page, request):
+        super(JSHandler, self).__init__(page, request)
         self.js_dict = OrderedDict()
+
+    def process(self, context):
         self.generate_js_dict()
+        context['media'] = self.js_dict
 
     def generate_js_dict(self):
         for key in ['template', 'organisms', 'molecules', 'atoms', 'other']:
@@ -19,9 +35,6 @@ class JSHandler:
         self.add_streamfield_js()
         for key, js_files in self.js_dict.iteritems():
             self.js_dict[key] = OrderedDict.fromkeys(js_files).keys()
-
-    def get_js_dict(self):
-        return self.js_dict
 
     # Gets the JS from the Streamfield data
     def add_streamfield_js(self):
