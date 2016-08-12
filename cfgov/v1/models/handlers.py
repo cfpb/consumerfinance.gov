@@ -17,7 +17,7 @@ class Handler(object):
 
 class JSHandler(Handler):
     """
-        Gathers all the JS files specific to this page and it's current
+        Gathers all the JS files specific to this page and its current
         Streamfield's blocks and puts them in the template context.
     """
     def __init__(self, page, request):
