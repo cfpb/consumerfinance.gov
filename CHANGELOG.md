@@ -19,11 +19,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 - Updated Protractor to version `4.0.2` from `3.2.1`.
 - Updated large checkboxes to match the spec.
+- Updated Capital Framework to version `3.6.1` from `3.4.0`.
 
 ### Removed
 - Unused `sinon-chai` npm package.
 
 ### Fixed
+- Updated banner-footer-webpack-plugin to use git URL instead of `0.0.1`.
 
 
 ## 3.6.0

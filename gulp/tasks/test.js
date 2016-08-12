@@ -188,7 +188,7 @@ function _spawnProtractor( suite ) {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function testAcceptanceBrowser( suite ) {
-    _spawnProtractor( suite );
+  _spawnProtractor( suite );
 }
 
 /**
@@ -225,4 +225,3 @@ gulp.task( 'test',
 gulp.task( 'test:acceptance', function() {
   testAcceptanceBrowser();
 } );
-
