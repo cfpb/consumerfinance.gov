@@ -1,0 +1,144 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+{% import 'molecules/social-media.html' as social_media with context %}
+    <section class="block
+                    block__flush-top
+                    block__sub">
+        <h1>{{ page.job_title }}</h1>
+        <dl>
+            <dt>Division/Office: </dt>
+            <dd>{{ page.job_category }}</dd>
+            <dt>Expiration Date:</dt>
+            <dd>
+                {% if page.job_close_date %}
+                    {{ time.render(page.job_close_date, {'date':true}) }}
+                {% endif %}
+            </dd>
+            <dt>Region:</dt>
+            <dd>{{ page.job_locations }}</dd>
+            <dt>Grade:</dt>
+            <dd>
+                <strong>({{ page.job_grades }})</strong>
+                ${{ '{:,.2f}'.format( page.job_salary_min ) }}–${{ '{:,.2f}'.format( page.job_salary_max ) }}
+            </dd>
+        </dl>
+        <div class="content-l">
+            <div class="content-l_col content-l_col-1-2">
+                <a href="#interested" class="btn">
+                    Interested in applying?
+                </a>
+            </div>
+            <div class="t-careers_social
+                        content-l_col
+                        content-l_col-1-2">
+                {{ social_media.render( {
+                    'title':            page.job_title,
+                    'twitter_hashtags': page.job_twitter_hash_tag or 'usajobs'
+                } ) }}
+            </div>
+        </div>
+    </section>
+
+    <section class="block
+                    block__padded-top
+                    block__border-top">
+        <h2>Job Description</h2>
+        {{ page.job_description }}
+    </section>
+
+    <section class="block">
+        <em>
+            {% if page.job_equal_opportunity_text %}
+                {{ page.job_equal_opportunity_text }}
+            {% else %}
+                The Consumer Financial Protection Bureau (CFPB) is an equal
+                opportunity employer and seeks to create and maintain a vibrant
+                and diverse workforce. Women, minorities, veterans, and
+                people with disabilities are encouraged to apply.
+            {% endif %}
+        </em>
+    </section>
+
+    <section class="block
+                    block__padded-top
+                    block__border-top">
+        <div class="content-l">
+            <div class="content-l_col content-l_col-1-2">
+                <h2 id="interested">Interested in Applying?</h2>
+            </div>
+            <div class="t-careers_social
+                        content-l_col
+                        content-l_col-1-2">
+                {# TODO: Fix vertical alignment.
+                         Social Media icons are slightly high
+                         relative to Interested in Applying heading. #}
+                {{ social_media.render( {
+                    'title':            page.job_title,
+                    'twitter_hashtags': page.job_twitter_hash_tag or 'usajobs'
+                } ) }}
+            </div>
+        </div>
+
+        <h3>Before you apply</h3>
+        {{ page.job_pre_application_instructions if
+           page.job_pre_application_instructions else ''
+        }}
+        <ul class="list list__links">
+            <li class="list_item">
+                <a class="jump-link"
+                   href="/about-us/careers/working-at-cfpb/">
+                    Learn about working @ CFPB
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="jump-link"
+                   href="/about-us/careers/application-process/">
+                    Learn about the application process
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    {% for job_applicant_type in page.job_application_types %}
+    <div class="block
+                block__bg
+                block__border">
+        <h4>{{ job_applicant_type.application_type.applicant_type }}</h4>
+        <p>{{ job_applicant_type.application_type.description }}</p>
+
+        {% if job_applicant_type.instructions %}
+            <p>{{ job_applicant_type.instructions }}</p>
+        {% endif %}
+
+        {% if job_applicant_type.usajobs_url %}
+           {% set job_url = job_applicant_type.usajobs_url %}
+        {% elif job_applicant_type.email %}
+           {% set job_url = "mailto:{0}?subject=Application for Position: {1}"
+                            .format(job_applicant_type.email, page.job_title | urlencode) %}
+        {% endif %}
+
+        <p><a class="btn" href="{{ job_applicant_type.usajobs_url }}">Apply now</a></p>
+        <p>
+            You are about to leave consumerfinance.gov. To submit the
+            application, you must go to USAJobs.gov.
+        </p>
+    </div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+{%- endblock %}
