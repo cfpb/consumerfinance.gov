@@ -6,6 +6,13 @@ from . import atoms, molecules
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
 
+JS_ORGANISMS = [
+    'BaseExpandable',
+    'Expandable',
+    'ExpandableGroup',
+    'FilterControls'
+]
+
 
 class Well(blocks.StructBlock):
     content = blocks.RichTextBlock(required=False, label='Well')

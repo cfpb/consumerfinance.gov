@@ -3,6 +3,8 @@ from itertools import chain
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 
+from ..atomic_elements import ATOMIC_JS
+
 
 class JSHandler:
     def __init__(self, page):
@@ -11,7 +13,7 @@ class JSHandler:
         self.generate_js_dict()
 
     def generate_js_dict(self):
-        for key in ['template', 'organisms', 'molecules', 'atoms']:
+        for key in ['template', 'organisms', 'molecules', 'atoms', 'other']:
             self.js_dict.update({key: []})
         self.page.add_page_js(self.js_dict)
         self.add_streamfield_js()
@@ -46,11 +48,18 @@ class JSHandler:
     def assign_js(self, obj):
         try:
             if hasattr(obj.Media, 'js'):
-                for key in self.js_dict.keys():
-                    if obj.__module__.endswith(key):
-                        self.js_dict[key] += obj.Media.js
-                if not [key for key in self.js_dict.keys()
-                        if obj.__module__.endswith(key)]:
-                    self.js_dict.update({'other': obj.Media.js})
-        except:
+                class_name = type(obj).__name__
+                for key in self.js_dict:
+                    if key in ATOMIC_JS:
+                        if class_name in ATOMIC_JS[key]:
+                            self.add_files(key, obj.Media.js)
+                            break
+                    elif key == 'other':
+                        self.add_files(key, obj.Media.js)
+                        break
+        except AttributeError:
             pass
+
+    def add_files(self, key, filenames):
+        self.js_dict[key] += [name for name in filenames
+                              if name not in self.js_dict[key]]
