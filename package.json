@@ -37,6 +37,7 @@
     "gulp-uglify": "2.0.0",
     "imports-loader": "0.6.5",
     "require-dir": "0.3.0",
+    "slick-carousel": "1.6.0",
     "snyk": "1.13.2",
     "validate.js": "0.9.0",
     "webpack": "1.12.14",
@@ -79,7 +80,7 @@
     "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",
     "handlebars": "./node_modules/handlebars/dist/handlebars.min.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",
-    "slick": "./vendor/slick-carousel/slick/slick.js",
+    "slick": "./node_modules/slick-carousel/slick/slick.js",
     "validate": "./node_modules/validate.js/validate.js"
   },
   "scripts": {

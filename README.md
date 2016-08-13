@@ -14,20 +14,20 @@ and [Wagtail CMS](https://wagtail.io) for content administration.
 ## Quickstart
 
 Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
-and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions 
+and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions
 are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
 
 Ensure that Elasticsearch and MySQL are installed and that MySQL is
-either running or runnable by our 
-[backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41) 
-and our 
+either running or runnable by our
+[backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41)
+and our
 [runserver.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/runserver.sh#L12).
 
 ```
 git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 pip install virtualenv virtualenvwrapper
-npm install -g gulp bower
+npm install -g gulp
 source load-env.sh
 source setup.sh
 ./runserver.sh
@@ -36,7 +36,7 @@ source setup.sh
 
 ## Documentation
 
-Documentation for this project is available in the [docs](docs/) directory 
+Documentation for this project is available in the [docs](docs/) directory
 and [online](https://cfpb.github.io/cfgov-refresh/).
 
 If you would like to browse the documentation locally, you can do so
