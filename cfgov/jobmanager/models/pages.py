@@ -4,7 +4,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList
+    FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
+    TabbedInterface
 )
 
 from jobmanager.models.django import Grade, JobCategory, Location
@@ -49,6 +50,9 @@ class JobListingPage(CFGOVPage):
         ),
     ]
 
-    edit_handler = ObjectList(content_panels, heading='Content')
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
 
     template = 'job-description-page/index.html'
