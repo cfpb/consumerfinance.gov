@@ -31,13 +31,12 @@
 
 {% from 'molecules/info-unit.html' import info_unit with context %}
 
-{% if value.sub_heading is defined
-   and value.sub_heading_icon is defined %}
+{% if value.sub_heading and value.sub_heading_icon %}
     {% set sub_heading =
         '<h4><span class="cf-icon cf-icon-{0}"></span>&nbsp;{1}</h4>'
         .format(value.sub_heading_icon, value.sub_heading)
     %}
-{% elif value.sub_heading is defined %}
+{% elif value.sub_heading %}
     {% set sub_heading = '<h4>' ~ value.sub_heading ~ '</h4>' %}
 {% else %}
     {% set sub_heading = '' %}
