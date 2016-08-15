@@ -17,7 +17,7 @@ from v1.models import CFGOVPage
 @hooks.register('after_create_page')
 @hooks.register('after_edit_page')
 def share_the_page(request, page):
-    page = page.specific
+    page = Page.objects.get(id=page.id).specific
     parent_page = page.parent()
     is_publishing = bool(request.POST.get('action-publish', False))
     is_sharing = bool(request.POST.get('action-share', False))
