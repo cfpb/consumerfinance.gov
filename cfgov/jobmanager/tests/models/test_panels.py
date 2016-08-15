@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.utils.http import urlquote
 from mock import Mock
 from model_mommy import mommy
 from unittest import TestCase
@@ -77,4 +78,22 @@ class EmailApplicationLinkTestCase(ApplicationLinkTestCaseMixin, TestCase):
         self.check_clean(
             address='user@example.com',
             label='Heading'
+        )
+
+    def test_mailto_link(self):
+        job = mommy.prepare(
+            JobListingPage,
+            title='This is a page title!',
+            description='This is a page description'
+        )
+
+        address = 'user@example.com'
+        link = EmailApplicationLink(address=address, job_listing=job)
+
+        self.assertEqual(
+            link.mailto_link,
+            'mailto:{}?subject=Application for Position: {}'.format(
+                address,
+                'This%20is%20a%20page%20title%21'
+            )
         )

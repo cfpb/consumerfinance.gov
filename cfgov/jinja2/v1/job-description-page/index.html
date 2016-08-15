@@ -1,6 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'macros/time.html' as time %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -12,22 +13,22 @@
     <section class="block
                     block__flush-top
                     block__sub">
-        <h1>{{ page.job_title }}</h1>
+        <h1>{{ page.title }}</h1>
         <dl>
             <dt>Division/Office: </dt>
-            <dd>{{ page.job_category }}</dd>
+            <dd>{{ page.category }}</dd>
             <dt>Expiration Date:</dt>
             <dd>
-                {% if page.job_close_date %}
-                    {{ time.render(page.job_close_date, {'date':true}) }}
+                {% if page.close_date %}
+                    {{ time.render(page.close_date, {'date':true}) }}
                 {% endif %}
             </dd>
             <dt>Region:</dt>
-            <dd>{{ page.job_locations }}</dd>
+            <dd>{{ page.locations }}</dd>
             <dt>Grade:</dt>
             <dd>
-                <strong>({{ page.job_grades }})</strong>
-                ${{ '{:,.2f}'.format( page.job_salary_min ) }}–${{ '{:,.2f}'.format( page.job_salary_max ) }}
+                <strong>({{ page.grades }})</strong>
+                ${{ '{:,.2f}'.format( page.salary_min ) }}–${{ '{:,.2f}'.format( page.salary_max ) }}
             </dd>
         </dl>
         <div class="content-l">
@@ -40,8 +41,8 @@
                         content-l_col
                         content-l_col-1-2">
                 {{ social_media.render( {
-                    'title':            page.job_title,
-                    'twitter_hashtags': page.job_twitter_hash_tag or 'usajobs'
+                    'title':            page.title,
+                    'twitter_hashtags': page.twitter_hash_tag or 'usajobs'
                 } ) }}
             </div>
         </div>
@@ -51,13 +52,13 @@
                     block__padded-top
                     block__border-top">
         <h2>Job Description</h2>
-        {{ page.job_description }}
+        {{ page.description | safe }}
     </section>
 
     <section class="block">
         <em>
-            {% if page.job_equal_opportunity_text %}
-                {{ page.job_equal_opportunity_text }}
+            {% if page.equal_opportunity_text %}
+                {{ page.equal_opportunity_text }}
             {% else %}
                 The Consumer Financial Protection Bureau (CFPB) is an equal
                 opportunity employer and seeks to create and maintain a vibrant
@@ -81,16 +82,13 @@
                          Social Media icons are slightly high
                          relative to Interested in Applying heading. #}
                 {{ social_media.render( {
-                    'title':            page.job_title,
-                    'twitter_hashtags': page.job_twitter_hash_tag or 'usajobs'
+                    'title':            page.title,
+                    'twitter_hashtags': page.twitter_hash_tag or 'usajobs'
                 } ) }}
             </div>
         </div>
 
         <h3>Before you apply</h3>
-        {{ page.job_pre_application_instructions if
-           page.job_pre_application_instructions else ''
-        }}
         <ul class="list list__links">
             <li class="list_item">
                 <a class="jump-link"
@@ -107,29 +105,30 @@
         </ul>
     </section>
 
-    {% for job_applicant_type in page.job_application_types %}
+    {% set usajobs_links = page.usajobs_application_links.order_by(
+      'applicant_type' 
+    ) %}
+    {% for usajobs_link in usajobs_links %}
     <div class="block
                 block__bg
                 block__border">
-        <h4>{{ job_applicant_type.application_type.applicant_type }}</h4>
-        <p>{{ job_applicant_type.application_type.description }}</p>
-
-        {% if job_applicant_type.instructions %}
-            <p>{{ job_applicant_type.instructions }}</p>
-        {% endif %}
-
-        {% if job_applicant_type.usajobs_url %}
-           {% set job_url = job_applicant_type.usajobs_url %}
-        {% elif job_applicant_type.email %}
-           {% set job_url = "mailto:{0}?subject=Application for Position: {1}"
-                            .format(job_applicant_type.email, page.job_title | urlencode) %}
-        {% endif %}
-
-        <p><a class="btn" href="{{ job_applicant_type.usajobs_url }}">Apply now</a></p>
+        <h4>{{ usajobs_link.applicant_type.applicant_type }}</h4>
+        <p>{{ usajobs_link.applicant_type.description }}</p>
+        <p><a class="btn" href="{{ usajobs_link.url }}">Apply now</a></p>
         <p>
             You are about to leave consumerfinance.gov. To submit the
             application, you must go to USAJobs.gov.
         </p>
+    </div>
+    {% endfor %}
+    {% set email_links = page.email_application_links.order_by('label') %}
+    {% for email_link in email_links %}
+    <div class="block
+                block__bg
+                block__border">
+        <h4>{{ email_link.label }}</h4>
+        {% if email_link.description %}<p>{{ email_link.description }}</p>{% endif %}
+        <p><a class="btn" href="{{ email_link.mailto_link | safe }}">Apply now</a></p>
     </div>
     {% endfor %}
 

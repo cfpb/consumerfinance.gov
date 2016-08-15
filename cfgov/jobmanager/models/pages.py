@@ -42,3 +42,5 @@ class JobListingPage(CFGOVPage):
     ]
 
     edit_handler = ObjectList(content_panels, heading='Content')
+
+    template = 'job-description-page/index.html'
