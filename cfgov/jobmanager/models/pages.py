@@ -8,7 +8,7 @@ from wagtail.wagtailadmin.edit_handlers import (
     TabbedInterface
 )
 
-from jobmanager.models.django import Grade, JobCategory, Location
+from jobmanager.models.django import JobCategory
 from v1.models import CFGOVPage
 
 
@@ -22,14 +22,12 @@ class JobListingPage(CFGOVPage):
                                      decimal_places=2)
     division = models.ForeignKey(JobCategory, on_delete=models.PROTECT,
                                  null=True)
-    grade = models.ForeignKey(Grade, on_delete=models.PROTECT, null=True)
-    region = models.ForeignKey(Location, on_delete=models.PROTECT, null=True)
 
     content_panels = CFGOVPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('division', classname='full'),
-            FieldPanel('grade', classname='full'),
-            FieldPanel('region', classname='full'),
+            InlinePanel('grades', label='Grades'),
+            InlinePanel('regions', label='Regions'),
             FieldRowPanel([
                 FieldPanel('open_date', classname='col6'),
                 FieldPanel('close_date', classname='col6'),

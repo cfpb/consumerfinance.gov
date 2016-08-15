@@ -20,8 +20,6 @@ class JobListingPageTestCase(TestCase):
     def prepare_job_listing_page(self, **kwargs):
         kwargs['description'] = kwargs.get('description', 'default')
         kwargs['division'] = kwargs.get('division', self.division)
-        kwargs['region'] = kwargs.get('region', self.region)
-        kwargs['grade'] = kwargs.get('grade', self.grade)
         return mommy.prepare(JobListingPage, **kwargs)
 
     def test_clean_with_all_fields_passes_validation(self):
@@ -58,15 +56,5 @@ class JobListingPageTestCase(TestCase):
 
     def test_clean_without_division_fails_validation(self):
         page = self.prepare_job_listing_page(division=None)
-        with self.assertRaises(ValidationError):
-            page.full_clean()
-
-    def test_clean_without_region_fails_validation(self):
-        page = self.prepare_job_listing_page(region=None)
-        with self.assertRaises(ValidationError):
-            page.full_clean()
-
-    def test_clean_without_grade_fails_validation(self):
-        page = self.prepare_job_listing_page(grade=None)
         with self.assertRaises(ValidationError):
             page.full_clean()

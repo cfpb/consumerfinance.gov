@@ -23,11 +23,11 @@
                     {{ time.render(page.close_date, {'date':true}) }}
                 {% endif %}
             </dd>
-            <dt>Region:</dt>
-            <dd>{{ page.region.region_long }}</dd>
-            <dt>Grade:</dt>
+            <dt>Region{{ page.regions.all() | pluralize() }}:</dt>
+            <dd>{{ page.regions.all() | join(', ') }}</dd>
+            <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
             <dd>
-                <strong>({{ page.grade }})</strong>
+                <strong>({{ page.grades.all() | join(', ') }})</strong>
                 ${{ '{:,.0f}'.format( page.salary_min ) }}–${{ '{:,.0f}'.format( page.salary_max ) }}
             </dd>
         </dl>
