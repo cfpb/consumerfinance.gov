@@ -1,0 +1,19 @@
+FROM centos:6
+#update this to force yum to update the package index
+ENV UPDATED 20160814 
+
+RUN yum -y update; yum clean all
+RUN yum -y install git && yum clean all
+RUN yum -y groupinstall 'Development Tools' && yum clean all
+
+WORKDIR /usr/local
+RUN curl  https://nodejs.org/download/release/v5.5.0/node-v5.5.0-linux-x64.tar.gz |  tar --strip-components 1  -xzv
+RUN npm -g gulp
+
+RUN mkdir /cfgov-refresh
+WORKDIR /cfgov-refresh
+
+ADD *.json ./
+ADD gulp* ./
+ADD cfgov ./
+ADD config ./
