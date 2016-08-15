@@ -17,6 +17,7 @@ class JobGradeModelAdmin(ModelAdmin):
     model = Grade
     menu_label = 'Grades'
     menu_icon = 'snippet'
+    list_display = ('grade', 'salary_min', 'salary_max')
 
 
 class JobCategoryModelAdmin(ModelAdmin):
@@ -35,6 +36,7 @@ class JobRegionModelAdmin(ModelAdmin):
     model = Location
     menu_label = 'Regions'
     menu_icon = 'snippet'
+    list_display = ('description', 'region', 'region_long')
 
 
 @modeladmin_register

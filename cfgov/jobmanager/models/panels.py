@@ -55,7 +55,7 @@ class USAJobsApplicationLink(Orderable, models.Model):
 
 
 class GradePanel(Orderable, models.Model):
-    grade = models.ForeignKey(Grade, related_name='panels')
+    grade = models.ForeignKey(Grade, related_name='grade_panels')
     job_listing = ParentalKey(JobListingPage, related_name='grades')
 
     class Meta:
@@ -70,7 +70,7 @@ class GradePanel(Orderable, models.Model):
 
 
 class RegionPanel(Orderable, models.Model):
-    region = models.ForeignKey(Location, related_name='panels')
+    region = models.ForeignKey(Location, related_name='region_panels')
     job_listing = ParentalKey(JobListingPage, related_name='regions')
 
     class Meta:
