@@ -1,6 +1,7 @@
 'use strict';
 
 // Required modules.
+var Analytics = require( '../modules/Analytics' );
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
 var Expandable = require( '../organisms/Expandable' );
@@ -9,6 +10,7 @@ var Multiselect = require( '../molecules/Multiselect' );
 var Notification = require( '../molecules/Notification' );
 var standardType = require( '../modules/util/standard-type' );
 var validators = require( '../modules/util/validators' );
+
 
 /**
  * FilterableListControls
@@ -23,6 +25,7 @@ var validators = require( '../modules/util/validators' );
 function FilterableListControls( element ) {
   var BASE_CLASS = 'o-filterable-list-controls';
   var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  var _expandable;
   var _form = _dom.querySelector( 'form' );
   var _notification;
   var _fieldGroups;
@@ -41,6 +44,8 @@ function FilterableListControls( element ) {
     ]
   };
 
+  var _cachedLabels = {};
+
   /**
    * @returns {FilterableListControls|undefined} An instance,
    *   or undefined if it was already initialized.
@@ -57,8 +62,8 @@ function FilterableListControls( element ) {
 
     // TODO: FilterableListControls should use expandable
     //       behavior (FlyoutMenu), not an expandable directly.
-    var expandable = new Expandable( _dom );
-    expandable.init();
+    _expandable = new Expandable( _dom );
+    _expandable.init();
 
     _notification = new Notification( _dom );
     _notification.init();
@@ -72,7 +77,54 @@ function FilterableListControls( element ) {
    * Initialize FilterableListControls events.
    */
   function _initEvents() {
-    _form.addEventListener( 'submit', _formSubmitted );
+    var labelDom = _dom.querySelector( '.o-expandable_label' );
+    var label;
+
+    if ( labelDom ) {
+      label = labelDom.textContent.trim();
+    }
+
+    _expandable.addEventListener( 'expandBegin',
+    function sendEvent( ) {
+      Analytics.sendEvent( 'Filter:open', label );
+    } );
+
+    _expandable.addEventListener( 'collapseBegin',
+    function sendEvent( ) {
+      Analytics.sendEvent( 'Filter:close', label );
+    } );
+
+    _form.addEventListener( 'change', function sendEvent( event ) {
+      var action;
+      var field = event.target;
+      var fieldValue;
+      var fieldLabel;
+
+      if ( !field ) {
+        return;
+      }
+
+      if ( !_cachedLabels[field.name] ) {
+        _cachedLabels[field.name] = {
+          label: _getLabelText( field )
+        };
+      }
+
+      if ( field.type === 'checkbox' && field.checked === false ) {
+        fieldValue = 'null';
+      } else {
+        fieldValue = field.value;
+      }
+
+      fieldLabel = _cachedLabels[field.name].label + ':' + fieldValue;
+      action = 'Filter:' + field.type + ':changed';
+      Analytics.sendEvent( action, fieldLabel );
+    } );
+
+    _form.addEventListener( 'submit', function sendEvent( event ) {
+      event.preventDefault();
+      Analytics.sendEvent( 'Filter:submit', label, _formSubmitted );
+    } );
   }
 
   /**
@@ -83,16 +135,16 @@ function FilterableListControls( element ) {
   }
 
   /**
-   * Show error notification.
-   * @param {Object} event Form submitted event.
+   * Handle form sumbmission and showing error notification.
    */
-  function _formSubmitted( event ) {
+  function _formSubmitted( ) {
     var validatedFields = _validateFields( [].slice.call( _form.elements ) );
 
     if ( validatedFields.invalid.length > 0 ) {
-      event.preventDefault();
       _setNotification( _notification.ERROR,
                         _buildErrorMessage( validatedFields.invalid ) );
+    } else {
+      _form.submit();
     }
   }
 
