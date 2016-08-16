@@ -18,15 +18,15 @@ class JobListingPageTestCase(TestCase):
         self.addCleanup(page_clean.stop)
 
     def prepare_job_listing_page(self, **kwargs):
-        kwargs['description'] = kwargs.get('description', 'default')
-        kwargs['division'] = kwargs.get('division', self.division)
+        kwargs.setdefault('description', 'default')
+        kwargs.setdefault('division', self.division)
         return mommy.prepare(JobListingPage, **kwargs)
 
     def test_clean_with_all_fields_passes_validation(self):
         page = self.prepare_job_listing_page()
         try:
             page.full_clean()
-        except ValidationError as e:
+        except ValidationError:
             self.fail('clean with all fields should validate')
 
     def test_clean_without_description_fails_validation(self):

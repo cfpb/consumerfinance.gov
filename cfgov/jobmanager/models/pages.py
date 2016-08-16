@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 
-from django.core.exceptions import ValidationError
 from django.db import models
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailadmin.edit_handlers import (

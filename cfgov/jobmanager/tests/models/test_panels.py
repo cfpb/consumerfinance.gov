@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-from django.utils.http import urlquote
 from mock import Mock
 from model_mommy import mommy
 from unittest import TestCase
