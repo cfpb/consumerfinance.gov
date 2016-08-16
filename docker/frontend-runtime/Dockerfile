@@ -8,12 +8,16 @@ RUN yum -y groupinstall 'Development Tools' && yum clean all
 
 WORKDIR /usr/local
 RUN curl  https://nodejs.org/download/release/v5.5.0/node-v5.5.0-linux-x64.tar.gz |  tar --strip-components 1  -xzv
-RUN npm -g gulp
+RUN npm install -g gulp bower
+RUN echo '{ "allow_root":true}' > /root/.bowerrc
 
-RUN mkdir /cfgov-refresh
-WORKDIR /cfgov-refresh
+RUN mkdir /src
+WORKDIR /src
 
-ADD *.json ./
-ADD gulp* ./
-ADD cfgov ./
-ADD config ./
+ADD docker/frontend-runtime/entrypoint.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENV TEST_HTTP_HOST django
+ENV TEST_HTTP_PORT 8000
+
+CMD entrypoint.sh
