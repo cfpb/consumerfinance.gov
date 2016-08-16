@@ -15,6 +15,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## UNRELEASED
 
 ### Added
+- Added new conference url in the nav
 
 ### Changed
 - Updated Protractor to version `4.0.2` from `3.2.1`.
