@@ -13,6 +13,9 @@ def isRequired(field_name):
 
 class HalfWidthLinkBlob(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
+    sub_heading = blocks.CharBlock(required=False)
+    sub_heading_icon = blocks.CharBlock(required=False, label="Sub heading icon",
+    help_text='A list of icon names can be obtained at: https://cfpb.github.io/capital-framework/components/cf-icons/. Example: linkedin-square,facebook-square, etc.')
     body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 

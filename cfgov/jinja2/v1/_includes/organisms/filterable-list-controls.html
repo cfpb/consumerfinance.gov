@@ -41,15 +41,15 @@
 
 {% macro _render_filter_fields(controls, form, index) -%}
     {% if controls.title %}
+        {% set field_id = 'filter' ~ index ~ '_title' %}
         <div class="form-l_col
                     form-l_col-1">
             <div class="form-group">
                 <label class="form-label-header"
-                       for="title">
+                       for="{{ field_id }}">
                     Item name
                 </label>
-                {{ form.render_with_id(form.title,
-                    'filter' ~ index ~ '_title') }}
+                {{ form.render_with_id(form.title, field_id) }}
             </div>
         </div>
     {% endif %}
@@ -81,28 +81,28 @@
                     form-l_col-2-3">
             <div class="form-l">
                 {% if controls.topics %}
+                    {% set field_id = 'filter' ~ index ~ '_topics' %}
                     <div class="form-l_col
                                 form-l_col-1-2">
                         <div class="form-group">
                             <label class="form-label-header"
-                                   for="topics">
+                                   for="{{ field_id }}">
                                 Topic
                             </label>
-                            {{ form.render_with_id(form.topics,
-                               'filter' ~ index ~ '_topics') }}
+                            {{ form.render_with_id(form.topics, field_id) }}
                         </div>
                     </div>
                 {% endif %}
                 {% if controls.authors %}
+                    {% set field_id = 'filter' ~ index ~ '_authors' %}
                     <div class="form-l_col
                                 form-l_col-1-2">
                         <div class="form-group">
                             <label class="form-label-header"
-                                   for="authors">
+                                   for="{{ field_id }}">
                                 Author
                             </label>
-                            {{ form.render_with_id(form.authors,
-                               'filter' ~ index ~ '_authors') }}
+                            {{ form.render_with_id(form.authors, field_id) }}
                         </div>
                     </div>
                 {% endif %}
@@ -160,7 +160,6 @@
 
         <div class="form-l">
             {{ _render_filter_fields(controls, form, index) }}
-
             <div class="form-l_col
                         form-l_col__flush-bottom
                         form-l_col-1">
