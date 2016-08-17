@@ -12,9 +12,9 @@ services:
             - .:/src
         depends_on:
             - base
-#    django:
-#        build:
-#            context: .
-#            dockerfile: docker/backend-runtime/Dockerfile
-#        volumes:
-#            - .:/src
+    django:
+        build:
+            context: .
+            dockerfile: docker/backend-runtime/Dockerfile
+        volumes:
+            - .:/src
