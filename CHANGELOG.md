@@ -12,7 +12,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-## 3.6
+## UNRELEASED
+
+### Added
+- Added new conference url in the nav
+
+### Changed
+- Updated Protractor to version `4.0.2` from `3.2.1`.
+- Updated large checkboxes to match the spec.
+- Updated Capital Framework to version `3.6.1` from `3.4.0`.
+- Updated imagemin to version `3.0.2` from `2.4.0`.
+
+### Removed
+- Unused `sinon-chai` npm package.
+
+### Fixed
+- Updated banner-footer-webpack-plugin to use git URL instead of `0.0.1`.
+
+
+## 3.6.0
 
 ### Added
 - Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management,available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/
@@ -31,6 +49,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Ignored `console.log` in tests and enforced `no-process`.
 - Updated `STAGING_HOSTNAME` to `DJANGO_STAGING_HOSTNAME` environment var.
 - Allows passing of port to `runserver.sh`.
+- Updated browse-filterable test suite to properly nest pagination tests.
+- Updated pagination to support multiple pagination molecules on a single page.
 
 ### Removed
 - Unused `SELENIUM_URL` environment variable.
@@ -39,8 +59,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `initial_test_data.py` as the tests create the data they need now.
 
 ### Fixed
-
 - Added misnamed and unreferenced environment variables to .env.
+- Moved pagination tests from /organisms/ to /molecules/ where they belong.
 
 
 ## 3.4.0 2016-07-12

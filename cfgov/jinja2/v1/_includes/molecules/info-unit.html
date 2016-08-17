@@ -27,6 +27,8 @@
 
    value.heading:             A string containing title of module.
 
+   value.sub_heading:         A string containing the subtitle of module.
+
    value.body:                A string containing the content to display below
                               the heading (typically a paragraph).
 
@@ -65,12 +67,20 @@
     <div class="m-info-unit_content">
         {{ value.heading | safe if value.heading else '' }}
 
+        {{ value.sub_heading | safe if value.sub_heading else '' }}
+
         {{ value.body | safe }}
 
         {% if value.links %}
             <ul class="list list__links">
             {% for link in value.links %}
                 <li class="list_item">
+                    {% if link.text is defined and link.text.find('@') > -1 %}
+                        {% if not value.emails is defined %}
+                            {% do value.update({'emails':[{'url':link.text}]}) %}
+                        {% endif %}
+                        {% include 'contact-email.html' with context %}
+                    {% else %}
                     <a class="{{ 'btn m-info-unit_btn' if value.is_button
                                   else 'list_link' }}"
                        href="{{ link.url }}">
@@ -78,6 +88,7 @@
                                  after testing is completed #}
                         {{ link.text if link.text else 'Learn More' }}
                     </a>
+                    {% endif %}
                 </li>
             {% endfor %}
             </ul>
