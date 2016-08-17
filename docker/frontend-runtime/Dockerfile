@@ -13,7 +13,8 @@ RUN echo '{ "allow_root":true}' > /root/.bowerrc
 
 RUN mkdir /src
 WORKDIR /src
-
+ADD package.json ./
+RUN npm install && mv node_modules ../
 ADD docker/frontend-runtime/entrypoint.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
