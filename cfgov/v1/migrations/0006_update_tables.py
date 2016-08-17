@@ -81,7 +81,7 @@ def create_tableblocks_for_every_table(apps,schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0005_auto_20160811_1753'),
+        ('v1', '0005_auto_20160815_1537'),
     ]
 
     operations = [
