@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+    gulp:
+        build:
+            context: .
+            dockerfile: docker/frontend-runtime/Dockerfile
+        volumes:
+            - .:/src
