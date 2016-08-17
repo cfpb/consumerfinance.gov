@@ -127,9 +127,9 @@ class Table(blocks.StructBlock):
     ]))
 
     class Meta:
-        icon = 'form'
+        icon = None
         template = '_includes/organisms/table.html'
-        label = 'Table'
+        label = ' '
 
 
 class FullWidthText(blocks.StreamBlock):
