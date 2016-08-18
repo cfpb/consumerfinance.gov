@@ -12,7 +12,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-## UNRELEASED
+
+## Unreleased Changes
+
+### Added
+
+### Changed
+
+### Removed
+
+## 3.7.0
 
 ### Added
 - Added new conference url in the nav
