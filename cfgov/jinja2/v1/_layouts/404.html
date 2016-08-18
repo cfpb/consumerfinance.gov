@@ -32,7 +32,8 @@
                     <p>
                         If you’re sure this is the right place, let us know.
                     </p>
-                    <a class="jump-link" href="mailto:CFPB_website@consumerfinance.gov?subject=404%20Error">
+                    {% set subject = "subject=404%20error%20occurred%20at%20{0}".format(request.url) %}
+                    <a class="jump-link" href="mailto:CFPB_website@consumerfinance.gov?{{ subject }}">
                         Contact us
                     </a>
                 </div>
