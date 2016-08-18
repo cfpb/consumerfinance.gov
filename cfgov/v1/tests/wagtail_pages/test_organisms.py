@@ -172,7 +172,7 @@ class OrganismsTestCase(TestCase):
         response = django_client.get('/sublanding/')
         self.assertContains(response, 'Enter your comments')
 
-    def test_table(self):
+    def test_tableblock(self):
         """Table correctly displays on a Learn Page"""
         learn_page = LearnPage(
                 title='Learn Page', 
@@ -180,14 +180,14 @@ class OrganismsTestCase(TestCase):
         )
         learn_page.content = StreamValue(
             learn_page.content.stream_block, 
-            [atomic.table],
+            [atomic.table_block],
             True
         )
         publish_page(child=learn_page)
         response = django_client.get('/learn/')
-        self.assertContains(response, 'table hyperlink')
-        self.assertContains(response, 'table text blob')
-        self.assertContains(response, 'table rich text blob')
+        self.assertContains(response, 'Header One')
+        self.assertContains(response, 'Row 1-1')
+        self.assertContains(response, 'Row 2-1')
 
     def test_expandable_group(self):
         """Expandable group correctly displays on a Browse Page"""

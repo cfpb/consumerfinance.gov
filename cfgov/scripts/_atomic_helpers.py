@@ -223,40 +223,36 @@ reg_comment = {
         'id': 'test id',
     }
 }
-table = {
-    'type': 'table',
+
+table_block = {
+    'type': 'table_block',
     'value': {
-        'headers': [
-            'One',
-            'Two',
-            'Three',
-            'Four'
-        ],
-        'rows': [
+        'data': 
+        [
             [
-                {
-                    'type': 'hyperlink',
-                    'value': {
-                        'text': 'table hyperlink',
-                        'url': '/'
-                    }
-                },
-                {
-                    'type': 'text',
-                    'value': 'table text'
-                },
-                {
-                    'type': 'text_blob',
-                    'value': 'table text blob',
-                },
-                {
-                    'type': 'rich_text_blob',
-                    'value': '<p>table rich text blob</p>',
-                }
-            ]
-        ]
+                'Header One',
+                'Header Two',
+                'Header Three',
+                'Header Four'
+            ],
+            [
+                'Row 1-1',
+                'Row 1-2',
+                'Row 1-3',
+                'Row 1-4'
+            ],
+            [
+                'Row 2-1',
+                'Row 2-2',
+                'Row 2-3',
+                'Row 2-4'
+            ],
+        ],
+        'first_row_is_table_header': True,
+        'first_col_is_header': False,
     }
 }
+
 expandable_group = {
     'type': 'expandable_group',
     'value': {
