@@ -87,6 +87,8 @@ describe( 'GlobalSearch', function() {
         it( 'should have a clear button label', function() {
           browser.wait( _dom.input.isEnabled() )
             .then( function() {
+              // TODO: This test occassionally fails.
+              //       Refactor to wait for the clear button longer.
               expect( _dom.clearBtn.isDisplayed() ).toBe( true );
             } );
         } );
@@ -113,13 +115,10 @@ describe( 'GlobalSearch', function() {
         } );
 
         it( 'should NOT have search input content', function() {
-          // TODO: Investigate reusing _dom.content in place of elem.
-          //       Redundant lookup is needed for elementIsNotVisible(),
-          //       since it's in the Selenium API, not protractor.
-          var elem = browser.driver.findElement( by.css( CONTENT_SEL ) );
           // Wait for search button to disappear after collapsing search.
+          var EC = ExpectedConditions;
           browser.wait(
-            protractor.until.elementIsNotVisible( elem )
+            EC.not( EC.elementToBeClickable( _dom.content ) )
           ).then( function() {
             expect( _dom.content.isDisplayed() ).toBe( false );
           } );
@@ -136,13 +135,10 @@ describe( 'GlobalSearch', function() {
           activeElement.sendKeys( protractor.Key.TAB );
           activeElement = browser.driver.switchTo().activeElement();
           activeElement.sendKeys( protractor.Key.TAB );
-          // TODO: Investigate reusing _dom.content in place of elem.
-          //       Redundant lookup is needed for elementIsNotVisible(),
-          //       since it's in the Selenium API, not protractor.
-          var elem = browser.driver.findElement( by.css( CONTENT_SEL ) );
           // Wait for search button to disappear after collapsing search.
+          var EC = ExpectedConditions;
           browser.wait(
-            protractor.until.elementIsNotVisible( elem )
+            EC.not( EC.elementToBeClickable( _dom.content ) )
           ).then( function() {
             expect( _dom.content.isDisplayed() ).toBe( false );
           } );

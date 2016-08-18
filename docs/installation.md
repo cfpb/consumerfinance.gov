@@ -1,4 +1,6 @@
-# Clone the repository
+# Installation and configuration for cfgov-refresh
+
+## Clone the repository
 
 Using the console, navigate to the root directory in which your projects live and clone this project's repository:
 
@@ -17,15 +19,15 @@ There are two ways to install cfgov-refresh:
 !!! danger
     The instruction for Vagrant are not currently working.
 
-# Stand-alone installation
+## Stand-alone installation
 
 These instructions are somewhat specific to developing on Mac OS X,
 but if you're familiar with other Unix-based systems,
 it should be fairly easy to adapt them to your needs.
 
-## Install system-level requirements ##
+### Install system-level requirements
 
-#### virtualenv & virtualenvwrapper Python modules ####
+#### virtualenv & virtualenvwrapper Python modules
 
 Install [virtualenv](https://virtualenv.pypa.io/en/latest/index.html)
 and [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/)
@@ -35,7 +37,7 @@ to be able to create a local environment for your server:
 pip install virtualenv virtualenvwrapper
 ```
 
-#### Autoenv module ####
+#### Autoenv module
 
 This project uses a large number of environment variables.
 
@@ -143,7 +145,7 @@ npm install -g gulp bower
 	This project requires Node.js v5.5 or higher, and npm v3 or higher.
 
 
-#### Set up your environment ####
+#### Set up your environment
 
 If this is the first time you're setting up the project, run the following
 script to copy `.env_SAMPLE` to `.env`, export your environment variables,
@@ -161,7 +163,7 @@ If you setup Autoenv earlier, this will happen for you automatically when you
 If you prefer not to use Autoenv, just be sure to `source .env` every time
 you start a new session of work on the project.
 
-#### Run `setup.sh` ####
+#### Run the setup script
 
 At this point, your machine should have everything it needs to automate the
 rest of the setup process.
@@ -262,16 +264,32 @@ cfgov start django
 
 ## Optional steps
 
+### Load initial data into database
+
+The `initial-data.sh` script can be used to initialize a new database to make
+it easy to get started working on Wagtail. This script first ensures that all
+migrations are applied to the database, and then does the following:
+
+- Creates an `admin` superuser with a password as specified in the
+`WAGTAIL_ADMIN_PW` environment variable, if set.
+- If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
+with a slug of `home-page`.
+- If it doesn't already exist, creates a new Wagtail Site with a hostname of
+`content.localhost`, with the root page set to the `CFGOV` home page.
+- If they don't already exist, creates pages for events (name `Events`, slug
+`events`) and archived events (name `Archive`, slug `archive`).
+
 ### Load a database dump from the Build server
 
 If you're installing this fresh, the initial data you receive will not be
 as extensive as you'd probably like it to be.
-You can get a database dump from the Build server by running the Jenkins job
-"flapjack-demo-refresh-mysql-dump".
-You'll get a download of `refresh_dump.sql.gz`; unzip that, then run:
+
+You can get a database dump using the `cf.gov-dump-rdbms`
+Jenkins job. Download the `sql.gz` file,
+unzip it, and then run:
 
 ```bash
-./refesh-data.sh /path/to/refresh_dump.sql
+./refresh-data.sh /path/to/dump.sql
 ```
 
 This will remove the initial Wagtail admin user that was created by

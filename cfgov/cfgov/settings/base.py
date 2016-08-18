@@ -37,6 +37,9 @@ INSTALLED_APPS = (
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',
+    'wagtail.contrib.table_block',
+
+    'wagtail.contrib.modeladmin',
 
     'localflavor',
     'modelcluster',
@@ -177,7 +180,7 @@ STATIC_URL = '/static/'
 # Absolute path to the directory static files should be collected to.
 STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
 
-MEDIA_ROOT = os.environ.get('MEDIA_ROOT', 
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
                             os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
 

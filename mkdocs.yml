@@ -17,9 +17,6 @@ pages:
     - Notes on frameworks: notes-on-frameworks.md
 - Testing: testing.md
 - Development tips: development-tips.md
-- Contributing: contributing.md
-- Terms: terms.md
-- License: license.md
 theme: readthedocs
 
 markdown_extensions:
