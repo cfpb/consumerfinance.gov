@@ -7,7 +7,7 @@ from v1.models.sublanding_page import SublandingPage
 from v1.models.browse_page import BrowsePage
 from v1.models.browse_filterable_page import BrowseFilterablePage, EventArchivePage, NewsroomLandingPage
 from v1.models.sublanding_filterable_page import SublandingFilterablePage, ActivityLogPage
-from v1.models.learn_page import EventPage, LearnPage, DocumentDetailPage
+from v1.models.learn_page import EventPage, LearnPage, DocumentDetailPage, StoryPage
 from v1.models.newsroom_page import NewsroomPage, LegacyNewsroomPage
 from v1.models.blog_page import BlogPage, LegacyBlogPage
 
@@ -16,7 +16,7 @@ from helpers import publish_page
 
 
 '''
-Page types tested here: 
+Page types tested here:
 
 LandingPage,
 SubLandingPage,
@@ -32,8 +32,9 @@ NewsroomPage,
 LegacyNewsroomPage,
 BlogPage,
 LegacyBlogPage,
-ActivityLogPage
- 
+ActivityLogPage,
+StoryPage
+
 '''
 
 django_client = Client()
@@ -96,4 +97,5 @@ class PageTitlesTestCase(TestCase):
     def test_activity_log_page(self):
         self.page_loads_with_correct_title(page_cls=ActivityLogPage)
 
-    
+    def test_story_page(self):
+        self.page_loads_with_correct_title(page_cls=StoryPage)
