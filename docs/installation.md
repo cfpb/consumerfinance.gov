@@ -264,6 +264,21 @@ cfgov start django
 
 ## Optional steps
 
+### Load initial data into database
+
+The `initial-data.sh` script can be used to initialize a new database to make
+it easy to get started working on Wagtail. This script first ensures that all
+migrations are applied to the database, and then does the following:
+
+- Creates an `admin` superuser with a password as specified in the
+`WAGTAIL_ADMIN_PW` environment variable, if set.
+- If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
+with a slug of `home-page`.
+- If it doesn't already exist, creates a new Wagtail Site with a hostname of
+`content.localhost`, with the root page set to the `CFGOV` home page.
+- If they don't already exist, creates pages for events (name `Events`, slug
+`events`) and archived events (name `Archive`, slug `archive`).
+
 ### Load a database dump from the Build server
 
 If you're installing this fresh, the initial data you receive will not be
