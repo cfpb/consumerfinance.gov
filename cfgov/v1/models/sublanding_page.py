@@ -5,11 +5,11 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
+from wagtail.contrib.table_block.blocks import TableBlock
 
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
 from ..util import filterable_list, util
-from wagtail.contrib.table_block.blocks import TableBlock
 
 
 class SublandingPage(CFGOVPage):

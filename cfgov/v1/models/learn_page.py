@@ -10,10 +10,10 @@ from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.contrib.table_block.blocks import TableBlock
 
 from ..atomic_elements import molecules, organisms
 from .base import CFGOVPage, CFGOVPageManager
-from wagtail.contrib.table_block.blocks import TableBlock
 
 
 

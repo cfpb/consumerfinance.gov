@@ -1,11 +1,11 @@
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+from wagtail.contrib.table_block.blocks import TableBlock
 
 from . import atoms, molecules
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
-from wagtail.contrib.table_block.blocks import TableBlock
 
 
 class Well(blocks.StructBlock):

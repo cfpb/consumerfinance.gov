@@ -7,11 +7,11 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
+from wagtail.contrib.table_block.blocks import TableBlock
 
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
 from ..util.util import get_secondary_nav_items
-from wagtail.contrib.table_block.blocks import TableBlock
 
 
 class BrowsePage(CFGOVPage):
