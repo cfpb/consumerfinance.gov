@@ -3,6 +3,6 @@
                 {{ 'block__flush-top' if index == 1 else '' }}
                 {{ 'block__padded-bottom block__border-bottom' if block.value.has_rule else '' }}
                 {{ block.block.meta.classname if block.block.meta.classname else '' -}}">
-        {{ render_stream_child(block) }}
+        {{ render_stream_child(block) | safe }}
     </div>
 {% endmacro %}
