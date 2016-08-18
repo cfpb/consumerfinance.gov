@@ -19,26 +19,22 @@
             {% endfor %}
         </ul>
 
-        {% if 'build' in request.site.hostname %}
-            <h2>Helpful links</h2>
-            <ul>
-                <li>
-                    <a href="https://github.cfpb.gov/pages/flapjack/wagtail-documentation/">
-                        Wagtail How-to
-                    </a>
-                </li>
-                <li>
-                    <a href="https://cfpb.github.io/design-manual/global-elements/global-elements.html">
-                        Design Manual - Global Elements
-                    </a>
-                </li>
-                <li>
-                    <a href="https://cfpb.github.io/design-manual/page-components/page-components.html">
-                        Design Manual - Page Components
-                    </a>
-                </li>
-            </ul>
-        {% endif %}
+        <h2>Helpful links</h2>
+        <ul>
+            <li>
+                <a href="https://cfpb.github.io/design-manual/global-elements/global-elements.html">
+                    Design Manual - Global Elements
+                </a>
+            </li>
+            <li>
+                <a href="https://cfpb.github.io/design-manual/page-components/page-components.html">
+                    Design Manual - Page Components
+                </a>
+            </li>
+            <li>
+                CFPB-specific Wagtail documentation (please see link in CF.gov Platform team repo under "playground")
+            </li>
+        </ul>
 
     </div>
 {% endblock %}
