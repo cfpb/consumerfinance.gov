@@ -1,6 +1,7 @@
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+from wagtail.contrib.table_block.blocks import TableBlock
 
 from . import atoms, molecules
 from ..util import ref
@@ -126,9 +127,9 @@ class Table(blocks.StructBlock):
     ]))
 
     class Meta:
-        icon = 'form'
+        icon = None
         template = '_includes/organisms/table.html'
-        label = 'Table'
+        label = ' '
 
 
 class FullWidthText(blocks.StreamBlock):
@@ -137,7 +138,8 @@ class FullWidthText(blocks.StreamBlock):
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
-    table = Table()
+    table = Table(editable=False)
+    table_block = TableBlock(table_options={'renderer':'html'})
 
     class Meta:
         icon = 'edit'
