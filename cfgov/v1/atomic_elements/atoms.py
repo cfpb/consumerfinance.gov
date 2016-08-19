@@ -19,9 +19,9 @@ def is_required(field_name):
 class NumberBlock(blocks.StructBlock):
     text = blocks.CharBlock(max_length=100, required=False)
 
-    def __init__(self, required=True):
+    def __init__(self, required=True, **kwargs):
         self.required = required
-        super(NumberBlock, self).__init__()
+        super(NumberBlock, self).__init__(**kwargs)
 
     def clean(self, data):
         error_dict = {}

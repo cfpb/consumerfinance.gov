@@ -1,7 +1,11 @@
+from django import forms
+from django.apps import apps
+from django.utils.encoding import smart_text
+from django.utils.functional import cached_property
+from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-from wagtail.contrib.table_block.blocks import TableBlock
 
 from . import atoms, molecules
 from ..util import ref
@@ -130,6 +134,84 @@ class Table(blocks.StructBlock):
         icon = None
         template = '_includes/organisms/table.html'
         label = ' '
+
+
+class ModelBlock(blocks.StructBlock):
+    model = None
+    ordering = None
+
+    limit = atoms.NumberBlock(label='Limit', required=False)
+
+    def get_queryset(self):
+        model_cls = apps.get_model(self.model)
+        queryset = model_cls.objects.all()
+
+        ordering = self.get_ordering()
+        if ordering:
+            if isinstance(ordering, basestring):
+                ordering = (self.ordering,)
+
+            queryset = queryset.order_by(*ordering)
+
+        return queryset
+
+    def get_ordering(self):
+        return self.ordering
+
+
+class ModelTable(ModelBlock):
+    fields = None
+    field_headers = None
+
+    def render(self, value):
+        table_value = {
+            'headers': [h.upper() for h in self.field_headers],
+            'rows': [self.make_row(obj) for obj in self.get_queryset()],
+        }
+
+        table = Table()
+        value = table.to_python(table_value)
+        return table.render(value)
+
+    def make_row(self, obj):
+        return [
+            {'type': 'text', 'value': self.make_value(obj, field)}
+            for field in self.fields
+        ]
+
+    def make_value(self, obj, field):
+        value = getattr(obj, field)
+        return self.format_field_value(field, value)
+
+    def format_field_value(self, field, value):
+        custom_formatter_name = 'make_{}_value'.format(field)
+        custom_formatter = getattr(self, custom_formatter_name, None)
+
+        if custom_formatter:
+            return custom_formatter(value)
+        else:
+            return smart_text(value)
+
+    class Meta:
+        template = '_includes/organisms/table.html'
+        icon = "table"
+
+
+class JobListingTable(ModelTable):
+    model = 'jobmanager.JobListingPage'
+    ordering = ('close_date', 'title')
+
+    fields = ['title', 'grades', 'close_date', 'regions']
+    field_headers = ['Title', 'Grade', 'Posting closes', 'Region']
+
+    def make_grades_value(self, value):
+        return ', '.join(sorted(g.grade.grade for g in value.all()))
+
+    def make_close_date_value(self, value):
+        return value.strftime('%b %d, %Y').upper()
+
+    def make_regions_value(self, value):
+        return ', '.join(sorted(r.region.region_long for r in value.all()))
 
 
 class FullWidthText(blocks.StreamBlock):
