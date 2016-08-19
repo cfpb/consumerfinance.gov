@@ -12,7 +12,10 @@
 
    ========================================================================== #}
 
-<table class="table__stack-on-small table__entry-header-on-small">
+<table class="o-table
+              {{ 'o-table__row-links' if value.row_links else '' }}
+              table__stack-on-small
+              table__entry-header-on-small">
     <thead>
         <tr>
             {% for thead in value.headers %}

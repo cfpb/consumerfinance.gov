@@ -26,7 +26,7 @@ function SmallBusinessess() {
 
   this.smallBusinessLinks = this.smallBusinessInfo.all( by.css( 'a' ) );
 
-  this.awardsTable = element( by.css( '.content_main .simple-table' ) );
+  this.awardsTable = element( by.css( '.content_main table' ) );
 
   this.moreInfoSection = _getQAElement( 'more-info', true );
 
