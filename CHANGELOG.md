@@ -12,18 +12,31 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-## UNRELEASED
+
+## Unreleased Changes
 
 ### Added
+
+### Changed
+
+### Removed
+
+## 3.7.0
+
+### Added
+- Added new conference url in the nav
+- Added TableBlock definition to organisms and models that use Table
 
 ### Changed
 - Updated Protractor to version `4.0.2` from `3.2.1`.
 - Updated large checkboxes to match the spec.
 - Updated Capital Framework to version `3.6.1` from `3.4.0`.
 - Updated imagemin to version `3.0.2` from `2.4.0`.
+- Migrated previous Table data to new TableBlocks
 
 ### Removed
 - Unused `sinon-chai` npm package.
+- Icon for old Table from admin panel (this field will need to be removed in a future release)
 
 ### Fixed
 - Updated banner-footer-webpack-plugin to use git URL instead of `0.0.1`.

@@ -4,7 +4,7 @@ from urlparse import urlparse
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import slugify
+from django.template.defaultfilters import pluralize, slugify
 from wagtail.wagtailcore.templatetags import wagtailcore_tags
 from django.contrib import messages
 
@@ -51,7 +51,9 @@ def environment(**options):
         'get_filter_data': get_filter_data,
         'cfgovpage_objects': CFGOVPage.objects,
     })
+
     env.filters.update({
+        'pluralize': pluralize,
         'slugify': slugify,
     })
     return env
