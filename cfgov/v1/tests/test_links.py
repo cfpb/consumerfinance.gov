@@ -1,6 +1,5 @@
 from django.test import TestCase
 from v1 import parse_links, get_protected_url
-# from bs4 import BeautifulSoup
 
 import mock
 
@@ -32,8 +31,8 @@ class LinkTest(TestCase):
 
         self.page = mock.MagicMock()
         self.request = mock.MagicMock()
-        self.request.url = 'http://localhost:8000/about-us/blog/'
-        self.page.url = 'http://localhost:8000/about-us/blog/we-want-hear-public-about-payday-loans/'
+        self.request.url = 'http://localhost:8000/path/to/page/'
+        self.page.url = 'http://localhost:8000/path/to/some/other/page/'
         self.page.live = True
         self.page.specific.shared = True
         self.context = mock.MagicMock()
@@ -43,22 +42,32 @@ class LinkTest(TestCase):
 
         self.context.__getitem__.side_effect = context_dict
 
-    def test_get_protected_url(self):
+    def test_get_protected_url_no_page(self):
 
         result = get_protected_url(self.context, None)
         self.assertEqual(result, '#')
+
+    def test_get_protected_url_no_url(self):
         self.page.url = None
         result = get_protected_url(self.context, self.page)
-        self.assertIs(result, None)
-        self.page.url = 'http://localhost:8000/about-us/blog/we-want-hear-public-about-payday-loans/'
+        self.assertIsNone(result)
+
+    def test_get_protected_url_live_page(self):
+        self.page.url = 'http://localhost:8000/path/to/some/other/page/'
         result = get_protected_url(self.context, self.page)
         self.assertEqual(result, self.page.url)
+
+    def test_get_protected_url_non_live_page(self):
         self.page.live = False
         result = get_protected_url(self.context, self.page)
         self.assertEqual(result, '#')
-        self.request.url = 'http://content.localhost:8000/about-us/blog/'
+
+    def test_get_protected_url_staging(self):
+        self.page.live = False
+        self.request.url = 'http://content.localhost:8000/path/to/page/'
+        self.page.url = 'http://localhost:8000/path/to/some/other/page/'
         result = get_protected_url(self.context, self.page)
-        self.assertEqual(result, 'http://content.localhost:8000/about-us/blog/we-want-hear-public-about-payday-loans/')
+        self.assertEqual(result, 'http://content.localhost:8000/path/to/some/other/page/')
 
 
 if __name__ == '__main__':
