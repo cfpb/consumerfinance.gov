@@ -140,8 +140,6 @@ class ModelBlock(blocks.StructBlock):
     model = None
     ordering = None
 
-    limit = atoms.NumberBlock(label='Limit', required=False)
-
     def get_queryset(self):
         model_cls = apps.get_model(self.model)
         queryset = model_cls.objects.all()
@@ -194,7 +192,7 @@ class ModelTable(ModelBlock):
 
     class Meta:
         template = '_includes/organisms/table.html'
-        icon = "table"
+        icon = 'table'
 
 
 class JobListingTable(ModelTable):

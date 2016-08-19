@@ -1,6 +1,7 @@
 import re
 
 from datetime import date
+from django.db import models
 from model_mommy import mommy
 from unittest import TestCase
 from wagtail.wagtailcore.models import Page
@@ -8,16 +9,81 @@ from wagtail.wagtailcore.models import Page
 from jobmanager.models.django import Grade, JobCategory, Location
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel, RegionPanel
-from v1.atomic_elements.organisms import JobListingTable
+from v1.atomic_elements.organisms import (
+    JobListingTable, ModelBlock, ModelTable
+)
+
+
+class TestModel(models.Model):
+    name = models.CharField(max_length=16)
+    age = models.PositiveIntegerField()
+
+    class Meta:
+        ordering = ('pk',)
+
+
+class ModelBlockTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        names = ['chico', 'harpo', 'groucho']
+        ages = [50, 60, 60]
+
+        TestModel.objects.bulk_create([
+            TestModel(name=name, age=age) for name, age in zip(names, ages)
+        ])
+
+    def test_get_queryset_no_ordering(self):
+        class TestModelBlock(ModelBlock):
+            model = 'v1.TestModel'
+
+        block = TestModelBlock()
+        self.assertSequenceEqual(
+            [model.name for model in block.get_queryset()],
+            ['chico', 'harpo', 'groucho']
+        )
+
+    def test_get_queryset_single_ordering(self):
+        class TestModelBlock(ModelBlock):
+            model = 'v1.TestModel'
+            ordering = '-name'
+
+        block = TestModelBlock()
+        self.assertSequenceEqual(
+            [model.name for model in block.get_queryset()],
+            ['harpo', 'groucho', 'chico']
+        )
+
+    def test_get_queryset_multiple_orderings(self):
+        class TestModelBlock(ModelBlock):
+            model = 'v1.TestModel'
+            ordering = ('-age', '-name')
+
+        block = TestModelBlock()
+        self.assertSequenceEqual(
+            [model.name for model in block.get_queryset()],
+            ['harpo', 'groucho', 'chico']
+        )
+
+
+class ModelTableTestCase(TestCase):
+    def test_default_formatter(self):
+        self.assertEqual(
+            ModelTable().format_field_value('foo', 1234),
+            '1234'
+        )
+
+    def test_custom_formatter(self):
+        class TestModelTable(ModelTable):
+            def make_foo_value(self, value):
+                return str(2 * value)
+
+        self.assertEqual(
+            TestModelTable().format_field_value('foo', 1234),
+            '2468'
+        )
 
 
 class JobListingTableTestCase(TestCase):
-    def test_init_needs_no_arguments(self):
-        try:
-            JobListingTable()
-        except TypeError:
-            self.fail('JobListingTable should require no arguments')
-
     def test_html_has_table(self):
         table = JobListingTable()
         html = table.render(table.to_python({}))
