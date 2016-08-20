@@ -1,9 +1,20 @@
 version: "2"
 
 services:
+    base:
+        build: docker/base
+        image: cfgov_base
     gulp:
         build:
             context: .
             dockerfile: docker/frontend-runtime/Dockerfile
         volumes:
             - .:/src
+        depends_on:
+            - base
+#    django:
+#        build:
+#            context: .
+#            dockerfile: docker/backend-runtime/Dockerfile
+#        volumes:
+#            - .:/src
