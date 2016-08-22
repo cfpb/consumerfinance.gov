@@ -7,7 +7,7 @@ services:
     gulp:
         build:
             context: .
-            dockerfile: docker/frontend-runtime/Dockerfile
+            dockerfile: docker/gulp/Dockerfile
         volumes:
             - .:/src
         depends_on:
@@ -15,6 +15,8 @@ services:
     django:
         build:
             context: .
-            dockerfile: docker/backend-runtime/Dockerfile
+            dockerfile: docker/django/Dockerfile
         volumes:
             - .:/src
+        depends_on:
+            - base
