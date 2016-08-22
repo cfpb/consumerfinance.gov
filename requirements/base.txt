@@ -38,7 +38,6 @@ rjsmin==1.0.12
 six==1.9.0
 sphinx-me==0.3
 suds==0.4
-tox==2.3.1
 unipath>=1.1,<=2.0
 urllib3==1.16
 virtualenv==15.0.2
