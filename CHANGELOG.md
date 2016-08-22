@@ -12,18 +12,35 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-## UNRELEASED
+
+## Unreleased Changes
 
 ### Added
 
 ### Changed
+
+### Removed
+
+## 3.7.0
+
+### Added
+- Added new conference url in the nav
+- Added TableBlock definition to organisms and models that use Table
+
+### Changed
 - Updated Protractor to version `4.0.2` from `3.2.1`.
 - Updated large checkboxes to match the spec.
+- Updated Capital Framework to version `3.6.1` from `3.4.0`.
+- Updated imagemin to version `3.0.2` from `2.4.0`.
+- Migrated previous Table data to new TableBlocks
+- Updated documentation npm module to version `4.0.0-beta5` from `4.0.0-beta2`.
 
 ### Removed
 - Unused `sinon-chai` npm package.
+- Icon for old Table from admin panel (this field will need to be removed in a future release)
 
 ### Fixed
+- Updated banner-footer-webpack-plugin to use git URL instead of `0.0.1`.
 
 
 ## 3.6.0
@@ -45,6 +62,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Ignored `console.log` in tests and enforced `no-process`.
 - Updated `STAGING_HOSTNAME` to `DJANGO_STAGING_HOSTNAME` environment var.
 - Allows passing of port to `runserver.sh`.
+- Updated browse-filterable test suite to properly nest pagination tests.
+- Updated pagination to support multiple pagination molecules on a single page.
 
 ### Removed
 - Unused `SELENIUM_URL` environment variable.
@@ -53,8 +72,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `initial_test_data.py` as the tests create the data they need now.
 
 ### Fixed
-
 - Added misnamed and unreferenced environment variables to .env.
+- Moved pagination tests from /organisms/ to /molecules/ where they belong.
 
 
 ## 3.4.0 2016-07-12

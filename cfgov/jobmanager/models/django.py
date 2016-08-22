@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import re
 
 from django.core.urlresolvers import reverse
@@ -18,6 +20,7 @@ class ApplicantType(models.Model):
     class Meta:
         ordering = ['applicant_type']
 
+
 class Grade(models.Model):
     grade = models.CharField(max_length=32)
     slug = models.SlugField()
@@ -31,6 +34,7 @@ class Grade(models.Model):
     class Meta:
         ordering = ['grade']
 
+
 class JobCategory(models.Model):
     job_category = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -42,6 +46,7 @@ class JobCategory(models.Model):
 
     class Meta:
         ordering = ['job_category']
+
 
 class Location(models.Model):
     description = models.CharField(max_length=128)
@@ -58,6 +63,7 @@ class Location(models.Model):
 
     def job_count(self):
         return self.job_set.filter().count()
+
 
 class Job(models.Model):
     title = models.CharField(max_length=255)
@@ -171,10 +177,6 @@ class JobApplicantType(models.Model):
         ordering = ['job']
 
 
-
-
-
-
 class FellowshipUpdateList(models.Model):
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
@@ -187,9 +189,3 @@ class FellowshipUpdateList(models.Model):
 
     def __unicode__(self):
         return self.first_name
-
-
-
-
-
-

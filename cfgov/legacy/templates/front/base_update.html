@@ -1,7 +1,5 @@
 {% load static %}
 {% load global_include %}
-{% get_static_prefix as STATIC_PREFIX %}
-{% get_media_prefix as MEDIA_PREFIX %}
 {% load i18n %}
 {% load staticversions %}
 {% get_static_version as STATIC_VERSION %}
@@ -29,8 +27,22 @@ please send an email with your full name to tech@cfpb.gov.
 <!--[if gt IE 8]><!--> <html dir="ltr" lang="{% trans "en-US" %}"> <!--<![endif]-->
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+
+<!--
+    ===========
+    GLOBAL META
+    ===========
+-->
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<!--
+    ==================
+    PAGE-SPECIFIC META
+    ==================
+-->
+
     <title>{% block title %}{% endblock %} > {% trans "Consumer Financial Protection Bureau" %}</title>
 
     <!-- Meta -->
@@ -60,11 +72,20 @@ please send an email with your full name to tech@cfpb.gov.
     <link rel="apple-touch-icon" size="114x114" href="/static/nemo/_/img/apple-touch-icon-114x114-precomposed.png">
     <link rel="apple-touch-icon" size="144x144" href="/static/nemo/_/img/apple-touch-icon-144x144-precomposed.png">
 
+    <!-- Feeds -->
+    <link rel="alternate" type="application/rss+xml" title="Consumer Financial Protection Bureau &raquo; Feed" href="/feed/" />
+    <link rel="alternate" type="application/rss+xml" title="Consumer Financial Protection Bureau &raquo; Comments Feed" href="/comments/feed/" />
+    {% block page_feeds %}
+    {% endblock %}
 
-    <script src="/static/nemo/_/js/jquery-1.9.1.min.js{{ STATIC_VERSION }}"></script>
-    <!--[if lt IE 9]>
-    <script src="/static/nemo/_/js/html5shim.js"></script>
-    <![endif]-->
+<!--
+    ======
+    STYLES
+    ======
+    The number of stylesheets here must be kept to a minimum.
+    Unless adding a significant amount of CSS that is specific to a single page or section of the site,
+    all new styles should be added to cfgov/v1/unprocessed/css/main.less.
+-->
 
     {% block nemo_styles %}
     <!-- Styles -->
@@ -95,27 +116,34 @@ please send an email with your full name to tech@cfpb.gov.
     <link rel="stylesheet" href="{% static 'css/footer.css' %}"/>
     <!--<![endif]-->
 
+<!--
+    ============
+    HEAD SCRIPTS
+    ============
+    The following scripts must be included in the head. DO NOT ADD ANY MORE.
+    All other scripts should go before the closing body tag.
+    If you come across a script that makes a convincing case to be included in
+    the head, then file an issue or PR to discuss including it.
+-->
 
-    <!-- Feeds -->
-    <link rel="alternate" type="application/rss+xml" title="Consumer Financial Protection Bureau &raquo; Feed" href="/feed/" />
-    <link rel="alternate" type="application/rss+xml" title="Consumer Financial Protection Bureau &raquo; Comments Feed" href="/comments/feed/" />
-    {% block page_feeds %}
-    {% endblock %}
+    <script src="{% static 'js/modernizr.min.js' %}"></script>
+    <!--[if lt IE 9]>
+    <script src="{% static 'nemo/_/js/html5shim.js' %}"></script>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+    <script>
+        // If in IE8 reverse no-js/js class change made by modernizr.
+        var docElement = document.documentElement;
+        docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
+    </script>
+    <![endif]-->
+
+    <!--[if IE 9]><script src="{% static 'js/ie/common.ie.js' %}"></script><![endif]-->
+
+    <script src="/static/nemo/_/js/jquery-1.9.1.min.js{{ STATIC_VERSION }}"></script>
 
     {% block analytics_js %}
-    <script src="{{ STATIC_PREFIX }}js/analytics.js{{ STATIC_VERSION }}"></script>
-
-    <!-- this is where we put our custom analytics -->
-    <script src="/static/nemo/_/js/analytics-global.js{{ STATIC_VERSION }}"></script>
-
-    <!-- H5BP's Asynchronous Google Analytics snippet. -->
-    <script>
-      var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
-
     {% endblock %}
 </head>
 
@@ -133,17 +161,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 {% endblock %}
 
-<script src="{% static 'js/modernizr.min.js' %}"></script>
-
-<!--[if lt IE 9]>
-<script>
-    // If in IE8 reverse no-js/js class change made by modernizr.
-    var docElement = document.documentElement;
-    docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-</script>
-<![endif]-->
-
-<!--[if IE 9]><script src="{% static 'js/ie/common.ie.js'  %}"></script><![endif]-->
     {% global_include "on-demand/header.html" %}
     <div id="page">
         {% block app_notification %}
