@@ -15,6 +15,23 @@
     }
 }
 
+/* Event-Agenda Table
+   ========================================================================== */
+.event-agenda_table {
+    h2 + & td[data-label]:before {
+        margin-top: 0;
+    }
+
+    th, td {
+        font-size: 16px;
+    }
+
+    .respond-to-min(@bp-med-min, {
+        th {
+            width: 25%;
+        }
+    } );
+}
 
 /* Event-Post
    ========================================================================== */

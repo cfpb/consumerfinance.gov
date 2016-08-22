@@ -23,7 +23,7 @@ describe( 'BreakpointHandler', function() {
   jsdom( {
     created: function( error, win ) {
       if ( error ) {
-        console.log( error ); // eslint-disable-line no-console, no-inline-comments, max-len
+        console.log( error );
       }
 
       var resizeEvent = win.document.createEvent( 'Event' );

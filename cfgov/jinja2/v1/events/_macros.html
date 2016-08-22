@@ -226,33 +226,29 @@
    ========================================================================== #}
 
 {% macro event_agenda(event) %}
-  {% set options = {
-      'time_col_classes': 'u-w25pct',
-      'agenda_col_classes': 'u-w25pct',
-      'location_col_classes': 'u-w25pct',
-      'speaker_col_classes': 'u-w25pct',
-  } %}
   <div class="block
               block__padded-top
               block__border-top">
     <h2>Agenda</h2>
-    <table class="u-w100pct
+    <table class="o-table
+                  event-agenda_table
+                  table__stack-on-small
+                  u-w100pct
                   block
-                  block__flush-top
-                  simple-table">
+                  block__flush-top">
         <thead>
             <tr>
-                <th class="{{ options.time_col_classes }}">Time</th>
-                <th class="{{ options.desc_col_classes }}">Agenda</th>
-                <th class="{{ options.location_col_classes }}">Location</th>
-                <th class="{{ options.speaker_col_classes }}">Speakers</th>
+                <th>Time</th>
+                <th>Agenda</th>
+                <th>Location</th>
+                <th>Speakers</th>
             </tr>
         </thead>
         <tbody>
         {% for block in event.agenda_items %}
           {% set bound = block.value.bound_blocks %}
             <tr>
-                <td class="{{ options.time_col_classes }}">
+                <td>
                     {% import 'macros/time.html' as time %}
                     {{ time.render(
                         bound.start_time.render(),
@@ -261,15 +257,15 @@
                     &ndash;
                     {{ time.render(bound.end_time.render(), {'time':true, 'timezone':true}) }}
                 </td>
-                <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
+                <td data-label="Agenda">
                     {{ bound.description.render() }}
                 </td>
-                <td class="{{ options.location_col_classes }}" data-label="Location">
+                <td data-label="Location">
                   {% if bound.location.render() %}
                     {{ bound.location.render() }}
                   {% endif %}
                 </td>
-                <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
+                <td data-label="Speakers">
                 {% for speaker in bound.speakers.value %}
                     {%- if speaker.bound_blocks.url.render() -%}
                     <a href="{{ speaker.bound_blocks.url.render() }}">

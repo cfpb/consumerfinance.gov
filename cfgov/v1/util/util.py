@@ -21,7 +21,7 @@ ERROR_MESSAGES = {
         'required': 'Please select at least one of the "%s" options.'
     },
     'DATE_ERRORS': {
-        'invalid': 'You have entered an invalid date.',
+        'invalid': 'You have entered an invalid date: %s.',
         'one_required': 'Please enter at least one date.'
     }
 }
@@ -60,7 +60,7 @@ def instanceOfBrowseOrFilterablePages(page):
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
     from ..templatetags.share import get_page_state_url
-    on_staging = os.environ.get('STAGING_HOSTNAME') == request.site.hostname
+    on_staging = os.environ.get('DJANGO_STAGING_HOSTNAME') == request.site.hostname
     nav_items = []
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
@@ -121,7 +121,7 @@ def get_appropriate_page_version(request, page):
     # If we're on the production site, make sure the version of the page
     # displayed is the latest version that has `live` set to True for
     # the live site or `shared` set to True for the staging site.
-    staging_hostname = os.environ.get('STAGING_HOSTNAME')
+    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
     revisions = page.revisions.all().order_by('-created_at')
     for revision in revisions:
         page_version = json.loads(revision.content_json)
@@ -152,7 +152,7 @@ def valid_destination_for_request(request, url):
 
 def all_valid_destinations_for_request(request):
     possible_destinations = (('Wagtail','/admin/'), ('Django admin', '/django-admin/'))
-    valid_destinations = [pair for pair in possible_destinations if 
+    valid_destinations = [pair for pair in possible_destinations if
                             valid_destination_for_request(request, pair[1])]
 
-    return valid_destinations 
+    return valid_destinations

@@ -1,6 +1,7 @@
 'use strict';
 
 var environment = require( './environment.js' );
+var envvars = require( '../../config/environment' ).envvars;
 var defaultSuites = require( './default-suites.js' );
 
 /**
@@ -48,9 +49,9 @@ function _chooseSuite( params ) {
  *   are not undefined or an empty string, false otherwise.
  */
 function _isSauceCredentialSet() {
-  var sauceSeleniumUrl = process.env.SAUCE_SELENIUM_URL;
-  var sauceUsername = process.env.SAUCE_USERNAME;
-  var sauceAccessKey = process.env.SAUCE_ACCESS_KEY;
+  var sauceSeleniumUrl = envvars.SAUCE_SELENIUM_URL;
+  var sauceUsername = envvars.SAUCE_USERNAME;
+  var sauceAccessKey = envvars.SAUCE_ACCESS_KEY;
 
   return typeof sauceSeleniumUrl !== 'undefined' &&
          sauceSeleniumUrl !== '' &&
@@ -161,10 +162,6 @@ var config = {
   jasmineNodeOpts: {
     defaultTimeoutInterval: 60000
   },
-  plugins: [{
-    axe: true,
-    package: 'protractor-accessibility-plugin'
-  }],
   getMultiCapabilities: function() {
     var params = this.params;
 
@@ -210,7 +207,7 @@ var config = {
                                 ',' + String( windowHeightPx );
 
     browser.getProcessedConfig().then( function( cf ) {
-      console.log( 'Executing...', cf.capabilities.name ); // eslint-disable-line no-console, no-inline-comments, max-len
+      console.log( 'Executing...', cf.capabilities.name );
     } );
     return;
   }
@@ -218,9 +215,9 @@ var config = {
 
 // Set Sauce Labs credientials from .env file.
 if ( _isSauceCredentialSet() ) {
-  config.sauceSeleniumAddress = process.env.SAUCE_SELENIUM_URL;
-  config.sauceUser = process.env.SAUCE_USERNAME;
-  config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+  config.sauceSeleniumAddress = envvars.SAUCE_SELENIUM_URL;
+  config.sauceUser = envvars.SAUCE_USERNAME;
+  config.sauceKey = envvars.SAUCE_ACCESS_KEY;
 }
 
 exports.config = config;

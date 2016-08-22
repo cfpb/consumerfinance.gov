@@ -28,7 +28,7 @@ def get_page_state_url(context, page):
     if url is None:  # If page is not aligned to a site root return None
         return None
     page_hostname = urlparse(url).hostname
-    staging_hostname = os.environ.get('STAGING_HOSTNAME')
+    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
     if not page.live and page.shared and staging_hostname != page_hostname:
         url = url.replace(page_hostname, staging_hostname)
     return url

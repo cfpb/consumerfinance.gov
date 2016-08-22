@@ -12,23 +12,68 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-## UNRELEASED
+
+## Unreleased Changes
 
 ### Added
-- Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management,available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/ 
-- Redesigned userbar: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#redesigned-userbar
-- Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader 
-- Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
 
 ### Changed
-- `content_panels` are no longer defined in `AbstractFilterPage`; defined in its subclasses instead
-- Upgraded Wagtail from 1.3 to 1.5.2
 
 ### Removed
-- Removed unused `interactiveTestPort` test variable.
-- Squashed all migrations
+
+## 3.7.0
+
+### Added
+- Added new conference url in the nav
+- Added TableBlock definition to organisms and models that use Table
+
+### Changed
+- Updated Protractor to version `4.0.2` from `3.2.1`.
+- Updated large checkboxes to match the spec.
+- Updated Capital Framework to version `3.6.1` from `3.4.0`.
+- Updated imagemin to version `3.0.2` from `2.4.0`.
+- Migrated previous Table data to new TableBlocks
+- Updated documentation npm module to version `4.0.0-beta5` from `4.0.0-beta2`.
+
+### Removed
+- Unused `sinon-chai` npm package.
+- Icon for old Table from admin panel (this field will need to be removed in a future release)
 
 ### Fixed
+- Updated banner-footer-webpack-plugin to use git URL instead of `0.0.1`.
+
+
+## 3.6.0
+
+### Added
+- Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management,available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/
+- Redesigned userbar: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#redesigned-userbar
+- Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader
+- Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
+- New users created via the Wagtail admin will automatically receive a password reset email.
+
+### Changed
+- Many browser tests have been rewritten as Python unit tests
+- A new spec suite "integration" encompasses tests from a few directories that were not named appropriately.
+- Gulp test has been updated as there are no longer any browser tests to run by default
+- `content_panels` are no longer defined in `AbstractFilterPage`; defined in its subclasses instead
+- Upgraded Wagtail from 1.3 to 1.5.2
+- Consolidated all environment variables in config/environment.js.
+- Ignored `console.log` in tests and enforced `no-process`.
+- Updated `STAGING_HOSTNAME` to `DJANGO_STAGING_HOSTNAME` environment var.
+- Allows passing of port to `runserver.sh`.
+- Updated browse-filterable test suite to properly nest pagination tests.
+- Updated pagination to support multiple pagination molecules on a single page.
+
+### Removed
+- Unused `SELENIUM_URL` environment variable.
+- Removed unused `interactiveTestPort` test variable.
+- Squashed all migrations
+- `initial_test_data.py` as the tests create the data they need now.
+
+### Fixed
+- Added misnamed and unreferenced environment variables to .env.
+- Moved pagination tests from /organisms/ to /molecules/ where they belong.
 
 
 ## 3.4.0 2016-07-12
@@ -46,7 +91,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fix scheduled publishing
-
 
 ## 3.0.0-3.3.22 – 2016-06-22
 

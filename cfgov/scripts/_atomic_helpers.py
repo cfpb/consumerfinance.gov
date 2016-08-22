@@ -7,8 +7,8 @@ contact_email = {
     "value": {
         "emails": [
             {
-                "url": "/",
-                "text": "test@example.com"
+                "url": "test@example.com",
+                "text": "e-mail"
             }
         ]
     }
@@ -19,7 +19,7 @@ contact_phone = {
         "phones": [
             {
                 "tty": "",
-                "number": "1234567890",
+                "number": "5151234567",
                 "vanity": ""
             }
         ],
@@ -55,7 +55,7 @@ rss_feed = {
 featured_content = {
     'type': 'featured_content',
     'value': {
-        'body': "<p>this is a featured content body</p>"
+        'body': "this is a featured content body"
     }
 }
 expandable = {
@@ -113,7 +113,7 @@ sidebar_contact = main_contact_info
 well = {
     'type': 'well',
     'value': {
-        'content': "<p>this is well content</p>"
+        'content': "this is well content"
     }
 }
 full_width_text = {
@@ -128,7 +128,7 @@ full_width_text = {
         },
         {
             'type': 'content',
-            'value': '<p>Full width text content.</p>'
+            'value': 'Full width text content'
         }
     ]
 }
@@ -139,7 +139,7 @@ image_text_25_75_group = {
         "image_texts": [
             {
                 "heading": "",
-                "body": "",
+                "body": "this is an image text in a 25 75 group",
                 "has_rule": False,
                 "image": {
                     "alt": "",
@@ -162,7 +162,7 @@ image_text_50_50_group = {
         "image_texts": [
             {
                 "heading": "",
-                "body": "",
+                "body": "this is an image text in a 50 50 group",
                 "links": [
                     {
                         "url": "/",
@@ -185,7 +185,7 @@ half_width_link_blob_group = {
         "heading": "Half Width Link Blob Group",
         "link_blobs": [
             {
-                "body": "",
+                "body": "this is a half width link blob",
                 "heading": "",
                 "links": [
                     {
@@ -209,7 +209,7 @@ email_signup = {
                 "type": "",
                 "required": False,
                 "label": "Email Sign up",
-                "btn_text": "",
+                "btn_text": "this is a form field with button",
                 "placeholder": ""
             }
         ]
@@ -223,40 +223,36 @@ reg_comment = {
         'id': 'test id',
     }
 }
-table = {
-    'type': 'table',
+
+table_block = {
+    'type': 'table_block',
     'value': {
-        'headers': [
-            'One',
-            'Two',
-            'Three',
-            'Four'
-        ],
-        'rows': [
+        'data': 
+        [
             [
-                {
-                    'type': 'hyperlink',
-                    'value': {
-                        'text': 'table hyperlink',
-                        'url': '/'
-                    }
-                },
-                {
-                    'type': 'text',
-                    'value': 'table text'
-                },
-                {
-                    'type': 'text_blob',
-                    'value': 'table text blob',
-                },
-                {
-                    'type': 'rich_text_blob',
-                    'value': '<p>table rich text blob</p>',
-                }
-            ]
-        ]
+                'Header One',
+                'Header Two',
+                'Header Three',
+                'Header Four'
+            ],
+            [
+                'Row 1-1',
+                'Row 1-2',
+                'Row 1-3',
+                'Row 1-4'
+            ],
+            [
+                'Row 2-1',
+                'Row 2-2',
+                'Row 2-3',
+                'Row 2-4'
+            ],
+        ],
+        'first_row_is_table_header': True,
+        'first_col_is_header': False,
     }
 }
+
 expandable_group = {
     'type': 'expandable_group',
     'value': {

@@ -1,6 +1,13 @@
 {
   "name": "cfgov-refresh",
-  "version": "3.0.0-3.3.21-hotfix1",
+  "version": "3.6.0",
+  "description": "The consumerfinance.gov website.",
+  "homepage": "http://www.consumerfinance.gov/",
+  "author": {
+    "name": "Consumer Financial Protection Bureau",
+    "email": "tech@cfpb.gov",
+    "url": "https://cfpb.github.io/"
+  },
   "repository": {
     "type": "git",
     "url": "http://github.com/cfpb/cfgov-refresh.git"
@@ -10,16 +17,16 @@
     "node": ">=5.5.0"
   },
   "dependencies": {
-    "banner-footer-webpack-plugin": "0.0.1",
+    "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "browser-sync": "2.11.2",
-    "capital-framework": "3.4.0",
+    "capital-framework": "3.6.1",
     "del": "2.2.0",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "3.1.0",
     "gulp-changed": "1.3.0",
     "gulp-cssmin": "0.1.7",
     "gulp-header": "1.7.1",
-    "gulp-imagemin": "2.4.0",
+    "gulp-imagemin": "3.0.2",
     "gulp-less": "3.0.5",
     "gulp-load-plugins": "1.2.0",
     "gulp-modernizr": "1.0.0-alpha",
@@ -37,9 +44,8 @@
   },
   "devDependencies": {
     "browser-sync": "2.11.2",
-    "cf-component-demo": "git://github.com/cfpb/cf-component-demo.git#0.8.2",
     "chai": "3.5.0",
-    "documentation": "4.0.0-beta2",
+    "documentation": "4.0.0-beta5",
     "es5-shim": "4.5.7",
     "glob-all": "3.0.1",
     "gulp-concat": "2.6.0",
@@ -62,12 +68,11 @@
     "mkdirp": "0.3.0",
     "mocha": "2.4.5",
     "mocha-jsdom": "1.1.0",
-    "protractor": "3.2.1",
+    "protractor": "4.0.2",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "psi": "2.0.4",
     "selenium-webdriver": "2.53.3",
     "sinon": "1.17.3",
-    "sinon-chai": "2.8.0",
     "wcag": "0.2.2"
   },
   "browser": {

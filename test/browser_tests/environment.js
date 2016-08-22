@@ -1,35 +1,21 @@
 'use strict';
 
-// Common configuration files with defaults plus overrides from environment vars
-var webServerDefaultPort = 8000;
-
+var envvars = require( '../../config/environment' ).envvars;
 var specsRoot = 'spec_suites/';
 
 module.exports = {
-  // The address of a running selenium server.
-  seleniumAddress:
-    process.env.SELENIUM_URL || 'http://localhost:4444/wd/hub',
-
-  // Default http port to host the web server
-  webServerDefaultPort: webServerDefaultPort,
-
   // A base URL for your application under test.
-  baseUrl:
-    'http://' + ( process.env.HTTP_HOST || 'localhost' ) +
-          ':' + ( process.env.HTTP_PORT || webServerDefaultPort ),
+  baseUrl: 'http://' + envvars.TEST_HTTP_HOST + ':' + envvars.TEST_HTTP_PORT,
 
   // The base path where the spec suites are located.
   specsBasePath: specsRoot + '**/*',
 
   suites: {
-    functional: [
-      specsRoot + 'wagtail/**/*.js'
+    integration: [
+      specsRoot + 'integration/**/*.js'
     ],
     content: [
-      specsRoot + 'content/**/*.js',
-      specsRoot + 'molecules/**/*.js',
-      specsRoot + 'organisms/**/*.js',
-      specsRoot + 'templates/**/*.js'
+      specsRoot + 'content/**/*.js'
     ]
   },
 

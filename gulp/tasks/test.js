@@ -1,5 +1,6 @@
 'use strict';
 
+var envvars = require( '../../config/environment' ).envvars;
 var gulp = require( 'gulp' );
 var plugins = require( 'gulp-load-plugins' )();
 var spawn = require( 'child_process' ).spawn;
@@ -22,7 +23,7 @@ function testUnitScripts( cb ) {
     .on( 'finish', function() {
       gulp.src( configTest.tests + '/unit_tests/**/*.js' )
         .pipe( plugins.mocha( {
-          reporter: 'nyan'
+          reporter: configTest.reporter ? 'spec' : 'nyan'
         } ) )
         .pipe( plugins.istanbul.writeReports( {
           dir: configTest.tests + '/unit_test_coverage'
@@ -45,7 +46,11 @@ function testUnitServer() {
   spawn(
     'tox',
     { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'Tox tests exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'Tox tests done!' );
   } );
 }
@@ -74,9 +79,12 @@ function _addCommandLineFlag( protractorParams, commandLineParams, value ) {
  */
 function _getProtractorParams( suite ) {
 
-  // Set default configuration command-line parameter.
-  var params = [ 'test/browser_tests/conf.js' ];
   var commandLineParams = minimist( process.argv.slice( 2 ) );
+
+  var configFile = commandLineParams.a11y ? 'test/browser_tests/a11y_conf.js' : 'test/browser_tests/conf.js';
+
+  // Set default configuration command-line parameter.
+  var params = [ configFile ];
 
   // If --sauce=false flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'sauce' );
@@ -115,12 +123,13 @@ function _getProtractorParams( suite ) {
  */
 function _getWCAGParams() {
   var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var host = process.env.HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
-  var port = process.env.HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
-  var checkerId = process.env.ACHECKER_ID || ''; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var host = envvars.TEST_HTTP_HOST;
+  var port = envvars.TEST_HTTP_PORT;
+  var checkerId = envvars.ACHECKER_ID;
   var urlPath = _parsePath( commandLineParams.u );
   var url = host + ':' + port + urlPath;
   plugins.util.log( 'WCAG tests checking URL: http://' + url );
+
   return [ '--u=' + url, '--id=' + checkerId ];
 }
 
@@ -164,6 +173,7 @@ function _parsePath( urlPath ) {
   if ( urlPath.charAt( 0 ) !== '/' ) {
     urlPath = '/' + urlPath;
   }
+
   return urlPath;
 }
 
@@ -175,7 +185,11 @@ function testA11y() {
     fsHelper.getBinary( 'wcag', 'wcag', '../.bin' ),
     _getWCAGParams(),
     { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'WCAG tests exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'WCAG tests done!' );
   } );
 }
@@ -210,7 +224,11 @@ function _spawnProtractor( suite ) {
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
     params,
     { stdio: 'inherit' }
-  ).once( 'close', function() {
+  ).once( 'close', function( code ) {
+    if ( code ) {
+      plugins.util.log( 'Protractor tests exited with code ' + code );
+      process.exit( 1 );
+    }
     plugins.util.log( 'Protractor tests done!' );
   } );
 }
@@ -220,12 +238,7 @@ function _spawnProtractor( suite ) {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function testAcceptanceBrowser( suite ) {
-  spawn(
-    './initial-test-data.sh', [], { stdio: 'inherit' }
-  ).once( 'close', function() {
-    plugins.util.log( 'Loaded Wagtail database data!' );
-    _spawnProtractor( suite );
-  } );
+  _spawnProtractor( suite );
 }
 
 /**
@@ -242,18 +255,6 @@ gulp.task( 'test:coveralls', testCoveralls );
 gulp.task( 'test:a11y', testA11y );
 gulp.task( 'test:perf', testPerf );
 
-gulp.task( 'test:acceptance:full', function() {
-  testAcceptanceBrowser();
-} );
-gulp.task( 'test:acceptance:functional', function() {
-  testAcceptanceBrowser( 'functional' );
-} );
-
-gulp.task( 'test:acceptance',
-  [
-    'test:acceptance:full'
-  ]
-);
 
 gulp.task( 'test:unit:scripts', testUnitScripts );
 gulp.task( 'test:unit:server', testUnitServer );
@@ -268,7 +269,10 @@ gulp.task( 'test:unit',
 gulp.task( 'test',
   [
     'lint',
-    'test:unit',
-    'test:acceptance:functional'
+    'test:unit'
   ]
 );
+
+gulp.task( 'test:acceptance', function() {
+  testAcceptanceBrowser();
+} );

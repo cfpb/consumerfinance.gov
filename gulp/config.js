@@ -38,7 +38,8 @@ module.exports = {
   },
   test: {
     src:   paths.unprocessed + '/js/**/*.js',
-    tests: paths.test
+    tests: paths.test,
+    reporter: process.env.CONTINUOUS_INTEGRATION // eslint-disable-line no-process-env
   },
   clean: {
     dest: paths.processed
