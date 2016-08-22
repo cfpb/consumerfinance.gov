@@ -177,6 +177,7 @@
 
 {% from 'molecules/notification.html' import render as notification with context %}
 {% from 'organisms/post-preview.html' import render as post_preview with context %}
+{% from 'molecules/info-unit.html' import render as info_unit with context %}
 
 {% macro render(controls, index) %}
     <div class="o-filterable-list-controls"
@@ -217,6 +218,17 @@
         {% if controls.categories.page_type == 'activity-log' %}
             {% import 'activity-log/_activity-list.html' as activity_list with context %}
             {{ activity_list.render(posts, index) }}
+        {% elif controls.output_5050 %}
+            <div class="o-info-unit-group" data-qa-hook="image-text-50-50">
+                <div class="content-l">
+                    {% for post in posts %}
+                    <div class="content-l_col
+                                content-l_col-1-2">
+                        {{ info_unit(post) }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         {% else %}
             {% for post in posts %}
                 {{ post_preview(post, controls, form_id=index) }}
