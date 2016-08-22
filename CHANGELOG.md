@@ -33,6 +33,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated Capital Framework to version `3.6.1` from `3.4.0`.
 - Updated imagemin to version `3.0.2` from `2.4.0`.
 - Migrated previous Table data to new TableBlocks
+- Updated documentation npm module to version `4.0.0-beta5` from `4.0.0-beta2`.
 
 ### Removed
 - Unused `sinon-chai` npm package.
