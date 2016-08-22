@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated imagemin to version `3.0.2` from `2.4.0`.
 - Migrated previous Table data to new TableBlocks
 - Updated documentation npm module to version `4.0.0-beta5` from `4.0.0-beta2`.
+- Updated gulp-uglify npm module to version `2.0.0` from `1.5.3`.
 
 ### Removed
 - Unused `sinon-chai` npm package.

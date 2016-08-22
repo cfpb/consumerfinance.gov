@@ -34,7 +34,7 @@
     "gulp-notify": "2.2.0",
     "gulp-replace": "0.5.4",
     "gulp-sourcemaps": "1.6.0",
-    "gulp-uglify": "1.5.3",
+    "gulp-uglify": "2.0.0",
     "imports-loader": "0.6.5",
     "require-dir": "0.3.0",
     "snyk": "1.13.2",
