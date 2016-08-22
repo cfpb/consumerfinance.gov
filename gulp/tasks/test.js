@@ -8,7 +8,7 @@ var configTest = require( '../config' ).test;
 var fsHelper = require( '../utils/fs-helper' );
 var minimist = require( 'minimist' );
 var localtunnel = require( 'localtunnel' );
-var isReachable = require('is-reachable');
+var isReachable = require( 'is-reachable' );
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -135,10 +135,12 @@ function _getWCAGParams() {
 
 /**
  * Processes command-line and environment variables
- * for passing to the psi executable.
+ * for passing to the PageSpeed Insights (PSI) executable.
  * An optional URL path comes from the command-line `--u=` flag.
  * A PSI "strategy" (mobile vs desktop) can be specified with the `--s=` flag.
- * @returns {Array} Array of command-line arguments for psi binary.
+ * @param {Function} callback
+ *   Function to call when the tested server is contacted, or there's an error.
+ * @returns {Array} Array of command-line arguments for PSI binary.
  */
 function _createPSITunnel( callback ) {
   var commandLineParams = minimist( process.argv.slice( 2 ) );
