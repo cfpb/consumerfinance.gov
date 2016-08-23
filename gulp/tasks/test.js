@@ -7,6 +7,8 @@ var spawn = require( 'child_process' ).spawn;
 var configTest = require( '../config' ).test;
 var fsHelper = require( '../utils/fs-helper' );
 var minimist = require( 'minimist' );
+var localtunnel = require( 'localtunnel' );
+var isReachable = require( 'is-reachable' );
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -132,6 +134,37 @@ function _getWCAGParams() {
 }
 
 /**
+ * Processes command-line and environment variables
+ * for passing to the PageSpeed Insights (PSI) executable.
+ * An optional URL path comes from the command-line `--u=` flag.
+ * A PSI "strategy" (mobile vs desktop) can be specified with the `--s=` flag.
+ * @param {Function} callback
+ *   Function to call when the tested server is contacted, or there's an error.
+ * @returns {Array} Array of command-line arguments for PSI binary.
+ */
+function _createPSITunnel( callback ) {
+  var commandLineParams = minimist( process.argv.slice( 2 ) );
+  var host = process.env.TEST_HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var port = process.env.TEST_HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var path = _parsePath( commandLineParams.u );
+  var url = host + ':' + port + path;
+  var strategy = commandLineParams.s || 'mobile';
+  isReachable( url, function( err, reachable ) {
+    if ( err || !reachable ) {
+      return callback( url + ' is not reachable. Is your local server running?' );
+    }
+    localtunnel( port, function( err, tunnel ) {
+      url = tunnel.url + path;
+      if ( err ) {
+        callback( 'Error creating local tunnel for PSI: ' + err, null, tunnel );
+      }
+      callback( null, [ url, '--strategy=' + strategy ], tunnel );
+    } );
+  } );
+  return plugins.util.log( 'PSI tests checking URL: http://' + url );
+}
+
+/**
  * Process a path and set it to an empty string if it's undefined
  * and add a leading slash if one is not present.
  * @param {string} urlPath The unprocessed path.
@@ -164,6 +197,25 @@ function testA11y() {
 }
 
 /**
+ * Run PageSpeed Insight tests.
+ */
+function testPerf() {
+  _createPSITunnel( function( err, url, tunnel ) {
+    if ( err ) {
+      return plugins.util.log( err );
+    }
+    spawn(
+      fsHelper.getBinary( 'psi', 'psi', '../.bin' ),
+      url,
+      { stdio: 'inherit' }
+    ).once( 'close', function() {
+      plugins.util.log( 'PSI tests done!' );
+      tunnel.close();
+    } );
+  } );
+}
+
+/**
  * Spawn the appropriate acceptance tests.
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
@@ -188,7 +240,7 @@ function _spawnProtractor( suite ) {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function testAcceptanceBrowser( suite ) {
-    _spawnProtractor( suite );
+  _spawnProtractor( suite );
 }
 
 /**
@@ -203,6 +255,7 @@ function testCoveralls() {
 gulp.task( 'test:coveralls', testCoveralls );
 
 gulp.task( 'test:a11y', testA11y );
+gulp.task( 'test:perf', testPerf );
 
 
 gulp.task( 'test:unit:scripts', testUnitScripts );
@@ -225,4 +278,3 @@ gulp.task( 'test',
 gulp.task( 'test:acceptance', function() {
   testAcceptanceBrowser();
 } );
-

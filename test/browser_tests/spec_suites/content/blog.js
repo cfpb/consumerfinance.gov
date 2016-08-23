@@ -137,12 +137,12 @@ describe( 'The Blog Page', function() {
 
   it( 'should set an initial height on filter expandable that does not cut off submit button when page loads with 5 filter options selected', function() {
     // open filter and select 5 options
-    page.searchFilterShowBtn.click().then(function () {
-      page.multiSelectSearch.isDisplayed().then(function () {
-        page.multiSelectSearch.click().then(function () {
+    page.searchFilterShowBtn.click().then( function() {
+      page.multiSelectSearch.isDisplayed().then( function() {
+        page.multiSelectSearch.click().then( function() {
           var options = browser.element.all( by.css( '.cf-multi-select_label' ) );
           for ( var i = 0; i < 5; i++ ) {
-            options.get(i).click();
+            options.get( i ).click();
           }
 
           // 5 choices should appear
@@ -151,10 +151,10 @@ describe( 'The Blog Page', function() {
 
           // submit choices
           browser.executeScript( 'arguments[0].scrollIntoView();', page.searchFilterSubmitBtn.getWebElement() );
-          page.searchFilterSubmitBtn.click().then(function () {
+          page.searchFilterSubmitBtn.click().then( function() {
             // submit button should be visible in open filter expandable
             // after page is reloaded
-            browser.getCurrentUrl().then(function(newUrl) {
+            browser.getCurrentUrl().then( function( newUrl ) {
               browser.get( newUrl );
               browser.sleep( 1000 );
               expect( page.searchFilterSubmitBtn.isDisplayed() ).toBe( true );

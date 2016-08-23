@@ -14,7 +14,7 @@
 });
 
 /* topdoc
-  name: Simple Table
+  name: Table Organism
   family: cfgov-cf-enhancements
   notes:
     - Extends the above stacked tables for sm devices
@@ -27,7 +27,7 @@
   patterns:
     - name: Collapsable Table
       markup: |
-        <table class="simple-table">
+        <table class="o-table">
             <thead>
                 <tr>
                     <th>Column 1</th>
@@ -39,27 +39,27 @@
             <tbody>
                 <tr>
                     <td>Lorem ipsum dolor.</td>
-                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
                     <td data-label="Lorem">Lorem ipsum dolor.</td>
                     <td data-label="Ipsum">Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
                     <td>Lorem ipsum dolor.</td>
-                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
                     <td data-label="Lorem">Lorem ipsum dolor.</td>
                     <td data-label="Ipsum">Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
                     <td>Lorem ipsum dolor.</td>
-                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
                     <td data-label="Lorem">Lorem ipsum dolor.</td>
                     <td data-label="Ipsum">Lorem ipsum dolor.</td>
                 </tr>
             </tbody>
         </table>
-    - name: simple-table__row-links (modifier)
+    - name: o-table__row-links (modifier)
       markup: |
-        <table class="simple-table simple-table__row-links">
+        <table class="o-table o-table__row-links">
             <thead>
                 <tr>
                     <th>Column 1</th>
@@ -69,20 +69,20 @@
             <tbody>
                 <tr>
                     <td><a href="#">Lorem ipsum dolor.</a></td>
-                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
                 </tr>
                 <tr>
                     <td><a href="#">Lorem ipsum dolor.</a></td>
-                    <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+                    <td class="o-table_row-heading">Lorem ipsum dolor.</td>
                 </tr>
             </tbody>
         </table>
       codenotes:
         - |
-          .simple-table.simple-table__row-links
+          .o-table.o-table__row-links
       notes:
         - "Modifier that makes rows appear to be hoverable links.
-           Used in coordination with simple-table-row-links.js."
+           Used in coordination with o-table-row-links.js."
     tags:
   tags:
     - cfgov-cf-enhancements
@@ -90,7 +90,9 @@
 @td-bg-mobile: @gray-5;
 @tr-link-color: @white;
 @tr-link-bg-hover: @pacific-80;
-.simple-table {
+
+
+.o-table {
 
     &__row-links {
       .respond-to-min(961px, {
@@ -145,6 +147,7 @@
         }
     });
 }
+
 
 /* topdoc
   name: EOF

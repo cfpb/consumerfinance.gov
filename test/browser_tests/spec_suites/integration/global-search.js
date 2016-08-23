@@ -116,7 +116,7 @@ describe( 'GlobalSearch', function() {
 
         it( 'should NOT have search input content', function() {
           // Wait for search button to disappear after collapsing search.
-          var EC = ExpectedConditions;
+          var EC = protractor.ExpectedConditions;
           browser.wait(
             EC.not( EC.elementToBeClickable( _dom.content ) )
           ).then( function() {
@@ -136,7 +136,7 @@ describe( 'GlobalSearch', function() {
           activeElement = browser.driver.switchTo().activeElement();
           activeElement.sendKeys( protractor.Key.TAB );
           // Wait for search button to disappear after collapsing search.
-          var EC = ExpectedConditions;
+          var EC = protractor.ExpectedConditions;
           browser.wait(
             EC.not( EC.elementToBeClickable( _dom.content ) )
           ).then( function() {

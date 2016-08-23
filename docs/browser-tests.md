@@ -124,7 +124,7 @@ describe( 'Beta The Bureau Page', function() {
 
 ## Important note:
 
-Protractor was created by the Angular team to do end-to-end testing of angular sites. It extends the Selenium API and makes certain allowences for AngularJS. To make it work correctly with non-Angular sites you MUST include the following bit of code in your conf.js file.
+Protractor was created by the Angular team to do end-to-end testing of angular sites. It extends the Selenium API and makes certain allowances for AngularJS. To make it work correctly with non-Angular sites you MUST include the following bit of code in your conf.js file.
 
 ```js
   beforeEach(function() {
@@ -155,7 +155,7 @@ run `gulp test:unit:server` from the command-line in the project root.
 # Accessibility Testing
 
 Run the acceptance tests with an `--a11y` flag (i.e. `gulp test:acceptance --a11y`)
-to check every webpage for WCAG and Section 508 compliancy using Protractor's
+to check every web page for WCAG and Section 508 compliance using Protractor's
 [accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
 
 If you'd like to audit a specific page, use `gulp test:a11y`:
