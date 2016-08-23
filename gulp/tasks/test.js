@@ -81,7 +81,9 @@ function _getProtractorParams( suite ) {
 
   var commandLineParams = minimist( process.argv.slice( 2 ) );
 
-  var configFile = commandLineParams.a11y ? 'test/browser_tests/a11y_conf.js' : 'test/browser_tests/conf.js';
+  var configFile = commandLineParams.a11y ?
+                  'test/browser_tests/a11y_conf.js' :
+                  'test/browser_tests/conf.js';
 
   // Set default configuration command-line parameter.
   var params = [ configFile ];
@@ -138,30 +140,40 @@ function _getWCAGParams() {
  * for passing to the PageSpeed Insights (PSI) executable.
  * An optional URL path comes from the command-line `--u=` flag.
  * A PSI "strategy" (mobile vs desktop) can be specified with the `--s=` flag.
- * @param {Function} callback
- *   Function to call when the tested server is contacted, or there's an error.
- * @returns {Array} Array of command-line arguments for PSI binary.
+ * @returns {Promise}
+ *   Promise containing an array of command-line arguments for PSI binary.
  */
-function _createPSITunnel( callback ) {
+function _createPSITunnel() {
   var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var host = process.env.TEST_HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
-  var port = process.env.TEST_HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var host = envvars.TEST_HTTP_HOST;
+  var port = envvars.TEST_HTTP_PORT;
   var path = _parsePath( commandLineParams.u );
   var url = host + ':' + port + path;
   var strategy = commandLineParams.s || 'mobile';
-  isReachable( url, function( err, reachable ) {
-    if ( err || !reachable ) {
-      return callback( url + ' is not reachable. Is your local server running?' );
-    }
-    localtunnel( port, function( err, tunnel ) {
-      url = tunnel.url + path;
-      if ( err ) {
-        callback( 'Error creating local tunnel for PSI: ' + err, null, tunnel );
+
+  // Create a promise that the server is reachable and we can create a tunnel.
+  var promise = new Promise( function( resolve, reject ) {
+    // Check if server is reachable.
+    isReachable( url, function( err, reachable ) {
+      if ( err || !reachable ) {
+        reject( url + ' is not reachable. Is your local server running?' );
       }
-      callback( null, [ url, '--strategy=' + strategy ], tunnel );
+      // Create the local tunnel.
+      localtunnel( port, function( tunErr, tunnel ) {
+        url = tunnel.url + path;
+        if ( tunErr ) {
+          tunnel.close();
+          reject( 'Error creating local tunnel for PSI: ' + tunErr );
+        }
+        resolve( {
+          url:    [ url, '--strategy=' + strategy ],
+          tunnel: tunnel
+        } );
+      } );
     } );
   } );
-  return plugins.util.log( 'PSI tests checking URL: http://' + url );
+
+  return promise;
 }
 
 /**
@@ -200,18 +212,19 @@ function testA11y() {
  * Run PageSpeed Insight tests.
  */
 function testPerf() {
-  _createPSITunnel( function( err, url, tunnel ) {
-    if ( err ) {
-      return plugins.util.log( err );
-    }
+  _createPSITunnel().then( function( params ) {
+    plugins.util.log( 'PSI tests checking URL: http://' + params.url.split( ' ' ) );
     spawn(
       fsHelper.getBinary( 'psi', 'psi', '../.bin' ),
-      url,
+      params.url,
       { stdio: 'inherit' }
     ).once( 'close', function() {
       plugins.util.log( 'PSI tests done!' );
-      tunnel.close();
+      params.tunnel.close();
     } );
+  } ).catch( function( err ) {
+    plugins.util.log( err );
+    process.exit( 1 );
   } );
 }
 
