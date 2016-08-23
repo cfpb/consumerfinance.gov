@@ -387,3 +387,17 @@ class ContentWithAnchor(blocks.StructBlock):
     class Meta:
         icon = 'edit'
         template = '_includes/molecules/full-width-text-anchor.html'
+
+
+class SnippetList(blocks.StructBlock):
+    snippet_type = blocks.ChoiceBlock(choices=ref.snippet_types,
+                                      required=True)
+    heading = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    image = atoms.ImageBasic()
+    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
+    has_rule = blocks.BooleanBlock(required=False)
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/molecules/snippet-list.html'

@@ -133,6 +133,11 @@ supported_languagues = [
     ('ht', 'Haitian Creole'),
 ]
 
+snippet_types = [
+    ('contacts', 'Contacts'),
+    ('downloads', 'Downloads'),
+]
+
 
 def related_posts_category_lookup(related_categories):
     related = []
