@@ -31,6 +31,12 @@
     {# No footer needed on this page. #}
 {%- endblock %}
 
+{% block javascript %}
+<script type='text/javascript'>
+    {% include '/js/externalSite.js' %}
+</script>
+{% endblock javascript %}
+
 {% block content_modifiers -%}
     external-site_container
 {%- endblock %}
