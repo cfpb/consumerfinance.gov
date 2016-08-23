@@ -11,4 +11,4 @@ mkdocs-bootswatch==0.1.0
 singledispatch==3.4.0.3
 six==1.9.0
 tornado==4.1
-mkDOCter==1.0
+mkDOCter
