@@ -9,7 +9,7 @@ cf.gov will be on a two week release cadence that will line up with the platform
 - The latest release tagged on the release branch is deployed to www and content.
 - If any urgent changes are needed before the next release is deployed to www and content, they are treated as hotfixes to the production release branch. Hot-fixes are committed to the release branch, and increment the patch number. For example, the first hotfix of 5.1 will be 5.1.1.
 
-![Release cadence](img/image01.png)
+![Release cadence](img/release-cadence.png)
 
 ## Sample schedule
 
