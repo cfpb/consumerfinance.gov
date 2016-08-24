@@ -10,6 +10,7 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
 from ..util import filterable_list, util
+from jobmanager.models import JobListingList
 
 
 class SublandingPage(CFGOVPage):
@@ -30,7 +31,7 @@ class SublandingPage(CFGOVPage):
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
-        ('job_listing_list', organisms.JobListingList()),
+        ('job_listing_list', JobListingList()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),

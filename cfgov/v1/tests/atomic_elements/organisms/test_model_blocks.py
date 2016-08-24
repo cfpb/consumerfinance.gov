@@ -1,17 +1,8 @@
-import re
-
-from datetime import date
 from django.db import models
-from model_mommy import mommy
 from unittest import TestCase
-from wagtail.wagtailcore.models import Page
 
-from jobmanager.models.django import Grade, JobCategory, Location
-from jobmanager.models.pages import JobListingPage
-from jobmanager.models.panels import GradePanel, RegionPanel
-from v1.atomic_elements.organisms import (
-    JobListingTable, ModelBlock, ModelTable
-)
+from cfgov.test import HtmlMixin
+from v1.atomic_elements.organisms import ModelBlock, ModelTable
 
 
 class TestModel(models.Model):
@@ -34,14 +25,27 @@ class TestModelMixin(object):
 
 
 class ModelBlockTestCase(TestModelMixin, TestCase):
-    def test_get_queryset_no_ordering(self):
+    def test_get_queryset_default(self):
         class TestModelBlock(ModelBlock):
             model = 'v1.TestModel'
 
         block = TestModelBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset()],
+            [model.name for model in block.get_queryset(None)],
             ['chico', 'harpo', 'groucho']
+        )
+
+    def test_get_queryset_filtering(self):
+        class TestModelBlock(ModelBlock):
+            model = 'v1.TestModel'
+
+            def filter_queryset(self, qs, value):
+                return qs.filter(name__startswith='h')
+
+        block = TestModelBlock()
+        self.assertSequenceEqual(
+            [model.name for model in block.get_queryset(None)],
+            ['harpo']
         )
 
     def test_get_queryset_single_ordering(self):
@@ -51,7 +55,20 @@ class ModelBlockTestCase(TestModelMixin, TestCase):
 
         block = TestModelBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset()],
+            [model.name for model in block.get_queryset(None)],
+            ['harpo', 'groucho', 'chico']
+        )
+
+    def test_get_queryset_ordering_method(self):
+        class TestModelBlock(ModelBlock):
+            model = 'v1.TestModel'
+
+            def get_ordering(self, value):
+                return '-name'
+
+        block = TestModelBlock()
+        self.assertSequenceEqual(
+            [model.name for model in block.get_queryset(None)],
             ['harpo', 'groucho', 'chico']
         )
 
@@ -62,19 +79,32 @@ class ModelBlockTestCase(TestModelMixin, TestCase):
 
         block = TestModelBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset()],
+            [model.name for model in block.get_queryset(None)],
             ['harpo', 'groucho', 'chico']
         )
 
+    def test_get_queryset_limit(self):
+        class TestModelBlock(ModelBlock):
+            model = 'v1.TestModel'
+            limit = 2
 
-class HtmlMixin(object):
-    def assertHtmlRegexpMatches(self, s, r):
-        s_no_right_spaces = re.sub('>\s*', '>', s)
-        s_no_extra_spaces = re.sub('\s*<', '<', s_no_right_spaces)
+        block = TestModelBlock()
+        self.assertSequenceEqual(
+            [model.name for model in block.get_queryset(None)],
+            ['chico', 'harpo']
+        )
 
-        self.assertIsNotNone(
-            re.search(r, s_no_extra_spaces.strip(), flags=re.DOTALL),
-            '{} did not match {}'.format(s_no_extra_spaces, r)
+    def test_get_queryset_limit_method(self):
+        class TestModelBlock(ModelBlock):
+            model = 'v1.TestModel'
+
+            def get_limit(self, value):
+                return 2
+
+        block = TestModelBlock()
+        self.assertSequenceEqual(
+            [model.name for model in block.get_queryset(None)],
+            ['chico', 'harpo']
         )
 
 
@@ -112,103 +142,3 @@ class ModelTableTestCase(TestModelMixin, HtmlMixin, TestCase):
             '</tr>'
             '</thead>'
         ))
-
-
-class JobListingTableTestCase(HtmlMixin, TestCase):
-    def test_html_has_table(self):
-        table = JobListingTable()
-        html = table.render(table.to_python({}))
-
-        self.assertHtmlRegexpMatches(html, (
-            '^<table '
-            'class="table__stack-on-small table__entry-header-on-small">'
-            '.*'
-            '</table>$'
-        ))
-
-    def test_html_has_header(self):
-        table = JobListingTable()
-        html = table.render(table.to_python({}))
-
-        self.assertHtmlRegexpMatches(html, (
-            '<thead>'
-            '<tr>'
-            '<th>TITLE</th>'
-            '<th>GRADE</th>'
-            '<th>POSTING CLOSES</th>'
-            '<th>REGION</th>'
-            '</tr>'
-            '</thead>'
-        ))
-
-    def test_html_formatting(self):
-        self.make_job_listing_page(
-            title='Manager',
-            grades=['1', '2', '3'],
-            close_date=date(2016, 8, 5),
-            regions=['NY', 'DC']
-        )
-        self.make_job_listing_page(
-            title='Assistant',
-            grades=['12'],
-            close_date=date(2016, 4, 21),
-            regions=['Silicon Valley']
-        )
-
-        table = JobListingTable()
-        html = table.render(table.to_python({}))
-
-        self.assertHtmlRegexpMatches(html, (
-            '<tr>'
-            '<td data-label="TITLE">Assistant</td>'
-            '<td data-label="GRADE">12</td>'
-            '<td data-label="POSTING CLOSES">APR 21, 2016</td>'
-            '<td data-label="REGION">Silicon Valley</td>'
-            '</tr>'
-            '<tr>'
-            '<td data-label="TITLE">Manager</td>'
-            '<td data-label="GRADE">1, 2, 3</td>'
-            '<td data-label="POSTING CLOSES">AUG 05, 2016</td>'
-            '<td data-label="REGION">DC, NY</td>'
-            '</tr>'
-        ))
-
-    def test_html_formatting_no_grade_or_region(self):
-        self.make_job_listing_page(
-            title='CEO',
-            close_date=date(2016, 12, 1)
-        )
-
-        table = JobListingTable()
-        html = table.render(table.to_python({}))
-
-        self.assertHtmlRegexpMatches(html, (
-            '<tr>'
-            '<td data-label="TITLE">CEO</td>'
-            '<td data-label="GRADE"></td>'
-            '<td data-label="POSTING CLOSES">DEC 01, 2016</td>'
-            '<td data-label="REGION"></td>'
-            '</tr>'
-        ))
-
-    @staticmethod
-    def make_job_listing_page(title, close_date, grades=[], regions=[]):
-        page = mommy.prepare(
-            JobListingPage,
-            title=title,
-            close_date=close_date,
-            description='description',
-            division=mommy.make(JobCategory)
-        )
-
-        home = Page.objects.get(slug='home-page')
-        home.add_child(instance=page)
-
-        for grade in grades:
-            grade_model = mommy.make(Grade, grade=grade)
-            GradePanel.objects.create(grade=grade_model, job_listing=page)
-
-        for region in regions:
-            region_model = mommy.make(Location, region_long=region)
-            RegionPanel.objects.create(region=region_model, job_listing=page)
-

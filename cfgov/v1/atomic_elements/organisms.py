@@ -148,7 +148,7 @@ class ModelBlock(blocks.StructBlock):
         ordering = self.get_ordering(value)
         if ordering:
             if isinstance(ordering, basestring):
-                ordering = (self.ordering,)
+                ordering = (ordering,)
 
             qs = qs.order_by(*ordering)
 
