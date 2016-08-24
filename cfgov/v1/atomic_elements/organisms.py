@@ -1,8 +1,5 @@
-from django import forms
 from django.apps import apps
-from django.forms.widgets import HiddenInput
 from django.utils.encoding import smart_text
-from django.utils.functional import cached_property
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
@@ -137,33 +134,38 @@ class Table(blocks.StructBlock):
         label = ' '
 
 
-class ModelBlock(blocks.FieldBlock):
+class ModelBlock(blocks.StructBlock):
     model = None
     ordering = None
+    limit = None
 
-    def get_queryset(self):
+    def get_queryset(self, value):
         model_cls = apps.get_model(self.model)
-        queryset = model_cls.objects.all()
+        qs = model_cls.objects.all()
 
-        ordering = self.get_ordering()
+        qs = self.filter_queryset(qs, value)
+
+        ordering = self.get_ordering(value)
         if ordering:
             if isinstance(ordering, basestring):
                 ordering = (self.ordering,)
 
-            queryset = queryset.order_by(*ordering)
+            qs = qs.order_by(*ordering)
 
-        return queryset
+        limit = self.get_limit(value)
+        if limit:
+            qs = qs[:limit]
 
-    def get_ordering(self):
+        return qs
+
+    def filter_queryset(self, qs, value):
+        return qs
+
+    def get_ordering(self, value):
         return self.ordering
 
-    @property
-    def field(self):
-        return forms.CharField(
-            widget=HiddenInput(),
-            required=False,
-            help_text=self.label
-        )
+    def get_limit(self, value):
+        return self.limit
 
 
 class ModelTable(ModelBlock):
@@ -171,9 +173,11 @@ class ModelTable(ModelBlock):
     field_headers = None
 
     def render(self, value):
+        rows = [self.make_row(obj) for obj in self.get_queryset(value)]
+
         table_value = {
             'headers': self.field_headers,
-            'rows': [self.make_row(obj) for obj in self.get_queryset()],
+            'rows': rows,
         }
 
         table = Table()
@@ -200,25 +204,20 @@ class ModelTable(ModelBlock):
             return smart_text(value)
 
     class Meta:
-        template = '_includes/organisms/table.html'
         icon = 'table'
 
 
-class JobListingTable(ModelTable):
-    model = 'jobmanager.JobListingPage'
-    ordering = ('close_date', 'title')
+class ModelList(ModelBlock):
+    limit = atoms.IntegerBlock(default=5, label='Maximum items', min_value=0)
 
-    fields = ['title', 'grades', 'close_date', 'regions']
-    field_headers = ['TITLE', 'GRADE', 'POSTING CLOSES', 'REGION']
+    def __init__(self, *args, **kwargs):
+        super(ModelList, self).__init__(*args, **kwargs)
 
-    def make_grades_value(self, value):
-        return ', '.join(sorted(g.grade.grade for g in value.all()))
+    def get_limit(self, value):
+        return value.get('limit')
 
-    def make_close_date_value(self, value):
-        return value.strftime('%b %d, %Y').upper()
-
-    def make_regions_value(self, value):
-        return ', '.join(sorted(r.region.region_long for r in value.all()))
+    class Meta:
+        icon = 'list-ul'
 
 
 class FullWidthText(blocks.StreamBlock):

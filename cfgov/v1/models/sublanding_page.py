@@ -30,6 +30,7 @@ class SublandingPage(CFGOVPage):
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
+        ('job_listing_list', organisms.JobListingList()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),
