@@ -29,7 +29,7 @@
                 POSTING CLOSES
             </th>
             <th>
-                REGION
+                LOCATION
             </th>
         </tr>
     </thead>
@@ -42,8 +42,8 @@
             <td data-label="Posting Closes">
                 {{ time.render(career.close_date, {'date':true}) }}
             </td>
-            <td data-label="Region">
-                {{ career.regions.order_by('region__region_long') | join(', ') }}
+            <td data-label="Location">
+              {{ career.location_names||join(', ') }}
             </td>
         </tr>
     {% endfor %}
