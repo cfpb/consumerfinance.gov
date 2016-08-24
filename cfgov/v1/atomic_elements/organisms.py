@@ -1,5 +1,6 @@
 from django import forms
 from django.apps import apps
+from django.forms.widgets import HiddenInput
 from django.utils.encoding import smart_text
 from django.utils.functional import cached_property
 from wagtail.contrib.table_block.blocks import TableBlock
@@ -136,7 +137,7 @@ class Table(blocks.StructBlock):
         label = ' '
 
 
-class ModelBlock(blocks.StructBlock):
+class ModelBlock(blocks.FieldBlock):
     model = None
     ordering = None
 
@@ -156,6 +157,14 @@ class ModelBlock(blocks.StructBlock):
     def get_ordering(self):
         return self.ordering
 
+    @property
+    def field(self):
+        return forms.CharField(
+            widget=HiddenInput(),
+            required=False,
+            help_text=self.label
+        )
+
 
 class ModelTable(ModelBlock):
     fields = None
@@ -163,7 +172,7 @@ class ModelTable(ModelBlock):
 
     def render(self, value):
         table_value = {
-            'headers': [h.upper() for h in self.field_headers],
+            'headers': self.field_headers,
             'rows': [self.make_row(obj) for obj in self.get_queryset()],
         }
 
@@ -200,7 +209,7 @@ class JobListingTable(ModelTable):
     ordering = ('close_date', 'title')
 
     fields = ['title', 'grades', 'close_date', 'regions']
-    field_headers = ['Title', 'Grade', 'Posting closes', 'Region']
+    field_headers = ['TITLE', 'GRADE', 'POSTING CLOSES', 'REGION']
 
     def make_grades_value(self, value):
         return ', '.join(sorted(g.grade.grade for g in value.all()))

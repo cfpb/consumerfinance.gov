@@ -22,7 +22,7 @@ class TestModel(models.Model):
         ordering = ('pk',)
 
 
-class ModelBlockTestCase(TestCase):
+class TestModelMixin(object):
     @classmethod
     def setUpClass(cls):
         names = ['chico', 'harpo', 'groucho']
@@ -32,6 +32,8 @@ class ModelBlockTestCase(TestCase):
             TestModel(name=name, age=age) for name, age in zip(names, ages)
         ])
 
+
+class ModelBlockTestCase(TestModelMixin, TestCase):
     def test_get_queryset_no_ordering(self):
         class TestModelBlock(ModelBlock):
             model = 'v1.TestModel'
@@ -65,7 +67,18 @@ class ModelBlockTestCase(TestCase):
         )
 
 
-class ModelTableTestCase(TestCase):
+class HtmlMixin(object):
+    def assertHtmlRegexpMatches(self, s, r):
+        s_no_right_spaces = re.sub('>\s*', '>', s)
+        s_no_extra_spaces = re.sub('\s*<', '<', s_no_right_spaces)
+
+        self.assertIsNotNone(
+            re.search(r, s_no_extra_spaces.strip(), flags=re.DOTALL),
+            '{} did not match {}'.format(s_no_extra_spaces, r)
+        )
+
+
+class ModelTableTestCase(TestModelMixin, HtmlMixin, TestCase):
     def test_default_formatter(self):
         self.assertEqual(
             ModelTable().format_field_value('foo', 1234),
@@ -82,8 +95,26 @@ class ModelTableTestCase(TestCase):
             '2468'
         )
 
+    def test_headers(self):
+        class TestModelTable(ModelTable):
+            model = 'v1.TestModel'
+            fields = ('name', 'age')
+            field_headers = ('First Name', 'Age')
 
-class JobListingTableTestCase(TestCase):
+        table = TestModelTable()
+        html = table.render(table.to_python({}))
+
+        self.assertHtmlRegexpMatches(html, (
+            '<thead>'
+            '<tr>'
+            '<th>First Name</th>'
+            '<th>Age</th>'
+            '</tr>'
+            '</thead>'
+        ))
+
+
+class JobListingTableTestCase(HtmlMixin, TestCase):
     def test_html_has_table(self):
         table = JobListingTable()
         html = table.render(table.to_python({}))
@@ -181,11 +212,3 @@ class JobListingTableTestCase(TestCase):
             region_model = mommy.make(Location, region_long=region)
             RegionPanel.objects.create(region=region_model, job_listing=page)
 
-    def assertHtmlRegexpMatches(self, s, r):
-        s_no_right_spaces = re.sub('>\s*', '>', s)
-        s_no_extra_spaces = re.sub('\s*<', '<', s_no_right_spaces)
-
-        self.assertIsNotNone(
-            re.search(r, s_no_extra_spaces.strip(), flags=re.DOTALL),
-            '{} did not match {}'.format(s_no_extra_spaces, r)
-        )
