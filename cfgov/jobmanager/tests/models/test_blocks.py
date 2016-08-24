@@ -70,11 +70,13 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         self.assertHtmlRegexpMatches(html, (
             '<li class="list_item">'
             '<a class="list_link" href=".*">Assistant</a>'
-            '<p class="date">CLOSING<span class="datetime">.*APR 21, 2099.*</span></p>'
+            '<p class="date">CLOSING<span class="datetime">'
+            '.*APR 21, 2099.*</span></p>'
             '</li>'
             '<li class="list_item">'
             '<a class="list_link" href=".*">Manager</a>'
-            '<p class="date">CLOSING<span class="datetime">.*AUG 05, 2099.*</span></p>'
+            '<p class="date">CLOSING<span class="datetime">.'
+            '*AUG 05, 2099.*</span></p>'
             '</li>'
         ))
 
@@ -85,8 +87,8 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
         html = table.render(table.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
-            '^<table '
-            'class="table__stack-on-small table__entry-header-on-small">'
+            '^<table class="o-table table__stack-on-small '
+            'table__entry-header-on-small">'
             '.*'
             '</table>$'
         ))
