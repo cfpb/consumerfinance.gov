@@ -69,7 +69,6 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, '(515) 123-4567')
         self.assertContains(response, '123 abc street')
 
-
     def test_sidebar_contact_info(self):
         """Sidebar contact info correctly displays on a Landing Page"""
         landing_page = LandingPage(
@@ -103,7 +102,6 @@ class OrganismsTestCase(TestCase):
         response = django_client.get('/learn/')
         self.assertContains(response, 'Full width text content')
 
-
     def test_image_text_groups(self):
         """Image Text Groups correctly display on a Landing Page"""
         landing_page = LandingPage(
@@ -122,7 +120,6 @@ class OrganismsTestCase(TestCase):
         response = django_client.get('/landing/')
         self.assertContains(response, 'Image 25 75 Group')
         self.assertContains(response, 'Image 50 50 Group')
-
 
     def test_half_width_link_blob_group(self):
         """Half width link blob group correctly displays on a Landing Page"""
@@ -219,4 +216,3 @@ class OrganismsTestCase(TestCase):
         response = django_client.get('/learn/')
         self.assertContains(response, 'Item Introduction')
         self.assertContains(response, 'Item introduction body')
-
