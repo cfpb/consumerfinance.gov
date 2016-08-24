@@ -13,6 +13,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## Unreleased
+
+### Added
+
+### Changed
+- Added support for Spanish-language cue labels to the Expandables organism.
+- Added support for Spanish-language heading to the Social Media molecule.
+
+### Removed
+
+
 ## 3.7.0
 
 ### Added
