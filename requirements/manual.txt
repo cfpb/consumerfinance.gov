@@ -1,0 +1,14 @@
+Markdown==2.3.1
+PyYAML==3.10
+backports-abc==0.4
+certifi==2016.8.2
+click==3.3
+django-livereload==1.2
+livereload==2.3.2
+mkdocs==0.15.3
+mkdocs-bootstrap==0.1.1
+mkdocs-bootswatch==0.1.0
+singledispatch==3.4.0.3
+six==1.9.0
+tornado==4.1
+mkDOCter
