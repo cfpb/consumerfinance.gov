@@ -54,7 +54,7 @@ var ieConf = {
 var externalConf = {
   entry: paths.unprocessed + JS_ROUTES_PATH + '/external-site/index.js',
   output: {
-    filename: 'externalSite.js'
+    filename: 'external-site.js'
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin( {
