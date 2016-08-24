@@ -172,34 +172,40 @@ class ModelTable(ModelBlock):
     fields = None
     field_headers = None
 
+    row_links = blocks.BooleanBlock(required=False, default=True)
+
     def render(self, value):
-        rows = [self.make_row(obj) for obj in self.get_queryset(value)]
+        rows = [
+            self.make_row(instance)
+            for instance in self.get_queryset(value)
+        ]
 
         table_value = {
             'headers': self.field_headers,
             'rows': rows,
+            'row_links': value.get('row_links'),
         }
 
         table = Table()
         value = table.to_python(table_value)
         return table.render(value)
 
-    def make_row(self, obj):
+    def make_row(self, instance):
         return [
-            {'type': 'text', 'value': self.make_value(obj, field)}
+            {'type': 'text', 'value': self.make_value(instance, field)}
             for field in self.fields
         ]
 
-    def make_value(self, obj, field):
-        value = getattr(obj, field)
-        return self.format_field_value(field, value)
+    def make_value(self, instance, field):
+        value = getattr(instance, field)
+        return self.format_field_value(instance, field, value)
 
-    def format_field_value(self, field, value):
+    def format_field_value(self, instance, field, value):
         custom_formatter_name = 'make_{}_value'.format(field)
         custom_formatter = getattr(self, custom_formatter_name, None)
 
         if custom_formatter:
-            return custom_formatter(value)
+            return custom_formatter(instance, value)
         else:
             return smart_text(value)
 

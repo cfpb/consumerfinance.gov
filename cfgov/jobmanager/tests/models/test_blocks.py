@@ -32,30 +32,22 @@ def make_job_listing_page(title, close_date, grades=[], regions=[]):
 
 
 class JobListingListTestCase(HtmlMixin, TestCase):
-    def test_html_has_table(self):
+    def test_html_has_aside(self):
         block = JobListingList()
         html = block.render(block.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
-            '^<table '
-            'class="u-w100pct block block__flush-top '
-            'simple-table simple-table__row-links">'
+            '^<aside class="m-jobs-list" data-qa-hook="openings-section">'
             '.*'
-            '</table>$'
+            '</aside>$'
         ))
 
-    def test_html_has_header(self):
+    def test_html_has_ul(self):
         block = JobListingList()
         html = block.render(block.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
-            '<thead>'
-            '<tr>'
-            '<th>TITLE</th>'
-            '<th>POSTING CLOSES</th>'
-            '<th>REGION</th>'
-            '</tr>'
-            '</thead>'
+            '<ul class="list list__unstyled">.*</ul>'
         ))
 
     def test_html_formatting(self):
@@ -76,16 +68,14 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         html = block.render(block.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
-            '<tr>'
-            '<td><a href=".*">Assistant</a></td>'
-            '<td data-label="Posting Closes">.*APR 21, 2099.*</td>'
-            '<td data-label="Region">Silicon Valley</td>'
-            '</tr>'
-            '<tr>'
-            '<td><a href=".*">Manager</a></td>'
-            '<td data-label="Posting Closes">.*AUG 05, 2099.*</td>'
-            '<td data-label="Region">DC, NY</td>'
-            '</tr>'
+            '<li class="list_item">'
+            '<a class="list_link" href=".*">Assistant</a>'
+            '<p class="date">CLOSING<span class="datetime">.*APR 21, 2099.*</span></p>'
+            '</li>'
+            '<li class="list_item">'
+            '<a class="list_link" href=".*">Manager</a>'
+            '<p class="date">CLOSING<span class="datetime">.*AUG 05, 2099.*</span></p>'
+            '</li>'
         ))
 
 
@@ -135,13 +125,13 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
 
         self.assertHtmlRegexpMatches(html, (
             '<tr>'
-            '<td data-label="TITLE">Assistant</td>'
+            '<td data-label="TITLE"><a href=".*">Assistant</a></td>'
             '<td data-label="GRADE">12</td>'
             '<td data-label="POSTING CLOSES">APR 21, 2099</td>'
             '<td data-label="REGION">Silicon Valley</td>'
             '</tr>'
             '<tr>'
-            '<td data-label="TITLE">Manager</td>'
+            '<td data-label="TITLE"><a href=".*">Manager</a></td>'
             '<td data-label="GRADE">1, 2, 3</td>'
             '<td data-label="POSTING CLOSES">AUG 05, 2099</td>'
             '<td data-label="REGION">DC, NY</td>'
@@ -159,7 +149,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
 
         self.assertHtmlRegexpMatches(html, (
             '<tr>'
-            '<td data-label="TITLE">CEO</td>'
+            '<td data-label="TITLE"><a href=".*">CEO</a></td>'
             '<td data-label="GRADE"></td>'
             '<td data-label="POSTING CLOSES">DEC 01, 2099</td>'
             '<td data-label="REGION"></td>'

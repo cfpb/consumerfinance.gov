@@ -111,17 +111,17 @@ class ModelBlockTestCase(TestModelMixin, TestCase):
 class ModelTableTestCase(TestModelMixin, HtmlMixin, TestCase):
     def test_default_formatter(self):
         self.assertEqual(
-            ModelTable().format_field_value('foo', 1234),
+            ModelTable().format_field_value(None, 'foo', 1234),
             '1234'
         )
 
     def test_custom_formatter(self):
         class TestModelTable(ModelTable):
-            def make_foo_value(self, value):
+            def make_foo_value(self, instance, value):
                 return str(2 * value)
 
         self.assertEqual(
-            TestModelTable().format_field_value('foo', 1234),
+            TestModelTable().format_field_value(None, 'foo', 1234),
             '2468'
         )
 
