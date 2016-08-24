@@ -21,7 +21,7 @@ class HalfWidthLinkBlob(blocks.StructBlock):
 
     class Meta:
         icon = 'link'
-        template = '_includes/molecules/half-width-link-blob.html'
+        template = '_includes/molecules/link-blob.html'
 
 
 class ImageText5050(blocks.StructBlock):
