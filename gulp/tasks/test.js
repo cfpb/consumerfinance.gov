@@ -144,8 +144,8 @@ function _getWCAGParams() {
  */
 function _createPSITunnel( callback ) {
   var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var host = process.env.HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
-  var port = process.env.HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var host = process.env.TEST_HTTP_HOST || 'localhost'; // eslint-disable-line no-process-env, no-inline-comments, max-len
+  var port = process.env.TEST_HTTP_PORT || '8000'; // eslint-disable-line no-process-env, no-inline-comments, max-len
   var path = _parsePath( commandLineParams.u );
   var url = host + ':' + port + path;
   var strategy = commandLineParams.s || 'mobile';
