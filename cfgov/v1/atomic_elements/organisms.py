@@ -182,7 +182,11 @@ class ModelTable(ModelBlock):
     fields = None
     field_headers = None
 
-    row_links = blocks.BooleanBlock(required=False, default=True)
+    row_links = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        help_text='Whether to highlight rows containing links'
+    )
 
     def render(self, value):
         rows = [
@@ -224,7 +228,12 @@ class ModelTable(ModelBlock):
 
 
 class ModelList(ModelBlock):
-    limit = atoms.IntegerBlock(default=5, label='Maximum items', min_value=0)
+    limit = atoms.IntegerBlock(
+        default=5,
+        label='Maximum items',
+        min_value=0,
+        help_text='Limit list to this number of items'
+    )
 
     def __init__(self, *args, **kwargs):
         super(ModelList, self).__init__(*args, **kwargs)
