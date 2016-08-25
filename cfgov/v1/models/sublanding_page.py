@@ -24,6 +24,7 @@ class SublandingPage(CFGOVPage):
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('full_width_text', organisms.FullWidthText()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
         ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
         ('table', organisms.Table(editable=False)),

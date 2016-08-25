@@ -37,10 +37,20 @@ class ImageText2575Group(blocks.StructBlock):
         template = '_includes/organisms/image-text-25-75-group.html'
 
 
-class HalfWidthLinkBlobGroup(blocks.StructBlock):
+class LinkBlobGroup(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
+    has_top_border = blocks.BooleanBlock(required=False)
+    has_bottom_border = blocks.BooleanBlock(required=False)
     link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
 
+
+class ThirdWidthLinkBlobGroup(LinkBlobGroup):
+    class Meta:
+        icon = 'link'
+        template = '_includes/organisms/third-width-link-blob-group.html'
+
+
+class HalfWidthLinkBlobGroup(LinkBlobGroup):
     class Meta:
         icon = 'link'
         template = '_includes/organisms/half-width-link-blob-group.html'
