@@ -1,114 +1,108 @@
-from django.db import models
-from unittest import TestCase
+from django.contrib.auth.models import User
+from django.test import TestCase
 
 from cfgov.test import HtmlMixin
 from v1.atomic_elements.organisms import ModelBlock, ModelTable
 
 
-class TestModel(models.Model):
-    name = models.CharField(max_length=16)
-    age = models.PositiveIntegerField()
-
-    class Meta:
-        ordering = ('pk',)
-
-
-class TestModelMixin(object):
+class UserModelMixin(object):
     @classmethod
     def setUpClass(cls):
-        names = ['chico', 'harpo', 'groucho']
-        ages = [50, 60, 60]
+        super(UserModelMixin, cls).setUpClass()
+        usernames = ['chico', 'harpo', 'groucho']
+        first_names = ['leonard', 'arthur', 'julius']
 
-        TestModel.objects.bulk_create([
-            TestModel(name=name, age=age) for name, age in zip(names, ages)
+        User.objects.bulk_create([
+            User(username=username, first_name=first_name)
+            for (username, first_name) in zip(usernames, first_names)
         ])
 
 
-class ModelBlockTestCase(TestModelMixin, TestCase):
+class ModelBlockTestCase(UserModelMixin, TestCase):
     def test_get_queryset_default(self):
-        class TestModelBlock(ModelBlock):
-            model = 'v1.TestModel'
+        class UserBlock(ModelBlock):
+            model = 'auth.User'
 
-        block = TestModelBlock()
+        block = UserBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset(None)],
-            ['chico', 'harpo', 'groucho']
+            [model.username for model in block.get_queryset(None)],
+            ['admin', 'chico', 'harpo', 'groucho']
         )
 
     def test_get_queryset_filtering(self):
-        class TestModelBlock(ModelBlock):
-            model = 'v1.TestModel'
+        class UserBlock(ModelBlock):
+            model = 'auth.User'
 
             def filter_queryset(self, qs, value):
-                return qs.filter(name__startswith='h')
+                return qs.filter(username__startswith='h')
 
-        block = TestModelBlock()
+        block = UserBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset(None)],
+            [model.username for model in block.get_queryset(None)],
             ['harpo']
         )
 
     def test_get_queryset_single_ordering(self):
-        class TestModelBlock(ModelBlock):
-            model = 'v1.TestModel'
-            ordering = '-name'
+        class UserBlock(ModelBlock):
+            model = 'auth.User'
+            ordering = '-username'
 
-        block = TestModelBlock()
+        block = UserBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset(None)],
-            ['harpo', 'groucho', 'chico']
+            [model.username for model in block.get_queryset(None)],
+            ['harpo', 'groucho', 'chico', 'admin']
         )
 
     def test_get_queryset_ordering_method(self):
-        class TestModelBlock(ModelBlock):
-            model = 'v1.TestModel'
+        class UserBlock(ModelBlock):
+            model = 'auth.User'
 
             def get_ordering(self, value):
-                return '-name'
+                return '-username'
 
-        block = TestModelBlock()
+        block = UserBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset(None)],
-            ['harpo', 'groucho', 'chico']
+            [model.username for model in block.get_queryset(None)],
+            ['harpo', 'groucho', 'chico', 'admin']
         )
 
     def test_get_queryset_multiple_orderings(self):
-        class TestModelBlock(ModelBlock):
-            model = 'v1.TestModel'
-            ordering = ('-age', '-name')
+        class UserBlock(ModelBlock):
+            model = 'auth.User'
+            ordering = ('-first_name', '-username')
 
-        block = TestModelBlock()
+        block = UserBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset(None)],
-            ['harpo', 'groucho', 'chico']
+            [model.username for model in block.get_queryset(None)],
+            ['chico', 'groucho', 'harpo', 'admin']
         )
 
     def test_get_queryset_limit(self):
-        class TestModelBlock(ModelBlock):
-            model = 'v1.TestModel'
+        class UserBlock(ModelBlock):
+            model = 'auth.User'
             limit = 2
 
-        block = TestModelBlock()
+        block = UserBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset(None)],
-            ['chico', 'harpo']
+            [model.username for model in block.get_queryset(None)],
+            ['admin', 'chico']
         )
 
     def test_get_queryset_limit_method(self):
-        class TestModelBlock(ModelBlock):
-            model = 'v1.TestModel'
+        class UserBlock(ModelBlock):
+            model = 'auth.User'
 
             def get_limit(self, value):
                 return 2
 
-        block = TestModelBlock()
+        block = UserBlock()
         self.assertSequenceEqual(
-            [model.name for model in block.get_queryset(None)],
-            ['chico', 'harpo']
+            [model.username for model in block.get_queryset(None)],
+            ['admin', 'chico']
         )
 
 
-class ModelTableTestCase(TestModelMixin, HtmlMixin, TestCase):
+class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
     def test_default_formatter(self):
         self.assertEqual(
             ModelTable().format_field_value(None, 'foo', 1234),
@@ -116,29 +110,29 @@ class ModelTableTestCase(TestModelMixin, HtmlMixin, TestCase):
         )
 
     def test_custom_formatter(self):
-        class TestModelTable(ModelTable):
+        class UserTable(ModelTable):
             def make_foo_value(self, instance, value):
                 return str(2 * value)
 
         self.assertEqual(
-            TestModelTable().format_field_value(None, 'foo', 1234),
+            UserTable().format_field_value(None, 'foo', 1234),
             '2468'
         )
 
     def test_headers(self):
-        class TestModelTable(ModelTable):
-            model = 'v1.TestModel'
-            fields = ('name', 'age')
-            field_headers = ('First Name', 'Age')
+        class UserTable(ModelTable):
+            model = 'auth.User'
+            fields = ('username', 'first_name')
+            field_headers = ('Username', 'First Name')
 
-        table = TestModelTable()
+        table = UserTable()
         html = table.render(table.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
             '<thead>'
             '<tr>'
+            '<th>Username</th>'
             '<th>First Name</th>'
-            '<th>Age</th>'
             '</tr>'
             '</thead>'
         ))
