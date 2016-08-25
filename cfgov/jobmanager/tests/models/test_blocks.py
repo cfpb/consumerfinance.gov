@@ -1,6 +1,6 @@
 from datetime import date
+from django.test import TestCase
 from model_mommy import mommy
-from unittest import TestCase
 from wagtail.wagtailcore.models import Page
 
 from cfgov.test import HtmlMixin
@@ -43,6 +43,13 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         ))
 
     def test_html_has_ul(self):
+        make_job_listing_page(
+            title='Manager',
+            grades=['1', '2', '3'],
+            close_date=date(2099, 8, 5),
+            regions=['NY', 'DC']
+        )
+
         block = JobListingList()
         html = block.render(block.to_python({}))
 
