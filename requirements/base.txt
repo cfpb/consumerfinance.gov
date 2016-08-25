@@ -20,7 +20,7 @@ django-taggit==0.18.3
 django-tinymce==2.2.0
 django-treebeard==3.0
 django>=1.8,<=1.8.99
-djangorestframework==3.3.3
+djangorestframework==2.4.8
 elasticsearch==1.6.0
 git+https://github.com/cfpb/publish_eccu.git#egg=publish_eccu
 git+https://github.com/rosskarchner/govdelivery.git#egg=govdelivery
