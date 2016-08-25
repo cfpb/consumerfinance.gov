@@ -1,6 +1,15 @@
 
 'use strict';
 
+/*
+ *  TableBlock HansonTable bridge
+ *
+ *  Code copied from
+ *  https://github.com/torchbox/wagtail/blob/master/wagtail/contrib/table_block/static/table_block/js/table.js
+ *
+ *  Modifications were made to add new form fields to the TableBlock in Wagtail admin.
+ */
+
 function initAtomicTable(id, tableOptions) {
     var containerId = id + '-handsontable-container';
     var tableHeaderCheckboxId = id + '-handsontable-header';

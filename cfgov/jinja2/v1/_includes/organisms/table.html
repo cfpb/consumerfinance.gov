@@ -35,13 +35,11 @@
     <tbody>
     {% for row in value.data[row_index:] or [] %}
         <tr>
-            {% for column in row or [] %}
+            {% for cell in row or [] %}
                 {% set tag = 'th' if value.first_col_is_header and loop.first else 'td' %}
-                {% if column %}
                 <{{tag}} data-label="{{ value.data[0][loop.index0] }}">
-                    {{ parse_links(column) | trim | safe | linebreaksbr }}
+                    {{ parse_links( cell or '' ) | trim | safe | linebreaksbr }}
                 </{{tag}}>
-                {% endif %}
             {% endfor %}
         </tr>
     {% endfor %}
