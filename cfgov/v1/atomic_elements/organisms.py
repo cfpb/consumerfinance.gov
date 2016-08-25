@@ -1,13 +1,23 @@
+
+import json
+
+from django import forms
+from django.template.loader import render_to_string
+from django.utils.functional import cached_property
+
 from django.apps import apps
 from django.utils.encoding import smart_text
-from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.contrib.table_block.blocks import TableBlock, TableInput
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
+
 from . import atoms, molecules
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
+
+from jinja2 import Environment, contextfunction, Markup
 
 
 class Well(blocks.StructBlock):
@@ -143,6 +153,32 @@ class Table(blocks.StructBlock):
         template = '_includes/organisms/table.html'
         label = ' '
 
+class AtomicTableInput(TableInput):
+    _id = 'table-block'
+    def render(self, name, value, attrs=None):
+        attrs.update({'id': self._id})
+        # Calling the grandparents render method and bypassing TableInputs,
+        # in order to control how we render the form.
+        original_field_html = super(TableInput, self).render(name, value, attrs)
+        return Markup(render_to_string('wagtailadmin/table_input.html', {
+            'original_field_html': original_field_html,
+            'attrs': attrs,
+            'value': value,
+        }))
+
+    def render_js_init(self, id_, name, value):
+        return "initAtomicTable({0}, {1});".format(json.dumps(id_), json.dumps(self.table_options))
+
+class AtomicTableBlock(TableBlock):
+
+    @cached_property
+    def field(self):
+        return forms.CharField(widget=AtomicTableInput(table_options=self.table_options), **self.field_options)
+
+    class Meta:
+        default = None
+        icon = 'table'
+        template = '_includes/organisms/table.html'
 
 class ModelBlock(blocks.StructBlock):
     """Abstract StructBlock that provides Django model instances to subclasses.
@@ -300,7 +336,7 @@ class FullWidthText(blocks.StreamBlock):
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
     table = Table(editable=False)
-    table_block = TableBlock(table_options={'renderer':'html'})
+    table_block = AtomicTableBlock(table_options={'renderer':'html'})
 
     class Meta:
         icon = 'edit'

@@ -198,7 +198,8 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
 STATICFILES_DIRS = [
-    PROJECT_ROOT.child('static_built')
+    PROJECT_ROOT.child('static_built'),
+    PROJECT_ROOT.child('templates', 'wagtailadmin')
 ]
 
 

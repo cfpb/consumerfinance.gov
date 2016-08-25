@@ -88,7 +88,7 @@ class LearnPage(AbstractFilterPage):
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table(editable=False)),
-        ('table_block', TableBlock(table_options={'renderer':'html'})),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
         ('call_to_action', molecules.CallToAction()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(

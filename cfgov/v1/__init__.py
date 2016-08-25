@@ -4,7 +4,7 @@ from urlparse import urlparse
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import pluralize, slugify
+from django.template.defaultfilters import pluralize, slugify, linebreaksbr
 from wagtail.wagtailcore.templatetags import wagtailcore_tags
 from django.contrib import messages
 
@@ -31,8 +31,7 @@ def environment(**options):
     from v1.util import ref
     env.globals.update({
         'static': staticfiles_storage.url,
-        'global_dict': {
-        },
+        'global_dict': {},
         'reverse': reverse,
         'render_stream_child': render_stream_child,
         'flag_enabled': flag_enabled,
@@ -53,8 +52,9 @@ def environment(**options):
     })
 
     env.filters.update({
+        'linebreaksbr': linebreaksbr,
         'pluralize': pluralize,
-        'slugify': slugify,
+        'slugify': slugify
     })
     return env
 

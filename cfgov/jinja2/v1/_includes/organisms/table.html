@@ -14,33 +14,36 @@
 
 <table class="o-table
               {{ 'o-table__row-links' if value.row_links else '' }}
-              table__stack-on-small
-              table__entry-header-on-small">
+              {{ 'table__stack-on-small' if value.is_stacked else '' }}
+              {{ 'table__striped' if value.is_striped else '' }}
+              {{ 'u-w100pct' if value.is_full_width else '' }}">
+    {% set row_index = 0 %}
+    {% if value.first_row_is_table_header and value.data | list | length > 0 %}
+    {% set row_index = 1 %}
     <thead>
         <tr>
-            {% for thead in value.headers %}
-                <th>{{ thead }}</th>
+            {% for column in value.data[0] %}
+                {% if column is defined %}
+                <th>
+                    {{ column | trim | safe | linebreaksbr }}
+                </th>
+                {% endif %}
             {% endfor %}
         </tr>
     </thead>
-    {% for row in value.rows %}
+    {% endif %}
+    <tbody>
+    {% for row in value.data[row_index:] or [] %}
         <tr>
-        {% for cell in row %}
-            {% set colcount = loop.index %}
-            {% for thead in value.headers %}
-                {% if colcount == loop.index %}
-                    {% if 'rich_text_blob' in cell.block_type %}
-                        <td data-label="{{ thead }}">
-                            {{ parse_links(cell.value) | safe }}
-                        </td>
-                    {% else %}
-                        <td data-label="{{ thead }}">
-                            {{ cell | safe }}
-                        </td>
-                    {% endif %}
+            {% for column in row or [] %}
+                {% set tag = 'th' if value.first_col_is_header and loop.first else 'td' %}
+                {% if column %}
+                <{{tag}} data-label="{{ value.data[0][loop.index0] }}">
+                    {{ parse_links(column) | trim | safe | linebreaksbr }}
+                </{{tag}}>
                 {% endif %}
             {% endfor %}
-        {% endfor %}
         </tr>
     {% endfor %}
+    </tbody>
 </table>

@@ -1,0 +1,51 @@
+
+<div class="field boolean_field widget-checkbox_input">
+    <label for="{{ attrs.id }}-handsontable-striped-rows">Striped rows</label>
+    <div class="field-content">
+        <div class="input">
+            <input type="checkbox" id="{{ attrs.id }}-handsontable-striped-rows" name="handsontable-striped-rows"/>
+            <span class="help">( Display the Table with striped rows )</span>
+        </div>
+
+    </div>
+</div>
+<div class="field boolean_field widget-checkbox_input">
+    <label for="{{ attrs.id }}-handsontable-striped-rows">Stacked on mobile</label>
+    <div class="field-content">
+        <div class="input">
+            <input type="checkbox" id="{{ attrs.id }}-handsontable-stack-on-mobile" name="handsontable-stack-on-mobile"/>
+            <span class="help">( Stack the table columns on mobile )</span>
+        </div>
+    </div>
+</div>
+<div class="field boolean_field widget-checkbox_input">
+    <label for="{{ attrs.id }}-handsontable-full-width">Full-width</label>
+    <div class="field-content">
+        <div class="input">
+            <input type="checkbox" id="{{ attrs.id }}-handsontable-full-width" name="handsontable-full-width"/>
+            <span class="help">( Display the table at full-width )</span>
+        </div>
+    </div>
+</div>
+<div class="field boolean_field widget-checkbox_input">
+    <label for="{{ attrs.id }}-handsontable-header">Row header</label>
+    <div class="field-content">
+        <div class="input">
+            <input type="checkbox" id="{{ attrs.id }}-handsontable-header" name="handsontable-header"/>
+            <span class="help">( Display the first row as a header )</span>
+        </div>
+    </div>
+</div>
+<div class="field boolean_field widget-checkbox_input">
+    <label for="{{ attrs.id }}-handsontable-col-header">Column header</label>
+    <div class="field-content">
+        <div class="input">
+            <input type="checkbox" id="{{ attrs.id }}-handsontable-col-header" name="handsontable-col-header"/>
+            <span class="help">( Display the first column as a header )</span>
+        </div>
+    </div>
+</div>
+<br/>
+<div id="{{ attrs.id }}-handsontable-container"></div>
+
+{{ original_field_html }}

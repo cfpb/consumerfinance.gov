@@ -28,7 +28,7 @@ class SublandingPage(CFGOVPage):
         ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
         ('table', organisms.Table(editable=False)),
-        ('table_block', TableBlock(table_options={'renderer':'html'})),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
