@@ -10,7 +10,7 @@ describe( 'FilterableListControls', function() {
 
   before( function() {
     var FilterableListControls =
-  	 require( BASE_JS_PATH + 'organisms/FilterableListControls' );
+     require( BASE_JS_PATH + 'organisms/FilterableListControls' );
   } );
 
   // TODO: Implement tests.
