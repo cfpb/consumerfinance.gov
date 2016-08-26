@@ -53,7 +53,7 @@
     "gulp-coveralls": "0.1.4",
     "gulp-eslint": "3.0.1",
     "gulp-istanbul": "0.10.3",
-    "gulp-mocha": "2.2.0",
+    "gulp-mocha": "3.0.1",
     "gulp-plumber": "1.1.0",
     "gulp-rename": "1.1.0",
     "gulp-util": "3.0.7",

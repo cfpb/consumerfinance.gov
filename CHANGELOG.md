@@ -52,6 +52,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `gulp test:perf` task to use a Promise.
 - Added `.eslintrc` override for gulp tasks to allow process.exit and console logging.
 - Updated mocha npm module to version `3.0.2` from `2.4.5`.
+- Updated gulp-mocha npm module to version `3.0.1` from `2.2.0`.
 
 ### Removed
 - Unused `sinon-chai` npm package.
