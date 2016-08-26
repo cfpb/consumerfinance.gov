@@ -35,6 +35,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Migrated previous Table data to new TableBlocks
 - Updated documentation npm module to version `4.0.0-beta5` from `4.0.0-beta2`.
 - Updated gulp-uglify npm module to version `2.0.0` from `1.5.3`.
+- Updated eslintrc dot-notation rule to support `catch` block in a Promise.
+- Updated `gulp test:perf` task to use a Promise.
+- Added `.eslintrc` override for gulp tasks to allow process.exit and console logging.
 
 ### Removed
 - Unused `sinon-chai` npm package.
