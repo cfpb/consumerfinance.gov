@@ -32,7 +32,6 @@ class SublandingPage(CFGOVPage):
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
-        ('job_listing_list', JobListingList()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),
@@ -47,6 +46,7 @@ class SublandingPage(CFGOVPage):
             ('body', blocks.TextBlock(required=False, label='Introduction Body')),
         ], heading='Breakout Image', icon='image')),
         ('related_posts', organisms.RelatedPosts()),
+        ('job_listing_list', JobListingList()),
     ], blank=True)
 
     # General content tab
