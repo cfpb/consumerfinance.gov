@@ -145,6 +145,25 @@ class Table(blocks.StructBlock):
 
 
 class ModelBlock(blocks.StructBlock):
+    """Abstract StructBlock that provides Django model instances to subclasses.
+
+    This class inherits from the standard Wagtail StructBlock but adds helper
+    methods that allow subclasses to dynamically render Django model instances.
+    This is useful if, for example, a widget needs to show a list of all model
+    instances meeting a certain criteria.
+
+    Subclasses must override the 'model' class attribute with the fully-
+    qualified name of the model to be used, for example 'my.app.Modelname'.
+
+    Subclasses may optionally override the 'filter_queryset' method to do
+    filtering on the model QuerySet.
+
+    Subclasses may optionally override either the class attributes 'ordering'
+    (providing a Django-style string or tuple of orderings to use) and 'limit'
+    (providing an integer to use to slice the model QuerySet), or provide
+    methods 'get_ordering' and 'get_limit' that do the same thing.
+
+    """
     model = None
     ordering = None
     limit = None
@@ -179,6 +198,22 @@ class ModelBlock(blocks.StructBlock):
 
 
 class ModelTable(ModelBlock):
+    """Abstract StructBlock that can generate a table from a Django model.
+
+    Subclasses must override the 'fields' and 'field_headers' class attributes
+    to specify which model fields to include in the generated table.
+
+    By default model instance values will be converted to text for display
+    in table rows. To override this, subclasses may define custom field
+    formatter methods, using the name 'make_FIELD_value'. This may be useful
+    if fields are non-text types, for example when formatting dates.
+
+    For example:
+
+        def get_created_value(self, instance, value):
+            return value.strftime('%b %d, %Y')
+
+    """
     fields = None
     field_headers = None
 
@@ -228,6 +263,19 @@ class ModelTable(ModelBlock):
 
 
 class ModelList(ModelBlock):
+    """Abstract StructBlock that can generate a list from a Django model.
+
+    Subclasses must define a 'render' method that renders the model QuerySet
+    to a string.
+
+    For example:
+
+        def render(self, value):
+            value['objects'] = self.get_queryset(value)
+            template = 'path/to/template.html'
+            return render_to_string(template, value)
+
+    """
     limit = atoms.IntegerBlock(
         default=5,
         label='Maximum items',
