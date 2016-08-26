@@ -117,11 +117,11 @@ class CFGOVPage(Page):
 
     settings_panels = [
         MultiFieldPanel(Page.promote_panels, 'Settings'),
+        InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
-        FieldPanel('language', 'language'),
-        InlinePanel('categories', label="Categories", max_num=2),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
+        FieldPanel('language', 'language'),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass

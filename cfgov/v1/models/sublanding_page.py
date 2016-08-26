@@ -10,6 +10,7 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
 from ..util import filterable_list, util
+from jobmanager.models import JobListingList
 
 
 class SublandingPage(CFGOVPage):
@@ -23,6 +24,7 @@ class SublandingPage(CFGOVPage):
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('full_width_text', organisms.FullWidthText()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
         ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
         ('table', organisms.Table(editable=False)),
@@ -44,6 +46,7 @@ class SublandingPage(CFGOVPage):
             ('body', blocks.TextBlock(required=False, label='Introduction Body')),
         ], heading='Breakout Image', icon='image')),
         ('related_posts', organisms.RelatedPosts()),
+        ('job_listing_list', JobListingList()),
     ], blank=True)
 
     # General content tab
