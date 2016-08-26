@@ -210,7 +210,7 @@ class ModelTable(ModelBlock):
 
     For example:
 
-        def get_created_value(self, instance, value):
+        def make_created_value(self, instance, value):
             return value.strftime('%b %d, %Y')
 
     """
