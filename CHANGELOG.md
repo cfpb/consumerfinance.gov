@@ -51,6 +51,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated eslintrc dot-notation rule to support `catch` block in a Promise.
 - Updated `gulp test:perf` task to use a Promise.
 - Added `.eslintrc` override for gulp tasks to allow process.exit and console logging.
+- Updated mocha npm module to version `3.0.2` from `2.4.5`.
 
 ### Removed
 - Unused `sinon-chai` npm package.
