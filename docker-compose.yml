@@ -1,22 +1,54 @@
 version: "2"
 
 services:
-    base:
-        build: docker/base
-        image: cfgov_base
     gulp:
         build:
             context: .
             dockerfile: docker/gulp/Dockerfile
         volumes:
             - .:/src
-        depends_on:
-            - base
+        ports:
+            - "3000:3000"
     django:
         build:
             context: .
             dockerfile: docker/django/Dockerfile
         volumes:
             - .:/src
-        depends_on:
-            - base
+        links:
+            - mysql
+            - pdfreactor
+            - elasticsearch
+        ports:
+            - "8000:8000"
+        environment:
+            DJANGO_STAGING_HOSTNAME: content.localhost
+            ES_HOST: elasticsearch
+    mysql:
+        build:
+            context: docker/mysql
+        ports:
+            - "3306:3306"
+    pdfreactor:
+        build: docker/pdfreactor
+        ports:
+            - "9423:9423" 
+    elasticsearch:
+        image: elasticsearch:1.7
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+    phpmyadmin:
+        build: docker/phpmyadmin
+        links:
+            - mysql
+        volumes:
+            - "./dbupload:/var/lib/phpMyAdmin/upload/"
+        ports:
+            - "8080:80"
+    fakes3:
+        image: lphoward/fake-s3
+        volumes:
+            - /fakes3_root
+        ports:
+            - "4569:4569"

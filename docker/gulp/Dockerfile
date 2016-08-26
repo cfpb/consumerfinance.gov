@@ -1,4 +1,4 @@
-FROM cfgov_base
+FROM cfgov/base
 #update this to force yum to update the package index
 
 RUN npm install -g gulp bower
@@ -14,4 +14,5 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ENV TEST_HTTP_HOST django
 ENV TEST_HTTP_PORT 8000
 
+EXPOSE 3000
 CMD entrypoint.sh
