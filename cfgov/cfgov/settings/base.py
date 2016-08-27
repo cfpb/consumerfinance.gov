@@ -345,6 +345,12 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
+    if os.environ.get('AWS_S3_HOST'):
+        AWS_S3_HOST = os.environ['AWS_S3_HOST']
+        AWS_S3_USE_SSL = False
+
+    if os.environ.get('AWS_S3_PORT'):
+        AWS_S3_PORT = int(os.environ['AWS_S3_PORT'])
 
     MEDIA_URL = os.environ.get('AWS_S3_URL') + '/f/'
 

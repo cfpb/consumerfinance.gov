@@ -1,6 +1,10 @@
+from django.conf import settings
+
 def alter_content(content):
     content = content.replace('http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/',
             '/static/nemo/')
+    if settings.DEBUG:
+        content = content.replace('fakes3/bucket', 'localhost:4569/fakes3/bucket')
     return content.replace('/wp-content/themes/cfpb_nemo/', '/static/nemo/')
 
 def wrap_streaming_content(content):
