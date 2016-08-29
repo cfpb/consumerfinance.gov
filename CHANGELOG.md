@@ -16,10 +16,23 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased Changes
 
 ### Added
+- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 
 ### Changed
 
 ### Removed
+- Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
+
+## 3.7.2
+
+### Changed
+- Added support for Spanish-language cue labels to the Expandables organism.
+- Added support for Spanish-language heading to the Social Media molecule.
+- Removed the leadership calendar print template from the "base.html" inheritence hiearchy
+- restores the django logging config we used before cfgov-refresh
+
+## 3.7.1
+- always use "localhost" when setting the base URL for PDFReactor
 
 ## 3.7.0
 
