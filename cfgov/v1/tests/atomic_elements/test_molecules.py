@@ -1,29 +1,30 @@
-from django.test import TestCase
-from django.test import Client
+from django.test import Client, TestCase
+from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
-from v1.models.landing_page import LandingPage
-from v1.models.sublanding_page import SublandingPage
-from v1.models.learn_page import LearnPage, DocumentDetailPage
-from v1.models.browse_page import BrowsePage
 from v1.models.browse_filterable_page import BrowseFilterablePage
+from v1.models.browse_page import BrowsePage
+from v1.models.landing_page import LandingPage
+from v1.models.learn_page import LearnPage, DocumentDetailPage
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
-from wagtail.wagtailcore.blocks import StreamValue
-from helpers import publish_page
+from v1.models.sublanding_page import SublandingPage
+from v1.tests.wagtail_pages.helpers import publish_page
+
 
 django_client = Client()
+
 
 class MoleculesTestCase(TestCase):
 
     def test_text_intro(self):
         """Text introduction value correctly displays on a Browse Filterable Page"""
         bfp = BrowseFilterablePage(
-            title='Browse Filterable Page', 
-            slug='browse-filterable-page', 
+            title='Browse Filterable Page',
+            slug='browse-filterable-page',
         )
         bfp.header = StreamValue(
-            bfp.header.stream_block, 
-            [atomic.text_introduction], 
+            bfp.header.stream_block,
+            [atomic.text_introduction],
             True
         )
         publish_page(child=bfp)
@@ -34,7 +35,7 @@ class MoleculesTestCase(TestCase):
         """Featured content value correctly displays on a Browse Page"""
         bp = BrowsePage(
             title='Browse Page',
-            slug='browse-page', 
+            slug='browse-page',
         )
         bp.header = StreamValue(bp.header.stream_block,
         [
@@ -52,12 +53,12 @@ class MoleculesTestCase(TestCase):
     def test_quote(self):
         """Quote value correctly displays on a Learn Page"""
         learn_page = LearnPage(
-            title='Learn', 
+            title='Learn',
             slug='learn'
         )
         learn_page.content = StreamValue(
             learn_page.content.stream_block,
-            [atomic.full_width_text], 
+            [atomic.full_width_text],
             True
         )
         publish_page(child=learn_page)
@@ -83,12 +84,12 @@ class MoleculesTestCase(TestCase):
     def test_hero(self):
         """Hero heading correctly displays on a Sublanding Filterable Page"""
         sfp = SublandingFilterablePage(
-            title='Sublanding Filterable Page', 
+            title='Sublanding Filterable Page',
             slug='sfp',
         )
         sfp.header = StreamValue(
-            sfp.header.stream_block, 
-            [atomic.hero], 
+            sfp.header.stream_block,
+            [atomic.hero],
             True
         )
         publish_page(child=sfp)
@@ -99,12 +100,12 @@ class MoleculesTestCase(TestCase):
     def test_related_links(self):
         """Related links value correctly displays on a Landing Page"""
         landing_page = LandingPage(
-            title='Landing Page', 
-            slug='landing', 
+            title='Landing Page',
+            slug='landing',
         )
         landing_page.sidefoot = StreamValue(
             landing_page.sidefoot.stream_block,
-            [atomic.related_links], 
+            [atomic.related_links],
             True
         )
         publish_page(child=landing_page)
@@ -114,8 +115,8 @@ class MoleculesTestCase(TestCase):
     def test_half_width_link_blob(self):
         """Half width link blob value correctly displays on a Landing Page"""
         landing_page = LandingPage(
-            title='Landing Page', 
-            slug='landing', 
+            title='Landing Page',
+            slug='landing',
         )
         landing_page.content = StreamValue(
             landing_page.content.stream_block,
@@ -129,12 +130,12 @@ class MoleculesTestCase(TestCase):
     def test_rss_feed(self):
         """RSS feed correctly displays on a Sublanding Page"""
         sublanding_page = SublandingPage(
-            title='Sublanding Page', 
+            title='Sublanding Page',
             slug='sublanding',
         )
         sublanding_page.sidefoot = StreamValue(
             sublanding_page.sidefoot.stream_block,
-            [atomic.rss_feed], 
+            [atomic.rss_feed],
             True
         )
         publish_page(sublanding_page)
@@ -144,7 +145,7 @@ class MoleculesTestCase(TestCase):
     def test_expandable(self):
         """Expandable label value correctly displays on a Browse Page"""
         browse_page = BrowsePage(
-            title='Browse Page', 
+            title='Browse Page',
             slug='browse',
         )
         browse_page.content = StreamValue(
@@ -159,7 +160,7 @@ class MoleculesTestCase(TestCase):
     def test_related_metadata(self):
         """Related metadata heading correctly displays on a Document Detail Page"""
         ddp = DocumentDetailPage(
-            title='Document Detail Page', 
+            title='Document Detail Page',
             slug='ddp',
         )
         ddp.sidefoot = StreamValue(
@@ -174,7 +175,7 @@ class MoleculesTestCase(TestCase):
     def test_image_texts(self):
         """Image Text molecules correctly display on a Landing Page"""
         landing_page = LandingPage(
-            title='Landing Page', 
+            title='Landing Page',
             slug='landing',
         )
         landing_page.content = StreamValue(
@@ -193,7 +194,7 @@ class MoleculesTestCase(TestCase):
     def test_formfield_with_button(self):
         """FormField with Button correctly displays on a Sublanding Page"""
         sublanding_page = DocumentDetailPage(
-            title='Sublanding Page', 
+            title='Sublanding Page',
             slug='sublanding',
         )
         sublanding_page.sidefoot = StreamValue(
