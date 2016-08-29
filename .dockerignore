@@ -5,3 +5,4 @@ collectstatic
 .tox
 develop-apps/*
 dbupload/*
+pdfreactor_key.txt

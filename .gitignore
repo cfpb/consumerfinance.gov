@@ -94,6 +94,7 @@ original_images/
 collectstatic/*
 develop-apps/*
 dbupload/*
+pdfreactor_key.txt
 
 # Ansible #
 #################
