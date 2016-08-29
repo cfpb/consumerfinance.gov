@@ -21,6 +21,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 
+## 3.7.2
+
+### Changed
+- Added support for Spanish-language cue labels to the Expandables organism.
+- Added support for Spanish-language heading to the Social Media molecule.
+- Removed the leadership calendar print template from the "base.html" inheritence hiearchy
+- restores the django logging config we used before cfgov-refresh
+
+## 3.7.1
+- always use "localhost" when setting the base URL for PDFReactor
+
 ## 3.7.0
 
 ### Added
