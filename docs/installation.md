@@ -123,7 +123,6 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 
 - [Gulp](http://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
-- [Bower](http://bower.io): Package manager for front-end dependencies.
 - [Less](http://lesscss.org): CSS pre-processor.
 - [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
   User interface pattern-library produced by the CFPB.
@@ -134,11 +133,11 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 
 1. Install [Node.js](http://nodejs.org) however you’d like.
    We recommend using [nvm](https://github.com/creationix/nvm), though.
-	
-2. Install [Gulp](http://gulpjs.com) and [Bower](http://bower.io):
+
+2. Install [Gulp](http://gulpjs.com):
 
 ```bash
-npm install -g gulp bower
+npm install -g gulp
 ```
 
 !!! note
