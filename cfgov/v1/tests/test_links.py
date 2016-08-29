@@ -43,26 +43,43 @@ class LinkTest(TestCase):
         self.context.__getitem__.side_effect = context_dict
 
     def test_get_protected_url_no_page(self):
-
+        """
+        Confirm that in the absence of a page, get_protected_url returns the hash.
+        """
         result = get_protected_url(self.context, None)
         self.assertEqual(result, '#')
 
     def test_get_protected_url_no_url(self):
+        """
+        Confirm that in the absence of a page URL, get_protected_url returns None.
+        """
         self.page.url = None
         result = get_protected_url(self.context, self.page)
         self.assertIsNone(result)
 
     def test_get_protected_url_live_page(self):
+        """
+        Confirm that if a live page is requested from the same host as the request
+        we get back the original page url.
+        """
         self.page.url = 'http://localhost:8000/path/to/some/other/page/'
         result = get_protected_url(self.context, self.page)
         self.assertEqual(result, self.page.url)
 
     def test_get_protected_url_non_live_page(self):
+        """
+        Confirm that if a non-live page is request, we get back the hash.
+        """
         self.page.live = False
         result = get_protected_url(self.context, self.page)
         self.assertEqual(result, '#')
 
     def test_get_protected_url_staging(self):
+        """
+        Make sure that if we're on the staging site and request a page from that site
+        which does not point to the same host, that we replace the hostname with the
+        staging hostname.
+        """
         self.page.live = False
         self.request.url = 'http://content.localhost:8000/path/to/page/'
         self.page.url = 'http://localhost:8000/path/to/some/other/page/'
