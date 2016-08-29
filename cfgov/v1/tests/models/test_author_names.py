@@ -25,6 +25,12 @@ class TestAuthorNames(TestCase):
         expected_result = ['Richa Something Agarwal', 'Jess Schafer', 'Sarah Simpson']
         self.assertEquals(page.alphabetize_authors(), expected_result)
 
+    def test_same_last_names(self):
+        page = CFGOVPage()
+        page.authors.add('Mary Smith', 'Vic Kumar', 'John Smith')
+        expected_result = ['Vic Kumar', 'John Smith', 'Mary Smith']
+        self.assertEquals(page.alphabetize_authors(), expected_result)
+
 
 if __name__ == '__main__':
     unittest.main()
