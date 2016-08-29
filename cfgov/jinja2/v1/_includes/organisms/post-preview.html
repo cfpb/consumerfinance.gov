@@ -151,7 +151,7 @@
                 </div>
             {% endif %}
             <div class="post_meta">
-                {% for author in post.authors.names() %}
+                {% for author in post.get_authors() %}
                     <span class="o-post-preview_byline">
                         {% if loop.index == 1  %}
                             By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">

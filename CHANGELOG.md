@@ -16,10 +16,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased Changes
 
 ### Added
+- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 
 ### Changed
 
 ### Removed
+- Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 
 ## 3.7.2
 
