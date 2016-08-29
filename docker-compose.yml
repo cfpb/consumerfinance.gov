@@ -17,6 +17,7 @@ services:
             - .:/src
         volumes_from: 
             - fakes3
+            - pdfreactor
         links:
             - mysql
             - pdfreactor
@@ -36,6 +37,8 @@ services:
             AWS_S3_URL: 'http://localhost:4569/bucket'
             S3_ENABLED: 'True'
             MEDIA_ROOT: '/fakes3_root/fakes3/bucket/'
+            PDFREACTOR_HOST: pdfreactor
+            PDFREACTOR_LIB: '/opt/PDFreactor/wrappers/python/lib'
     mysql:
         build:
             context: docker/mysql

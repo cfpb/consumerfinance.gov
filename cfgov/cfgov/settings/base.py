@@ -1,4 +1,5 @@
 import os
+import sys
 from unipath import Path
 from ..util import admin_emails
 
@@ -301,6 +302,10 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 
 # PDFReactor
 PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
+if os.path.exists(PDFREACTOR_LIB):
+    sys.path.append(PDFREACTOR_LIB)
+
+PDFREACTOR_HOST = os.environ.get('PDFREACTOR_HOST', 'localhost')
 
 #LEGACY APPS
 
