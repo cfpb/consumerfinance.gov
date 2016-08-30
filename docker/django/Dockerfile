@@ -15,6 +15,7 @@ ADD docker/django/entrypoint.sh /usr/local/bin
 RUN mkdir /var/media
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+ENTRYPOINT ["scl","enable", "python27", "--"]
 CMD entrypoint.sh
 VOLUME /var/media
 WORKDIR /src
