@@ -1,6 +1,6 @@
 {
   "name": "cfgov-refresh",
-  "version": "3.6.0",
+  "version": "3.7.2",
   "description": "The consumerfinance.gov website.",
   "homepage": "http://www.consumerfinance.gov/",
   "author": {
@@ -62,7 +62,7 @@
     "jasmine-reporters": "2.1.1",
     "jasmine-spec-reporter": "2.4.0",
     "jquery": "1.11.3",
-    "jsdom": "8.3.0",
+    "jsdom": "9.4.2",
     "localtunnel": "1.8.1",
     "map-stream": "0.0.4",
     "minimist": "1.2.0",
