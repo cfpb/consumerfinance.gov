@@ -4308,9 +4308,16 @@
       "resolved": "https://registry.npmjs.org/gulp-imagemin/-/gulp-imagemin-3.0.2.tgz"
     },
     "gulp-istanbul": {
-      "version": "0.10.3",
-      "from": "gulp-istanbul@0.10.3",
-      "resolved": "http://registry.npmjs.org/gulp-istanbul/-/gulp-istanbul-0.10.3.tgz"
+      "version": "1.1.1",
+      "from": "gulp-istanbul@1.1.1",
+      "resolved": "https://registry.npmjs.org/gulp-istanbul/-/gulp-istanbul-1.1.1.tgz",
+      "dependencies": {
+        "lodash": {
+          "version": "4.15.0",
+          "from": "lodash@>=4.0.0 <5.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.15.0.tgz"
+        }
+      }
     },
     "gulp-less": {
       "version": "3.0.5",
