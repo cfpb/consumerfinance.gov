@@ -12,7 +12,7 @@ install:
     - docker build . -f docker/gulp/Dockerfile -t test_box
 
 script:
-    - "docker run -t -rm -v $(pwd):/src/ test_box gulp lint"
-    - "docker run -t -rm -v $(pwd):/src/ test_box gulp test:unit"
-    - "docker run -t -rm -v $(pwd):/src/ test_box gulp test:coveralls"
+    - "docker run -t --rm -v $(pwd):/src/ test_box gulp lint"
+    - "docker run -t --rm -v $(pwd):/src/ test_box gulp test:unit"
+    - "docker run -t --rm -v $(pwd):/src/ test_box gulp test:coveralls"
 
