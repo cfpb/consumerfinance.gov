@@ -2,7 +2,7 @@
 
 var configScripts = require( '../config' ).scripts;
 var fsHelper = require( '../utils/fs-helper' );
-var glob = require( 'glob' );
+var globAll = require( 'glob-all' );
 var gulp = require( 'gulp' );
 var plugins = require( 'gulp-load-plugins' )();
 var spawn = require( 'child_process' ).spawn;
@@ -12,7 +12,7 @@ var spawn = require( 'child_process' ).spawn;
  * Generate scripts documentation.
  */
 function docsScripts() {
-  glob( configScripts.src, function( er, files ) {
+  globAll( configScripts.src, function( er, files ) {
     var options = [ 'build' ].concat( files ).concat(
                   [ '--github',
                     '--output=docs/scripts',

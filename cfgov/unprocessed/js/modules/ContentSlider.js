@@ -52,13 +52,23 @@ function ContentSlider( elem ) {
       swipe:          false,
       speed:          SPEED,
       adaptiveHeight: true,
-      arrows:         false,
-      onBeforeChange: _beforeChangeHandler,
-      onAfterChange:  fnBind( _afterChangeHandler, this )
+      arrows:         false
     };
-    _$container.slick( slickOpts );
-    _slickObj = _$container.getSlick();
 
+    _$container.on( 'afterChange', fnBind( _afterChangeHandler, this ) );
+    _$container.on( 'beforeChange', _beforeChangeHandler );
+    _$container.on( 'init', fnBind( _initHandler, this ) );
+    _$container.slick( slickOpts );
+
+    return this;
+  }
+
+  /**
+   * @param {Object} event - Slick event.
+   * @param {Object} slider - Reference to the slick slider instance.
+   */
+  function _initHandler( event, slider ) {
+    _slickObj = slider;
     _$container.height( $( _slickObj.$slides[0] ).height() );
 
     // Set up events.
@@ -80,16 +90,15 @@ function ContentSlider( elem ) {
     _slickObj.setHeight = function setHeight() {
       this.$list.css( 'height', 'auto' );
     };
-
-    return this;
   }
 
   /**
+   * @param {Object} event - Slick event.
    * @param {Object} slider - Reference to the slick slider instance.
    * @param {number} currInd - Current slide number.
    * @param {number} targetInd - Slide number to switch to.
    */
-  function _afterChangeHandler( slider, currInd, targetInd ) {
+  function _afterChangeHandler( event, slider, currInd, targetInd ) {
     // Init the Expandable after the nodes have been cloned.
     this.dispatchEvent( 'afterChange', {
       target: this, currInd: currInd, targetInd: targetInd
@@ -97,11 +106,12 @@ function ContentSlider( elem ) {
   }
 
   /**
+   * @param {Object} event - Slick event.
    * @param {Object} slider - Reference to the slick slider instance.
    * @param {number} currInd - Current slide number.
    * @param {number} targetInd - Slide number to switch to.
    */
-  function _beforeChangeHandler( slider, currInd, targetInd ) {
+  function _beforeChangeHandler( event, slider, currInd, targetInd ) {
     // When slide is changed,
     // animate height of container to accommodate new slide's height.
     var slide = slider.$slides[targetInd];
@@ -120,8 +130,8 @@ function ContentSlider( elem ) {
     if ( $node.length ) {
       // TODO: Move content instead of cloning; use ids instead of classes.
       $node.first().clone().show().appendTo( $div );
-      _$container.slickAdd( $div );
-      _$container.slickNext();
+      _$container.slick( 'slickAdd', $div );
+      _$container.slick( 'slickNext' );
     }
   }
 
@@ -130,11 +140,11 @@ function ContentSlider( elem ) {
    */
   function _slideOutContent( event ) {
     event.preventDefault();
-    _$container.slickPrev();
+    _$container.slick( 'slickPrev' );
 
     // Once slide has been animated out of view, remove it from DOM.
     setTimeout( function() {
-      _$container.slickRemove( _slickObj.$slides.length - 1 );
+      _$container.slick( 'slickRemove', _slickObj.$slides.length - 1 );
     }, SPEED );
   }
 
@@ -145,12 +155,12 @@ function ContentSlider( elem ) {
 
     // Remove all but permanent slides.
     while ( _slickObj.$slides.length > _slideCount ) {
-      _$container.slickRemove( _slickObj.$slides.length - 1 );
+      _$container.slick( 'slickRemove', _slickObj.$slides.length - 1 );
     }
 
     // Remove listeners on container.
     _$container.off( 'click.slider' );
-    _$container.unslick();
+    _$container.slick( 'unslick' );
 
     return this;
   }
@@ -160,7 +170,6 @@ function ContentSlider( elem ) {
    * @returns {ContentSlider} An instance.
    */
   function setHeightToAuto() {
-
     _$container.height( 'auto' );
 
     return this;
