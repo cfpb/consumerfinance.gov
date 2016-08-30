@@ -19,6 +19,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 
 ### Changed
+- Updated gulp-istanbul npm module to version `1.1.1` from `0.10.3`.
+- Updated jsdom npm module to version `9.4.2` from `8.3.0`.
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
