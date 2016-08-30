@@ -2,6 +2,7 @@
 
 var envvars = require( '../../config/environment' ).envvars;
 var gulp = require( 'gulp' );
+var gulpMocha = require( 'gulp-mocha' );
 var plugins = require( 'gulp-load-plugins' )();
 var spawn = require( 'child_process' ).spawn;
 var configTest = require( '../config' ).test;
@@ -22,7 +23,7 @@ function testUnitScripts( cb ) {
     .pipe( plugins.istanbul.hookRequire() )
     .on( 'finish', function() {
       gulp.src( configTest.tests + '/unit_tests/**/*.js' )
-        .pipe( plugins.mocha( {
+        .pipe( gulpMocha( {
           reporter: configTest.reporter ? 'spec' : 'nyan'
         } ) )
         .pipe( plugins.istanbul.writeReports( {
