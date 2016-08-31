@@ -152,9 +152,9 @@ class Table(blocks.StructBlock):
     ]))
 
     class Meta:
-        icon = None
+        icon = 'form'
         template = '_includes/organisms/table.html'
-        label = ' '
+        label = 'Table'
 
 
 class ModelBlock(blocks.StructBlock):
@@ -312,8 +312,7 @@ class FullWidthText(blocks.StreamBlock):
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
-    table = Table(editable=False)
-    table_block = TableBlock(table_options={'renderer':'html'})
+    table = Table()
 
     class Meta:
         icon = 'edit'

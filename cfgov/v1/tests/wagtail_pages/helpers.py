@@ -17,6 +17,3 @@ def publish_page(child):
     revision = save_new_page(child=child)
     revision.publish()
 
-def publish_changes(child):
-	revision = save_page(page=child)
-	revision.publish()
