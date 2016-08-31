@@ -31,7 +31,7 @@ class BrowsePage(CFGOVPage):
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table(editable=False)),
-        ('table_block', organisms.AtomicTableBlock.TableBlock(table_options={'renderer':'html'})),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
         ('job_listing_table', JobListingTable()),
     ], blank=True)
 
