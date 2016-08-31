@@ -189,6 +189,7 @@ class AtomicTableBlock(TableBlock):
         default = None
         icon = 'table'
         template = '_includes/organisms/table.html'
+        label = ' '
 
 
 class ModelBlock(blocks.StructBlock):
