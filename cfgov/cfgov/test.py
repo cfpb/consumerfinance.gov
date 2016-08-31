@@ -34,7 +34,7 @@ class TestDataTestRunner(DiscoverRunner):
 class HtmlMixin(object):
     def assertHtmlRegexpMatches(self, s, r):
         s_no_right_spaces = re.sub('>\s*', '>', s)
-        s_no_left_spaces = re.sub('\s*<', '<', s_no_right_spaces)
+        s_no_left_spaces = re.sub('\s*([<"])', r'\1', s_no_right_spaces)
         s_no_extra_spaces = re.sub('\s+', ' ', s_no_left_spaces)
 
         self.assertIsNotNone(
