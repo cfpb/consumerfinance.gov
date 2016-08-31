@@ -21,6 +21,19 @@ class Well(blocks.StructBlock):
 
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
+
+    sharing = blocks.StructBlock([
+        ('shareable', blocks.BooleanBlock(label='Include sharing links?',
+                                          help_text='If checked, share links '
+                                                    'will be included below '
+                                                    'the items.',
+                                          required=False)),
+        ('share_blurb', blocks.CharBlock(help_text='Sets the tweet text, '
+                                                   'email subject line, and '
+                                                   'LinkedIn post text.',
+                                         required=False)),
+    ])
+
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
