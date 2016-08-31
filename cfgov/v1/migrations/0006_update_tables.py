@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from __future__ import print_function
+from itertools import chain
 
-from django.db import migrations, models
-import v1.models.snippets
-import wagtail.contrib.table_block.blocks
-import wagtail.wagtailcore.fields
-import wagtail.wagtailcore.blocks
-import wagtail.wagtailsnippets.blocks
-import wagtail.wagtailimages.blocks
-from wagtail.wagtailcore.models import Site
-from django.conf import settings
+from django.db import migrations
+
 from v1.models.learn_page import LearnPage, DocumentDetailPage
 from v1.models.sublanding_page import SublandingPage
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
@@ -18,25 +13,43 @@ from v1.models.blog_page import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.demo import DemoPage
 from v1.tests.wagtail_pages.helpers import publish_changes
-from v1.models.base import CFGOVPage
-from itertools import chain
-
-def update_content_tables(wagtail_page):
-    for item in wagtail_page.content.stream_data:
-        if item['type'] == 'table':
-            item['type'] = 'table_block'
-            item['value'] = create_tableblock_data(old_table=item['value'])
-            print "Creating a new TableBlock on page %s" %(wagtail_page.title)
 
 
-def update_full_width_text_tables(wagtail_page):
-    for item in wagtail_page.content.stream_data:
-        if item['type'] == 'full_width_text':
-            for sub_item in item['value']:
-                if sub_item['type'] == 'table':
-                    sub_item['type'] = 'table_block'
-                    sub_item['value'] = create_tableblock_data(old_table=sub_item['value'])
-                    print "Creating a new TableBlock on page %s" %(wagtail_page.title)
+def update_table_items(items, wagtail_page):
+    for item in list(filter(
+        lambda item: item['type'] == 'table',
+        items
+    )):
+        item['type'] = 'table_block'
+        item['value'] = create_tableblock_data(old_table=item['value'])
+        print(
+            "Updating Table to a TableBlock on page %s of page type %s"
+            % (wagtail_page.title, wagtail_page.__class__.__name__)
+        )
+
+
+def update_tables_in_content_field(wagtail_page):
+    update_table_items(
+        items=wagtail_page.content.stream_data,
+        wagtail_page=wagtail_page
+    )
+
+
+def update_tables_in_full_width_text_organisms(wagtail_page):
+    for item in list(filter(
+            lambda item: item['type'] == 'full_width_text',
+            wagtail_page.content.stream_data
+    )):
+        sub_items = item['value']
+        update_table_items(items=sub_items, wagtail_page=wagtail_page)
+
+
+def convert_hyperlink_obj_to_text(value):
+    """ Taken from cfgov/jinja2/v1/_includes/atoms/hyperlink.html """
+    return """<a class='jump-link' href='%s'>%s</a>""" % (
+        value['url'],
+        value['text']
+    )
 
 
 def create_tableblock_data(old_table):
@@ -49,21 +62,25 @@ def create_tableblock_data(old_table):
         for row_list in old_table['rows']:
             new_row = []
             for row in row_list:
+                if row['type'] == 'hyperlink':
+                    row['value'] = convert_hyperlink_obj_to_text(row['value'])
                 new_row.append(row['value'])
             table['data'].append(new_row)
     return table
 
 
-def create_tableblocks_for_every_table(apps,schema_editor):
+def create_tableblocks_for_every_table(apps, schema_editor):
+    print("Updating tables in content field")
     for p in chain(
-        BrowsePage.objects.all(), 
-        SublandingPage.objects.all(), 
+        BrowsePage.objects.all(),
+        SublandingPage.objects.all(),
         LearnPage.objects.all(),
         DocumentDetailPage.objects.all(),
     ):
-        update_content_tables(wagtail_page=p)
+        update_tables_in_content_field(wagtail_page=p)
         publish_changes(child=p)
 
+    print("Updating tables in full width text organisms")
     for p in chain(
         BlogPage.objects.all(),
         BrowseFilterablePage.objects.all(),
@@ -73,9 +90,8 @@ def create_tableblocks_for_every_table(apps,schema_editor):
         SublandingFilterablePage.objects.all(),
         SublandingPage.objects.all(),
     ):
-        update_full_width_text_tables(wagtail_page=p)
+        update_tables_in_full_width_text_organisms(wagtail_page=p)
         publish_changes(child=p)
-
 
 
 class Migration(migrations.Migration):
