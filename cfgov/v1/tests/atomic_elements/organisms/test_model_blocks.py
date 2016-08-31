@@ -119,15 +119,27 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
             '2468'
         )
 
-    def test_headers(self):
+    def get_table_html(self, **kwargs):
         class UserTable(ModelTable):
             model = 'auth.User'
             fields = ('username', 'first_name')
             field_headers = ('Username', 'First Name')
 
         table = UserTable()
-        html = table.render(table.to_python({}))
+        return table.render(table.to_python(kwargs))
 
+    def test_no_row_headers(self):
+        html = self.get_table_html(first_row_is_table_header=False)
+        self.assertHtmlRegexpMatches(html, (
+            '<tbody>'
+            '<tr>'
+            '<td data-label="Username">Username</td>'
+            '<td data-label="First Name">First Name</td>'
+            '</tr>'
+        ))
+
+    def test_row_headers(self):
+        html = self.get_table_html(first_row_is_table_header=True)
         self.assertHtmlRegexpMatches(html, (
             '<thead>'
             '<tr>'
@@ -135,4 +147,58 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
             '<th>First Name</th>'
             '</tr>'
             '</thead>'
+        ))
+
+    def test_no_col_headers(self):
+        html = self.get_table_html(first_col_is_header=False)
+        self.assertHtmlRegexpMatches(html, (
+            '<tr>'
+            '<td data-label="Username">chico</td>'
+            '<td data-label="First Name">leonard</td>'
+            '</tr>'
+        ))
+
+    def test_col_headers(self):
+        html = self.get_table_html(first_col_is_header=True)
+        self.assertHtmlRegexpMatches(html, (
+            '<tr>'
+            '<th data-label="Username">chico</th>'
+            '<td data-label="First Name">leonard</td>'
+            '</tr>'
+        ))
+
+    def test_no_full_width(self):
+        html = self.get_table_html(is_full_width=False)
+        self.assertHtmlRegexpMatches(html, (
+            '<table class="o-table">'
+        ))
+
+    def test_full_width(self):
+        html = self.get_table_html(is_full_width=True)
+        self.assertHtmlRegexpMatches(html, (
+            '<table class="o-table u-w100pct">'
+        ))
+
+    def test_not_striped(self):
+        html = self.get_table_html(is_striped=False)
+        self.assertHtmlRegexpMatches(html, (
+            '<table class="o-table">'
+        ))
+
+    def test_striped(self):
+        html = self.get_table_html(is_striped=True)
+        self.assertHtmlRegexpMatches(html, (
+            '<table class="o-table table__striped">'
+        ))
+
+    def test_not_stacked(self):
+        html = self.get_table_html(is_stacked=False)
+        self.assertHtmlRegexpMatches(html, (
+            '<table class="o-table">'
+        ))
+
+    def test_stacked(self):
+        html = self.get_table_html(is_stacked=True)
+        self.assertHtmlRegexpMatches(html, (
+            '<table class="o-table table__stack-on-small">'
         ))

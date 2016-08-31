@@ -264,31 +264,58 @@ class ModelTable(ModelBlock):
     fields = None
     field_headers = None
 
-    row_links = blocks.BooleanBlock(
+    first_row_is_table_header = blocks.BooleanBlock(
         required=False,
         default=True,
-        help_text='Whether to highlight rows containing links'
+        help_text='Display the first row as a header.'
+    )
+    first_col_is_header = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        help_text='Display the first column as a header.'
+    )
+    is_full_width = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        help_text='Display the table at full width.'
+    )
+    is_striped = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        help_text='Display the table with striped rows.'
+    )
+    is_stacked = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        help_text='Stack the table columns on mobile.'
     )
 
     def render(self, value):
-        rows = [
-            self.make_row(instance)
-            for instance in self.get_queryset(value)
-        ]
+        rows = [self.field_headers]
+
+        rows.extend([
+            self.make_row(instance) for instance in self.get_queryset(value)
+        ])
 
         table_value = {
-            'headers': self.field_headers,
-            'rows': rows,
-            'row_links': value.get('row_links'),
+            'data': rows,
         }
 
-        table = Table()
+        table_value.update((k, value.get(k)) for k in (
+            'first_row_is_table_header',
+            'first_col_is_header',
+            'is_full_width',
+            'is_striped',
+            'is_stacked',
+        ))
+
+        table = AtomicTableBlock()
         value = table.to_python(table_value)
         return table.render(value)
 
     def make_row(self, instance):
         return [
-            {'type': 'text', 'value': self.make_value(instance, field)}
+            self.make_value(instance, field)
             for field in self.fields
         ]
 
