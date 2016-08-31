@@ -8,7 +8,6 @@ Here flags can added, enabled, or disabled:
 
 ![Feature flags](img/image00.png)
 
-
 The flag consists of a single string (by convention all uppercase, with underscores instead of whitespace). Flags are disabled by default, and checks for flags that do not exist will return False.
 
 Once a flag has been created it can be checked in Python and Jinja2 templates using the functions flag_enabled and flag_disabled found in flags.template_functions and exposed to templates in v1. 
@@ -37,6 +36,10 @@ I’m a beta banner.
 
 Feature flags are implemented as a Django app in cfgov-refresh/cfgov/flags. 
 
-## Feature Flag Hygiene
+## Feature flag hygiene
 
 Feature flags should be rare and ephemeral. Changes should be small and frequent, and not big-bang releases, and flags that are no longer used should be cleaned up and removed from code and the database.
+
+## Feature flag source
+
+Feature flags for cfgov-refresh are implemented [in the `flags` Django app](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/flags).
