@@ -10,9 +10,11 @@ from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.contrib.table_block.blocks import TableBlock
 
 from ..atomic_elements import molecules, organisms
 from .base import CFGOVPage, CFGOVPageManager
+
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -85,7 +87,8 @@ class LearnPage(AbstractFilterPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', TableBlock(table_options={'renderer':'html'})),
         ('call_to_action', molecules.CallToAction()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
@@ -98,7 +101,8 @@ class DocumentDetailPage(AbstractFilterPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', TableBlock(table_options={'renderer':'html'})),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel = StreamFieldPanel('content')
