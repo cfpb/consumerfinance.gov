@@ -17,7 +17,7 @@ from . import atoms, molecules
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
 
-from jinja2 import Environment, contextfunction, Markup
+from jinja2 import Markup
 
 
 class Well(blocks.StructBlock):
@@ -153,13 +153,19 @@ class Table(blocks.StructBlock):
         template = '_includes/organisms/table.html'
         label = ' '
 
+
 class AtomicTableInput(TableInput):
     _id = 'table-block'
+
     def render(self, name, value, attrs=None):
         attrs.update({'id': self._id})
+
         # Calling the grandparents render method and bypassing TableInputs,
         # in order to control how we render the form.
-        original_field_html = super(TableInput, self).render(name, value, attrs)
+        original_field_html = super(TableInput, self).render(
+            name, value, attrs
+        )
+
         return Markup(render_to_string('wagtailadmin/table_input.html', {
             'original_field_html': original_field_html,
             'attrs': attrs,
@@ -167,18 +173,23 @@ class AtomicTableInput(TableInput):
         }))
 
     def render_js_init(self, id_, name, value):
-        return "initAtomicTable({0}, {1});".format(json.dumps(id_), json.dumps(self.table_options))
+        return "initAtomicTable({0}, {1});".format(
+            json.dumps(id_),
+            json.dumps(self.table_options)
+        )
+
 
 class AtomicTableBlock(TableBlock):
-
     @cached_property
     def field(self):
-        return forms.CharField(widget=AtomicTableInput(table_options=self.table_options), **self.field_options)
+        widget = AtomicTableInput(table_options=self.table_options)
+        return forms.CharField(widget=widget, **self.field_options)
 
     class Meta:
         default = None
         icon = 'table'
         template = '_includes/organisms/table.html'
+
 
 class ModelBlock(blocks.StructBlock):
     """Abstract StructBlock that provides Django model instances to subclasses.
