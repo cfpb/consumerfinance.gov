@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.http import Http404
 from django.contrib.auth.models import Permission
-from django.utils.html import escape, format_html, format_html_join
+from django.utils.html import escape, format_html_join
 
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore import hooks
@@ -51,14 +51,14 @@ def share(page, is_sharing, is_live):
 
 @hooks.register('insert_editor_js')
 def editor_js():
-  js_files = [
-    'js/table-block.js',
-  ]
-  js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
-    ((settings.STATIC_URL, filename) for filename in js_files)
-  )
+    js_files = [
+        'js/table-block.js',
+    ]
+    js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
+        ((settings.STATIC_URL, filename) for filename in js_files)
+    )
 
-  return js_includes
+    return js_includes
 
 # `CFGOVPage.route()` will select the latest revision of the page where `live`
 # is set to True and return that revision as a page object to serve the request
