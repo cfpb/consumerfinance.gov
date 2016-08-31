@@ -38,7 +38,7 @@
             {% for cell in row or [] %}
                 {% set tag = 'th' if value.first_col_is_header and loop.first else 'td' %}
                 <{{tag}} data-label="{{ value.data[0][loop.index0] }}">
-                    {{ parse_links( cell or '' ) | trim | safe | linebreaksbr }}
+                    {{ cell | trim | safe | linebreaksbr }}
                 </{{tag}}>
             {% endfor %}
         </tr>
