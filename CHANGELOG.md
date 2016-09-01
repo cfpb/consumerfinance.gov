@@ -13,7 +13,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased Changes
+## 3.8.0
 
 ### Added
 - Logging configuration to `local.py`
