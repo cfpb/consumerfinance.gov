@@ -13,7 +13,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased Changes
+## 3.8.0
 
 ### Added
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
