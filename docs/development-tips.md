@@ -36,9 +36,9 @@ stop the web server and return to `cfgov-refresh`
 and run `cfgov/manage.py sheer_index -r` to load the projects' data into ElasticSearch.
 
 !!! note
-	Do not install the projects directly into the `cfgov-refresh` directory.
-	Clone and install the projects as siblings to `cfgov-refresh`,
-	so that they share the same parent directory (`~/Projects` or similar).
+    Do not install the projects directly into the `cfgov-refresh` directory.
+    Clone and install the projects as siblings to `cfgov-refresh`,
+    so that they share the same parent directory (`~/Projects` or similar).
 
 ### TIP: Loading data into Django models
 The Django management command `import-data` will import data from the specified
@@ -111,8 +111,8 @@ named `DataConverter` that subclasses either `_helpers.PageDataConverter` or
 **Static assets** prior to processing (minifying etc.): `cfgov\unprocessed`.
 
 !!! note
-	After a `gulp build` they are copied over to the `cfgov\static_built` location,
-	ready to be served by Django.
+    After running `gulp build` the site's assets are copied over to `cfgov\static_built`,
+    ready to be served by Django.
 
 #### Simple static template setup
 
