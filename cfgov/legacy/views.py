@@ -34,7 +34,9 @@ class HousingCounselorPDFView(PDFGeneratorView):
 
         zip = self.form.cleaned_data['zip']
         api_url = 'hud-api-replace/%s.html/' % zip
-        url = '%s://%s/%s' % (request.scheme, 'localhost', api_url)
+        callback_host = os.environ.get('HOSTNAME', 'localhost')
+        callback_port= self.request.META['SERVER_PORT']
+        url = '%s://%s:%s/%s' % (request.scheme, callback_host, callback_port, api_url)
         return url
 
     def get(self, request):
