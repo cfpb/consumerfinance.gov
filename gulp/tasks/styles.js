@@ -94,6 +94,27 @@ function stylesOnDemand() {
 }
 
 /**
+ * Process CSS for Wagtail feature flags.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesFeatureFlags() {
+  return gulp.src( configStyles.cwd + '/feature-flags/*.less' )
+    .pipe( plugins.less( configStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( plugins.autoprefixer( {
+      browsers: [ 'last 2 version',
+                  'ie 7-8',
+                  'android 4',
+                  'BlackBerry 7',
+                  'BlackBerry 10' ]
+    } ) )
+    .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
+/**
  * Process Nemo CSS.
  * @returns {PassThrough} A source stream.
  */
@@ -142,6 +163,7 @@ function stylesNemoIE() {
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:ie', stylesIe );
 gulp.task( 'styles:ondemand', stylesOnDemand );
+gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:nemoProd', stylesNemoProd );
 gulp.task( 'styles:nemoIE', stylesNemoIE );
 gulp.task( 'styles:nemo', [
@@ -153,5 +175,6 @@ gulp.task( 'styles', [
   'styles:modern',
   'styles:ie',
   'styles:ondemand',
+  'styles:featureFlags',
   'styles:nemo'
 ] );
