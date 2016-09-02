@@ -16,32 +16,45 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased Changes
 
 ### Added
+- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
+- Ability to output sharing links within an Image and Text 50/50 Group module
 
 ### Changed
 
 ### Removed
+- Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
+
+## 3.7.2
+
+### Changed
+- Added support for Spanish-language cue labels to the Expandables organism.
+- Added support for Spanish-language heading to the Social Media molecule.
+- Removed the leadership calendar print template from the "base.html" inheritence hiearchy
+- restores the django logging config we used before cfgov-refresh
+
+## 3.7.1
+- always use "localhost" when setting the base URL for PDFReactor
 
 ## 3.7.0
 
 ### Added
 - Added new conference url in the nav
-- Added TableBlock definition to organisms and models that use Table
 
 ### Changed
 - Updated Protractor to version `4.0.2` from `3.2.1`.
 - Updated large checkboxes to match the spec.
 - Updated Capital Framework to version `3.6.1` from `3.4.0`.
 - Updated imagemin to version `3.0.2` from `2.4.0`.
-- Migrated previous Table data to new TableBlocks
 - Updated documentation npm module to version `4.0.0-beta5` from `4.0.0-beta2`.
 - Updated gulp-uglify npm module to version `2.0.0` from `1.5.3`.
 - Updated eslintrc dot-notation rule to support `catch` block in a Promise.
 - Updated `gulp test:perf` task to use a Promise.
 - Added `.eslintrc` override for gulp tasks to allow process.exit and console logging.
+- Updated mocha npm module to version `3.0.2` from `2.4.5`.
+- Updated gulp-mocha npm module to version `3.0.1` from `2.2.0`.
 
 ### Removed
 - Unused `sinon-chai` npm package.
-- Icon for old Table from admin panel (this field will need to be removed in a future release)
 
 ### Fixed
 - Updated banner-footer-webpack-plugin to use git URL instead of `0.0.1`.

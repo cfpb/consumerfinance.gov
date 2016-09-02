@@ -4,7 +4,7 @@ Everything that is part of cfgov-refresh and its dependencies are deployed as pa
 
 Projects that are independent of cfgov-refresh will need to provide their own deployment process, and all jobs they require. They will not be automatically included in the cf.gov deployment process, and will not be on the cf.gov release cadence. 
 
-All new deployment jobs, jobs that run in addition to the cf.gov depoyment jobs, as well as independent jobs, must be implemented with [Jenkins-as-code](https://github.com/cfpb/jenkins-automation).
+All new deployment jobs, jobs that run in addition to the cf.gov deployment jobs, as well as independent jobs, must be implemented with [Jenkins-as-code](https://github.com/cfpb/jenkins-automation).
 
 ## Deployment QA
 
