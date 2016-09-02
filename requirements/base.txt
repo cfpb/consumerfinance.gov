@@ -1,3 +1,4 @@
+PyYAML==3.11
 djangorestframework==2.4.8
 django-dynamicresponse==0.5.0
 django-simple-feedback-collector==0.0.4
