@@ -13,7 +13,7 @@ import wagtail.wagtailcore.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0006_update_tables'),
+        ('v1', '0005_auto_20160815_1537'),
     ]
 
     operations = [

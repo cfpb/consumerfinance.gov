@@ -21,6 +21,19 @@ class Well(blocks.StructBlock):
 
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
+
+    sharing = blocks.StructBlock([
+        ('shareable', blocks.BooleanBlock(label='Include sharing links?',
+                                          help_text='If checked, share links '
+                                                    'will be included below '
+                                                    'the items.',
+                                          required=False)),
+        ('share_blurb', blocks.CharBlock(help_text='Sets the tweet text, '
+                                                   'email subject line, and '
+                                                   'LinkedIn post text.',
+                                         required=False)),
+    ])
+
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
@@ -139,9 +152,9 @@ class Table(blocks.StructBlock):
     ]))
 
     class Meta:
-        icon = None
+        icon = 'form'
         template = '_includes/organisms/table.html'
-        label = ' '
+        label = 'Table'
 
 
 class ModelBlock(blocks.StructBlock):
@@ -299,8 +312,7 @@ class FullWidthText(blocks.StreamBlock):
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
-    table = Table(editable=False)
-    table_block = TableBlock(table_options={'renderer':'html'})
+    table = Table()
 
     class Meta:
         icon = 'edit'
