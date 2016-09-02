@@ -20,9 +20,23 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Ability to output sharing links within an Image and Text 50/50 Group module
 
 ### Changed
+- Updated gulp-istanbul npm module to version `1.1.1` from `0.10.3`.
+- Updated del npm module to version `2.2.2` from `2.2.0`.
+- Updated gulp-autoprefixer npm module to version `3.1.1` from `3.1.0`.
+- Updated gulp-changed npm module to version `1.3.2` from `1.3.0`.
+- Updated gulp-header npm module to version `1.8.8` from `1.7.1`.
+- Updated gulp-imagemin npm module to version `3.0.3` from `3.0.2`.
+- Updated gulp-less npm module to version `3.1.0` from `3.0.5`.
+- Updated gulp-load-plugins npm module to version `1.2.4` from `1.2.0`.
+- Updated validate.js npm module to version `0.10.0` from `0.9.0`.
+- Updated webpack npm module to version `1.13.2` from `1.12.14`.
+- Updated webpack-stream npm module to version `3.2.0` from `3.1.0`.
+- Updated es5-shim npm module to version `4.5.9` from `4.5.7`.
+- Updated gulp-rename npm module to version `1.2.2` from `1.1.0`.
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
+- Unused npm module map-stream.
 
 ## 3.7.2
 
