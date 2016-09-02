@@ -3,6 +3,7 @@
 var gulp = require( 'gulp' );
 var plugins = require( 'gulp-load-plugins' )();
 var mqr = require( 'gulp-mq-remove' );
+var cleanCSS = require('gulp-clean-css');
 var config = require( '../config' );
 var configPkg = config.pkg;
 var configBanner = config.banner;
@@ -50,7 +51,7 @@ function stylesIe() {
       width: '75em'
     } ) )
     // mqr expands the minified file
-    .pipe( plugins.cssmin() )
+    .pipe( cleanCSS( {compatibility: 'ie8'} ) )
     .pipe( plugins.rename( {
       suffix:  '.ie',
       extname: '.css'
@@ -82,7 +83,7 @@ function stylesOnDemand() {
       width: '75em'
     } ) )
     // mqr expands the minified file
-    .pipe( plugins.cssmin() )
+    .pipe( cleanCSS( {compatibility: 'ie8'} ) )
     .pipe( plugins.rename( {
       suffix:  '.nonresponsive',
       extname: '.css'
