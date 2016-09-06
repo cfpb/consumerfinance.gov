@@ -13,6 +13,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 3.8.1
+
+### Added
+- Google Optimize code on `find-a-housing-counselor` page
+
 ## 3.8.0
 
 ### Added
