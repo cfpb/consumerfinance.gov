@@ -18,7 +18,7 @@ Product | Content Pages | APIs | HTML5 API Clients ("single page apps") | Tradit
 ------- | ------------- | ---- | -------------------------------------- | --------------------
 What to build | Wagtail page types and templates | Django app using Django REST Framework | The API (if needed) and Wagtail page type and template to host the client | A standard models / forms / views-based Django app. Often calling internal/external APIs
 Where does the code live | cfgov-refresh | cfgov-refresh (see exceptions) | cfgov-refresh | cfgov-refresh (see exceptions)
-How to start | Extend our existing library of page types and molecules | create a django app in the "api's" namespace | Build the API first, then create a wagtail page to host the tool | Create a Django app at the top level of the repo. When feasible, consider providing Wagtail page-types instead of traditional views
+How to start | Extend our existing library of page types and molecules | create a Django app in the "api's" namespace | Build the API first, then create a wagtail page to host the tool | Create a Django app at the top level of the repo. When feasible, consider providing Wagtail page-types instead of traditional views
 How to ship | With release cycle | With release cycle | Consider getting APIs deployed well in advance | with release cycle | with release cycle
 How to change | See below | With the release cycle | Use [API versioning](http://www.django-rest-framework.org/api-guide/versioning/) to avoid breaking existing code | See below | Generally with the release cycle. If using Wagtail, see guidelines below. If not, use feature flags to hide changes that must go live at a particular time/date.
 
@@ -52,4 +52,4 @@ Projects that will be part of cfgov but live in their own repositories should:
 
 - follow file-naming conventions for their front-end resources to avoid collisions (eg, project_name.js rather than main.js) OR follow resource folder structure conventions
 - where possible, follow front-end guidelines/templates for new projects, including build processes and testing setup
-- where necessary, follow a suggested approach for sharing resources (javascript/css) that are internal to cfgov-refresh
+- where necessary, follow a suggested approach for sharing resources (JavaScript/CSS) that are internal to cfgov-refresh
