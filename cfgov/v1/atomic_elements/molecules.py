@@ -191,7 +191,7 @@ class RelatedLinks(blocks.StructBlock):
 
     class Meta:
         icon = 'link'
-        template = '_includes/molecules/related-links.html'
+        template = '_includes/molecules/related-content.html'
 
 
 class Quote(blocks.StructBlock):
