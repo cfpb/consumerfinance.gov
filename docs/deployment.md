@@ -4,7 +4,7 @@ Everything that is part of cfgov-refresh and its dependencies are deployed as pa
 
 Projects that are independent of cfgov-refresh will need to provide their own deployment process, and all jobs they require. They will not be automatically included in the cf.gov deployment process, and will not be on the cf.gov release cadence. 
 
-All new deployment jobs, jobs that run in addition to the cf.gov depoyment jobs, as well as independent jobs, must be implemented with Jenkins-as-code.
+All new deployment jobs, jobs that run in addition to the cf.gov deployment jobs, as well as independent jobs, must be implemented with [Jenkins-as-code](https://github.com/cfpb/jenkins-automation).
 
 ## Deployment QA
 
@@ -22,13 +22,14 @@ Regular releases of cf.gov on our release cadence are automated, presuming:
 
 ## Current deployment process
 
-The current cf.gov deployment process requires running the following individual Jenkins jobs manually, in the following order:
+The current cf.gov deployment process requires running the cf.gov-pipeline-build Jenkins pipeline job, with the release tag to deploy and the environment to which it should be deployed.
 
-- cf.gov-beta-frontend-build, build with the tag name of the latest release, i.e. 3.5.2.
-- cf.gov-fab-deploy-django, build with DEPLOY_ENV Staging
-- cf.gov-fab-deploy-django, build with DEPLOY_ENV ***PRODUCTION***
+The pipeline will invoke the following jobs, in order:
 
-The following teams and individuals have the necessary access to deploy cf.gov releases:
+- cf.gov-frontend-build, which builds the front-end assets for cfgov-refresh
+- cf.gov-deploy-django, which takes the cfgov-refresh build, and uses [drama-free-django](https://github.com/cfpb/drama-free-django) to build a deployable artifact for all of cf.gov and its requirements, and then deploys the artifact to the appropriate servers for the selected environment.
+
+Any back-end developer on the platform team should be able to assist with deployments. You may also contact the following individually:
 
 - Ross Karchner
 - Scott Cranfill

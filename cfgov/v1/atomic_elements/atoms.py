@@ -1,6 +1,7 @@
 import re
-from django.core.exceptions import ValidationError
 
+from django import forms
+from django.core.exceptions import ValidationError
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
@@ -47,6 +48,21 @@ class NumberBlock(blocks.StructBlock):
     class Meta:
         icon = 'order'
         template = '_includes/atoms/number.html'
+
+
+class IntegerBlock(blocks.FieldBlock):
+    def __init__(self, required=True, help_text=None, min_value=None,
+                 max_value=None, **kwargs):
+        self.field = forms.IntegerField(
+            required=required,
+            help_text=help_text,
+            min_value=min_value,
+            max_value=max_value
+        )
+        super(IntegerBlock, self).__init__(**kwargs)
+
+    class Meta:
+        icon = 'plus-inverse'
 
 
 class Hyperlink(blocks.StructBlock):

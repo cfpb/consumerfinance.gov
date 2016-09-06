@@ -1,6 +1,5 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% import 'macros/time.html' as time %}
 
 {% block content_main_modifiers -%}
@@ -23,11 +22,15 @@
                     {{ time.render(page.close_date, {'date':true}) }}
                 {% endif %}
             </dd>
+            {% if page.regions.exists() %}
             <dt>Region{{ page.regions.all() | pluralize() }}:</dt>
             <dd>{{ page.regions.all() | join(', ') }}</dd>
+            {% endif %}
             <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
             <dd>
+                {% if page.grades.exists() %}
                 <strong>({{ page.grades.all() | join(', ') }})</strong>
+                {% endif %}
                 ${{ '{:,.0f}'.format( page.salary_min ) }}–${{ '{:,.0f}'.format( page.salary_max ) }}
             </dd>
         </dl>
@@ -134,6 +137,56 @@
     o-sidebar-content
 {%- endblock %}
 
-{% block content_sidebar scoped -%}
-    {{ streamfield_sidefoot.render(page.sidefoot) }}
-{%- endblock %}
+{% block content_sidebar scoped  %}
+<div class="block block__flush-top">
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            Before you apply
+        </span>
+    </h2>
+    <p>
+        Consider exploring our information about working at the CFPB
+        and our application process.
+    </p>
+    <ul class="list list__links u-mb0">
+        <li class="list_item">
+            <a href="/about-us/careers/working-at-cfpb" class="list_link">
+                Working at the CFPB
+            </a>
+        </li>
+        <li class="list_item">
+            <a href="/about-us/careers/application-process" class="list_link">
+                Learn how the application process works
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="block block__flush-top">
+    {%- import 'related-links.html' as related_links -%}
+    {{- related_links.render([
+      [ '/about-us/blog/',
+        'CFPB Blog' ],
+      [ '/about-us/newsroom/',
+        'Newsroom' ],
+      [ '/office-civil-rights/',
+        'Office of Civil Rights' ]
+    ]) -}}
+</div>
+
+<h2 class="header-slug">
+    <span class="header-slug_inner">
+        Follow us on LinkedIn
+    </span>
+</h2>
+<p data-qa-hook="info-section-desc">
+    The CFPB is one of the most searched for agencies
+    in the federal government.
+    Connect with us to stay updated on the work
+    we do and new opportunities to be a part of it.
+</p>
+<a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
+   class="jump-link jump-link__external-link jump-link__underline">
+    Follow us on LinkedIn
+</a>
+{% endblock %}

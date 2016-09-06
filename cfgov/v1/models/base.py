@@ -117,11 +117,11 @@ class CFGOVPage(Page):
 
     settings_panels = [
         MultiFieldPanel(Page.promote_panels, 'Settings'),
+        InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
-        FieldPanel('language', 'language'),
-        InlinePanel('categories', label="Categories", max_num=2),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
+        FieldPanel('language', 'language'),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
@@ -130,6 +130,17 @@ class CFGOVPage(Page):
         ObjectList(sidefoot_panels, heading='Sidebar/Footer'),
         ObjectList(settings_panels, heading='Configuration'),
     ])
+
+    def get_authors(self):
+        """ Returns a sorted list of authors. Default is alphabetical """
+        return self.alphabetize_authors()
+
+    def alphabetize_authors(self):
+        """ Alphabetize authors of this page by last name, then first name if needed """
+        # First sort by first name
+        author_names = sorted(self.authors.names())
+        # Then sort by last name
+        return sorted(author_names, key=lambda x: x.split()[-1])
 
     def generate_view_more_url(self, request):
         from ..forms import ActivityLogFilterForm

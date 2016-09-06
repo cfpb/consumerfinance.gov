@@ -5,12 +5,11 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-from wagtail.contrib.table_block.blocks import TableBlock
 
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
 from ..util import filterable_list, util
-
+from jobmanager.models import JobListingList
 
 class SublandingPage(CFGOVPage):
     header = StreamField([
@@ -23,10 +22,10 @@ class SublandingPage(CFGOVPage):
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('full_width_text', organisms.FullWidthText()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
         ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
-        ('table', organisms.Table(editable=False)),
-        ('table_block', TableBlock(table_options={'renderer':'html'})),
+        ('table', organisms.Table()),
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
@@ -44,6 +43,7 @@ class SublandingPage(CFGOVPage):
             ('body', blocks.TextBlock(required=False, label='Introduction Body')),
         ], heading='Breakout Image', icon='image')),
         ('related_posts', organisms.RelatedPosts()),
+        ('job_listing_list', JobListingList()),
     ], blank=True)
 
     # General content tab

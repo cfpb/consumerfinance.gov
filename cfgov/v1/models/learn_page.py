@@ -10,11 +10,9 @@ from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.contrib.table_block.blocks import TableBlock
 
 from ..atomic_elements import molecules, organisms
 from .base import CFGOVPage, CFGOVPageManager
-
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -43,6 +41,8 @@ class AbstractFilterPage(CFGOVPage):
     # Configuration tab panels
     settings_panels = [
         MultiFieldPanel(Page.promote_panels, 'Settings'),
+        InlinePanel('categories', label="Categories", max_num=2),
+        FieldPanel('tags', 'Tags'),
         MultiFieldPanel([
             FieldPanel('preview_title', classname="full"),
             FieldPanel('preview_subheading', classname="full"),
@@ -50,15 +50,13 @@ class AbstractFilterPage(CFGOVPage):
             FieldPanel('secondary_link_url', classname="full"),
             FieldPanel('secondary_link_text', classname="full"),
             ImageChooserPanel('preview_image'),
-        ], heading='Page Preview Fields', classname='collapsible collapsed'),
+        ], heading='Page Preview Fields', classname='collapsible'),
+        FieldPanel('authors', 'Authors'),
         MultiFieldPanel([
             FieldPanel('date_published'),
             FieldPanel('date_filed'),
             FieldPanel('comments_close_by'),
         ], 'Relevant Dates', classname='collapsible'),
-        FieldPanel('tags', 'Tags'),
-        FieldPanel('authors', 'Authors'),
-        InlinePanel('categories', label="Categories", max_num=2),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
     ]
 
@@ -87,8 +85,7 @@ class LearnPage(AbstractFilterPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table(editable=False)),
-        ('table_block', TableBlock(table_options={'renderer':'html'})),
+        ('table', organisms.Table()),
         ('call_to_action', molecules.CallToAction()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
@@ -101,8 +98,7 @@ class DocumentDetailPage(AbstractFilterPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table(editable=False)),
-        ('table_block', TableBlock(table_options={'renderer':'html'})),
+        ('table', organisms.Table()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel = StreamFieldPanel('content')

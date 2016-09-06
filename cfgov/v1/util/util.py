@@ -68,6 +68,9 @@ def get_secondary_nav_items(request, current_page):
     else:
         page = get_appropriate_page_version(request, current_page)
 
+    if not page:
+        return [], False
+
     # TODO: Remove this ASAP once Press Resources gets its own Wagtail page
     if page.slug == 'newsroom':
         return [

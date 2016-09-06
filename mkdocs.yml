@@ -17,7 +17,12 @@ pages:
     - Notes on frameworks: notes-on-frameworks.md
 - Testing: testing.md
 - Development tips: development-tips.md
-theme: readthedocs
+
+theme: mkDOCter
+extra:
+    brand_color: "#2CB34A"
+    logo_url: https://cfpb.github.io/img/logo_210.png
+    logo_alt: Consumer Financial Protection Bureau
 
 markdown_extensions:
     - admonition

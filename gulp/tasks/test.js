@@ -2,11 +2,14 @@
 
 var envvars = require( '../../config/environment' ).envvars;
 var gulp = require( 'gulp' );
+var gulpMocha = require( 'gulp-mocha' );
 var plugins = require( 'gulp-load-plugins' )();
 var spawn = require( 'child_process' ).spawn;
 var configTest = require( '../config' ).test;
 var fsHelper = require( '../utils/fs-helper' );
 var minimist = require( 'minimist' );
+var localtunnel = require( 'localtunnel' );
+var isReachable = require( 'is-reachable' );
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -20,7 +23,7 @@ function testUnitScripts( cb ) {
     .pipe( plugins.istanbul.hookRequire() )
     .on( 'finish', function() {
       gulp.src( configTest.tests + '/unit_tests/**/*.js' )
-        .pipe( plugins.mocha( {
+        .pipe( gulpMocha( {
           reporter: configTest.reporter ? 'spec' : 'nyan'
         } ) )
         .pipe( plugins.istanbul.writeReports( {
@@ -79,7 +82,9 @@ function _getProtractorParams( suite ) {
 
   var commandLineParams = minimist( process.argv.slice( 2 ) );
 
-  var configFile = commandLineParams.a11y ? 'test/browser_tests/a11y_conf.js' : 'test/browser_tests/conf.js';
+  var configFile = commandLineParams.a11y ?
+                  'test/browser_tests/a11y_conf.js' :
+                  'test/browser_tests/conf.js';
 
   // Set default configuration command-line parameter.
   var params = [ configFile ];
@@ -132,6 +137,47 @@ function _getWCAGParams() {
 }
 
 /**
+ * Processes command-line and environment variables
+ * for passing to the PageSpeed Insights (PSI) executable.
+ * An optional URL path comes from the command-line `--u=` flag.
+ * A PSI "strategy" (mobile vs desktop) can be specified with the `--s=` flag.
+ * @returns {Promise}
+ *   Promise containing an array of command-line arguments for PSI binary.
+ */
+function _createPSITunnel() {
+  var commandLineParams = minimist( process.argv.slice( 2 ) );
+  var host = envvars.TEST_HTTP_HOST;
+  var port = envvars.TEST_HTTP_PORT;
+  var path = _parsePath( commandLineParams.u );
+  var url = host + ':' + port + path;
+  var strategy = commandLineParams.s || 'mobile';
+
+  // Create a promise that the server is reachable and we can create a tunnel.
+  var promise = new Promise( function( resolve, reject ) {
+    // Check if server is reachable.
+    isReachable( url, function( err, reachable ) {
+      if ( err || !reachable ) {
+        reject( url + ' is not reachable. Is your local server running?' );
+      }
+      // Create the local tunnel.
+      localtunnel( port, function( tunErr, tunnel ) {
+        url = tunnel.url + path;
+        if ( tunErr ) {
+          tunnel.close();
+          reject( 'Error creating local tunnel for PSI: ' + tunErr );
+        }
+        resolve( {
+          url:    [ url, '--strategy=' + strategy ],
+          tunnel: tunnel
+        } );
+      } );
+    } );
+  } );
+
+  return promise;
+}
+
+/**
  * Process a path and set it to an empty string if it's undefined
  * and add a leading slash if one is not present.
  * @param {string} urlPath The unprocessed path.
@@ -160,6 +206,26 @@ function testA11y() {
       process.exit( 1 );
     }
     plugins.util.log( 'WCAG tests done!' );
+  } );
+}
+
+/**
+ * Run PageSpeed Insight tests.
+ */
+function testPerf() {
+  _createPSITunnel().then( function( params ) {
+    plugins.util.log( 'PSI tests checking URL: http://' + params.url.split( ' ' ) );
+    spawn(
+      fsHelper.getBinary( 'psi', 'psi', '../.bin' ),
+      params.url,
+      { stdio: 'inherit' }
+    ).once( 'close', function() {
+      plugins.util.log( 'PSI tests done!' );
+      params.tunnel.close();
+    } );
+  } ).catch( function( err ) {
+    plugins.util.log( err );
+    process.exit( 1 );
   } );
 }
 
@@ -203,6 +269,7 @@ function testCoveralls() {
 gulp.task( 'test:coveralls', testCoveralls );
 
 gulp.task( 'test:a11y', testA11y );
+gulp.task( 'test:perf', testPerf );
 
 
 gulp.task( 'test:unit:scripts', testUnitScripts );
