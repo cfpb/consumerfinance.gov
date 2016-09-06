@@ -190,7 +190,7 @@ class RelatedLinks(blocks.StructBlock):
     links = blocks.ListBlock(atoms.Hyperlink())
 
     class Meta:
-        icon = 'link'
+        icon = 'grip'
         template = '_includes/molecules/related-content.html'
 
 
