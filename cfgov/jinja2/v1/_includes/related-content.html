@@ -1,13 +1,13 @@
 
 {# ==========================================================================
 
-   related_links.render()
+   related_content.render()
 
    ==========================================================================
 
    Description:
 
-   Render a related links list when given:
+   Render a related-content link list when given:
 
    related_links:   An array of links. "Links" are arrays where the first
                     item is the URL and the second item is the text.
@@ -21,10 +21,10 @@
    ========================================================================== #}
 
 {%- macro render(related_links, related_links_2) -%}
-<div class="related-links">
+<div class="related-content">
     <h2 class="header-slug">
         <span class="header-slug_inner">
-            Related links
+            Related content
         </span>
     </h2>
 {%- if related_links_2 %}
