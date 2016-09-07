@@ -17,6 +17,9 @@ class TestDataTestRunner(DiscoverRunner):
         if not self.check_for_wagtail_root():
             self.setup_wagtail_root()
 
+        if not self.check_for_cfgov_root():
+            self.setup_cfgov_root()
+
         initial_data.run()
         return dbs
 
@@ -29,6 +32,16 @@ class TestDataTestRunner(DiscoverRunner):
 
         module = importlib.import_module(migration)
         module.initial_data(apps, None)
+
+    def check_for_cfgov_root(self):
+        return Page.objects.filter(slug='cfgov').exists()
+
+    def setup_cfgov_root(self):
+        migration = 'v1.migrations.0008_site_root_data'
+        print('Running migration {} to setup CFGOV root'.format(migration))
+
+        module = importlib.import_module(migration)
+        module.create_site_root(apps, None)
 
 
 class HtmlMixin(object):

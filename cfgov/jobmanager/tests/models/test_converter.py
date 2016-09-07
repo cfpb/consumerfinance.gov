@@ -17,7 +17,7 @@ class JobConverterTestCase(TestCase):
 
     def test_create_with_parent(self):
         try:
-            JobConverter('home-page')
+            JobConverter('cfgov')
         except Page.DoesNotExist:
             self.fail('creation with existing parent should not fail')
 
@@ -25,7 +25,7 @@ class JobConverterTestCase(TestCase):
         self.assertRaises(Page.DoesNotExist, JobConverter, 'no-such-page')
 
     def convert_job(self, job, commit=False):
-        converter = JobConverter('home-page', commit=commit)
+        converter = JobConverter('cfgov', commit=commit)
         return converter.convert(job)
 
     def test_convert_job_without_commit_does_not_make_page(self):
