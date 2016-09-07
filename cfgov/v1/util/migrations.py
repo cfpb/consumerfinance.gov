@@ -26,7 +26,6 @@ def get_or_create_page(apps, page_cls_app, page_cls_name, title, slug,
     depth = parent_page.depth + 1
     path = MP_Node._get_path(parent_page.path, depth, parent_page.numchild + 1)
 
-    print(page_cls)
     page = page_cls.objects.create(
         title=title,
         slug=slug,
