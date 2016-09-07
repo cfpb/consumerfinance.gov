@@ -13,7 +13,7 @@ def create_site_root(apps, schema_editor):
     Site = apps.get_model('wagtailcore.Site')
 
     staging_hostname = os.environ['DJANGO_STAGING_HOSTNAME']
-    http_port = os.environ['DJANGO_HTTP_PORT']
+    http_port = os.environ.get('DJANGO_HTTP_PORT', '80')
 
     root = Page.objects.get(slug='root')
 
