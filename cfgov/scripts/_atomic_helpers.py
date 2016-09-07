@@ -37,8 +37,8 @@ contact_address = {
         "zip_code": "20012"
     }
 }
-related_content = {
-    'type': 'related_content',
+related_links = {
+    'type': 'related_links',
     'value': {
         'links': [
             {
