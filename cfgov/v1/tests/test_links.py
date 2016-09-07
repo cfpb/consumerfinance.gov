@@ -26,6 +26,11 @@ class ImportDataTest(TestCase):
 
 
 class LinkTest(TestCase):
+    """
+    The get_protected_url function is a template tag that is applied to links to make sure
+    that the returned URL is something that is allowed to be accessed by the user. Under some
+    conditions, get_protected_url returns the hash mark '#' which results in a non-navigable URL.
+    """
 
     def setUp(self):
 
@@ -68,7 +73,7 @@ class LinkTest(TestCase):
 
     def test_get_protected_url_non_live_page(self):
         """
-        Confirm that if a non-live page is request, we get back the hash.
+        Confirm that if a non-live page is requested from a live page, we get back the hash.
         """
         self.page.live = False
         result = get_protected_url(self.context, self.page)
