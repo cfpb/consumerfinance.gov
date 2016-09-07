@@ -77,7 +77,7 @@ function scriptsIE() {
 }
 
 /**
- * Bundle external site scripts. 
+ * Bundle external site scripts.
  * @returns {PassThrough} A source stream.
  */
 function scriptsExternal() {

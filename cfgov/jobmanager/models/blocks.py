@@ -10,6 +10,9 @@ class OpenJobListingsMixin(object):
     def filter_queryset(self, qs, value):
         qs = super(OpenJobListingsMixin, self).filter_queryset(qs, value)
 
+        # Hide any jobs that have not been published.
+        qs = qs.filter(live=True)
+
         if value.get('hide_closed'):
             today = timezone.now().date()
             qs = qs.filter(open_date__lte=today, close_date__gte=today)
