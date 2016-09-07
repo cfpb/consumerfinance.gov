@@ -25,9 +25,18 @@ def create_site_root(apps, schema_editor):
         title='CFGov',
         slug='cfgov',
         parent_page=root,
-        live=True,
-        shared=True
+        live=True
     )
+
+    # Make sure a revision exists for the site root so that it is viewable.
+    if not site_root.revisions.exists():
+        # This is suboptimal, but unfortunately there's no easy way to
+        # reproduce Wagtail's revision logic without running code that
+        # is only available through model import.
+        from wagtail.wagtailcore.models import Page as ImportedPage
+        imported_site_root = ImportedPage.objects.get(pk=site_root.pk)
+        revision = imported_site_root.save_revision()
+        revision.save()
 
     # Make sure default site (either the one installed with Wagtail, or one
     # that has since been manually setup) is running on the correct port and
@@ -39,7 +48,7 @@ def create_site_root(apps, schema_editor):
 
     # Setup a staging site if it doesn't exist already. Use the correct
     # hostname and port, and the same root home page.
-    staging_site, created = Site.objects.get_or_create(
+    staging_site, _ = Site.objects.get_or_create(
         hostname=staging_hostname,
         defaults={
             'port': http_port,
@@ -55,6 +64,10 @@ def create_site_root(apps, schema_editor):
         pass
     else:
         hello_world.delete()
+
+    # Extra save needed for some reason to register site.
+    default_site.save()
+    staging_site.save()
 
 
 class Migration(migrations.Migration):
