@@ -2,6 +2,7 @@ import time
 from datetime import timedelta
 from itertools import chain
 from util import ERROR_MESSAGES
+from collections import Counter
 
 from django import forms
 from django.db.models import Q
@@ -11,8 +12,6 @@ from taggit.models import Tag
 
 from .util import ref
 from .models.base import CFGOVPage
-from .util.util import most_common
-
 
 class FilterErrorList(ErrorList):
     def __str__(self):
@@ -112,25 +111,33 @@ class FilterableListForm(forms.Form):
         self.set_topics(parent, page_ids, hostname)
         self.set_authors(parent, page_ids, hostname)
 
+
+    def prepare_options(self, arr):
+        """ Returns an ordered list of tuples of the format ('tag-slug-name', 'Tag Display Name') """
+        arr = Counter(arr).most_common() # Order by most to least common
+        # Grab only the first tuple in the generated tuple, which includes a count we do not need
+        return [x[0] for x in arr]
+        
+        
     # Populate Topics' choices
     def set_topics(self, parent, page_ids, hostname):
-        tags = Tag.objects.filter(v1_cfgovtaggedpages_items__content_object__id__in=page_ids).values_list('name', flat=True)
+        tags = Tag.objects.filter(v1_cfgovtaggedpages_items__content_object__id__in=page_ids).values_list('slug', 'name')
 
-        # Orders by most to least common tags
-        options = most_common(list(tags))
-        most = [(option, option) for option in options[:3]]
-        other = [(option, option) for option in options[3:]]
+        options = self.prepare_options(arr=tags)
+        most = options[:3]
+        other = options[3:]
+
         self.fields['topics'].choices = \
-            (('Most frequent', tuple(most)),
-             ('All other topics', tuple(other)))
+            (('Most frequent', most),
+             ('All other topics', other))
 
     # Populate Authors' choices
     def set_authors(self, parent, page_ids, hostname):
-        authors = Tag.objects.filter(v1_cfgovauthoredpages_items__content_object__id__in=page_ids).values_list('name', flat=True)
+        authors = Tag.objects.filter(v1_cfgovauthoredpages_items__content_object__id__in=page_ids).values_list('slug', 'name')
+        options = self.prepare_options(arr=authors)
 
-        # Orders by most to least common authors
-        self.fields['authors'].choices = [(author, author) for author in
-                                          most_common(list(authors))]
+        self.fields['authors'].choices = options
+
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
@@ -192,8 +199,8 @@ class FilterableListForm(forms.Form):
             'date_published__gte',   # from_date
             'date_published__lte',   # to_date
             'categories__name__in',  # categories
-            'tags__name__in',        # topics
-            'authors__name__in',     # authors
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
         ]
 
 class EventArchiveFilterForm(FilterableListForm):
@@ -203,8 +210,8 @@ class EventArchiveFilterForm(FilterableListForm):
             'start_dt__gte',         # from_date
             'end_dt__lte',           # to_date
             'categories__name__in',  # categories
-            'tags__name__in',        # topics
-            'authors__name__in',     # authors
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
         ]
 
 

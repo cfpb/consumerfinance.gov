@@ -149,7 +149,7 @@ class CFGOVPage(Page):
         available_tags = [tag[0] for name, tags in form.fields['topics'].choices for tag in tags]
         tags = []
         index = util.get_form_id(activity_log)
-        for tag in self.tags.names():
+        for tag in self.tags.slugs():
             if tag in available_tags:
                 tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
         tags = '&'.join(tags)
