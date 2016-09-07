@@ -8,6 +8,25 @@ def get_page(apps, slug):
     return base_page_cls.objects.get(slug=slug)
 
 
+def get_free_path(apps, parent_page):
+    offset = 1
+    base_page_cls = apps.get_model('wagtailcore', 'Page')
+
+    while True:
+        path = MP_Node._get_path(
+            parent_page.path,
+            parent_page.depth + 1,
+            parent_page.numchild + offset
+        )
+
+        try:
+            base_page_cls.objects.get(path=path)
+        except base_page_cls.DoesNotExist:
+            return path
+
+        offset += 1
+
+
 @transaction.atomic
 def get_or_create_page(apps, page_cls_app, page_cls_name, title, slug,
                        parent_page, live=False, shared=False, **kwargs):
@@ -23,14 +42,11 @@ def get_or_create_page(apps, page_cls_app, page_cls_name, title, slug,
 
     parent_page = get_page(apps, slug=parent_page.slug)
 
-    depth = parent_page.depth + 1
-    path = MP_Node._get_path(parent_page.path, depth, parent_page.numchild + 1)
-
     page = page_cls.objects.create(
         title=title,
         slug=slug,
-        depth=depth,
-        path=path,
+        depth=parent_page.depth + 1,
+        path=get_free_path(apps, parent_page),
         content_type=page_content_type,
         live=live,
         shared=shared,
