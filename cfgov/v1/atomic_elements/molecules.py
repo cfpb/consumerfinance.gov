@@ -12,10 +12,14 @@ def isRequired(field_name):
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
+    h_text = ('A list of icon names can be obtained at: '
+              'https://cfpb.github.io/capital-framework/components/cf-icons/. '
+              'Examples: linkedin-square, facebook-square, etc.')
     heading = blocks.CharBlock(required=False)
     sub_heading = blocks.CharBlock(required=False)
-    sub_heading_icon = blocks.CharBlock(required=False, label="Sub heading icon",
-    help_text='A list of icon names can be obtained at: https://cfpb.github.io/capital-framework/components/cf-icons/. Example: linkedin-square,facebook-square, etc.')
+    sub_heading_icon = blocks.CharBlock(required=False,
+                                        label="Sub heading icon",
+                                        help_text=h_text)
     body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
@@ -142,7 +146,7 @@ class CallToAction(blocks.StructBlock):
     class Meta:
         template = '_includes/molecules/call-to-action.html'
         icon = 'grip'
-        label = 'Call to Action'
+        label = 'Call to action'
 
 
 class ContactAddress(blocks.StructBlock):
@@ -192,6 +196,7 @@ class RelatedLinks(blocks.StructBlock):
     class Meta:
         icon = 'grip'
         template = '_includes/molecules/related-content.html'
+        label = 'Related content'
 
 
 class Quote(blocks.StructBlock):
@@ -228,7 +233,8 @@ class RelatedMetadata(blocks.StructBlock):
     class Meta:
         icon = 'grip'
         template = '_includes/molecules/related-metadata.html'
-        label = 'Related Metadata'
+        label = 'Related metadata'
+
 
 class RSSFeed(blocks.ChoiceBlock):
     choices = [
@@ -239,6 +245,7 @@ class RSSFeed(blocks.ChoiceBlock):
     class Meta:
         icon = 'plus'
         template = '_includes/molecules/rss-feed.html'
+        label = 'RSS feed'
 
 
 class SocialMedia(blocks.StructBlock):
