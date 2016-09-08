@@ -1,6 +1,3 @@
-import time
-from datetime import timedelta
-from itertools import chain
 from util import ERROR_MESSAGES
 from collections import Counter
 
@@ -12,6 +9,7 @@ from taggit.models import Tag
 
 from .util import ref
 from .models.base import CFGOVPage
+
 
 class FilterErrorList(ErrorList):
     def __str__(self):
@@ -30,6 +28,7 @@ class FilterDateField(forms.DateField):
 
 class PDFFilterDateField(forms.DateField):
     def clean(self, value):
+        import pdb; pdb.set_trace();
         if value:
             try:
                 value = get_date_string(value)
@@ -68,7 +67,7 @@ class CalenderPDFFilterForm(forms.Form):
         to_date_empty = 'filter_range_date_lte' in cleaned_data and \
                         cleaned_data['filter_range_date_lte'] == None
 
-        if from_date_empty and to_date_empty :
+        if from_date_empty and to_date_empty:
             raise forms.ValidationError(ERROR_MESSAGES['DATE_ERRORS']['one_required'])
         return cleaned_data
 
@@ -96,12 +95,12 @@ class FilterableListForm(forms.Form):
         'class': 'js-filter_range-date js-filter_range-date__lte',
     })
 
-    title =      forms.CharField(max_length=250, required=False, widget=widgets.TextInput(attrs=title_attrs))
-    from_date =  FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
-    to_date =    FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
+    title = forms.CharField(max_length=250, required=False, widget=widgets.TextInput(attrs=title_attrs))
+    from_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
+    to_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
     categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
-    topics =     forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
-    authors =    forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
+    topics = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
+    authors = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
 
     def __init__(self, *args, **kwargs):
         parent = kwargs.pop('parent')
@@ -117,8 +116,7 @@ class FilterableListForm(forms.Form):
         arr = Counter(arr).most_common() # Order by most to least common
         # Grab only the first tuple in the generated tuple, which includes a count we do not need
         return [x[0] for x in arr]
-        
-        
+
     # Populate Topics' choices
     def set_topics(self, parent, page_ids, hostname):
         tags = Tag.objects.filter(v1_cfgovtaggedpages_items__content_object__id__in=page_ids).values_list('slug', 'name')
@@ -137,7 +135,6 @@ class FilterableListForm(forms.Form):
         options = self.prepare_options(arr=authors)
 
         self.fields['authors'].choices = options
-
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
@@ -202,6 +199,7 @@ class FilterableListForm(forms.Form):
             'tags__slug__in',        # topics
             'authors__slug__in',     # authors
         ]
+
 
 class EventArchiveFilterForm(FilterableListForm):
     def get_query_strings(self):
