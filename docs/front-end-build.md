@@ -45,12 +45,12 @@ We usually use [Grunt](http://gruntjs.com/) to automate the compilation of JavaS
 
 Here are some helpful plugins for Grunt:
 
-- [grunt-contrib-uglify](https://github.com/gruntjs/grunt-contrib-uglify) for concatinating and minifying JS
+- [grunt-contrib-uglify](https://github.com/gruntjs/grunt-contrib-uglify) for concatenating and minifying JS
 - [grunt-contrib-less](https://github.com/gruntjs/grunt-contrib-less) for compiling Less and CSS files
 - [grunt-contrib-cssmin](https://github.com/gruntjs/grunt-contrib-cssmin) for minifying CSS
 - [grunt-contrib-clean](https://github.com/gruntjs/grunt-contrib-clean) for cleaning folders
 - [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch) for watching and compiling assets on the fly
-- [grunt-browserify](https://github.com/jmreidy/grunt-browserify) for using Node style CommonJS modules clientside
+- [grunt-browserify](https://github.com/jmreidy/grunt-browserify) for using Node style CommonJS modules client-side
 
 ## Capital Framework Generator
 
