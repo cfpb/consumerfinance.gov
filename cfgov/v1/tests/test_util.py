@@ -71,12 +71,6 @@ class TestUtilFunctions(TestCase):
         assert not self.page_versions[2].as_page_object.called
         assert not self.page_versions[3].as_page_object.called
 
-    def test_most_common(self):
-        lst = ['1', '1', '2', '3', '3', '1']
-        most_common_list = util.most_common(lst)
-        self.assertEquals('1', most_common_list[0])
-        self.assertEquals('3', most_common_list[1])
-
     def test_has_active_filters_returns_True_for_search_terms_in_url(self):
         self.request.GET.items.return_value = [('key0', 'some val')]
         assert util.has_active_filters(self.request, 0)

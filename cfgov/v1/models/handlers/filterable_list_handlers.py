@@ -7,14 +7,13 @@ from ...forms import FilterableListForm, EventArchiveFilterForm, \
     ActivityLogFilterForm, NewsroomFilterForm
 from ...models import CFGOVPage, AbstractFilterPage, EventPage
 from ...util.ref import choices_for_page_type
-from ...util.util import get_secondary_nav_items, has_active_filters
+from ...util.util import has_active_filters
 
 
 class FilterableListHandler(Handler):
     def process(self, block_tuples):
         forms = self._get_forms(block_tuples)
         self.context['filters'] = self._process_filters(forms, block_tuples)
-        self.context['get_secondary_nav_items'] = get_secondary_nav_items
         self.context['has_active_filters'] = has_active_filters
 
     def _get_forms(self, block_tuples):

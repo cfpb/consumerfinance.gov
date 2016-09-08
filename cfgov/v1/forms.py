@@ -110,23 +110,22 @@ class QueryFormMixin(object):
     def _generate_query(self):
         final_query = Q()
         if self.is_bound:
-            # import pdb; pdb.set_trace()
             q_tuples = zip(self._get_query_strings(), self.declared_fields)
             for query, field_name in q_tuples:
-                field_data = self.cleaned_data.get(field_name)
-                field = self._normalize_dates(query, field_data)
+                field = self.cleaned_data.get(field_name, None)
+                if isinstance(field, datetime):
+                    field = self._normalize_dates(query, field)
                 if field:
                     final_query &= Q((query, field))
         return final_query
 
     @staticmethod
     def _normalize_dates(q_str, field):
-        if isinstance(field, datetime):
-            date_field = field.replace(tzinfo=pytz.utc)
-            if q_str in ['date_published__gte', 'start_dt__gte']:
-                return date_field.replace(hour=0, minute=0, second=0)
-            elif q_str in ['date_published__lte', 'end_dt__lte']:
-                return date_field.replace(hour=23, minute=59, second=59)
+        date_field = field.replace(tzinfo=pytz.utc)
+        if q_str in ['date_published__gte', 'start_dt__gte']:
+            return date_field.replace(hour=0, minute=0, second=0)
+        elif q_str in ['date_published__lte', 'end_dt__lte']:
+            return date_field.replace(hour=23, minute=59, second=59)
         return field
 
 

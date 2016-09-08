@@ -39,7 +39,7 @@ class TestFilterableListHandler(TestCase):
     @mock.patch('v1.models.handlers.filterable_list_handlers.FilterableListHandler._get_forms')
     def test_process_sets_context(self, mock_get_forms, mock_process_filters):
         self.handler.process(mock.MagicMock())
-        for key in ['filters', 'get_secondary_nav_items', 'has_active_filters']:
+        for key in ['filters', 'has_active_filters']:
             assert key in self.context.keys()
 
     @mock.patch('v1.models.handlers.filterable_list_handlers.FilterableListHandler._get_filter_form_class')

@@ -1,4 +1,6 @@
-import datetime, mock
+import mock
+import pytz
+from datetime import date, datetime, timedelta
 
 from django.db.models import Q
 from django.test import TestCase
@@ -19,40 +21,37 @@ class TestFilterableListForm(TestCase):
     #     for key in self.mock_request.keys():
     #         self.mock_request[key].user = mock.Mock()
 
+    @mock.patch('django.forms.Form.__init__')
+    @mock.patch('v1.forms.QueryFormMixin.__init__')
     @mock.patch('__builtin__.super')
     @mock.patch('v1.models.base.CFGOVPage.objects')
     @mock.patch('v1.forms.FilterableListForm.set_topics')
     @mock.patch('v1.forms.FilterableListForm.set_authors')
-    def test_init_calls_super(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super):
-        form = FilterableListForm(parent=mock.Mock(), hostname='test')
-        assert mock_super.called
-
-
-    @mock.patch('__builtin__.super')
-    @mock.patch('v1.models.base.CFGOVPage.objects')
-    @mock.patch('v1.forms.FilterableListForm.set_topics')
-    @mock.patch('v1.forms.FilterableListForm.set_authors')
-    def test_init_calls_values_list_on_properly_formed_queryset(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super):
+    def test_init_calls_values_list_on_properly_formed_queryset(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super, mock_form_init, mock_mixin_init):
         form = FilterableListForm(parent=mock.Mock(), hostname='test')
         assert mock_cfgovpage_objects.live_shared.called
         assert mock_cfgovpage_objects.live_shared().descendant_of.called
         assert mock_cfgovpage_objects.live_shared().descendant_of().values_list.called
 
 
+    @mock.patch('django.forms.Form.__init__')
+    @mock.patch('v1.forms.QueryFormMixin.__init__')
     @mock.patch('__builtin__.super')
     @mock.patch('v1.models.base.CFGOVPage.objects')
     @mock.patch('v1.forms.FilterableListForm.set_topics')
     @mock.patch('v1.forms.FilterableListForm.set_authors')
-    def test_init_calls_settopics(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super):
+    def test_init_calls_settopics(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super, mock_form_init, mock_mixin_init):
         form = FilterableListForm(parent=mock.Mock(), hostname='test')
         assert mock_settopics.called
 
 
+    @mock.patch('django.forms.Form.__init__')
+    @mock.patch('v1.forms.QueryFormMixin.__init__')
     @mock.patch('__builtin__.super')
     @mock.patch('v1.models.base.CFGOVPage.objects')
     @mock.patch('v1.forms.FilterableListForm.set_topics')
     @mock.patch('v1.forms.FilterableListForm.set_authors')
-    def test_init_calls_setauthors(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super):
+    def test_init_calls_setauthors(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super, mock_form_init, mock_mixin_init):
         form = FilterableListForm(parent=mock.Mock(), hostname='test')
         assert mock_setauthors.called
 
@@ -83,8 +82,8 @@ class TestFilterableListForm(TestCase):
     @mock.patch('__builtin__.super')
     def test_clean_returns_cleaned_data_if_valid(self, mock_super, mock_init):
         mock_init.return_value = None
-        from_date = datetime.date.today()
-        to_date = from_date + datetime.timedelta(days=1)
+        from_date = date.today()
+        to_date = from_date + timedelta(days=1)
 
         form = FilterableListForm()
         mock_super().clean.return_value = {'from_date': from_date, 'to_date': to_date}
@@ -99,7 +98,7 @@ class TestFilterableListForm(TestCase):
     @mock.patch('__builtin__.super')
     def test_clean_returns_cleaned_data_if_only_one_date_field_is_empty(self, mock_super, mock_init):
         mock_init.return_value = None
-        from_date = datetime.date.today()
+        from_date = date.today()
         to_date = ''
 
         form = FilterableListForm()
@@ -131,8 +130,8 @@ class TestFilterableListForm(TestCase):
     @mock.patch('__builtin__.super')
     def test_clean_switches_date_fields_if_todate_is_less_than_fromdate(self, mock_super, mock_init):
         mock_init.return_value = None
-        to_date = datetime.date.today()
-        from_date = to_date + datetime.timedelta(days=1)
+        to_date = date.today()
+        from_date = to_date + timedelta(days=1)
 
         form = FilterableListForm()
         mock_super().clean.return_value = {'from_date': from_date, 'to_date': to_date}
@@ -182,11 +181,11 @@ class TestFilterableListForm(TestCase):
         form = FilterableListForm()
         form.is_bound = False
 
-        result = form.generate_query()
+        result = form._generate_query()
         assert result.children == []
 
 
-    @mock.patch('v1.forms.FilterableListForm.get_query_strings')
+    @mock.patch('v1.forms.FilterableListForm._get_query_strings')
     @mock.patch('v1.forms.FilterableListForm.__init__')
     def test_generate_query_returns_empty_query_fields_not_in_cleaned_data(self, mock_init, mock_get_query_strings):
         mock_init.return_value = None
@@ -196,11 +195,11 @@ class TestFilterableListForm(TestCase):
         mock_get_query_strings.return_value = ['field__contains']
         form.cleaned_data = {'notthefield': None}
 
-        result = form.generate_query()
+        result = form._generate_query()
         assert result.children == []
 
 
-    @mock.patch('v1.forms.FilterableListForm.get_query_strings')
+    @mock.patch('v1.forms.FilterableListForm._get_query_strings')
     @mock.patch('v1.forms.FilterableListForm.__init__')
     def test_generate_query_returns_query_from_cleaned_data_fields_and_query_strings(self, mock_init, mock_get_query_strings):
         mock_init.return_value = None
@@ -210,5 +209,21 @@ class TestFilterableListForm(TestCase):
         mock_get_query_strings.return_value = ['field__contains']
         form.cleaned_data = {'field': 'foobar'}
 
-        result = form.generate_query()
+        result = form._generate_query()
         assert result.children == [('field__contains', 'foobar')]
+
+    def test_normalize_dates_floors_from_date(self):
+        form = FilterableListForm()
+        test_date = datetime(2016, 4, 1, 21, 30, 30)
+        result = form._normalize_dates('date_published__gte', test_date)
+        self.assertEquals(result, datetime(2016, 4, 1, 0, 0, 0, tzinfo=pytz.utc))
+        result = form._normalize_dates('start_dt__gte', test_date)
+        self.assertEquals(result, datetime(2016, 4, 1, 0, 0, 0, tzinfo=pytz.utc))
+
+    def test_normalize_dates_ceilings_to_date(self):
+        form = FilterableListForm()
+        test_date = datetime(2016, 4, 1, 21, 30, 30)
+        result = form._normalize_dates('date_published__lte', test_date)
+        self.assertEquals(result, datetime(2016, 4, 1, 23, 59, 59, tzinfo=pytz.utc))
+        result = form._normalize_dates('end_dt__lte', test_date)
+        self.assertEquals(result, datetime(2016, 4, 1, 23, 59, 59, tzinfo=pytz.utc))
