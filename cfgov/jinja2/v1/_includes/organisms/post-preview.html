@@ -151,19 +151,19 @@
                 </div>
             {% endif %}
             <div class="post_meta">
-                {% for author in post.get_authors() %}
+                {% for author in post.authors.all() %}
                     <span class="o-post-preview_byline">
                         {% if loop.index == 1  %}
-                            By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                                {{ author }}
+                            By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                                {{ author.name }}
                                 </a>
                         {% elif loop.last == true %}
-                            and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                                {{ author }}
+                            and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                                {{ author.name }}
                                 </a>
                         {% else %}
-                            ,<a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                                {{ author }}
+                            ,<a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                                {{ author.name }}
                                 </a>
                         {% endif %}
                     </span>
@@ -171,7 +171,7 @@
 
                 {% if post.tags.names() | length %}
                     {%- import 'tags.html' as tags %}
-                    {{ tags.render(post.tags.names(), page_url, true, false, form_id) }}
+                    {{ tags.render(related_metadata_tags(post), page_url, true, false, form_id, is_wagtail=True) }}
                 {% endif %}
             </div>
             {% if post.secondary_link_url and post.secondary_link_text %}
