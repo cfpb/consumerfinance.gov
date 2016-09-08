@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 - Ability to output sharing links within an Image and Text 50/50 Group module
 - Google Optimize code on `find-a-housing-counselor` page
+- Added migration 0008 for data related to updating molecule label "Related content"
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
@@ -37,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated gulp-rename npm module to version `1.2.2` from `1.1.0`.
 - Replaces deprecated gulp-cssmin with gulp-clean-css.
 - Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
+
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
