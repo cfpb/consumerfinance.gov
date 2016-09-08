@@ -28,7 +28,6 @@ class FilterDateField(forms.DateField):
 
 class PDFFilterDateField(forms.DateField):
     def clean(self, value):
-        import pdb; pdb.set_trace();
         if value:
             try:
                 value = get_date_string(value)
