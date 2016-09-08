@@ -70,9 +70,3 @@ class TestUtilFunctions(TestCase):
         assert not self.page_versions[1].as_page_object.called
         assert not self.page_versions[2].as_page_object.called
         assert not self.page_versions[3].as_page_object.called
-
-    def test_most_common(self):
-        lst = ['1', '1', '2', '3', '3', '1']
-        most_common_list = util.most_common(lst)
-        self.assertEquals('1', most_common_list[0])
-        self.assertEquals('3', most_common_list[1])
