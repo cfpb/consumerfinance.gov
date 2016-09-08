@@ -14,11 +14,13 @@ function create( tag, options ) {
   for ( var i in options ) {
     if ( options.hasOwnProperty( i ) ) {
       var val = options[i];
-      var ref = queryOne( val );
+      var ref;
 
       if ( i === 'inside' ) {
+        ref = queryOne( val );
         ref.appendChild( elem );
       } else if ( i === 'around' ) {
+        ref = queryOne( val );
         ref.parentNode.insertBefore( elem, ref );
         elem.appendChild( ref );
       } else if ( i in elem ) {
