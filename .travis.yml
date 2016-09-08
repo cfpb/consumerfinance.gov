@@ -31,3 +31,8 @@ script:
 
 env:
     - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test WORDPRESS=http://www.consumerfinance.gov
+
+cache:
+  - pip
+  - directories:
+    - node_modules
