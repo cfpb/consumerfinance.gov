@@ -36,7 +36,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated es5-shim npm module to version `4.5.9` from `4.5.7`.
 - Updated gulp-rename npm module to version `1.2.2` from `1.1.0`.
 - Replaces deprecated gulp-cssmin with gulp-clean-css.
-- Updated admin page sidefoot label and icon to read 'Related content'
+- Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
