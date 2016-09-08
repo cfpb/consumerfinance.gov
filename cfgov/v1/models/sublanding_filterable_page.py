@@ -17,7 +17,6 @@ from .learn_page import AbstractFilterPage
 from ..atomic_elements import molecules, organisms
 from ..feeds import FilterableFeedPageMixin
 from ..util.ref import choices_for_page_type
-from ..util.filterable_list import FilterableListMixin
 
 
 class SublandingFilterablePage(FilterableFeedPageMixin, CFGOVPage):
