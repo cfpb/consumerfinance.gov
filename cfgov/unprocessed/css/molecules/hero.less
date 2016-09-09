@@ -1,0 +1,228 @@
+// Copied from capital-framework:prerelease-ver-4 on 9/8/16
+// Remove when cfgov-refresh upgrades to CF4.
+
+//
+// Theme variables
+// NOTE: Variables have been commented out here and declared in cf-theme-overrides.less
+//
+
+// Sizing variables
+
+// @hero-desktop-height: 285px;
+// @hero-image-height:   195px;
+//
+// // Color variables
+// // $color- variables are from 18F's U.S. Web Design Standards
+// // https://github.com/18F/web-design-standards/blob/master/src/stylesheets/core/_variables.scss
+//
+// @hero-bg:             #dce4ef; // $color-gray-cool-light
+// @hero-overlay-bg:     #5b616b; // $color-gray
+// @hero-overlay-text:   white;
+// @hero-overlay-cta:    #dce4ef; // $color-gray-cool-light
+
+
+.m-hero {
+    background-color: @hero-bg;
+
+    .respond-to-min( @bp-sm-min, {
+        display: table;
+        width: 100%;
+        height: @hero-desktop-height;
+    } );
+
+    &_wrapper {
+        padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
+        .respond-to-min( @bp-sm-min, {
+            display: table;
+            height: 100%;
+            padding: 0;
+        } );
+
+        .respond-to-max( @bp-xs-max, {
+            padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+    }
+
+    &_text {
+        .grid_column( 1, 1 );
+
+        .respond-to-min( @bp-sm-min, {
+            .grid_column( 7, 12 );
+
+            padding: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+
+            // Keep the text vertically centered
+            display: table-cell;
+            vertical-align: middle;
+        } );
+
+        .respond-to-range( @bp-sm-min, ( @bp-lg-max - @grid_gutter-width ), {
+            padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        } );
+    }
+
+    &_heading {
+        .heading-1();
+
+        .respond-to-max( @bp-sm-max, {
+            .heading-2();
+        } );
+    }
+
+    &_subhead,
+    &_cta:not( .btn ) {
+        // Not using the `.heading-3()` mixin here because we want the weight
+        // to remain Regular on smaller screens.
+        .webfont-regular();
+
+        font-size: @size-iv;
+        line-height: 1.25;
+
+        .respond-to-min( @bp-med-min, {
+            font-size: @size-iii;
+        } );
+    }
+
+    &_subhead {
+        margin-bottom: 0;
+    }
+
+    &_cta {
+        display: inline-block;
+        margin-top: unit( @grid_gutter-width / 2 / @size-iv, em );
+
+        &:not( .btn ) {
+            border-bottom-width: 1px;
+        }
+
+        .respond-to-min( @bp-sm-min, {
+            margin-bottom: 0;
+        } );
+
+        .respond-to-min( @bp-med-min, {
+            margin-top: unit( @grid_gutter-width / 2 / @size-iii, em );
+        } );
+
+        &.btn {
+            margin-top: unit( @grid_gutter-width / 2 / @btn-font-size, em );
+        }
+    }
+
+    &_image-wrapper {
+        .grid_column( 1, 1 );
+
+        .respond-to-min( @bp-sm-min, {
+            .grid_column( 5, 12 );
+
+            // Keep the image vertically centered
+            display: table-cell;
+            vertical-align: middle;
+        } );
+
+        .respond-to-max( @bp-xs-max, {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+
+        &__bleed-vertical {
+            position: relative;
+
+            .m-hero_image {
+                display: block;
+                height: auto;
+            }
+
+            .m-hero_image__bleeding {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            .respond-to-max( @bp-xs-max, {
+                .m-hero_image__bleeding {
+                    display: none;
+                }
+            } );
+
+            .respond-to-min( @bp-sm-min, {
+                .m-hero_image {
+                    display: none;
+                }
+            } );
+
+            .respond-to-min( @bp-med-min, {
+                .m-hero_image {
+                    display: none;
+                }
+            } );
+        }
+    }
+
+    &_image {
+        // height is the same as min-height in a table
+        height: unit( @hero-image-height / @base-font-size-px, em );
+
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    &__overlay {
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        .respond-to-max( @bp-xs-max, {
+
+            .m-hero_wrapper {
+                // Remove wrapper bottom padding
+                padding-bottom: 0;
+
+                // Overwrite the image that is set in the markup because
+                // we're showing the image container below instead
+                background-image: none !important;
+            }
+
+            .m-hero_image-wrapper {
+                border-width: 0;
+            }
+
+            .m-hero_image {
+                background-size: cover;
+            }
+        } );
+
+        .respond-to-min( @bp-sm-min, {
+            .m-hero_image {
+                // Overwrite the image but don't remove the container from
+                // the grid flow. Necessary due to table-cell.
+                background: transparent !important;
+            }
+        } );
+
+        .respond-to-min( ( @bp-lg-max - @grid_gutter-width ), {
+            .m-hero_wrapper {
+                padding: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            }
+        } );
+    }
+
+    &__overlay-text {
+        .m-hero {
+            background-color: @hero-overlay-bg;
+        }
+
+        .m-hero_wrapper {
+            color: @hero-overlay-text;
+        }
+
+        .m-hero_cta:not( .btn ) {
+            .u-link__colors( @hero-overlay-cta );
+        }
+    }
+}
