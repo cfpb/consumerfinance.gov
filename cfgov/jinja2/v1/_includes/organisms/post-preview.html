@@ -151,7 +151,7 @@
                 </div>
             {% endif %}
             <div class="post_meta">
-                {% for author in post.authors.all() %}
+                {% for author in post.get_authors() %}
                     <span class="o-post-preview_byline">
                         {% if loop.index == 1  %}
                             By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
@@ -169,7 +169,7 @@
                     </span>
                 {% endfor %}
 
-                {% if post.tags.names() | length %}
+                {% if post.tags.exists() %}
                     {%- import 'tags.html' as tags %}
                     {{ tags.render(related_metadata_tags(post), page_url, true, false, form_id, is_wagtail=True) }}
                 {% endif %}
