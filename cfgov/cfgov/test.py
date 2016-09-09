@@ -37,7 +37,7 @@ class TestDataTestRunner(DiscoverRunner):
         return Page.objects.filter(slug='cfgov').exists()
 
     def setup_cfgov_root(self):
-        migration = 'v1.migrations.0008_site_root_data'
+        migration = 'v1.migrations.0009_site_root_data'
         print('Running migration {} to setup CFGOV root'.format(migration))
 
         module = importlib.import_module(migration)

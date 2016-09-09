@@ -48,7 +48,7 @@ def create_careers_pages(apps, schema_editor):
 class Migration(migrations.Migration):
     dependencies = [
         ('jobmanager', '0006_auto_20160815_1705'),
-        ('v1', '0008_site_root_data'),
+        ('v1', '0009_site_root_data'),
     ]
 
     operations = [
