@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Replaces deprecated gulp-cssmin with gulp-clean-css.
 - Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
 
+
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 - Unused npm module map-stream.
