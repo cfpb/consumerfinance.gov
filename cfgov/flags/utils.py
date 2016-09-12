@@ -1,24 +1,14 @@
-from django.conf.urls import include
-
-from .models import Flag, FlagState
-from .template_functions import flag_enabled
-
-
-def missing_flag_states_for_site(site, exclude_keys):
-    return (FlagState(site=site, flag=f, enabled=f.enabled_by_default)
-            for f in Flag.objects.exclude(key__in=exclude_keys))
+from flags.models import Flag, FlagState
 
 
 def init_missing_flag_states_for_site(site):
-    saved_states = site.flagstate_set.all()
-    saved_keys = [ss.flag_id for ss in saved_states]
-    missing_states = missing_flag_states_for_site(site, saved_keys)
+    existing_flags = site.flag_states.values_list('flag', flat=True)
+    missing_flags = Flag.objects.exclude(key__in=existing_flags)
 
-    return [state.save() for state in missing_states]
-
-
-def conditional_include(flag, *args, **kwargs):
-    if flag_enabled(flag):
-        return include(*args, **kwargs)
-    else:
-        return []
+    FlagState.objects.bulk_create([
+        FlagState(
+            site=site,
+            flag=flag,
+            enabled=flag.enabled_by_default
+        ) for flag in missing_flags
+    ])
