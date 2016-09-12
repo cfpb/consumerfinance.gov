@@ -15,9 +15,9 @@ def select_site(request):
     if request.method == 'POST':
         form = SelectSiteForm(request.POST)
 
-    if form.is_valid():
-        site_id = form.cleaned_data['site_id']
-        return redirect('flagadmin:list', site_id)
+        if form.is_valid():
+            site_id = form.cleaned_data['site_id']
+            return redirect('flagadmin:list', site_id)
     else:
         default_site = Site.objects.all().filter(is_default_site=True).get()
         return redirect('flagadmin:list', (default_site.id),)
@@ -49,7 +49,7 @@ def index(request, site_id):
     )
 
     flagstate_forms = FlagStateFormSet(
-        queryset=selected_site.flagstate_set.all()
+        queryset=selected_site.flag_states.all()
     )
 
     context = {
