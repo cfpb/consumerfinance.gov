@@ -44,6 +44,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Unused npm module map-stream.
 - Custom method `most_common` since python lib offers similar function
 
+### Fixed
+- Post preview organism template used tag/author names instead of slugs that
+caused bad link formation
+
 ## 3.7.2
 
 ### Changed
