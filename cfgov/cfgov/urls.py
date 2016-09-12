@@ -10,7 +10,6 @@ from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
 from django.http import HttpResponse
 
-from flags.utils import conditional_include
 from legacy.views import HousingCounselorPDFView, dbrouter_shortcut, token_provider
 from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
@@ -29,6 +28,7 @@ from wagtail.wagtailcore import urls as wagtail_urls
 from transition_utilities.conditional_urls import include_if_app_enabled
 
 fin_ed = SheerSite('fin-ed-resources')
+
 
 urlpatterns = [
 
@@ -145,11 +145,7 @@ urlpatterns = [
     url(r'^external-site/$', SheerTemplateView.as_view(template_name='external-site/index.html'), name='external-site'),
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(url='/about-us/careers/%(path)s', permanent=True)),
-    url(r'^about-us/careers/', conditional_include(
-        'DJANGO_CAREERS',
-        'jobmanager.urls',
-        namespace='careers'
-    )),
+    url(r'^about-us/careers/', include('jobmanager.urls', namespace='careers')),
 
     url(r'^transcripts/', include([
         url(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$', SheerTemplateView.as_view(
