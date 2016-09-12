@@ -29,7 +29,6 @@ from transition_utilities.conditional_urls import include_if_app_enabled
 
 fin_ed = SheerSite('fin-ed-resources')
 
-
 urlpatterns = [
 
     url(r'^documents/', include(wagtaildocs_urls)),
