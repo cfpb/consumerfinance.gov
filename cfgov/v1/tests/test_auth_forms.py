@@ -43,30 +43,25 @@ class UserCreationFormTestCase(TestCase):
 
 
 class UserEditFormTestCase(TestCase):
-    def test_no_edits_valid(self):
-        data = {
+    def setUp(self):
+        self.userdata = {
             'username': 'george',
             'email': 'george@washington.com',
             'first_name': 'george',
             'last_name': 'washington',
         }
 
-        user = User.objects.create(**data)
-        form = UserEditForm(data=data, instance=user)
+    def test_no_edits_valid(self):
+        user = User.objects.create(**self.userdata)
+        form = UserEditForm(data=self.userdata, instance=user)
         self.assertTrue(form.is_valid())
 
     def test_edit_first_name(self):
-        data = {
-            'username': 'george',
-            'email': 'george@washington.com',
-            'first_name': 'george',
-            'last_name': 'washington',
-        }
+        user = User.objects.create(**self.userdata)
 
-        user = User.objects.create(**data)
-
-        data['first_name'] = 'joe'
-        form = UserEditForm(data=data, instance=user)
+        userdata2 = dict(self.userdata)
+        userdata2['first_name'] = 'joe'
+        form = UserEditForm(data=userdata2, instance=user)
         self.assertTrue(form.is_valid())
 
         user = form.save()
@@ -74,37 +69,23 @@ class UserEditFormTestCase(TestCase):
         self.assertEqual(user.username, 'george')
 
     def test_duplicate_email_fails_validation(self):
-        data = {
-            'username': 'george',
-            'email': 'george@washington.com',
-            'first_name': 'george',
-            'last_name': 'washington',
-        }
+        User.objects.create(**self.userdata)
 
-        User.objects.create(**data)
-
-        data2 = dict(data)
-        data['username'] = 'patrick'
-        form = UserEditForm(data=data2)
+        userdata2 = dict(self.userdata)
+        userdata2['username'] = 'patrick'
+        form = UserEditForm(data=userdata2)
 
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors['email'])
 
     def test_duplicate_emails_allowed_on_user_model(self):
-        data = {
-            'username': 'george',
-            'email': 'george@washington.com',
-            'first_name': 'george',
-            'last_name': 'washington',
-        }
+        User.objects.create(**self.userdata)
 
-        User.objects.create(**data)
-
-        data2 = dict(data)
-        data2['username'] = 'patrick'
+        userdata2 = dict(self.userdata)
+        userdata2['username'] = 'patrick'
 
         try:
-            User.objects.create(**data2)
+            User.objects.create(**userdata2)
         except Exception:
             self.fail(
                 'users with duplicate emails are allowed, '
