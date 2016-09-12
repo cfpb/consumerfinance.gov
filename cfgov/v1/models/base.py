@@ -138,9 +138,9 @@ class CFGOVPage(Page):
     def alphabetize_authors(self):
         """ Alphabetize authors of this page by last name, then first name if needed """
         # First sort by first name
-        author_names = sorted(self.authors.names())
+        author_names = self.authors.order_by('name')
         # Then sort by last name
-        return sorted(author_names, key=lambda x: x.split()[-1])
+        return sorted(author_names, key=lambda x: x.name.split()[-1])
 
     def generate_view_more_url(self, request):
         from ..forms import ActivityLogFilterForm
