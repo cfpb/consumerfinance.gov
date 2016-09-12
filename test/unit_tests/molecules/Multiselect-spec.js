@@ -14,7 +14,7 @@ var sandbox;
 var HTML_SNIPPET =
     '<select name="test-select" id="test-select" multiple>' +
       '<option value="Debt collection">Debt collection</option>' +
-      '<option value="Nonbanks">Nonbanks</option>' +
+      '<option value="consumers-responses">Consumer&#39;s Responses</option>' +
       '<option value="Mortgage disclosure">Mortgage disclosure</option>' +
       '<optgroup label="All other topics">' +
     '</select>';

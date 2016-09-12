@@ -11,9 +11,10 @@ class TestAuthorNames(TestCase):
 
     def test_alphabetize_authors_by_last_name(self):
         page = CFGOVPage()
-        page.authors.add('Ross Karchner','Richa Agarwal', 'Andy Chosak', 'Will Barton')
+        page.authors.add('Ross Karchner', 'Richa Agarwal', 'Andy Chosak', 'Will Barton')
         expected_result = ['Richa Agarwal', 'Will Barton', 'Andy Chosak', 'Ross Karchner']
-        self.assertEquals(page.alphabetize_authors(), expected_result)
+        author_names = [a.name for a in page.alphabetize_authors()]
+        self.assertEquals(author_names, expected_result)
     
     def test_no_authors(self):
         page = CFGOVPage()
@@ -23,13 +24,15 @@ class TestAuthorNames(TestCase):
         page = CFGOVPage()
         page.authors.add('Jess Schafer', 'Richa Something Agarwal', 'Sarah Simpson')
         expected_result = ['Richa Something Agarwal', 'Jess Schafer', 'Sarah Simpson']
-        self.assertEquals(page.alphabetize_authors(), expected_result)
+        author_names = [a.name for a in page.alphabetize_authors()]
+        self.assertEquals(author_names, expected_result)
 
     def test_same_last_names(self):
         page = CFGOVPage()
         page.authors.add('Mary Smith', 'Vic Kumar', 'John Smith')
         expected_result = ['Vic Kumar', 'John Smith', 'Mary Smith']
-        self.assertEquals(page.alphabetize_authors(), expected_result)
+        author_names = [a.name for a in page.alphabetize_authors()]
+        self.assertEquals(author_names, expected_result)
 
 
 if __name__ == '__main__':
