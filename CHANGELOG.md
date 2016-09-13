@@ -16,9 +16,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased Changes
 
 ### Added
+- Logging configuration to `local.py`
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 - Ability to output sharing links within an Image and Text 50/50 Group module
 - Google Optimize code on `find-a-housing-counselor` page
+- Data migration sets up site root and careers pages
+- Wagtail User editor now enforces unique email addresses when creating/editing users.
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
@@ -37,7 +40,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated gulp-rename npm module to version `1.2.2` from `1.1.0`.
 - Replaces deprecated gulp-cssmin with gulp-clean-css.
 - Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
-
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
