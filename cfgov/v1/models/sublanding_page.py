@@ -1,4 +1,5 @@
 from itertools import chain
+from collections import defaultdict
 
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
@@ -68,15 +69,12 @@ class SublandingPage(CFGOVPage):
     def get_browsefilterable_posts(self, request, limit):
         filter_pages = [p.specific for p in self.get_appropriate_descendants(request.site.hostname)
                         if 'FilterablePage' in p.specific_class.__name__ and 'archive' not in p.title.lower()]
-        filtered_controls = {}
-        for page in filter_pages:
-            id = str(util.get_form_id(page))
-            if id not in filtered_controls.keys():
-                filtered_controls.update({id: []})
-            form_class = page.get_form_class()
-            posts = page.get_page_set(form_class(parent=page, hostname=request.site.hostname), request.site.hostname)
-            filtered_controls[id].append(posts)
 
-        posts_tuple_list = [(id, post) for id, posts in filtered_controls.iteritems() for post in chain(*posts)]
+        posts_tuple_list = [(str(util.get_form_id(page)), post)
+                            for page in filter_pages
+                            for post in page.get_page_set(page.get_form_class()(parent=page,
+                                                                                hostname=request.site.hostname),
+                                                          request.site.hostname)]
+
         posts = sorted(posts_tuple_list, key=lambda p: p[1].date_published, reverse=True)[:limit]
         return posts
