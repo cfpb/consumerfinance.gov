@@ -138,6 +138,12 @@ snippet_types = [
     ('downloads', 'Downloads'),
 ]
 
+snippet_subtypes = [
+    ('Download', (
+        
+    ))
+]
+
 
 def related_posts_category_lookup(related_categories):
     related = []

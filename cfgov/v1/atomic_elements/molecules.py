@@ -392,11 +392,14 @@ class ContentWithAnchor(blocks.StructBlock):
 class SnippetList(blocks.StructBlock):
     snippet_type = blocks.ChoiceBlock(choices=ref.snippet_types,
                                       required=True)
+    # Subtype, too
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic()
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
     has_rule = blocks.BooleanBlock(required=False)
+
+    # Needs a tag chooser
 
     class Meta:
         icon = 'image'
