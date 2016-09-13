@@ -1,16 +1,14 @@
 import time
+
 from datetime import timedelta
-
-from django.contrib.auth.forms import (PasswordChangeForm, PasswordResetForm,
-                                       SetPasswordForm)
-
-from django.contrib.auth import authenticate
-from django.contrib.auth import get_user_model
-from django.utils import timezone
 from django.conf import settings
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm,
+    SetPasswordForm
+)
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.contrib.auth.forms import AuthenticationForm
-
+from django.utils import timezone
 from wagtail.wagtailusers import forms as wagtailforms
 
 from .email import send_password_reset_email
@@ -123,6 +121,17 @@ class LoginForm(AuthenticationForm):
 
 
 class UserCreationForm(wagtailforms.UserCreationForm):
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        try:
+            User = get_user_model()
+            User.objects.get(email=email)
+        except User.DoesNotExist:
+            return email
+        else:
+            raise ValidationError('This email is already in use.')
+
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=commit)
 
@@ -130,3 +139,16 @@ class UserCreationForm(wagtailforms.UserCreationForm):
             send_password_reset_email(user.email)
 
         return user
+
+
+class UserEditForm(wagtailforms.UserEditForm):
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        try:
+            User = get_user_model()
+            User.objects.exclude(pk=self.instance.pk).get(email=email)
+        except User.DoesNotExist:
+            return email
+        else:
+            raise ValidationError('This email is already in use.')

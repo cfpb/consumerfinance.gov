@@ -30,4 +30,4 @@ script:
   - gulp test:coveralls
 
 env:
-    - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test WORDPRESS=http://www.consumerfinance.gov
+    - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test WORDPRESS=http://www.consumerfinance.gov DJANGO_STAGING_HOSTNAME=content.localhost
