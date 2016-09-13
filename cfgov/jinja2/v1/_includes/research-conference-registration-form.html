@@ -7,6 +7,8 @@
       class="js-validate-filters">
 
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <input type="hidden" name="code" value="{{ value.code }}">
+    <input type="hidden" name="page_id" value="{{ page.id }}">
 
     {# Form heading #}
     {% if value.heading %}
@@ -44,11 +46,11 @@
 
         {# Days attending #}
         {% set checkbox_fields = [] %}
-        {% for field in value.days %}
-            {% do checkbox_fields.append(field) %}
+        {% for session in value.sessions %}
+            {% do checkbox_fields.append(session) %}
         {% endfor %}
         {{ large_checkbox.render({
-            "legend":   'Which days will you be attending?',
+            "legend":   'Which sessions will you be attending?',
             "fields":    checkbox_fields,
             "size" : '1'
         }, {}) }}
