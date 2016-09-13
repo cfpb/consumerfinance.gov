@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added a test for get_browsefilterable_posts function of the sublanding page 
 - Data migration sets up site root and careers pages
 - Wagtail User editor now enforces unique email addresses when creating/editing users.
+- Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
