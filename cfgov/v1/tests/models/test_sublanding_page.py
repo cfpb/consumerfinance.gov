@@ -38,9 +38,9 @@ class SublandingPageTestCase(TestCase):
         # order of retrieval in test situations, otherwise the `date_published`
         # can vary due to commit order
 
-        self.child1_of_post1 = AbstractFilterPage(title='child 1 of post 1', date_published=dt.datetime(2016, 9, 1))
-        self.child2_of_post1 = AbstractFilterPage(title='child 2 of post 1', date_published=dt.datetime(2016, 9, 2))
-        self.child1_of_post2 = AbstractFilterPage(title='child 1 of post 2', date_published=dt.datetime(2016, 9, 3))
+        self.child1_of_post1 = AbstractFilterPage(title='child 1 of post 1', date_published=dt.date(2016, 9, 1))
+        self.child2_of_post1 = AbstractFilterPage(title='child 2 of post 1', date_published=dt.date(2016, 9, 2))
+        self.child1_of_post2 = AbstractFilterPage(title='child 1 of post 2', date_published=dt.date(2016, 9, 3))
         helpers.save_new_page(self.child1_of_post1, self.post1)
         helpers.save_new_page(self.child2_of_post1, self.post1)
         helpers.save_new_page(self.child1_of_post2, self.post2)
