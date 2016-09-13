@@ -13,10 +13,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## Unreleased
+
+### Changed
+- Updated copy on Students and Recent Graduates Careers page.
+
+
 ## 3.8.1
 
 ### Added
 - Google Optimize code on `find-a-housing-counselor` page
+
 
 ## 3.8.0
 
@@ -29,6 +36,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 
+
 ## 3.7.2
 
 ### Changed
@@ -37,8 +45,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed the leadership calendar print template from the "base.html" inheritence hiearchy
 - restores the django logging config we used before cfgov-refresh
 
+
 ## 3.7.1
 - always use "localhost" when setting the base URL for PDFReactor
+
 
 ## 3.7.0
 
