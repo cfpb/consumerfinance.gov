@@ -215,6 +215,7 @@ WAGTAILIMAGES_IMAGE_MODEL = 'v1.CFGOVImage'
 TAGGIT_CASE_INSENSITIVE = True
 
 WAGTAIL_USER_CREATION_FORM = 'v1.auth_forms.UserCreationForm'
+WAGTAIL_USER_EDIT_FORM = 'v1.auth_forms.UserEditForm'
 
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')

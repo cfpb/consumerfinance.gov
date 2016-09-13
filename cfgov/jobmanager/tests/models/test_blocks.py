@@ -22,7 +22,7 @@ def make_job_listing_page(title, close_date=None, grades=[], regions=[],
         **kwargs
     )
 
-    home = Page.objects.get(slug='home-page')
+    home = Page.objects.get(slug='cfgov')
     home.add_child(instance=page)
 
     for grade in grades:
