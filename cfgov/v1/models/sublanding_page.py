@@ -1,6 +1,3 @@
-from itertools import chain
-from collections import defaultdict
-
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
