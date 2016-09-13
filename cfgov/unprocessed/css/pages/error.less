@@ -96,14 +96,17 @@
     }
 
     &__500 {
-        .content_main {
-            margin-top: 30px;
-        }
-
+        
         .main_wrapper {
 
             background: transparent url('/static/img/server.png') no-repeat right top;
             background-size: contain;
+
+            .respond-to-min(@bp-sm-min, {
+                .content_main {
+                    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+                }
+            });
 
             .respond-to-max(@bp-xs-max, {
                 background: none;
