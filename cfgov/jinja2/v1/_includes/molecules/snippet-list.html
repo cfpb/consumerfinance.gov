@@ -48,7 +48,8 @@
             </thead>
             <tbody>
             {% for snippet in value.snippets %}
-                <tr>
+                {{ snippet.template() }}
+                {# <tr>
                     <th data-label="Title">{{ snippet.title }}</th>
                     <td data-label="Download">
                         <a href="{{ snippet.url }}">Download</a>
@@ -56,7 +57,7 @@
                     <td data-label="Order">
                         <a href="{{ snippet.order_link }}">Order</a>
                     </td>
-                </tr>
+                </tr> #}
             {% endfor %}
             </tbody>
         </table>

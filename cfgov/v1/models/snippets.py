@@ -58,6 +58,13 @@ class Download(ClusterableModel):
     title = models.CharField(max_length=255)
     desc = RichTextField(verbose_name='Description', blank=True)
 
+    subtype = models.ChoiceField(choices=(
+                                     ('screensaver', 'Screensaver'),
+                                     ('flyer', 'Flyer'),
+                                     ('poster', 'Poster')
+                                 ))
+    # Figure out how to associate a template file with each subtype
+
     thumbnail = models.ForeignKey(
         'v1.CFGOVImage',
         null=True,
@@ -106,6 +113,14 @@ class Download(ClusterableModel):
         FieldPanel('bulk_order_link'),
         FieldPanel('tags'),
     ]
+
+    def template(self, is_single=False):
+        # check if single or not, return concatenation of subtype and kind of
+        # template
+        if is_single:
+            return self.subtype + '-single.html'
+        else:
+            return self.subtype + '-list-item.html'
 
     def __str__(self):
         return self.title
