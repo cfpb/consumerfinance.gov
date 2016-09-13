@@ -7,6 +7,8 @@ omit =
     */site-packages*
     */python2.7/*
     *setup.py
+    *settings/*
+data_file = ../.coverage
 
 [report]
 exclude_lines = 
