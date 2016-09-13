@@ -33,6 +33,23 @@ if flags_enabled(request, 'FLAG1', 'FLAG2', 'FLAG3'):
 	print(“All flags were set”)
 
 ```
+
+You can also use the `flag_required` method decorator to mark Django views as requiring a flag. The default behavior is to return a 404 if the flag is not set, but an optional fallback view function can be specified instead.
+
+```python
+from flags.decorators import flag_required
+
+@flag_required('MY_FLAG')
+def view_requiring_flag(request):
+    retrun HttpResponse('flag was set')
+
+def other_view(request):
+    return HttpResponse('flag was not set')
+
+@flag_required('MY_FLAG', fallback_view=other_view)
+def view_with_fallback(request):
+    return HttpResponse('flag was set')
+```
 	
 ## Jinja2 template example:
 
