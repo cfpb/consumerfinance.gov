@@ -21,6 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Ability to output sharing links within an Image and Text 50/50 Group module
 - Google Optimize code on `find-a-housing-counselor` page
 - Data migration sets up site root and careers pages
+- Wagtail User editor now enforces unique email addresses when creating/editing users.
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
