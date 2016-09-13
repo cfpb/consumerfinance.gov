@@ -8,7 +8,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
-from ..util import filterable_list, util
+from ..util import util
 from jobmanager.models import JobListingList
 
 class SublandingPage(CFGOVPage):

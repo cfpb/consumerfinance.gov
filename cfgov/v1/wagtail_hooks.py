@@ -11,7 +11,11 @@ from django.utils.html import escape
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore import hooks
 
-from v1.models import CFGOVPage
+from .models import CFGOVPage
+from .models.handlers import Handler
+from .models.handlers.filterable_list_handlers import FilterableListHandler, \
+    EventArchiveHandler, NewsroomHandler, ActivityLogHandler
+from .models.handlers.js_handler import JSHandler
 
 
 @hooks.register('after_create_page')
@@ -126,3 +130,36 @@ class CFGovLinkHandler(object):
 @hooks.register('register_rich_text_link_handler')
 def register_cfgov_link_handler():
     return ('page', CFGovLinkHandler)
+
+
+@hooks.register('cfgov_context_handlers')
+def register_js_handler(*args):
+    handler = JSHandler(*args)
+    handler.process()
+
+
+@hooks.register('cfgov_context_handlers')
+def register_filterablelist_handlers(*args):
+    base_handler = Handler(*args)
+    def get_filter_blocks():
+        block_tuples = []
+        blocks_dict = base_handler.get_streamfield_blocks()
+        for blocks_list in blocks_dict.values():
+            for form_id, block in enumerate(blocks_list):
+                if block.block_type == 'filter_controls':
+                    block_tuples.append((form_id, block))
+        return block_tuples
+
+    block_tuples = get_filter_blocks()
+    if block_tuples:
+        i, block = block_tuples[0]
+        page_type = block.value['page_type']
+        if page_type == 'newsroom':
+            handler = NewsroomHandler(*args)
+        elif page_type == 'activity-log':
+            handler = ActivityLogHandler(*args)
+        elif page_type == 'event-archive':
+            handler = EventArchiveHandler(*args)
+        else:
+            handler = FilterableListHandler(*args)
+        handler.process(block_tuples)

@@ -27,11 +27,10 @@ ERROR_MESSAGES = {
 }
 
 def get_form_id(page):
-    form_ids = page.get_filter_ids()
-    if form_ids:
-        return form_ids[0]
-    else:
-        return 0
+    for i, block in enumerate(page.content):
+        if block.block_type == 'filter_controls':
+            return i
+    return 0
 
 
 def instanceOfBrowseOrFilterablePages(page):
@@ -143,3 +142,11 @@ def all_valid_destinations_for_request(request):
                             valid_destination_for_request(request, pair[1])]
 
     return valid_destinations
+
+
+def has_active_filters(request, index):
+    for key, param in request.GET.items():
+        if key != 'form-id':
+            if str(index) in key and param:
+                return True
+    return False

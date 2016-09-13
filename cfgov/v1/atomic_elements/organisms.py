@@ -9,6 +9,13 @@ from . import atoms, molecules
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
 
+JS_ORGANISMS = [
+    'BaseExpandable',
+    'Expandable',
+    'ExpandableGroup',
+    'FilterControls'
+]
+
 
 class Well(blocks.StructBlock):
     content = blocks.RichTextBlock(required=False, label='Well')
@@ -379,22 +386,18 @@ class ItemIntroduction(blocks.StructBlock):
         classname = 'block__flush-top'
 
 
-# TODO: FilterControls/Filterable List should be updated to use same
-#       atomic name used on the frontend of FilterableListControls,
-#       or vice versa.
-class FilterControls(BaseExpandable):
+class FilterableListControls(BaseExpandable):
     form_type = blocks.ChoiceBlock(choices=[
         ('filterable-list', 'Filterable List'),
         ('pdf-generator', 'PDF Generator'),
     ], default='filterable-list')
+    page_type = blocks.ChoiceBlock(choices=ref.page_types, required=False)
     title = blocks.BooleanBlock(default=True, required=False,
                                 label='Filter Title')
     post_date_description = blocks.CharBlock(default='Published')
     categories = blocks.StructBlock([
         ('filter_category', blocks.BooleanBlock(default=True, required=False)),
         ('show_preview_categories', blocks.BooleanBlock(default=True, required=False)),
-        ('page_type', blocks.ChoiceBlock(choices=ref.page_types,
-                                         required=False)),
     ])
     topics = blocks.BooleanBlock(default=True, required=False,
                                  label='Filter Topics')
@@ -402,6 +405,8 @@ class FilterControls(BaseExpandable):
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
                                      label='Filter Date Range')
+    results_limit = atoms.NumberBlock(default=10,
+                                      help_text='Number of results per page')
 
     class Meta:
         label = 'Filter Controls'

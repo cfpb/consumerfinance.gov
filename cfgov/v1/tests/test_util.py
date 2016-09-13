@@ -70,3 +70,15 @@ class TestUtilFunctions(TestCase):
         assert not self.page_versions[1].as_page_object.called
         assert not self.page_versions[2].as_page_object.called
         assert not self.page_versions[3].as_page_object.called
+
+    def test_has_active_filters_returns_True_for_search_terms_in_url(self):
+        self.request.GET.items.return_value = [('key0', 'some val')]
+        assert util.has_active_filters(self.request, 0)
+
+    def test_has_active_filters_returns_False_for_nonmatching_keys_for_index(self):
+        self.request.GET.items.return_value = [('key0', 'some val')]
+        assert not util.has_active_filters(self.request, 1)
+
+    def test_has_active_filters_returns_False_for_empty_values(self):
+        self.request.GET.items.return_value = [('key0', '')]
+        assert not util.has_active_filters(self.request, 0)
