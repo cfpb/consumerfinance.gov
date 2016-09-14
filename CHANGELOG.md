@@ -13,7 +13,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased
+## 3.8.2
 
 ### Changed
 - Updated copy on Students and Recent Graduates Careers page.
