@@ -164,7 +164,7 @@ class Table(blocks.StructBlock):
     class Meta:
         icon = 'form'
         template = '_includes/organisms/table.html'
-        label = 'Table'
+        label = ' '
 
 
 class AtomicTableInput(TableInput):
@@ -199,7 +199,7 @@ class AtomicTableBlock(TableBlock):
         default = None
         icon = 'table'
         template = '_includes/organisms/table.html'
-        label = ' '
+        label = 'TableBlock'
 
 
 class ModelBlock(blocks.StructBlock):
