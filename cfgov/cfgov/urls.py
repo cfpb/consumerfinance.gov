@@ -240,6 +240,11 @@ if settings.DEBUG :
     urlpatterns.append(url(r'^test-fixture/$', SheerTemplateView.as_view(template_name='test-fixture/index.html'), name='test-fixture'))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+    # enable local preview of error pages
+    urlpatterns.append(url(r'^500/$', TemplateView.as_view(template_name='500.html'), name='500'))
+    urlpatterns.append(url(r'^404/$', TemplateView.as_view(template_name='404.html'), name='404'))
+
+
 # Catch remaining URL patterns that did not match a route thus far.
 
 urlpatterns.append(url(r'', include(wagtail_urls)))
@@ -247,6 +252,8 @@ urlpatterns.append(url(r'', include(wagtail_urls)))
 from sheerlike import register_permalink
 
 from django.shortcuts import render
+
+
 
 
 def handle_error(code, request):
