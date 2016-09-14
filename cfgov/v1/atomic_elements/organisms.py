@@ -14,7 +14,7 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 
 from . import atoms, molecules
-from ..util import ref, get_unique_id
+from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
 
 from jinja2 import Markup
