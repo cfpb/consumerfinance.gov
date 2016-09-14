@@ -8,11 +8,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 from django.core.context_processors import csrf
 from django.utils import timezone
-import re
-import datetime
 
+from flags.decorators import flag_required
+from flags.views import FlaggedViewMixin
 from jobmanager.models import Job, JobCategory, Location, FellowshipUpdateList
+from transition_utilities.conditional_urls import wagtail_fail_through
 
+
+FLAG_NAME = 'DJANGO_CAREERS'
 
 
 @csrf_exempt
@@ -32,6 +35,7 @@ def fellowship_form_submit(request):
     return HttpResponse('OK')
 
 
+@flag_required('DJANGO_CAREERS', fallback_view=wagtail_fail_through)
 def detail(request, pk=None, slug=None):
     today = timezone.now().date()
 
@@ -55,7 +59,7 @@ def detail(request, pk=None, slug=None):
             'salary_max': salary_max})
 
 
-class JobListView(ListView):
+class JobListView(FlaggedViewMixin, ListView):
     model = Job
     ordering = ('close_date', 'title')
 

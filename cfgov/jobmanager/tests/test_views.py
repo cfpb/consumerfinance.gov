@@ -1,24 +1,34 @@
 import django
 
-from django.test import RequestFactory
+from django.test import RequestFactory, TestCase
 from mock import patch
 from model_mommy import mommy
-from unittest import TestCase
 
+from flags.models import Flag
 from jobmanager.models import Job
-from jobmanager.views import CurrentOpeningsView, IndexView, JobListView
+from jobmanager.views import (
+    CurrentOpeningsView, FLAG_NAME, IndexView
+)
 
 
 django.setup()
 
 
 class JobListViewTestCaseMixin(object):
+    @classmethod
+    def setUpClass(cls):
+        super(JobListViewTestCaseMixin, cls).setUpClass()
+        Flag.objects.get_or_create(
+            key=FLAG_NAME,
+            defaults={'enabled_by_default': True}
+        )
+
     def setUp(self):
         self.view = self.view_cls()
 
     def request(self):
         request = RequestFactory().get('')
-        return self.view_cls.as_view()(request)
+        return self.view_cls.as_view(flag_name=FLAG_NAME)(request)
 
     def mock_jobs(self, count):
         jobs = mommy.prepare(Job, _quantity=count) if count else []
