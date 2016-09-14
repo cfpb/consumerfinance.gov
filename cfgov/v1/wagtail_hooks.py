@@ -60,6 +60,20 @@ def editor_js():
 
     return js_includes
 
+
+@hooks.register('insert_editor_css')
+def editor_css():
+    css_files = [
+        'css/table-block.css',
+    ]
+    css_includes = format_html_join('\n', '<link rel="stylesheet" href="{0}{1}"><link>',
+        ((settings.STATIC_URL, filename) for filename in css_files)
+    )
+
+    print css_includes + 'css includes'
+    return css_includes
+
+
 # `CFGOVPage.route()` will select the latest revision of the page where `live`
 # is set to True and return that revision as a page object to serve the request
 # so here we configure the latest revision to fall in line with that logic.

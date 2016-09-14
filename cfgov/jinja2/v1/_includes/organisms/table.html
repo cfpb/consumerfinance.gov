@@ -12,6 +12,7 @@
 
    ========================================================================== #}
 
+{% if value.data  %}
 <table class="o-table
               {{ 'o-table__row-links' if value.row_links else '' }}
               {{ 'table__stack-on-small' if value.is_stacked else '' }}
@@ -23,7 +24,7 @@
     <thead>
         <tr>
             {% for column in value.data[0] %}
-                {% if column is defined %}
+                {% if cell is not none %}
                 <th>
                     {{ column | trim | safe | linebreaksbr }}
                 </th>
@@ -36,12 +37,15 @@
     {% for row in value.data[row_index:] or [] %}
         <tr>
             {% for cell in row or [] %}
+                {% if cell is not none %}
                 {% set tag = 'th' if value.first_col_is_header and loop.first else 'td' %}
-                <{{tag}} data-label="{{ value.data[0][loop.index0] }}">
+                <{{tag}} data-label="{{ value.data[0][loop.index0] | striptags }}">
                     {{ cell | trim | safe | linebreaksbr }}
                 </{{tag}}>
+                {% endif %}
             {% endfor %}
         </tr>
     {% endfor %}
     </tbody>
 </table>
+{% endif %}

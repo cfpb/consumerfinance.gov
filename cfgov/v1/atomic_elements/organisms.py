@@ -14,7 +14,7 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
 
 from . import atoms, molecules
-from ..util import ref
+from ..util import ref, get_unique_id
 from ..models.snippets import Contact as ContactSnippetClass
 
 from jinja2 import Markup
@@ -155,11 +155,8 @@ class Table(blocks.StructBlock):
 
 
 class AtomicTableInput(TableInput):
-    _id = 'table-block'
 
     def render(self, name, value, attrs=None):
-        attrs.update({'id': self._id})
-
         # Calling the grandparents render method and bypassing TableInputs,
         # in order to control how we render the form.
         original_field_html = super(TableInput, self).render(
