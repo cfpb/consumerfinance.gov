@@ -16,12 +16,43 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased Changes
 
 ### Added
+- Logging configuration to `local.py`
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
+- Ability to output sharing links within an Image and Text 50/50 Group module
+- Google Optimize code on `find-a-housing-counselor` page
+- Added a test for get_browsefilterable_posts function of the sublanding page 
+- Data migration sets up site root and careers pages
+- Wagtail User editor now enforces unique email addresses when creating/editing users.
+- Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
+- New `@flag_required` decorator for Django views
 
 ### Changed
+- Special characters no longer break the multiselect in the filter form
+- Updated gulp-istanbul npm module to version `1.1.1` from `0.10.3`.
+- Updated del npm module to version `2.2.2` from `2.2.0`.
+- Updated gulp-autoprefixer npm module to version `3.1.1` from `3.1.0`.
+- Updated gulp-changed npm module to version `1.3.2` from `1.3.0`.
+- Updated gulp-header npm module to version `1.8.8` from `1.7.1`.
+- Updated gulp-imagemin npm module to version `3.0.3` from `3.0.2`.
+- Updated gulp-less npm module to version `3.1.0` from `3.0.5`.
+- Updated gulp-load-plugins npm module to version `1.2.4` from `1.2.0`.
+- Updated validate.js npm module to version `0.10.0` from `0.9.0`.
+- Updated webpack npm module to version `1.13.2` from `1.12.14`.
+- Updated webpack-stream npm module to version `3.2.0` from `3.1.0`.
+- Updated es5-shim npm module to version `4.5.9` from `4.5.7`.
+- Updated gulp-rename npm module to version `1.2.2` from `1.1.0`.
+- Replaces deprecated gulp-cssmin with gulp-clean-css.
+- Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
+- Feature flag methods now take an explicit `request` object to determine what site to check the flag against
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
+- Unused npm module map-stream.
+- Custom method `most_common` since python lib offers similar function
+
+### Fixed
+- Post preview organism template used tag/author names instead of slugs that
+caused bad link formation
 
 ## 3.7.2
 
@@ -38,14 +69,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Added new conference url in the nav
-- Added TableBlock definition to organisms and models that use Table
 
 ### Changed
 - Updated Protractor to version `4.0.2` from `3.2.1`.
 - Updated large checkboxes to match the spec.
 - Updated Capital Framework to version `3.6.1` from `3.4.0`.
 - Updated imagemin to version `3.0.2` from `2.4.0`.
-- Migrated previous Table data to new TableBlocks
 - Updated documentation npm module to version `4.0.0-beta5` from `4.0.0-beta2`.
 - Updated gulp-uglify npm module to version `2.0.0` from `1.5.3`.
 - Updated eslintrc dot-notation rule to support `catch` block in a Promise.
@@ -56,7 +85,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 - Unused `sinon-chai` npm package.
-- Icon for old Table from admin panel (this field will need to be removed in a future release)
 
 ### Fixed
 - Updated banner-footer-webpack-plugin to use git URL instead of `0.0.1`.

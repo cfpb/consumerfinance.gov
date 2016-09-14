@@ -138,9 +138,9 @@ class CFGOVPage(Page):
     def alphabetize_authors(self):
         """ Alphabetize authors of this page by last name, then first name if needed """
         # First sort by first name
-        author_names = sorted(self.authors.names())
+        author_names = self.authors.order_by('name')
         # Then sort by last name
-        return sorted(author_names, key=lambda x: x.split()[-1])
+        return sorted(author_names, key=lambda x: x.name.split()[-1])
 
     def generate_view_more_url(self, request):
         from ..forms import ActivityLogFilterForm
@@ -149,7 +149,7 @@ class CFGOVPage(Page):
         available_tags = [tag[0] for name, tags in form.fields['topics'].choices for tag in tags]
         tags = []
         index = util.get_form_id(activity_log)
-        for tag in self.tags.names():
+        for tag in self.tags.slugs():
             if tag in available_tags:
                 tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
         tags = '&'.join(tags)

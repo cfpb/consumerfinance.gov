@@ -1,5 +1,6 @@
 from datetime import date
 from django.test import TestCase
+from django.utils import timezone
 from model_mommy import mommy
 from wagtail.wagtailcore.models import Page
 
@@ -10,16 +11,18 @@ from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel, RegionPanel
 
 
-def make_job_listing_page(title, close_date, grades=[], regions=[]):
+def make_job_listing_page(title, close_date=None, grades=[], regions=[],
+                          **kwargs):
     page = mommy.prepare(
         JobListingPage,
         title=title,
-        close_date=close_date,
+        close_date=close_date or timezone.now().date(),
         description='description',
-        division=mommy.make(JobCategory)
+        division=mommy.make(JobCategory),
+        **kwargs
     )
 
-    home = Page.objects.get(slug='home-page')
+    home = Page.objects.get(slug='cfgov')
     home.add_child(instance=page)
 
     for grade in grades:
@@ -29,6 +32,8 @@ def make_job_listing_page(title, close_date, grades=[], regions=[]):
     for region in regions:
         region_model = mommy.make(Location, region_long=region)
         RegionPanel.objects.create(region=region_model, job_listing=page)
+
+    return page
 
 
 class JobListingListTestCase(HtmlMixin, TestCase):
@@ -86,6 +91,28 @@ class JobListingListTestCase(HtmlMixin, TestCase):
             '*AUG 05, 2099.*</span></p>'
             '</li>'
         ))
+
+    def test_excludes_draft_jobs(self):
+        make_job_listing_page('Job', live=False, shared=False)
+        qs = JobListingList().get_queryset({})
+        self.assertFalse(qs.exists())
+
+    def test_excludes_shared_jobs(self):
+        make_job_listing_page('Job', live=False, shared=True)
+        qs = JobListingList().get_queryset({})
+        self.assertFalse(qs.exists())
+
+    def test_includes_live_jobs(self):
+        job = make_job_listing_page('Job', live=True, shared=False)
+        qs = JobListingList().get_queryset({})
+        self.assertTrue(qs.exists())
+        self.assertEqual(job.title, qs[0].title)
+
+    def test_includes_live_and_shared_jobs(self):
+        job = make_job_listing_page('Job', live=True, shared=True)
+        qs = JobListingList().get_queryset({})
+        self.assertTrue(qs.exists())
+        self.assertEqual(job.title, qs[0].title)
 
 
 class JobListingTableTestCase(HtmlMixin, TestCase):
@@ -163,3 +190,25 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<td data-label="REGION"></td>'
             '</tr>'
         ))
+
+    def test_excludes_draft_jobs(self):
+        make_job_listing_page('Job', live=False, shared=False)
+        qs = JobListingTable().get_queryset({})
+        self.assertFalse(qs.exists())
+
+    def test_excludes_shared_jobs(self):
+        make_job_listing_page('Job', live=False, shared=True)
+        qs = JobListingTable().get_queryset({})
+        self.assertFalse(qs.exists())
+
+    def test_includes_live_jobs(self):
+        job = make_job_listing_page('Job', live=True, shared=False)
+        qs = JobListingTable().get_queryset({})
+        self.assertTrue(qs.exists())
+        self.assertEqual(job.title, qs[0].title)
+
+    def test_includes_live_and_shared_jobs(self):
+        job = make_job_listing_page('Job', live=True, shared=True)
+        qs = JobListingTable().get_queryset({})
+        self.assertTrue(qs.exists())
+        self.assertEqual(job.title, qs[0].title)

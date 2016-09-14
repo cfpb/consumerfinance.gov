@@ -97,7 +97,7 @@ def create_tableblocks_for_every_table(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0007_add_tableblocks_to_pages'),
+        ('v1', '0011_adjust_tableblock_to_use_macro'),
     ]
 
     operations = [

@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=flapjack)](https://travis-ci.org/cfpb/cfgov-refresh?branch=flapjack)
 [![Code Climate](https://codeclimate.com/github/cfpb/cfgov-refresh.png?branch=flapjack)](https://codeclimate.com/github/cfpb/cfgov-refresh?branch=flapjack)
+[![Coverage Status](https://coveralls.io/repos/github/cfpb/cfgov-refresh/badge.svg)](https://coveralls.io/github/cfpb/cfgov-refresh)
 
 The redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website.
 This Django project includes the front-end assets and build tools,
