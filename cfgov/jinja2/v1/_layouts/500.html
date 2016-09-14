@@ -33,7 +33,7 @@
         </aside>
 
         <p>Are you sure this is the right web address? 
-            <a class="jump-link" href={{"mailto:CFPB_website@consumerfinance.gov?subject=500%20Error%20on%20" + request.path}} >
+            <a class="jump-link" href={{"mailto:CFPB_website@consumerfinance.gov?subject=500%20Error%20on%20" + request.build_absolute_uri()}} >
                 <span class="jump-link_text">Let us know</span>
             </a>
         </p>
