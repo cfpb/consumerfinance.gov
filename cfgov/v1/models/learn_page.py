@@ -99,7 +99,8 @@ class DocumentDetailPage(AbstractFilterPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel = StreamFieldPanel('content')

@@ -25,6 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Wagtail User editor now enforces unique email addresses when creating/editing users.
 - Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
 - New `@flag_required` decorator for Django views
+- Added TableBlock definition to organisms and models that use Table
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
@@ -44,11 +45,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Replaces deprecated gulp-cssmin with gulp-clean-css.
 - Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
 - Feature flag methods now take an explicit `request` object to determine what site to check the flag against
+- Migrated previous Table data to new TableBlocks
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 - Unused npm module map-stream.
 - Custom method `most_common` since python lib offers similar function
+- Icon for old Table from admin panel (this field will need to be removed in a future release)
 
 ### Fixed
 - Post preview organism template used tag/author names instead of slugs that
