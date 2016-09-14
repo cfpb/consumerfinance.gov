@@ -70,7 +70,6 @@ def editor_css():
         ((settings.STATIC_URL, filename) for filename in css_files)
     )
 
-    print css_includes + 'css includes'
     return css_includes
 
 
