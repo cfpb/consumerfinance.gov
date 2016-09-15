@@ -65,6 +65,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 - Post preview organism template used tag/author names instead of slugs that
 caused bad link formation
+- Fixed an issue w/ the email signup not utilizing the Gov Delivery JSON view for instant error/success feedback.
+- Fixed an issue w/ the form validation skipping any validation types other than `required`.
 
 
 ## 3.7.2
