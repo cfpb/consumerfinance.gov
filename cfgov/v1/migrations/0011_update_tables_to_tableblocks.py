@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from __future__ import print_function
 from itertools import chain
+import logging
+logger = logging.getLogger(__name__)
 
 from django.db import migrations
 
@@ -16,32 +17,39 @@ from v1.tests.wagtail_pages.helpers import publish_changes
 
 
 def update_table_items(items, wagtail_page):
-    for item in list(filter(
-        lambda item: item['type'] == 'table',
-        items
-    )):
+    table_items = list(filter(lambda i: i['type'] == 'table', items))
+
+    for item in table_items:
         item['type'] = 'table_block'
         item['value'] = create_tableblock_data(old_table=item['value'])
-        print(
+        logger.info(
             "Updating Table to a TableBlock on page %s of page type %s"
             % (wagtail_page.title, wagtail_page.__class__.__name__)
         )
 
+    return table_items
+
 
 def update_tables_in_content_field(wagtail_page):
-    update_table_items(
+    return update_table_items(
         items=wagtail_page.content.stream_data,
         wagtail_page=wagtail_page
     )
 
 
 def update_tables_in_full_width_text_organisms(wagtail_page):
+    tables = []
+
     for item in list(filter(
-            lambda item: item['type'] == 'full_width_text',
-            wagtail_page.content.stream_data
+        lambda item: item['type'] == 'full_width_text',
+        wagtail_page.content.stream_data
     )):
         sub_items = item['value']
-        update_table_items(items=sub_items, wagtail_page=wagtail_page)
+        tables.extend(
+            update_table_items(items=sub_items, wagtail_page=wagtail_page)
+        )
+
+    return tables
 
 
 def convert_hyperlink_obj_to_text(value):
@@ -70,17 +78,17 @@ def create_tableblock_data(old_table):
 
 
 def create_tableblocks_for_every_table(apps, schema_editor):
-    print("Updating tables in content field")
+    logger.info("Updating tables in content field")
     for p in chain(
         BrowsePage.objects.all(),
         SublandingPage.objects.all(),
         LearnPage.objects.all(),
         DocumentDetailPage.objects.all(),
     ):
-        update_tables_in_content_field(wagtail_page=p)
-        publish_changes(child=p)
+        if update_tables_in_content_field(wagtail_page=p):
+            publish_changes(child=p)
 
-    print("Updating tables in full width text organisms")
+    logger.info("Updating tables in full width text organisms")
     for p in chain(
         BlogPage.objects.all(),
         BrowseFilterablePage.objects.all(),
@@ -90,14 +98,14 @@ def create_tableblocks_for_every_table(apps, schema_editor):
         SublandingFilterablePage.objects.all(),
         SublandingPage.objects.all(),
     ):
-        update_tables_in_full_width_text_organisms(wagtail_page=p)
-        publish_changes(child=p)
+        if update_tables_in_full_width_text_organisms(wagtail_page=p):
+            publish_changes(child=p)
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0011_adjust_tableblock_to_use_macro'),
+        ('v1', '0010_create_tableblock'),
     ]
 
     operations = [
