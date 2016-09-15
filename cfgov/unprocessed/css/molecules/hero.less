@@ -25,9 +25,10 @@
     background-color: @hero-bg;
 
     .respond-to-min( @bp-sm-min, {
-        display: table;
+        // display: table;
         width: 100%;
-        height: @hero-desktop-height;
+        // height: @hero-desktop-height;
+        min-height: @hero-desktop-height;
     } );
 
     &_wrapper {
@@ -35,9 +36,19 @@
         padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
 
         .respond-to-min( @bp-sm-min, {
-            display: table;
-            height: 100%;
+            // display: table;
+            // height: 100%;
+            // min-height: @hero-desktop-height;
+            display: flex;
+            // flex-direction: row;
+            align-items: stretch;
+            // align-content: center;
+            min-height: @hero-desktop-height;
             padding: 0;
+
+            .lt-ie10 & {
+                // display: block;
+            }
         } );
 
         .respond-to-max( @bp-xs-max, {
@@ -55,8 +66,21 @@
             padding: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
 
             // Keep the text vertically centered
-            display: table-cell;
+            // display: table-cell;
+            display: inline-block;
+            // Full margin auto gets vertical centering to work with Flexbox.
+            margin: auto;
             vertical-align: middle;
+
+            .lt-ie10 & {
+                margin: 0 -0.25em 0 0;
+                // Hacky magic number fix to correct stupid IE rounding errors
+                width: 58%;
+            }
+        } );
+
+        .respond-to-min( @bp-med-min, {
+            padding: unit( @grid_gutter-width * 1.5 / @base-font-size-px, em ) 0;
         } );
 
         .respond-to-range( @bp-sm-min, ( @bp-lg-max - @grid_gutter-width ), {
@@ -67,6 +91,8 @@
     &_heading {
         .heading-1();
 
+        margin-top: 0;
+
         .respond-to-max( @bp-sm-max, {
             .heading-2();
         } );
@@ -76,7 +102,6 @@
     &_cta:not( .btn ) {
         // Not using the `.heading-3()` mixin here because we want the weight
         // to remain Regular on smaller screens.
-        .webfont-regular();
 
         font-size: @size-iv;
         line-height: 1.25;
@@ -118,8 +143,16 @@
             .grid_column( 5, 12 );
 
             // Keep the image vertically centered
-            display: table-cell;
+            // display: table-cell;
+            display: inline-block;
+            padding: unit( ( @hero-desktop-height - @hero-image-height ) / 2 / @base-font-size-px, em ) 0;
+            // Full margin auto gets vertical centering to work with Flexbox.
+            margin: auto;
             vertical-align: middle;
+
+            .lt-ie10 & {
+                margin: 0;
+            }
         } );
 
         .respond-to-max( @bp-xs-max, {
@@ -127,8 +160,11 @@
         } );
 
         &__bleed-vertical {
+            padding: 0;
             position: relative;
-            height: 100%;
+            // height: 100%;
+            // min-height: @hero-desktop-height;
+            // flex-grow: 1;
 
             .m-hero_image {
                 display: block;
@@ -138,6 +174,7 @@
             .m-hero_image__bleeding {
                 width: 100%;
                 height: 100%;
+                min-height: @hero-desktop-height;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -154,16 +191,27 @@
                     display: none;
                 }
             } );
+
+            // .respond-to-min( @bp-med-min, {
+            //     .m-hero_image {
+            //         display: none;
+            //     }
+            // } );
         }
     }
 
     &_image {
+        max-width: 100%;
         // height is the same as min-height in a table
-        height: unit( @hero-image-height / @base-font-size-px, em );
+        // height: unit( @hero-image-height / @base-font-size-px, em );
 
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
+
+        .respond-to-min( @bp-sm-min, {
+            max-height: unit( @hero-image-height / @base-font-size-px, em );
+        } );
     }
 
     &__overlay {
@@ -186,7 +234,8 @@
             }
 
             .m-hero_image {
-                background-size: cover;
+                // Removes space below image created by standard inline display
+                vertical-align: middle;
             }
         } );
 
@@ -194,7 +243,7 @@
             .m-hero_image {
                 // Overwrite the image but don't remove the container from
                 // the grid flow. Necessary due to table-cell.
-                background: transparent !important;
+                display: none;
             }
         } );
 
@@ -206,16 +255,14 @@
     }
 
     &__overlay-text {
-        .m-hero {
-            background-color: @hero-overlay-bg;
-        }
+        background-color: @hero-overlay-bg;
 
         .m-hero_wrapper {
             color: @hero-overlay-text;
         }
 
         .m-hero_cta:not( .btn ) {
-            .u-link__colors( @hero-overlay-cta );
+            color: #FFF;
         }
     }
 }

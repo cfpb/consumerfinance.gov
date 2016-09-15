@@ -91,15 +91,15 @@
         </div>
     {% else %}
         <div class="m-hero_image-wrapper">
-            <div class="m-hero_image"
+            <img class="m-hero_image"
                 {% if value.is_overlay and value.small_image %}
                     {% set sm_img=image(value.small_image, 'original') %}
-                    style="background-image: url(' {{- sm_img.url -}} ');"
+                    src="{{ sm_img.url }}"
                 {% elif value.image %}
                     {% set img=image(value.image, 'original') %}
-                    style="background-image: url(' {{- img.url -}} ');"
-                {% endif %}>
-            </div>
+                    src="{{ img.url }}"
+                {% endif %}
+                 alt="">
         </div>
     {% endif %}
     </div>
