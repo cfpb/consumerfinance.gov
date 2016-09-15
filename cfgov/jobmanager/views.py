@@ -9,13 +9,8 @@ from django.views.generic import ListView
 from django.core.context_processors import csrf
 from django.utils import timezone
 
-from flags.decorators import flag_required
 from flags.views import FlaggedViewMixin
-from jobmanager.models import Job, JobCategory, Location, FellowshipUpdateList
-from transition_utilities.conditional_urls import wagtail_fail_through
-
-
-FLAG_NAME = 'DJANGO_CAREERS'
+from jobmanager.models import Job, FellowshipUpdateList
 
 
 @csrf_exempt
@@ -35,7 +30,6 @@ def fellowship_form_submit(request):
     return HttpResponse('OK')
 
 
-@flag_required('DJANGO_CAREERS', fallback_view=wagtail_fail_through)
 def detail(request, pk=None, slug=None):
     today = timezone.now().date()
 

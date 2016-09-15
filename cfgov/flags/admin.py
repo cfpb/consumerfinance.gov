@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from flags.models import Flag, FlagState
+
+
+admin.site.register(Flag)
+admin.site.register(FlagState)
