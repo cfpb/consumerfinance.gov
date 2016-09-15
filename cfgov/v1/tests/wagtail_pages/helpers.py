@@ -1,12 +1,9 @@
-from django.contrib.auth.models import User
-
 from v1.models.home_page import HomePage
 
 
 def save_page(page):
-    admin_user = User.objects.get(username='admin')
     page.save()
-    return page.save_revision(user=admin_user)
+    return page.save_revision()
 
 
 def save_new_page(child, root=None):
