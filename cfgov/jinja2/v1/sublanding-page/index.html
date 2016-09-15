@@ -27,6 +27,11 @@
                         block__flush-sides">
                 {{ featured_content.render(block.value) }}
             </div>
+        {% elif block.block_type == 'feedback' %}
+            {% import block.block.meta.template as feedback with context %}
+            {% set form_id = 'form-content-' ~ loop.index0 %}
+            {% set settings = form_modules.content[loop.index0] %}
+            {{ feedback.render(block.value, settings, form_id) }}
         {% elif 'post_preview_snapshot' in block.block_type %}
             <div class="block 
                         {{ block.block.meta.classname if block.block.meta.classname else '' }}">

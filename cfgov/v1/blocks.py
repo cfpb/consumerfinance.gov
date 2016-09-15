@@ -1,5 +1,5 @@
-from wagtail.wagtailcore import blocks
 from django.utils.module_loading import import_string
+from wagtail.wagtailcore import blocks
 
 
 class AbstractFormBlock(blocks.StructBlock):
@@ -30,3 +30,12 @@ class AbstractFormBlock(blocks.StructBlock):
         handler = None
         method = 'POST'
         icon = 'form'
+
+
+class Feedback(AbstractFormBlock):
+    question_text = blocks.CharBlock(default='Was this answer helpful to you?')
+    button_text = blocks.CharBlock(default='Submit feedback')
+
+    class Meta:
+        handler = 'v1.handlers.blocks.feedback.FeedbackHandler'
+        template = '_includes/blocks/feedback.html'

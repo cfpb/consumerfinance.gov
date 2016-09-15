@@ -14,6 +14,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
 from .learn_page import AbstractFilterPage
+from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
 from ..feeds import FilterableFeedPageMixin
 from ..util.ref import choices_for_page_type
@@ -29,6 +30,7 @@ class SublandingFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFG
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
         ('featured_content', molecules.FeaturedContent()),
+        ('feedback', v1_blocks.Feedback()),
     ])
 
     # General content tab
