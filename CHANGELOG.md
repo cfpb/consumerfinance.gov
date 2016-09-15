@@ -13,25 +13,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## 3.8.2
-
-### Changed
-- Updated copy on Students and Recent Graduates Careers page.
-
-
-## 3.8.1
-
-### Added
-- Google Optimize code on `find-a-housing-counselor` page
-
-
-## 3.8.0
+## 3.9.0
 
 ### Added
 - Logging configuration to `local.py`
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 - Ability to output sharing links within an Image and Text 50/50 Group module
-- Google Optimize code on `find-a-housing-counselor` page
 - Added a test for get_browsefilterable_posts function of the sublanding page 
 - Data migration sets up site root and careers pages
 - Wagtail User editor now enforces unique email addresses when creating/editing users.
@@ -65,6 +52,30 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 - Post preview organism template used tag/author names instead of slugs that
 caused bad link formation
+
+
+## 3.8.2
+
+### Changed
+- Updated copy on Students and Recent Graduates Careers page.
+
+
+## 3.8.1
+
+### Added
+- Google Optimize code on `find-a-housing-counselor` page
+
+
+## 3.8.0
+
+### Added
+- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
+- Ability to output sharing links within an Image and Text 50/50 Group module
+
+### Changed
+
+### Removed
+- Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 
 
 ## 3.7.2
