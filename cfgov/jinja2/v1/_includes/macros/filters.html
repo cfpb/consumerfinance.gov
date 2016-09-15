@@ -80,6 +80,10 @@
         you need more than one filters form on a page you'll want to give it a
         unique prefix.
 
+  user_options.calendar_required:
+
+        Allows you to disable showing the Calendar required label.
+
    ==========================================================================
 
    Examples:
@@ -101,6 +105,7 @@
 
 {%- set options = {
     'action':                   '/',
+    'calendar_required':        false,
     'expand_label':             'Filter',
     'submit_label':             'Apply filters',
     'form_method':              'get',
@@ -221,6 +226,9 @@
             <div class="form-group required-check-group">
                 <label class="form-label-header">
                     Calendars
+                    {% if options.calendar_required %}
+                    <span class="short-desc">(required)</span>
+                    {% endif %}
                 </label>
                 {% for director in directors_list %}
                     {{ _filter_checkbox( 'calendar', director, '', options.id_prefix) | safe }}
@@ -368,12 +376,10 @@
         {% for error in errors %}
            {% do error_messages.append(error|string) %}
         {% endfor %}
-        {% set value = {
-            'message': '</br>'.join(error_messages) | safe,
-            'type': 'error'
-        } %}
         <div class="u-mt15 u-mb15">
-            {% include 'molecules/notification.html' with context %}
+            {% import 'molecules/notification.html' as notification %}
+            {% set error_messages = '</br>'.join(error_messages) | safe %}
+            {{ notification.render( 'error', true, error_messages ) }}
         </div>
     {%- endif -%}
 {% endmacro %}

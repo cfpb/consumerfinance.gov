@@ -4,7 +4,7 @@ from urlparse import urlparse
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import slugify
+from django.template.defaultfilters import pluralize, slugify
 from wagtail.wagtailcore.templatetags import wagtailcore_tags
 from django.contrib import messages
 
@@ -51,7 +51,9 @@ def environment(**options):
         'get_filter_data': get_filter_data,
         'cfgovpage_objects': CFGOVPage.objects,
     })
+
     env.filters.update({
+        'pluralize': pluralize,
         'slugify': slugify,
     })
     return env
@@ -184,10 +186,10 @@ def related_metadata_tags(context, page):
     # From an ancestor, get the form ids then use the first id since the
     # filterable list on the page will probably have the first id on the page.
     id, filter_page = get_filter_data(page)
-    for tag in page.specific.tags.names():
-        tag_link = {'text': tag, 'url': ''}
+    for tag in page.specific.tags.all():
+        tag_link = {'text': tag.name, 'url': ''}
         if id is not None and filter_page is not None:
-            param = '?filter' + str(id) + '_topics=' + tag
+            param = '?filter' + str(id) + '_topics=' + tag.slug
             tag_link['url'] = get_protected_url(context, filter_page) + param
         tags['links'].append(tag_link)
     return tags

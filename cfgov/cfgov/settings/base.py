@@ -38,6 +38,8 @@ INSTALLED_APPS = (
     'wagtail.wagtailforms',
     'wagtail.wagtailsites',
 
+    'wagtail.contrib.modeladmin',
+
     'localflavor',
     'modelcluster',
     'compressor',
@@ -177,7 +179,8 @@ STATIC_URL = '/static/'
 # Absolute path to the directory static files should be collected to.
 STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'f')
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
+                            os.path.join(PROJECT_ROOT, 'f'))
 MEDIA_URL = '/f/'
 
 # List of finder classes that know how to find static files in
@@ -210,6 +213,9 @@ DOWNLOAD_LINK_PATTERN = r'(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 WAGTAIL_SITE_NAME = 'v1'
 WAGTAILIMAGES_IMAGE_MODEL = 'v1.CFGOVImage'
 TAGGIT_CASE_INSENSITIVE = True
+
+WAGTAIL_USER_CREATION_FORM = 'v1.auth_forms.UserCreationForm'
+WAGTAIL_USER_EDIT_FORM = 'v1.auth_forms.UserEditForm'
 
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')

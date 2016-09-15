@@ -19,6 +19,7 @@ exports.config = {
   sauceKey:  envvars.SAUCE_ACCESS_KEY,
 
   onPrepare: function() {
+    // Ignore Selenium allowances for non-angular sites.
     browser.ignoreSynchronization = true;
 
     // Add jasmine spec reporter.

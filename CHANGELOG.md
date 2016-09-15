@@ -12,30 +12,115 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-## 3.6
+
+## Unreleased Changes
+
+### Added
+- Logging configuration to `local.py`
+- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
+- Ability to output sharing links within an Image and Text 50/50 Group module
+- Google Optimize code on `find-a-housing-counselor` page
+- Added a test for get_browsefilterable_posts function of the sublanding page 
+- Data migration sets up site root and careers pages
+- Wagtail User editor now enforces unique email addresses when creating/editing users.
+- Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
+- New `@flag_required` decorator for Django views
+
+### Changed
+- Special characters no longer break the multiselect in the filter form
+- Updated gulp-istanbul npm module to version `1.1.1` from `0.10.3`.
+- Updated del npm module to version `2.2.2` from `2.2.0`.
+- Updated gulp-autoprefixer npm module to version `3.1.1` from `3.1.0`.
+- Updated gulp-changed npm module to version `1.3.2` from `1.3.0`.
+- Updated gulp-header npm module to version `1.8.8` from `1.7.1`.
+- Updated gulp-imagemin npm module to version `3.0.3` from `3.0.2`.
+- Updated gulp-less npm module to version `3.1.0` from `3.0.5`.
+- Updated gulp-load-plugins npm module to version `1.2.4` from `1.2.0`.
+- Updated validate.js npm module to version `0.10.0` from `0.9.0`.
+- Updated webpack npm module to version `1.13.2` from `1.12.14`.
+- Updated webpack-stream npm module to version `3.2.0` from `3.1.0`.
+- Updated es5-shim npm module to version `4.5.9` from `4.5.7`.
+- Updated gulp-rename npm module to version `1.2.2` from `1.1.0`.
+- Replaces deprecated gulp-cssmin with gulp-clean-css.
+- Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
+- Feature flag methods now take an explicit `request` object to determine what site to check the flag against
+
+### Removed
+- Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
+- Unused npm module map-stream.
+- Custom method `most_common` since python lib offers similar function
+
+### Fixed
+- Post preview organism template used tag/author names instead of slugs that
+caused bad link formation
+
+## 3.7.2
+
+### Changed
+- Added support for Spanish-language cue labels to the Expandables organism.
+- Added support for Spanish-language heading to the Social Media molecule.
+- Removed the leadership calendar print template from the "base.html" inheritence hiearchy
+- restores the django logging config we used before cfgov-refresh
+
+## 3.7.1
+- always use "localhost" when setting the base URL for PDFReactor
+
+## 3.7.0
+
+### Added
+- Added new conference url in the nav
+
+### Changed
+- Updated Protractor to version `4.0.2` from `3.2.1`.
+- Updated large checkboxes to match the spec.
+- Updated Capital Framework to version `3.6.1` from `3.4.0`.
+- Updated imagemin to version `3.0.2` from `2.4.0`.
+- Updated documentation npm module to version `4.0.0-beta5` from `4.0.0-beta2`.
+- Updated gulp-uglify npm module to version `2.0.0` from `1.5.3`.
+- Updated eslintrc dot-notation rule to support `catch` block in a Promise.
+- Updated `gulp test:perf` task to use a Promise.
+- Added `.eslintrc` override for gulp tasks to allow process.exit and console logging.
+- Updated mocha npm module to version `3.0.2` from `2.4.5`.
+- Updated gulp-mocha npm module to version `3.0.1` from `2.2.0`.
+
+### Removed
+- Unused `sinon-chai` npm package.
+
+### Fixed
+- Updated banner-footer-webpack-plugin to use git URL instead of `0.0.1`.
+
+
+## 3.6.0
 
 ### Added
 - Page revision management: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#page-revision-management,available at e.g. http://127.0.0.1:8000/admin/pages/64/revisions/
 - Redesigned userbar: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#redesigned-userbar
 - Multiple document uploader: http://docs.wagtail.io/en/v1.4.1/releases/1.4.html#multiple-document-uploader
 - Improved link handling: http://docs.wagtail.io/en/v1.5/releases/1.5.html#improved-link-handling-in-rich-text
+- New users created via the Wagtail admin will automatically receive a password reset email.
 
 ### Changed
+- Many browser tests have been rewritten as Python unit tests
+- A new spec suite "integration" encompasses tests from a few directories that were not named appropriately.
+- Gulp test has been updated as there are no longer any browser tests to run by default
 - `content_panels` are no longer defined in `AbstractFilterPage`; defined in its subclasses instead
 - Upgraded Wagtail from 1.3 to 1.5.2
 - Consolidated all environment variables in config/environment.js.
 - Ignored `console.log` in tests and enforced `no-process`.
 - Updated `STAGING_HOSTNAME` to `DJANGO_STAGING_HOSTNAME` environment var.
 - Allows passing of port to `runserver.sh`.
+- Updated browse-filterable test suite to properly nest pagination tests.
+- Updated pagination to support multiple pagination molecules on a single page.
 
 ### Removed
 - Unused `SELENIUM_URL` environment variable.
 - Removed unused `interactiveTestPort` test variable.
 - Squashed all migrations
+- `initial_test_data.py` as the tests create the data they need now.
 
 ### Fixed
-
 - Added misnamed and unreferenced environment variables to .env.
+- Moved pagination tests from /organisms/ to /molecules/ where they belong.
 
 
 ## 3.4.0 2016-07-12

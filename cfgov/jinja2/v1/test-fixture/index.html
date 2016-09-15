@@ -44,7 +44,14 @@
     ============
     The atomic CSS file. This includes legacy IE-specific prefixing.
 #}
+
+<!--[if lt IE 9]>
+<link rel="stylesheet" href="{{ static('css/' + atomic_type + suffix + '.nonresponsive.css') }}">
+<![endif]-->
+
+<!--[if gt IE 8]><!-->
 <link rel="stylesheet" href="{{ static('css/' + atomic_type + suffix + '.css') }}">
+<!--<![endif]-->
 
 {#
     ================

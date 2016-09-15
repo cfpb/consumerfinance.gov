@@ -21,26 +21,10 @@ ERROR_MESSAGES = {
         'required': 'Please select at least one of the "%s" options.'
     },
     'DATE_ERRORS': {
-        'invalid': 'You have entered an invalid date.',
+        'invalid': 'You have entered an invalid date: %s.',
         'one_required': 'Please enter at least one date.'
     }
 }
-
-
-# Orders by most to least common in the given list.
-def most_common(lst):
-    # Returns the lst if empty or there's just one element in it.
-    if not lst or len(lst) == 1:
-        return lst
-    else:
-        # Gets the most common element in the list.
-        most = max(set(lst), key=lst.count)
-        # Creates a new list without that element.
-        new_list = [e for e in lst if most not in e]
-        # Recursively returns a list with the most common elements ordered
-        # most to least. Ties go to the lowest index in the given list.
-        return [most] + most_common(new_list)
-
 
 def get_form_id(page):
     form_ids = page.get_filter_ids()
@@ -67,6 +51,9 @@ def get_secondary_nav_items(request, current_page):
         page = get_appropriate_page_version(request, parent)
     else:
         page = get_appropriate_page_version(request, current_page)
+
+    if not page:
+        return [], False
 
     # TODO: Remove this ASAP once Press Resources gets its own Wagtail page
     if page.slug == 'newsroom':
@@ -152,7 +139,7 @@ def valid_destination_for_request(request, url):
 
 def all_valid_destinations_for_request(request):
     possible_destinations = (('Wagtail','/admin/'), ('Django admin', '/django-admin/'))
-    valid_destinations = [pair for pair in possible_destinations if 
+    valid_destinations = [pair for pair in possible_destinations if
                             valid_destination_for_request(request, pair[1])]
 
-    return valid_destinations 
+    return valid_destinations

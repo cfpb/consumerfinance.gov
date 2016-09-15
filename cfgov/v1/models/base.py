@@ -117,11 +117,11 @@ class CFGOVPage(Page):
 
     settings_panels = [
         MultiFieldPanel(Page.promote_panels, 'Settings'),
+        InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
-        FieldPanel('language', 'language'),
-        InlinePanel('categories', label="Categories", max_num=2),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
+        FieldPanel('language', 'language'),
     ]
 
     # Tab handler interface guide because it must be repeated for each subclass
@@ -131,6 +131,17 @@ class CFGOVPage(Page):
         ObjectList(settings_panels, heading='Configuration'),
     ])
 
+    def get_authors(self):
+        """ Returns a sorted list of authors. Default is alphabetical """
+        return self.alphabetize_authors()
+
+    def alphabetize_authors(self):
+        """ Alphabetize authors of this page by last name, then first name if needed """
+        # First sort by first name
+        author_names = self.authors.order_by('name')
+        # Then sort by last name
+        return sorted(author_names, key=lambda x: x.name.split()[-1])
+
     def generate_view_more_url(self, request):
         from ..forms import ActivityLogFilterForm
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
@@ -138,7 +149,7 @@ class CFGOVPage(Page):
         available_tags = [tag[0] for name, tags in form.fields['topics'].choices for tag in tags]
         tags = []
         index = util.get_form_id(activity_log)
-        for tag in self.tags.names():
+        for tag in self.tags.slugs():
             if tag in available_tags:
                 tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
         tags = '&'.join(tags)

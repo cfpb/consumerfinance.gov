@@ -15,4 +15,17 @@
         </div>
         {% endfor %}
     </div>
+
+    {% if value.sharing.shareable %}
+        {% import 'molecules/social-media.html' as social_media with context %}
+        {% set share_blurb = value.sharing.share_blurb
+           if value.sharing.share_blurb
+           else None %}
+        <div class="u-mt30">
+            {{ social_media.render( {
+                'is_share_view': true,
+                'blurb': share_blurb
+            } ) }}
+        </div>
+    {% endif %}
 </div>

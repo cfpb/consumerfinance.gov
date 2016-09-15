@@ -11,6 +11,7 @@ from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
 from ..util.util import get_secondary_nav_items
+from jobmanager.models import JobListingTable
 
 
 class BrowsePage(CFGOVPage):
@@ -23,11 +24,13 @@ class BrowsePage(CFGOVPage):
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table()),
+        ('job_listing_table', JobListingTable()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

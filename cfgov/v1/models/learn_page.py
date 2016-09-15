@@ -41,6 +41,8 @@ class AbstractFilterPage(CFGOVPage):
     # Configuration tab panels
     settings_panels = [
         MultiFieldPanel(Page.promote_panels, 'Settings'),
+        InlinePanel('categories', label="Categories", max_num=2),
+        FieldPanel('tags', 'Tags'),
         MultiFieldPanel([
             FieldPanel('preview_title', classname="full"),
             FieldPanel('preview_subheading', classname="full"),
@@ -48,15 +50,13 @@ class AbstractFilterPage(CFGOVPage):
             FieldPanel('secondary_link_url', classname="full"),
             FieldPanel('secondary_link_text', classname="full"),
             ImageChooserPanel('preview_image'),
-        ], heading='Page Preview Fields', classname='collapsible collapsed'),
+        ], heading='Page Preview Fields', classname='collapsible'),
+        FieldPanel('authors', 'Authors'),
         MultiFieldPanel([
             FieldPanel('date_published'),
             FieldPanel('date_filed'),
             FieldPanel('comments_close_by'),
         ], 'Relevant Dates', classname='collapsible'),
-        FieldPanel('tags', 'Tags'),
-        FieldPanel('authors', 'Authors'),
-        InlinePanel('categories', label="Categories", max_num=2),
         MultiFieldPanel(Page.settings_panels, 'Scheduled Publishing'),
     ]
 

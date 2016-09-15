@@ -5,7 +5,7 @@ var paths = require( '../config/environment' ).paths;
 var globAll = require( 'glob-all' );
 
 module.exports = {
-  pkg:    JSON.parse( fs.readFileSync( 'bower.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
+  pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
   banner:
       '/*!\n' +
       ' *               ad$$               $$\n' +
@@ -89,22 +89,20 @@ module.exports = {
     },
     vendorCss: {
       src: [
-        paths.lib + '/slick-carousel/slick/slick.css',
-        paths.lib + '/slick-carousel/slick/slick.css.map',
+        paths.modules + '/slick-carousel/slick/slick.css',
         paths.unprocessed + '/css/pdfreactor-fonts.css'
       ],
       dest: paths.processed + '/css'
     },
     vendorImg: {
       src: [
-        paths.lib + '/slick-carousel/slick/ajax-loader.gif'
+        paths.modules + '/slick-carousel/slick/ajax-loader.gif'
       ],
       dest: paths.processed + '/img'
     },
     vendorJs: {
       src: [
-        paths.lib + '/jquery/dist/jquery.min.js',
-        paths.lib + '/box-sizing-polyfill/boxsizing.htc'
+        paths.modules + '/jquery/dist/jquery.min.js'
       ],
       dest: paths.processed + '/js/'
     }

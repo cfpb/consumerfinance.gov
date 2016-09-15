@@ -1,12 +1,13 @@
 from __future__ import print_function
 
 import importlib
+import re
 
 from django.apps import apps
 from django.test.runner import DiscoverRunner
 from wagtail.wagtailcore.models import Page
 
-from scripts import initial_data, initial_test_data
+from scripts import initial_data
 
 
 class TestDataTestRunner(DiscoverRunner):
@@ -16,8 +17,10 @@ class TestDataTestRunner(DiscoverRunner):
         if not self.check_for_wagtail_root():
             self.setup_wagtail_root()
 
+        if not self.check_for_cfgov_root():
+            self.setup_cfgov_root()
+
         initial_data.run()
-        initial_test_data.run()
         return dbs
 
     def check_for_wagtail_root(self):
@@ -29,3 +32,25 @@ class TestDataTestRunner(DiscoverRunner):
 
         module = importlib.import_module(migration)
         module.initial_data(apps, None)
+
+    def check_for_cfgov_root(self):
+        return Page.objects.filter(slug='cfgov').exists()
+
+    def setup_cfgov_root(self):
+        migration = 'v1.migrations.0009_site_root_data'
+        print('Running migration {} to setup CFGOV root'.format(migration))
+
+        module = importlib.import_module(migration)
+        module.create_site_root(apps, None)
+
+
+class HtmlMixin(object):
+    def assertHtmlRegexpMatches(self, s, r):
+        s_no_right_spaces = re.sub('>\s*', '>', s)
+        s_no_left_spaces = re.sub('\s*<', '<', s_no_right_spaces)
+        s_no_extra_spaces = re.sub('\s+', ' ', s_no_left_spaces)
+
+        self.assertIsNotNone(
+            re.search(r, s_no_extra_spaces.strip(), flags=re.DOTALL),
+            '{} did not match {}'.format(s_no_extra_spaces, r)
+        )

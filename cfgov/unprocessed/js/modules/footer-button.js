@@ -48,8 +48,8 @@ function _scrollToTop() {
       if ( window.scrollY !== 0 ) {
         window.requestAnimationFrame( _step );
         scrollCount += 1;
-        scrollMargin = cosParameter - ( cosParameter *
-                       Math.cos( scrollCount * scrollStep ) );
+        scrollMargin = cosParameter - cosParameter *
+                       Math.cos( scrollCount * scrollStep );
         window.scrollTo( 0, scrollHeight - scrollMargin );
       }
     }, SCROLL_STEP_DURATION );
