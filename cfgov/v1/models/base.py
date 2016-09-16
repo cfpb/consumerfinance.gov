@@ -158,46 +158,49 @@ class CFGOVPage(Page):
     def related_posts(self, block, hostname):
         from . import AbstractFilterPage
         related = {}
-        queries = {}
         query = models.Q(('tags__name__in', self.tags.names()))
         search_types = [
             ('blog', 'posts', 'Blog', query),
             ('newsroom', 'newsroom', 'Newsroom', query),
             ('events', 'events', 'Events', query),
         ]
-        for parent_slug, search_type, search_type_name, search_query in search_types:
-            try:
-                parent = Page.objects.get(slug=parent_slug)
-                search_query &= Page.objects.child_of_q(parent)
+
+        def fetch_children_by_specific_category(block, parent_slug):
+            # This used to be a Page.objects.get, which would throw
+            # an exception if the requested parent wasn't found. As of
+            # Django 1.6, you can now do Page.objects.filter().first();
+            # the advantage here is that you can check for None right
+            # away and not have to rely on catching exceptions, which
+            # in any case didn't do anything useful other than to print
+            # an error message. Instead, we just return an empty query
+            # which has no effect on the final result.
+            parent = Page.objects.filter(slug=parent_slug).first()
+            if parent:
+                child_query = Page.objects.child_of_q(parent)
                 if 'specific_categories' in block.value:
-                    specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
-                    choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
-                    categories = [c for c in specific_categories if c in choices]
-                    if categories:
-                        search_query &= Q(('categories__name__in', categories))
-                if parent_slug == 'events':
-                    try:
-                        parent_slug = 'archive-past-events'
-                        parent = Page.objects.get(slug=parent_slug)
-                        q = (Page.objects.child_of_q(parent) & query)
-                        if 'specific_categories' in block.value:
-                            specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
-                            choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
-                            categories = [c for c in specific_categories if c in choices]
-                            if categories:
-                                q &= Q(('categories__name__in', categories))
-                        search_query |= q
-                    except Page.DoesNotExist:
-                        print 'archive-past-events does not exist'
-                queries[search_type_name] = search_query
-            except Page.DoesNotExist:
-                print parent_slug, 'does not exist'
+                    child_query &= specific_categories_query(block, parent_slug)
+            else:
+                child_query = Q()
+            return child_query
+
+        def specific_categories_query(block, parent_slug):
+            specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
+            choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
+            categories = [c for c in specific_categories if c in choices]
+            if categories:
+                return Q(('categories__name__in', categories))
+            else:
+                return Q()
+
         for parent_slug, search_type, search_type_name, search_query in search_types:
-            if 'relate_%s' % search_type in block.value \
-                    and block.value['relate_%s' % search_type]:
+            search_query &= fetch_children_by_specific_category(block, parent_slug)
+            if parent_slug == 'events':
+                search_query |= fetch_children_by_specific_category(block, 'archive-past-events') & query
+            relate = block.value.get('relate_{}'.format(search_type), None)
+            if relate:
                 related[search_type_name] = \
                     AbstractFilterPage.objects.live_shared(hostname).filter(
-                        queries[search_type_name]).distinct().exclude(
+                        search_query).distinct().exclude(
                         id=self.id).order_by('-date_published')[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
