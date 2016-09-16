@@ -26,6 +26,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
 - New `@flag_required` decorator for Django views
 - Added TableBlock definition to organisms and models that use Table
+- Added `cfgov/templates/wagtailadmin/js/table-block.js` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
+- Added `cfgov/templates/wagtailadmin/table_input.html` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
@@ -46,6 +48,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
 - Feature flag methods now take an explicit `request` object to determine what site to check the flag against
 - Migrated previous Table data to new TableBlocks
+- Modified `cfgov/cfgov/settings/base.py` to add wagtailadmin to the STATICFILES_DIRS path.
+- Modified `cfgov/jinja2/v1/_includes/organisms/table.html` to work with the Wagtail TableBlock component.
+- Modified `cfgov/v1/__init__.py` to add the linebreaksbr.
+- Modified `cfgov/v1/atomic_elements/organisms.py` to create classes which inherit from the TableBlock classes. This allowed us to control which templates where used for rendering the Wagtail admin and table.
+- Modified `cfgov/v1/models/browse_page.py`, `cfgov/v1/models/learn_page.py`, and `cfgov/v1/models/sublanding_page.py` to use the new AtomicTableBlock.
+- Modified `cfgov/v1/wagtail_hooks.py` to add load new script for the admin.
+
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
