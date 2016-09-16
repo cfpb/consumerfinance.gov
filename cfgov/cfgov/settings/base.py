@@ -10,6 +10,7 @@ REPOSITORY_ROOT = Path(__file__).ancestor(4)
 # This is the root of the Django project, 'cfgov'
 PROJECT_ROOT = REPOSITORY_ROOT.child('cfgov')
 V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
+DATA_RESEARCH_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'data_research')
 
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 
@@ -125,9 +126,13 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [V1_TEMPLATE_ROOT, V1_TEMPLATE_ROOT.child('_includes'),
+        'DIRS': [
+            V1_TEMPLATE_ROOT,
+            V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
-            PROJECT_ROOT.child('static_built')],
+            DATA_RESEARCH_TEMPLATE_ROOT,
+            PROJECT_ROOT.child('static_built')
+        ],
         'APP_DIRS': False,
         'OPTIONS': {
             'environment': 'v1.environment',

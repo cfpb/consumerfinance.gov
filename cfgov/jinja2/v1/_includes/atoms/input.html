@@ -24,7 +24,7 @@
 
 {% macro render(value) -%}
 
-{%- set id = get_unique_id('input_', '_') ~ slugify( value.label ) -%}
+{%- set id = value.id or get_unique_id('input_', '_') ~ slugify( value.label ) -%}
 {%- set ht_id = get_unique_id('input_ht_', '_') ~ slugify( value.label ) -%}
 
 <div class="form-l_col form-l_col-{{ value.size if value.size else '1' }}">
@@ -38,11 +38,14 @@
         <p class="micro-copy" id="{{ ht_id }}">{{ value.helperText | safe }}</p>
     {%- endif -%}
     <input id="{{ id }}"
+           name="{{ id }}"
            type="{{ value.type }}"
+           value="{{ value.value }}"
            {{ 'required' if value.required else '' }}
            {{ 'disabled' if value.disabled else ''}}
            {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}
            {{ 'placeholder="' ~ value.placeholder ~ '"' if value.placeholder else '' }}>
+    </input>
 </div>
 
 {%- endmacro %}

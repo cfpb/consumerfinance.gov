@@ -1,0 +1,107 @@
+{% import 'atoms/input.html' as input %}
+{% import 'atoms/textarea.html' as textarea %}
+{% import 'atoms/submit-button.html' as submit_button %}
+{% import 'molecules/big-checkbox.html' as big_checkbox %}
+{% import 'molecules/notification.html' as notification %}
+
+{% macro render(value, settings, form_id) %}
+{% set form = settings.form %}
+
+<form id="registration-form"
+      method="post"
+      action="."
+      class="o-form js-validate-filters">
+
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <input type="hidden" name="form_id" value="{{ form_id }}">
+    {% for code in value.codes %}
+        <input type="hidden" name="codes" value="{{ code }}">
+    {% endfor %}
+
+    {# Form heading #}
+    {% if value.heading %}
+        <h2>{{ value.heading }}</h2>
+    {% endif %}
+
+    {# JS-disabled result handling #}
+    {% for message in get_messages(request) %}
+        {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
+    {% endfor %}
+
+    <section class="o-form-section">
+
+        {# Name #}
+        {{ input.render({
+            'id':       'name',
+            'label':    'Name',
+            'type':     'text',
+            'value':    form.name.value() | default('', true),
+            'size':     '1',
+            'required': true,
+            'disabled': false
+        }) }}
+
+        {# Organization #}
+        {{ input.render({
+            'id': 'organization',
+            'label':    'Organization',
+            'type':     'text',
+            'value':    form.organization.value() | default('', true),
+            'size':     '1',
+            'required': true,
+            'disabled': false
+        }) }}
+
+        {# Email #}
+        {{ input.render({
+            'id': 'email',
+            'label':   'Email',
+            'type':    'email',
+            'value':    form.email.value() | default('', true),
+            'size':    '1',
+            'required': true,
+            'disabled': false
+        }) }}
+
+        {# Sessions attending #}
+        {% set checkbox_fields = [] %}
+        {% for session in value.sessions %}
+            {% do checkbox_fields.append(session) %}
+        {% endfor %}
+        {{ big_checkbox.render({
+            "legend": 'Which sessions will you be attending?',
+            "fields": checkbox_fields,
+            'value':  form.sessions.value() | default([], true),
+            "size" :  '1'
+        }, options={
+            'id':       'sessions',
+            'required': true
+        }) }}
+
+        {# Food/allergies/restrictions #}
+        {{ textarea.render({
+            'name':       'foodinfo',
+            'label':      'Do you have food allergies/restrictions?',
+            'value':      form.foodinfo.value() | default('', true),
+            'helperText': false,
+            'required':   false,
+            'disabled':   false
+        }) }}
+
+        {# Other accommodations #}
+        {{ textarea.render({
+            'name':       'accommodations',
+            'label':      'Will you require any accommodations to attend?',
+            'value':      form.accommodations.value() | default('', true),
+            'helperText': 'Examples: hearing, parking space, breastfeeding',
+            'required':   false,
+            'disabled':   false
+        }) }}
+
+    </section>
+
+    {{ submit_button.render({'button_text': 'Register'})}}
+
+</form>
+
+{% endmacro %}

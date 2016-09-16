@@ -34,9 +34,12 @@
     {%- endif -%}
     <textarea class="input__long"
               id="{{ id }}"
+              {%- if value.name -%} name="{{ value.name }}" {%- endif -%}
               {{ 'required' if value.required else '' }}
               {{ 'disabled' if value.disabled else '' }}
-              {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}></textarea>
+              {{ 'aria-describedby="' ~ ht_id ~ '"' if value.helperText else '' }}>
+        {{- value.value | default('', true) -}}
+    </textarea>
 </div>
 
 {%- endmacro %}
