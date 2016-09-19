@@ -12,7 +12,7 @@ import wagtail.wagtailcore.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0007_imagetext5050_sharing'),
+        ('v1', '0009_site_root_data'),
     ]
 
     operations = [
