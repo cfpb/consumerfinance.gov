@@ -13,32 +13,30 @@
 {%- endblock %}
 
 {% block content_main %}
-    <div class="error_copy_container">
-        <header class="error_header u-mt30">
-            <h1 class="superheader">500 internal server error</h1>
-            <p class="short_desc">That didn’t work the way it was supposed to. You
-                might want to try again in a little bit. We’ll try to resolve
-                the issue.
-            </p>
-        </header>
-        <aside class="error_action_container padded-container u-mt60 u-mb60">
-            <div class="content-l content-l__large-gutters padded-container_body">
-                <div class="content-l_col content-l_col-1-2">
-                    <p>
-                        Explore our other useful tools and resources.
-                    </p>
-                    <a href="/" class="btn btn__full btn__error-home">Visit homepage</a>
-                </div>
-                <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
-                    <p>
-                        If the problem persists please let us know.
-                    </p>
-                    <a class="jump-link" href="mailto:CFPB_website@consumerfinance.gov?subject=500%20Error">
-                        Contact us
-                    </a>
-                </div>
+    <div class="main_wrapper">
+        <div class="error_copy_container">
+            <header class="error_header">
+                <h1>500: Server error</h1>
+                <p class="lead-paragraph">We can’t find the page you’re looking for. Visit our homepage for helpful tools and resources, or contact us and we'll point you in the right direction.</p>
+            </header>
+        </div>
+
+        <aside class="error_action_container">
+            <div class="error_action_col">
+                <a href="/" class="btn btn__full btn__error-home u-inline-block">Visit homepage</a>
+            </div>
+            <div class="error_action_col">
+                <a class="btn btn__full btn__error-home u-inline-block" href="/about-us/contact-us/">
+                    Contact us
+                </a>
             </div>
         </aside>
+
+        <p>Are you sure this is the right web address? 
+            <a class="jump-link" href={{"mailto:CFPB_website@consumerfinance.gov?subject=500%20Error%20at%20%22" + request.build_absolute_uri() + "%22"}} >
+                <span class="jump-link_text">Let us know</span>
+            </a>
+        </p>
     </div>
 {% endblock %}
 

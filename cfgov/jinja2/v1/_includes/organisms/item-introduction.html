@@ -31,8 +31,7 @@
 {% set form_id, ancestor = get_filter_data(page) %}
 {% set page_url = get_protected_url(ancestor) %}
 {% set published_date = value.date %}
-{% set page_authors = page.get_authors() %}
-{% set has_authors = page_authors|length > 0 %}
+{% set has_authors = page.authors.exists() %}
 
 <div class="o-item-introduction">
     {% if value.category is string %}
@@ -54,10 +53,10 @@
     {% endif %}
         {% if has_authors %}
             <span class="byline">
-            {%- for author in page_authors -%}
+            {%- for author in page.get_authors() -%}
                 {{- 'By ' if loop.index == 1 else ' and ' }}
-                <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                    {{ author }}
+                <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                    {{ author.name }}
                 </a>
             {%- endfor -%}
                 &ndash;

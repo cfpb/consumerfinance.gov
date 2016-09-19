@@ -1,17 +1,14 @@
-import os
-from django.utils import timezone
-
-from django.conf import settings
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
-
 from v1.models.learn_page import EventPage
 from v1.models.browse_filterable_page import BrowseFilterablePage, EventArchivePage
-from wagtail.wagtailcore.models import Page
-from modelcluster.models import get_all_child_relations
+
+from django.utils import timezone
+from django.conf import settings
+import logging
+logger = logging.getLogger(__name__)
 
 
 def run():
+    logger.info('Searching for events to archive...')
     event_page_exists = BrowseFilterablePage.objects.filter(title='Events').exists()
     archive_event_page_exists = EventArchivePage.objects.filter(title__icontains='Archive').exists()
 
@@ -27,12 +24,12 @@ def run():
                         if event.end_dt < timezone.now():
                             if event.can_move_to(archived_events):
                                 event.move(archived_events, pos='last-child')
-                                print event.title + ' Event .....archived'
+                                loggger.info(event.title + ' Event .....archived')
         else:
-            print 'No events to archive found....'
+            logger.info('No events to archive found....')
     elif not event_page_exists:
-        print 'Events browse filterable page has not been created....'
+        logger.info('Events browse filterable page has not been created....')
     elif not archive_event_page_exists:
-        print 'No Archived events Browse filterable page named \'Archive\' exist....'
+        logger.info('No Archived events Browse filterable page named \'Archive\' exist....')
     else:
-        print 'No events exist in the database...'
+        logger.info('No events exist in the database...')
