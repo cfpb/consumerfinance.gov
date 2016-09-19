@@ -3354,3 +3354,8 @@ Not in CF docs yet..
 	color: black;
 	letter-spacing: 0;
 }
+
+/* Mega menu link hover state */
+.o-mega-menu a:hover {
+	background-color: transparent;
+}
