@@ -59,7 +59,7 @@ class ServeViewTestCase(TestCase):
 class ServeUrlTestCase(TestCase):
     def test_url_reverse(self):
         self.assertEqual(
-            reverse('document_serve', args=('123', 'example.doc')),
+            reverse('wagtaildocs_serve', args=('123', 'example.doc')),
             '/documents/123/example.doc'
         )
 
