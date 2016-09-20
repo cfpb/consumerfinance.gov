@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
 - Production settings now use ManifestStaticFilesStorage
 - Added a 'run_travis.sh' script to enable separate JS and Python test coverage reporting 
+- AbstractFormBlock
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.

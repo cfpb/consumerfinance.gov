@@ -1,3 +1,4 @@
+import importlib
 import collections, json, os, re
 from itertools import chain
 from time import time
@@ -143,3 +144,32 @@ def all_valid_destinations_for_request(request):
                             valid_destination_for_request(request, pair[1])]
 
     return valid_destinations
+
+
+def load_class(full_class_string):
+    """
+    Credit to @tsileo
+
+    Returns a class from a dotted class string.
+    """
+
+    class_data = full_class_string.split('.')
+    module_path = '.'.join(class_data[:-1])
+    class_str = class_data[-1]
+
+    try:
+        module = importlib.import_module(module_path)
+    except ImportError as e:
+        raise e('Handler class path from block Meta does not exist.')
+
+    return getattr(module, class_str)
+
+def get_streamfields(page):
+    """
+    Retrieves the stream values on a page from it's Streamfield
+    """
+    blocks_dict = {}
+    for key, value in vars(page).items():
+        if isinstance(value, StreamValue):
+            blocks_dict.update({key: value})
+    return blocks_dict

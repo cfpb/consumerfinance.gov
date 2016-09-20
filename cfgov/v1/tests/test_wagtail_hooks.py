@@ -5,7 +5,8 @@ import publish_eccu
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from ..wagtail_hooks import share_the_page, check_permissions, share, configure_page_revision, flush_akamai
+from ..wagtail_hooks import share_the_page, check_permissions, share, \
+    configure_page_revision, flush_akamai, form_module_handlers
 
 
 class TestShareThePage(TestCase):
@@ -218,3 +219,77 @@ class TestFlushAkamai(TestCase):
         mock_settings.ENABLE_AKAMAI_CACHE_PURGE = True
         flush_akamai(self.page, True)
         assert mock_publish.called
+
+class TestFormModuleHandlers(TestCase):
+    def setUp(self):
+        mock.patch('v1.wagtail_hooks.hooks.register')
+        self.page = mock.Mock()
+        self.request = mock.Mock()
+        self.context = {}
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_sets_context(self, mock_getstreamfields, mock_hasattr):
+        mock_hasattr.return_value = True
+        child = mock.Mock()
+        mock_getstreamfields.items.return_value = [('name', [child])]
+        form_module_handlers(self.page, self.request, self.context)
+        assert 'form_modules' in self.context
+
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_sets_context(self, mock_getstreamfields):
+        mock_getstreamfields.items.return_value = []
+        form_module_handlers(self.page, self.request, self.context)
+        assert 'form_modules' not in self.context
+
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_calls_get_streamfields(self, mock_getstreamfields):
+        form_module_handlers(self.page, self.request, self.context)
+        mock_getstreamfields.assert_called_with(self.page)
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_checks_child_block_if_set_form_context_exists(self, mock_getstreamfields, mock_hasattr):
+        child = mock.Mock()
+        streamfields = {'name': [child]}
+        mock_getstreamfields.return_value = streamfields
+        form_module_handlers(self.page, self.request, self.context)
+        mock_hasattr.assert_called_with(child.block, 'get_result')
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_sets_context_fieldname_if_not_set(self, mock_getstreamfields, mock_hasattr):
+        child = mock.Mock()
+        streamfields = {'name': [child]}
+        mock_getstreamfields.return_value = streamfields
+        mock_hasattr.return_value = True        
+        form_module_handlers(self.page, self.request, self.context)
+        assert 'name' in self.context['form_modules']
+        self.assertIsInstance(self.context['form_modules']['name'], list)
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_calls_child_block_get_result(self, mock_getstreamfields, mock_hasattr):
+        child = mock.Mock()
+        streamfields = {'name': [child]}
+        mock_getstreamfields.return_value = streamfields
+        mock_hasattr.return_value = True        
+        form_module_handlers(self.page, self.request, self.context)
+        child.block.get_result.assert_called_with(
+            self.page,
+            self.request,
+            child.value,
+            child.block.is_submitted()
+        )
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_calls_child_block_is_submitted(self, mock_getstreamfields, mock_hasattr):
+        child = mock.Mock()
+        streamfields = {'name': [child]}
+        mock_getstreamfields.return_value = streamfields
+        mock_hasattr.return_value = True        
+        form_module_handlers(self.page, self.request, self.context)
+        child.block.is_submitted.assert_called_with(self.request, 'name', 0)
+
+

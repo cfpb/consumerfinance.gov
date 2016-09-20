@@ -4,15 +4,15 @@ from urlparse import urlsplit
 from django.utils import timezone
 
 from django.conf import settings
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.contrib.auth.models import Permission
 from django.utils.html import escape
 
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore import hooks
 
-from v1.models import CFGOVPage
-
+from .models import CFGOVPage
+from .util import util
 
 @hooks.register('after_create_page')
 @hooks.register('after_edit_page')
@@ -126,3 +126,34 @@ class CFGovLinkHandler(object):
 @hooks.register('register_rich_text_link_handler')
 def register_cfgov_link_handler():
     return ('page', CFGovLinkHandler)
+
+
+@hooks.register('cfgovpage_context_handlers')
+def form_module_handlers(page, request, context, *args, **kwargs):
+    """
+    Hook function that iterates over every Streamfield's blocks on a page and
+    sets the context for any form modules.
+    """
+    form_modules = {}
+    streamfields = util.get_streamfields(page)
+
+    for fieldname, blocks in streamfields.items():
+        for index, child in enumerate(blocks):
+            if hasattr(child.block, 'get_result'):
+                if fieldname not in form_modules:
+                    form_modules[fieldname] = []
+                is_submitted = child.block.is_submitted(
+                    request,
+                    fieldname,
+                    index
+                )
+                module_context = child.block.get_result(
+                    page,
+                    request,
+                    child.value,
+                    is_submitted
+                )
+                form_modules[fieldname].append(module_context)
+
+    if form_modules:
+        context['form_modules'] = form_modules
