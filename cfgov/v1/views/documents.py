@@ -1,5 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import View
 from urlparse import urlparse
 from wagtail.wagtaildocs.views.serve import serve as wagtail_serve
@@ -32,7 +31,7 @@ class DocumentServeView(View):
 
     def redirect_to_file_url(self, request, document):
         url = self.remove_url_query_string(document.file.url)
-        return HttpResponseRedirect(url)
+        return redirect(url, permanent=False)
 
     @staticmethod
     def remove_url_query_string(url):
