@@ -18,6 +18,7 @@ from sheerlike.middleware import GlobalRequestMiddleware
 from v1.views import unshare, change_password, \
                      password_reset_confirm, login_with_lockout,\
                      check_permissions, welcome
+from v1.views.documents import DocumentServeView
 from v1.auth_forms import CFGOVPasswordChangeForm
 
 
@@ -31,7 +32,10 @@ fin_ed = SheerSite('fin-ed-resources')
 
 urlpatterns = [
 
-    url(r'^documents/', include(wagtaildocs_urls)),
+    url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
+        DocumentServeView.as_view(),
+        name='document_serve'),
+
     # TODO: Enable search route when search is available.
     # url(r'^search/$', 'search.views.search', name='search'),
 
