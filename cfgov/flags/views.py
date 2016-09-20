@@ -82,6 +82,7 @@ def save(request, site_id):
 class FlaggedViewMixin(object):
     flag_name = None
     fallback_view = None
+    pass_if_set = True
 
     def dispatch(self, request, *args, **kwargs):
         if self.flag_name is None:
@@ -93,7 +94,8 @@ class FlaggedViewMixin(object):
 
         decorator = flag_required(
             self.flag_name,
-            fallback_view=self.fallback_view
+            fallback_view=self.fallback_view,
+            pass_if_set=self.pass_if_set
         )
 
         return decorator(super_dispatch)(request, *args, **kwargs)
