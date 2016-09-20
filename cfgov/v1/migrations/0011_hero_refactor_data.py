@@ -12,8 +12,15 @@ from v1.tests.wagtail_pages.helpers import (
 def migrate_hero_forwards(data):
     data = dict(data)
 
-    data['small_image'] = data['image']['upload']
-    data['image'] = data.pop('background_image', None)
+    image = (data.get('image') or {}).get('upload')
+    background_image = data.pop('background_image', None)
+
+    if background_image:
+        data['small_image'] = image
+        data['image'] = background_image
+    else:
+        data['small_image'] = None
+        data['image'] = image
 
     return data
 
@@ -21,10 +28,18 @@ def migrate_hero_forwards(data):
 def migrate_hero_backwards(data):
     data = dict(data)
 
-    data['background_image'] = data['image']
-
+    image = data['image']
     small_image = data.pop('small_image', None)
-    if small_image:
+
+    data['image'] = None
+    data['background_image'] = None
+
+    if image and small_image:
+        data['image'] = {'upload': small_image, 'alt': ''}
+        data['background_image'] = image
+    elif image:
+        data['image'] = {'upload': image, 'alt': ''}
+    elif small_image:
         data['image'] = {'upload': small_image, 'alt': ''}
 
     return data
