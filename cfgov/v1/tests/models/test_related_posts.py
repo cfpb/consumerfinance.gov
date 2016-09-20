@@ -105,6 +105,12 @@ class RelatedPostsTestCase(TestCase):
         self.page_with_authors.delete()
 
     def test_related_posts_blog(self):
+        """
+        Tests whether related posts from the blog from the supplied specific
+        categories are retrieved. We expect there to be two such posts from
+        the blog because we added two such posts in the setup. There should
+        be no other posts in either of the other categories.
+        """
 
         self.block.value['relate_posts'] = True
         self.block.value['relate_newsroom'] = False
@@ -121,6 +127,13 @@ class RelatedPostsTestCase(TestCase):
         self.assertNotIn('Events', related_posts)
 
     def test_related_posts_blog_limit(self):
+        """
+        Tests whether related posts from the blog from the supplied specific
+        categories are retrieved, subject to supplied limit. We expect there
+        to be one such post from the blog, that post should be the one with
+        the most recent publication date, and no other categories
+        (newsroom, events) to have, any posts in them.
+        """
 
         self.block.value['relate_posts'] = True
         self.block.value['relate_newsroom'] = False
@@ -137,6 +150,13 @@ class RelatedPostsTestCase(TestCase):
         self.assertNotIn('Events', related_posts)
 
     def test_related_posts_newsroom(self):
+        """
+        Tests whether related posts from the newsroom for the supplied specific
+        categories are retrieved. We expect there to be one such post from
+        the newsroom; we added two newsroom children but one of them should not
+        match. We also expect that no other categories (newsroom, events) have
+        any posts in them.
+        """
 
         self.block.value['relate_posts'] = False
         self.block.value['relate_newsroom'] = True
@@ -152,6 +172,13 @@ class RelatedPostsTestCase(TestCase):
         self.assertNotIn('Events', related_posts)
 
     def test_related_posts_events(self):
+        """
+        Tests whether related posts from events are retrieved. Events have
+        no specific categories associated with them so it doesn't matter what
+        that value is set to. We expect there to be one such post from
+        events because we added one child to the events parent. We also expect
+        that no other categories (newsroom, blog) have any posts in them.
+        """
 
         self.block.value['relate_posts'] = False
         self.block.value['relate_newsroom'] = False
@@ -167,7 +194,15 @@ class RelatedPostsTestCase(TestCase):
         self.assertNotIn('Newsroom', related_posts)
 
     def test_related_posts_events_archive(self):
-
+        """
+        Tests whether related posts from archived events are retrieved.
+        Events have no specific categories associated with them so it
+        doesn't matter what that value is set to. Here, we save an
+        archived event child, and thus we expect that we should retrieve
+        both the original event child and the archive event child.
+        We also expect that no other categories (newsroom, blog) have
+        any posts in them.
+        """
         helpers.save_new_page(self.events_child2, self.archive_events_parent)
 
         self.block.value['relate_posts'] = False
@@ -185,6 +220,12 @@ class RelatedPostsTestCase(TestCase):
         self.assertEqual(related_posts['Events'][1], self.events_child2)
 
     def test_related_posts_all(self):
+        """
+        We test whether all the different posts are retrieved. This is
+        basically the logical AND of the blog, newsroom, and events
+        tests. We expect to retrieve all the blog, newsroom, and events
+        posts (two, one, and one of each, respectively).
+        """
 
         self.block.value['relate_posts'] = True
         self.block.value['relate_newsroom'] = True

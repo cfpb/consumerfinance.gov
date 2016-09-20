@@ -166,14 +166,16 @@ class CFGOVPage(Page):
         ]
 
         def fetch_children_by_specific_category(block, parent_slug):
-            # This used to be a Page.objects.get, which would throw
-            # an exception if the requested parent wasn't found. As of
-            # Django 1.6, you can now do Page.objects.filter().first();
-            # the advantage here is that you can check for None right
-            # away and not have to rely on catching exceptions, which
-            # in any case didn't do anything useful other than to print
-            # an error message. Instead, we just return an empty query
-            # which has no effect on the final result.
+            """
+            This used to be a Page.objects.get, which would throw
+            an exception if the requested parent wasn't found. As of
+            Django 1.6, you can now do Page.objects.filter().first();
+            the advantage here is that you can check for None right
+            away and not have to rely on catching exceptions, which
+            in any case didn't do anything useful other than to print
+            an error message. Instead, we just return an empty query
+            which has no effect on the final result.
+            """
             parent = Page.objects.filter(slug=parent_slug).first()
             if parent:
                 child_query = Page.objects.child_of_q(parent)
