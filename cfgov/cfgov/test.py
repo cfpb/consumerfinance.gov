@@ -4,13 +4,29 @@ import importlib
 import re
 
 from django.apps import apps
+from django.db import connection
+from django.db.migrations.loader import MigrationLoader
 from django.test.runner import DiscoverRunner
+
+from scripts import initial_data
 
 
 class TestDataTestRunner(DiscoverRunner):
     def setup_databases(self, **kwargs):
         dbs = super(TestDataTestRunner, self).setup_databases(**kwargs)
 
+        # Ensure that certain key data migrations are always run, even if
+        # tests are being run without migrations, e.g. through use of
+        # settings.test_nomigrations.
+        self.run_required_data_migrations()
+
+        # Set up additional required test data that isn't contained in data
+        # migrations, for example an admin user.
+        initial_data.run()
+
+        return dbs
+
+    def run_required_data_migrations(self):
         migration_methods = (
             (
                 'wagtail.wagtailcore.migrations.0002_initial_data',
@@ -26,11 +42,18 @@ class TestDataTestRunner(DiscoverRunner):
             ),
         )
 
+        loader = MigrationLoader(connection)
         for migration, method in migration_methods:
-            module = importlib.import_module(migration)
-            getattr(module, method)(apps, None)
+            if not self.is_migration_applied(loader, migration):
+                print('applying migration {}'.format(migration))
+                module = importlib.import_module(migration)
+                getattr(module, method)(apps, None)
 
-        return dbs
+    @staticmethod
+    def is_migration_applied(loader, migration):
+        parts = migration.split('.')
+        migration_tuple = (parts[-3], parts[-1])
+        return migration_tuple in loader.applied_migrations
 
 
 class HtmlMixin(object):
