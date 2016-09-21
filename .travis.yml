@@ -14,7 +14,7 @@ install:
   - npm install -g gulp
 
   # Project initialization.
-  - pip install coverage coveralls tox
+  - pip install -r requirements/travis.txt
   - chmod +x ./frontend.sh
   - ./frontend.sh test
 
@@ -24,8 +24,7 @@ env:
 script:
   - gulp lint
   - gulp test:unit
-  #- gulp test:coveralls
-  - tox
+  - gulp test:coveralls
 
 after_success:
   - coverage combine
