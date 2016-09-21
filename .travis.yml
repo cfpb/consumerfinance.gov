@@ -15,8 +15,8 @@ install:
 
   # Project initialization.
   - pip install coverage coveralls tox
-  #- chmod +x ./frontend.sh
-  #- ./frontend.sh test
+  - chmod +x ./frontend.sh
+  - ./frontend.sh test
 
 env:
   - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test DJANGO_STAGING_HOSTNAME=content.localhost
