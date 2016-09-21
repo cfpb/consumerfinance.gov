@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.
+- Optimized Travis build by removing unnecessary steps.
 
 ### Removed
 - `max-height` styling on info unit images
