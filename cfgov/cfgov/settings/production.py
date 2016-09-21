@@ -53,3 +53,5 @@ if os.environ.get('DATABASE_ROUTING', False):
             'PORT': os.environ.get('LEGACY_MYSQL_PORT', ''),
         },
     }
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'

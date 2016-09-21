@@ -17,35 +17,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
+- Production settings now use ManifestStaticFilesStorage
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.
+- In templates, ALL static file references now use Django's `static` tag/function
+- In CSS/Less, references to other assets are now relative
 - Optimized Travis build by removing unnecessary steps.
 
 ### Removed
-- `max-height` styling on info unit images
+- `max-height` styling on info unit images 
+### Fixed
 
-
-## 3.8.2
-
-### Changed
-- Updated copy on Students and Recent Graduates Careers page.
-
-
-## 3.8.1
-
-### Added
-- Google Optimize code on `find-a-housing-counselor` page
-
-
-## 3.8.0
+## 3.9.0
 
 ### Added
 - Logging configuration to `local.py`
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 - Ability to output sharing links within an Image and Text 50/50 Group module
-- Google Optimize code on `find-a-housing-counselor` page
-- Added a test for get_browsefilterable_posts function of the sublanding page
+- Added a test for get_browsefilterable_posts function of the sublanding page 
 - Data migration sets up site root and careers pages
 - Wagtail User editor now enforces unique email addresses when creating/editing users.
 - Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
@@ -80,6 +70,30 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 caused bad link formation
 - Fixed an issue w/ the email signup not utilizing the Gov Delivery JSON view for instant error/success feedback.
 - Fixed an issue w/ the form validation skipping any validation types other than `required`.
+
+
+## 3.8.2
+
+### Changed
+- Updated copy on Students and Recent Graduates Careers page.
+
+
+## 3.8.1
+
+### Added
+- Google Optimize code on `find-a-housing-counselor` page
+
+
+## 3.8.0
+
+### Added
+- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
+- Ability to output sharing links within an Image and Text 50/50 Group module
+
+### Changed
+
+### Removed
+- Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 
 
 ## 3.7.2
