@@ -70,20 +70,33 @@ class TextIntroduction(blocks.StructBlock):
 
 
 class Hero(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    heading = blocks.CharBlock(required=False,
+                               help_text='Maximum character count: 25 (including spaces)')
+    body = blocks.RichTextBlock(required=False,
+                                help_text='Maximum character count: 185 (including spaces)')
 
-    background_image = ImageChooserBlock(required=False,
-                                         help_text='An image object containing the URL of the image to be placed behind the hero.')
+    links = blocks.ListBlock(atoms.Hyperlink(),
+                             help_text='If your hero needs a call-to-action link, enter it here, rather than inside the body field.')
+    is_button = blocks.BooleanBlock(required=False,
+                                    help_text='Select to render any links given above as buttons.')
 
-    image = atoms.ImageBasic(required=False)
+    image = ImageChooserBlock(required=False,
+                              help_text='Should be exactly 390px tall, and up to 940px wide, unless this is an overlay or bleeding style hero.')
+    is_overlay = blocks.BooleanBlock(required=False,
+                                     help_text='Select if you want the provided image to be a background image under the entire hero.')
 
     background_color = blocks.CharBlock(required=False,
-                                        help_text="Use Hexcode colors e.g #F0F8FF")
-    links = blocks.ListBlock(atoms.Hyperlink())
-    is_button = blocks.BooleanBlock(required=False)
-    is_white_text = blocks.BooleanBlock(required=False)
-    is_overlay = blocks.BooleanBlock(required=False)
+                                        help_text='Specify a hex value (with the # sign) from our official palette: https://github.com/cfpb/cf-theme-cfpb/blob/master/src/color-palette.less')
+    is_white_text = blocks.BooleanBlock(required=False,
+                                        help_text='Turns the hero text white. Useful if using a dark background color or background image.')
+    cta_link_color = blocks.CharBlock(required=False,
+                                      label='CTA link color',
+                                      help_text='If using a dark background color or background image, you may need to specify an alternate color for the call-to-action link. Specify a hex value (with the # sign) from our official palette: https://github.com/cfpb/cf-theme-cfpb/blob/master/src/color-palette.less')
+
+    is_bleeding = blocks.BooleanBlock(required=False,
+                                      help_text='Select if you want the provided image to bleed vertically off the top and bottom of the hero.')
+    small_image = ImageChooserBlock(required=False,
+                                    help_text='Provide an alternate image for small displays when using a bleeding or overlay hero.')
 
     class Meta:
         icon = 'image'
