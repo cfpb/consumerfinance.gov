@@ -33,11 +33,11 @@ class TestAbstractFormBlock(TestCase):
         with self.assertRaises(AttributeError) as e:
             self.block.get_handler_class()
 
-    @mock.patch('v1.blocks.util')
-    def test_get_handler_class_returns_load_class_with_handler_path(self, mock_util):
+    @mock.patch('v1.blocks.import_string')
+    def test_get_handler_class_returns_load_class_with_handler_path(self, mock_import):
         self.block.meta.handler = 'handler.dot.path'
         self.block.get_handler_class()
-        mock_util.load_class.assert_called_with(self.block.meta.handler)
+        mock_import.assert_called_with(self.block.meta.handler)
 
     def test_is_submitted_returns_False_for_wrong_method(self):
         result = self.block.is_submitted(self.request, 'name', 0)

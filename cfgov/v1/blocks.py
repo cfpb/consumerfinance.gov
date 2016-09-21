@@ -1,5 +1,5 @@
 from wagtail.wagtailcore import blocks
-from v1.util import util
+from django.utils.module_loading import import_string
 
 
 class AbstractFormBlock(blocks.StructBlock):
@@ -16,7 +16,7 @@ class AbstractFormBlock(blocks.StructBlock):
         if not handler_path:
             raise AttributeError(
                 'You must set a handler attribute on the Meta class.')
-        return util.load_class(handler_path)
+        return import_string(handler_path)
 
     def is_submitted(self, request, sfname, index):
         form_id = 'form-%s-%d' % (sfname, index)
