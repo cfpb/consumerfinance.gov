@@ -34,7 +34,7 @@
     <div class="block">
         <figure class="media float-media rwd-crop" data-qa-hook="director-bio-image">
             <img class="media_image media_image__150 rwd-crop_item"
-                 src="/static/img/director-cordray-300x400.jpg"
+                 src="{{ static('img/director-cordray-300x400.jpg')}}"
                  alt="Portrait of Director Richard Cordray">
         </figure>
         <p>
@@ -91,7 +91,7 @@
                     <div class="media_image-container
                                 media_image-container__wide-margin">
                         <img class="media_image media_image__100"
-                             src="/static/img/director-cordray-round-200x200.jpg"
+                             src="{{ static('img/director-cordray-round-200x200.jpg')}}"
                              alt="Portrait of Director Richard Cordray">
                     </div>
                     <div class="media_body" data-qa-hook="director-media-downloads">
@@ -101,19 +101,19 @@
                         <ul class="list list__links">
                             <li class="list_item">
                                 <a class="list_link jump-link jump-link__download"
-                                   href="/static/pdf/201410_cfpb_bio_cordray.pdf">
+                                   href="{{ static('pdf/201410_cfpb_bio_cordray.pdf') }}">
                                     <span class="jump-link_text">Biography</span>
                                 </a>
                             </li>
                             <li class="list_item">
                                 <a class="list_link jump-link jump-link__download"
-                                   href="/static/img/director-cordray-3238x3672.jpg">
+                                   href="{{ static('img/director-cordray-3238x3672.jpg') }}">
                                     <span class="jump-link_text">High-res portrait</span>
                                 </a>
                             </li>
                             <li class="list_item">
                                 <a class="list_link jump-link jump-link__download"
-                                   href="/static/img/director-cordray-300x400.jpg">
+                                   href="{{ static('img/director-cordray-300x400.jpg')}}">
                                     <span class="jump-link_text">Low-res portrait</span>
                                 </a>
                             </li>
