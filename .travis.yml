@@ -14,6 +14,7 @@ install:
   - npm install -g gulp
 
   # Project initialization.
+  - pip install -r requirements/test.txt
   - chmod +x ./frontend.sh
   - ./frontend.sh test
 
