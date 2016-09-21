@@ -10,18 +10,18 @@ sudo: false
 services:
   - elasticsearch
 
-install:
+#install:
   # Project configuration requirements.
-  - pip install virtualenv virtualenvwrapper
-  - pip install autoenv
-  - pip install coveralls
-  - export CXX=clang++
-  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-  - nvm install 5.5.0
-  - nvm use 5.5.0
-  - npm install -g gulp
-  - chmod +x ./setup.sh
-  - ./setup.sh test
+  #- pip install virtualenv virtualenvwrapper
+  #- pip install autoenv
+  #- pip install coveralls
+  #- export CXX=clang++
+  #- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+  #- nvm install 5.5.0
+  #- nvm use 5.5.0
+  #- npm install -g gulp
+  #- chmod +x ./setup.sh
+  #- ./setup.sh test
 
   # Project initialization.
 
@@ -32,18 +32,17 @@ env:
   # - GULP_TEST="test:unit"
   # - GULP_TEST="test:coveralls"
 
-before_script:
-  - python cfgov/manage.py sheer_index
-  - python cfgov/manage.py migrate
+#before_script:
+#  - python cfgov/manage.py sheer_index
+#  - python cfgov/manage.py migrate
 
 script:
-  - gulp lint
-  - gulp test:unit
-  - gulp test:coveralls
+  - pip install -r requirements/test.txt
 
-after_success:
-  - coverage combine
-  - coveralls
+
+#after_success:
+  # - coverage combine
+  # - coveralls
 
 # notifications:
 #   webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN
