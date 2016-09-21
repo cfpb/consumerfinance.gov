@@ -17,9 +17,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
+- Production settings now use ManifestStaticFilesStorage
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.
+- In templates, ALL static file references now use Django's `static` tag/function
+- In CSS/Less, references to other assets are now relative
 
 ### Removed
 - `max-height` styling on info unit images 
