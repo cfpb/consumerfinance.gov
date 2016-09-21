@@ -21,7 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 
 ### Removed
-
+- `max-height` styling on info unit images 
 ### Fixed
 
 ## 3.9.0
