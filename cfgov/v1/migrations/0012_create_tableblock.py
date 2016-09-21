@@ -13,7 +13,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0009_site_root_data'),
+        ('v1', '0011_hero_refactor_data'),
     ]
 
     operations = [
