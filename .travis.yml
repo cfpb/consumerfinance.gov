@@ -14,17 +14,18 @@ install:
   - npm install -g gulp
 
   # Project initialization.
-  - pip install tox
-  - chmod +x ./frontend.sh
-  - ./frontend.sh test
+  - pip install coverage coveralls tox
+  #- chmod +x ./frontend.sh
+  #- ./frontend.sh test
 
 env:
   - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test DJANGO_STAGING_HOSTNAME=content.localhost
 
 script:
-  - gulp lint
-  - gulp test:unit
-  - gulp test:coveralls
+  #- gulp lint
+  #- gulp test:unit
+  #- gulp test:coveralls
+  - tox
 
 after_success:
   - coverage combine
