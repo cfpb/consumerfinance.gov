@@ -8,11 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 from django.core.context_processors import csrf
 from django.utils import timezone
-import re
-import datetime
 
-from jobmanager.models import Job, JobCategory, Location, FellowshipUpdateList
-
+from flags.views import FlaggedViewMixin
+from jobmanager.models import Job, FellowshipUpdateList
 
 
 @csrf_exempt
@@ -55,7 +53,7 @@ def detail(request, pk=None, slug=None):
             'salary_max': salary_max})
 
 
-class JobListView(ListView):
+class JobListView(FlaggedViewMixin, ListView):
     model = Job
     ordering = ('close_date', 'title')
 
