@@ -25,8 +25,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - In CSS/Less, references to other assets are now relative
 
 ### Removed
-- `max-height` styling on info unit images 
+- `max-height` styling on info unit images
+
 ### Fixed
+- Corrected Spanish-language label for sharing module
+
 
 ## 3.9.0
 
@@ -34,7 +37,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Logging configuration to `local.py`
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 - Ability to output sharing links within an Image and Text 50/50 Group module
-- Added a test for get_browsefilterable_posts function of the sublanding page 
+- Added a test for get_browsefilterable_posts function of the sublanding page
 - Data migration sets up site root and careers pages
 - Wagtail User editor now enforces unique email addresses when creating/editing users.
 - Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
