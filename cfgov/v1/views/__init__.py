@@ -29,11 +29,13 @@ from wagtail.wagtailadmin.views import account
 from wagtail.wagtailusers.views.users import add_user_perm, change_user_perm
 from wagtail.wagtailadmin.utils import permission_required
 
-from .auth_forms import CFGOVSetPasswordForm, CFGOVPasswordChangeForm, LoginForm
-
-from .util.util import valid_destination_for_request,\
-                       all_valid_destinations_for_request
-from .signals import page_unshared
+from v1.auth_forms import (
+    CFGOVPasswordChangeForm, CFGOVSetPasswordForm, LoginForm
+)
+from v1.signals import page_unshared
+from v1.util.util import (
+    all_valid_destinations_for_request, valid_destination_for_request
+)
 
 
 class EventICSView(ICSView):
@@ -249,7 +251,7 @@ def custom_password_reset_confirm(request, uidb64=None, token=None,
 def welcome(request):
     valid_destinations = all_valid_destinations_for_request(request)
 
-    
+
     if len(valid_destinations) == 1:
         redirect_to = valid_destinations[0][1]
         return HttpResponseRedirect(redirect_to)
