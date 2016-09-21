@@ -22,8 +22,8 @@ env:
   - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test DJANGO_STAGING_HOSTNAME=content.localhost
 
 script:
-  #- gulp lint
-  #- gulp test:unit
+  - gulp lint
+  - gulp test:unit
   #- gulp test:coveralls
   - tox
 
