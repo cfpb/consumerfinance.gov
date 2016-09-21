@@ -21,6 +21,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 - Refactored heroes to support the new "bleeding" format.
 
+### Removed
+- `max-height` styling on info unit images
+
 
 ## 3.8.2
 
