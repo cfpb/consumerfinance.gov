@@ -13,12 +13,42 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased Changes
+## Unreleased
 
 ### Added
+- Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
+
+### Changed
+- Refactored heroes to support the new "bleeding" format.
+
+### Removed
+- `max-height` styling on info unit images
+
+
+## 3.8.2
+
+### Changed
+- Updated copy on Students and Recent Graduates Careers page.
+
+
+## 3.8.1
+
+### Added
+- Google Optimize code on `find-a-housing-counselor` page
+
+
+## 3.8.0
+
+### Added
+- Logging configuration to `local.py`
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 - Ability to output sharing links within an Image and Text 50/50 Group module
 - Google Optimize code on `find-a-housing-counselor` page
+- Added a test for get_browsefilterable_posts function of the sublanding page
+- Data migration sets up site root and careers pages
+- Wagtail User editor now enforces unique email addresses when creating/editing users.
+- Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
+- New `@flag_required` decorator for Django views
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
@@ -37,11 +67,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated gulp-rename npm module to version `1.2.2` from `1.1.0`.
 - Replaces deprecated gulp-cssmin with gulp-clean-css.
 - Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
+- Feature flag methods now take an explicit `request` object to determine what site to check the flag against
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 - Unused npm module map-stream.
 - Custom method `most_common` since python lib offers similar function
+
+### Fixed
+- Post preview organism template used tag/author names instead of slugs that
+caused bad link formation
+- Fixed an issue w/ the email signup not utilizing the Gov Delivery JSON view for instant error/success feedback.
+- Fixed an issue w/ the form validation skipping any validation types other than `required`.
+
 
 ## 3.7.2
 
@@ -51,8 +89,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed the leadership calendar print template from the "base.html" inheritence hiearchy
 - restores the django logging config we used before cfgov-refresh
 
+
 ## 3.7.1
 - always use "localhost" when setting the base URL for PDFReactor
+
 
 ## 3.7.0
 

@@ -116,6 +116,14 @@ well = {
         'content': "this is well content"
     }
 }
+filter_controls = {
+    'type': 'filter_controls',
+    'value': [
+        {
+            'title': 'this is a filter'
+        }
+    ]
+}
 full_width_text = {
     'type': 'full_width_text',
     'value': [

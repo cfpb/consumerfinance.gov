@@ -4,8 +4,9 @@ import importlib
 import re
 
 from django.apps import apps
+from django.db import connection
+from django.db.migrations.loader import MigrationLoader
 from django.test.runner import DiscoverRunner
-from wagtail.wagtailcore.models import Page
 
 from scripts import initial_data
 
@@ -14,21 +15,45 @@ class TestDataTestRunner(DiscoverRunner):
     def setup_databases(self, **kwargs):
         dbs = super(TestDataTestRunner, self).setup_databases(**kwargs)
 
-        if not self.check_for_wagtail_root():
-            self.setup_wagtail_root()
+        # Ensure that certain key data migrations are always run, even if
+        # tests are being run without migrations, e.g. through use of
+        # settings.test_nomigrations.
+        self.run_required_data_migrations()
 
+        # Set up additional required test data that isn't contained in data
+        # migrations, for example an admin user.
         initial_data.run()
+
         return dbs
 
-    def check_for_wagtail_root(self):
-        return Page.objects.filter(slug='root').exists()
+    def run_required_data_migrations(self):
+        migration_methods = (
+            (
+                'wagtail.wagtailcore.migrations.0002_initial_data',
+                'initial_data'
+            ),
+            (
+                'wagtail.wagtailcore.migrations.0025_collection_initial_data',
+                'initial_data'
+            ),
+            (
+                'v1.migrations.0009_site_root_data',
+                'create_site_root'
+            ),
+        )
 
-    def setup_wagtail_root(self):
-        migration = 'wagtail.wagtailcore.migrations.0002_initial_data'
-        print('Running migration {} to setup Wagtail root'.format(migration))
+        loader = MigrationLoader(connection)
+        for migration, method in migration_methods:
+            if not self.is_migration_applied(loader, migration):
+                print('applying migration {}'.format(migration))
+                module = importlib.import_module(migration)
+                getattr(module, method)(apps, None)
 
-        module = importlib.import_module(migration)
-        module.initial_data(apps, None)
+    @staticmethod
+    def is_migration_applied(loader, migration):
+        parts = migration.split('.')
+        migration_tuple = (parts[-3], parts[-1])
+        return migration_tuple in loader.applied_migrations
 
 
 class HtmlMixin(object):
