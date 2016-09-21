@@ -4,7 +4,7 @@
 
    ==========================================================================
 
-   See [GHE]/flapjack/Modules-V1/wiki/Heros
+   See https://cfpb.github.io/design-manual/global-elements/heroes.html
 
    Description:
 
@@ -14,10 +14,11 @@
 
    value.heading:          A string containing title of module.
 
-   value.body:             A string containing the content to display below the
-                           heading (typically a paragraph).
+   value.body:             A string containing the content to display below
+                           the heading (typically a paragraph).
 
-   value.links:            A tuple of items to create a list of links, containing:
+   value.links:            A tuple of items to create a list of links,
+                           containing:
 
    value.links[i].url:     A string for the URL of the link.
 
@@ -30,13 +31,16 @@
 
    value.is_overlay:       A boolean to change the hero to an overlay hero.
 
-   value.background_color: A string containing the color code (in any format) to
-                           set as the hero background color.
+   value.background_color: A string containing the color code (in any format)
+                           to set as the hero background color.
 
    value.is_white_text:    A boolean to change the text color to white.
 
-   value.cta_link_color:   A string containing the color code (in any format) to
-                           set as the hero background color.
+   value.cta_link_color:   A string containing the color code (in any format)
+                           to set as the CTA link color. Should only be used
+                           in the event that the background_color value does
+                           not have sufficient contrast with the default
+                           link color.
 
    value.is_bleeding:      A boolean that indicates that the image bleeds
                            vertically.
