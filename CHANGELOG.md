@@ -13,9 +13,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased Changes
+## Unreleased
 
 ### Added
+- Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
 
 ### Changed
 
