@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Refactored heroes to support the new "bleeding" format.
 - In templates, ALL static file references now use Django's `static` tag/function
 - In CSS/Less, references to other assets are now relative
+- Optimized Travis build by removing unnecessary steps.
 
 ### Removed
 - `max-height` styling on info unit images
