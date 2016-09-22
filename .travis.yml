@@ -5,45 +5,26 @@ python:
 
 cache: pip
 
-sudo: false
-
-services:
-  - elasticsearch
-
 install:
   # Project configuration requirements.
-  - pip install virtualenv virtualenvwrapper
-  - pip install autoenv
-  - pip install coveralls
   - export CXX=clang++
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
   - nvm install 5.5.0
   - nvm use 5.5.0
   - npm install -g gulp
-  - chmod +x ./setup.sh
-  - ./setup.sh test
 
   # Project initialization.
+  - pip install -r requirements/travis.txt
+  - chmod +x ./frontend.sh
+  - ./frontend.sh test
 
 env:
-  - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test WORDPRESS=http://www.consumerfinance.gov DJANGO_STAGING_HOSTNAME=content.localhost
-  # COVERALLS_PARALLEL=true
-  # - GULP_TEST="lint"
-  # - GULP_TEST="test:unit"
-  # - GULP_TEST="test:coveralls"
-
-before_script:
-  - python cfgov/manage.py sheer_index
-  - python cfgov/manage.py migrate
+  - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test DJANGO_STAGING_HOSTNAME=content.localhost
 
 script:
   - gulp lint
   - gulp test:unit
-  - gulp test:coveralls
+  - tox -e travis
 
 after_success:
-  - coverage combine
   - coveralls
-
-# notifications:
-#   webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN
