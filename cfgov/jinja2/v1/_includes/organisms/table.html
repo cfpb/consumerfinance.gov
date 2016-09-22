@@ -22,29 +22,33 @@
     {% if value.first_row_is_table_header and value.data | list | length > 0 %}
     {% set row_index = 1 %}
     <thead>
+        {# Check to verify the row isn't empty #}
+        {% if value.data[0] | reject('none') | list | length %}
         <tr>
-            {% for column in value.data[0] %}
-                {% if cell is not none %}
-                <th>
-                    {{ column | trim | safe | linebreaksbr }}
-                </th>
-                {% endif %}
+            {% for cell in value.data[0] %}
+            <th scope="col">
+                {{ cell if cell is not none else '' | trim | safe | linebreaksbr }}
+            </th>
             {% endfor %}
         </tr>
+        {% endif %}
     </thead>
     {% endif %}
     <tbody>
     {% for row in value.data[row_index:] or [] %}
+        {% if row | reject('none') | list | length %}
         <tr>
             {% for cell in row or [] %}
-                {% if cell is not none %}
-                {% set tag = 'th' if value.first_col_is_header and loop.first else 'td' %}
-                <{{tag}} data-label="{{ value.data[0][loop.index0] | striptags }}">
-                    {{ cell | trim | safe | linebreaksbr }}
-                </{{tag}}>
+                {% set tag = 'th scope="row"' if value.first_col_is_header and loop.first else 'td' %}
+                {% if value.data[0][loop.index0] is not none %}
+                   {% set data_label = 'data-label="{0}"'.format(value.data[0][loop.index0] | striptags | trim) %}
                 {% endif %}
+                <{{tag}} {{ data_label | default }}>
+                    {{ cell if cell is not none else '' | trim | safe | linebreaksbr }}
+                </{{tag}}>
             {% endfor %}
         </tr>
+        {% endif %}
     {% endfor %}
     </tbody>
 </table>
