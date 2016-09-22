@@ -1,10 +1,6 @@
 # Including forms into Wagtail page context
 
-Wagtail has a FormBuilder module that they want you to use for forms on their pages. The problem with this module is that it's restrictive. There are ways of subclassing its normal behavior, but the real restriction lays in that it subclasses the same class CFGOVPage does: Page. This makes using it nearly impossible for us at the moment.
-
-To get a form in the Wagtail page context, a developer has a few options. All of which are quite onerous and require an intimate knowledge of the Wagtail page backend and request handling flow to implement correctly.
-
-For our purposes there is `AbstractFormBlock`, a subclass of StructBlock that implements methods to process a request. If a developer wishes to add a module that includes a form, they only need to follow a few steps in order to get it handled properly:
+Wagtail provides a FormBuilder module, but it cannot be used with subclasses of Page, like our CFGOVPage. For our purposes there is `AbstractFormBlock`, a subclass of StructBlock that implements methods to process a request. If a developer wishes to add a module that includes a form, they only need to follow a few steps in order to get it handled properly:
 
 1. Create the form.
 2. Create handler class that implements a method named `process`.
