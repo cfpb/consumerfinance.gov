@@ -26,7 +26,7 @@
         {% elif block.block_type == 'conference_registration_form' %}
             {% import block.block.meta.template as conference_form with context %}
             {% set form_id = 'form-' ~ 'content-' ~ loop.index0 %}
-            {% set settings = form_modules.content.pop(0) %}
+            {% set settings = form_modules.content[loop.index0] %}
             {{ conference_form.render(block.value, settings, form_id) }}
         {% else %}
             {{ render_block.render(block, loop.index) }}

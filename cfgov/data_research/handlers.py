@@ -4,7 +4,7 @@ from urlparse import urlparse
 
 from django.conf import settings
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 
 from v1.handlers import Handler
 from .forms import ConferenceRegistrationForm
@@ -19,9 +19,7 @@ class ConferenceRegistrationHandler(Handler):
         if is_submitted:
             data = self.get_post_data()
             form = ConferenceRegistrationForm(data)
-            response = self.process_form(form)
-            if response:
-                return response
+            return self.get_response(form)
 
         return {'form': ConferenceRegistrationForm()}
 
@@ -31,7 +29,7 @@ class ConferenceRegistrationHandler(Handler):
         data['sessions'] = ','.join(sessions)
         return data
 
-    def process_form(self, form):
+    def get_response(self, form):
         if form.is_valid():
             attendee = form.save(commit=False)
             codes = self.request.POST.getlist('codes', [])
@@ -71,6 +69,7 @@ class ConferenceRegistrationHandler(Handler):
         else:
             message = 'Your registration is complete!'
             messages.success(self.request, message=message)
+            return HttpResponseRedirect(self.page.url)
 
     def fail(self, form):
         if self.request.is_ajax():
