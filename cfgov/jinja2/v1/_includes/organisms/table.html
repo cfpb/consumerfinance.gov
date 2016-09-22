@@ -45,15 +45,22 @@
         {% if row | reject('none') | list | length %}
         <tr>
             {% for cell in row or [] %}
-                {% set tag = 'th scope="row"' if value.first_col_is_header and loop.first else 'td' %}
+                {% if value.first_col_is_header and loop.first %}
+                    {% set open_tag = 'th scope="row"' %}
+                    {% set close_tag = 'th' %}
+                {% else %}
+                    {% set open_tag = 'td' %}
+                    {% set close_tag = 'td' %}
+                {% endif %}
                 {% if first_row[loop.index0] is not none and
-                                             value.first_col_is_header == false and
-                                             value.is_stacked %}
+                    value.first_col_is_header == false and
+                    value.is_stacked
+                %}
                    {% set data_label = 'data-label="{0}"'.format(first_row[loop.index0] | striptags | trim) %}
                 {% endif %}
-                <{{tag}} {{ data_label | default }}>
+                <{{ open_tag | safe }} {{ data_label | safe | default }}>
                     {{ _render_cell(cell) }}
-                </{{tag}}>
+                </{{ close_tag | safe }}>
             {% endfor %}
         </tr>
         {% endif %}

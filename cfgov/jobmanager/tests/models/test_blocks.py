@@ -133,10 +133,10 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
         self.assertHtmlRegexpMatches(html, (
             '<thead>'
             '<tr>'
-            '<th>TITLE</th>'
-            '<th>GRADE</th>'
-            '<th>POSTING CLOSES</th>'
-            '<th>REGION</th>'
+            '<th scope="col">TITLE</th>'
+            '<th scope="col">GRADE</th>'
+            '<th scope="col">POSTING CLOSES</th>'
+            '<th scope="col">REGION</th>'
             '</tr>'
             '</thead>'
         ))
