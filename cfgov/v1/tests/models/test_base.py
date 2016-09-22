@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from ...models.base import CFGOVPage
+from v1.models.base import CFGOVPage
 
 
 class TestCFGOVPage(TestCase):
@@ -56,6 +56,7 @@ class TestCFGOVPage(TestCase):
     def test_serve_ajax_returns_failed_JSON_response_for_no_form_id(self):
         response = self.page.serve_ajax(self.request)
         self.assertEqual(response.content, '{"result": "error"}')
+        self.assertEqual(response.status_code, 400)
 
     @mock.patch('v1.models.base.getattr')
     def test_serve_ajax_gets_streamfield_from_page_using_form_id(self, mock_getattr):

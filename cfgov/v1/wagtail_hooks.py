@@ -4,7 +4,7 @@ from urlparse import urlsplit
 from django.utils import timezone
 
 from django.conf import settings
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from django.contrib.auth.models import Permission
 from django.utils.html import escape
 

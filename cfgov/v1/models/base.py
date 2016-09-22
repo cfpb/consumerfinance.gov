@@ -258,7 +258,7 @@ class CFGOVPage(Page):
         """
         form_id = request.POST.get('form_id', None)
         if not form_id:
-            return JsonResponse({'result': 'error'})
+            return JsonResponse({'result': 'error'}, status=400)
 
         sfname, index = form_id.split('-')[1:]
 

@@ -19,13 +19,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
 - Production settings now use ManifestStaticFilesStorage
 - Added a 'run_travis.sh' script to enable separate JS and Python test coverage reporting 
-- AbstractFormBlock
+- AbstractFormBlock to be used as a base class for modules requiring Django Forms
+- wagtail_hooks.py function `form_module_handlers` used by `CFGOVPage.get_context()`
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.
 - In templates, ALL static file references now use Django's `static` tag/function
 - In CSS/Less, references to other assets are now relative
 - Optimized Travis build by removing unnecessary steps.
+- Refactored heroes to support the new "bleeding" format.
+- `CFGOVPage.get_context()` now uses wagtail hooks to call functions registered with the hook name `cfgovpage_context_handlers`
+- `CFGOVPage.serve()` calls `CFGOVPage.serve_ajax()` to handle AJAX requests
 
 ### Removed
 - `max-height` styling on info unit images

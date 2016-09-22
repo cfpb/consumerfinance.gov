@@ -1,4 +1,3 @@
-import importlib
 import collections, json, os, re
 from itertools import chain
 from time import time
@@ -148,7 +147,7 @@ def all_valid_destinations_for_request(request):
 
 def get_streamfields(page):
     """
-    Retrieves the stream values on a page from it's Streamfield
+    Retrieves the stream values on a page from its Streamfield
     """
     blocks_dict = {}
     for key, value in vars(page).items():

@@ -232,13 +232,13 @@ class TestFormModuleHandlers(TestCase):
     def test_sets_context(self, mock_getstreamfields, mock_hasattr):
         mock_hasattr.return_value = True
         child = mock.Mock()
-        mock_getstreamfields.items.return_value = [('name', [child])]
+        mock_getstreamfields().items.return_value = [('name', [child])]
         form_module_handlers(self.page, self.request, self.context)
         assert 'form_modules' in self.context
 
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')
-    def test_sets_context(self, mock_getstreamfields):
-        mock_getstreamfields.items.return_value = []
+    def test_does_not_set_context(self, mock_getstreamfields):
+        mock_getstreamfields().items.return_value = []
         form_module_handlers(self.page, self.request, self.context)
         assert 'form_modules' not in self.context
 
