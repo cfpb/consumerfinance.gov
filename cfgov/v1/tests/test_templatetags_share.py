@@ -69,7 +69,7 @@ class TemplatetagsShareTestCase(TestCase):
     def test_get_page_state_url_no_url(self):
 
         self.page.live = True
-        self.page.url_path = ''
+        self.page.url_path = 'somenonvalidpath'
         self.page.shared = True
         self.page.save()
 
@@ -83,7 +83,8 @@ class TemplatetagsShareTestCase(TestCase):
         self.page.save()
 
         result = share.get_page_state_url(None, self.page)
-        self.assertEqual(result, 'http://content.localhost:8000/a-very-nice-cfgov-page-4/')
+        self.assertEqual(result, self.page.url.replace('http://localhost',
+                                                       'http://content.localhost'))
 
     def test_get_page_state_url_live(self):
 
