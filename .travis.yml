@@ -29,8 +29,8 @@ env:
 script:
   - ./run_travis.sh
 
-after_success:
-  - coveralls
+# after_success:
+#   - coveralls
 
 notifications:
   webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN
