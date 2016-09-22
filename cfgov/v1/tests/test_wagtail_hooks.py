@@ -265,7 +265,7 @@ class TestFormModuleHandlers(TestCase):
         mock_hasattr.return_value = True        
         form_module_handlers(self.page, self.request, self.context)
         assert 'name' in self.context['form_modules']
-        self.assertIsInstance(self.context['form_modules']['name'], list)
+        self.assertIsInstance(self.context['form_modules']['name'], dict)
 
     @mock.patch('__builtin__.hasattr')
     @mock.patch('v1.wagtail_hooks.util.get_streamfields')

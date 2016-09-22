@@ -7,7 +7,9 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_delete
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponseBadRequest, \
+    HttpResponse
+from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.dispatch import receiver
@@ -241,12 +243,12 @@ class CFGOVPage(Page):
         If request is ajax, then return the ajax request handler response, else
         return the super.
         """
-        if request.is_ajax():
-            return self.serve_ajax(request)
+        if request.method == 'POST':
+            return self.serve_post(request, *args, **kwargs)
 
         return super(CFGOVPage, self).serve(request, *args, **kwargs)
 
-    def serve_ajax(self, request):
+    def serve_post(self, request, *args, **kwargs):
         """
         Attempts to retreive form_id from the POST request and returns a JSON
         response.
@@ -254,18 +256,33 @@ class CFGOVPage(Page):
         If form_id is found, it returns the response from the block method
         retrieval.
 
-        If form_id is not found it returns an error response.
+        If form_id is not found, it returns an error response.
         """
         form_id = request.POST.get('form_id', None)
         if not form_id:
-            return JsonResponse({'result': 'error'}, status=400)
+            if request.is_ajax():
+                return JsonResponse({'result': 'error'}, status=400)
+
+            return HttpResponseBadRequest(self.url)
 
         sfname, index = form_id.split('-')[1:]
 
         streamfield = getattr(self, sfname)
         module = streamfield[int(index)]
 
-        return module.block.get_result(self, request, module.value, True)
+        result = module.block.get_result(self, request, module.value, True)
+
+        if isinstance(result, HttpResponse):
+            return result
+        else:
+            context = self.get_context(request, *args, **kwargs)
+            context['form_modules'][sfname].update({int(index): result})
+
+            return TemplateResponse(
+                request,
+                self.get_template(request, *args, **kwargs),
+                context
+            )
 
     @property
     def status_string(self):

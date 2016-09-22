@@ -141,19 +141,21 @@ def form_module_handlers(page, request, context, *args, **kwargs):
         for index, child in enumerate(blocks):
             if hasattr(child.block, 'get_result'):
                 if fieldname not in form_modules:
-                    form_modules[fieldname] = []
-                is_submitted = child.block.is_submitted(
-                    request,
-                    fieldname,
-                    index
-                )
-                module_context = child.block.get_result(
-                    page,
-                    request,
-                    child.value,
-                    is_submitted
-                )
-                form_modules[fieldname].append(module_context)
+                    form_modules[fieldname] = {}
+
+                if not request.method == 'POST':
+                    is_submitted = child.block.is_submitted(
+                        request,
+                        fieldname,
+                        index
+                    )
+                    module_context = child.block.get_result(
+                        page,
+                        request,
+                        child.value,
+                        is_submitted
+                    )
+                    form_modules[fieldname].update({index: module_context})
 
     if form_modules:
         context['form_modules'] = form_modules

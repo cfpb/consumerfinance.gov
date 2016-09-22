@@ -29,7 +29,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Optimized Travis build by removing unnecessary steps.
 - Refactored heroes to support the new "bleeding" format.
 - `CFGOVPage.get_context()` now uses wagtail hooks to call functions registered with the hook name `cfgovpage_context_handlers`
-- `CFGOVPage.serve()` calls `CFGOVPage.serve_ajax()` to handle AJAX requests
+- `CFGOVPage.serve()` calls `CFGOVPage.serve_post()` to handle POST requests
 
 ### Removed
 - `max-height` styling on info unit images
