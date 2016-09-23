@@ -56,9 +56,9 @@
                     value.first_col_is_header == false and
                     value.is_stacked
                 %}
-                   {% set data_label = 'data-label="{0}"'.format(first_row[loop.index0] | striptags | trim) %}
+                   {% set data_label = ' data-label="{0}"'.format(first_row[loop.index0] | striptags | trim) %}
                 {% endif %}
-                <{{ open_tag | safe }} {{ data_label | safe | default }}>
+                <{{ open_tag | safe }}{{ data_label | safe | default }}>
                     {{ _render_cell(cell) }}
                 </{{ close_tag | safe }}>
             {% endfor %}
