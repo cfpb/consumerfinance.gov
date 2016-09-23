@@ -13,21 +13,27 @@
    ========================================================================== #}
 
 {% if value.data  %}
+
+{% macro _render_cell(cell) %}
+    {{ cell if cell is not none else '&nbsp;' | trim | safe | linebreaksbr }}
+{% endmacro %}
+
 <table class="o-table
               {{ 'o-table__row-links' if value.row_links else '' }}
               {{ 'table__stack-on-small' if value.is_stacked else '' }}
               {{ 'table__striped' if value.is_striped else '' }}
               {{ 'u-w100pct' if value.is_full_width else '' }}">
     {% set row_index = 0 %}
+    {% set first_row = value.data[row_index] %}
     {% if value.first_row_is_table_header and value.data | list | length > 0 %}
     {% set row_index = 1 %}
     <thead>
         {# Check to verify the row isn't empty #}
-        {% if value.data[0] | reject('none') | list | length %}
+        {% if first_row | reject('none') | list | length %}
         <tr>
             {% for cell in value.data[0] %}
             <th scope="col">
-                {{ cell if cell is not none else '' | trim | safe | linebreaksbr }}
+                {{ _render_cell(cell) }}
             </th>
             {% endfor %}
         </tr>
@@ -40,11 +46,13 @@
         <tr>
             {% for cell in row or [] %}
                 {% set tag = 'th scope="row"' if value.first_col_is_header and loop.first else 'td' %}
-                {% if value.data[0][loop.index0] is not none %}
-                   {% set data_label = 'data-label="{0}"'.format(value.data[0][loop.index0] | striptags | trim) %}
+                {% if first_row[loop.index0] is not none and
+                                             value.first_col_is_header == false and
+                                             value.is_stacked %}
+                   {% set data_label = 'data-label="{0}"'.format(first_row[loop.index0] | striptags | trim) %}
                 {% endif %}
                 <{{tag}} {{ data_label | default }}>
-                    {{ cell if cell is not none else '' | trim | safe | linebreaksbr }}
+                    {{ _render_cell(cell) }}
                 </{{tag}}>
             {% endfor %}
         </tr>
