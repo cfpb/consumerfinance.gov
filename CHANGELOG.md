@@ -18,15 +18,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
 - Production settings now use ManifestStaticFilesStorage
+- New environment variable to store the Akamai object ID
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.
 - In templates, ALL static file references now use Django's `static` tag/function
 - In CSS/Less, references to other assets are now relative
 - Optimized Travis build by removing unnecessary steps.
+- `flush_akamai` function to call Akamai API endpoint that flushes entire site instead, since this is faster than flushing an individual page
+- Only proceed with an Akamai flush if it is an existing page
 
 ### Removed
 - `max-height` styling on info unit images
+- Reference to publish_eccu repo
 
 ### Fixed
 - Corrected Spanish-language label for sharing module

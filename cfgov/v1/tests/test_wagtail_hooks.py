@@ -1,6 +1,5 @@
 import mock
 import json
-import publish_eccu
 
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -197,24 +196,3 @@ class TestConfigurePageRevision(TestCase):
         latest_content = json.loads(latest.content_json)
         assert latest_content['shared']
         assert latest_content['live']
-
-
-class TestFlushAkamai(TestCase):
-
-    def setUp(self):
-        self.page = mock.Mock()
-        self.page.owner.email = 'test@mail.com'
-
-    @mock.patch('v1.wagtail_hooks.settings')
-    @mock.patch('publish_eccu.publish.publish')
-    def test_not_publishing_a_page(self, mock_publish, mock_settings):
-        mock_settings.ENABLE_AKAMAI_CACHE_PURGE = True
-        flush_akamai(self.page, False)
-        assert not mock_publish.called
-
-    @mock.patch('v1.wagtail_hooks.settings')
-    @mock.patch('publish_eccu.publish.publish')
-    def test_publishing_a_page(self, mock_publish, mock_settings):
-        mock_settings.ENABLE_AKAMAI_CACHE_PURGE = True
-        flush_akamai(self.page, True)
-        assert mock_publish.called

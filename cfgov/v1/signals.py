@@ -66,7 +66,7 @@ def configure_page_and_revision(sender, **kwargs):
     from .wagtail_hooks import share, configure_page_revision, flush_akamai
     share(page=kwargs['instance'], is_sharing=False, is_live=True)
     configure_page_revision(page=kwargs['instance'], is_sharing=False, is_live=True)
-    flush_akamai(page=kwargs['instance'], is_live=True)
+    flush_akamai(page=kwargs['instance'])
 
 
 page_unshared.connect(unshare_all_revisions)
