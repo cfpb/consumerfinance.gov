@@ -1,16 +1,27 @@
 
 {# ==========================================================================
 
-   Table
+   Table - See [GHE]/flapjack/Modules-V1/wiki/Tables
 
    ==========================================================================
 
    Description:
 
-   Create a table.
-   See [GHE]/flapjack/Modules-V1/wiki/Tables
+   Creates Table markup when given:
+
+   value.data:          A multi-dimensional list representing table rows.
+
+   value.row_links:     Boolean indicating if the table contains row links.
+
+   value.is_stacked:    Boolean indicating if the table columns
+                        should be stacked on mobile.
+
+   value.is_striped:    Boolean indicating if the table should be striped.
+
+   value.is_full_width: Boolean indicating if the table should be full width.
 
    ========================================================================== #}
+
 
 {% if value.data  %}
 
@@ -28,7 +39,8 @@
     {% if value.first_row_is_table_header and value.data | list | length > 0 %}
     {% set row_index = 1 %}
     <thead>
-        {# Check to verify the row isn't empty #}
+
+        {# Check to verify the row isn't empty. #}
         {% if first_row | reject('none') | list | length %}
         <tr>
             {% for cell in value.data[0] %}
@@ -45,22 +57,28 @@
         {% if row | reject('none') | list | length %}
         <tr>
             {% for cell in row or [] %}
+                {% set tag = 'td' %}
+                {% set attributes = '' %}
+
+                {# Logic to determine if the first column is a header. #}
                 {% if value.first_col_is_header and loop.first %}
-                    {% set open_tag = 'th scope="row"' %}
-                    {% set close_tag = 'th' %}
-                {% else %}
-                    {% set open_tag = 'td' %}
-                    {% set close_tag = 'td' %}
+                    {% set tag = 'th' %}
+                    {% set attributes = ' scope="row"' %}
                 {% endif %}
-                {% if first_row[loop.index0] is not none and
-                    value.first_col_is_header == false and
-                    value.is_stacked
+
+                {# Logic to add data labels for creating responsive tables on mobile. #}
+                {% if value.first_row_is_table_header and
+                      first_row[loop.index0] is not none and
+                      value.is_stacked
                 %}
-                   {% set data_label = ' data-label="{0}"'.format(first_row[loop.index0] | striptags | trim) %}
+                    {% set attributes = attributes + ' data-label="{0}"'.format(first_row[loop.index0]
+                                        | striptags
+                                        | trim)
+                    %}
                 {% endif %}
-                <{{ open_tag | safe }}{{ data_label | safe | default }}>
+                <{{ tag | safe }}{{ attributes | safe }}>
                     {{ _render_cell(cell) }}
-                </{{ close_tag | safe }}>
+                </{{ tag | safe }}>
             {% endfor %}
         </tr>
         {% endif %}

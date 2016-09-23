@@ -141,7 +141,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
         html = table.render(table.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
-            '^<table class="o-table">'
+            '^<table class="o-table table__stack-on-small">'
             '.*'
             '</table>$'
         ))

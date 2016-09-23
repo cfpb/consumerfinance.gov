@@ -133,8 +133,8 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
         self.assertHtmlRegexpMatches(html, (
             '<tbody>'
             '<tr>'
-            '<td data-label="Username">Username</td>'
-            '<td data-label="First Name">First Name</td>'
+            '<td>Username</td>'
+            '<td>First Name</td>'
             '</tr>'
         ))
 
@@ -170,25 +170,25 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
     def test_no_full_width(self):
         html = self.get_table_html(is_full_width=False)
         self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table">'
+            '<table class="o-table table__stack-on-small">'
         ))
 
     def test_full_width(self):
         html = self.get_table_html(is_full_width=True)
         self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table u-w100pct">'
+            '<table class="o-table table__stack-on-small u-w100pct">'
         ))
 
     def test_not_striped(self):
         html = self.get_table_html(is_striped=False)
         self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table">'
+            '<table class="o-table table__stack-on-small">'
         ))
 
     def test_striped(self):
         html = self.get_table_html(is_striped=True)
         self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table table__striped">'
+            '<table class="o-table table__stack-on-small table__striped">'
         ))
 
     def test_not_stacked(self):

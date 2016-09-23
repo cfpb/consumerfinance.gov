@@ -297,7 +297,7 @@ class ModelTable(ModelBlock):
     )
     is_stacked = blocks.BooleanBlock(
         required=False,
-        default=False,
+        default=True,
         help_text='Stack the table columns on mobile.'
     )
 
