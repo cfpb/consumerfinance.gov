@@ -1,4 +1,4 @@
-echo "running $RUNTEST"
+echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
     gulp "test:unit"
     gulp "test:coveralls"
