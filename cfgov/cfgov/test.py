@@ -6,7 +6,9 @@ import re
 from django.apps import apps
 from django.db import connection
 from django.db.migrations.loader import MigrationLoader
+from django.test import RequestFactory
 from django.test.runner import DiscoverRunner
+from mock import Mock
 
 from scripts import initial_data
 
@@ -66,3 +68,13 @@ class HtmlMixin(object):
             re.search(r, s_no_extra_spaces.strip(), flags=re.DOTALL),
             '{} did not match {}'.format(s_no_extra_spaces, r)
         )
+
+    def assertPageIncludesHtml(self, page, s):
+        request = RequestFactory().get('/')
+        request.user = Mock()
+
+        rendered_html = page.serve(request).render()
+        try:
+            self.assertHtmlRegexpMatches(str(rendered_html), s)
+        except AssertionError:
+            self.fail('rendered page HTML did not match {}'.format(s))
