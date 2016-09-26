@@ -12,11 +12,11 @@ def isRequired(field_name):
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    sub_heading = blocks.CharBlock(required=False)
+    heading = blocks.CharBlock(required=False, label="H3 heading")
+    sub_heading = blocks.CharBlock(required=False, label="H4 heading")
     sub_heading_icon = blocks.CharBlock(
         required=False,
-        label="Sub heading icon",
+        label="H4 heading icon",
         help_text=(
             'A list of icon names can be obtained at: '
             'https://cfpb.github.io/capital-framework/components/cf-icons/. '
