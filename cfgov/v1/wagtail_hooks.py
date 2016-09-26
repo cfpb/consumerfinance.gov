@@ -105,16 +105,17 @@ def get_akamai_credentials():
     raise ValueError('AKAMAI_OBJECT_ID, AKAMAI_USER, and AKAMAI_PASSWORD must be configured.')
 
 def should_flush(page):
-    """ 
-    Only initiate an Akamai flush if it is enabled in settings,
+    """ Only initiate an Akamai flush if it is enabled in settings,
     and if it was an existing page, as new pages would not be cached yet.
     """
     if settings.ENABLE_AKAMAI_CACHE_PURGE:
         now = datetime.now(tz=pytz.utc)
-        # If page was first published a minute ago, it is a new page
-        if page.first_published_at < now - timedelta(minutes=1):
+        # If page was first published a minute or less ago,
+        # it is a new page resulting from `publish_scheduled_pages` cron job
+        if page.first_published_at and page.first_published_at < now - timedelta(minutes=1):
             return True
     return False
+
 
 def flush_akamai(page):
     if should_flush(page):
