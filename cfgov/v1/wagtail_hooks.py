@@ -6,13 +6,13 @@ from django.utils import timezone
 from django.conf import settings
 from django.http import Http404
 from django.contrib.auth.models import Permission
-from django.utils.html import escape
+from django.utils.html import escape, format_html_join
 
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore import hooks
 
-from v1.models import CFGOVPage
-
+from .models import CFGOVPage
+from .util import util
 
 @hooks.register('after_create_page')
 @hooks.register('after_edit_page')
@@ -47,6 +47,30 @@ def share(page, is_sharing, is_live):
     else:
         page.has_unshared_changes = True
     page.save()
+
+
+@hooks.register('insert_editor_js')
+def editor_js():
+    js_files = [
+        'js/table-block.js',
+    ]
+    js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
+        ((settings.STATIC_URL, filename) for filename in js_files)
+    )
+
+    return js_includes
+
+
+@hooks.register('insert_editor_css')
+def editor_css():
+    css_files = [
+        'css/table-block.css',
+    ]
+    css_includes = format_html_join('\n', '<link rel="stylesheet" href="{0}{1}"><link>',
+        ((settings.STATIC_URL, filename) for filename in css_files)
+    )
+
+    return css_includes
 
 
 # `CFGOVPage.route()` will select the latest revision of the page where `live`
@@ -126,3 +150,36 @@ class CFGovLinkHandler(object):
 @hooks.register('register_rich_text_link_handler')
 def register_cfgov_link_handler():
     return ('page', CFGovLinkHandler)
+
+
+@hooks.register('cfgovpage_context_handlers')
+def form_module_handlers(page, request, context, *args, **kwargs):
+    """
+    Hook function that iterates over every Streamfield's blocks on a page and
+    sets the context for any form modules.
+    """
+    form_modules = {}
+    streamfields = util.get_streamfields(page)
+
+    for fieldname, blocks in streamfields.items():
+        for index, child in enumerate(blocks):
+            if hasattr(child.block, 'get_result'):
+                if fieldname not in form_modules:
+                    form_modules[fieldname] = {}
+
+                if not request.method == 'POST':
+                    is_submitted = child.block.is_submitted(
+                        request,
+                        fieldname,
+                        index
+                    )
+                    module_context = child.block.get_result(
+                        page,
+                        request,
+                        child.value,
+                        is_submitted
+                    )
+                    form_modules[fieldname].update({index: module_context})
+
+    if form_modules:
+        context['form_modules'] = form_modules

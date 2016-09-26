@@ -7,6 +7,7 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
+from wagtail.contrib.table_block.blocks import TableBlock
 
 from .base import CFGOVPage
 from ..atomic_elements import molecules, organisms
@@ -29,7 +30,8 @@ class BrowsePage(CFGOVPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
         ('job_listing_table', JobListingTable()),
     ], blank=True)
 

@@ -20,6 +20,11 @@ def publish_page(child):
     revision.publish()
 
 
+def publish_changes(child):
+    revision = save_page(page=child)
+    revision.publish()
+
+
 def set_page_stream_data(page, field_name, stream_data):
     field = getattr(page, field_name)
     stream_block = field.stream_block
