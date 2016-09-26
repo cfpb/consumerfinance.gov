@@ -9,4 +9,4 @@ class ConferenceRegistrationForm(AbstractFormBlock):
 
     class Meta:
         handler = 'data_research.handlers.ConferenceRegistrationHandler'
-        template = 'blocks/conference-registration-form.html'
+        template = '_includes/conference-registration-form.html'
