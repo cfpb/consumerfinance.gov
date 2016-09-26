@@ -18,7 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
 - Production settings now use ManifestStaticFilesStorage
-- Added a 'run_travis.sh' script to enable separate JS and Python test coverage reporting 
+- Added a 'run_travis.sh' script to enable separate JS and Python test coverage reporting
 - AbstractFormBlock to be used as a base class for modules requiring Django Forms
 - wagtail_hooks.py function `form_module_handlers` used by `CFGOVPage.get_context()`
 
@@ -30,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Refactored heroes to support the new "bleeding" format.
 - `CFGOVPage.get_context()` now uses wagtail hooks to call functions registered with the hook name `cfgovpage_context_handlers`
 - `CFGOVPage.serve()` calls `CFGOVPage.serve_post()` to handle POST requests
+- Changed label names for the half-width / third-width link blobs.
 
 ### Removed
 - `max-height` styling on info unit images
