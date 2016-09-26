@@ -12,7 +12,7 @@ import wagtail.wagtailcore.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0011_hero_refactor_data'),
+        ('v1', '0013_update_tables_to_tableblocks'),
     ]
 
     operations = [
