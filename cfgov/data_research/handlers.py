@@ -1,6 +1,5 @@
 import json
 from govdelivery.api import GovDelivery
-from urlparse import urlparse
 
 from django.conf import settings
 from django.contrib import messages

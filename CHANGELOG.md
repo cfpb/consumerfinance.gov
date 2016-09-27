@@ -24,9 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - wagtail_hooks.py function `form_module_handlers` used by `CFGOVPage.get_context()`
 - Feedback module
 - `data_research` app to project
-- ConferenceRegistrationForm, ConferenceRegistrationBlock, ConferenceRegistration model, ConferenceRegistrationHandler, and template
-- data_research template root to template engine
-- CFGOVPage.serve_ajax to handle ajax requests
+- Conference Registration form, block, model, handler, and template
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.
