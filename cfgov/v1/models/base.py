@@ -544,4 +544,9 @@ class TemporaryLockout(models.Model):
 class Feedback(models.Model):
     is_helpful = models.BooleanField()
     comment = models.TextField(blank=True, null=True)
-    page = models.ForeignKey(Page, on_delete=models.SET_NULL, null=True)
+    page = models.ForeignKey(
+        Page,
+        related_name='feedback',
+        null=True,
+        on_delete=models.SET_NULL,
+    )

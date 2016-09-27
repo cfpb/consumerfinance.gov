@@ -33,10 +33,6 @@ class DemoPage(CFGOVPage):
         ('item_intro', organisms.ItemIntroduction()),
     ], blank=True)
 
-    blocks = StreamField([
-        ('feedback', v1_blocks.Feedback()),
-    ], blank=True)
-
     contact = models.ForeignKey(
         Contact,
         null=True,
@@ -49,7 +45,6 @@ class DemoPage(CFGOVPage):
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('molecules'),
         StreamFieldPanel('organisms'),
-        StreamFieldPanel('blocks'),
         SnippetChooserPanel('contact'),
     ]
 
