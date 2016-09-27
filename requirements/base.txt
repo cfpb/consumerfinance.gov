@@ -22,7 +22,6 @@ django-treebeard==3.0
 django==1.8.14
 djangorestframework==2.4.8
 elasticsearch==1.6.0
-git+https://github.com/cfpb/publish_eccu.git#egg=publish_eccu
 git+https://github.com/rosskarchner/govdelivery.git#egg=govdelivery
 html5lib==0.9999999
 icalendar==3.9.0

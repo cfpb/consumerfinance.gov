@@ -503,3 +503,8 @@ REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
 
 # Akamai
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)
+AKAMAI_PURGE_URL = 'https://api.ccu.akamai.com/ccu/v2/queues/default'
+if ENABLE_AKAMAI_CACHE_PURGE:
+    AKAMAI_USER = os.environ.get('AKAMAI_USER')
+    AKAMAI_PASSWORD = os.environ.get('AKAMAI_PASSWORD')
+    AKAMAI_OBJECT_ID = os.environ.get('AKAMAI_OBJECT_ID')

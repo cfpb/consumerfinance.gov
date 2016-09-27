@@ -1,19 +1,20 @@
 import mock
 import json
-import publish_eccu
+from datetime import datetime, timedelta
+import pytz
 
 from django.test import TestCase
 from django.test.client import RequestFactory
 
 from ..wagtail_hooks import share_the_page, check_permissions, share, \
-    configure_page_revision, flush_akamai, form_module_handlers
+    configure_page_revision, form_module_handlers, should_flush, flush_akamai
+from v1.models.browse_page import BrowsePage
 
 
 class TestShareThePage(TestCase):
 
     @mock.patch('wagtail.wagtailcore.hooks.register')
     def setUp(self, mock_register):
-        from ..wagtail_hooks import share_the_page
         self.page = mock.Mock()
         self.page.specific.id = 1234
         rf = RequestFactory()
@@ -24,7 +25,6 @@ class TestShareThePage(TestCase):
         }
         for key in self.mock_request.keys():
             self.mock_request[key].user = mock.Mock()
-
 
     @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
@@ -40,7 +40,6 @@ class TestShareThePage(TestCase):
         share_the_page(self.mock_request['saving'], self.page)
         mock_share.assert_called_once_with(self.page.specific, False, False)
 
-
     @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
@@ -55,7 +54,6 @@ class TestShareThePage(TestCase):
         share_the_page(self.mock_request['sharing'], self.page)
         mock_share.assert_called_once_with(self.page.specific, True, False)
 
-
     @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
@@ -69,7 +67,6 @@ class TestShareThePage(TestCase):
         mock_page.objects.get.return_value = self.page
         share_the_page(self.mock_request['publishing'], self.page)
         mock_share.assert_called_once_with(self.page.specific, False, True)
-
 
     @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
@@ -200,26 +197,6 @@ class TestConfigurePageRevision(TestCase):
         assert latest_content['live']
 
 
-class TestFlushAkamai(TestCase):
-
-    def setUp(self):
-        self.page = mock.Mock()
-        self.page.owner.email = 'test@mail.com'
-
-    @mock.patch('v1.wagtail_hooks.settings')
-    @mock.patch('publish_eccu.publish.publish')
-    def test_not_publishing_a_page(self, mock_publish, mock_settings):
-        mock_settings.ENABLE_AKAMAI_CACHE_PURGE = True
-        flush_akamai(self.page, False)
-        assert not mock_publish.called
-
-    @mock.patch('v1.wagtail_hooks.settings')
-    @mock.patch('publish_eccu.publish.publish')
-    def test_publishing_a_page(self, mock_publish, mock_settings):
-        mock_settings.ENABLE_AKAMAI_CACHE_PURGE = True
-        flush_akamai(self.page, True)
-        assert mock_publish.called
-
 class TestFormModuleHandlers(TestCase):
     def setUp(self):
         mock.patch('v1.wagtail_hooks.hooks.register')
@@ -262,7 +239,7 @@ class TestFormModuleHandlers(TestCase):
         child = mock.Mock()
         streamfields = {'name': [child]}
         mock_getstreamfields.return_value = streamfields
-        mock_hasattr.return_value = True        
+        mock_hasattr.return_value = True
         form_module_handlers(self.page, self.request, self.context)
         assert 'name' in self.context['form_modules']
         self.assertIsInstance(self.context['form_modules']['name'], dict)
@@ -273,7 +250,7 @@ class TestFormModuleHandlers(TestCase):
         child = mock.Mock()
         streamfields = {'name': [child]}
         mock_getstreamfields.return_value = streamfields
-        mock_hasattr.return_value = True        
+        mock_hasattr.return_value = True
         form_module_handlers(self.page, self.request, self.context)
         child.block.get_result.assert_called_with(
             self.page,
@@ -288,8 +265,39 @@ class TestFormModuleHandlers(TestCase):
         child = mock.Mock()
         streamfields = {'name': [child]}
         mock_getstreamfields.return_value = streamfields
-        mock_hasattr.return_value = True        
+        mock_hasattr.return_value = True
         form_module_handlers(self.page, self.request, self.context)
         child.block.is_submitted.assert_called_with(self.request, 'name', 0)
 
 
+class TestFlushAkamai(TestCase):
+    """ Tests the appropriate conditions under which we should be flushing Akamai.
+    Not meant to test if the flush itself succeeded.
+    """
+
+    def setUp(self):
+        self.page = BrowsePage(title='an arbitrary page', slug='an-arbitrary-page')
+        self.page.first_published_at = datetime.now(tz=pytz.utc) - timedelta(days=1)
+
+    def test_should_not_flush_if_not_enabled(self):
+        with self.settings(ENABLE_AKAMAI_CACHE_PURGE=None):
+            assert not should_flush(self.page)
+
+    def test_should_not_flush_if_new_page(self):
+        self.page.first_published_at = datetime.now(tz=pytz.utc) - timedelta(seconds=10)
+        with self.settings(ENABLE_AKAMAI_CACHE_PURGE=True):
+            assert not should_flush(self.page)
+
+    def test_should_flush_if_enabled_and_old_page(self):
+        with self.settings(ENABLE_AKAMAI_CACHE_PURGE=True):
+            assert should_flush(self.page)
+
+    @mock.patch('v1.wagtail_hooks.should_flush')
+    def test_should_flush_gets_called_when_trying_to_flush(self, mock_should_flush):
+        with self.settings(
+            AKAMAI_OBJECT_ID='some-arbitrary-id',
+            AKAMAI_USER='some-arbitrary-user',
+            AKAMAI_PASSWORD='some-arbitrary-pw'
+        ):
+            flush_akamai(self.page)
+        assert mock_should_flush.called

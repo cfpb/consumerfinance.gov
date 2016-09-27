@@ -1,18 +1,27 @@
 import os
 import json
 from urlparse import urlsplit
-from django.utils import timezone
+import logging
+from exceptions import ValueError
+from datetime import datetime, timedelta
+import pytz
 
+from django.utils import timezone
 from django.conf import settings
 from django.http import Http404
 from django.contrib.auth.models import Permission
 from django.utils.html import escape, format_html_join
 
-from wagtail.wagtailcore.models import Page
+import requests
+
 from wagtail.wagtailcore import hooks
+from wagtail.wagtailcore.models import Page
 
 from .models import CFGOVPage
 from .util import util
+
+logger = logging.getLogger(__name__)
+
 
 @hooks.register('after_create_page')
 @hooks.register('after_edit_page')
@@ -30,7 +39,8 @@ def share_the_page(request, page):
 
     share(page, is_sharing, is_live)
     configure_page_revision(page, is_sharing, is_live)
-    flush_akamai(page, is_live)
+    if is_live:
+        flush_akamai(page)
 
 
 def check_permissions(parent, user, is_publishing, is_sharing):
@@ -89,17 +99,46 @@ def configure_page_revision(page, is_sharing, is_live):
     latest.save()
 
 
-def flush_akamai(page, is_live):
-    if is_live and settings.ENABLE_AKAMAI_CACHE_PURGE:
-        from publish_eccu.publish import publish as akamai_cache_reset
+def get_akamai_credentials():
+    if settings.AKAMAI_OBJECT_ID and settings.AKAMAI_USER and settings.AKAMAI_PASSWORD:
+        return settings.AKAMAI_OBJECT_ID, (settings.AKAMAI_USER, settings.AKAMAI_PASSWORD)
+    raise ValueError('AKAMAI_OBJECT_ID, AKAMAI_USER, and AKAMAI_PASSWORD must be configured.')
 
-        url_paths = [page.url_path.replace('cfgov/', '')]
-        if url_paths[0] == '/':
-            is_home_page = True
-        else:
-            is_home_page = False
+def should_flush(page):
+    """ Only initiate an Akamai flush if it is enabled in settings,
+    and if it was an existing page, as new pages would not be cached yet.
+    """
+    if settings.ENABLE_AKAMAI_CACHE_PURGE:
+        now = datetime.now(tz=pytz.utc)
+        # If page was first published a minute or less ago,
+        # it is a new page resulting from `publish_scheduled_pages` cron job
+        if page.first_published_at and page.first_published_at < now - timedelta(minutes=1):
+            return True
+    return False
 
-        akamai_cache_reset(url_paths, invalidate_root=is_home_page, user_email=page.owner.email)
+
+def flush_akamai(page):
+    if should_flush(page):
+        object_id, auth = get_akamai_credentials()
+        headers = {'content-type': 'application/json'}
+        payload = {
+            'action': 'invalidate',
+            'type': 'cpcode',
+            'domain': 'production',
+            'objects': [object_id]
+        }
+        r = requests.post(
+            settings.AKAMAI_PURGE_URL,
+            headers=headers,
+            data=json.dumps(payload),
+            auth=auth
+        )
+        logger.info(
+            'Initiated Akamai flush with response {text}'.format(text=r.text)
+        )
+        if r.status_code == 201:
+            return True
+    return False
 
 
 @hooks.register('before_serve_page')
