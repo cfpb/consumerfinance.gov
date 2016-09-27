@@ -1,5 +1,0 @@
-.hero, .sub-hero{font-family:"Avenir Next", Arial, sans-serif;font-weight:500;}
-.hero{font-size:36px;line-height:58px;}
-/* Adding top margin for new design. If we add sub-heads back in, should be removed. */
-.hero h1 {margin-left:0; margin-top:45px;}
-.sub-hero{font-size:28px; line-height:30px;margin-top:0; margin-left:0;}
