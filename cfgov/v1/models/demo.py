@@ -8,7 +8,6 @@ from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from .base import CFGOVPage
 from ..atomic_elements import atoms, molecules, organisms
 from .snippets import Contact
-from .. import blocks as v1_blocks
 
 
 class DemoPage(CFGOVPage):

@@ -33,7 +33,7 @@ class AbstractFormBlock(blocks.StructBlock):
 
 
 class Feedback(AbstractFormBlock):
-    question_text = blocks.CharBlock(default='Was this answer helpful to you?')
+    question_text = blocks.CharBlock(default='Was this page helpful to you?')
     button_text = blocks.CharBlock(default='Submit feedback')
 
     class Meta:
