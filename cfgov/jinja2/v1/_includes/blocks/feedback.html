@@ -1,94 +1,85 @@
 {% import 'molecules/notification.html' as notification %}
 
 {% macro render(value, settings, form_id) %}
-{% set form = settings.form %}
 
-{# JS-disabled result handling #}
-{% for message in get_messages(request) %}
-    {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
-{% endfor %}
+    {% set form = settings.form %}
 
-<form
-  method="post"
-  action="."
-  class="o-form
-         rateq
-         block
-         block__bg
-         block__border-bottom
-         block__border-top
-         block__border-right
-         block__border-left
-         block__padded-top">
+    {# JS-disabled result handling #}
+    {% for message in get_messages(request) %}
+        {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
+    {% endfor %}
 
-  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-  <input type="hidden" name="form_id" value="{{ form_id }}">
+<form method="post"
+      action="."
+      class="o-form
+             block
+             block__bg
+             block__border
+             block__padded-top">
 
-  <div class="content-l">
-    <fieldset class="u-reset">
-          <div class="form-l_col
-                      form-l_col-1
-                      form-l_col__flush-bottom">
-              <legend>
-                  <span class="h4">{{ value.question_text }}</span>
-              </legend>
-          </div>
-          <div class="rating-inputs">
-            <div class="form-l_col
-                        form-l_col-1-3
-                        form-l-inset">
-                <div class="form-l-inset_container">
-                    <input class="cf-input"
-                           type="radio"
-                           name="is_helpful"
-                           value='1'
-                           id="is_helpful_1"
-                           {{ 'checked' if request.POST.is_helpful == '1' else '' }}>
-                    <label class="cf-input_label"
-                           for="is_helpful_1">
-                        Yes
-                    </label>
-                </div>
-            </div>
-            <div class="form-l_col
-                        form-l_col-1-3
-                        form-l-inset">
-                <div class="form-l-inset_container">
-                    <input class="cf-input"
-                           type="radio"
-                           name="is_helpful"
-                           value="0"
-                           id="is_helpful_0"
-                           {{ 'checked' if request.POST.is_helpful == '0' else '' }}>
-                    <label class="cf-input_label"
-                           for="is_helpful_0">
-                        No
-                    </label>
-                </div>
-            </div>
-      </fieldset>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <input type="hidden" name="form_id" value="{{ form_id }}">
 
-      <fieldset class="u-reset">
+    <fieldset class="o-form-input-group o-form-input-group__two-column">
         <div class="form-l_col
                     form-l_col-1
                     form-l_col__flush-bottom">
-          <legend>
-            <span class="short-desc"><em>Optional</em> </span><span class="h4">Additional comment</span>
-          </legend>
+            <legend class="h4">
+                {{ value.question_text }}
+            </legend>
         </div>
+        <div class="m-big-radio-button">
+            <div class="m-big-radio-button_container">
+                <input class="cf-input"
+                       id="is_helpful_1"
+                       type="radio"
+                       name="is_helpful"
+                       value='1'
+                       {{ 'checked' if request.POST.is_helpful == '1' else '' }}>
+                <label class="cf-input_label"
+                       for="is_helpful_1">
+                    Yes
+                </label>
+            </div>
+        </div>
+        <div class="m-big-radio-button">
+            <div class="m-big-radio-button_container">
+                <input class="cf-input"
+                       id="is_helpful_0"
+                       type="radio"
+                       name="is_helpful"
+                       value="0"
+                       {{ 'checked' if request.POST.is_helpful == '0' else '' }}>
+                <label class="cf-input_label"
+                       for="is_helpful_0">
+                    No
+                </label>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="o-form-input-group">
         <div class="form-l_col
                     form-l_col-1
-                    feedback-col">
-          <textarea rows=2 name='comment'>
-            {{- form.comment.value() | default('', true) -}}
-          </textarea>
+                    form-l_col__flush-bottom">
+            <label for="comment">
+                <em>Optional</em> <span class="h4">Additional comment</span>
+            </label>
+            <p class="u-mb10"><small><b>Note:</b> Do not include sensitive information like your name, contact information, account number, or social security number in this field.</small></p>
         </div>
         <div class="form-l_col
                     form-l_col-1">
-          <button class="btn" type="submit">{{ value.button_text }}</button>
+            <textarea id="comment" name="comment" rows="2">
+                {{- form.comment.value() | default('', true) -}}
+            </textarea>
         </div>
-      </fieldset>
-   </div>
+        <div class="form-l_col
+                    form-l_col-1
+                    form-l_col__flush-bottom">
+            <button class="btn" type="submit">{{ value.button_text }}</button>
+        </div>
+    </fieldset>
+
 </form>
 
 {% endmacro %}
