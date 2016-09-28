@@ -550,3 +550,4 @@ class Feedback(models.Model):
         null=True,
         on_delete=models.SET_NULL,
     )
+    submitted_on = models.DateTimeField(auto_now_add=True)
