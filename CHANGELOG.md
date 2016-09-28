@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - `max-height` styling on info unit images
 - Reference to publish_eccu repo
+- `tax-time-saving` rules from `urls.py`
 
 ### Fixed
 - Corrected Spanish-language label for sharing module
