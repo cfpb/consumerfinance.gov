@@ -42,11 +42,8 @@ urlpatterns = [
     url(r'^owning-a-home/resources/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/resources/%(path)s', permanent=True)),
     url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
 
-    # the two redirects are an unfortunate workaround, could be resolved by
+    # the redirect is an unfortunate workaround, could be resolved by
     # using static('path/to/asset') in the source template
-
-    url(r'^tax-time-saving/static/(?P<path>.*)$', RedirectView.as_view(url='/static/tax-time-saving/static/%(path)s', permanent=True)),
-    url(r'^tax-time-saving/', include(SheerSite('tax-time-saving').urls)),
     url(r'^know-before-you-owe/static/(?P<path>.*)$', RedirectView.as_view(url='/static/know-before-you-owe/static/%(path)s', permanent=True)),
     url(r'^know-before-you-owe/', include(SheerSite('know-before-you-owe').urls)),
 
