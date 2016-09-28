@@ -13,13 +13,54 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased Changes
+## Unreleased
 
 ### Added
-- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
-- Ability to output sharing links within an Image and Text 50/50 Group module
+- Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
+- Production settings now use ManifestStaticFilesStorage
+- New environment variable to store the Akamai object ID
+- Added a 'run_travis.sh' script to enable separate JS and Python test coverage reporting
+- AbstractFormBlock to be used as a base class for modules requiring Django Forms
+- wagtail_hooks.py function `form_module_handlers` used by `CFGOVPage.get_context()`
 
 ### Changed
+- Refactored heroes to support the new "bleeding" format.
+- In templates, ALL static file references now use Django's `static` tag/function
+- In CSS/Less, references to other assets are now relative
+- Optimized Travis build by removing unnecessary steps.
+- `flush_akamai` function to call Akamai API endpoint that flushes entire site instead, since this is faster than flushing an individual page
+- Only proceed with an Akamai flush if it is an existing page
+- Refactored heroes to support the new "bleeding" format.
+- `CFGOVPage.get_context()` now uses wagtail hooks to call functions registered with the hook name `cfgovpage_context_handlers`
+- `CFGOVPage.serve()` calls `CFGOVPage.serve_post()` to handle POST requests
+- Changed label names for the half-width / third-width link blobs.
+
+### Removed
+- `max-height` styling on info unit images
+- Reference to publish_eccu repo
+- `tax-time-saving` rules from `urls.py`
+
+### Fixed
+- Corrected Spanish-language label for sharing module
+
+
+## 3.9.0
+
+### Added
+- Logging configuration to `local.py`
+- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
+- Ability to output sharing links within an Image and Text 50/50 Group module
+- Added a test for get_browsefilterable_posts function of the sublanding page
+- Data migration sets up site root and careers pages
+- Wagtail User editor now enforces unique email addresses when creating/editing users.
+- Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
+- New `@flag_required` decorator for Django views
+- Added TableBlock definition to organisms and models that use Table
+- Added `cfgov/templates/wagtailadmin/js/table-block.js` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
+- Added `cfgov/templates/wagtailadmin/table_input.html` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
+
+### Changed
+- Special characters no longer break the multiselect in the filter form
 - Updated gulp-istanbul npm module to version `1.1.1` from `0.10.3`.
 - Updated del npm module to version `2.2.2` from `2.2.0`.
 - Updated gulp-autoprefixer npm module to version `3.1.1` from `3.1.0`.
@@ -33,10 +74,54 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated webpack-stream npm module to version `3.2.0` from `3.1.0`.
 - Updated es5-shim npm module to version `4.5.9` from `4.5.7`.
 - Updated gulp-rename npm module to version `1.2.2` from `1.1.0`.
+- Replaces deprecated gulp-cssmin with gulp-clean-css.
+- Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
+- Feature flag methods now take an explicit `request` object to determine what site to check the flag against
+- Migrated previous Table data to new TableBlocks
+- Modified `cfgov/cfgov/settings/base.py` to add wagtailadmin to the STATICFILES_DIRS path.
+- Modified `cfgov/jinja2/v1/_includes/organisms/table.html` to work with the Wagtail TableBlock component.
+- Modified `cfgov/v1/__init__.py` to add the linebreaksbr.
+- Modified `cfgov/v1/atomic_elements/organisms.py` to create classes which inherit from the TableBlock classes. This allowed us to control which templates where used for rendering the Wagtail admin and table.
+- Modified `cfgov/v1/models/browse_page.py`, `cfgov/v1/models/learn_page.py`, and `cfgov/v1/models/sublanding_page.py` to use the new AtomicTableBlock.
+- Modified `cfgov/v1/wagtail_hooks.py` to add load new script for the admin.
+
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 - Unused npm module map-stream.
+- Custom method `most_common` since python lib offers similar function
+- Icon for old Table from admin panel (this field will need to be removed in a future release)
+
+### Fixed
+- Post preview organism template used tag/author names instead of slugs that
+caused bad link formation
+- Fixed an issue w/ the email signup not utilizing the Gov Delivery JSON view for instant error/success feedback.
+- Fixed an issue w/ the form validation skipping any validation types other than `required`.
+
+
+## 3.8.2
+
+### Changed
+- Updated copy on Students and Recent Graduates Careers page.
+
+
+## 3.8.1
+
+### Added
+- Google Optimize code on `find-a-housing-counselor` page
+
+
+## 3.8.0
+
+### Added
+- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
+- Ability to output sharing links within an Image and Text 50/50 Group module
+
+### Changed
+
+### Removed
+- Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
+
 
 ## 3.7.2
 
@@ -46,8 +131,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed the leadership calendar print template from the "base.html" inheritence hiearchy
 - restores the django logging config we used before cfgov-refresh
 
+
 ## 3.7.1
 - always use "localhost" when setting the base URL for PDFReactor
+
 
 ## 3.7.0
 

@@ -59,10 +59,9 @@ var _validator = {
     $.each( _validator.settings.types, function( key, val ) {
       if ( _validator._skipType( elem, val ) ) {
         status[val] = null;
-        return false;
+      } else {
+        status[val] = typeof validation[val] === 'undefined';
       }
-      status[val] = typeof validation[val] === 'undefined';
-      return true;
     } );
 
     return status;

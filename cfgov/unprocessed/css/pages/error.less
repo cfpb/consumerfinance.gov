@@ -3,63 +3,119 @@
    Page-specific styles for the error pages.
    ========================================================================== */
 
-.btn__error-home {
-    .respond-to-max(@bp-sm-min, {
-        text-align: center;
-    });
-}
-
 .error_action_container {
-    background-color: @white;
+    margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
 
-    .respond-to-max(@bp-med-max, {
-        .stack-col(content-l_col-1-2);
+    .btn {
+        margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
+    }
+
+    .respond-to-min(@bp-sm-min, {
+        display: table;
+        margin: unit( ( @grid_gutter-width * 1.5 ) / @base-font-size-px, em ) 0;
+
+
+        .error_action_col {
+            display: table-cell;
+            padding: 0 0 0 unit( @grid_gutter-width / @base-font-size-px, em );
+
+            &:first-child {
+                padding: 0 unit( @grid_gutter-width / @base-font-size-px, em ) 0 0;
+                border-right: 1px solid @gray-40;
+            }
+        }
+
+        .btn {
+            margin: unit( ( @grid_gutter-width / 4 ) / @base-font-size-px, em ) 0;
+        }
     });
 }
 
 .error_copy_container {
-    .grid_column(6);
+    .grid_column(12);
+    border-width: 0 !important;
 
-    .respond-to-max(@bp-sm-max, {
-        .grid_column(12);
+    .respond-to-min(@bp-sm-min, {
+        .grid_column( 7, 12 );
     });
-}
 
-.error_header {
-    color: @white;
+    .respond-to-min(@bp-lg-min, {
+        width: 63%;
+    });
 
-    .superheader {
-        .respond-to-max(@bp-sm-max, {
-            .h1();
-        });
+    .respond-to-max(799px, {
+        h1 {
+            font-size: @size-iii !important;
+        }
+
+        .lead-paragraph {
+            font-size: @size-iv;
+        }
+    });
+
+    .lead-paragraph {
+        margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) !important;
     }
+
 }
 
 .error_main {
     background-color: @dark-gray;
+    color: @white;
+
+    .jump-link {
+        color: @white;
+        border-color: @white;
+        margin-top: unit( ( @grid_gutter-width / 4 ) / @base-font-size-px, em );
+    } 
 
     &__404 {
-        .content_wrapper {
-            background: transparent url('/static/img/plug.png') no-repeat top right;
+        .content_main {
+            background: transparent url('../img/plug.png') no-repeat top right;
+            background-size: 36%;
+            padding-top: unit( @grid_gutter-width / @base-font-size-px, em );
 
-            .respond-to-max(@bp-sm-max, {
+            .respond-to-max(@bp-xs-max, {
                 background: none;
             });
+
+            .respond-to-min(@bp-sm-min, {
+                margin-bottom: unit( ( @grid_gutter-width * 1.5 )/ @base-font-size-px, em );
+                padding-bottom:0;
+            });
+
+            .respond-to-range(700px, 799px, {
+                background-size: 34%;
+            });
+
+            .respond-to-min(@bp-med-min, {
+                background-size: contain;
+            }); 
+            
         }
     }
 
     &__500 {
-            @background-image-size__px: 757px;
-            @background-image-offset-x__px: @background-image-size__px - 150px;
+        
+        .main_wrapper {
 
-            background: @dark-gray url('/static/img/server-rack.png') no-repeat @background-image-size__px 60px;
+            background: transparent url('../img/server.png') no-repeat right top;
+            background-size: contain;
 
-            .respond-to-max(@bp-sm-max, {
-                background-image: none;
+            .respond-to-min(@bp-sm-min, {
+                .content_main {
+                    margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+                }
             });
 
-            .respond-to-range(@bp-med-min, @bp-med-max, {
-                background-position: @background-image-offset-x__px 60px;
+            .respond-to-max(@bp-xs-max, {
+                background: none;
             });
+
+            .respond-to-range(@bp-sm-min, @bp-sm-max, {
+                background-size: 40%;
+            });
+            
+        }
     }
 }

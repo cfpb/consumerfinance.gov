@@ -1,0 +1,16 @@
+[run]
+omit = 
+    *wsgi.py
+    *admin*
+    *migrations/*
+    *templatetags/*
+    */site-packages*
+    */python2.7/*
+    *setup.py
+    *settings/*
+data_file = ../.coverage
+
+[report]
+exclude_lines = 
+    pragma: no cover
+    if __name__ == .__main__.:

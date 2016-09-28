@@ -36,7 +36,7 @@
              However, including the slick fonts makes the dots on the
              /about-us/the-bureau/ page at mobile sizes enormous.
     #}
-    <link rel="stylesheet" href="/static/css/slick.css">
+    <link rel="stylesheet" href="{{ static('css/slick.css')}}">
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -46,7 +46,7 @@
 
 {% block content_main %}
     <h1>Bureau Structure</h1>
-    <p>Org chart last updated: July 26, 2016</p>
+    <p>Org chart last updated: August 29, 2016</p>
     <div class="org-chart">
         <div class="org-chart_node org-chart_node__root">
             {{ role.render({

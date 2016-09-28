@@ -26,22 +26,6 @@ ERROR_MESSAGES = {
     }
 }
 
-
-# Orders by most to least common in the given list.
-def most_common(lst):
-    # Returns the lst if empty or there's just one element in it.
-    if not lst or len(lst) == 1:
-        return lst
-    else:
-        # Gets the most common element in the list.
-        most = max(set(lst), key=lst.count)
-        # Creates a new list without that element.
-        new_list = [e for e in lst if most not in e]
-        # Recursively returns a list with the most common elements ordered
-        # most to least. Ties go to the lowest index in the given list.
-        return [most] + most_common(new_list)
-
-
 def get_form_id(page):
     form_ids = page.get_filter_ids()
     if form_ids:
@@ -159,3 +143,14 @@ def all_valid_destinations_for_request(request):
                             valid_destination_for_request(request, pair[1])]
 
     return valid_destinations
+
+
+def get_streamfields(page):
+    """
+    Retrieves the stream values on a page from its Streamfield
+    """
+    blocks_dict = {}
+    for key, value in vars(page).items():
+        if isinstance(value, StreamValue):
+            blocks_dict.update({key: value})
+    return blocks_dict

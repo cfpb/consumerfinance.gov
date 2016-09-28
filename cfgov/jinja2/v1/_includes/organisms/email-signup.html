@@ -28,6 +28,7 @@
 {% endif %}
 
 <form id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
+      class="o-form o-form__email-signup"
       action="/subscriptions/new/"
       method="POST"
       enctype="application/x-www-form-urlencoded">

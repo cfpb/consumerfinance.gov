@@ -1,7 +1,5 @@
 import os
 
-from functools import partial
-
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -9,29 +7,32 @@ from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
 from django.http import HttpResponse
-
-from legacy.views import HousingCounselorPDFView, dbrouter_shortcut, token_provider
-from sheerlike.views.generic import SheerTemplateView
-from sheerlike.sites import SheerSite
-from sheerlike.middleware import GlobalRequestMiddleware
-
-from v1.views import unshare, change_password, \
-                     password_reset_confirm, login_with_lockout,\
-                     check_permissions, welcome
-from v1.auth_forms import CFGOVPasswordChangeForm
-
-
+from functools import partial
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
+from legacy.views import (
+    HousingCounselorPDFView, dbrouter_shortcut, token_provider
+)
+from sheerlike.views.generic import SheerTemplateView
+from sheerlike.sites import SheerSite
 from transition_utilities.conditional_urls import include_if_app_enabled
+from v1.auth_forms import CFGOVPasswordChangeForm
+from v1.views import (
+    change_password, check_permissions, login_with_lockout,
+    password_reset_confirm, unshare, welcome
+)
+from v1.views.documents import DocumentServeView
+
 
 fin_ed = SheerSite('fin-ed-resources')
 
 urlpatterns = [
 
-    url(r'^documents/', include(wagtaildocs_urls)),
+    url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
+        DocumentServeView.as_view(),
+        name='wagtaildocs_serve'),
+
     # TODO: Enable search route when search is available.
     # url(r'^search/$', 'search.views.search', name='search'),
 
@@ -41,11 +42,8 @@ urlpatterns = [
     url(r'^owning-a-home/resources/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/resources/%(path)s', permanent=True)),
     url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
 
-    # the two redirects are an unfortunate workaround, could be resolved by
+    # the redirect is an unfortunate workaround, could be resolved by
     # using static('path/to/asset') in the source template
-
-    url(r'^tax-time-saving/static/(?P<path>.*)$', RedirectView.as_view(url='/static/tax-time-saving/static/%(path)s', permanent=True)),
-    url(r'^tax-time-saving/', include(SheerSite('tax-time-saving').urls)),
     url(r'^know-before-you-owe/static/(?P<path>.*)$', RedirectView.as_view(url='/static/know-before-you-owe/static/%(path)s', permanent=True)),
     url(r'^know-before-you-owe/', include(SheerSite('know-before-you-owe').urls)),
 
@@ -240,6 +238,11 @@ if settings.DEBUG :
     urlpatterns.append(url(r'^test-fixture/$', SheerTemplateView.as_view(template_name='test-fixture/index.html'), name='test-fixture'))
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+    # enable local preview of error pages
+    urlpatterns.append(url(r'^500/$', TemplateView.as_view(template_name='500.html'), name='500'))
+    urlpatterns.append(url(r'^404/$', TemplateView.as_view(template_name='404.html'), name='404'))
+
+
 # Catch remaining URL patterns that did not match a route thus far.
 
 urlpatterns.append(url(r'', include(wagtail_urls)))
@@ -247,6 +250,8 @@ urlpatterns.append(url(r'', include(wagtail_urls)))
 from sheerlike import register_permalink
 
 from django.shortcuts import render
+
+
 
 
 def handle_error(code, request):

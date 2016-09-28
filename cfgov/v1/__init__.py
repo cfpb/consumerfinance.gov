@@ -4,7 +4,7 @@ from urlparse import urlparse
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import pluralize, slugify
+from django.template.defaultfilters import pluralize, slugify, linebreaksbr
 from wagtail.wagtailcore.templatetags import wagtailcore_tags
 from django.contrib import messages
 
@@ -31,8 +31,7 @@ def environment(**options):
     from v1.util import ref
     env.globals.update({
         'static': staticfiles_storage.url,
-        'global_dict': {
-        },
+        'global_dict': {},
         'reverse': reverse,
         'render_stream_child': render_stream_child,
         'flag_enabled': flag_enabled,
@@ -53,8 +52,9 @@ def environment(**options):
     })
 
     env.filters.update({
+        'linebreaksbr': linebreaksbr,
         'pluralize': pluralize,
-        'slugify': slugify,
+        'slugify': slugify
     })
     return env
 
@@ -186,10 +186,10 @@ def related_metadata_tags(context, page):
     # From an ancestor, get the form ids then use the first id since the
     # filterable list on the page will probably have the first id on the page.
     id, filter_page = get_filter_data(page)
-    for tag in page.specific.tags.names():
-        tag_link = {'text': tag, 'url': ''}
+    for tag in page.specific.tags.all():
+        tag_link = {'text': tag.name, 'url': ''}
         if id is not None and filter_page is not None:
-            param = '?filter' + str(id) + '_topics=' + tag
+            param = '?filter' + str(id) + '_topics=' + tag.slug
             tag_link['url'] = get_protected_url(context, filter_page) + param
         tags['links'].append(tag_link)
     return tags

@@ -87,7 +87,7 @@ function _sendSubscriptionRequest( elem ) {
  * Initialize the email subscribe form validation.
  */
 function init() {
-  $( '#email-subscribe-form' )
+  $( '.o-form' )
     .cf_notifier()
     .cf_formValidator( 'init', {
       onFailure: function( event, fields ) {
@@ -96,7 +96,7 @@ function init() {
       },
       onSuccess: function( event ) {
         _clearError( this );
-        if ( this.id === 'email-subscribe-form' ) {
+        if ( this.classList.contains( 'o-form__email-signup' ) ) {
           event.preventDefault();
           _sendSubscriptionRequest( this );
         }

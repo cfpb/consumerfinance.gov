@@ -9,6 +9,11 @@ from jobmanager.models.blocks import JobListingList, JobListingTable
 from jobmanager.models.django import Grade, JobCategory, Location
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel, RegionPanel
+from scripts._atomic_helpers import job_listing_list
+from v1.models import SublandingPage
+from v1.tests.wagtail_pages.helpers import (
+    save_new_page, set_page_stream_data
+)
 
 
 def make_job_listing_page(title, close_date=None, grades=[], regions=[],
@@ -22,7 +27,7 @@ def make_job_listing_page(title, close_date=None, grades=[], regions=[],
         **kwargs
     )
 
-    home = Page.objects.get(slug='home-page')
+    home = Page.objects.get(slug='cfgov')
     home.add_child(instance=page)
 
     for grade in grades:
@@ -114,6 +119,21 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         self.assertTrue(qs.exists())
         self.assertEqual(job.title, qs[0].title)
 
+    def test_page_renders_block_safely(self):
+        """
+        Test to make sure that a page with a jobs list block renders it
+        in a safe way, meaning as raw HTML vs. as a quoted string.
+        """
+        page = SublandingPage(title='title', slug='slug')
+        save_new_page(page)
+        set_page_stream_data(page, 'sidebar_breakout', [job_listing_list])
+
+        self.assertPageIncludesHtml(page, (
+            '><aside class="m-jobs-list" data-qa-hook="openings-section">'
+            '.*'
+            '</aside><'
+        ))
+
 
 class JobListingTableTestCase(HtmlMixin, TestCase):
     def test_html_has_table(self):
@@ -121,8 +141,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
         html = table.render(table.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
-            '^<table class="o-table table__stack-on-small '
-            'table__entry-header-on-small">'
+            '^<table class="o-table table__stack-on-small">'
             '.*'
             '</table>$'
         ))
@@ -134,10 +153,10 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
         self.assertHtmlRegexpMatches(html, (
             '<thead>'
             '<tr>'
-            '<th>TITLE</th>'
-            '<th>GRADE</th>'
-            '<th>POSTING CLOSES</th>'
-            '<th>REGION</th>'
+            '<th scope="col">TITLE</th>'
+            '<th scope="col">GRADE</th>'
+            '<th scope="col">POSTING CLOSES</th>'
+            '<th scope="col">REGION</th>'
             '</tr>'
             '</thead>'
         ))

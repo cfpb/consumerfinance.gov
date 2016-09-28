@@ -57,12 +57,10 @@ class TestFilterableListForm(TestCase):
         assert mock_setauthors.called
 
 
-    @mock.patch('v1.forms.most_common')
     @mock.patch('v1.forms.FilterableListForm.__init__')
     @mock.patch('taggit.models.Tag.objects')
-    def test_set_topics_filters_tags_on_pageids(self, mock_tag_objects, mock_init, mock_mostcommon):
+    def test_set_topics_filters_tags_on_pageids(self, mock_tag_objects, mock_init):
         mock_init.return_value = None
-        mock_mostcommon.return_value = []
         page_ids = [1, 2, 3, 4, 5]
         form = FilterableListForm()
         form.fields = {'topics': mock.Mock()}
@@ -70,84 +68,15 @@ class TestFilterableListForm(TestCase):
         mock_tag_objects.filter.assert_called_with(v1_cfgovtaggedpages_items__content_object__id__in=page_ids)
 
 
-    @mock.patch('v1.forms.most_common')
     @mock.patch('v1.forms.FilterableListForm.__init__')
     @mock.patch('taggit.models.Tag.objects')
-    def test_set_topics_calls_mostcommon_with_tagnames(self, mock_tag_objects, mock_init, mock_mostcommon):
-        page_ids = [1, 2, 3, 4, 5]
-        tag_names = ['tag1', 'tag2', 'tag3']
+    def test_set_authors_filters_tags_on_pageids(self, mock_tag_objects, mock_init):
         mock_init.return_value = None
-        mock_tag_objects.filter().values_list.return_value = tag_names
-        mock_mostcommon.return_value = []
-        form = FilterableListForm()
-        form.fields = {'topics': mock.Mock()}
-        form.set_topics(parent=mock.Mock(), page_ids=page_ids, hostname='test')
-        mock_mostcommon.assert_called_with(tag_names)
-
-
-    @mock.patch('v1.forms.most_common')
-    @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('taggit.models.Tag.objects')
-    def test_set_topics_assigns_choices_to_mostcommon_tags(self, mock_tag_objects, mock_init, mock_mostcommon):
-        page_ids = [1, 2, 3, 4, 5]
-        tag_names = ['tag1', 'tag2', 'tag3', 'tag4']
-        mock_init.return_value = None
-        mock_mostcommon.return_value = tag_names
-        form = FilterableListForm()
-        form.fields = {'topics': mock.Mock()}
-        form.set_topics(parent=mock.Mock(), page_ids=page_ids, hostname='test')
-
-        # choices are a tuple of tuples of tuples that separate the tag names list
-        # into the first three and the rest of the tag names
-        assert form.fields['topics'].choices == (
-            ('Most frequent', (('tag1', 'tag1'), ('tag2', 'tag2'), ('tag3', 'tag3')),),
-            ('All other topics', (('tag4', 'tag4'),))
-        )
-
-
-    @mock.patch('v1.forms.most_common')
-    @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('taggit.models.Tag.objects')
-    def test_set_authors_filters_tags_on_pageids(self, mock_tag_objects, mock_init, mock_mostcommon):
-        mock_init.return_value = None
-        mock_mostcommon.return_value = []
         page_ids = [1, 2, 3, 4, 5]
         form = FilterableListForm()
         form.fields = {'authors': mock.Mock()}
         form.set_authors(parent=mock.Mock(), page_ids=page_ids, hostname='test')
         mock_tag_objects.filter.assert_called_with(v1_cfgovauthoredpages_items__content_object__id__in=page_ids)
-
-
-    @mock.patch('v1.forms.most_common')
-    @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('taggit.models.Tag.objects')
-    def test_set_authors_calls_mostcommon_with_tagnames(self, mock_tag_objects, mock_init, mock_mostcommon):
-        page_ids = [1, 2, 3, 4, 5]
-        tag_names = ['tag1', 'tag2', 'tag3']
-        mock_init.return_value = None
-        mock_tag_objects.filter().values_list.return_value = tag_names
-        mock_mostcommon.return_value = []
-        form = FilterableListForm()
-        form.fields = {'authors': mock.Mock()}
-        form.set_authors(parent=mock.Mock(), page_ids=page_ids, hostname='test')
-        mock_mostcommon.assert_called_with(tag_names)
-
-
-    @mock.patch('v1.forms.most_common')
-    @mock.patch('v1.forms.FilterableListForm.__init__')
-    @mock.patch('taggit.models.Tag.objects')
-    def test_set_authors_assigns_choices_to_mostcommon_tags(self, mock_tag_objects, mock_init, mock_mostcommon):
-        page_ids = [1, 2, 3, 4, 5]
-        tag_names = ['tag1', 'tag2', 'tag3', 'tag4']
-        mock_init.return_value = None
-        mock_mostcommon.return_value = tag_names
-        form = FilterableListForm()
-        form.fields = {'authors': mock.Mock()}
-        form.set_authors(parent=mock.Mock(), page_ids=page_ids, hostname='test')
-
-        # choices are a tuple of tuples of tuples that separate the tag names list
-        # into the first three and the rest of the tag names
-        assert form.fields['authors'].choices == [('tag1', 'tag1'), ('tag2', 'tag2'), ('tag3', 'tag3'), ('tag4', 'tag4')]
 
 
     @mock.patch('v1.forms.FilterableListForm.__init__')

@@ -55,7 +55,7 @@
     {% import 'macros/mobile-carousel.html' as mobile_carousel %}
     {{ mobile_carousel.render({
         'image_sizes_class': 'media_image__100',
-        'image_base_url':    '/static/img/',
+        'image_base_url':    static('img/'),
         'data': [{
             'image_filename': 'serve.png',
             'title':          'Serve',

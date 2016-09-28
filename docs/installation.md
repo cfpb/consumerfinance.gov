@@ -272,7 +272,7 @@ migrations are applied to the database, and then does the following:
 - Creates an `admin` superuser with a password as specified in the
 `WAGTAIL_ADMIN_PW` environment variable, if set.
 - If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
-with a slug of `home-page`.
+with a slug of `cfgov`.
 - If it doesn't already exist, creates a new Wagtail Site with a hostname of
 `content.localhost`, with the root page set to the `CFGOV` home page.
 - If they don't already exist, creates pages for events (name `Events`, slug

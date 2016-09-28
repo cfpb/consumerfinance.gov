@@ -71,8 +71,12 @@ class TestUtilFunctions(TestCase):
         assert not self.page_versions[2].as_page_object.called
         assert not self.page_versions[3].as_page_object.called
 
-    def test_most_common(self):
-        lst = ['1', '1', '2', '3', '3', '1']
-        most_common_list = util.most_common(lst)
-        self.assertEquals('1', most_common_list[0])
-        self.assertEquals('3', most_common_list[1])
+    @mock.patch('__builtin__.isinstance')
+    @mock.patch('__builtin__.vars')
+    @mock.patch('v1.util.util.StreamValue')
+    def get_streamfields_returns_dict_of_streamfields(self, mock_streamvalueclass, mock_vars, mock_isinstance):
+        page = mock.Mock()
+        mock_vars.items.return_value = {'key': 'value'}
+        mock_isinstance.return_value = True
+        result = util.get_streamfields(page)
+        self.assertEqual(result, {'key': 'value'})
