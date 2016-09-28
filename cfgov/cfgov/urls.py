@@ -54,12 +54,13 @@ urlpatterns = [
     url(r'^owning-a-home/mortgage-closing/', include(oah.urls_for_prefix('mortgage-closing'))),
     url(r'^owning-a-home/mortgage-estimate/', include(oah.urls_for_prefix('mortgage-estimate'))),
 
+    url(r'^owning-a-home/process/', include(oah.urls_for_prefix('process/prepare/'))),
     url(r'^owning-a-home/process/prepare/', include(oah.urls_for_prefix('process/prepare/'))),
     url(r'^owning-a-home/process/explore/', include(oah.urls_for_prefix('process/explore/'))),
     url(r'^owning-a-home/process/compare/', include(oah.urls_for_prefix('process/compare/'))),
     url(r'^owning-a-home/process/close/', include(oah.urls_for_prefix('process/close/'))),
     url(r'^owning-a-home/process/sources/', include(oah.urls_for_prefix('process/sources/'))),
-    
+
     # url('')
 
     # the redirect is an unfortunate workaround, could be resolved by
