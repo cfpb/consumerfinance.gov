@@ -16,5 +16,5 @@ cf.gov is on a two-week release cadence. The release process is as follows:
 | Monday | Tuesday | Wednesday | Thursday | Friday |
 | ------ | ------- | --------- | -------- | ------ | 
 | | | | 5.1 branched, 5.1.0 released, deployed to beta | Hotfix 5.1.1 committed, released, deployed to beta |
-| | 5.1.1 deployed to www and content | | Hotfix 5.1.2 committed, released, deployed to www and content | |
+| | 5.1.1 deployed to www and content | Hotfix 5.1.2 committed, released, deployed to www and content | | |
 | | | | 5.2 branched, 5.2.0 released, deployed to beta | | 
