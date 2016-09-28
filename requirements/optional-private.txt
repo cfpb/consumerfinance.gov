@@ -2,10 +2,9 @@
 # configure git with:
 # git config --global url.https://<private hostname>/.insteadOf https://private.repo/
 
+git+https://private.repo/CFPB/agreement_database.git@v2.2.1#egg=agreements
 git+https://private.repo/CFPB/cfgov-selfregistration.git@v1.1#egg=selfregistration
-git+https://private.repo/CFPB/Picard.git@v1.3#egg=picard
 git+https://private.repo/CFPB/django-college-cost-comparison.git@v1.2.2#egg=comparisontool
 git+https://private.repo/CFPB/knowledgebase.git@v2.1.0#egg=knowledgebase
-git+https://private.repo/CFPB/agreement_database.git@v2.2.1#egg=agreements
-git+https://private.repo/CCDB4/CCDB-content.git@v1.2.2#egg=complaintdatabase
+git+https://private.repo/CFPB/Picard.git@v1.3#egg=picard
 git+https://private.repo/eregs/ip.git@1.0.2#egg=eregsip
