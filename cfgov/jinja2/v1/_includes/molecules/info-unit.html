@@ -54,10 +54,10 @@
         {% if value.image.is_decorative %}
         <div class="m-info-unit_image
                     {{ 'm-info-unit_image__square' if value.image.is_square else '' }}"
-             style="background-image: url( {{ static(value.image.url) }} );">
+             style="background-image: url( {{ value.image.url }} );">
         </div>
         {% else %}
-        <img src="{{ static(value.image.url) }}"
+        <img src="{{ value.image.url }}"
              alt="{{ value.image.alt if value.image.alt else '' }}"
              class="m-info-unit_image
                     {{ 'm-info-unit_image__square' if value.image.is_square else '' }}">

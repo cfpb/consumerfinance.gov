@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
 - Production settings now use ManifestStaticFilesStorage
+- New environment variable to store the Akamai object ID
 - Added a 'run_travis.sh' script to enable separate JS and Python test coverage reporting
 - AbstractFormBlock to be used as a base class for modules requiring Django Forms
 - wagtail_hooks.py function `form_module_handlers` used by `CFGOVPage.get_context()`
@@ -28,13 +29,20 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - In templates, ALL static file references now use Django's `static` tag/function
 - In CSS/Less, references to other assets are now relative
 - Optimized Travis build by removing unnecessary steps.
+- `flush_akamai` function to call Akamai API endpoint that flushes entire site instead, since this is faster than flushing an individual page
+- Only proceed with an Akamai flush if it is an existing page
 - Refactored heroes to support the new "bleeding" format.
 - `CFGOVPage.get_context()` now uses wagtail hooks to call functions registered with the hook name `cfgovpage_context_handlers`
 - `CFGOVPage.serve()` calls `CFGOVPage.serve_post()` to handle POST requests
 - Changed label names for the half-width / third-width link blobs.
+- Mega menu `Free Brochures` link
 
 ### Removed
 - `max-height` styling on info unit images
+- Reference to publish_eccu repo
+- `tax-time-saving` rules from `urls.py`
+- Removed Owning a Home homepage from urls being pulled from sheersites.
+
 
 ### Fixed
 - Corrected Spanish-language label for sharing module
