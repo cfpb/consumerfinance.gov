@@ -1,5 +1,4 @@
 address==0.1.1
-argparse==1.3.0
 BeautifulSoup==3.2.1
 beautifulsoup4==4.4.1
 boto==2.38.0
