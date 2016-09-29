@@ -1,6 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% import 'templates/render_block.html' as render_block with context %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -20,8 +21,11 @@
     {%- endfor %}
 
     {% for block in page.content -%}
-        {% import 'templates/render_block.html' as render_block with context %}
-        {{ render_block.render(block, loop.index) }}
+        {% if block.block_type == 'feedback' %}
+            {% include 'setup-feedback-and-render.html' %}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
     {%- endfor %}
 {% endblock %}
 

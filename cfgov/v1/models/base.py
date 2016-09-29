@@ -539,3 +539,15 @@ class TemporaryLockout(models.Model):
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
+
+
+class Feedback(models.Model):
+    is_helpful = models.BooleanField()
+    comment = models.TextField(blank=True, null=True)
+    page = models.ForeignKey(
+        Page,
+        related_name='feedback',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+    submitted_on = models.DateTimeField(auto_now_add=True)

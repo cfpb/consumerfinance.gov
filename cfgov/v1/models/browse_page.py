@@ -10,6 +10,7 @@ from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
 from wagtail.contrib.table_block.blocks import TableBlock
 
 from .base import CFGOVPage
+from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
 from ..util.util import get_secondary_nav_items
 from jobmanager.models import JobListingTable
@@ -33,6 +34,7 @@ class BrowsePage(CFGOVPage):
         ('table', organisms.Table(editable=False)),
         ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
         ('job_listing_table', JobListingTable()),
+        ('feedback', v1_blocks.Feedback()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
