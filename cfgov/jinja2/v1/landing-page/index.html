@@ -23,10 +23,7 @@
     {%- endfor %}
     {% for block in page.content -%}
         {% if block.block_type == 'feedback' %}
-            {% import block.block.meta.template as feedback with context %}
-            {% set form_id = 'form-content-' ~ loop.index0 %}
-            {% set settings = form_modules.content[loop.index0] %}
-            {{ feedback.render(block.value, settings, form_id) }}
+            {% include 'setup-feedback-and-render.html' %}
         {% else %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}
