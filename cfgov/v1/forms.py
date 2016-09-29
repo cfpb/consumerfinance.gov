@@ -8,7 +8,7 @@ from django.forms import widgets
 from taggit.models import Tag
 
 from .util import ref
-from .models.base import CFGOVPage
+from .models.base import CFGOVPage, Feedback
 
 
 class FilterErrorList(ErrorList):
@@ -243,3 +243,13 @@ class ActivityLogFilterForm(NewsroomFilterForm):
         page_ids = CFGOVPage.objects.live_shared(hostname).filter(query).values_list('id', flat=True)
         self.set_topics(parent, page_ids, hostname)
         self.set_authors(parent, page_ids, hostname)
+
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['is_helpful', 'comment']
+
+    def __init__(self, *args, **kwargs):
+        super(FeedbackForm, self).__init__(*args, **kwargs)
+        self.fields['is_helpful'].required = True

@@ -11,8 +11,9 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from ..atomic_elements import molecules, organisms
 from .base import CFGOVPage, CFGOVPageManager
+from .. import blocks as v1_blocks
+from ..atomic_elements import molecules, organisms
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -88,6 +89,7 @@ class LearnPage(AbstractFilterPage):
         ('table', organisms.Table(editable=False)),
         ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
         ('call_to_action', molecules.CallToAction()),
+        ('feedback', v1_blocks.Feedback()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel = StreamFieldPanel('content')
@@ -101,6 +103,7 @@ class DocumentDetailPage(AbstractFilterPage):
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table(editable=False)),
         ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
+        ('feedback', v1_blocks.Feedback()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel = StreamFieldPanel('content')

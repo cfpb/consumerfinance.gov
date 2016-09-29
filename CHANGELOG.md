@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added a 'run_travis.sh' script to enable separate JS and Python test coverage reporting
 - AbstractFormBlock to be used as a base class for modules requiring Django Forms
 - wagtail_hooks.py function `form_module_handlers` used by `CFGOVPage.get_context()`
+- Feedback module
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.

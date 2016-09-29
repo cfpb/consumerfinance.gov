@@ -27,8 +27,10 @@
                         block__flush-sides">
                 {{ featured_content.render(block.value) }}
             </div>
+        {% elif block.block_type == 'feedback' %}
+            {% include 'setup-feedback-and-render.html' %}
         {% elif 'post_preview_snapshot' in block.block_type %}
-            <div class="block 
+            <div class="block
                         {{ block.block.meta.classname if block.block.meta.classname else '' }}">
                 {% set limit = block.value.limit | int %}
                 {% set posts = page.get_browsefilterable_posts(request, limit) %}
