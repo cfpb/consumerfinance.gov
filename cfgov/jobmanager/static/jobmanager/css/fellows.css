@@ -843,11 +843,6 @@ ul.jobs-external-links{
 /* Modifiers */
 
 
-.jobs-theme .sub-theme-bold--textured {
-  background-image: url("../img/cr-003-sub-theme-bold-texture.png");
-  background-position: center;
-}
-
 /* Quiet (light grey)
    ========================================================================== */
 
@@ -872,31 +867,7 @@ ul.jobs-external-links{
 
 /* @todo: change this to a bg image with bg sizing, but we need modernizr first */
 
-.jobs-theme .hero-wrapper_cr-003-process {
-  background-image: url("../img/cr-003-process_small.png");
-  background-repeat: no-repeat;
-  background-position: 90% 0;
-}
 
-.jobs-theme .hero-wrapper_cr-003-data {
-  background-image: url("../img/cr-003-data_small.png");
-  background-repeat: no-repeat;
-  background-position: 98% 100%;
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-
-  .jobs-theme .hero-wrapper_cr-003-process {
-    background-image: url("../img/cr-003-process.png");
-    background-size: 201px;
-  }
-
-  .jobs-theme .hero-wrapper_cr-003-data {
-    background-image: url("../img/cr-003-data.png");
-    background-size: 349px;
-  }
-
-}
 
 /* ==========================================================================
    Utilities
