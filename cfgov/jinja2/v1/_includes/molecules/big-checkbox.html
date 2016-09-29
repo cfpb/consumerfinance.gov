@@ -43,7 +43,6 @@
                            name="form_{{ id_slug }}"
                            id="input_{{ id_slug }}_{{ loop.index0 }}"
                            value="{{ loop.index0 }}"
-                           {{ 'required' if settings.required else '' }}
                            {{ 'disabled' if settings.disabled else '' }}
                            {{ 'checked' if loop.index0|string in settings.value else '' }}>
                     <label class="a-input_label"

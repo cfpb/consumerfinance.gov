@@ -70,7 +70,7 @@ function _sendSubscriptionRequest( elem ) {
       state:   'error'
     },
     pass: {
-      message: 'Your subscription was successfuly received.',
+      message: 'Your subscription was successfully received.',
       state:   'success'
     }
   };

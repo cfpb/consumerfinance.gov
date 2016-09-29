@@ -6,6 +6,7 @@ class ConferenceRegistration(models.Model):
     name           = models.CharField(max_length=250, blank=True)
     organization   = models.CharField(max_length=250, blank=True)
     email          = models.EmailField(max_length=250, blank=True)
-    sessions       = models.TextField(blank=True)
+    sessions       = models.TextField(blank=False)
     foodinfo       = models.CharField(max_length=250, blank=True)
     accommodations = models.CharField(max_length=250, blank=True)
+    codes          = models.TextField(blank=False)

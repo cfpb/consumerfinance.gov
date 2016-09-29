@@ -1,3 +1,4 @@
+import json
 import mock
 from django.test import RequestFactory, TestCase
 
@@ -19,6 +20,8 @@ class TestConferenceRegistrationHandler(TestCase):
         }
         request = self.factory.post('/', post_data)
         block_value = {
+            'capacity': 5,
+            'codes': ['ABC123', 'QWE321'],
             'sessions': [
                 'Session 0 description',
                 'Session 1 description',
@@ -27,43 +30,86 @@ class TestConferenceRegistrationHandler(TestCase):
         }
         self.handler = Handler(page, request, block_value)
 
+    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.is_at_capacity')
+    def test_process_calls_is_at_capacity(self, mock_capacity):
+        result = self.handler.process(True)
+        self.assertTrue(mock_capacity.called)
+
+    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.is_at_capacity')
+    def test_process_returns_context_with_flag_when_is_at_capacity(self, mock_capacity):
+        result = self.handler.process(True)
+        assert 'form' in result
+        assert 'is_at_capacity' in result
+        self.assertTrue(result['is_at_capacity'])
+
+    @mock.patch('__builtin__.reduce')
+    @mock.patch('data_research.handlers.ConferenceRegistration')
+    def test_is_at_capacity_calls_filter_with_generated_query_from_codes(self, mock_model, mock_reduce):
+        mock_model.objects.filter().count.return_value = 0
+        self.handler.is_at_capacity()
+        mock_model.objects.filter.assert_called_with(mock_reduce())
+
+    @mock.patch('data_research.handlers.ConferenceRegistration')
+    def test_is_at_capacity_returns_False_for_attendance_less_than_capacity(self, mock_model):
+        mock_model.objects.filter().count.return_value = 0
+        result = self.handler.is_at_capacity()
+        self.assertFalse(result)
+
+    @mock.patch('data_research.handlers.ConferenceRegistration')
+    def test_is_at_capacity_returns_True_for_attendance_at_capacity(self, mock_model):
+        mock_model.objects.filter().count.return_value = 5
+        result = self.handler.is_at_capacity()
+        self.assertTrue(result)
+
+    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.is_at_capacity')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_post_data')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_response')
     @mock.patch('data_research.handlers.ConferenceRegistrationForm')
-    def test_process_calls_get_post_data_for_submitted_form(self, mock_form, mock_get_response, mock_get_post_data):
+    def test_process_calls_get_post_data_for_submitted_form(self, mock_form, mock_get_response, mock_get_post_data, mock_capacity):
+        mock_capacity.return_value = False
         self.handler.process(is_submitted=True)
         assert mock_get_post_data.called
 
+    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.is_at_capacity')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_post_data')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_response')
     @mock.patch('data_research.handlers.ConferenceRegistrationForm')
-    def test_process_binds_form_for_submissions(self, mock_form, mock_get_response, mock_get_post_data):
+    def test_process_binds_form_for_submissions(self, mock_form, mock_get_response, mock_get_post_data, mock_capacity):
+        mock_capacity.return_value = False
         data = {'post_data': None}
         mock_get_post_data.return_value = data
         self.handler.process(is_submitted=True)
         mock_form.assert_called_with(data)
 
+    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.is_at_capacity')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_post_data')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_response')
     @mock.patch('data_research.handlers.ConferenceRegistrationForm')
-    def test_process_calls_get_response_for_submissions(self, mock_form, mock_get_response, mock_get_post_data):
+    def test_process_calls_get_response_for_submissions(self, mock_form, mock_get_response, mock_get_post_data, mock_capacity):
+        mock_capacity.return_value = False
         self.handler.process(is_submitted=True)
         mock_get_response.assert_called_with(mock_form())
 
+    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.is_at_capacity')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_post_data')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_response')
     @mock.patch('data_research.handlers.ConferenceRegistrationForm')
-    def test_process_does_not_bind_form_non_submissions(self, mock_form, mock_get_response, mock_get_post_data):
+    def test_process_does_not_bind_form_non_submissions(self, mock_form, mock_get_response, mock_get_post_data, mock_capacity):
+        mock_capacity.return_value = False
         self.handler.process(is_submitted=False)
         mock_form.assert_called_with()
 
+    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.is_at_capacity')
     @mock.patch('data_research.handlers.ConferenceRegistrationForm')
-    def test_process_returns_context(self, mock_form):
+    def test_process_returns_context(self, mock_form, mock_capacity):
+        mock_capacity.return_value = False
         result = self.handler.process(False)
         self.assertEqual(result, {'form': mock_form()})
 
+    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.is_at_capacity')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_response')
-    def test_process_returns_get_response_call_for_submission(self, mock_get_response):
+    def test_process_returns_get_response_call_for_submission(self, mock_get_response, mock_capacity):
+        mock_capacity.return_value = False
         result = self.handler.process(True)
         self.assertEqual(result, mock_get_response())
 
@@ -71,11 +117,12 @@ class TestConferenceRegistrationHandler(TestCase):
         result = self.handler.get_post_data()
         self.assertIsInstance(result, dict)
 
-    def test_get_post_data_sets_sessions_from_form_sessions(self):
+    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_sessions')
+    def test_get_post_data_sets_sessions_from_form_sessions(self, mock_get_sessions):
+        mock_get_sessions.return_value = self.handler.block_value['sessions']
         result = self.handler.get_post_data()
-        assert 'sessions' in result
-        session_str = ','.join(result.getlist('form_sessions'))
-        self.assertEqual(session_str, result['sessions'])
+        self.assertIn('sessions', result)
+        self.assertEqual(json.dumps(self.handler.block_value['sessions']), result['sessions'])
 
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.fail')
     def test_get_response_calls_form_isvalid(self, mock_fail):
@@ -97,7 +144,7 @@ class TestConferenceRegistrationHandler(TestCase):
         form = mock.Mock()
         mock_subscribe.return_value = False
         self.handler.get_response(form)
-        mock_subscribe.assert_called_with(form.save().email, ['ABC123', 'QWE321'])
+        mock_subscribe.assert_called_with(form.save().email, form.save().codes)
 
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.subscribe')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.fail')
@@ -108,14 +155,12 @@ class TestConferenceRegistrationHandler(TestCase):
         mock_fail.assert_called_with(form)
 
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.success')
-    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.save_attendee')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.subscribe')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.fail')
-    def test_get_response_calls_save_attendee_and_success_for_successful_subscription(self, mock_fail, mock_subscribe, mock_save_attendee, mock_success):
+    def test_get_response_calls_success_for_successful_subscription(self, mock_fail, mock_subscribe, mock_success):
         form = mock.Mock()
         mock_subscribe.return_value = True
         self.handler.get_response(form)
-        mock_save_attendee.assert_called_with(form.save())
         self.assertTrue(mock_success.called)
 
     @mock.patch('data_research.handlers.settings')
@@ -157,27 +202,6 @@ class TestConferenceRegistrationHandler(TestCase):
         result = self.handler.subscribe('em@il.com', ['code'])
         self.assertTrue(mock_messages.error.called)
         self.assertFalse(result)
-
-    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_sessions')
-    @mock.patch('data_research.handlers.json')
-    def test_save_attendee_calls_get_sessions(self, mock_json, mock_getsessions):
-        attendee = mock.Mock()
-        self.handler.save_attendee(attendee)
-        self.assertTrue(mock_getsessions.called)
-
-    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_sessions')
-    @mock.patch('data_research.handlers.json')
-    def test_save_attendee_calls_json_dumps(self, mock_json, mock_getsessions):
-        attendee = mock.Mock()
-        self.handler.save_attendee(attendee)
-        self.assertTrue(mock_json.dumps.called)
-
-    @mock.patch('data_research.handlers.ConferenceRegistrationHandler.get_sessions')
-    @mock.patch('data_research.handlers.json')
-    def test_save_attendee_calls_save_on_attendee(self, mock_json, mock_getsessions):
-        attendee = mock.Mock()
-        self.handler.save_attendee(attendee)
-        self.assertTrue(attendee.save.called)
 
     def test_get_sessions_returns_strings_from_block_value_if_in_post_data(self):
         self.handler.request = self.factory.post('/', {'form_sessions': ['0']})
@@ -225,8 +249,8 @@ class TestConferenceRegistrationHandler(TestCase):
 
     @mock.patch('data_research.handlers.JsonResponse')
     @mock.patch('data_research.handlers.messages')
-    def test_fail_calls_returns_JsonResponse_with_ajax_request(self, mock_messages, mock_json_response):
+    def test_fail_calls_returns_JsonResponse_with_nonajax_request(self, mock_messages, mock_json_response):
         form = mock.Mock()
         form.errors = {'err': ['error message']}
         self.handler.fail(form)
-        mock_messages.error.assert_called_with(self.handler.request, message='error message')
+        mock_messages.error.assert_called_with(self.handler.request, form.errors['err'][0])

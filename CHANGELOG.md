@@ -49,6 +49,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Corrected Spanish-language label for sharing module
+- Typo on success message for form subscription
 
 
 ## 3.9.0
