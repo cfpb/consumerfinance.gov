@@ -22,7 +22,7 @@ feedparser==5.2.1
 geocoder==1.12.0
 git+https://github.com/cfpb/publish_eccu.git#egg=publish_eccu
 git+https://github.com/rosskarchner/govdelivery.git#egg=govdelivery
-html5lib==0.999999
+html5lib==0.9999999
 icalendar==3.9.0
 Jinja2==2.7.3
 jsonschema==2.0.0
