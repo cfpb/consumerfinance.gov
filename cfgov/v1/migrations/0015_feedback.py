@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import datetime
-from django.utils.timezone import utc
 from django.db import migrations, models
 import v1.models.snippets
 import wagtail.wagtailcore.fields
@@ -28,7 +26,7 @@ class Migration(migrations.Migration):
                 ('is_helpful', models.BooleanField()),
                 ('comment', models.TextField(null=True, blank=True)),
                 ('page', models.ForeignKey(related_name='feedback', on_delete=django.db.models.deletion.SET_NULL, to='wagtailcore.Page', null=True)),
-                ('submitted_on', models.DateTimeField(default=datetime.datetime(2016, 9, 28, 14, 43, 49, 537049, tzinfo=utc), auto_now_add=True)),
+                ('submitted_on', models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.AlterField(
