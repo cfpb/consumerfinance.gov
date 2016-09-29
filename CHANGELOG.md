@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `CFGOVPage.get_context()` now uses wagtail hooks to call functions registered with the hook name `cfgovpage_context_handlers`
 - `CFGOVPage.serve()` calls `CFGOVPage.serve_post()` to handle POST requests
 - Changed label names for the half-width / third-width link blobs.
+- Mega menu `Free Brochures` link
 
 ### Removed
 - `max-height` styling on info unit images
