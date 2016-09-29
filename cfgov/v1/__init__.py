@@ -127,7 +127,7 @@ def add_link_markup(tags):
         if added_icon:
             # Wraps the link text in a span that provides the underline
             contents = tag.contents
-            span = BeautifulSoup('').new_tag('span')
+            span = BeautifulSoup('', 'html.parser').new_tag('span')
             span['class'] = EXTERNAL_SPAN_CSS
             span.contents = contents
             tag.contents = [span, NavigableString(' ')]
