@@ -1,7 +1,11 @@
+from django.http import HttpRequest
 from django.test import TestCase
-from v1 import parse_links, get_protected_url
+from wagtail.wagtailcore.models import Site
 
-import mock
+from v1 import parse_links, get_protected_url
+from v1.middleware import StagingMiddleware
+from v1.models import CFGOVPage
+from v1.tests.wagtail_pages.helpers import save_new_page
 
 
 class ImportDataTest(TestCase):
@@ -25,73 +29,84 @@ class ImportDataTest(TestCase):
         self.assertIn('class="icon-link_text"', output)
 
 
-class LinkTest(TestCase):
-    """
-    The get_protected_url function is a template tag that is applied to links to make sure
-    that the returned URL is something that is allowed to be accessed by the user. Under some
-    conditions, get_protected_url returns the hash mark '#' which results in a non-navigable URL.
-    """
+class GetProtectedUrlTestCase(TestCase):
+    def test_get_live_page_from_www_returns_relative_url(self):
+        page = self.make_page(path='foo', live=True, shared=False)
+        context = {'request': self.request_for_hostname('localhost')}
+        protected_url = get_protected_url(context, page)
+        self.assertEquals(protected_url, '/foo/')
 
-    def setUp(self):
+    def test_get_live_page_from_content_returns_relative_url(self):
+        page = self.make_page(path='foo', live=True, shared=False)
+        context = {'request': self.request_for_hostname('content.localhost')}
+        protected_url = get_protected_url(context, page)
+        self.assertEquals(protected_url, '/foo/')
 
-        self.page = mock.MagicMock()
-        self.request = mock.MagicMock()
-        self.request.url = 'http://localhost:8000/path/to/page/'
-        self.page.url = 'http://localhost:8000/path/to/some/other/page/'
-        self.page.live = True
-        self.page.specific.shared = True
-        self.context = mock.MagicMock()
+    def test_get_live_and_shared_page_from_www_returns_relative_url(self):
+        page = self.make_page(path='foo', live=True, shared=True)
+        context = {'request': self.request_for_hostname('localhost')}
+        protected_url = get_protected_url(context, page)
+        self.assertEquals(protected_url, '/foo/')
 
-        def context_dict(name):
-            return {'request': self.request}[name]
+    def test_get_live_and_shared_page_from_content_returns_relative_url(self):
+        page = self.make_page(path='foo', live=True, shared=True)
+        context = {'request': self.request_for_hostname('content.localhost')}
+        protected_url = get_protected_url(context, page)
+        self.assertEquals(protected_url, '/foo/')
 
-        self.context.__getitem__.side_effect = context_dict
+    def test_get_shared_page_from_www_returns_hash(self):
+        page = self.make_page(path='foo', live=False, shared=True)
+        context = {'request': self.request_for_hostname('localhost')}
+        protected_url = get_protected_url(context, page)
+        self.assertEquals(protected_url, '#')
 
-    def test_get_protected_url_no_page(self):
-        """
-        Confirm that in the absence of a page, get_protected_url returns the hash.
-        """
-        result = get_protected_url(self.context, None)
-        self.assertEqual(result, '#')
+    def test_get_shared_page_from_content_returns_relative_url(self):
+        page = self.make_page(path='foo', live=False, shared=True)
+        context = {'request': self.request_for_hostname('content.localhost')}
+        protected_url = get_protected_url(context, page)
+        self.assertEquals(protected_url, '/foo/')
 
-    def test_get_protected_url_no_url(self):
-        """
-        Confirm that in the absence of a page URL, get_protected_url returns None.
-        """
-        self.page.url = None
-        result = get_protected_url(self.context, self.page)
-        self.assertIsNone(result)
+    def test_get_draft_page_from_www_returns_hash(self):
+        page = self.make_page(path='foo', live=False, shared=False)
+        context = {'request': self.request_for_hostname('localhost')}
+        protected_url = get_protected_url(context, page)
+        self.assertEquals(protected_url, '#')
 
-    def test_get_protected_url_live_page(self):
-        """
-        Confirm that if a live page is requested from the same host as the request
-        we get back the original page url.
-        """
-        self.page.url = 'http://localhost:8000/path/to/some/other/page/'
-        result = get_protected_url(self.context, self.page)
-        self.assertEqual(result, self.page.url)
+    def test_get_draft_page_from_content_returns_hash(self):
+        page = self.make_page(path='foo', live=False, shared=False)
+        context = {'request': self.request_for_hostname('content.localhost')}
+        protected_url = get_protected_url(context, page)
+        self.assertEquals(protected_url, '#')
 
-    def test_get_protected_url_non_live_page(self):
-        """
-        Confirm that if a non-live page is requested from a live page, we get back the hash.
-        """
-        self.page.live = False
-        result = get_protected_url(self.context, self.page)
-        self.assertEqual(result, '#')
+    def test_get_null_page_from_www_returns_hash(self):
+        context = {'request': self.request_for_hostname('localhost')}
+        protected_url = get_protected_url(context, None)
+        self.assertEquals(protected_url, '#')
 
-    def test_get_protected_url_staging(self):
-        """
-        Make sure that if we're on the staging site and request a page from that site
-        which does not point to the same host, that we replace the hostname with the
-        staging hostname.
-        """
-        self.page.live = False
-        self.request.url = 'http://content.localhost:8000/path/to/page/'
-        self.page.url = 'http://localhost:8000/path/to/some/other/page/'
-        result = get_protected_url(self.context, self.page)
-        self.assertEqual(result, 'http://content.localhost:8000/path/to/some/other/page/')
+    def test_get_null_page_from_content_returns_hash(self):
+        context = {'request': self.request_for_hostname('content.localhost')}
+        protected_url = get_protected_url(context, None)
+        self.assertEquals(protected_url, '#')
 
+    def test_context_without_request_raises_keyerror(self):
+        page = self.make_page(path='foo', live=True, shared=False)
+        context = {}
 
-if __name__ == '__main__':
-    unittest.main()
+        with self.assertRaises(KeyError):
+            get_protected_url(context, page)
 
+    def make_page(self, path, live, shared):
+        page = CFGOVPage(slug=path, title=path)
+        page.live = live
+        page.shared = shared
+        save_new_page(page)
+        return page
+
+    def request_for_hostname(self, hostname):
+        request = HttpRequest()
+        request.META['SERVER_NAME'] = hostname
+        request.site = Site.objects.get(hostname=hostname)
+
+        StagingMiddleware().process_request(request)
+
+        return request
