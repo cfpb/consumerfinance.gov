@@ -76,7 +76,7 @@
                 {{ big_checkbox.render({
                     "legend": 'Which sessions will you be attending?',
                     "fields": checkbox_fields,
-                    'value':  form.sessions.value() | default([], true),
+                    'value':  request.POST.getlist('form_sessions', []),
                     "size" :  '1'
                 }, options={
                     'id':       'sessions',
