@@ -13,6 +13,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 3.10.1
+
+### Changed
+- retirement app updated 0.5.1
+- restored css file 'cr-003-theme.css'
+
 ## 3.10.0
 
 ### Added
