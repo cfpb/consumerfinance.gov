@@ -10,7 +10,7 @@ import wagtail.wagtailimages.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0014_modify_half_blob_labels'),
+        ('v1', '0015_feedback'),
     ]
 
     operations = [

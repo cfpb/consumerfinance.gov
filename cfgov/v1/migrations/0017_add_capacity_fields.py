@@ -14,7 +14,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0015_registration_form_block'),
+        ('v1', '0016_registration_form_block'),
     ]
 
     operations = [
