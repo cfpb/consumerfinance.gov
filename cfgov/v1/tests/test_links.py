@@ -1,4 +1,6 @@
 from django.http import HttpRequest
+from django.template import engines
+from django.template.response import TemplateResponse
 from django.test import TestCase
 from wagtail.wagtailcore.models import Site
 
@@ -94,6 +96,19 @@ class GetProtectedUrlTestCase(TestCase):
 
         with self.assertRaises(KeyError):
             get_protected_url(context, page)
+
+    def test_render_page(self):
+        template_string = 'url: {{ get_protected_url(page) }}'
+        template = engines['wagtail-env'].from_string(template_string)
+
+        page = self.make_page(path='foo', live=True, shared=False)
+        request = self.request_for_hostname('localhost')
+        context = page.get_context(request)
+
+        response = TemplateResponse(request, template, context)
+        response.render()
+
+        self.assertEqual(response.content, 'url: /foo/')
 
     def make_page(self, path, live, shared):
         page = CFGOVPage(slug=path, title=path)
