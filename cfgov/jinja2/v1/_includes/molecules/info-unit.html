@@ -64,7 +64,9 @@
         {% endif %}
     {% endif %}
 
-    <div class="m-info-unit_content">
+    <div class="m-info-unit_content"
+         id="m-info-unit_unique-{{ value.sub_heading | striptags | lower | replace(' ', '-') if value.sub_heading else 'test' }}">
+
         {{ value.heading | safe if value.heading else '' }}
 
         {{ value.sub_heading | safe if value.sub_heading else '' }}
