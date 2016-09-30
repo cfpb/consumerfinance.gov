@@ -15,6 +15,7 @@ from .learn_page import AbstractFilterPage
 from ..atomic_elements import molecules, organisms
 from ..feeds import FilterableFeedPageMixin
 from ..util.filterable_list import FilterableListMixin
+from .. import blocks as v1_blocks
 
 
 class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
@@ -25,6 +26,7 @@ class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPa
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
+        ('feedback', v1_blocks.Feedback()),
     ])
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

@@ -26,6 +26,8 @@
                         block__flush-top">
                 {{ flc.render(block.value, loop.index0) }}
             </div>
+        {% elif block.block_type == 'feedback' %}
+            {% include 'setup-feedback-and-render.html' %}
         {% else %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}

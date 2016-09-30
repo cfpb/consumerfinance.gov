@@ -21,7 +21,11 @@
     {%- endfor %}
 
     {% for block in page.content -%}
-        {{ render_block.render(block, loop.index) }}
+        {% if block.block_type == 'feedback' %}
+            {% include 'setup-feedback-and-render.html' %}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
     {%- endfor %}
 
     {% if page.sidefoot %}
