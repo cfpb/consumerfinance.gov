@@ -42,6 +42,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Reference to publish_eccu repo
 - `tax-time-saving` rules from `urls.py`
 - Removed Owning a Home homepage from urls being pulled from sheersites.
+- Removed duplicate caching configuration
 
 
 ### Fixed
