@@ -18,6 +18,8 @@ from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
 from django.conf import settings
 from processors.processors_common import fix_link
+from v1.routing import get_page_relative_url
+
 
 default_app_config = 'v1.apps.V1AppConfig'
 
@@ -160,22 +162,16 @@ def render_stream_child(context, stream_child):
 
 @contextfunction
 def get_protected_url(context, page):
-    if page is None:
-        return '#'
+    if page:
+        request = context['request']
 
-    request_hostname = urlparse(context['request'].url).hostname
-    url = page.url
-    if url is None:  # If page is not aligned to a site root return None
-        return None
-    page_hostname = urlparse(url).hostname
-    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
-    if page.live:
-        return url
-    elif page.specific.shared:
-        if request_hostname == staging_hostname:
-            return url.replace(page_hostname, staging_hostname)
-        else:
-            return '#'
+        if page.live or page.shared and request.is_staging:
+            url = get_page_relative_url(page, request.site)
+
+            if url:
+                return url
+
+    return '#'
 
 
 @contextfunction
