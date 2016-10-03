@@ -13,6 +13,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 3.10.2
+
+### Changed
+- fixed typo in mission statement
+
+
 ## 3.10.1
 
 ### Changed
