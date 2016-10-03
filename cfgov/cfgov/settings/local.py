@@ -1,7 +1,10 @@
 from .base import *
 
 DEBUG = True
-INSTALLED_APPS += ('wagtail.contrib.wagtailstyleguide',)
+INSTALLED_APPS += (
+    'sslserver',
+    'wagtail.contrib.wagtailstyleguide',
+)
 
 if os.environ.get('DATABASE_ROUTING', False):
     DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter', 'v1.db_router.LegacyRouter']
