@@ -9,7 +9,7 @@ git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 ```
 
-You may also wish to fork the repository on Github and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
+You may also wish to fork the repository on GitHub and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
 
 There are two ways to install cfgov-refresh:
 
@@ -392,5 +392,5 @@ To solve this, from outside the virtual environment, run `pip uninstall south`.
 If you're getting other kinds of Python errors (for example, when running tox),
 you may even want to go as far as uninstalling all globally-installed
 Python packages: `pip freeze | grep -v "^-e" | xargs pip uninstall -y`.
-After doing that, you'll need to reinstall virtualenv:
+After doing that, you'll need to re-install virtualenv:
 `pip install virtualenv virtualenvwrapper`.
