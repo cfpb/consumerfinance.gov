@@ -24,6 +24,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 
+## 3.10.3
+
+### Removals
+
+- This removes the current version number from built assets, like main.css
+
 ## 3.10.2
 
 ### Changed
