@@ -1,5 +1,6 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% import 'form_block.html' as form_block with context %}
 {% import 'molecules/featured-content.html' as featured_content %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
@@ -28,7 +29,7 @@
                 {{ featured_content.render(block.value) }}
             </div>
         {% elif block.block_type == 'feedback' %}
-            {% include 'setup-feedback-and-render.html' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
         {% elif 'post_preview_snapshot' in block.block_type %}
             <div class="block
                         {{ block.block.meta.classname if block.block.meta.classname else '' }}">

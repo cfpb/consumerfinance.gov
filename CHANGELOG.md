@@ -37,6 +37,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - AbstractFormBlock to be used as a base class for modules requiring Django Forms
 - wagtail_hooks.py function `form_module_handlers` used by `CFGOVPage.get_context()`
 - Feedback module
+- `data_research` app to project
+- Conference Registration form, block, model, handler, and template
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.
@@ -61,6 +63,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Corrected Spanish-language label for sharing module
+- Typo on success message for form subscription
 
 
 ## 3.9.0

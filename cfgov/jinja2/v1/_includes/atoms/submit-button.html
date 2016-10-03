@@ -1,5 +1,9 @@
+{% macro render(value) -%}
+
 <div class="o-form-actions">
     <input class="btn btn__super form-actions_item"
            type="submit"
            value="{{ value.button_text }}">
 </div>
+
+{%- endmacro %}

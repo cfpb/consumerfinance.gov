@@ -1,5 +1,7 @@
 {% extends 'layout-side-nav.html' %}
 
+{% import 'form_block.html' as form_block with context %}
+
 {% block desc %}
     Our vision is a consumer finance marketplace that works for American consumers,
     responsible providers, and the economy as a whole.
@@ -23,7 +25,7 @@
 
     {% for block in page.blocks %}
         {% if block.block_type == 'feedback' %}
-            {% include 'setup-feedback-and-render.html' %}
+            {{- form_block.render(block, 'blocks', loop.index0) -}}
         {% else %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}
