@@ -104,6 +104,7 @@ MIDDLEWARE_CLASSES = (
 
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'transition_utilities.middleware.RewriteNemoURLsMiddleware',
+    'v1.middleware.StagingMiddleware',
 )
 
 ROOT_URLCONF = 'cfgov.urls'
@@ -484,3 +485,6 @@ if ENABLE_AKAMAI_CACHE_PURGE:
     AKAMAI_USER = os.environ.get('AKAMAI_USER')
     AKAMAI_PASSWORD = os.environ.get('AKAMAI_PASSWORD')
     AKAMAI_OBJECT_ID = os.environ.get('AKAMAI_OBJECT_ID')
+
+# Staging site
+STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
