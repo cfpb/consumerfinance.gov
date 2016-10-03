@@ -13,6 +13,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## Unreleased
+
+### Added
+
+### Changed
+
+### Removed
+
 ## 3.10.1
 
 ### Changed

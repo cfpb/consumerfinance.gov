@@ -9,7 +9,7 @@ This Django project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
 and [Wagtail CMS](https://wagtail.io) for content administration.
 
-![Screenshot of cfgov-refresh](screenshot.jpg)
+![Screenshot of cfgov-refresh](homepage.png)
 
 
 ## Quickstart
