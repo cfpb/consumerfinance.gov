@@ -20,7 +20,7 @@ module.exports = {
       ' *                     $$\n' +
       ' *                     $$\n' +
       ' *\n' +
-      ' *  <%= pkg.name %> - v<%= pkg.version %>\n' +
+      ' *  <%= pkg.name %>\n' +
       ' *  <%= pkg.homepage %>\n' +
       ' *  A public domain work of the Consumer Financial Protection Bureau\n' +
       ' */\n',
