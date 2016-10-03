@@ -56,6 +56,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'storages',
     'flags',
+    'data_research',
     'v1',
     'core',
     'sheerlike',
@@ -124,9 +125,12 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [V1_TEMPLATE_ROOT, V1_TEMPLATE_ROOT.child('_includes'),
+        'DIRS': [
+            V1_TEMPLATE_ROOT,
+            V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
-            PROJECT_ROOT.child('static_built')],
+            PROJECT_ROOT.child('static_built')
+        ],
         'APP_DIRS': False,
         'OPTIONS': {
             'environment': 'v1.environment',
