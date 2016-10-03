@@ -36,7 +36,7 @@ class ImageText5050Group(blocks.StructBlock):
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
                                           help_text='If checked, share links '
                                                     'will be included below '
-                                                    'the items.',
+                                                    'the items---TEST',
                                           required=False)),
         ('share_blurb', blocks.CharBlock(help_text='Sets the tweet text, '
                                                    'email subject line, and '
