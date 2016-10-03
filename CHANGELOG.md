@@ -17,6 +17,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- New unit test checks for missing migrations that need to be generated using `makemigrations`.
+
 ### Changed
 
 ### Removed
