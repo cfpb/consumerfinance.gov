@@ -16,6 +16,27 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+- Ability to run using HTTP locally with `./runserver.sh ssl`.
+
+### Changed
+
+### Removed
+
+## 3.10.2
+
+### Changed
+- fixed typo in mission statement
+
+## 3.10.1
+
+### Changed
+- retirement app updated 0.5.1
+- restored css file 'cr-003-theme.css'
+
+## 3.10.0
+
+### Added
 - Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
 - Production settings now use ManifestStaticFilesStorage
 - New environment variable to store the Akamai object ID
