@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+
+# Fail if any command fails.
+set -e
+
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
     gulp "test:unit"

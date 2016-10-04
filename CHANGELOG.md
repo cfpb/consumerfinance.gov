@@ -17,9 +17,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- New unit test checks for missing migrations that need to be generated using `makemigrations`.
+- Ability to run using HTTP locally with `./runserver.sh ssl`.
+
 ### Changed
 
 ### Removed
+
+## 3.10.3
+
+### Removals
+
+- This removes the current version number from built assets, like main.css
 
 ## 3.10.2
 
