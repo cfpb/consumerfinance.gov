@@ -13,6 +13,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 3.10.4
+
+### Added
+- Added Prepaid Cards to mega menu. (Requires feature flag for now.)
+
+
+## 3.10.3
+
+### Removed
+- This removes the current version number from built assets, like main.css
+
+
 ## 3.10.2
 
 ### Changed
@@ -24,6 +36,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 - retirement app updated 0.5.1
 - restored css file 'cr-003-theme.css'
+
 
 ## 3.10.0
 
@@ -69,7 +82,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed duplicate caching configuration
 - Icon for old Table from admin panel (this field will need to be removed in a future release)
 
-
 ### Fixed
 - Corrected Spanish-language label for sharing module
 
@@ -85,7 +97,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Wagtail User editor now enforces unique email addresses when creating/editing users.
 - Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
 - New `@flag_required` decorator for Django views
-
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
@@ -106,13 +117,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
 - Feature flag methods now take an explicit `request` object to determine what site to check the flag against
 
-
-
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 - Unused npm module map-stream.
 - Custom method `most_common` since python lib offers similar function
-
 
 ### Fixed
 - Post preview organism template used tag/author names instead of slugs that
