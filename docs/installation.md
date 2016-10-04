@@ -392,5 +392,5 @@ To solve this, from outside the virtual environment, run `pip uninstall south`.
 If you're getting other kinds of Python errors (for example, when running tox),
 you may even want to go as far as uninstalling all globally-installed
 Python packages: `pip freeze | grep -v "^-e" | xargs pip uninstall -y`.
-After doing that, you'll need to re-install virtualenv:
+After doing that, you'll need to reinstall virtualenv:
 `pip install virtualenv virtualenvwrapper`.
