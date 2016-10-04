@@ -46,5 +46,6 @@
     'heading':     '<h3>' ~ value.heading ~ '</h3>',
     'sub_heading': sub_heading,
     'body':        parse_links(value.body) | safe,
-    'links':       value.links
+    'links':       value.links,
+    'anchor_link': value.anchor_link
 } ) }}

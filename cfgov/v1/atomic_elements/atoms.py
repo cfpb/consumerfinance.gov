@@ -154,3 +154,11 @@ class ImageBasicUrl(ImageBasic):
             raise ValidationError("ImageBasicUrlAlt validation errors", params=error_dict)
         else:
             return data
+
+class AnchorLink(blocks.StructBlock):
+    link_id = blocks.CharBlock(required=False)
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/atoms/anchor-link.html'
+        label = 'Anchor link'

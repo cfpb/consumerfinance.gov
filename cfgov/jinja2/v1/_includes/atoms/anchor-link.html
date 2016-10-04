@@ -1,0 +1,23 @@
+
+{# ==========================================================================
+
+   Anchor Link ID
+
+   ==========================================================================
+
+   Description:
+
+   Create an ID for use in anchor links.
+   See [GHE]/flapjack/Modules-V1/wiki/Anchor-Link
+
+   value:                  Object defined from a StreamField block.
+
+   value.anchor_link:      A string generated using the sub_heading plus 
+                           a concatenated random   number, or a random 
+                           number if there is no sub_heading value.
+
+   ========================================================================== #}
+{% from 'macros/util/format/url.html' import slugify as slugify %}
+{% set id = get_unique_id('anchor_', '_') ~ slugify( value.anchor_link ) %}
+
+<p>{{ value.anchor_link }}</p>
