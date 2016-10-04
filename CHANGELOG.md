@@ -16,7 +16,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.10.4
 
 ### Added
-- Added Prepaid Cards to mega menu.
+- Added Prepaid Cards to mega menu. (Requires feature flag for now.)
 
 
 ## 3.10.3
