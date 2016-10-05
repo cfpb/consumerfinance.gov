@@ -1,4 +1,5 @@
 {% extends "front/base_update.html" %}
+{% load staticfiles %}"}
 
 {% block page_meta %}
 <meta charset="UTF-8" />
@@ -18,7 +19,7 @@
 {% endblock %}
 
 {% block page_css %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_PREFIX }}jobmanager/css/jobs.css" />
+<link rel="stylesheet" type="text/css" href="{% static 'jobmanager/css/jobs.css' %}" />
 {% endblock %}
 
 {% block content %}
