@@ -23,6 +23,7 @@ class JobConverter(object):
             page = JobListingPage(
                 title=job.title,
                 slug=job.slug,
+                live=False,
                 **page_attributes
             )
 
@@ -92,8 +93,8 @@ def run():
     date_cutoff = timezone.now().date() - timedelta(days=180)
     jobs = Job.objects.filter(close_date__gte=date_cutoff)
 
-    careers_page = Page.objects.get(slug='careers')
-    converter = JobConverter(parent=careers_page)
+    parent_page = Page.objects.get(slug='current-openings')
+    converter = JobConverter(parent=parent_page)
 
     for job in jobs:
         converter.convert(job)
