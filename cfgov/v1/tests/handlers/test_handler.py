@@ -1,6 +1,6 @@
 import mock
 from unittest import TestCase
-from ...handlers import Handler
+from v1.handlers import Handler
 
 
 class TestHandler(TestCase):

@@ -199,8 +199,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     {# TODO: Remove Else conditional when this is fully moved to wagtail. #}
     {# Check and include page-level JavaScript. #}
-    {% if page and page.media %}
-        {% for type, jsfiles in page.media.iteritems() %}
+    {% if page and media %}
+        {% for type, jsfiles in media.iteritems() %}
             {% for js in jsfiles %}
                 {% include '/js/routes/on-demand/' + js ignore missing %}
             {% endfor %}

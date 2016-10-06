@@ -19,6 +19,7 @@ from wagtail.wagtailcore.models import Page
 
 from .models import CFGOVPage
 from .util import util
+from v1.handlers.js import JSHandler
 
 logger = logging.getLogger(__name__)
 
@@ -222,3 +223,8 @@ def form_module_handlers(page, request, context, *args, **kwargs):
 
     if form_modules:
         context['form_modules'] = form_modules
+
+
+@hooks.register('cfgovpage_context_handlers')
+def register_js_handler(page, request, context, *args, **kwargs):
+    JSHandler(page, request, context).process()

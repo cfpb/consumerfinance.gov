@@ -365,62 +365,17 @@ class CFGOVPage(Page):
         user_perms = CFGOVUserPagePermissionsProxy(user)
         return user_perms.for_page(self)
 
-    class Meta:
-        app_label = 'v1'
-
     def parent(self):
         parent = self.get_ancestors(inclusive=False).reverse()[0].specific
         return parent
 
     # To be overriden if page type requires JS files every time
     # 'template' is used as the key for front-end consistency
-    def add_page_js(self, js):
-        js['template'] = []
+    def get_page_js(self):
+        return []
 
-    # Retrieves the stream values on a page from it's Streamfield
-    def _get_streamfield_blocks(self):
-        lst = [value for key, value in vars(self).iteritems()
-               if type(value) is StreamValue]
-        return list(chain(*lst))
-
-    # Gets the JS from the Streamfield data
-    def _add_streamfield_js(self, js):
-        # Create a dictionary with keys ordered organisms, molecules, then atoms
-        for child in self._get_streamfield_blocks():
-            self._add_block_js(child.block, js)
-
-    # Recursively search the blocks and classes for declared Media.js
-    def _add_block_js(self, block, js):
-        self._assign_js(block, js)
-        if issubclass(type(block), blocks.StructBlock):
-            for child in block.child_blocks.values():
-                self._add_block_js(child, js)
-        elif issubclass(type(block), blocks.ListBlock):
-            self._add_block_js(block.child_block, js)
-
-    # Assign the Media js to the dictionary appropriately
-    def _assign_js(self, obj, js):
-        try:
-            if hasattr(obj.Media, 'js'):
-                for key in js.keys():
-                    if obj.__module__.endswith(key):
-                        js[key] += obj.Media.js
-                if not [key for key in js.keys() if obj.__module__.endswith(key)]:
-                    js.update({'other': obj.Media.js})
-        except:
-            pass
-
-    # Returns all the JS files specific to this page and it's current Streamfield's blocks
-    @property
-    def media(self):
-        js = OrderedDict()
-        for key in ['template', 'organisms', 'molecules', 'atoms']:
-            js.update({key: []})
-        self.add_page_js(js)
-        self._add_streamfield_js(js)
-        for key, js_files in js.iteritems():
-            js[key] = OrderedDict.fromkeys(js_files).keys()
-        return js
+    class Meta:
+        app_label = 'v1'
 
 
 class CFGOVPageCategory(Orderable):

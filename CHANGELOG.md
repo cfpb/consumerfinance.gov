@@ -21,6 +21,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Improved the help text in the Featured Content module in Wagtail.
+- `CFGOVPage.media` property is now a variable in the jinja2 context named `media`
+- `CFGOVPage.media` property methods are now in JSHandler
 
 ### Removed
 

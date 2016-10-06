@@ -50,9 +50,9 @@ class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPa
 
     template = 'browse-filterable/index.html'
 
-    def add_page_js(self, js):
-        super(BrowseFilterablePage, self).add_page_js(js)
-        js['template'] += ['secondary-navigation.js']
+    def get_page_js(self):
+        files = super(BrowseFilterablePage, self).get_page_js()
+        return files + ['secondary-navigation.js']
 
 
 class EventArchivePage(BrowseFilterablePage):
