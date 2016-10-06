@@ -9,7 +9,7 @@ from flags.models import Flag
 from jobmanager.models import Job
 from jobmanager.views import IndexView
 from jobmanager.urls import FLAG_NAME
-from scripts.create_careers_pages import create_careers_pages
+from scripts import create_careers_pages
 
 
 class CareersViewTestCaseMixin(object):
@@ -64,7 +64,7 @@ class JobListViewTestCaseMixin(CareersViewTestCaseMixin):
         self.assertEquals(self.request().status_code, 200)
 
     def test_get_wagtail_page(self):
-        create_careers_pages()
+        create_careers_pages.run()
         self.create_wagtail_careers_feature_flag(enabled=True)
         with patch(
             'transition_utilities.conditional_urls.wagtail_serve'

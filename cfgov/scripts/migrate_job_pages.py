@@ -88,7 +88,7 @@ class JobConverter(object):
 
 
 @transaction.atomic
-def migrate_job_pages():
+def run():
     date_cutoff = timezone.now().date() - timedelta(days=180)
     jobs = Job.objects.filter(close_date__gte=date_cutoff)
 
@@ -100,4 +100,4 @@ def migrate_job_pages():
 
 
 if '__main__' == __name__:
-    migrate_job_pages()
+    run()

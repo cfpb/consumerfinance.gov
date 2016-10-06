@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 @transaction.atomic
-def create_careers_pages():
+def run():
     default_site = Site.objects.get(is_default_site=True)
     root_page = default_site.root_page
 
@@ -46,4 +46,4 @@ def create_careers_pages():
 
 
 if '__main__' == __name__:
-    create_careers_pages()
+    run()
