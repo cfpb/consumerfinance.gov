@@ -6,8 +6,8 @@
 - A few components that haven't been converted by the v1 team yet (possibly workshop with entire D&D team):
     - Hero
     - Feature Content Module
-    - Forms (partialy done)
-- Difficult to test how changes affect every project (we should set up a playgroud)
+    - Forms (partially done)
+- Difficult to test how changes affect every project (we should set up a playground)
 - Unclear how atomic changes will affect components
 - Documentation is incomplete (working on that currently)
 - Unclear how future changes will be updated in Wagtail (should platform own this?)

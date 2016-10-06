@@ -30,7 +30,7 @@ git checkout master
 #### Updating all dependencies
 
 Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
-This setup script will remove and re-install the project dependencies
+This setup script will remove and reinstall the project dependencies
 and rebuild the site's JavaScript and CSS assets.
 
 !!! note
@@ -88,7 +88,7 @@ From the project root, start the Django server:
 !!! note
 	If prompted to migrate database changes,
 	stop the server with `ctrl` + `c` and run these commands:
-	
+
 ```bash
 python cfgov/manage.py migrate
 ./initial-data.sh
