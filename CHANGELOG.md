@@ -22,6 +22,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- JS form validation messages and Conference module validation messages
+
 ### Removed
 
 ## 3.10.3
