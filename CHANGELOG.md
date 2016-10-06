@@ -16,30 +16,33 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-
 - New unit test checks for missing migrations that need to be generated using `makemigrations`.
 - Ability to run using HTTP locally with `./runserver.sh ssl`.
 
 ### Changed
+- Improved the help text in the Featured Content module in Wagtail.
 
 ### Removed
+
 
 ## 3.10.3
 
 ### Removals
-
 - This removes the current version number from built assets, like main.css
+
 
 ## 3.10.2
 
 ### Changed
 - fixed typo in mission statement
 
+
 ## 3.10.1
 
 ### Changed
 - retirement app updated 0.5.1
 - restored css file 'cr-003-theme.css'
+
 
 ## 3.10.0
 
