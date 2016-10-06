@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - New unit test checks for missing migrations that need to be generated using `makemigrations`.
 - Ability to run using HTTP locally with `./runserver.sh ssl`.
+- Load DigitalGov Search JS using HTTPS.
 
 ### Changed
 - Improved the help text in the Featured Content module in Wagtail.
