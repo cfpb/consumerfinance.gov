@@ -12,7 +12,6 @@
    value:                   An object with the following options for value.
 
    value.show_category:    Whether to show the category or not.
-   value.category:         The category label text.
    value.heading:          Heading text.
    value.paragraph.source: Body introduction text.
    value.authors:          Array of author names and associated URLs.
@@ -36,14 +35,10 @@
 
 <div class="o-item-introduction">
     {% if value.show_category %}
-        {% if value.category is string %}
-            {{ category_slug.render(value.category, page_url, index=form_id) }}
-        {% else %}
-            {% for category in page.categories.all() %}
-                {{ '|' if loop.index > 1 else '' }}
-                {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug', index=index) }}
-            {% endfor %}
-        {% endif %}
+        {% for category in page.categories.all() %}
+            {{ '|' if loop.index > 1 else '' }}
+            {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug', index=index) }}
+        {% endfor %}
     {% endif %}
     <h1>{{ value.heading | safe }}</h1>
 
