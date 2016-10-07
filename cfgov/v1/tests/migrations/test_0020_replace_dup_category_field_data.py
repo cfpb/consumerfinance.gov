@@ -17,6 +17,8 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
         )
 
     def test_forwards_with_category(self):
+        """ Forward migration that has a category and should get
+            show_category=True """
         data = {
             'category': 'test-category',
         }
@@ -24,6 +26,8 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
         self.assertEqual(migrated, {'show_category': True})
 
     def test_forwards_without_category(self):
+        """ Forward migration that does not have a category and should
+            get show_category=False """
         data = {
             'category': '',
         }
@@ -31,6 +35,8 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
         self.assertEqual(migrated, {'show_category': False})
 
     def test_backwards_with_show_category(self):
+        """ Backward migration that has a show_category=True and should
+            get the first category from the settings_panel categories """
         page = Mock(categories=Mock(values=[{'name': 'test-category'}]))
         data = {
             'show_category': True,
@@ -39,6 +45,8 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
         self.assertEqual(migrated, {'category': 'test-category'})
 
     def test_backwards_without_show_category(self):
+        """ Backward migration that has a show_category=False and should
+            get an empty category string. """
         page = Mock(categories=Mock(values=[{'name': 'test-category'}]))
         data = {
             'show_category': False,
@@ -47,6 +55,8 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
         self.assertEqual(migrated, {'category': ''})
 
     def test_backwards_without_category(self):
+        """ Backward migration that has a show_category=True but has not
+            categories in the settings_panel """
         page = Mock(categories=Mock(values=[]))
         data = {
             'show_category': True,

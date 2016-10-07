@@ -16,6 +16,9 @@ class MigrationsUtilTestCase(TestCase):
     @mock.patch('v1.util.migrations.set_page_stream_data')
     def test_migrate_stream_field(self, mock_set_page_stream_data,
             mock_get_page_stream_data):
+        """ Test that the migrate_stream_field function correctly gets
+            old data, calls the mapper function, and stores new data 
+            based on the mapper results. """
         mock_get_page_stream_data.return_value = \
                 [{'type': 'my_type', 'value': {'afield': 'old data'}}]
 
@@ -43,6 +46,9 @@ class MigrationsUtilTestCase(TestCase):
     @mock.patch('v1.util.migrations.set_page_stream_data')
     def test_migrate_stream_field_not_migrated(self,
             mock_set_page_stream_data, mock_get_page_stream_data):
+        """ Test that the migrate_stream_field function correctly
+            ignores a field that does not have the correct type and
+            shouldn't be migrated. """
         mock_get_page_stream_data.return_value = \
                 [{'type': 'my_type', 'value': {'afield': 'old data'}}]
 
@@ -60,6 +66,10 @@ class MigrationsUtilTestCase(TestCase):
     @mock.patch('v1.util.migrations.migrate_stream_field')
     def test_migrate_page_types_and_fields(self,
             mock_migrate_stream_field, mock_get_model):
+        """ Test that the migrate_page_types_and_fields function
+            correctly calls the migrate_stream_field function with 
+            the appropriate values from the list of page types and 
+            fields. """
         mapper = mock.Mock()
 
         # Set up a mock page model that return a single mock page
