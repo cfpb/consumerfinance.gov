@@ -65,7 +65,17 @@
     {% endif %}
 
     <div class="m-info-unit_content"
-         id="m-info-unit_unique-{{ value.sub_heading | striptags | lower | replace(' ', '-') if value.sub_heading else 'test' }}">
+         id="{{ anchor_link_id }}">
+
+        <span style="color:blue">
+        <br>
+        {{ value.anchor_link }}
+        <br>
+        anchor-test will be replaced by number in db
+        <br>
+        random string like this is not going to work because it changes every page load.
+        generate random number in the database and store it for exposing in the admin and here.
+        </span>
 
         {{ value.heading | safe if value.heading else '' }}
 
