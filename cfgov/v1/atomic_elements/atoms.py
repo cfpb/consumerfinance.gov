@@ -4,7 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-# from 'macros/util/format/url.html' 
+from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
 from ..util.util import get_unique_id, slugify
 
 def number_validator(value, search=re.compile(r'[^0-9]').search):
@@ -158,10 +158,8 @@ class ImageBasicUrl(ImageBasic):
 
 class AnchorLink(blocks.StructBlock):
     link_id = blocks.CharBlock(required=False)
+    # full_url = blocks.CharBlock(required=False, default=slugurl)
 
-# todos: test; output the string on front end
-
-# done: save the unique anchor id in the database; show it in the admin; it is copy and pasteable; it is editable by a content editor; if there is no anchor_ prefix with the unique id, then it generates that and adds it to the text that the editor put in the field; if there is no text entered in the field, it autogenerates it on save for half-width blobs
     def clean(self, data):
         error_dict = {}
 
