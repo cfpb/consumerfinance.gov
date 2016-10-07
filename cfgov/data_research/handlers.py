@@ -71,7 +71,7 @@ class ConferenceRegistrationHandler(Handler):
         return self.fail(form)
 
     def subscribe(self, email, codes):
-        err = 'There was an error in your submission, please try again later.'
+        err = 'There was an error in your submission. Please try again later.'
         try:
             gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
             subscription_response = gd.set_subscriber_topics(email, codes)
@@ -89,7 +89,7 @@ class ConferenceRegistrationHandler(Handler):
             return JsonResponse({'result': 'pass'})
         else:
             messages.success(self.request,
-                             'Your subscription was successfully received.')
+                             'Your submission was successfully received.')
             return HttpResponseRedirect(self.page.url)
 
     def fail(self, form):

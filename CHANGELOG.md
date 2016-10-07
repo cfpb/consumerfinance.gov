@@ -23,6 +23,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 - Improved the help text in the Featured Content module in Wagtail.
 
+- JS form validation messages and Conference module validation messages
+
 ### Removed
 
 

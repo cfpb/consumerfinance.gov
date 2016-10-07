@@ -66,11 +66,11 @@ function _sendSubscriptionRequest( elem ) {
   var formData = $form.serialize();
   var states = {
     fail: {
-      message: 'There was an error in your submission, please try again later.',
+      message: 'There was an error in your submission. Please try again later.',
       state:   'error'
     },
     pass: {
-      message: 'Your subscription was successfully received.',
+      message: 'Your submission was successfully received.',
       state:   'success'
     }
   };
