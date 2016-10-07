@@ -42,6 +42,8 @@
    value.is_button:           Boolean for whether the link should be a button.
                               Default is false.
 
+   value.anchor_link:         A string containing a unique ID attribute for the info unit content when it's a half width link blob.
+
    ========================================================================== #}
 
 {% macro info_unit(value) %}
@@ -64,14 +66,7 @@
         {% endif %}
     {% endif %}
 
-    <div class="m-info-unit_content"
-         id="{{ anchor_link_id }}">
-
-        <span style="color:blue">
-        <br>
-        {{ value.anchor_link }}
-
-        </span>
+    <div class="m-info-unit_content" id="{{ value.anchor_link }}">
 
         {{ value.heading | safe if value.heading else '' }}
 
