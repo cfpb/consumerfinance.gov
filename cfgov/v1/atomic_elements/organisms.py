@@ -365,7 +365,9 @@ class ExpandableGroup(blocks.StructBlock):
 
 
 class ItemIntroduction(blocks.StructBlock):
-    category = blocks.ChoiceBlock(choices=ref.categories, required=False)
+    show_category = blocks.BooleanBlock(required=False, default=True,
+            help_text="Whether to show the category or not "
+                      "(category must be set in 'Configuration').")
 
     heading = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
