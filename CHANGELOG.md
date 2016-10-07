@@ -24,6 +24,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Improved the help text in the Featured Content module in Wagtail.
 - Moved careers page creation from Django data migrations to standalone Python scripts.
 
+- JS form validation messages and Conference module validation messages
+
 ### Removed
 
 
