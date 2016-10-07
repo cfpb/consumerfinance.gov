@@ -138,10 +138,15 @@ snippet_types = [
     ('downloads', 'Downloads'),
 ]
 
-snippet_subtypes = [
-    ('Download', (
-        
-    ))
+snippet_fields = [
+    ('Contacts', (
+        ('email', 'email'),
+        ('phone', 'phone'),
+    )),
+    ('Downloads', (
+        ('related_file', 'related_file'),
+        ('order_link', 'order_link'),
+    )),
 ]
 
 

@@ -10,8 +10,6 @@
 
    value:                Object defined from a StreamField block.
 
-   value.close_date:     A string representing the closing date for the snippet.
-
    value.heading:        The heading of the snippet list.
                          Default is the type of snippet being listed.
 
@@ -31,39 +29,38 @@
 
    ========================================================================== #}
 
-{% macro render(value) %}
+
 <div class="m-snippet-list">
     <h3>
         {{ value.heading or value.snippet_type }}
     </h3>
-    {% set snippets = }
+    {# set snippets = #}
     {% if value.snippet is defined and value.snippet | length > 0 %}
-    {% include value.snippet + '.html' %}
-        <table class=".table__stack-on-small">
+        {# include value.snippet + '.html' #}
+        <table class="table__stack-on-small">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Download</th>
-                    <th>Order</th>
+                    <th>Description</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             {% for snippet in value.snippets %}
-                {{ snippet.template() }}
-                {# <tr>
-                    <th data-label="Title">{{ snippet.title }}</th>
-                    <td data-label="Download">
-                        <a href="{{ snippet.url }}">Download</a>
+                <tr>
+                    <th data-label="Description">{{ snippet.title }}</th>
+                    <td data-label="Actions">
+                    {% for action in value.actions %}
+                        {% set href = snippet[action.snippet_field].file_path
+                           if snippet[action.snippet_field].file_path is defined
+                           else snippet[action.snippet_field] %}
+                        <a href="{{ href }}">{{ action.link_label }}</a>
+                    {% endfor %}
                     </td>
-                    <td data-label="Order">
-                        <a href="{{ snippet.order_link }}">Order</a>
-                    </td>
-                </tr> #}
+                </tr>
             {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <p>There are no current openings at this time.</p>
+        <p>There are no items at this time.</p>
     {% endif %}
 </div>
-{% endmacro %}

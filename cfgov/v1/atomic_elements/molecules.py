@@ -390,14 +390,25 @@ class ContentWithAnchor(blocks.StructBlock):
 
 
 class SnippetList(blocks.StructBlock):
-    snippet_type = blocks.ChoiceBlock(choices=ref.snippet_types,
-                                      required=True)
-    # Subtype, too
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic()
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
     has_rule = blocks.BooleanBlock(required=False)
+
+    snippet_type = blocks.ChoiceBlock(
+        choices=ref.snippet_types,
+        required=True
+    )
+    actions = blocks.ListBlock(blocks.StructBlock(
+        ('link_label', blocks.CharBlock(
+            help_text='E.g., "Download" or "Order free prints"'
+        )),
+        ('snippet_field', blocks.ChoiceBlock(
+            choices=ref.snippet_fields,
+            help_text='Corresponds to the available fields for the selected snippet type'
+        )),
+    ))
 
     # Needs a tag chooser
 
