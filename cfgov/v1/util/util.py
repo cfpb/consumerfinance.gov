@@ -33,6 +33,8 @@ def get_form_id(page):
     else:
         return 0
 
+def slugify(string):
+    return string.lower().replace(' ', '-').replace(',', '').replace('.', '').replace('!', '').replace('?', '')
 
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage

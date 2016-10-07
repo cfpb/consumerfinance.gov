@@ -25,7 +25,7 @@ class HalfWidthLinkBlob(blocks.StructBlock):
         )
     body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-    anchor_link = blocks.CharBlock(atoms.AnchorLink(), default="anchor link test")
+    anchor_link = atoms.AnchorLink()
 
     class Meta:
         icon = 'link'
