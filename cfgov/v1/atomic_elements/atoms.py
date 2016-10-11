@@ -2,10 +2,11 @@ import re
 
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
-from ..util.util import get_unique_id, slugify
+from ..util.util import get_unique_id
 
 def number_validator(value, search=re.compile(r'[^0-9]').search):
     if value:
