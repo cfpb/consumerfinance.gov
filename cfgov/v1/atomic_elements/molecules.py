@@ -5,7 +5,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from . import atoms
 from ..util import util, ref
-
+from ..blocks import AnchorLink
 
 def isRequired(field_name):
     return [str(field_name) + ' is required.']
@@ -25,7 +25,7 @@ class HalfWidthLinkBlob(blocks.StructBlock):
         )
     body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-    anchor_link = atoms.AnchorLink()
+    anchor_link = AnchorLink()
 
     class Meta:
         icon = 'link'

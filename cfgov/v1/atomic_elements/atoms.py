@@ -2,11 +2,8 @@ import re
 
 from django import forms
 from django.core.exceptions import ValidationError
-from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
-from ..util.util import get_unique_id
 
 def number_validator(value, search=re.compile(r'[^0-9]').search):
     if value:
@@ -156,33 +153,3 @@ class ImageBasicUrl(ImageBasic):
             raise ValidationError("ImageBasicUrlAlt validation errors", params=error_dict)
         else:
             return data
-
-class AnchorLink(blocks.StructBlock):
-    link_id = blocks.CharBlock(required=False)
-    # full_url = blocks.CharBlock(required=False, default=slugurl)
-
-    def clean(self, data):
-        error_dict = {}
-
-        def format_id(string):
-            words = string.split('_');
-            suffix = ''
-            if string:
-                suffix = '_'
-            if 'anchor' in words:
-                return slugify(string)
-            else:
-                return get_unique_id('anchor_' + slugify(string) + suffix)
-
-        if data:
-            try:
-                data['link_id'] = format_id(data['link_id'])
-            except ValidationError as e:
-                error_dict.update(e.params)
-
-        return super(AnchorLink, self).clean(data)
-
-    class Meta:
-        icon = 'link'
-        template = '_includes/atoms/anchor-link.html'
-        label = 'Anchor link'
