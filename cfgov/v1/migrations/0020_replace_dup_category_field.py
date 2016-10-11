@@ -5,6 +5,7 @@ from django.db import migrations, models
 import wagtail.wagtailcore.fields
 import wagtail.wagtailcore.blocks
 import wagtail.wagtailimages.blocks
+import v1.atomic_elements.organisms
 
 
 class Migration(migrations.Migration):
