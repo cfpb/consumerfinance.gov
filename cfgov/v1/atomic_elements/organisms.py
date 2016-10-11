@@ -365,15 +365,16 @@ class ExpandableGroup(blocks.StructBlock):
 
 
 class ItemIntroduction(blocks.StructBlock):
-    show_category = blocks.BooleanBlock(required=False, default=True,
-            help_text="Whether to show the category or not "
-                      "(category must be set in 'Configuration').")
+    show_category = blocks.BooleanBlock(
+        required=False, default=True, help_text="Whether to show the "
+        "category or not (category must be set in 'Configuration').")
 
     heading = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
 
     date = blocks.DateBlock(required=False)
-    has_social = blocks.BooleanBlock(required=False, help_text="Whether to show the share icons or not.")
+    has_social = blocks.BooleanBlock(
+        required=False, help_text="Whether to show the share icons or not.")
 
     class Meta:
         icon = 'form'

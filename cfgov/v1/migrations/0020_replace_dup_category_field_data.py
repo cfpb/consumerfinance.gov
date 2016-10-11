@@ -43,7 +43,7 @@ def forwards(apps, schema_editor):
         ('DemoPage', 'header', 'item_introduction'),
     ]
     migrate_page_types_and_fields(apps, page_types_and_fields,
-            migrate_category_field_forwards)
+                                  migrate_category_field_forwards)
 
 
 def backwards(apps, schema_editor):
@@ -52,7 +52,7 @@ def backwards(apps, schema_editor):
         ('DemoPage', 'header', 'item_introduction'),
     ]
     migrate_page_types_and_fields(apps, page_types_and_fields,
-            migrate_category_field_backwards)
+                                  migrate_category_field_backwards)
 
 
 class Migration(migrations.Migration):
