@@ -1,20 +1,16 @@
-import importlib
-
 from decimal import Decimal
 from django.test import TestCase
 from model_mommy import mommy
 from wagtail.wagtailcore.models import Page
 
 from jobmanager.models.django import Job
+from scripts.migrate_job_pages import JobConverter
 
 
 class JobConverterTestCase(TestCase):
     def convert_job(self, job):
-        migration = 'jobmanager.migrations.0008_migrate_job_pages'
-        module = importlib.import_module(migration)
-
         parent_page = Page.objects.get(slug='cfgov')
-        converter = module.JobConverter(parent=parent_page)
+        converter = JobConverter(parent=parent_page)
         return converter.convert(job)
 
     def test_convert_job_keeps_slug(self):
