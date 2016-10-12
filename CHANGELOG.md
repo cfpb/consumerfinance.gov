@@ -19,11 +19,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - New unit test checks for missing migrations that need to be generated using `makemigrations`.
 - Ability to run using HTTP locally with `./runserver.sh ssl`.
 - Load DigitalGov Search JS using HTTPS.
+- an initial robots.txt file
 
 ### Changed
 - Improved the help text in the Featured Content module in Wagtail.
-
 - JS form validation messages and Conference module validation messages
+- complaints app updated to 1.2.5
+- retirement app updated to 0.5.3
+- knowledgebase app updated to: v2.1.3
+- college-costs app updated to: 2.2.6
+- Moved careers page creation from Django data migrations to standalone Python scripts.
 
 ### Removed
 
