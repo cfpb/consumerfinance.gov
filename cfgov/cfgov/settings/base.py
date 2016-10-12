@@ -16,6 +16,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
+# see https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-USE_ETAGS
+USE_ETAGS = True
 
 try:
     import mysql
