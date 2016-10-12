@@ -11,6 +11,7 @@ from wagtail.contrib.table_block.blocks import TableBlock, TableInput
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+from ..blocks import AnchorLink
 
 
 from . import atoms, molecules
@@ -386,6 +387,7 @@ class FullWidthText(blocks.StreamBlock):
     related_links = molecules.RelatedLinks()
     table = Table(editable=False)
     table_block = AtomicTableBlock(table_options={'renderer':'html'})
+    anchor_link = AnchorLink()
 
     class Meta:
         icon = 'edit'
