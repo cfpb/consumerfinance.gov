@@ -17,7 +17,7 @@
         {% if 'content_with_anchor' in block.block_type %}
                 {{ render_stream_child(block) | safe }}
         {% elif 'content' in block.block_type %}
-            <div class="m-full-width-text" {{ anchor_id }}>
+            <div class="m-full-width-text">
                 {{ parse_links(block.value) | safe }}
             </div>
         {% elif 'table' in block.block_type %}

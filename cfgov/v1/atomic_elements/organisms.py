@@ -11,7 +11,6 @@ from wagtail.contrib.table_block.blocks import TableBlock, TableInput
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-from ..blocks import AnchorLink
 
 
 from . import atoms, molecules
@@ -378,17 +377,9 @@ class ModelList(ModelBlock):
     class Meta:
         icon = 'list-ul'
 
-class ContentWithAnchor(blocks.StructBlock):
-    content_block = blocks.RichTextBlock()
-    anchor_link = AnchorLink()
-
-    class Meta:
-        icon = 'edit'
-        template = '_includes/organisms/full-width-text-anchor.html'
-
 
 class FullWidthText(blocks.StreamBlock):
-    content_with_anchor = ContentWithAnchor()
+    content_with_anchor = molecules.ContentWithAnchor()
     content = blocks.RichTextBlock(icon='edit')
     media = images_blocks.ImageChooserBlock(icon='image')
     quote = molecules.Quote()
