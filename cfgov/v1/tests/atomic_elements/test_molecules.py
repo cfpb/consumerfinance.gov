@@ -64,7 +64,7 @@ class MoleculesTestCase(TestCase):
         publish_page(child=learn_page)
         response = django_client.get('/learn/')
         self.assertContains(response, 'full width text block')
-        self.assertContains(response, 'anchor link')
+        self.assertContains(response, 'this is an anchor link')
 
     def test_quote(self):
         """Quote value correctly displays on a Learn Page"""

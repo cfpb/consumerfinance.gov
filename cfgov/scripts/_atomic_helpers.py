@@ -95,13 +95,6 @@ call_to_action = {
         'paragraph_text': 'this is a call to action'
     }
 }
-content_with_anchor = {
-    'type': 'content_with_anchor',
-    'value': {
-        'content_block': 'Full width text content',
-        'anchor_link': 'this is an anchor link'
-    }
-}
 
 #############
 # Organisms #
@@ -137,7 +130,9 @@ full_width_text = {
             'type': 'content_with_anchor',
             'value': {
                 'content_block': 'full width text block',
-                'anchor_link': 'anchor link'
+                'anchor_link': {
+                    'link_id': 'this is an anchor link'
+                }
             }
         },
         {

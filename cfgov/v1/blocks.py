@@ -40,15 +40,6 @@ class AnchorLink(blocks.StructBlock):
             )
         )
 
-    # def get_url():
-    #     return '/relative/path/'
-
-    # full_url = blocks.CharBlock(required=False, default=get_url(), help_text=(
-    #         'Copy this relative URL to insert anchor links that take the user to this content section.'
-    #         )
-    #     )
-
-
     def clean(self, data):
 
         def format_id(string):
