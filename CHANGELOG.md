@@ -12,6 +12,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## 3.10.8
+
+### Added
+- enable the `USE_ETAGS` Django setting
+
+## 3.10.7
+
+### Fixes
+- Corrected a typo introduced in 3.10.7
+
+## 3.10.6
+
+### Fixes
+- replace a few remaining `STATIC_PREFIX` references with the `static` tag
+
+## 3.10.5
+
+### Fixes
+- adds missing `{% load staticfiles %}` tags
 
 ## 3.10.4
 
