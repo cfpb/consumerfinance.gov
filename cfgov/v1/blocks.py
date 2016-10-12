@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.utils.module_loading import import_string
 from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
@@ -35,9 +34,14 @@ class AbstractFormBlock(blocks.StructBlock):
         method = 'POST'
         icon = 'form'
 
+
 class AnchorLink(blocks.StructBlock):
-    link_id = blocks.CharBlock(required=False, label='ID for this content block', help_text=(
-            'Auto-generated on save, or enter some human-friendly text to make it easier to read.'
+    link_id = blocks.CharBlock(
+        required=False,
+        label='ID for this content block',
+        help_text=(
+                'Auto-generated on save, or enter some human-friendly text ',
+                'to make it easier to read.'
             )
         )
 
