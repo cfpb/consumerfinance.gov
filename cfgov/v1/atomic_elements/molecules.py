@@ -6,6 +6,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from . import atoms
 from ..util import util, ref
 
+
 def isRequired(field_name):
     return [str(field_name) + ' is required.']
 
