@@ -3,7 +3,7 @@ import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from ..blocks import AbstractFormBlock
+from ..blocks import AbstractFormBlock, AnchorLink
 
 
 class TestAbstractFormBlock(TestCase):
@@ -52,3 +52,14 @@ class TestAbstractFormBlock(TestCase):
         self.request = self.factory.post('/', {'form_id': 'form-match-0'})
         result = self.block.is_submitted(self.request, 'match', 0)
         self.assertTrue(result)
+
+
+class TestAnchorLink(TestCase):
+    def setUp(self):
+        self.block = AnchorLink()
+        self.data = {'link_id': 'test-string'}
+
+    @mock.patch('v1.blocks.AnchorLink.clean')
+    def test_clean_calls_format_id(self, mock_format_id):
+        self.block.clean(self.data)
+        self.assertTrue(mock_format_id.called)

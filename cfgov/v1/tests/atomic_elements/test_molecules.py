@@ -50,6 +50,22 @@ class MoleculesTestCase(TestCase):
         response = django_client.get('/browse-page/')
         self.assertContains(response, 'this is a featured content body')
 
+    def test_content_with_anchor(self):
+        """Content with anchor value correctly displays on a Learn Page"""
+        learn_page = LearnPage(
+            title='Learn',
+            slug='learn'
+        )
+        learn_page.content = StreamValue(
+            learn_page.content.stream_block,
+            [atomic.full_width_text],
+            True
+        )
+        publish_page(child=learn_page)
+        response = django_client.get('/learn/')
+        self.assertContains(response, 'full width text block')
+        self.assertContains(response, 'anchor link')
+
     def test_quote(self):
         """Quote value correctly displays on a Learn Page"""
         learn_page = LearnPage(
