@@ -65,7 +65,7 @@ class AnchorLink(blocks.StructBlock):
         if data:
             try:
                 data['link_id'] = format_id(data['link_id'])
-                data = super(NumberBlock, self).clean(data)
+                data = super(AnchorLink, self).clean(data)
             except ValidationError as e:
                 error_dict.update(e.params)
                 raise ValidationError("AnchorLink validation errors", params=error_dict)
