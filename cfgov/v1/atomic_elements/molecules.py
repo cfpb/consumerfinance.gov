@@ -2,9 +2,9 @@ from django.core.exceptions import ValidationError
 
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-from ..blocks import AnchorLink
 
 from . import atoms
+from ..blocks import AnchorLink
 from ..util import util, ref
 
 
