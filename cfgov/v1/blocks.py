@@ -65,10 +65,12 @@ class AnchorLink(blocks.StructBlock):
         if data:
             try:
                 data['link_id'] = format_id(data['link_id'])
+                data = super(NumberBlock, self).clean(data)
             except ValidationError as e:
                 error_dict.update(e.params)
-
-        return super(AnchorLink, self).clean(data)
+                raise ValidationError("AnchorLink validation errors", params=error_dict)
+        
+        return data
 
     class Meta:
         icon = 'link'
