@@ -42,7 +42,6 @@
    value.is_button:           Boolean for whether the link should be a button.
                               Default is false.
 
-
    ========================================================================== #}
 
 {% macro info_unit(value) %}
@@ -66,7 +65,6 @@
     {% endif %}
 
     <div class="m-info-unit_content">
-
         {{ value.heading | safe if value.heading else '' }}
 
         {{ value.sub_heading | safe if value.sub_heading else '' }}
