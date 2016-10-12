@@ -5,15 +5,13 @@
 'use strict';
 
 var $ = require( 'jquery' );
-var handlebars = require( 'handlebars' );
-
 var _notifierTemplate = '<div class="m-notification ' +
                                     'm-notification__{{ state }}" ' +
                              'style="display: none;">' +
                           '<span class="m-notification_icon cf-icon"></span>' +
                           '<div class="m-notification_content">' +
                               '<p class="h4 m-notification_message">' +
-                                '{{{ message }}}' +
+                                '{{ message }}' +
                               '</p>' +
                           '</div>' +
                         '</div>';
@@ -51,9 +49,13 @@ var _notifier = {
       state:   settings.state,
       icon:    icon[settings.state]
     };
-    var template = handlebars.compile( settings.template );
+    var template = settings.template.replace( /\{\{\s?(.*?)\s?\}\}/g,
+      function( match, token ) {
+        return data[token];
+      }
+    );
 
-    return template( data );
+    return template;
   },
 
   // Clear any previously created notifications
