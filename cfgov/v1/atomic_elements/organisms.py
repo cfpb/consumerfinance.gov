@@ -378,8 +378,15 @@ class ModelList(ModelBlock):
     class Meta:
         icon = 'list-ul'
 
+class ContentWithAnchor(blocks.StructBlock):
+    content_block = blocks.RichTextBlock()
+    anchor_link = AnchorLink()
+
 
 class FullWidthText(blocks.StreamBlock):
+    content_with_anchor = ContentWithAnchor(icon='edit')
+    # will this break stuff?
+    # content = ContentWithAnchor(icon='edit')
     content = blocks.RichTextBlock(icon='edit')
     media = images_blocks.ImageChooserBlock(icon='image')
     quote = molecules.Quote()
@@ -387,7 +394,6 @@ class FullWidthText(blocks.StreamBlock):
     related_links = molecules.RelatedLinks()
     table = Table(editable=False)
     table_block = AtomicTableBlock(table_options={'renderer':'html'})
-    anchor_link = AnchorLink()
 
     class Meta:
         icon = 'edit'
