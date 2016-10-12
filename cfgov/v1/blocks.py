@@ -50,7 +50,6 @@ class AnchorLink(blocks.StructBlock):
 
 
     def clean(self, data):
-        error_dict = {}
 
         def format_id(string):
             words = string.split('_');
@@ -62,14 +61,8 @@ class AnchorLink(blocks.StructBlock):
             else:
                 return get_unique_id('anchor_' + slugify(string) + suffix)
 
-        if data:
-            try:
-                data['link_id'] = format_id(data['link_id'])
-                data = super(AnchorLink, self).clean(data)
-            except ValidationError as e:
-                error_dict.update(e.params)
-                raise ValidationError("AnchorLink validation errors", params=error_dict)
-        
+        data['link_id'] = format_id(data['link_id'])
+        data = super(AnchorLink, self).clean(data)
         return data
 
     class Meta:
