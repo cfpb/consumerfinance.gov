@@ -28,6 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - retirement app updated to 0.5.3
 - knowledgebase app updated to: v2.1.3
 - college-costs app updated to: 2.2.6
+- Moved careers page creation from Django data migrations to standalone Python scripts.
 
 ### Removed
 
