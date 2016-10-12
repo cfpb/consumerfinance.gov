@@ -43,13 +43,12 @@ class AnchorLink(blocks.StructBlock):
     def clean(self, data):
 
         def format_id(string):
-            words = string.split('_');
-            suffix = ''
-            if string:
-                suffix = '_'
-            if 'anchor' in words:
+            if string == 'anchor':
+                return get_unique_id('anchor_')
+            elif 'anchor' in string:
                 return slugify(string)
             else:
+                suffix = '_' if string else ''
                 return get_unique_id('anchor_' + slugify(string) + suffix)
 
         data['link_id'] = format_id(data['link_id'])
