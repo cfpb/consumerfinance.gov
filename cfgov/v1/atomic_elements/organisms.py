@@ -382,11 +382,13 @@ class ContentWithAnchor(blocks.StructBlock):
     content_block = blocks.RichTextBlock()
     anchor_link = AnchorLink()
 
+    class Meta:
+        icon = 'edit'
+        template = '_includes/organisms/full-width-text-anchor.html'
+
 
 class FullWidthText(blocks.StreamBlock):
-    content_with_anchor = ContentWithAnchor(icon='edit')
-    # will this break stuff?
-    # content = ContentWithAnchor(icon='edit')
+    content_with_anchor = ContentWithAnchor()
     content = blocks.RichTextBlock(icon='edit')
     media = images_blocks.ImageChooserBlock(icon='image')
     quote = molecules.Quote()

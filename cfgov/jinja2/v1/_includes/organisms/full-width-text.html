@@ -11,22 +11,11 @@
    See [GHE]/flapjack/Modules-V1/wiki/Full-Width-Copy
 
    ========================================================================== #}
-{% if value.anchor_link %}
-    {% set anchor_id =
-        'id="{{ value.anchor_link }}"'
-    %}
-{% else %}
-    {% set anchor_id = 'id="no-anchor"' %}
-{% endif %}
 
 <div class="o-full-width-text-group">
     {% for block in value %}
         {% if 'content_with_anchor' in block.block_type %}
-            <div class="m-full-width-text" {{ anchor_id }}>
-            content_with_anchor
-                {{ render_stream_child(block) | safe}}
-
-            </div>
+                {{ render_stream_child(block) | safe }}
         {% elif 'content' in block.block_type %}
             <div class="m-full-width-text" {{ anchor_id }}>
                 {{ parse_links(block.value) | safe }}

@@ -35,8 +35,19 @@ class AbstractFormBlock(blocks.StructBlock):
         icon = 'form'
 
 class AnchorLink(blocks.StructBlock):
-    link_id = blocks.CharBlock(required=False)
-    # full_url = blocks.CharBlock(required=False, default=slugurl)
+    link_id = blocks.CharBlock(required=False, label='ID for this content block', help_text=(
+            'Auto-generated on save, or enter some human-friendly text to make it easier to read.'
+            )
+        )
+
+    # def get_url():
+    #     return '/relative/path/'
+
+    # full_url = blocks.CharBlock(required=False, default=get_url(), help_text=(
+    #         'Copy this relative URL to insert anchor links that take the user to this content section.'
+    #         )
+    #     )
+
 
     def clean(self, data):
         error_dict = {}
