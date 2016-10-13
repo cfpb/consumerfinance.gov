@@ -1,12 +1,8 @@
 from django.utils.module_loading import import_string
-<<<<<<< HEAD
 from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
 
 from .util.util import get_unique_id
-=======
-from wagtail.wagtailcore import blocks
->>>>>>> master
 
 
 class AbstractFormBlock(blocks.StructBlock):
