@@ -14,6 +14,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 ## 3.10.9
 
+### Added
+- robots.txt
+
 ### Fixed
 - Update links in TableBlocks that reference internal documents or pages & have no href
 
