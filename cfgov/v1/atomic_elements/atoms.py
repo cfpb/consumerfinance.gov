@@ -5,7 +5,6 @@ from django.core.exceptions import ValidationError
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-
 def number_validator(value, search=re.compile(r'[^0-9]').search):
     if value:
         return bool(search(value))
