@@ -4,6 +4,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from . import atoms
+from ..blocks import AnchorLink
 from ..util import util, ref
 
 
@@ -282,3 +283,12 @@ class SocialMedia(blocks.StructBlock):
     class Meta:
         icon = 'site'
         template = '_includes/molecules/social-media.html'
+
+
+class ContentWithAnchor(blocks.StructBlock):
+    content_block = blocks.RichTextBlock()
+    anchor_link = AnchorLink()
+
+    class Meta:
+        icon = 'edit'
+        template = '_includes/molecules/full-width-text-anchor.html'
