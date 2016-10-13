@@ -38,14 +38,14 @@ def convert_links(links):
             continue  # Don't update it if the href is already set
         if linktype == 'document':
             doc = get_object_or_404(get_document_model(), id=object_id)
-            filepath = '/' + doc.file.name
+            url = doc.url
         elif linktype == 'page':
             page = Page.objects.get(id=object_id)
-            filepath = page.relative_url(current_site=page.get_site())
+            url = page.relative_url(current_site=page.get_site())
         else:
             continue
         updated = True
-        link['href'] = filepath
+        link['href'] = url
     return updated
 
 
