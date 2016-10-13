@@ -12,6 +12,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## 3.10.9
+
+### Fixed
+- Update links in TableBlocks that reference internal documents or pages & have no href
+
+
 ## 3.10.8
 
 ### Added
@@ -36,9 +42,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Added Prepaid Cards to mega menu. (Requires feature flag for now.)
-
-### Fixed
-- Update links in TableBlocks that reference internal documents or pages & have no href
 
 
 ## 3.10.3
