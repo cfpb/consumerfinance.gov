@@ -57,6 +57,9 @@ def run():
             rows = tableblock['value']['data']
             for row in rows:
                 for idx, item in enumerate(row):
+                    if not item:
+                        continue
+
                     soup = BeautifulSoup(item, 'html.parser')
                     links = soup.findAll('a')
                     if links and convert_links(links):
