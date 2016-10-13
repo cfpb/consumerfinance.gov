@@ -1,5 +1,8 @@
 from django.utils.module_loading import import_string
+from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
+
+from .util.util import get_unique_id
 
 
 class AbstractFormBlock(blocks.StructBlock):
@@ -30,6 +33,37 @@ class AbstractFormBlock(blocks.StructBlock):
         handler = None
         method = 'POST'
         icon = 'form'
+
+
+class AnchorLink(blocks.StructBlock):
+    link_id = blocks.CharBlock(
+        required=False,
+        label='ID for this content block',
+        help_text=(
+                'Auto-generated on save, or enter some human-friendly text ',
+                'to make it easier to read.'
+            )
+        )
+
+    def clean(self, data):
+
+        def format_id(string):
+            if string == 'anchor':
+                return get_unique_id('anchor_')
+            elif 'anchor' in string:
+                return slugify(string)
+            else:
+                suffix = '_' if string else ''
+                return get_unique_id('anchor_' + slugify(string) + suffix)
+
+        data['link_id'] = format_id(data['link_id'])
+        data = super(AnchorLink, self).clean(data)
+        return data
+
+    class Meta:
+        icon = 'link'
+        template = '_includes/atoms/anchor-link.html'
+        label = 'Anchor link'
 
 
 class Feedback(AbstractFormBlock):
