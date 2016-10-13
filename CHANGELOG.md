@@ -34,6 +34,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 
+### Fixed
+- Update links in TableBlocks that reference internal documents or pages & have no href
+
 
 ## 3.10.3
 
