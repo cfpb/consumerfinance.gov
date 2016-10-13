@@ -1,8 +1,12 @@
 from django.utils.module_loading import import_string
+<<<<<<< HEAD
 from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
 
 from .util.util import get_unique_id
+=======
+from wagtail.wagtailcore import blocks
+>>>>>>> master
 
 
 class AbstractFormBlock(blocks.StructBlock):
@@ -64,3 +68,12 @@ class AnchorLink(blocks.StructBlock):
         icon = 'link'
         template = '_includes/atoms/anchor-link.html'
         label = 'Anchor link'
+
+
+class Feedback(AbstractFormBlock):
+    question_text = blocks.CharBlock(default='Was this page helpful to you?')
+    button_text = blocks.CharBlock(default='Submit feedback')
+
+    class Meta:
+        handler = 'v1.handlers.blocks.feedback.FeedbackHandler'
+        template = '_includes/blocks/feedback.html'

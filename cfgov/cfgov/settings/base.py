@@ -16,6 +16,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
+# see https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-USE_ETAGS
+USE_ETAGS = True
 
 try:
     import mysql
@@ -56,6 +58,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'storages',
     'flags',
+    'data_research',
     'v1',
     'core',
     'sheerlike',
@@ -103,6 +106,7 @@ MIDDLEWARE_CLASSES = (
 
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'transition_utilities.middleware.RewriteNemoURLsMiddleware',
+    'v1.middleware.StagingMiddleware',
 )
 
 ROOT_URLCONF = 'cfgov.urls'
@@ -124,9 +128,12 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [V1_TEMPLATE_ROOT, V1_TEMPLATE_ROOT.child('_includes'),
+        'DIRS': [
+            V1_TEMPLATE_ROOT,
+            V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
-            PROJECT_ROOT.child('static_built')],
+            PROJECT_ROOT.child('static_built')
+        ],
         'APP_DIRS': False,
         'OPTIONS': {
             'environment': 'v1.environment',
@@ -417,33 +424,6 @@ SHEER_SITES = {
             Path(REPOSITORY_ROOT, '../tax-time-saving/dist')),
 }
 
-CACHES = {
-    'default' : {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_cache',
-    },
-    'eregs_longterm_cache': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_longterm_cache',
-        'TIMEOUT': 60*60*24*15,     # 15 days
-        'OPTIONS': {
-            'MAX_ENTRIES': 10000,
-        },
-    },
-    'api_cache':{
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'api_cache_memory',
-        'TIMEOUT': 3600,
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        },
-    }
-}
-
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
-CACHE_MIDDLEWARE_SECONDS = 600
-
 #The base URL for the API that we use to access layers and the regulation.
 API_BASE = os.environ.get('EREGS_API_BASE', '')
 
@@ -459,7 +439,6 @@ GOOGLE_ANALYTICS_SITE = ''
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
 CACHE_MIDDLEWARE_SECONDS = 1800
-
 
 #eRegs
 BACKENDS = {
@@ -508,3 +487,6 @@ if ENABLE_AKAMAI_CACHE_PURGE:
     AKAMAI_USER = os.environ.get('AKAMAI_USER')
     AKAMAI_PASSWORD = os.environ.get('AKAMAI_PASSWORD')
     AKAMAI_OBJECT_ID = os.environ.get('AKAMAI_OBJECT_ID')
+
+# Staging site
+STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')

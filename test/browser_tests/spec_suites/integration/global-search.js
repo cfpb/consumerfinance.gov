@@ -101,7 +101,7 @@ describe( 'GlobalSearch', function() {
           } )
           .then( function() {
             _dom.searchBtn.click();
-            var portalUrl = 'http://search.consumerfinance.gov/' +
+            var portalUrl = 'https://search.consumerfinance.gov/' +
                             'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
             expect( browser.getCurrentUrl() ).toBe( portalUrl );
           } );

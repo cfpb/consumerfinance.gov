@@ -9,7 +9,7 @@ git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 ```
 
-You may also wish to fork the repository on Github and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
+You may also wish to fork the repository on GitHub and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
 
 There are two ways to install cfgov-refresh:
 

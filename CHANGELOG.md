@@ -16,12 +16,58 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- New unit test checks for missing migrations that need to be generated using `makemigrations`.
+- Ability to run using HTTP locally with `./runserver.sh ssl`.
+- Load DigitalGov Search JS using HTTPS.
+- an initial robots.txt file
+
+### Changed
+- Improved the help text in the Featured Content module in Wagtail.
+- JS form validation messages and Conference module validation messages
+- complaints app updated to 1.2.5
+- retirement app updated to 0.5.3
+- knowledgebase app updated to: v2.1.3
+- college-costs app updated to: 2.2.6
+- Moved careers page creation from Django data migrations to standalone Python scripts.
+- Use HTTPS when linking to search.consumerfinance.gov.
+
+### Removed
+
+
+## 3.10.3
+
+### Removals
+- This removes the current version number from built assets, like main.css
+
+
+## 3.10.2
+
+### Changed
+- fixed typo in mission statement
+
+
+## 3.10.1
+
+### Changed
+- retirement app updated 0.5.1
+- restored css file 'cr-003-theme.css'
+
+
+## 3.10.0
+
+### Added
 - Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
 - Production settings now use ManifestStaticFilesStorage
 - New environment variable to store the Akamai object ID
 - Added a 'run_travis.sh' script to enable separate JS and Python test coverage reporting
 - AbstractFormBlock to be used as a base class for modules requiring Django Forms
 - wagtail_hooks.py function `form_module_handlers` used by `CFGOVPage.get_context()`
+- Feedback module
+- `data_research` app to project
+- Conference Registration form, block, model, handler, and template
+- Added TableBlock definition to organisms and models that use Table
+- Added `cfgov/templates/wagtailadmin/js/table-block.js` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
+- Added `cfgov/templates/wagtailadmin/table_input.html` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
 
 ### Changed
 - Refactored heroes to support the new "bleeding" format.
@@ -34,13 +80,27 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `CFGOVPage.get_context()` now uses wagtail hooks to call functions registered with the hook name `cfgovpage_context_handlers`
 - `CFGOVPage.serve()` calls `CFGOVPage.serve_post()` to handle POST requests
 - Changed label names for the half-width / third-width link blobs.
+- Mega menu `Free Brochures` link
+- Migrated previous Table data to new TableBlocks
+- Modified `cfgov/cfgov/settings/base.py` to add wagtailadmin to the STATICFILES_DIRS path.
+- Modified `cfgov/jinja2/v1/_includes/organisms/table.html` to work with the Wagtail TableBlock component.
+- Modified `cfgov/v1/__init__.py` to add the linebreaksbr.
+- Modified `cfgov/v1/atomic_elements/organisms.py` to create classes which inherit from the TableBlock classes. This allowed us to control which templates where used for rendering the Wagtail admin and table.
+- Modified `cfgov/v1/models/browse_page.py`, `cfgov/v1/models/learn_page.py`, and `cfgov/v1/models/sublanding_page.py` to use the new AtomicTableBlock.
+- Modified `cfgov/v1/wagtail_hooks.py` to add load new script for the admin.
 
 ### Removed
 - `max-height` styling on info unit images
 - Reference to publish_eccu repo
+- `tax-time-saving` rules from `urls.py`
+- Removed Owning a Home homepage from urls being pulled from sheersites.
+- Removed duplicate caching configuration
+- Icon for old Table from admin panel (this field will need to be removed in a future release)
+
 
 ### Fixed
 - Corrected Spanish-language label for sharing module
+- Typo on success message for form subscription
 
 
 ## 3.9.0
@@ -54,9 +114,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Wagtail User editor now enforces unique email addresses when creating/editing users.
 - Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
 - New `@flag_required` decorator for Django views
-- Added TableBlock definition to organisms and models that use Table
-- Added `cfgov/templates/wagtailadmin/js/table-block.js` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
-- Added `cfgov/templates/wagtailadmin/table_input.html` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
+
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
@@ -76,20 +134,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Replaces deprecated gulp-cssmin with gulp-clean-css.
 - Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
 - Feature flag methods now take an explicit `request` object to determine what site to check the flag against
-- Migrated previous Table data to new TableBlocks
-- Modified `cfgov/cfgov/settings/base.py` to add wagtailadmin to the STATICFILES_DIRS path.
-- Modified `cfgov/jinja2/v1/_includes/organisms/table.html` to work with the Wagtail TableBlock component.
-- Modified `cfgov/v1/__init__.py` to add the linebreaksbr.
-- Modified `cfgov/v1/atomic_elements/organisms.py` to create classes which inherit from the TableBlock classes. This allowed us to control which templates where used for rendering the Wagtail admin and table.
-- Modified `cfgov/v1/models/browse_page.py`, `cfgov/v1/models/learn_page.py`, and `cfgov/v1/models/sublanding_page.py` to use the new AtomicTableBlock.
-- Modified `cfgov/v1/wagtail_hooks.py` to add load new script for the admin.
+
 
 
 ### Removed
 - Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
 - Unused npm module map-stream.
 - Custom method `most_common` since python lib offers similar function
-- Icon for old Table from admin panel (this field will need to be removed in a future release)
+
 
 ### Fixed
 - Post preview organism template used tag/author names instead of slugs that

@@ -6,6 +6,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
 
 from .base import CFGOVPage
+from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
 
 
@@ -21,6 +22,7 @@ class LandingPage(CFGOVPage):
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
         ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
         ('well', organisms.Well()),
+        ('feedback', v1_blocks.Feedback()),
     ], blank=True)
 
     # General content tab
@@ -35,12 +37,5 @@ class LandingPage(CFGOVPage):
         ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
-
-    def get_context(self, request, *args, **kwargs):
-        return {
-            PAGE_TEMPLATE_VAR: self,
-            'self': self,
-            'request': request,
-        }
 
     template = 'landing-page/index.html'
