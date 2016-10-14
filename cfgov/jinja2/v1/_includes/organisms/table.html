@@ -77,7 +77,7 @@
                     %}
                 {% endif %}
                 <{{ tag | safe }}{{ attributes | safe }}>
-                    {{ _render_cell(cell) }}
+                    {{ _render_cell(parse_links(cell)) }}
                 </{{ tag | safe }}>
             {% endfor %}
         </tr>
