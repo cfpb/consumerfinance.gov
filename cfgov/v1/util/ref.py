@@ -134,8 +134,8 @@ supported_languagues = [
 ]
 
 snippet_types = [
-    ('contacts', 'Contacts'),
-    ('downloads', 'Downloads'),
+    ('v1.models.snippets.Contact', 'Contacts'),
+    ('v1.models.snippets.Download', 'Downloads'),
 ]
 
 snippet_fields = [

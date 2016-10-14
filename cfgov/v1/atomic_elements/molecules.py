@@ -400,7 +400,7 @@ class SnippetList(blocks.StructBlock):
         choices=ref.snippet_types,
         required=True
     )
-    actions = blocks.ListBlock(blocks.StructBlock(
+    actions = blocks.ListBlock(blocks.StructBlock([
         ('link_label', blocks.CharBlock(
             help_text='E.g., "Download" or "Order free prints"'
         )),
@@ -408,9 +408,14 @@ class SnippetList(blocks.StructBlock):
             choices=ref.snippet_fields,
             help_text='Corresponds to the available fields for the selected snippet type'
         )),
-    ))
+    ]))
 
     # Needs a tag chooser
+
+    tags = blocks.ListBlock(
+        blocks.CharBlock(label='Tag'),
+        help_text='Enter tags to filter the snippets.'
+    )
 
     class Meta:
         icon = 'image'

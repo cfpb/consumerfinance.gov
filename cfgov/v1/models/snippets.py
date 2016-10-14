@@ -58,13 +58,6 @@ class Download(ClusterableModel):
     title = models.CharField(max_length=255)
     desc = RichTextField(verbose_name='Description', blank=True)
 
-    subtype = models.ChoiceField(choices=(
-                                     ('screensaver', 'Screensaver'),
-                                     ('flyer', 'Flyer'),
-                                     ('poster', 'Poster')
-                                 ))
-    # Figure out how to associate a template file with each subtype
-
     thumbnail = models.ForeignKey(
         'v1.CFGOVImage',
         null=True,

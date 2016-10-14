@@ -34,8 +34,9 @@
     <h3>
         {{ value.heading or value.snippet_type }}
     </h3>
-    {# set snippets = #}
-    {% if value.snippet is defined and value.snippet | length > 0 %}
+    {{ value.body if value.body }}
+    {% set snippets = get_snippets(value.snippet_type) %}
+    {% if value.snippet_type is defined and snippets | length > 0 %}
         {# include value.snippet + '.html' #}
         <table class="table__stack-on-small">
             <thead>
@@ -45,14 +46,15 @@
                 </tr>
             </thead>
             <tbody>
-            {% for snippet in value.snippets %}
+                {{ value.tags }}
+            {% for snippet in snippets.filter(tags__name__in=value.tags).distinct() %}
                 <tr>
                     <th data-label="Description">{{ snippet.title }}</th>
                     <td data-label="Actions">
                     {% for action in value.actions %}
-                        {% set href = snippet[action.snippet_field].file_path
-                           if snippet[action.snippet_field].file_path is defined
-                           else snippet[action.snippet_field] %}
+                        {%- set href = snippet[action.snippet_field].url
+                           if snippet[action.snippet_field].url is defined
+                           else snippet[action.snippet_field] -%}
                         <a href="{{ href }}">{{ action.link_label }}</a>
                     {% endfor %}
                     </td>
