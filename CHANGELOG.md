@@ -13,6 +13,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 3.10.11
+
+### Changed
+- update comparisontool to 1.2.6
+
 ## 3.10.10
 
 ### Fixed
