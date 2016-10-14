@@ -12,6 +12,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+
+## 3.10.10
+
+### Fixed
+- incorrectly used static tag on housing counselor page
+
 ## 3.10.9
 
 ### Added
