@@ -19,11 +19,7 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 # see https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-USE_ETAGS
 USE_ETAGS = True
 
-try:
-    import mysql
-    MYSQL_ENGINE = 'mysql.connector.django'
-except ImportError:
-    MYSQL_ENGINE = 'django.db.backends.mysql'
+MYSQL_ENGINE = 'django.db.backends.mysql'
 
 # Application definition
 
