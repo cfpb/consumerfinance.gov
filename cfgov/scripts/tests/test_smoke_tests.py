@@ -1,8 +1,4 @@
-"""Test the dployment http and static resource smoke tests
-
-this line will run the tests and show the coverage report:
-coverage run -m --source='.' unittest test_smoke_tests > /dev/null && coverage report -m
-"""
+"""Test the dployment http and static resource smoke tests"""
 import unittest
 
 import mock
