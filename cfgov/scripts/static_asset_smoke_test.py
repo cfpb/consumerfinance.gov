@@ -20,9 +20,10 @@ parser.add_argument("sub_urls",
 parser.add_argument("-v", "--verbose",
                     action="store_true",
                     help="set logging level to info to see all message output.")
+parser.add_argument("--base",
+                    help="choose a server base other than www.consumerfinance.gov")
 
 CFPB_BASE = 'http://www.consumerfinance.gov'
-# CFPB_BASE = 'http://cfproweb01'
 
 def check_static(url):
     """Check all static links on a cf.gov page"""
@@ -65,6 +66,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.verbose:
         logger.setLevel(logging.INFO)
+    if args.base:
+        CFPB_BASE = args.base
     logger.info(check_static(CFPB_BASE))
     if args.sub_urls:
         for arg in args.sub_urls:
