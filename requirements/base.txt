@@ -41,3 +41,4 @@ unipath>=1.1,<=2.0
 vobject==0.9.1
 wagtail==1.5.2
 Wand==0.4.2
+django-csp==3.1

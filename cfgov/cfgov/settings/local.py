@@ -64,3 +64,23 @@ LOGGING = {
         }
     }
 }
+
+# CSP
+
+MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + ('csp.middleware.CSPMiddleware',)
+CSP_REPORT_ONLY = True
+
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'","'unsafe-eval'", '*.google-analytics.com',
+                  '*.googletagmanager.com', 'search.usa.gov', 'api.mapbox.com',
+                  'js-agent.newrelic.com', 'dnn506yrbagrg.cloudfront.net',
+                  '*.doubleclick.net', 'bam.nr-data.net',  '*.youtube.com',
+                  '*.ytimg.com', 'trk.cetrk.com')
+
+CSP_STYLE_SRC= ("'self'", "'unsafe-inline'", 'fast.fonts.net', 'api.mapbox.com')
+CSP_IMG_SRC= ("'self'",'s3.amazonaws.com', 'stats.g.doubleclick.net',
+              'files.consumerfinance.gov', 'img.youtube.com',
+              '*.google-analytics.com', 'trk.cetrk.com', 'searchstats.usa.gov',
+              'gtrk.s3.amazonaws.com')
+CSP_FRAME_SRC= ("'self'", '*.googletagmanager.com', '*.google-analytics.com',
+                'www.youtube.com', '*.doubleclick.net')
+CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
