@@ -1,4 +1,4 @@
-import os
+import os, sys
 from unipath import Path
 from ..util import admin_emails
 
@@ -18,12 +18,6 @@ PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
 # see https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-USE_ETAGS
 USE_ETAGS = True
-
-try:
-    import mysql
-    MYSQL_ENGINE = 'mysql.connector.django'
-except ImportError:
-    MYSQL_ENGINE = 'django.db.backends.mysql'
 
 # Application definition
 
@@ -151,19 +145,35 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+if 'collectstatic' in sys.argv:
+    COLLECTSTATIC = True
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'v1',
+        }
+    }
+else:
+    COLLECTSTATIC = False
+    try:
+        import mysql
+        MYSQL_ENGINE = 'mysql.connector.django'
+    except ImportError:
+        MYSQL_ENGINE = 'django.db.backends.mysql'
 
-DATABASES = {
-    'default': {
-        'ENGINE': MYSQL_ENGINE,
-        'NAME': os.environ.get('MYSQL_NAME', 'v1'),
-        'USER': os.environ.get('MYSQL_USER', 'root'),
-        'PASSWORD': os.environ.get('MYSQL_PW', ''),
-        'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
-        'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
-    },
-}
+    # Database
+    # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
+    DATABASES = {
+        'default': {
+            'ENGINE': MYSQL_ENGINE,
+            'NAME': os.environ.get('MYSQL_NAME', 'v1'),
+            'USER': os.environ.get('MYSQL_USER', 'root'),
+            'PASSWORD': os.environ.get('MYSQL_PW', ''),
+            'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
+            'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
+        },
+    }
 
 
 # Internationalization
