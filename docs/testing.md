@@ -1,4 +1,4 @@
-# Browser Tests
+# Browser tests
 
 ## Quick start:
 
@@ -112,7 +112,7 @@ describe( 'Beta The Bureau Page', function() {
 } );
 ```
 
-## Further Reading
+## Further reading
 
 - [Protractor](http://angular.github.io/protractor/#/)
 - [Select elements on a page](http://www.seleniumhq.org/docs/03_webdriver.jsp#locating-ui-elements-webelements)
@@ -120,7 +120,7 @@ describe( 'Beta The Bureau Page', function() {
 - [Understanding Page Objects](http://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings)
 
 
-# Performance Testing
+# Performance testing
 
 To audit if the site complies with performance best practices and guidelines,
 run `gulp test:perf`.
@@ -129,11 +129,24 @@ The audit will run against
 [Google's PageSpeed Insights](https://github.com/addyosmani/psi).
 
 
-# Django Server Unit Tests
+# Django and Python unit tests
 
-To run the server unit tests using Tox,
-make sure the `TOXENV` variable is set in your `.env` file and
-run `gulp test:unit:server` from the command-line in the project root.
+To run the the full suite of Python 2.7 unit tests using Tox, cd to the project 
+root, make sure the `TOXENV` variable is set in your `.env` file and then run
+
+```
+tox
+```
+
+If you haven't changed any installed packages and you don't need to test all migrations, you can run a much faster Python code test using:
+```
+tox -e fast
+```
+
+To see Python code coverage information, run
+```
+./show_coverage.sh
+``
 
 
 # Accessibility Testing
