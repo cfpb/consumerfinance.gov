@@ -14,7 +14,7 @@ from v1.models import HomePage
 def run():
     print('Running script initial_data')
 
-    admin_password = os.environ['WAGTAIL_ADMIN_PW']
+    admin_password = os.environ.get('WAGTAIL_ADMIN_PW')
     staging_hostname = os.environ['DJANGO_STAGING_HOSTNAME']
     http_port = os.environ.get('DJANGO_HTTP_PORT', '80')
 
@@ -35,7 +35,7 @@ def run():
         home_page = HomePage.objects.get(slug='cfgov')
     except HomePage.DoesNotExist:
         home_page = HomePage(
-            title='CFGOV',
+            title='CFGov',
             slug='cfgov',
             live=True
         )
@@ -50,15 +50,17 @@ def run():
     # that has since been manually setup) is running on the correct port and
     # with the expected home page as its root.
     default_site = Site.objects.get(is_default_site=True)
+    default_site.hostname = 'localhost'
     default_site.port = http_port
     default_site.root_page_id = home_page.id
     default_site.save()
 
     # Setup a staging site if it doesn't exist already. Use the correct
     # hostname and port, and the same root home page.
-    staging_site, _ = Site.objects.get_or_create(
-        hostname=staging_hostname,
+    staging_site, _ = Site.objects.update_or_create(
+        is_default_site=False,
         defaults={
+            'hostname': staging_hostname,
             'port': http_port,
             'root_page_id': home_page.id,
         }
