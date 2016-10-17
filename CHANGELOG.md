@@ -30,8 +30,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - college-costs app updated to: 2.2.6
 - Moved careers page creation from Django data migrations to standalone Python scripts.
 - Use HTTPS when linking to search.consumerfinance.gov.
+- Moved site root setup from Django data migration into 'initial_data' script.
 
 ### Removed
+- Moved 'setup_sites' script functionality into 'initial_data' script.
 
 ### Fixed
 - Update links in TableBlocks that reference internal documents or pages & have no href
