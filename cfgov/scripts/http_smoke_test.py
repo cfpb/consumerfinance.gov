@@ -12,8 +12,8 @@ shell_log.setLevel(logging.INFO)
 logger.addHandler(shell_log)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("server",
-                    help="The server to test. Choices are `www`, `pro1`, and `pro2`")
+parser.add_argument("--base",
+                    help="choose a server base other than www.consumerfinance.gov")
 parser.add_argument("--full",
                     action="store_true",
                     help=("If --full is used, the script will check all urls in our main nav, "
@@ -25,11 +25,7 @@ parser.add_argument("-v", "--verbose",
 
 FULL = False
 TIMEOUT = 10
-BASES = {
-    'www': 'http://www.consumerfinance.gov',
-    'pro1': 'http://cfproweb01',
-    'pro2': 'http://cfproweb02'
-}
+BASE  = 'http://www.consumerfinance.gov'
 
 FULL_RUN = [
     '/',
@@ -151,25 +147,14 @@ SHORT_RUN = [
     # '/about-us/the-bureau/',
     '/activity-log/',
 ]
-HELP = ("SMOKE TEST USAGE:\n    "
-            "Run this script with 'python {} [DOMAIN]'\n    "
-            "Domain options are 'www' 'pro1' and 'pro2'\n    "
-            "Using pro1 or pro2 will sidestep Akamai, but you "
-            "must run those tests from the EXT VPC\n    "
-            "Optional final param '--full' will increase the number "
-                "of URLs tested from {} to {}\n    "
-            "Using --full tests every link in our main nav\n    "
-            "Tests pass if the url returns status code 200")
 
 def check_urls(base, full=False):
     """
     A smoke test to make sure the main cfgov URLs are returning status 200.
 
-    Base options allow us to make http calls without hitting Akamai.
-    The 'full' option tests every link in the main cfgov nav.
+    The full option tests every link in the main nav, plus most popular pages.
     """
 
-    base_url = BASES[base]
     count = 0
     timeouts = []
     failures = []
@@ -183,7 +168,7 @@ def check_urls(base, full=False):
         count += 1
         sys.stdout.write('.')
         sys.stdout.flush()
-        url = '{}{}'.format(base_url, url_suffix)
+        url = '{}{}'.format(base, url_suffix)
         try:
             response = requests.get(url, timeout=TIMEOUT)
             code = response.status_code
@@ -209,7 +194,7 @@ def check_urls(base, full=False):
                                 sys.argv[0],
                                 timer,
                                 count,
-                                base_url,
+                                base,
                                 len(failures),
                                 len(timeouts)
                                 )
@@ -228,6 +213,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.verbose:
         logger.setLevel(logging.INFO)
+    if args.base:
+        BASE = args.base
     if args.full:
         FULL = True
-    check_urls(args.server, full=FULL)
+    check_urls(BASE, full=FULL)
