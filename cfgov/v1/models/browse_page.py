@@ -6,7 +6,7 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
+from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR, PageManager
 from wagtail.contrib.table_block.blocks import TableBlock
 
 from .base import CFGOVPage
@@ -59,6 +59,8 @@ class BrowsePage(CFGOVPage):
     ])
 
     template = 'browse-basic/index.html'
+
+    objects = PageManager()
 
     def add_page_js(self, js):
         super(BrowsePage, self).add_page_js(js)
