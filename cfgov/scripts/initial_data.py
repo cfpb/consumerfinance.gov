@@ -1,5 +1,4 @@
-from __future__ import print_function
-
+import logging
 import os
 
 from django.contrib.auth.hashers import make_password
@@ -10,9 +9,12 @@ from wagtail.wagtailcore.models import Page, Site
 from v1.models import HomePage
 
 
+logger = logging.getLogger(__name__)
+
+
 @transaction.atomic
 def run():
-    print('Running script initial_data')
+    logger.info('Running script initial_data')
 
     admin_password = os.environ.get('WAGTAIL_ADMIN_PW')
     staging_hostname = os.environ['DJANGO_STAGING_HOSTNAME']
