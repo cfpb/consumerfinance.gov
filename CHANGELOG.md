@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Wagtail upgraded to version 1.6.3.
 
 ### Removed
+- Removed Handlebars from `package.json` and `cf_notifier.js`.
 
 ### Fixed
 - Update links in TableBlocks that reference internal documents or pages & have no href
