@@ -21,7 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
 
-## 3.11.0
+## 3.11.1
 
 ### Changed
 - comaprisontool updated to 1.2.7
