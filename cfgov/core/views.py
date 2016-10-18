@@ -16,7 +16,7 @@ from core.utils import extract_answers_from_request
 from django.conf import settings
 
 import logging
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 REQUIRED_PARAMS_GOVDELIVERY = ['email', 'code']
 
@@ -130,7 +130,6 @@ def submit_comment(data):
 
 @csrf_exempt
 def csp_violation_report(request):
-    import pdb;pdb.set_trace
     if request.method == 'POST':
         try:
             csp_dict = json.loads(request.body)['csp-report']
@@ -141,6 +140,6 @@ def csp_violation_report(request):
 
         message_template = '{blocked-uri} blocked on {document-uri}, violated {violated-directive}'
         message = message_template.format(**csp_dict)
-        log.warn(message)
+        logger.warn(message)
         return HttpResponse()
     return HttpResponseForbidden()
