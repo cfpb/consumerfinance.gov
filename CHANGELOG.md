@@ -14,6 +14,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 
 ## Unreleased
+- Added smoke-test scripts to check static assets and base page responses.
 
 ### Changed
 - Update base.html to conditionally include es5 script.
