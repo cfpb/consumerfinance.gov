@@ -92,6 +92,3 @@ class HttpTests(unittest.TestCase):
         mock_get.side_effect = requests.exceptions.RequestException
         http_smoke_test.check_urls('pro1')
         self.assertEqual(mock_get.call_count, len(http_smoke_test.SHORT_RUN))
-    
-
-

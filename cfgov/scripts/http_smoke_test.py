@@ -12,25 +12,31 @@ shell_log.setLevel(logging.INFO)
 logger.addHandler(shell_log)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--base",
-                    help="choose a server base other than www.consumerfinance.gov")
-parser.add_argument("--full",
-                    action="store_true",
-                    help=("If --full is used, the script will check all urls in our main nav, "
-                          "plus a selection of our most-visited pages."))
-parser.add_argument("-v", "--verbose",
-                    action="store_true",
-                    help="set logging level to info to see all message output.")
-
+parser.add_argument(
+    "--base",
+    help="choose a server base other than www.consumerfinance.gov"
+)
+parser.add_argument(
+    "--full",
+    action="store_true",
+    help=("If --full is used, the script will check all urls in our main nav, "
+          "plus a selection of our most-visited pages.")
+)
+parser.add_argument(
+    "-v", "--verbose",
+    action="store_true",
+    help="set logging level to info to see all message output."
+)
 
 FULL = False
 TIMEOUT = 10
-BASE  = 'http://www.consumerfinance.gov'
+BASE = 'http://www.consumerfinance.gov'
 
 FULL_RUN = [
     '/',
     '/es/',
-    '/es/obtener-respuestas/buscar?selected_facets=category_exact:enviar-dinero',
+    ('/es/obtener-respuestas/buscar'
+     '?selected_facets=category_exact:enviar-dinero'),
     '/complaint/',
     '/learnmore/',
     '/askcfpb/',
@@ -42,7 +48,8 @@ FULL_RUN = [
     '/servicemembers/',
     '/consumer-tools/auto-loans/',
     '/paying-for-college/',
-    '/paying-for-college2/understanding-your-financial-aid-offer/about-this-tool/',
+    ('/paying-for-college2/understanding-your-financial-aid-offer/'
+     'about-this-tool/'),
     '/owning-a-home/',
     '/retirement/before-you-claim/',
     '/retirement/before-you-claim/es/',
@@ -102,7 +109,8 @@ SHORT_RUN = [
     # '/servicemembers/',
     '/consumer-tools/auto-loans/',
     '/paying-for-college/',
-    '/paying-for-college2/understanding-your-financial-aid-offer/about-this-tool/',
+    ('/paying-for-college2/understanding-your-financial-aid-offer/'
+     'about-this-tool/'),
     '/owning-a-home/',
     '/retirement/before-you-claim/',
     # '/retirement/before-you-claim/es/',
@@ -148,6 +156,7 @@ SHORT_RUN = [
     '/activity-log/',
 ]
 
+
 def check_urls(base, full=False):
     """
     A smoke test to make sure the main cfgov URLs are returning status 200.
@@ -186,22 +195,23 @@ def check_urls(base, full=False):
             logger.info("{} failed for '{}'".format(url, e))
             failures.append((url, e))
     timer = int(time.time() - starter)
-    logger.info("\n{} took {} seconds to check {} URLs at {}\n  "
-          "{} failed\n  "
-          "{} timed out".format(
-                                sys.argv[0],
-                                timer,
-                                count,
-                                base,
-                                len(failures),
-                                len(timeouts)
-                                )
+    logger.info(
+        "\n{} took {} seconds to check {} URLs at {}\n  "
+        "{} failed\n  "
+        "{} timed out".format(
+            sys.argv[0],
+            timer,
+            count,
+            base,
+            len(failures),
+            len(timeouts)
+        )
     )
     if failures:
         logger.error("These URLs failed: {}".format(failures))
     if timeouts:
         logger.error("These URLs timed out after {} seconds: "
-              "{}".format(TIMEOUT, timeouts))
+                     "{}".format(TIMEOUT, timeouts))
     if failures or timeouts:
         logger.error("FAIL")
     else:

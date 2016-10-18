@@ -13,17 +13,24 @@ shell_log = logging.StreamHandler()
 shell_log.setLevel(logging.INFO)
 logger.addHandler(shell_log)
 parser = argparse.ArgumentParser()
-parser.add_argument("sub_urls",
-                    nargs='*',
-                    help=("add any number of sub-urls to check, separated by spaces\n  "
-                         "Example: `python static_asset_smoke_test.py askcfpb retirement`"))
-parser.add_argument("-v", "--verbose",
-                    action="store_true",
-                    help="set logging level to info to see all message output.")
-parser.add_argument("--base",
-                    help="choose a server base other than www.consumerfinance.gov")
+parser.add_argument(
+    "sub_urls",
+    nargs='*',
+    help=("add any number of sub-urls to check, separated by spaces\n  "
+          "Example: `python static_asset_smoke_test.py askcfpb retirement`")
+)
+parser.add_argument(
+    "-v", "--verbose",
+    action="store_true",
+    help="set logging level to info to see all message output."
+)
+parser.add_argument(
+    "--base",
+    help="choose a server base other than www.consumerfinance.gov"
+)
 
 CFPB_BASE = 'http://www.consumerfinance.gov'
+
 
 def check_static(url):
     """Check all static links on a cf.gov page"""
@@ -56,9 +63,11 @@ def check_static(url):
         else:
             failures.append((link, code))
     if failures:
-        return "\x1B[91mLight FAIL!{} static links failed for {}: {}\x1B[0m\n".format(len(failures), url, failures)
+        return ("\x1B[91mLight FAIL!{} static links failed "
+                "for {}: {}\x1B[0m\n".format(len(failures), url, failures))
     else:
-        return "\x1B[32m{} static links passed for {}\x1B[0m\n".format(count, url)
+        return ("\x1B[32m{} static links passed "
+                "for {}\x1B[0m\n".format(count, url))
 
 if __name__ == '__main__':
     fail = False
@@ -84,4 +93,5 @@ if __name__ == '__main__':
     if not fail:
         logger.info('\x1B[32mSUCCESS! All static links return 200.\x1B[0m')
     else:
-        logger.warning("\x1B[91mLightFAIL! Some static links didn't return 200.\x1B[0m")
+        logger.warning("\x1B[91mLightFAIL! Some static links "
+                       "didn't return 200.\x1B[0m")
