@@ -2,6 +2,7 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
@@ -65,6 +66,8 @@ class SublandingPage(CFGOVPage):
     ])
 
     template = 'sublanding-page/index.html'
+
+    objects = PageManager()
 
     def get_browsefilterable_posts(self, request, limit):
         filter_pages = [p.specific for p in self.get_appropriate_descendants(request.site.hostname)
