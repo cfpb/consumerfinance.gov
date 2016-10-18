@@ -51,7 +51,7 @@ var _notifier = {
     };
     var template = settings.template.replace( /\{\{\s?(.*?)\s?\}\}/g,
       function( match, token ) {
-        return data[token];
+        return data[token] || '';
       }
     );
 
