@@ -24,7 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 3.11.1
 
 ### Changed
-- comaprisontool updated to 1.2.7
+- comparisontool updated to 1.2.7
 
 ## 3.11.0
 
