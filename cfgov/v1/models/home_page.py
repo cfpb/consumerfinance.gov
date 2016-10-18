@@ -3,6 +3,7 @@ from ..atomic_elements import atoms, molecules, organisms
 from ..util import ref
 from django.db import models
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel, PageChooserPanel
 from wagtail.wagtailcore import blocks
@@ -38,6 +39,8 @@ class HomePage(CFGOVPage):
     parent_page_types = ['wagtailcore.Page']  # Sets page to only be createable at the root
 
     template = 'index.html'
+
+    objects = PageManager()
 
     def get_category_name(self, category_icon_name):
         cats = dict(ref.limited_categories)
