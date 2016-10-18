@@ -164,10 +164,8 @@ def check_urls(base, full=False):
     else:
         url_list = SHORT_RUN
     for url_suffix in url_list:
-        # print(url_suffix)
+        logger.info(url_suffix)
         count += 1
-        sys.stdout.write('.')
-        sys.stdout.flush()
         url = '{}{}'.format(base, url_suffix)
         try:
             response = requests.get(url, timeout=TIMEOUT)
