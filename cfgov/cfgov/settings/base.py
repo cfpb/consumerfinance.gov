@@ -155,11 +155,7 @@ if 'collectstatic' in sys.argv:
     }
 else:
     COLLECTSTATIC = False
-    try:
-        import mysql
-        MYSQL_ENGINE = 'mysql.connector.django'
-    except ImportError:
-        MYSQL_ENGINE = 'django.db.backends.mysql'
+    MYSQL_ENGINE = 'django.db.backends.mysql'
 
     # Database
     # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
