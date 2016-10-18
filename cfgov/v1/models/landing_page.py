@@ -3,7 +3,7 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
+from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR, PageManager
 
 from .base import CFGOVPage
 from .. import blocks as v1_blocks
@@ -39,3 +39,5 @@ class LandingPage(CFGOVPage):
     ])
 
     template = 'landing-page/index.html'
+
+    objects = PageManager()
