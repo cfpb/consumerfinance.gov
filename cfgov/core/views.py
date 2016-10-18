@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
 from django.contrib import messages
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
@@ -14,6 +14,9 @@ from govdelivery.api import GovDelivery
 
 from core.utils import extract_answers_from_request
 from django.conf import settings
+
+import logging
+log = logging.getLogger(__name__)
 
 REQUIRED_PARAMS_GOVDELIVERY = ['email', 'code']
 
@@ -123,3 +126,21 @@ def submit_comment(data):
                              })
 
     return response
+
+
+@csrf_exempt
+def csp_violation_report(request):
+    import pdb;pdb.set_trace
+    if request.method == 'POST':
+        try:
+            csp_dict = json.loads(request.body)['csp-report']
+        # bare except is non-ideal, but if parsing fails for any reason
+        # we need to abort
+        except:
+            return HttpResponseForbidden()
+
+        message_template = '{blocked-uri} blocked on {document-uri}, violated {violated-directive}'
+        message = message_template.format(**csp_dict)
+        log.warn(message)
+        return HttpResponse()
+    return HttpResponseForbidden()
