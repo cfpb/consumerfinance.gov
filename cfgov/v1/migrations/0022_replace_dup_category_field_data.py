@@ -5,6 +5,8 @@ import json
 
 from django.db import migrations
 
+from wagtail.wagtailcore.models import Page, PageRevision
+
 from v1.util.migrations import migrate_page_types_and_fields
 
 
@@ -25,11 +27,9 @@ def migrate_category_field_backwards(page_or_revision, data):
     # the page settings categories and assign its name to the categories
     # field.
     if data.pop('show_category'):
-        try:
-            # Assume the page_or_revision is a page
+        if isinstance(page_or_revision, Page):
             categories = page_or_revision.categories
-        except AttributeError:
-            # If it's not a page, it's a revision
+        elif isinstance(page_or_revision, PageRevision):
             revision_content = json.loads(page_or_revision.content_json)
             categories = revision_content['categories']
 
