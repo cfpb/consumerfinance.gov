@@ -74,7 +74,7 @@ def backwards(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('v1', '0020_replace_dup_category_field'),
+        ('v1', '0021_replace_dup_category_field'),
     ]
 
     operations = [
