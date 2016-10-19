@@ -4,7 +4,7 @@ from localflavor.us.models import USStateField
 from django.db import models
 from django.core.validators import RegexValidator
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
@@ -25,6 +25,8 @@ class BlogPage(AbstractFilterPage):
         content_panel = StreamFieldPanel('content')
     )
     template = 'blog/blog_page.html'
+
+    objects = PageManager()
 
 
 class LegacyBlogPage(AbstractFilterPage):
