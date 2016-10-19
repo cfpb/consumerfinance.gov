@@ -88,14 +88,14 @@ def set_stream_data(page_or_revision, field_name, stream_data):
         stream_block = field.stream_block
         stream_value = StreamValue(stream_block, stream_data, is_lazy=True)
         setattr(page_or_revision, field_name, stream_value)
-        page_or_revision.save()
     except AttributeError:
         # Otherwise it will raise an Attribute error and we can assume
         # page_or_revision is a revision
         revision_content = json.loads(page_or_revision.content_json)
         revision_content[field_name] = json.dumps(stream_data)
         page_or_revision.content_json = json.dumps(revision_content)
-        page_or_revision.save()
+
+    page_or_revision.save()
 
 
 def migrate_stream_field(page_or_revision, field_name, field_type, mapper):
