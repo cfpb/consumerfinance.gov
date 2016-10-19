@@ -4,9 +4,7 @@ from __future__ import unicode_literals
 from django.apps import apps as imported_apps
 from django.db import migrations, transaction
 
-from v1.util.migrations import (
-    get_stream_data, set_stream_data
-)
+from v1.util.migrations import get_stream_data, set_stream_data
 
 
 def migrate_hero_forwards(data):
