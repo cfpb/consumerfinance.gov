@@ -207,6 +207,28 @@
 }
 
 /* topdoc
+  name: Adjustments to max line length
+  family: cf-layout
+  notes:
+    - "Limit main text lines to an optimum reading length"
+  tags:
+    - cf-layout
+*/
+
+.content_main {
+    dd,
+    dt,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    p {
+        max-width: 41.875rem;
+    }
+}
+
+/* topdoc
   name: EOF
   eof: true
 */
