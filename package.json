@@ -31,7 +31,7 @@
     "gulp-mq-remove": "0.0.2",
     "gulp-notify": "2.2.0",
     "gulp-replace": "0.5.4",
-    "gulp-sourcemaps": "1.6.0",
+    "gulp-sourcemaps": "2.1.1",
     "gulp-uglify": "2.0.0",
     "imports-loader": "0.6.5",
     "require-dir": "0.3.0",
