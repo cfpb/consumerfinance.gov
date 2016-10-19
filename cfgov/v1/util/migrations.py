@@ -121,7 +121,7 @@ def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
     """ Migrate the fields of a wagtail page type using the given mapper
         function. page_types_and_fields should be a list of 4-tuples
         providing ('app', 'PageType', 'field_name', 'block type'). """
-    for page_type, app, field_name, block_type in page_types_and_fields:
+    for app, page_type, field_name, block_type in page_types_and_fields:
         page_model = apps.get_model(app, page_type)
         revision_model = apps.get_model('wagtailcore.PageRevision')
         for page in page_model.objects.all():
