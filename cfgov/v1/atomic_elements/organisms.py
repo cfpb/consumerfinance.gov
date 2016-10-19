@@ -301,7 +301,7 @@ class ModelTable(ModelBlock):
         help_text='Stack the table columns on mobile.'
     )
 
-    def render(self, value):
+    def render(self, value, context=None):
         rows = [self.field_headers]
 
         rows.extend([
@@ -322,7 +322,7 @@ class ModelTable(ModelBlock):
 
         table = AtomicTableBlock()
         value = table.to_python(table_value)
-        return table.render(value)
+        return table.render(value, context=context)
 
     def make_row(self, instance):
         return [
@@ -355,7 +355,7 @@ class ModelList(ModelBlock):
 
     For example:
 
-        def render(self, value):
+        def render(self, value, context=None):
             value['objects'] = self.get_queryset(value)
             template = 'path/to/template.html'
             return render_to_string(template, value)
