@@ -93,7 +93,6 @@ class LearnPage(AbstractFilterPage):
     )
     template = 'learn-page/index.html'
 
-
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
