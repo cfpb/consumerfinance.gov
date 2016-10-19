@@ -99,8 +99,8 @@ def set_stream_data(page_or_revision, field_name, stream_data):
 
 
 def migrate_stream_field(page_or_revision, field_name, field_type, mapper):
-    """ Migrate a stream field of the name and type belonging to
-        the page using the mapper function """
+    """ Migrate a block of the type within a StreamField of the name belonging
+    to the page or revision using the mapper function """
     old_stream_data = get_stream_data(page_or_revision, field_name)
     new_stream_data = []
 
@@ -120,7 +120,7 @@ def migrate_stream_field(page_or_revision, field_name, field_type, mapper):
 def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
     """ Migrate the fields of a wagtail page type using the given mapper
         function. page_types_and_fields should be a list of 3-tuples
-        providing ('PageType', 'field_name', 'field type'). """
+        providing ('PageType', 'field_name', 'block type'). """
     for page_type, field_name, field_type in page_types_and_fields:
         page_model = apps.get_model('v1', page_type)
         revision_model = apps.get_model('wagtailcore.PageRevision')
