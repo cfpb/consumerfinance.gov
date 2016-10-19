@@ -28,7 +28,7 @@ def backward_mapper(page_or_revision, data):
 
 def forwards(apps, schema_editor):
     page_types_and_fields = [
-        ('MyPage', 'streamfield_name', 'streamblock_type'),
+        ('myapp', 'MyPage', 'streamfield_name', 'streamblock_type'),
     ]
     migrate_page_types_and_fields(apps, 
                                   page_types_and_fields,
@@ -37,8 +37,7 @@ def forwards(apps, schema_editor):
 
 def backwards(apps, schema_editor):
     page_types_and_fields = [
-        ('MyPage', 'streamfield_name', 'streamblock_type'),
-
+        ('myapp', 'MyPage', 'streamfield_name', 'streamblock_type'),
     ]
     migrate_page_types_and_fields(apps, 
                                   page_types_and_fields,
@@ -58,7 +57,7 @@ These functions are available in `v1.util.migrations`.
 
 ##### `migrate_page_types_and_fields(apps, page_types_and_fields, mapper)`
 
-Migrate the fields of a wagtail page type using the given mapper function. page_types_and_fields should be a list of 3-tuples providing ('PageType', 'field_name', 'block type').
+Migrate the fields of a wagtail page type using the given mapper function. page_types_and_fields should be a list of 4-tuples providing ('app', 'PageType', 'field_name', 'block type').
 
 The mapper function should take `page_or_revision` and the stream block value.
 
