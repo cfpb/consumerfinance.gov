@@ -65,7 +65,7 @@
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
         <meta property="og:image"
-              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
+              content="{{ static('nemo/_/img/logo.svg') }}">
         <!--   Optional -->
         <meta property="og:description" content="{% block og_desc %}{{- page.search_description if page and page.search_description -}}{% endblock %}">
         <meta property="og:site_name" content="Consumer Financial Protection Bureau">
@@ -74,8 +74,7 @@
         {% block og_article_author %}{% endblock %}
     <!-- End of Open Graph properties -->
 
-    {# TODO: Explicit favicon link needed for testing. Remove for production. #}
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ static('assets/favicon.ico')}}">
 
 <!--
     ======
@@ -124,13 +123,7 @@
 
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
 
-    {# TODO: jQuery CDN is provided in the head to satisfy
-             Google Tag Manager (GTM) requirements.
-             Ideally GTM would handle its own dependency management
-             and initializing jQuery could be moved to the footer. #}
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>if (!window.jQuery) { document.write('<script src="{{ static('js/jquery.min.js') }}"><\/script>'); }
+    <script src="{{ static('js/jquery.min.js') }}"></script>
     </script>
 
 </head>
