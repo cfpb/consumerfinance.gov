@@ -13,13 +13,7 @@ def migrate_category_field_forwards(page_or_revision, data):
 
     # If the original category field is empty, we take that to mean
     # show_category should be False.
-    if 'category' not in data or data['category'] == '':
-        data['show_category'] = False
-    else:
-        data['show_category'] = True
-
-    if 'category' in data:
-        del data['category']
+    data['show_category'] = bool(data.pop('category', None))
 
     return data
 
@@ -30,7 +24,7 @@ def migrate_category_field_backwards(page_or_revision, data):
     # If show_category is true, we need to get the first category from
     # the page settings categories and assign its name to the categories
     # field.
-    if data['show_category'] is True:
+    if data.pop('show_category'):
         try:
             # Assume the page_or_revision is a page
             categories = page_or_revision.categories
@@ -48,16 +42,15 @@ def migrate_category_field_backwards(page_or_revision, data):
     else:
         data['category'] = ''
 
-    del data['show_category']
     return data
 
 
 def forwards(apps, schema_editor):
     page_types_and_fields = [
-        ('DocumentDetailPage', 'header', 'item_introduction'),
-        ('LearnPage', 'header', 'item_introduction'),
-        ('EventPage', 'header', 'item_introduction'),
-        ('DemoPage', 'header', 'item_introduction'),
+        ('v1', 'DocumentDetailPage', 'header', 'item_introduction'),
+        ('v1', 'LearnPage', 'header', 'item_introduction'),
+        ('v1', 'EventPage', 'header', 'item_introduction'),
+        ('v1', 'DemoPage', 'header', 'item_introduction'),
     ]
     migrate_page_types_and_fields(apps, page_types_and_fields,
                                   migrate_category_field_forwards)
@@ -65,8 +58,8 @@ def forwards(apps, schema_editor):
 
 def backwards(apps, schema_editor):
     page_types_and_fields = [
-        ('AbstractFilterPage', 'header', 'item_introduction'),
-        ('DemoPage', 'header', 'item_introduction'),
+        ('v1', 'AbstractFilterPage', 'header', 'item_introduction'),
+        ('v1', 'DemoPage', 'header', 'item_introduction'),
     ]
     migrate_page_types_and_fields(apps, page_types_and_fields,
                                   migrate_category_field_backwards)

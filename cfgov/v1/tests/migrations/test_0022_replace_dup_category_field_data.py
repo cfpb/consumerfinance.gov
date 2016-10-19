@@ -13,7 +13,7 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
     def setUpClass(cls):
         super(RemoveDupCategoryFieldMigrationTestCase, cls).setUpClass()
         cls.migration = importlib.import_module(
-            'v1.migrations.0021_replace_dup_category_field_data'
+            'v1.migrations.0022_replace_dup_category_field_data'
         )
 
     def test_forwards_with_category(self):
@@ -43,7 +43,7 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
             mock_page, data)
         self.assertEqual(migrated, {'category': 'test-category'})
 
-    @mock.patch('v1.migrations.0021_replace_dup_category_field_data.json')
+    @mock.patch('v1.migrations.0022_replace_dup_category_field_data.json')
     def test_backwards_with_show_category_revision(self, mock_json):
         """ Backward migration show_category=True for a revision """
         mock_revision = mock.Mock(spec=['content_json'])
@@ -55,13 +55,12 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
         migrated = self.migration.migrate_category_field_backwards(mock_revision, data)
         self.assertEqual(migrated, {'category': 'test-category'})
 
-    @mock.patch('v1.migrations.0021_replace_dup_category_field_data.json')
+    @mock.patch('v1.migrations.0022_replace_dup_category_field_data.json')
     def test_backwards_with_show_category_revision_without_category(
             self, mock_json):
         """ Backward migration show_category=True for a revision """
         mock_revision = mock.Mock(spec=['content_json'])
-        mock_json.loads.return_value = {
-            'categories': []}
+        mock_json.loads.return_value = {'categories': []}
         data = {
             'show_category': True,
         }
