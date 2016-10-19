@@ -119,15 +119,15 @@ def migrate_stream_field(page_or_revision, field_name, field_type, mapper):
 @transaction.atomic
 def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
     """ Migrate the fields of a wagtail page type using the given mapper
-        function. page_types_and_fields should be a list of 3-tuples
-        providing ('PageType', 'field_name', 'block type'). """
-    for page_type, field_name, field_type in page_types_and_fields:
-        page_model = apps.get_model('v1', page_type)
+        function. page_types_and_fields should be a list of 4-tuples
+        providing ('app', 'PageType', 'field_name', 'block type'). """
+    for page_type, app, field_name, block_type in page_types_and_fields:
+        page_model = apps.get_model(app, page_type)
         revision_model = apps.get_model('wagtailcore.PageRevision')
         for page in page_model.objects.all():
-            migrate_stream_field(page, field_name, field_type, mapper)
+            migrate_stream_field(page, field_name, block_type, mapper)
 
             revisions = revision_model.objects.filter(
                 page=page).order_by('-id')
             for revision in revisions:
-                migrate_stream_field(revision, field_name, field_type, mapper)
+                migrate_stream_field(revision, field_name, block_type, mapper)

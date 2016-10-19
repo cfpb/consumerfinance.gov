@@ -173,7 +173,7 @@ class MigrationsUtilTestCase(TestCase):
                                            mock_revision_model]
 
         page_types_and_fields = [
-            ('SomePage', 'my_field', 'my_type'),
+            ('myapp', 'SomePage', 'my_field', 'my_type'),
         ]
         migrate_page_types_and_fields(mock_apps, page_types_and_fields, mapper)
 
