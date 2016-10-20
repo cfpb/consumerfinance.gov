@@ -7,7 +7,7 @@ from django.db import migrations
 
 from wagtail.wagtailcore.models import Page, PageRevision
 
-from v1.util.migrations import migrate_page_types_and_fields
+from v1.util.migrations import migrate_page_types_and_fields, is_page
 
 
 def migrate_category_field_forwards(page_or_revision, data):
@@ -27,13 +27,11 @@ def migrate_category_field_backwards(page_or_revision, data):
     # the page settings categories and assign its name to the categories
     # field.
     if data.pop('show_category'):
-        if isinstance(page_or_revision, Page):
+        if is_page(page_or_revision):
             categories = page_or_revision.categories
-        elif isinstance(page_or_revision, PageRevision):
+        else:
             revision_content = json.loads(page_or_revision.content_json)
             categories = revision_content['categories']
-        else:
-            raise TypeError("expected a Page or PageRevision descendent")
 
         try:
             data['category'] = categories[0]['name']

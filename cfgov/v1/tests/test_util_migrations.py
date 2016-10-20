@@ -14,6 +14,7 @@ from v1.util.migrations import (
     migrate_stream_field,
     get_stream_data,
     set_stream_data,
+    is_page,
 )
 from v1.tests.wagtail_pages.helpers import save_new_page
 
@@ -34,6 +35,14 @@ class MigrationsUtilTestCase(TestCase):
     def tearDown(self):
         self.revision.delete()
         self.page.delete()
+
+    def test_is_page_page(self):
+        """ Test that a page is verifably a page """
+        self.assertTrue(is_page(self.page))
+
+    def test_is_page_revision(self):
+        """ Test that a revision is verifiably not a page """
+        self.assertFalse(is_page(self.revision))
 
     def test_get_stream_data_page(self):
         """ Test that get_stream_data fetches the stream_data correctly

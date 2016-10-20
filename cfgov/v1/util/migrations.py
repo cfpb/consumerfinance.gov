@@ -64,19 +64,24 @@ def get_or_create_page(apps, page_cls_app, page_cls_name, title, slug,
     return page
 
 
+def is_page(page_or_revision):
+    """ Return True if the page_or_revision is a Page object """
+    if hasattr(page_or_revision, 'content_json'):
+        return False
+    return True
+
+
 def get_stream_data(page_or_revision, field_name):
     """ Get the stream field data for a given field name on a page or a
     revision """
-    if isinstance(page_or_revision, Page):
+    if is_page(page_or_revision):
         field = getattr(page_or_revision, field_name)
         stream_block = field.stream_block
         stream_data = stream_block.get_prep_value(field)
-    elif isinstance(page_or_revision, PageRevision):
+    else:
         revision_content = json.loads(page_or_revision.content_json)
         field = revision_content[field_name]
         stream_data = json.loads(field)
-    else:
-        raise TypeError("expected a Page or PageRevision descendent")
 
     return stream_data
 
@@ -84,17 +89,15 @@ def get_stream_data(page_or_revision, field_name):
 def set_stream_data(page_or_revision, field_name, stream_data):
     """ Set the stream field data for a given field name on a page or a
     revision """
-    if isinstance(page_or_revision, Page):
+    if is_page(page_or_revision):
         field = getattr(page_or_revision, field_name)
         stream_block = field.stream_block
         stream_value = StreamValue(stream_block, stream_data, is_lazy=True)
         setattr(page_or_revision, field_name, stream_value)
-    elif isinstance(page_or_revision, PageRevision):
+    else:
         revision_content = json.loads(page_or_revision.content_json)
         revision_content[field_name] = json.dumps(stream_data)
         page_or_revision.content_json = json.dumps(revision_content)
-    else:
-        raise TypeError("expected a Page or PageRevision descendent")
 
     page_or_revision.save()
 
