@@ -6,6 +6,8 @@ import importlib
 import mock
 from unittest import TestCase
 
+from wagtail.wagtailcore.models import Page, PageRevision
+
 
 class RemoveDupCategoryFieldMigrationTestCase(TestCase):
 
@@ -34,7 +36,7 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
 
     def test_backwards_with_show_category_page(self):
         """ Backward migration with show_category=True for a page """
-        mock_page = mock.Mock()
+        mock_page = mock.Mock(spec=Page)
         mock_page.categories = [{'name': 'test-category'}]
         data = {
             'show_category': True,
@@ -46,7 +48,8 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
     @mock.patch('v1.migrations.0022_replace_dup_category_field_data.json')
     def test_backwards_with_show_category_revision(self, mock_json):
         """ Backward migration show_category=True for a revision """
-        mock_revision = mock.Mock(spec=['content_json'])
+        mock_revision = mock.Mock(spec=PageRevision)
+        mock_revision.content_json = ""
         mock_json.loads.return_value = {
             'categories': [{'name': 'test-category'}]}
         data = {
@@ -59,7 +62,8 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
     def test_backwards_with_show_category_revision_without_category(
             self, mock_json):
         """ Backward migration show_category=True for a revision """
-        mock_revision = mock.Mock(spec=['content_json'])
+        mock_revision = mock.Mock(spec=PageRevision)
+        mock_revision.content_json = ""
         mock_json.loads.return_value = {'categories': []}
         data = {
             'show_category': True,
@@ -70,7 +74,7 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
     def test_backwards_without_show_category(self):
         """ Backward migration with show_category=False and an empty category
         string. """
-        mock_page = mock.Mock()
+        mock_page = mock.Mock(spec=Page)
         mock_page.categories = [{'name': 'test-category'}]
         data = {
             'show_category': False,
@@ -81,7 +85,7 @@ class RemoveDupCategoryFieldMigrationTestCase(TestCase):
 
     def test_backwards_without_category(self):
         """ Backward migration with show_category=True and categories """
-        mock_page = mock.Mock()
+        mock_page = mock.Mock(spec=Page)
         mock_page.categories = []
         data = {
             'show_category': True,

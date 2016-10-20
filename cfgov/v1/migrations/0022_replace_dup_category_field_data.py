@@ -32,6 +32,8 @@ def migrate_category_field_backwards(page_or_revision, data):
         elif isinstance(page_or_revision, PageRevision):
             revision_content = json.loads(page_or_revision.content_json)
             categories = revision_content['categories']
+        else:
+            raise TypeError("expected a Page or PageRevision descendent")
 
         try:
             data['category'] = categories[0]['name']
