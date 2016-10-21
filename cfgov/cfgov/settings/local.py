@@ -67,7 +67,8 @@ LOGGING = {
 
 # CSP
 
-MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + ('csp.middleware.CSPMiddleware',)
+MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + ('core.middleware.CSPScriptHashMiddleware','csp.middleware.CSPMiddleware',
+                                           )
 CSP_REPORT_ONLY = True
 
 CSP_REPORT_URI = '/csp-report/'
