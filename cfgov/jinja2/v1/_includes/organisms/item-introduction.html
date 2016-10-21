@@ -34,7 +34,7 @@
 {% set has_authors = page.authors.exists() %}
 
 <div class="o-item-introduction">
-    {% if value.show_category %}
+    {% if page.categories.count() > 0 and value.show_category %}
         {{ category_slug.render(page.categories.first().name, page_url, index=form_id) }}
     {% else %}
         {% for category in page.categories.all() %}
