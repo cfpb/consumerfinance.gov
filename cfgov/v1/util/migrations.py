@@ -115,7 +115,6 @@ def migrate_stream_field(page_or_revision, field_name, field_type, mapper):
         new_stream_data.append(field)
 
     if migrated:
-        print('migrated page {}'.format(page_or_revision))
         set_stream_data(page_or_revision, field_name, new_stream_data)
 
 

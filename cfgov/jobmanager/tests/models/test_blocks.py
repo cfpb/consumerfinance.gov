@@ -9,6 +9,10 @@ from jobmanager.models.blocks import JobListingList, JobListingTable
 from jobmanager.models.django import Grade, JobCategory, Location
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel, RegionPanel
+from scripts._atomic_helpers import job_listing_list
+from v1.models import SublandingPage
+from v1.tests.wagtail_pages.helpers import save_new_page
+from v1.util.migrations import set_stream_data
 
 
 def make_job_listing_page(title, close_date=None, grades=[], regions=[],
@@ -113,6 +117,21 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         qs = JobListingList().get_queryset({})
         self.assertTrue(qs.exists())
         self.assertEqual(job.title, qs[0].title)
+
+    def test_page_renders_block_safely(self):
+        """
+        Test to make sure that a page with a jobs list block renders it
+        in a safe way, meaning as raw HTML vs. as a quoted string.
+        """
+        page = SublandingPage(title='title', slug='slug')
+        save_new_page(page)
+        set_stream_data(page, 'sidebar_breakout', [job_listing_list])
+
+        self.assertPageIncludesHtml(page, (
+            '><aside class="m-jobs-list" data-qa-hook="openings-section">'
+            '.*'
+            '</aside><'
+        ))
 
 
 class JobListingTableTestCase(HtmlMixin, TestCase):
