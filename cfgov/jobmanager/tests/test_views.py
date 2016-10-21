@@ -1,8 +1,6 @@
-from django.apps import apps
 from django.core.urlresolvers import resolve, reverse
 from django.http import Http404
 from django.test import RequestFactory, TestCase
-from importlib import import_module
 from mock import patch
 from model_mommy import mommy
 from wagtail.wagtailcore.models import Site
@@ -11,6 +9,7 @@ from flags.models import Flag
 from jobmanager.models import Job
 from jobmanager.views import IndexView
 from jobmanager.urls import FLAG_NAME
+from scripts import create_careers_pages
 
 
 class CareersViewTestCaseMixin(object):
@@ -23,12 +22,6 @@ class CareersViewTestCaseMixin(object):
     @staticmethod
     def create_wagtail_careers_feature_flag(enabled):
         Flag.objects.create(key=FLAG_NAME, enabled_by_default=enabled)
-
-    @staticmethod
-    def create_wagtail_careers_pages():
-        migration = 'jobmanager.migrations.0007_create_careers_pages'
-        module = import_module(migration)
-        module.create_careers_pages(apps, None)
 
     def request(self):
         path = reverse(self.url_name)
@@ -71,7 +64,7 @@ class JobListViewTestCaseMixin(CareersViewTestCaseMixin):
         self.assertEquals(self.request().status_code, 200)
 
     def test_get_wagtail_page(self):
-        self.create_wagtail_careers_pages()
+        create_careers_pages.run()
         self.create_wagtail_careers_feature_flag(enabled=True)
         with patch(
             'transition_utilities.conditional_urls.wagtail_serve'

@@ -1,5 +1,6 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% import 'form_block.html' as form_block with context %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -22,7 +23,11 @@
         {% endif %}
     {%- endfor %}
     {% for block in page.content -%}
-        {{ render_block.render(block, loop.index) }}
+        {% if block.block_type == 'feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
     {%- endfor %}
 {% endblock %}
 

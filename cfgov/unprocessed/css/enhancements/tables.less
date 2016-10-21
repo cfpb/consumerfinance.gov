@@ -109,6 +109,17 @@
       });
     }
 
+    tbody th {
+        border-bottom: 1px solid @thead-bg;
+        padding: unit(10px / @font-size, em);
+        color: @thead-text;
+        background: @thead-bg;
+        .h5();
+        &:first-child {
+          border-top: 1px solid @thead-bg;
+        }
+    }
+
     .respond-to-max(960px, {
 
         font-size: 14px;

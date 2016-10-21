@@ -1,6 +1,7 @@
 from django.db import models
 
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
@@ -54,6 +55,8 @@ class DemoPage(CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Settings',
                    classname="settings"),
     ])
+
+    objects = PageManager()
 
     def get_context(self, request):
         context = super(DemoPage, self).get_context(request)

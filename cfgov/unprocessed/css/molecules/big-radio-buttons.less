@@ -1,0 +1,133 @@
+//
+// Theme variables
+//
+
+// Color variables
+
+// Input borders
+@input-border:                  @gray;
+@input-border__hover:           @pacific;
+@input-border__focused:         @pacific;
+@input-border__active:          @pacific;
+@input-border__error:           @red;
+@input-border__warning:         @gold;
+@input-border__success:         @green;
+
+// Input backgrounds
+@input-bg:                      @white;
+@input-bg__active:              @pacific;
+@input-bg__disabled:            @gray-5;
+
+// Input text
+@input-text__disabled:          @gray-80;
+@input-text__placeholder:       @gray-40;
+
+// Input icons
+@input-icon__error:             @red;
+
+// select
+@select-border:                 @gray-40;
+@select-icon:                   @gray-80;
+@select-icon-bg:                @gray-5;
+
+// Large target area variables
+@input-big-target-bg:           @gray-10;
+
+@input-big-target-bg__selected: @pacific-20;
+@input-border__selected:        @pacific;
+
+@input-big-target-bg__disabled: @gray-40;
+
+
+// Sizing variables
+
+@select-height: 30px;
+
+
+.m-big-radio-button {
+    margin-bottom: unit( 15px / @base-font-size-px, em );
+
+    &:last-child {
+        margin-bottom: unit( 30px / @base-font-size-px, em );
+    }
+
+    .cf-input {
+        @radio-width: unit( 17px / @base-font-size-px, em );
+
+        &[type="radio"] {
+            .u-visually-hidden();
+
+            .lt-ie9 & {
+                height: 20px;
+                width: 20px;
+                border: 0;
+                margin: 1em;
+                position: static;
+                float: left;
+            }
+        }
+
+        &[type="radio"] + label {
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        &[type="radio"] + label::before {
+            display: inline-block;
+            margin-top: unit( 2px / @base-font-size-px, em );
+            margin-right: 0.6em;
+            border-radius: 100%;
+            box-shadow: 0 0 0 2px #fff, 0 0 0 3px @input-border;
+            height: @radio-width;
+            width: @radio-width;
+            background: white;
+            content: '\a0';
+            vertical-align: top;
+        }
+
+        &[type="radio"]:checked + label::before {
+            background-color: @input-border__selected;
+            box-shadow: 0 0 0 2px @input-bg, 0 0 0 3px @input-border__selected;
+        }
+
+        &[type="radio"]:hover + label::before {
+            box-shadow: 0 0 0 2px @input-bg, 0 0 0 3px @input-border__selected;
+        }
+
+        &[type="radio"]:focus + label::before {
+            box-shadow: 0 0 0 1px @input-bg, 0 0 0 3px @input-border__selected;
+        }
+
+        &[type="radio"]:disabled + label {
+            color: @input-disabled;
+            cursor: not-allowed;
+        }
+
+        &[type="radio"]:disabled + label::before {
+            background: @input-big-target-bg__disabled;
+            box-shadow: 0 0 0 1px @input-bg, 0 0 0 2px @input-disabled;
+            cursor: not-allowed;
+        }
+    }
+
+    label {
+        padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        margin: 0;
+    }
+
+    &.selected label,
+    &.focus label,
+    input:focus + label,
+    input:checked + label {
+        outline: 1px solid @input-border__focused;
+    }
+
+    &.selected label,
+    input:checked + label {
+        background-color: @input-big-target-bg__selected;
+    }
+
+    &_container {
+        background: @input-big-target-bg;
+    }
+}

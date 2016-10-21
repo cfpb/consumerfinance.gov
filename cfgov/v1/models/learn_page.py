@@ -4,15 +4,16 @@ from localflavor.us.models import USStateField
 from django.db import models
 from django.core.validators import RegexValidator
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from ..atomic_elements import molecules, organisms
 from .base import CFGOVPage, CFGOVPageManager
+from .. import blocks as v1_blocks
+from ..atomic_elements import molecules, organisms
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -85,25 +86,33 @@ class LearnPage(AbstractFilterPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
         ('call_to_action', molecules.CallToAction()),
+        ('feedback', v1_blocks.Feedback()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel = StreamFieldPanel('content')
     )
     template = 'learn-page/index.html'
 
+    objects = PageManager()
+
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
+        ('feedback', v1_blocks.Feedback()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel = StreamFieldPanel('content')
     )
     template = 'document-detail/index.html'
+
+    objects = PageManager()
 
 
 class AgendaItemBlock(blocks.StructBlock):
@@ -115,6 +124,8 @@ class AgendaItemBlock(blocks.StructBlock):
         ('name', blocks.CharBlock(required=False)),
         ('url', blocks.URLBlock(required=False)),
     ], icon='user', required=False))
+
+    objects = PageManager()
 
     class Meta:
         icon = 'date'

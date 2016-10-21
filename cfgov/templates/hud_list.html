@@ -1,4 +1,4 @@
-
+{% load staticfiles %}
 	 
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en-US"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en-US"> <![endif]-->
@@ -108,6 +108,6 @@
 			</article>
 				</section><!--/main_content-->
 	</div><!-- /wrapper -->
-<script type='text/javascript' src='/static/nemo/_/js/jquery-1.9.1.min.js?ver=1.9.1'></script>
-<script type='text/javascript' src='/static/nemo/_/js/functions.js?ver=3.6.1'></script>
+    <script type='text/javascript' src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'nemo/_/js/functions.js' %}"></script>
 </html>

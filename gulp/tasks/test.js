@@ -277,8 +277,7 @@ gulp.task( 'test:unit:server', testUnitServer );
 
 gulp.task( 'test:unit',
   [
-    'test:unit:scripts',
-    'test:unit:server'
+    'test:unit:scripts'
   ]
 );
 

@@ -1,5 +1,5 @@
 {% extends "front/base_nonresponsive.html" %}
-{% load static %}
+{% load static from staticfiles %}
 
 {% block title %}
 Find a housing counselor
@@ -19,9 +19,9 @@ Find a housing counselor
   	<li><a href="/">Home</a></li>
         <li>Find a housing counselor</li>
   </ul>         
-  <div class="share mini">	<a href="http://www.facebook.com/sharer.php?u=http://beta.consumerfinance.gov/find-a-housing-counselor/&amp;t=Find a housing counselor" class="share-facebook noStyles"><img src="{% static 'nemo/_/img/icon_small_facebook.png' %}" alt="Share on Facebook"></a>
-            <a href="http://twitter.com/intent/tweet/?url=http://beta.consumerfinance.gov/find-a-housing-counselor/&amp;via=CFPB" class="share-twitter noStyles"><img src="{% static 'nemo/_/img/icon_small_twitter.png' %}" alt="Share on Twitter"></a>
-            <a href="http://api.addthis.com/oexchange/0.8/forward/email/offer?url=http://beta.consumerfinance.gov/find-a-housing-counselor/&amp;title=Find a housing counselor&amp;pubid=ra-4da354ee346886d2" class="share-email noStyles"><img src="{% static 'nemo/_/img/icon_small_email.png' %}" alt="Share via email"></a>
+  <div class="share mini">	<a href="http://www.facebook.com/sharer.php?u=http://www.consumerfinance.gov/find-a-housing-counselor/&amp;t=Find a housing counselor" class="share-facebook noStyles"><img src="{% static 'nemo/_/img/icon_small_facebook.png' %}" alt="Share on Facebook"></a>
+            <a href="http://twitter.com/intent/tweet/?url=http://www.consumerfinance.gov/find-a-housing-counselor/&amp;via=CFPB" class="share-twitter noStyles"><img src="{% static 'nemo/_/img/icon_small_twitter.png' %}" alt="Share on Twitter"></a>
+            <a href="http://api.addthis.com/oexchange/0.8/forward/email/offer?url=http://www.consumerfinance.gov/find-a-housing-counselor/&amp;title=Find a housing counselor&amp;pubid=ra-4da354ee346886d2" class="share-email noStyles"><img src="{% static 'nemo/_/img/icon_small_email.png' %}" alt="Share via email"></a>
 </div>		<article class="page">
 			
 				<div class="hud_hca_api_print-header">
@@ -169,7 +169,7 @@ Find a housing counselor
 {% block app_js %}
 <script type='text/javascript' src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
 <script type='text/javascript'>
-document.agc_base="{% static 'nemo/_/img/hud_gmap/agc_' %}";
+document.agc_base="/static/nemo/_/img/hud_gmap/agc_";
 
 </script>
 <script type='text/javascript' src='{% static 'hud_api/js/hud_api.js' %}'></script>

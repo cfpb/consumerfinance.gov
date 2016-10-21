@@ -4,7 +4,7 @@ from urlparse import urlparse
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import pluralize, slugify
+from django.template.defaultfilters import pluralize, slugify, linebreaksbr
 from wagtail.wagtailcore.templatetags import wagtailcore_tags
 from django.contrib import messages
 
@@ -18,6 +18,8 @@ from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
 from django.conf import settings
 from processors.processors_common import fix_link
+from v1.routing import get_page_relative_url
+
 
 default_app_config = 'v1.apps.V1AppConfig'
 
@@ -31,8 +33,7 @@ def environment(**options):
     from v1.util import ref
     env.globals.update({
         'static': staticfiles_storage.url,
-        'global_dict': {
-        },
+        'global_dict': {},
         'reverse': reverse,
         'render_stream_child': render_stream_child,
         'flag_enabled': flag_enabled,
@@ -53,8 +54,9 @@ def environment(**options):
     })
 
     env.filters.update({
+        'linebreaksbr': linebreaksbr,
         'pluralize': pluralize,
-        'slugify': slugify,
+        'slugify': slugify
     })
     return env
 
@@ -127,7 +129,7 @@ def add_link_markup(tags):
         if added_icon:
             # Wraps the link text in a span that provides the underline
             contents = tag.contents
-            span = BeautifulSoup('').new_tag('span')
+            span = BeautifulSoup('', 'html.parser').new_tag('span')
             span['class'] = EXTERNAL_SPAN_CSS
             span.contents = contents
             tag.contents = [span, NavigableString(' ')]
@@ -160,22 +162,16 @@ def render_stream_child(context, stream_child):
 
 @contextfunction
 def get_protected_url(context, page):
-    if page is None:
-        return '#'
+    if page:
+        request = context['request']
 
-    request_hostname = urlparse(context['request'].url).hostname
-    url = page.url
-    if url is None:  # If page is not aligned to a site root return None
-        return None
-    page_hostname = urlparse(url).hostname
-    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
-    if page.live:
-        return url
-    elif page.specific.shared:
-        if request_hostname == staging_hostname:
-            return url.replace(page_hostname, staging_hostname)
-        else:
-            return '#'
+        if page.live or page.shared and request.is_staging:
+            url = get_page_relative_url(page, request.site)
+
+            if url:
+                return url
+
+    return '#'
 
 
 @contextfunction
