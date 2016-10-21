@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 - Update base.html to conditionally include es5 script.
 - Wagtail upgraded to version 1.6.3.
+- Moved site root setup from Django data migration into 'initial_data' script.
 
 ### Removed
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
