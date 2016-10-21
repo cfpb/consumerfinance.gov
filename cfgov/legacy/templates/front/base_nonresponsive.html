@@ -1,10 +1,8 @@
-{% load static %}
+{% load static from staticfiles %}
 {% load global_include %}
-{% get_static_prefix as STATIC_PREFIX %}
-{% get_media_prefix as MEDIA_PREFIX %}
+
 {% load i18n %}
 {% load staticversions %}
-{% get_static_version as STATIC_VERSION %}
 {% load remit_var %}
 {% is_remit as IS_REMIT %}
 
@@ -179,7 +177,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     var aid = "cfpb";
     var script = document.createElement('script');
     script.type = "text/javascript";
-    script.src = "http://search.usa.gov/javascripts/stats.js";
+    script.src = "https://search.usa.gov/javascripts/stats.js";
     document.getElementsByTagName("head")[0].appendChild(script);
   //]]>
 </script>

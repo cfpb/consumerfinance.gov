@@ -6,12 +6,15 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
+from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR, PageManager
+from wagtail.contrib.table_block.blocks import TableBlock
 
 from .base import CFGOVPage
+from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
 from ..util.util import get_secondary_nav_items
 from jobmanager.models import JobListingTable
+from data_research.blocks import ConferenceRegistrationForm
 
 
 class BrowsePage(CFGOVPage):
@@ -29,8 +32,11 @@ class BrowsePage(CFGOVPage):
         ('full_width_text', organisms.FullWidthText()),
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
         ('job_listing_table', JobListingTable()),
+        ('feedback', v1_blocks.Feedback()),
+        ('conference_registration_form', ConferenceRegistrationForm()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
@@ -53,6 +59,8 @@ class BrowsePage(CFGOVPage):
     ])
 
     template = 'browse-basic/index.html'
+
+    objects = PageManager()
 
     def add_page_js(self, js):
         super(BrowsePage, self).add_page_js(js)

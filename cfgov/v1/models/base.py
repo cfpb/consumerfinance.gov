@@ -7,7 +7,9 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_delete
-from django.http import Http404
+from django.http import Http404, JsonResponse, HttpResponseBadRequest, \
+    HttpResponse
+from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.dispatch import receiver
@@ -15,7 +17,7 @@ from django.contrib.auth.models import User
 
 from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
-from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore import blocks, hooks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
@@ -229,6 +231,58 @@ class CFGOVPage(Page):
 
     def get_prev_appropriate_siblings(self, hostname, inclusive=False):
         return self.get_appropriate_siblings(hostname=hostname, inclusive=inclusive).filter(path__lte=self.path).order_by('-path')
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
+        for hook in hooks.get_hooks('cfgovpage_context_handlers'):
+            hook(self, request, context, *args, **kwargs)
+        return context
+
+    def serve(self, request, *args, **kwargs):
+        """
+        If request is ajax, then return the ajax request handler response, else
+        return the super.
+        """
+        if request.method == 'POST':
+            return self.serve_post(request, *args, **kwargs)
+
+        return super(CFGOVPage, self).serve(request, *args, **kwargs)
+
+    def serve_post(self, request, *args, **kwargs):
+        """
+        Attempts to retreive form_id from the POST request and returns a JSON
+        response.
+
+        If form_id is found, it returns the response from the block method
+        retrieval.
+
+        If form_id is not found, it returns an error response.
+        """
+        form_id = request.POST.get('form_id', None)
+        if not form_id:
+            if request.is_ajax():
+                return JsonResponse({'result': 'error'}, status=400)
+
+            return HttpResponseBadRequest(self.url)
+
+        sfname, index = form_id.split('-')[1:]
+
+        streamfield = getattr(self, sfname)
+        module = streamfield[int(index)]
+
+        result = module.block.get_result(self, request, module.value, True)
+
+        if isinstance(result, HttpResponse):
+            return result
+        else:
+            context = self.get_context(request, *args, **kwargs)
+            context['form_modules'][sfname].update({int(index): result})
+
+            return TemplateResponse(
+                request,
+                self.get_template(request, *args, **kwargs),
+                context
+            )
 
     @property
     def status_string(self):
@@ -485,3 +539,15 @@ class TemporaryLockout(models.Model):
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
+
+
+class Feedback(models.Model):
+    is_helpful = models.BooleanField()
+    comment = models.TextField(blank=True, null=True)
+    page = models.ForeignKey(
+        Page,
+        related_name='feedback',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+    submitted_on = models.DateTimeField(auto_now_add=True)

@@ -143,3 +143,14 @@ def all_valid_destinations_for_request(request):
                             valid_destination_for_request(request, pair[1])]
 
     return valid_destinations
+
+
+def get_streamfields(page):
+    """
+    Retrieves the stream values on a page from its Streamfield
+    """
+    blocks_dict = {}
+    for key, value in vars(page).items():
+        if isinstance(value, StreamValue):
+            blocks_dict.update({key: value})
+    return blocks_dict

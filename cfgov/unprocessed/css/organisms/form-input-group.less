@@ -3,13 +3,15 @@
     padding: 0;
     border: none;
 
-    .m-big-checkbox {
+    .m-big-checkbox,
+    .m-big-radio-button {
       .respond-to-min( @bp-sm-min, {
           .grid_column(12);
       } );
     }
 
-    &__two-column .m-big-checkbox {
+    &__two-column .m-big-checkbox,
+    &__two-column .m-big-radio-button {
         .respond-to-min( @bp-sm-min, {
             .grid_column(6);
 

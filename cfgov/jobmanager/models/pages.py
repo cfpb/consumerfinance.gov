@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from django.db import models
 from wagtail.wagtailcore.fields import RichTextField
+from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
     TabbedInterface
@@ -53,3 +54,5 @@ class JobListingPage(CFGOVPage):
     ])
 
     template = 'job-description-page/index.html'
+
+    objects = PageManager()

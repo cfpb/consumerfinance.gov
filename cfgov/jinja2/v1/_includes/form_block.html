@@ -1,0 +1,42 @@
+{# =========================================================================
+
+    render(block, fieldname, index)
+
+        Imports the block's template, sets variables to be passed to the
+        template's render() function, and the loop's index.
+
+        block:
+
+            A Page's streamfield block needed to retrieve the module template
+            and necessary data to render it.
+
+        fieldname:
+
+            The name of the Page's streamfield the block lives under.
+
+        index:
+
+            The index of the loop that the block was retrieved with.
+
+   Usage:
+
+       Call this macro when the block class inherits from AbstractFormBlock to
+       to render it correctly.
+
+        {% import 'form_block.html' as form_block with context %}
+
+       {% for block in page.streamfield %}
+           {{ form_block.render(block, 'streamfield', loop.index0) }}
+       {% endfor %}
+
+   ========================================================================= #}
+
+{%- macro render(block, fieldname, index) -%}
+    {%- import block.block.meta.template as form_block with context -%}
+
+    {%- set form_id = 'form-' ~ fieldname ~ '-' ~ index -%}
+    {%- set settings = form_modules[fieldname][index] -%}
+
+    {{- form_block.render(block.value, settings, form_id) -}}
+
+{%- endmacro -%}

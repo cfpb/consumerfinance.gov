@@ -103,7 +103,16 @@
     {# Customized Modernizr build that includes html5shiv.
        Built via gulp-modernizer in `scripts.js` task. #}
     <script src="{{ static('js/modernizr.min.js') }}"></script>
-    <script src="{{ static('js/es5-shim.js') }}"></script>
+    <script>
+    //<![CDATA[
+        if ( window.Modernizr && window.Modernizr.es5 === false ) {
+            var script = document.createElement( 'script' );
+            script.type = 'text/javascript';
+            script.src = '{{ static('js/es5-shim.js') }}';
+            document.getElementsByTagName( 'head' )[0].appendChild( script );
+        }
+    //]]>
+    </script>
 
     <!--[if lt IE 9]>
     <script>
@@ -223,7 +232,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     var script = document.createElement( 'script' );
     script.type = 'text/javascript';
-    script.src = 'http://search.usa.gov/javascripts/remote.loader.js';
+    script.src = 'https://search.usa.gov/javascripts/remote.loader.js';
     document.getElementsByTagName( 'head' )[0].appendChild( script );
 //]]>
 </script>

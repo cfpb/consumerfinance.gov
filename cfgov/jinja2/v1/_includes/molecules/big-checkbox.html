@@ -22,7 +22,7 @@
 
 {% macro render(settings, options) -%}
     {% from 'macros/util/format/url.html' import slugify as slugify %}
-    {% set id_slug = slugify( settings.legend ) %}
+    {% set id_slug = options.id or slugify( settings.legend ) %}
     <fieldset class="o-form-input-group
                     {{ 'o-form-input-group__two-column' if settings.fields | length == 2 else '' }}">
         <div class="form-l_col
@@ -41,11 +41,12 @@
                     <input class="a-input"
                            type="checkbox"
                            name="form_{{ id_slug }}"
-                           id="input_{{ id_slug }}_{{ loop.index }}"
-                           {{ 'required' if settings.required else '' }}
-                           {{ 'disabled' if settings.disabled else '' }}>
+                           id="input_{{ id_slug }}_{{ loop.index0 }}"
+                           value="{{ loop.index0 }}"
+                           {{ 'disabled' if settings.disabled else '' }}
+                           {{ 'checked' if loop.index0|string in settings.value else '' }}>
                     <label class="a-input_label"
-                           for="input_{{ id_slug }}_{{ loop.index }}">
+                           for="input_{{ id_slug }}_{{ loop.index0 }}">
                         {{ field }}
                     </label>
                 </div>

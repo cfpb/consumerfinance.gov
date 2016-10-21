@@ -1,4 +1,4 @@
-import os
+import os, sys
 from unipath import Path
 from ..util import admin_emails
 
@@ -16,12 +16,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
-
-try:
-    import mysql
-    MYSQL_ENGINE = 'mysql.connector.django'
-except ImportError:
-    MYSQL_ENGINE = 'django.db.backends.mysql'
+# see https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-USE_ETAGS
+USE_ETAGS = True
 
 # Application definition
 
@@ -39,6 +35,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailsites',
 
     'wagtail.contrib.modeladmin',
+    'wagtail.contrib.table_block',
 
     'localflavor',
     'modelcluster',
@@ -55,6 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'storages',
     'flags',
+    'data_research',
     'v1',
     'core',
     'sheerlike',
@@ -62,12 +60,12 @@ INSTALLED_APPS = (
     'legacy',
     'django_extensions',
     'reversion',
-    'tinymce'
+    'tinymce',
+    'jobmanager',
 )
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
-    {'import': 'jobmanager', 'apps': ('jobmanager', 'reversion', 'tinymce')},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
@@ -84,7 +82,6 @@ OPTIONAL_APPS = [
     {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'picard', 'apps': ('picard',)},
-    {'import': 'publish-eccu', 'apps': ('publish-eccu',)},
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -102,6 +99,7 @@ MIDDLEWARE_CLASSES = (
 
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'transition_utilities.middleware.RewriteNemoURLsMiddleware',
+    'v1.middleware.StagingMiddleware',
 )
 
 ROOT_URLCONF = 'cfgov.urls'
@@ -123,9 +121,12 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [V1_TEMPLATE_ROOT, V1_TEMPLATE_ROOT.child('_includes'),
+        'DIRS': [
+            V1_TEMPLATE_ROOT,
+            V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
-            PROJECT_ROOT.child('static_built')],
+            PROJECT_ROOT.child('static_built')
+        ],
         'APP_DIRS': False,
         'OPTIONS': {
             'environment': 'v1.environment',
@@ -143,19 +144,31 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+if 'collectstatic' in sys.argv:
+    COLLECTSTATIC = True
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'v1',
+        }
+    }
+else:
+    COLLECTSTATIC = False
+    MYSQL_ENGINE = 'django.db.backends.mysql'
 
-DATABASES = {
-    'default': {
-        'ENGINE': MYSQL_ENGINE,
-        'NAME': os.environ.get('MYSQL_NAME', 'v1'),
-        'USER': os.environ.get('MYSQL_USER', 'root'),
-        'PASSWORD': os.environ.get('MYSQL_PW', ''),
-        'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
-        'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
-    },
-}
+    # Database
+    # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
+    DATABASES = {
+        'default': {
+            'ENGINE': MYSQL_ENGINE,
+            'NAME': os.environ.get('MYSQL_NAME', 'v1'),
+            'USER': os.environ.get('MYSQL_USER', 'root'),
+            'PASSWORD': os.environ.get('MYSQL_PW', ''),
+            'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
+            'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
+        },
+    }
 
 
 # Internationalization
@@ -197,7 +210,8 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
 STATICFILES_DIRS = [
-    PROJECT_ROOT.child('static_built')
+    PROJECT_ROOT.child('static_built'),
+    PROJECT_ROOT.child('templates', 'wagtailadmin')
 ]
 
 
@@ -415,33 +429,6 @@ SHEER_SITES = {
             Path(REPOSITORY_ROOT, '../tax-time-saving/dist')),
 }
 
-CACHES = {
-    'default' : {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_cache',
-    },
-    'eregs_longterm_cache': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_longterm_cache',
-        'TIMEOUT': 60*60*24*15,     # 15 days
-        'OPTIONS': {
-            'MAX_ENTRIES': 10000,
-        },
-    },
-    'api_cache':{
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'api_cache_memory',
-        'TIMEOUT': 3600,
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        },
-    }
-}
-
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
-CACHE_MIDDLEWARE_SECONDS = 600
-
 #The base URL for the API that we use to access layers and the regulation.
 API_BASE = os.environ.get('EREGS_API_BASE', '')
 
@@ -457,7 +444,6 @@ GOOGLE_ANALYTICS_SITE = ''
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
 CACHE_MIDDLEWARE_SECONDS = 1800
-
 
 #eRegs
 BACKENDS = {
@@ -501,3 +487,11 @@ REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
 
 # Akamai
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)
+AKAMAI_PURGE_URL = 'https://api.ccu.akamai.com/ccu/v2/queues/default'
+if ENABLE_AKAMAI_CACHE_PURGE:
+    AKAMAI_USER = os.environ.get('AKAMAI_USER')
+    AKAMAI_PASSWORD = os.environ.get('AKAMAI_PASSWORD')
+    AKAMAI_OBJECT_ID = os.environ.get('AKAMAI_OBJECT_ID')
+
+# Staging site
+STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')

@@ -1,5 +1,5 @@
 {% extends "front/base_nonresponsive.html" %}
-{% load static %}
+{% load static from staticfiles %}
 
 {% block title %}
 Find a housing counselor
@@ -169,7 +169,7 @@ Find a housing counselor
 {% block app_js %}
 <script type='text/javascript' src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
 <script type='text/javascript'>
-document.agc_base="{% static 'nemo/_/img/hud_gmap/agc_' %}";
+document.agc_base="/static/nemo/_/img/hud_gmap/agc_";
 
 </script>
 <script type='text/javascript' src='{% static 'hud_api/js/hud_api.js' %}'></script>
