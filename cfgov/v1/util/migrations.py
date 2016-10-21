@@ -84,6 +84,9 @@ def migrate_stream_field(page, field_name, field_type, mapper):
 
 @transaction.atomic
 def migrate_page_types_and_fields(apps, page_types_and_fields, mapper):
+    """ Migrate the fields of a wagtail page type using the given mapper
+        function. page_types_and_fields should be a list of 3-tuples
+        providing ('PageType', 'field_name', 'field type'). """
     for page_type, field_name, field_type in page_types_and_fields:
         page_cls = imported_apps.get_model('v1', page_type)
         for page in page_cls.objects.all():
