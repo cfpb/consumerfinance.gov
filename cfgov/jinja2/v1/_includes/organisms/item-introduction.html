@@ -35,6 +35,8 @@
 
 <div class="o-item-introduction">
     {% if value.show_category %}
+        {{ category_slug.render(page.categories.first().name, page_url, index=form_id) }}
+    {% else %}
         {% for category in page.categories.all() %}
             {{ '|' if loop.index > 1 else '' }}
             {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug', index=loop.index) }}
