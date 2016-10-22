@@ -14,32 +14,96 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 
 ## Unreleased
-
-### Added
-
-- New unit test checks for missing migrations that need to be generated using `makemigrations`.
-- Ability to run using HTTP locally with `./runserver.sh ssl`.
+- Added smoke-test scripts to check static assets and base page responses.
 
 ### Changed
+- Update base.html to conditionally include es5 script.
+- Wagtail upgraded to version 1.6.3.
+- Moved site root setup from Django data migration into 'initial_data' script.
 
 ### Removed
+- Removed Handlebars from `package.json` and `cf_notifier.js`.
+
+## 3.11.1
+
+### Changed
+- comparisontool updated to 1.2.7
+
+## 3.11.0
+
+### Added
+- New unit test checks for missing migrations that need to be generated using `makemigrations`.
+- Ability to run using HTTP locally with `./runserver.sh ssl`.
+- Load DigitalGov Search JS using HTTPS.
+
+### Changed
+- Improved the help text in the Featured Content module in Wagtail.
+- JS form validation messages and Conference module validation messages
+- complaints app updated to 1.2.5
+- retirement app updated to 0.5.3
+- knowledgebase app updated to: v2.1.3
+- college-costs app updated to: 2.2.6
+- Moved careers page creation from Django data migrations to standalone Python scripts.
+- Use HTTPS when linking to search.consumerfinance.gov.
+
+## 3.10.10
+
+### Fixed
+- incorrectly used static tag on housing counselor page
+
+## 3.10.9
+
+### Added
+- robots.txt
+
+### Fixed
+- Update links in TableBlocks that reference internal documents or pages & have no href
+
+
+## 3.10.8
+
+### Added
+- enable the `USE_ETAGS` Django setting
+
+## 3.10.7
+
+### Fixes
+- Corrected a typo introduced in 3.10.7
+
+## 3.10.6
+
+### Fixes
+- replace a few remaining `STATIC_PREFIX` references with the `static` tag
+
+## 3.10.5
+
+### Fixes
+- adds missing `{% load staticfiles %}` tags
+
+## 3.10.4
+
+### Added
+- Added Prepaid Cards to mega menu. (Requires feature flag for now.)
+
 
 ## 3.10.3
 
 ### Removals
-
 - This removes the current version number from built assets, like main.css
+
 
 ## 3.10.2
 
 ### Changed
 - fixed typo in mission statement
 
+
 ## 3.10.1
 
 ### Changed
 - retirement app updated 0.5.1
 - restored css file 'cr-003-theme.css'
+
 
 ## 3.10.0
 

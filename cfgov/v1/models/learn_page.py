@@ -4,7 +4,7 @@ from localflavor.us.models import USStateField
 from django.db import models
 from django.core.validators import RegexValidator
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailcore.fields import StreamField, RichTextField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
@@ -96,6 +96,8 @@ class LearnPage(AbstractFilterPage):
     )
     template = 'learn-page/index.html'
 
+    objects = PageManager()
+
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
@@ -110,6 +112,8 @@ class DocumentDetailPage(AbstractFilterPage):
     )
     template = 'document-detail/index.html'
 
+    objects = PageManager()
+
 
 class AgendaItemBlock(blocks.StructBlock):
     start_time = blocks.TimeBlock(label="Start", required=False)
@@ -120,6 +124,8 @@ class AgendaItemBlock(blocks.StructBlock):
         ('name', blocks.CharBlock(required=False)),
         ('url', blocks.URLBlock(required=False)),
     ], icon='user', required=False))
+
+    objects = PageManager()
 
     class Meta:
         icon = 'date'

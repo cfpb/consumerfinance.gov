@@ -9,7 +9,7 @@ import modelcluster.fields
 import wagtail.wagtailimages.blocks
 from django.conf import settings
 import taggit.managers
-import wagtail.wagtailadmin.taggable
+import wagtail.wagtailsearch.index
 import wagtail.wagtailimages.models
 import wagtail.wagtailcore.fields
 import wagtail.wagtailcore.blocks
@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(models.Model, wagtail.wagtailadmin.taggable.TagSearchable),
+            bases=(models.Model, wagtail.wagtailsearch.index.Indexed),
         ),
         migrations.CreateModel(
             name='CFGOVPage',

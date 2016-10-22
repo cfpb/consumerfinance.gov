@@ -4,6 +4,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from . import atoms
+from ..blocks import AnchorLink
 from ..util import util, ref
 
 
@@ -141,8 +142,8 @@ class FeaturedContent(blocks.StructBlock):
                              label='Additional Links')
 
     video = blocks.StructBlock([
-        ('id', blocks.CharBlock(required=False, help_text='e.g In \"https://www.youtube.com/watch?v=en0Iq8II4fA\", the ID is everything after the \"?v=\"')),
-        ('url', blocks.CharBlock(default='/', required=False)),
+        ('id', blocks.CharBlock(required=False, label='ID', help_text='E.g., in \"https://www.youtube.com/watch?v=en0Iq8II4fA\", the ID is everything after the \"?v=\".')),
+        ('url', blocks.CharBlock(required=False, label='URL', help_text='You must use the embed URL, e.g., https://www.youtube.com/embed/JPTg8ZB3j5c?autoplay=1&enablejsapi=1')),
         ('height', blocks.CharBlock(default='320', required=False)),
         ('width', blocks.CharBlock(default='568', required=False)),
     ])
@@ -282,3 +283,12 @@ class SocialMedia(blocks.StructBlock):
     class Meta:
         icon = 'site'
         template = '_includes/molecules/social-media.html'
+
+
+class ContentWithAnchor(blocks.StructBlock):
+    content_block = blocks.RichTextBlock()
+    anchor_link = AnchorLink()
+
+    class Meta:
+        icon = 'edit'
+        template = '_includes/molecules/full-width-text-anchor.html'

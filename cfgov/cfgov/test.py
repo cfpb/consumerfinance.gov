@@ -38,10 +38,6 @@ class TestDataTestRunner(DiscoverRunner):
                 'wagtail.wagtailcore.migrations.0025_collection_initial_data',
                 'initial_data'
             ),
-            (
-                'v1.migrations.0009_site_root_data',
-                'create_site_root'
-            ),
         )
 
         loader = MigrationLoader(connection)

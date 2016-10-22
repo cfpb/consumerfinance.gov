@@ -10,6 +10,7 @@ from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
@@ -48,9 +49,13 @@ class SublandingFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFG
 
     template = 'sublanding-page/index.html'
 
+    objects = PageManager()
+
 
 class ActivityLogPage(SublandingFilterablePage):
     template = 'activity-log/index.html'
+
+    objects = PageManager()
 
     def per_page_limit(self):
         return 100

@@ -7,6 +7,7 @@ from django.db import models
 
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
 from .base import CFGOVPage
@@ -49,6 +50,8 @@ class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPa
 
     template = 'browse-filterable/index.html'
 
+    objects = PageManager()
+
     def add_page_js(self, js):
         super(BrowseFilterablePage, self).add_page_js(js)
         js['template'] += ['secondary-navigation.js']
@@ -56,6 +59,8 @@ class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPa
 
 class EventArchivePage(BrowseFilterablePage):
     template = 'browse-filterable/index.html'
+
+    objects = PageManager()
 
     @staticmethod
     def get_form_class():
@@ -65,8 +70,7 @@ class EventArchivePage(BrowseFilterablePage):
 class NewsroomLandingPage(BrowseFilterablePage):
     template = 'newsroom/index.html'
 
+    objects = PageManager()
+
     def get_filter_parent(self):
         return None
-
-
-

@@ -96,7 +96,6 @@ call_to_action = {
     }
 }
 
-
 #############
 # Organisms #
 #############
@@ -127,6 +126,15 @@ filter_controls = {
 full_width_text = {
     'type': 'full_width_text',
     'value': [
+        {
+            'type': 'content_with_anchor',
+            'value': {
+                'content_block': 'full width text block',
+                'anchor_link': {
+                    'link_id': 'this is an anchor link'
+                }
+            }
+        },
         {
             'type': 'quote',
             'value': {
