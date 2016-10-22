@@ -19,43 +19,6 @@ class TestFilterableListForm(TestCase):
     #     for key in self.mock_request.keys():
     #         self.mock_request[key].user = mock.Mock()
 
-    @mock.patch('__builtin__.super')
-    @mock.patch('v1.models.base.CFGOVPage.objects')
-    @mock.patch('v1.forms.FilterableListForm.set_topics')
-    @mock.patch('v1.forms.FilterableListForm.set_authors')
-    def test_init_calls_super(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super):
-        form = FilterableListForm(parent=mock.Mock(), hostname='test')
-        assert mock_super.called
-
-
-    @mock.patch('__builtin__.super')
-    @mock.patch('v1.models.base.CFGOVPage.objects')
-    @mock.patch('v1.forms.FilterableListForm.set_topics')
-    @mock.patch('v1.forms.FilterableListForm.set_authors')
-    def test_init_calls_values_list_on_properly_formed_queryset(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super):
-        form = FilterableListForm(parent=mock.Mock(), hostname='test')
-        assert mock_cfgovpage_objects.live_shared.called
-        assert mock_cfgovpage_objects.live_shared().descendant_of.called
-        assert mock_cfgovpage_objects.live_shared().descendant_of().values_list.called
-
-
-    @mock.patch('__builtin__.super')
-    @mock.patch('v1.models.base.CFGOVPage.objects')
-    @mock.patch('v1.forms.FilterableListForm.set_topics')
-    @mock.patch('v1.forms.FilterableListForm.set_authors')
-    def test_init_calls_settopics(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super):
-        form = FilterableListForm(parent=mock.Mock(), hostname='test')
-        assert mock_settopics.called
-
-
-    @mock.patch('__builtin__.super')
-    @mock.patch('v1.models.base.CFGOVPage.objects')
-    @mock.patch('v1.forms.FilterableListForm.set_topics')
-    @mock.patch('v1.forms.FilterableListForm.set_authors')
-    def test_init_calls_setauthors(self, mock_setauthors, mock_settopics, mock_cfgovpage_objects, mock_super):
-        form = FilterableListForm(parent=mock.Mock(), hostname='test')
-        assert mock_setauthors.called
-
 
     @mock.patch('v1.forms.FilterableListForm.__init__')
     @mock.patch('taggit.models.Tag.objects')
@@ -64,7 +27,7 @@ class TestFilterableListForm(TestCase):
         page_ids = [1, 2, 3, 4, 5]
         form = FilterableListForm()
         form.fields = {'topics': mock.Mock()}
-        form.set_topics(parent=mock.Mock(), page_ids=page_ids, hostname='test')
+        form.set_topics(page_ids=page_ids)
         mock_tag_objects.filter.assert_called_with(v1_cfgovtaggedpages_items__content_object__id__in=page_ids)
 
 
@@ -75,7 +38,7 @@ class TestFilterableListForm(TestCase):
         page_ids = [1, 2, 3, 4, 5]
         form = FilterableListForm()
         form.fields = {'authors': mock.Mock()}
-        form.set_authors(parent=mock.Mock(), page_ids=page_ids, hostname='test')
+        form.set_authors(page_ids=page_ids)
         mock_tag_objects.filter.assert_called_with(v1_cfgovauthoredpages_items__content_object__id__in=page_ids)
 
 
@@ -212,3 +175,4 @@ class TestFilterableListForm(TestCase):
 
         result = form.generate_query()
         assert result.children == [('field__contains', 'foobar')]
+
