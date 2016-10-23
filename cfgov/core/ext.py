@@ -11,15 +11,14 @@ class CSPScriptHashExtension(Extension):
 
     def parse(self, parser):
 
-        # don't know if this is actually neccessary:
-        lineno = next(parser.stream).lineno
+        # first token is the tag ('hashedscript'), skip it
+        next(parser.stream)
 
         body = parser.parse_statements(['name:end_hashedscript'],
                                        drop_needle=True)
 
         return nodes.CallBlock(self.call_method('_hash_script'),
-
-                               [], [], body).set_lineno(lineno)
+                               [], [], body)
 
     def _hash_script(self, caller):
         js = caller()
@@ -30,6 +29,5 @@ class CSPScriptHashExtension(Extension):
         request.script_hashes.append(hash)
         return "<script>{js}</script>".format(js=js)
 
-#: nicer import name
+# nicer import name
 csp = CSPScriptHashExtension
-
