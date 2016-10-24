@@ -94,7 +94,7 @@ class EmailSignUp(blocks.StructBlock):
     text = blocks.CharBlock(required=False)
     gd_code = blocks.CharBlock(required=False)
 
-    form_field = blocks.ListBlock(molecules.FormFieldWithButton(), icon='mail', required=True)
+    form_field = blocks.ListBlock(molecules.FormFieldWithButton(), icon='mail', required=False)
 
     class Meta:
         icon = 'mail'
