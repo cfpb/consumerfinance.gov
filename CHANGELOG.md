@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Wagtail upgraded to version 1.6.3.
 - Moved site root setup from Django data migration into 'initial_data' script.
 - Unit tests run via tox now include optional app tests, if optional apps are present.
+- Frontend: upgrade `gulp-sourcemaps` from `1.6.0` to `2.1.1`.
 
 ### Removed
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
