@@ -61,7 +61,6 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
    * @returns {Notification} An instance.
    */
   function setTypeAndContent( type, messageText, explanationText ) {
-    console.log( arguments );
     _setType( type );
     setContent( messageText, explanationText );
 
@@ -91,7 +90,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   /**
    * Generate a string of HTML from the plugin's settings
    * @returns {string} The expanded HTML string
-   * This
+   * Commented out until nedded.
 
   function generateHTML( settings ) {
     var template = '<div class="m-notification m-notification__{{ state }}" ' +
