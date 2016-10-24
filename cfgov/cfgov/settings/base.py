@@ -60,12 +60,12 @@ INSTALLED_APPS = (
     'legacy',
     'django_extensions',
     'reversion',
-    'tinymce'
+    'tinymce',
+    'jobmanager',
 )
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
-    {'import': 'jobmanager', 'apps': ('jobmanager', 'reversion', 'tinymce')},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
@@ -82,7 +82,6 @@ OPTIONAL_APPS = [
     {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'picard', 'apps': ('picard',)},
-    {'import': 'publish-eccu', 'apps': ('publish-eccu',)},
 ]
 
 MIDDLEWARE_CLASSES = (
