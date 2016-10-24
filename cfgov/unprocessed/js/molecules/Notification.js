@@ -61,6 +61,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
    * @returns {Notification} An instance.
    */
   function setTypeAndContent( type, messageText, explanationText ) {
+    console.log( arguments );
     _setType( type );
     setContent( messageText, explanationText );
 
@@ -86,6 +87,42 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
 
     return this;
   }
+
+  /**
+   * Generate a string of HTML from the plugin's settings
+   * @returns {string} The expanded HTML string
+   * This
+
+  function generateHTML( settings ) {
+    var template = '<div class="m-notification m-notification__{{ state }}" ' +
+                         'style="display: none;">' +
+                      '<span class="m-notification_icon cf-icon"></span>' +
+                      '<div class="m-notification_content">' +
+                        '<p class="h4 m-notification_message">' +
+                          '{{ message }}' +
+                        '</p>' +
+                      '</div>' +
+                    '</div>';
+
+    var icon = {
+      error:   'delete',
+      success: 'approved',
+      warning: 'error'
+    };
+    var data = {
+      message: settings.message,
+      state:   settings.state,
+      icon:    icon[settings.state]
+    };
+    var template = template.replace( /\{\{\s?(.*?)\s?\}\}/g,
+      function( match, token ) {
+        return data[token] || '';
+      }
+    );
+
+    return template;
+  }
+*/
 
   /**
    * @param {number} type The notifiation type.
