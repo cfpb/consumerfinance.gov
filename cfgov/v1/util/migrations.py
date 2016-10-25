@@ -66,7 +66,7 @@ def get_or_create_page(apps, page_cls_app, page_cls_name, title, slug,
 
 def is_page(page_or_revision):
     """ Return True if the page_or_revision is a Page object """
-    return hasattr(page_or_revision, 'content_json'):
+    return hasattr(page_or_revision, 'content_json')
 
 
 def get_stream_data(page_or_revision, field_name):
