@@ -73,9 +73,9 @@ Get the stream field data for a given field name on a page or a revision.
 
 This function will return a list of `dict`-like objects containing the blocks within the given StreamField.
 
-##### `set_stream_data(page_or_revision, field_name, stream_data)`
+##### `set_stream_data(page_or_revision, field_name, stream_data, commit=True)`
 
-Set the stream field data for a given field name on a page or a revision. 
+Set the stream field data for a given field name on a page or a revision. If commit is True (default) `save()` is called on the `page_or_revision` object. 
 
 `stream_data` must be a list of `dict`-like objects containing the blocks within the given StreamField.
 

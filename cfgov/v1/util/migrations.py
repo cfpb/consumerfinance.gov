@@ -86,9 +86,10 @@ def get_stream_data(page_or_revision, field_name):
     return stream_data
 
 
-def set_stream_data(page_or_revision, field_name, stream_data):
+def set_stream_data(page_or_revision, field_name, stream_data, commit=True):
     """ Set the stream field data for a given field name on a page or a
-    revision """
+    revision. If commit is True (default) save() is called on the
+    page_or_revision object. """
     if is_page(page_or_revision):
         field = getattr(page_or_revision, field_name)
         stream_block = field.stream_block
@@ -99,7 +100,8 @@ def set_stream_data(page_or_revision, field_name, stream_data):
         revision_content[field_name] = json.dumps(stream_data)
         page_or_revision.content_json = json.dumps(revision_content)
 
-    page_or_revision.save()
+    if commit:
+        page_or_revision.save()
 
 
 def migrate_stream_field(page_or_revision, field_name, field_type, mapper):
