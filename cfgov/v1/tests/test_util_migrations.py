@@ -106,8 +106,7 @@ class MigrationsUtilTestCase(TestCase):
         # Mock the field mapper migration function. We'll inspect the
         # call to this and ensure the return value makes it to
         # set_stream_data.
-        mapper = mock.Mock()
-        mapper.return_value = 'new text'
+        mapper = mock.Mock(return_value='new text')
 
         migrate_stream_field(self.revision, 'body', 'text', mapper)
 
