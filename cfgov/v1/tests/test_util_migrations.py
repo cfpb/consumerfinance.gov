@@ -74,6 +74,16 @@ class MigrationsUtilTestCase(TestCase):
             self.revision.as_page_object().body.stream_data[0]['value'],
             'new text')
 
+    def test_set_stream_data_page_without_committing(self):
+        """ Test that set_stream_data correctly sets stream data for a
+        given page and saves the page. """
+        self.page.save = mock.Mock()
+
+        new_stream_data = [{'type': 'text', 'value': 'new text'}]
+        set_stream_data(self.page, 'body', new_stream_data, commit=False)
+
+        self.assertEqual(self.page.save.mock_calls, [])
+
     def test_migrate_stream_field_page(self):
         """ Test that the migrate_stream_field function correctly gets
         old data, calls the mapper function, and stores new data
