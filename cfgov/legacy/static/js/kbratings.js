@@ -32,7 +32,6 @@ var rating_switcher = function(serverAction, cssClass){
 
          rating_button.attr('class', 'kbfeedback '+ cssClass);
         }, dataType='json');
-    _gaq.push(['_trackEvent','Rating',rating_button.data('term')]);
     }    
 }
 

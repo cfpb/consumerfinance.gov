@@ -30,9 +30,6 @@ if ('onhashchange' in window) {
 			return false;
 		});
 
-		// Analytics
-		var prev_hash_val = location.hash;
-
 		if (window.location.hash) {
 			show_slide(window.location.hash.replace('#',''), 1);
 			// If you paste a url into the browser with a hash it will jump to that hash.
@@ -48,11 +45,6 @@ if ('onhashchange' in window) {
 			if (!slide_id)
 				slide_id = 'main';
 			show_slide(slide_id);
-			// Analytics
-			if( prev_hash_val != location.hash ) {
-				prev_hash_val = location.hash;
-				_gaq.push(['_trackPageview', location.pathname + location.search + location.hash]);
-			}
 		});
 
 	});
