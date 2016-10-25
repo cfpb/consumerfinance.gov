@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import mock
-from unittest import TestCase
+from django.test import TestCase
 
 from django.apps import apps
 
@@ -32,10 +32,6 @@ class MigrationsUtilTestCase(TestCase):
         self.revision = self.page.save_revision()
         self.page.save()
 
-    def tearDown(self):
-        self.revision.delete()
-        self.page.delete()
-
     def test_is_page_page(self):
         """ Test that a page is verifably a page """
         self.assertTrue(is_page(self.page))
@@ -54,7 +50,7 @@ class MigrationsUtilTestCase(TestCase):
 
     def test_get_stream_data_revision(self):
         """ Test that get_stream_data fetches the stream_data correctly
-        from a page object. """
+        from a revision object. """
         stream_data = get_stream_data(self.revision.as_page_object(), 'body')
 
         self.assertEqual(stream_data[0]['type'], 'text')
@@ -70,7 +66,7 @@ class MigrationsUtilTestCase(TestCase):
 
     def test_set_stream_data_revision(self):
         """ Test that set_stream_data correctly sets stream data for a
-        given page and saves the page. """
+        given revision and saves the page. """
         new_stream_data = [{'type': 'text', 'value': 'new text'}]
         set_stream_data(self.revision, 'body', new_stream_data)
 
@@ -85,8 +81,7 @@ class MigrationsUtilTestCase(TestCase):
         # Mock the field mapper migration function. We'll inspect the
         # call to this and ensure the return value makes it to
         # set_stream_data.
-        mapper = mock.Mock()
-        mapper.return_value = 'new text'
+        mapper = mock.Mock(return_value='new text')
 
         migrate_stream_field(self.page, 'body', 'text', mapper)
 
