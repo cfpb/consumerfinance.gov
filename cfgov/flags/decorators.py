@@ -12,7 +12,7 @@ def flag_required(flag_name, fallback_view=None, pass_if_set=True):
             if (enabled and pass_if_set) or (not enabled and not pass_if_set):
                 return func(request, *args, **kwargs)
             elif fallback_view is not None:
-                return fallback_view(request, *args, **kwargs)
+                return fallback_view(request)
             else:
                 raise Http404
 
