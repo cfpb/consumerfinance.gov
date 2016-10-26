@@ -7,7 +7,7 @@ cf.gov is on a two-week release cadence. The release process is as follows:
 - That release is deployed to our beta server ("beta").
 - If any fixes are necessary before going to production, they are committed to the release branch, and back-merged to master. New "hotfix" releases are tagged from the branch with the appropriate patch number as needed to get urgent changes onto beta.
 - The latest release tagged on the release branch is deployed to production servers ("content" and "www"). 
-- If any urgent changes are needed before the next release is deployed to www and content we follow the same "hotfix" proceedure detailed above for beta.
+- If any urgent changes are needed before the next release is deployed to www and content we follow the same "hotfix" procedure detailed above for beta.
 
 ![Release cadence](img/release-cadence.png)
 
