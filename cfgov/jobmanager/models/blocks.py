@@ -66,7 +66,10 @@ class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
     field_headers = ['TITLE', 'GRADE', 'POSTING CLOSES', 'REGION']
 
     def make_title_value(self, instance, value):
-        return Markup('<a href="{}">{}</a>'.format(instance.url, value))
+        return Markup('<a href="{}">{}</a>'.format(
+            instance.relative_url(instance.get_site()),
+            value
+        ))
 
     def make_grades_value(self, instance, value):
         return ', '.join(sorted(g.grade.grade for g in value.all()))

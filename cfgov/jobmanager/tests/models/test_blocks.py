@@ -1,8 +1,9 @@
 from datetime import date
 from django.test import TestCase
 from django.utils import timezone
+from mock import Mock
 from model_mommy import mommy
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Page, Site
 
 from cfgov.test import HtmlMixin
 from jobmanager.models.blocks import JobListingList, JobListingTable
@@ -42,9 +43,16 @@ def make_job_listing_page(title, close_date=None, grades=[], regions=[],
 
 
 class JobListingListTestCase(HtmlMixin, TestCase):
+    def setUp(self):
+        site = Site.objects.get(is_default_site=True)
+        self.request = Mock(site=site)
+        self.more_jobs_page = site.root_page
+
     def test_html_has_aside(self):
         block = JobListingList()
-        html = block.render(block.to_python({}))
+        html = block.render(block.to_python({
+            'more_jobs_page': self.more_jobs_page.pk,
+        }))
 
         self.assertHtmlRegexpMatches(html, (
             '^<aside class="m-jobs-list" data-qa-hook="openings-section">'
@@ -61,7 +69,9 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         )
 
         block = JobListingList()
-        html = block.render(block.to_python({}))
+        html = block.render(block.to_python({
+            'more_jobs_page': self.more_jobs_page.pk,
+        }))
 
         self.assertHtmlRegexpMatches(html, (
             '<ul class="list list__unstyled">.*</ul>'
@@ -82,7 +92,9 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         )
 
         block = JobListingList()
-        html = block.render(block.to_python({}))
+        html = block.render(block.to_python({
+            'more_jobs_page': self.more_jobs_page.pk,
+        }))
 
         self.assertHtmlRegexpMatches(html, (
             '<li class="list_item">'
