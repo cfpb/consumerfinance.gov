@@ -30,7 +30,7 @@
         {% for job in careers %}
         <li class="list_item">
             <a class="list_link"
-               href="{{ get_protected_url(job) }}">{{ job.title }}</a>
+               href="{{ job.relative_url(job.get_site()) }}">{{ job.title }}</a>
             <p class="date">
                 CLOSING
                 {{ time.render(job.close_date, {'date': true}) }}
@@ -40,7 +40,7 @@
     </ul>
     <a class="jump-link
               jump-link__underline"
-       href="{{ get_protected_url(more_jobs_page) }}">
+       href="{{ more_jobs_page.relative_url(more_jobs_page.get_site()) }}">
         <span class="jump-link_text">
           {{ more_jobs_text or 'View all job openings' }}
         </span>

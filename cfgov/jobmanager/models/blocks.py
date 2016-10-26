@@ -45,8 +45,6 @@ class JobListingList(OpenJobListingsMixin, organisms.ModelList):
 
     def render(self, value):
         value['careers'] = self.get_queryset(value)
-        value.update(context or {})
-
         template = '_includes/organisms/job-listing-list.html'
         return render_to_string(template, value)
 

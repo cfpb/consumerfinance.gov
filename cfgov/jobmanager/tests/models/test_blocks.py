@@ -45,10 +45,13 @@ def make_job_listing_page(title, close_date=None, grades=[], regions=[],
 class JobListingListTestCase(HtmlMixin, TestCase):
     def setUp(self):
         self.request = Mock(site=Site.objects.get(is_default_site=True))
+        self.more_jobs_page = Page.objects.first()
 
     def test_html_has_aside(self):
         block = JobListingList()
-        html = block.render(block.to_python({}))
+        html = block.render(block.to_python({
+            'more_jobs_page': self.more_jobs_page.pk,
+        }))
 
         self.assertHtmlRegexpMatches(html, (
             '^<aside class="m-jobs-list" data-qa-hook="openings-section">'
@@ -65,10 +68,9 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         )
 
         block = JobListingList()
-        html = block.render(
-            block.to_python({}),
-            context={'request': self.request}
-        )
+        html = block.render(block.to_python({
+            'more_jobs_page': self.more_jobs_page.pk,
+        }))
 
         self.assertHtmlRegexpMatches(html, (
             '<ul class="list list__unstyled">.*</ul>'
@@ -89,10 +91,9 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         )
 
         block = JobListingList()
-        html = block.render(
-            block.to_python({}),
-            context={'request': self.request}
-        )
+        html = block.render(block.to_python({
+            'more_jobs_page': self.more_jobs_page.pk,
+        }))
 
         self.assertHtmlRegexpMatches(html, (
             '<li class="list_item">'
