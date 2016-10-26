@@ -44,8 +44,9 @@ def make_job_listing_page(title, close_date=None, grades=[], regions=[],
 
 class JobListingListTestCase(HtmlMixin, TestCase):
     def setUp(self):
-        self.request = Mock(site=Site.objects.get(is_default_site=True))
-        self.more_jobs_page = Page.objects.first()
+        site = Site.objects.get(is_default_site=True)
+        self.request = Mock(site=site)
+        self.more_jobs_page = site.root_page
 
     def test_html_has_aside(self):
         block = JobListingList()
