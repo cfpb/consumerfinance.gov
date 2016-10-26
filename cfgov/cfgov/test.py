@@ -1,19 +1,40 @@
 from __future__ import print_function
 
 import importlib
+import itertools
 import re
 
 from django.apps import apps
+from django.conf import settings
 from django.db import connection
 from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
-from django.test.runner import DiscoverRunner
+from django.test.runner import DiscoverRunner, is_discoverable
 from mock import Mock
 
 from scripts import initial_data
 
 
-class TestDataTestRunner(DiscoverRunner):
+class OptionalAppsMixin(object):
+    def build_suite(self, test_labels=None, extra_tests=None, **kwargs):
+        if not test_labels:
+            app_names = set(itertools.chain(*(
+                optional_app['apps']
+                for optional_app in settings.OPTIONAL_APPS
+            )))
+
+            discoverable_app_names = filter(is_discoverable, app_names)
+
+            test_labels = list(discoverable_app_names) + ['.']
+
+        return super(OptionalAppsMixin, self).build_suite(
+            test_labels=test_labels,
+            extra_tests=extra_tests,
+            **kwargs
+        )
+
+
+class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
     def setup_databases(self, **kwargs):
         dbs = super(TestDataTestRunner, self).setup_databases(**kwargs)
 
@@ -37,10 +58,6 @@ class TestDataTestRunner(DiscoverRunner):
             (
                 'wagtail.wagtailcore.migrations.0025_collection_initial_data',
                 'initial_data'
-            ),
-            (
-                'v1.migrations.0009_site_root_data',
-                'create_site_root'
             ),
         )
 

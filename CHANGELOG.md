@@ -14,12 +14,29 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 
 ## Unreleased
+- Added smoke-test scripts to check static assets and base page responses.
+
+### Changed
+- Update base.html to conditionally include es5 script.
+- Wagtail upgraded to version 1.6.3.
+- Moved site root setup from Django data migration into 'initial_data' script.
+- Unit tests run via tox now include optional app tests, if optional apps are present.
+- Frontend: upgrade `gulp-sourcemaps` from `1.6.0` to `2.1.1`.
+
+### Removed
+- Removed Handlebars from `package.json` and `cf_notifier.js`.
+
+## 3.11.1
+
+### Changed
+- comparisontool updated to 1.2.7
+
+## 3.11.0
 
 ### Added
 - New unit test checks for missing migrations that need to be generated using `makemigrations`.
 - Ability to run using HTTP locally with `./runserver.sh ssl`.
 - Load DigitalGov Search JS using HTTPS.
-- an initial robots.txt file
 
 ### Changed
 - Improved the help text in the Featured Content module in Wagtail.
@@ -31,10 +48,44 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Moved careers page creation from Django data migrations to standalone Python scripts.
 - Use HTTPS when linking to search.consumerfinance.gov.
 
-### Removed
+## 3.10.10
+
+### Fixed
+- incorrectly used static tag on housing counselor page
+
+## 3.10.9
+
+### Added
+- robots.txt
 
 ### Fixed
 - Update links in TableBlocks that reference internal documents or pages & have no href
+
+
+## 3.10.8
+
+### Added
+- enable the `USE_ETAGS` Django setting
+
+## 3.10.7
+
+### Fixes
+- Corrected a typo introduced in 3.10.7
+
+## 3.10.6
+
+### Fixes
+- replace a few remaining `STATIC_PREFIX` references with the `static` tag
+
+## 3.10.5
+
+### Fixes
+- adds missing `{% load staticfiles %}` tags
+
+## 3.10.4
+
+### Added
+- Added Prepaid Cards to mega menu. (Requires feature flag for now.)
 
 
 ## 3.10.3
