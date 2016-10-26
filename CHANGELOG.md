@@ -13,6 +13,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 3.11.4
+
+### Fixed
+
+- Minor bugs in the managing careers with Wagtail
+
+## 3.11.3
+
+### Fixed
+
+- Restores the "prepaid" link to navigation
+
+## 3.11.2
+
+### Fixed
+
+- A template error
+
 ## 3.11.1
 
 ### Changed
