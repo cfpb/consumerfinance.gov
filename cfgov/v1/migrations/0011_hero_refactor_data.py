@@ -4,9 +4,7 @@ from __future__ import unicode_literals
 from django.apps import apps as imported_apps
 from django.db import migrations, transaction
 
-from v1.tests.wagtail_pages.helpers import (
-    get_page_stream_data, set_page_stream_data
-)
+from v1.util.migrations import get_stream_data, set_stream_data
 
 
 def migrate_hero_forwards(data):
@@ -46,7 +44,7 @@ def migrate_hero_backwards(data):
 
 
 def migrate_page(page, field_name, mapper):
-    old_stream_data = get_page_stream_data(page, field_name)
+    old_stream_data = get_stream_data(page, field_name)
     new_stream_data = []
 
     migrated = False
@@ -59,7 +57,7 @@ def migrate_page(page, field_name, mapper):
 
     if migrated:
         print('migrated page {}'.format(page.slug))
-        set_page_stream_data(page, field_name, new_stream_data)
+        set_stream_data(page, field_name, new_stream_data)
 
 
 @transaction.atomic

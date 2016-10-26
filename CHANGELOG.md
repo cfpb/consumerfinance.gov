@@ -14,7 +14,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 
 ## Unreleased
+
+### Added
 - Added smoke-test scripts to check static assets and base page responses.
+- new dependency: django-htmlmin, which compresses outgoing HTML
+- Added Wagtail StreamField migration utilities
 
 ### Changed
 - Update base.html to conditionally include es5 script.
