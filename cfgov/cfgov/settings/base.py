@@ -98,6 +98,8 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'transition_utilities.middleware.RewriteNemoURLsMiddleware',
     'v1.middleware.StagingMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
 )
 
 ROOT_URLCONF = 'cfgov.urls'
