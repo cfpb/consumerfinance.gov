@@ -12,9 +12,8 @@ from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel, RegionPanel
 from scripts._atomic_helpers import job_listing_list
 from v1.models import SublandingPage
-from v1.tests.wagtail_pages.helpers import (
-    save_new_page, set_page_stream_data
-)
+from v1.tests.wagtail_pages.helpers import save_new_page
+from v1.util.migrations import set_stream_data
 
 
 def make_job_listing_page(title, close_date=None, grades=[], regions=[],
@@ -136,7 +135,7 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         """
         page = SublandingPage(title='title', slug='slug')
         save_new_page(page)
-        set_page_stream_data(page, 'sidebar_breakout', [job_listing_list])
+        set_stream_data(page, 'sidebar_breakout', [job_listing_list])
 
         self.assertPageIncludesHtml(page, (
             '><aside class="m-jobs-list" data-qa-hook="openings-section">'
