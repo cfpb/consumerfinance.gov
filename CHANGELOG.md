@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Update base.html to conditionally include es5 script.
 - Wagtail upgraded to version 1.6.3.
 - Moved site root setup from Django data migration into 'initial_data' script.
+- Graduated line lengths feature flag to main stylesheet.
 - Unit tests run via tox now include optional app tests, if optional apps are present.
 - Frontend: upgrade `gulp-sourcemaps` from `1.6.0` to `2.1.1`.
 
