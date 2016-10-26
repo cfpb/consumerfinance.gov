@@ -1,5 +1,7 @@
 from .local import *
 
+HTML_MINIFY = False
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
