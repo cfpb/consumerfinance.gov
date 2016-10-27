@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added smoke-test scripts to check static assets and base page responses.
 - new dependency: django-htmlmin, which compresses outgoing HTML
 - Added Wagtail StreamField migration utilities
+- Tests for `FilterableListForm`
 
 ### Changed
 - Update base.html to conditionally include es5 script.
@@ -29,9 +30,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Unit tests run via tox now include optional app tests, if optional apps are present.
 - Frontend: upgrade `gulp-sourcemaps` from `1.6.0` to `2.1.1`.
 - Modified org structure to change the Assistant Director to `Stacy Canan`.
+- `FilterableListForm` and related code, e.g. `get_page_set`
 
 ### Removed
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
+- `NewsroomFilterForm` and `ActivityLogFilterForm` and related tests
 
 ## 3.11.1
 
