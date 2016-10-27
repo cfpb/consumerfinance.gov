@@ -69,9 +69,7 @@ module.exports = {
       paths.legacy + '/nemo/_/js/appendAround.js',
       paths.legacy + '/nemo/_/js/plugins.js',
       paths.legacy + '/nemo/_/js/main.js',
-      paths.legacy + '/nemo/_/js/jquery.youtube-find-and-track.js',
-      paths.legacy + '/nemo/_/js/AnalyticsTarget.js',
-      paths.legacy + '/nemo/_/js/analytics-es.js'
+      paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
     ]
   },
   images: {
