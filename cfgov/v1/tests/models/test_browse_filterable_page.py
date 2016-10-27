@@ -10,4 +10,3 @@ class EventArchivePageTestCase(TestCase):
             EventArchivePage.get_form_class(),
             EventArchiveFilterForm
         )
-

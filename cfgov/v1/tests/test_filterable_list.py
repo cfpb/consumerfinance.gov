@@ -1,13 +1,8 @@
-import os
 import mock
 
-from django import forms
 from django.test import TestCase
-from django.core.exceptions import ValidationError
-from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.test import RequestFactory
 
-from ..models import BrowseFilterablePage, EventArchivePage, NewsroomLandingPage, SublandingFilterablePage, ActivityLogPage
 from ..util.filterable_list import FilterableListMixin
 from v1.forms import FilterableListForm
 
@@ -108,7 +103,6 @@ class TestFilterableListMixin(TestCase):
         self.mixin.content = [block]
         self.assertRaises(TypeError, self.mixin.get_filter_ids)
 
-
     # FilterableListMixin.get_form_specific_filter_data tests
     @mock.patch('v1.util.filterable_list.FilterableListMixin.get_filter_ids')
     def test_get_form_specific_filter_data_calls_get_filter_ids(self, mock_getfilterids):
@@ -116,14 +110,12 @@ class TestFilterableListMixin(TestCase):
             mock.Mock())
         assert mock_getfilterids.called
 
-
     @mock.patch('v1.util.filterable_list.FilterableListMixin.get_filter_ids')
     def test_get_form_specific_filter_data_returns_GET_data_categorized_by_form_id(self, mock_getfilterids):
         mock_getfilterids.return_value = [0]
         request_string = '/?filter0_title=test'
         data = self.mixin.get_form_specific_filter_data(self.factory.get(request_string).GET)
         assert data[0]['title'] == 'test'
-
 
     @mock.patch('v1.util.filterable_list.FilterableListMixin.get_filter_ids')
     def test_get_form_specific_filter_data_returns_GET_data_as_list_for_multiple_values(self, mock_getfilterids):
@@ -136,7 +128,6 @@ class TestFilterableListMixin(TestCase):
     def test_get_context_raises_exception_for_super_obj_has_no_get_context(self):
         self.assertRaises(AttributeError, self.mixin.get_context, request=self.factory.get('/'))
 
-
     @mock.patch('__builtin__.super')
     @mock.patch('v1.util.util.get_secondary_nav_items')
     @mock.patch('v1.util.filterable_list.FilterableListMixin.process_forms')
@@ -144,7 +135,6 @@ class TestFilterableListMixin(TestCase):
     def test_get_context_calls_super(self, mock_get_forms, mock_process_forms, mock_nav, mock_super):
         self.mixin.get_context(self.factory.get('/'))
         assert mock_super.called
-
 
     @mock.patch('__builtin__.super')
     @mock.patch('v1.util.util.get_secondary_nav_items')
@@ -154,7 +144,6 @@ class TestFilterableListMixin(TestCase):
         mock_super().get_context.return_value = {}
         assert 'get_secondary_nav_items' in self.mixin.get_context(self.factory.get('/'))
 
-
     @mock.patch('__builtin__.super')
     @mock.patch('v1.util.util.get_secondary_nav_items')
     @mock.patch('v1.util.filterable_list.FilterableListMixin.process_forms')
@@ -162,7 +151,6 @@ class TestFilterableListMixin(TestCase):
     def test_get_context_adds_filter_data_into_context(self, mock_get_forms, mock_process_forms, mock_nav, mock_super):
         mock_super().get_context.return_value = {}
         assert 'filter_data' in self.mixin.get_context(self.factory.get('/'))
-
 
     # FilterableListMixin.process_forms tests
     @mock.patch('v1.util.filterable_list.FilterableListMixin.per_page_limit')

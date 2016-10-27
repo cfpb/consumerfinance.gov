@@ -1,24 +1,12 @@
-from itertools import chain
-from operator import attrgetter
-
-from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db import models
-from django.db.models import Q
-
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
-from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
-from .learn_page import AbstractFilterPage
 from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
 from ..feeds import FilterableFeedPageMixin
-from ..util.ref import choices_for_page_type
 from ..util.filterable_list import FilterableListMixin
 
 
@@ -63,4 +51,3 @@ class ActivityLogPage(SublandingFilterablePage):
     def get_filter_parent(self):
         """ The Activity Log never filters results by a parent page """
         return None
-

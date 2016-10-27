@@ -1,8 +1,3 @@
-from itertools import chain
-from operator import attrgetter
-
-from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
 
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
@@ -11,7 +6,6 @@ from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
 from .base import CFGOVPage
-from .learn_page import AbstractFilterPage
 from ..atomic_elements import molecules, organisms
 from ..feeds import FilterableFeedPageMixin
 from ..util.filterable_list import FilterableListMixin
@@ -66,6 +60,7 @@ class EventArchivePage(BrowseFilterablePage):
     def get_form_class():
         from .. import forms
         return forms.EventArchiveFilterForm
+
 
 class NewsroomLandingPage(BrowseFilterablePage):
     template = 'newsroom/index.html'
