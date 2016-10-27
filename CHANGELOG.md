@@ -29,6 +29,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Unit tests run via tox now include optional app tests, if optional apps are present.
 - Frontend: upgrade `gulp-sourcemaps` from `1.6.0` to `2.1.1`.
 - Modified org structure to change the Assistant Director to `Stacy Canan`.
+- Updated "Standing up for you" stats on the homepage.
 
 ### Removed
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
