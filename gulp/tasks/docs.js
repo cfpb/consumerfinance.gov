@@ -4,7 +4,7 @@ var configScripts = require( '../config' ).scripts;
 var fsHelper = require( '../utils/fs-helper' );
 var globAll = require( 'glob-all' );
 var gulp = require( 'gulp' );
-var plugins = require( 'gulp-load-plugins' )();
+var gulpUtil = require( 'gulp-util' );
 var spawn = require( 'child_process' ).spawn;
 
 // TODO: Update this to support grouping methods by class in the generated docs.
@@ -21,7 +21,7 @@ function docsScripts() {
     fsHelper.getBinary( 'documentation', 'documentation.js' ),
       options, { stdio: 'inherit' }
     ).once( 'close', function() {
-      plugins.util.log( 'Scripts documentation generated!' );
+      gulpUtil.log( 'Scripts documentation generated!' );
     } );
   } );
 }
