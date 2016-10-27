@@ -237,10 +237,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
 {% endblock javascript %}
 
-{% if flag_enabled(request, 'NEW_LINE_LENGTH')  %}
-<link rel="stylesheet" href="{{ static('css/feature-flags/line-length.css') }}">
-{% endif %}
-
 </body>
 
 </html>
