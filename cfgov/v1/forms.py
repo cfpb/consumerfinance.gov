@@ -111,16 +111,12 @@ class FilterableListForm(forms.Form):
         super(FilterableListForm, self).__init__(*args, **kwargs)
         page_ids = CFGOVPage.objects.live_shared(self.hostname).values_list('id', flat=True)
 
-        categories = self.data.get('categories')
-        if categories:
-            self.update_categories(categories=categories)
-            logger.info('Filtering by categories {}'.format(categories))
-
+        self.clean_categories()
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
 
-    def update_categories(self, categories):
+    def clean_categories(self):
         """ This is a (hopefully) temporary solution for dealing w/ the fact
         that we show Blog and Reports as options for filtering, but
         aren't categories themselves. Rather, they consist of sub-categories,
@@ -130,6 +126,9 @@ class FilterableListForm(forms.Form):
         respective categories exists in cfgov/v1/util/ref.py
         """
 
+        categories = self.data.get('categories')
+        if not categories:
+            return None
         subcategories = dict(ref.categories)
         if 'blog' in categories:
             for x in subcategories['Blog']:
@@ -137,6 +136,8 @@ class FilterableListForm(forms.Form):
         if 'research-reports' in categories:
             for x in subcategories['Research Report']:
                 categories.append(x[0].lower())
+        logger.info('Filtering by categories {}'.format(categories))
+        return categories
 
     def base_query(self):
         base_query = AbstractFilterPage.objects.live_shared(hostname=self.hostname)
