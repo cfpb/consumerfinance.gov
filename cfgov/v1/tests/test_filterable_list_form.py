@@ -26,13 +26,13 @@ class TestFilterableListForm(TestCase):
         publish_page(page2)
         form = self.setUpFilterableForm(data={'categories': ['foo']})
         page_set = form.get_page_set()
-        assert len(page_set) == 1
-        assert page_set[0].specific == page1
+        self.assertEquals(len(page_set), 1)
+        self.assertEquals(page_set[0].specific, page1)
 
     def test_filter_by_nonexisting_category(self):
         form = self.setUpFilterableForm(data={'categories': ['made up filter']})
         page_set = form.get_page_set()
-        assert len(page_set) == 0
+        self.assertEquals(len(page_set), 0)
 
     def test_filter_by_tags(self):
         page1 = BlogPage(title='test page 1')
@@ -46,9 +46,9 @@ class TestFilterableListForm(TestCase):
         publish_page(page3)
         form = self.setUpFilterableForm(data={'topics': ['foo', 'bar']})
         page_set = form.get_page_set()
-        assert len(page_set) == 2
-        assert page_set[1].specific == page1
-        assert page_set[0].specific == page2
+        self.assertEquals(len(page_set), 2)
+        self.assertEquals(page_set[1].specific, page1)
+        self.assertEquals(page_set[0].specific, page2)
 
     def test_filter_doesnt_return_drafts(self):
         page1 = BlogPage(title='test page 1')
@@ -58,8 +58,8 @@ class TestFilterableListForm(TestCase):
         publish_page(page1)  # Only publish one of the pages
         form = self.setUpFilterableForm(data={'topics': ['foo']})
         page_set = form.get_page_set()
-        assert len(page_set) == 1
-        assert page_set[0].specific == page1
+        self.assertEquals(len(page_set), 1)
+        self.assertEquals(page_set[0].specific, page1)
 
     def test_filter_by_author_names(self):
         page1 = BlogPage(title='test page 1')
@@ -71,8 +71,8 @@ class TestFilterableListForm(TestCase):
         publish_page(page2)
         form = self.setUpFilterableForm(data={'authors': ['sarah-simpson']})
         page_set = form.get_page_set()
-        assert len(page_set) == 1
-        assert page_set[0].specific == page1
+        self.assertEquals(len(page_set), 1)
+        self.assertEquals(page_set[0].specific, page1)
 
     def test_filter_by_title(self):
         page1 = EventPage(title='Cool Event')
@@ -81,17 +81,17 @@ class TestFilterableListForm(TestCase):
         publish_page(page2)
         form = self.setUpFilterableForm(data={'title': 'Cool'})
         page_set = form.get_page_set()
-        assert len(page_set) == 1
-        assert page_set[0].specific == page1
+        self.assertEquals(len(page_set), 1)
+        self.assertEquals(page_set[0].specific, page1)
 
     def test_clean_categories_converts_blog_subcategories_correctly(self):
         form = self.setUpFilterableForm()
         form.data = {'categories': ['blog']}
         form.clean_categories()
-        assert form.data['categories'] == ['blog', 'at-the-cfpb', 'policy_compliance', 'data-research-reports', 'info-for-consumers']
+        self.assertEquals(form.data['categories'], ['blog', 'at-the-cfpb', 'policy_compliance', 'data-research-reports', 'info-for-consumers'])
 
     def test_clean_categories_converts_reports_subcategories_correctly(self):
         form = self.setUpFilterableForm()
         form.data = {'categories': ['research-reports']}
         form.clean_categories()
-        assert form.data['categories'] == ['research-reports', 'consumer-complaint', 'super-highlight', 'data-point', 'industry-markets', 'consumer-edu-empower', 'to-congress']
+        self.assertEquals(form.data['categories'], ['research-reports', 'consumer-complaint', 'super-highlight', 'data-point', 'industry-markets', 'consumer-edu-empower', 'to-congress'])
