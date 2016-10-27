@@ -18,6 +18,7 @@ class FilterableListMixin(object):
         return context
 
     def get_filter_parent(self):
+        """ Filters results to children of the current page """
         return self
 
     def process_forms(self, request, forms):

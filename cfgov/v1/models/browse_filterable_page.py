@@ -73,4 +73,5 @@ class NewsroomLandingPage(BrowseFilterablePage):
     objects = PageManager()
 
     def get_filter_parent(self):
+        """ The Newsroom never filters results by a parent page """
         return None

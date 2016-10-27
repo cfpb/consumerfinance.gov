@@ -61,5 +61,6 @@ class ActivityLogPage(SublandingFilterablePage):
         return 100
 
     def get_filter_parent(self):
+        """ The Activity Log never filters results by a parent page """
         return None
 
