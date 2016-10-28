@@ -13,7 +13,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased
+## 4.0.0
 
 ### Added
 - Added smoke-test scripts to check static assets and base page responses.
