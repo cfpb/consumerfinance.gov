@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.test import TestCase, override_settings
 
 from wagtail.wagtailimages.models import get_image_model
