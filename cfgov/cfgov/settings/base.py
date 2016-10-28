@@ -100,7 +100,9 @@ MIDDLEWARE_CLASSES = (
     'v1.middleware.StagingMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
-)
+    'core.middleware.CSPScriptHashMiddleware',
+    'csp.middleware.CSPMiddleware'
+    )
 
 ROOT_URLCONF = 'cfgov.urls'
 
