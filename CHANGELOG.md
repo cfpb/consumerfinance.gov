@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
+- Removed `gulp-load-plugins` from `package.json`.
 
 ## 3.11.1
 
