@@ -145,9 +145,9 @@ class CFGOVPage(Page):
         return sorted(author_names, key=lambda x: x.name.split()[-1])
 
     def generate_view_more_url(self, request):
-        from ..forms import ActivityLogFilterForm
+        from ..forms import FilterableListForm
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
-        form = ActivityLogFilterForm(parent=activity_log, hostname=request.site.hostname)
+        form = FilterableListForm(parent=activity_log, hostname=request.site.hostname)
         available_tags = [tag[0] for name, tags in form.fields['topics'].choices for tag in tags]
         tags = []
         index = util.get_form_id(activity_log)
