@@ -12,6 +12,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## 4.0.1
+
+### Changed
+- update comparisontool to 1.2.8
 
 ## 4.0.0
 
