@@ -73,13 +73,22 @@ class JobListingPageTestCase(TestCase):
         return page
 
     def test_ordered_grades(self):
-        page = self.make_page_with_grades(3, 2, 1)
-        self.assertEqual(page.ordered_grades, [1, 2, 3])
+        page = self.make_page_with_grades('3', '2', '1')
+        self.assertEqual(page.ordered_grades, ['1', '2', '3'])
 
     def test_ordered_grades_removes_duplicates(self):
-        page = self.make_page_with_grades(3, 2, 2, 2, 1, 1)
-        self.assertEqual(page.ordered_grades, [1, 2, 3])
+        page = self.make_page_with_grades('3', '2', '2', '2', '1', '1')
+        self.assertEqual(page.ordered_grades, ['1', '2', '3'])
 
     def test_ordered_grades_sorts_numerically(self):
-        page = self.make_page_with_grades(100, 10, 11, 1, 2, 3)
-        self.assertEqual(page.ordered_grades, [1, 2, 3, 10, 11, 100])
+        page = self.make_page_with_grades('100', '10', '11', '1')
+        self.assertEqual(page.ordered_grades, ['1', '10', '11', '100'])
+
+    def test_ordered_grades_non_numeric_after_numeric(self):
+        page = self.make_page_with_grades('2', '1', 'b', 'B', 'a', 'A')
+        self.assertEqual(page.ordered_grades, ['1', '2', 'A', 'B', 'a', 'b'])
+
+    def test_ordered_grades_returns_strings(self):
+        page = self.make_page_with_grades('3', '2', '1')
+        for grade in page.ordered_grades:
+            self.assertIsInstance(grade, basestring)
