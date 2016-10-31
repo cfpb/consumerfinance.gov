@@ -1,17 +1,17 @@
 from django.core.exceptions import ValidationError
+from django.test import TestCase
 from mock import patch
 from model_mommy import mommy
-from unittest import TestCase
 
-from jobmanager.models.django import JobCategory, Grade, Location
+from jobmanager.models.django import JobCategory, Grade
 from jobmanager.models.pages import JobListingPage
+from jobmanager.models.panels import GradePanel
+from v1.tests.wagtail_pages.helpers import save_new_page
 
 
 class JobListingPageTestCase(TestCase):
     def setUp(self):
         self.division = mommy.make(JobCategory)
-        self.grade = mommy.make(Grade)
-        self.region = mommy.make(Location)
 
         page_clean = patch('jobmanager.models.pages.CFGOVPage.clean')
         page_clean.start()
@@ -58,3 +58,28 @@ class JobListingPageTestCase(TestCase):
         page = self.prepare_job_listing_page(division=None)
         with self.assertRaises(ValidationError):
             page.full_clean()
+
+    def make_page_with_grades(self, *grades):
+        page = self.prepare_job_listing_page()
+        save_new_page(page)
+
+        for grade in grades:
+            panel = GradePanel.objects.create(
+                grade=mommy.make(Grade, grade=str(grade)),
+                job_listing=page
+            )
+            page.grades.add(panel)
+
+        return page
+
+    def test_ordered_grades(self):
+        page = self.make_page_with_grades(3, 2, 1)
+        self.assertEqual(page.ordered_grades, [1, 2, 3])
+
+    def test_ordered_grades_removes_duplicates(self):
+        page = self.make_page_with_grades(3, 2, 2, 2, 1, 1)
+        self.assertEqual(page.ordered_grades, [1, 2, 3])
+
+    def test_ordered_grades_sorts_numerically(self):
+        page = self.make_page_with_grades(100, 10, 11, 1, 2, 3)
+        self.assertEqual(page.ordered_grades, [1, 2, 3, 10, 11, 100])

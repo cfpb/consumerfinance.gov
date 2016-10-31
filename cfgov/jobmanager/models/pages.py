@@ -56,3 +56,9 @@ class JobListingPage(CFGOVPage):
     template = 'job-description-page/index.html'
 
     objects = PageManager()
+
+    @property
+    def ordered_grades(self):
+        """Return a list of job grades in numerical order."""
+        grades = set(g.grade.grade for g in self.grades.all())
+        return sorted(map(int, grades))
