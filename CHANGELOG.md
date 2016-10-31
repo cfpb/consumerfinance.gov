@@ -17,6 +17,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 - update comparisontool to 1.2.8
 
+### Fixed
+- correct the ordering of grades on job pages
+
 ## 4.0.0
 
 ### Added
