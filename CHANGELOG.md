@@ -22,7 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ### Removed
-
+- `tax-time-saving` reference in `base.py` (it moved to Wagtail)
 
 
 ## 4.0.0
