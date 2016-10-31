@@ -356,7 +356,7 @@ HAYSTACK_CONNECTIONS = {
 # S3 Configuration
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
-    AWS_S3_SECURE_URLS = False  # True = use https; False = use http
+    AWS_S3_SECURE_URLS = True  # True = use https; False = use http
     AWS_QUERYSTRING_AUTH = False  # False = do not use authentication-related query parameters for requests
     AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')

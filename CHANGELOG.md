@@ -44,6 +44,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Modified org structure to change the Assistant Director to `Stacy Canan`.
 - `FilterableListForm` and related code, e.g. `get_page_set`
 - Updated "Standing up for you" stats on the homepage.
+- Use secure URLs for files stored on S3
 - Fixed grade ordering on job listing posts.
 
 ### Removed
