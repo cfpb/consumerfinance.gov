@@ -426,9 +426,6 @@ SHEER_SITES = {
         'know-before-you-owe':
             Path(os.environ.get('KBYO_SHEER_PATH') or
             Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
-        'tax-time-saving':
-            Path(os.environ.get('TAX_TIME_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../tax-time-saving/dist')),
 }
 
 #The base URL for the API that we use to access layers and the regulation.
