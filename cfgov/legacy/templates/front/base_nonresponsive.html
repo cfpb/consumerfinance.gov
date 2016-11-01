@@ -94,19 +94,6 @@ please send an email with your full name to tech@cfpb.gov.
     {% endblock %}
 
     {% block analytics_js %}
-    <script src="{% static 'js/analytics.js' %}"></script>
-
-    <!-- this is where we put our custom analytics -->
-    <script src="{% static 'nemo/_/js/analytics-global.js' %}"></script>
-
-    <!-- H5BP's Asynchronous Google Analytics snippet. -->
-    {% hashedscript %}
-      var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-    {% end_hashedscript %}
-
     {% endblock %}
 </head>
 

@@ -66,11 +66,6 @@
                         '?autoplay=1&rel=0&showinfo=0&theme=light" frameborder="0" allowfullscreen></iframe>'
                     )
                     .fitVids();
-
-                    // Call video tracking code
-                    if ( typeof $.fn.findAndTrackYouTubeVideos !== 'undefined' ) {
-                        $('iframe').findAndTrackYouTubeVideos();
-                    }
                 }
             }
 

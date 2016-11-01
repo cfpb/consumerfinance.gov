@@ -1,7 +1,8 @@
 'use strict';
 
 var gulp = require( 'gulp' );
-var plugins = require( 'gulp-load-plugins' )();
+var gulpChanged = require( 'gulp-changed' );
+var gulpReplace = require( 'gulp-replace' );
 var configCopy = require( '../config' ).copy;
 var handleErrors = require( '../utils/handle-errors' );
 var browserSync = require( 'browser-sync' );
@@ -14,7 +15,7 @@ var browserSync = require( 'browser-sync' );
  */
 function _genericCopy( src, dest ) {
   return gulp.src( src )
-    .pipe( plugins.changed( dest ) )
+    .pipe( gulpChanged( dest ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( dest ) )
     .pipe( browserSync.reload( {
@@ -35,9 +36,9 @@ gulp.task( 'copy:vendorfonts', function() {
 gulp.task( 'copy:vendorcss', function() {
   var vendorCss = configCopy.vendorCss;
   return gulp.src( vendorCss.src )
-    .pipe( plugins.changed( vendorCss.dest ) )
+    .pipe( gulpChanged( vendorCss.dest ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.replace(
+    .pipe( gulpReplace(
       /url\(".\/ajax-loader.gif"\)/ig,
       'url("/img/ajax-loader.gif")'
     ) )
