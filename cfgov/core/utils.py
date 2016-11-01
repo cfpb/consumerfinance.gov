@@ -3,7 +3,7 @@ import base64
 
 def hash_for_script(js):
     hasher = hashlib.sha256()
-    hasher.update(js)
+    hasher.update(js.encode('utf-8'))
     encoded = base64.b64encode(hasher.digest())
     return "'sha256-{encoded}'".format(encoded=encoded)
 

@@ -1,8 +1,6 @@
 from jinja2 import nodes
 from jinja2.ext import Extension
 
-import sheerlike.middleware
-
 from .utils import hash_for_script
 
 
@@ -17,17 +15,26 @@ class CSPScriptHashExtension(Extension):
         body = parser.parse_statements(['name:end_hashedscript'],
                                        drop_needle=True)
 
-        return nodes.CallBlock(self.call_method('_hash_script'),
-                               [], [], body)
+        context = nodes.ContextReference()
 
-    def _hash_script(self, caller):
+        return nodes.CallBlock(
+            self.call_method('_hash_script', [context]),
+            [],
+            [],
+            body
+        )
+
+    def _hash_script(self, context, caller):
         js = caller()
-        request = sheerlike.middleware.get_request()
+
+        request = context['request']
         if not hasattr(request, 'script_hashes'):
             request.script_hashes = []
+
         hash = hash_for_script(js)
         request.script_hashes.append(hash)
-        return "<script>{js}</script>".format(js=js)
+        return u"<script>{js}</script>".format(js=js)
+
 
 # nicer import name
 csp = CSPScriptHashExtension
