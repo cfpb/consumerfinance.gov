@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from models.snippets import Contact
 
 from v1.email import send_password_reset_email
-from v1.models import Feedback
+from v1.models import Feedback, CFGOVTaggedPages, CFGOVAuthoredPages
 
 
 @admin.register(Contact)
@@ -13,6 +13,7 @@ class ContactAdmin(admin.ModelAdmin):
 
 
 admin.site.unregister(User)
+
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
@@ -40,3 +41,13 @@ feedback_page_url.short_description = 'Page URL'
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('is_helpful', 'comment', feedback_page_url, 'submitted_on')
     list_filter = ('submitted_on', 'page__title',)
+
+
+@admin.register(CFGOVTaggedPages)
+class CFGOVTaggedPagesAdmin(admin.ModelAdmin):
+    list_display = ('tag_id',)
+
+
+@admin.register(CFGOVAuthoredPages)
+class CFGOVAuthoredPagesAdmin(admin.ModelAdmin):
+    list_display = ('tag_id',)
