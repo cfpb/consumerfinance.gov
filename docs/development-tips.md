@@ -26,9 +26,8 @@ and then indexed within this cfgov-refresh project.
 The non-v1 apps are the following:
 
  - [Owning a Home](https://github.com/cfpb/owning-a-home).
- - [Tax time savings](https://github.com/cfpb/tax-time-saving).
- - fin-ed-resources (not public) - for the Education Resources section.
- - know-before-you-owe (not public) - for the Consumer Tools > Know before you owe section.
+ - fin-ed-resources (ghe/CFGOV/fin-ed-resources) - for the Education Resources section.
+ - know-before-you-owe (ghe/CFGOV/know-before-you-owe) - for the Consumer Tools > Know before you owe section.
 
 After installing these projects as sibling directories to the `cfgov-refresh` repository,
 build the third-party projects per their directions,
