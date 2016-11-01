@@ -101,7 +101,7 @@ class EmailSignUp(blocks.StructBlock):
         template = '_includes/organisms/email-signup.html'
 
     class Media:
-        js = ["email-signup.js"]
+        js = ['email-signup.js']
 
 
 class RegComment(blocks.StructBlock):
