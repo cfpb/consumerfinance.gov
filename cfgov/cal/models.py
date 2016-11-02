@@ -9,6 +9,7 @@ class CFPBCalendar(models.Model):
     def __unicode__(self):
         return "%s" % (self.title)
 
+
 class CFPBCalendarEvent(models.Model):
     calendar = models.ForeignKey(CFPBCalendar)
     uid = models.CharField(max_length=255, blank=True)
@@ -29,7 +30,7 @@ class CFPBCalendarEvent(models.Model):
         return self.dtstart.date()
 
     def save(self):
-        if self.uid == None or self.uid == "":
+        if self.uid is None or self.uid == "":
             self.uid = uuid.uuid4()
         super(CFPBCalendarEvent, self).save()
 

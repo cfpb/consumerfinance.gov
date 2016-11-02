@@ -1,5 +1,4 @@
 import warnings
-from bs4 import BeautifulSoup
 from v1 import parse_links
 
 

@@ -1,7 +1,5 @@
-import os
-
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import url
 
 from unipath import Path
 

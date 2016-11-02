@@ -28,7 +28,7 @@ class FilterDateField(forms.DateField):
                 msg = self.error_messages['invalid']
                 if '%s'in msg:
                     msg = msg % value
-                raise forms.ValidationError(msg , code='invalid')
+                raise forms.ValidationError(msg, code='invalid')
 
         return super(FilterDateField, self).clean(value)
 

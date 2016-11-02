@@ -3,9 +3,8 @@ import subprocess
 import atexit
 import signal
 
-from django.conf import settings
-from django.contrib.staticfiles.management.commands.runserver import Command\
-    as StaticfilesRunserverCommand
+from django.contrib.staticfiles.management.commands.runserver \
+    import Command as StaticfilesRunserverCommand
 
 
 # Inspired by:
@@ -27,7 +26,7 @@ class Command(StaticfilesRunserverCommand):
             stderr=self.stderr,
         )
 
-        self.gulp_process=sub
+        self.gulp_process = sub
 
         self.stdout.write('>>> Gulp process on pid {0}'.format(sub.pid))
 

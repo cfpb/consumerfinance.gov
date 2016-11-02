@@ -1,10 +1,12 @@
-from cal.models import CFPBCalendar, CFPBCalendarEvent
-from datetime import date, datetime
+from cal.models import CFPBCalendarEvent
+from datetime import datetime
+import re
+
 
 class ProcessEvent(object):
 
     # pass in an icalendar event and the calendar table that was queried
-    def __init__(self, event ,calendar_record):
+    def __init__(self, event, calendar_record):
         self.event = event
 
         self.e = CFPBCalendarEvent()
@@ -18,7 +20,7 @@ class ProcessEvent(object):
         self._process()
 
     # get rid of unicode and formatting issues
-    def _clean_string(self,s):
+    def _clean_string(self, s):
 
         s = s.encode('ascii', 'ignore')
         s = str(s).replace('\\n', '').replace('\\,', ',')
@@ -26,7 +28,7 @@ class ProcessEvent(object):
         return s
 
     # convert the datetime to string and remove any timezone info
-    def _clean_date(self,d):
+    def _clean_date(self, d):
 
         d = str(d).replace('Z', '')
         d = d.encode('ascii', 'ignore')
@@ -38,7 +40,7 @@ class ProcessEvent(object):
     def _is_all_day(self):
 
         start = datetime.strptime(self.e.dtstart.split(" ")[0], "%Y-%m-%d")
-        end =  datetime.strptime(self.e.dtend.split(" ")[0], "%Y-%m-%d")
+        end = datetime.strptime(self.e.dtend.split(" ")[0], "%Y-%m-%d")
 
         diff = start - end
 
@@ -50,7 +52,7 @@ class ProcessEvent(object):
     def _set_value(self, i):
 
         if i in ('DTSTART', 'DTEND', 'DTSTAMP', 'CREATED'):
-            v = self._clean_date( self.event.decoded(i) )
+            v = self._clean_date(self.event.decoded(i))
 
         elif i in ('DESCRIPTION', 'SUMMARY', 'LOCATION'):
             v = self._clean_string(self.event[i])
@@ -60,12 +62,14 @@ class ProcessEvent(object):
 
         setattr(self.e, i.lower(), v)
 
-    # make sure uid is unqiue - this is do to recurring events sharing the same uid
+    # make sure uid is unqiue - this is do to recurring events sharing
+    # the same uid
     def _create_unique_id(self):
 
-        temp = str(self.e.uid)+'@'+str(self.e.dtstart).replace(" ","").replace(":","").replace("-","")
+        temp = str(self.e.uid) + '@' + \
+            re.sub(r'[ -:]', '', str(self.e.dtstart))
 
-        self.e.uid=temp
+        self.e.uid = temp
 
     # let the magic happen
     def _process(self):
@@ -73,23 +77,27 @@ class ProcessEvent(object):
         for i in self.event.keys():
             self._set_value(i)
 
-        if self.e.summary == None:
-            summary_fill = CFPBCalendarEvent.objects.filter(uid__contains=self.e.uid )  #uid=self.e.uid, summary__isnull=False)
+        if self.e.summary is None:
+            # uid=self.e.uid, summary__isnull=False)
+            summary_fill = CFPBCalendarEvent.objects.filter(
+                uid__contains=self.e.uid)
 
             if summary_fill:
                 self.e.summary = summary_fill[0].summary
 
-        if self.e.dtstamp == None:
-             self.e.dtstamp = self._clean_date(self.event.decoded("RECURRENCE-ID"))
+        if self.e.dtstamp is None:
+            self.e.dtstamp = self._clean_date(
+                self.event.decoded("RECURRENCE-ID"))
 
-        if self.e.location == None:
+        if self.e.location is None:
             self.e.location = " "
 
         self._is_all_day()
 
         self._create_unique_id()
 
-        dupes = CFPBCalendarEvent.objects.filter(uid=self.e.uid, dtstamp=self.e.dtstamp)
+        dupes = CFPBCalendarEvent.objects.filter(
+            uid=self.e.uid, dtstamp=self.e.dtstamp)
 
         self.num_dupes = len(dupes)
 

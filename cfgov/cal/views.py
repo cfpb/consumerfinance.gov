@@ -3,13 +3,13 @@ import os
 import six
 import urllib2
 
-from datetime import date, datetime, timedelta
+from datetime import timedelta
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.db.models import Max, Min, Q
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 from django.template.loader import get_template
 from httplib import BadStatusLine
 
@@ -17,13 +17,13 @@ from cal.forms import CalendarFilterForm, CalendarPDFForm
 from cal.models import CFPBCalendarEvent
 
 
-## TODO: Update to python 3 when PDFreactor's python wrapper supports it.
+# TODO: Update to python 3 when PDFreactor's python wrapper supports it.
 if six.PY2:
     try:
         sys.path.append(os.environ.get('PDFREACTOR_LIB'))
-        from PDFreactor import *
+        from PDFreactor import PDFreactor
     except ImportError:
-       PDFreactor = None
+        PDFreactor = None
 
 
 class PaginatorForSheerTemplates(Paginator):
@@ -35,10 +35,10 @@ class PaginatorForSheerTemplates(Paginator):
     def pages(self):
         return self.num_pages
 
-    def url_for_page(self,pagenum):
+    def url_for_page(self, pagenum):
         url_args = self.request.GET.copy()
         url_args['page'] = pagenum
-        return self.request.path +'?' + url_args.urlencode()
+        return self.request.path + '?' + url_args.urlencode()
 
 
 def display(request, pdf=False):
@@ -46,8 +46,9 @@ def display(request, pdf=False):
     display (potentially filtered) html view of the calendar
     """
 
-    template_name='about-us/the-bureau/leadership-calendar/index.html'
-    form = CalendarPDFForm(request.GET) if pdf else CalendarFilterForm(request.GET)
+    template_name = 'about-us/the-bureau/leadership-calendar/index.html'
+    form = CalendarPDFForm(request.GET) if pdf \
+        else CalendarFilterForm(request.GET)
     context = {'form': form}
     form_is_valid = form.is_valid()
 
@@ -55,7 +56,8 @@ def display(request, pdf=False):
         set_cal_events_context(context)
 
         if pdf:
-            template_name = 'about-us/the-bureau/leadership-calendar/print/index.html'
+            template_name = \
+                'about-us/the-bureau/leadership-calendar/print/index.html'
             if PDFreactor:
                 return pdf_response(request, context)
             else:
@@ -66,7 +68,7 @@ def display(request, pdf=False):
     elif not form_is_valid and pdf:
         for error in form.errors.itervalues():
             messages.error(request,
-                           u''.join(error).encode('utf-8',errors='ignore'),
+                           u''.join(error).encode('utf-8', errors='ignore'),
                            extra_tags='leadership-calendar')
         return redirect_to_leadership_view()
 
@@ -77,13 +79,15 @@ def set_cal_events_context(context):
     cal_q = get_calendar_events_query(context['form'])
     events = CFPBCalendarEvent.objects.filter(cal_q).order_by('-dtstart')
     stats = events.aggregate(Min('dtstart'), Max('dtend'))
-    range_start = context['form'].cleaned_data.get('filter_range_date_gte') or stats['dtstart__min']
-    range_end = context['form'].cleaned_data.get('filter_range_date_lte') or stats['dtend__max']
+    range_start = context['form'].cleaned_data.get('filter_range_date_gte') \
+        or stats['dtstart__min']
+    range_end = context['form'].cleaned_data.get('filter_range_date_lte') \
+        or stats['dtend__max']
 
     context.update({
         'events': events,
         'range_start': range_start,
-        'range_end':range_end,
+        'range_end': range_end,
     })
 
 
@@ -103,6 +107,7 @@ def get_calendar_events_query(form):
         cal_q &= Q(('dtend__lte', lte))
 
     return cal_q
+
 
 def set_pagination_context(request, context):
     datetimes = context['events'].datetimes('dtstart', 'day', order='DESC')
@@ -160,11 +165,15 @@ def pdf_response(request, context):
     try:
         pdf = pdf_reactor.renderDocumentFromContent(html.encode('utf-8'))
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=cfpb-leadership.pdf'
+        response['Content-Disposition'] = \
+            'attachment; filename=cfpb-leadership.pdf'
         return response
     except (urllib2.HTTPError, urllib2.URLError, BadStatusLine):
-        messages.error(request, 'Error Creating PDF', extra_tags='leadership-calendar')
+        messages.error(request,
+                       'Error Creating PDF',
+                       extra_tags='leadership-calendar')
         return redirect_to_leadership_view()
+
 
 def redirect_to_leadership_view():
     view_name = 'the-bureau:leadership-calendar'

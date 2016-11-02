@@ -72,4 +72,5 @@ class ICSViewTest(TestCase):
             try:
                 icalendar.Calendar.from_ical(response.content)
             except ValueError:
-                self.fail('generate_ics() did not return a valid iCalendar file')
+                self.fail('generate_ics() did not return a valid '
+                          'iCalendar file')

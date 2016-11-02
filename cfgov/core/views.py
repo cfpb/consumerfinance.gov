@@ -1,10 +1,6 @@
-import os
-
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
 from django.http import JsonResponse
 from django.contrib import messages
 import requests
@@ -34,7 +30,8 @@ def govdelivery_subscribe(request):
         passing_response = redirect('govdelivery:success')
         failing_response = redirect('govdelivery:server_error')
     for required_param in REQUIRED_PARAMS_GOVDELIVERY:
-        if required_param not in request.POST or not request.POST.get(required_param):
+        if (required_param not in request.POST or
+                not request.POST.get(required_param)):
             return failing_response if is_ajax else \
                 redirect('govdelivery:user_error')
     email_address = request.POST['email']
@@ -48,9 +45,9 @@ def govdelivery_subscribe(request):
         return failing_response
     answers = extract_answers_from_request(request)
     for question_id, answer_text in answers:
-        response = gd.set_subscriber_answers_to_question(email_address,
-                                                         question_id,
-                                                         answer_text)
+        gd.set_subscriber_answers_to_question(email_address,
+                                              question_id,
+                                              answer_text)
     return passing_response
 
 
@@ -108,8 +105,10 @@ def submit_comment(data):
 
     parsed_data = MultipartEncoder(
         fields={
-            'first_name': data['first_name'] if data.get('first_name') else u'Anonymous',
-            'last_name': data['last_name'] if data.get('last_name') else u'Anonymous',
+            'first_name':
+                data['first_name'] if data.get('first_name') else u'Anonymous',
+            'last_name':
+                data['last_name'] if data.get('last_name') else u'Anonymous',
             'email': data['email'] if data.get('email') else u'NA',
             'general_comment': data['general_comment'],
             'comment_on': data['comment_on'],

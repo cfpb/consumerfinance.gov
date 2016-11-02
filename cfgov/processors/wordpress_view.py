@@ -36,7 +36,8 @@ def process_view(post):
         if isinstance(custom_fields['popular_posts'], basestring):
             post['popular_posts'] = [custom_fields['popular_posts']]
         else:
-            popular_posts = [slug for slug in custom_fields['popular_posts'][:5]]
+            popular_posts = [slug for slug in
+                             custom_fields['popular_posts'][:5]]
             post['popular_posts'] = popular_posts
 
     # convert related links into a proper list
@@ -61,20 +62,22 @@ def process_view(post):
         else:
             hero_id = custom_fields['related_hero'][0]
         if hero_id:
-            hero_url = os.path.expandvars('$WORDPRESS/hero/' + hero_id + '/?json=1')
+            hero_url = os.path.expandvars(
+                '$WORDPRESS/hero/' + hero_id + '/?json=1')
             response = requests.get(hero_url)
             hero_data = json.loads(response.content)
             if hero_data['status'] is 'ok':
                 hero_data = hero_data['post']
                 if 'related_post' in hero_data['custom_fields']:
                     hero_data['related_posts'] = \
-                        [p for p in hero_data['custom_fields']['related_post'] if p]
+                        [p for p in hero_data['custom_fields']['related_post']
+                         if p]
                 post['hero'] = hero_data
 
     # convert other custom fields
     names = ['og_title', 'og_image', 'og_desc', 'twtr_text', 'twtr_lang',
-             'twtr_rel', 'twtr_hash', 'utm_campaign', 'utm_term', 'utm_content',
-             'alt_title']
+             'twtr_rel', 'twtr_hash', 'utm_campaign', 'utm_term',
+             'utm_content', 'alt_title']
     for name in names:
         if name in post['custom_fields']:
             post[name] = post['custom_fields'][name]

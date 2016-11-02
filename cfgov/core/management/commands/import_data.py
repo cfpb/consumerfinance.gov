@@ -19,7 +19,6 @@ class Command(BaseCommand):
         parser.add_argument('--app', action='store', default='v1')
         parser.add_argument('--overwrite', action='store_true')
 
-
     def get_converter(self, app, wagtail_type):
         # Looks for a processor in this directory to import the module from
         # using the command line argument: wagtail_type
@@ -28,7 +27,7 @@ class Command(BaseCommand):
                                    (app, wagtail_type))
         except ImportError:
             raise ImportError(('No module found in %s.processors named '
-                              + '(%s)') % (app, wagtail_type))
+                               '(%s)') % (app, wagtail_type))
         try:
             return module.DataConverter()
         except AttributeError:
@@ -37,29 +36,31 @@ class Command(BaseCommand):
     def get_processor(self, data_type, processors):
         # Looks for the correct sheer processor to use for data retrieval.
         if data_type not in processors:
-            raise CommandError('Could not find a processor for %s.' % data_type)
+            raise CommandError('Could not find a processor for %s.'
+                               % data_type)
         return import_module(processors[data_type]['processor'])
 
     def get_documents(self, data_type, processors):
         processor = self.get_processor(data_type, processors)
-        # 'name' is actually an unused param, so we just pass None to it for now
-        return processor.documents(name = None, url = processors[data_type]['url'])
-
+        # 'name' is actually an unused param, so we just pass None for now
+        return processor.documents(name=None,
+                                   url=processors[data_type]['url'])
 
     def handle(self, *args, **options):
         if not options['parent'] and not options['snippet']:
-            raise CommandError('manage.py import-data: error: you must specify'
-                               + ' either a parent page to import pages or'
-                               + ' flag the importing as a snippet.')
+            raise CommandError('manage.py import-data: error: you must '
+                               'specify either a parent page to import '
+                               'pages or flag the importing as a snippet.')
 
-        documents = self.get_documents(options['data_type'], settings.SHEER_PROCESSORS)
+        documents = self.get_documents(options['data_type'],
+                                       settings.SHEER_PROCESSORS)
         importer = Importer(**options)
-        converter = self.get_converter(options['app'], options['wagtail_type'].lower())
-       
+        converter = self.get_converter(options['app'],
+                                       options['wagtail_type'].lower())
+
         for doc in documents:
             # Maps the retrieved sheer document to the given model name
             # using the imported module.
             importer.migrate(doc['_source'], converter)
 
         importer.print_results()
-

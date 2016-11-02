@@ -72,13 +72,17 @@ class Importer:
             if self.overwrite and existing:
                 pages_views.edit(request, existing.id)
             else:
-                pages_views.create(request, self.app, self.wagtail_type, parent_page.id)
+                pages_views.create(request,
+                                   self.app,
+                                   self.wagtail_type,
+                                   parent_page.id)
         except (IntegrityError, MessageFailure):
             self.is_valid(existing, imported_data)
             try:
                 if existing:
                     existing = existing.specific
-                page = existing or Page.objects.descendant_of(parent_page).get(slug=imported_data['slug']).specific
+                page = existing or Page.objects.descendant_of(
+                    parent_page).get(slug=imported_data['slug']).specific
                 if 'blog_category' in imported_data:
                     cat_key = 'blog_category'
                 else:
@@ -87,15 +91,18 @@ class Importer:
                     for categories_tuple in categories:
                         if categories_tuple[0] in ['Blog', 'Newsroom']:
                             for category_tuple in categories_tuple[1]:
-                                if category_tuple[1].lower() == imported_data[cat_key][i].lower():
-                                    c, created = page.categories.get_or_create(page=page, name=category_tuple[0])
+                                if (category_tuple[1].lower() ==
+                                        imported_data[cat_key][i].lower()):
+                                    c, created = page.categories.get_or_create(
+                                        page=page, name=category_tuple[0])
                                     c.save()
 
                 page.save()
                 page.save_revision().publish()
             except Page.DoesNotExist:
-                print imported_data['slug'], 'is not a slug for a page in the database, so no categories were made.'
-
+                print imported_data['slug'], ('is not a slug for a page in '
+                                              'the database, so no categories '
+                                              'were made.')
 
     def migrate_snippet(self, request, imported_data, converter):
         existing = converter.get_existing_snippet(imported_data)
@@ -125,7 +132,7 @@ class Importer:
         if user:
             if not user.is_active or not user.is_superuser:
                 raise PermissionDenied('This user does not have permissions to'
-                                       + 'perform this operation.')
+                                       'perform this operation.')
         else:
             raise ValidationError('The username and password were incorrect.')
 
@@ -160,7 +167,7 @@ class PageDataConverter(object):
     def add_defaults(self, post_dict):
         # Related Posts
         for pagetype in ['events', 'newsroom', 'posts']:
-            post_dict['sidefoot-0-value-relate_'+pagetype] = 'on'
+            post_dict['sidefoot-0-value-relate_' + pagetype] = 'on'
         post_dict['sidefoot-0-order'] = '0'
         post_dict['sidefoot-count'] = '1'
         post_dict['sidefoot-0-deleted'] = ''
@@ -171,7 +178,7 @@ class PageDataConverter(object):
 
         # Categories
         for setting in ['MIN_NUM_FORMS', 'INITIAL_FORMS', 'TOTAL_FORMS']:
-            post_dict['categories-'+setting] = '0'
+            post_dict['categories-' + setting] = '0'
         post_dict['categories-MAX_NUM_FORMS'] = '2'
 
 

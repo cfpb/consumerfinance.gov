@@ -11,21 +11,23 @@ from django.core.exceptions import ImproperlyConfigured
 from pytz import timezone
 from dateutil.parser import parse
 from v1.forms import CalenderPDFFilterForm
-from django.core.urlresolvers import reverse, resolve
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.conf import settings
 
+
 class PDFReactorNotConfigured(Exception):
     pass
 
-## TODO: Update to python 3 when PDFreactor's python wrapper supports it.
+
+# TODO: Update to python 3 when PDFreactor's python wrapper supports it.
 if six.PY2:
     try:
         sys.path.append(os.environ.get('PDFREACTOR_LIB'))
-        from PDFreactor import *
+        from PDFreactor import PDFreactor
     except:
-       PDFreactor = None
+        PDFreactor = None
+
 
 class PDFGeneratorView(View):
     render_url = None
@@ -44,7 +46,8 @@ class PDFGeneratorView(View):
         if self.stylesheet_url is None:
             raise ImproperlyConfigured(
                 "PDFGeneratorView requires either a definition of "
-                "'stylesheet_url' or an implementation of 'get_stylesheet_url()'")
+                "'stylesheet_url' or an implementation of "
+                "'get_stylesheet_url()'")
         return self.stylesheet_url
 
     def get_filename(self):
@@ -59,12 +62,14 @@ class PDFGeneratorView(View):
             raise Exception("PDFGeneratorView requires a license")
 
         if settings.DEBUG and PDFreactor is None:
-            return HttpResponse("PDF Reactor is not configured, can not render %s" % self.get_render_url())
+            return HttpResponse("PDF Reactor is not configured, can not "
+                                "render %s" % self.get_render_url())
 
         try:
             pdf_reactor = PDFreactor()
         except:
-            raise PDFReactorNotConfigured('PDFreactor python library path needs to be configured.')
+            raise PDFReactorNotConfigured('PDFreactor python library path '
+                                          'needs to be configured.')
 
         pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_WARN)
         pdf_reactor.setLicenseKey(str(self.license))
@@ -72,11 +77,13 @@ class PDFGeneratorView(View):
         pdf_reactor.setAddTags(True)
         pdf_reactor.setAddBookmarks(True)
         pdf_reactor.addUserStyleSheet('', '', '', self.get_stylesheet_url())
-        url = '{0}?filter_calendar={1}&filter_range_date_gte={2}&filter_range_date_lte={3}'.format(
-                self.get_render_url(),
-                query_opts['filter_calendar'],
-                query_opts['filter_range_date_gte'],
-                query_opts['filter_range_date_lte'])
+        url = ('{0}?filter_calendar={1}&'
+               'filter_range_date_gte={2}&'
+               'filter_range_date_lte={3}'.format(
+                   self.get_render_url(),
+                   query_opts['filter_calendar'],
+                   query_opts['filter_range_date_gte'],
+                   query_opts['filter_range_date_lte']))
 
         result = pdf_reactor.renderDocumentFromURL(url)
 
@@ -88,8 +95,8 @@ class PDFGeneratorView(View):
         else:
             # Set the correct header for PDF output
             response = HttpResponse(result, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename={0}'.format(
-                self.get_filename())
+            response['Content-Disposition'] = \
+                'attachment; filename={0}'.format(self.get_filename())
             return response
 
     def post(self, request):
@@ -116,6 +123,7 @@ class PDFGeneratorView(View):
                 messages.error(request, str(error),
                                extra_tags='leadership-calendar')
             return HttpResponseRedirect('/the-bureau/leadership-calendar/')
+
 
 class ICSView(ContextMixin, View):
     """
@@ -194,14 +202,14 @@ class ICSView(ContextMixin, View):
         # Create the event
         event = icalendar.Event()
 
-         # Populate the event
+        # Populate the event
         event.add('summary', self.get_field_value('event_summary'))
         event.add('uid', self.get_field_value('event_uid'))
         event.add('location', self.get_field_value('event_location'))
-        dtstart = self.make_date_tz_aware(self.get_field_value('event_dtstart'),
-                                          'starting_tzidnfo')
-        dtend = self.make_date_tz_aware(self.get_field_value('event_dtend'),
-                                        'ending_tzidnfo')
+        dtstart = self.make_date_tz_aware(
+            self.get_field_value('event_dtstart'), 'starting_tzidnfo')
+        dtend = self.make_date_tz_aware(
+            self.get_field_value('event_dtend'), 'ending_tzidnfo')
         event.add('dtstart', dtstart)
         event.add('dtend', dtend)
         event.add('dtstamp', parse(self.get_field_value('event_dtstamp')))
@@ -224,8 +232,8 @@ class ICSView(ContextMixin, View):
                                 content_type='text/calendar',
                                 status=source_status,
                                 charset='utf-8')
-        response['Content-Disposition'] = 'attachment;filename={}.ics'.format(
-            event_slug)
+        response['Content-Disposition'] = \
+            'attachment;filename={}.ics'.format(event_slug)
         return response
 
     def get(self, *args, **kwargs):

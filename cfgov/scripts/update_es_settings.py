@@ -1,12 +1,12 @@
 from elasticsearch import Elasticsearch
-from elasticsearch.client import IndicesClient
 
 from django.conf import settings
 
 
-# This is run so the Elasticsearch index settings actually get updated with the
-# new settings when they're changed. We're going to just put this as part of our
-# deployment so it gets run before a sheer_index to prevent failed deployments.
+# This is run so the Elasticsearch index settings actually get updated with
+# the new settings when they're changed. We're going to just put this as part
+# of our deployment so it gets run before a sheer_index to prevent failed
+# deployments.
 def run():
     es = Elasticsearch(settings.SHEER_ELASTICSEARCH_SERVER)
     index_name = settings.SHEER_ELASTICSEARCH_INDEX

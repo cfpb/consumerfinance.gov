@@ -17,11 +17,14 @@ def get_tableblocks(page):
         stream_data = page.specific.content.stream_data
     except:
         return []
-    tableblocks = list(filter(lambda item: item['type'] == 'table_block', stream_data))
-    full_width_text_items = list(filter(lambda item: item['type'] == 'full_width_text', stream_data))
+    tableblocks = list(
+        filter(lambda item: item['type'] == 'table_block', stream_data))
+    full_width_text_items = list(
+        filter(lambda item: item['type'] == 'full_width_text', stream_data))
     for item in full_width_text_items:
         sub_items = item['value']
-        for sub_item in list(filter(lambda i: i['type'] == 'table_block', sub_items)):
+        for sub_item in list(
+                filter(lambda i: i['type'] == 'table_block', sub_items)):
             tableblocks.append(sub_item)
     return tableblocks
 

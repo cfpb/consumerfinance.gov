@@ -1,5 +1,6 @@
 from django.contrib.staticfiles.finders import FileSystemFinder
 
+
 class NoPHPFileSystemFinder(FileSystemFinder):
     def find(self, path, all=False):
         if path.lower().endswith('.php'):
@@ -9,4 +10,4 @@ class NoPHPFileSystemFinder(FileSystemFinder):
 
     def list(self, ignore_patterns):
         ignore_patterns.append('*.php')
-        return super(NoPHPFileSystemFinder,self).list(ignore_patterns)
+        return super(NoPHPFileSystemFinder, self).list(ignore_patterns)

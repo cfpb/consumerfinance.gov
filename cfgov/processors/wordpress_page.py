@@ -1,15 +1,14 @@
-import sys
 import json
-import os.path
 import requests
 from sheerlike.external_links import process_external_links
 
 
 def posts_at_url(url):
 
-    results = {'posts':[]}
+    results = {'posts': []}
     for post_id in ['36603', '36605', '36601']:
-        resp = requests.get('http://www.consumerfinance.gov/api/get_post/', params={'post_type': 'page', 'post_id': post_id})
+        resp = requests.get('http://www.consumerfinance.gov/api/get_post/',
+                            params={'post_type': 'page', 'post_id': post_id})
         results['posts'].append(json.loads(resp.content)['post'])
 
     for p in results['posts']:

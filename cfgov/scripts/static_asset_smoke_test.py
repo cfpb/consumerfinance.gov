@@ -87,8 +87,7 @@ if __name__ == '__main__':
     logger.info("{} took {} seconds to check {}\n".format(
         sys.argv[0],
         int(time.time() - start),
-        CFPB_BASE
-        )
+        CFPB_BASE)
     )
     if not fail:
         logger.info('\x1B[32mSUCCESS! All static links return 200.\x1B[0m')

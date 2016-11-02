@@ -1,5 +1,4 @@
 import mock
-import json
 import urllib2
 
 from django.core.urlresolvers import reverse
@@ -46,7 +45,8 @@ class TestCalendarEvents(TestCase):
     @mock.patch('cal.views.render')
     @mock.patch('cal.views.CalendarPDFForm')
     @mock.patch('cal.views.set_cal_events_context')
-    def test_display_calls_render_if_no_pdfreactor(self, context, form, render):
+    def test_display_calls_render_if_no_pdfreactor(
+            self, context, form, render):
         display(self.request, pdf=True)
         self.assertEqual(render.call_count, 1)
         self.assertEqual(
@@ -61,8 +61,8 @@ class TestCalendarEvents(TestCase):
     @mock.patch('cal.views.CalendarFilterForm')
     @mock.patch('cal.views.set_pagination_context')
     @mock.patch('cal.views.set_cal_events_context')
-    def test_display_calls_set_pagination_context(self,
-            mock_set_cal_events_context, mock_set_pagination_context,
+    def test_display_calls_set_pagination_context(
+            self, mock_set_cal_events_context, mock_set_pagination_context,
             mock_form_class, mock_render):
         mock_form = mock.Mock()
         mock_form.is_valid.return_value = True
@@ -74,8 +74,8 @@ class TestCalendarEvents(TestCase):
     @mock.patch('cal.views.CalendarFilterForm')
     @mock.patch('cal.views.set_pagination_context')
     @mock.patch('cal.views.set_cal_events_context')
-    def test_display_calls_render_for_regular_view(self,
-            mock_set_cal_events_context, mock_set_pagination_context,
+    def test_display_calls_render_for_regular_view(
+            self, mock_set_cal_events_context, mock_set_pagination_context,
             mock_form_class, mock_render):
         mock_form = mock.Mock()
         mock_form.is_valid.return_value = True
@@ -83,7 +83,9 @@ class TestCalendarEvents(TestCase):
         template_name = 'about-us/the-bureau/leadership-calendar/index.html'
         display(self.request)
         assert mock_render.called
-        mock_render.assert_called_with(self.request, template_name, {'form': mock_form})
+        mock_render.assert_called_with(self.request,
+                                       template_name,
+                                       {'form': mock_form})
 
 
 class TestSetCalendarEventsContext(TestCase):
@@ -123,8 +125,8 @@ class TestSetPaginationContext(TestCase):
 
     @mock.patch('cal.views.PaginatorForSheerTemplates')
     @mock.patch('cal.views.configure_page_days')
-    def test_calls_configure_page_days(self, mock_configure_page_days,
-            mock_paginator):
+    def test_calls_configure_page_days(
+            self, mock_configure_page_days, mock_paginator):
         set_pagination_context(self.request, self.context)
         assert mock_configure_page_days.called
 
@@ -167,7 +169,6 @@ class TestPDFResponse(TestCase):
     def test_pdfreactor_error_sets_message(self, pdfreactor, messages):
         pdf_response(self.request, self.context)
         self.assertEqual(messages.error.call_count, 1)
-
 
     @patch('cal.views.messages')
     @patch('cal.views.PDFreactor', return_value=Mock(

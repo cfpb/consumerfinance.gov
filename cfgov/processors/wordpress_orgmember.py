@@ -35,7 +35,8 @@ def process_orgmember(member):
     else:
         member['has_parent'] = False
     if member['taxonomy_orgmember_cat']:
-        member['category'] = member['taxonomy_orgmember_cat'][0]['title'].replace('&amp;', '&')
+        member['category'] = \
+            member['taxonomy_orgmember_cat'][0]['title'].replace('&amp;', '&')
     if member['custom_fields'].get('name'):
         member['name'] = member['custom_fields'].get('name')
     else:
@@ -43,8 +44,8 @@ def process_orgmember(member):
     if member['custom_fields'].get('titles'):
         member['titles'] = member['custom_fields'].get('titles')
     else:
-        member['titles'] = [member['custom_fields'].get(title) for title in
-                           ['titles_0', 'titles_1']
+        member['titles'] = [member['custom_fields'].get(title)
+                            for title in ['titles_0', 'titles_1']
                             if member['custom_fields'].get(title)]
     del member['custom_fields']
 

@@ -1,10 +1,11 @@
-from django.conf.urls import *
+from django.conf.urls import url, patterns
 
 
-urlpatterns = patterns('cal.views',
+urlpatterns = patterns(
+    'cal.views',
     url(r'^$', 'display', name='leadership-calendar'),
     url(r'^pdf/$',
         'display',
-        kwargs={'pdf':True},
+        kwargs={'pdf': True},
         name='leadership-calendar-pdf'),
 )

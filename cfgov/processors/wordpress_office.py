@@ -34,7 +34,9 @@ def process_office(post):
 
     # get intro text & subscribe form data from custom fields
     intro = {}
-    for attr in ['intro_text', 'intro_subscribe_form', 'intro_govdelivery_code']:
+    for attr in ['intro_text',
+                 'intro_subscribe_form',
+                 'intro_govdelivery_code']:
         if attr in custom_fields:
             new_attr = attr.replace('intro_', '')
             intro[new_attr] = custom_fields[attr]
@@ -105,7 +107,9 @@ def process_office(post):
     for i, tag in enumerate(post['tags']):
         if not tag.isalnum():
             for char in tag:
-                if not char.isalnum() and not char.isspace() and not char == '-':
+                if (not char.isalnum() and
+                        not char.isspace() and
+                        not char == '-'):
                     post['tags'][i] = tag.replace(char, '')
 
     del post['custom_fields']
