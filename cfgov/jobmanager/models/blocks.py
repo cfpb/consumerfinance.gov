@@ -4,7 +4,6 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from v1.atomic_elements import organisms
 from wagtail.wagtailcore import blocks
-from jinja2 import Markup
 
 
 class OpenJobListingsMixin(object):
@@ -68,10 +67,10 @@ class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
     field_headers = ['TITLE', 'GRADE', 'POSTING CLOSES', 'REGION']
 
     def make_title_value(self, instance, value):
-        return Markup('<a href="{}">{}</a>'.format(
+        return '<a href="{}">{}</a>'.format(
             instance.relative_url(instance.get_site()),
             value
-        ))
+        )
 
     def make_grades_value(self, instance, value):
         return ', '.join(sorted(g.grade.grade for g in value.all()))
