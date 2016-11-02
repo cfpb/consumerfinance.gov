@@ -33,7 +33,7 @@ class CSPTemplateTagsTest(TestCase):
 
     def render_and_check_sha(self, template):
         request = self.factory.get('/')
-        template.render({'request':request}, request=request)
+        template.render({}, request=request)
         self.assertIn(self.expected_sha, request.script_hashes)
 
     def test_jinja2_tag(self):
