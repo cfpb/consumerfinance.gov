@@ -3,6 +3,7 @@
 /**
  * @constant
  * @type {string}
+ * @description
  * Constant for the name of the data-* attribute set on
  * HTML DOM elements for access by JavaScript.
  */
@@ -11,6 +12,7 @@ var JS_HOOK = 'data-js-hook';
 /**
  * @constant
  * @type {string}
+ * @description
  * Flag prefix for settings that describe what JavaScript
  * behaviors should be attached to a component.
  * This would be set in the markup and initialized when
@@ -28,6 +30,7 @@ var BEHAVIOR_PREFIX = 'behavior_';
 /**
  * @constant
  * @type {string}
+ * @description
  * Flag prefix for settings related to changes in a components
  * state set in the data-* JavaScript hook.
  *
