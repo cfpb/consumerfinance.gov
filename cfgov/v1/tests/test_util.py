@@ -55,13 +55,13 @@ class TestUtilFunctions(TestCase):
         self.revision_4 = self.new_page.revisions.create(content_json=json.dumps(content_json))
 
     def test_production_returns_first_live_page(self):
-        self.request.site.hostname = 'localhost'
-        version = self.new_page.get_appropriate_page_version(self.request.site.hostname)
+        self.request.is_staging = False
+        version = self.new_page.get_appropriate_page_version(self.request)
         self.assertEqual(version.title, 'revision 2')
 
     def test_shared_returns_first_shared_page(self):
-        self.request.site.hostname = 'content.localhost'
-        version = self.new_page.get_appropriate_page_version(self.request.site.hostname)
+        self.request.is_staging = True
+        version = self.new_page.get_appropriate_page_version(self.request)
         self.assertEqual(version.title, 'revision 3')
 
     def test_shared_returns_None_for_only_draft_versions(self):
@@ -69,13 +69,14 @@ class TestUtilFunctions(TestCase):
         self.revision_2.delete()
         self.revision_3.delete()
 
-        version = self.new_page.get_appropriate_page_version(self.request.site.hostname)
+        version = self.new_page.get_appropriate_page_version(self.request)
         self.assertIsNone(version)
 
     def test_shared_returns_None_if_page_not_live_when_on_production(self):
         self.revision_1.delete()
         self.revision_2.delete()
-        version = self.new_page.get_appropriate_page_version(self.request.site.hostname)
+        self.request.is_staging = False
+        version = self.new_page.get_appropriate_page_version(self.request)
         self.assertIsNone(version)
 
     @mock.patch('__builtin__.isinstance')
