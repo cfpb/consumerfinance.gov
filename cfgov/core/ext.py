@@ -1,7 +1,7 @@
 from jinja2 import nodes
 from jinja2.ext import Extension
 
-from .utils import hash_for_script
+from .utils import add_js_hash_to_request
 
 
 class CSPScriptHashExtension(Extension):
@@ -28,11 +28,9 @@ class CSPScriptHashExtension(Extension):
         js = caller()
 
         request = context['request']
-        if not hasattr(request, 'script_hashes'):
-            request.script_hashes = []
 
-        hash = hash_for_script(js)
-        request.script_hashes.append(hash)
+        add_js_hash_to_request(request, js)
+
         return u"<script>{js}</script>".format(js=js)
 
 
