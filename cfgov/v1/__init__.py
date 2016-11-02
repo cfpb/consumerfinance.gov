@@ -196,5 +196,5 @@ def get_filter_data(page):
     for ancestor in page.get_ancestors().reverse().specific():
         if ancestor.specific_class.__name__ in ['BrowseFilterablePage', 'SublandingFilterablePage',
                                                 'EventArchivePage', 'NewsroomLandingPage']:
-            return util.get_form_id(ancestor), ancestor
+            return ancestor.form_id(), ancestor
     return None, None

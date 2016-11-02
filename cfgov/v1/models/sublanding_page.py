@@ -77,7 +77,7 @@ class SublandingPage(CFGOVPage):
                         and 'archive' not in p.title.lower()]
         posts_tuple_list = []
         for page in filter_pages:
-            form_id = str(util.get_form_id(page))
+            form_id = str(page.form_id())
             form = FilterableListForm(parent=page, hostname=request.site.hostname)
             for post in form.get_page_set():
                 posts_tuple_list.append((form_id, post))

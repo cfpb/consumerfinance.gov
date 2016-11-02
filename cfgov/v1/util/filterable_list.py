@@ -93,3 +93,10 @@ class FilterableListMixin(object):
 
     def per_page_limit(self):
         return 10
+
+    def form_id(self):
+        form_ids = self.get_filter_ids()
+        if form_ids:
+            return form_ids[0]
+        else:
+            return 0

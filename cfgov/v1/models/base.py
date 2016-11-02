@@ -150,7 +150,7 @@ class CFGOVPage(Page):
         form = FilterableListForm(parent=activity_log, hostname=request.site.hostname)
         available_tags = [tag[0] for name, tags in form.fields['topics'].choices for tag in tags]
         tags = []
-        index = util.get_form_id(activity_log)
+        index = activity_log.form_id()
         for tag in self.tags.slugs():
             if tag in available_tags:
                 tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
