@@ -189,13 +189,13 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
 
         self.assertHtmlRegexpMatches(html, (
             '<tr>'
-            '<td data-label="TITLE"><a href=".*">Assistant</a></td>'
+            '<td data-label="TITLE"><a class="" href=".*">Assistant</a></td>'
             '<td data-label="GRADE">12</td>'
             '<td data-label="POSTING CLOSES">APR 21, 2099</td>'
             '<td data-label="REGION">Silicon Valley</td>'
             '</tr>'
             '<tr>'
-            '<td data-label="TITLE"><a href=".*">Manager</a></td>'
+            '<td data-label="TITLE"><a class="" href=".*">Manager</a></td>'
             '<td data-label="GRADE">1, 2, 3</td>'
             '<td data-label="POSTING CLOSES">AUG 05, 2099</td>'
             '<td data-label="REGION">DC, NY</td>'
@@ -213,7 +213,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
 
         self.assertHtmlRegexpMatches(html, (
             '<tr>'
-            '<td data-label="TITLE"><a href=".*">CEO</a></td>'
+            '<td data-label="TITLE"><a class="" href=".*">CEO</a></td>'
             '<td data-label="GRADE"></td>'
             '<td data-label="POSTING CLOSES">DEC 01, 2099</td>'
             '<td data-label="REGION"></td>'
