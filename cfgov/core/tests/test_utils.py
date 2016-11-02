@@ -1,7 +1,5 @@
-import unittest
-
 from django.template.loader import get_template
-from django.test import RequestFactory
+from django.test import TestCase, RequestFactory
 
 from core.utils import (extract_answers_from_request,
                         hash_for_script,
@@ -14,7 +12,7 @@ class FakeRequest(object):
         self.POST = params
 
 
-class JavascriptHashTest(unittest.TestCase):
+class JavascriptHashTest(TestCase):
     script = "alert('hello javascript');"
     expected_sha = "'sha256-Ft3A+V6Yme/8r0/K/uC38Zj0VJ98VnbTD3MLupPTNuc='"
 
@@ -29,7 +27,7 @@ class JavascriptHashTest(unittest.TestCase):
         self.assertIn(self.expected_sha, request.script_hashes)
 
 
-class CSPTemplateTagsTest(unittest.TestCase):
+class CSPTemplateTagsTest(TestCase):
     factory = RequestFactory()
     expected_sha = "'sha256-SypW8zp5ZrylvHKnRaTv4V9wLQxdi9hBpjLLWAzN4Xw='"
 
@@ -50,7 +48,7 @@ class CSPTemplateTagsTest(unittest.TestCase):
         self.render_and_check_sha(template)
 
 
-class ExtractAnswersTest(unittest.TestCase):
+class ExtractAnswersTest(TestCase):
 
     def test_no_answers_to_extract(self):
         request = FakeRequest({'unrelated_key': 'unrelated_value'})
