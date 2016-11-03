@@ -100,6 +100,9 @@ class EmailSignUp(blocks.StructBlock):
         icon = 'mail'
         template = '_includes/organisms/email-signup.html'
 
+    class Media:
+        js = ['email-signup.js']
+
 
 class RegComment(blocks.StructBlock):
     document_id = blocks.CharBlock(required=True, label='Document ID',

@@ -21,6 +21,12 @@ var ERROR_MESSAGES = {
   FIELD: {
     REQUIRED: 'This field is required.'
   },
+  FORM: {
+    SUBMISSION: {
+      ERROR: 'There was an error in your submission. Please try again later.',
+      SUCCESS: 'Your submission was successfully received.'
+    }
+  },
   DEFAULT: 'Error!',
   DOM: {
     INVALID: 'Invalid dom element was provided.'
