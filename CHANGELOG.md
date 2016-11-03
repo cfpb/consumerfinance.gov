@@ -19,6 +19,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ### Changed
+- Fixed issue surrounding table link download / external icons not appearing.
+- Frontend: replaced `documentation` npm module with `jsdoc`.
 
 
 ### Removed

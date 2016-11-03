@@ -37,7 +37,7 @@ def check_static(url):
 
     count = 0
     failures = []
-    soup = bs(requests.get(url).content, 'lxml')
+    soup = bs(requests.get(url).content, 'html.parser')
     static_js = [
         link.get('src') for link in soup.findAll('script') if
         link.get('src') and 'static' in link.get('src')
