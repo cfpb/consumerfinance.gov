@@ -28,6 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
+- all references to `django-htmlmin`
 
 
 ## 4.0.0
