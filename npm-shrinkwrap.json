@@ -1756,16 +1756,6 @@
           "from": "lodash@>=4.0.0 <5.0.0",
           "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.6.tgz"
         },
-        "minimist": {
-          "version": "0.0.8",
-          "from": "minimist@0.0.8",
-          "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
-        },
-        "mkdirp": {
-          "version": "0.5.1",
-          "from": "mkdirp@^0.5.0",
-          "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz"
-        },
         "strip-bom": {
           "version": "3.0.0",
           "from": "strip-bom@>=3.0.0 <4.0.0",
@@ -4045,16 +4035,6 @@
           "from": "glob@>=5.0.15 <6.0.0",
           "resolved": "https://registry.npmjs.org/glob/-/glob-5.0.15.tgz"
         },
-        "minimist": {
-          "version": "0.0.8",
-          "from": "minimist@0.0.8",
-          "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
-        },
-        "mkdirp": {
-          "version": "0.5.1",
-          "from": "mkdirp@0.5.x",
-          "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz"
-        },
         "nopt": {
           "version": "3.0.6",
           "from": "nopt@>=3.0.0 <4.0.0",
@@ -4128,16 +4108,6 @@
           "version": "3.6.0",
           "from": "lodash@>=3.6.0 <3.7.0",
           "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.6.0.tgz"
-        },
-        "minimist": {
-          "version": "0.0.8",
-          "from": "minimist@0.0.8",
-          "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
-        },
-        "mkdirp": {
-          "version": "0.5.1",
-          "from": "mkdirp@0.5.x",
-          "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz"
         },
         "nopt": {
           "version": "3.0.6",
@@ -4286,16 +4256,6 @@
           "version": "0.3.6",
           "from": "marked@>=0.3.6 <0.4.0",
           "resolved": "https://registry.npmjs.org/marked/-/marked-0.3.6.tgz"
-        },
-        "minimist": {
-          "version": "0.0.8",
-          "from": "minimist@0.0.8",
-          "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
-        },
-        "mkdirp": {
-          "version": "0.5.1",
-          "from": "mkdirp@~0.5.1",
-          "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz"
         },
         "strip-json-comments": {
           "version": "2.0.1",
@@ -4981,7 +4941,7 @@
     },
     "mkdirp": {
       "version": "0.5.1",
-      "from": "mkdirp@0.5.1",
+      "from": "mkdirp@>=0.5.0 <0.6.0",
       "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz",
       "dependencies": {
         "minimist": {
@@ -5010,16 +4970,6 @@
           "version": "3.3.2",
           "from": "json3@3.3.2",
           "resolved": "https://registry.npmjs.org/json3/-/json3-3.3.2.tgz"
-        },
-        "minimist": {
-          "version": "0.0.8",
-          "from": "minimist@0.0.8",
-          "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
-        },
-        "mkdirp": {
-          "version": "0.5.1",
-          "from": "mkdirp@0.5.1",
-          "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz"
         },
         "supports-color": {
           "version": "3.1.2",
@@ -5671,16 +5621,6 @@
           "version": "4.16.6",
           "from": "lodash@>=4.5.1 <5.0.0",
           "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.6.tgz"
-        },
-        "minimist": {
-          "version": "0.0.8",
-          "from": "minimist@0.0.8",
-          "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
-        },
-        "mkdirp": {
-          "version": "0.5.1",
-          "from": "mkdirp@^0.5.0",
-          "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz"
         },
         "pretty-bytes": {
           "version": "3.0.1",
@@ -7310,19 +7250,7 @@
     "write": {
       "version": "0.2.1",
       "from": "write@>=0.2.1 <0.3.0",
-      "resolved": "https://registry.npmjs.org/write/-/write-0.2.1.tgz",
-      "dependencies": {
-        "minimist": {
-          "version": "0.0.8",
-          "from": "minimist@0.0.8",
-          "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
-        },
-        "mkdirp": {
-          "version": "0.5.1",
-          "from": "mkdirp@^0.5.1",
-          "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz"
-        }
-      }
+      "resolved": "https://registry.npmjs.org/write/-/write-0.2.1.tgz"
     },
     "write-file-atomic": {
       "version": "1.2.0",

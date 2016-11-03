@@ -60,7 +60,7 @@
     "jsdom": "8.3.0",
     "localtunnel": "1.8.1",
     "minimist": "1.2.0",
-    "mkdirp": "0.3.0",
+    "mkdirp": "0.5.1",
     "mocha": "3.0.2",
     "mocha-jsdom": "1.1.0",
     "protractor": "4.0.2",
