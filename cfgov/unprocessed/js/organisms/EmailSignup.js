@@ -5,6 +5,8 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
 var FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
 var Notification = require( '../molecules/Notification' );
+var validateEmail = require( '../modules/util/validators' ).email;
+var BASE_CLASS = 'o-email-signup';
 
 /**
  * EmailSignup
@@ -17,7 +19,6 @@ var Notification = require( '../molecules/Notification' );
  * @returns {EmailSignup} An instance.
  */
 function EmailSignup( element ) {
-  var BASE_CLASS = 'o-email-signup';
   var UNDEFINED;
   var _baseElement = atomicHelpers.checkDom( element, BASE_CLASS );
   var _formElement = _baseElement.querySelector( 'form' );
@@ -40,20 +41,22 @@ function EmailSignup( element ) {
   }
 
   /**
-   * @param {HTMLNode} event
+   * @param {event} event DOM event
    * @returns {event} DOM event.
    */
   function _onSubmit( event ) {
+    var isValid;
     event.preventDefault();
     if ( !_emailElement.value ) {
       return UNDEFINED;
     }
-    if ( isValidEmail( _emailElement ) === false ) {
+    isValid = validateEmail( _emailElement );
+    if ( isValid.email === false ) {
       _notification.setTypeAndContent( _notification.ERROR,
                                        ERROR_MESSAGES.EMAIL.INVALID );
       _notification.show();
     } else {
-      sendEmail();
+      _sendEmail();
     }
 
     return event;
@@ -62,9 +65,17 @@ function EmailSignup( element ) {
   /**
    * Sends form data and displays notification on success / failure.
    */
-  function sendEmail( ) {
+  function _sendEmail( ) {
     var DONE_CODE = 4;
-    var SUCCESS_CODES = [ 200, 201, 202, 203, 204, 205, 206 ];
+    var SUCCESS_CODES = {
+      200: 'ok',
+      201: 'created',
+      202: 'accepted',
+      203: 'non-authoritative info',
+      204: 'no content',
+      205: 'reset content',
+      206: 'partial content'
+    };
     var notificationType = _notification.ERROR;
     var notificationMsg = FORM_MESSAGES.ERROR;
     var xhr = new XMLHttpRequest();
@@ -73,8 +84,7 @@ function EmailSignup( element ) {
     xhr.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' );
     xhr.onreadystatechange = function() {
       if ( xhr.readyState === DONE_CODE ) {
-        // TODO: It might make sense to use min / max instead.
-        if ( SUCCESS_CODES.indexOf( xhr.status ) > -1 ) {
+        if ( xhr.status in SUCCESS_CODES ) {
           notificationType = _notification.SUCCESS;
           notificationMsg = FORM_MESSAGES.SUCCESS;
         }
@@ -82,32 +92,14 @@ function EmailSignup( element ) {
         _notification.show();
       }
     };
-    xhr.send( serializeFormData() );
-  }
-
-  /**
-   * Determines if a field contains a valid email.
-   *
-   * @param {HTMLNode} element Form field.
-   * @returns {Boolean} indicating if the field is valid email.
-   */
-  function isValidEmail( element ) {
-    var regex =
-      '^[a-z0-9\u007F-\uffff!#$%&\'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9' +
-      '\u007F-\uffff!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-z0-9]' +
-      '(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$';
-    var emailRegex = new RegExp( regex, 'i' );
-    var isValid = true;
-    if ( emailRegex.test( element.value ) === false ) {
-      isValid = false;
-    }
-    return isValid;
+    xhr.send( _serializeFormData() );
   }
 
   /**
    * @returns {string} representing form data.
+   * Example: param1=value1&param2=value2
    */
-  function serializeFormData() {
+  function _serializeFormData() {
     return [ _emailElement, _codeElement ].map( function( formElement ) {
       return encodeURIComponent( formElement.name ) +
       '=' + encodeURIComponent( formElement.value );
@@ -119,6 +111,6 @@ function EmailSignup( element ) {
   return this;
 }
 
-EmailSignup.selector = '.o-email-signup';
+EmailSignup.BASE_CLASS = '.' + BASE_CLASS;
 
 module.exports = EmailSignup;
