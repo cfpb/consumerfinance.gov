@@ -66,8 +66,9 @@ class ProcessEvent(object):
     # the same uid
     def _create_unique_id(self):
 
-        temp = str(self.e.uid) + '@' + \
-            re.sub(r'[ -:]', '', str(self.e.dtstart))
+        temp = (str(self.e.uid)
+                + '@'
+                + re.sub(r'[ -:]', '', str(self.e.dtstart)))
 
         self.e.uid = temp
 

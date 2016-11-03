@@ -107,9 +107,9 @@ def process_office(post):
     for i, tag in enumerate(post['tags']):
         if not tag.isalnum():
             for char in tag:
-                if (not char.isalnum() and
-                        not char.isspace() and
-                        not char == '-'):
+                if (not char.isalnum()
+                        and not char.isspace()
+                        and not char == '-'):
                     post['tags'][i] = tag.replace(char, '')
 
     del post['custom_fields']

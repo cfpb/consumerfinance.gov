@@ -105,11 +105,11 @@ def submit_comment(data):
 
     parsed_data = MultipartEncoder(
         fields={
-            'first_name':
-                data['first_name'] if data.get('first_name') else u'Anonymous',
-            'last_name':
-                data['last_name'] if data.get('last_name') else u'Anonymous',
-            'email': data['email'] if data.get('email') else u'NA',
+            'first_name': (data['first_name'] if data.get('first_name')
+                           else u'Anonymous'),
+            'last_name': (data['last_name'] if data.get('last_name')
+                          else u'Anonymous'),
+            'email': (data['email'] if data.get('email') else u'NA'),
             'general_comment': data['general_comment'],
             'comment_on': data['comment_on'],
             'organization': u'NA'

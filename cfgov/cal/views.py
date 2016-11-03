@@ -47,8 +47,8 @@ def display(request, pdf=False):
     """
 
     template_name = 'about-us/the-bureau/leadership-calendar/index.html'
-    form = CalendarPDFForm(request.GET) if pdf \
-        else CalendarFilterForm(request.GET)
+    form = (CalendarPDFForm(request.GET) if pdf
+            else CalendarFilterForm(request.GET))
     context = {'form': form}
     form_is_valid = form.is_valid()
 
@@ -79,10 +79,10 @@ def set_cal_events_context(context):
     cal_q = get_calendar_events_query(context['form'])
     events = CFPBCalendarEvent.objects.filter(cal_q).order_by('-dtstart')
     stats = events.aggregate(Min('dtstart'), Max('dtend'))
-    range_start = context['form'].cleaned_data.get('filter_range_date_gte') \
-        or stats['dtstart__min']
-    range_end = context['form'].cleaned_data.get('filter_range_date_lte') \
-        or stats['dtend__max']
+    range_start = (context['form'].cleaned_data.get('filter_range_date_gte')
+                   or stats['dtstart__min'])
+    range_end = (context['form'].cleaned_data.get('filter_range_date_lte')
+                 or stats['dtend__max'])
 
     context.update({
         'events': events,
