@@ -102,6 +102,7 @@ MIDDLEWARE_CLASSES = (
     'v1.middleware.StagingMiddleware',
     'htmlmin.middleware.HtmlMinifyMiddleware',
     'htmlmin.middleware.MarkRequestMiddleware',
+    'core.middleware.UpstreamCacheControlMiddleware'
 )
 
 ROOT_URLCONF = 'cfgov.urls'
