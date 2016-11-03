@@ -41,4 +41,3 @@ unipath>=1.1,<=2.0
 vobject==0.9.1
 wagtail==1.6.3
 Wand==0.4.2
-django-htmlmin==0.10.0
