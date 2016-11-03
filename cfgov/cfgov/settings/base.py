@@ -100,7 +100,7 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'transition_utilities.middleware.RewriteNemoURLsMiddleware',
     'v1.middleware.StagingMiddleware',
-    'core.middleware.UpstreamCacheControlMiddleware'
+    'core.middleware.DownstreamCacheControlMiddleware'
 )
 
 ROOT_URLCONF = 'cfgov.urls'
