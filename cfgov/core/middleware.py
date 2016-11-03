@@ -1,5 +1,5 @@
 class UpstreamCacheControlMiddleware(object):
     def process_response(self, request, response):
-        # import pdb;pdb.set_trace()
-
+        if 'CSRF_COOKIE_USED' in request.META:
+            response['Edge-Control'] = 'no-store'
         return response
