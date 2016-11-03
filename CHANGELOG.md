@@ -22,6 +22,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed issue surrounding table link download / external icons not appearing.
 - Frontend: replaced `documentation` npm module with `jsdoc`.
 - Refactoring email signup to remove validate.js.
+- Frontend: update `browser-sync` to version `2.17.5` from `2.11.2`.
+- Frontend: update `mkdirp` to version `0.5.1` from `0.3.0`.
+
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
