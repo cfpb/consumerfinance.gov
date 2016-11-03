@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
-    "browser-sync": "2.11.2",
     "capital-framework": "3.6.1",
     "del": "2.2.2",
     "gulp": "3.9.1",
@@ -40,7 +39,7 @@
     "webpack-stream": "3.2.0"
   },
   "devDependencies": {
-    "browser-sync": "2.11.2",
+    "browser-sync": "2.17.5",
     "chai": "3.5.0",
     "es5-shim": "4.5.9",
     "glob-all": "3.0.1",
@@ -61,7 +60,7 @@
     "jsdom": "8.3.0",
     "localtunnel": "1.8.1",
     "minimist": "1.2.0",
-    "mkdirp": "0.3.0",
+    "mkdirp": "0.5.1",
     "mocha": "3.0.2",
     "mocha-jsdom": "1.1.0",
     "protractor": "4.0.2",
