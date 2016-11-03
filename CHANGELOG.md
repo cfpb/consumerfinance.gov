@@ -12,6 +12,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## 4.0.2
+
+### Removals
+- django-htmlmin removed from middleware and dependencies.
+
 ## 4.0.1
 
 ### Changed
