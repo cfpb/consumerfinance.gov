@@ -16,3 +16,12 @@ LOGGING = {}
 INSTALLED_APPS += (
     'wagtail.tests.testapp',
 )
+
+WAGTAILADMIN_RICH_TEXT_EDITORS = {
+    'default': {
+        'WIDGET': 'wagtail.wagtailadmin.rich_text.HalloRichTextArea',
+    },
+    'custom': {
+        'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
+    },
+}
