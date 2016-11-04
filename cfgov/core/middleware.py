@@ -1,3 +1,10 @@
+class DownstreamCacheControlMiddleware(object):
+    def process_response(self, request, response):
+        if 'CSRF_COOKIE_USED' in request.META:
+            response['Edge-Control'] = 'no-store'
+        return response
+
+
 class CSPScriptHashMiddleware(object):
     def process_response(self, request, response):
         if hasattr(request, 'script_hashes'):

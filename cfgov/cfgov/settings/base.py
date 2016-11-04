@@ -98,7 +98,8 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'transition_utilities.middleware.RewriteNemoURLsMiddleware',
     'v1.middleware.StagingMiddleware',
-    )
+    'core.middleware.DownstreamCacheControlMiddleware'
+)
 
 CSP_MIDDLEWARE_CLASSES = ('core.middleware.CSPScriptHashMiddleware',
                           'csp.middleware.CSPMiddleware')
