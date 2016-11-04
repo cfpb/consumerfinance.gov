@@ -25,7 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: update `browser-sync` to version `2.17.5` from `2.11.2`.
 - Frontend: update `mkdirp` to version `0.5.1` from `0.3.0`.
 - Fixed broken `manage.py check` command when using `cfgov.settings.test`.
-
+- Fixed conference registration form capacity logic.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
