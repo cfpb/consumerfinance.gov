@@ -36,6 +36,7 @@ def register_permalink(sheer_type, url_pattern_name):
 def global_render_template(name, **kwargs):
     request = get_request()
     context = RequestContext(request, kwargs or None)
+    context['request'] = request
     template = loader.get_template(name, using='wagtail-env')
     return mark_safe(template.render(context.flatten()))
 
@@ -49,24 +50,6 @@ def url_for(app, filename, site_slug=None):
         raise ValueError("url_for doesn't know about %s" % app)
 
 
-class SheerlikeContext(Context):
-
-    def __init__(self, environment, parent, name, blocks):
-        super(
-            SheerlikeContext,
-            self).__init__(
-            environment,
-            parent,
-            name,
-            blocks)
-        try:
-            self.vars['request'] = get_request()
-        except:
-            pass
-
-# Monkey patch not needed in master version of Jinja2
-# https://github.com/mitsuhiko/jinja2/commit/f22fdd5ffe81aab743f78290071b0aa506705533
-jinja2.runtime.Context = SheerlikeContext
 
 
 class SheerlikeEnvironment(Environment):
