@@ -3,6 +3,7 @@ import mock
 from django.test import RequestFactory, TestCase
 
 from ..handlers import ConferenceRegistrationHandler as Handler
+from data_research.models import ConferenceRegistration
 
 
 class TestConferenceRegistrationHandler(TestCase):
@@ -41,13 +42,6 @@ class TestConferenceRegistrationHandler(TestCase):
         assert 'form' in result
         assert 'is_at_capacity' in result
         self.assertTrue(result['is_at_capacity'])
-
-    @mock.patch('__builtin__.reduce')
-    @mock.patch('data_research.handlers.ConferenceRegistration')
-    def test_is_at_capacity_calls_filter_with_generated_query_from_codes(self, mock_model, mock_reduce):
-        mock_model.objects.filter().count.return_value = 0
-        self.handler.is_at_capacity()
-        mock_model.objects.filter.assert_called_with(mock_reduce())
 
     @mock.patch('data_research.handlers.ConferenceRegistration')
     def test_is_at_capacity_returns_False_for_attendance_less_than_capacity(self, mock_model):
@@ -254,3 +248,33 @@ class TestConferenceRegistrationHandler(TestCase):
         form.errors = {'err': ['error message']}
         self.handler.fail(form)
         mock_messages.error.assert_called_with(self.handler.request, form.errors['err'][0])
+
+    def test_capacity_not_reached_no_registrations_yet(self):
+        self.assertFalse(self.handler.is_at_capacity())
+
+    def test_capacity_not_reached(self):
+        ConferenceRegistration.objects.bulk_create(
+            [ConferenceRegistration(
+                codes=json.dumps(self.handler.block_value['codes'])
+            )] * (self.handler.block_value['capacity'] - 1)
+        )
+
+        self.assertFalse(self.handler.is_at_capacity())
+
+    def test_capacity_reached(self):
+        ConferenceRegistration.objects.bulk_create(
+            [ConferenceRegistration(
+                codes=json.dumps(self.handler.block_value['codes'])
+            )] * self.handler.block_value['capacity']
+        )
+
+        self.assertTrue(self.handler.is_at_capacity())
+
+    def test_capacity_not_reached_for_other_codes(self):
+        ConferenceRegistration.objects.bulk_create(
+            [ConferenceRegistration(
+                codes=json.dumps(['some', 'different', 'codes'])
+            )] * self.handler.block_value['capacity']
+        )
+
+        self.assertFalse(self.handler.is_at_capacity())

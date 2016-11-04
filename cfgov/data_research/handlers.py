@@ -31,10 +31,14 @@ class ConferenceRegistrationHandler(Handler):
         return {'form': ConferenceRegistrationForm()}
 
     def is_at_capacity(self):
-        query = reduce(
-            lambda x, y: Q(('codes__contains', x)) & Q(('codes__contains', y)),
-            self.block_value['codes']
-        )
+        query = Q()
+
+        # TODO: Let's perhaps use a less-dangerous way to compare
+        # codes than a straight string-compare against a JSON list
+        # Alternatively (less-safe), make sure codes are strictly
+        # very-unique and not subsets of each other.
+        for code in self.block_value['codes']:
+            query &= Q(codes__contains=code)
 
         capacity = self.block_value['capacity']
         attendee_count = ConferenceRegistration.objects.filter(query).count()
