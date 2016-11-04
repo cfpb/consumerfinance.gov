@@ -5,7 +5,10 @@ from v1.blocks import AbstractFormBlock
 
 
 class ConferenceRegistrationForm(AbstractFormBlock):
-    heading = blocks.CharBlock(required=False)
+    heading = blocks.CharBlock(required=False, help_text=(
+        'Note: Non-customizable fields will show up in '
+        'Preview and Publish modes.'
+    ))
     codes = blocks.ListBlock(blocks.CharBlock(label='Code'), label='GovDelivery codes')
     sessions = blocks.ListBlock(blocks.CharBlock(label='Session'), label='Sessions attending')
     capacity = atoms.IntegerBlock(help_text='Enter an integer that will be the conference attendance limit.')
