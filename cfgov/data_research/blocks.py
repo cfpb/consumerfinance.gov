@@ -6,7 +6,7 @@ from v1.blocks import AbstractFormBlock
 
 class ConferenceRegistrationForm(AbstractFormBlock):
     heading = blocks.CharBlock(required=False, help_text=(
-        'Note: Non-customizable fields will show up in '
+        'Note: Additional form field options will appear in '
         'Preview and Publish modes.'
     ))
     codes = blocks.ListBlock(blocks.CharBlock(label='Code'), label='GovDelivery codes')
