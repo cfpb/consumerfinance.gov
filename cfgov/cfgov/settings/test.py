@@ -1,7 +1,5 @@
 from .local import *
 
-HTML_MINIFY = False
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -18,3 +16,12 @@ LOGGING = {}
 INSTALLED_APPS += (
     'wagtail.tests.testapp',
 )
+
+WAGTAILADMIN_RICH_TEXT_EDITORS = {
+    'default': {
+        'WIDGET': 'wagtail.wagtailadmin.rich_text.HalloRichTextArea',
+    },
+    'custom': {
+        'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
+    },
+}
