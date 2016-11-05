@@ -231,7 +231,7 @@ class CFGOVPage(Page):
         home_page_children = request.site.root_page.get_children()
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
-                return [ancestor.get_appropriate_page_version(request) for ancestor in ancestors[i+1:]]
+                return [ancestor.specific.get_appropriate_page_version(request) for ancestor in ancestors[i+1:]]
         return []
 
     def get_appropriate_descendants(self, hostname, inclusive=True):
