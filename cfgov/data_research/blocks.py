@@ -9,10 +9,17 @@ class ConferenceRegistrationForm(AbstractFormBlock):
         'Note: Additional form field options will appear in '
         'Preview and Publish modes.'
     ))
-    codes = blocks.ListBlock(blocks.CharBlock(label='Code'), label='GovDelivery codes')
-    sessions = blocks.ListBlock(blocks.CharBlock(label='Session'), label='Sessions attending')
-    capacity = atoms.IntegerBlock(help_text='Enter an integer that will be the conference attendance limit.')
-    at_capacity_message = organisms.FullWidthText(help_text='Enter a message that will be shown when the event is at capacity')
+    code = blocks.CharBlock(label='GovDelivery Code')
+    sessions = blocks.ListBlock(
+        blocks.CharBlock(label='Session'),
+        label='Sessions attending'
+    )
+    capacity = atoms.IntegerBlock(help_text=(
+        'Enter an integer that will be the conference attendance limit.'
+    ))
+    at_capacity_message = organisms.FullWidthText(help_text=(
+        'Enter a message that will be shown when the event is at capacity'
+    ))
 
     class Meta:
         handler = 'data_research.handlers.ConferenceRegistrationHandler'

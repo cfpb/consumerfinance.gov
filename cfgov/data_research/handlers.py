@@ -1,14 +1,13 @@
 import json
-from govdelivery.api import GovDelivery
 
 from django.conf import settings
 from django.contrib import messages
-from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
+from govdelivery.api import GovDelivery
 
+from data_research.forms import ConferenceRegistrationForm
 from data_research.models import ConferenceRegistration
 from v1.handlers import Handler
-from .forms import ConferenceRegistrationForm
 
 
 class ConferenceRegistrationHandler(Handler):
@@ -31,31 +30,17 @@ class ConferenceRegistrationHandler(Handler):
         return {'form': ConferenceRegistrationForm()}
 
     def is_at_capacity(self):
-        query = Q()
-
-        # TODO: Let's perhaps use a less-dangerous way to compare
-        # codes than a straight string-compare against a JSON list
-        # Alternatively (less-safe), make sure codes are strictly
-        # very-unique and not subsets of each other.
-        for code in self.block_value['codes']:
-            query &= Q(codes__contains=code)
-
         capacity = self.block_value['capacity']
-        attendee_count = ConferenceRegistration.objects.filter(query).count()
+        code = self.block_value['code']
 
-        if attendee_count < capacity:
-            return False
-        else:
-            return True
+        attendees = ConferenceRegistration.objects.filter(code=code)
+        return attendees.count() >= capacity
 
     def get_post_data(self):
         data = self.request.POST.copy()
 
         sessions = self.get_sessions()
         data['sessions'] = json.dumps(sessions) if sessions else ''
-
-        codes = self.request.POST.getlist('codes', [])
-        data['codes'] = json.dumps(codes) if codes else ''
 
         return data
 
@@ -68,17 +53,22 @@ class ConferenceRegistrationHandler(Handler):
         if form.is_valid():
             attendee = form.save(commit=False)
 
-            if self.subscribe(attendee.email, attendee.codes):
+            if self.subscribe(attendee.email, attendee.code):
                 attendee.save()
                 return self.success()
 
         return self.fail(form)
 
-    def subscribe(self, email, codes):
+    def subscribe(self, email, code):
         err = 'There was an error in your submission. Please try again later.'
         try:
             gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
-            subscription_response = gd.set_subscriber_topics(email, codes)
+
+            subscription_response = gd.set_subscriber_topics(
+                email_address=email,
+                topic_codes=[code]
+            )
+
             if subscription_response.status_code != 200:
                 messages.error(self.request, err)
                 return False

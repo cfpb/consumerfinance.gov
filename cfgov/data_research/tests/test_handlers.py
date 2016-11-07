@@ -11,18 +11,18 @@ class TestConferenceRegistrationHandler(TestCase):
         self.factory = RequestFactory()
         page = mock.Mock()
         post_data = {
-            'name': 'Kurt Wall',
-            'organization': 'Excella Consulting',
-            'email': 'kurt@mail.com',
+            'name': 'Generic User',
+            'organization': 'Data Research Inst',
+            'email': 'user@example.com',
             'form_sessions': ['0', '1', '2'],
             'foodinfo': 'N/A',
             'accommodations': 'N/A',
-            'codes': ['ABC123', 'QWE321']
+            'code': 'ABC123',
         }
         request = self.factory.post('/', post_data)
         block_value = {
             'capacity': 5,
-            'codes': ['ABC123', 'QWE321'],
+            'code': 'ABC123',
             'sessions': [
                 'Session 0 description',
                 'Session 1 description',
@@ -138,7 +138,7 @@ class TestConferenceRegistrationHandler(TestCase):
         form = mock.Mock()
         mock_subscribe.return_value = False
         self.handler.get_response(form)
-        mock_subscribe.assert_called_with(form.save().email, form.save().codes)
+        mock_subscribe.assert_called_with(form.save().email, form.save().code)
 
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.subscribe')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.fail')
@@ -161,22 +161,25 @@ class TestConferenceRegistrationHandler(TestCase):
     @mock.patch('data_research.handlers.messages')
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_instantiates_GovDelivery_with_account_code(self, mock_gd, mock_messages, mock_settings):
-        self.handler.subscribe('em@il.com', ['code'])
+        self.handler.subscribe('em@il.com', 'code')
         mock_gd.assert_called_with(account_code=mock_settings.ACCOUNT_CODE)
 
     @mock.patch('data_research.handlers.settings')
     @mock.patch('data_research.handlers.messages')
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_sets_subscriptions(self, mock_gd, mock_messages, mock_settings):
-        self.handler.subscribe('em@il.com', ['code'])
-        mock_gd().set_subscriber_topics.assert_called_with('em@il.com', ['code'])
+        self.handler.subscribe('em@il.com', 'code')
+        mock_gd().set_subscriber_topics.assert_called_with(
+            email_address='em@il.com',
+            topic_codes=['code']
+        )
 
     @mock.patch('data_research.handlers.settings')
     @mock.patch('data_research.handlers.messages')
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_returns_True_for_success(self, mock_gd, mock_messages, mock_settings):
         mock_gd().set_subscriber_topics().status_code = 200
-        result = self.handler.subscribe('em@il.com', ['code'])
+        result = self.handler.subscribe('em@il.com', 'code')
         self.assertTrue(result)
 
     @mock.patch('data_research.handlers.settings')
@@ -184,7 +187,7 @@ class TestConferenceRegistrationHandler(TestCase):
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_returns_False_for_nonset_account_code(self, mock_gd, mock_messages, mock_settings):
         mock_gd.side_effect = KeyError()
-        result = self.handler.subscribe('em@il.com', ['code'])
+        result = self.handler.subscribe('em@il.com', 'code')
         self.assertTrue(mock_messages.error.called)
         self.assertFalse(result)
 
@@ -193,7 +196,7 @@ class TestConferenceRegistrationHandler(TestCase):
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_returns_False_when_setting_subscriptions(self, mock_gd, mock_messages, mock_settings):
         mock_gd().set_subscriber_topics.side_effect = Exception()
-        result = self.handler.subscribe('em@il.com', ['code'])
+        result = self.handler.subscribe('em@il.com', 'code')
         self.assertTrue(mock_messages.error.called)
         self.assertFalse(result)
 
@@ -254,27 +257,24 @@ class TestConferenceRegistrationHandler(TestCase):
 
     def test_capacity_not_reached(self):
         ConferenceRegistration.objects.bulk_create(
-            [ConferenceRegistration(
-                codes=json.dumps(self.handler.block_value['codes'])
-            )] * (self.handler.block_value['capacity'] - 1)
+            [ConferenceRegistration(code=self.handler.block_value['code'])]
+            * (self.handler.block_value['capacity'] - 1)
         )
 
         self.assertFalse(self.handler.is_at_capacity())
 
     def test_capacity_reached(self):
         ConferenceRegistration.objects.bulk_create(
-            [ConferenceRegistration(
-                codes=json.dumps(self.handler.block_value['codes'])
-            )] * self.handler.block_value['capacity']
+            [ConferenceRegistration(code=self.handler.block_value['code'])]
+            * self.handler.block_value['capacity']
         )
 
         self.assertTrue(self.handler.is_at_capacity())
 
     def test_capacity_not_reached_for_other_codes(self):
         ConferenceRegistration.objects.bulk_create(
-            [ConferenceRegistration(
-                codes=json.dumps(['some', 'different', 'codes'])
-            )] * self.handler.block_value['capacity']
+            [ConferenceRegistration(code='a-different-code')]
+            * self.handler.block_value['capacity']
         )
 
         self.assertFalse(self.handler.is_at_capacity())
