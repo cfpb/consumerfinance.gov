@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: update `mkdirp` to version `0.5.1` from `0.3.0`.
 - Fixed broken `manage.py check` command when using `cfgov.settings.test`.
 - Fixed conference registration form capacity logic.
+- Update `snyk` to version `1.19.1` from `1.13.2`.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
