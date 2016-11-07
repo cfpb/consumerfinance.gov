@@ -18,9 +18,7 @@
 
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
             <input type="hidden" name="form_id" value="{{ form_id }}">
-            {% for code in value.codes %}
-                <input type="hidden" name="codes" value="{{ code }}">
-            {% endfor %}
+            <input type="hidden" name="code" value="{{ value.code }}">
 
             {# Form heading #}
             {% if value.heading %}
