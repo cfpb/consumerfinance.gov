@@ -28,6 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed conference registration form capacity logic.
 - Update `snyk` to version `1.19.1` from `1.13.2`.
 - Disable logging below CRITICAL when running Python unit tests.
+- Fixed empty `heading` value in link blobs
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
