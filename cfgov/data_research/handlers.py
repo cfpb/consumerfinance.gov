@@ -1,4 +1,5 @@
 import json
+import logging
 
 from django.conf import settings
 from django.contrib import messages
@@ -8,6 +9,9 @@ from govdelivery.api import GovDelivery
 from data_research.forms import ConferenceRegistrationForm
 from data_research.models import ConferenceRegistration
 from v1.handlers import Handler
+
+
+logger = logging.getLogger(__name__)
 
 
 class ConferenceRegistrationHandler(Handler):
@@ -60,8 +64,8 @@ class ConferenceRegistrationHandler(Handler):
         return self.fail(form)
 
     def subscribe(self, email, code):
-        err = 'There was an error in your submission. Please try again later.'
         try:
+            logger.info('subscribing to GovDelivery')
             gd = GovDelivery(account_code=settings.ACCOUNT_CODE)
 
             subscription_response = gd.set_subscriber_topics(
@@ -69,14 +73,18 @@ class ConferenceRegistrationHandler(Handler):
                 topic_codes=[code]
             )
 
-            if subscription_response.status_code != 200:
-                messages.error(self.request, err)
-                return False
-        except (KeyError, Exception):
-            messages.error(self.request, err)
-            return False
+            subscription_response.raise_for_status()
+        except Exception:
+            logger.exception('error subscribing to GovDelivery')
+        else:
+            return True
 
-        return True
+        messages.error(
+            self.request,
+            'There was an error in your submission. Please try again later.'
+        )
+
+        return False
 
     def success(self):
         if self.request.is_ajax():
