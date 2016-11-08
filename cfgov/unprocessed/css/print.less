@@ -50,3 +50,67 @@
     padding-bottom: unit(30px / @base-font-size-px, em);
     border-bottom: 5px solid @black;
 }
+
+
+@media only print  {
+   @page { 
+      margin: 10mm;  
+      width: 1000px !important;
+   } 
+
+   html, body {
+      /* Firefox needs width, Chrome doesn't, but less than 1000px seems too narrow on Chrome */
+      width: 1000px; 
+      font-size: 17px; /* may need to adjust so print isn't too small w/ 1000px width */
+   }
+   .content_wrapper {
+      /* for Firefox, which only prints first page of inline-block elements */
+      display: table !important; 
+   }
+
+   .content_main,
+   .content_sidebar {
+      /* for Firefox, which only prints first page of inline-block elements */
+      display: table-cell !important;
+   }
+
+   .content_sidebar .list_item, 
+   .content_sidebar  .block,
+   .content_sidebar .o-email-signup,
+   .content_sidebar  p {
+      /* for Firefox; prevents sidebar items from displaying inline */
+      width: 100% !important; 
+   }
+
+   /* home page tweaks */
+   .content-l_col + .content-l_col {
+      margin-top: 0 !important;
+   }
+
+   .content-l_col-1-2__on-lg  {
+      width: 100% !important;
+      .m-card {
+      width: 100%;
+      box-sizing: border-box;
+      }
+   }
+
+   .content-l_col-1-3__on-lg + .content-l_col-1-3__on-lg:before {
+      display: none;
+   }
+
+   .content-l_col-1-3__on-lg {
+      margin-top: 0 !important;
+
+      .m-info-unit  {
+         display: block !important;
+      }
+      
+
+      .m-info-unit_content {
+         width: 100%;
+         margin-left: 0 !important;
+      }
+   }
+
+}
