@@ -76,15 +76,13 @@ class ConferenceRegistrationHandler(Handler):
             subscription_response.raise_for_status()
         except Exception:
             logger.exception('error subscribing to GovDelivery')
-        else:
-            return True
+            messages.error(self.request, (
+                'There was an error in your submission. '
+                'Please try again later.'
+            ))
+            return False
 
-        messages.error(
-            self.request,
-            'There was an error in your submission. Please try again later.'
-        )
-
-        return False
+        return True
 
     def success(self):
         if self.request.is_ajax():
