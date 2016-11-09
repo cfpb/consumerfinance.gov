@@ -3,6 +3,7 @@ import mock
 from django.test import RequestFactory, TestCase
 
 from ..handlers import ConferenceRegistrationHandler as Handler
+from data_research.models import ConferenceRegistration
 
 
 class TestConferenceRegistrationHandler(TestCase):
@@ -10,18 +11,18 @@ class TestConferenceRegistrationHandler(TestCase):
         self.factory = RequestFactory()
         page = mock.Mock()
         post_data = {
-            'name': 'Kurt Wall',
-            'organization': 'Excella Consulting',
-            'email': 'kurt@mail.com',
+            'name': 'Generic User',
+            'organization': 'Data Research Inst',
+            'email': 'user@example.com',
             'form_sessions': ['0', '1', '2'],
             'foodinfo': 'N/A',
             'accommodations': 'N/A',
-            'codes': ['ABC123', 'QWE321']
+            'code': 'ABC123',
         }
         request = self.factory.post('/', post_data)
         block_value = {
             'capacity': 5,
-            'codes': ['ABC123', 'QWE321'],
+            'code': 'ABC123',
             'sessions': [
                 'Session 0 description',
                 'Session 1 description',
@@ -41,13 +42,6 @@ class TestConferenceRegistrationHandler(TestCase):
         assert 'form' in result
         assert 'is_at_capacity' in result
         self.assertTrue(result['is_at_capacity'])
-
-    @mock.patch('__builtin__.reduce')
-    @mock.patch('data_research.handlers.ConferenceRegistration')
-    def test_is_at_capacity_calls_filter_with_generated_query_from_codes(self, mock_model, mock_reduce):
-        mock_model.objects.filter().count.return_value = 0
-        self.handler.is_at_capacity()
-        mock_model.objects.filter.assert_called_with(mock_reduce())
 
     @mock.patch('data_research.handlers.ConferenceRegistration')
     def test_is_at_capacity_returns_False_for_attendance_less_than_capacity(self, mock_model):
@@ -144,7 +138,7 @@ class TestConferenceRegistrationHandler(TestCase):
         form = mock.Mock()
         mock_subscribe.return_value = False
         self.handler.get_response(form)
-        mock_subscribe.assert_called_with(form.save().email, form.save().codes)
+        mock_subscribe.assert_called_with(form.save().email, form.save().code)
 
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.subscribe')
     @mock.patch('data_research.handlers.ConferenceRegistrationHandler.fail')
@@ -167,22 +161,25 @@ class TestConferenceRegistrationHandler(TestCase):
     @mock.patch('data_research.handlers.messages')
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_instantiates_GovDelivery_with_account_code(self, mock_gd, mock_messages, mock_settings):
-        self.handler.subscribe('em@il.com', ['code'])
+        self.handler.subscribe('em@il.com', 'code')
         mock_gd.assert_called_with(account_code=mock_settings.ACCOUNT_CODE)
 
     @mock.patch('data_research.handlers.settings')
     @mock.patch('data_research.handlers.messages')
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_sets_subscriptions(self, mock_gd, mock_messages, mock_settings):
-        self.handler.subscribe('em@il.com', ['code'])
-        mock_gd().set_subscriber_topics.assert_called_with('em@il.com', ['code'])
+        self.handler.subscribe('em@il.com', 'code')
+        mock_gd().set_subscriber_topics.assert_called_with(
+            email_address='em@il.com',
+            topic_codes=['code']
+        )
 
     @mock.patch('data_research.handlers.settings')
     @mock.patch('data_research.handlers.messages')
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_returns_True_for_success(self, mock_gd, mock_messages, mock_settings):
         mock_gd().set_subscriber_topics().status_code = 200
-        result = self.handler.subscribe('em@il.com', ['code'])
+        result = self.handler.subscribe('em@il.com', 'code')
         self.assertTrue(result)
 
     @mock.patch('data_research.handlers.settings')
@@ -190,7 +187,7 @@ class TestConferenceRegistrationHandler(TestCase):
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_returns_False_for_nonset_account_code(self, mock_gd, mock_messages, mock_settings):
         mock_gd.side_effect = KeyError()
-        result = self.handler.subscribe('em@il.com', ['code'])
+        result = self.handler.subscribe('em@il.com', 'code')
         self.assertTrue(mock_messages.error.called)
         self.assertFalse(result)
 
@@ -199,7 +196,7 @@ class TestConferenceRegistrationHandler(TestCase):
     @mock.patch('data_research.handlers.GovDelivery')
     def test_subscribe_returns_False_when_setting_subscriptions(self, mock_gd, mock_messages, mock_settings):
         mock_gd().set_subscriber_topics.side_effect = Exception()
-        result = self.handler.subscribe('em@il.com', ['code'])
+        result = self.handler.subscribe('em@il.com', 'code')
         self.assertTrue(mock_messages.error.called)
         self.assertFalse(result)
 
@@ -254,3 +251,30 @@ class TestConferenceRegistrationHandler(TestCase):
         form.errors = {'err': ['error message']}
         self.handler.fail(form)
         mock_messages.error.assert_called_with(self.handler.request, form.errors['err'][0])
+
+    def test_capacity_not_reached_no_registrations_yet(self):
+        self.assertFalse(self.handler.is_at_capacity())
+
+    def test_capacity_not_reached(self):
+        ConferenceRegistration.objects.bulk_create(
+            [ConferenceRegistration(code=self.handler.block_value['code'])]
+            * (self.handler.block_value['capacity'] - 1)
+        )
+
+        self.assertFalse(self.handler.is_at_capacity())
+
+    def test_capacity_reached(self):
+        ConferenceRegistration.objects.bulk_create(
+            [ConferenceRegistration(code=self.handler.block_value['code'])]
+            * self.handler.block_value['capacity']
+        )
+
+        self.assertTrue(self.handler.is_at_capacity())
+
+    def test_capacity_not_reached_for_other_codes(self):
+        ConferenceRegistration.objects.bulk_create(
+            [ConferenceRegistration(code='a-different-code')]
+            * self.handler.block_value['capacity']
+        )
+
+        self.assertFalse(self.handler.is_at_capacity())
