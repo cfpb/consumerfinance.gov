@@ -57,6 +57,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated "Standing up for you" stats on the homepage.
 - Use secure URLs for files stored on S3
 - Fixed grade ordering on job listing posts.
+- Updating Bureau Structure so Christopher D’Angelo isn't marked as "acting".
 
 ### Removed
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
