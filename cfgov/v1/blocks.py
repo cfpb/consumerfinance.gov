@@ -73,3 +73,19 @@ class Feedback(AbstractFormBlock):
     class Meta:
         handler = 'v1.handlers.blocks.feedback.FeedbackHandler'
         template = '_includes/blocks/feedback.html'
+
+
+class ReferredFeedback(AbstractFormBlock):
+
+    intro_text = blocks.CharBlock(
+        default='Provide additional feedback'
+        )
+    question_text = blocks.CharBlock(
+        default='Have any additional feedback on the page you were just on? '
+                'Please use the form below to share your thoughts.'
+        )
+    button_text = blocks.CharBlock(default='Submit feedback')
+
+    class Meta:
+        handler = 'v1.handlers.blocks.referred_feedback.ReferredFeedbackHandler'
+        template = '_includes/blocks/referred-feedback.html'

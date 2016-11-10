@@ -1,0 +1,51 @@
+{% import 'molecules/notification.html' as notification %}
+
+{% macro render(value, settings, form_id) %}
+
+    {% set form = settings.form %}
+
+    {# JS-disabled result handling #}
+    {% for message in get_messages(request) %}
+        {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
+    {% endfor %}
+
+<form method="post"
+      action="."
+      class="o-form
+             block
+             block__bg
+             block__border
+             block__padded-top">
+
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <input type="hidden" name="form_id" value="{{ form_id }}">
+    <input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER }}">
+
+    <fieldset class="o-form-input-group">
+        <div class="form-l_col
+                    form-l_col-1
+                    form-l_col__flush-bottom">
+            <legend class="h3">
+                {{ value.intro_text }}
+            </legend>
+            <label for="comment">
+                <span class="h4">{{ value.question_text }}</span>
+            </label>
+            <p class="u-mb10"><small><b>Note:</b> Do not include sensitive information like your name, contact information, account number, or social security number in this field.</small></p>
+        </div>
+        <div class="form-l_col
+                    form-l_col-1">
+            <textarea id="comment" name="comment" rows="2">
+                {{- form.comment.value() | default('', true) -}}
+            </textarea>
+        </div>
+        <div class="form-l_col
+                    form-l_col-1
+                    form-l_col__flush-bottom">
+            <button class="btn" type="submit">{{ value.button_text }}</button>
+        </div>
+    </fieldset>
+
+</form>
+
+{% endmacro %}

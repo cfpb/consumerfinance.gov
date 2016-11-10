@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from models.snippets import Contact
 
 from v1.email import send_password_reset_email
-from v1.models import Feedback
+from v1.models import Feedback, ReferredFeedback
 
 
 @admin.register(Contact)
@@ -40,3 +40,10 @@ feedback_page_url.short_description = 'Page URL'
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('is_helpful', 'comment', feedback_page_url, 'submitted_on')
     list_filter = ('submitted_on', 'page__title',)
+
+
+@admin.register(ReferredFeedback)
+class ReferredFeedbackAdmin(admin.ModelAdmin):
+    list_display = ('referrer', 'comment', 'submitted_on')
+    list_filter = ('submitted_on',)
+    search_fields = ['referrer', 'comment']

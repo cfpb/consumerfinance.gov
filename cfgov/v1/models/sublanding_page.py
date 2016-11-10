@@ -8,7 +8,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from .base import CFGOVPage
 from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
-from ..util import util
+# from ..util import util
 from jobmanager.models import JobListingList
 from v1.forms import FilterableListForm
 
@@ -32,6 +32,7 @@ class SublandingPage(CFGOVPage):
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
+        ('referred_feedback', v1_blocks.ReferredFeedback()),
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
     sidebar_breakout = StreamField([

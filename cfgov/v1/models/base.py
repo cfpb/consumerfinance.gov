@@ -3,39 +3,56 @@ import json
 from itertools import chain
 from collections import OrderedDict
 
-from django.core.urlresolvers import reverse
+# from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_delete
-from django.http import Http404, JsonResponse, HttpResponseBadRequest, \
+from django.http import (
+    Http404,
+    JsonResponse,
+    HttpResponseBadRequest,
     HttpResponse
+)
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 
-from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
+from wagtail.wagtailimages.models import (
+    Image, AbstractImage, AbstractRendition
+)
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks, hooks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import Page, PagePermissionTester, \
-    UserPagePermissionsProxy, Orderable, PageManager, PageQuerySet
+# from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
+# from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import (
+    Orderable,
+    Page,
+    PageManager,
+    PagePermissionTester,
+    PageQuerySet,
+    UserPagePermissionsProxy
+)
 from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, \
-    MultiFieldPanel, TabbedInterface, ObjectList
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel,
+    InlinePanel,
+    MultiFieldPanel,
+    ObjectList,
+    TabbedInterface
+)
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 
-from sheerlike.query import QueryFinder
+# from sheerlike.query import QueryFinder
 
 from .. import get_protected_url
 from ..atomic_elements import molecules, organisms
-from ..util import util, ref
+from ..util import ref
 
 import urllib
 
@@ -497,20 +514,21 @@ def image_delete(sender, instance, **kwargs):
 def rendition_delete(sender, instance, **kwargs):
     instance.file.delete(False)
 
-# keep encrypted passwords around to ensure that user does not re-use any of the
-# previous 10
+
+# keep encrypted passwords around to ensure that user does not re-use
+# any of the previous 10
 class PasswordHistoryItem(models.Model):
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()   # password becomes invalid at...
-    locked_until = models.DateTimeField() # password can not be changed until...
+    expires_at = models.DateTimeField()  # password becomes invalid at...
+    locked_until = models.DateTimeField()  # password cannot be changed until
     encrypted_password = models.CharField(_('password'), max_length=128)
 
     class Meta:
         get_latest_by = 'created'
 
     @classmethod
-    def current_for_user(cls,user):
+    def current_for_user(cls, user):
         return user.passwordhistoryitem_set.latest()
 
     def can_change_password(self):
@@ -520,6 +538,7 @@ class PasswordHistoryItem(models.Model):
     def must_change_password(self):
         now = timezone.now()
         return(self.expires_at < now)
+
 
 # User Failed Login Attempts
 class FailedLoginAttempt(models.Model):
@@ -549,6 +568,7 @@ class FailedLoginAttempt(models.Model):
         attempts = self.failed_attempts.split(',')
         return len(attempts) > value
 
+
 class TemporaryLockout(models.Model):
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
@@ -565,3 +585,16 @@ class Feedback(models.Model):
         on_delete=models.SET_NULL,
     )
     submitted_on = models.DateTimeField(auto_now_add=True)
+
+
+class ReferredFeedback(models.Model):
+    """A standalone feedback module that other pages can refer to"""
+    referrer = models.CharField(max_length=255, blank=True, null=True)
+    comment = models.TextField()
+    submitted_on = models.DateTimeField(auto_now_add=True)
+    page = models.ForeignKey(
+        Page,
+        related_name='referred_feedback',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
