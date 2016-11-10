@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import importlib
 import itertools
+import logging
 import re
 
 from django.apps import apps
@@ -35,6 +36,16 @@ class OptionalAppsMixin(object):
 
 
 class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
+    def run_tests(self, test_labels, extra_tests=None, **kwargs):
+        # Disable logging below CRITICAL during tests.
+        logging.disable(logging.CRITICAL)
+
+        return super(TestDataTestRunner, self).run_tests(
+            test_labels,
+            extra_tests,
+            **kwargs
+        )
+
     def setup_databases(self, **kwargs):
         dbs = super(TestDataTestRunner, self).setup_databases(**kwargs)
 
