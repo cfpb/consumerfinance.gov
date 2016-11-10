@@ -20,6 +20,7 @@ class ReferredFeedbackHandler(Handler):
     def get_response(self, form):
         if form.is_valid():
             feedback = form.save(commit=False)
+            feedback.page = self.page
             feedback.save()
             return self.success()
         else:
