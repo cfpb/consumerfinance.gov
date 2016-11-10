@@ -30,6 +30,8 @@
             </div>
         {% elif block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
+        {% elif block.block_type == 'referred_feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
         {% elif 'post_preview_snapshot' in block.block_type %}
             <div class="block
                         {{ block.block.meta.classname if block.block.meta.classname else '' }}">
