@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('wagtailcore', '0029_unicode_slugfield_dj19'),
-        ('v1', '0022_replace_dup_category_field_data'),
+        ('v1', '0023_conf_reg_form_updates'),
     ]
 
     operations = [
