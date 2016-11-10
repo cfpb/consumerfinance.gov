@@ -26,7 +26,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Frontend: update `browser-sync` to version `2.17.5` from `2.11.2`.
 - Frontend: update `mkdirp` to version `0.5.1` from `0.3.0`.
 - Fixed broken `manage.py check` command when using `cfgov.settings.test`.
+- Fixed conference registration form capacity logic.
 - Update `snyk` to version `1.19.1` from `1.13.2`.
+- Disable logging below CRITICAL when running Python unit tests.
+- Fixed empty `heading` value in link blobs
+- Picard upgraded to version 1.5.2.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
@@ -54,11 +58,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated "Standing up for you" stats on the homepage.
 - Use secure URLs for files stored on S3
 - Fixed grade ordering on job listing posts.
+- Updating Bureau Structure so Christopher D’Angelo isn't marked as "acting".
 
 ### Removed
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
 - `NewsroomFilterForm` and `ActivityLogFilterForm` and related tests
 - Removed `gulp-load-plugins` from `package.json`.
+- Removed  Laura Van Dyke from the press resources page.
 
 ## 3.11.1
 
