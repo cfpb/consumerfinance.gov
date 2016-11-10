@@ -62,6 +62,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
 - `NewsroomFilterForm` and `ActivityLogFilterForm` and related tests
 - Removed `gulp-load-plugins` from `package.json`.
+- Removed  Laura Van Dyke from the press resources page.
 
 ## 3.11.1
 
