@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Disable logging below CRITICAL when running Python unit tests.
 - Fixed empty `heading` value in link blobs
 - Picard upgraded to version 1.5.2.
+- Simplified Akamai cache flushing logic to always flush on publish.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
