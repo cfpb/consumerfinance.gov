@@ -33,18 +33,18 @@ $(document).ready(function(){
         var form = $('#email_collection_form');
         // clear errors
         form.find('.err').remove();
-        
+
         if(!(/^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($('#email').val())))
             return show_error(form, 'Please provide a valid email address and try again!');
-        
+
         $.ajax({
-            type: "POST", 
+            type: "POST",
             url: "/subscriptions/new/",
             data: form.serialize(),
             complete: function(req, status_msg) {
                 if(status_msg == 'success')
                     form.addClass('success').html('Thank you for providing us your email address. You will receive updates from us shortly.');
-                else 
+                else
                     return show_error(form, 'There was an issue with your submission. Please try again later!');
             }
         });
@@ -83,7 +83,7 @@ function setup_decision_tree(){
         $this.closest('.decision-tree').parent().find('.header_look').removeClass('header_look');
         $(dec_tree_nd).slideUp();
         return false;
-    })
+    });
 
     // show the tooltip if the form is incomplete
     $('.next-step-btn').mouseover(function(){
@@ -127,4 +127,3 @@ function tree_decide(nd){
     var url = dec_urls[id][($(selections[0]).text() == 'Yes'?'1':'0') + ($(selections[1]).text() == 'Yes'?'1':'0')];
     nd.find('.next-step-btn').data('url', url);
 }
-
