@@ -12,13 +12,13 @@
     Do not edit, this script comes straight from Digital Gov.
     http://search.digitalgov.gov/manual/code.html
 #}
-<script type='text/javascript'>
+{% hashedscript %}
 //<![CDATA[
     var usasearch_config = { siteHandle: 'cfpb' };
 
     var script = document.createElement( 'script' );
     script.type = 'text/javascript';
-    script.src = 'http://search.usa.gov/javascripts/remote.loader.js';
+    script.src = 'https://search.usa.gov/javascripts/remote.loader.js';
     document.getElementsByTagName( 'head' )[0].appendChild( script );
 //]]>
-</script>
+{% end_hashedscript %}

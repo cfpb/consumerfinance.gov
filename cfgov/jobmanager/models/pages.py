@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from django.db import models
 from wagtail.wagtailcore.fields import RichTextField
+from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
     TabbedInterface
@@ -53,3 +54,14 @@ class JobListingPage(CFGOVPage):
     ])
 
     template = 'job-description-page/index.html'
+
+    objects = PageManager()
+
+    @property
+    def ordered_grades(self):
+        """Return a list of job grades in numerical order.
+
+        Non-numeric grades are sorted alphabetically after numeric grades.
+        """
+        grades = set(g.grade.grade for g in self.grades.all())
+        return sorted(grades, key=lambda g: int(g) if g.isdigit() else g)

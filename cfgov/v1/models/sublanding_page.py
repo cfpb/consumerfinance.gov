@@ -1,15 +1,17 @@
-from itertools import chain
-
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from .base import CFGOVPage
+from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
-from ..util import filterable_list, util
+from ..util import util
 from jobmanager.models import JobListingList
+from v1.forms import FilterableListForm
+
 
 class SublandingPage(CFGOVPage):
     header = StreamField([
@@ -25,10 +27,12 @@ class SublandingPage(CFGOVPage):
         ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
         ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer': 'html'})),
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
+        ('feedback', v1_blocks.Feedback()),
     ], blank=True)
     sidebar_breakout = StreamField([
         ('slug', blocks.CharBlock(icon='title')),
@@ -65,20 +69,16 @@ class SublandingPage(CFGOVPage):
 
     template = 'sublanding-page/index.html'
 
+    objects = PageManager()
+
     def get_browsefilterable_posts(self, request, limit):
         filter_pages = [p.specific for p in self.get_appropriate_descendants(request.site.hostname)
-                        if 'FilterablePage' in p.specific_class.__name__ and 'archive' not in p.title.lower()]
-        filtered_controls = {}
+                        if 'FilterablePage' in p.specific_class.__name__
+                        and 'archive' not in p.title.lower()]
+        posts_tuple_list = []
         for page in filter_pages:
-            id = str(util.get_form_id(page))
-            if id not in filtered_controls.keys():
-                filtered_controls.update({id: []})
-            form_class = page.get_form_class()
-            posts = page.get_page_set(form_class(parent=page, hostname=request.site.hostname), request.site.hostname)
-            if filtered_controls[id]:
-                filtered_controls[id] += posts
-            else:
-                filtered_controls[id] = posts
-        posts_tuple_list = [(id, post) for id, posts in filtered_controls.iteritems() for post in posts]
-        posts = sorted(posts_tuple_list, key=lambda p: p[1].date_published, reverse=True)[:limit]
-        return posts
+            form_id = str(page.form_id())
+            form = FilterableListForm(parent=page, hostname=request.site.hostname)
+            for post in form.get_page_set():
+                posts_tuple_list.append((form_id, post))
+        return sorted(posts_tuple_list, key=lambda p: p[1].date_published, reverse=True)[:limit]

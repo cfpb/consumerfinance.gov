@@ -27,7 +27,7 @@
         'url':  '/about-us/the-bureau/',
     },
     'image': {
-        'src': '/static/img/fmc-about-us-540x300.jpg',
+        'src': 'img/fmc-about-us-540x300.jpg',
         'alt': 'Still from about the CFPB video.',
     },
     'body': 'This short video covers what the CFPB is ' +
@@ -39,7 +39,7 @@
         'url':  '/policy-compliance/guidance/implementation-guidance/',
     },
     'image': {
-        'src': '/static/img/fmc-poly-com-540x300.jpg',
+        'src': 'img/fmc-poly-com-540x300.jpg',
         'alt': 'Still from Know Before You Owe video.',
     },
     'body': 'The TILA-RESPA integrated disclosure rule ' +
@@ -59,7 +59,7 @@
         ('Information for Students', '/students/', []),
         ('Information for Older Americans', '/older-americans/', []),
         ('Information for Servicemembers & Veterans', '/servicemembers/', [])
-    ),(
+    ),[
         ('Getting an Auto Loan', '/consumer-tools/auto-loans/', [(
             ('Plan to Shop for Your Auto Loan', '/consumer-tools/auto-loans/plan-to-shop-for-your-auto-loan/', []),
             ('Learn to Explore Loan Choices', '/consumer-tools/auto-loans/learn-to-explore-loan-choices/', []),
@@ -70,7 +70,7 @@
         ('Owning a Home', '/owning-a-home/', []),
         ('Planning for Retirement', '/retirement/', []),
         ('Sending Money Abroad', '/sending-money/', [])
-    ),(
+    ],(
         ('Know Before You Owe Mortgages', '/know-before-you-owe/', []),
         ('Trouble Paying Your Mortgage?', '/mortgagehelp/', []),
         ('Protections Against Discrimination', '/fair-lending/', [])
@@ -86,7 +86,7 @@
     ),(
         ('Information for Economically Vulnerable Consumers', '/empowerment/', []),
         ('Managing Someone Else’s Money', '/managing-someone-elses-money/', []),
-        ('Free Brochures', 'http://promotions.usa.gov/cfpbpubs.html', [])
+        ('Free Brochures', 'http://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php', [])
     )]),
     ('Data & Research', '/data-research/', [(
         ('Research & Reports', '/data-research/research-reports/', []),
@@ -150,3 +150,11 @@
         ('Contact Us', '/about-us/contact-us/', [])
     )])
 )] -%}
+
+{% if flag_enabled(request, 'PREPAID_RELEASE') %}
+    {{ nav_items[0][0][2][1].append( ('Prepaid Cards', '/consumer-tools/prepaid-cards/', [(
+        ('Choose the Right Card for Your Situation', '/consumer-tools/prepaid-cards/choose-the-right-card/', []),
+        ('Know Your Rights', '/consumer-tools/prepaid-cards/know-your-rights/', []),
+        ('Understand the Fees You Will Pay', '/consumer-tools/prepaid-cards/understand-fees/', [])
+    )]) ) }}
+{% endif %}

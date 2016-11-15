@@ -5,7 +5,6 @@ from django.core.exceptions import ValidationError
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-
 def number_validator(value, search=re.compile(r'[^0-9]').search):
     if value:
         return bool(search(value))
@@ -21,8 +20,12 @@ class NumberBlock(blocks.StructBlock):
     text = blocks.CharBlock(max_length=100, required=False)
 
     def __init__(self, required=True):
-        self.required = required
+        self.is_required = required
         super(NumberBlock, self).__init__()
+
+    @property
+    def required(self):
+        return self.is_required
 
     def clean(self, data):
         error_dict = {}
@@ -70,8 +73,12 @@ class Hyperlink(blocks.StructBlock):
     url = blocks.CharBlock(default='/', required=False)
 
     def __init__(self, required=True):
-        self.required = required
+        self.is_required = required
         super(Hyperlink, self).__init__()
+
+    @property
+    def required(self):
+        return self.is_required
 
     def clean(self, data):
         error_dict = {}
@@ -100,8 +107,12 @@ class ImageBasic(blocks.StructBlock):
     alt = blocks.CharBlock(required=False)
 
     def __init__(self, required=True):
-        self.required = required
+        self.is_required = required
         super(ImageBasic, self).__init__()
+
+    @property
+    def required(self):
+        return self.is_required
 
     def clean(self, data):
         error_dict = {}

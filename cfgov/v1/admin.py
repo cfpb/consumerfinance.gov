@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from models.snippets import Contact
 
 from v1.email import send_password_reset_email
+from v1.models import Feedback
 
 
 @admin.register(Contact)
@@ -26,3 +27,16 @@ class UserAdmin(UserAdmin):
         )
 
     send_password_reset_email.short_description = 'Send password reset email'
+
+
+def feedback_page_url(feedback):
+    if feedback.page:
+        return feedback.page.url
+
+feedback_page_url.short_description = 'Page URL'
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('is_helpful', 'comment', feedback_page_url, 'submitted_on')
+    list_filter = ('submitted_on', 'page__title',)

@@ -1,18 +1,21 @@
 import mock
 import json
-import publish_eccu
 
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from ..wagtail_hooks import share_the_page, check_permissions, share, configure_page_revision, flush_akamai
+from v1.models.browse_page import BrowsePage
+from v1.wagtail_hooks import (
+    check_permissions, configure_page_revision, flush_akamai,
+    form_module_handlers, get_akamai_credentials, share, share_the_page,
+    should_flush
+)
 
 
 class TestShareThePage(TestCase):
 
     @mock.patch('wagtail.wagtailcore.hooks.register')
     def setUp(self, mock_register):
-        from ..wagtail_hooks import share_the_page
         self.page = mock.Mock()
         self.page.specific.id = 1234
         rf = RequestFactory()
@@ -23,7 +26,6 @@ class TestShareThePage(TestCase):
         }
         for key in self.mock_request.keys():
             self.mock_request[key].user = mock.Mock()
-
 
     @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
@@ -39,7 +41,6 @@ class TestShareThePage(TestCase):
         share_the_page(self.mock_request['saving'], self.page)
         mock_share.assert_called_once_with(self.page.specific, False, False)
 
-
     @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
@@ -54,7 +55,6 @@ class TestShareThePage(TestCase):
         share_the_page(self.mock_request['sharing'], self.page)
         mock_share.assert_called_once_with(self.page.specific, True, False)
 
-
     @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
@@ -68,7 +68,6 @@ class TestShareThePage(TestCase):
         mock_page.objects.get.return_value = self.page
         share_the_page(self.mock_request['publishing'], self.page)
         mock_share.assert_called_once_with(self.page.specific, False, True)
-
 
     @mock.patch('v1.wagtail_hooks.Page')
     @mock.patch('v1.wagtail_hooks.check_permissions')
@@ -199,22 +198,133 @@ class TestConfigurePageRevision(TestCase):
         assert latest_content['live']
 
 
+class TestFormModuleHandlers(TestCase):
+    def setUp(self):
+        mock.patch('v1.wagtail_hooks.hooks.register')
+        self.page = mock.Mock()
+        self.request = mock.Mock()
+        self.context = {}
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_sets_context(self, mock_getstreamfields, mock_hasattr):
+        mock_hasattr.return_value = True
+        child = mock.Mock()
+        mock_getstreamfields().items.return_value = [('name', [child])]
+        form_module_handlers(self.page, self.request, self.context)
+        assert 'form_modules' in self.context
+
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_does_not_set_context(self, mock_getstreamfields):
+        mock_getstreamfields().items.return_value = []
+        form_module_handlers(self.page, self.request, self.context)
+        assert 'form_modules' not in self.context
+
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_calls_get_streamfields(self, mock_getstreamfields):
+        form_module_handlers(self.page, self.request, self.context)
+        mock_getstreamfields.assert_called_with(self.page)
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_checks_child_block_if_set_form_context_exists(self, mock_getstreamfields, mock_hasattr):
+        child = mock.Mock()
+        streamfields = {'name': [child]}
+        mock_getstreamfields.return_value = streamfields
+        form_module_handlers(self.page, self.request, self.context)
+        mock_hasattr.assert_called_with(child.block, 'get_result')
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_sets_context_fieldname_if_not_set(self, mock_getstreamfields, mock_hasattr):
+        child = mock.Mock()
+        streamfields = {'name': [child]}
+        mock_getstreamfields.return_value = streamfields
+        mock_hasattr.return_value = True
+        form_module_handlers(self.page, self.request, self.context)
+        assert 'name' in self.context['form_modules']
+        self.assertIsInstance(self.context['form_modules']['name'], dict)
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_calls_child_block_get_result(self, mock_getstreamfields, mock_hasattr):
+        child = mock.Mock()
+        streamfields = {'name': [child]}
+        mock_getstreamfields.return_value = streamfields
+        mock_hasattr.return_value = True
+        form_module_handlers(self.page, self.request, self.context)
+        child.block.get_result.assert_called_with(
+            self.page,
+            self.request,
+            child.value,
+            child.block.is_submitted()
+        )
+
+    @mock.patch('__builtin__.hasattr')
+    @mock.patch('v1.wagtail_hooks.util.get_streamfields')
+    def test_calls_child_block_is_submitted(self, mock_getstreamfields, mock_hasattr):
+        child = mock.Mock()
+        streamfields = {'name': [child]}
+        mock_getstreamfields.return_value = streamfields
+        mock_hasattr.return_value = True
+        form_module_handlers(self.page, self.request, self.context)
+        child.block.is_submitted.assert_called_with(self.request, 'name', 0)
+
+
 class TestFlushAkamai(TestCase):
+    """ Tests the appropriate conditions under which we should be flushing Akamai.
+    Not meant to test if the flush itself succeeded.
+    """
 
     def setUp(self):
-        self.page = mock.Mock()
-        self.page.owner.email = 'test@mail.com'
+        self.page = BrowsePage(
+            title='an arbitrary page',
+            slug='an-arbitrary-page'
+        )
 
-    @mock.patch('v1.wagtail_hooks.settings')
-    @mock.patch('publish_eccu.publish.publish')
-    def test_not_publishing_a_page(self, mock_publish, mock_settings):
-        mock_settings.ENABLE_AKAMAI_CACHE_PURGE = True
-        flush_akamai(self.page, False)
-        assert not mock_publish.called
+    def test_should_not_flush_if_not_enabled(self):
+        with self.settings(ENABLE_AKAMAI_CACHE_PURGE=None):
+            assert not should_flush(self.page)
 
-    @mock.patch('v1.wagtail_hooks.settings')
-    @mock.patch('publish_eccu.publish.publish')
-    def test_publishing_a_page(self, mock_publish, mock_settings):
-        mock_settings.ENABLE_AKAMAI_CACHE_PURGE = True
-        flush_akamai(self.page, True)
-        assert mock_publish.called
+    def test_should_flush_if_enabled(self):
+        with self.settings(ENABLE_AKAMAI_CACHE_PURGE=True):
+            assert should_flush(self.page)
+
+    @mock.patch('v1.wagtail_hooks.should_flush')
+    def test_should_flush_gets_called_when_trying_to_flush(self, mock_should_flush):
+        with self.settings(
+            AKAMAI_OBJECT_ID='some-arbitrary-id',
+            AKAMAI_USER='some-arbitrary-user',
+            AKAMAI_PASSWORD='some-arbitrary-pw'
+        ):
+            flush_akamai(self.page)
+        assert mock_should_flush.called
+
+
+class TestGetAkamaiCredentials(TestCase):
+    def test_no_credentials_raises(self):
+        with self.settings(
+            AKAMAI_OBJECT_ID=None,
+            AKAMAI_USER=None,
+            AKAMAI_PASSWORD=None
+        ):
+            self.assertRaises(ValueError, get_akamai_credentials)
+
+    def test_some_credentials_raises(self):
+        with self.settings(
+            AKAMAI_OBJECT_ID='some-arbitrary-id',
+            AKAMAI_USER=None,
+            AKAMAI_PASSWORD=None
+        ):
+            self.assertRaises(ValueError, get_akamai_credentials)
+
+    def test_all_credentials_returns(self):
+        with self.settings(
+            AKAMAI_OBJECT_ID='object-id',
+            AKAMAI_USER='username',
+            AKAMAI_PASSWORD='password'
+        ):
+            object_id, auth = get_akamai_credentials()
+            self.assertEqual(object_id, 'object-id')
+            self.assertIsInstance(auth, tuple)
+            self.assertEqual(auth, ('username', 'password'))

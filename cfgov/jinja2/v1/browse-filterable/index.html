@@ -1,5 +1,6 @@
 {% extends 'layout-side-nav.html' %}
 
+{% import 'form_block.html' as form_block with context %}
 {% import 'molecules/featured-content.html' as featured_content %}
 {% import 'organisms/filterable-list-controls.html' as flc with context %}
 {% import 'templates/render_block.html' as render_block with context %}
@@ -26,6 +27,8 @@
                         block__flush-top">
                 {{ flc.render(block.value, loop.index0) }}
             </div>
+        {% elif block.block_type == 'feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
         {% else %}
             {{ render_block.render(block, loop.index) }}
         {% endif %}

@@ -8,10 +8,10 @@ If not using the Vagrant box, you will generally have four tabs
     such as `git checkout master`.
  2. **Elasticsearch**.
     Run an Elasticsearch (ES) instance.
-    See instructions [below](https://github.com/cfpb/cfgov-refresh#2-run-elasticsearch).
+    See instructions [below](#2-run-elasticsearch).
  3. **Django server**. Start and stop the web server.
     Server is started with `./runserver.sh`,
-    but see more details [below](https://github.com/cfpb/cfgov-refresh#3-load-indexes--launch-site).
+    but see more details [below](#3-load-indexes--launch-site).
  4. **Gulp watch**.
     Run the Gulp watch (`gulp watch`) task to automatically re-run the gulp
     asset compilation tasks when their source files are changed.
@@ -30,7 +30,7 @@ git checkout master
 #### Updating all dependencies
 
 Each time you fetch from the upstream repository (this repo), run `./setup.sh`.
-This setup script will remove and re-install the project dependencies
+This setup script will remove and reinstall the project dependencies
 and rebuild the site's JavaScript and CSS assets.
 
 !!! note
@@ -88,7 +88,7 @@ From the project root, start the Django server:
 !!! note
 	If prompted to migrate database changes,
 	stop the server with `ctrl` + `c` and run these commands:
-	
+
 ```bash
 python cfgov/manage.py migrate
 ./initial-data.sh
@@ -103,13 +103,22 @@ python cfgov/manage.py createsuperuser
 
 To view the site browse to: <http://localhost:8000>
 
+!!! note "Using a different port"
+	If you want to run the server at a port other than 8000 use
+
+    `python cfgov/manage.py runserver <port number>`
+
+    Specify an alternate port number, e.g. `8001`.
+
 To view the Wagtail admin login,
 browse to: <http://localhost:8000/admin/login/>
 
-!!! note
-	Using a different port.**
-	If you want to run the server at a port other than 8000
-	use `python cfgov/manage.py runserver <port number>`, e.g. `8001`.
+!!! note "Using HTTPS locally"
+    To access a local server using HTTPS use
+
+    `./runserver.sh ssl`
+
+    You'll need to ignore any browser certificate errors.
 
 ### 4. Launch the Gulp watch task
 

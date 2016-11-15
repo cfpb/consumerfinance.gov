@@ -29,7 +29,7 @@
             <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
             <dd>
                 {% if page.grades.exists() %}
-                <strong>({{ page.grades.all() | join(', ') }})</strong>
+                <strong>({{ page.ordered_grades | join(', ') }})</strong>
                 {% endif %}
                 ${{ '{:,.0f}'.format( page.salary_min ) }}–${{ '{:,.0f}'.format( page.salary_max ) }}
             </dd>

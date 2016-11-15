@@ -26,30 +26,6 @@ ERROR_MESSAGES = {
     }
 }
 
-
-# Orders by most to least common in the given list.
-def most_common(lst):
-    # Returns the lst if empty or there's just one element in it.
-    if not lst or len(lst) == 1:
-        return lst
-    else:
-        # Gets the most common element in the list.
-        most = max(set(lst), key=lst.count)
-        # Creates a new list without that element.
-        new_list = [e for e in lst if most not in e]
-        # Recursively returns a list with the most common elements ordered
-        # most to least. Ties go to the lowest index in the given list.
-        return [most] + most_common(new_list)
-
-
-def get_form_id(page):
-    form_ids = page.get_filter_ids()
-    if form_ids:
-        return form_ids[0]
-    else:
-        return 0
-
-
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
     return isinstance(page, (BrowsePage, BrowseFilterablePage))
@@ -64,9 +40,9 @@ def get_secondary_nav_items(request, current_page):
     nav_items = []
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
-        page = get_appropriate_page_version(request, parent)
+        page = parent.get_appropriate_page_version(request)
     else:
-        page = get_appropriate_page_version(request, current_page)
+        page = current_page.get_appropriate_page_version(request)
 
     if not page:
         return [], False
@@ -95,9 +71,9 @@ def get_secondary_nav_items(request, current_page):
         # Only if it's a Browse(Filterable) type page
         if instanceOfBrowseOrFilterablePages(sibling.specific):
             if page.id == sibling.id:
-                sibling = get_appropriate_page_version(request, page)
+                sibling = page.get_appropriate_page_version(request)
             else:
-                sibling = get_appropriate_page_version(request, sibling)
+                sibling = sibling.get_appropriate_page_version(request)
             item = {
                 'title': sibling.title,
                 'slug': sibling.slug,
@@ -119,21 +95,6 @@ def get_secondary_nav_items(request, current_page):
             return nav_items, True
     return nav_items, False
 
-
-def get_appropriate_page_version(request, page):
-    # If we're on the production site, make sure the version of the page
-    # displayed is the latest version that has `live` set to True for
-    # the live site or `shared` set to True for the staging site.
-    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
-    revisions = page.revisions.all().order_by('-created_at')
-    for revision in revisions:
-        page_version = json.loads(revision.content_json)
-        if request.site.hostname != staging_hostname:
-            if page_version['live']:
-                return revision.as_page_object()
-        else:
-            if page_version['shared']:
-                return revision.as_page_object()
 
 def valid_destination_for_request(request, url):
 
@@ -159,3 +120,14 @@ def all_valid_destinations_for_request(request):
                             valid_destination_for_request(request, pair[1])]
 
     return valid_destinations
+
+
+def get_streamfields(page):
+    """
+    Retrieves the stream values on a page from its Streamfield
+    """
+    blocks_dict = {}
+    for key, value in vars(page).items():
+        if isinstance(value, StreamValue):
+            blocks_dict.update({key: value})
+    return blocks_dict

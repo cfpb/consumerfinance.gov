@@ -3,31 +3,32 @@ language: python
 python:
   - "2.7"
 
-sudo: false
-
-services:
-  - elasticsearch
+cache: pip
 
 install:
-  # Project configuration requirements.
-  - pip install virtualenv virtualenvwrapper
-  - pip install autoenv
+  - pip install -r requirements/travis.txt
   - export CXX=clang++
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
   - nvm install 5.5.0
   - nvm use 5.5.0
   - npm install -g gulp
-
-  # Project initialization.
-  - chmod +x ./setup.sh
-  - ./setup.sh test
-  - python cfgov/manage.py sheer_index
-  - python cfgov/manage.py migrate
-
-script:
-  - gulp lint
-  - gulp test:unit
-  - gulp test:coveralls
+  - chmod +x ./frontend.sh
+  - ./frontend.sh test
 
 env:
-    - TOXENV=py27 DJANGO_SETTINGS_MODULE=cfgov.settings.test WORDPRESS=http://www.consumerfinance.gov
+  global:
+    - TOXENV=py27
+    - DJANGO_SETTINGS_MODULE=cfgov.settings.test
+    - DJANGO_STAGING_HOSTNAME=content.localhost
+    - COVERALLS_PARALLEL=true
+
+  matrix:
+    - RUNTEST=frontend
+    - RUNTEST=backend
+
+script:
+  - ./run_travis.sh
+
+notifications:
+  webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN
+

@@ -1,4 +1,4 @@
- {% load static %}
+ {% load static from staticfiles %}
 <!DOCTYPE html>
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
@@ -55,14 +55,6 @@
 
 	{% block page_feeds %}
 	{% endblock %}
-
-  <!-- H5BP's Asynchronous Google Analytics snippet. -->
-  <script>
-    var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
-  </script>
 
 </head>
 

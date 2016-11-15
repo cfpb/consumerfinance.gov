@@ -36,6 +36,7 @@ def register_permalink(sheer_type, url_pattern_name):
 def global_render_template(name, **kwargs):
     request = get_request()
     context = RequestContext(request, kwargs or None)
+    context['request'] = request
     template = loader.get_template(name, using='wagtail-env')
     return mark_safe(template.render(context.flatten()))
 
@@ -67,7 +68,6 @@ class SheerlikeContext(Context):
 # Monkey patch not needed in master version of Jinja2
 # https://github.com/mitsuhiko/jinja2/commit/f22fdd5ffe81aab743f78290071b0aa506705533
 jinja2.runtime.Context = SheerlikeContext
-
 
 class SheerlikeEnvironment(Environment):
 

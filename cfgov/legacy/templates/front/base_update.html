@@ -1,4 +1,4 @@
-{% load static %}
+{% load static from staticfiles %}
 {% load global_include %}
 {% load i18n %}
 {% load staticversions %}
@@ -24,7 +24,7 @@ please send an email with your full name to tech@cfpb.gov.
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" dir="ltr" lang="{% trans "en-US" %}"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" dir="ltr" lang="{% trans "en-US" %}"> <![endif]-->
 <!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
-<!--[if gt IE 8]><!--> <html dir="ltr" lang="{% trans "en-US" %}"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html dir="ltr" lang="{% trans "en-US" %}" class="no-js"> <!--<![endif]-->
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 
@@ -54,7 +54,7 @@ please send an email with your full name to tech@cfpb.gov.
     <meta property="fb:app_id" content="210516218981921">
 
     {% block open_graph_image %}
-    <meta property="og:image" content="/static/nemo/_/img/logo.svg">
+    <meta property="og:image" content="{% static 'nemo/_/img/logo.svg' %}">
     {% endblock %}
 
     {% block page_meta %}
@@ -67,10 +67,10 @@ please send an email with your full name to tech@cfpb.gov.
     {% endblock %}
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="/static/nemo/_/img/apple-touch-icon-precomposed.png">
-    <link rel="apple-touch-icon" size="72x72" href="/static/nemo/_/img/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon" size="114x114" href="/static/nemo/_/img/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon" size="144x144" href="/static/nemo/_/img/apple-touch-icon-144x144-precomposed.png">
+    <link rel="apple-touch-icon" href="{% static 'nemo/_/img/apple-touch-icon-precomposed.png' %}">
+    <link rel="apple-touch-icon" size="72x72" href="{% static 'nemo/_/img/apple-touch-icon-72x72-precomposed.png' %}">
+    <link rel="apple-touch-icon" size="114x114" href="{% static 'nemo/_/img/apple-touch-icon-114x114-precomposed.png' %}">
+    <link rel="apple-touch-icon" size="144x144" href="{% static 'nemo/_/img/apple-touch-icon-144x144-precomposed.png' %}">
 
     <!-- Feeds -->
     <link rel="alternate" type="application/rss+xml" title="Consumer Financial Protection Bureau &raquo; Feed" href="/feed/" />
@@ -91,12 +91,12 @@ please send an email with your full name to tech@cfpb.gov.
     <!-- Styles -->
 
     <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="/static/nemo/_/c/woff.css{{ STATIC_VERSION }}">
+        <link rel="stylesheet" href="{% static 'nemo/_/c/woff.css' %}">
     <!--<![endif]-->
     <!--[if lt IE 9]>
-    <link rel="stylesheet" href="/static/nemo/_/c/eot.css">
+    <link rel="stylesheet" href="{% static 'nemo/_/c/eot.css' %}">
     <![endif]-->
-    <link rel="stylesheet" href="/static/nemo/_/c/styles.css{{ STATIC_VERSION }}">
+    <link rel="stylesheet" href="{% static 'nemo/_/c/styles.css'%">
 
     {% endblock %}
 
@@ -141,7 +141,7 @@ please send an email with your full name to tech@cfpb.gov.
 
     <!--[if IE 9]><script src="{% static 'js/ie/common.ie.js' %}"></script><![endif]-->
 
-    <script src="/static/nemo/_/js/jquery-1.9.1.min.js{{ STATIC_VERSION }}"></script>
+    <script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
 
     {% block analytics_js %}
     {% endblock %}
@@ -187,8 +187,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     {% endblock %}
 
 {% block nemo_js %}
-<script src="/static/nemo/_/js/functions.js{{ STATIC_VERSION }}"></script>
-<script type="text/javascript" src="/static/agreements/js/chosen.jquery.js{{ STATIC_VERSION }}"></script>
+<script src="{% static 'nemo/_/js/functions.js' %}"></script>
+<script type="text/javascript" src="{% static 'agreements/js/chosen.jquery.js' %}"></script>
 {% endblock %}
 
 {% block app_js %}
@@ -203,7 +203,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     var aid = 'cfpb';
     var script = document.createElement( 'script' );
     script.type = 'text/javascript';
-    script.src = 'http://search.usa.gov/javascripts/stats.js';
+    script.src = 'https://search.usa.gov/javascripts/stats.js';
     document.getElementsByTagName( 'head' )[0].appendChild( script );
   //]]>
 </script>

@@ -1,13 +1,23 @@
+
+import json
+
+from django import forms
+from django.template.loader import render_to_string
+from django.utils.functional import cached_property
+
 from django.apps import apps
 from django.utils.encoding import smart_text
-from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.contrib.table_block.blocks import TableBlock, TableInput
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
+
 from . import atoms, molecules
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
+
+from jinja2 import Markup
 
 
 class Well(blocks.StructBlock):
@@ -90,6 +100,9 @@ class EmailSignUp(blocks.StructBlock):
         icon = 'mail'
         template = '_includes/organisms/email-signup.html'
 
+    class Media:
+        js = ['email-signup.js']
+
 
 class RegComment(blocks.StructBlock):
     document_id = blocks.CharBlock(required=True, label='Document ID',
@@ -152,9 +165,44 @@ class Table(blocks.StructBlock):
     ]))
 
     class Meta:
-        icon = 'form'
+        icon = None
         template = '_includes/organisms/table.html'
-        label = 'Table'
+        label = ' '
+
+
+class AtomicTableInput(TableInput):
+
+    def render(self, name, value, attrs=None):
+        # Calling the grandparents render method and bypassing TableInputs,
+        # in order to control how we render the form.
+        original_field_html = super(TableInput, self).render(
+            name, value, attrs
+        )
+
+        return Markup(render_to_string('wagtailadmin/table_input.html', {
+            'original_field_html': original_field_html,
+            'attrs': attrs,
+            'value': value,
+        }))
+
+    def render_js_init(self, id_, name, value):
+        return "initAtomicTable({0}, {1});".format(
+            json.dumps(id_),
+            json.dumps(self.table_options)
+        )
+
+
+class AtomicTableBlock(TableBlock):
+    @cached_property
+    def field(self):
+        widget = AtomicTableInput(table_options=self.table_options)
+        return forms.CharField(widget=widget, **self.field_options)
+
+    class Meta:
+        default = None
+        icon = 'table'
+        template = '_includes/organisms/table.html'
+        label = 'TableBlock'
 
 
 class ModelBlock(blocks.StructBlock):
@@ -230,31 +278,58 @@ class ModelTable(ModelBlock):
     fields = None
     field_headers = None
 
-    row_links = blocks.BooleanBlock(
+    first_row_is_table_header = blocks.BooleanBlock(
         required=False,
         default=True,
-        help_text='Whether to highlight rows containing links'
+        help_text='Display the first row as a header.'
+    )
+    first_col_is_header = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        help_text='Display the first column as a header.'
+    )
+    is_full_width = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        help_text='Display the table at full width.'
+    )
+    is_striped = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        help_text='Display the table with striped rows.'
+    )
+    is_stacked = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        help_text='Stack the table columns on mobile.'
     )
 
-    def render(self, value):
-        rows = [
-            self.make_row(instance)
-            for instance in self.get_queryset(value)
-        ]
+    def render(self, value, context=None):
+        rows = [self.field_headers]
+
+        rows.extend([
+            self.make_row(instance) for instance in self.get_queryset(value)
+        ])
 
         table_value = {
-            'headers': self.field_headers,
-            'rows': rows,
-            'row_links': value.get('row_links'),
+            'data': rows,
         }
 
-        table = Table()
+        table_value.update((k, value.get(k)) for k in (
+            'first_row_is_table_header',
+            'first_col_is_header',
+            'is_full_width',
+            'is_striped',
+            'is_stacked',
+        ))
+
+        table = AtomicTableBlock()
         value = table.to_python(table_value)
-        return table.render(value)
+        return table.render(value, context=context)
 
     def make_row(self, instance):
         return [
-            {'type': 'text', 'value': self.make_value(instance, field)}
+            self.make_value(instance, field)
             for field in self.fields
         ]
 
@@ -283,7 +358,7 @@ class ModelList(ModelBlock):
 
     For example:
 
-        def render(self, value):
+        def render(self, value, context=None):
             value['objects'] = self.get_queryset(value)
             template = 'path/to/template.html'
             return render_to_string(template, value)
@@ -307,12 +382,14 @@ class ModelList(ModelBlock):
 
 
 class FullWidthText(blocks.StreamBlock):
+    content_with_anchor = molecules.ContentWithAnchor()
     content = blocks.RichTextBlock(icon='edit')
     media = images_blocks.ImageChooserBlock(icon='image')
     quote = molecules.Quote()
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
-    table = Table()
+    table = Table(editable=False)
+    table_block = AtomicTableBlock(table_options={'renderer':'html'})
 
     class Meta:
         icon = 'edit'
@@ -365,13 +442,21 @@ class ExpandableGroup(blocks.StructBlock):
 
 
 class ItemIntroduction(blocks.StructBlock):
-    category = blocks.ChoiceBlock(choices=ref.categories, required=False)
+    show_category = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        help_text=(
+            "Whether to show the category or not "
+            "(category must be set in 'Configuration')."
+        )
+    )
 
     heading = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
 
     date = blocks.DateBlock(required=False)
-    has_social = blocks.BooleanBlock(required=False, help_text="Whether to show the share icons or not.")
+    has_social = blocks.BooleanBlock(
+        required=False, help_text="Whether to show the share icons or not.")
 
     class Meta:
         icon = 'form'

@@ -1,7 +1,5 @@
-import time
-from datetime import timedelta
-from itertools import chain
 from util import ERROR_MESSAGES
+from collections import Counter
 
 from django import forms
 from django.db.models import Q
@@ -10,8 +8,11 @@ from django.forms import widgets
 from taggit.models import Tag
 
 from .util import ref
-from .models.base import CFGOVPage
-from .util.util import most_common
+from .models.base import CFGOVPage, Feedback
+from .models.learn_page import AbstractFilterPage
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 class FilterErrorList(ErrorList):
@@ -69,7 +70,7 @@ class CalenderPDFFilterForm(forms.Form):
         to_date_empty = 'filter_range_date_lte' in cleaned_data and \
                         cleaned_data['filter_range_date_lte'] == None
 
-        if from_date_empty and to_date_empty :
+        if from_date_empty and to_date_empty:
             raise forms.ValidationError(ERROR_MESSAGES['DATE_ERRORS']['one_required'])
         return cleaned_data
 
@@ -97,40 +98,83 @@ class FilterableListForm(forms.Form):
         'class': 'js-filter_range-date js-filter_range-date__lte',
     })
 
-    title =      forms.CharField(max_length=250, required=False, widget=widgets.TextInput(attrs=title_attrs))
-    from_date =  FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
-    to_date =    FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
+    title = forms.CharField(max_length=250, required=False, widget=widgets.TextInput(attrs=title_attrs))
+    from_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
+    to_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
     categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
-    topics =     forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
-    authors =    forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
+    topics = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
+    authors = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
 
     def __init__(self, *args, **kwargs):
-        parent = kwargs.pop('parent')
-        hostname = kwargs.pop('hostname')
+        self.parent = kwargs.pop('parent')
+        self.hostname = kwargs.pop('hostname')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        page_ids = CFGOVPage.objects.live_shared(hostname).descendant_of(parent).values_list('id', flat=True)
-        self.set_topics(parent, page_ids, hostname)
-        self.set_authors(parent, page_ids, hostname)
+        page_ids = CFGOVPage.objects.live_shared(self.hostname).values_list('id', flat=True)
+
+        self.clean_categories()
+        self.set_topics(page_ids)
+        self.set_authors(page_ids)
+
+
+    def clean_categories(self):
+        """ This is a (hopefully) temporary solution for dealing w/ the fact
+        that we show Blog and Reports as options for filtering, but
+        aren't categories themselves. Rather, they consist of sub-categories,
+        but since we aren't showing those sub-categories to the end user,
+        selecting the parent category is equivalent to all of them
+        getting checked. The mapping of Blog and Reports to their
+        respective categories exists in cfgov/v1/util/ref.py
+        """
+
+        categories = self.data.get('categories')
+        if not categories:
+            return None
+        subcategories = dict(ref.categories)
+        if 'blog' in categories:
+            for x in subcategories['Blog']:
+                categories.append(x[0].lower())
+        if 'research-reports' in categories:
+            for x in subcategories['Research Report']:
+                categories.append(x[0].lower())
+        logger.info('Filtering by categories {}'.format(categories))
+        return categories
+
+    def base_query(self):
+        base_query = AbstractFilterPage.objects.live_shared(hostname=self.hostname)
+        if self.parent:
+            base_query = base_query.filter(CFGOVPage.objects.child_of_q(self.parent))
+            logger.info('Filtering by parent {}'.format(self.parent))
+        return base_query
+
+    def get_page_set(self):
+        base_query = self.base_query()
+        query = self.generate_query()
+        return base_query.filter(query).distinct().order_by('-date_published')
+
+    def prepare_options(self, arr):
+        """ Returns an ordered list of tuples of the format ('tag-slug-name', 'Tag Display Name') """
+        arr = Counter(arr).most_common()  # Order by most to least common
+        # Grab only the first tuple in the generated tuple, which includes a count we do not need
+        return [x[0] for x in arr]
 
     # Populate Topics' choices
-    def set_topics(self, parent, page_ids, hostname):
-        tags = Tag.objects.filter(v1_cfgovtaggedpages_items__content_object__id__in=page_ids).values_list('name', flat=True)
+    def set_topics(self, page_ids):
+        tags = Tag.objects.filter(v1_cfgovtaggedpages_items__content_object__id__in=page_ids).values_list('slug', 'name')
 
-        # Orders by most to least common tags
-        options = most_common(list(tags))
-        most = [(option, option) for option in options[:3]]
-        other = [(option, option) for option in options[3:]]
+        options = self.prepare_options(arr=tags)
+        most = options[:3]
+        other = options[3:]
+
         self.fields['topics'].choices = \
-            (('Most frequent', tuple(most)),
-             ('All other topics', tuple(other)))
+            (('Most frequent', most),
+             ('All other topics', other))
 
     # Populate Authors' choices
-    def set_authors(self, parent, page_ids, hostname):
-        authors = Tag.objects.filter(v1_cfgovauthoredpages_items__content_object__id__in=page_ids).values_list('name', flat=True)
+    def set_authors(self, page_ids):
+        authors = Tag.objects.filter(v1_cfgovauthoredpages_items__content_object__id__in=page_ids).values_list('slug', 'name')
+        options = self.prepare_options(arr=authors)
 
-        # Orders by most to least common authors
-        self.fields['authors'].choices = [(author, author) for author in
-                                          most_common(list(authors))]
+        self.fields['authors'].choices = options
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
@@ -192,9 +236,10 @@ class FilterableListForm(forms.Form):
             'date_published__gte',   # from_date
             'date_published__lte',   # to_date
             'categories__name__in',  # categories
-            'tags__name__in',        # topics
-            'authors__name__in',     # authors
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
         ]
+
 
 class EventArchiveFilterForm(FilterableListForm):
     def get_query_strings(self):
@@ -203,39 +248,16 @@ class EventArchiveFilterForm(FilterableListForm):
             'start_dt__gte',         # from_date
             'end_dt__lte',           # to_date
             'categories__name__in',  # categories
-            'tags__name__in',        # topics
-            'authors__name__in',     # authors
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
         ]
 
 
-class NewsroomFilterForm(FilterableListForm):
-    def __init__(self, *args, **kwargs):
-        parent = kwargs.pop('parent')
-        hostname = kwargs.pop('hostname')
-        super(FilterableListForm, self).__init__(*args, **kwargs)
-        try:
-            blog = CFGOVPage.objects.get(slug='blog')
-        except CFGOVPage.DoesNotExist:
-            print 'A blog landing page needs to be made'
-        query = CFGOVPage.objects.child_of_q(parent)
-        query |= CFGOVPage.objects.child_of_q(blog)
-        page_ids = CFGOVPage.objects.live_shared(hostname).filter(query).values_list('id', flat=True)
-        self.set_topics(parent, page_ids, hostname)
-        self.set_authors(parent, page_ids, hostname)
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['is_helpful', 'comment']
 
-
-class ActivityLogFilterForm(NewsroomFilterForm):
     def __init__(self, *args, **kwargs):
-        parent = kwargs.pop('parent')
-        hostname = kwargs.pop('hostname')
-        super(FilterableListForm, self).__init__(*args, **kwargs)
-        query = CFGOVPage.objects.child_of_q(parent)
-        for slug in ['blog', 'newsroom', 'research-reports']:
-            try:
-                parent = CFGOVPage.objects.get(slug=slug)
-                query |= CFGOVPage.objects.child_of_q(parent)
-            except CFGOVPage.DoesNotExist:
-                print slug, 'does not exist'
-        page_ids = CFGOVPage.objects.live_shared(hostname).filter(query).values_list('id', flat=True)
-        self.set_topics(parent, page_ids, hostname)
-        self.set_authors(parent, page_ids, hostname)
+        super(FeedbackForm, self).__init__(*args, **kwargs)
+        self.fields['is_helpful'].required = True

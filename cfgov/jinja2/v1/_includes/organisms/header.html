@@ -18,7 +18,7 @@
 <header class="o-header"
         role="banner">
 
-    {% if flag_enabled('BETA_NOTICE') and show_banner %}
+    {% if flag_enabled(request, 'BETA_NOTICE') and show_banner %}
     <div class="m-global-banner">
         <div class="wrapper
                     wrapper__match-content
@@ -69,21 +69,21 @@
             <a class="o-header_logo" href="/">
                 <!--[if lt IE 9]>
                     <img class="o-header_logo-img"
-                         src="/static/img/logo_sm-exec.png"
+    src="{{ static('img/logo_sm-exec.png')}}"
                          alt="Consumer Financial Protection Bureau"
                          width="237"
                          height="50">
                 <![endif]-->
                 <!--[if gt IE 8]><!-->
                 <img class="o-header_logo-img u-js-only"
-                     src="/static/img/logo_sm-exec.svg"
-                     onerror="this.onerror=null;this.src='/static/img/logo_sm-exec.png';"
+                     src="{{ static('img/logo_sm-exec.svg')}}"
+                     onerror="this.onerror=null;this.src='{{ static('img/logo_sm-exec.png')}}';"
                      alt="Consumer Financial Protection Bureau"
                      width="237"
                      height="50">
                 <noscript>
                     <img class="o-header_logo-img"
-                         src="/static/img/logo_sm-exec.png"
+                         src="{{ static('img/logo_sm-exec.png')}}"
                          alt="Consumer Financial Protection Bureau"
                          width="237"
                          height="50">
@@ -98,11 +98,11 @@
 
     </div>
     <!--[if gt IE 8]><!-->
-    <script>
+      {% hashedscript %}
       /* TODO: scope no-js to individual molecules/organisms. This is a hack to fix no-js on the on-demand header, while also allowing the menu to be scoped to o-header for on-demand pages. */
       var headerDom = document.querySelector( '.o-header_content' );
       headerDom.className = headerDom.className.replace( 'no-js', 'js' );
-    </script>
+      {% end_hashedscript %}
     <!--<![endif]-->
 </header>
 
