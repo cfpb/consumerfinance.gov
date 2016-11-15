@@ -16,6 +16,7 @@ from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
 from sheerlike.helpers import IndexHelper
+from sheerlike.post_processors import post_process
 
 
 def read_json_file(path):
@@ -71,6 +72,7 @@ def index_processor(es, index_name, processor, reindex=False):
             es.indices.put_mapping(index=index_name,
                                    doc_type=processor.name,
                                    body={processor.name: mapping_supplied})
+
     # Keep track of whether the indexing process is successful
     # This is so the end user and/or Jenkins knows the job failed if everything
     # didn't index 100%
@@ -84,6 +86,10 @@ def index_processor(es, index_name, processor, reindex=False):
         document_iterator = []
         sys.stderr.write("error making connection for %s" % processor.name)
         index_success = False
+
+    # Set up post processing that should apply to all documents regardless
+    # of their source processor.
+    document_iterator = post_process(document_iterator)
 
     try:
         result = bulk(es, document_iterator, index=index_name)
