@@ -1,9 +1,9 @@
 import os
 import json
+import urllib
 from itertools import chain
 from collections import OrderedDict
 
-# from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_delete
@@ -26,8 +26,6 @@ from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks, hooks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
-# from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
-# from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import (
     Orderable,
     Page,
@@ -48,13 +46,9 @@ from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 
-# from sheerlike.query import QueryFinder
-
 from .. import get_protected_url
 from ..atomic_elements import molecules, organisms
 from ..util import ref
-
-import urllib
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -108,7 +102,9 @@ class CFGOVPage(Page):
                                   related_name='tagged_pages')
     shared = models.BooleanField(default=False)
     has_unshared_changes = models.BooleanField(default=False)
-    language = models.CharField(choices=ref.supported_languagues, default='en', max_length=2)
+    language = models.CharField(
+        choices=ref.supported_languagues, default='en', max_length=2
+    )
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
@@ -155,7 +151,10 @@ class CFGOVPage(Page):
         return self.alphabetize_authors()
 
     def alphabetize_authors(self):
-        """ Alphabetize authors of this page by last name, then first name if needed """
+        """
+        Alphabetize authors of this page by last name,
+        then first name if needed
+        """
         # First sort by first name
         author_names = self.authors.order_by('name')
         # Then sort by last name
@@ -205,7 +204,9 @@ class CFGOVPage(Page):
             return child_query
 
         def specific_categories_query(block, parent_slug):
-            specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
+            specific_categories = ref.related_posts_category_lookup(
+                block.value['specific_categories']
+            )
             choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
             categories = [c for c in specific_categories if c in choices]
             if categories:
