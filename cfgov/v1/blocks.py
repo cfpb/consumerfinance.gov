@@ -82,7 +82,7 @@ class Feedback(AbstractFormBlock):
     question_text = blocks.CharBlock(
         required=False,
         default=(
-            'Have any additional feedback on the page you were just on? '
+            'Have any additional feedback about the page you were just on? '
             'Please use the form below to share your thoughts.'),
         help_text=(
             'Leave blank unless you are building a referred-page '
@@ -109,7 +109,7 @@ class Feedback(AbstractFormBlock):
         required=False,
         default='Do you currently own a home?'
     )
-    button_text = blocks.CharBlock(default='Submit feedback')
+    button_text = blocks.CharBlock(default='Submit')
 
     class Meta:
         handler = 'v1.handlers.blocks.feedback.FeedbackHandler'
