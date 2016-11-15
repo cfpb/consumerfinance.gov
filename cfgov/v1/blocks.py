@@ -83,14 +83,16 @@ class Feedback(AbstractFormBlock):
         required=False,
         default=(
             'Have any additional feedback on the page you were just on? '
-            'Please use the form below to share your thoughts.'
-        )
+            'Please use the form below to share your thoughts.'),
+        help_text=(
+            'Leave blank unless you are building a referred-page '
+            'feedback form, as in /owning-a-home/feedback/.')
     )
     optional_intro = blocks.CharBlock(
         required=False,
         default='Optional: Tell us a bit more about yourself.',
         help_text=(
-            'Leave blank unless you are using a feedback form with extra '
+            'Leave blank unless you are building a feedback form with extra '
             'radio-button prompts, as in /owning-a-home/help-us-improve/.'
             )
     )
