@@ -69,7 +69,12 @@ class AnchorLink(blocks.StructBlock):
 class Feedback(AbstractFormBlock):
     was_it_helpful_text = blocks.CharBlock(
         required=False,
-        default='Was this page helpful to you?')
+        default='Was this page helpful to you?',
+        help_text=(
+            'Leave blank for anything but a "Was this helpful" '
+            'radio-button feedback form.'
+            )
+        )
     intro_text = blocks.CharBlock(
         required=False,
         default='Provide additional feedback'
@@ -83,7 +88,11 @@ class Feedback(AbstractFormBlock):
     )
     optional_intro = blocks.CharBlock(
         required=False,
-        default='Optional: Tell us a bit more about yourself.'
+        default='Optional: Tell us a bit more about yourself.',
+        help_text=(
+            'Leave blank unless you are using a feedback form with extra '
+            'radio-button prompts, as in /owning-a-home/help-us-improve/.'
+            )
     )
     optional_text = blocks.CharBlock(
         required=False,
