@@ -90,16 +90,17 @@ class ConferenceRegistrationHandler(Handler):
         else:
             messages.success(self.request,
                 'Thank you for registering for '
-                'the CFPB research conference on December 15-16, 2016. '
+                'the 2016 CFPB Research Conference on December 15-16, 2016. '
                 'We are looking forward to seeing you there!<br><br>'
                 '<span style="font-weight: normal; '
                 'font-family:AvenirNextLTW01-Regular,Arial,sans-serif">'
                 'Let us know if your plans change, and you can\'t make '
-                'the days you registered to attend. Also, let us know '
+                'the sessions you registered to attend. Also, let us know '
                 'if you have any questions about the event and how to '
                 'attend. Feel free to email us at '
                 '<a href="mailto:CFPB_ResearchConference@cfpb.gov">'
-                'CFPB_ResearchConference@cfpb.gov</a>.</span>')
+                'CFPB_ResearchConference@cfpb.gov</a>.</span>',
+                extra_tags='safe')
             return HttpResponseRedirect(self.page.url)
 
     def fail(self, form):
