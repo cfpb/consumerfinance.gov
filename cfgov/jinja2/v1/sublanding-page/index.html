@@ -28,7 +28,7 @@
                         block__flush-sides">
                 {{ featured_content.render(block.value) }}
             </div>
-        {% elif block.block_type == 'feedback' or block.block_type == 'referred_feedback' %}
+        {% elif block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
         {% elif 'post_preview_snapshot' in block.block_type %}
             <div class="block

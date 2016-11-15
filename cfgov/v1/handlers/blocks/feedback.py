@@ -1,10 +1,12 @@
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http import JsonResponse, HttpResponseRedirect
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
 
 from .. import Handler
-from v1.forms import FeedbackForm
+from v1.forms import (
+    FeedbackForm,
+    ReferredFeedbackForm,
+    SuggestionFeedbackForm
+)
 
 
 class FeedbackHandler(Handler):
@@ -14,7 +16,12 @@ class FeedbackHandler(Handler):
 
     def process(self, is_submitted):
         if is_submitted:
-            form = FeedbackForm(self.request.POST)
+            if 'help-us-improve' in self.page.url:
+                form = SuggestionFeedbackForm(self.request.POST)
+            elif 'feedback' in self.page.url:
+                form = ReferredFeedbackForm(self.request.POST)
+            else:
+                form = FeedbackForm(self.request.POST)
             return self.get_response(form)
 
         return {'form': FeedbackForm()}
@@ -23,7 +30,8 @@ class FeedbackHandler(Handler):
         if form.is_valid():
             feedback = form.save(commit=False)
             is_helpful = self.request.POST.get('is_helpful', None)
-            feedback.is_helpful = bool(int(is_helpful))
+            if is_helpful is not None:
+                feedback.is_helpful = bool(int(is_helpful))
             feedback.page = self.page
             feedback.save()
             return self.success()
@@ -44,6 +52,8 @@ class FeedbackHandler(Handler):
         else:
             if form.errors.get('is_helpful', None):
                 messages.error(self.request, 'You must select an option.')
+            elif form.errors.get('comment', None):
+                messages.error(self.request, 'You must enter a comment.')
             else:
                 message = 'Something went wrong. Please try again.'
                 messages.error(self.request, message)

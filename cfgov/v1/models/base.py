@@ -576,25 +576,16 @@ class TemporaryLockout(models.Model):
 
 
 class Feedback(models.Model):
-    is_helpful = models.BooleanField()
-    comment = models.TextField(blank=True, null=True)
+    submitted_on = models.DateTimeField(auto_now_add=True)
     page = models.ForeignKey(
         Page,
         related_name='feedback',
         null=True,
         on_delete=models.SET_NULL,
     )
-    submitted_on = models.DateTimeField(auto_now_add=True)
-
-
-class ReferredFeedback(models.Model):
-    """A standalone feedback module that other pages can refer to"""
+    comment = models.TextField(blank=True, null=True)
     referrer = models.CharField(max_length=255, blank=True, null=True)
-    comment = models.TextField()
-    submitted_on = models.DateTimeField(auto_now_add=True)
-    page = models.ForeignKey(
-        Page,
-        related_name='referred_feedback',
-        null=True,
-        on_delete=models.SET_NULL,
-    )
+    is_helpful = models.NullBooleanField()
+    expect_to_buy = models.CharField(max_length=255, blank=True, null=True)
+    currently_own = models.CharField(max_length=255, blank=True, null=True)
+    email = models.EmailField(max_length=250, blank=True, null=True)

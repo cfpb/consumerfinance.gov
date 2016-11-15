@@ -32,7 +32,6 @@ class SublandingPage(CFGOVPage):
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
-        ('referred_feedback', v1_blocks.ReferredFeedback()),
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
     sidebar_breakout = StreamField([

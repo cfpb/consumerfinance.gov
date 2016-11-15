@@ -8,6 +8,7 @@ class TestFeedbackHandler(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         page = mock.Mock()
+        page.url = '/owning-a-home/'
         post_data = {
             'is_helpful': '1',
             'comment': 'Example comment.'

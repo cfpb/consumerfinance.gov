@@ -67,25 +67,39 @@ class AnchorLink(blocks.StructBlock):
 
 
 class Feedback(AbstractFormBlock):
-    question_text = blocks.CharBlock(default='Was this page helpful to you?')
+    was_it_helpful_text = blocks.CharBlock(
+        required=False,
+        default='Was this page helpful to you?')
+    intro_text = blocks.CharBlock(
+        required=False,
+        default='Provide additional feedback'
+        )
+    question_text = blocks.CharBlock(
+        required=False,
+        default=(
+            'Have any additional feedback on the page you were just on? '
+            'Please use the form below to share your thoughts.'
+        )
+    )
+    optional_intro = blocks.CharBlock(
+        required=False,
+        default='Optional: Tell us a bit more about yourself.'
+    )
+    optional_text = blocks.CharBlock(
+        required=False,
+        default='This information helps us understand your question better.'
+    )
+    optional_question_1 = blocks.CharBlock(
+        required=False,
+        default='How soon do you expect to buy a home?'
+
+    )
+    optional_question_2 = blocks.CharBlock(
+        required=False,
+        default='Do you currently own a home?'
+    )
     button_text = blocks.CharBlock(default='Submit feedback')
 
     class Meta:
         handler = 'v1.handlers.blocks.feedback.FeedbackHandler'
         template = '_includes/blocks/feedback.html'
-
-
-class ReferredFeedback(AbstractFormBlock):
-
-    intro_text = blocks.CharBlock(
-        default='Provide additional feedback'
-        )
-    question_text = blocks.CharBlock(
-        default='Have any additional feedback on the page you were just on? '
-                'Please use the form below to share your thoughts.'
-        )
-    button_text = blocks.CharBlock(default='Submit feedback')
-
-    class Meta:
-        handler = 'v1.handlers.blocks.referred_feedback.ReferredFeedbackHandler'
-        template = '_includes/blocks/referred-feedback.html'
