@@ -99,8 +99,7 @@ class ConferenceRegistrationHandler(Handler):
                 'if you have any questions about the event and how to '
                 'attend. Feel free to email us at '
                 '<a href="mailto:CFPB_ResearchConference@cfpb.gov">'
-                'CFPB_ResearchConference@cfpb.gov</a>.</span>',
-                extra_tags='safe')
+                'CFPB_ResearchConference@cfpb.gov</a>.</span>')
             return HttpResponseRedirect(self.page.url)
 
     def fail(self, form):

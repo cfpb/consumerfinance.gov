@@ -27,7 +27,7 @@
 
             {# JS-disabled result handling #}
             {%- for message in get_messages(request) -%}
-                {{- notification.render(message.level_tag, true, message.message) -}}
+                {{- notification.render(message.level_tag, true, message.message | safe) -}}
             {%- endfor -%}
 
             <section class="o-form-section">
