@@ -27,15 +27,18 @@
 
             {# JS-disabled result handling #}
             {%- for message in get_messages(request) -%}
-                {{- notification.render(message.level_tag, true, message.message) -}}
+                {{- notification.render(message.level_tag, true, message.message | safe) -}}
             {%- endfor -%}
 
             <section class="o-form-section">
+                <div class="form-l_col form-l_col-1">
+                    <p><strong>*</strong> Indicates a required field.</p>
+                </div>
 
                 {# Name #}
                 {{- input.render({
                     'id':       'name',
-                    'label':    'Name',
+                    'label':    'Name *',
                     'type':     'text',
                     'value':    form.name.value() | default('', true),
                     'size':     '1',
@@ -57,7 +60,7 @@
                 {# Email #}
                 {{- input.render({
                     'id': 'email',
-                    'label':   'Email',
+                    'label':   'Email *',
                     'type':    'email',
                     'value':    form.email.value() | default('', true),
                     'size':    '1',
@@ -72,7 +75,7 @@
                 {% endfor %}
 
                 {{ big_checkbox.render({
-                    "legend": 'Which sessions will you be attending?',
+                    "legend": 'Which sessions will you be attending? ',
                     "fields": checkbox_fields,
                     'value':  request.POST.getlist('form_sessions', []),
                     "size" :  '1'

@@ -89,7 +89,17 @@ class ConferenceRegistrationHandler(Handler):
             return JsonResponse({'result': 'pass'})
         else:
             messages.success(self.request,
-                             'Your submission was successfully received.')
+                'Thank you for registering for '
+                'the 2016 CFPB Research Conference on December 15-16, 2016. '
+                'We are looking forward to seeing you there!<br><br>'
+                '<span style="font-weight: normal; '
+                'font-family:AvenirNextLTW01-Regular,Arial,sans-serif">'
+                'Let us know if your plans change, and you can\'t make '
+                'the sessions you registered to attend. Also, let us know '
+                'if you have any questions about the event and how to '
+                'attend. Feel free to email us at '
+                '<a href="mailto:CFPB_ResearchConference@cfpb.gov">'
+                'CFPB_ResearchConference@cfpb.gov</a>.</span>')
             return HttpResponseRedirect(self.page.url)
 
     def fail(self, form):
