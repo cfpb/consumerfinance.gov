@@ -5,13 +5,11 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
-from v1.models.base import CFGOVPage
-from v1.atomic_elements import molecules, organisms
-from v1.feeds import FilterableFeedPageMixin
-from v1.util.filterable_list import FilterableListMixin
-from v1 import blocks as v1_blocks
-from v1.util import ref
-from v1.models.learn_page import AbstractFilterPage
+from .base import CFGOVPage
+from ..atomic_elements import molecules, organisms
+from ..feeds import FilterableFeedPageMixin
+from ..util.filterable_list import FilterableListMixin
+from .. import blocks as v1_blocks
 
 
 class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
@@ -69,7 +67,6 @@ class NewsroomLandingPage(BrowseFilterablePage):
 
     objects = PageManager()
 
-    def base_query(self, hostname):
-        """ Modify the base query for Newsroom to exclude research reports """
-        reports = [x[0] for x in dict(ref.categories)['Research Report']]
-        return AbstractFilterPage.objects.live_shared(hostname).exclude(categories__name__in=reports)
+    def get_filter_parent(self):
+        """ The Newsroom never filters results by a parent page """
+        return None

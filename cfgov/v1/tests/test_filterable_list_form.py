@@ -5,15 +5,13 @@ from v1.forms import FilterableListForm
 from v1.models.base import CFGOVPageCategory
 from v1.tests.wagtail_pages.helpers import publish_page
 from wagtail.wagtailcore.models import Site
-from v1.models.learn_page import AbstractFilterPage
 
 
 class TestFilterableListForm(TestCase):
 
     def setUpFilterableForm(self, data=None):
-        hostname = Site.objects.get(is_default_site=True).hostname
-        base_query = AbstractFilterPage.objects.live_shared(hostname)
-        form = FilterableListForm(hostname=hostname, base_query=base_query)
+        site = Site.objects.get(is_default_site=True)
+        form = FilterableListForm(parent=None, hostname=site.hostname)
         form.is_bound = True
         form.cleaned_data = data
         return form

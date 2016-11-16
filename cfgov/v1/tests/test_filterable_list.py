@@ -11,6 +11,11 @@ class TestFilterableListMixin(TestCase):
     def setUp(self):
         self.mixin = FilterableListMixin()
         self.factory = RequestFactory()
+
+    @mock.patch('v1.models.learn_page.AbstractFilterPage.objects')
+    def test_base_query_calls_live_shared(self, mock_cfgovmanager):
+        FilterableListForm(parent=None, hostname='hostname').base_query()
+        assert mock_cfgovmanager.live_shared.called
     
     # FilterableListMixin.per_page_limit tests
     def test_per_page_limit_returns_integer(self):
