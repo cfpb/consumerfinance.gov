@@ -14,6 +14,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 
 ## Unreleased
+- Fixed breadcrumb rendering for wagtail subpages
 
 ### Added
 - DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
