@@ -35,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Simplified Akamai cache flushing logic to always flush on publish.
 - Conference Registration Form display element improvements.
 - Conference Registration Form submission success message replaced.
+- Improved job listings view in Wagtail admin.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
