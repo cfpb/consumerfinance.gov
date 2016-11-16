@@ -1,17 +1,16 @@
 from django.db import models
 
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, TabbedInterface, ObjectList
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
-from v1.models.base import CFGOVPage
+from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.feeds import FilterableFeedPageMixin
-from v1.util.filterable_list import FilterableListMixin
-from v1 import blocks as v1_blocks
-from v1.util import ref
+from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
+from v1.util import ref
+from v1.util.filterable_list import FilterableListMixin
 
 
 class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
