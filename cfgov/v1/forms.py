@@ -83,6 +83,9 @@ class CalenderPDFFilterForm(forms.Form):
             )
         return cleaned_data
 
+class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
+    def validate(self, value):
+        pass
 
 class FilterableListForm(forms.Form):
     title_attrs = {
@@ -111,7 +114,7 @@ class FilterableListForm(forms.Form):
     from_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
     to_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
     categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
-    topics = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
+    topics = MultipleChoiceFieldNoValidation(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
     authors = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
 
     def __init__(self, *args, **kwargs):
