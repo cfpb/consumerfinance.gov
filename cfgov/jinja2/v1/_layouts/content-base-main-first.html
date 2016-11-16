@@ -7,7 +7,7 @@
         {% if breadcrumb_items | length > 0 %}
             <div class="content_wrapper">
                 {%- import 'breadcrumbs.html' as breadcrumbs -%}
-                {{ breadcrumbs.render(breadcrumb_items) }}
+                {{ breadcrumbs.render(breadcrumb_items, 'breadcrumbs__main-first') }}
             </div>
         {% endif %}
     {% else %}
