@@ -16,7 +16,6 @@
              block__bg
              block__border
              block__padded-top">
-
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <input type="hidden" name="form_id" value="{{ form_id }}">
     <input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER }}">
@@ -69,6 +68,8 @@
             <legend class="h3">
                 {{ value.intro_text }}
             </legend>
+            {% endif %}
+            {% if value.question_text %}
             <label for="comment">
                 <span class="h4">{{ value.question_text }}</span>
             </label>
@@ -89,18 +90,18 @@
         </div>
     </fieldset>
 
-        {% if value.optional_intro %}
+        {% if value.radio_intro %}
     <fieldset class="o-form-input-group">
         <div class="form-l_col
                     form-l_col-1">
             <h3>
-                {{ value.optional_intro }}
+                {{ value.radio_intro }}
             </h3>
             <h4>
-                {{ value.optional_text }}
+                {{ value.radio_text }}
             </h4>
             <h3>
-               {{ value.optional_question_1 }}
+               {{ value.radio_question_1 }}
             </h3>
 
                 <input class="cf-input"
@@ -128,7 +129,7 @@
         <div class="form-l_col
                     form-l_col-1">
             <h3>
-               {{ value.optional_question_2 }}
+               {{ value.radio_question_2 }}
             </h3>
                 <input class="cf-input"
                        id="never_owned"

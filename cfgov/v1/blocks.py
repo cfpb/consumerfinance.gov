@@ -77,18 +77,18 @@ class Feedback(AbstractFormBlock):
         )
     intro_text = blocks.CharBlock(
         required=False,
-        default='Provide additional feedback'
-        )
-    question_text = blocks.CharBlock(
-        required=False,
         default=(
             'Have any additional feedback about the page you were just on? '
             'Please use the form below to share your thoughts.'),
         help_text=(
-            'Leave blank unless you are building a referred-page '
-            'feedback form, as in /owning-a-home/feedback/.')
+            'Optional feedback intro')
+        )
+    question_text = blocks.CharBlock(
+        required=False,
+        help_text=(
+            'Optional expansion on intro')
     )
-    optional_intro = blocks.CharBlock(
+    radio_intro = blocks.CharBlock(
         required=False,
         default='Optional: Tell us a bit more about yourself.',
         help_text=(
@@ -96,16 +96,16 @@ class Feedback(AbstractFormBlock):
             'radio-button prompts, as in /owning-a-home/help-us-improve/.'
             )
     )
-    optional_text = blocks.CharBlock(
+    radio_text = blocks.CharBlock(
         required=False,
         default='This information helps us understand your question better.'
     )
-    optional_question_1 = blocks.CharBlock(
+    radio_question_1 = blocks.CharBlock(
         required=False,
         default='How soon do you expect to buy a home?'
 
     )
-    optional_question_2 = blocks.CharBlock(
+    radio_question_2 = blocks.CharBlock(
         required=False,
         default='Do you currently own a home?'
     )
