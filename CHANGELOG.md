@@ -12,6 +12,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## 4.1.1
+
+
+### Changed
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+
+
 
 ## 4.1.0
 
@@ -31,8 +39,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Disable logging below CRITICAL when running Python unit tests.
 - Fixed empty `heading` value in link blobs
 - Picard upgraded to version 1.5.2.
-- Conference Registration Form display element improvements.
-- Conference Registration Form submission success message replaced.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
