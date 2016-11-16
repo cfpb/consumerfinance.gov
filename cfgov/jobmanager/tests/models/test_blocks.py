@@ -4,7 +4,6 @@ from django.utils import timezone
 from mock import Mock
 from model_mommy import mommy
 from wagtail.wagtailcore.models import Page, Site
-from django.test import RequestFactory
 
 from cfgov.test import HtmlMixin
 from jobmanager.models.blocks import JobListingList, JobListingTable
@@ -137,10 +136,6 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         page = SublandingPage(title='title', slug='slug')
         save_new_page(page)
         set_stream_data(page, 'sidebar_breakout', [job_listing_list])
-        request = RequestFactory().get('/')
-        request.site = Site.objects.get(is_default_site=True)
-        request.user = Mock()
-        print("Page content is {}".format(page.serve(request).render()))
 
         self.assertPageIncludesHtml(page, (
             '><aside class="m-jobs-list" data-qa-hook="openings-section">'
