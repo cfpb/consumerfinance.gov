@@ -17,6 +17,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
+- Block, page and other bits for an Owning a Home feedback module that captures referrer
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context. 
 
 ### Changed
