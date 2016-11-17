@@ -8,23 +8,42 @@ from v1.forms import (
     SuggestionFeedbackForm
 )
 
+FEEDBACK_TYPES = {
+    'helpful': FeedbackForm,
+    'referred': ReferredFeedbackForm,
+    'suggestion': SuggestionFeedbackForm
+}
+
+
+def get_feedback_type(block_value):
+    if block_value:
+        if block_value.get('was_it_helpful_text'):
+            return 'helpful'
+        elif block_value.get('radio_intro'):
+            return 'suggestion'
+        else:
+            return 'referred'
+    else:
+        return 'helpful'
+
 
 class FeedbackHandler(Handler):
-    def __init__(self, page, request, block_value):
+    def __init__(self,
+                 page,
+                 request,
+                 block_value):
         super(FeedbackHandler, self).__init__(page, request)
         self.block_value = block_value
 
     def process(self, is_submitted):
+
+        form_cls = FEEDBACK_TYPES[get_feedback_type(self.block_value)]
+
         if is_submitted:
-            if 'help-us-improve' in self.page.url:
-                form = SuggestionFeedbackForm(self.request.POST)
-            elif 'feedback' in self.page.url:
-                form = ReferredFeedbackForm(self.request.POST)
-            else:
-                form = FeedbackForm(self.request.POST)
+            form = form_cls(self.request.POST)
             return self.get_response(form)
 
-        return {'form': FeedbackForm()}
+        return {'form': form_cls()}
 
     def get_response(self, form):
         if form.is_valid():
