@@ -1,43 +1,43 @@
-import os
-import json
-from itertools import chain
 from collections import OrderedDict
+from itertools import chain
+import json
+import os
+from urllib import urlencode
 
-from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_delete
-from django.http import Http404, JsonResponse, HttpResponseBadRequest, \
-    HttpResponse
-from django.template.response import TemplateResponse
-from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
 from django.dispatch import receiver
-from django.contrib.auth.models import User
+from django.http import (
+    Http404,
+    JsonResponse,
+    HttpResponseBadRequest,
+    HttpResponse
+)
 
-from wagtail.wagtailimages.models import Image, AbstractImage, AbstractRendition
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
-from wagtail.wagtailcore import blocks, hooks
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.templatetags.wagtailcore_tags import slugurl
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import Page, PagePermissionTester, \
-    UserPagePermissionsProxy, Orderable, PageManager, PageQuerySet
-from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, \
-    MultiFieldPanel, TabbedInterface, ObjectList
-from taggit.models import TaggedItemBase
+from django.template.response import TemplateResponse
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 
-from sheerlike.query import QueryFinder
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel, \
+    MultiFieldPanel, TabbedInterface, ObjectList
+from wagtail.wagtailcore import blocks, hooks
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import Orderable, Page, PageManager, PagePermissionTester, \
+    PageQuerySet, UserPagePermissionsProxy
+from wagtail.wagtailimages.models import AbstractImage, AbstractRendition, Image
+from wagtail.wagtailcore.url_routing import RouteResult
 
-from .. import get_protected_url
-from ..atomic_elements import molecules, organisms
-from ..util import util, ref
+from taggit.models import TaggedItemBase
 
-import urllib
+from v1 import get_protected_url
+from v1.atomic_elements import molecules, organisms
+from v1.util import ref
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -91,7 +91,9 @@ class CFGOVPage(Page):
                                   related_name='tagged_pages')
     shared = models.BooleanField(default=False)
     has_unshared_changes = models.BooleanField(default=False)
-    language = models.CharField(choices=ref.supported_languagues, default='en', max_length=2)
+    language = models.CharField(
+        choices=ref.supported_languagues, default='en', max_length=2
+    )
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
@@ -138,27 +140,24 @@ class CFGOVPage(Page):
         return self.alphabetize_authors()
 
     def alphabetize_authors(self):
-        """ Alphabetize authors of this page by last name, then first name if needed """
+        """
+        Alphabetize authors of this page by last name,
+        then first name if needed
+        """
         # First sort by first name
         author_names = self.authors.order_by('name')
         # Then sort by last name
         return sorted(author_names, key=lambda x: x.name.split()[-1])
 
     def generate_view_more_url(self, request):
-        from ..forms import FilterableListForm
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
-        form = FilterableListForm(parent=activity_log, hostname=request.site.hostname)
-        available_tags = [tag[0] for name, tags in form.fields['topics'].choices for tag in tags]
         tags = []
         index = activity_log.form_id()
-        for tag in self.tags.slugs():
-            if tag in available_tags:
-                tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
-        tags = '&'.join(tags)
+        tags = urlencode([('filter%s_topics' % index, tag) for tag in self.tags.slugs()])
         return get_protected_url({'request': request}, activity_log) + '?' + tags
 
     def related_posts(self, block, hostname):
-        from . import AbstractFilterPage
+        from v1.models.learn_page import AbstractFilterPage
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
         search_types = [
@@ -188,7 +187,9 @@ class CFGOVPage(Page):
             return child_query
 
         def specific_categories_query(block, parent_slug):
-            specific_categories = ref.related_posts_category_lookup(block.value['specific_categories'])
+            specific_categories = ref.related_posts_category_lookup(
+                block.value['specific_categories']
+            )
             choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
             categories = [c for c in specific_categories if c in choices]
             if categories:
@@ -497,20 +498,21 @@ def image_delete(sender, instance, **kwargs):
 def rendition_delete(sender, instance, **kwargs):
     instance.file.delete(False)
 
-# keep encrypted passwords around to ensure that user does not re-use any of the
-# previous 10
+
+# keep encrypted passwords around to ensure that user does not re-use
+# any of the previous 10
 class PasswordHistoryItem(models.Model):
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()   # password becomes invalid at...
-    locked_until = models.DateTimeField() # password can not be changed until...
+    expires_at = models.DateTimeField()  # password becomes invalid at...
+    locked_until = models.DateTimeField()  # password cannot be changed until
     encrypted_password = models.CharField(_('password'), max_length=128)
 
     class Meta:
         get_latest_by = 'created'
 
     @classmethod
-    def current_for_user(cls,user):
+    def current_for_user(cls, user):
         return user.passwordhistoryitem_set.latest()
 
     def can_change_password(self):
@@ -520,6 +522,7 @@ class PasswordHistoryItem(models.Model):
     def must_change_password(self):
         now = timezone.now()
         return(self.expires_at < now)
+
 
 # User Failed Login Attempts
 class FailedLoginAttempt(models.Model):
@@ -549,6 +552,7 @@ class FailedLoginAttempt(models.Model):
         attempts = self.failed_attempts.split(',')
         return len(attempts) > value
 
+
 class TemporaryLockout(models.Model):
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
@@ -556,12 +560,16 @@ class TemporaryLockout(models.Model):
 
 
 class Feedback(models.Model):
-    is_helpful = models.BooleanField()
-    comment = models.TextField(blank=True, null=True)
+    submitted_on = models.DateTimeField(auto_now_add=True)
     page = models.ForeignKey(
         Page,
         related_name='feedback',
         null=True,
         on_delete=models.SET_NULL,
     )
-    submitted_on = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField(blank=True, null=True)
+    referrer = models.CharField(max_length=255, blank=True, null=True)
+    is_helpful = models.NullBooleanField()
+    expect_to_buy = models.CharField(max_length=255, blank=True, null=True)
+    currently_own = models.CharField(max_length=255, blank=True, null=True)
+    email = models.EmailField(max_length=250, blank=True, null=True)

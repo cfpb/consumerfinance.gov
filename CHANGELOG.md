@@ -25,6 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
+- Block, page and other bits for an Owning a Home feedback module that captures referrer
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context. 
 
 ### Changed
@@ -39,6 +40,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Disable logging below CRITICAL when running Python unit tests.
 - Fixed empty `heading` value in link blobs
 - Picard upgraded to version 1.5.2.
+- Eregs/ip updated to version 1.0.3.
+- Simplified Akamai cache flushing logic to always flush on publish.
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
