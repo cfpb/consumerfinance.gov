@@ -7,9 +7,8 @@ from django.forms.utils import ErrorList
 from django.forms import widgets
 from taggit.models import Tag
 
-from .util import ref
-from .models.base import CFGOVPage, Feedback
-from .models.learn_page import AbstractFilterPage
+from v1.util import ref
+from v1.models.base import CFGOVPage, Feedback
 
 import logging
 logger = logging.getLogger(__name__)
@@ -84,6 +83,9 @@ class CalenderPDFFilterForm(forms.Form):
             )
         return cleaned_data
 
+class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
+    def validate(self, value):
+        pass
 
 class FilterableListForm(forms.Form):
     title_attrs = {
@@ -112,12 +114,12 @@ class FilterableListForm(forms.Form):
     from_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
     to_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
     categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
-    topics = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
+    topics = MultipleChoiceFieldNoValidation(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
     authors = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
 
     def __init__(self, *args, **kwargs):
-        self.parent = kwargs.pop('parent')
         self.hostname = kwargs.pop('hostname')
+        self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
         page_ids = CFGOVPage.objects.live_shared(self.hostname).values_list('id', flat=True)
 
@@ -148,21 +150,9 @@ class FilterableListForm(forms.Form):
         logger.info('Filtering by categories {}'.format(categories))
         return categories
 
-    def base_query(self):
-        base_query = AbstractFilterPage.objects.live_shared(
-            hostname=self.hostname
-        )
-        if self.parent:
-            base_query = base_query.filter(
-                CFGOVPage.objects.child_of_q(self.parent)
-            )
-            logger.info('Filtering by parent {}'.format(self.parent))
-        return base_query
-
     def get_page_set(self):
-        base_query = self.base_query()
         query = self.generate_query()
-        return base_query.filter(query).distinct().order_by('-date_published')
+        return self.base_query.filter(query).distinct().order_by('-date_published')
 
     def prepare_options(self, arr):
         """ Returns an ordered list of tuples of the format ('tag-slug-name', 'Tag Display Name') """
