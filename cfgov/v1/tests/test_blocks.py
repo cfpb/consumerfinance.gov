@@ -22,11 +22,6 @@ class TestAbstractFormBlock(TestCase):
     @mock.patch('v1.blocks.AbstractFormBlock.get_handler_class')
     def test_get_result_instantiates_class(self, mock_getclass):
         self.block.get_result(self.page, self.request, self.block_value, True)
-        mock_getclass().assert_called_with(self.page, self.request, block_value=self.block_value)
-
-    @mock.patch('v1.blocks.AbstractFormBlock.get_handler_class')
-    def test_get_result_instantiates_class(self, mock_getclass):
-        self.block.get_result(self.page, self.request, self.block_value, True)
         mock_getclass()().process.assert_called_with(True)
 
     def test_get_handler_class_raises_AttributeError_for_unset_handler_meta(self):

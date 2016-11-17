@@ -2,6 +2,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from ..util.util import get_secondary_nav_items
 from v1.forms import FilterableListForm
+from v1.models.base import CFGOVPage
+from v1.models.learn_page import AbstractFilterPage
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 class FilterableListMixin(object):
@@ -17,9 +22,9 @@ class FilterableListMixin(object):
         context['filter_data'] = filter_data
         return context
 
-    def get_filter_parent(self):
-        """ Filters results to children of the current page """
-        return self
+    def base_query(self, hostname):
+        logger.info('Filtering by parent {}'.format(self))
+        return AbstractFilterPage.objects.live_shared(hostname).filter(CFGOVPage.objects.child_of_q(self))
 
     def process_forms(self, request, forms):
         filter_data = {'forms': [], 'page_sets': []}
@@ -45,9 +50,13 @@ class FilterableListMixin(object):
         return filter_data
 
     def get_forms(self, request):
-        parent = self.get_filter_parent()
+        hostname = request.site.hostname
         for form_data in self.get_form_specific_filter_data(request_dict=request.GET):
-            yield FilterableListForm(form_data, parent=parent, hostname=request.site.hostname)
+            yield FilterableListForm(
+                form_data,
+                hostname=hostname,
+                base_query=self.base_query(hostname)
+            )
 
     # Transform each GET parameter key from unique ID for the form in the
     # request and assign it to a dictionary under the form ID from where it

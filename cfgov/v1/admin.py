@@ -38,5 +38,12 @@ feedback_page_url.short_description = 'Page URL'
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
-    list_display = ('is_helpful', 'comment', feedback_page_url, 'submitted_on')
     list_filter = ('submitted_on', 'page__title',)
+    list_display = (
+        'referrer',
+        'comment',
+        feedback_page_url,
+        'submitted_on',
+        'is_helpful'
+    )
+    search_fields = ['referrer', 'comment']
