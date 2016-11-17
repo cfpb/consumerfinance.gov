@@ -499,7 +499,6 @@ def rendition_delete(sender, instance, **kwargs):
     instance.file.delete(False)
 
 
-<<<<<<< 891c51e596fe6ee61f11aac5e81092b875df1c99
 # keep encrypted passwords around to ensure that user does not re-use
 # any of the previous 10
 class PasswordHistoryItem(models.Model):
@@ -507,15 +506,6 @@ class PasswordHistoryItem(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()  # password becomes invalid at...
     locked_until = models.DateTimeField()  # password cannot be changed until
-=======
-# keep encrypted passwords around to ensure that user does not re-use any of the
-# previous 10
-class PasswordHistoryItem(models.Model):
-    user = models.ForeignKey(User)
-    created = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()   # password becomes invalid at...
-    locked_until = models.DateTimeField()  # password can not be changed until...
->>>>>>> flake8 updates and use urlencode instead
     encrypted_password = models.CharField(_('password'), max_length=128)
 
     class Meta:
