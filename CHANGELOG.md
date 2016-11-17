@@ -12,8 +12,21 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-## 4.1.1
 
+## 4.1.4
+
+### Fixed
+- an improved fix for the newsroom issue (see 4.1.2 and 4.1.3)
+
+## 4.1.3
+
+### Fixed
+- backed-out 4.1.2's newsroom fix
+
+## 4.1.2
+
+### Fixed
+- exclude reports from newsroom
 
 ### Changed
 - Conference Registration Form display element improvements.
