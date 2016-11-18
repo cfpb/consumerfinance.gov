@@ -1,54 +1,43 @@
-import os
-import json
-import urllib
-from itertools import chain
 from collections import OrderedDict
+from itertools import chain
+import json
+import os
+from urllib import urlencode
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 from django.http import (
     Http404,
     JsonResponse,
     HttpResponseBadRequest,
     HttpResponse
 )
-from django.template.response import TemplateResponse
-from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
-from django.dispatch import receiver
-from django.contrib.auth.models import User
 
-from wagtail.wagtailimages.models import (
-    Image, AbstractImage, AbstractRendition
-)
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
-from wagtail.wagtailcore import blocks, hooks
-from wagtail.wagtailcore.blocks.stream_block import StreamValue
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import (
-    Orderable,
-    Page,
-    PageManager,
-    PagePermissionTester,
-    PageQuerySet,
-    UserPagePermissionsProxy
-)
-from wagtail.wagtailcore.url_routing import RouteResult
-from wagtail.wagtailadmin.edit_handlers import (
-    FieldPanel,
-    InlinePanel,
-    MultiFieldPanel,
-    ObjectList,
-    TabbedInterface
-)
-from taggit.models import TaggedItemBase
+from django.template.response import TemplateResponse
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 
-from .. import get_protected_url
-from ..atomic_elements import molecules, organisms
-from ..util import ref
+from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel, \
+    MultiFieldPanel, TabbedInterface, ObjectList
+from wagtail.wagtailcore import blocks, hooks
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import Orderable, Page, PageManager, PagePermissionTester, \
+    PageQuerySet, UserPagePermissionsProxy
+from wagtail.wagtailimages.models import AbstractImage, AbstractRendition, Image
+from wagtail.wagtailcore.url_routing import RouteResult
+
+from taggit.models import TaggedItemBase
+
+from v1 import get_protected_url
+from v1.atomic_elements import molecules, organisms
+from v1.util import ref
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -161,20 +150,14 @@ class CFGOVPage(Page):
         return sorted(author_names, key=lambda x: x.name.split()[-1])
 
     def generate_view_more_url(self, request):
-        from ..forms import FilterableListForm
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
-        form = FilterableListForm(parent=activity_log, hostname=request.site.hostname)
-        available_tags = [tag[0] for name, tags in form.fields['topics'].choices for tag in tags]
         tags = []
         index = activity_log.form_id()
-        for tag in self.tags.slugs():
-            if tag in available_tags:
-                tags.append('filter%s_topics=' % index + urllib.quote_plus(tag))
-        tags = '&'.join(tags)
+        tags = urlencode([('filter%s_topics' % index, tag) for tag in self.tags.slugs()])
         return get_protected_url({'request': request}, activity_log) + '?' + tags
 
     def related_posts(self, block, hostname):
-        from . import AbstractFilterPage
+        from v1.models.learn_page import AbstractFilterPage
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
         search_types = [
