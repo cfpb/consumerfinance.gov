@@ -34,11 +34,15 @@
     <h3>
         {{ value.heading or value.snippet_type }}
     </h3>
+{% if value.image %}
+    {% set img = image(value.image.upload, 'original') %}
+    <img src="{{ img.url }}" alt="{{ value.image.alt }}">
+{% endif %}
     {{ value.body if value.body }}
     {% set snippets = get_snippets(value.snippet_type) %}
-    {% if value.snippet_type is defined and snippets | length > 0 %}
+    {% if value.snippet_type is defined and snippets | length > 0 and value.tags %}
         {# include value.snippet + '.html' #}
-        <table class="table__stack-on-small">
+        <table class="table__stack-on-small u-mt30 u-w100pct">
             <thead>
                 <tr>
                     <th>Description</th>
@@ -46,23 +50,30 @@
                 </tr>
             </thead>
             <tbody>
-                {{ value.tags }}
             {% for snippet in snippets.filter(tags__name__in=value.tags).distinct() %}
                 <tr>
                     <th data-label="Description">{{ snippet.title }}</th>
                     <td data-label="Actions">
-                    {% for action in value.actions %}
-                        {%- set href = snippet[action.snippet_field].url
-                           if snippet[action.snippet_field].url is defined
-                           else snippet[action.snippet_field] -%}
-                        <a href="{{ href }}">{{ action.link_label }}</a>
-                    {% endfor %}
+                        <ul class="list__horizontal">
+                        {% for action in value.actions %}
+                            {%- set href = snippet[action.snippet_field].url
+                               if snippet[action.snippet_field].url is defined
+                               else snippet[action.snippet_field] -%}
+                            <li class="list_item">
+                                <a href="{{ href }}">{{ action.link_label }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <p>There are no items at this time.</p>
+        {% import 'molecules/notification.html' as notification %}
+        <div class="u-mt30">
+            {{ notification.render('warning', true, 'No items found.') }}
+        </div>
+        <!-- <p class="u-mt30">There are no items at this time.</p> -->
     {% endif %}
 </div>
