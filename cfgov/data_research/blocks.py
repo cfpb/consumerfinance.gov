@@ -17,9 +17,21 @@ class ConferenceRegistrationForm(AbstractFormBlock):
     capacity = atoms.IntegerBlock(help_text=(
         'Enter an integer that will be the conference attendance limit.'
     ))
-    at_capacity_message = organisms.FullWidthText(help_text=(
-        'Enter a message that will be shown when the event is at capacity'
-    ))
+    success_message = blocks.RichTextBlock(
+        help_text=(
+            'Enter a message that will be shown on successful registration.'
+        )
+    )
+    at_capacity_message = organisms.FullWidthText(
+        help_text=(
+            'Enter a message that will be shown when the event is at capacity.'
+        )
+    )
+    failure_message = blocks.CharBlock(
+        help_text=(
+            'Enter a message that will be shown on registration failure.'
+        )
+    )
 
     class Meta:
         handler = 'data_research.handlers.ConferenceRegistrationHandler'
