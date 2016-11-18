@@ -11,11 +11,16 @@
 
 <form method="post"
       action="."
+{% if not value.was_it_helpful_text %}
+      class="o-form">
+{% else %}
       class="o-form
              block
              block__bg
              block__border
              block__padded-top">
+{% endif %}
+<div class="form-l">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <input type="hidden" name="form_id" value="{{ form_id }}">
     <input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER }}">
@@ -168,6 +173,7 @@
             <button class="btn" type="submit">{{ value.button_text }}</button>
         </div>
     </fieldset>
+  </div>
 </form>
 
 {% endmacro %}
