@@ -83,9 +83,11 @@ class CalenderPDFFilterForm(forms.Form):
             )
         return cleaned_data
 
+
 class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
     def validate(self, value):
         pass
+
 
 class FilterableListForm(forms.Form):
     title_attrs = {
@@ -152,12 +154,18 @@ class FilterableListForm(forms.Form):
 
     def get_page_set(self):
         query = self.generate_query()
-        return self.base_query.filter(query).distinct().order_by('-date_published')
+        return self.base_query.filter(query).distinct().order_by(
+            '-date_published'
+        )
 
     def prepare_options(self, arr):
-        """ Returns an ordered list of tuples of the format ('tag-slug-name', 'Tag Display Name') """
+        """
+        Returns an ordered list of tuples of the format
+        ('tag-slug-name', 'Tag Display Name')
+        """
         arr = Counter(arr).most_common()  # Order by most to least common
-        # Grab only the first tuple in the generated tuple, which includes a count we do not need
+        # Grab only the first tuple in the generated tuple,
+        # which includes a count we do not need
         return [x[0] for x in arr]
 
     # Populate Topics' choices
@@ -228,7 +236,10 @@ class FilterableListForm(forms.Form):
     def generate_query(self):
         final_query = Q()
         if self.is_bound:
-            for query, field_name in zip(self.get_query_strings(), self.declared_fields):
+            for query, field_name in zip(
+                self.get_query_strings(),
+                self.declared_fields
+            ):
                 if self.cleaned_data.get(field_name):
                     final_query &= \
                         Q((query, self.cleaned_data.get(field_name)))
@@ -275,7 +286,7 @@ class ReferredFeedbackForm(forms.ModelForm):
     """For feedback modules that need to capture the referring page"""
     class Meta:
         model = Feedback
-        fields = ['referrer', 'comment']
+        fields = ['is_helpful', 'referrer', 'comment']
 
     def __init__(self, *args, **kwargs):
         super(ReferredFeedbackForm, self).__init__(*args, **kwargs)

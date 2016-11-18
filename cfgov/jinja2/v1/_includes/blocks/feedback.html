@@ -63,6 +63,10 @@
             </div>
         </div>
     </fieldset>
+    {% else %}
+    <input type="hidden"
+           name="is_helpful"
+           value="{{ request.GET.get('is_helpful', '') }}">
     {% endif %}
 
     <fieldset class="o-form-input-group">
