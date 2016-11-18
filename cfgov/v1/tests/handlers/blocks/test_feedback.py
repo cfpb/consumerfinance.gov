@@ -137,7 +137,11 @@ class TestFeedbackHandler(TestCase):
             '/', HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.handler.fail(form)
-        mock_json_response.assert_called_with({'result': 'fail'})
+
+        mock_json_response.assert_called_with(
+            {'result': 'fail',
+             'message': 'You must select an option.'}
+        )
 
     @mock.patch('v1.handlers.blocks.feedback.JsonResponse')
     @mock.patch('v1.handlers.blocks.feedback.messages')

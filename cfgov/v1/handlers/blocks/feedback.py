@@ -65,16 +65,17 @@ class FeedbackHandler(Handler):
             return HttpResponseRedirect(self.page.url)
 
     def fail(self, form):
-        if self.request.is_ajax():
-            return JsonResponse({'result': 'fail'})
-
+        if form.errors.get('is_helpful', None):
+            msg = 'You must select an option.'
+        elif form.errors.get('comment', None):
+            msg = 'You must enter a comment.'
+        elif form.errors.get('email', None):
+            msg = 'You must enter a valid email.'
         else:
-            if form.errors.get('is_helpful', None):
-                messages.error(self.request, 'You must select an option.')
-            elif form.errors.get('comment', None):
-                messages.error(self.request, 'You must enter a comment.')
-            else:
-                message = 'Something went wrong. Please try again.'
-                messages.error(self.request, message)
+            msg = 'Something went wrong. Please try again.'
 
-        return {'form': form}
+        if self.request.is_ajax():
+            return JsonResponse({'result': 'fail', 'message': msg})
+        else:
+            messages.error(self.request, msg)
+            return {'form': form}
