@@ -1,0 +1,33 @@
+
+{# ==========================================================================
+
+   Chart
+
+   ==========================================================================
+
+   Description:
+
+   Create a line chart molecule with data.
+   See [GHE]/flapjack/Modules-V1/wiki/Chart
+
+   ========================================================================== #}
+
+<div class="m-chart block block__flush-top" data-chart-type="line">
+    {% if value.heading %}
+        <h3>{{ value.heading }}</h3>
+    {% endif %}
+
+    {% if value.description %}
+        <p class="short-desc">{{ value.description }}</h3>
+    {% endif %}
+
+    {% if value.data_source %}
+        <p><strong>Source:</strong> <a href="{{ parse_links(value.data_source) | safe }}">{{ parse_links(value.data_source) | safe }}</a></p>
+    {% endif %}
+
+    <p><strong>Date published:</strong> </p>
+
+    {% if value.note %}
+        <p><strong>Note:</strong> {{ value.note }}</p>
+    {% endif %}
+</div>

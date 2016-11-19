@@ -14,7 +14,7 @@ from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
 from ..util.util import get_secondary_nav_items
 from jobmanager.models import JobListingTable
-from data_research.blocks import ConferenceRegistrationForm
+from data_research.blocks import ConferenceRegistrationForm, ChartGroup, LineChart
 
 
 class BrowsePage(CFGOVPage):
@@ -37,6 +37,8 @@ class BrowsePage(CFGOVPage):
         ('job_listing_table', JobListingTable()),
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
+        ('chart_group', ChartGroup()),
+        ('line_chart', LineChart()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
