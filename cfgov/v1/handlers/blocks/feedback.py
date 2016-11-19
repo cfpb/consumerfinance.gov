@@ -49,7 +49,7 @@ class FeedbackHandler(Handler):
         if form.is_valid():
             feedback = form.save(commit=False)
             is_helpful = self.request.POST.get('is_helpful', None)
-            if is_helpful is not None:
+            if is_helpful is not None and is_helpful != '':
                 feedback.is_helpful = bool(int(is_helpful))
             feedback.page = self.page
             feedback.save()
