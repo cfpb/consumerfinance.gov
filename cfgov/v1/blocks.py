@@ -121,7 +121,7 @@ class Feedback(AbstractFormBlock):
                  'paperwork-reduction-act-statement/">'
                  'Paperwork Reduction Act Statement</a> and the '
                  '<a href="/owning-a-home/help-us-improve/'
-                 'privacy-act-statement/">Privacy Act Statement</a>')
+                 'privacy-act-statement/">Privacy Act Statement</a>.')
     )
 
     class Meta:
