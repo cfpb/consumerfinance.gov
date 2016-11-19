@@ -90,7 +90,11 @@ class TestFeedbackHandler(TestCase):
             '/', HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.handler.success()
-        mock_json_response.assert_called_with({'result': 'pass'})
+        mock_json_response.assert_called_with(
+            {'result': 'pass',
+             'message': 'Thanks for your feedback!',
+             'heading': ''}
+        )
 
     @mock.patch('v1.handlers.blocks.feedback.HttpResponseRedirect')
     @mock.patch('v1.handlers.blocks.feedback.JsonResponse')

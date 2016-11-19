@@ -59,7 +59,21 @@ class FeedbackHandler(Handler):
 
     def success(self):
         if self.request.is_ajax():
-            return JsonResponse({'result': 'pass'})
+            if get_feedback_type(self.block_value) == 'suggestion':
+                return JsonResponse(
+                    {'result': 'pass',
+                     'heading': 'Thank you!',
+                     'message': "Be sure to also sign up for our email list "
+                     "to get our blog posts and other tips about homebuying "
+                     "and mortgages in your inbox. We'll also let you know "
+                     "when we make updates to Owning a Home."}
+                )
+            else:
+                return JsonResponse(
+                    {'result': 'pass',
+                     'heading': '',
+                     'message': 'Thanks for your feedback!'}
+                )
         else:
             messages.success(self.request, message='Thanks for your feedback!')
             return HttpResponseRedirect(self.page.url)
