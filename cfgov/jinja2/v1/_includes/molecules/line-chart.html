@@ -21,6 +21,10 @@
         <p class="short-desc">{{ value.description }}</h3>
     {% endif %}
 
+    <div class="m-chart_graphics">
+        <!-- graph SVG elements render here -->
+    </div>
+
     {% if value.data_source %}
         <p><strong>Source:</strong> <a href="{{ parse_links(value.data_source) | safe }}">{{ parse_links(value.data_source) | safe }}</a></p>
     {% endif %}
