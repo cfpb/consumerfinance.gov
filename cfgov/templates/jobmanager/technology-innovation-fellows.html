@@ -1,4 +1,5 @@
 {% extends "front/base_nonresponsive.html" %}
+{% load static %}
 
 {% block page_meta %}
 <meta charset="UTF-8" />
@@ -13,11 +14,11 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block page_css %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_PREFIX }}jobmanager/css/fellows.css" />
+<link rel="stylesheet" type="text/css" href="{% static 'jobmanager/css/fellows.css' %}" />
 {% endblock %}
 
 {% block page_js %}
-    <script src="{{ STATIC_PREFIX }}jobmanager/js/fellows.js"></script>
+    <script src="{% static 'jobmanager/js/fellows.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -34,7 +35,7 @@ fellowship_form_submit_url = "{% url 'fellowship_form_submit' %}";
                         <h3>Our mission demands smart, usable, and reliable technology. Come serve consumers by helping us design and build it.</h3>
                     </div>
                     <div class="span5 offset1">
-                        <img alt="Technology and Innovation Fellowship Hero Image" id="hero-image" src="{{ STATIC_PREFIX }}jobmanager/img/fellowship_hero.png" />
+                        <img alt="Technology and Innovation Fellowship Hero Image" id="hero-image" src="{% static 'jobmanager/img/fellowship_hero.png' %}" />
                     </div>
                 </div> <!-- END .row-fluid -->
             </div><!-- END .wrapper -->
@@ -151,24 +152,24 @@ fellowship_form_submit_url = "{% url 'fellowship_form_submit' %}";
                 </div>
                 <div class="row-fluid current-fellows">
                     <div class="span3">
-                        <img alt="Photo of Stephanie" src="{{ STATIC_PREFIX }}jobmanager/img/stephanie.png" />
+                        <img alt="Photo of Stephanie" src="{% static 'jobmanager/img/stephanie.png' %}" />
                         <h3 class="fellow-name">Stephanie</h3>
                         <h5 class="fellow-title">Graphic Designer</h5>
                         <p>"I've had the opportunity to do so much more than I was expecting. I've designed web tools to aid consumers shopping for mortgages, user-friendly <a href="http://www.consumerfinance.gov/complaint/#debt-collection">forms for submitting complaints</a>, and <a href="http://www.consumerfinance.gov/strategic-plan/">reports to Congress</a>."</p>
                     </div>
                     <div class="span3">
-                        <img alt="Photo of Mehgan" src="{{ STATIC_PREFIX }}jobmanager/img/mehgan.png" />
+                        <img alt="Photo of Mehgan" src="{% static 'jobmanager/img/mehgan.png' %}" />
                         <h3 class="fellow-name">Mehgan</h3>
                         <h5 class="fellow-title">Graphic Designer</h5>
                         <p>"I've always had an interest in socially responsible design. Through improved digital experiences, there is a unique opportunity for the government to reach consumers and bring about positive change in people's lives."</p> </div>
                     <div class="span3">
-                        <img alt="Photo of Eduardo" src="{{ STATIC_PREFIX }}jobmanager/img/eduardo.png" />
+                        <img alt="Photo of Eduardo" src="{% static 'jobmanager/img/eduardo.png' %}" />
                         <h3 class="fellow-name">Eduardo</h3>
                         <h5 class="fellow-title">UX Designer</h5>
                         <p>"I work on <a href="https://github.com/cfpb/owning-a-home">Owning a Home</a>, an upcoming online tool that will provide consumers with tools to better understand the process necessary for homeownership. As a veteran, working at CFPB has allowed me to serve my country in a different way."</p>
                     </div>
                     <div class="span3">
-                        <img alt="Photo of Shashank" src="{{ STATIC_PREFIX }}jobmanager/img/shashank_photo.png" />
+                        <img alt="Photo of Shashank" src="{% static 'jobmanager/img/shashank_photo.png' %}" />
                         <h3 class="fellow-name">Shashank</h3>
                         <h5 class="fellow-title">Back-end Developer</h5>
                         <p>"I work on <a href="http://www.consumerfinance.gov/eregulations/about">eRegulations</a>. I helped develop the <a href="https://github.com/cfpb/regulations-parser">parser</a>, the <a href="https://github.com/cfpb/regulations-parser/blob/master/regparser/notice/compiler.py">compiler</a>, and the regulation <a href="https://github.com/eregs/regulations-site">viewer</a> that displays regulatory information that's easy to read, access, and understand."</p> </div>
