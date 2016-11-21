@@ -32,7 +32,7 @@
 
             <section class="o-form-section">
                 <div class="form-l_col form-l_col-1">
-                    <p><strong>*</strong> Indicates a required field.</p>
+                    <p class="form-label-header"><strong>*</strong> Indicates a required field</p>
                 </div>
 
                 {# Name #}
@@ -87,7 +87,7 @@
                 {# Food/allergies/restrictions #}
                 {{ textarea.render({
                     'name':       'foodinfo',
-                    'label':      'Do you have food allergies/restrictions?',
+                    'label':      'Please let us know about any food allergies or restrictions.',
                     'value':      form.foodinfo.value() | default('', true),
                     'helperText': false,
                     'required':   false,
@@ -97,9 +97,9 @@
                 {# Other accommodations #}
                 {{ textarea.render({
                     'name':       'accommodations',
-                    'label':      'Will you require any accommodations to attend?',
+                    'label':      'Please let us know of any accommodations you need in order to attend.',
                     'value':      form.accommodations.value() | default('', true),
-                    'helperText': 'Examples: hearing, parking space, breastfeeding',
+                    'helperText': false,
                     'required':   false,
                     'disabled':   false
                 }) }}
