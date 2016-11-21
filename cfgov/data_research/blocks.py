@@ -41,7 +41,7 @@ class LineChart(blocks.StructBlock):
 
     # how this works https://github.com/cfpb/cfgov-refresh/blob/12a5568f0e73ce016f98ae8a2d859219eb3ce01c/cfgov/v1/models/base.py#L416
     class Media:
-        js = ['line-chart.js']
+        js = ['chart.js']
 
 
 class ChartGroup(blocks.StructBlock):
