@@ -20,11 +20,13 @@
             <input type="hidden" name="code" value="{{ value.code }}">
 
             {% if settings.is_successful_submission %}
-                {{- notification.render(
-                    'success',
-                    true,
-                    value.success_message | safe
-                ) }}
+                <div class="block block__flush-top">
+                    {{- notification.render(
+                        'success',
+                        true,
+                        value.success_message | safe
+                    ) }}
+                </div>
             {% endif %}
 
             {# Form heading #}
