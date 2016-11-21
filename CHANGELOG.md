@@ -37,6 +37,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Conference Registration Form display element improvements.
 - Conference Registration Form submission success message replaced.
 r Conference Registration Form configurable error and success messages.
+- Fixed broken static assets on Technology and Innovation Fellowship page.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
