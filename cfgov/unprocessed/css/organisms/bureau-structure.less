@@ -12,10 +12,19 @@
 @node-border-width: 3px;
 @node-border-color: @gray-20;
 
+
 .o-bureau-structure_chart {
     margin-top: @margin;
     background: @gray-10;
     border-top:1px solid @node-border-color;
+
+    .u-hide-unless-mobile {
+        display:none;
+
+        .respond-to-max( @bp-xs-max, {
+            display: block;
+        } );
+    }
 
     .respond-to-min( @bp-sm-min, {
         padding: @margin;
@@ -23,76 +32,6 @@
         margin-left: -@margin;
         margin-right: -@margin;
     } );
-
-    #content-slider {
-        display: none;
-        position: relative;
-        margin-left: -10px;
-
-        .slick-slide {
-            margin-left: 10px;
-        }
-
-        .slick-slider {
-            margin-bottom: 0;
-        }
-
-        .link_text {
-            background: none;
-            color: @pacific;
-
-            &:hover {
-                color: @pacific-60;
-            }
-
-            &:active {
-                color: @navy;
-            }
-        }
-    }
-
-    .content-hide {
-        display: none;
-        margin-bottom: @margin;
-        background-color: inherit;
-    }
-
-    .content-show,
-    .content-hide {
-
-        .respond-to-max( @bp-xs-max, {
-            .cf-icon,
-            &:before,
-            &:after {
-                color: @pacific;
-            }
-
-            &:focus {
-                outline: thin dotted;
-            }
-
-            &:hover {
-                border-color: @pacific-60;
-                z-index: 2;
-
-                .cf-icon,
-                &:before,
-                &:after {
-                    color: @pacific-60;
-                }
-            }
-
-            &:active {
-                border-color: @navy;
-
-                .cf-icon,
-                &:before,
-                &:after {
-                    color: @navy;
-                }
-            }
-        } );
-    }
 
     // Expandable Overrides
     // TODO: Remove these when base expandable is created.
@@ -116,6 +55,24 @@
     .o-expandable_header-right {
         width: 27%;
     }
+
+    .respond-to-max( @bp-xs-max, {
+        .swipe {
+          overflow: hidden;
+          visibility: hidden;
+          position: relative;
+        }
+        .swipe-wrap {
+          overflow: hidden;
+          position: relative;
+        }
+        .swipe-wrap > li {
+          float: left;
+          width: 100%;
+          position: relative;
+          overflow: hidden;
+        }
+    } );
 }
 
 .o-bureau-structure_branch {
@@ -140,7 +97,7 @@
             border: 0 solid @spine-color;
         }
 
-        &:first-child {
+        &:nth-child(2) {
             padding-right: @margin / 2;
 
             &:after {
@@ -193,11 +150,13 @@
 */
 .o-bureau-structure_branches {
     padding-top: @margin;
+    transition: max-height .5s;
 
     /* :before pseudo element's left border draws a centered vertical line
        down from .o-bureau-structure_root to .o-bureau-structure_branches.
     */
     .respond-to-min( @bp-sm-min, {
+        padding-top: @margin;
         position: relative;
 
         &:before {
@@ -213,18 +172,70 @@
 }
 
 .o-bureau-structure_categories {
-    .link_item {
-        margin-bottom: 0;
-        border-top: 1px solid @node-border-color;
-        background: @gray-5;
 
+    .link_item {
+        color: @pacific;
+        margin-bottom: 0;
+        border: none;
+        background: @gray-5;
         &:last-child {
             border-bottom: 1px solid @node-border-color;
         }
     }
 
-    .link_text {
-       border: none;
+     &:last-child {
+                border-top: none;
+            }
+
+    &-item {
+        background: none;
+        color: @pacific;
+
+        .respond-to-max( @bp-xs-max, {
+
+            &:hover {
+                color: @pacific-60;
+            }
+
+            &:active {
+                color: @navy;
+            }
+
+            .cf-icon,
+            &:before,
+            &:after {
+                color: @pacific;
+            }
+
+            &:focus {
+                outline: thin dotted;
+            }
+
+            &:last-child {
+                border-bottom: 1px;
+            }
+
+            &:hover {
+                border-color: @pacific-60;
+                z-index: 2;
+
+                .cf-icon,
+                &:before,
+                &:after {
+                    color: @pacific-60;
+                }
+            }
+
+            &:active {
+                border-color: @navy;
+
+                .cf-icon,
+                &:before,
+                &:after {
+                    color: @navy;
+                }
+            }
+        } );
     }
 }
 
