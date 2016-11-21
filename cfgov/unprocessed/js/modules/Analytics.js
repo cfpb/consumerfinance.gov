@@ -13,9 +13,9 @@ var Analytics = {
    * @param {string} action Name of event.
    * @param {string} label DOM element label.
    * @param {string} category Type of event.
-   * @param {Function} callback Function to call on GTM submsission.
+   * @param {Function} callback Function to call on GTM submission.
    * @param {number} timeout Callback invocation fallback time.
-   * @returns {Analytics} An instance
+   * @returns {object} Data layer object.
    */
   getDataLayerOptions: function( action, label, category, callback, timeout ) {
     return {
@@ -57,17 +57,14 @@ var Analytics = {
    * @description
    * Pushes an event to the GTM dataLayer.
    * @param {object} dataLayerOptions Type of event.
-   * @returns {Analytics} An instance
    */
   sendEvent: function( dataLayerOptions ) {
     var callback = dataLayerOptions.eventCallback;
     if ( Analytics.tagManagerIsLoaded ) {
       window.dataLayer.push( dataLayerOptions );
     } else if ( callback && typeof callback === 'function' ) {
-      return callback();
+      callback();  // eslint-disable-line callback-return, inline-comments, max-len
     }
-
-    return Analytics;
   },
 
   /**
