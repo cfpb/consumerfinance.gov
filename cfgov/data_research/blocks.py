@@ -29,7 +29,8 @@ class ConferenceRegistrationForm(AbstractFormBlock):
     )
     failure_message = blocks.CharBlock(
         help_text=(
-            'Enter a message that will be shown on registration failure.'
+            'Enter a message that will be shown if the GovDelivery '
+            'subscription fails.'
         )
     )
 
