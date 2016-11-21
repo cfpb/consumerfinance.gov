@@ -312,3 +312,19 @@ job_listing_table = {
         'first_col_is_header': False,
     },
 }
+
+conference_registration_form = {
+    'type': 'conference_registration_form',
+    'value': {
+        'at_capacity_message': [
+            {
+                'type': 'content',
+                'value': 'Full.',
+            },
+        ],
+        'code': 'GDCODE',
+        'capacity': 100,
+        'heading': 'Register.',
+        'sessions': ['Morning', 'Afternoon'],
+    },
+}
