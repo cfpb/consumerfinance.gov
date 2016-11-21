@@ -8,7 +8,9 @@
     {% set form = settings.form %}
 
     {% if settings.is_at_capacity %}
-        {{ value.at_capacity_message | safe }}
+        <div class="block block__flush-top">
+            {{ value.at_capacity_message | safe }}
+        </div>
     {% else %}
         <form id="registration-form"
               method="post"
