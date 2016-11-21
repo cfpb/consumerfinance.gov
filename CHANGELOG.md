@@ -13,9 +13,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 4.1.6
+
+### Changed
+- Fixed broken static assets on Technology and Innovation Fellowship page.
+- Conference Registration Form configurable error and success messages.
+
 ## 4.1.5
 
-## Changed
+### Changed
 - update complaints to 1.2.7
 
 ## 4.1.4
