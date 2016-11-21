@@ -110,7 +110,7 @@ class ConferenceExporter(object):
         value = getattr(attendee, field)
 
         if 'sessions' == field:
-            value = ', '.join(json.loads(value or '[]'))
+            value = ','.join(json.loads(value or '[]'))
 
         return force_bytes(value)
 
