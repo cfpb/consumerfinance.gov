@@ -8,9 +8,10 @@
     {% set form = settings.form %}
 
     {% if settings.is_at_capacity %}
-        {{ value.at_capacity_message | safe }}
+        <div class="block block__flush-top">
+            {{ value.at_capacity_message | safe }}
+        </div>
     {% else %}
-
         <form id="registration-form"
               method="post"
               action="."
@@ -20,14 +21,26 @@
             <input type="hidden" name="form_id" value="{{ form_id }}">
             <input type="hidden" name="code" value="{{ value.code }}">
 
+            {% if settings.is_successful_submission %}
+                {{- notification.render(
+                    'success',
+                    true,
+                    value.success_message | safe
+                ) }}
+            {% endif %}
+
             {# Form heading #}
             {% if value.heading %}
                 <h2>{{ value.heading }}</h2>
             {% endif %}
 
-            {# JS-disabled result handling #}
-            {%- for message in get_messages(request) -%}
-                {{- notification.render(message.level_tag, true, message.message | safe) -}}
+            {% for error in form.non_field_errors() %}
+                {{- notification.render('error', true, error) }}
+            {% endfor %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{- notification.render('error', true, error) }}
+                {% endfor %}
             {%- endfor -%}
 
             <section class="o-form-section">
