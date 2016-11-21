@@ -324,7 +324,9 @@ conference_registration_form = {
         ],
         'code': 'GDCODE',
         'capacity': 100,
+        'failure_message': 'Oops.',
         'heading': 'Register.',
         'sessions': ['Morning', 'Afternoon'],
+        'success_message': 'Success!',
     },
 }
