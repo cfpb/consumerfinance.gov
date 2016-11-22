@@ -12,6 +12,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## 4.1.8
+
+### Changed
+- roll complaints back to 1.2.6
 
 ## 4.1.7
 
