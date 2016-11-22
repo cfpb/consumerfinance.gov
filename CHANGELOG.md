@@ -13,6 +13,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 4.1.7
+
+### Changed
+- moved data_research into the db_router.py whitelist
+
 ## 4.1.6
 
 ### Changed
