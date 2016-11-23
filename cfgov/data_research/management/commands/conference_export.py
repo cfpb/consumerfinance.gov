@@ -47,7 +47,7 @@ class ConferenceExporter(object):
     EMAIL_BODIES = (
         (
             'The 2016 Research Conference is at {0.count} of '
-            '{0.conference_capacity} for signups.'
+            '{0.conference_capacity} capacity for signups.'
         ),
         (
             'The 2016 Research Conference has reached capacity with {0.count} '
@@ -62,7 +62,7 @@ class ConferenceExporter(object):
         'This is an automated message.'
     )
 
-    ATTACHMENT_FILENAME = 'conf_reg.csv'
+    ATTACHMENT_FILENAME = 'conference_registrations.csv'
 
     def __init__(self, page_id, verbose=False):
         self.form_block = get_registration_form_from_page(page_id)
