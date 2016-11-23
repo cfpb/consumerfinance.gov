@@ -40,6 +40,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed broken static assets on Technology and Innovation Fellowship page.
 - Updated the analytics code to send events on form submission.
 - Fixed issue surrounding event venue not displaying on event page.
+- Limit Newsroom posts to appropriate page categories.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
