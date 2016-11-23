@@ -46,12 +46,14 @@ class ConferenceExporter(object):
 
     EMAIL_BODIES = (
         (
-            'The 2016 Research Conference form is at {} of {} capacity for '
-            'signups.'
+            'The 2016 Research Conference is at {0.count} of '
+            '{0.conference_capacity} for signups.'
         ),
         (
-            'The 2016 Research Conference form is at-capacity (full) and '
-            'signups are closed.'
+            'The 2016 Research Conference has reached capacity with {0.count} '
+            'submissions. Signups are now closed.\n\nThe capacity for this '
+            'event was set to {0.conference_capacity} at the time of this '
+            'email.'
         ),
     )
 
@@ -80,17 +82,19 @@ class ConferenceExporter(object):
 
     @property
     def at_capacity(self):
-        return self.attendees.count() >= self.conference_capacity
+        return self.count >= self.conference_capacity
 
     @property
     def attendees(self):
         return ConferenceRegistration.objects.filter(code=self.conference_code)
 
+    @property
+    def count(self):
+        return self.attendees.count()
+
     def to_csv(self):
         if self.verbose:
-            logger.info('generating CSV for {} attendees'.format(
-                self.attendees.count()
-            ))
+            logger.info('generating CSV for {} attendees'.format(self.count))
 
         csvfile = StringIO()
         writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
@@ -117,7 +121,7 @@ class ConferenceExporter(object):
     def create_email_message(self, from_address, to_addresses):
         subject = self.EMAIL_SUBJECTS[self.at_capacity]
         body = self.EMAIL_BODIES[self.at_capacity] + self.EMAIL_FOOTER
-        body = body.format(self.attendees.count(), self.conference_capacity)
+        body = body.format(self)
 
         csvfile = self.to_csv()
 
