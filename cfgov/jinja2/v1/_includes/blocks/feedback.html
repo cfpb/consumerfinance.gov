@@ -16,16 +16,17 @@
              block__bg
              block__border
              block__padded-top">
-
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <input type="hidden" name="form_id" value="{{ form_id }}">
+    <input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER }}">
 
+    {% if value.was_it_helpful_text %}
     <fieldset class="o-form-input-group o-form-input-group__two-column">
         <div class="form-l_col
                     form-l_col-1
                     form-l_col__flush-bottom">
             <legend class="h4">
-                {{ value.question_text }}
+                {{ value.was_it_helpful_text }}
             </legend>
         </div>
         <div class="m-big-radio-button">
@@ -57,29 +58,117 @@
             </div>
         </div>
     </fieldset>
+    {% endif %}
 
     <fieldset class="o-form-input-group">
         <div class="form-l_col
                     form-l_col-1
                     form-l_col__flush-bottom">
+            {% if value.intro_text %}
+            <legend class="h3">
+                {{ value.intro_text }}
+            </legend>
+            {% endif %}
+            {% if value.question_text %}
+            <label for="comment">
+                <span class="h4">{{ value.question_text }}</span>
+            </label>
+            {% endif %}
+
+            {% if value.was_it_helpful_text %}
             <label for="comment">
                 <em>Optional</em> <span class="h4">Additional comment</span>
             </label>
-            <p class="u-mb10"><small><b>Note:</b> Do not include sensitive information like your name, contact information, account number, or social security number in this field.</small></p>
+            {% endif %}
+            <p class="u-mb10"><small><em>Note: Do not include sensitive information like your name, contact information, account number, or social security number in this field.</em></small></p>
         </div>
         <div class="form-l_col
                     form-l_col-1">
-            <textarea id="comment" name="comment" rows="2">
+            <textarea id="comment" name="comment" rows="6">
                 {{- form.comment.value() | default('', true) -}}
             </textarea>
         </div>
+    </fieldset>
+
+        {% if value.radio_intro and not value.was_it_helpful_text %}
+    <fieldset class="o-form-input-group">
         <div class="form-l_col
-                    form-l_col-1
-                    form-l_col__flush-bottom">
-            <button class="btn" type="submit">{{ value.button_text }}</button>
+                    form-l_col-1">
+            <h3>
+                {{ value.radio_intro }}
+            </h3>
+            <h4>
+                {{ value.radio_text }}
+            </h4>
+            <h3>
+               {{ value.radio_question_1 }}
+            </h3>
+
+                <input class="cf-input"
+                       id="radio-6-months"
+                       type="radio"
+                       name="expect_to_buy"
+                       value="next 6 months">
+                <label for="radio-6-months">I expect to buy a home in the next 6 months</label>
+                <input class="cf-input"
+                       id="radio-6-to-12"
+                       type="radio"
+                       name="expect_to_buy"
+                       value="6 to 12 months">
+                <label for="radio-6-to-12">I expect to buy a home in 6 – 12 months</label>
+                <input class="cf-input"
+                       id="do not expect"
+                       type="radio"
+                       name="expect_to_buy"
+                       value="not expecting">
+                <label for="do not expect">I don't expect to buy a home in the next 12 months</label>
         </div>
     </fieldset>
 
+    <fieldset class="o-form-input-group">
+        <div class="form-l_col
+                    form-l_col-1">
+            <h3>
+               {{ value.radio_question_2 }}
+            </h3>
+                <input class="cf-input"
+                       id="never_owned"
+                       type="radio"
+                       name="currently_own"
+                       value='never owned'>
+                <label for="never_owned">I have never owned a home</label>
+                <input class="cf-input"
+                       id="not_now"
+                       type="radio"
+                       name="currently_own"
+                       value='have owned'>
+                <label for="not_now">I have owned a home in the past, but don't own right now</label>
+                <input class="cf-input"
+                       id="owner"
+                       type="radio"
+                       name="currently_own"
+                       value='currently_own'>
+                <label for="owner">I currently own a home</label>
+        </div>
+    </fieldset>
+
+    <fieldset class="o-form-input-group">
+        <div class="form-l_col
+                    form-l_col-1">
+            <label for="email">
+                <h3>Contact email</h3>
+                <input id="form_email" type="email" name="email">      
+            </label>
+    <p>If you provide your contact information, we may contact you to clarify your question.  This information is collected in accordance with the <a href="/owning-a-home/help-us-improve/paperwork-reduction-act">Paperwork Reduction Act Statement</a>a> and the <a href="/owning-a-home/help-us-improve/privacy-act-statement/">Privacy Act Statement</a>.</p>
+        </div>
+    </fieldset>
+        {% endif %}
+    <fieldset class="o-form-input-group">
+        <div class="form-l_col
+                    form-l_col-1">
+            <button class="btn" type="submit">{{ value.button_text }}</button>
+        </div>
+    </fieldset>
 </form>
 
 {% endmacro %}
