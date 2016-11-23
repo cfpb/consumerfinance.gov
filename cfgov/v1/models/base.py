@@ -4,6 +4,7 @@ import json
 import os
 from urllib import urlencode
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
@@ -67,8 +68,7 @@ class CFGOVPageQuerySet(PageQuerySet):
         return self.live_q() | self.shared_q()
 
     def live_shared(self, hostname):
-        staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
-        if staging_hostname in hostname:
+        if settings.STAGING_HOSTNAME in hostname:
             return self.filter(self.live_shared_q())
         else:
             return self.live()
