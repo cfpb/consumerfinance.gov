@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Block, page and other bits for an Owning a Home feedback module that captures referrer
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context. 
 - `conference_export` management command added to export conference registrations.
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 
 ### Changed
 - Fixed issue surrounding table link download / external icons not appearing.
@@ -37,8 +38,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Simplified Akamai cache flushing logic to always flush on publish.
 - Conference Registration Form display element improvements.
 - Conference Registration Form submission success message replaced.
-r Conference Registration Form configurable error and success messages.
+- Conference Registration Form configurable error and success messages.
 - Fixed broken static assets on Technology and Innovation Fellowship page.
+- Updated the analytics code to send events on form submission.
+- Fixed issue surrounding event venue not displaying on event page.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)

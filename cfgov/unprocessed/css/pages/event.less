@@ -146,7 +146,8 @@
     text-transform: capitalize;
     display: inline-block;
 
-    .event-meta_street:not(:empty):after {
+    .event-meta_street:not(:empty):after,
+    .event-meta_suite:not(:empty):after {
         // Adding a linebreak after the street if it's contents
         // aren't empty.
         content: '\A';
