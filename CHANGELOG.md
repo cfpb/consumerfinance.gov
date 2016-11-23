@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Simplified Akamai cache flushing logic to always flush on publish.
 - Conference Registration Form display element improvements.
 - Conference Registration Form submission success message replaced.
+- Improved job listings view in Wagtail admin.
 - college-costs updated to version 2.2.8 for new URL field
 - Conference Registration Form configurable error and success messages.
 - Fixed broken static assets on Technology and Innovation Fellowship page.
