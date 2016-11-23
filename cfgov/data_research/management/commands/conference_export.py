@@ -17,8 +17,8 @@ from v1.util.migrations import get_stream_data
 logger = logging.getLogger(__name__)
 
 
-def get_registration_form_from_slug(slug):
-    page = Page.objects.get(slug=slug).specific
+def get_registration_form_from_page(page_id):
+    page = Page.objects.get(pk=page_id).specific
     content = get_stream_data(page, 'content')
 
     for block in content:
@@ -62,8 +62,8 @@ class ConferenceExporter(object):
 
     ATTACHMENT_FILENAME = 'conf_reg.csv'
 
-    def __init__(self, page_slug, verbose=False):
-        self.form_block = get_registration_form_from_slug(page_slug)
+    def __init__(self, page_id, verbose=False):
+        self.form_block = get_registration_form_from_page(page_id)
         self.verbose = verbose
 
         if self.verbose:
@@ -132,8 +132,8 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            'page_slug',
-            help='Wagtail page slug containing registration form'
+            'page_id',
+            help='Wagtail page primary key containing registration form'
         )
         parser.add_argument(
             '-f', '--email-from-address',
@@ -152,13 +152,13 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        page_slug = options['page_slug']
+        page_id = options['page_id']
         verbose = options['verbosity'] >= 2
         email_from_address = options['email_from_address']
         email_to_addresses = options['email_to_address']
         dry_run = options['dry_run']
 
-        exporter = ConferenceExporter(page_slug=page_slug, verbose=verbose)
+        exporter = ConferenceExporter(page_id=page_id, verbose=verbose)
 
         if email_to_addresses:
             if verbose:
