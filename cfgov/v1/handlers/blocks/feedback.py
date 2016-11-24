@@ -48,9 +48,11 @@ class FeedbackHandler(Handler):
     def get_response(self, form):
         if form.is_valid():
             feedback = form.save(commit=False)
-            is_helpful = self.request.POST.get('is_helpful', None)
-            if is_helpful is not None and is_helpful != '':
+            is_helpful = self.request.POST.get('is_helpful')
+            try:
                 feedback.is_helpful = bool(int(is_helpful))
+            except ValueError:
+                pass
             feedback.page = self.page
             feedback.save()
             return self.success()
@@ -76,7 +78,7 @@ class FeedbackHandler(Handler):
                 )
         else:
             messages.success(self.request, message='Thanks for your feedback!')
-            return HttpResponseRedirect(self.page.url)
+            return HttpResponseRedirect(self.request.path)
 
     def fail(self, form):
         if form.errors.get('is_helpful', None):
