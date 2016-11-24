@@ -48,10 +48,11 @@ class FeedbackHandler(Handler):
     def get_response(self, form):
         if form.is_valid():
             feedback = form.save(commit=False)
-            is_helpful = self.request.POST.get('is_helpful')
             try:
-                feedback.is_helpful = bool(int(is_helpful))
-            except ValueError:
+                feedback.is_helpful = bool(
+                    int(self.request.POST.get('is_helpful'))
+                )
+            except (ValueError, TypeError):
                 pass
             feedback.page = self.page
             feedback.save()

@@ -127,7 +127,7 @@ class TestFeedbackHandler(TestCase):
                                                  mock_json_response,
                                                  mock_redirect):
         self.handler.success()
-        mock_redirect.assert_called_with(self.handler.page.url)
+        mock_redirect.assert_called_with(self.handler.request.path)
 
     @mock.patch('v1.handlers.blocks.feedback.JsonResponse')
     @mock.patch('v1.handlers.blocks.feedback.messages')

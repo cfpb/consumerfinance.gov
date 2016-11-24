@@ -114,14 +114,6 @@ class Feedback(AbstractFormBlock):
     )
     contact_advisory = blocks.RichTextBlock(
         required=False,
-        default=('If you provide your contact information, '
-                 'we may contact you to clarify your question. '
-                 'This information is collected in accordance with the '
-                 '<a href="/owning-a-home/help-us-improve/'
-                 'paperwork-reduction-act-statement/">'
-                 'Paperwork Reduction Act Statement</a> and the '
-                 '<a href="/owning-a-home/help-us-improve/'
-                 'privacy-act-statement/">Privacy Act Statement</a>.')
     )
 
     class Meta:
