@@ -30,6 +30,16 @@ class JobListingModelAdmin(ModelAdmin):
     model = JobListingPage
     menu_label = 'Job listing pages'
     menu_icon = 'doc-full-inverse'
+    list_display = (
+        'title', 'division', 'grades', 'regions', 'open_date', 'close_date'
+    )
+    search_fields = ('title',)
+
+    def grades(self, page):
+        return ', '.join(page.ordered_grades)
+
+    def regions(self, page):
+        return ', '.join(page.ordered_regions)
 
 
 class JobRegionModelAdmin(ModelAdmin):

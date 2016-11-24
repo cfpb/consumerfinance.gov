@@ -19,6 +19,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
 - Forms and other bits for two new Owning a Home feedback modules
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context. 
+- `conference_export` management command added to export conference registrations.
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 
 ### Changed
 - Fixed issue surrounding table link download / external icons not appearing.
@@ -36,6 +38,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Simplified Akamai cache flushing logic to always flush on publish.
 - Conference Registration Form display element improvements.
 - Conference Registration Form submission success message replaced.
+- Improved job listings view in Wagtail admin.
+- college-costs updated to version 2.2.8 for new URL field
+- Conference Registration Form configurable error and success messages.
+- Fixed broken static assets on Technology and Innovation Fellowship page.
+- Updated the analytics code to send events on form submission.
+- Fixed issue surrounding event venue not displaying on event page.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
