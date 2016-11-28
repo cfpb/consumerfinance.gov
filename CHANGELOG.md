@@ -92,6 +92,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Disable logging below CRITICAL when running Python unit tests.
 - Fixed empty `heading` value in link blobs
 - Picard upgraded to version 1.5.2.
+- Eregs/ip updated to version 1.0.3.
+- Simplified Akamai cache flushing logic to always flush on publish.
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+- Conference Registration Form configurable error and success messages.
+- Fixed broken static assets on Technology and Innovation Fellowship page.
+- Updated the analytics code to send events on form submission.
+- Fixed issue surrounding event venue not displaying on event page.
+- Limit Newsroom posts to appropriate page categories.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
