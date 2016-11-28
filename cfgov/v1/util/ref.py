@@ -144,8 +144,10 @@ snippet_fields = [
         ('phone', 'phone'),
     )),
     ('Downloads', (
-        ('related_file', 'related_file'),
-        ('order_link', 'order_link'),
+        ('related_file', 'Related file'),
+        ('alternate_file', 'Alternate file'),
+        ('link', 'Link'),
+        ('alternate_link', 'Alternate link'),
     )),
 ]
 

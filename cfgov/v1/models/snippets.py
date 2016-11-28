@@ -74,7 +74,7 @@ class Download(ClusterableModel):
         related_name='+'
     )
 
-    related_file_es = models.ForeignKey(
+    alternate_file = models.ForeignKey(
         'wagtaildocs.Document',
         null=True,
         blank=True,
@@ -82,15 +82,17 @@ class Download(ClusterableModel):
         related_name='+'
     )
 
-    order_link = models.URLField(blank=True,
-                                 help_text='URL to order a few copies of a'
-                                           'printed piece.',
-                                 validators=[URLValidator])
+    link = models.URLField(
+        blank=True,
+        help_text='Example: URL to order a few copies of a printed piece.',
+        validators=[URLValidator]
+    )
 
-    bulk_order_link = models.URLField(blank=True,
-                                      help_text='URL to order copies of a'
-                                                'printed piece in bulk.',
-                                      validators=[URLValidator])
+    alternate_link = models.URLField(
+        blank=True,
+        help_text='Example: a URL to for ordering bulk copies.',
+        validators=[URLValidator]
+    )
 
     tags = TaggableManager(through=DownloadTag, blank=True)
 
@@ -101,9 +103,9 @@ class Download(ClusterableModel):
         FieldPanel('desc'),
         ImageChooserPanel('thumbnail'),
         DocumentChooserPanel('related_file'),
-        DocumentChooserPanel('related_file_es'),
-        FieldPanel('order_link'),
-        FieldPanel('bulk_order_link'),
+        DocumentChooserPanel('alternate_file'),
+        FieldPanel('link'),
+        FieldPanel('alternate_link'),
         FieldPanel('tags'),
     ]
 

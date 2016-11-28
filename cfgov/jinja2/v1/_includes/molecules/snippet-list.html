@@ -55,14 +55,16 @@
                     <th data-label="Description">{{ snippet.title }}</th>
                     <td data-label="Actions">
                         <ul class="list__horizontal">
-                        {% for action in value.actions %}
+                    {% for action in value.actions %}
+                        {% if snippet[action.snippet_field] %}
                             {%- set href = snippet[action.snippet_field].url
                                if snippet[action.snippet_field].url is defined
                                else snippet[action.snippet_field] -%}
                             <li class="list_item">
                                 <a href="{{ href }}">{{ action.link_label }}</a>
                             </li>
-                        {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                         </ul>
                     </td>
                 </tr>
