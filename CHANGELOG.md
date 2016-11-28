@@ -32,8 +32,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 
-## 4.1.8-hotfix – 2016-11-28
-- Bumping version of College Comparision Tool
+## 4.1.9
+- Bumping version of College Comparision Tool.
 
 ## 4.1.8
 
