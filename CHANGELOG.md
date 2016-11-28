@@ -18,7 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
 - Forms and other bits for two new Owning a Home feedback modules
-- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context. 
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 - `conference_export` management command added to export conference registrations.
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 
@@ -48,6 +48,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
 - all references to `django-htmlmin`
+
+### Fixed
+- Fixed file type link icons within info-units
 
 
 ## 4.0.0
