@@ -2,8 +2,10 @@ import mock
 
 from django.test import TestCase
 from django.test.client import RequestFactory
+from wagtail.wagtailcore.models import Site
 
 from v1.models.base import CFGOVPage
+from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
 class TestCFGOVPage(TestCase):
@@ -210,3 +212,46 @@ class TestCFGOVPage(TestCase):
             self.request, mock_get_template(), mock_get_context()
         )
         self.assertEqual(result, mock_response())
+
+
+class TestCFGOVPageQuerySet(TestCase):
+    def setUp(self):
+        default_site = Site.objects.get(is_default_site=True)
+        self.live_host = default_site.hostname
+
+        staging_site = Site.objects.get(is_default_site=False)
+        self.staging_host = staging_site.hostname
+
+    def check_live_shared_counts(self, on_live_host, on_staging_host):
+        pages = CFGOVPage.objects
+        self.assertEqual(
+            pages.live_shared(hostname=self.live_host).count(),
+            on_live_host
+        )
+        self.assertEqual(
+            pages.live_shared(hostname=self.staging_host).count(),
+            on_staging_host
+        )
+
+    def test_live_shared_with_only_root_page(self):
+        self.check_live_shared_counts(on_live_host=1, on_staging_host=1)
+
+    def test_live_shared_with_another_draft_page(self):
+        page = CFGOVPage(title='test', slug='test', live=False, shared=False)
+        save_new_page(page)
+        self.check_live_shared_counts(on_live_host=1, on_staging_host=1)
+
+    def test_live_shared_with_another_shared_page(self):
+        page = CFGOVPage(title='test', slug='test', live=False, shared=True)
+        save_new_page(page)
+        self.check_live_shared_counts(on_live_host=1, on_staging_host=2)
+
+    def test_live_shared_with_another_live_page(self):
+        page = CFGOVPage(title='test', slug='test', live=True, shared=False)
+        save_new_page(page)
+        self.check_live_shared_counts(on_live_host=2, on_staging_host=2)
+
+    def test_live_shared_with_another_live_shared_page(self):
+        page = CFGOVPage(title='test', slug='test', live=True, shared=True)
+        publish_page(page)
+        self.check_live_shared_counts(on_live_host=2, on_staging_host=2)
