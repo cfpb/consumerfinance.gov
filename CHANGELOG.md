@@ -17,7 +17,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
-- Block, page and other bits for an Owning a Home feedback module that captures referrer
+- Forms and other bits for two new Owning a Home feedback modules
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context. 
 - `conference_export` management command added to export conference registrations.
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
