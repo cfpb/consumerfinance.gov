@@ -109,7 +109,12 @@ class Feedback(AbstractFormBlock):
         required=False,
         default='Do you currently own a home?'
     )
-    button_text = blocks.CharBlock(default='Submit')
+    button_text = blocks.CharBlock(
+        default='Submit'
+    )
+    contact_advisory = blocks.RichTextBlock(
+        required=False,
+    )
 
     class Meta:
         handler = 'v1.handlers.blocks.feedback.FeedbackHandler'

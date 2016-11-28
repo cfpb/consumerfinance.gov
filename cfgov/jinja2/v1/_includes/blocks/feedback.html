@@ -11,14 +11,19 @@
 
 <form method="post"
       action="."
+{% if not value.was_it_helpful_text %}
+      class="o-form">
+{% else %}
       class="o-form
              block
              block__bg
              block__border
              block__padded-top">
+{% endif %}
+<div class="form-l">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     <input type="hidden" name="form_id" value="{{ form_id }}">
-    <input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER }}">
+    <input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER or '' }}">
 
     {% if value.was_it_helpful_text %}
     <fieldset class="o-form-input-group o-form-input-group__two-column">
@@ -58,14 +63,17 @@
             </div>
         </div>
     </fieldset>
+    {% else %}
+    <input type="hidden"
+           name="is_helpful"
+           value="{{ request.GET.get('is_helpful') }}">
     {% endif %}
 
     <fieldset class="o-form-input-group">
         <div class="form-l_col
-                    form-l_col-1
-                    form-l_col__flush-bottom">
+                    form-l_col-1">
             {% if value.intro_text %}
-            <legend class="h3">
+            <legend class="h2">
                 {{ value.intro_text }}
             </legend>
             {% endif %}
@@ -94,12 +102,12 @@
     <fieldset class="o-form-input-group">
         <div class="form-l_col
                     form-l_col-1">
-            <h3>
+            <h2>
                 {{ value.radio_intro }}
-            </h3>
-            <h4>
+            </h2>
+            <p>
                 {{ value.radio_text }}
-            </h4>
+            </p>
             <h3>
                {{ value.radio_question_1 }}
             </h3>
@@ -159,7 +167,7 @@
                 <h3>Contact email</h3>
                 <input id="form_email" type="email" name="email">      
             </label>
-    <p>If you provide your contact information, we may contact you to clarify your question.  This information is collected in accordance with the <a href="/owning-a-home/help-us-improve/paperwork-reduction-act">Paperwork Reduction Act Statement</a>a> and the <a href="/owning-a-home/help-us-improve/privacy-act-statement/">Privacy Act Statement</a>.</p>
+    <p>{{ value.contact_advisory }}</p>
         </div>
     </fieldset>
         {% endif %}
@@ -169,6 +177,7 @@
             <button class="btn" type="submit">{{ value.button_text }}</button>
         </div>
     </fieldset>
+  </div>
 </form>
 
 {% endmacro %}

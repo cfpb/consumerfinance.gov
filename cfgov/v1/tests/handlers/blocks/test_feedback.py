@@ -90,7 +90,11 @@ class TestFeedbackHandler(TestCase):
             '/', HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.handler.success()
-        mock_json_response.assert_called_with({'result': 'pass'})
+        mock_json_response.assert_called_with(
+            {'result': 'pass',
+             'message': 'Thanks for your feedback!',
+             'heading': ''}
+        )
 
     @mock.patch('v1.handlers.blocks.feedback.HttpResponseRedirect')
     @mock.patch('v1.handlers.blocks.feedback.JsonResponse')
@@ -123,7 +127,7 @@ class TestFeedbackHandler(TestCase):
                                                  mock_json_response,
                                                  mock_redirect):
         self.handler.success()
-        mock_redirect.assert_called_with(self.handler.page.url)
+        mock_redirect.assert_called_with(self.handler.request.path)
 
     @mock.patch('v1.handlers.blocks.feedback.JsonResponse')
     @mock.patch('v1.handlers.blocks.feedback.messages')
@@ -137,7 +141,11 @@ class TestFeedbackHandler(TestCase):
             '/', HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.handler.fail(form)
-        mock_json_response.assert_called_with({'result': 'fail'})
+
+        mock_json_response.assert_called_with(
+            {'result': 'fail',
+             'message': 'You must select an option.'}
+        )
 
     @mock.patch('v1.handlers.blocks.feedback.JsonResponse')
     @mock.patch('v1.handlers.blocks.feedback.messages')
