@@ -32,7 +32,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ## 4.1.9
-- Bumping version of College Comparision Tool.
+- Bumping version of College Comparision Tool to 1.2.9
 
 ## 4.1.8
 
