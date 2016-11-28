@@ -17,7 +17,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Forms and other bits for two new Owning a Home feedback modules
-- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context. 
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 - `conference_export` management command added to export conference registrations.
 
 ### Changed
@@ -32,6 +32,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Removed
 
+## 4.1.9
+- Bumping version of College Comparision Tool.
 
 ## 4.1.8
 
@@ -78,7 +80,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
-- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context. 
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 
 ### Changed
 - Fixed issue surrounding table link download / external icons not appearing.
