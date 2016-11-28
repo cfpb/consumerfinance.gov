@@ -13,7 +13,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased
+## 4.2.0
 
 ### Added
 - Forms and other bits for two new Owning a Home feedback modules
@@ -30,8 +30,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated the analytics code to send events on form submission.
 - Fixed issue surrounding event venue not displaying on event page.
 
-### Removed
 
+## 4.1.9
+- Bumping version of College Comparision Tool.
 
 ## 4.1.8
 
