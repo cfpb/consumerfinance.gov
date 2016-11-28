@@ -108,6 +108,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
 - all references to `django-htmlmin`
 
+### Fixed
+- Fixed file type link icons within info-units
+
 
 
 ## 4.0.0
