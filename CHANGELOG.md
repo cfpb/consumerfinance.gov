@@ -12,6 +12,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## 4.1.9
+- update django-college-cost-comparison to v1.2.9
+
 ## 4.1.8
 
 ### Changed
