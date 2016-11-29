@@ -87,6 +87,7 @@ OPTIONAL_APPS = [
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

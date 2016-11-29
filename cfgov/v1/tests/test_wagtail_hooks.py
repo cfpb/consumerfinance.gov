@@ -1,14 +1,15 @@
 import mock
 import json
-from datetime import datetime, timedelta
-import pytz
 
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from ..wagtail_hooks import share_the_page, check_permissions, share, \
-    configure_page_revision, form_module_handlers, should_flush, flush_akamai
 from v1.models.browse_page import BrowsePage
+from v1.wagtail_hooks import (
+    check_permissions, configure_page_revision, flush_akamai,
+    form_module_handlers, get_akamai_credentials, share, share_the_page,
+    should_flush
+)
 
 
 class TestShareThePage(TestCase):
@@ -276,19 +277,16 @@ class TestFlushAkamai(TestCase):
     """
 
     def setUp(self):
-        self.page = BrowsePage(title='an arbitrary page', slug='an-arbitrary-page')
-        self.page.first_published_at = datetime.now(tz=pytz.utc) - timedelta(days=1)
+        self.page = BrowsePage(
+            title='an arbitrary page',
+            slug='an-arbitrary-page'
+        )
 
     def test_should_not_flush_if_not_enabled(self):
         with self.settings(ENABLE_AKAMAI_CACHE_PURGE=None):
             assert not should_flush(self.page)
 
-    def test_should_not_flush_if_new_page(self):
-        self.page.first_published_at = datetime.now(tz=pytz.utc) - timedelta(seconds=10)
-        with self.settings(ENABLE_AKAMAI_CACHE_PURGE=True):
-            assert not should_flush(self.page)
-
-    def test_should_flush_if_enabled_and_old_page(self):
+    def test_should_flush_if_enabled(self):
         with self.settings(ENABLE_AKAMAI_CACHE_PURGE=True):
             assert should_flush(self.page)
 
@@ -301,3 +299,32 @@ class TestFlushAkamai(TestCase):
         ):
             flush_akamai(self.page)
         assert mock_should_flush.called
+
+
+class TestGetAkamaiCredentials(TestCase):
+    def test_no_credentials_raises(self):
+        with self.settings(
+            AKAMAI_OBJECT_ID=None,
+            AKAMAI_USER=None,
+            AKAMAI_PASSWORD=None
+        ):
+            self.assertRaises(ValueError, get_akamai_credentials)
+
+    def test_some_credentials_raises(self):
+        with self.settings(
+            AKAMAI_OBJECT_ID='some-arbitrary-id',
+            AKAMAI_USER=None,
+            AKAMAI_PASSWORD=None
+        ):
+            self.assertRaises(ValueError, get_akamai_credentials)
+
+    def test_all_credentials_returns(self):
+        with self.settings(
+            AKAMAI_OBJECT_ID='object-id',
+            AKAMAI_USER='username',
+            AKAMAI_PASSWORD='password'
+        ):
+            object_id, auth = get_akamai_credentials()
+            self.assertEqual(object_id, 'object-id')
+            self.assertIsInstance(auth, tuple)
+            self.assertEqual(auth, ('username', 'password'))

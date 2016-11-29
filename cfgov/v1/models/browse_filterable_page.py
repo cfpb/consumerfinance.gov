@@ -1,18 +1,23 @@
-from django.db import models
+import itertools
 
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
+from django.db import models
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface
+)
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
-from .base import CFGOVPage
-from ..atomic_elements import molecules, organisms
-from ..feeds import FilterableFeedPageMixin
-from ..util.filterable_list import FilterableListMixin
-from .. import blocks as v1_blocks
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.feeds import FilterableFeedPageMixin
+from v1.models.base import CFGOVPage
+from v1.models.learn_page import AbstractFilterPage
+from v1.util import ref
+from v1.util.filterable_list import FilterableListMixin
 
 
-class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
+class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin,
+                           CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', molecules.FeaturedContent()),
@@ -67,6 +72,19 @@ class NewsroomLandingPage(BrowseFilterablePage):
 
     objects = PageManager()
 
-    def get_filter_parent(self):
-        """ The Newsroom never filters results by a parent page """
-        return None
+    @classmethod
+    def eligible_categories(cls):
+        categories = dict(ref.categories)
+        return sorted(itertools.chain(*(
+            dict(categories[category]).keys()
+            for category in ('Blog', 'Newsroom')
+        )))
+
+    @classmethod
+    def base_query(cls, hostname):
+        """Newsroom pages should only show content from certain categories."""
+        eligible_pages = AbstractFilterPage.objects.live_shared(hostname)
+
+        return eligible_pages.filter(
+            categories__name__in=cls.eligible_categories()
+        )
