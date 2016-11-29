@@ -11,7 +11,7 @@ from wagtail.contrib.table_block.blocks import TableBlock, TableInput
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-
+from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from . import atoms, molecules
 from ..util import ref
@@ -171,6 +171,48 @@ class Table(blocks.StructBlock):
         icon = None
         template = '_includes/organisms/table.html'
         label = ' '
+
+
+class BureauStructurePosition(blocks.StructBlock):
+    name = blocks.CharBlock()
+    title = blocks.StructBlock([
+        ('title_1', blocks.CharBlock(required=False)),
+        ('title_2', blocks.CharBlock(required=False))
+    ])
+
+
+class BureauStructureNode(BureauStructurePosition):
+    office_name = blocks.CharBlock(required=False)
+    positions = blocks.ListBlock(BureauStructurePosition(required=False))
+
+
+class BureauStructureOffice(blocks.StructBlock):
+    office_name = blocks.CharBlock(required=False)
+    division_name = blocks.CharBlock()
+    title = blocks.StructBlock([
+        ('title_1', blocks.CharBlock(required=False)),
+        ('title_2', blocks.CharBlock(required=False))
+    ])
+
+    more_info_url = atoms.Hyperlink(required=False)
+    positions = blocks.ListBlock(BureauStructurePosition(required=False))
+
+
+class BureauStructure(blocks.StructBlock):
+    director = blocks.CharBlock()
+    last_updated_date = blocks.DateBlock(required=False)
+    download_image = DocumentChooserBlock(icon='image')
+    divisions = blocks.ListBlock(BureauStructureOffice())
+    office_of_the_director = blocks.ListBlock(BureauStructureNode(),
+                             label='Office of the Director')
+
+    class Meta:
+        icon = None
+        template = '_includes/organisms/bureau-structure.html'
+        icon = "table"
+
+    class Media:
+        js = ['bureau-structure.js']
 
 
 class AtomicTableInput(TableInput):

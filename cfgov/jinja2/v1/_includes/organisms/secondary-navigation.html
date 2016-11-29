@@ -51,7 +51,7 @@
         <ul class="o-secondary-navigation_list
                    o-secondary-navigation_list__parents">
         {%- for item in nav_items %}
-            <li data-nav-is-active="{{ request.url.startswith(item.url) }}">
+            <li data-nav-is-active="">
                 {{ nav_link.render(item.title, item.url, true, item.url == request.url) }}
             {%- if item.children -%}
                 <ul class="o-secondary-navigation_list

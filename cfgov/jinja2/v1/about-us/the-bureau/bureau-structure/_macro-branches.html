@@ -13,18 +13,18 @@
    ========================================================================== #}
 {% macro render(categories) -%}
 {% import '_macro-node.html' as node with context %}
-<ul class="org-chart_branches
+<ul class="o-bureau-structure_branches
            list
            list__unstyled">
     {% for category in categories %}
     {% set category_index = loop.index %}
-    <li class="org-chart_branch">
-        <h4 class="org-chart_branch_name">{{ category.title }}</h4>
-        <ul class="org-chart_nodes
+    <li class="o-bureau-structure_branch">
+        <h4 class="o-bureau-structure_branch_name">{{ category.title }}</h4>
+        <ul class="o-bureau-structure_nodes
                    nodes{{ category_index }}
                    list
                    list__unstyled">
-            <li class="org-chart_branch_name">
+            <li class="o-bureau-structure_branch_name">
                 <button class="content-hide
                                link_text
                                jump-link
