@@ -1,23 +1,18 @@
 import warnings
+
 from bs4 import BeautifulSoup
+
+from sheerlike.helpers import process_string_fields
 from v1 import parse_links
+
+
+def process_doc(doc):
+    return parse_links(doc).encode(formatter=None)
 
 
 def process_external_links(doc):
     warnings.filterwarnings('ignore')
     for key, value in doc.iteritems():
-        doc[key] = _process_data(value)
+        doc[key] = process_string_fields(value, callback=process_doc)
     warnings.resetwarnings()
     return doc
-
-
-def _process_data(field):
-    if isinstance(field, basestring):
-        field = parse_links(field).encode(formatter=None)
-    elif isinstance(field, list):
-        for i, value in enumerate(field):
-            field[i] = _process_data(value)
-    elif isinstance(field, dict):
-        for key, value in field.iteritems():
-            field[key] = _process_data(value)
-    return field

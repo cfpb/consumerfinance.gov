@@ -1,12 +1,14 @@
-import sys
 import json
 import os.path
+import re
 import requests
+import sys
+
 from sheerlike.external_links import process_external_links
+from sheerlike.helpers import process_string_fields
 
 
 def posts_at_url(url):
-
     current_page = 1
     max_page = sys.maxint
 
@@ -22,17 +24,27 @@ def posts_at_url(url):
 
 
 def documents(name='', url='', **kwargs):
-
     for post in posts_at_url(url):
         yield process_post(post)
 
 
-def process_post(page):
+HTTP_IMAGE_TAG_REGEX = r'<img[^>]*\ src=\\?\\?"http://([^"]+)\\?\\?"'
 
+
+def convert_http_image_link(field):
+    match = re.search(HTTP_IMAGE_TAG_REGEX, field)
+
+    if match:
+        print(field)
+        print(match.group(1))
+
+
+def process_post(page):
     del page['comments']
     page['_id'] = page['id']
 
     page = process_external_links(page)
+    page = process_string_fields(page, callback=convert_http_image_link)
 
     return {'_type': 'report',
             '_id': page['id'],
