@@ -27,8 +27,6 @@ def documents(name='', url='', **kwargs):
         yield process_post(post)
 
 
-
-
 def process_post(page):
 
     del page['comments']
