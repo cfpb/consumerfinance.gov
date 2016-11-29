@@ -72,6 +72,7 @@
     {%- set city   =  event.venue_city   | default('', true) -%}
     {%- set state  =  event.venue_state  | default('', true) -%}
     {%- set street =  event.venue_street | default('', true) -%}
+    {%- set suite  =  event.venue_suite  | default('', true) -%}
     {%- set name   =  event.venue_name   | default('', true) -%}
     {%- set zip    =  event.venue_zip    | default('', true) -%}
     <p class="event-meta_address h-adr">
@@ -87,6 +88,10 @@
             <span class="event-meta_street p-street-address">{{ street }}</span>
         {% endmacro -%}
 
+        {%- macro _suite() %}
+            <span class="event-meta_suite p-extended-address">{{ suite }}</span>
+        {% endmacro -%}
+
         {% macro _venue() %}
             <span class="event-meta_venue p-extended-address">{{ name }}</span>
         {% endmacro %}
@@ -100,6 +105,7 @@
                 'city'   : _city()   | trim,
                 'street' : _street() | trim,
                 'state'  : _state()  | trim,
+                'suite'  : _suite()  | trim,
                 'venue'  : _venue()  | trim,
                 'zip'    : _zip()    | trim
             }) | safe
@@ -145,7 +151,8 @@
             <div class="content-l">
                 <div class="event-meta content-l_col content-l_col-1-2">
                     {{ event_meta_address(event,
-                        address_format ='{venue} {street} {city}' ~ state_prefix ~ '{state} {zip}'
+                        address_format ='{venue} {street} {suite}
+                        {city}' ~ state_prefix ~ '{state} {zip}'
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">

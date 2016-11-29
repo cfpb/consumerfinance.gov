@@ -2,8 +2,8 @@ import json
 import logging
 
 from django.conf import settings
-from django.contrib import messages
-from django.http import JsonResponse, HttpResponseRedirect
+from django.core.exceptions import NON_FIELD_ERRORS
+from django.http import HttpResponseRedirect
 from govdelivery.api import GovDelivery
 
 from data_research.forms import ConferenceRegistrationForm
@@ -15,23 +15,38 @@ logger = logging.getLogger(__name__)
 
 
 class ConferenceRegistrationHandler(Handler):
+    SUCCESS_QUERY_STRING_PARAMETER = 'success'
+
     def __init__(self, page, request, block_value):
         super(ConferenceRegistrationHandler, self).__init__(page, request)
         self.block_value = block_value
 
     def process(self, is_submitted):
         if self.is_at_capacity():
-            return {
-                'form': ConferenceRegistrationForm(),
-                'is_at_capacity': True
-            }
+            return {'is_at_capacity': True}
 
         if is_submitted:
             data = self.get_post_data()
             form = ConferenceRegistrationForm(data)
-            return self.get_response(form)
 
-        return {'form': ConferenceRegistrationForm()}
+            if form.is_valid():
+                attendee = form.save(commit=False)
+
+                if self.subscribe(attendee.email, attendee.code):
+                    attendee.save()
+                    return HttpResponseRedirect(self.success_url)
+
+                form.add_error(
+                    NON_FIELD_ERRORS,
+                    self.block_value['failure_message']
+                )
+
+            return {'form': form}
+
+        return {
+            'form': ConferenceRegistrationForm(),
+            'is_successful_submission': self.is_successful_submission(),
+        }
 
     def is_at_capacity(self):
         capacity = self.block_value['capacity']
@@ -39,6 +54,9 @@ class ConferenceRegistrationHandler(Handler):
 
         attendees = ConferenceRegistration.objects.filter(code=code)
         return attendees.count() >= capacity
+
+    def is_successful_submission(self):
+        return self.SUCCESS_QUERY_STRING_PARAMETER in self.request.GET
 
     def get_post_data(self):
         data = self.request.POST.copy()
@@ -53,16 +71,6 @@ class ConferenceRegistrationHandler(Handler):
         sessions = self.block_value.get('sessions', [])
         return [session for i, session in enumerate(sessions) if str(i) in ids]
 
-    def get_response(self, form):
-        if form.is_valid():
-            attendee = form.save(commit=False)
-
-            if self.subscribe(attendee.email, attendee.code):
-                attendee.save()
-                return self.success()
-
-        return self.fail(form)
-
     def subscribe(self, email, code):
         try:
             logger.info('subscribing to GovDelivery')
@@ -76,29 +84,13 @@ class ConferenceRegistrationHandler(Handler):
             subscription_response.raise_for_status()
         except Exception:
             logger.exception('error subscribing to GovDelivery')
-            messages.error(self.request, (
-                'There was an error in your submission. '
-                'Please try again later.'
-            ))
             return False
 
         return True
 
-    def success(self):
-        if self.request.is_ajax():
-            return JsonResponse({'result': 'pass'})
-        else:
-            messages.success(self.request,
-                             'Your submission was successfully received.')
-            return HttpResponseRedirect(self.page.url)
-
-    def fail(self, form):
-        if self.request.is_ajax():
-            return JsonResponse({'result': 'fail'})
-
-        else:
-            for field, errors in form.errors.iteritems():
-                for message in errors:
-                    messages.error(self.request, message)
-
-            return {'form': form}
+    @property
+    def success_url(self):
+        return '{}?{}'.format(
+            self.request.path,
+            self.SUCCESS_QUERY_STRING_PARAMETER
+        )

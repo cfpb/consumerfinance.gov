@@ -65,3 +65,9 @@ class JobListingPage(CFGOVPage):
         """
         grades = set(g.grade.grade for g in self.grades.all())
         return sorted(grades, key=lambda g: int(g) if g.isdigit() else g)
+
+    @property
+    def ordered_regions(self):
+        """Return a list of job regions in alphabetical order."""
+        regions = set(r.region.region_long for r in self.regions.all())
+        return sorted(regions)

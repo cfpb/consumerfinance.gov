@@ -11,7 +11,6 @@ var Notification = require( '../molecules/Notification' );
 var standardType = require( '../modules/util/standard-type' );
 var validators = require( '../modules/util/validators' );
 
-
 /**
  * FilterableListControls
  * @class
@@ -79,18 +78,19 @@ function FilterableListControls( element ) {
   function _initEvents() {
     var labelDom = _dom.querySelector( '.o-expandable_label' );
     var label;
+    var getDataLayerOptions = Analytics.getDataLayerOptions;
+    var dataLayerArray = [];
+    var cachedFields = {};
 
     if ( labelDom ) {
       label = labelDom.textContent.trim();
     }
 
-    _expandable.addEventListener( 'expandBegin',
-    function sendEvent( ) {
+    _expandable.addEventListener( 'expandBegin', function sendEvent() {
       Analytics.sendEvent( 'Filter:open', label );
     } );
 
-    _expandable.addEventListener( 'collapseBegin',
-    function sendEvent( ) {
+    _expandable.addEventListener( 'collapseBegin', function sendEvent() {
       Analytics.sendEvent( 'Filter:close', label );
     } );
 
@@ -98,32 +98,23 @@ function FilterableListControls( element ) {
       var action;
       var field = event.target;
       var fieldValue;
-      var fieldLabel;
 
       if ( !field ) {
         return;
       }
-
-      if ( !_cachedLabels[field.name] ) {
-        _cachedLabels[field.name] = {
-          label: _getLabelText( field )
-        };
-      }
-
-      if ( field.type === 'checkbox' && field.checked === false ) {
-        fieldValue = 'null';
-      } else {
-        fieldValue = field.value;
-      }
-
-      fieldLabel = _cachedLabels[field.name].label + ':' + fieldValue;
-      action = 'Filter:' + field.type + ':changed';
-      Analytics.sendEvent( action, fieldLabel );
+      action = field.name + ':change';
+      cachedFields[field.name] = getDataLayerOptions( action, field.value );
     } );
 
     _form.addEventListener( 'submit', function sendEvent( event ) {
       event.preventDefault();
-      Analytics.sendEvent( 'Filter:submit', label, _formSubmitted );
+      Object.keys( cachedFields ).forEach( function( key ) {
+        dataLayerArray.push( cachedFields[key] );
+      } );
+      dataLayerArray.push( getDataLayerOptions( 'Filter:submit', label,
+                           '', _formSubmitted ) );
+      Analytics.sendEvents( dataLayerArray );
+      dataLayerArray = [];
     } );
   }
 
