@@ -46,10 +46,6 @@ class ImageText2575(blocks.StructBlock):
     image = atoms.ImageBasic()
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
     has_rule = blocks.BooleanBlock(required=False)
-    should_link_image = blocks.BooleanBlock(default=False,
-                                            required=False,
-                                            help_text='Boolean indicating whether the image should be wrapped in a link tag.'
-                                            )
 
     class Meta:
         icon = 'image'
