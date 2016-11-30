@@ -273,12 +273,31 @@ class SocialMedia(blocks.StructBlock):
     blurb = blocks.CharBlock(required=False,
                              default='Look what I found on the CFPB\'s site!',
                              help_text='Sets the tweet text, email subject line, and LinkedIn post text.')
+
+    email_title = blocks.CharBlock(required=False,
+                                    help_text='Custom subject for email shares. If blank, will default to value of blurb field above.')
+
+    email_text = blocks.CharBlock(required=False,
+                                  help_text='Custom text for email shares. If blank, will default to "Check out this page from the CFPB".')
+
+    email_signature = blocks.CharBlock(required=False,
+                                       help_text='Adds a custom signature line to email shares. No default if blank.')
+    linkedin_title = blocks.CharBlock(required=False,
+                                      help_text='Custom title for LinkedIn shares. If blank, will default to value of blurb field above.')
+
+    linkedin_text = blocks.CharBlock(required=False,
+                                     help_text='Custom text for LinkedIn shares.')
+
+    twitter_text = blocks.CharBlock(required=False,
+                                    max_length=100,
+                                    help_text='Custom text for Twitter shares. If blank, will default to value of blurb field above.')
     twitter_related = blocks.CharBlock(required=False,
                                        help_text='A comma-separated list of accounts related to the content of the shared URL. Do not enter the @ symbol. If blank, it will default to just "cfpb".')
     twitter_hashtags = blocks.CharBlock(required=False,
                                         help_text='A comma-separated list of hashtags to be appended to default tweet text.')
     twitter_lang = blocks.CharBlock(required=False,
                                     help_text='Loads text components in the specified language, if other than English. E.g., use "es" for Spanish. See https://dev.twitter.com/web/overview/languages for a list of supported language codes.')
+
 
     class Meta:
         icon = 'site'
