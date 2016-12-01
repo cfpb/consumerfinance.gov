@@ -18,14 +18,6 @@
     background: @gray-10;
     border-top:1px solid @node-border-color;
 
-    .u-hide-unless-mobile {
-        display:none;
-
-        .respond-to-max( @bp-xs-max, {
-            display: block;
-        } );
-    }
-
     .respond-to-min( @bp-sm-min, {
         padding: @margin;
         border: 1px solid @node-border-color;
@@ -131,15 +123,6 @@
         .respond-to-max( @bp-xs-max, {
             margin-bottom: @margin;
             background: @white;
-
-            &:after {
-                content: '';
-                position: absolute;
-                left: 50%;
-                width: 0;
-                height: @margin;
-                border-left: @spine-width solid @spine-color;
-            }
         } );
     }
 }
@@ -183,9 +166,9 @@
         }
     }
 
-     &:last-child {
-                border-top: none;
-            }
+    &:last-child {
+        border-top: none;
+    }
 
     &-item {
         background: none;
@@ -272,7 +255,7 @@
     }
 
     .respond-to-max( @bp-xs-max, {
-        &:not(:first-child) {
+        &:not( :first-child ) {
             margin: @margin / 2;
         }
     } );
