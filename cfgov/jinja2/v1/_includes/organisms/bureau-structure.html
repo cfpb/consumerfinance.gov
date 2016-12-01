@@ -141,8 +141,8 @@
             <li class="o-bureau-structure_node">
                 {{ _role(child_org) }}
                 {% if loop.last and org.more_info_url %}
-                <a href="{{ org.relative_url }}" class="o-bureau-structure_node_more-info">
-                    More information about these offices
+                <a href="{{ org.more_info_url.url }}" class="o-bureau-structure_node_more-info">
+                    {{ org.more_info_url.text or 'More information about these offices' }}
                 </a>
                 {% endif %}
             </li>

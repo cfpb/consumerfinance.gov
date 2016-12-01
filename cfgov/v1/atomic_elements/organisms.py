@@ -174,38 +174,35 @@ class Table(blocks.StructBlock):
 
 
 class BureauStructurePosition(blocks.StructBlock):
+    office_name = blocks.CharBlock()
     name = blocks.CharBlock()
     title = blocks.StructBlock([
         ('title_1', blocks.CharBlock(required=False)),
         ('title_2', blocks.CharBlock(required=False))
     ])
 
-
-class BureauStructureNode(BureauStructurePosition):
-    office_name = blocks.CharBlock(required=False)
-    positions = blocks.ListBlock(BureauStructurePosition(required=False))
-
-
-class BureauStructureOffice(blocks.StructBlock):
-    office_name = blocks.CharBlock(required=False)
+class BureauStructureDivision(blocks.StructBlock):
     division_name = blocks.CharBlock()
+    name = blocks.CharBlock(required=False)
     title = blocks.StructBlock([
         ('title_1', blocks.CharBlock(required=False)),
         ('title_2', blocks.CharBlock(required=False))
     ])
-
     more_info_url = atoms.Hyperlink(required=False)
     positions = blocks.ListBlock(BureauStructurePosition(required=False))
 
 
+class BureauStructureOffice(BureauStructurePosition):
+    positions = blocks.ListBlock(BureauStructurePosition(required=False))
+
+
 class BureauStructure(blocks.StructBlock):
-    director = blocks.CharBlock()
     last_updated_date = blocks.DateBlock(required=False)
     download_image = DocumentChooserBlock(icon='image')
-    divisions = blocks.ListBlock(BureauStructureOffice())
-    office_of_the_director = blocks.ListBlock(BureauStructureNode(),
+    director = blocks.CharBlock()
+    divisions = blocks.ListBlock(BureauStructureDivision())
+    office_of_the_director = blocks.ListBlock(BureauStructureOffice(),
                              label='Office of the Director')
-
     class Meta:
         icon = None
         template = '_includes/organisms/bureau-structure.html'
