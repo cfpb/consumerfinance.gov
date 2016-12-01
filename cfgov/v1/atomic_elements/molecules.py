@@ -310,9 +310,9 @@ class SocialMedia(blocks.StructBlock):
     is_share_view = blocks.BooleanBlock(
         default=True,
         required=False,
-        label='Create sharing links',
-        help_text='If deselected, links to visit CFPB profiles '
-                  'will be created.'
+        label='Desired action: share this page',
+        help_text='If unchecked, social media icons will link users to '
+                  'official CFPB accounts. Do not fill in any further fields.'
     )
     blurb = blocks.CharBlock(
         required=False,
@@ -323,53 +323,53 @@ class SocialMedia(blocks.StructBlock):
 
     email_title = blocks.CharBlock(
         required=False,
-        help_text='Custom subject for email shares. If blank, will default '
-                  'to value of blurb field above.'
+        help_text='(Optional) Custom subject for email shares. If blank, '
+                  'will default to value of blurb field above.'
     )
 
     email_text = blocks.CharBlock(
         required=False,
-        help_text='Custom text for email shares. If blank, will default '
-                  'to "Check out this page from the CFPB".'
+        help_text='(Optional) Custom text for email shares. If blank, will '
+                  'default to "Check out this page from the CFPB".'
     )
 
     email_signature = blocks.CharBlock(
         required=False,
-        help_text='Adds a custom signature line to email shares. '
-                  'No default if blank.'
+        help_text='(Optional) Adds a custom signature line to email shares. '
     )
     linkedin_title = blocks.CharBlock(
         required=False,
-        help_text='Custom title for LinkedIn shares. If blank, will default '
-                  'to value of blurb field above.'
+        help_text='(Optional) Custom title for LinkedIn shares. If blank, '
+                  'will default to value of blurb field above.'
     )
 
     linkedin_text = blocks.CharBlock(
         required=False,
-        help_text='Custom text for LinkedIn shares.'
+        help_text='(Optional) Custom text for LinkedIn shares.'
     )
 
     twitter_text = blocks.CharBlock(
         required=False,
         max_length=100,
-        help_text='Custom text for Twitter shares. If blank, will default '
-                  'to value of blurb field above.'
+        help_text='(Optional) Custom text for Twitter shares. If blank, '
+                  'will default to value of blurb field above.'
     )
     twitter_related = blocks.CharBlock(
         required=False,
-        help_text='A comma-separated list of accounts related to the content '
-                  'of the shared URL. Do not enter the @ symbol. '
-                  'If blank, it will default to just "cfpb".'
+        help_text='(Optional) A comma-separated list of accounts related '
+                  'to the content of the shared URL. Do not enter the '
+                  ' @ symbol. If blank, it will default to just "cfpb".'
     )
     twitter_hashtags = blocks.CharBlock(
         required=False,
-        help_text='A comma-separated list of hashtags to be appended '
-                  'to default tweet text.'
+        help_text='(Optional) A comma-separated list of hashtags to be '
+                  'appended to default tweet text.'
     )
     twitter_lang = blocks.CharBlock(
         required=False,
-        help_text='Loads text components in the specified language, '
-                  'if other than English. E.g., use "es" for Spanish. '
+        help_text='(Optional) Loads text components in the specified '
+                  'language, if other than English. E.g., use "es" '
+                  ' for Spanish. '
                   'See https://dev.twitter.com/web/overview/languages '
                   'for a list of supported language codes.'
     )
