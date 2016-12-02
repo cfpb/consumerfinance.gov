@@ -29,6 +29,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - college-costs updated to version 2.2.8 for new URL field
 - Updated the analytics code to send events on form submission.
 - Fixed issue surrounding event venue not displaying on event page.
+- Limit Activity Log posts to appropriate page categories.
+- Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
+- Removed feedback-form default text and clarified help_text
 
 ### Removed
 
