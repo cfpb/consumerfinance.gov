@@ -5,11 +5,18 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-from .base import CFGOVPage
-from .. import blocks as v1_blocks
-from ..atomic_elements import molecules, organisms
-from ..util import filterable_list, util
+from v1.models.base import CFGOVPage
+from v1.models.learn_page import AbstractFilterPage
+
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+
 from jobmanager.models import JobListingList
+from v1.forms import FilterableListForm
+
+import logging
+logger = logging.getLogger(__name__)
+
 
 class SublandingPage(CFGOVPage):
     header = StreamField([
@@ -26,7 +33,7 @@ class SublandingPage(CFGOVPage):
         ('post_preview_snapshot', organisms.PostPreviewSnapshot()),
         ('well', organisms.Well()),
         ('table', organisms.Table(editable=False)),
-        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
+        ('table_block', organisms.AtomicTableBlock(table_options={'renderer': 'html'})),
         ('contact', organisms.MainContactInfo()),
         ('formfield_with_button', molecules.FormFieldWithButton()),
         ('reg_comment', organisms.RegComment()),
@@ -70,16 +77,16 @@ class SublandingPage(CFGOVPage):
     objects = PageManager()
 
     def get_browsefilterable_posts(self, request, limit):
-        filter_pages = [p.specific for p in self.get_appropriate_descendants(request.site.hostname)
+        hostname = request.site.hostname
+        filter_pages = [p.specific for p in self.get_appropriate_descendants(hostname)
                         if 'FilterablePage' in p.specific_class.__name__
                         and 'archive' not in p.title.lower()]
-
-        posts_tuple_list = [(str(util.get_form_id(page)), post)
-                            for page in filter_pages
-                            for post in page.get_page_set(
-                                page.get_form_class()(parent=page,
-                                                      hostname=request.site.hostname),
-                                request.site.hostname)]
-
-        posts = sorted(posts_tuple_list, key=lambda p: p[1].date_published, reverse=True)[:limit]
-        return posts
+        posts_tuple_list = []
+        for page in filter_pages:
+            base_query = AbstractFilterPage.objects.live_shared(hostname).filter(CFGOVPage.objects.child_of_q(page))
+            logger.info('Filtering by parent {}'.format(page))
+            form_id = str(page.form_id())
+            form = FilterableListForm(hostname=hostname, base_query=base_query)
+            for post in form.get_page_set():
+                posts_tuple_list.append((form_id, post))
+        return sorted(posts_tuple_list, key=lambda p: p[1].date_published, reverse=True)[:limit]

@@ -9,20 +9,24 @@ var sinon = require( 'sinon' );
 var sandbox;
 var Analytics;
 var dataLayerOptions;
+var getDataLayerOptions;
+var UNDEFINED;
 
 describe( 'Analytics', function() {
   jsdom();
 
   before( function() {
     Analytics = require( BASE_JS_PATH + 'modules/Analytics' );
+    getDataLayerOptions = Analytics.getDataLayerOptions;
   } );
 
   beforeEach( function() {
     sandbox = sinon.sandbox.create();
 
     function push( object ) {
-      if ( object.hasOwnProperty( 'callback' ) ) {
-        return object.callback();
+      if ( object.hasOwnProperty( 'eventCallback' ) &&
+           typeof object.eventCallback === 'function' ) {
+        return object.eventCallback();
       }
       return [].push.call( this, object );
     }
@@ -33,7 +37,8 @@ describe( 'Analytics', function() {
     Analytics.tagManagerIsLoaded = false;
 
     dataLayerOptions = {
-      event:        'CFGOV Event',
+      event:        'Page Interaction',
+      eventCallback: UNDEFINED,
       action:       '',
       label:        '',
       eventTimeout: 500
@@ -73,7 +78,7 @@ describe( 'Analytics', function() {
       } );
       window.google_tag_manager = {};
       Analytics.init();
-      Analytics.sendEvent( action, label );
+      Analytics.sendEvent( getDataLayerOptions( action, label ) );
       expect( window.dataLayer.length === 1 ).to.be.true;
       expect( window.dataLayer[0] ).to.deep.equal( options );
     } );
@@ -84,7 +89,7 @@ describe( 'Analytics', function() {
       var label = 'text:null';
       delete window.google_tag_manager;
       Analytics.init();
-      Analytics.sendEvent( action, label );
+      Analytics.sendEvent( getDataLayerOptions( action, label ) );
       expect( window.dataLayer.length === 0 ).to.be.true;
     } );
 
@@ -93,21 +98,24 @@ describe( 'Analytics', function() {
       var action = 'inbox:clicked';
       var label = 'text:null';
       var callback = sinon.stub();
-      Analytics.sendEvent( action, label, callback );
+      window.google_tag_manager = {};
+      Analytics.sendEvent( getDataLayerOptions( action, label, '', callback ) );
       expect( callback.called ).to.be.true;
     } );
   } );
 
   describe( '.sendEvents()', function() {
     it( 'should properly add objects to the dataLayer Array', function() {
-      var options1 = Object.assign( {}, dataLayerOptions, {
-        action: 'inbox:clicked',
-        label:  'text:label_1'
-      } );
-      var options2 = Object.assign( {}, dataLayerOptions, {
-        action: 'checbox:clicked',
-        label:  'text:label_2'
-      } );
+      var options1 = getDataLayerOptions( Object.assign( {}, dataLayerOptions,
+        {
+          action: 'inbox:clicked',
+          label:  'text:label_1'
+        } ) );
+      var options2 = getDataLayerOptions( Object.assign( {}, dataLayerOptions,
+        {
+          action: 'checbox:clicked',
+          label:  'text:label_2'
+        } ) );
       window.google_tag_manager = {};
       Analytics.init();
       Analytics.sendEvents( [ options1, options2 ] );
@@ -116,14 +124,14 @@ describe( 'Analytics', function() {
 
     it( 'shouldn\'t add objects to the dataLayer Array if an array isn\'t passed',
     function() {
-      var options1 = Object.assign( {}, dataLayerOptions, {
+      var options1 = getDataLayerOptions( Object.assign( {}, dataLayerOptions, {
         action: 'inbox:clicked',
         label:  'text:label_1'
-      } );
-      var options2 = Object.assign( {}, dataLayerOptions, {
+      } ) );
+      var options2 = getDataLayerOptions( Object.assign( {}, dataLayerOptions, {
         action: 'checbox:clicked',
         label:  'text:label_2'
-      } );
+      } ) );
       window.google_tag_manager = {};
       Analytics.init();
       Analytics.sendEvents( options1, options2 );

@@ -100,6 +100,9 @@ class EmailSignUp(blocks.StructBlock):
         icon = 'mail'
         template = '_includes/organisms/email-signup.html'
 
+    class Media:
+        js = ['email-signup.js']
+
 
 class RegComment(blocks.StructBlock):
     document_id = blocks.CharBlock(required=True, label='Document ID',
@@ -439,13 +442,21 @@ class ExpandableGroup(blocks.StructBlock):
 
 
 class ItemIntroduction(blocks.StructBlock):
-    category = blocks.ChoiceBlock(choices=ref.categories, required=False)
+    show_category = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        help_text=(
+            "Whether to show the category or not "
+            "(category must be set in 'Configuration')."
+        )
+    )
 
     heading = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
 
     date = blocks.DateBlock(required=False)
-    has_social = blocks.BooleanBlock(required=False, help_text="Whether to show the share icons or not.")
+    has_social = blocks.BooleanBlock(
+        required=False, help_text="Whether to show the share icons or not.")
 
     class Meta:
         icon = 'form'

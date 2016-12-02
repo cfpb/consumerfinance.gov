@@ -1,10 +1,11 @@
 import mock
 
-from django.http import JsonResponse
 from django.test import TestCase
 from django.test.client import RequestFactory
+from wagtail.wagtailcore.models import Site
 
 from v1.models.base import CFGOVPage
+from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
 class TestCFGOVPage(TestCase):
@@ -15,10 +16,10 @@ class TestCFGOVPage(TestCase):
 
     @mock.patch('__builtin__.super')
     @mock.patch('v1.models.base.hooks')
-    def test_get_context_calls_get_hooks(self, mock_hooks, mock_super):
+    def test_get_context_calls_get_context(self, mock_hooks, mock_super):
         self.page.get_context(self.request)
         mock_super.assert_called_with(CFGOVPage, self.page)
-        mock_super().get_context.assert_called_with(self.request, [], {})
+        mock_super().get_context.assert_called_with(self.request)
 
     @mock.patch('__builtin__.super')
     @mock.patch('v1.models.base.hooks')
@@ -32,7 +33,9 @@ class TestCFGOVPage(TestCase):
         fn = mock.Mock()
         mock_hooks.get_hooks.return_value = [fn]
         self.page.get_context(self.request)
-        fn.assert_called_with(self.page, self.request, mock_super().get_context())
+        fn.assert_called_with(
+            self.page, self.request, mock_super().get_context()
+        )
 
     @mock.patch('__builtin__.super')
     @mock.patch('v1.models.base.hooks')
@@ -48,34 +51,44 @@ class TestCFGOVPage(TestCase):
 
     @mock.patch('__builtin__.super')
     @mock.patch('v1.models.base.CFGOVPage.serve_post')
-    def test_serve_calls_serve_post_on_post_request(self, mock_serve_post, mock_super):
+    def test_serve_calls_serve_post_on_post_request(
+            self, mock_serve_post, mock_super):
         self.request = self.factory.post('/')
         self.page.serve(self.request)
         mock_serve_post.assert_called_with(self.request)
 
     def test_serve_post_returns_failed_JSON_response_for_no_form_id(self):
-        self.request = self.factory.post('/', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.request = self.factory.post(
+            '/', HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
         response = self.page.serve_post(self.request)
         self.assertEqual(response.content, '{"result": "error"}')
         self.assertEqual(response.status_code, 400)
 
     @mock.patch('v1.models.base.HttpResponseBadRequest')
-    def test_serve_post_calls_messages_and_bad_request_for_no_form_id(self, mock_bad_request):
+    def test_serve_post_calls_messages_and_bad_request_for_no_form_id(
+            self, mock_bad_request):
         self.request = self.factory.post('/')
         self.page.serve_post(self.request)
         mock_bad_request.assert_called_with(self.page.url)
 
     @mock.patch('v1.models.base.HttpResponseBadRequest')
-    def test_serve_post_returns_bad_request_for_no_form_id(self, mock_bad_request):
+    def test_serve_post_returns_bad_request_for_no_form_id(
+            self, mock_bad_request):
         self.request = self.factory.post('/')
-        result = self.page.serve_post(self.request)
+        self.page.serve_post(self.request)
         self.assertTrue(mock_bad_request.called)
 
     @mock.patch('v1.models.base.TemplateResponse')
     @mock.patch('v1.models.base.CFGOVPage.get_template')
     @mock.patch('v1.models.base.CFGOVPage.get_context')
     @mock.patch('v1.models.base.getattr')
-    def test_serve_post_gets_streamfield_from_page_using_form_id(self, mock_getattr, mock_get_context, mock_get_template, mock_response):
+    def test_serve_post_gets_streamfield_from_page_using_form_id(
+            self,
+            mock_getattr,
+            mock_get_context,
+            mock_get_template,
+            mock_response):
         mock_getattr.return_value = mock.MagicMock()
         mock_get_context.return_value = mock.MagicMock()
         self.request = self.factory.post(
@@ -83,20 +96,25 @@ class TestCFGOVPage(TestCase):
             {'form_id': 'form-content-0'},
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
-        result = self.page.serve_post(self.request)
+        self.page.serve_post(self.request)
         mock_getattr.assert_called_with(self.page, 'content')
 
     @mock.patch('v1.models.base.TemplateResponse')
     @mock.patch('v1.models.base.CFGOVPage.get_template')
     @mock.patch('v1.models.base.CFGOVPage.get_context')
     @mock.patch('v1.models.base.getattr')
-    def test_serve_post_calls_module_get_result(self, mock_getattr, mock_get_context, mock_get_template, mock_response):
+    def test_serve_post_calls_module_get_result(
+            self,
+            mock_getattr,
+            mock_get_context,
+            mock_get_template,
+            mock_response):
         self.request = self.factory.post(
             '/',
             {'form_id': 'form-content-0'},
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
-        result = self.page.serve_post(self.request)
+        self.page.serve_post(self.request)
         module = mock_getattr()[0]
         module.block.get_result.assert_called_with(
             self.page,
@@ -110,7 +128,12 @@ class TestCFGOVPage(TestCase):
     @mock.patch('v1.models.base.CFGOVPage.get_template')
     @mock.patch('v1.models.base.CFGOVPage.get_context')
     @mock.patch('v1.models.base.getattr')
-    def test_serve_post_returns_result_if_response(self, mock_getattr, mock_get_context, mock_get_template, mock_response, mock_isinstance):
+    def test_serve_post_returns_result_if_response(
+            self, mock_getattr,
+            mock_get_context,
+            mock_get_template,
+            mock_response,
+            mock_isinstance):
         mock_getattr.return_value = mock.MagicMock()
         mock_get_context.return_value = mock.MagicMock()
         self.request = self.factory.post(
@@ -126,7 +149,12 @@ class TestCFGOVPage(TestCase):
     @mock.patch('v1.models.base.CFGOVPage.get_template')
     @mock.patch('v1.models.base.CFGOVPage.get_context')
     @mock.patch('v1.models.base.getattr')
-    def test_serve_post_calls_get_context(self, mock_getattr, mock_get_context, mock_get_template, mock_response):
+    def test_serve_post_calls_get_context(
+            self,
+            mock_getattr,
+            mock_get_context,
+            mock_get_template,
+            mock_response):
         mock_getattr.return_value = mock.MagicMock()
         mock_get_context.return_value = mock.MagicMock()
         self.request = self.factory.post(
@@ -134,14 +162,19 @@ class TestCFGOVPage(TestCase):
             {'form_id': 'form-content-0'},
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
-        result = self.page.serve_post(self.request)
+        self.page.serve_post(self.request)
         self.assertTrue(mock_get_context.called)
 
     @mock.patch('v1.models.base.TemplateResponse')
     @mock.patch('v1.models.base.CFGOVPage.get_template')
     @mock.patch('v1.models.base.CFGOVPage.get_context')
     @mock.patch('v1.models.base.getattr')
-    def test_serve_post_sets_context(self, mock_getattr, mock_get_context, mock_get_template, mock_response):
+    def test_serve_post_sets_context(
+            self,
+            mock_getattr,
+            mock_get_context,
+            mock_get_template,
+            mock_response):
         context = {'form_modules': {'content': {}}}
         mock_getattr.return_value = mock.MagicMock()
         mock_get_context.return_value = context
@@ -150,16 +183,23 @@ class TestCFGOVPage(TestCase):
             {'form_id': 'form-content-0'},
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
-        result = self.page.serve_post(self.request)
+        self.page.serve_post(self.request)
         module = mock_getattr()[0]
         self.assertIn(0, context['form_modules']['content'])
-        self.assertEqual(module.block.get_result(), context['form_modules']['content'][0])
+        self.assertEqual(
+            module.block.get_result(), context['form_modules']['content'][0]
+        )
 
     @mock.patch('v1.models.base.TemplateResponse')
     @mock.patch('v1.models.base.CFGOVPage.get_template')
     @mock.patch('v1.models.base.CFGOVPage.get_context')
     @mock.patch('v1.models.base.getattr')
-    def test_serve_post_returns_template_response_if_result_not_response(self, mock_getattr, mock_get_context, mock_get_template, mock_response):
+    def test_serve_post_returns_template_response_if_result_not_response(
+            self,
+            mock_getattr,
+            mock_get_context,
+            mock_get_template,
+            mock_response):
         mock_getattr.return_value = mock.MagicMock()
         mock_get_context.return_value = mock.MagicMock()
         self.request = self.factory.post(
@@ -168,5 +208,50 @@ class TestCFGOVPage(TestCase):
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         result = self.page.serve_post(self.request)
-        mock_response.assert_called_with(self.request, mock_get_template(), mock_get_context())
+        mock_response.assert_called_with(
+            self.request, mock_get_template(), mock_get_context()
+        )
         self.assertEqual(result, mock_response())
+
+
+class TestCFGOVPageQuerySet(TestCase):
+    def setUp(self):
+        default_site = Site.objects.get(is_default_site=True)
+        self.live_host = default_site.hostname
+
+        staging_site = Site.objects.get(is_default_site=False)
+        self.staging_host = staging_site.hostname
+
+    def check_live_shared_counts(self, on_live_host, on_staging_host):
+        pages = CFGOVPage.objects
+        self.assertEqual(
+            pages.live_shared(hostname=self.live_host).count(),
+            on_live_host
+        )
+        self.assertEqual(
+            pages.live_shared(hostname=self.staging_host).count(),
+            on_staging_host
+        )
+
+    def test_live_shared_with_only_root_page(self):
+        self.check_live_shared_counts(on_live_host=1, on_staging_host=1)
+
+    def test_live_shared_with_another_draft_page(self):
+        page = CFGOVPage(title='test', slug='test', live=False, shared=False)
+        save_new_page(page)
+        self.check_live_shared_counts(on_live_host=1, on_staging_host=1)
+
+    def test_live_shared_with_another_shared_page(self):
+        page = CFGOVPage(title='test', slug='test', live=False, shared=True)
+        save_new_page(page)
+        self.check_live_shared_counts(on_live_host=1, on_staging_host=2)
+
+    def test_live_shared_with_another_live_page(self):
+        page = CFGOVPage(title='test', slug='test', live=True, shared=False)
+        save_new_page(page)
+        self.check_live_shared_counts(on_live_host=2, on_staging_host=2)
+
+    def test_live_shared_with_another_live_shared_page(self):
+        page = CFGOVPage(title='test', slug='test', live=True, shared=True)
+        publish_page(page)
+        self.check_live_shared_counts(on_live_host=2, on_staging_host=2)

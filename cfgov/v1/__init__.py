@@ -26,6 +26,7 @@ default_app_config = 'v1.apps.V1AppConfig'
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
     options['extensions'].append('jinja2.ext.loopcontrols')
+    options['extensions'].append('core.ext.csp')
     env = sheerlike_environment(**options)
     env.autoescape = True
     from v1.models import CFGOVPage
@@ -195,5 +196,5 @@ def get_filter_data(page):
     for ancestor in page.get_ancestors().reverse().specific():
         if ancestor.specific_class.__name__ in ['BrowseFilterablePage', 'SublandingFilterablePage',
                                                 'EventArchivePage', 'NewsroomLandingPage']:
-            return util.get_form_id(ancestor), ancestor
+            return ancestor.form_id(), ancestor
     return None, None

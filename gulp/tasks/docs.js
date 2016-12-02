@@ -1,28 +1,24 @@
 'use strict';
 
 var configScripts = require( '../config' ).scripts;
-var fsHelper = require( '../utils/fs-helper' );
-var globAll = require( 'glob-all' );
 var gulp = require( 'gulp' );
-var plugins = require( 'gulp-load-plugins' )();
+var gulpUtil = require( 'gulp-util' );
+var paths = require( '../../config/environment' ).paths;
 var spawn = require( 'child_process' ).spawn;
 
-// TODO: Update this to support grouping methods by class in the generated docs.
 /**
- * Generate scripts documentation.
+ * Generate JS scripts documentation.
  */
 function docsScripts() {
-  globAll( configScripts.src, function( er, files ) {
-    var options = [ 'build' ].concat( files ).concat(
-                  [ '--github',
-                    '--output=docs/scripts',
-                    '--format=html' ] );
-    spawn(
-    fsHelper.getBinary( 'documentation', 'documentation.js' ),
-      options, { stdio: 'inherit' }
-    ).once( 'close', function() {
-      plugins.util.log( 'Scripts documentation generated!' );
-    } );
+  spawn(
+    paths.modules + '/.bin/jsdoc',
+    [ paths.unprocessed + '/js',
+      '--recurse',
+      '--destination',
+      './docs/scripts' ],
+    { stdio: 'inherit' }
+  ).once( 'close', function() {
+    gulpUtil.log( 'Scripts documentation generated!' );
   } );
 }
 

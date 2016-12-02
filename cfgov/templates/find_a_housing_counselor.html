@@ -1,4 +1,5 @@
 {% extends "front/base_nonresponsive.html" %}
+{% load csp %}
 {% load static from staticfiles %}
 
 {% block title %}
@@ -7,7 +8,8 @@ Find a housing counselor
 
 {% block analytics_js %}
 <!-- Google Optimize --> 
-<noscript><iframe src="https://www.google-analytics.com/gtm/ns?id=GTM-KHB8MB" style="display:none;visibility:hidden" height="0" width="0"></iframe> </noscript><script>(function(p,a,l,i,n,d,r,o,m,e){r={id:'GTM-KHB8MB',l:'dataLayer',m:'sync'}; if(!r.gac){o=/;((__utma=)|([^;=]+=GAX?\d+\.))[^;]*/g;m=l.cookie.replace( /^|(; +)/g,';').match(o);if(m)r.gac=m.sort().join('').substring(1)};e= 'https://www.google-analytics.com/gtm/js?';r.m=='sync'||(p['event']='gtm.js'); for(d in r)if(r.hasOwnProperty(d))e+=n(d)+'='+n(r[d])+'&';a[r.l]=a[r.l]||[]; a[r.l].push(p);if(r.m=='sync'){l.write('<'+i+' src="'+e+'"><\/'+i+'>');}else{ j=l.createElement(i);j.async=!0;j.src=e;f=l.getElementsByTagName(i)[0]; f.parentNode.insertBefore(j,f);}})({'gtm.start':1*new Date()},window,document, 'script',encodeURIComponent);</script> 
+<noscript><iframe src="https://www.google-analytics.com/gtm/ns?id=GTM-KHB8MB" style="display:none;visibility:hidden" height="0" width="0"></iframe> </noscript>
+{% hashedscript %}(function(p,a,l,i,n,d,r,o,m,e){r={id:'GTM-KHB8MB',l:'dataLayer',m:'sync'}; if(!r.gac){o=/;((__utma=)|([^;=]+=GAX?\d+\.))[^;]*/g;m=l.cookie.replace( /^|(; +)/g,';').match(o);if(m)r.gac=m.sort().join('').substring(1)};e= 'https://www.google-analytics.com/gtm/js?';r.m=='sync'||(p['event']='gtm.js'); for(d in r)if(r.hasOwnProperty(d))e+=n(d)+'='+n(r[d])+'&';a[r.l]=a[r.l]||[]; a[r.l].push(p);if(r.m=='sync'){l.write('<'+i+' src="'+e+'"><\/'+i+'>');}else{ j=l.createElement(i);j.async=!0;j.src=e;f=l.getElementsByTagName(i)[0]; f.parentNode.insertBefore(j,f);}})({'gtm.start':1*new Date()},window,document, 'script',encodeURIComponent);{% end_hashedscript %}
 <!-- End Google Optimize -->
 {{block.super}}
 
@@ -168,10 +170,10 @@ Find a housing counselor
 
 {% block app_js %}
 <script type='text/javascript' src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-<script type='text/javascript'>
+{% hashedscript %}
 document.agc_base="/static/nemo/_/img/hud_gmap/agc_";
+{% end_hashedscript %}
 
-</script>
 <script type='text/javascript' src='{% static 'hud_api/js/hud_api.js' %}'></script>
 
 {% endblock %}

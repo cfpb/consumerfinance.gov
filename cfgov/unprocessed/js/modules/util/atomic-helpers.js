@@ -17,6 +17,7 @@ var standardType = require( './standard-type' );
 /**
  * @constant
  * @type {string}
+ * @description
  * Flag that gets set on an atomic component after its .init()
  * method has been called. This is used so that an atomic
  * component won't get initialized a second time after it

@@ -16,21 +16,134 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Forms and other bits for two new Owning a Home feedback modules
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
+- `conference_export` management command added to export conference registrations.
+
+### Changed
+- Eregs/ip updated to version 1.0.3.
+- Simplified Akamai cache flushing logic to always flush on publish.
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+- Improved job listings view in Wagtail admin.
+- college-costs updated to version 2.2.8 for new URL field
+- Updated the analytics code to send events on form submission.
+- Fixed issue surrounding event venue not displaying on event page.
+- Limit Activity Log posts to appropriate page categories.
+- Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
+- Removed feedback-form default text and clarified help_text
+
+### Removed
+
+## 4.1.9
+- Bumping version of College Comparision Tool.
+
+## 4.1.8
+
+### Changed
+- roll complaints back to 1.2.6
+
+## 4.1.7
+
+### Changed
+- moved data_research into the db_router.py whitelist
+
+## 4.1.6
+
+### Changed
+- Fixed broken static assets on Technology and Innovation Fellowship page.
+- Conference Registration Form configurable error and success messages.
+
+## 4.1.5
+
+### Changed
+- update complaints to 1.2.7
+
+## 4.1.4
+
+### Fixed
+- an improved fix for the newsroom issue (see 4.1.2 and 4.1.3)
+
+## 4.1.3
+
+### Fixed
+- backed-out 4.1.2's newsroom fix
+
+## 4.1.2
+
+### Fixed
+- exclude reports from newsroom
+
+### Changed
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+
+
+## 4.1.0
+
+### Added
+- DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
+
+### Changed
+- Fixed issue surrounding table link download / external icons not appearing.
+- Frontend: replaced `documentation` npm module with `jsdoc`.
+- Refactoring email signup to remove validate.js.
+- Frontend: update `browser-sync` to version `2.17.5` from `2.11.2`.
+- Frontend: update `mkdirp` to version `0.5.1` from `0.3.0`.
+- Fixed broken `manage.py check` command when using `cfgov.settings.test`.
+- Fixed conference registration form capacity logic.
+- Update `snyk` to version `1.19.1` from `1.13.2`.
+- Disable logging below CRITICAL when running Python unit tests.
+- Fixed empty `heading` value in link blobs
+- Picard upgraded to version 1.5.2.
+- Eregs/ip updated to version 1.0.3.
+- Simplified Akamai cache flushing logic to always flush on publish.
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+- Conference Registration Form configurable error and success messages.
+- Fixed broken static assets on Technology and Innovation Fellowship page.
+- Updated the analytics code to send events on form submission.
+- Fixed issue surrounding event venue not displaying on event page.
+- Limit Newsroom posts to appropriate page categories.
+
+### Removed
+- `tax-time-saving` reference in `base.py` (it moved to Wagtail)
+- all references to `django-htmlmin`
+
+### Fixed
+- Fixed file type link icons within info-units
+
+
+
+## 4.0.0
+
+### Added
 - Added smoke-test scripts to check static assets and base page responses.
 - new dependency: django-htmlmin, which compresses outgoing HTML
 - Added Wagtail StreamField migration utilities
+- Tests for `FilterableListForm`
 
 ### Changed
 - Update base.html to conditionally include es5 script.
 - Wagtail upgraded to version 1.6.3.
-- Picard upgraded to version 1.5.
+- Picard upgraded to version 1.5.1.
 - Moved site root setup from Django data migration into 'initial_data' script.
 - Graduated line lengths feature flag to main stylesheet.
 - Unit tests run via tox now include optional app tests, if optional apps are present.
 - Frontend: upgrade `gulp-sourcemaps` from `1.6.0` to `2.1.1`.
+- Modified org structure to change the Assistant Director to `Stacy Canan`.
+- `FilterableListForm` and related code, e.g. `get_page_set`
+- Updated "Standing up for you" stats on the homepage.
+- Use secure URLs for files stored on S3
+- Fixed grade ordering on job listing posts.
+- Updating Bureau Structure so Christopher D’Angelo isn't marked as "acting".
 
 ### Removed
 - Removed Handlebars from `package.json` and `cf_notifier.js`.
+- `NewsroomFilterForm` and `ActivityLogFilterForm` and related tests
+- Removed `gulp-load-plugins` from `package.json`.
+- Removed  Laura Van Dyke from the press resources page.
 
 ## 3.11.1
 

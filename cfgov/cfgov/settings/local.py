@@ -1,6 +1,7 @@
 from .base import *
 
 DEBUG = True
+SECRET_KEY = 'not-secret-key-for-testing'
 INSTALLED_APPS += (
     'sslserver',
     'wagtail.contrib.wagtailstyleguide',
@@ -65,3 +66,7 @@ LOGGING = {
         }
     }
 }
+
+
+MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+CSP_REPORT_ONLY = True

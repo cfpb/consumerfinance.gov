@@ -1,8 +1,8 @@
 'use strict';
 
-var gulp = require( 'gulp' );
-var plugins = require( 'gulp-load-plugins' )();
 var configLint = require( '../config' ).lint;
+var gulp = require( 'gulp' );
+var gulpEslint = require( 'gulp-eslint' );
 var handleErrors = require( '../utils/handle-errors' );
 var minimist = require( 'minimist' );
 
@@ -16,8 +16,8 @@ function _genericLint( src ) {
   var commandLineParams = minimist( process.argv.slice( 2 ) );
   var willFix = commandLineParams.fix || false;
   return gulp.src( src, { base: './' } )
-    .pipe( plugins.eslint( { fix: willFix } ) )
-    .pipe( plugins.eslint.format() )
+    .pipe( gulpEslint( { fix: willFix } ) )
+    .pipe( gulpEslint.format() )
     .pipe( gulp.dest( './' ) )
     .on( 'error', handleErrors );
 }

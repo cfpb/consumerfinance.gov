@@ -3,8 +3,6 @@ import json
 from urlparse import urlsplit
 import logging
 from exceptions import ValueError
-from datetime import datetime, timedelta
-import pytz
 
 from django.utils import timezone
 from django.conf import settings
@@ -34,7 +32,9 @@ def share_the_page(request, page):
     check_permissions(parent_page, request.user, is_publishing, is_sharing)
 
     is_live = False
-    if is_publishing and not (page.go_live_at and page.go_live_at > timezone.now()):
+    goes_live_in_future = page.go_live_at and page.go_live_at > timezone.now()
+
+    if is_publishing and not goes_live_in_future:
         is_live = True
 
     share(page, is_sharing, is_live)
@@ -64,7 +64,9 @@ def editor_js():
     js_files = [
         'js/table-block.js',
     ]
-    js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
+    js_includes = format_html_join(
+        '\n',
+        '<script src="{0}{1}"></script>',
         ((settings.STATIC_URL, filename) for filename in js_files)
     )
 
@@ -76,7 +78,9 @@ def editor_css():
     css_files = [
         'css/table-block.css',
     ]
-    css_includes = format_html_join('\n', '<link rel="stylesheet" href="{0}{1}"><link>',
+    css_includes = format_html_join(
+        '\n',
+        '<link rel="stylesheet" href="{0}{1}"><link>',
         ((settings.STATIC_URL, filename) for filename in css_files)
     )
 
@@ -100,21 +104,22 @@ def configure_page_revision(page, is_sharing, is_live):
 
 
 def get_akamai_credentials():
-    if settings.AKAMAI_OBJECT_ID and settings.AKAMAI_USER and settings.AKAMAI_PASSWORD:
-        return settings.AKAMAI_OBJECT_ID, (settings.AKAMAI_USER, settings.AKAMAI_PASSWORD)
-    raise ValueError('AKAMAI_OBJECT_ID, AKAMAI_USER, and AKAMAI_PASSWORD must be configured.')
+    object_id = getattr(settings, 'AKAMAI_OBJECT_ID', None)
+    user = getattr(settings, 'AKAMAI_USER', None)
+    password = getattr(settings, 'AKAMAI_PASSWORD', None)
+
+    if not all((object_id, user, password)):
+        raise ValueError(
+            'AKAMAI_OBJECT_ID, AKAMAI_USER, and AKAMAI_PASSWORD '
+            'must be configured.'
+        )
+
+    return object_id, (user, password)
+
 
 def should_flush(page):
-    """ Only initiate an Akamai flush if it is enabled in settings,
-    and if it was an existing page, as new pages would not be cached yet.
-    """
-    if settings.ENABLE_AKAMAI_CACHE_PURGE:
-        now = datetime.now(tz=pytz.utc)
-        # If page was first published a minute or less ago,
-        # it is a new page resulting from `publish_scheduled_pages` cron job
-        if page.first_published_at and page.first_published_at < now - timedelta(minutes=1):
-            return True
-    return False
+    """Only initiate an Akamai flush if it is enabled in settings."""
+    return settings.ENABLE_AKAMAI_CACHE_PURGE
 
 
 def flush_akamai(page):
@@ -156,18 +161,18 @@ def register_share_permissions():
 
 class CFGovLinkHandler(object):
     """
-    CFGovLinkHandler will be invoked whenever we encounter an <a> element in HTML content
-    with an attribute of data-linktype="page". The resulting element in the database
-    representation will be:
+    CFGovLinkHandler will be invoked whenever we encounter an <a> element in
+    HTML content with an attribute of data-linktype="page". The resulting
+    element in the database representation will be:
     <a linktype="page" id="42">hello world</a>
     """
 
     @staticmethod
     def get_db_attributes(tag):
         """
-        Given an <a> tag that we've identified as a page link embed (because it has a
-        data-linktype="page" attribute), return a dict of the attributes we should
-        have on the resulting <a linktype="page"> element.
+        Given an <a> tag that we've identified as a page link embed (because it
+        has a data-linktype="page" attribute), return a dict of the attributes
+        we should have on the resulting <a linktype="page"> element.
         """
         return {'id': tag['data-id']}
 
@@ -181,7 +186,10 @@ class CFGovLinkHandler(object):
             else:
                 editor_attrs = ''
 
-            return '<a %shref="%s">' % (editor_attrs, escape(urlsplit(page.url).path))
+            return '<a %shref="%s">' % (
+                editor_attrs,
+                escape(urlsplit(page.url).path)
+            )
         except Page.DoesNotExist:
             return "<a>"
 

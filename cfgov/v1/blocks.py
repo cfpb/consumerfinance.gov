@@ -67,8 +67,49 @@ class AnchorLink(blocks.StructBlock):
 
 
 class Feedback(AbstractFormBlock):
-    question_text = blocks.CharBlock(default='Was this page helpful to you?')
-    button_text = blocks.CharBlock(default='Submit feedback')
+    was_it_helpful_text = blocks.CharBlock(
+        required=False,
+        default='Was this page helpful to you?',
+        help_text=(
+            'Use this field only for feedback forms '
+            'that use "Was this helpful?" radio buttons.'
+            )
+        )
+    intro_text = blocks.CharBlock(
+        required=False,
+        help_text='Optional feedback intro'
+        )
+    question_text = blocks.CharBlock(
+        required=False,
+        help_text='Optional expansion on intro'
+    )
+    radio_intro = blocks.CharBlock(
+        required=False,
+        help_text=(
+            'Leave blank unless you are building a feedback form with extra '
+            'radio-button prompts, as in /owning-a-home/help-us-improve/.'
+            )
+    )
+    radio_text = blocks.CharBlock(
+        required=False,
+        default='This information helps us understand your question better.'
+    )
+    radio_question_1 = blocks.CharBlock(
+        required=False,
+        default='How soon do you expect to buy a home?'
+
+    )
+    radio_question_2 = blocks.CharBlock(
+        required=False,
+        default='Do you currently own a home?'
+    )
+    button_text = blocks.CharBlock(
+        default='Submit'
+    )
+    contact_advisory = blocks.RichTextBlock(
+        required=False,
+        help_text='Use only for feedback forms that ask for a contact email'
+    )
 
     class Meta:
         handler = 'v1.handlers.blocks.feedback.FeedbackHandler'
