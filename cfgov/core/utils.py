@@ -8,7 +8,6 @@ from django.http.request import QueryDict
 from django.core.urlresolvers import reverse
 
 
-signer = Signer(sep='||')
 
 
 def hash_for_script(js):
@@ -29,7 +28,12 @@ def append_query_args_to_url(base_url, args_dict):
     return "{0}?{1}".format(base_url, urlencode(args_dict))
 
 
-def sign_url(url):
+def sign_url(url, secret=None):
+    if secret:
+        signer = Signer(secret, sep='||')
+    else:
+        signer = Signer(sep='||')
+
     url, signature = signer.sign(url).split('||')
     return (url, signature)
 

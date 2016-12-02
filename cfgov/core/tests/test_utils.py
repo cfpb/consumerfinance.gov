@@ -1,10 +1,13 @@
 from django.template.loader import get_template
 from django.test import TestCase, RequestFactory
+from django.core.signing import Signer
+
 from unittest import expectedFailure
 
 from core.utils import (extract_answers_from_request,
                         hash_for_script,
                         add_js_hash_to_request,
+                        sign_url,
                         append_query_args_to_url)
 
 
@@ -58,6 +61,20 @@ class URLBuildingTest(TestCase):
         base_url = 'http://google.com/'
         result = append_query_args_to_url(base_url, query_args)
         self.assertEqual(result, 'http://google.com/?foo=bar')
+
+
+class URLSigningTest(TestCase):
+    def test_signing_url(self):
+        key = 'testkey'
+        url, signature = sign_url('http://google.com', secret=key)
+        # this is the default format for signing results in Django
+        recombined = "{0}:{1}".format(url, signature)
+
+        signer = Signer(key)
+        unsigned_url = signer.unsign(recombined)
+
+        self.assertEqual(url, unsigned_url)
+
 
 class ExtractAnswersTest(TestCase):
 
