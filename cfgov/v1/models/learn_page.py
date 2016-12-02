@@ -90,7 +90,7 @@ class LearnPage(AbstractFilterPage):
         ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
         ('call_to_action', molecules.CallToAction()),
         ('feedback', v1_blocks.Feedback()),
-        ('video_player', molecules.VideoPlayer()),
+        ('video_player', organisms.VideoPlayer()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel = StreamFieldPanel('content')
