@@ -392,9 +392,7 @@ class ContentWithAnchor(blocks.StructBlock):
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
-    image = atoms.ImageBasic()
-    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-    has_rule = blocks.BooleanBlock(required=False)
+    image = atoms.ImageBasic(required=False)
 
     snippet_type = blocks.ChoiceBlock(
         choices=ref.snippet_types,
@@ -418,5 +416,5 @@ class SnippetList(blocks.StructBlock):
     )
 
     class Meta:
-        icon = 'image'
+        icon = 'table'
         template = '_includes/molecules/snippet-list.html'

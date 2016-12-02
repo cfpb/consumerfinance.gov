@@ -32,6 +32,7 @@
 
 <div class="m-snippet-list">
     {% set img = image(value.image.upload, 'original') if value.image else '/' %}
+    {% set heading = '<h3>' ~ value.heading ~ '</h3>' if value.heading else '' %}
     {{ info_unit( {
         'modifier': 'inline',
         'image': {
@@ -40,7 +41,7 @@
             'is_square': true,
             'is_decorative': value.image.alt == ''
         },
-        'heading': '<h3>' ~ value.heading  or value.snippet_type ~ '</h3>',
+        'heading': heading,
         'body': parse_links(value.body) | safe
     } ) }}
 

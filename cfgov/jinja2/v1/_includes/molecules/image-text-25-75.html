@@ -38,6 +38,7 @@
 {% if value.image.upload %}
     {% set photo=image(value.image.upload, 'original') %}
 {% endif %}
+{% set heading = '<h3>' ~ value.heading ~ '</h3>' if value.heading else '' %}
 
 {{ info_unit( {
     'modifier': 'inline',
@@ -47,7 +48,7 @@
         'is_square': true,
         'is_decorative': value.image.alt == ''
     },
-    'heading': '<h3>' ~ value.heading ~ '</h3>',
+    'heading': heading,
     'body': parse_links(value.body) | safe,
     'links': value.links,
     'should_link_image': value.should_link_image or false
