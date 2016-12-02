@@ -294,31 +294,11 @@ class ContentWithAnchor(blocks.StructBlock):
         template = '_includes/molecules/full-width-text-anchor.html'
 
 
-# class VideoPlayer(blocks.RegexBlock):
-#     label = 'YouTube URL'
-#     required = True
-#     help_text = "You must use the embed URL " \
-#                 "(https://www.youtube.com/embed/video_id), " \
-#                 "which can be obtained by clicking Share > Embed " \
-#                 "on the YouTube video page."
-#     regex = r'^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+([/]?)'
-#     error_messages = {
-#         'required': 'The YouTube URL field is required for video players.',
-#         'invalid': "The YouTube URL is in the wrong format."
-#     }
-#
-#     class Meta:
-#         icon = 'media'
-#         template = '_includes/macros/video-player.html'
-
 class VideoPlayer(blocks.StructBlock):
     video_url = blocks.RegexBlock(
-        label='YouTube URL',
+        label='YouTube Embed URL',
+        default='https://www.youtube.com/embed/',
         required=True,
-        # help_text="You must use the embed URL "
-        #           "(https://www.youtube.com/embed/video_id), "
-        #           "which can be obtained by clicking Share > Embed "
-        #           "on the YouTube video page.",
         regex=r'^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+([/]?)$',
         error_messages={
             'required': 'The YouTube URL field is required for video players.',
