@@ -24,3 +24,9 @@ class S3UtilsTestCase(TestCase):
             image.file.url,
             'https://s3.amazonaws.com/test_s3_bucket/f/test.png'
         )
+
+    def test_storage_location_uses_settings(self):
+        with modify_settings(AWS_S3_ROOT='test'):
+            from v1.s3utils import MediaRootS3BotoStorage
+            storage = MediaRootS3BotoStorage()
+            self.assertEqual(storage.location, 'test')

@@ -372,7 +372,8 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 
-    MEDIA_URL = os.environ.get('AWS_S3_URL') + '/f/'
+    AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
+    MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery
 
