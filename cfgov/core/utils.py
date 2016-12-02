@@ -1,6 +1,13 @@
 import hashlib
 import base64
 
+from django.core.signing import Signer
+from django.http.request import QueryDict
+from django.core.urlresolvers import reverse
+
+
+signer = Signer(sep='||')
+
 
 def hash_for_script(js):
     hasher = hashlib.sha256()
@@ -15,6 +22,19 @@ def add_js_hash_to_request(request, js):
         hash = hash_for_script(js)
         request.script_hashes.append(hash)
 
+
+def sign_url(url):
+    url, signature = signer.sign(url).split('||')
+    return (url, signature)
+
+
+def signed_redirect(url):
+    url, signature = sign_url(url)
+    query_args = QueryDict(mutable=True)
+    query_args['ext_url'] = url
+    query_args['signature'] = signature
+
+    return ('{0}?{1}'.format(reverse('external-site'), query_args.urlencode()))
 
 def extract_answers_from_request(request):
     answers = [(param.split('_')[1], value) for param, value in

@@ -3,11 +3,13 @@ import os, re, HTMLParser
 from urlparse import urlparse
 
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import pluralize, slugify, linebreaksbr
-from wagtail.wagtailcore.templatetags import wagtailcore_tags
 from django.contrib import messages
+from django.conf import settings
+from django.http.request import QueryDict
+from django.core.urlresolvers import reverse
 
+from wagtail.wagtailcore.templatetags import wagtailcore_tags
 from jinja2 import Environment, contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
@@ -16,12 +18,13 @@ from .util.util import get_unique_id, get_secondary_nav_items
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
-from django.conf import settings
 from processors.processors_common import fix_link
 from v1.routing import get_page_relative_url
+from core.utils import signed_redirect
 
 
 default_app_config = 'v1.apps.V1AppConfig'
+
 
 def environment(**options):
     options.setdefault('extensions', []).append(CompressorExtension)
@@ -52,6 +55,7 @@ def environment(**options):
         'related_metadata_tags': related_metadata_tags,
         'get_filter_data': get_filter_data,
         'cfgovpage_objects': CFGOVPage.objects,
+        'signed_redirect': signed_redirect,
     })
 
     env.filters.update({
@@ -112,6 +116,7 @@ EXTERNAL_SPAN_CSS = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
 
 
 def add_link_markup(tags):
+
     for tag in tags:
         added_icon = False
         if not tag.attrs.get('class', None):
@@ -120,8 +125,9 @@ def add_link_markup(tags):
             # Sets the icon to indicate you're leaving consumerfinance.gov
             tag.attrs['class'].append(EXTERNAL_A_CSS)
             if EXTERNAL_LINK_PATTERN.match(tag['href']):
-                # Sets the link to an external one if you're leaving .gov
-                tag['href'] = '/external-site/?ext_url=' + tag['href']
+
+                tag['href'] = signed_redirect(tag['href'])
+
             added_icon = True
         elif DOWNLOAD_LINK_PATTERN.search(tag['href']):
             # Sets the icon to indicate you're downloading a file
