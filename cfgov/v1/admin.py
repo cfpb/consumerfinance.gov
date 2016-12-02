@@ -33,7 +33,7 @@ def feedback_page_title(feedback):
     if feedback.page:
         return feedback.page.title
 
-feedback_page_title.short_description = 'Page title'
+feedback_page_title.short_description = 'Page'
 
 
 @admin.register(Feedback)
