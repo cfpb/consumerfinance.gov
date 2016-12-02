@@ -314,11 +314,38 @@ class SocialMedia(blocks.StructBlock):
         help_text='If unchecked, social media icons will link users to '
                   'official CFPB accounts. Do not fill in any further fields.'
     )
+
     blurb = blocks.CharBlock(
         required=False,
         default="Look what I found on the CFPB's site!",
         help_text='Sets the tweet text, email subject line, '
                   'and LinkedIn post text.'
+    )
+
+    twitter_text = blocks.CharBlock(
+        required=False,
+        max_length=100,
+        help_text='(Optional) Custom text for Twitter shares. If blank, '
+                  'will default to value of blurb field above.'
+    )
+    twitter_related = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) A comma-separated list of accounts related '
+                  'to the content of the shared URL. Do not enter the '
+                  ' @ symbol. If blank, it will default to just "cfpb".'
+    )
+    twitter_hashtags = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) A comma-separated list of hashtags to be '
+                  'appended to default tweet text.'
+    )
+    twitter_lang = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) Loads text components in the specified '
+                  'language, if other than English. E.g., use "es" '
+                  ' for Spanish. '
+                  'See https://dev.twitter.com/web/overview/languages '
+                  'for a list of supported language codes.'
     )
 
     email_title = blocks.CharBlock(
@@ -346,32 +373,6 @@ class SocialMedia(blocks.StructBlock):
     linkedin_text = blocks.CharBlock(
         required=False,
         help_text='(Optional) Custom text for LinkedIn shares.'
-    )
-
-    twitter_text = blocks.CharBlock(
-        required=False,
-        max_length=100,
-        help_text='(Optional) Custom text for Twitter shares. If blank, '
-                  'will default to value of blurb field above.'
-    )
-    twitter_related = blocks.CharBlock(
-        required=False,
-        help_text='(Optional) A comma-separated list of accounts related '
-                  'to the content of the shared URL. Do not enter the '
-                  ' @ symbol. If blank, it will default to just "cfpb".'
-    )
-    twitter_hashtags = blocks.CharBlock(
-        required=False,
-        help_text='(Optional) A comma-separated list of hashtags to be '
-                  'appended to default tweet text.'
-    )
-    twitter_lang = blocks.CharBlock(
-        required=False,
-        help_text='(Optional) Loads text components in the specified '
-                  'language, if other than English. E.g., use "es" '
-                  ' for Spanish. '
-                  'See https://dev.twitter.com/web/overview/languages '
-                  'for a list of supported language codes.'
     )
 
     class Meta:
