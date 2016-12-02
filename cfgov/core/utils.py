@@ -1,6 +1,8 @@
 import hashlib
 import base64
 
+from urllib import urlencode
+
 from django.core.signing import Signer
 from django.http.request import QueryDict
 from django.core.urlresolvers import reverse
@@ -21,6 +23,10 @@ def add_js_hash_to_request(request, js):
             request.script_hashes = []
         hash = hash_for_script(js)
         request.script_hashes.append(hash)
+
+
+def append_query_args_to_url(base_url, args_dict):
+    return "{0}?{1}".format(base_url, urlencode(args_dict))
 
 
 def sign_url(url):
