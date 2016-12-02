@@ -81,13 +81,13 @@
                         {% endif %}
                         {% include 'contact-email.html' with context %}
                     {% else %}
-                    <a class="{{ 'btn m-info-unit_btn' if value.is_button
-                                  else 'list_link' }}"
-                       href="{{ link.url }}">
-                        {# TODO: check for link.url otherwise show disabled
-                                 after testing is completed #}
-                        {{ link.text if link.text else 'Learn More' }}
-                    </a>
+                        {% set link_class = 'btn m-info-unit_btn' if
+                            value.is_button else 'list_link' %}
+                        {% set link_text = link.text if link.text
+                            else 'Learn More' %}
+                        {% set link = '<a class="' ~ link_class ~ '" href="' ~
+                            link.url ~ '">' ~ link_text ~ '</a>' %}
+                        {{ parse_links( link ) | safe }}
                     {% endif %}
                 </li>
             {% endfor %}
