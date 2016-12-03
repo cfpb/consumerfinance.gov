@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Forms and other bits for two new Owning a Home feedback modules
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 - `conference_export` management command added to export conference registrations.
+- Add ability to individually customize the content of social media share links
 
 ### Changed
 - Eregs/ip updated to version 1.0.3.
