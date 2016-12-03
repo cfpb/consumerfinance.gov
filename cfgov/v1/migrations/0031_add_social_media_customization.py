@@ -11,7 +11,7 @@ import wagtail.wagtailcore.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0029_remove_contact_advisory_default_text'),
+        ('v1', '0030_adjust_feedback_default_text'),
     ]
 
     operations = [
