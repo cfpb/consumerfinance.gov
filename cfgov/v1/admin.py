@@ -29,21 +29,21 @@ class UserAdmin(UserAdmin):
     send_password_reset_email.short_description = 'Send password reset email'
 
 
-def feedback_page_url(feedback):
+def feedback_page_title(feedback):
     if feedback.page:
-        return feedback.page.url
+        return feedback.page.title
 
-feedback_page_url.short_description = 'Page URL'
+feedback_page_title.short_description = 'Page'
 
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
-    list_filter = ('submitted_on', 'page__title',)
+    list_filter = ('submitted_on',)
     list_display = (
-        'referrer',
-        'comment',
-        feedback_page_url,
         'submitted_on',
-        'is_helpful'
+        feedback_page_title,
+        'referrer',
+        'is_helpful',
+        'comment'
     )
-    search_fields = ['referrer', 'comment']
+    search_fields = ['referrer', 'comment', 'page__title']
