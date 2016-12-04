@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 - `conference_export` management command added to export conference registrations.
 - Add ability to individually customize the content of social media share links
+- Added CSV download option to v1_feedback django_admin page
 
 ### Changed
 - Eregs/ip updated to version 1.0.3.
