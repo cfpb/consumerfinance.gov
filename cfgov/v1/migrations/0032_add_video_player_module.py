@@ -11,7 +11,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0030_adjust_feedback_default_text'),
+        ('v1', '0031_add_social_media_customization'),
     ]
 
     operations = [
