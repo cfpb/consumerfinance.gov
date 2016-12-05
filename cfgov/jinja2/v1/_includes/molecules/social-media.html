@@ -17,6 +17,18 @@
    value.is_share_view:     Whether the "Share this" heading is shown.
                             Default is true.
 
+   value.email_title        Sets subject for email
+
+   value.email_text         Sets body for email
+
+   value.email_signature    Sets signature for email
+
+   value.linkedin_title     Sets title for LinkedIn post
+
+   value.linkedin_text      Sets text for LinkedIn post
+
+   value.twitter_text:      Sets content for tweet
+
    value.twitter_hashtags:  A comma-separated list of hashtags
                             to be appended to default Tweet text.
                             https://dev.twitter.com/web/tweet-button/parameters
@@ -36,6 +48,12 @@
 
 {% set parsed_url = request.url | urlencode %}
 {% set is_share_view = value.is_share_view | default( true ) %}
+{% set email_title = value.email_title | urlencode or blurb %}
+{% set email_text = value.email_text | urlencode or 'Check out this page from the CFPB - ' %}
+{% set email_signature = '%0A%0A' + value.email_signature | urlencode if value.email_signature else '' %}
+{% set linkedin_title = value.linkedin_title | urlencode or blurb %}
+{% set linkedin_text = value.linkedin_text | urlencode or '' %}
+{% set twitter_text = value.twitter_text | urlencode or blurb %}
 
 <div class="m-social-media
             m-social-media__{{ 'share' if is_share_view else 'follow' }}">
