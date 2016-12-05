@@ -101,7 +101,8 @@
 
    ========================================================================== #}
 {% macro _node(tagName="div", org, sub_title="text") -%}
-{% set has_children = org.positions | list | length %}
+{% set has_children = org.offices | list | length %}
+
 <{{ tagName }} class="o-bureau-structure_node
        {{ 'o-expandable
            o-expandable__expanded'
@@ -137,12 +138,14 @@
         <ul class="o-expandable_content-animated
                    list list__unstyled
                    list__spaced">
-            {% for child_org in org.positions %}
+            {% for child_org in org.offices %}
             <li class="o-bureau-structure_node">
                 {{ _role(child_org) }}
-                {% if loop.last and org.more_info_url %}
-                <a href="{{ org.more_info_url.url }}" class="o-bureau-structure_node_more-info">
-                    {{ org.more_info_url.text or 'More information about these offices' }}
+                {% if loop.last and org.link_to_division_page %}
+                <a href="{{ org.link_to_division_page.url }}"
+                   class="o-bureau-structure_node_more-info">
+                    {{ org.link_to_division_page.text or
+                       'More information about these offices' }}
                 </a>
                 {% endif %}
             </li>
@@ -172,17 +175,17 @@
    ========================================================================== #}
 {% macro _role(role) -%}
 <div class="o-bureau-structure_role">
-    {% if role.office_title %}
+    {% if role.office_name or role.division %}
     <h6 class="o-bureau-structure_role_office">
-        {{ role.office_title | safe }}
+        {{ role.office_name or role.division | safe }}
     </h6>
     {% endif %}
-    {% if role.name %}
+    {% if role.lead or role.division_lead %}
     <span class="o-bureau-structure_role_name">
-        {{ role.name | safe }}
+        {{ role.lead or role.division_lead | safe }}
     </span>
     {% endif %}
-    {% for title_line in ['title_1', 'title_2'] if role.title %}
+    {% for title_line in ['line_1', 'line_2'] if role.title %}
     <span class="o-bureau-structure_role_title">
         {{  role.title[title_line] | safe }}
     </span>
@@ -328,8 +331,8 @@
                     }]
             %}
             {{ _role({
-                'name' : '<a href="/about-us/the-bureau/about-director/">' ~  value.director ~ '</a>',
-                'office_title': 'Director'
+                'office_name' : '<a href="/about-us/the-bureau/about-director/">' ~  value.director ~ '</a>',
+                'lead': 'Director'
             }) }}
         </div>
         {{ _content_slider(categories) }}
