@@ -13,12 +13,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased
+## 4.2.1
+
+### Changed
+- Limit Activity Log posts to appropriate page categories.
+- Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
+
+## 4.2.0
 
 ### Added
 - Forms and other bits for two new Owning a Home feedback modules
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 - `conference_export` management command added to export conference registrations.
+- Add ability to individually customize the content of social media share links
 
 ### Changed
 - Eregs/ip updated to version 1.0.3.
@@ -32,11 +39,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Limit Activity Log posts to appropriate page categories.
 - Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
 - Removed feedback-form default text and clarified help_text
+- Ajusted Django admin page for v1_feedback objects
 
-### Removed
 
 ## 4.1.9
-- Bumping version of College Comparision Tool.
+- Bumping version of College Comparision Tool to 1.2.9
 
 ## 4.1.8
 
