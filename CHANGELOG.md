@@ -56,8 +56,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed issue surrounding event venue not displaying on event page.
 - Limit Activity Log posts to appropriate page categories.
 - Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
-- Removed feedback-form default text and clarified help_text
-- Ajusted Django admin page for v1_feedback objects
 
 
 ## 4.1.9
