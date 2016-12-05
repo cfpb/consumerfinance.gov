@@ -13,7 +13,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased
+## 4.2.0
 
 ### Added
 - Forms and other bits for two new Owning a Home feedback modules
@@ -35,10 +35,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed feedback-form default text and clarified help_text
 - Ajusted Django admin page for v1_feedback objects
 
-### Removed
 
 ## 4.1.9
 - Bumping version of College Comparision Tool.
+- Bumping version of College Comparision Tool to 1.2.9
 
 ## 4.1.8
 
