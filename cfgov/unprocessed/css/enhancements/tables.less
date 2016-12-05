@@ -120,44 +120,40 @@
         }
     }
 
-    .respond-to-max(960px, {
-
-        font-size: 14px;
-
-        thead {
-            display: none;
-        }
-
-        tbody {
-            border-top: none;
-        }
-
-        tr {
-            border-bottom: none;
-        }
-
-        td:first-child {
-            .h4();
-            margin-bottom: 10px;
-            background-color: @td-bg-mobile;
-        }
-
-        td[data-label] {
-            padding-bottom: 20px;
-
-            &:before {
-                .h6();
-                display: block;
-                content: attr(data-label);
-            }
-        }
-
-        &_row-heading {
-            .h4();
-            margin-bottom: 0;
-        }
-    });
 }
+
+.respond-to-max( @bp-xs-max, {
+    .o-table {
+        width: 100%;
+    }
+
+    .o-table__stack-on-small {
+        tr,
+        td {
+            display: block;
+        }
+
+        & > thead {
+          display: none
+        }
+
+        td[data-label]:before {
+            .webfont-demi();
+            display: block;
+            margin-top: 0;
+            margin-bottom: .41666667em;
+            content: attr(data-label);
+            font-size: .875em;
+            line-height: 1.83333333;
+            text-transform: uppercase;
+        }
+
+        td:last-child {
+            margin-bottom: unit( 30px / @base-font-size-px, em );
+        }
+    }
+
+} );
 
 
 /* topdoc

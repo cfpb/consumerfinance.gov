@@ -25,6 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed feedback-form default text and clarified help_text
 - Adjusted Django admin page for v1_feedback objects
 - Updated owning-a-home-api dependency to v0.9.91 for security update
+- Change table organism to be in line with design manual
 
 ### Fixed
 - Fixed file type link icons within info-units
