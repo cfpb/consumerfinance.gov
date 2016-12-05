@@ -25,6 +25,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed feedback-form default text and clarified help_text
 - Adjusted Django admin page for v1_feedback objects
 - Updated owning-a-home-api dependency to v0.9.91 for security update
+- Modified 25 / 75 Organims to add Boolean `should_link_image` flag.
 
 ### Fixed
 - Fixed file type link icons within info-units
@@ -57,7 +58,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
 - Removed feedback-form default text and clarified help_text
 - Ajusted Django admin page for v1_feedback objects
-- Modified 25 / 75 molecule to add Boolean `should_link_image` flag.
 
 
 ## 4.1.9
