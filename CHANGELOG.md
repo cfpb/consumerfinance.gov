@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 - Add ability to individually customize the content of social media share links
+- New Wagtail video player module that can be added to Learn pages
 
 ### Changed
 - Removed feedback-form default text and clarified help_text
