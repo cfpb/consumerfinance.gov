@@ -20,7 +20,7 @@ from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
 from processors.processors_common import fix_link
 from v1.routing import get_page_relative_url
-from core.utils import signed_redirect
+from core.utils import signed_redirect, unsigned_redirect
 
 
 default_app_config = 'v1.apps.V1AppConfig'
@@ -56,6 +56,7 @@ def environment(**options):
         'get_filter_data': get_filter_data,
         'cfgovpage_objects': CFGOVPage.objects,
         'signed_redirect': signed_redirect,
+        'unsigned_redirect': unsigned_redirect,
     })
 
     env.filters.update({

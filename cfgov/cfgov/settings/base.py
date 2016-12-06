@@ -228,11 +228,11 @@ STATICFILES_DIRS = [
 
 ALLOWED_HOSTS = ['*']
 
-EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook.com\/cfpb$',
-                          r'^https:\/\/twitter.com\/cfpb$',
-                          r'^https:\/\/www.linkedin.com\/company\/consumer-financial-protection-bureau$',
-                          r'^https:\/\/www.youtube.com\/user\/cfpbvideo$',
-                          r'https:\/\/www.flickr.com\/photos\/cfpbphotos$'
+EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
+                          r'^https:\/\/twitter\.com\/cfpb$',
+                          r'^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$',
+                          r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
+                          r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
                           )
 EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
 NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'

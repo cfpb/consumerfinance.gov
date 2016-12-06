@@ -71,21 +71,21 @@
 
         {% set facebook_info = {
             'name': 'Facebook',
-            'homepage': signed_redirect('https://facebook.com/cfpb'),
+            'homepage': unsigned_redirect('https://facebook.com/cfpb'),
             'share_url': signed_redirect('https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ '&redirect_uri=' ~ parsed_url),
             'class': 'cf-icon-facebook-square'
         } %}
 
         {% set twitter_info = {
             'name': 'Twitter',
-            'homepage': signed_redirect('https://twitter.com/cfpb'),
+            'homepage': unsigned_redirect('https://twitter.com/cfpb'),
             'share_url': signed_redirect(_share_twitter_url(parsed_url, twitter_text, value)|trim),
             'class': 'cf-icon-twitter-square'
         } %}
 
         {% set linkedin_info = {
             'name': 'LinkedIn',
-            'homepage': signed_redirect('https://www.linkedin.com/company/consumer-financial-protection-bureau'),
+            'homepage': unsigned_redirect('https://www.linkedin.com/company/consumer-financial-protection-bureau'),
             'share_url': signed_redirect('https://www.linkedin.com/shareArticle?mini=true&url=' ~ parsed_url ~ '&title=' ~ linkedin_title ~ '&summary=' ~ linkedin_text),
             'class': 'cf-icon-linkedin-square'
         } %}
