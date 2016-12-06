@@ -7,7 +7,10 @@ from django.views.generic.edit import FormMixin
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
+from django.http import (JsonResponse,
+                         HttpResponseForbidden,
+                         HttpResponse,
+                         Http404)
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 
@@ -171,9 +174,16 @@ class ExternalURLNoticeView(FormMixin, TemplateView):
 
         form = self.get_form()
         context['form'] = form
-        context['form_is_valid'] = form.is_valid()
 
         return context
+
+    def get(self, request):
+        form = self.get_form()
+        if form.is_valid():
+            return super(ExternalURLNoticeView, self).get(request)
+        else:
+            raise Http404("URL invalid, not whitelisted, or signature"
+                          " validation failed")
 
     def post(self, request):
         form = self.get_form()
