@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 - `conference_export` management command added to export conference registrations.
 - Add ability to individually customize the content of social media share links
+- New `add_images` management command to programmaticaly add images to Wagtail.
 
 ### Changed
 - Eregs/ip updated to version 1.0.3.
@@ -34,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
 - Removed feedback-form default text and clarified help_text
 - Ajusted Django admin page for v1_feedback objects
+- CFGOVImage renditions behavior changed to always return original source image, skipping Wagtail processing.
 
 ### Removed
 
