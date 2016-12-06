@@ -4,7 +4,6 @@ import base64
 from urllib import urlencode
 
 from django.core.signing import Signer
-from django.http.request import QueryDict
 from django.core.urlresolvers import reverse
 
 
@@ -40,11 +39,11 @@ def sign_url(url, secret=None):
 
 def signed_redirect(url):
     url, signature = sign_url(url)
-    query_args = QueryDict(mutable=True)
-    query_args['ext_url'] = url
-    query_args['signature'] = signature
+    query_args = {'ext_url': url,
+                  'signature': signature}
 
-    return ('{0}?{1}'.format(reverse('external-site'), query_args.urlencode()))
+    return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
+
 
 def extract_answers_from_request(request):
     answers = [(param.split('_')[1], value) for param, value in
