@@ -2,7 +2,9 @@ from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 from django.utils.six import string_types
-from wagtail.wagtailimages.image_operations import MinMaxOperation
+from wagtail.wagtailimages.image_operations import (
+    DoNothingOperation, MinMaxOperation, WidthHeightOperation
+)
 from wagtail.wagtailimages.models import (
     AbstractImage, AbstractRendition, Filter, Image
 )
@@ -16,19 +18,28 @@ class CFGOVImage(AbstractImage):
     )
 
     def get_rendition(self, rendition_filter):
-        """Always return the source image file when renditions are requested.
+        """Always return the source image file for GIF renditions.
 
         CFGOVImage overrides the default Wagtail renditions behavior to
-        always embed the original uploaded image file, instead of generating
-        new versions on the fly.
+        always embed the original uploaded image file for GIFs, instead of
+        generating new versions on the fly.
+        """
+        if self.file.name.endswith('.gif'):
+            return self.get_mock_rendition(rendition_filter)
+        else:
+            return super(CFGOVImage, self).get_rendition(rendition_filter)
 
-        By default using the template tag {% image image 'original' %} will
-        return an <img> tag linking to the original file (instead of a file
-        copy, as is default Wagtail behavior.)
+    def get_mock_rendition(self, rendition_filter):
+        """Create a mock rendition object that wraps the original image.
 
-        Using a template tag with a maximum image size like
-        {% image image 'max-165x165' %} will generate an <img> tag with
-        the specified size parameters, i.e. <img width="165" height="165">.
+        Using the template tag {% image image 'original' %} will return an
+        <img> tag linking to the original file (instead of a file copy, as
+        is default Wagtail behavior).
+
+        Template tags with Wagtail size-related filters (width, height, max,
+        and min), e.g. {% image image 'max-165x165' %}, will generate an
+        <img> tag with appropriate size parameters, following logic from
+        wagtail.wagtailimages.image_operations.
         """
         if isinstance(rendition_filter, string_types):
             rendition_filter = Filter(spec=rendition_filter)
@@ -37,10 +48,16 @@ class CFGOVImage(AbstractImage):
         height = self.height
 
         for operation in rendition_filter.operations:
-            if isinstance(operation, MinMaxOperation):
-                if 'max' == operation.method:
-                    width = operation.width
-                    height = operation.height
+            if isinstance(operation, DoNothingOperation):
+                continue
+
+            if not any([
+                isinstance(operation, WidthHeightOperation),
+                isinstance(operation, MinMaxOperation),
+            ]):
+                raise RuntimeError('non-size operations not supported on GIFs')
+
+            width, height = self.apply_size_operation(operation, width, height)
 
         return CFGOVRendition(
             image=self,
@@ -48,6 +65,25 @@ class CFGOVImage(AbstractImage):
             width=width,
             height=height
         )
+
+    @staticmethod
+    def apply_size_operation(operation, width, height):
+        class MockResizableImage(object):
+            def __init__(self, width, height):
+                self.width = width
+                self.height = height
+
+            def get_size(self):
+                return self.width, self.height
+
+            def resize(self, size):
+                width, height = size
+                self.width = width
+                self.height = height
+
+        mock_image = MockResizableImage(width, height)
+        operation.run(mock_image, image=None)
+        return mock_image.width, mock_image.height
 
 
 class CFGOVRendition(AbstractRendition):
