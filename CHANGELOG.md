@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Adjusted Django admin page for v1_feedback objects
 - Updated owning-a-home-api dependency to v0.9.91 for security update
 - Modified 25 / 75 Organims to add Boolean `should_link_image` flag.
+- external redirection page now only accepts whitelisted or signed URL's
 
 ### Fixed
 - Fixed file type link icons within info-units
