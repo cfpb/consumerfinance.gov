@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from .templates import get_date_string
+from sheerlike.templates import get_date_string
 
 
 class TestTemplates(TestCase):
