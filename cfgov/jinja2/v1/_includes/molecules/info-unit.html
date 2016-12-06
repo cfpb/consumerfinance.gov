@@ -42,6 +42,9 @@
    value.is_button:           Boolean for whether the link should be a button.
                               Default is false.
 
+    value.should_link_image:  Boolean for whether the image should be wrapped in
+                              a tag.
+
    ========================================================================== #}
 
 {% macro info_unit(value) %}
@@ -49,8 +52,12 @@
          change to a boolean parameter. #}
 <div class="m-info-unit
             {{ 'm-info-unit__' ~ value.modifier if value.modifier else '' }}">
-
     {% if value.image %}
+        {% set should_link_image = value.should_link_image
+                                   and value.links[0] and value.links[0].url %}
+        {% if should_link_image %}
+            <a href="{{ value.links[0].url }}">
+        {% endif %}
         {% if value.image.is_decorative %}
         <div class="m-info-unit_image
                     {{ 'm-info-unit_image__square' if value.image.is_square else '' }}"
@@ -61,6 +68,9 @@
              alt="{{ value.image.alt if value.image.alt else '' }}"
              class="m-info-unit_image
                     {{ 'm-info-unit_image__square' if value.image.is_square else '' }}">
+        {% endif %}
+        {% if should_link_image %}
+            </a>
         {% endif %}
     {% endif %}
 

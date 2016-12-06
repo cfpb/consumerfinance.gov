@@ -13,11 +13,30 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+
+## Unreleased
+
+### Added
+- Add ability to individually customize the content of social media share links
+- Code to convert S3 HTTP image links to HTTPS during sheerlike imports
+- New Wagtail video player module that can be added to Learn pages
+
+### Changed
+- Removed feedback-form default text and clarified help_text
+- Adjusted Django admin page for v1_feedback objects
+- Updated owning-a-home-api dependency to v0.9.91 for security update
+- Modified 25 / 75 Organims to add Boolean `should_link_image` flag.
+
+### Fixed
+- Fixed file type link icons within info-units
+
+
 ## 4.2.1
 
 ### Changed
 - Limit Activity Log posts to appropriate page categories.
 - Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
+
 
 ## 4.2.0
 
@@ -25,7 +44,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Forms and other bits for two new Owning a Home feedback modules
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 - `conference_export` management command added to export conference registrations.
-- Add ability to individually customize the content of social media share links
 
 ### Changed
 - Eregs/ip updated to version 1.0.3.
@@ -38,22 +56,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed issue surrounding event venue not displaying on event page.
 - Limit Activity Log posts to appropriate page categories.
 - Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
-- Removed feedback-form default text and clarified help_text
-- Ajusted Django admin page for v1_feedback objects
 
 
 ## 4.1.9
-- Bumping version of College Comparision Tool to 1.2.9
+
+### Changed
+- Bumping version of College Comparison Tool to 1.2.9
+
 
 ## 4.1.8
 
 ### Changed
 - roll complaints back to 1.2.6
 
+
 ## 4.1.7
 
 ### Changed
 - moved data_research into the db_router.py whitelist
+
 
 ## 4.1.6
 
@@ -61,20 +82,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed broken static assets on Technology and Innovation Fellowship page.
 - Conference Registration Form configurable error and success messages.
 
+
 ## 4.1.5
 
 ### Changed
 - update complaints to 1.2.7
+
 
 ## 4.1.4
 
 ### Fixed
 - an improved fix for the newsroom issue (see 4.1.2 and 4.1.3)
 
+
 ## 4.1.3
 
 ### Fixed
 - backed-out 4.1.2's newsroom fix
+
 
 ## 4.1.2
 
@@ -117,10 +142,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
 - all references to `django-htmlmin`
-
-### Fixed
-- Fixed file type link icons within info-units
-
 
 
 ## 4.0.0
