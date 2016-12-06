@@ -20,12 +20,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add ability to individually customize the content of social media share links
 - Code to convert S3 HTTP image links to HTTPS during sheerlike imports
 - New Wagtail video player module that can be added to Learn pages
+- New `add_images` management command to programmaticaly add images to Wagtail.
 
 ### Changed
 - Removed feedback-form default text and clarified help_text
 - Adjusted Django admin page for v1_feedback objects
 - Updated owning-a-home-api dependency to v0.9.91 for security update
-- Modified 25 / 75 Organims to add Boolean `should_link_image` flag.
+- Modified 25 / 75 Organisms to add Boolean `should_link_image` flag.
+- CFGOVImage renditions behavior changed to always return original source image, skipping Wagtail processing.
 
 ### Fixed
 - Fixed file type link icons within info-units
@@ -44,8 +46,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Forms and other bits for two new Owning a Home feedback modules
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 - `conference_export` management command added to export conference registrations.
-- Add ability to individually customize the content of social media share links
-- New `add_images` management command to programmaticaly add images to Wagtail.
 
 ### Changed
 - Eregs/ip updated to version 1.0.3.
@@ -58,9 +58,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed issue surrounding event venue not displaying on event page.
 - Limit Activity Log posts to appropriate page categories.
 - Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
-- Removed feedback-form default text and clarified help_text
-- Ajusted Django admin page for v1_feedback objects
-- CFGOVImage renditions behavior changed to always return original source image, skipping Wagtail processing.
 
 
 ## 4.1.9
