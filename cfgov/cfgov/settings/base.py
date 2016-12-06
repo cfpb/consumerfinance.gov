@@ -102,8 +102,7 @@ MIDDLEWARE_CLASSES = (
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
-CSP_MIDDLEWARE_CLASSES = ('core.middleware.CSPScriptHashMiddleware',
-                          'csp.middleware.CSPMiddleware')
+CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
 
 if ('CSP_ENFORCE' in os.environ or 'CSP_REPORT' in os.environ):
     MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
@@ -522,7 +521,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   'bam.nr-data.net',
                   '*.youtube.com',
                   '*.ytimg.com',
-                  'trk.cetrk.com')
+                  'trk.cetrk.com',
+                  'universal.iperceptions.com')
 
 # These specify valid sources of CSS code
 CSP_STYLE_SRC = ("'self'",
@@ -550,11 +550,14 @@ CSP_FRAME_SRC= ("'self'",
                 '*.googletagmanager.com',
                 '*.google-analytics.com',
                 'www.youtube.com',
-                '*.doubleclick.net')
+                '*.doubleclick.net',
+                'universal.iperceptions.com')
 
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
 
 # These specify what hosts we can make (potentially) cross-domain AJAX requests to.
-CSP_CONNECT_SRC = ("'self'", '*.tiles.mapbox.com')
-
+CSP_CONNECT_SRC = ("'self'",
+                   '*.tiles.mapbox.com',
+                   'bam.nr-data.net',
+                   'api.iperceptions.com')
