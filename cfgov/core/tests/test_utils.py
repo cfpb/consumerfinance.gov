@@ -56,7 +56,7 @@ class CSPTemplateTagsTest(TestCase):
 
 
 class URLBuildingTest(TestCase):
-    def test_appned_query_args(self):
+    def test_append_query_args(self):
         query_args = {'foo': 'bar'}
         base_url = 'http://google.com/'
         result = append_query_args_to_url(base_url, query_args)
