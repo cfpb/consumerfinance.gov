@@ -16,6 +16,20 @@ class CFGOVImage(AbstractImage):
     )
 
     def get_rendition(self, rendition_filter):
+        """Always return the source image file when renditions are requested.
+
+        CFGOVImage overrides the default Wagtail renditions behavior to
+        always embed the original uploaded image file, instead of generating
+        new versions on the fly.
+
+        By default using the template tag {% image image 'original' %} will
+        return an <img> tag linking to the original file (instead of a file
+        copy, as is default Wagtail behavior.)
+
+        Using a template tag with a maximum image size like
+        {% image image 'max-165x165' %} will generate an <img> tag with
+        the specified size parameters, i.e. <img width="165" height="165">.
+        """
         if isinstance(rendition_filter, string_types):
             rendition_filter = Filter(spec=rendition_filter)
 
