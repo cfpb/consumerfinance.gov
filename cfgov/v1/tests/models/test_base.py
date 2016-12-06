@@ -271,9 +271,8 @@ class TestFeedbackModel(TestCase):
 
     def test_assemble_csv(self):
         test_csv = Feedback().assemble_csv(Feedback.objects.all())
-        self.assertIn("comment", test_csv, )
-        self.assertIn("Sparks on the curb", test_csv)
-        self.assertIn(
-            "{}".format(self.test_feedback.submitted_on.date()),
-            test_csv
-        )
+        for term in ["comment",
+                     "Sparks on the curb",
+                     "tester@example.com",
+                     "{}".format(self.test_feedback.submitted_on.date())]:
+            self.assertIn(term, test_csv)
