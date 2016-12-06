@@ -44,7 +44,7 @@ class FeedbackAdmin(admin.ModelAdmin):
         subject = "CFPB website {} download"
         message = 'A CSV file of selected {} records is attached.'
         fromline = 'do-not-reply@cfpb.gov'
-        user_message = "Sent selected {} records as CSV to {}"
+        user_message = "Sent {} selected {} records as CSV to {}"
         recipients = [user.email]
         csvfile = Feedback().assemble_csv(queryset)
         email = EmailMessage(
@@ -57,7 +57,11 @@ class FeedbackAdmin(admin.ModelAdmin):
         email.send()
         self.message_user(
             request,
-            user_message.format(object_name, ", ".join(recipients))
+            user_message.format(
+                queryset.count(),
+                object_name,
+                ", ".join(recipients)
+            )
         )
 
     export_selection_as_csv.short_description = 'Export selection as CSV'
