@@ -53,6 +53,9 @@ class ImageText5050Group(blocks.StructBlock):
 
 class ImageText2575Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
+    should_link_image = blocks.BooleanBlock(default=False,
+                                            required=False,
+                                            help_text='Check this to link all images to the URL of the first link in their unit\'s list, if there is a link.')
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
@@ -494,3 +497,24 @@ class FilterControls(BaseExpandable):
 
     class Media:
         js = ['filterable-list-controls.js']
+
+
+class VideoPlayer(blocks.StructBlock):
+    video_url = blocks.RegexBlock(
+        label='YouTube Embed URL',
+        default='https://www.youtube.com/embed/',
+        required=True,
+        regex=r'^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+([/]?)$',
+        error_messages={
+            'required': 'The YouTube URL field is required for video players.',
+            'invalid': "The YouTube URL is in the wrong format. "
+                       "You must use the embed URL "
+                       "(https://www.youtube.com/embed/video_id), "
+                       "which can be obtained by clicking Share > Embed "
+                       "on the YouTube video page.",
+        }
+    )
+
+    class Meta:
+        icon = 'media'
+        template = '_includes/organisms/video-player.html'
