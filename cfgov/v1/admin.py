@@ -1,6 +1,3 @@
-import csv
-from cStringIO import StringIO
-
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -39,30 +36,7 @@ feedback_page_title.short_description = 'Page'
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
 
-    actions = admin.ModelAdmin.actions + ['export_selection_as_csv']
-
-    def assemble_csv(modeladmin, queryset):
-        headings = [
-            'comment',
-            'currently_own',
-            'expect_to_buy',
-            'email',
-            'is_helpful',
-            'page',
-            'referrer',
-            'submitted_on'
-        ]
-        csvfile = StringIO()
-        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-        writer.writerow([field for field in headings])
-        for feedback in queryset:
-            feedback.submitted_on = "{}".format(feedback.submitted_on.date())
-            feedback.comment = feedback.comment.encode('utf-8')
-            writer.writerow(
-                ["{}".format(getattr(feedback, heading))
-                 for heading in headings]
-            )
-        return csvfile.getvalue()
+    actions = ['export_selection_as_csv']
 
     def export_selection_as_csv(self, request, queryset):
         object_name = queryset.model._meta.object_name
@@ -72,7 +46,7 @@ class FeedbackAdmin(admin.ModelAdmin):
         fromline = 'do-not-reply@cfpb.gov'
         user_message = "Sent selected {} records as CSV to {}"
         recipients = [user.email]
-        csvfile = self.assemble_csv(queryset)
+        csvfile = Feedback().assemble_csv(queryset)
         email = EmailMessage(
             subject.format(object_name),
             message.format(object_name),

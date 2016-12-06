@@ -1,10 +1,11 @@
 import mock
+import datetime
 
 from django.test import TestCase
 from django.test.client import RequestFactory
 from wagtail.wagtailcore.models import Site
 
-from v1.models.base import CFGOVPage
+from v1.models.base import CFGOVPage, Feedback
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
@@ -255,3 +256,24 @@ class TestCFGOVPageQuerySet(TestCase):
         page = CFGOVPage(title='test', slug='test', live=True, shared=True)
         publish_page(page)
         self.check_live_shared_counts(on_live_host=2, on_staging_host=2)
+
+
+class TestFeedbackModel(TestCase):
+    def setUp(self):
+        self.test_feedback = Feedback(
+            email='tester@example.com',
+            comment="Sparks on the curb.",
+            is_helpful=True,
+            referrer="http://www.consumerfinance.gov/owing-a-home/",
+            submitted_on=datetime.datetime.now()
+            )
+        self.test_feedback.save()
+
+    def test_assemble_csv(self):
+        test_csv = Feedback().assemble_csv(Feedback.objects.all())
+        self.assertIn("comment", test_csv, )
+        self.assertIn("Sparks on the curb", test_csv)
+        self.assertIn(
+            "{}".format(self.test_feedback.submitted_on.date()),
+            test_csv
+        )
