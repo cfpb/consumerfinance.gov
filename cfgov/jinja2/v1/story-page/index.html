@@ -1,0 +1,54 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% import 'macros/video-player.html' as video_player %}
+{% import 'organisms/item-introduction.html' as item_introduction with context %}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    {% for block in page.header -%}
+        {% if block.block_type == 'item_introduction' %}
+            {{ item_introduction.render(block.value) }}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+
+    {% if page.video_url %}
+        {% set video_id = page.video_id | default( '' ) %}
+        <figure class="u-mb30">
+            {{ video_player.render({
+                'button_pos': 'bottomRight',
+                'video': {
+                    'id': video_id,
+                    'url': page.video_url
+                }
+            }) }}
+        </figure>
+    {% elif page.image %}
+        {% set img = image(page.image, 'original') %}
+        {% set img_url = img.url %}
+        {# TODO: Figure out why the line below only returns the image's
+           title, even if the alt field has something in it. #}
+        {% set img_alt = img.alt %}
+        <figure class="u-mb30">
+            <img src="{{ img_url }}" alt="{{ img_alt }}">
+        </figure>
+    {% endif %}
+
+    {% for block in page.content -%}
+        {{ render_block.render(block, loop.index) }}
+    {%- endfor %}
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+{%- endblock %}

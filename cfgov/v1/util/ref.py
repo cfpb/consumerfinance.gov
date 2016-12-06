@@ -32,11 +32,12 @@ page_types = [
     ('final-rule', 'Final Rule'),
     ('foia-freq-req-record', 'FOIA Frequently Requested Record'),
     ('impl-resource', 'Implementation Resource'),
+    ('leadership-calendar', 'Leadership Calendar'),
     ('newsroom', 'Newsroom'),
     ('notice-opportunity-comment', 'Notice and Opportunity for Comment'),
     ('research-reports', 'Research Report'),
     ('rule-under-dev', 'Rule under development'),
-    ('leadership-calendar', 'Leadership Calendar'),
+    ('story', 'Story'),
 ]
 
 fcm_types = [
@@ -106,6 +107,14 @@ categories = [
         ('notice-proposed-rule-2', 'Advanced Notice of Proposed Rulemaking'),
         ('proposed-rule-2', 'Proposed Rule'),
     )),
+    ('Story', (
+        ('auto-loans', 'Auto loans'),
+        ('credit-cards', 'Credit cards'),
+        ('credit-reporting', 'Credit reporting'),
+        ('debt-collection', 'Debt collection'),
+        ('mortgages', 'Mortgages'),
+        ('student-loans', 'Student loans'),
+    ))
 ]
 
 supported_languagues = [

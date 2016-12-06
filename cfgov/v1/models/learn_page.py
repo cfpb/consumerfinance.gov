@@ -40,6 +40,7 @@ class AbstractFilterPage(CFGOVPage):
 
 
     # Configuration tab panels
+    header_panel = [StreamFieldPanel('header')]
     settings_panels = [
         MultiFieldPanel(Page.promote_panels, 'Settings'),
         InlinePanel('categories', label="Categories", max_num=2),
@@ -116,6 +117,47 @@ class DocumentDetailPage(AbstractFilterPage):
     objects = PageManager()
 
 
+class StoryPage(AbstractFilterPage):
+    video_url = models.URLField("YouTube URL", blank=True,
+                                help_text="Format: https://www.youtube.com/embed/video_id. "
+                                          "It can be obtained by clicking on Share > Embed on YouTube.",
+                                validators=[RegexValidator(
+                                    regex='^https?:\/\/www\.youtube\.com\/embed\/.*$'
+                                )])
+    image = models.ForeignKey('v1.CFGOVImage',
+                              null=True,
+                              blank=True,
+                              on_delete=models.SET_NULL,
+                              related_name='+')
+
+    content = StreamField([
+        ('full_width_text', organisms.FullWidthText()),
+        ('well', organisms.Well()),
+        ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('expandable', organisms.Expandable()),
+        ('expandable_group', organisms.ExpandableGroup()),
+        ('table', organisms.Table()),
+        ('call_to_action', molecules.CallToAction()),
+    ], blank=True)
+
+    objects = CFGOVPageManager()
+
+    content_panels = CFGOVPage.content_panels + AbstractFilterPage.header_panel + [
+        FieldPanel('video_url', classname="full"),
+        ImageChooserPanel('image'),
+        StreamFieldPanel('content'),
+    ]
+
+    # Tab handler interface
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='General Content'),
+        ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
+        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
+    ])
+
+    template = 'story-page/index.html'
+
+
 class AgendaItemBlock(blocks.StructBlock):
     start_time = blocks.TimeBlock(label="Start", required=False)
     end_time = blocks.TimeBlock(label="End", required=False)
@@ -142,7 +184,7 @@ class EventPage(AbstractFilterPage):
     end_dt = models.DateTimeField("End", blank=True, null=True)
     future_body = RichTextField(blank=True)
     archive_image = models.ForeignKey(
-        'wagtailimages.Image',
+        'v1.CFGOVImage',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -163,8 +205,8 @@ class EventPage(AbstractFilterPage):
         related_name='+'
     )
     flickr_url = models.URLField("Flickr URL", blank=True)
-    youtube_url = models.URLField("Youtube URL", blank=True,
-    help_text="Format: https://www.youtube.com/embed/video_id. It can be obtained by clicking on Share > Embed on Youtube.",
+    youtube_url = models.URLField("YouTube URL", blank=True,
+    help_text="Format: https://www.youtube.com/embed/video_id. It can be obtained by clicking on Share > Embed on YouTube.",
     validators=[ RegexValidator(regex='^https?:\/\/www\.youtube\.com\/embed\/.*$')])
 
     live_stream_availability = models.BooleanField("Streaming?", default=False,
