@@ -114,3 +114,6 @@ class Feedback(AbstractFormBlock):
     class Meta:
         handler = 'v1.handlers.blocks.feedback.FeedbackHandler'
         template = '_includes/blocks/feedback.html'
+
+    class Media:
+        js = ['feedback-form.js']
