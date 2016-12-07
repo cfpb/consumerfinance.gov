@@ -5,6 +5,9 @@ import requests
 from sheerlike.external_links import process_external_links
 
 
+PAGE_IDS = (36601, 36603, 36605)
+
+
 def posts_at_url(url):
 
     current_page = 1
@@ -18,7 +21,8 @@ def posts_at_url(url):
         max_page = results['pages']
 
         for p in results['posts']:
-            yield p
+            if p['id'] in PAGE_IDS:
+                yield p
 
 
 def documents(name, url, **kwargs):
