@@ -30,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed file type link icons within info-units
+- Wordpress page processor properly uses WORDPRESS environment variable.
 
 
 ## 4.2.1
