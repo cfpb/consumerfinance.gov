@@ -211,6 +211,8 @@
                 {{ notification('warning', true,
                     'Sorry, there were no results based on your filter selections.',
                     'Please reset the filter or change your selections and try again.') }}
+            {% elif posts.paginator.count == 1 %}
+                {{ notification('success', true, posts.paginator.count ~ ' filtered result') }}
             {% else %}
                 {{ notification('success', true, posts.paginator.count ~ ' filtered results') }}
             {% endif %}
