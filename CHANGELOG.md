@@ -21,7 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Code to convert S3 HTTP image links to HTTPS during sheerlike imports
 - New Wagtail video player module that can be added to Learn pages
 - Add settings to settings/base.py enabling picard to integrate with Jenkins
-- Credit Market Trends to mega menu with a feature flag
+- Consumer Credit Trends to mega menu with a feature flag
 
 ### Changed
 - Removed feedback-form default text and clarified help_text
