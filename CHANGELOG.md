@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add ability to individually customize the content of social media share links
 - Code to convert S3 HTTP image links to HTTPS during sheerlike imports
 - New Wagtail video player module that can be added to Learn pages
+- Credit Market Trends to mega menu with a feature flag
 
 ### Changed
 - Removed feedback-form default text and clarified help_text
