@@ -15,6 +15,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ## Unreleased
+- Fixed breadcrumb rendering for wagtail subpages
 
 ### Added
 - Add ability to individually customize the content of social media share links

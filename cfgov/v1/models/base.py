@@ -230,11 +230,22 @@ class CFGOVPage(Page):
                     return revision.as_page_object()
 
     def get_breadcrumbs(self, request):
+        """
+        Delivers 3-tuple (href, id, caption) for each ancestor page,
+        to be processed by jinja2 breadcrumbs.html macro
+        """
         ancestors = self.get_ancestors()
         home_page_children = request.site.root_page.get_children()
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
-                return [ancestor.specific.get_appropriate_page_version(request) for ancestor in ancestors[i+1:]]
+                crumb_pages = [
+                    ancestor.specific.get_appropriate_page_version(request)
+                    for ancestor in ancestors[i:]]
+                return [(
+                    page.url_path.replace('/cfgov', ''),
+                    page.id,
+                    page.title
+                    ) for page in crumb_pages]
         return []
 
     def get_appropriate_descendants(self, hostname, inclusive=True):

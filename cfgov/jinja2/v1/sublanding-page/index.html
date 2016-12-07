@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block pre_content %}
+    {{ super() }}
     {% if page.sidebar_breakout %}
         {% import 'organisms/sidebar-breakout.html' as sidebar_breakout with context %}
         {% call(block) sidebar_breakout.render() %}

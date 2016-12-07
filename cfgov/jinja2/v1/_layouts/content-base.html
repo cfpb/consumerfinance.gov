@@ -4,14 +4,20 @@
     <main class="content {% block content_modifiers -%}{%- endblock %}" id="main" role="main">
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
+        {% if page %}
+            {% set breadcrumb_items = page.get_breadcrumbs(request) %}
             {% if breadcrumb_items | length > 0 %}
                 <div class="wrapper">
                 {%- import 'breadcrumbs.html' as breadcrumbs -%}
                 {{ breadcrumbs.render(breadcrumb_items) }}
                 </div>
             {% endif %}
+        {% endif %}
         {%- endblock %}
         {% block body_content scoped -%}{%- endblock %}
         {% block post_content scoped -%}{%- endblock %}
     </main>
 {% endblock %}
+
+
+

@@ -5,6 +5,7 @@ import itertools
 import logging
 import re
 
+from wagtail.wagtailcore.models import Site
 from django.apps import apps
 from django.conf import settings
 from django.db import connection
@@ -99,6 +100,7 @@ class HtmlMixin(object):
 
     def assertPageIncludesHtml(self, page, s):
         request = RequestFactory().get('/')
+        request.site = Site.objects.get(is_default_site=True)
         request.user = Mock()
 
         rendered_html = page.serve(request).render()
