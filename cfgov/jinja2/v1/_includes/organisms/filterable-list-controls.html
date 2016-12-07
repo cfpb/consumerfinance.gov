@@ -205,16 +205,15 @@
             {% endfor %}
         {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
+            {% set count = posts.paginator.count %}
             {% if has_active_filters == false %}
-                {{ notification('success', false, posts.paginator.count ~ ' filtered results') }}
-            {% elif posts.paginator.count == 0 %}
+                {{ notification('success', false, count ~ ' filtered results') }}
+            {% elif count == 0 %}
                 {{ notification('warning', true,
                     'Sorry, there were no results based on your filter selections.',
                     'Please reset the filter or change your selections and try again.') }}
-            {% elif posts.paginator.count == 1 %}
-                {{ notification('success', true, posts.paginator.count ~ ' filtered result') }}
             {% else %}
-                {{ notification('success', true, posts.paginator.count ~ ' filtered results') }}
+                {{ notification('success', true, count ~ ' filtered result' ~ count|pluralize('s')) }}
             {% endif %}
         {% endif %}
         {% if controls.categories.page_type == 'activity-log' %}
