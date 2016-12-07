@@ -102,8 +102,7 @@ MIDDLEWARE_CLASSES = (
     'core.middleware.DownstreamCacheControlMiddleware'
 )
 
-CSP_MIDDLEWARE_CLASSES = ('core.middleware.CSPScriptHashMiddleware',
-                          'csp.middleware.CSPMiddleware')
+CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
 
 if ('CSP_ENFORCE' in os.environ or 'CSP_REPORT' in os.environ):
     MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
@@ -486,6 +485,14 @@ CACHES = {
 }
 
 PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
+PICARD_TASK_RUNNER = os.environ.get('PICARD_TASK_RUNNER', 'shell')
+PICARD_JENKINS_HOST = os.environ.get('PICARD_JENKINS_HOST', None)
+PICARD_JENKINS_USER = os.environ.get('PICARD_JENKINS_USER', None)
+PICARD_JENKINS_PASSWORD = os.environ.get('PICARD_JENKINS_PASSWORD', None)
+PICARD_JENKINS_AKAMAI_FLUSH = os.environ.get('PICARD_JENKINS_AKAMAI_FLUSH', None)
+PICARD_JENKINS_DATA_EXPORT = os.environ.get('PICARD_JENKINS_DATA_EXPORT', None)
+PICARD_JENKINS_DATA_EXPORT_FROM_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT', 'CONTENT')
+PICARD_JENKINS_DATA_EXPORT_TO_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT', 'PRODUCTION')
 
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
@@ -522,7 +529,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   'bam.nr-data.net',
                   '*.youtube.com',
                   '*.ytimg.com',
-                  'trk.cetrk.com')
+                  'trk.cetrk.com',
+                  'universal.iperceptions.com')
 
 # These specify valid sources of CSS code
 CSP_STYLE_SRC = ("'self'",
@@ -550,11 +558,14 @@ CSP_FRAME_SRC= ("'self'",
                 '*.googletagmanager.com',
                 '*.google-analytics.com',
                 'www.youtube.com',
-                '*.doubleclick.net')
+                '*.doubleclick.net',
+                'universal.iperceptions.com')
 
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
 
 # These specify what hosts we can make (potentially) cross-domain AJAX requests to.
-CSP_CONNECT_SRC = ("'self'", '*.tiles.mapbox.com')
-
+CSP_CONNECT_SRC = ("'self'",
+                   '*.tiles.mapbox.com',
+                   'bam.nr-data.net',
+                   'api.iperceptions.com')
