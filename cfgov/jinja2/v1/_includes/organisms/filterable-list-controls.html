@@ -219,7 +219,7 @@
             {% import 'activity-log/_activity-list.html' as activity_list with context %}
             {{ activity_list.render(posts, index) }}
         {% elif controls.output_5050 %}
-            <div class="o-info-unit-group" data-qa-hook="image-text-50-50">
+            <div class="o-info-unit-group u-mb30" data-qa-hook="image-text-50-50">
                 <div class="content-l">
                     {% for post in posts %}
                     <div class="content-l_col
@@ -229,9 +229,9 @@
                             {% set photo = image(post.preview_image, 'original') %}
                         {% endif %}
                         {% set heading = '<a href="' ~ post_url ~ '"><h2 class="h3">' ~
-                                         post.preview_heading ~
+                                         post.preview_title ~
                                          '</h2></a>'
-                           if post.preview_heading else null %}
+                           if post.preview_title else null %}
                         {% set sub_heading = '<a href="' ~ post_url ~ '"><h2 class="h4">' ~
                                              post.preview_subheading ~
                                              '</h2></a>'
