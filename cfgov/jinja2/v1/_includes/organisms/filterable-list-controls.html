@@ -175,9 +175,9 @@
     </form>
 {% endmacro %}
 
+{% from 'molecules/info-unit.html' import info_unit with context %}
 {% from 'molecules/notification.html' import render as notification with context %}
 {% from 'organisms/post-preview.html' import render as post_preview with context %}
-{% from 'molecules/info-unit.html' import render as info_unit with context %}
 
 {% macro render(controls, index) %}
     <div class="o-filterable-list-controls"
@@ -224,7 +224,36 @@
                     {% for post in posts %}
                     <div class="content-l_col
                                 content-l_col-1-2">
-                        {{ info_unit(post) }}
+                        {% set post_url = get_protected_url(post) %}
+                        {% if post.preview_image %}
+                            {% set photo = image(post.preview_image, 'original') %}
+                        {% endif %}
+                        {% set heading = '<a href="' ~ post_url ~ '"><h2 class="h3">' ~
+                                         post.preview_heading ~
+                                         '</h2></a>'
+                           if post.preview_heading else null %}
+                        {% set sub_heading = '<a href="' ~ post_url ~ '"><h2 class="h4">' ~
+                                             post.preview_subheading ~
+                                             '</h2></a>'
+                           if post.preview_subheading else null %}
+                        {% if post.secondary_link_url and post.secondary_link_text %}
+                            {% set links = [
+                                {
+                                    'url': post.secondary_link_url,
+                                    'text': post.secondary_link_text
+                                }
+                            ] %}
+                        {% endif %}
+                        {{ info_unit( {
+                            'image': {
+                                'url': photo.url if photo else '/',
+                                'alt': post.preview_image.alt if post.preview_image.alt else '',
+                            },
+                            'heading': heading,
+                            'sub_heading': sub_heading,
+                            'body': parse_links(post.preview_description),
+                            'links': links or null,
+                        } ) }}
                     </div>
                     {% endfor %}
                 </div>
