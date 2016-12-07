@@ -106,6 +106,14 @@ categories = [
         ('notice-proposed-rule-2', 'Advanced Notice of Proposed Rulemaking'),
         ('proposed-rule-2', 'Proposed Rule'),
     )),
+    ('Story', (
+        ('auto-loans', 'Auto loans'),
+        ('credit-cards', 'Credit cards'),
+        ('credit-reporting', 'Credit reporting'),
+        ('debt-collection', 'Debt collection'),
+        ('mortgages', 'Mortgages'),
+        ('student-loans', 'Student loans'),
+    )),
 ]
 
 supported_languagues = [
