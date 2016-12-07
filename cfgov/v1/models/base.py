@@ -1,3 +1,5 @@
+import csv
+from cStringIO import StringIO
 from collections import OrderedDict
 from itertools import chain
 import json
@@ -546,3 +548,26 @@ class Feedback(models.Model):
     expect_to_buy = models.CharField(max_length=255, blank=True, null=True)
     currently_own = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(max_length=250, blank=True, null=True)
+
+    def assemble_csv(self, queryset):
+        headings = [
+            'comment',
+            'currently_own',
+            'expect_to_buy',
+            'email',
+            'is_helpful',
+            'page',
+            'referrer',
+            'submitted_on'
+        ]
+        csvfile = StringIO()
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+        writer.writerow([field for field in headings])
+        for feedback in queryset:
+            feedback.submitted_on = "{}".format(feedback.submitted_on.date())
+            feedback.comment = feedback.comment.encode('utf-8')
+            writer.writerow(
+                ["{}".format(getattr(feedback, heading))
+                 for heading in headings]
+            )
+        return csvfile.getvalue()
