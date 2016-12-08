@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 
 
 
+<<<<<<< HEAD
 def hash_for_script(js):
     hasher = hashlib.sha256()
     hasher.update(js.encode('utf-8'))
@@ -50,6 +51,8 @@ def unsigned_redirect(url):
     return ('{0}?{1}'.format(reverse('external-site'), urlencode(query_args)))
 
 
+=======
+>>>>>>> 662dd2d30714e2af32351d96a5058aa700d28e37
 def extract_answers_from_request(request):
     answers = [(param.split('_')[1], value) for param, value in
                request.POST.items() if param.startswith('questionid')]
