@@ -50,7 +50,10 @@
             {% set video_url = _buildParam( video_url, 'enablejsapi=1' )  %}
         {% endif -%}
         {% if video_url.find( 'origin=' ) == -1 -%}
-            {% set video_url = _buildParam( video_url, 'origin=http://' ~ request.META['HTTP_HOST'] )  %}
+            {% set video_url = _buildParam(
+                 video_url,
+                 'origin=' ~ request.scheme ~ '://' ~ request.META['HTTP_HOST']
+            ) %}
         {% endif %}
     {% elif video_player == 'ustream' %}
         {% if video_url.find( 'html5ui' ) == -1 -%}
