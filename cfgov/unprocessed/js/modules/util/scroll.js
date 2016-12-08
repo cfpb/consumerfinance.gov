@@ -36,7 +36,7 @@ function _easeInOutQuad( t, b, c, d ) {
  */
 function _calculateDuration( distance ) {
   var duration = Math.abs( distance ) / 2;
-  return Math.min( Math.max( duration, 200 ), 500 ) || 200;
+  return Math.min( Math.max( duration, 200 ), 1000 ) || 500;
 }
 
 /**
@@ -46,7 +46,8 @@ function _calculateDuration( distance ) {
  *
  */
 function scrollTo( to, duration ) {
-  var startPosition = window.scrollY;
+
+  var startPosition = window.pageYOffset;
   var distance = to - startPosition;
   var startTime;
   duration = _calculateDuration( distance );
@@ -73,17 +74,17 @@ function scrollTo( to, duration ) {
  *
  */
 function scrollIntoView( elem ) {
-  if ( !elementInView( elem ) ) {
+  if ( !elementInView( elem, true ) ) {
     var offset = elem.getBoundingClientRect().top;
-    var to = window.pageYOffset + offset;
+    var to = window.pageYOffset + offset - 15;
     scrollTo( to );
   }
 }
 
 /**
  * @param {HTMLNode} elem The DOM element to check for
- * @param {HTMLNode} strict If strict, whole element (or
- *    as much as will fit) must be in viewport
+ * @param {Boolean} strict Tests whether whole element is
+ * onscreen rather than just a part.
  * @returns {Boolean} Whether the element is in the viewport.
  */
 function elementInView( elem, strict ) {
@@ -94,8 +95,10 @@ function elementInView( elem, strict ) {
   var elementTop = elem.getBoundingClientRect().top + windowTop;
   var elementBottom = elementTop + elementHeight;
 
+  if ( strict ) {
+    return elementTop >= windowTop && elementBottom <= windowBottom;
+  }
   return elementBottom >= windowTop && elementTop <= windowBottom;
-  // return: top in viewport and bottom also, or height is > than windowHeight
 }
 
 
@@ -104,3 +107,6 @@ module.exports = {
   scrollIntoView: scrollIntoView,
   scrollTo: scrollTo
 };
+
+window.scrollToElement = scrollTo;
+
