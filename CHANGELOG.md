@@ -14,7 +14,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 
 
-## Unreleased
+## 4.3.0
 
 ### Added
 - Add ability to individually customize the content of social media share links
