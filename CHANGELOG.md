@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add settings to settings/base.py enabling picard to integrate with Jenkins
 - Credit Market Trends to mega menu with a feature flag
 - New category support for stories (categorized by type of financial product)
+- Ability to output filterable list items as 50/50 info units
 
 ### Changed
 - Removed feedback-form default text and clarified help_text
