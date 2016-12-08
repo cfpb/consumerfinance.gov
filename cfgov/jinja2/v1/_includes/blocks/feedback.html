@@ -9,15 +9,13 @@
 <div class="o-feedback">
 	<form method="post"
 	      action="."
-	{% if not value.was_it_helpful_text %}
-	      class="o-form">
-	{% else %}
 	      class="o-form
 	             block
+	             {% if value.was_it_helpful_text %}
 	             block__bg
 	             block__border
-	             block__padded-top">
-	{% endif %}
+	             block__padded-top
+	            {% endif %}">
 	<div class="u-mb15">
 		{% if get_messages(request) %}
 			{% for message in get_messages(request) %}
