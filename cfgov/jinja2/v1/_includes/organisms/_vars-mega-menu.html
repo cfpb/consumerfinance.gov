@@ -159,8 +159,8 @@
     )]) ) }}
 {% endif %}
 
-{% if flag_enabled(request, 'MARKET_TRENDS_RELEASE') %}
+{% if flag_enabled(request, 'CREDIT_TRENDS_RELEASE') %}
     {{ nav_items[0][2][2][2].insert( 0,
-        ('Credit Market Trends', '/data-research/credit-market-trends/', [])
+        ('Consumer Credit Trends', '/data-research/consumer-credit-trends/', [])
     ) }}
 {% endif %}
