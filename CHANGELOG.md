@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Credit card agreements database updated to 2.2.4
 - Picard upgraded to version 1.5.4.
 - CFGOVImage renditions behavior changed to always return original source image for GIFs.
+- Change table organism to be in line with design manual
 
 ### Fixed
 - Fixed file type link icons within info-units
