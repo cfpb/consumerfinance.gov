@@ -35,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Picard upgraded to version 1.5.4.
 - CFGOVImage renditions behavior changed to always return original source image for GIFs.
 - Change table organism to be in line with design manual
+- Split Google Tag Manager code between page head and body
 
 ### Fixed
 - Fixed file type link icons within info-units
