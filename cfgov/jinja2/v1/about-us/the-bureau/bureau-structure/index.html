@@ -3,7 +3,6 @@
 {% import '_vars-office-data.html' as office_data %}
 {% import '_vars-division-data.html' as division_data %}
 {% import '_macro-role.html' as role with context %}
-{% import '_macro-content-slider.html' as content_slider with context %}
 {% import '_macro-branches.html' as branches with context %}
 
 {% set active_nav_id = 'bureau-structure' %}
@@ -12,7 +11,7 @@
                         'title': 'Divisions',
                         'sub_title': 'Offices in this division',
                         'data': division_data.data
-                     },{
+                     }, {
                         'title':'Office of the Director',
                         'sub_title': 'Offices under this position',
                         'data': office_data.data

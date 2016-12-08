@@ -92,9 +92,7 @@ module.exports = {
       dest: paths.processed + '/css'
     },
     vendorImg: {
-      src: [
-        paths.modules + '/slick-carousel/slick/ajax-loader.gif'
-      ],
+      src: [],
       dest: paths.processed + '/img'
     },
     vendorJs: {

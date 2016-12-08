@@ -33,6 +33,7 @@
     "gulp-uglify": "2.0.0",
     "imports-loader": "0.6.5",
     "require-dir": "0.3.0",
+    "slick-carousel": "1.6.0",
     "snyk": "1.19.1",
     "webpack": "1.13.2",
     "webpack-stream": "3.2.0"
@@ -70,7 +71,8 @@
     "wcag": "0.2.2"
   },
   "browser": {
-    "es5-sham": "./node_modules/es5-shim/es5-sham.min.js"
+    "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",
+    "jquery": "./node_modules/jquery/dist/jquery.js"
   },
   "scripts": {
     "test": "snyk test"
