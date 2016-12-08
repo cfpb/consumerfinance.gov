@@ -23,15 +23,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Add settings to settings/base.py enabling picard to integrate with Jenkins
 - Credit Market Trends to mega menu with a feature flag
 - New category support for stories (categorized by type of financial product)
+- Ability to output filterable list items as 50/50 info units
+- New `add_images` management command to programmaticaly add images to Wagtail.
 
 ### Changed
 - Removed feedback-form default text and clarified help_text
 - Adjusted Django admin page for v1_feedback objects
 - Updated owning-a-home-api dependency to v0.9.91 for security update
-- Change table organism to be in line with design manual
-- Modified 25 / 75 Organims to add Boolean `should_link_image` flag.
+- Modified 25 / 75 Organisms to add Boolean `should_link_image` flag.
 - Credit card agreements database updated to 2.2.4
 - Picard upgraded to version 1.5.4.
+- CFGOVImage renditions behavior changed to always return original source image for GIFs.
+- Change table organism to be in line with design manual
 
 ### Fixed
 - Fixed file type link icons within info-units
