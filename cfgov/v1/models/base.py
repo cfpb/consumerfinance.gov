@@ -1,3 +1,5 @@
+import csv
+from cStringIO import StringIO
 from collections import OrderedDict
 from itertools import chain
 import json
@@ -8,8 +10,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
 from django.http import (
     Http404,
     JsonResponse,
@@ -31,7 +31,6 @@ from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Orderable, Page, PageManager, PagePermissionTester, \
     PageQuerySet, UserPagePermissionsProxy
-from wagtail.wagtailimages.models import AbstractImage, AbstractRendition, Image
 from wagtail.wagtailcore.url_routing import RouteResult
 
 from taggit.models import TaggedItemBase
@@ -475,30 +474,6 @@ class CFGOVUserPagePermissionsProxy(UserPagePermissionsProxy):
         return CFGOVPagePermissionTester(self, page)
 
 
-class CFGOVImage(AbstractImage):
-    alt = models.CharField(max_length=100, blank=True)
-
-    admin_form_fields = Image.admin_form_fields + (
-        'alt',
-    )
-
-
-class CFGOVRendition(AbstractRendition):
-    image = models.ForeignKey(CFGOVImage, related_name='renditions')
-
-
-# Delete the source image file when an image is deleted
-@receiver(pre_delete, sender=CFGOVImage)
-def image_delete(sender, instance, **kwargs):
-    instance.file.delete(False)
-
-
-# Delete the rendition image file when a rendition is deleted
-@receiver(pre_delete, sender=CFGOVRendition)
-def rendition_delete(sender, instance, **kwargs):
-    instance.file.delete(False)
-
-
 # keep encrypted passwords around to ensure that user does not re-use
 # any of the previous 10
 class PasswordHistoryItem(models.Model):
@@ -573,3 +548,26 @@ class Feedback(models.Model):
     expect_to_buy = models.CharField(max_length=255, blank=True, null=True)
     currently_own = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(max_length=250, blank=True, null=True)
+
+    def assemble_csv(self, queryset):
+        headings = [
+            'comment',
+            'currently_own',
+            'expect_to_buy',
+            'email',
+            'is_helpful',
+            'page',
+            'referrer',
+            'submitted_on'
+        ]
+        csvfile = StringIO()
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+        writer.writerow([field for field in headings])
+        for feedback in queryset:
+            feedback.submitted_on = "{}".format(feedback.submitted_on.date())
+            feedback.comment = feedback.comment.encode('utf-8')
+            writer.writerow(
+                ["{}".format(getattr(feedback, heading))
+                 for heading in headings]
+            )
+        return csvfile.getvalue()
