@@ -94,9 +94,9 @@
     ),(
         ('Consumer Complaint Database', '/data-research/consumer-complaints/', []),
         ('Mortgage Database (HMDA)', '/data-research/mortgage-data-hmda/', [])
-    ),(
+    ),[
         ('Credit Card Surveys & Agreements', '/data-research/credit-card-data/', []),
-    )]),
+    ]]),
     ('Policy & Compliance', '/policy-compliance/', [(
         ('Rulemaking', '/policy-compliance/rulemaking/', [(
             ('Final Rules', '/policy-compliance/rulemaking/final-rules/', []),
@@ -157,4 +157,10 @@
         ('Know Your Rights', '/consumer-tools/prepaid-cards/know-your-rights/', []),
         ('Understand the Fees You Will Pay', '/consumer-tools/prepaid-cards/understand-fees/', [])
     )]) ) }}
+{% endif %}
+
+{% if flag_enabled(request, 'CREDIT_TRENDS_RELEASE') %}
+    {{ nav_items[0][2][2][2].insert( 0,
+        ('Consumer Credit Trends', '/data-research/consumer-credit-trends/', [])
+    ) }}
 {% endif %}
