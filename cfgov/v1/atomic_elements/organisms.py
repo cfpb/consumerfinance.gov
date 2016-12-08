@@ -490,6 +490,8 @@ class FilterControls(BaseExpandable):
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
                                      label='Filter Date Range')
+    output_5050 = blocks.BooleanBlock(default=False, required=False,
+                                      label="Render preview items as 50-50s")
 
     class Meta:
         label = 'Filter Controls'

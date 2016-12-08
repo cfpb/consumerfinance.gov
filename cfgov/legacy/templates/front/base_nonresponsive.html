@@ -76,7 +76,7 @@ please send an email with your full name to tech@cfpb.gov.
     <link rel="stylesheet" href="{% static 'nemo/_/c/eot.css' %}">
     <![endif]-->
     <link rel="stylesheet" href="{% static 'nemo/_/c/styles.css' %}">
-   
+
 
     {% endblock %}
 
@@ -88,6 +88,13 @@ please send an email with your full name to tech@cfpb.gov.
     <link rel="stylesheet" href="{% static 'css/header.nonresponsive.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/footer.nonresponsive.css' %}"/>
 
+    {# Google Tag Manager #}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+
     <!-- Feeds -->
     {% block page_feeds %}
     {% endblock %}
@@ -98,18 +105,10 @@ please send an email with your full name to tech@cfpb.gov.
 
 <body class="{% block body_class %}page{% endblock %}" data-lang="{% trans "en" %}">
 {% block gtm_js %}
-<!-- Google Tag Manager -->
-{# Should always be included immediately after the opening <body> tag #}
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KMMLRS');
-</script>
-<!-- End Google Tag Manager -->
+<!-- End Google Tag Manager (noscript) -->
 {% endblock %}
 <script src="{% static 'js/modernizr.min.js'  %}"></script>
 
@@ -144,7 +143,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
     </div><!-- /#page -->
-        {% global_include "on-demand/footer.html" %}    
+        {% global_include "on-demand/footer.html" %}
 
     {% block app_modal %}
     {% endblock %}

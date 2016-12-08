@@ -28,15 +28,16 @@ page_types = [
     ('activity-log', 'Activity Log'),
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
-    ('enforcement', 'Enforcement action'),
+    ('enforcement', 'Enforcement Action'),
     ('final-rule', 'Final Rule'),
     ('foia-freq-req-record', 'FOIA Frequently Requested Record'),
     ('impl-resource', 'Implementation Resource'),
+    ('leadership-calendar', 'Leadership Calendar'),
     ('newsroom', 'Newsroom'),
     ('notice-opportunity-comment', 'Notice and Opportunity for Comment'),
     ('research-reports', 'Research Report'),
-    ('rule-under-dev', 'Rule under development'),
-    ('leadership-calendar', 'Leadership Calendar'),
+    ('rule-under-dev', 'Rule Under Development'),
+    ('story', 'Story'),
 ]
 
 fcm_types = [
@@ -105,6 +106,14 @@ categories = [
     ('Rule under development', (
         ('notice-proposed-rule-2', 'Advanced Notice of Proposed Rulemaking'),
         ('proposed-rule-2', 'Proposed Rule'),
+    )),
+    ('Story', (
+        ('auto-loans', 'Auto loans'),
+        ('credit-cards', 'Credit cards'),
+        ('credit-reporting', 'Credit reporting'),
+        ('debt-collection', 'Debt collection'),
+        ('mortgages', 'Mortgages'),
+        ('student-loans', 'Student loans'),
     )),
 ]
 
