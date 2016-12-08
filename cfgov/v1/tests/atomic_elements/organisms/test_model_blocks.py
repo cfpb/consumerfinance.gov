@@ -170,25 +170,25 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
     def test_no_full_width(self):
         html = self.get_table_html(is_full_width=False)
         self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table table__stack-on-small">'
+            '<table class="o-table o-table__stack-on-small">'
         ))
 
     def test_full_width(self):
         html = self.get_table_html(is_full_width=True)
         self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table table__stack-on-small u-w100pct">'
+            '<table class="o-table o-table__stack-on-small u-w100pct">'
         ))
 
     def test_not_striped(self):
         html = self.get_table_html(is_striped=False)
         self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table table__stack-on-small">'
+            '<table class="o-table o-table__stack-on-small">'
         ))
 
     def test_striped(self):
         html = self.get_table_html(is_striped=True)
         self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table table__stack-on-small table__striped">'
+            '<table class="o-table o-table__stack-on-small table__striped">'
         ))
 
     def test_not_stacked(self):
@@ -200,5 +200,5 @@ class ModelTableTestCase(UserModelMixin, HtmlMixin, TestCase):
     def test_stacked(self):
         html = self.get_table_html(is_stacked=True)
         self.assertHtmlRegexpMatches(html, (
-            '<table class="o-table table__stack-on-small">'
+            '<table class="o-table o-table__stack-on-small">'
         ))
