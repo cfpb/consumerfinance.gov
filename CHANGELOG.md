@@ -12,6 +12,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## Unreleased
+
+## Changed
+- external-site redirector now requires URLs to either be whitelisted or signed
+
+
+## Unreleased
+
+### Fixed
+- Fixed bug stopping videos in HTTPS pages.
 
 
 ## 4.3.1
@@ -46,6 +56,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed file type link icons within info-units
+- Wordpress page processor properly uses WORDPRESS environment variable.
 
 
 ## 4.2.1
