@@ -14,6 +14,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 
 
+## Unreleased
+
+### Fixed
+- Fixed bug stopping videos in HTTPS pages.
+
+
 ## 4.3.0
 
 ### Added
