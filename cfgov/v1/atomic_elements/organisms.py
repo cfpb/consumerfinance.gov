@@ -14,6 +14,7 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from . import atoms, molecules
+from .. import blocks as v1_blocks
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
 
@@ -172,22 +173,21 @@ class Table(blocks.StructBlock):
         template = '_includes/organisms/table.html'
         label = ' '
 
-
 class BureauStructurePosition(blocks.StructBlock):
     office_name = blocks.CharBlock()
-    lead = blocks.CharBlock(default="Name")
+    lead = blocks.CharBlock(placeholder="Name")
     title = blocks.StructBlock([
-        ('line_1', blocks.CharBlock(required=False, default="Text")),
-        ('line_2', blocks.CharBlock(required=False, default="Text"))
+        ('line_1', blocks.CharBlock(required=False, placeholder="Name")),
+        ('line_2', blocks.CharBlock(required=False, placeholder="Name"))
     ])
 
 
 class BureauStructureDivision(blocks.StructBlock):
-    division = blocks.CharBlock(label='Division', default="Division Name")
-    division_lead = blocks.CharBlock(default="Name")
+    division = v1_blocks.CharBlockWithPlaceHolder(label='Division')
+    division_lead = v1_blocks.CharBlockWithPlaceHolder(placeholder="Name")
     title = blocks.StructBlock([
-        ('line_1', blocks.CharBlock(required=False, default="Text")),
-        ('line_2', blocks.CharBlock(required=False, default="Text"))
+        ('line_1', v1_blocks.CharBlockWithPlaceHolder(required=False, placeholder="Name")),
+        ('line_2', v1_blocks.CharBlockWithPlaceHolder(required=False, placeholder="Name"))
     ])
     link_to_division_page = atoms.Hyperlink(required=False)
     offices = blocks.ListBlock(BureauStructurePosition(required=False))
