@@ -175,19 +175,19 @@ class Table(blocks.StructBlock):
 
 class BureauStructurePosition(blocks.StructBlock):
     office_name = blocks.CharBlock()
-    lead = blocks.CharBlock(placeholder="Name")
+    lead = v1_blocks.CharBlockWithPlaceHolder(placeholder_text="Name")
     title = blocks.StructBlock([
-        ('line_1', blocks.CharBlock(required=False, placeholder="Name")),
-        ('line_2', blocks.CharBlock(required=False, placeholder="Name"))
+        ('line_1', v1_blocks.CharBlockWithPlaceHolder(required=False, placeholder_text="Title 1")),
+        ('line_2', v1_blocks.CharBlockWithPlaceHolder(required=False, placeholder_text="Title 2"))
     ])
 
 
 class BureauStructureDivision(blocks.StructBlock):
     division = v1_blocks.CharBlockWithPlaceHolder(label='Division')
-    division_lead = v1_blocks.CharBlockWithPlaceHolder(placeholder="Name")
+    division_lead = v1_blocks.CharBlockWithPlaceHolder(placeholder_text="Name")
     title = blocks.StructBlock([
-        ('line_1', v1_blocks.CharBlockWithPlaceHolder(required=False, placeholder="Name")),
-        ('line_2', v1_blocks.CharBlockWithPlaceHolder(required=False, placeholder="Name"))
+        ('line_1', v1_blocks.CharBlockWithPlaceHolder(required=False, placeholder_text="Title 1")),
+        ('line_2', v1_blocks.CharBlockWithPlaceHolder(required=False, placeholder_text="Title 2"))
     ])
     link_to_division_page = atoms.Hyperlink(required=False)
     offices = blocks.ListBlock(BureauStructurePosition(required=False))
