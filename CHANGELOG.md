@@ -17,11 +17,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Changed
 - external-site redirector now requires URLs to either be whitelisted or signed
 
-
-## Unreleased
-
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
+- bug that wasn't signing links already coded to /external-site
 
 
 ## 4.3.1
