@@ -22,6 +22,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - bug that wasn't signing links already coded to /external-site
 
 
+## 4.3.1
+
+### Changed
+- Fix incorrect django settings for picard
+- Bump picard to 1.5.5 to fix false positive error report
+
+
 ## 4.3.0
 
 ### Added
