@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 import os, re, HTMLParser
-from urlparse import urlparse
+from urlparse import urlparse, parse_qs
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template.defaultfilters import pluralize, slugify, linebreaksbr
@@ -20,7 +20,7 @@ from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
 from processors.processors_common import fix_link
 from v1.routing import get_page_relative_url
-from core.utils import signed_redirect, unsigned_redirect
+from core.utils import signed_redirect, unsigned_redirect, sign_url
 
 
 default_app_config = 'v1.apps.V1AppConfig'
@@ -121,7 +121,14 @@ def add_link_markup(tags):
         added_icon = False
         if not tag.attrs.get('class', None):
             tag.attrs.update({'class': []})
-        if NONCFPB_LINK_PATTERN.match(tag['href']):
+        if tag['href'].startswith('/external-site/?'):
+            components = urlparse(tag['href'])
+            arguments = parse_qs(components.query)
+            if 'ext_url' in arguments:
+                external_url = arguments['ext_url'][0]
+                tag['href'] = signed_redirect(external_url)
+
+        elif NONCFPB_LINK_PATTERN.match(tag['href']):
             # Sets the icon to indicate you're leaving consumerfinance.gov
             tag.attrs['class'].append(EXTERNAL_A_CSS)
             if EXTERNAL_LINK_PATTERN.match(tag['href']):
