@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 import os, re, HTMLParser
-from urlparse import urlparse
+from urlparse import urlparse, parse_qs
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template.defaultfilters import pluralize, slugify, linebreaksbr
@@ -121,6 +121,11 @@ def add_link_markup(tags):
         added_icon = False
         if not tag.attrs.get('class', None):
             tag.attrs.update({'class': []})
+        if tag['href'].startswith('/external-site/?'):
+            components = urlparse(tag['href'])
+            arguments = parse_qs(components.query)
+            if 'ext_url' in arguments:
+                tag['href'] = arguments['ext_url'][0]
         if NONCFPB_LINK_PATTERN.match(tag['href']):
             # Sets the icon to indicate you're leaving consumerfinance.gov
             tag.attrs['class'].append(EXTERNAL_A_CSS)
