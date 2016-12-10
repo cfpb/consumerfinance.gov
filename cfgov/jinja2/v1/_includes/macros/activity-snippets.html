@@ -25,7 +25,7 @@
    ========================================================================== #}
 
 {% macro render(tag,
-                activity_types=['posts', 'op-ed', 'newsroom', 'press release', 'speech', 'testimony'],
+                activity_types=['blog', 'op-ed', 'newsroom', 'press release', 'speech', 'testimony'],
                 include_date_flag=false,
                 number_columns=1
                )
@@ -72,67 +72,29 @@
 
 {% macro _activity_snippet(activity_type, tags, quantity, include_date_flag=false) %}
     {% import 'macros/category-icon.html' as category_icon %}
-    {% if activity_type|lower == 'posts' %}
-        {% set icon = category_icon.render('blog') %}
-        {% set header = 'Blog' %}
-        {% set categories = ['at-the-cfpb', 'policy_compliance', 'data-research-reports', 'info-for-consumers'] %}
-        {% set feed = cfgovpage_objects.live_shared(request.site.hostname).filter(categories__name__in=categories)[:quantity] %}
-    {% elif activity_type|lower == 'op-ed' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Op-Ed' %}
-        {% set categories = ['op-ed'] %}
-        {% set feed = cfgovpage_objects.live_shared(request.site.hostname).filter(categories__name__in=categories)[:quantity] %}
-    {% elif activity_type|lower == 'newsroom' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Newsroom' %}
-        {% set categories = ['op-ed', 'press-release', 'speech', 'testimony'] %}
-        {% set feed = cfgovpage_objects.live_shared(request.site.hostname).filter(categories__name__in=categories)[:quantity] %}
-    {% elif activity_type|lower == 'press release' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Press Release' %}
-        {% set categories = ['press-release'] %}
-        {% set feed = cfgovpage_objects.live_shared(request.site.hostname).filter(categories__name__in=categories)[:quantity] %}
-    {% elif activity_type|lower == 'speech' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Speech' %}
-        {% set categories = ['speech'] %}
-        {% set feed = cfgovpage_objects.live_shared(request.site.hostname).filter(categories__name__in=categories)[:quantity] %}
-    {% elif activity_type|lower == 'testimony' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Testimony' %}
-        {% set categories = ['testimony'] %}
-        {% set feed = cfgovpage_objects.live_shared(request.site.hostname).filter(categories__name__in=categories)[:quantity] %}
-    {% elif activity_type|lower == 'cfpb_report' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Reports' %}
-        {% set categories = ['consumer-complaint', 'super-highlight', 'data-point', 'industry-markets', 'consumer-edu-empower', 'to-congress'] %}
-        {% set feed = cfgovpage_objects.live_shared(request.site.hostname).filter(categories__name__in=categories)[:quantity] %}
-    {% else %}
-        {% set icon = category_icon.render('blog') %}
-        {% set header = 'Feed' %}
-        {% set categories = ['at-the-cfpb', 'policy_compliance', 'data-research-reports', 'info-for-consumers'] %}
-        {% set feed = cfgovpage_objects.live_shared(request.site.hostname).filter(categories__name__in=categories)[:quantity] %}
-    {% endif %}
+    {% set feed = get_latest_activities(activity_type, request.site.hostname) %}
     {% if feed %}
-    <div class="activity">
-        <h3 class="h4">{{ icon }} {{ header }}</h3>
-        <ul class="list list__unstyled list__spaced list__links">
-        {% for item in feed %}
-            <li class="list_item">
-                <a class="list_link"
-                   href="{{ get_protected_url(item) }}">
-                    {{ item.preview_title | safe if item.preview_title else item.title | safe  }}
-                    {%- if include_date_flag and item.specific.date_published -%}
-                        <span class="date">
-                            &ndash;
-                            {% import 'macros/time.html' as time %}
-                            {{ time.render(item.specific.date_published, {'date':true}) }}
-                        </span>
-                    {%- endif -%}
-                </a>
-            </li>
-        {% endfor %}
-        </ul>
-    </div>
+      {% set header = activity_type.title() %}
+      {% set icon = category_icon.render(activity_type) %}
+      <div class="activity">
+          <h3 class="h4">{{ icon }} {{ header }}</h3>
+          <ul class="list list__unstyled list__spaced list__links">
+          {% for item in feed %}
+              <li class="list_item">
+                  <a class="list_link"
+                     href="{{ get_protected_url(item) }}">
+                      {{ item.preview_title | safe if item.preview_title else item.title | safe  }}
+                      {%- if include_date_flag and item.specific.date_published -%}
+                          <span class="date">
+                              &ndash;
+                              {% import 'macros/time.html' as time %}
+                              {{ time.render(item.specific.date_published, {'date':true}) }}
+                          </span>
+                      {%- endif -%}
+                  </a>
+              </li>
+          {% endfor %}
+          </ul>
+      </div>
     {% endif %}
 {% endmacro %}
