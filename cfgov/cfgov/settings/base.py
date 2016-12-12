@@ -368,6 +368,7 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # S3 Configuration
+AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
@@ -378,7 +379,6 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
     AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 
-    AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
     MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery

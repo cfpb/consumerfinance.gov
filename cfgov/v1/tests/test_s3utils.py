@@ -31,7 +31,7 @@ class S3UtilsTestCase(TestCase):
         )
 
     def test_storage_location_uses_settings(self):
-        with modify_settings(AWS_S3_ROOT='test'):
+        with override_settings(AWS_S3_ROOT='test'):
             from v1.s3utils import MediaRootS3BotoStorage
             storage = MediaRootS3BotoStorage()
             self.assertEqual(storage.location, 'test')
@@ -54,7 +54,7 @@ class TestS3StorageLocation(TestCase):
     def test_storage_writes_to_s3(self):
         f = ContentFile('content')
         Storage = get_storage_class()
-        filename = Storage().save('content.txt', f)
+        Storage().save('content.txt', f)
 
         bucket = self.s3.get_bucket('test_s3_bucket')
         key = bucket.get_key('root/content.txt')
