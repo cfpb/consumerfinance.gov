@@ -24,6 +24,8 @@ from v1.views import (
 )
 from v1.views.documents import DocumentServeView
 
+from core.views import ExternalURLNoticeView
+
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
@@ -108,6 +110,9 @@ urlpatterns = [
             name='page')],
         namespace='business')),
 
+    url(r'^external-site/$', ExternalURLNoticeView.as_view(),
+        name='external-site'),
+
     url(r'^subscriptions/new/$',
         'core.views.govdelivery_subscribe',
         name='govdelivery'),
@@ -160,7 +165,6 @@ urlpatterns = [
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 
-    url(r'^external-site/$', SheerTemplateView.as_view(template_name='external-site/index.html'), name='external-site'),
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(url='/about-us/careers/%(path)s', permanent=True)),
     url(r'^about-us/careers/', include('jobmanager.urls', namespace='careers')),

@@ -227,6 +227,12 @@ STATICFILES_DIRS = [
 
 ALLOWED_HOSTS = ['*']
 
+EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
+                          r'^https:\/\/twitter\.com\/cfpb$',
+                          r'^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$',
+                          r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
+                          r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
+                          )
 EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
 NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
 FILES_LINK_PATTERN = r'https?:\/\/files\.consumerfinance.gov\/f\/\S+\.[a-z]+'
@@ -491,8 +497,8 @@ PICARD_JENKINS_USER = os.environ.get('PICARD_JENKINS_USER', None)
 PICARD_JENKINS_PASSWORD = os.environ.get('PICARD_JENKINS_PASSWORD', None)
 PICARD_JENKINS_AKAMAI_FLUSH = os.environ.get('PICARD_JENKINS_AKAMAI_FLUSH', None)
 PICARD_JENKINS_DATA_EXPORT = os.environ.get('PICARD_JENKINS_DATA_EXPORT', None)
-PICARD_JENKINS_DATA_EXPORT_FROM_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT', 'CONTENT')
-PICARD_JENKINS_DATA_EXPORT_TO_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT', 'PRODUCTION')
+PICARD_JENKINS_DATA_EXPORT_FROM_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_FROM_ENV', 'CONTENT')
+PICARD_JENKINS_DATA_EXPORT_TO_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_TO_ENV', 'PRODUCTION')
 
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')

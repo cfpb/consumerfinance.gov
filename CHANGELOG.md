@@ -12,6 +12,21 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## Unreleased
+
+## Changed
+- external-site redirector now requires URLs to either be whitelisted or signed
+
+### Fixed
+- Fixed bug stopping videos in HTTPS pages.
+- bug that wasn't signing links already coded to /external-site
+
+
+## 4.3.1
+
+### Changed
+- Fix incorrect django settings for picard
+- Bump picard to 1.5.5 to fix false positive error report
 
 
 ## 4.3.0

@@ -31,7 +31,6 @@ function ExternalSite( element ) {
    * Initialize the events and timer.
    */
   function init() {
-    _directEl.addEventListener( 'click', _proceedClicked );
     _intervalId = setInterval( _tick, INTERVAL );
   }
 
@@ -50,7 +49,7 @@ function ExternalSite( element ) {
    */
   function _gotoUrl() {
     clearInterval( _intervalId );
-    window.location = _durationEl.getAttribute( 'data-url' );
+    $('#proceed').submit()
   }
 
   /**
