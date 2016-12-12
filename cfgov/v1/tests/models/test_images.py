@@ -1,6 +1,4 @@
-from unittest import skipIf
-
-from django.db import IntegrityError, connection
+from django.db import IntegrityError
 from django.test import TestCase
 from mock import Mock, patch
 from wagtail.wagtailimages.models import Filter
