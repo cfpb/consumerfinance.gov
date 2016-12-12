@@ -1,4 +1,6 @@
 from django.core.urlresolvers import reverse
+from django.conf import settings
+
 from wagtail.wagtailcore.utils import WAGTAIL_APPEND_SLASH
 from jinja2 import contextfunction
 from django import template
@@ -64,7 +66,7 @@ def get_page_state_url(context, page):
     if url is None:  # If page is not aligned to a site root return None
         return None
     page_hostname = urlparse(url).hostname
-    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
+    staging_hostname = settings.STAGING_HOSTNAME
     if not page.live and page.shared and staging_hostname != page_hostname:
         url = url.replace(page_hostname, staging_hostname)
     return url
