@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
 - bug that wasn't signing links already coded to /external-site
+- Added missing uniqueness constraint on CFGOVRendition.
 
 
 ## 4.3.1
