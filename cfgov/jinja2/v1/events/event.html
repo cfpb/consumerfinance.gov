@@ -23,13 +23,13 @@
 
 {% block content_main %}
     {% include 'events/_event-detail.html' %}
-    {% from 'events/_macros.html' import event_media as event_media %}
+    {% from 'events/_macros.html' import event_media as event_media with context %}
     {% if event_state and event_state != 'future' %}
         {{ event_media(page) }}
     {% endif %}
 
     {% if page.agenda_items %}
-        {% from 'events/_macros.html' import event_agenda as event_agenda %}
+        {% from 'events/_macros.html' import event_agenda as event_agenda with context%}
         {{ event_agenda(page) }}
     {% endif %}
     <div class="event-footer">

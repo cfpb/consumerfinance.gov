@@ -98,11 +98,11 @@
 
     </div>
     <!--[if gt IE 8]><!-->
-      {% hashedscript %}
+      <script>
       /* TODO: scope no-js to individual molecules/organisms. This is a hack to fix no-js on the on-demand header, while also allowing the menu to be scoped to o-header for on-demand pages. */
       var headerDom = document.querySelector( '.o-header_content' );
       headerDom.className = headerDom.className.replace( 'no-js', 'js' );
-      {% end_hashedscript %}
+      </script>
     <!--<![endif]-->
 </header>
 

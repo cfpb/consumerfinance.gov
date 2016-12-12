@@ -12,13 +12,66 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-
 ## Unreleased
+
+## Changed
+- external-site redirector now requires URLs to either be whitelisted or signed
+
+### Fixed
+- Fixed bug stopping videos in HTTPS pages.
+- bug that wasn't signing links already coded to /external-site
+
+
+## 4.3.1
+
+### Changed
+- Fix incorrect django settings for picard
+- Bump picard to 1.5.5 to fix false positive error report
+
+
+## 4.3.0
+
+### Added
+- Add ability to individually customize the content of social media share links
+- Code to convert S3 HTTP image links to HTTPS during sheerlike imports
+- New Wagtail video player module that can be added to Learn pages
+- Add settings to settings/base.py enabling picard to integrate with Jenkins
+- Credit Market Trends to mega menu with a feature flag
+- New category support for stories (categorized by type of financial product)
+- Ability to output filterable list items as 50/50 info units
+- New `add_images` management command to programmaticaly add images to Wagtail.
+
+### Changed
+- Removed feedback-form default text and clarified help_text
+- Adjusted Django admin page for v1_feedback objects
+- Updated owning-a-home-api dependency to v0.9.91 for security update
+- Modified 25 / 75 Organisms to add Boolean `should_link_image` flag.
+- Credit card agreements database updated to 2.2.4
+- Picard upgraded to version 1.5.4.
+- CFGOVImage renditions behavior changed to always return original source image for GIFs.
+- Change table organism to be in line with design manual
+- Split Google Tag Manager code between page head and body
+
+### Fixed
+- Fixed file type link icons within info-units
+- Wordpress page processor properly uses WORDPRESS environment variable.
+
+
+## 4.2.1
+
+### Changed
+- Limit Activity Log posts to appropriate page categories.
+- Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
+
+
+## 4.2.0
 
 ### Added
 - Forms and other bits for two new Owning a Home feedback modules
 - django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 - `conference_export` management command added to export conference registrations.
+- Add ability to individually customize the content of social media share links
+- Added CSV download option to v1_feedback django_admin page
 
 ### Changed
 - Eregs/ip updated to version 1.0.3.
@@ -32,20 +85,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Limit Activity Log posts to appropriate page categories.
 - Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
 
-### Removed
 
 ## 4.1.9
-- Bumping version of College Comparision Tool.
+
+### Changed
+- Bumping version of College Comparison Tool to 1.2.9
+
 
 ## 4.1.8
 
 ### Changed
 - roll complaints back to 1.2.6
 
+
 ## 4.1.7
 
 ### Changed
 - moved data_research into the db_router.py whitelist
+
 
 ## 4.1.6
 
@@ -53,20 +110,24 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed broken static assets on Technology and Innovation Fellowship page.
 - Conference Registration Form configurable error and success messages.
 
+
 ## 4.1.5
 
 ### Changed
 - update complaints to 1.2.7
+
 
 ## 4.1.4
 
 ### Fixed
 - an improved fix for the newsroom issue (see 4.1.2 and 4.1.3)
 
+
 ## 4.1.3
 
 ### Fixed
 - backed-out 4.1.2's newsroom fix
+
 
 ## 4.1.2
 
@@ -109,10 +170,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)
 - all references to `django-htmlmin`
-
-### Fixed
-- Fixed file type link icons within info-units
-
 
 
 ## 4.0.0
