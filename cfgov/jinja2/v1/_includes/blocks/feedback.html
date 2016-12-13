@@ -27,7 +27,8 @@
     </div>
 	<form method="post"
 	      action="."
-	      class="o-form">
+	      class="o-form"
+	      novalidate>
 	
 	<div class="form-l">
 	    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
@@ -102,7 +103,10 @@
 	        </div>
 	        <div class="form-l_col
 	                    form-l_col-1">
-	            <textarea id="comment" name="comment" rows="6">
+	            <textarea id="comment" name="comment" rows="6"
+	                     {% if not value.was_it_helpful_text %}
+                             required
+                         {% endif %}>
 	                {{- form.comment.value() | default('', true) -}}
 	            </textarea>
 	        </div>
