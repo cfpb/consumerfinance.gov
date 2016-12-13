@@ -89,6 +89,11 @@ class CFGOVImage(AbstractImage):
 class CFGOVRendition(AbstractRendition):
     image = models.ForeignKey(CFGOVImage, related_name='renditions')
 
+    class Meta:
+        unique_together = (
+            ('image', 'filter', 'focal_point_key'),
+        )
+
 
 # Delete the source image file when an image is deleted
 @receiver(pre_delete, sender=CFGOVImage)
