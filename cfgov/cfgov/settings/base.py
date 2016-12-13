@@ -227,6 +227,12 @@ STATICFILES_DIRS = [
 
 ALLOWED_HOSTS = ['*']
 
+EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
+                          r'^https:\/\/twitter\.com\/cfpb$',
+                          r'^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$',
+                          r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
+                          r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
+                          )
 EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
 NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
 FILES_LINK_PATTERN = r'https?:\/\/files\.consumerfinance.gov\/f\/\S+\.[a-z]+'
@@ -362,6 +368,7 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # S3 Configuration
+AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
@@ -372,7 +379,7 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
     AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 
-    MEDIA_URL = os.environ.get('AWS_S3_URL') + '/f/'
+    MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery
 
@@ -491,8 +498,8 @@ PICARD_JENKINS_USER = os.environ.get('PICARD_JENKINS_USER', None)
 PICARD_JENKINS_PASSWORD = os.environ.get('PICARD_JENKINS_PASSWORD', None)
 PICARD_JENKINS_AKAMAI_FLUSH = os.environ.get('PICARD_JENKINS_AKAMAI_FLUSH', None)
 PICARD_JENKINS_DATA_EXPORT = os.environ.get('PICARD_JENKINS_DATA_EXPORT', None)
-PICARD_JENKINS_DATA_EXPORT_FROM_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT', 'CONTENT')
-PICARD_JENKINS_DATA_EXPORT_TO_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT', 'PRODUCTION')
+PICARD_JENKINS_DATA_EXPORT_FROM_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_FROM_ENV', 'CONTENT')
+PICARD_JENKINS_DATA_EXPORT_TO_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_TO_ENV', 'PRODUCTION')
 
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')

@@ -12,9 +12,30 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
-
-
 ## Unreleased
+
+## Added
+- New AWS_S3_ROOT setting to specify root S3 path.
+
+## Changed
+- external-site redirector now requires URLs to either be whitelisted or signed
+- Move logic for activity snippets out of template
+
+### Fixed
+- Fixed bug stopping videos in HTTPS pages.
+- bug that wasn't signing links already coded to /external-site
+- Sort activity snippets by latest date
+- Added missing uniqueness constraint on CFGOVRendition.
+
+
+## 4.3.1
+
+### Changed
+- Fix incorrect django settings for picard
+- Bump picard to 1.5.5 to fix false positive error report
+
+
+## 4.3.0
 
 ### Added
 - Add ability to individually customize the content of social media share links
@@ -24,17 +45,22 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Credit Market Trends to mega menu with a feature flag
 - New category support for stories (categorized by type of financial product)
 - Ability to output filterable list items as 50/50 info units
+- New `add_images` management command to programmaticaly add images to Wagtail.
 
 ### Changed
 - Removed feedback-form default text and clarified help_text
 - Adjusted Django admin page for v1_feedback objects
 - Updated owning-a-home-api dependency to v0.9.91 for security update
-- Modified 25 / 75 Organims to add Boolean `should_link_image` flag.
+- Modified 25 / 75 Organisms to add Boolean `should_link_image` flag.
 - Credit card agreements database updated to 2.2.4
 - Picard upgraded to version 1.5.4.
+- CFGOVImage renditions behavior changed to always return original source image for GIFs.
+- Change table organism to be in line with design manual
+- Split Google Tag Manager code between page head and body
 
 ### Fixed
 - Fixed file type link icons within info-units
+- Wordpress page processor properly uses WORDPRESS environment variable.
 
 
 ## 4.2.1

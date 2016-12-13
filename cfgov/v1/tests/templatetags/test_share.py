@@ -1,10 +1,14 @@
 import mock
 
+from django.template import Context, Template
 from unittest import TestCase
+from wagtail.wagtailcore.models import Site
+
 from v1.templatetags import share
 from v1.tests.wagtail_pages import helpers
-from v1.models.base import CFGOVPage, CFGOVPagePermissionTester, CFGOVUserPagePermissionsProxy, User
-from wagtail.wagtailcore.models import Site
+from v1.models.base import (
+    CFGOVPage, CFGOVPagePermissionTester, CFGOVUserPagePermissionsProxy, User
+)
 
 
 class TemplatetagsShareTestCase(TestCase):
@@ -163,3 +167,19 @@ class TemplatetagsShareTestCase(TestCase):
             site.save()
 
         self.assertIsNone(result)
+
+
+class TemplateRenderingTest(TestCase):
+    def test_template_renders_with_get_page_state_url(self):
+        site = Site.objects.get(is_default_site=True)
+        page = site.root_page
+
+        template = (
+            '{% load share %}'
+            '{% get_page_state_url page as url %}'
+            '{{ url }}'
+        )
+
+        t = Template(template)
+        c = Context({'page': page})
+        self.assertEquals(t.render(c), page.url)
