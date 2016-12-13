@@ -19,8 +19,9 @@ from .util.util import get_unique_id, get_secondary_nav_items
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
 from processors.processors_common import fix_link
-from v1.routing import get_page_relative_url
 from core.utils import signed_redirect, unsigned_redirect, sign_url
+from v1.routing import get_protected_url, get_page_relative_url
+from v1.templatetags.share import get_page_state_url
 
 
 default_app_config = 'v1.apps.V1AppConfig'
@@ -32,7 +33,7 @@ def environment(**options):
     env = sheerlike_environment(**options)
     env.autoescape = True
     from v1.models import CFGOVPage
-    from v1.templatetags import share
+    from v1.templatetags.activity_feed import get_latest_activities
     from v1.util import ref
     env.globals.update({
         'static': staticfiles_storage.url,
@@ -48,20 +49,21 @@ def environment(**options):
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
         'is_report': ref.is_report,
-        'get_page_state_url': share.get_page_state_url,
+        'get_page_state_url': get_page_state_url,
         'parse_links': parse_links,
-        'get_protected_url': get_protected_url,
         'related_metadata_tags': related_metadata_tags,
         'get_filter_data': get_filter_data,
         'cfgovpage_objects': CFGOVPage.objects,
         'signed_redirect': signed_redirect,
         'unsigned_redirect': unsigned_redirect,
+        'get_protected_url': get_protected_url,
+        'get_latest_activities': get_latest_activities,
     })
 
     env.filters.update({
         'linebreaksbr': linebreaksbr,
         'pluralize': pluralize,
-        'slugify': slugify
+        'slugify': slugify,
     })
     return env
 
@@ -172,20 +174,6 @@ def render_stream_child(context, stream_child):
     unescaped = HTMLParser.HTMLParser().unescape(html)
     # Return the rendered template as safe html
     return Markup(unescaped)
-
-
-@contextfunction
-def get_protected_url(context, page):
-    if page:
-        request = context['request']
-
-        if page.live or page.shared and request.is_staging:
-            url = get_page_relative_url(page, request.site)
-
-            if url:
-                return url
-
-    return '#'
 
 
 @contextfunction

@@ -7,8 +7,11 @@ from django.forms.utils import ErrorList
 from django.forms import widgets
 from taggit.models import Tag
 
-from v1.util import ref
-from v1.models.base import CFGOVPage, Feedback
+from .models.base import CFGOVPage, Feedback
+from .models.learn_page import AbstractFilterPage
+from v1.util.categories import clean_categories
+from v1.util import ref 
+
 
 import logging
 logger = logging.getLogger(__name__)
@@ -125,32 +128,18 @@ class FilterableListForm(forms.Form):
         super(FilterableListForm, self).__init__(*args, **kwargs)
         page_ids = CFGOVPage.objects.live_shared(self.hostname).values_list('id', flat=True)
 
-        self.clean_categories()
+        clean_categories(selected_categories=self.data.get('categories'))
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
-    def clean_categories(self):
-        """ This is a (hopefully) temporary solution for dealing w/ the fact
-        that we show Blog and Reports as options for filtering, but
-        aren't categories themselves. Rather, they consist of sub-categories,
-        but since we aren't showing those sub-categories to the end user,
-        selecting the parent category is equivalent to all of them
-        getting checked. The mapping of Blog and Reports to their
-        respective categories exists in cfgov/v1/util/ref.py
-        """
 
-        categories = self.data.get('categories')
-        if not categories:
-            return None
-        subcategories = dict(ref.categories)
-        if 'blog' in categories:
-            for x in subcategories['Blog']:
-                categories.append(x[0].lower())
-        if 'research-reports' in categories:
-            for x in subcategories['Research Report']:
-                categories.append(x[0].lower())
-        logger.info('Filtering by categories {}'.format(categories))
-        return categories
+    def base_query(self):
+        base_query = AbstractFilterPage.objects.live_shared(hostname=self.hostname)
+        if self.parent:
+            base_query = base_query.filter(CFGOVPage.objects.child_of_q(self.parent))
+            logger.info('Filtering by parent {}'.format(self.parent))
+        return base_query
+
 
     def get_page_set(self):
         query = self.generate_query()

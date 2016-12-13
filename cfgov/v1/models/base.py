@@ -35,6 +35,7 @@ from wagtail.wagtailcore.url_routing import RouteResult
 
 from taggit.models import TaggedItemBase
 
+
 from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms
 from v1.util import ref
