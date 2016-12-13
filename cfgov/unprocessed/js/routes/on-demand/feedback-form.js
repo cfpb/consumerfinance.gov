@@ -11,6 +11,13 @@ var BASE_CLASS = 'o-feedback';
 function validateFeedback( fields ) {
 	if ( fields.comment && fields.comment.hasAttribute('required') && !fields.comment.value ) {
 		return "Please enter a comment."
+	} else if ( fields['is_helpful'] ) {
+		for ( var i = 0; i < fields['is_helpful'].length; i ++ ) {
+			if ( fields['is_helpful'][i].checked ) {
+				return;
+			}
+		}
+		return 'Please select an option.'
 	}
 }
 
