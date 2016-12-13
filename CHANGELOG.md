@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - external-site redirector now requires URLs to either be whitelisted or signed
 - Move logic for activity snippets out of template
 - Move `get_page_state_url` out of templatetags to avoid circular dependencies
+- Update privacy policy URL
 
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
