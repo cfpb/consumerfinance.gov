@@ -152,9 +152,9 @@ var API = {
         this.player.stopVideo();
     } else {
       this.childElements.iFrameContainer.removeChild(
-        this.childElements.iFrameContainer.firstChild;
-      )
-       this.state.setIsIframeLoaded( false );
+        this.childElements.iFrameContainer.firstChild
+      );
+      this.state.setIsIframeLoaded( false );
     }
   }
 };
