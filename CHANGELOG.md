@@ -14,6 +14,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 ## Unreleased
 
+## Added
+- New AWS_S3_ROOT setting to specify root S3 path.
+
 ## Changed
 - external-site redirector now requires URLs to either be whitelisted or signed
 - Move logic for activity snippets out of template
