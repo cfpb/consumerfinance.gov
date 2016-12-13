@@ -24,9 +24,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
-- bug that wasn't signing links already coded to /external-site
+- bug that wasn't signing links already coded to /external-site.
 - Sort activity snippets by latest date
 - Added missing uniqueness constraint on CFGOVRendition.
+- Fix for Youtube API failures
 
 
 ## 4.3.1
