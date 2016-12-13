@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Changed
 - external-site redirector now requires URLs to either be whitelisted or signed
 - Move logic for activity snippets out of template
+- Upgrade npm shrinkwrap endpoints to HTTPS
 
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
