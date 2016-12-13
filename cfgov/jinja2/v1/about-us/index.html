@@ -180,7 +180,7 @@
         {# TODO Add Events to the Activity Snippets #}
 
         {% import 'macros/activity-snippets.html' as activity_snippets with context %}
-        {% set activities_feed = activity_snippets.render(tags, ['posts', 'newsroom'], include_date_flag=true) %}
+        {% set activities_feed = activity_snippets.render(tags, ['blog', 'newsroom'], include_date_flag=true) %}
         {% include 'templates/activities-feed.html' %}
         <a class="jump-link jump-link__underline"
            href="/activity-log/">

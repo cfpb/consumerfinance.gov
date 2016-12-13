@@ -1,5 +1,14 @@
 from django.core.urlresolvers import reverse
+from django.conf import settings
+
 from wagtail.wagtailcore.utils import WAGTAIL_APPEND_SLASH
+from jinja2 import contextfunction
+from django import template
+from wagtail.wagtailcore.models import Page
+from urlparse import urlparse
+import os
+
+register = template.Library()
 
 
 def get_url_parts_for_site(page, site):
@@ -46,3 +55,32 @@ def get_page_relative_url(page, site):
         return page_path
     else:
         return root_url + page_path
+
+
+@register.assignment_tag(takes_context=True)
+def get_page_state_url(context, page):
+    page = Page.objects.get(id=page.id).specific
+    if not page.live and not page.shared:
+        return None
+    url = page.url
+    if url is None:  # If page is not aligned to a site root return None
+        return None
+    page_hostname = urlparse(url).hostname
+    staging_hostname = settings.STAGING_HOSTNAME
+    if not page.live and page.shared and staging_hostname != page_hostname:
+        url = url.replace(page_hostname, staging_hostname)
+    return url
+
+
+@contextfunction
+def get_protected_url(context, page):
+    if page:
+        request = context['request']
+
+        if page.live or page.shared and request.is_staging:
+            url = get_page_relative_url(page, request.site)
+
+            if url:
+                return url
+
+    return '#'
