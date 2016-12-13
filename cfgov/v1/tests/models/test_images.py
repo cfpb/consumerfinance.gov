@@ -1,6 +1,8 @@
+from django.db import IntegrityError
 from django.test import TestCase
 from mock import Mock, patch
 from wagtail.wagtailimages.models import Filter
+from wagtail.wagtailimages.tests.utils import get_test_image_file
 
 from v1.models.images import CFGOVImage, CFGOVRendition
 
@@ -90,3 +92,27 @@ class CFGOVImageTest(TestCase):
             rendition.img_tag(),
             '<img alt="" height="150" src="https://url" width="250">'
         )
+
+
+class CFGOVRenditionTest(TestCase):
+    def test_uniqueness_constraint(self):
+        image = CFGOVImage.objects.create(
+            title='test',
+            file=get_test_image_file()
+        )
+
+        filt = Filter.objects.create(spec='original')
+
+        def create_rendition(image, filt):
+            return CFGOVRendition.objects.create(
+                filter=filt,
+                image=image,
+                file=image.file,
+                width=100,
+                height=100,
+                focal_point_key=filt.get_cache_key(image)
+            )
+
+        create_rendition(image=image, filt=filt)
+        with self.assertRaises(IntegrityError):
+            create_rendition(image=image, filt=filt)

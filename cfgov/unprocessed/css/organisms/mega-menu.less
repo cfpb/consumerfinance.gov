@@ -647,6 +647,63 @@
     }
 } );
 
+// for IA_USER_TESTING_MENU feature flag
+.o-mega-menu__ia-testing {
+    .o-mega-menu_content-2 {
+        &-overview {
+            .respond-to-min( @bp-lg-min, {
+                margin-bottom: 20px;
+            } );
+        }
+
+        &-grid.full-width {
+            .respond-to-min( @bp-lg-min, {
+                .grid_column( 12 );
+
+                .o-mega-menu_content-list {
+                    .grid_column( 3 );
+                }
+            } );
+        }
+
+        &-list {
+            .respond-to-max( @bp-sm-max, {
+                h3 {
+                    margin-top: 15px;
+                }
+            } );
+        }
+    }
+
+    .nav_footer {
+        .respond-to-min( @bp-lg-min, {
+            margin-top: 30px;
+            font-size: 18px;
+        } );
+
+        span {
+            border-top: 1px solid @gray-40;
+            padding: 15px;
+
+            .respond-to-max( @bp-sm-max, {
+                display: block;
+                margin: 0 15px 10px 30px;
+                padding: 15px 0;
+            } );
+        }
+    }
+
+    .hide-title {
+        .respond-to-max( @bp-sm-max, {
+            .u-visually-hidden;
+        } );
+        .respond-to-min( @bp-lg-min, {
+            visibility: hidden;
+        } );
+    }
+}
+// end feature flag section
+
 /* topdoc
     name: EOF
     eof: true
