@@ -9,7 +9,7 @@ var FormSubmit = require( '../../organisms/FormSubmit.js' );
 var BASE_CLASS = 'o-feedback';
 
 function validateFeedback( fields ) {
-	if ( fields.comment && !fields.comment.value ) {
+	if ( fields.comment && fields.comment.hasAttribute('required') && !fields.comment.value ) {
 		return "Please enter a comment."
 	}
 }
