@@ -20,7 +20,8 @@ from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
 from processors.processors_common import fix_link
 from core.utils import signed_redirect, unsigned_redirect, sign_url
-from v1.routing import get_page_state_url, get_protected_url, get_page_relative_url
+from v1.routing import get_protected_url, get_page_relative_url
+from v1.templatetags.share import get_page_state_url
 
 
 default_app_config = 'v1.apps.V1AppConfig'
