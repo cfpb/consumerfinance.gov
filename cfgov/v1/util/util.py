@@ -35,7 +35,7 @@ def instanceOfBrowseOrFilterablePages(page):
 # TODO: Move into BrowsePage class once BrowseFilterablePage has been merged
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
-    from ..templatetags.share import get_page_state_url
+    from v1.templatetags.share import get_page_state_url
     on_staging = os.environ.get('DJANGO_STAGING_HOSTNAME') == request.site.hostname
     nav_items = []
     parent = current_page.get_parent().specific
