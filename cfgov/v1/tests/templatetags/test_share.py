@@ -2,6 +2,7 @@ import mock
 
 from unittest import TestCase
 from v1.templatetags import share
+from v1.routing import get_page_state_url
 from v1.tests.wagtail_pages import helpers
 from v1.models.base import CFGOVPage, CFGOVPagePermissionTester, CFGOVUserPagePermissionsProxy, User
 from wagtail.wagtailcore.models import Site
@@ -84,7 +85,7 @@ class TemplatetagsShareTestCase(TestCase):
         self.page.shared = False
         self.page.save()
 
-        result = share.get_page_state_url(None, self.page)
+        result = get_page_state_url(None, self.page)
         self.assertIsNone(result)
 
     def test_get_page_state_url_staged(self):
@@ -99,7 +100,7 @@ class TemplatetagsShareTestCase(TestCase):
         self.page.shared = True
         self.page.save()
 
-        result = share.get_page_state_url(None, self.page)
+        result = get_page_state_url(None, self.page)
         self.assertEqual(result, self.page.url.replace('http://localhost',
                                                        'http://content.localhost'))
 
@@ -112,7 +113,7 @@ class TemplatetagsShareTestCase(TestCase):
         self.page.shared = False
         self.page.save()
 
-        result = share.get_page_state_url(None, self.page)
+        result = get_page_state_url(None, self.page)
         self.assertEqual(result, self.page.url)
 
     def test_v1page_permissions_no_permissions_in_context(self):
@@ -157,7 +158,7 @@ class TemplatetagsShareTestCase(TestCase):
         for site in site_objects:
             site.delete()
 
-        result = share.get_page_state_url(None, self.page)
+        result = get_page_state_url(None, self.page)
 
         for site in site_objects:
             site.save()
