@@ -14,10 +14,17 @@ function validateFeedback( fields ) {
 	}
 }
 
+var element = document.body.querySelector( '.' + BASE_CLASS );
+
+var opts = {
+  validator: validateFeedback, 
+  replaceForm: element.getAttribute('data-replace')
+ }
+
 var formSubmit = new FormSubmit(
-  document.body.querySelector( '.' + BASE_CLASS ),
+  element,
   BASE_CLASS,
-  validateFeedback
+  opts
 );
 
 formSubmit.init();
