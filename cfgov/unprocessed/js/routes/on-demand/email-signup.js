@@ -19,7 +19,7 @@ function emailValidation ( fields ) {
 var formSubmit = new FormSubmit(
   document.body.querySelector( '.' + BASE_CLASS ),
   BASE_CLASS,
-  emailValidation
+  { validator: emailValidation }
 );
 
 

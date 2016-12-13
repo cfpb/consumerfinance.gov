@@ -5,26 +5,30 @@
     {% set form = settings.form %}
 
     {# JS-disabled result handling #}
-    
-<div class="o-feedback">
+
+<div class="o-feedback 
+			block
+	        {% if value.was_it_helpful_text %}
+		        block__bg
+		        block__border
+		        block__padded-top
+	        {% endif %}" 
+	        {% if value.radio_intro %} 
+	        	data-replace="true" 
+	        {% endif %}>
+	<div class="u-mb15">
+        {% if get_messages(request) %}
+            {% for message in get_messages(request) %}
+                {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
+            {% endfor %}
+        {% else %}
+            {{ notification.render('success', false, '') }}
+        {% endif %}
+    </div>
 	<form method="post"
 	      action="."
-	      class="o-form
-	             block
-	             {% if value.was_it_helpful_text %}
-	             block__bg
-	             block__border
-	             block__padded-top
-	            {% endif %}">
-	<div class="u-mb15">
-		{% if get_messages(request) %}
-			{% for message in get_messages(request) %}
-		        {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
-		    {% endfor %}
-	    {% else %}
-	    	{{ notification.render('success', false, '') }}
-	    {% endif %}
-    </div>
+	      class="o-form">
+	
 	<div class="form-l">
 	    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 	    <input type="hidden" name="form_id" value="{{ form_id }}">
@@ -104,7 +108,7 @@
 	        </div>
 	    </fieldset>
 
-	        {% if value.radio_intro and not value.was_it_helpful_text %}
+	    {% if value.radio_intro and not value.was_it_helpful_text %}
 	    <fieldset class="o-form-input-group">
 	        <div class="form-l_col
 	                    form-l_col-1">
@@ -176,7 +180,10 @@
 	    <p>{{ value.contact_advisory }}</p>
 	        </div>
 	    </fieldset>
-	        {% endif %}
+
+	    {% endif %}
+
+
 	    <fieldset class="o-form-input-group">
 	        <div class="form-l_col
 	                    form-l_col-1">

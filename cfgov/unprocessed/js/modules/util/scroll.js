@@ -1,4 +1,5 @@
 'use strict';
+var assign = require( './assign' ).assign;
 
 var _requestAnimationFrame = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
@@ -9,23 +10,22 @@ var _requestAnimationFrame = window.requestAnimationFrame ||
       },
     1000 / 60 ); };
 
-
 /**
  * Easing
- * @param {Number} t current time
- * @param {Number} b start position
- * @param {Number} c difference between start and end position
- * @param {Number} d duration
+ * @param {Number} currentTime current time
+ * @param {Number} startPosition start position
+ * @param {Number} distance difference between start and end position
+ * @param {Number} duration duration
  * @returns {Number} next position
  *
  */
-function _easeInOutQuad( t, b, c, d ) {
-  t /= d / 2;
-  if ( t < 1 ) {
-    return c / 2 * t * t + b;
+function _easeInOutQuad( currentTime, startPosition, distance, duration ) {
+  currentTime /= duration / 2;
+  if ( currentTime < 1 ) {
+    return distance / 2 * currentTime * currentTime + startPosition;
   }
-  t--;
-  return -c / 2 * ( t * ( t - 2 ) - 1 ) + b;
+  currentTime--;
+  return -distance / 2 * ( currentTime * ( currentTime - 2 ) - 1 ) + startPosition;
 }
 
 /**
@@ -42,15 +42,17 @@ function _calculateDuration( distance ) {
 /**
  * Animated scroll to a location in page.
  * @param {Number} to The y-coordinate to scroll to
- * @param {Number} duration Duration of the scroll animation (optional)
+ * @param {Object} opts Optional parameters, including:
+ * 		duration: Duration of the scroll animation
+ * 		callback: To be called when scroll is complete
  *
  */
-function scrollTo( to, duration ) {
-
+function scrollTo( to, opts ) {
+  opts = opts && typeof opts === 'object' ? opts : {};
   var startPosition = window.pageYOffset;
   var distance = to - startPosition;
+  var duration = opts.duration || _calculateDuration( distance );
   var startTime;
-  duration = _calculateDuration( distance );
 
   function scroll( timestamp ) {
     startTime = startTime || timestamp;
@@ -59,6 +61,8 @@ function scrollTo( to, duration ) {
     window.scroll( 0, next );
     if ( elapsed < duration ) {
       _requestAnimationFrame( scroll );
+    } else if ( typeof opts.callback === 'function' ) {
+      opts.callback();
     }
   }
 
@@ -71,13 +75,19 @@ function scrollTo( to, duration ) {
  * Checks whether element in viewport and if not,
  * scrolls it into view.
  * @param {HTMLNode} elem The DOM element to check for
+ * @param {Object} opts Optional parameters, including:
+ * 	  offset: Distance from top of screen of element
+        when scroll is complete
+ *    callback: function called when scroll is complete
  *
  */
-function scrollIntoView( elem ) {
+function scrollIntoView( elem, opts ) {
+  var defaults = { offset: 15 };
+  opts = assign( defaults, opts );
   if ( !elementInView( elem, true ) ) {
-    var offset = elem.getBoundingClientRect().top;
-    var to = window.pageYOffset + offset - 15;
-    scrollTo( to );
+    var elementTop = elem.getBoundingClientRect().top;
+    var to = Math.max( window.pageYOffset + elementTop - opts.offset, 0 );
+    scrollTo( to, opts );
   }
 }
 

@@ -1,8 +1,9 @@
 'use strict';
-
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var scroll = require( '../modules/util/scroll' );
+var AlphaTransition = require( '../modules/transition/AlphaTransition' );
+var BaseTransition = require( '../modules/transition/BaseTransition' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
 var FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
 var Notification = require( '../molecules/Notification' );
@@ -16,10 +17,13 @@ var Notification = require( '../molecules/Notification' );
  * @param {HTMLNode} element
  *   The DOM element within which to search for the organism.
  * @param {string} baseClass class of organism
- * @param {function} validator optional validation function
+ * @param {Object} opts optional params, including
+ *   validator: validation function, and
+ *   replaceForm: Boolean, determines if form is replaced with message
  * @returns {FormSubmit} An instance.
  */
-function FormSubmit( element, baseClass, validator ) {
+function FormSubmit( element, baseClass, opts ) {
+  opts = opts || {};
   var UNDEFINED;
   var _baseElement = atomicHelpers.checkDom( element, baseClass );
   var _formElement = _baseElement.querySelector( 'form' );
@@ -61,8 +65,8 @@ function FormSubmit( element, baseClass, validator ) {
    * @returns {string|undefined} error message.
    */
   function _validateForm() {
-    if ( typeof validator === 'function' ) {
-      return validator( _cachedFields );
+    if ( typeof opts.validator === 'function' ) {
+      return opts.validator( _cachedFields );
     }
     return UNDEFINED;
   }
@@ -94,6 +98,7 @@ function FormSubmit( element, baseClass, validator ) {
       206: 'partial content'
     };
     var message;
+    var heading;
     var state = 'ERROR';
     var xhr = new XMLHttpRequest();
     xhr.open( 'POST', _formElement.action );
@@ -107,16 +112,45 @@ function FormSubmit( element, baseClass, validator ) {
             var response = JSON.parse( xhr.responseText );
             result = response.result;
             message = response.message;
+            heading = response.header;
           } catch( err ) {
             // ignore lack of response
           }
           state = result === 'fail' ? 'ERROR' : 'SUCCESS';
         }
-        _displayNotification( _notification[state],
+        if ( state === 'SUCCESS' && opts.replaceForm ) {
+          heading = heading || 'Thank you!';
+          _replaceFormWithNotification( heading + ' ' + message );
+        } else {
+          _displayNotification( _notification[state],
                               message || FORM_MESSAGES[state] );
+        }
       }
     };
     xhr.send( _serializeFormData() );
+  }
+
+  /**
+   * @param {string} message Success message to display
+   *  Replaces form with notification on success.
+   */
+  function _replaceFormWithNotification( message ) {
+    var transition = new AlphaTransition( _baseElement ).init();
+    scroll.scrollIntoView( _formElement, { offset: 100, callback: fadeOutForm } );
+
+    function fadeOutForm() {
+      transition.addEventListener( BaseTransition.END_EVENT, fadeInMessage );
+      transition.fadeOut();
+    }
+
+    function fadeInMessage() {
+      _baseElement.style.marginBottom = Math.min( _formElement.offsetHeight, 100 ) + 'px';
+      _formElement.style.display = 'none';
+      _notification.setTypeAndContent( _notification.SUCCESS, message );
+      _notification.show();
+      transition.removeEventListener( BaseTransition.END_EVENT, fadeInMessage );
+      transition.fadeIn();
+    }
   }
 
   /**
@@ -124,14 +158,12 @@ function FormSubmit( element, baseClass, validator ) {
    *   Checkboxes and radio fields are stored in array.
    */
   function _cacheFields() {
+    var nonInputTypes = [ 'file', 'reset', 'submit', 'button' ];
     var cachedFields = {};
     var fields = ( _formElement || {} ).elements;
-    var f = 0;
-    var len = fields.length;
-    for ( f; f < len; f++ ) {
+    for ( var f = 0; f < fields.length; f++ ) {
       var field = fields[f];
-      if ( field.name && !field.disabled &&
-         [ 'file', 'reset', 'submit', 'button' ].indexOf( field.type ) === -1 ) {
+      if ( field.name && !field.disabled && nonInputTypes.indexOf( field.type ) === -1 ) {
         if ( field.type === 'radio' || field.type === 'checkbox' ) {
           cachedFields[field.name] = cachedFields[field.name] || [];
           cachedFields[field.name].push( field );
