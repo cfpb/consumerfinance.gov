@@ -9,9 +9,14 @@ var FormSubmit = require( '../../organisms/FormSubmit.js' );
 var BASE_CLASS = 'o-feedback';
 
 function validateFeedback( fields ) {
-	if ( fields.comment && fields.comment.hasAttribute('required') && !fields.comment.value ) {
-		return "Please enter a comment."
-	} else if ( fields['is_helpful'] ) {
+	if ( fields.comment ) {
+		if ( fields.comment.value ) {
+			return;
+		} else if ( fields.comment.hasAttribute('required') ) {
+			return "Please enter a comment."
+		} 
+	} 
+	if ( fields['is_helpful'] ) {
 		for ( var i = 0; i < fields['is_helpful'].length; i ++ ) {
 			if ( fields['is_helpful'][i].checked ) {
 				return;
