@@ -14,16 +14,20 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ---------------------------------------
 ## Unreleased
 
+## Added
+- New AWS_S3_ROOT setting to specify root S3 path.
+
 ## Changed
 - external-site redirector now requires URLs to either be whitelisted or signed
 - Move logic for activity snippets out of template
-- Move `get_page_state_url` out of templatetags to avoid circular dependencies
+- Upgrade npm shrinkwrap endpoints to HTTPS
 
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
-- bug that wasn't signing links already coded to /external-site
+- bug that wasn't signing links already coded to /external-site.
 - Sort activity snippets by latest date
 - Added missing uniqueness constraint on CFGOVRendition.
+- Fix for Youtube API failures
 
 
 ## 4.3.1
