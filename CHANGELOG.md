@@ -23,6 +23,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Update privacy policy URL
 - Upgrade npm shrinkwrap endpoints to HTTPS
 
+## Removed
+- Removed deprecated Django careers-related models, views, and templates.
+
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
 - bug that wasn't signing links already coded to /external-site.
