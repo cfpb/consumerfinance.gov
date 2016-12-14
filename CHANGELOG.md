@@ -16,6 +16,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Added
 - New AWS_S3_ROOT setting to specify root S3 path.
+- New PlaceholderFieldBlock and PlaceholderCharBlock to set block placeholder text.
 
 ## Changed
 - external-site redirector now requires URLs to either be whitelisted or signed
