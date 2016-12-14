@@ -1,13 +1,4 @@
 {% extends 'layout-full.html' %}
-{% set request_host = 'http://' + request.META.HTTP_HOST %}
-{% set request_referrer = request.META.HTTP_REFERER or request_host %}
-
-{% set request_copy = request.GET.copy() %}
-{% set request_url = request_copy.pop('ext_url', None) %}
-{% set params = request_copy | urlencode %}
-{% if request_url %}
-   {% set request_url = request_url[0] + '&' + params if params else request_url[0] %}
-{% endif %}
 
 {% set external_url = request_url or request_host %}
 
@@ -43,30 +34,29 @@
 
 {% block content_main %}
     <section class='padded-container'>
+        {% if form.is_valid() %}
         <h1>Thank you for visiting consumerfinance.gov.</h1>
         <p class="lead-paragraph">
             You are leaving the CFPB web server.
             You will now access
-            <span class="external-site_text">{{ external_url }}</span>,<br>
+            <span class="external-site_text">{{ form.cleaned_data['validated_url'] }}</span>,<br>
             which may have different privacy policies.
             We hope your visit was informative and enjoyable.
         </p>
         <p class="lead-paragraph u-js-only">
             We’ll take you to the page in:
-            <span class="external-site_reload-container"
-                  data-url="{{ external_url }}"></span>
+            <span class="external-site_reload-container" ></span>
         </p>
-        <a href="{{ request_referrer }}"
+        <form method="POST" action="{{ url('external-site') }}" id="proceed">
+        <input type="button" 
            class="btn
                   btn__full
-                  external-site_back-btn ">
-            Go Back
-        </a>
-        <a href="{{ external_url }}"
-           class="btn
-                  btn__full
-                  external-site_proceed-btn">
-            Proceed to external site
-        </a>
+                  external-site_proceed-btn"
+           value="Proceed to external site">
+        {{ form }}
+        </form>
+        {% else %}
+            You attempted to reach an external link, but something went wrong.
+        {% endif %}
     </section>
 {% endblock %}
