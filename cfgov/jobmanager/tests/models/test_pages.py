@@ -3,7 +3,7 @@ from django.test import TestCase
 from mock import patch
 from model_mommy import mommy
 
-from jobmanager.models.django import JobCategory, Grade, Location
+from jobmanager.models.django import Grade, JobCategory, Location
 from jobmanager.models.pages import JobListingPage
 from jobmanager.models.panels import GradePanel, RegionPanel
 from v1.tests.wagtail_pages.helpers import save_new_page

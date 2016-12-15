@@ -37,7 +37,6 @@ exclude =
 
     # Now we come to the bits we exclude because they haven't had a
     # proper cleanup yet.
-    cfgov/jobmanager,
     cfgov/v1
 
 # max-complexity = 10

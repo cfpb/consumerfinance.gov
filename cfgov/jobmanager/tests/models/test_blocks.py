@@ -1,4 +1,5 @@
 from datetime import date
+
 from django.test import TestCase
 from django.utils import timezone
 from mock import Mock
