@@ -1,9 +1,13 @@
 import mock
+import json
 
 from django.test import TestCase
 from django.test.client import RequestFactory
 
 from ..util import util
+from v1.tests.wagtail_pages import helpers
+from v1.models import CFGOVPage
+from wagtail.wagtailcore.models import PageRevision
 
 
 class TestUtilFunctions(TestCase):
@@ -19,54 +23,68 @@ class TestUtilFunctions(TestCase):
         ]
         self.page.revisions.all().order_by.return_value = self.page_versions
 
-    @mock.patch('json.loads')
-    def test_production_returns_first_live_page(self, mock_json_loads):
-        self.request.site.hostname = 'localhost'
-        mock_json_loads.side_effect = [page.content_json for page in self.page_versions]
-        util.get_appropriate_page_version(self.request, self.page)
-        assert not self.page_versions[0].as_page_object.called
-        assert not self.page_versions[1].as_page_object.called
-        assert self.page_versions[2].as_page_object.called
-        assert not self.page_versions[3].as_page_object.called
+        self.new_page = CFGOVPage(title='a cfgov page')
+        self.new_page.live = False
+        self.new_page.shared = False
 
-    @mock.patch('json.loads')
-    def test_shared_returns_first_shared_page(self, mock_json_loads):
-        self.request.site.hostname = 'content.localhost'
-        mock_json_loads.side_effect = [page.content_json for page in self.page_versions]
-        util.get_appropriate_page_version(self.request, self.page)
-        assert not self.page_versions[0].as_page_object.called
-        assert self.page_versions[1].as_page_object.called
-        assert not self.page_versions[2].as_page_object.called
-        assert not self.page_versions[3].as_page_object.called
+        helpers.save_new_page(self.new_page)
+        content_json = json.loads(self.new_page.to_json())
+        # create the various page revisions
+        # revision 1
+        content_json['title'] = 'revision 1'
+        content_json['live'] = True
+        content_json['shared'] = True
+        self.revision_1 = self.new_page.revisions.create(content_json=json.dumps(content_json))
 
-    @mock.patch('json.loads')
-    def test_shared_returns_None_for_only_draft_versions(self, mock_json_loads):
-        self.page_versions = [
-            mock.Mock(**{'content_json': {'live': False, 'shared': False}}),
-            mock.Mock(**{'content_json': {'live': False, 'shared': False}}),
-            mock.Mock(**{'content_json': {'live': False, 'shared': False}}),
-            mock.Mock(**{'content_json': {'live': False, 'shared': False}}),
-        ]
-        mock_json_loads.side_effect = [page.content_json for page in self.page_versions]
-        util.get_appropriate_page_version(self.request, self.page)
-        assert not self.page_versions[0].as_page_object.called
-        assert not self.page_versions[1].as_page_object.called
-        assert not self.page_versions[2].as_page_object.called
-        assert not self.page_versions[3].as_page_object.called
+        # rev 2
+        content_json['title'] = 'revision 2'
+        content_json['live'] = True
+        content_json['shared'] = False
+        self.revision_2 = self.new_page.revisions.create(content_json=json.dumps(content_json))
 
+        # rev 3
+        content_json['title'] = 'revision 3'
+        content_json['live'] = False
+        content_json['shared'] = True
+        self.revision_3 = self.new_page.revisions.create(content_json=json.dumps(content_json))
 
-    @mock.patch('json.loads')
-    def test_shared_returns_None_if_page_not_live_when_on_production(self, mock_json_loads):
-        self.request.site.hostname = 'localhost'
-        self.page_versions = [
-            mock.Mock(**{'content_json': {'live': False, 'shared': True}}),
-            mock.Mock(**{'content_json': {'live': False, 'shared': True}}),
-            mock.Mock(**{'content_json': {'live': False, 'shared': True}}),
-            mock.Mock(**{'content_json': {'live': False, 'shared': True}}),
-        ]
-        mock_json_loads.side_effect = [page.content_json for page in self.page_versions]
-        util.get_appropriate_page_version(self.request, self.page)
-        assert not self.page_versions[0].as_page_object.called
-        assert not self.page_versions[1].as_page_object.called
-        assert not self.page_versions[2].as_page_object.called
-        assert not self.page_versions[3].as_page_object.called
+        # rev 4
+        content_json['title'] = 'revision 4'
+        content_json['live'] = False
+        content_json['shared'] = False
+        self.revision_4 = self.new_page.revisions.create(content_json=json.dumps(content_json))
+
+    def test_production_returns_first_live_page(self):
+        self.request.is_staging = False
+        version = self.new_page.get_appropriate_page_version(self.request)
+        self.assertEqual(version.title, 'revision 2')
+
+    def test_shared_returns_first_shared_page(self):
+        self.request.is_staging = True
+        version = self.new_page.get_appropriate_page_version(self.request)
+        self.assertEqual(version.title, 'revision 3')
+
+    def test_shared_returns_None_for_only_draft_versions(self):
+        self.revision_1.delete()
+        self.revision_2.delete()
+        self.revision_3.delete()
+
+        version = self.new_page.get_appropriate_page_version(self.request)
+        self.assertIsNone(version)
+
+    def test_shared_returns_None_if_page_not_live_when_on_production(self):
+        self.revision_1.delete()
+        self.revision_2.delete()
+        self.request.is_staging = False
+        version = self.new_page.get_appropriate_page_version(self.request)
+        self.assertIsNone(version)
+
+    @mock.patch('__builtin__.isinstance')
+    @mock.patch('__builtin__.vars')
+    @mock.patch('v1.util.util.StreamValue')
+    def get_streamfields_returns_dict_of_streamfields(self, mock_streamvalueclass, mock_vars, mock_isinstance):
+        page = mock.Mock()
+        mock_vars.items.return_value = {'key': 'value'}
+        mock_isinstance.return_value = True
+        result = util.get_streamfields(page)
+        self.assertEqual(result, {'key': 'value'})

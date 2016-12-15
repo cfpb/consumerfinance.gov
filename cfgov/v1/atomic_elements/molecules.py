@@ -1,22 +1,17 @@
-from django.core.exceptions import ValidationError
-
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from . import atoms
-from ..util import util, ref
-
-
-def isRequired(field_name):
-    return [str(field_name) + ' is required.']
+from ..blocks import AnchorLink
+from ..util import ref
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    sub_heading = blocks.CharBlock(required=False)
+    heading = blocks.CharBlock(required=False, label="H3 heading")
+    sub_heading = blocks.CharBlock(required=False, label="H4 heading")
     sub_heading_icon = blocks.CharBlock(
         required=False,
-        label="Sub heading icon",
+        label="H4 heading icon",
         help_text=(
             'A list of icon names can be obtained at: '
             'https://cfpb.github.io/capital-framework/components/cf-icons/. '
@@ -36,7 +31,8 @@ class ImageText5050(blocks.StructBlock):
     body = blocks.RichTextBlock(blank=True, required=False)
     image = atoms.ImageBasic()
     is_widescreen = blocks.BooleanBlock(required=False, label="Use 16:9 image")
-    is_button = blocks.BooleanBlock(required=False, label="Show links as button")
+    is_button = blocks.BooleanBlock(required=False,
+                                    label="Show links as button")
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 
     class Meta:
@@ -70,20 +66,69 @@ class TextIntroduction(blocks.StructBlock):
 
 
 class Hero(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
+    heading = blocks.CharBlock(
+        required=False,
+        help_text='Maximum character count: 25 (including spaces)'
+    )
+    body = blocks.RichTextBlock(
+        required=False,
+        help_text='Maximum character count: 185 (including spaces)'
+    )
 
-    background_image = ImageChooserBlock(required=False,
-                                         help_text='An image object containing the URL of the image to be placed behind the hero.')
+    links = blocks.ListBlock(
+        atoms.Hyperlink(),
+        help_text='If your hero needs a call-to-action link, '
+                  'enter it here, rather than inside the body field.'
+    )
+    is_button = blocks.BooleanBlock(
+        required=False,
+        help_text='Select to render any links given above as buttons.'
+    )
 
-    image = atoms.ImageBasic(required=False)
+    image = ImageChooserBlock(
+        required=False,
+        help_text='Should be exactly 390px tall, and up to 940px wide, '
+                  'unless this is an overlay or bleeding style hero.'
+    )
+    is_overlay = blocks.BooleanBlock(
+        required=False,
+        help_text='Select if you want the provided image to be '
+                  'a background image under the entire hero.'
+    )
 
-    background_color = blocks.CharBlock(required=False,
-                                        help_text="Use Hexcode colors e.g #F0F8FF")
-    links = blocks.ListBlock(atoms.Hyperlink())
-    is_button = blocks.BooleanBlock(required=False)
-    is_white_text = blocks.BooleanBlock(required=False)
-    is_overlay = blocks.BooleanBlock(required=False)
+    background_color = blocks.CharBlock(
+        required=False,
+        help_text='Specify a hex value (with the # sign) '
+                  'from our official palette: '
+                  'https://github.com/cfpb/cf-theme-cfpb/blob/'
+                  'master/src/color-palette.less'
+    )
+    is_white_text = blocks.BooleanBlock(
+        required=False,
+        help_text='Turns the hero text white. Useful if using '
+                  'a dark background color or background image.'
+    )
+    cta_link_color = blocks.CharBlock(
+        required=False,
+        label='CTA link color',
+        help_text='If using a dark background color or background image, '
+                  'you may need to specify an alternate color '
+                  'for the call-to-action link. Specify a hex value '
+                  '(with the # sign) from our official palette: '
+                  'https://github.com/cfpb/cf-theme-cfpb/blob/'
+                  'master/src/color-palette.less'
+    )
+
+    is_bleeding = blocks.BooleanBlock(
+        required=False,
+        help_text='Select if you want the provided image to bleed '
+                  'vertically off the top and bottom of the hero.'
+    )
+    small_image = ImageChooserBlock(
+        required=False,
+        help_text='Provide an alternate image for small displays '
+                  'when using a bleeding or overlay hero.'
+    )
 
     class Meta:
         icon = 'image'
@@ -120,7 +165,8 @@ class FeaturedContent(blocks.StructBlock):
     category = blocks.ChoiceBlock(choices=ref.fcm_types, required=False)
     post = blocks.PageChooserBlock(required=False)
 
-    show_post_link = blocks.BooleanBlock(required=False, label="Render post link?")
+    show_post_link = blocks.BooleanBlock(required=False,
+                                         label="Render post link?")
     post_link_text = blocks.CharBlock(required=False)
 
     image = atoms.ImageBasic(required=False)
@@ -128,8 +174,17 @@ class FeaturedContent(blocks.StructBlock):
                              label='Additional Links')
 
     video = blocks.StructBlock([
-        ('id', blocks.CharBlock(required=False, help_text='e.g In \"https://www.youtube.com/watch?v=en0Iq8II4fA\", the ID is everything after the \"?v=\"')),
-        ('url', blocks.CharBlock(default='/', required=False)),
+        ('id', blocks.CharBlock(
+            required=False,
+            label='ID',
+            help_text='E.g., in "https://www.youtube.com/watch?v=en0Iq8II4fA",'
+                      ' the ID is everything after the "?v=".')),
+        ('url', blocks.CharBlock(
+            required=False,
+            label='URL',
+            help_text='You must use the embed URL, e.g., '
+                      'https://www.youtube.com/embed/'
+                      'JPTg8ZB3j5c?autoplay=1&enablejsapi=1')),
         ('height', blocks.CharBlock(default='320', required=False)),
         ('width', blocks.CharBlock(default='568', required=False)),
     ])
@@ -252,20 +307,83 @@ class RSSFeed(blocks.ChoiceBlock):
 
 
 class SocialMedia(blocks.StructBlock):
-    is_share_view = blocks.BooleanBlock(default=True,
-                                        required=False,
-                                        label='Create sharing links',
-                                        help_text='If deselected, links to visit CFPB profiles will be created.')
-    blurb = blocks.CharBlock(required=False,
-                             default='Look what I found on the CFPB\'s site!',
-                             help_text='Sets the tweet text, email subject line, and LinkedIn post text.')
-    twitter_related = blocks.CharBlock(required=False,
-                                       help_text='A comma-separated list of accounts related to the content of the shared URL. Do not enter the @ symbol. If blank, it will default to just "cfpb".')
-    twitter_hashtags = blocks.CharBlock(required=False,
-                                        help_text='A comma-separated list of hashtags to be appended to default tweet text.')
-    twitter_lang = blocks.CharBlock(required=False,
-                                    help_text='Loads text components in the specified language, if other than English. E.g., use "es" for Spanish. See https://dev.twitter.com/web/overview/languages for a list of supported language codes.')
+    is_share_view = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        label='Desired action: share this page',
+        help_text='If unchecked, social media icons will link users to '
+                  'official CFPB accounts. Do not fill in any further fields.'
+    )
+
+    blurb = blocks.CharBlock(
+        required=False,
+        default="Look what I found on the CFPB's site!",
+        help_text='Sets the tweet text, email subject line, '
+                  'and LinkedIn post text.'
+    )
+
+    twitter_text = blocks.CharBlock(
+        required=False,
+        max_length=100,
+        help_text='(Optional) Custom text for Twitter shares. If blank, '
+                  'will default to value of blurb field above.'
+    )
+    twitter_related = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) A comma-separated list of accounts related '
+                  'to the content of the shared URL. Do not enter the '
+                  ' @ symbol. If blank, it will default to just "cfpb".'
+    )
+    twitter_hashtags = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) A comma-separated list of hashtags to be '
+                  'appended to default tweet text.'
+    )
+    twitter_lang = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) Loads text components in the specified '
+                  'language, if other than English. E.g., use "es" '
+                  ' for Spanish. '
+                  'See https://dev.twitter.com/web/overview/languages '
+                  'for a list of supported language codes.'
+    )
+
+    email_title = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) Custom subject for email shares. If blank, '
+                  'will default to value of blurb field above.'
+    )
+
+    email_text = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) Custom text for email shares. If blank, will '
+                  'default to "Check out this page from the CFPB".'
+    )
+
+    email_signature = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) Adds a custom signature line to email shares. '
+    )
+    linkedin_title = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) Custom title for LinkedIn shares. If blank, '
+                  'will default to value of blurb field above.'
+    )
+
+    linkedin_text = blocks.CharBlock(
+        required=False,
+        help_text='(Optional) Custom text for LinkedIn shares.'
+    )
 
     class Meta:
         icon = 'site'
         template = '_includes/molecules/social-media.html'
+
+
+class ContentWithAnchor(blocks.StructBlock):
+    content_block = blocks.RichTextBlock()
+    anchor_link = AnchorLink()
+
+    class Meta:
+        icon = 'edit'
+        template = '_includes/molecules/full-width-text-anchor.html'

@@ -1,7 +1,5 @@
 import os
 
-from functools import partial
-
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -9,29 +7,35 @@ from django.conf.urls.static import static
 from django.conf.urls import include, url
 from django.views.generic.base import TemplateView, RedirectView
 from django.http import HttpResponse
-
-from legacy.views import HousingCounselorPDFView, dbrouter_shortcut, token_provider
-from sheerlike.views.generic import SheerTemplateView
-from sheerlike.sites import SheerSite
-from sheerlike.middleware import GlobalRequestMiddleware
-
-from v1.views import unshare, change_password, \
-                     password_reset_confirm, login_with_lockout,\
-                     check_permissions, welcome
-from v1.auth_forms import CFGOVPasswordChangeForm
-
-
+from functools import partial
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
+from legacy.views import (
+    HousingCounselorPDFView, dbrouter_shortcut, token_provider
+)
+from sheerlike.views.generic import SheerTemplateView
+from sheerlike.sites import SheerSite
 from transition_utilities.conditional_urls import include_if_app_enabled
+from v1.auth_forms import CFGOVPasswordChangeForm
+from v1.views import (
+    change_password, check_permissions, login_with_lockout,
+    password_reset_confirm, unshare, welcome
+)
+from v1.views.documents import DocumentServeView
+
+from core.views import ExternalURLNoticeView
+
 
 fin_ed = SheerSite('fin-ed-resources')
+oah = SheerSite('owning-a-home')
 
 urlpatterns = [
 
-    url(r'^documents/', include(wagtaildocs_urls)),
+    url(r'^documents/(?P<document_id>\d+)/(?P<document_filename>.*)$',
+        DocumentServeView.as_view(),
+        name='wagtaildocs_serve'),
+
     # TODO: Enable search route when search is available.
     # url(r'^search/$', 'search.views.search', name='search'),
 
@@ -39,13 +43,30 @@ urlpatterns = [
 
     url(r'^owning-a-home/static/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/static/%(path)s', permanent=True)),
     url(r'^owning-a-home/resources/(?P<path>.*)$', RedirectView.as_view(url='/static/owning-a-home/resources/%(path)s', permanent=True)),
-    url(r'^owning-a-home/', include(SheerSite('owning-a-home').urls)),
 
-    # the two redirects are an unfortunate workaround, could be resolved by
+    url(r'^owning-a-home/closing-disclosure/', include(oah.urls_for_prefix('closing-disclosure'))),
+    url(r'^owning-a-home/explore-rates/', include(oah.urls_for_prefix('explore-rates'))),
+    url(r'^owning-a-home/loan-estimate/', include(oah.urls_for_prefix('loan-estimate'))),
+
+    url(r'^owning-a-home/loan-options/', include(oah.urls_for_prefix('loan-options'))),
+    url(r'^owning-a-home/loan-options/FHA-loans/', include(oah.urls_for_prefix('loan-options/FHA-loans/'))),
+    url(r'^owning-a-home/loan-options/conventional-loans/', include(oah.urls_for_prefix('loan-options/conventional-loans/'))),
+    url(r'^owning-a-home/loan-options/special-loan-programs/', include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
+
+    url(r'^owning-a-home/mortgage-closing/', include(oah.urls_for_prefix('mortgage-closing'))),
+    url(r'^owning-a-home/mortgage-estimate/', include(oah.urls_for_prefix('mortgage-estimate'))),
+
+    url(r'^owning-a-home/process/', include(oah.urls_for_prefix('process/prepare/'))),
+    url(r'^owning-a-home/process/prepare/', include(oah.urls_for_prefix('process/prepare/'))),
+    url(r'^owning-a-home/process/explore/', include(oah.urls_for_prefix('process/explore/'))),
+    url(r'^owning-a-home/process/compare/', include(oah.urls_for_prefix('process/compare/'))),
+    url(r'^owning-a-home/process/close/', include(oah.urls_for_prefix('process/close/'))),
+    url(r'^owning-a-home/process/sources/', include(oah.urls_for_prefix('process/sources/'))),
+
+    # url('')
+
+    # the redirect is an unfortunate workaround, could be resolved by
     # using static('path/to/asset') in the source template
-
-    url(r'^tax-time-saving/static/(?P<path>.*)$', RedirectView.as_view(url='/static/tax-time-saving/static/%(path)s', permanent=True)),
-    url(r'^tax-time-saving/', include(SheerSite('tax-time-saving').urls)),
     url(r'^know-before-you-owe/static/(?P<path>.*)$', RedirectView.as_view(url='/static/know-before-you-owe/static/%(path)s', permanent=True)),
     url(r'^know-before-you-owe/', include(SheerSite('know-before-you-owe').urls)),
 
@@ -88,6 +109,9 @@ urlpatterns = [
             SheerTemplateView.as_view(),
             name='page')],
         namespace='business')),
+
+    url(r'^external-site/$', ExternalURLNoticeView.as_view(),
+        name='external-site'),
 
     url(r'^subscriptions/new/$',
         'core.views.govdelivery_subscribe',
@@ -141,7 +165,6 @@ urlpatterns = [
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 
-    url(r'^external-site/$', SheerTemplateView.as_view(template_name='external-site/index.html'), name='external-site'),
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(url='/about-us/careers/%(path)s', permanent=True)),
     url(r'^about-us/careers/', include('jobmanager.urls', namespace='careers')),
@@ -181,8 +204,8 @@ urlpatterns = [
     # credit cards KBYO
 
     url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(template_name='knowbeforeyouowe/creditcards/tool.html'), name='cckbyo'),
-    # Form crsf token provider for JS form submission
-    url(r'^token-provider/', token_provider)
+    # Form csrf token provider for JS form submission
+    url(r'^token-provider/', token_provider),
 ]
 
 if settings.ALLOW_ADMIN_URL:
@@ -228,6 +251,11 @@ if settings.ALLOW_ADMIN_URL:
     if 'selfregistration' in settings.INSTALLED_APPS:
         patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
 
+    if 'csp.middleware.CSPMiddleware' in settings.MIDDLEWARE_CLASSES:
+        # allow browsers to push CSP error reports back to the server
+        patterns.append(url(r'^csp-report/',
+                            'core.views.csp_violation_report'))
+
     urlpatterns = patterns + urlpatterns
 
 
@@ -240,6 +268,11 @@ if settings.DEBUG:
     urlpatterns.append(url(r'^test-fixture/$', SheerTemplateView.as_view(template_name='test-fixture/index.html'), name='test-fixture'))
     urlpatterns += static('/f/', document_root=settings.MEDIA_ROOT)
 
+    # enable local preview of error pages
+    urlpatterns.append(url(r'^500/$', TemplateView.as_view(template_name='500.html'), name='500'))
+    urlpatterns.append(url(r'^404/$', TemplateView.as_view(template_name='404.html'), name='404'))
+
+
 # Catch remaining URL patterns that did not match a route thus far.
 
 urlpatterns.append(url(r'', include(wagtail_urls)))
@@ -247,6 +280,8 @@ urlpatterns.append(url(r'', include(wagtail_urls)))
 from sheerlike import register_permalink
 
 from django.shortcuts import render
+
+
 
 
 def handle_error(code, request):

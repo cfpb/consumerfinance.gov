@@ -6,6 +6,8 @@ cfgov_apps = [
     'v1',
     'flags',
     'taggit',
+    'jobmanager',
+    'data_research'
 ]
 
 

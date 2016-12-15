@@ -1,76 +1,77 @@
-from __future__ import print_function
-
-import json
+import logging
 import os
 
-from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
+from django.db import transaction
 from wagtail.wagtailcore.models import Page, Site
 
-from v1.models import HomePage, BrowseFilterablePage
+from v1.models import HomePage
 
 
+logger = logging.getLogger(__name__)
+
+
+@transaction.atomic
 def run():
-    print('Running script \'scripts.initial_data\' ...')
-    admin_user = None
-    site_root = None
-    events = None
+    logger.info('Running script initial_data')
 
-    admin_user = User.objects.filter(username='admin')
-    if not admin_user:
-        admin_user = User(username='admin',
-                            password=make_password(os.environ.get('WAGTAIL_ADMIN_PW')),
-                            is_superuser=True, is_active=True, is_staff=True)
-        admin_user.save()
-    else:
-        admin_user = admin_user[0]
+    admin_password = os.environ.get('WAGTAIL_ADMIN_PW')
+    staging_hostname = os.environ['DJANGO_STAGING_HOSTNAME']
+    http_port = os.environ.get('DJANGO_HTTP_PORT', '80')
 
-    # Creates a new site root `CFGov`
-    site_root = HomePage.objects.filter(title='CFGOV')
-    if not site_root:
-        root = Page.objects.first()
-        site_root = HomePage(title='CFGOV', slug='home-page', depth=2, owner=admin_user)
-        site_root.live = True
-        root.add_child(instance=site_root)
-        latest = site_root.save_revision(user=admin_user, submitted_for_moderation=False)
-        latest.save()
-    else:
-        site_root = site_root[0]
+    # Create admin user if it doesn't exist already.
+    # Update existing one with admin password and active state.
+    User.objects.update_or_create(
+        username='admin',
+        defaults={
+            'password': make_password(admin_password),
+            'is_superuser': True,
+            'is_staff': True,
+            'is_active': True,
+        }
+    )
 
-    # Setting new site root
-    if not Site.objects.filter(hostname='content.localhost').exists():
-        site = Site.objects.first()
-        site.port = 8000
-        site.root_page_id = site_root.id
-        site.save()
-        content_site = Site(hostname='content.localhost', port=8000, root_page_id=site_root.id)
-        content_site.save()
-
-        # Clean Up
-        old_site_root = Page.objects.filter(id=2)[0]
-        if old_site_root:
-            old_site_root.delete()
-
-    # Events Browse Page required for event `import-data` command
-    if not BrowseFilterablePage.objects.filter(title='Events').exists():
-        events = BrowseFilterablePage(title='Events', slug='events', owner=admin_user)
-        site_root.add_child(instance=events)
-        revision = events.save_revision(
-            user=admin_user,
-            submitted_for_moderation=False,
+    # Create home page if it doesn't exist already.
+    try:
+        home_page = HomePage.objects.get(slug='cfgov')
+    except HomePage.DoesNotExist:
+        home_page = HomePage(
+            title='CFGov',
+            slug='cfgov',
+            live=True
         )
-        revision.publish()
 
-    # Archived Events Browse Filterable Page
-    if not BrowseFilterablePage.objects.filter(title='Archive').exists():
-        archived_events = BrowseFilterablePage(title='Archive', slug='archive', owner=admin_user)
-        if not events:
-            events = BrowseFilterablePage.objects.get(title='Events')
+        root_page = Page.objects.get(slug='root')
+        root_page.add_child(instance=home_page)
 
-        events.add_child(instance=archived_events)
-        revision = archived_events.save_revision(
-            user=admin_user,
-            submitted_for_moderation=False,
-        )
-        revision.publish()
+        home_page_revision = home_page.save_revision()
+        home_page_revision.publish()
+
+    # Make sure default site (either the one installed with Wagtail, or one
+    # that has since been manually setup) is running on the correct port and
+    # with the expected home page as its root.
+    default_site = Site.objects.get(is_default_site=True)
+    default_site.hostname = 'localhost'
+    default_site.port = http_port
+    default_site.root_page_id = home_page.id
+    default_site.save()
+
+    # Setup a staging site if it doesn't exist already. Use the correct
+    # hostname and port, and the same root home page.
+    staging_site, _ = Site.objects.update_or_create(
+        is_default_site=False,
+        defaults={
+            'hostname': staging_hostname,
+            'port': http_port,
+            'root_page_id': home_page.id,
+        }
+    )
+
+    # Delete the legacy Wagtail "hello world" page, if it exists.
+    try:
+        hello_world = Page.objects.get(slug='home')
+    except Page.DoesNotExist:
+        pass
+    else:
+        hello_world.delete()

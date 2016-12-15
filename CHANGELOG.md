@@ -12,13 +12,354 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+## Unreleased
 
-## Unreleased Changes
+## Added
+- New AWS_S3_ROOT setting to specify root S3 path.
+
+## Changed
+- external-site redirector now requires URLs to either be whitelisted or signed
+- Move logic for activity snippets out of template
+- Update privacy policy URL
+- Upgrade npm shrinkwrap endpoints to HTTPS
+
+## Removed
+- Removed deprecated Django careers-related models, views, and templates.
+
+### Fixed
+- Fixed bug stopping videos in HTTPS pages.
+- bug that wasn't signing links already coded to /external-site.
+- Sort activity snippets by latest date
+- Added missing uniqueness constraint on CFGOVRendition.
+- Fix for Youtube API failures
+
+## 4.3.2
+
+### Changed
+- Updated Owning-a-home feedback modules to use Ajax form submission
+
+## 4.3.1
+
+### Changed
+- Fix incorrect django settings for picard
+- Bump picard to 1.5.5 to fix false positive error report
+
+
+## 4.3.0
 
 ### Added
+- Add ability to individually customize the content of social media share links
+- Code to convert S3 HTTP image links to HTTPS during sheerlike imports
+- New Wagtail video player module that can be added to Learn pages
+- Add settings to settings/base.py enabling picard to integrate with Jenkins
+- Credit Market Trends to mega menu with a feature flag
+- New category support for stories (categorized by type of financial product)
+- Ability to output filterable list items as 50/50 info units
+- New `add_images` management command to programmaticaly add images to Wagtail.
+
+### Changed
+- Removed feedback-form default text and clarified help_text
+- Adjusted Django admin page for v1_feedback objects
+- Updated owning-a-home-api dependency to v0.9.91 for security update
+- Modified 25 / 75 Organisms to add Boolean `should_link_image` flag.
+- Credit card agreements database updated to 2.2.4
+- Picard upgraded to version 1.5.4.
+- CFGOVImage renditions behavior changed to always return original source image for GIFs.
+- Change table organism to be in line with design manual
+- Split Google Tag Manager code between page head and body
+
+### Fixed
+- Fixed file type link icons within info-units
+- Wordpress page processor properly uses WORDPRESS environment variable.
+
+
+## 4.2.1
+
+### Changed
+- Limit Activity Log posts to appropriate page categories.
+- Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
+
+
+## 4.2.0
+
+### Added
+- Forms and other bits for two new Owning a Home feedback modules
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
+- `conference_export` management command added to export conference registrations.
+- Add ability to individually customize the content of social media share links
+- Added CSV download option to v1_feedback django_admin page
+
+### Changed
+- Eregs/ip updated to version 1.0.3.
+- Simplified Akamai cache flushing logic to always flush on publish.
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+- Improved job listings view in Wagtail admin.
+- college-costs updated to version 2.2.8 for new URL field
+- Updated the analytics code to send events on form submission.
+- Fixed issue surrounding event venue not displaying on event page.
+- Limit Activity Log posts to appropriate page categories.
+- Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
+
+
+## 4.1.9
+
+### Changed
+- Bumping version of College Comparison Tool to 1.2.9
+
+
+## 4.1.8
+
+### Changed
+- roll complaints back to 1.2.6
+
+
+## 4.1.7
+
+### Changed
+- moved data_research into the db_router.py whitelist
+
+
+## 4.1.6
+
+### Changed
+- Fixed broken static assets on Technology and Innovation Fellowship page.
+- Conference Registration Form configurable error and success messages.
+
+
+## 4.1.5
+
+### Changed
+- update complaints to 1.2.7
+
+
+## 4.1.4
+
+### Fixed
+- an improved fix for the newsroom issue (see 4.1.2 and 4.1.3)
+
+
+## 4.1.3
+
+### Fixed
+- backed-out 4.1.2's newsroom fix
+
+
+## 4.1.2
+
+### Fixed
+- exclude reports from newsroom
+
+### Changed
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+
+
+## 4.1.0
+
+### Added
+- DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
+
+### Changed
+- Fixed issue surrounding table link download / external icons not appearing.
+- Frontend: replaced `documentation` npm module with `jsdoc`.
+- Refactoring email signup to remove validate.js.
+- Frontend: update `browser-sync` to version `2.17.5` from `2.11.2`.
+- Frontend: update `mkdirp` to version `0.5.1` from `0.3.0`.
+- Fixed broken `manage.py check` command when using `cfgov.settings.test`.
+- Fixed conference registration form capacity logic.
+- Update `snyk` to version `1.19.1` from `1.13.2`.
+- Disable logging below CRITICAL when running Python unit tests.
+- Fixed empty `heading` value in link blobs
+- Picard upgraded to version 1.5.2.
+- Eregs/ip updated to version 1.0.3.
+- Simplified Akamai cache flushing logic to always flush on publish.
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+- Conference Registration Form configurable error and success messages.
+- Fixed broken static assets on Technology and Innovation Fellowship page.
+- Updated the analytics code to send events on form submission.
+- Fixed issue surrounding event venue not displaying on event page.
+- Limit Newsroom posts to appropriate page categories.
+
+### Removed
+- `tax-time-saving` reference in `base.py` (it moved to Wagtail)
+- all references to `django-htmlmin`
+
+
+## 4.0.0
+
+### Added
+- Added smoke-test scripts to check static assets and base page responses.
+- new dependency: django-htmlmin, which compresses outgoing HTML
+- Added Wagtail StreamField migration utilities
+- Tests for `FilterableListForm`
+
+### Changed
+- Update base.html to conditionally include es5 script.
+- Wagtail upgraded to version 1.6.3.
+- Picard upgraded to version 1.5.1.
+- Moved site root setup from Django data migration into 'initial_data' script.
+- Graduated line lengths feature flag to main stylesheet.
+- Unit tests run via tox now include optional app tests, if optional apps are present.
+- Frontend: upgrade `gulp-sourcemaps` from `1.6.0` to `2.1.1`.
+- Modified org structure to change the Assistant Director to `Stacy Canan`.
+- `FilterableListForm` and related code, e.g. `get_page_set`
+- Updated "Standing up for you" stats on the homepage.
+- Use secure URLs for files stored on S3
+- Fixed grade ordering on job listing posts.
+- Updating Bureau Structure so Christopher D’Angelo isn't marked as "acting".
+
+### Removed
+- Removed Handlebars from `package.json` and `cf_notifier.js`.
+- `NewsroomFilterForm` and `ActivityLogFilterForm` and related tests
+- Removed `gulp-load-plugins` from `package.json`.
+- Removed  Laura Van Dyke from the press resources page.
+
+## 3.11.1
+
+### Changed
+- comparisontool updated to 1.2.7
+
+## 3.11.0
+
+### Added
+- New unit test checks for missing migrations that need to be generated using `makemigrations`.
+- Ability to run using HTTP locally with `./runserver.sh ssl`.
+- Load DigitalGov Search JS using HTTPS.
+
+### Changed
+- Improved the help text in the Featured Content module in Wagtail.
+- JS form validation messages and Conference module validation messages
+- complaints app updated to 1.2.5
+- retirement app updated to 0.5.3
+- knowledgebase app updated to: v2.1.3
+- college-costs app updated to: 2.2.6
+- Moved careers page creation from Django data migrations to standalone Python scripts.
+- Use HTTPS when linking to search.consumerfinance.gov.
+
+## 3.10.10
+
+### Fixed
+- incorrectly used static tag on housing counselor page
+
+## 3.10.9
+
+### Added
+- robots.txt
+
+### Fixed
+- Update links in TableBlocks that reference internal documents or pages & have no href
+
+
+## 3.10.8
+
+### Added
+- enable the `USE_ETAGS` Django setting
+
+## 3.10.7
+
+### Fixes
+- Corrected a typo introduced in 3.10.7
+
+## 3.10.6
+
+### Fixes
+- replace a few remaining `STATIC_PREFIX` references with the `static` tag
+
+## 3.10.5
+
+### Fixes
+- adds missing `{% load staticfiles %}` tags
+
+## 3.10.4
+
+### Added
+- Added Prepaid Cards to mega menu. (Requires feature flag for now.)
+
+
+## 3.10.3
+
+### Removals
+- This removes the current version number from built assets, like main.css
+
+
+## 3.10.2
+
+### Changed
+- fixed typo in mission statement
+
+
+## 3.10.1
+
+### Changed
+- retirement app updated 0.5.1
+- restored css file 'cr-003-theme.css'
+
+
+## 3.10.0
+
+### Added
+- Created new `WAGTAIL_CAREERS` feature flag to toggle from Django to Wagtail careers pages.
+- Production settings now use ManifestStaticFilesStorage
+- New environment variable to store the Akamai object ID
+- Added a 'run_travis.sh' script to enable separate JS and Python test coverage reporting
+- AbstractFormBlock to be used as a base class for modules requiring Django Forms
+- wagtail_hooks.py function `form_module_handlers` used by `CFGOVPage.get_context()`
+- Feedback module
+- `data_research` app to project
+- Conference Registration form, block, model, handler, and template
+- Added TableBlock definition to organisms and models that use Table
+- Added `cfgov/templates/wagtailadmin/js/table-block.js` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
+- Added `cfgov/templates/wagtailadmin/table_input.html` to override the default form TableBlock inputs. ( This file was copied from Wagtail ).
+
+### Changed
+- Refactored heroes to support the new "bleeding" format.
+- In templates, ALL static file references now use Django's `static` tag/function
+- In CSS/Less, references to other assets are now relative
+- Optimized Travis build by removing unnecessary steps.
+- `flush_akamai` function to call Akamai API endpoint that flushes entire site instead, since this is faster than flushing an individual page
+- Only proceed with an Akamai flush if it is an existing page
+- Refactored heroes to support the new "bleeding" format.
+- `CFGOVPage.get_context()` now uses wagtail hooks to call functions registered with the hook name `cfgovpage_context_handlers`
+- `CFGOVPage.serve()` calls `CFGOVPage.serve_post()` to handle POST requests
+- Changed label names for the half-width / third-width link blobs.
+- Mega menu `Free Brochures` link
+- Migrated previous Table data to new TableBlocks
+- Modified `cfgov/cfgov/settings/base.py` to add wagtailadmin to the STATICFILES_DIRS path.
+- Modified `cfgov/jinja2/v1/_includes/organisms/table.html` to work with the Wagtail TableBlock component.
+- Modified `cfgov/v1/__init__.py` to add the linebreaksbr.
+- Modified `cfgov/v1/atomic_elements/organisms.py` to create classes which inherit from the TableBlock classes. This allowed us to control which templates where used for rendering the Wagtail admin and table.
+- Modified `cfgov/v1/models/browse_page.py`, `cfgov/v1/models/learn_page.py`, and `cfgov/v1/models/sublanding_page.py` to use the new AtomicTableBlock.
+- Modified `cfgov/v1/wagtail_hooks.py` to add load new script for the admin.
+
+### Removed
+- `max-height` styling on info unit images
+- Reference to publish_eccu repo
+- `tax-time-saving` rules from `urls.py`
+- Removed Owning a Home homepage from urls being pulled from sheersites.
+- Removed duplicate caching configuration
+- Icon for old Table from admin panel (this field will need to be removed in a future release)
+
+
+### Fixed
+- Corrected Spanish-language label for sharing module
+- Typo on success message for form subscription
+
+
+## 3.9.0
+
+### Added
+- Logging configuration to `local.py`
 - Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
 - Ability to output sharing links within an Image and Text 50/50 Group module
-- Google Optimize code on `find-a-housing-counselor` page
+- Added a test for get_browsefilterable_posts function of the sublanding page
+- Data migration sets up site root and careers pages
+- Wagtail User editor now enforces unique email addresses when creating/editing users.
+- Default button text color and spacing overrides to `.m-global-search_trigger` in nemo stylesheet so that search button will be visible on pages that use `base_nonresponsive` template
+- New `@flag_required` decorator for Django views
+
 
 ### Changed
 - Special characters no longer break the multiselect in the filter form
@@ -37,6 +378,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated gulp-rename npm module to version `1.2.2` from `1.1.0`.
 - Replaces deprecated gulp-cssmin with gulp-clean-css.
 - Updated admin page sidefoot 'Related links' label and icon to read 'Related content'
+- Feature flag methods now take an explicit `request` object to determine what site to check the flag against
+
 
 
 ### Removed
@@ -44,9 +387,37 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Unused npm module map-stream.
 - Custom method `most_common` since python lib offers similar function
 
+
 ### Fixed
 - Post preview organism template used tag/author names instead of slugs that
 caused bad link formation
+- Fixed an issue w/ the email signup not utilizing the Gov Delivery JSON view for instant error/success feedback.
+- Fixed an issue w/ the form validation skipping any validation types other than `required`.
+
+
+## 3.8.2
+
+### Changed
+- Updated copy on Students and Recent Graduates Careers page.
+
+
+## 3.8.1
+
+### Added
+- Google Optimize code on `find-a-housing-counselor` page
+
+
+## 3.8.0
+
+### Added
+- Author names are now displayed in alphabetical order by last name, falls back on first name if necessary
+- Ability to output sharing links within an Image and Text 50/50 Group module
+
+### Changed
+
+### Removed
+- Unused functions `author_name` and `item_author_name` from `v1/feeds.py`
+
 
 ## 3.7.2
 
@@ -56,8 +427,10 @@ caused bad link formation
 - Removed the leadership calendar print template from the "base.html" inheritence hiearchy
 - restores the django logging config we used before cfgov-refresh
 
+
 ## 3.7.1
 - always use "localhost" when setting the base URL for PDFReactor
+
 
 ## 3.7.0
 

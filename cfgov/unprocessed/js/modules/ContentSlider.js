@@ -29,6 +29,7 @@ function ContentSlider( elem ) {
   /**
    * @constant
    * @type {number}
+   * @description
    *  Carousel transition speed in milliseconds.
    */
   var SPEED = 300;

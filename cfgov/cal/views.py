@@ -146,9 +146,11 @@ def pdf_response(request, context):
 
     pdf_reactor = PDFreactor(host=settings.PDFREACTOR_HOST)
     pdf_reactor.setBaseURL("http://localhost/")
-    pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_WARN)
+
+    pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_FATAL)
     if license:
         pdf_reactor.setLicenseKey(str(license))
+
     pdf_reactor.setAuthor('CFPB')
     pdf_reactor.setAddTags(True)
     pdf_reactor.setAddBookmarks(True)

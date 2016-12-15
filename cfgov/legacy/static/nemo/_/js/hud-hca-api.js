@@ -233,7 +233,7 @@ cfpb_hud_hca = (function() {
 				}
 				marker_array[i] = new google.maps.Marker({
 					position: position,
-					icon: "/static/nemo/_/img/hud_gmap/agc_" + number + ".png",
+					icon: "../img/hud_gmap/agc_" + number + ".png",
 					map: gmap,
 					title: val.nme,
 					zIndex: z

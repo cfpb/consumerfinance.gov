@@ -3348,3 +3348,14 @@ Not in CF docs yet..
 	margin: 0 auto;
 	max-width: 290px;
 }
+
+/* Global search button */
+.m-global-search_trigger {
+	color: black;
+	letter-spacing: 0;
+}
+
+/* Mega menu link hover state */
+.o-mega-menu a:hover {
+	background-color: transparent;
+}

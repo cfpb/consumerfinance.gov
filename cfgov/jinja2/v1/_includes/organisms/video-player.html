@@ -1,0 +1,23 @@
+{# ==========================================================================
+
+   Video Player
+
+   ==========================================================================
+
+   Description:
+
+   Create a video player for the Wagtail Video Player module.
+
+   value:                  Object defined from a StreamField block.
+
+   value.video_url:        A string containing the YouTube embed URL to use.
+
+   ========================================================================== #}
+
+{% import 'macros/video-player.html' as player with context %}
+
+{{ player.render({
+    'video': {
+        'url': value.video_url
+    }
+}) }}

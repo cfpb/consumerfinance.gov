@@ -152,19 +152,6 @@ $(document).ready(function (){
     $("a > img").each(function() {
         $(this).parent().addClass("noStyles");
     });
-    $(".mini a").mouseup(function(){
-        var link = $(this).attr("href");
-        link = link.replace("http://","/");
-        link = link.replace("http://","/");
-        var tracker = "/v/topshare"+link;
-        _gaq.push(['_trackPageview',tracker]); });
-    $(".botshare a").mouseup(function(){
-        var link = $(this).attr("href");
-        link = link.replace("http://","/");
-        link = link.replace("http://","/");
-        var tracker = "/v/botshare"+link;
-        _gaq.push(['_trackPageview',tracker]);
-    });
     $('iframe').each(function() {
         var url = $(this).attr("src")
         if ( url.indexOf('youtube') !== -1 ) {

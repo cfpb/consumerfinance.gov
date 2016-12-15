@@ -1,15 +1,17 @@
 'use strict';
 
-var envvars = require( '../../config/environment' ).envvars;
-var gulp = require( 'gulp' );
-var gulpMocha = require( 'gulp-mocha' );
-var plugins = require( 'gulp-load-plugins' )();
-var spawn = require( 'child_process' ).spawn;
 var configTest = require( '../config' ).test;
+var envvars = require( '../../config/environment' ).envvars;
 var fsHelper = require( '../utils/fs-helper' );
-var minimist = require( 'minimist' );
-var localtunnel = require( 'localtunnel' );
+var gulp = require( 'gulp' );
+var gulpCoveralls = require( 'gulp-coveralls' );
+var gulpIstanbul = require( 'gulp-istanbul' );
+var gulpMocha = require( 'gulp-mocha' );
+var gulpUtil = require( 'gulp-util' );
 var isReachable = require( 'is-reachable' );
+var localtunnel = require( 'localtunnel' );
+var minimist = require( 'minimist' );
+var spawn = require( 'child_process' ).spawn;
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -17,21 +19,21 @@ var isReachable = require( 'is-reachable' );
  */
 function testUnitScripts( cb ) {
   gulp.src( configTest.src )
-    .pipe( plugins.istanbul( {
+    .pipe( gulpIstanbul( {
       includeUntested: false
     } ) )
-    .pipe( plugins.istanbul.hookRequire() )
+    .pipe( gulpIstanbul.hookRequire() )
     .on( 'finish', function() {
       gulp.src( configTest.tests + '/unit_tests/**/*.js' )
         .pipe( gulpMocha( {
           reporter: configTest.reporter ? 'spec' : 'nyan'
         } ) )
-        .pipe( plugins.istanbul.writeReports( {
+        .pipe( gulpIstanbul.writeReports( {
           dir: configTest.tests + '/unit_test_coverage'
         } ) )
 
         /* TODO: we want this but it breaks because we don't have good coverage
-        .pipe( plugins.istanbul.enforceThresholds( {
+        .pipe( gulpIstanbul.enforceThresholds( {
           thresholds: { global: 90 }
         } ) )
         */
@@ -49,10 +51,10 @@ function testUnitServer() {
     { stdio: 'inherit' }
   ).once( 'close', function( code ) {
     if ( code ) {
-      plugins.util.log( 'Tox tests exited with code ' + code );
+      gulpUtil.log( 'Tox tests exited with code ' + code );
       process.exit( 1 );
     }
-    plugins.util.log( 'Tox tests done!' );
+    gulpUtil.log( 'Tox tests done!' );
   } );
 }
 
@@ -131,7 +133,7 @@ function _getWCAGParams() {
   var checkerId = envvars.ACHECKER_ID;
   var urlPath = _parsePath( commandLineParams.u );
   var url = host + ':' + port + urlPath;
-  plugins.util.log( 'WCAG tests checking URL: http://' + url );
+  gulpUtil.log( 'WCAG tests checking URL: http://' + url );
 
   return [ '--u=' + url, '--id=' + checkerId ];
 }
@@ -202,10 +204,10 @@ function testA11y() {
     { stdio: 'inherit' }
   ).once( 'close', function( code ) {
     if ( code ) {
-      plugins.util.log( 'WCAG tests exited with code ' + code );
+      gulpUtil.log( 'WCAG tests exited with code ' + code );
       process.exit( 1 );
     }
-    plugins.util.log( 'WCAG tests done!' );
+    gulpUtil.log( 'WCAG tests done!' );
   } );
 }
 
@@ -214,17 +216,17 @@ function testA11y() {
  */
 function testPerf() {
   _createPSITunnel().then( function( params ) {
-    plugins.util.log( 'PSI tests checking URL: http://' + params.url.split( ' ' ) );
+    gulpUtil.log( 'PSI tests checking URL: http://' + params.url.split( ' ' ) );
     spawn(
       fsHelper.getBinary( 'psi', 'psi', '../.bin' ),
       params.url,
       { stdio: 'inherit' }
     ).once( 'close', function() {
-      plugins.util.log( 'PSI tests done!' );
+      gulpUtil.log( 'PSI tests done!' );
       params.tunnel.close();
     } );
   } ).catch( function( err ) {
-    plugins.util.log( err );
+    gulpUtil.log( err );
     process.exit( 1 );
   } );
 }
@@ -235,17 +237,17 @@ function testPerf() {
  */
 function _spawnProtractor( suite ) {
   var params = _getProtractorParams( suite );
-  plugins.util.log( 'Running Protractor with params: ' + params );
+  gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
     params,
     { stdio: 'inherit' }
   ).once( 'close', function( code ) {
     if ( code ) {
-      plugins.util.log( 'Protractor tests exited with code ' + code );
+      gulpUtil.log( 'Protractor tests exited with code ' + code );
       process.exit( 1 );
     }
-    plugins.util.log( 'Protractor tests done!' );
+    gulpUtil.log( 'Protractor tests done!' );
   } );
 }
 
@@ -262,7 +264,7 @@ function testAcceptanceBrowser( suite ) {
  */
 function testCoveralls() {
   gulp.src( configTest.tests + '/unit_test_coverage/lcov.info' )
-    .pipe( plugins.coveralls() );
+    .pipe( gulpCoveralls() );
 }
 
 // This task will only run on Travis
@@ -277,8 +279,7 @@ gulp.task( 'test:unit:server', testUnitServer );
 
 gulp.task( 'test:unit',
   [
-    'test:unit:scripts',
-    'test:unit:server'
+    'test:unit:scripts'
   ]
 );
 

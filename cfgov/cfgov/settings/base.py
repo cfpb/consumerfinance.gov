@@ -1,5 +1,5 @@
-import os
-import sys
+import os, sys
+
 from unipath import Path
 from ..util import admin_emails
 
@@ -17,12 +17,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 # Use the django default password hashing
 PASSWORD_HASHERS = global_settings.PASSWORD_HASHERS
 
-
-try:
-    import mysql
-    MYSQL_ENGINE = 'mysql.connector.django'
-except ImportError:
-    MYSQL_ENGINE = 'django.db.backends.mysql'
+# see https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-USE_ETAGS
+USE_ETAGS = True
 
 # Application definition
 
@@ -40,6 +36,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailsites',
 
     'wagtail.contrib.modeladmin',
+    'wagtail.contrib.table_block',
 
     'localflavor',
     'modelcluster',
@@ -56,6 +53,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'storages',
     'flags',
+    'data_research',
     'v1',
     'core',
     'sheerlike',
@@ -63,12 +61,12 @@ INSTALLED_APPS = (
     'legacy',
     'django_extensions',
     'reversion',
-    'tinymce'
+    'tinymce',
+    'jobmanager',
 )
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
-    {'import': 'jobmanager', 'apps': ('jobmanager', 'reversion', 'tinymce')},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
@@ -85,12 +83,12 @@ OPTIONAL_APPS = [
     {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'picard', 'apps': ('picard',)},
-    {'import': 'publish-eccu', 'apps': ('publish-eccu',)},
 ]
 
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -98,12 +96,22 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-
     'wagtail.wagtailcore.middleware.SiteMiddleware',
-
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'transition_utilities.middleware.RewriteNemoURLsMiddleware',
+    'v1.middleware.StagingMiddleware',
+    'core.middleware.DownstreamCacheControlMiddleware'
 )
+
+CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
+
+if ('CSP_ENFORCE' in os.environ or 'CSP_REPORT' in os.environ):
+    MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+
+if 'CSP_REPORT' in os.environ:
+    CSP_REPORT_ONLY = True
+
+CSP_REPORT_URI = '/csp-report/'
 
 ROOT_URLCONF = 'cfgov.urls'
 
@@ -124,9 +132,12 @@ TEMPLATES = [
     {
         'NAME': 'wagtail-env',
         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [V1_TEMPLATE_ROOT, V1_TEMPLATE_ROOT.child('_includes'),
+        'DIRS': [
+            V1_TEMPLATE_ROOT,
+            V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
-            PROJECT_ROOT.child('static_built')],
+            PROJECT_ROOT.child('static_built')
+        ],
         'APP_DIRS': False,
         'OPTIONS': {
             'environment': 'v1.environment',
@@ -144,19 +155,31 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+if 'collectstatic' in sys.argv:
+    COLLECTSTATIC = True
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'v1',
+        }
+    }
+else:
+    COLLECTSTATIC = False
+    MYSQL_ENGINE = 'django.db.backends.mysql'
 
-DATABASES = {
-    'default': {
-        'ENGINE': MYSQL_ENGINE,
-        'NAME': os.environ.get('MYSQL_NAME', 'v1'),
-        'USER': os.environ.get('MYSQL_USER', 'root'),
-        'PASSWORD': os.environ.get('MYSQL_PW', ''),
-        'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
-        'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
-    },
-}
+    # Database
+    # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
+    DATABASES = {
+        'default': {
+            'ENGINE': MYSQL_ENGINE,
+            'NAME': os.environ.get('MYSQL_NAME', 'v1'),
+            'USER': os.environ.get('MYSQL_USER', 'root'),
+            'PASSWORD': os.environ.get('MYSQL_PW', ''),
+            'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
+            'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
+        },
+    }
 
 
 # Internationalization
@@ -198,12 +221,19 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
 STATICFILES_DIRS = [
-    PROJECT_ROOT.child('static_built')
+    PROJECT_ROOT.child('static_built'),
+    PROJECT_ROOT.child('templates', 'wagtailadmin')
 ]
 
 
 ALLOWED_HOSTS = ['*']
 
+EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
+                          r'^https:\/\/twitter\.com\/cfpb$',
+                          r'^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$',
+                          r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
+                          r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
+                          )
 EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
 NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
 FILES_LINK_PATTERN = r'https?:\/\/files\.consumerfinance.gov\/f\/\S+\.[a-z]+'
@@ -216,6 +246,7 @@ WAGTAILIMAGES_IMAGE_MODEL = 'v1.CFGOVImage'
 TAGGIT_CASE_INSENSITIVE = True
 
 WAGTAIL_USER_CREATION_FORM = 'v1.auth_forms.UserCreationForm'
+WAGTAIL_USER_EDIT_FORM = 'v1.auth_forms.UserEditForm'
 
 SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.environ.get('ES_PORT', '9200')
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')
@@ -342,13 +373,15 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # S3 Configuration
+AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
-    AWS_S3_SECURE_URLS = False  # True = use https; False = use http
+    AWS_S3_SECURE_URLS = True  # True = use https; False = use http
     AWS_QUERYSTRING_AUTH = False  # False = do not use authentication-related query parameters for requests
     AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
     if os.environ.get('AWS_S3_HOST'):
         AWS_S3_HOST = os.environ['AWS_S3_HOST']
@@ -357,7 +390,7 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     if os.environ.get('AWS_S3_PORT'):
         AWS_S3_PORT = int(os.environ['AWS_S3_PORT'])
 
-    MEDIA_URL = os.environ.get('AWS_S3_URL') + '/f/'
+    MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery
 
@@ -420,37 +453,7 @@ SHEER_SITES = {
         'know-before-you-owe':
             Path(os.environ.get('KBYO_SHEER_PATH') or
             Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
-        'tax-time-saving':
-            Path(os.environ.get('TAX_TIME_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../tax-time-saving/dist')),
 }
-
-CACHES = {
-    'default' : {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_cache',
-    },
-    'eregs_longterm_cache': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_longterm_cache',
-        'TIMEOUT': 60*60*24*15,     # 15 days
-        'OPTIONS': {
-            'MAX_ENTRIES': 10000,
-        },
-    },
-    'api_cache':{
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'api_cache_memory',
-        'TIMEOUT': 3600,
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        },
-    }
-}
-
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
-CACHE_MIDDLEWARE_SECONDS = 600
 
 #The base URL for the API that we use to access layers and the regulation.
 API_BASE = os.environ.get('EREGS_API_BASE', '')
@@ -467,7 +470,6 @@ GOOGLE_ANALYTICS_SITE = ''
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
 CACHE_MIDDLEWARE_SECONDS = 1800
-
 
 #eRegs
 BACKENDS = {
@@ -501,6 +503,14 @@ CACHES = {
 }
 
 PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
+PICARD_TASK_RUNNER = os.environ.get('PICARD_TASK_RUNNER', 'shell')
+PICARD_JENKINS_HOST = os.environ.get('PICARD_JENKINS_HOST', None)
+PICARD_JENKINS_USER = os.environ.get('PICARD_JENKINS_USER', None)
+PICARD_JENKINS_PASSWORD = os.environ.get('PICARD_JENKINS_PASSWORD', None)
+PICARD_JENKINS_AKAMAI_FLUSH = os.environ.get('PICARD_JENKINS_AKAMAI_FLUSH', None)
+PICARD_JENKINS_DATA_EXPORT = os.environ.get('PICARD_JENKINS_DATA_EXPORT', None)
+PICARD_JENKINS_DATA_EXPORT_FROM_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_FROM_ENV', 'CONTENT')
+PICARD_JENKINS_DATA_EXPORT_TO_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_TO_ENV', 'PRODUCTION')
 
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
@@ -511,3 +521,69 @@ REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
 
 # Akamai
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)
+AKAMAI_PURGE_URL = 'https://api.ccu.akamai.com/ccu/v2/queues/default'
+if ENABLE_AKAMAI_CACHE_PURGE:
+    AKAMAI_USER = os.environ.get('AKAMAI_USER')
+    AKAMAI_PASSWORD = os.environ.get('AKAMAI_PASSWORD')
+    AKAMAI_OBJECT_ID = os.environ.get('AKAMAI_OBJECT_ID')
+
+# Staging site
+STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
+
+# CSP Whitelists
+
+# These specify what is allowed in <script> tags.
+CSP_SCRIPT_SRC = ("'self'",
+                  "'unsafe-inline'",
+                  "'unsafe-eval'",
+                  '*.google-analytics.com',
+                  '*.googletagmanager.com',
+                  'ajax.googleapis.com',
+                  'search.usa.gov',
+                  'api.mapbox.com',
+                  'js-agent.newrelic.com',
+                  'dnn506yrbagrg.cloudfront.net',
+                  '*.doubleclick.net',
+                  'bam.nr-data.net',
+                  '*.youtube.com',
+                  '*.ytimg.com',
+                  'trk.cetrk.com',
+                  'universal.iperceptions.com')
+
+# These specify valid sources of CSS code
+CSP_STYLE_SRC = ("'self'",
+                 "'unsafe-inline'",
+                 'fast.fonts.net',
+                 'api.mapbox.com')
+
+# These specify valid image sources
+CSP_IMG_SRC= ("'self'",
+              's3.amazonaws.com',
+              'stats.g.doubleclick.net',
+              'files.consumerfinance.gov',
+              'img.youtube.com',
+              '*.google-analytics.com',
+              'trk.cetrk.com',
+              'searchstats.usa.gov',
+              'gtrk.s3.amazonaws.com',
+              '*.googletagmanager.com',
+              'api.mapbox.com',
+              '*.tiles.mapbox.com',
+              'data:')
+
+# These specify what URL's we allow to appear in frames/iframes
+CSP_FRAME_SRC= ("'self'",
+                '*.googletagmanager.com',
+                '*.google-analytics.com',
+                'www.youtube.com',
+                '*.doubleclick.net',
+                'universal.iperceptions.com')
+
+# These specify where we allow fonts to come from
+CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
+
+# These specify what hosts we can make (potentially) cross-domain AJAX requests to.
+CSP_CONNECT_SRC = ("'self'",
+                   '*.tiles.mapbox.com',
+                   'bam.nr-data.net',
+                   'api.iperceptions.com')

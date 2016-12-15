@@ -1,5 +1,6 @@
 {% extends 'layout-side-nav.html' %}
 
+{% import 'form_block.html' as form_block with context %}
 {% import 'molecules/featured-content.html' as featured_content %}
 {% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
@@ -21,7 +22,11 @@
     {%- endfor %}
 
     {% for block in page.content -%}
-        {{ render_block.render(block, loop.index) }}
+        {% if block.block_type in ['feedback', 'conference_registration_form'] %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
     {%- endfor %}
 
     {% if page.sidefoot %}

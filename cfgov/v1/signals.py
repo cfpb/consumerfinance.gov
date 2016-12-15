@@ -55,18 +55,22 @@ def update_all_revisions(instance, attr):
 
 
 def unshare_all_revisions(sender, **kwargs):
+    from v1.wagtail_hooks import flush_akamai
     update_all_revisions(kwargs['instance'], 'shared')
+    flush_akamai(page=kwargs['instance'])
 
 
 def unpublish_all_revisions(sender, **kwargs):
+    from v1.wagtail_hooks import flush_akamai
     update_all_revisions(kwargs['instance'], 'live')
+    flush_akamai(page=kwargs['instance'])
 
 
 def configure_page_and_revision(sender, **kwargs):
-    from .wagtail_hooks import share, configure_page_revision, flush_akamai
+    from v1.wagtail_hooks import share, configure_page_revision, flush_akamai
     share(page=kwargs['instance'], is_sharing=False, is_live=True)
     configure_page_revision(page=kwargs['instance'], is_sharing=False, is_live=True)
-    flush_akamai(page=kwargs['instance'], is_live=True)
+    flush_akamai(page=kwargs['instance'])
 
 
 page_unshared.connect(unshare_all_revisions)

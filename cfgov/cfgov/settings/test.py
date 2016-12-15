@@ -10,3 +10,18 @@ DATABASES = {
 EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
 TEST_RUNNER = 'cfgov.test.TestDataTestRunner'
+
+LOGGING = {}
+
+INSTALLED_APPS += (
+    'wagtail.tests.testapp',
+)
+
+WAGTAILADMIN_RICH_TEXT_EDITORS = {
+    'default': {
+        'WIDGET': 'wagtail.wagtailadmin.rich_text.HalloRichTextArea',
+    },
+    'custom': {
+        'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
+    },
+}

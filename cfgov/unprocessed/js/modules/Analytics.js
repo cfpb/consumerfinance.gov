@@ -6,7 +6,26 @@ var Analytics = {
 
   tagManagerIsLoaded: false,
 
-  EVENT_CATEGORY: 'CFGOV Event',
+  EVENT_CATEGORY: 'Page Interaction',
+
+  /**
+   * Get data layer object.
+   * @param {string} action Name of event.
+   * @param {string} label DOM element label.
+   * @param {string} category Type of event.
+   * @param {Function} callback Function to call on GTM submission.
+   * @param {number} timeout Callback invocation fallback time.
+   * @returns {object} Data layer object.
+   */
+  getDataLayerOptions: function( action, label, category, callback, timeout ) {
+    return {
+      event:         category || Analytics.EVENT_CATEGORY,
+      action:        action,
+      label:         label || '',
+      eventCallback: callback,
+      eventTimeout:  timeout || 500
+    };
+  },
 
   /**
    * Initialize the Analytics module.
@@ -37,32 +56,15 @@ var Analytics = {
    *
    * @description
    * Pushes an event to the GTM dataLayer.
-   *
-   * @param {string} action Name of event.
-   * @param {string} label DOM element label.
-   * @param {Function} callback Function to call on GTM submsission.
-   * @param {number} timeout Callback invocation fallback time.
-  * @returns {Analytics} An instance
+   * @param {object} dataLayerOptions Type of event.
    */
-  sendEvent: function( action, label, callback, timeout ) {
-    var dataLayerOptions = {
-      event:        Analytics.EVENT_CATEGORY,
-      action:       action,
-      label:        label || '',
-      eventTimeout: timeout || 500
-    };
-
-
+  sendEvent: function( dataLayerOptions ) {
+    var callback = dataLayerOptions.eventCallback;
     if ( Analytics.tagManagerIsLoaded ) {
-      if ( callback ) {
-        dataLayerOptions.eventCallback = callback;
-      }
       window.dataLayer.push( dataLayerOptions );
-    } else if ( typeof callback === 'function' ) {
-      return callback();
+    } else if ( callback && typeof callback === 'function' ) {
+      callback();  // eslint-disable-line callback-return, inline-comments, max-len
     }
-
-    return Analytics;
   },
 
   /**

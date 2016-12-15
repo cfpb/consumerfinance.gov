@@ -24,6 +24,7 @@
 
    ========================================================================== #}
 
+{% import 'form_block.html' as form_block with context %}
 {% import 'organisms/item-introduction.html' as item_introduction with context %}
 {%- import 'templates/render_block.html' as render_block with context -%}
 {%- import 'tags.html' as tags -%}
@@ -50,6 +51,8 @@
         {% for block in page.content %}
             {% if block.block_type == 'content' %}
                 {{ parse_links(block.value) | safe }}
+            {% elif block.block_type == 'feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
             {% else %}
                 {{ render_block.render(block, loop.index) }}
             {% endif %}

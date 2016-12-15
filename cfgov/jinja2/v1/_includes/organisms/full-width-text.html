@@ -14,7 +14,9 @@
 
 <div class="o-full-width-text-group">
     {% for block in value %}
-        {% if 'content' in block.block_type %}
+        {% if 'content_with_anchor' in block.block_type %}
+                {{ render_stream_child(block) | safe }}
+        {% elif 'content' in block.block_type %}
             <div class="m-full-width-text">
                 {{ parse_links(block.value) | safe }}
             </div>

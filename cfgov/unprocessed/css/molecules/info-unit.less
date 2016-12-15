@@ -98,15 +98,10 @@
  */
 .u-info-unit-base() {
     &_image {
-        max-height: unit( @m-info-unit_img__sm / @base-font-size-px, em );
         margin-right: auto;
         margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         margin-left: auto;
         display: block;
-
-        .respond-to-min( @bp-med-min, {
-            max-height: unit( @m-info-unit_img__lg / @base-font-size-px, em );
-        } );
 
         &__square {
             width: unit( @m-info-unit_img__sm / @base-font-size-px, em );

@@ -28,8 +28,8 @@ describe( 'Footer', function() {
       'plain writing',
     '/privacy/':
       'privacy, policy & legal notices',
-    '/privacy/digital-privacy-policy/':
-      'digital privacy policy',
+    '/privacy/website-privacy-policy/':
+      'website privacy policy',
     '/tribal/':
       'tribal',
     'http://usa.gov/':

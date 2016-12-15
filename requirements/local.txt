@@ -1,5 +1,6 @@
 -r base.txt
 
 django-livereload==1.2
-tox==2.1.1
+django-sslserver==0.19
+tox==2.3.1
 Werkzeug==0.10.4
