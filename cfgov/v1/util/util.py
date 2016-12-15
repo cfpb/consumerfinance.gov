@@ -35,14 +35,14 @@ def instanceOfBrowseOrFilterablePages(page):
 # TODO: Move into BrowsePage class once BrowseFilterablePage has been merged
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
-    from ..templatetags.share import get_page_state_url
+    from v1.templatetags.share import get_page_state_url
     on_staging = os.environ.get('DJANGO_STAGING_HOSTNAME') == request.site.hostname
     nav_items = []
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
-        page = get_appropriate_page_version(request, parent)
+        page = parent.get_appropriate_page_version(request)
     else:
-        page = get_appropriate_page_version(request, current_page)
+        page = current_page.get_appropriate_page_version(request)
 
     if not page:
         return [], False
@@ -71,9 +71,9 @@ def get_secondary_nav_items(request, current_page):
         # Only if it's a Browse(Filterable) type page
         if instanceOfBrowseOrFilterablePages(sibling.specific):
             if page.id == sibling.id:
-                sibling = get_appropriate_page_version(request, page)
+                sibling = page.get_appropriate_page_version(request)
             else:
-                sibling = get_appropriate_page_version(request, sibling)
+                sibling = sibling.get_appropriate_page_version(request)
             item = {
                 'title': sibling.title,
                 'slug': sibling.slug,
@@ -95,21 +95,6 @@ def get_secondary_nav_items(request, current_page):
             return nav_items, True
     return nav_items, False
 
-
-def get_appropriate_page_version(request, page):
-    # If we're on the production site, make sure the version of the page
-    # displayed is the latest version that has `live` set to True for
-    # the live site or `shared` set to True for the staging site.
-    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME')
-    revisions = page.revisions.all().order_by('-created_at')
-    for revision in revisions:
-        page_version = json.loads(revision.content_json)
-        if request.site.hostname != staging_hostname:
-            if page_version['live']:
-                return revision.as_page_object()
-        else:
-            if page_version['shared']:
-                return revision.as_page_object()
 
 def valid_destination_for_request(request, url):
 

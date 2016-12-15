@@ -10,4 +10,4 @@ class ConferenceRegistration(models.Model):
     sessions = models.TextField(blank=False)
     foodinfo = models.CharField(max_length=250, blank=True)
     accommodations = models.CharField(max_length=250, blank=True)
-    codes = models.TextField(blank=False)
+    code = models.CharField(max_length=250)

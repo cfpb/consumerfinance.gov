@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
-    "browser-sync": "2.11.2",
     "capital-framework": "3.6.1",
     "del": "2.2.2",
     "gulp": "3.9.1",
@@ -35,13 +34,12 @@
     "imports-loader": "0.6.5",
     "require-dir": "0.3.0",
     "slick-carousel": "1.6.0",
-    "snyk": "1.13.2",
-    "validate.js": "0.10.0",
+    "snyk": "1.19.1",
     "webpack": "1.13.2",
     "webpack-stream": "3.2.0"
   },
   "devDependencies": {
-    "browser-sync": "2.11.2",
+    "browser-sync": "2.17.5",
     "chai": "3.5.0",
     "es5-shim": "4.5.9",
     "glob-all": "3.0.1",
@@ -62,7 +60,7 @@
     "jsdom": "8.3.0",
     "localtunnel": "1.8.1",
     "minimist": "1.2.0",
-    "mkdirp": "0.3.0",
+    "mkdirp": "0.5.1",
     "mocha": "3.0.2",
     "mocha-jsdom": "1.1.0",
     "protractor": "4.0.2",
@@ -75,8 +73,7 @@
   "browser": {
     "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",
     "jquery": "./node_modules/jquery/dist/jquery.js",
-    "slick": "./node_modules/slick-carousel/slick/slick.js",
-    "validate": "./node_modules/validate.js/validate.js"
+    "slick": "./node_modules/slick-carousel/slick/slick.js"
   },
   "scripts": {
     "test": "snyk test"

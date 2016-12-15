@@ -32,6 +32,10 @@
       action="/subscriptions/new/"
       method="POST"
       enctype="application/x-www-form-urlencoded">
+     <div class="u-mb15">
+	    {% import 'molecules/notification.html' as notification with context %}
+	    {{ notification.render('success', false, '') }}
+	</div>
     {% if value.text %}
         <p>
             {{ value.text }}

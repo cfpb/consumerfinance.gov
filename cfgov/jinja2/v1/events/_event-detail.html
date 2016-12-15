@@ -24,7 +24,7 @@
                 'twitter_hashtags': page.twtr_hash
             } ) }}
         </div>
-        {% from 'events/_macros.html' import event_venue as event_venue %}
+        {% from 'events/_macros.html' import event_venue as event_venue with context %}
         {{ event_venue( page, event_state ) }}
     </header>
     <div class="post_body">

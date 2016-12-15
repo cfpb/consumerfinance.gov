@@ -1,17 +1,20 @@
 from django.test import TestCase
-from ..models import BlogPage
-from ..models.learn_page import EventPage
-from v1.forms import FilterableListForm
-from v1.models.base import CFGOVPageCategory
-from v1.tests.wagtail_pages.helpers import publish_page
+
 from wagtail.wagtailcore.models import Site
 
+from v1.forms import FilterableListForm
+from v1.models import BlogPage
+from v1.models.base import CFGOVPageCategory
+from v1.models.learn_page import AbstractFilterPage, EventPage
+from v1.tests.wagtail_pages.helpers import publish_page
+from v1.util.categories import clean_categories
 
 class TestFilterableListForm(TestCase):
 
     def setUpFilterableForm(self, data=None):
-        site = Site.objects.get(is_default_site=True)
-        form = FilterableListForm(parent=None, hostname=site.hostname)
+        hostname = Site.objects.get(is_default_site=True).hostname
+        base_query = AbstractFilterPage.objects.live_shared(hostname)
+        form = FilterableListForm(hostname=hostname, base_query=base_query)
         form.is_bound = True
         form.cleaned_data = data
         return form
@@ -87,11 +90,11 @@ class TestFilterableListForm(TestCase):
     def test_clean_categories_converts_blog_subcategories_correctly(self):
         form = self.setUpFilterableForm()
         form.data = {'categories': ['blog']}
-        form.clean_categories()
+        clean_categories(selected_categories=form.data.get('categories'))
         self.assertEquals(form.data['categories'], ['blog', 'at-the-cfpb', 'policy_compliance', 'data-research-reports', 'info-for-consumers'])
 
     def test_clean_categories_converts_reports_subcategories_correctly(self):
         form = self.setUpFilterableForm()
         form.data = {'categories': ['research-reports']}
-        form.clean_categories()
+        clean_categories(selected_categories=form.data.get('categories'))
         self.assertEquals(form.data['categories'], ['research-reports', 'consumer-complaint', 'super-highlight', 'data-point', 'industry-markets', 'consumer-edu-empower', 'to-congress'])

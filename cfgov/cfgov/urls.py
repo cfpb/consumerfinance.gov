@@ -26,6 +26,8 @@ from v1.views import (
 )
 from v1.views.documents import DocumentServeView
 
+from core.views import ExternalURLNoticeView
+
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
@@ -152,6 +154,9 @@ urlpatterns = [
             name='page')],
         namespace='business')),
 
+    url(r'^external-site/$', ExternalURLNoticeView.as_view(),
+        name='external-site'),
+
     url(r'^subscriptions/new/$',
         'core.views.govdelivery_subscribe',
         name='govdelivery'),
@@ -210,9 +215,6 @@ urlpatterns = [
         SheerTemplateView.as_view(
             template_name='about-us/index.html'), name='about-us'),
 
-    url(r'^external-site/$',
-        SheerTemplateView.as_view(
-            template_name='external-site/index.html'), name='external-site'),
 
     url(r'^careers/(?P<path>.*)$',
         RedirectView.as_view(
@@ -278,12 +280,9 @@ urlpatterns = [
 
     # credit cards KBYO
 
-    url(r'^credit-cards/knowbeforeyouowe/$',
-        TemplateView.as_view(
-            template_name='knowbeforeyouowe/creditcards/tool.html'),
-        name='cckbyo'),
-    # Form crsf token provider for JS form submission
-    url(r'^token-provider/', token_provider)
+    url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(template_name='knowbeforeyouowe/creditcards/tool.html'), name='cckbyo'),
+    # Form csrf token provider for JS form submission
+    url(r'^token-provider/', token_provider),
 ]
 
 if settings.ALLOW_ADMIN_URL:
@@ -346,6 +345,11 @@ if settings.ALLOW_ADMIN_URL:
 
     if 'selfregistration' in settings.INSTALLED_APPS:
         patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
+
+    if 'csp.middleware.CSPMiddleware' in settings.MIDDLEWARE_CLASSES:
+        # allow browsers to push CSP error reports back to the server
+        patterns.append(url(r'^csp-report/',
+                            'core.views.csp_violation_report'))
 
     urlpatterns = patterns + urlpatterns
 

@@ -87,6 +87,7 @@ OPTIONAL_APPS = [
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -94,15 +95,22 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-
     'wagtail.wagtailcore.middleware.SiteMiddleware',
-
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'transition_utilities.middleware.RewriteNemoURLsMiddleware',
     'v1.middleware.StagingMiddleware',
-    'htmlmin.middleware.HtmlMinifyMiddleware',
-    'htmlmin.middleware.MarkRequestMiddleware',
+    'core.middleware.DownstreamCacheControlMiddleware'
 )
+
+CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
+
+if ('CSP_ENFORCE' in os.environ or 'CSP_REPORT' in os.environ):
+    MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+
+if 'CSP_REPORT' in os.environ:
+    CSP_REPORT_ONLY = True
+
+CSP_REPORT_URI = '/csp-report/'
 
 ROOT_URLCONF = 'cfgov.urls'
 
@@ -219,6 +227,12 @@ STATICFILES_DIRS = [
 
 ALLOWED_HOSTS = ['*']
 
+EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',
+                          r'^https:\/\/twitter\.com\/cfpb$',
+                          r'^https:\/\/www\.linkedin\.com\/company\/consumer-financial-protection-bureau$',
+                          r'^https:\/\/www\.youtube\.com\/user\/cfpbvideo$',
+                          r'https:\/\/www\.flickr\.com\/photos\/cfpbphotos$'
+                          )
 EXTERNAL_LINK_PATTERN = r'https?:\/\/(?:www\.)?(?![^\?]+gov)(?!(content\.)?localhost).*'
 NONCFPB_LINK_PATTERN = r'(https?:\/\/(?:www\.)?(?![^\?]*(cfpb|consumerfinance).gov)(?!(content\.)?localhost).*)'
 FILES_LINK_PATTERN = r'https?:\/\/files\.consumerfinance.gov\/f\/\S+\.[a-z]+'
@@ -354,16 +368,18 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # S3 Configuration
+AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
     AWS_S3_SECURE_URLS = True  # True = use https; False = use http
     AWS_QUERYSTRING_AUTH = False  # False = do not use authentication-related query parameters for requests
     AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 
-    MEDIA_URL = os.environ.get('AWS_S3_URL') + '/f/'
+    MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery
 
@@ -476,6 +492,14 @@ CACHES = {
 }
 
 PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
+PICARD_TASK_RUNNER = os.environ.get('PICARD_TASK_RUNNER', 'shell')
+PICARD_JENKINS_HOST = os.environ.get('PICARD_JENKINS_HOST', None)
+PICARD_JENKINS_USER = os.environ.get('PICARD_JENKINS_USER', None)
+PICARD_JENKINS_PASSWORD = os.environ.get('PICARD_JENKINS_PASSWORD', None)
+PICARD_JENKINS_AKAMAI_FLUSH = os.environ.get('PICARD_JENKINS_AKAMAI_FLUSH', None)
+PICARD_JENKINS_DATA_EXPORT = os.environ.get('PICARD_JENKINS_DATA_EXPORT', None)
+PICARD_JENKINS_DATA_EXPORT_FROM_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_FROM_ENV', 'CONTENT')
+PICARD_JENKINS_DATA_EXPORT_TO_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_TO_ENV', 'PRODUCTION')
 
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
@@ -494,3 +518,61 @@ if ENABLE_AKAMAI_CACHE_PURGE:
 
 # Staging site
 STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
+
+# CSP Whitelists
+
+# These specify what is allowed in <script> tags.
+CSP_SCRIPT_SRC = ("'self'",
+                  "'unsafe-inline'",
+                  "'unsafe-eval'",
+                  '*.google-analytics.com',
+                  '*.googletagmanager.com',
+                  'ajax.googleapis.com',
+                  'search.usa.gov',
+                  'api.mapbox.com',
+                  'js-agent.newrelic.com',
+                  'dnn506yrbagrg.cloudfront.net',
+                  '*.doubleclick.net',
+                  'bam.nr-data.net',
+                  '*.youtube.com',
+                  '*.ytimg.com',
+                  'trk.cetrk.com',
+                  'universal.iperceptions.com')
+
+# These specify valid sources of CSS code
+CSP_STYLE_SRC = ("'self'",
+                 "'unsafe-inline'",
+                 'fast.fonts.net',
+                 'api.mapbox.com')
+
+# These specify valid image sources
+CSP_IMG_SRC= ("'self'",
+              's3.amazonaws.com',
+              'stats.g.doubleclick.net',
+              'files.consumerfinance.gov',
+              'img.youtube.com',
+              '*.google-analytics.com',
+              'trk.cetrk.com',
+              'searchstats.usa.gov',
+              'gtrk.s3.amazonaws.com',
+              '*.googletagmanager.com',
+              'api.mapbox.com',
+              '*.tiles.mapbox.com',
+              'data:')
+
+# These specify what URL's we allow to appear in frames/iframes
+CSP_FRAME_SRC= ("'self'",
+                '*.googletagmanager.com',
+                '*.google-analytics.com',
+                'www.youtube.com',
+                '*.doubleclick.net',
+                'universal.iperceptions.com')
+
+# These specify where we allow fonts to come from
+CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
+
+# These specify what hosts we can make (potentially) cross-domain AJAX requests to.
+CSP_CONNECT_SRC = ("'self'",
+                   '*.tiles.mapbox.com',
+                   'bam.nr-data.net',
+                   'api.iperceptions.com')

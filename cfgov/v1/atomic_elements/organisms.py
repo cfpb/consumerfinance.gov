@@ -53,6 +53,9 @@ class ImageText5050Group(blocks.StructBlock):
 
 class ImageText2575Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
+    should_link_image = blocks.BooleanBlock(default=False,
+                                            required=False,
+                                            help_text='Check this to link all images to the URL of the first link in their unit\'s list, if there is a link.')
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
@@ -99,6 +102,9 @@ class EmailSignUp(blocks.StructBlock):
     class Meta:
         icon = 'mail'
         template = '_includes/organisms/email-signup.html'
+
+    class Media:
+        js = ['email-signup.js']
 
 
 class RegComment(blocks.StructBlock):
@@ -484,6 +490,8 @@ class FilterControls(BaseExpandable):
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
                                      label='Filter Date Range')
+    output_5050 = blocks.BooleanBlock(default=False, required=False,
+                                      label="Render preview items as 50-50s")
 
     class Meta:
         label = 'Filter Controls'
@@ -491,3 +499,24 @@ class FilterControls(BaseExpandable):
 
     class Media:
         js = ['filterable-list-controls.js']
+
+
+class VideoPlayer(blocks.StructBlock):
+    video_url = blocks.RegexBlock(
+        label='YouTube Embed URL',
+        default='https://www.youtube.com/embed/',
+        required=True,
+        regex=r'^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+([/]?)$',
+        error_messages={
+            'required': 'The YouTube URL field is required for video players.',
+            'invalid': "The YouTube URL is in the wrong format. "
+                       "You must use the embed URL "
+                       "(https://www.youtube.com/embed/video_id), "
+                       "which can be obtained by clicking Share > Embed "
+                       "on the YouTube video page.",
+        }
+    )
+
+    class Meta:
+        icon = 'media'
+        template = '_includes/organisms/video-player.html'

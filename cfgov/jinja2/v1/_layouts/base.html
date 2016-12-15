@@ -99,6 +99,13 @@
     If you come across a script that makes a convincing case to be included in
     the head, then file an issue or PR to discuss including it.
 -->
+    {# Google Tag Manager #}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+
     {# Customized Modernizr build that includes html5shiv.
        Built via gulp-modernizer in `scripts.js` task. #}
     <script src="{{ static('js/modernizr.min.js') }}"></script>
@@ -112,7 +119,6 @@
         }
     //]]>
     </script>
-
     <!--[if lt IE 9]>
     <script>
         // If in IE8 reverse no-js/js class change made by modernizr.
@@ -141,14 +147,10 @@
     Analytics
     =========
 -->
-<!-- GOOGLE TAG MANAGER -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+<!-- End Google Tag Manager (noscript) -->
 
 {% block body %}
 
@@ -186,16 +188,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     The number of scripts here must be kept to a minimum.
 -->
 
-{% block javascript %}
+{% block javascript scoped %}
 <!--[if gt IE 8]><!-->
 {# Include site-wide JavaScript. #}
-<script type='text/javascript'>
+<script>
     {% include '/js/routes/common.js' %}
 </script>
-
 {# Remove after sheer has been completely phased out #}
 {% if not page %}
-<script type='text/javascript'>
+<script>
     {% include '/js/routes/sheer.js' %}
 </script>
 {% endif %}
@@ -219,13 +220,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% endmacro %}
 {% set js_source = page_template_js() | trim %}
 {% if js_source | length > 0 %}
-<script type='text/javascript'>
+<script>
     {{ js_source }}
 </script>
 {% endif %}
 <!--<![endif]-->
 
-<script type='text/javascript'>
+<script>
 //<![CDATA[
     var usasearch_config = { siteHandle: 'cfpb' };
 
@@ -235,6 +236,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     document.getElementsByTagName( 'head' )[0].appendChild( script );
 //]]>
 </script>
+
 {% endblock javascript %}
 
 </body>

@@ -7,9 +7,11 @@ from django.forms.utils import ErrorList
 from django.forms import widgets
 from taggit.models import Tag
 
-from .util import ref
 from .models.base import CFGOVPage, Feedback
 from .models.learn_page import AbstractFilterPage
+from v1.util.categories import clean_categories
+from v1.util import ref 
+
 
 import logging
 logger = logging.getLogger(__name__)
@@ -30,6 +32,7 @@ class FilterDateField(forms.DateField):
                 pass
         return value
 
+
 class PDFFilterDateField(forms.DateField):
     def clean(self, value):
         if value:
@@ -38,6 +41,7 @@ class PDFFilterDateField(forms.DateField):
             except Exception as e:
                 pass
         return value
+
 
 class FilterCheckboxList(forms.CharField):
     def validate(self, value):
@@ -49,12 +53,18 @@ class FilterCheckboxList(forms.CharField):
 
 
 class CalenderPDFFilterForm(forms.Form):
-    filter_calendar = FilterCheckboxList(label='Calendar',
-        error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS'])
-    filter_range_date_gte = PDFFilterDateField(required=False,
-        error_messages=ERROR_MESSAGES['DATE_ERRORS'])
-    filter_range_date_lte = PDFFilterDateField(required=False,
-        error_messages=ERROR_MESSAGES['DATE_ERRORS'])
+    filter_calendar = FilterCheckboxList(
+        label='Calendar',
+        error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS']
+    )
+    filter_range_date_gte = PDFFilterDateField(
+        required=False,
+        error_messages=ERROR_MESSAGES['DATE_ERRORS']
+    )
+    filter_range_date_lte = PDFFilterDateField(
+        required=False,
+        error_messages=ERROR_MESSAGES['DATE_ERRORS']
+    )
 
     def __init__(self, *args, **kwargs):
         kwargs['error_class'] = FilterErrorList
@@ -66,13 +76,20 @@ class CalenderPDFFilterForm(forms.Form):
     def clean(self):
         cleaned_data = super(CalenderPDFFilterForm, self).clean()
         from_date_empty = 'filter_range_date_gte' in cleaned_data and \
-                          cleaned_data['filter_range_date_gte']  == None
+                          cleaned_data['filter_range_date_gte'] is None
         to_date_empty = 'filter_range_date_lte' in cleaned_data and \
-                        cleaned_data['filter_range_date_lte'] == None
+                        cleaned_data['filter_range_date_lte'] is None
 
         if from_date_empty and to_date_empty:
-            raise forms.ValidationError(ERROR_MESSAGES['DATE_ERRORS']['one_required'])
+            raise forms.ValidationError(
+                ERROR_MESSAGES['DATE_ERRORS']['one_required']
+            )
         return cleaned_data
+
+
+class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
+    def validate(self, value):
+        pass
 
 
 class FilterableListForm(forms.Form):
@@ -102,42 +119,19 @@ class FilterableListForm(forms.Form):
     from_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
     to_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
     categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
-    topics = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
+    topics = MultipleChoiceFieldNoValidation(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
     authors = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
 
     def __init__(self, *args, **kwargs):
-        self.parent = kwargs.pop('parent')
         self.hostname = kwargs.pop('hostname')
+        self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
         page_ids = CFGOVPage.objects.live_shared(self.hostname).values_list('id', flat=True)
 
-        self.clean_categories()
+        clean_categories(selected_categories=self.data.get('categories'))
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
-
-    def clean_categories(self):
-        """ This is a (hopefully) temporary solution for dealing w/ the fact
-        that we show Blog and Reports as options for filtering, but
-        aren't categories themselves. Rather, they consist of sub-categories,
-        but since we aren't showing those sub-categories to the end user,
-        selecting the parent category is equivalent to all of them
-        getting checked. The mapping of Blog and Reports to their
-        respective categories exists in cfgov/v1/util/ref.py
-        """
-
-        categories = self.data.get('categories')
-        if not categories:
-            return None
-        subcategories = dict(ref.categories)
-        if 'blog' in categories:
-            for x in subcategories['Blog']:
-                categories.append(x[0].lower())
-        if 'research-reports' in categories:
-            for x in subcategories['Research Report']:
-                categories.append(x[0].lower())
-        logger.info('Filtering by categories {}'.format(categories))
-        return categories
 
     def base_query(self):
         base_query = AbstractFilterPage.objects.live_shared(hostname=self.hostname)
@@ -146,20 +140,28 @@ class FilterableListForm(forms.Form):
             logger.info('Filtering by parent {}'.format(self.parent))
         return base_query
 
+
     def get_page_set(self):
-        base_query = self.base_query()
         query = self.generate_query()
-        return base_query.filter(query).distinct().order_by('-date_published')
+        return self.base_query.filter(query).distinct().order_by(
+            '-date_published'
+        )
 
     def prepare_options(self, arr):
-        """ Returns an ordered list of tuples of the format ('tag-slug-name', 'Tag Display Name') """
+        """
+        Returns an ordered list of tuples of the format
+        ('tag-slug-name', 'Tag Display Name')
+        """
         arr = Counter(arr).most_common()  # Order by most to least common
-        # Grab only the first tuple in the generated tuple, which includes a count we do not need
+        # Grab only the first tuple in the generated tuple,
+        # which includes a count we do not need
         return [x[0] for x in arr]
 
     # Populate Topics' choices
     def set_topics(self, page_ids):
-        tags = Tag.objects.filter(v1_cfgovtaggedpages_items__content_object__id__in=page_ids).values_list('slug', 'name')
+        tags = Tag.objects.filter(
+            v1_cfgovtaggedpages_items__content_object__id__in=page_ids
+            ).values_list('slug', 'name')
 
         options = self.prepare_options(arr=tags)
         most = options[:3]
@@ -171,7 +173,9 @@ class FilterableListForm(forms.Form):
 
     # Populate Authors' choices
     def set_authors(self, page_ids):
-        authors = Tag.objects.filter(v1_cfgovauthoredpages_items__content_object__id__in=page_ids).values_list('slug', 'name')
+        authors = Tag.objects.filter(
+            v1_cfgovauthoredpages_items__content_object__id__in=page_ids
+            ).values_list('slug', 'name')
         options = self.prepare_options(arr=authors)
 
         self.fields['authors'].choices = options
@@ -221,7 +225,10 @@ class FilterableListForm(forms.Form):
     def generate_query(self):
         final_query = Q()
         if self.is_bound:
-            for query, field_name in zip(self.get_query_strings(), self.declared_fields):
+            for query, field_name in zip(
+                self.get_query_strings(),
+                self.declared_fields
+            ):
                 if self.cleaned_data.get(field_name):
                     final_query &= \
                         Q((query, self.cleaned_data.get(field_name)))
@@ -254,6 +261,7 @@ class EventArchiveFilterForm(FilterableListForm):
 
 
 class FeedbackForm(forms.ModelForm):
+    """For feedback modules that simply ask 'Was this page helfpul?'"""
     class Meta:
         model = Feedback
         fields = ['is_helpful', 'comment']
@@ -261,3 +269,30 @@ class FeedbackForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FeedbackForm, self).__init__(*args, **kwargs)
         self.fields['is_helpful'].required = True
+
+
+class ReferredFeedbackForm(forms.ModelForm):
+    """For feedback modules that need to capture the referring page"""
+    class Meta:
+        model = Feedback
+        fields = ['is_helpful', 'referrer', 'comment']
+
+    def __init__(self, *args, **kwargs):
+        super(ReferredFeedbackForm, self).__init__(*args, **kwargs)
+        self.fields['comment'].required = True
+
+
+class SuggestionFeedbackForm(forms.ModelForm):
+    """For feedback modules seeking content suggestions"""
+
+    class Meta:
+        model = Feedback
+        fields = ['referrer',
+                  'comment',
+                  'expect_to_buy',
+                  'currently_own',
+                  'email']
+
+    def __init__(self, *args, **kwargs):
+        super(SuggestionFeedbackForm, self).__init__(*args, **kwargs)
+        self.fields['comment'].required = True
