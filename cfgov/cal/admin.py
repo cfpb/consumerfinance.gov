@@ -42,9 +42,9 @@ class CFPBCalendarImportICSFileAdmin(admin.ModelAdmin):
     def changelist_view(self, request, extra_context=None):
         context = {}
         context.update(extra_context or {})
-        context.update({'icsfile': None, })
-        context.update({'calendar_record': None, })
-        context.update({'processed_events': None, })
+        context.update({'icsfile': None})
+        context.update({'calendar_record': None})
+        context.update({'processed_events': None})
 
         leadership = CFPBCalendar.objects.all().order_by("title")
 
@@ -61,8 +61,10 @@ class CFPBCalendarImportICSFileAdmin(admin.ModelAdmin):
                     error.append((['There was an error with the File'],
                                   ["Incorrect File Type"]))
                     context.update({'error': error, })
-                    return super(CFPBCalendarImportICSFileAdmin,
-                                 self).changelist_view(request, context)
+                    return super(
+                        CFPBCalendarImportICSFileAdmin,
+                        self
+                    ).changelist_view(request, context)
 
             try:
                 file_content = icsfile.read()
