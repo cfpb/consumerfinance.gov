@@ -34,6 +34,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added missing uniqueness constraint on CFGOVRendition.
 - Fix for Youtube API failures
 
+## 4.3.2
+
+### Changed
+- Updated Owning-a-home feedback modules to use Ajax form submission
 
 ## 4.3.1
 
