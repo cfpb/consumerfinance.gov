@@ -506,7 +506,7 @@ class VideoPlayer(blocks.StructBlock):
         label='YouTube Embed URL',
         default='https://www.youtube.com/embed/',
         required=True,
-        regex=r'^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+([/]?)$',
+        regex=r'^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9\-]+([/]?)$',
         error_messages={
             'required': 'The YouTube URL field is required for video players.',
             'invalid': "The YouTube URL is in the wrong format. "
