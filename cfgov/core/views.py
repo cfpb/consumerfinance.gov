@@ -6,8 +6,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.http import (Http404, HttpResponse, HttpResponseForbidden,
                          JsonResponse)
-from django.shortcuts import redirect, render_to_response
-from django.template import RequestContext
+from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -144,7 +143,8 @@ def csp_violation_report(request):
         except:
             return HttpResponseForbidden()
 
-        message_template = '{blocked-uri} blocked on {document-uri}, violated {violated-directive}'
+        message_template = ('{blocked-uri} blocked on {document-uri}, '
+                            'violated {violated-directive}')
         message = message_template.format(**csp_dict)
         logger.warn(message)
         return HttpResponse()

@@ -7,7 +7,9 @@ from django.core.signing import BadSignature, Signer
 from django.utils.translation import ugettext_lazy as _
 
 EXTERNAL_URL_WHITELIST_RAW = getattr(settings, 'EXTERNAL_URL_WHITELIST', ())
-EXTERNAL_URL_WHITELIST = [re.compile(regex) for regex in EXTERNAL_URL_WHITELIST_RAW]
+EXTERNAL_URL_WHITELIST = [re.compile(regex)
+                          for regex in EXTERNAL_URL_WHITELIST_RAW]
+
 
 class ExternalURLForm(forms.Form):
     ext_url = forms.URLField(widget=forms.HiddenInput)
@@ -22,7 +24,8 @@ class ExternalURLForm(forms.Form):
             return
 
         url = cleaned_data['ext_url']
-        matched_whitelist = any((regex.match(url) for regex in EXTERNAL_URL_WHITELIST))
+        matched_whitelist = any((regex.match(url)
+                                 for regex in EXTERNAL_URL_WHITELIST))
 
         if matched_whitelist:
             cleaned_data['validated_url'] = url

@@ -275,7 +275,9 @@ urlpatterns = [
 
     # credit cards KBYO
 
-    url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(template_name='knowbeforeyouowe/creditcards/tool.html'), name='cckbyo'),
+    url(r'^credit-cards/knowbeforeyouowe/$', TemplateView.as_view(
+        template_name='knowbeforeyouowe/creditcards/tool.html'),
+        name='cckbyo'),
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
 ]

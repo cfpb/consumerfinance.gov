@@ -65,6 +65,7 @@ class SheerlikeContext(Context):
 # https://github.com/mitsuhiko/jinja2/commit/f22fdd5ffe81aab743f78290071b0aa506705533
 jinja2.runtime.Context = SheerlikeContext
 
+
 class SheerlikeEnvironment(Environment):
 
     def join_path(self, template, parent):

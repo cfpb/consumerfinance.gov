@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.test import RequestFactory, TestCase
+from django.test import TestCase
 
 from core.forms import ExternalURLForm
 from core.utils import sign_url
