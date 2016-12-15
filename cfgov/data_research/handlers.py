@@ -10,7 +10,6 @@ from data_research.forms import ConferenceRegistrationForm
 from data_research.models import ConferenceRegistration
 from v1.handlers import Handler
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -1,6 +1,5 @@
-from elasticsearch import Elasticsearch
-
 from django.conf import settings
+from elasticsearch import Elasticsearch
 
 
 # This is run so the Elasticsearch index settings actually get updated with

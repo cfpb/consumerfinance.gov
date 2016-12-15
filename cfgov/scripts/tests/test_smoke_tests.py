@@ -4,7 +4,7 @@ import unittest
 import mock
 import requests
 
-from scripts import static_asset_smoke_test, http_smoke_test
+from scripts import http_smoke_test, static_asset_smoke_test
 
 
 class StaticAssetTests(unittest.TestCase):

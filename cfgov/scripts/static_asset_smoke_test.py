@@ -1,10 +1,10 @@
 """Check that static assets are available on consumerfinance.gov"""
-import time
-import requests
 import argparse
-import sys
 import logging
+import sys
+import time
 
+import requests
 from bs4 import BeautifulSoup as bs
 
 logger = logging.getLogger('static_asset_smoke_tests')

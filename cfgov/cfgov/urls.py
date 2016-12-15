@@ -1,33 +1,28 @@
 import os
+from functools import partial
 
+from django.conf import settings
+from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.conf import settings
-from django.conf.urls.static import static
-from django.conf.urls import include, url
-from django.views.generic.base import TemplateView, RedirectView
 from django.http import HttpResponse
 from django.shortcuts import render
-from functools import partial
+from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
-from legacy.views import (
-    HousingCounselorPDFView, dbrouter_shortcut, token_provider
-)
+from core.views import ExternalURLNoticeView
+from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
+                          token_provider)
 from sheerlike import register_permalink
-from sheerlike.views.generic import SheerTemplateView
 from sheerlike.sites import SheerSite
+from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
-from v1.views import (
-    change_password, check_permissions, login_with_lockout,
-    password_reset_confirm, unshare, welcome
-)
+from v1.views import (change_password, check_permissions, login_with_lockout,
+                      password_reset_confirm, unshare, welcome)
 from v1.views.documents import DocumentServeView
-
-from core.views import ExternalURLNoticeView
-
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')

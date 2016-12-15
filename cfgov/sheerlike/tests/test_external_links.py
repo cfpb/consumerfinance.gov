@@ -1,9 +1,8 @@
 from django.test import TestCase
 from mock import call, patch
 
-from sheerlike.external_links import (
-    convert_http_image_links, process_external_links
-)
+from sheerlike.external_links import (convert_http_image_links,
+                                      process_external_links)
 
 
 class TestProcessExternalLinks(TestCase):

@@ -1,6 +1,7 @@
-from cal.models import CFPBCalendarEvent
-from datetime import datetime
 import re
+from datetime import datetime
+
+from cal.models import CFPBCalendarEvent
 
 
 class ProcessEvent(object):

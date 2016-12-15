@@ -1,27 +1,24 @@
-from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView
-from django.views.generic.edit import FormMixin
-from django.shortcuts import redirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.http import (JsonResponse,
-                         HttpResponseForbidden,
-                         HttpResponse,
-                         Http404)
-from django.contrib import messages
-from django.utils.decorators import method_decorator
+import json
+import logging
 
 import requests
-from requests_toolbelt.multipart.encoder import MultipartEncoder
-import json
-from govdelivery.api import GovDelivery
-
-from core.utils import extract_answers_from_request
-from core.forms import ExternalURLForm
 from django.conf import settings
+from django.contrib import messages
+from django.http import (Http404, HttpResponse, HttpResponseForbidden,
+                         JsonResponse)
+from django.shortcuts import redirect, render_to_response
+from django.template import RequestContext
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from django.views.generic import TemplateView
+from django.views.generic.edit import FormMixin
+from govdelivery.api import GovDelivery
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-import logging
+from core.forms import ExternalURLForm
+from core.utils import extract_answers_from_request
+
 logger = logging.getLogger(__name__)
 
 REQUIRED_PARAMS_GOVDELIVERY = ['email', 'code']

@@ -1,19 +1,18 @@
 import os
 import sys
 
-import six
-import requests
 import icalendar
-
-from django.views.generic.base import View, ContextMixin
-from django.http import HttpResponse, Http404
-from django.core.exceptions import ImproperlyConfigured
-from pytz import timezone
+import requests
+import six
 from dateutil.parser import parse
-from v1.forms import CalenderPDFFilterForm
-from django.contrib import messages
-from django.http import HttpResponseRedirect
 from django.conf import settings
+from django.contrib import messages
+from django.core.exceptions import ImproperlyConfigured
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.views.generic.base import ContextMixin, View
+from pytz import timezone
+
+from v1.forms import CalenderPDFFilterForm
 
 
 class PDFReactorNotConfigured(Exception):

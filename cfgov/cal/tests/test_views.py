@@ -1,16 +1,14 @@
-import mock
 import urllib2
 
+import mock
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse
 from django.test import RequestFactory, TestCase
 from mock import MagicMock, Mock, patch
 
-from cal.views import (
-    display, get_calendar_events_query, pdf_response, set_cal_events_context,
-    set_pagination_context
-)
+from cal.views import (display, get_calendar_events_query, pdf_response,
+                       set_cal_events_context, set_pagination_context)
 
 
 class TestCalendarEvents(TestCase):

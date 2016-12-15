@@ -1,18 +1,14 @@
+import codecs
+import importlib
+import json
 import os
 import sys
-import codecs
-
 from collections import OrderedDict
-import json
-
-import importlib
 
 from django.conf import settings
-
-from unipath import Path
-
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
+from unipath import Path
 
 from sheerlike.helpers import IndexHelper
 

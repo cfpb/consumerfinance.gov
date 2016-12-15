@@ -1,7 +1,9 @@
-import sys
 import json
 import os.path
+import sys
+
 import requests
+
 from sheerlike.external_links import process_external_links
 
 

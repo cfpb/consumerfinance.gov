@@ -1,9 +1,8 @@
 import ast
-
-from django.http import Http404
 from functools import wraps
-from django import template
 
+from django import template
+from django.http import Http404
 
 register = template.Library()
 

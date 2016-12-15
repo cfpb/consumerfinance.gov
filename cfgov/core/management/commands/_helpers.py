@@ -1,13 +1,12 @@
 import traceback
 
 from django.contrib.auth import authenticate
-from django.core.exceptions import PermissionDenied, ValidationError
-from django.http import HttpRequest
 from django.contrib.messages.api import MessageFailure
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.db.utils import IntegrityError
-
-from wagtail.wagtailcore.models import Page
+from django.http import HttpRequest
 from wagtail.wagtailadmin.views import pages as pages_views
+from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsnippets.views import snippets as snippets_views
 
 from v1.util.ref import categories

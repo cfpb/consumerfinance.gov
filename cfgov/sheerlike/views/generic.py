@@ -1,7 +1,6 @@
-from django.views.generic.base import TemplateView
 from django.http import Http404
 from django.template import TemplateDoesNotExist
-
+from django.views.generic.base import TemplateView
 from elasticsearch import TransportError
 
 from sheerlike.query import get_document

@@ -1,11 +1,10 @@
 import datetime
-
-from django import forms
 from unittest import TestCase
 
-from cal.forms import (
-    CalendarFilterForm, CalendarPDFForm, FilterCheckboxList, FilterDateField
-)
+from django import forms
+
+from cal.forms import (CalendarFilterForm, CalendarPDFForm, FilterCheckboxList,
+                       FilterDateField)
 from cal.models import CFPBCalendar
 
 

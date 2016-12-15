@@ -1,10 +1,10 @@
 import re
 
 from django import forms
-from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
-from django.core.signing import Signer, BadSignature
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.signing import BadSignature, Signer
+from django.utils.translation import ugettext_lazy as _
 
 EXTERNAL_URL_WHITELIST_RAW = getattr(settings, 'EXTERNAL_URL_WHITELIST', ())
 EXTERNAL_URL_WHITELIST = [re.compile(regex) for regex in EXTERNAL_URL_WHITELIST_RAW]

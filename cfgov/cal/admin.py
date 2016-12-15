@@ -1,8 +1,10 @@
-from cal.models import CFPBCalendar, CFPBCalendarEvent, CFPBImportICSFile
-from django.contrib import admin
-from event import ProcessEvent
-from icalendar import Calendar
 import sys
+
+from django.contrib import admin
+from icalendar import Calendar
+
+from cal.models import CFPBCalendar, CFPBCalendarEvent, CFPBImportICSFile
+from event import ProcessEvent
 
 
 def activate(modeladmin, request, queryset):

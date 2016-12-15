@@ -1,6 +1,5 @@
 from urlparse import urlsplit, urlunsplit
 
-
 replacements = (
     ('/blog/', '/about-us/blog/'),
     ('/pressrelease/', '/about-us/newsroom/'),

@@ -1,7 +1,5 @@
-from django.conf.urls import include
-
 from django.conf import settings
-
+from django.conf.urls import include
 from wagtail.wagtailcore.views import serve as wagtail_serve
 
 

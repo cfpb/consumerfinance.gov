@@ -1,21 +1,21 @@
 import os
-import six
 import sys
 
-from django.conf import settings
-from django.http import HttpResponse
+import six
 from django import http
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.translation import ugettext as _
-from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils.translation import ugettext as _
+from django.views.decorators.csrf import csrf_exempt
 
 from core.services import PDFGeneratorView, PDFReactorNotConfigured
 from v1.db_router import cfgov_apps
-from .forms import HousingCounselorForm
 
+from .forms import HousingCounselorForm
 
 if six.PY2:
     try:

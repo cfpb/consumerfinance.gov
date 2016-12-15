@@ -1,21 +1,20 @@
-import sys
 import os
-import six
+import sys
 import urllib2
-
 from datetime import timedelta
+from httplib import BadStatusLine
+
+import six
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.urlresolvers import reverse
-from django.db.models import Max, Min, Q
+from django.db.models import Q, Max, Min
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import get_template
-from httplib import BadStatusLine
 
 from cal.forms import CalendarFilterForm, CalendarPDFForm
 from cal.models import CFPBCalendarEvent
-
 
 # TODO: Update to python 3 when PDFreactor's python wrapper supports it.
 if six.PY2:

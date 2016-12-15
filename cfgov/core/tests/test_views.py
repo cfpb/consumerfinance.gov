@@ -1,17 +1,14 @@
-import django
 import json
-
-from mock import Mock, call, patch
-
 from urllib import urlencode
-from django.test import RequestFactory, TestCase
+
+import django
 from django.core.urlresolvers import reverse
 from django.http import QueryDict
-
+from django.test import RequestFactory, TestCase
+from mock import Mock, call, patch
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 from core.views import govdelivery_subscribe, regsgov_comment, submit_comment
-
 
 django.setup()
 

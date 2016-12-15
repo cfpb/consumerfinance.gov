@@ -1,5 +1,5 @@
-import mock
 import icalendar
+import mock
 from django.test import TestCase
 
 from core.services import ICSView

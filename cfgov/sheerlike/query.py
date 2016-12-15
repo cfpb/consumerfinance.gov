@@ -1,26 +1,20 @@
-import os
+import datetime
 import json
-
+import os
 from collections import namedtuple
 
-from django.utils.datastructures import MultiValueDict as MultiDict
-from django.conf import settings
-from django.utils.http import urlencode
-from django.core.urlresolvers import reverse
-
-import datetime
-from dateutil import parser
-from pytz import timezone
-
 import elasticsearch
-
+from dateutil import parser
+from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.utils.datastructures import MultiValueDict as MultiDict
+from django.utils.http import urlencode
+from pytz import timezone
 from unipath import Path
 
 from .filters import filter_dsl_from_multidict
-
 from .middleware import get_request
 from .templates import _convert_date
-
 
 ALLOWED_SEARCH_PARAMS = (
     'doc_type',
