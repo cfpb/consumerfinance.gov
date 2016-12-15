@@ -1,6 +1,6 @@
 import datetime
-import mock
 
+import mock
 from django.test import TestCase
 
 from ..forms import *

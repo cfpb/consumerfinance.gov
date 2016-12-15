@@ -1,7 +1,8 @@
+from unittest import TestCase
+
 from django.http import HttpRequest
 from django.test import override_settings
 from wagtail.wagtailcore.models import Site
-from unittest import TestCase
 
 from v1.middleware import StagingMiddleware
 

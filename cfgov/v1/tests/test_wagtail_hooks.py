@@ -1,15 +1,14 @@
-import mock
 import json
 
+import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
 
 from v1.models.browse_page import BrowsePage
-from v1.wagtail_hooks import (
-    check_permissions, configure_page_revision, flush_akamai,
-    form_module_handlers, get_akamai_credentials, share, share_the_page,
-    should_flush
-)
+from v1.wagtail_hooks import (check_permissions, configure_page_revision,
+                              flush_akamai, form_module_handlers,
+                              get_akamai_credentials, share, share_the_page,
+                              should_flush)
 
 
 class TestShareThePage(TestCase):

@@ -1,8 +1,10 @@
+import hashlib
+
 import dateutil
 
 from core.management.commands._helpers import SnippetDataConverter
+
 from ..models.snippets import Contact
-import hashlib
 
 
 class DataConverter(SnippetDataConverter):

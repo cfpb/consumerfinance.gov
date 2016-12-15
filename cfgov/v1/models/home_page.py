@@ -1,12 +1,15 @@
-from .base import CFGOVPage
-from ..atomic_elements import atoms, molecules, organisms
-from ..util import ref
 from django.db import models
+from wagtail.wagtailadmin.edit_handlers import (FieldPanel, ObjectList,
+                                                PageChooserPanel,
+                                                StreamFieldPanel,
+                                                TabbedInterface)
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
-    StreamFieldPanel, FieldPanel, PageChooserPanel
-from wagtail.wagtailcore import blocks
+
+from ..atomic_elements import atoms, molecules, organisms
+from ..util import ref
+from .base import CFGOVPage
 
 
 class HomePage(CFGOVPage):

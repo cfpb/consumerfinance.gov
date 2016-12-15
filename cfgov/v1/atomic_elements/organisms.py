@@ -2,22 +2,19 @@
 import json
 
 from django import forms
-from django.template.loader import render_to_string
-from django.utils.functional import cached_property
-
 from django.apps import apps
+from django.template.loader import render_to_string
 from django.utils.encoding import smart_text
+from django.utils.functional import cached_property
+from jinja2 import Markup
 from wagtail.contrib.table_block.blocks import TableBlock, TableInput
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 
-
 from . import atoms, molecules
-from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
-
-from jinja2 import Markup
+from ..util import ref
 
 
 class Well(blocks.StructBlock):

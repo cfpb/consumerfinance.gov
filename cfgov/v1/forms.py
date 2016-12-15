@@ -1,19 +1,19 @@
-from util import ERROR_MESSAGES
+import logging
 from collections import Counter
 
 from django import forms
 from django.db.models import Q
-from django.forms.utils import ErrorList
 from django.forms import widgets
+from django.forms.utils import ErrorList
 from taggit.models import Tag
+
+from util import ERROR_MESSAGES
+from v1.util import ref
+from v1.util.categories import clean_categories
 
 from .models.base import CFGOVPage, Feedback
 from .models.learn_page import AbstractFilterPage
-from v1.util.categories import clean_categories
-from v1.util import ref 
 
-
-import logging
 logger = logging.getLogger(__name__)
 
 
@@ -28,17 +28,18 @@ class FilterDateField(forms.DateField):
         if value:
             try:
                 value = get_date_obj(value)
-            except Exception as e:
+            except Exception:
                 pass
         return value
 
 
 class PDFFilterDateField(forms.DateField):
     def clean(self, value):
+        from sheerlike.templates import get_date_string
         if value:
             try:
                 value = get_date_string(value)
-            except Exception as e:
+            except Exception:
                 pass
         return value
 
@@ -115,31 +116,57 @@ class FilterableListForm(forms.Form):
         'class': 'js-filter_range-date js-filter_range-date__lte',
     })
 
-    title = forms.CharField(max_length=250, required=False, widget=widgets.TextInput(attrs=title_attrs))
-    from_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
-    to_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
-    categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
-    topics = MultipleChoiceFieldNoValidation(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
-    authors = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
+    title = forms.CharField(
+        max_length=250,
+        required=False,
+        widget=widgets.TextInput(attrs=title_attrs)
+    )
+    from_date = FilterDateField(
+        required=False,
+        input_formats=['%m/%d/%Y'],
+        widget=widgets.DateInput(attrs=from_select_attrs)
+    )
+    to_date = FilterDateField(
+        required=False,
+        input_formats=['%m/%d/%Y'],
+        widget=widgets.DateInput(attrs=to_select_attrs)
+    )
+    categories = forms.MultipleChoiceField(
+        required=False,
+        choices=ref.page_type_choices,
+        widget=widgets.CheckboxSelectMultiple()
+    )
+    topics = MultipleChoiceFieldNoValidation(
+        required=False,
+        choices=[],
+        widget=widgets.SelectMultiple(attrs=topics_select_attrs)
+    )
+    authors = forms.MultipleChoiceField(
+        required=False,
+        choices=[],
+        widget=widgets.SelectMultiple(attrs=authors_select_attrs)
+    )
 
     def __init__(self, *args, **kwargs):
         self.hostname = kwargs.pop('hostname')
         self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        page_ids = CFGOVPage.objects.live_shared(self.hostname).values_list('id', flat=True)
+        page_ids = CFGOVPage.objects.live_shared(
+            self.hostname
+        ).values_list('id', flat=True)
 
         clean_categories(selected_categories=self.data.get('categories'))
         self.set_topics(page_ids)
         self.set_authors(page_ids)
 
-
     def base_query(self):
-        base_query = AbstractFilterPage.objects.live_shared(hostname=self.hostname)
+        base_query = AbstractFilterPage.objects.live_shared(
+            hostname=self.hostname)
         if self.parent:
-            base_query = base_query.filter(CFGOVPage.objects.child_of_q(self.parent))
+            base_query = base_query.filter(
+                CFGOVPage.objects.child_of_q(self.parent))
             logger.info('Filtering by parent {}'.format(self.parent))
         return base_query
-
 
     def get_page_set(self):
         query = self.generate_query()
@@ -161,7 +188,7 @@ class FilterableListForm(forms.Form):
     def set_topics(self, page_ids):
         tags = Tag.objects.filter(
             v1_cfgovtaggedpages_items__content_object__id__in=page_ids
-            ).values_list('slug', 'name')
+        ).values_list('slug', 'name')
 
         options = self.prepare_options(arr=tags)
         most = options[:3]
@@ -175,7 +202,7 @@ class FilterableListForm(forms.Form):
     def set_authors(self, page_ids):
         authors = Tag.objects.filter(
             v1_cfgovauthoredpages_items__content_object__id__in=page_ids
-            ).values_list('slug', 'name')
+        ).values_list('slug', 'name')
         options = self.prepare_options(arr=authors)
 
         self.fields['authors'].choices = options

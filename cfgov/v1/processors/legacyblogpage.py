@@ -1,5 +1,6 @@
-import dateutil
 import datetime
+
+import dateutil
 
 from core.management.commands._helpers import PageDataConverter
 

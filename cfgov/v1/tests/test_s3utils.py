@@ -1,12 +1,11 @@
 import boto
-
 from django.core.files.base import ContentFile
 from django.core.files.storage import get_storage_class
 from django.test import TestCase, override_settings
-from moto import mock_s3
-
 from wagtail.wagtailimages.models import get_image_model
 from wagtail.wagtailimages.tests.utils import get_test_image_file
+
+from moto import mock_s3
 
 
 class S3UtilsTestCase(TestCase):

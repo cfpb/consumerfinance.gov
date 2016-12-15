@@ -1,5 +1,4 @@
 import mock
-
 from django.test import TestCase
 from django.test.client import RequestFactory
 
@@ -87,5 +86,3 @@ class TestAnchorLink(TestCase):
 
         assert 'anchor_' in result['link_id']
         assert self.stringContainsNumbers(result['link_id'])
-
-        

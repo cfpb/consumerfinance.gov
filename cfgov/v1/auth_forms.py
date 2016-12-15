@@ -1,13 +1,15 @@
 import time
-
 from datetime import timedelta
+
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import (
-    AuthenticationForm, PasswordChangeForm, PasswordResetForm,
+    AuthenticationForm,
+    PasswordChangeForm,
+    PasswordResetForm,
     SetPasswordForm
 )
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
 from wagtail.wagtailusers import forms as wagtailforms
 
@@ -27,8 +29,11 @@ class PasswordValidationMixin(object):
         if key1 in cleaned_data and key2 in cleaned_data:
             password = cleaned_data[key1]
 
-            password_policy._check_passwords(password, user, password_field = key1)
+            password_policy._check_passwords(password,
+                                             user,
+                                             password_field=key1)
         return cleaned_data
+
 
 class UserEditValidationMixin(PasswordValidationMixin):
     password_key = 'password'
@@ -62,7 +67,7 @@ class LoginForm(AuthenticationForm):
 
                 try:
                     user = UserModel._default_manager.get(
-                            username=username)
+                        username=username)
                 except ObjectDoesNotExist:
                     raise ValidationError(
                         self.error_messages['invalid_login'],
@@ -87,23 +92,41 @@ class LoginForm(AuthenticationForm):
 
                 if fa.too_many_attempts(attempts_allowed, time_period):
                     dt_now = timezone.now()
-                    lockout_expires = dt_now + timedelta(seconds=settings.LOGIN_FAIL_TIME_PERIOD)
-                    lockout = user.temporarylockout_set.create(expires_at=lockout_expires)
+                    lockout_expires = dt_now + timedelta(
+                        seconds=settings.LOGIN_FAIL_TIME_PERIOD)
+                    lockout = user.temporarylockout_set.create(
+                        expires_at=lockout_expires)
                     lockout.save()
-                    raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
+                    raise ValidationError(
+                        'This account is temporarily locked; '
+                        'please try later or <a href="/admin/password_reset/" '
+                        'style="color:white;font-weight:bold">'
+                        'reset your password</a>'
+                    )
                 else:
                     fa.save()
-                    raise ValidationError('Login failed. %s more attempts until your account will be temporarily locked.' % (attempts_allowed-attempts_used))
+                    raise ValidationError(
+                        'Login failed. {attempts} more attempts until your '
+                        'account will be temporarily locked.'.format(
+                            attempts=attempts_allowed - attempts_used)
+                    )
 
             else:
                 self.confirm_login_allowed(self.user_cache)
 
                 dt_now = timezone.now()
                 try:
-                    current_password_data = self.user_cache.passwordhistoryitem_set.latest()
+                    current_password_data = \
+                        self.user_cache.passwordhistoryitem_set.latest()
 
                     if dt_now > current_password_data.expires_at:
-                        raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
+                        raise ValidationError(
+                            'This account is temporarily locked; '
+                            'please try later or '
+                            '<a href="/admin/password_reset/" '
+                            'style="color:white;font-weight:bold">'
+                            'reset your password</a>'
+                        )
 
                 except ObjectDoesNotExist:
                     pass
@@ -116,8 +139,13 @@ class LoginForm(AuthenticationForm):
 
         lockout_query = user.temporarylockout_set.filter(expires_at__gt=now)
 
-        if lockout_query.count() > 0 :
-            raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
+        if lockout_query.count() > 0:
+            raise ValidationError(
+                'This account is temporarily locked; '
+                'please try later or <a href="/admin/password_reset/" '
+                'style="color:white;font-weight:bold">'
+                'reset your password</a>'
+            )
 
 
 class UserCreationForm(wagtailforms.UserCreationForm):

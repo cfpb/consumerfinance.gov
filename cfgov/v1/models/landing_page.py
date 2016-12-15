@@ -1,13 +1,13 @@
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
-    StreamFieldPanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailadmin.edit_handlers import (ObjectList, StreamFieldPanel,
+                                                TabbedInterface)
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR, PageManager
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from .base import CFGOVPage
 from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
+from .base import CFGOVPage
 
 
 class LandingPage(CFGOVPage):

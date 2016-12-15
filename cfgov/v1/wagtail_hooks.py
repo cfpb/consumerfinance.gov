@@ -1,17 +1,15 @@
-import os
 import json
-from urlparse import urlsplit
 import logging
+import os
 from exceptions import ValueError
-
-from django.utils import timezone
-from django.conf import settings
-from django.http import Http404
-from django.contrib.auth.models import Permission
-from django.utils.html import escape, format_html_join
+from urlparse import urlsplit
 
 import requests
-
+from django.conf import settings
+from django.contrib.auth.models import Permission
+from django.http import Http404
+from django.utils import timezone
+from django.utils.html import escape, format_html_join
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
 

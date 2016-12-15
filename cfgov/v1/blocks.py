@@ -40,10 +40,10 @@ class AnchorLink(blocks.StructBlock):
         required=False,
         label='ID for this content block',
         help_text=(
-                'Auto-generated on save, or enter some human-friendly text ',
-                'to make it easier to read.'
-            )
+            'Auto-generated on save, or enter some human-friendly text ',
+            'to make it easier to read.'
         )
+    )
 
     def clean(self, data):
 
@@ -73,12 +73,12 @@ class Feedback(AbstractFormBlock):
         help_text=(
             'Use this field only for feedback forms '
             'that use "Was this helpful?" radio buttons.'
-            )
         )
+    )
     intro_text = blocks.CharBlock(
         required=False,
         help_text='Optional feedback intro'
-        )
+    )
     question_text = blocks.CharBlock(
         required=False,
         help_text='Optional expansion on intro'
@@ -88,7 +88,7 @@ class Feedback(AbstractFormBlock):
         help_text=(
             'Leave blank unless you are building a feedback form with extra '
             'radio-button prompts, as in /owning-a-home/help-us-improve/.'
-            )
+        )
     )
     radio_text = blocks.CharBlock(
         required=False,

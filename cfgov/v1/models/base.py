@@ -1,40 +1,34 @@
 import csv
-from cStringIO import StringIO
-from collections import OrderedDict
-from itertools import chain
 import json
 import os
+from collections import OrderedDict
+from cStringIO import StringIO
+from itertools import chain
 from urllib import urlencode
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
-from django.http import (
-    Http404,
-    JsonResponse,
-    HttpResponseBadRequest,
-    HttpResponse
-)
-
+from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
+                         JsonResponse)
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
-
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel, \
-    MultiFieldPanel, TabbedInterface, ObjectList
+from taggit.models import TaggedItemBase
+from wagtail.wagtailadmin.edit_handlers import (FieldPanel, InlinePanel,
+                                                MultiFieldPanel, ObjectList,
+                                                StreamFieldPanel,
+                                                TabbedInterface)
 from wagtail.wagtailcore import blocks, hooks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import Orderable, Page, PageManager, PagePermissionTester, \
-    PageQuerySet, UserPagePermissionsProxy
+from wagtail.wagtailcore.models import (Orderable, Page, PageManager,
+                                        PagePermissionTester, PageQuerySet,
+                                        UserPagePermissionsProxy)
 from wagtail.wagtailcore.url_routing import RouteResult
-
-from taggit.models import TaggedItemBase
-
 
 from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms

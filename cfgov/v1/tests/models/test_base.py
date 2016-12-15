@@ -1,6 +1,6 @@
-import mock
 import datetime
 
+import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
 from wagtail.wagtailcore.models import Site

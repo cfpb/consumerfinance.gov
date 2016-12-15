@@ -2,10 +2,9 @@
 from __future__ import unicode_literals
 
 import importlib
-
-import mock
 from unittest import TestCase
 
+import mock
 from wagtail.wagtailcore.models import Page, PageRevision
 
 

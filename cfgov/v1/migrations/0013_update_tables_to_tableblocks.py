@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from itertools import chain
+
 import logging
-logger = logging.getLogger(__name__)
+from itertools import chain
 
 from django.db import migrations
 
-from v1.models.learn_page import LearnPage, DocumentDetailPage
-from v1.models.sublanding_page import SublandingPage
-from v1.models.sublanding_filterable_page import SublandingFilterablePage
-from v1.models.browse_page import BrowsePage
 from v1.models.blog_page import BlogPage
 from v1.models.browse_filterable_page import BrowseFilterablePage
+from v1.models.browse_page import BrowsePage
 from v1.models.demo import DemoPage
+from v1.models.learn_page import DocumentDetailPage, LearnPage
+from v1.models.sublanding_filterable_page import SublandingFilterablePage
+from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_changes
+
+logger = logging.getLogger(__name__)
+
+
 
 
 def update_table_items(items, wagtail_page):

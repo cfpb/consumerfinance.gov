@@ -5,11 +5,10 @@ from scripts import _atomic_helpers as atomic
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.browse_page import BrowsePage
 from v1.models.landing_page import LandingPage
-from v1.models.learn_page import LearnPage, DocumentDetailPage
+from v1.models.learn_page import DocumentDetailPage, LearnPage
 from v1.models.sublanding_filterable_page import SublandingFilterablePage
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page
-
 
 django_client = Client()
 

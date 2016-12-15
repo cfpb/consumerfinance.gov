@@ -1,11 +1,13 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import logging
 
-from ..util.util import get_secondary_nav_items
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
 from v1.forms import FilterableListForm
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
 
-import logging
+from ..util.util import get_secondary_nav_items
+
 logger = logging.getLogger(__name__)
 
 

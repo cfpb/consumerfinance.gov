@@ -1,13 +1,19 @@
-import collections, json, os, re
+import collections
+import json
+import os
+import re
 from itertools import chain
 from time import time
+
 from django.conf import settings
-from django.http import Http404, HttpResponseRedirect
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.urlresolvers import resolve
+from django.http import Http404, HttpResponseRedirect
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.blocks.struct_block import StructValue
+
 from ref import related_posts_categories
+
 
 def get_unique_id(prefix='', suffix=''):
     index = hex(int(time() * 10000000))[2:]

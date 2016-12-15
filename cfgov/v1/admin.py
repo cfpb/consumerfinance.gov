@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
-from models.snippets import Contact
 
+from models.snippets import Contact
 from v1.email import send_password_reset_email
 from v1.models import Feedback
 

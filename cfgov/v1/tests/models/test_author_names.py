@@ -1,6 +1,8 @@
 from django.test import TestCase
-from v1.models.base import CFGOVPage
 from mock import patch
+
+from v1.models.base import CFGOVPage
+
 
 class TestAuthorNames(TestCase):
 
@@ -37,4 +39,3 @@ class TestAuthorNames(TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

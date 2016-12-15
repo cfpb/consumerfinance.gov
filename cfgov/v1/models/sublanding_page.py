@@ -1,20 +1,19 @@
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
-    StreamFieldPanel
+import logging
+
+from wagtail.wagtailadmin.edit_handlers import (ObjectList, StreamFieldPanel,
+                                                TabbedInterface)
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
+from jobmanager.models import JobListingList
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.forms import FilterableListForm
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
 
-from v1 import blocks as v1_blocks
-from v1.atomic_elements import molecules, organisms
-
-from jobmanager.models import JobListingList
-from v1.forms import FilterableListForm
-
-import logging
 logger = logging.getLogger(__name__)
 
 
