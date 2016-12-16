@@ -12,6 +12,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
   to the level of a MAJOR or MINOR update.
 
 ---------------------------------------
+
 ## Unreleased
 
 ## Added
@@ -31,12 +32,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - bug that wasn't signing links already coded to /external-site.
 - Sort activity snippets by latest date
 - Added missing uniqueness constraint on CFGOVRendition.
-- Fix for Youtube API failures
+- Fix for YouTube API failures
+- Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.
+
 
 ## 4.3.2
 
 ### Changed
 - Updated Owning-a-home feedback modules to use Ajax form submission
+
 
 ## 4.3.1
 
