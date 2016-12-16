@@ -81,7 +81,7 @@ var BureauStructure = BS = {
       }
     }
 
-    return BS.vendorPrefixes[ style ] || '';
+    return BS.vendorPrefixes[ style ] || style;
   },
 
   /**
