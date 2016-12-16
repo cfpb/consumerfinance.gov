@@ -32,6 +32,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Sort activity snippets by latest date
 - Added missing uniqueness constraint on CFGOVRendition.
 - Fix for Youtube API failures
+- Fix for Wagtail admin page status string when live but not shared.
 
 ## 4.3.2
 
