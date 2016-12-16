@@ -4,6 +4,7 @@ from v1.util import ref
 
 logger = logging.getLogger(__name__)
 
+
 def clean_categories(selected_categories):
     """ This is a (hopefully) temporary solution for dealing w/ the fact
     that we show Blog and Reports as options for filtering, but

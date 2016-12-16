@@ -4,7 +4,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from treebeard.mp_tree import MP_Node
 from wagtail.wagtailcore.blocks import StreamValue
-from wagtail.wagtailcore.models import Page, PageRevision
 
 
 def get_page(apps, slug):

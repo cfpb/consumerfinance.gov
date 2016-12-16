@@ -41,7 +41,6 @@ exclude =
     cfgov/v1/models,
     cfgov/v1/processors,
     cfgov/v1/tests,
-    cfgov/v1/util,
     cfgov/v1/views
 
 # max-complexity = 10
