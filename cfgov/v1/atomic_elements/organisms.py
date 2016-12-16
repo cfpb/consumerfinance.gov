@@ -50,9 +50,12 @@ class ImageText5050Group(blocks.StructBlock):
 
 class ImageText2575Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    should_link_image = blocks.BooleanBlock(default=False,
-                                            required=False,
-                                            help_text='Check this to link all images to the URL of the first link in their unit\'s list, if there is a link.')
+    should_link_image = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=('Check this to link all images to the URL of the first '
+                   'link in their unit\'s list, if there is a link.')
+    )
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
@@ -94,7 +97,9 @@ class EmailSignUp(blocks.StructBlock):
     text = blocks.CharBlock(required=False)
     gd_code = blocks.CharBlock(required=False)
 
-    form_field = blocks.ListBlock(molecules.FormFieldWithButton(), icon='mail', required=False)
+    form_field = blocks.ListBlock(molecules.FormFieldWithButton(),
+                                  icon='mail',
+                                  required=False)
 
     class Meta:
         icon = 'mail'
@@ -105,13 +110,31 @@ class EmailSignUp(blocks.StructBlock):
 
 
 class RegComment(blocks.StructBlock):
-    document_id = blocks.CharBlock(required=True, label='Document ID',
-                                   help_text='Federal Register document ID number to which the comment should be submitted. Should follow this format: CFPB-YYYY-####-####')
-    generic_regs_link = blocks.BooleanBlock(required=False, default=True,
-                                            label='Use generic Regs.gov link?',
-                                            help_text='If unchecked, the link to comment at Regulations.gov if you want to add attachments will link directly to the document given above. Leave this checked if this comment form is being published before the full document is live at Regulations.gov, then uncheck it when the full document has been published.')
-    id = blocks.CharBlock(required=False, label='Form ID',
-                          help_text='Sets the `id` attribute in the form\'s markup. If not set, the form will be assigned a base id of `o-reg-comment_` with a random number appended.')
+    document_id = blocks.CharBlock(
+        required=True,
+        label='Document ID',
+        help_text=('Federal Register document ID number to which the comment '
+                   'should be submitted. Should follow this format: '
+                   'CFPB-YYYY-####-####')
+    )
+    generic_regs_link = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        label='Use generic Regs.gov link?',
+        help_text=('If unchecked, the link to comment at Regulations.gov if '
+                   'you want to add attachments will link directly to the '
+                   'document given above. Leave this checked if this comment '
+                   'form is being published before the full document is live '
+                   'at Regulations.gov, then uncheck it when the full '
+                   'document has been published.')
+    )
+    id = blocks.CharBlock(
+        required=False,
+        label='Form ID',
+        help_text=('Sets the `id` attribute in the form\'s markup. If not '
+                   'set, the form will be assigned a base id of '
+                   '`o-reg-comment_` with a random number appended.')
+    )
 
     class Meta:
         icon = 'form'
@@ -120,20 +143,41 @@ class RegComment(blocks.StructBlock):
 
 class RelatedPosts(blocks.StructBlock):
     limit = blocks.CharBlock(default='3', label='Limit')
-    show_heading = blocks.BooleanBlock(required=False, default=True,
-                                       label='Show Heading and Icon?',
-                                       help_text='This toggles the heading and'
-                                                 + ' icon for the related types.')
-    header_title = blocks.CharBlock(default='Further reading', label='Slug Title')
+    show_heading = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        label='Show Heading and Icon?',
+        help_text=('This toggles the heading and '
+                   'icon for the related types.')
+    )
+    header_title = blocks.CharBlock(
+        default='Further reading',
+        label='Slug Title'
+    )
 
-    relate_posts = blocks.BooleanBlock(required=False, default=True,
-                                       label='Blog Posts', editable=False)
-    relate_newsroom = blocks.BooleanBlock(required=False, default=True,
-                                          label='Newsroom', editable=False)
-    relate_events = blocks.BooleanBlock(required=False, default=True,
-                                        label='Events')
+    relate_posts = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        label='Blog Posts',
+        editable=False
+    )
+    relate_newsroom = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        label='Newsroom',
+        editable=False
+    )
+    relate_events = blocks.BooleanBlock(
+        required=False,
+        default=True,
+        label='Events'
+    )
 
-    specific_categories = blocks.ListBlock(blocks.ChoiceBlock(choices=ref.related_posts_categories, required=False), required=False)
+    specific_categories = blocks.ListBlock(
+        blocks.ChoiceBlock(choices=ref.related_posts_categories,
+                           required=False),
+        required=False
+    )
 
     class Meta:
         icon = 'link'
@@ -389,7 +433,7 @@ class FullWidthText(blocks.StreamBlock):
     cta = molecules.CallToAction()
     related_links = molecules.RelatedLinks()
     table = Table(editable=False)
-    table_block = AtomicTableBlock(table_options={'renderer':'html'})
+    table_block = AtomicTableBlock(table_options={'renderer': 'html'})
 
     class Meta:
         icon = 'edit'
@@ -476,8 +520,10 @@ class FilterControls(BaseExpandable):
                                 label='Filter Title')
     post_date_description = blocks.CharBlock(default='Published')
     categories = blocks.StructBlock([
-        ('filter_category', blocks.BooleanBlock(default=True, required=False)),
-        ('show_preview_categories', blocks.BooleanBlock(default=True, required=False)),
+        ('filter_category',
+         blocks.BooleanBlock(default=True, required=False)),
+        ('show_preview_categories',
+         blocks.BooleanBlock(default=True, required=False)),
         ('page_type', blocks.ChoiceBlock(choices=ref.page_types,
                                          required=False)),
     ])
