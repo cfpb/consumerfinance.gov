@@ -7,7 +7,6 @@
 
 var BreakpointHandler = require( './BreakpointHandler' );
 var Expandable = require( '../organisms/Expandable' );
-var UNDEFINED;
 var BS;
 
 var BureauStructure = BS = {
@@ -16,7 +15,7 @@ var BureauStructure = BS = {
 
   expandables: [],
 
-  vendorPrefix: UNDEFINED,
+  vendorPrefixes: {},
 
   slideCount: 0,
 
@@ -29,7 +28,6 @@ var BureauStructure = BS = {
    */
   initialize: function initialize() {
     BS.setElements();
-    BS.vendorPrefix = BS.getVendorPrefix();
     BS.slideCount = BS.elements.branches.length;
 
     new BreakpointHandler( {
@@ -65,26 +63,25 @@ var BureauStructure = BS = {
 
   /**
    * Returns proper vendor prefix name
-   * Code copied from https://davidwalsh.name/vendor-prefix.
+   * @param {string} style - css style.
    * @returns {object} vendor prefixes.
   */
-  getVendorPrefix: function getVendorPrefix() {
-    var ua = navigator.userAgent.toLowerCase();
-    var match = /opera/.exec( ua ) ||
-                /msie/.exec( ua ) ||
-                /firefox/.exec( ua ) ||
-                /(chrome|safari)/.exec( ua ) ||
-                []; // eslint-disable-line  wrap-regex, inline-comments, max-len
+  getVendorPrefix: function getVendorPrefix( style ) {
+    var vendors = ['webkit', 'Moz', 'ms', 'O'];
+    var element = document.body;
+    var existingPrefix = BS.vendorPrefixes[ style ] ||
+                         element.style[ style.toLowerCase() ];
 
-    var vendors = {
-      opera: 'O',
-      chrome: 'webkit',
-      safari: 'webkit',
-      firefox: 'Moz',
-      msie: 'ms'
-    };
+    if ( existingPrefix ) return existingPrefix;
 
-    return vendors[match[0]];
+    for ( var i = 0; i < vendors.length; i++ ) {
+      if ( typeof element.style[ vendors[ i ] + style ] != 'undefined' ) {
+        BS.vendorPrefixes[ style ] = vendors[ i ] + style;
+        break;
+      }
+    }
+
+    return BS.vendorPrefixes[ style ] || '';
   },
 
   /**
@@ -164,8 +161,8 @@ var BureauStructure = BS = {
     var sign = slideIndex > BS.slideIndex ? '-' : '';
     var index = Array.prototype.indexOf.call( branches, branches[slideIndex] );
     var transForm = 'translate(' + sign + 100 * index + '%, 0)';
-    var prefixedTransitionDuration = BS.vendorPrefix + 'TransitionDuration';
-    var prefixedTransform = BS.vendorPrefix + 'Transform';
+    var prefixedTransitionDuration = BS.getVendorPrefix( 'TransitionDuration' );
+    var prefixedTransform = BS.getVendorPrefix( 'Transform' );
     var nextSlideStyle = branches[slideIndex].style;
 
     if ( slideIndex > BS.slideIndex ) {
