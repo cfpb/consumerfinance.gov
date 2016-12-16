@@ -1,5 +1,3 @@
-import datetime
-
 import dateutil
 
 from core.management.commands._helpers import PageDataConverter
@@ -37,12 +35,12 @@ class DataConverter(PageDataConverter):
             'sidefoot-0-value-gd_code': u'USCFPB_23',
             'sidefoot-0-value-form_field-0-order': u'0',
             'sidefoot-0-value-form_field-count': u'1',
-            'sidefoot-0-value-form_field-0-value-info': u'<p>The information you provide will permit the Consumer Financial Protection Bureau to process your request or inquiry.\xa0<a href="http://privacy/privacy-policy/">See More</a></p>',
+            'sidefoot-0-value-form_field-0-value-info': u'<p>The information you provide will permit the Consumer Financial Protection Bureau to process your request or inquiry.\xa0<a href="http://privacy/privacy-policy/">See More</a></p>',  # noqa
             'sidefoot-0-value-form_field-0-value-btn_text': u'Sign Up',
             'sidefoot-0-value-heading': u'Stay Informed',
             'sidefoot-0-value-form_field-0-value-label': u'Email Address',
-            'sidefoot-0-value-form_field-0-value-placeholder': u'example@mail.com',
-            'sidefoot-0-value-text': u'Subscribe to our email newsletter. We will update you on new newsroom updates.',
+            'sidefoot-0-value-form_field-0-value-placeholder': u'example@mail.com',  # noqa
+            'sidefoot-0-value-text': u'Subscribe to our email newsletter. We will update you on new newsroom updates.',  # noqa
         })
 
     def set_date(self, date_str):
@@ -65,13 +63,14 @@ class DataConverter(PageDataConverter):
 
     def convert(self, doc):
         post_dict = {
-            'title':   doc.get('title', ''),
-            'slug':    doc.get('slug', ''),
+            'title': doc.get('title', ''),
+            'slug': doc.get('slug', ''),
             'content': doc.get('content', '').decode('utf-8'),
         }
         self.add_defaults(doc, post_dict)
 
-        post_dict['preview_description'] = doc.get('excerpt', '').decode('utf-8')
+        post_dict['preview_description'] = doc.get('excerpt',
+                                                   '').decode('utf-8')
         post_dict['date_published'] = self.set_date(doc.get('date', ''))
         post_dict['tags'] = self.format_tags(doc.get('tags'))
         post_dict['authors'] = self.format_tags(doc.get('author'))

@@ -39,7 +39,6 @@ exclude =
     # proper cleanup yet.
     cfgov/v1/atomic_elements,
     cfgov/v1/models,
-    cfgov/v1/processors,
     cfgov/v1/tests,
     cfgov/v1/views
 
