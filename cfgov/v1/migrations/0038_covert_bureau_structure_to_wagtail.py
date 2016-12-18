@@ -14,7 +14,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0036_cfgovrendition_uniqueness'),
+        ('v1', '0037_fix_youtube_url_validation'),
     ]
 
     operations = [
