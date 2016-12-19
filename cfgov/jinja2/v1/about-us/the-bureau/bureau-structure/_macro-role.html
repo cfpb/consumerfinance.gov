@@ -13,15 +13,15 @@
 
    ========================================================================== #}
 {% macro render(role) -%}
-<div class="org-chart_role">
-    <h6 class="org-chart_role_office">
+<div class="o-bureau-structure_role">
+    <h6 class="o-bureau-structure_role_office">
         {{ role.title | safe }}
     </h6>
-    <span class="org-chart_role_name">
+    <span class="o-bureau-structure_role_name">
         {{ role.name | safe }}
     </span>
     {% for title in role.titles %}
-    <span class="org-chart_role_title">
+    <span class="o-bureau-structure_role_title">
         {{ title | safe }}
     </span>
     {% endfor %}
