@@ -12,14 +12,14 @@
 
    ========================================================================== #}
 {% macro render(categories) -%}
-<div class="org-chart_nav">
+<div class="o-bureau-structure_nav">
     <ul class="list__links">
         {% for category in categories %}
         <li>
             <button class="jump-link
                            jump-link__right
                            jump-link__bg
-                           org-chart_nav-item"
+                           o-bureau-structure_nav-item"
                     data-show-slide-index="{{ loop.index }}">
                 {{ category.title }}
             </button>

@@ -6,5 +6,5 @@
 
 'use strict';
 
-var BureauStructure = require( '../../../../modules/BureauStructure' );
+var BureauStructure = require( '../../../../organisms/BureauStructure' );
 BureauStructure.initialize();

@@ -5,7 +5,7 @@
 
 'use strict';
 
-var BreakpointHandler = require( './BreakpointHandler' );
+var BreakpointHandler = require( '../modules/BreakpointHandler' );
 var Expandable = require( '../organisms/Expandable' );
 var BS;
 
@@ -14,6 +14,8 @@ var BureauStructure = BS = {
   elements: {},
 
   expandables: [],
+
+  isMobile: false,
 
   vendorPrefixes: {},
 
@@ -28,6 +30,7 @@ var BureauStructure = BS = {
    */
   initialize: function initialize() {
     BS.setElements();
+    BS.initializeExpandables();
     BS.slideCount = BS.elements.branches.length;
 
     new BreakpointHandler( {
@@ -47,7 +50,6 @@ var BureauStructure = BS = {
       BS.elements.branches[i].removeAttribute( 'style' );
     }
     BS.removeEventListeners();
-    BS.destroyExpandables();
   },
 
   /**
@@ -55,10 +57,10 @@ var BureauStructure = BS = {
    */
   setElements: function setElements() {
     var elements = BS.elements;
-    elements.base = document.querySelector( '.org-chart' );
-    elements.branch = BS.elements.base.querySelector( '.org-chart_branches' );
+    elements.base = document.querySelector( '.o-bureau-structure_chart' );
+    elements.branch = BS.elements.base.querySelector( '.o-bureau-structure_branches' );
     elements.branches =
-      BS.elements.base.querySelectorAll( '.org-chart_branches > li' );
+      BS.elements.base.querySelectorAll( '.o-bureau-structure_branches > li' );
   },
 
   /**
@@ -203,7 +205,7 @@ var BureauStructure = BS = {
      */
     enterMobile: function enterMobile() {
       BS.slideIndex = 0;
-      BS.initializeExpandables();
+      BS.isMobile = true;
       BS.addEventListeners();
       BS.setSliderWidth();
       BS.setSliderHeight();
@@ -213,6 +215,7 @@ var BureauStructure = BS = {
      * Event handler called when leaving the mobile Breakpoint.
      */
     leaveMobile: function leaveMobile() {
+      BS.isMobile = false;
       BS.destroy();
     },
 
@@ -220,6 +223,7 @@ var BureauStructure = BS = {
      * Event handler called when height of the Bureau Structure changes.
      */
     heightChange: function heightChange() {
+      if( BS.isMobile === false ) return;
       BS.setSliderHeight();
     },
 
