@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Wagtail pages from the Django admin 
 - Delete option from Wagtail templates
 - Removed deprecated fellowship view/model.
+- Removed deprecated fellowship notification sign up form.
 
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.

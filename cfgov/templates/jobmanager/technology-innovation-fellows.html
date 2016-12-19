@@ -17,14 +17,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'jobmanager/css/fellows.css' %}" />
 {% endblock %}
 
-{% block page_js %}
-    <script src="{% static 'jobmanager/js/fellows.js' %}"></script>
-{% endblock %}
-
 {% block content %}
-<script type="text/javascript">
-fellowship_form_submit_url = "#";
-</script>
 <div class="jobs-theme">
     <div class="sub-theme-bold sub-theme-bold--divided">
         <div class="l-separated-small--vertical">
@@ -45,7 +38,7 @@ fellowship_form_submit_url = "#";
     <div class="sub-theme-quiet sub-theme-quiet--divided l-separated-large--vertical">
         <div class="wrapper">
             <div class="row-fluid" id="main">
-                <div class="span6 jobs-intro-text">
+                <div class="span9 jobs-intro-text">
                     <h2>Thank you for applying.</h2>
 {# ###### REMOVED ###### #}
 {% comment %}
@@ -60,51 +53,7 @@ fellowship_form_submit_url = "#";
                         <li><a href="https://cfpb.github.io/">https://cfpb.github.io/ <i class="icon-external-link"></i></a></li>
                         <li><a href="https://www.youtube.com/watch?v=X078IIOqZGE">Design Reel</a></li>
                     </ul>
-                </div><!-- END .span4 -->
-                <div class="span5 offset1">
-                    <form method="POST" class="fellows-signup-form" id="get-update-form"{#  action="#" #}>
-                        <h3>Sign up for fellowship updates</h3>
-                        <label>
-                            <div>First Name</div>
-                            <input type="text" required name="first_name" />
-                        </label>
-                        <label>
-                            <div>Last Name</div>
-                            <input type="text" required name="last_name" />
-                        </label>
-                        <label>
-                            <div>Email Address</div>
-                            <input type="email" required name="email" />
-                        </label>
-
-                        <h4>Select your area of expertise</h4>
-                        <div class="row-liquid jobs-checkboxes">
-                            <div class="span6">
-                                <label>
-                                    <input type="checkbox" name="likes_design" />
-                                    <span>Design</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="likes_development" />
-                                    <span>Development</span>
-                                </label>
-                            </div>
-                            <div class="span6">
-                                <label>
-                                    <input type="checkbox" name="likes_cybersecurity" />
-                                    <span>Cybersecurity</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="likes_data" />
-                                    <span>Data</span>
-                                </label>
-                            </div>
-                        </div>
-                        <!-- {# <input type="submit" class="btn btn-primary" value="Sign up" id="signup_btn" /> #} -->
-                        <input type="button" class="btn btn-primary btn-disabled" value="Sign up" id="signup_btn" />
-                        <div style='margin-top:-31px;padding-right:23px;font-size:.8em;text-align:right;'><a href="#privacy-act-statement">Privacy act statement</a></div>
-                    </form>
-                </div>
+                </div><!-- END .span9 -->
             </div>
 
             <!-- HOW IT WORKS -->
@@ -245,9 +194,9 @@ fellowship_form_submit_url = "#";
 
                         <h4>Digital Analyst</h4>
                         <p>Digital Analysts inform strategy for web content and social media through analysis of current usage trends. They integrate digital channels to create a holistic view of audiences and behaviors through an integrated measurement system.</p>
-                   
+
                         <a class="btn btn-primary btn-disabled">View details</a>
-                      
+
 
                         <h4>Data Architect</h4>
                         <p>Data Architects design, develop, and support the information management architecture and vision for the agency while working closely with subject matter experts to provide solutions for future scalability.</p>
