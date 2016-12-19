@@ -17,14 +17,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'jobmanager/css/fellows.css' %}" />
 {% endblock %}
 
-{% block page_js %}
-    <script src="{% static 'jobmanager/js/fellows.js' %}"></script>
-{% endblock %}
-
 {% block content %}
-<script type="text/javascript">
-fellowship_form_submit_url = "{% url 'fellowship_form_submit' %}";
-</script>
 <div class="jobs-theme">
     <div class="sub-theme-bold sub-theme-bold--divided">
         <div class="l-separated-small--vertical">
