@@ -30,6 +30,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed layout.less enhancements that have been moved to Capital Framework.
 - Wagtail pages from the Django admin 
 - Delete option from Wagtail templates
+- Removed deprecated fellowship view/model.
 
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
