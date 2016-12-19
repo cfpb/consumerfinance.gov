@@ -88,11 +88,3 @@ class TestConvertHttpImageLinks(TestCase):
                     '<img src="http://other.url/img.png">'
                 )
                 convert_http_image_links(html)
-
-    def test_link_as_wordpress_image(self):
-        with self.settings(AWS_STORAGE_BUCKET_NAME='bucket.name')
-            html = '<img src="http://bucket.name/img.png">'
-            self.assertEqual(
-                convert_http_image_links(html),
-                '<img src="https://bucket.name.s3.amazonaws.com/img.png">'
-            )
