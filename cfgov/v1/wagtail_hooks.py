@@ -77,6 +77,7 @@ def editor_js():
 def editor_css():
     css_files = [
         'css/table-block.css',
+        'css/bureau-structure.css'
     ]
     css_includes = format_html_join(
         '\n',

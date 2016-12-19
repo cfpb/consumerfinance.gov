@@ -10,11 +10,11 @@
 var $ = require( 'jquery' );
 require( 'slick' );
 
-var ContentSlider = require( '../../../../modules/ContentSlider' );
-var BreakpointHandler = require( '../../../../modules/BreakpointHandler' );
-var Expandable = require( '../../../../organisms/Expandable' );
-var dataHook = require( '../../../../modules/util/data-hook' );
-var standardType = require( '../../../../modules/util/standard-type' );
+var ContentSlider = require( '../../modules/ContentSlider' );
+var BreakpointHandler = require( '../../modules/BreakpointHandler' );
+var Expandable = require( '../../organisms/Expandable' );
+var dataHook = require( '../../modules/util/data-hook' );
+var standardType = require( '../../modules/util/standard-type' );
 
 var _slider;
 var $legend;
@@ -50,7 +50,9 @@ function _initExpandables() {
 }
 
 function _updateHeight() {
-  _slider.setHeightToAuto();
+  if ( _slider ) {
+    _slider.setHeightToAuto();
+  }
 }
 
 function _createSlider() {
