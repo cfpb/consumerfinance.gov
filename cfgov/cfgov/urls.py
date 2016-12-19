@@ -167,7 +167,6 @@ urlpatterns = [
 
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(url='/about-us/careers/%(path)s', permanent=True)),
-    url(r'^about-us/careers/', include('jobmanager.urls', namespace='careers')),
 
     url(r'^transcripts/', include([
         url(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$', SheerTemplateView.as_view(
@@ -199,7 +198,6 @@ urlpatterns = [
     url(r'^jobs/technology-innovation-fellows/$',
         TemplateView.as_view(template_name='jobmanager/technology-innovation-fellows.html'),
         name='technology_innovation_fellows'),
-    url(r'^jobs/fellowship_form_submit/$', 'jobmanager.views.fellowship_form_submit', name='fellowship_form_submit'),
 
     # credit cards KBYO
 
