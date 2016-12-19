@@ -28,6 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Removed
 - Removed deprecated Django careers-related models, views, and templates.
 - Removed layout.less enhancements that have been moved to Capital Framework.
+- Removed deprecated fellowship view/model.
 
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
