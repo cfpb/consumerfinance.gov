@@ -24,6 +24,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Move logic for activity snippets out of template
 - Update privacy policy URL
 - Upgrade npm shrinkwrap endpoints to HTTPS
+- Upgrade to Wagtail 1.7 
 
 ## Removed
 - Removed deprecated Django careers-related models, views, and templates.
