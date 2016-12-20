@@ -8,7 +8,7 @@ from wagtail.wagtailimages.utils import get_fill_filter_spec_migrations
 class Migration(migrations.Migration):
 
 	dependencies = [
-		('v1', '0037_auto_20161216_0231'),
+		('v1', '0039_add_filter_spec_to_cfgovrendition'),
 	]
 
 	forward, reverse = get_fill_filter_spec_migrations('v1', 'CFGOVRendition')

@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0036_cfgovrendition_uniqueness'),
+        ('v1', '0038_convert_bureau_structure_to_wagtail'),
     ]
 
     operations = [
