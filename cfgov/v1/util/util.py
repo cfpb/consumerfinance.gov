@@ -72,19 +72,19 @@ def get_secondary_nav_items(request, current_page):
                 'title': 'The Bureau',
                 'slug': 'the-bureau',
                 'url': '/the-bureau/',
-                'children': [ {
+                'children': [{
                     'title': 'The Director',
                     'url': BASE_URL + '/about-director/',
                     'slug': 'about-director',
-                }, {
+                },{
                     'title': 'The Deputy Director',
                     'url': BASE_URL + '/about-deputy-director/',
                     'slug': 'about-deputy-director',
-                }, {
+                },{
                     'title': 'Bureau Structure',
                     'url': BASE_URL + '/bureau-structure/',
                     'slug': 'bureau-structure',
-                }, {
+                },{
                     'title': page.title,
                     'url': get_page_state_url({}, page).replace('/about-us', BASE_URL),
                     'slug': page.slug,

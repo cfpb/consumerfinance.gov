@@ -92,7 +92,7 @@ urlpatterns = [
         url(r'^$', SheerTemplateView.as_view(template_name='about-us/the-bureau/index.html'),
             name='index'),
         url(r'^leadership-calendar/',
-            lambda request: views.serve( request, 'about-us/leadership-calendar' ),
+            lambda request: views.serve(request, 'about-us/leadership-calendar'),
             name='leadership-calendar'),
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
