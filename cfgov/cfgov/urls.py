@@ -9,7 +9,7 @@ from django.views.generic.base import TemplateView, RedirectView
 from django.http import HttpResponse
 from functools import partial
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtailcore import urls as wagtail_urls
+from wagtail.wagtailcore import urls as wagtail_urls, views
 
 from legacy.views import (
     HousingCounselorPDFView, dbrouter_shortcut, token_provider
@@ -87,11 +87,12 @@ urlpatterns = [
             name='press-resources'),
 
     url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/%(path)s', permanent=True)),
+    url(r'^about-us/leadership-calendar/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/leadership-calendar/%(path)s', permanent=True)),
     url(r'^about-us/the-bureau/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='about-us/the-bureau/index.html'),
             name='index'),
         url(r'^leadership-calendar/',
-            include('cal.urls'),
+            lambda request: views.serve(request, 'about-us/leadership-calendar'),
             name='leadership-calendar'),
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),

@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Update privacy policy URL
 - Upgrade npm shrinkwrap endpoints to HTTPS
 - Upgrade to Wagtail 1.7
+- Added redirect for `Leadership Calendar` Wagtail Page.
 
 ## Removed
 - Removed deprecated Django careers-related models, views, and templates.
