@@ -1,0 +1,342 @@
+
+{# ==========================================================================
+
+   _branches()
+
+   ==========================================================================
+
+   Description:
+
+   Renders an org chart branch when given:
+
+   categories: An Array of categories.
+
+   ========================================================================== #}
+{% macro _branches(categories) -%}
+<ul class="o-bureau-structure_branches
+           list
+           list__unstyled">
+    {% for category in categories %}
+    {% set category_index = loop.index %}
+    <li class="o-bureau-structure_branch">
+        <h4 class="o-bureau-structure_branch_name">{{ category.title }}</h4>
+        <ul class="o-bureau-structure_nodes
+                   nodes{{ category_index }}
+                   list
+                   list__unstyled">
+            <li class="o-bureau-structure_branch_name">
+                <button class="content-hide
+                               link_text
+                               jump-link
+                               jump-link__before
+                               jump-link__left">
+                    {{ category.title }}
+                </button>
+            </li>
+            {% for org in category.data %}
+            {{ _node('li', org, category.sub_title) }}
+            {% endfor %}
+            {% if loop.last %}
+            <li>
+                {{ _legend() }}
+            </li>
+            {% endif %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+{%- endmacro %}
+
+
+{# ==========================================================================
+
+   _content_slider()
+
+   ==========================================================================
+
+   Description:
+
+   Renders a content slider when given:
+
+   categories: An Array of categories.
+
+   ========================================================================== #}
+{% macro _content_slider(categories) -%}
+<div id="content-slider">
+    <div class="o-bureau-structure_categories">
+        <ul class="list__links">
+            {% for category in categories %}
+            <li class="link_item">
+                <button class="link_text
+                               jump-link
+                               jump-link__right
+                               jump-link__bg
+                               content-show"
+                        data-content=".nodes{{ loop.index }}">
+                    {{ category.title }}
+                </button>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{%- endmacro %}
+
+
+{# ==========================================================================
+
+   _node()
+
+   ==========================================================================
+
+   Description:
+
+   Renders an org chart node when given:
+
+   tagName:   A string representing the encompassing element tag name.
+
+   org:       A dictionary object representing an organization.
+
+   sub_title: A string representing a sub title for an organization.
+
+   ========================================================================== #}
+{% macro _node(tagName="div", org, sub_title="text") -%}
+{% set has_children = org.offices | list | length %}
+
+<{{ tagName }} class="o-bureau-structure_node
+       {{ 'o-expandable
+           o-expandable__expanded'
+          if has_children else '' }}">
+    {% if has_children %}
+    {{ _role(org) }}
+    <button class="o-expandable_target">
+        <div class="o-expandable_header">
+            <div class="o-bureau-structure_node_expander">
+                <span class="o-expandable_header-left
+                             o-expandable_label
+                             o-bureau-structure_node_label">
+                    {{ sub_title }}
+                </span>
+                <span class="o-expandable_header-right
+                             o-expandable_link">
+                    <span class="o-expandable_cue
+                                 o-expandable_cue-open">
+                        <span class="o-expandable_cue-label">Show</span>
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="o-expandable_cue
+                                 o-expandable_cue-close">
+                        <span class="o-expandable_cue-label">Hide</span>
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </button>
+    <div class="o-bureau-structure_nodes
+                o-expandable_content">
+        <ul class="o-expandable_content-animated
+                   list list__unstyled
+                   list__spaced">
+            {% for child_org in org.offices %}
+            <li class="o-bureau-structure_node">
+                {{ _role(child_org) }}
+                {% if loop.last and org.link_to_division_page %}
+                <a href="{{ org.link_to_division_page.url }}"
+                   class="o-bureau-structure_node_more-info">
+                    {{ org.link_to_division_page.text or
+                       'More information about these offices' }}
+                </a>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    {{ _role(org) }}
+    {% endif %}
+</{{ tagName }}>
+{%- endmacro %}
+
+
+{# ==========================================================================
+
+   _role()
+
+   ==========================================================================
+
+   Description:
+
+   Renders a person's role within the bureau structure when given:
+
+   role: An object containing a title (office title), name (person's name),
+         and titles (list of titles the person holds in particular office).
+
+   ========================================================================== #}
+{% macro _role(role) -%}
+<div class="o-bureau-structure_role">
+    {% if role.office_name or role.division %}
+    <h6 class="o-bureau-structure_role_office">
+        {{ role.office_name or role.division | safe }}
+    </h6>
+    {% endif %}
+    {% if role.lead or role.division_lead %}
+    <span class="o-bureau-structure_role_name">
+        {{ role.lead or role.division_lead | safe }}
+    </span>
+    {% endif %}
+    {% for title_line in ['line_1', 'line_2'] if role.title %}
+    <span class="o-bureau-structure_role_title">
+        {{  role.title[title_line] | safe }}
+    </span>
+    {% endfor %}
+</div>
+{%- endmacro %}
+
+
+{# ==========================================================================
+
+   _legend()
+
+   ==========================================================================
+
+   Description:
+
+   Renders an org chart legend.
+
+   ========================================================================== #}
+{% macro _legend() -%}
+<section class="o-bureau-structure_legend">
+    <h4>Chart Legend</h4>
+    <ul class="list
+               list__unstyled
+               list__spaced">
+        <li class="list_item">
+            <span class="o-bureau-structure_legend_symbol">*</span>
+            <span class="o-bureau-structure_legend_definition">
+                Position currently filled on an acting basis
+            </span>
+        </li>
+        <li class="list_item">
+            <span class="o-bureau-structure_legend_symbol">**</span>
+            <span class="o-bureau-structure_legend_definition">
+                Position has direct reporting responsibilities to the director
+            </span>
+        </li>
+        <li class="list_item">
+            <span class="o-bureau-structure_legend_symbol">***</span>
+            <span class="o-bureau-structure_legend_definition">
+                Position is not part of the CFPB director’s office
+            </span>
+        </li>
+</section>
+{%- endmacro %}
+
+
+{# ==========================================================================
+
+   _footer()
+
+   ==========================================================================
+
+   Description:
+
+   Renders an org chart footer when given:
+
+   download_image_url: A string representing the URL of the download image.
+
+   ========================================================================== #}
+{% macro _footer(download_image_url) -%}
+<aside class="block
+              block__padded-top
+              block__border-top
+              o-bureau-structure_footer">
+    <div class="content-l content-l__main">
+        <div class="content-l_col content-l_col-1-2"
+             data-qa-hook="org-chart-download-info">
+            <h2 class="h3">Download a copy</h2>
+            <p>
+                Download a printable, PDF copy of this organizational chart. This version
+                is expanded to show all offices.
+            </p>
+            <a class="btn"
+               href="{{ download_image_url }}">
+                <span class="btn_icon__left cf-icon cf-icon-save"></span>
+                Download PNG
+            </a>
+        </div>
+        <div class="content-l_col content-l_col-1-2">
+            <h2 class="h3">Request speaking info</h2>
+            <p>
+                Ask a CFPB employee to be involved in a forum, publication, discussion, or
+                other event; or to inquire about any CFPB events.
+            </p>
+            <span class="cf-icon cf-icon-email list_icon"></span>
+            <span class="list_text">
+                <a class="list_link"
+                   href="mailto:invitations2cfpb@consumerfinance.gov">
+                    invitations2cfpb@consumerfinance.gov
+                </a>
+            </span>
+        </div>
+    </div>
+</aside>
+{%- endmacro %}
+
+
+{# ==========================================================================
+
+    bureau_structure.render()
+
+   ==========================================================================
+
+   Description:
+
+   Creates a Bureau Structure organism when given:
+
+   value:                        An object used to customize the markup.
+
+   value.director:               A string containing the director name.
+
+   value.divisions:              A list containing of division objects.
+
+   value.download_image:         A string representing the URL of the download image.
+
+   value.last_updated_date:      A date representing the last update date for the bureau
+                                 structure.
+
+   value.office_of_the_director: A list containing of Office of the Director objects.
+
+   ========================================================================== #}
+<div class="o-bureau-structure">
+    <link rel="stylesheet" href="{{ static('css/slick.css') }}">
+    <h1>Bureau Structure</h1>
+    {% if value.last_updated_date %}
+    <p>
+        Org chart last updated:
+        {{ value.last_updated_date | date('%B %d, %Y') }}
+    </p>
+    {% endif %}
+    <div class="o-bureau-structure_chart">
+        <div class="o-bureau-structure_node
+                    o-bureau-structure_node__root">
+            {% set categories = [{
+                        'title': 'Divisions',
+                        'sub_title': 'Offices in this division',
+                        'data': value.divisions
+                    },{
+                        'title':'Office of the Director',
+                        'sub_title': 'Offices under this position',
+                        'data': value.office_of_the_director
+                    }]
+            %}
+            {{ _role({
+                'lead': '<a href="/about-us/the-bureau/about-director/">' ~  value.director ~ '</a>',
+                'office_name': 'Director'
+            }) }}
+        </div>
+        {{ _content_slider(categories) }}
+        {{ _branches(categories) }}
+    </div>
+    {{ _footer( value.download_image.url ) }}
+</div>

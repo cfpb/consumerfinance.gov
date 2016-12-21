@@ -38,9 +38,6 @@
                         {% if not page.locked %}
                             <div class="dropdown-toggle icon icon-arrow-up"></div>
                             <ul role="menu">
-                                {% if page_perms.can_delete %}
-                                    <li><a href="{% url 'wagtailadmin_pages:delete' page.id %}" class="shortcut">{% trans 'Delete' %}</a></li>
-                                {% endif %}
                                 {% if page_perms.can_unpublish %}
                                     <li><a href="{% url 'wagtailadmin_pages:unpublish' page.id %}">{% trans 'Unpublish' %}</a></li>
                                 {% endif %}
