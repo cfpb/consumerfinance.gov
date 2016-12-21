@@ -41,7 +41,10 @@ class ServeViewTestCase(TestCase):
     )
     def test_document_serve_view_s3(self):
         filename = 'test.txt'
-        with patch('v1.s3utils.S3BotoStorage._save', return_value=filename):
+        with patch(
+            'storages.backends.s3boto.S3BotoStorage._save',
+            return_value=filename
+        ):
             doc = create_document(filename)
 
         response = self.view.get(self.request, doc.pk, filename)
