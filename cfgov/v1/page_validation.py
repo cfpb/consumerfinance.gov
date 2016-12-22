@@ -2,7 +2,11 @@ from __future__ import print_function, unicode_literals
 
 import re
 
+from difflib import ndiff
 from functools import partial
+from wagtail.wagtailcore.blocks import RawHTMLBlock
+
+from v1.tests.wagtail_pages.helpers import save_page
 
 
 HTTP_IMAGE_TAG_REGEX = r'<img[^>]*\ src=\\?\\?"(http://[^"]+)\\?\\?"'
@@ -38,3 +42,45 @@ def convert_http_image_match(match, url_mappings):
     raise ValueError(
         'cannot convert HTTP image link {}'.format(http_image_url)
     )
+
+
+class PageValidator(object):
+    def __init__(self, http_image_url_mappings):
+        self.http_image_url_mappings = http_image_url_mappings
+
+    def validate_page(self, page, fix=False):
+        diffsets = []
+
+        for block in page.content:
+            if not isinstance(block.block, RawHTMLBlock):
+                continue
+
+            try:
+                corrected = self.correct_html(block.value)
+            except Exception:
+                print('failed page validation:', page.full_url)
+                raise
+
+            if corrected != block.value:
+                diffset = ndiff(block.value.split('\n'), corrected.split('\n'))
+                diffsets.append(
+                    d for d in diffset
+                    if d.startswith('- ') or d.startswith('+ ')
+                )
+
+                block.value = corrected
+
+        if diffsets:
+            print('\ndetected invalid page:', page.full_url)
+            for diffset in diffsets:
+                for diff in diffset:
+                    print(diff)
+
+            if fix:
+                revision = save_page(page)
+
+                if page.live:
+                    revision.publish()
+
+    def correct_html(self, html):
+        return convert_http_image_links(html, self.http_image_url_mappings)
