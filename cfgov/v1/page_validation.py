@@ -2,39 +2,39 @@ from __future__ import print_function, unicode_literals
 
 import re
 
-from django.conf import settings
 from functools import partial
-
-from v1.s3utils import https_s3_url_prefix
 
 
 HTTP_IMAGE_TAG_REGEX = r'<img[^>]*\ src=\\?\\?"(http://[^"]+)\\?\\?"'
 
 
-def convert_http_image_match(match, convert_url_prefixes):
-    """Convert an HTTP link matching a URL prefix to an HTTPS link to S3."""
-    http_image_url = match.group(1)
-    https_prefix = https_s3_url_prefix()
+def convert_http_image_links(html, url_mappings):
+    """Convert HTTP image links according to a given set of URL mappings.
 
-    for url_prefix in convert_url_prefixes:
-        if http_image_url.startswith(url_prefix):
-            print('altering link {} to start with {} instead of {}'.format(
-                match.group(0),
-                https_prefix,
-                url_prefix
-            ))
-            return re.sub(url_prefix, https_prefix, match.group(0))
+    url_mappings should be a list of tuples representing each pair of URL
+    prefixes to convert from and to. For example:
+
+        >> html = '<img src="http://from.url/path/image.png"/>'
+        >> url_mappings = [('http://from.url/', 'http://to.url/')]
+        >> convert_http_image_links(html, url_mappings)
+        '<img src="http://to.url/path/image.png"/>'
+
+    """
+    converter = partial(
+        convert_http_image_match,
+        url_mappings=url_mappings
+    )
+
+    return re.sub(HTTP_IMAGE_TAG_REGEX, converter, html)
+
+
+def convert_http_image_match(match, url_mappings):
+    http_image_url = match.group(1)
+
+    for from_prefix, to_prefix in url_mappings:
+        if http_image_url.startswith(from_prefix):
+            return re.sub(from_prefix, to_prefix, match.group(0))
 
     raise ValueError(
         'cannot convert HTTP image link {}'.format(http_image_url)
     )
-
-
-def convert_http_image_links(html, convert_url_prefixes):
-    """Convert HTTP image links matching given URL prefixes to MEDIA_URL."""
-    converter = partial(
-        convert_http_image_match,
-        convert_url_prefixes=convert_url_prefixes
-    )
-
-    return re.sub(HTTP_IMAGE_TAG_REGEX, converter, html)
