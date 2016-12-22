@@ -11,9 +11,10 @@ from wagtail.contrib.table_block.blocks import TableBlock, TableInput
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-
+from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from . import atoms, molecules
+from .. import blocks as v1_blocks
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
 
@@ -171,6 +172,45 @@ class Table(blocks.StructBlock):
         icon = None
         template = '_includes/organisms/table.html'
         label = ' '
+
+class BureauStructurePosition(blocks.StructBlock):
+    office_name = blocks.CharBlock()
+    lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
+    title = blocks.StructBlock([
+        ('line_1', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 1")),
+        ('line_2', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 2"))
+    ])
+
+
+class BureauStructureDivision(blocks.StructBlock):
+    division = v1_blocks.PlaceholderCharBlock(label='Division')
+    division_lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
+    title = blocks.StructBlock([
+        ('line_1', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 1")),
+        ('line_2', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 2"))
+    ])
+    link_to_division_page = atoms.Hyperlink(required=False)
+    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+
+
+class BureauStructureOffice(BureauStructurePosition):
+    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+
+
+class BureauStructure(blocks.StructBlock):
+    last_updated_date = blocks.DateBlock(required=False)
+    download_image = DocumentChooserBlock(icon='image')
+    director = blocks.CharBlock()
+    divisions = blocks.ListBlock(BureauStructureDivision())
+    office_of_the_director = blocks.ListBlock(BureauStructureOffice(),
+                             label='Office of the Director')
+    class Meta:
+        icon = None
+        template = '_includes/organisms/bureau-structure.html'
+        icon = "table"
+
+    class Media:
+        js = ['bureau-structure.js']
 
 
 class AtomicTableInput(TableInput):
@@ -506,7 +546,7 @@ class VideoPlayer(blocks.StructBlock):
         label='YouTube Embed URL',
         default='https://www.youtube.com/embed/',
         required=True,
-        regex=r'^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+([/]?)$',
+        regex=r'^https:\/\/www\.youtube\.com\/embed\/.+$',
         error_messages={
             'required': 'The YouTube URL field is required for video players.',
             'invalid': "The YouTube URL is in the wrong format. "

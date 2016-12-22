@@ -47,17 +47,3 @@ class Location(models.Model):
 
     class Meta:
         ordering = ['region']
-
-
-class FellowshipUpdateList(models.Model):
-    first_name = models.CharField(max_length=255, null=True, blank=True)
-    last_name = models.CharField(max_length=255, null=True, blank=True)
-    email = models.CharField(max_length=255, null=True, blank=True)
-    date_created = models.DateTimeField(auto_now_add=True)
-    likes_design = models.BooleanField(default=False)
-    likes_cybersecurity = models.BooleanField(default=False)
-    likes_development = models.BooleanField(default=False)
-    likes_data = models.BooleanField(default=False)
-
-    def __unicode__(self):
-        return self.first_name

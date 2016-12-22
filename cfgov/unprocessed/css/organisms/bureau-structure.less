@@ -12,7 +12,7 @@
 @node-border-width: 3px;
 @node-border-color: @gray-20;
 
-.org-chart {
+.o-bureau-structure_chart {
     margin-top: @margin;
     background: @gray-10;
     border-top:1px solid @node-border-color;
@@ -118,9 +118,11 @@
     }
 }
 
-.org-chart_branch {
-    /* Borders on .org-chart_branch pseudo elements (:after on first branch, :before on last)
-       draw lines connecting the branch headers to the line from .org-chart_root.
+.o-bureau-structure_branch {
+    /* Borders on .org-chart_branch pseudo elements
+       (:after on first branch, :before on last)
+       draw lines connecting the branch headers to the
+       line from .org-chart_root.
     */
     .respond-to-min( @bp-sm-min, {
         .grid_column( 6 );
@@ -155,7 +157,7 @@
                 border-width: @spine-width @spine-width 0 0;
             }
 
-            .org-chart_node:nth-last-child(2):after {
+            .o-bureau-structure_node:nth-last-child(2):after {
                 border: none;
             }
         }
@@ -186,13 +188,14 @@
 }
 
 /* Lines of the org chart are drawn with before & after
-   pseudo elements applied to .org-chart_branches & .org-chart_branch.
+   pseudo elements applied to .o-bureau-structure_branches
+   & .o-bureau-structure_branch.
 */
-.org-chart_branches {
+.o-bureau-structure_branches {
     padding-top: @margin;
 
     /* :before pseudo element's left border draws a centered vertical line
-       down from .org-chart_root to .org-chart_branches.
+       down from .o-bureau-structure_root to .o-bureau-structure_branches.
     */
     .respond-to-min( @bp-sm-min, {
         position: relative;
@@ -209,7 +212,7 @@
     } );
 }
 
-.org-chart_categories {
+.o-bureau-structure_categories {
     .link_item {
         margin-bottom: 0;
         border-top: 1px solid @node-border-color;
@@ -225,7 +228,7 @@
     }
 }
 
-.org-chart_node {
+.o-bureau-structure_node {
     .webfont-regular();
     position:relative;
     box-sizing: border-box;
@@ -234,11 +237,11 @@
     margin: 0 auto @margin / 2;
     background: @white;
 
-    // nested .org-chart_node blocks have different borders.
-    .org-chart_nodes {
+    // nested .o-bureau-structure_node blocks have different borders.
+    .o-bureau-structure_nodes {
         border: none;
 
-        .org-chart_node {
+        .o-bureau-structure_node {
             padding-top: @margin / 2;
             border-width: 1px;
             margin-bottom: 0;
@@ -261,11 +264,10 @@
         &:not(:first-child) {
             margin: @margin / 2;
         }
-
     } );
 }
 
-.org-chart_node__root {
+.o-bureau-structure_node__root {
     margin-bottom: 0;
     max-width: @node-width__desktop;
 
@@ -276,7 +278,7 @@
         border: none;
         margin: 0;
 
-        .org-chart_role {
+        .o-bureau-structure_role {
             text-align: center;
         }
 
@@ -290,14 +292,14 @@
     } );
 }
 
-.org-chart_node_expander {
+.o-bureau-structure_node_expander {
     overflow: auto;
     padding: @margin / 2 0;
     border-top: 1px solid @node-border-color;
     border-bottom: 1px solid @node-border-color;
 }
 
-.org-chart_node_more-info {
+.o-bureau-structure_node_more-info {
     .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
     .u-link__no-border();
 
@@ -305,7 +307,7 @@
     margin-top: @margin;
 }
 
-.org-chart_role {
+.o-bureau-structure_role {
     text-align: left;
 
     &_name,
@@ -323,7 +325,7 @@
     }
 }
 
-.org-chart_legend {
+.o-bureau-structure_legend {
     padding: @margin;
     border-top: @node-border-width solid @green;
     margin-top:  @margin;
@@ -345,7 +347,7 @@
     } );
 }
 
-.org-chart_footer {
+.o-bureau-structure_footer {
     border-color: @node-border-color;
     margin-top: @margin * 2;
 
