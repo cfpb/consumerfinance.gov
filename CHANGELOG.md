@@ -13,7 +13,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
-## Unreleased
+## 4.4.0
 
 ## Added
 - Add RSS subscription button to newsroom posts.
@@ -33,7 +33,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.
 - Fix blog post RSS subscription links
 - Fix for Wagtail admin page status string when live but not shared.
-
 
 ## 4.3.2
 
