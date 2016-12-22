@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - New AWS_S3_ROOT setting to specify root S3 path.
 - New PlaceholderFieldBlock and PlaceholderCharBlock to set block placeholder text.
 - Add RSS subscription button to newsroom posts.
+- New `validate_page_html` command for checking/fixing HTTP image links in legacy pages.
 
 ## Changed
 - external-site redirector now requires URLs to either be whitelisted or signed
