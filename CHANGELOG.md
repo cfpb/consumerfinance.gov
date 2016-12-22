@@ -35,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Delete option from Wagtail templates
 - Removed deprecated fellowship view/model.
 - Removed deprecated fellowship notification sign up form.
+- Spokesperson who is no longer with the Bureau from the press page.
 
 ### Fixed
 - Fixed bug stopping videos in HTTPS pages.
