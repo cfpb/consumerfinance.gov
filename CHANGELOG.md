@@ -16,20 +16,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ## Added
-- New AWS_S3_ROOT setting to specify root S3 path.
-- New PlaceholderFieldBlock and PlaceholderCharBlock to set block placeholder text.
 - Add RSS subscription button to newsroom posts.
 
 ## Changed
-- external-site redirector now requires URLs to either be whitelisted or signed
-- Move logic for activity snippets out of template
-- Update privacy policy URL
-- Upgrade npm shrinkwrap endpoints to HTTPS
 - Upgrade to Wagtail 1.7
 - Added redirect for `Leadership Calendar` Wagtail Page.
 
 ## Removed
-- Removed deprecated Django careers-related models, views, and templates.
 - Removed layout.less enhancements that have been moved to Capital Framework.
 - Wagtail pages from the Django admin
 - Delete option from Wagtail templates
@@ -37,11 +30,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed deprecated fellowship notification sign up form.
 
 ### Fixed
-- Fixed bug stopping videos in HTTPS pages.
-- bug that wasn't signing links already coded to /external-site.
-- Sort activity snippets by latest date
-- Added missing uniqueness constraint on CFGOVRendition.
-- Fix for YouTube API failures
 - Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.
 - Fix blog post RSS subscription links
 - Fix for Wagtail admin page status string when live but not shared.
@@ -50,15 +38,31 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 4.3.2
 
 ### Changed
+- external-site redirector now requires URLs to either be whitelisted or signed
+- Move logic for activity snippets out of template
+- Update privacy policy URL
+- Upgrade npm shrinkwrap endpoints to HTTPS
 - Updated Owning-a-home feedback modules to use Ajax form submission
 
+### Added
+- New PlaceholderFieldBlock and PlaceholderCharBlock to set block placeholder text.
+- New AWS_S3_ROOT setting to specify root S3 path.
+
+## Removed
+- Removed deprecated Django careers-related models, views, and templates.
+
+### Fixed
+- Fixed bug stopping videos in HTTPS pages.
+- bug that wasn't signing links already coded to /external-site.
+- Sort activity snippets by latest date
+- Added missing uniqueness constraint on CFGOVRendition.
+- Fix for YouTube API failures
 
 ## 4.3.1
 
 ### Changed
 - Fix incorrect django settings for picard
 - Bump picard to 1.5.5 to fix false positive error report
-
 
 ## 4.3.0
 
