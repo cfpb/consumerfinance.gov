@@ -82,7 +82,7 @@ class CFGOVImage(AbstractImage):
                 self.height = height
 
         mock_image = MockResizableImage(width, height)
-        operation.run(mock_image, image=None)
+        operation.run(mock_image, image=None, env={})
         return mock_image.width, mock_image.height
 
 

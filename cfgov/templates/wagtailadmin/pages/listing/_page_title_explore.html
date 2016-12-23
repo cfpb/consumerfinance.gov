@@ -30,9 +30,6 @@
     {% if parent_page_perms.can_add_subpage and 'copy' not in hide_actions|default:'' %}
         <li><a href="{% url 'wagtailadmin_pages:copy' page.id %}" class="button button-small button-secondary">{% trans 'Copy' %}</a></li>
     {% endif %}
-    {% if page_perms.can_delete and 'delete' not in hide_actions|default:'' %}
-        <li><a href="{% url 'wagtailadmin_pages:delete' page.id %}" class="button button-small button-secondary">{% trans 'Delete' %}</a></li>
-    {% endif %}
     {% v1page_permissions page as v1page_perms %}
     {% if page|is_shared and v1page_perms.can_unshare and 'share' not in hide_actions|default:'' %}
         <li><a href="{% url 'unshare' page.id %}" class="button button-small button-secondary">{% trans 'Unshare' %}</a></li>
