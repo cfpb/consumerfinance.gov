@@ -13,23 +13,27 @@
    ========================================================================== #}
 {% macro render(categories) -%}
 {% import '_macro-node.html' as node with context %}
+{% import '_macro-mobile-nav.html' as mobile_nav with context %}
 <ul class="o-bureau-structure_branches
            list
            list__unstyled">
+    <li class="u-show-on-mobile org-chart_branch_name">
+        {{ mobile_nav.render(categories) }}
+    </li>
     {% for category in categories %}
     {% set category_index = loop.index %}
     <li class="o-bureau-structure_branch">
-        <h4 class="o-bureau-structure_branch_name">{{ category.title }}</h4>
+        <h4 class="o-bureau-structure_branch_name u-hide-on-mobile">{{ category.title }}</h4>
         <ul class="o-bureau-structure_nodes
-                   nodes{{ category_index }}
                    list
                    list__unstyled">
             <li class="o-bureau-structure_branch_name">
-                <button class="content-hide
-                               link_text
+                <button class="o-bureau-structure_nav-item
                                jump-link
                                jump-link__before
-                               jump-link__left">
+                               jump-link__left
+                               u-show-on-mobile"
+                        data-show-slide-index="0">
                     {{ category.title }}
                 </button>
             </li>
