@@ -87,15 +87,12 @@ module.exports = {
     },
     vendorCss: {
       src: [
-        paths.modules + '/slick-carousel/slick/slick.css',
         paths.unprocessed + '/css/pdfreactor-fonts.css'
       ],
       dest: paths.processed + '/css'
     },
     vendorImg: {
-      src: [
-        paths.modules + '/slick-carousel/slick/ajax-loader.gif'
-      ],
+      src: [],
       dest: paths.processed + '/img'
     },
     vendorJs: {
