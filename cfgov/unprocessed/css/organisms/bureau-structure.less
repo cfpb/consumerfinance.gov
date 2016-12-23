@@ -24,76 +24,6 @@
         margin-right: -@margin;
     } );
 
-    #content-slider {
-        display: none;
-        position: relative;
-        margin-left: -10px;
-
-        .slick-slide {
-            margin-left: 10px;
-        }
-
-        .slick-slider {
-            margin-bottom: 0;
-        }
-
-        .link_text {
-            background: none;
-            color: @pacific;
-
-            &:hover {
-                color: @pacific-60;
-            }
-
-            &:active {
-                color: @navy;
-            }
-        }
-    }
-
-    .content-hide {
-        display: none;
-        margin-bottom: @margin;
-        background-color: inherit;
-    }
-
-    .content-show,
-    .content-hide {
-
-        .respond-to-max( @bp-xs-max, {
-            .cf-icon,
-            &:before,
-            &:after {
-                color: @pacific;
-            }
-
-            &:focus {
-                outline: thin dotted;
-            }
-
-            &:hover {
-                border-color: @pacific-60;
-                z-index: 2;
-
-                .cf-icon,
-                &:before,
-                &:after {
-                    color: @pacific-60;
-                }
-            }
-
-            &:active {
-                border-color: @navy;
-
-                .cf-icon,
-                &:before,
-                &:after {
-                    color: @navy;
-                }
-            }
-        } );
-    }
-
     // Expandable Overrides
     // TODO: Remove these when base expandable is created.
     .o-expandable_target {
@@ -116,13 +46,40 @@
     .o-expandable_header-right {
         width: 27%;
     }
+
+    .respond-to-max( @bp-xs-max, {
+        overflow: hidden;
+    } );
 }
 
 .o-bureau-structure_branch {
-    /* Borders on .org-chart_branch pseudo elements
-       (:after on first branch, :before on last)
-       draw lines connecting the branch headers to the
-       line from .org-chart_root.
+
+    &_name {
+        position: relative;
+
+        .respond-to-min( @bp-sm-min, {
+            margin: ( @margin / 2 ) 0;
+            text-align: center;
+        } );
+
+        .respond-to-max( @bp-xs-max, {
+            margin-bottom: @margin;
+            background: @white;
+
+            &:after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: -@margin;
+                width: 0;
+                height: @margin;
+                border-left: @spine-width solid @spine-color;
+            }
+        } );
+    }
+
+    /* Borders on .org-chart_branch pseudo elements (:after on first branch, :before on last)
+       draw lines connecting the branch headers to the line from .org-chart_root.
     */
     .respond-to-min( @bp-sm-min, {
         .grid_column( 6 );
@@ -140,7 +97,7 @@
             border: 0 solid @spine-color;
         }
 
-        &:first-child {
+        &:nth-child( 2n ) {
             padding-right: @margin / 2;
 
             &:after {
@@ -162,40 +119,16 @@
             }
         }
     } );
-
-    &_name {
-        position: relative;
-
-        .respond-to-min( @bp-sm-min, {
-            margin: @margin / 2 0;
-            text-align: center;
-        } );
-
-        .respond-to-max( @bp-xs-max, {
-            margin-bottom: @margin;
-            background: @white;
-
-            &:after {
-                content: '';
-                position: absolute;
-                left: 50%;
-                width: 0;
-                height: @margin;
-                border-left: @spine-width solid @spine-color;
-            }
-        } );
-    }
 }
 
 /* Lines of the org chart are drawn with before & after
-   pseudo elements applied to .o-bureau-structure_branches
-   & .o-bureau-structure_branch.
+   pseudo elements applied to .o-bureau-structure_branches & .o-bureau-structure_branch.
 */
 .o-bureau-structure_branches {
     padding-top: @margin;
 
     /* :before pseudo element's left border draws a centered vertical line
-       down from .o-bureau-structure_root to .o-bureau-structure_branches.
+       down from o-bureau-structure_root to .o-bureau-structure_branches.
     */
     .respond-to-min( @bp-sm-min, {
         position: relative;
@@ -210,12 +143,23 @@
             border-left: @spine-width solid @spine-color;
         }
     } );
+
+    .respond-to-max( @bp-xs-max, {
+        padding-top: 0;
+        overflow: hidden;
+
+        > li {
+            overflow: hidden;
+            float: left;
+        }
+    } );
 }
 
-.o-bureau-structure_categories {
-    .link_item {
-        margin-bottom: 0;
+.o-bureau-structure_nav {
+
+    li {
         border-top: 1px solid @node-border-color;
+        margin-bottom: 0;
         background: @gray-5;
 
         &:last-child {
@@ -223,21 +167,67 @@
         }
     }
 
-    .link_text {
-       border: none;
+    .o-bureau-structure_nav-item {
+        margin-bottom: 0;
+        border: none;
+        background: none;
+        color: @pacific;
     }
+}
+
+.o-bureau-structure_nav-item {
+    margin-bottom: @margin;
+    background-color: inherit;
+    color: @pacific;
+
+    .respond-to-max( @bp-xs-max, {
+        display: inline-block;
+
+        .cf-icon,
+        &:before,
+        &:after {
+            color: @pacific;
+        }
+
+        &:focus {
+            outline: thin dotted;
+        }
+
+        &:hover {
+            color: @pacific-60;
+            border-color: @pacific-60;
+            z-index: 2;
+
+            .cf-icon,
+            &:before,
+            &:after {
+                color: @pacific-60;
+            }
+        }
+
+        &:active {
+            color: @navy;
+            border-color: @navy;
+
+            .cf-icon,
+            &:before,
+            &:after {
+                color: @navy;
+            }
+        }
+    } );
 }
 
 .o-bureau-structure_node {
     .webfont-regular();
-    position:relative;
+    position: relative;
     box-sizing: border-box;
     padding: @margin @margin / 2;
     border-bottom: @node-border-width solid @node-border-color;
     margin: 0 auto @margin / 2;
     background: @white;
 
-    // nested .o-bureau-structure_node blocks have different borders.
+    // nested .org-chart_node blocks have different borders.
     .o-bureau-structure_nodes {
         border: none;
 
@@ -353,7 +343,7 @@
 
     .respond-to-min( @bp-sm-min, {
         padding-top: 0;
-        margin-top: @margin;
         border: none;
+        margin-top: @margin;
     } );
 }
