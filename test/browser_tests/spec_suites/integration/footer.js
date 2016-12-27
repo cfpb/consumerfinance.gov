@@ -5,8 +5,8 @@ var Footer = require( '../../shared_objects/footer.js' );
 describe( 'Footer', function() {
   var _sharedObject;
 
-  var _footerLinkLookup =
-  { '/accessibility/':
+  var _footerLinkLookup = {
+    '/accessibility/':
       'accessibility',
     '/office-civil-rights/':
       'office of civil rights',
