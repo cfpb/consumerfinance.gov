@@ -44,7 +44,7 @@ def share_the_page(request, page):
 @hooks.register('after_delete_page')
 def log_page_deletion(request, page):
     logger.warning(
-        u'User {user} with ID {user_id} deleted page {title} with ID {page_id} at URL {url}'.format(
+        u'User {user} with ID {user_id} deleted page {title} with ID {page_id} at URL {url}'.format(  # noqa: E501
             user=request.user,
             user_id=request.user.id,
             title=page.title,

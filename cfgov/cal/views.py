@@ -8,7 +8,7 @@ import six
 from django.contrib import messages
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.urlresolvers import reverse
-from django.db.models import Q, Max, Min
+from django.db.models import Max, Min, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import get_template

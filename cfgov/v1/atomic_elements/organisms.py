@@ -9,13 +9,12 @@ from django.utils.functional import cached_property
 from jinja2 import Markup
 from wagtail.contrib.table_block.blocks import TableBlock, TableInput
 from wagtail.wagtailcore import blocks
+from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from . import atoms, molecules
 from .. import blocks as v1_blocks
-from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
 from ..util import ref
 
@@ -216,12 +215,15 @@ class Table(blocks.StructBlock):
         template = '_includes/organisms/table.html'
         label = ' '
 
+
 class BureauStructurePosition(blocks.StructBlock):
     office_name = blocks.CharBlock()
     lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
     title = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 1")),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 2"))
+        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
+                                                  placeholder="Title 1")),
+        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
+                                                  placeholder="Title 2"))
     ])
 
 
@@ -229,8 +231,10 @@ class BureauStructureDivision(blocks.StructBlock):
     division = v1_blocks.PlaceholderCharBlock(label='Division')
     division_lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
     title = blocks.StructBlock([
-        ('line_1', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 1")),
-        ('line_2', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 2"))
+        ('line_1', v1_blocks.PlaceholderCharBlock(required=False,
+                                                  placeholder="Title 1")),
+        ('line_2', v1_blocks.PlaceholderCharBlock(required=False,
+                                                  placeholder="Title 2"))
     ])
     link_to_division_page = atoms.Hyperlink(required=False)
     offices = blocks.ListBlock(BureauStructurePosition(required=False))
@@ -245,8 +249,10 @@ class BureauStructure(blocks.StructBlock):
     download_image = DocumentChooserBlock(icon='image')
     director = blocks.CharBlock()
     divisions = blocks.ListBlock(BureauStructureDivision())
-    office_of_the_director = blocks.ListBlock(BureauStructureOffice(),
-                             label='Office of the Director')
+    office_of_the_director = blocks.ListBlock(
+        BureauStructureOffice(), label='Office of the Director'
+    )
+
     class Meta:
         icon = None
         template = '_includes/organisms/bureau-structure.html'

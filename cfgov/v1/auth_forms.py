@@ -3,12 +3,8 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.forms import (
-    AuthenticationForm,
-    PasswordChangeForm,
-    PasswordResetForm,
-    SetPasswordForm
-)
+from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
+                                       PasswordResetForm, SetPasswordForm)
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils import timezone
 from wagtail.wagtailusers import forms as wagtailforms

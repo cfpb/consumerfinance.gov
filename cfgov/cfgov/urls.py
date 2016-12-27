@@ -10,7 +10,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtailcore import urls as wagtail_urls, views
+from wagtail.wagtailcore import urls as wagtail_urls
+from wagtail.wagtailcore import views
 
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
@@ -118,15 +119,19 @@ urlpatterns = [
             template_name='newsroom/press-resources/index.html'),
         name='press-resources'),
 
-    url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/%(path)s', permanent=True)),
-    url(r'^about-us/leadership-calendar/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/leadership-calendar/%(path)s', permanent=True)),
+    url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(
+        url='/about-us/the-bureau/%(path)s', permanent=True)),
+    url(r'^about-us/leadership-calendar/(?P<path>.*)$', RedirectView.as_view(
+        url='/about-us/the-bureau/leadership-calendar/%(path)s',
+        permanent=True)),
     url(r'^about-us/the-bureau/', include([
         url(r'^$',
             SheerTemplateView.as_view(
                 template_name='about-us/the-bureau/index.html'),
             name='index'),
         url(r'^leadership-calendar/',
-            lambda request: views.serve(request, 'about-us/leadership-calendar'),
+            lambda request: views.serve(request,
+                                        'about-us/leadership-calendar'),
             name='leadership-calendar'),
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
@@ -210,7 +215,8 @@ urlpatterns = [
             template_name='about-us/index.html'), name='about-us'),
 
 
-    url(r'^careers/(?P<path>.*)$', RedirectView.as_view(url='/about-us/careers/%(path)s', permanent=True)),
+    url(r'^careers/(?P<path>.*)$', RedirectView.as_view(
+        url='/about-us/careers/%(path)s', permanent=True)),
 
     url(r'^transcripts/', include([
         url(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$',
