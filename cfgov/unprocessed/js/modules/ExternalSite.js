@@ -24,6 +24,7 @@ function ExternalSite( element ) {
   var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _durationEl = _dom.querySelector( '.external-site_reload-container' );
   var _directEl = _dom.querySelector( '.external-site_proceed-btn' );
+  var _form = _dom.querySelector( 'form#proceed' );
   var _duration = TOTAL_DURATION;
   var _intervalId;
 
@@ -32,6 +33,7 @@ function ExternalSite( element ) {
    */
   function init() {
     _intervalId = setInterval( _tick, INTERVAL );
+    _directEl.addEventListener( 'click', _proceedClicked );
   }
 
   /**
@@ -49,7 +51,7 @@ function ExternalSite( element ) {
    */
   function _gotoUrl() {
     clearInterval( _intervalId );
-    $('#proceed').submit();
+    _form.submit();
   }
 
   /**
