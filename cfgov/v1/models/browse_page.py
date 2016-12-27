@@ -1,13 +1,12 @@
-import itertools
-
 from django.db import models
-from wagtail.contrib.table_block.blocks import TableBlock
-from wagtail.wagtailadmin.edit_handlers import (FieldPanel, ObjectList,
-                                                StreamFieldPanel,
-                                                TabbedInterface)
-from wagtail.wagtailcore import blocks
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel,
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface
+)
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR, PageManager
+from wagtail.wagtailcore.models import PageManager
 
 from data_research.blocks import ConferenceRegistrationForm
 from jobmanager.models import JobListingTable
@@ -35,7 +34,8 @@ class BrowsePage(CFGOVPage):
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table(editable=False)),
-        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'})),
         ('job_listing_table', JobListingTable()),
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
@@ -69,7 +69,7 @@ class BrowsePage(CFGOVPage):
         js['template'] += ['secondary-navigation.js']
 
     def full_width_serif(self):
-        return true
+        return True
 
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)

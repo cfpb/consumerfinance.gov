@@ -1,9 +1,10 @@
-from wagtail.wagtailadmin.edit_handlers import (ObjectList, StreamFieldPanel,
-                                                TabbedInterface)
-from wagtail.wagtailcore import blocks
+from wagtail.wagtailadmin.edit_handlers import (
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface
+)
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR, PageManager
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailcore.models import PageManager
 
 from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms

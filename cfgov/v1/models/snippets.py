@@ -35,7 +35,8 @@ class Contact(models.Model):
 
     @classmethod
     def get_by_title_slug(self, title, slug):
-        return self.objects.get(hash=hashlib.md5(title + ';;' + slug).hexdigest())
+        return self.objects.get(
+            hash=hashlib.md5(title + ';;' + slug).hexdigest())
 
 
 @receiver(pre_save, sender=Contact)

@@ -1,4 +1,4 @@
-# flake8: noqa
+# flake8: noqa F403
 
 from .blocks import *
 from .django import *

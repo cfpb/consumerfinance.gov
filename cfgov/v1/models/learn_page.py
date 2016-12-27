@@ -3,10 +3,15 @@ from datetime import date
 from django.core.validators import RegexValidator
 from django.db import models
 from localflavor.us.models import USStateField
-from wagtail.wagtailadmin.edit_handlers import (FieldPanel, FieldRowPanel,
-                                                InlinePanel, MultiFieldPanel,
-                                                ObjectList, StreamFieldPanel,
-                                                TabbedInterface)
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel,
+    FieldRowPanel,
+    InlinePanel,
+    MultiFieldPanel,
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface
+)
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page, PageManager
@@ -25,10 +30,13 @@ class AbstractFilterPage(CFGOVPage):
         ('item_introduction', organisms.ItemIntroduction()),
     ], blank=True)
     preview_title = models.CharField(max_length=255, null=True, blank=True)
-    preview_subheading = models.CharField(max_length=255, null=True, blank=True)
+    preview_subheading = models.CharField(
+        max_length=255, null=True, blank=True)
     preview_description = RichTextField(null=True, blank=True)
-    secondary_link_url = models.CharField(max_length=500, null=True, blank=True)
-    secondary_link_text = models.CharField(max_length=255, null=True, blank=True)
+    secondary_link_url = models.CharField(
+        max_length=500, null=True, blank=True)
+    secondary_link_text = models.CharField(
+        max_length=255, null=True, blank=True)
     preview_image = models.ForeignKey(
         'v1.CFGOVImage',
         null=True,
@@ -39,7 +47,6 @@ class AbstractFilterPage(CFGOVPage):
     date_published = models.DateField(default=date.today)
     date_filed = models.DateField(null=True, blank=True)
     comments_close_by = models.DateField(null=True, blank=True)
-
 
     # Configuration tab panels
     settings_panels = [
@@ -75,7 +82,8 @@ class AbstractFilterPage(CFGOVPage):
             content_panel,
         ]
         return TabbedInterface([
-            ObjectList(self.content_panels + content_panels, heading='General Content'),
+            ObjectList(self.content_panels + content_panels,
+                       heading='General Content'),
             ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
             ObjectList(self.settings_panels, heading='Configuration'),
         ])
@@ -89,17 +97,19 @@ class LearnPage(AbstractFilterPage):
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table(editable=False)),
-        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'})),
         ('call_to_action', molecules.CallToAction()),
         ('feedback', v1_blocks.Feedback()),
         ('video_player', organisms.VideoPlayer()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel = StreamFieldPanel('content')
+        content_panel=StreamFieldPanel('content')
     )
     template = 'learn-page/index.html'
 
     objects = PageManager()
+
 
 class DocumentDetailPage(AbstractFilterPage):
     content = StreamField([
@@ -107,11 +117,12 @@ class DocumentDetailPage(AbstractFilterPage):
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table(editable=False)),
-        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'})),
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
-        content_panel = StreamFieldPanel('content')
+        content_panel=StreamFieldPanel('content')
     )
     template = 'document-detail/index.html'
 
@@ -165,17 +176,33 @@ class EventPage(AbstractFilterPage):
         related_name='+'
     )
     flickr_url = models.URLField("Flickr URL", blank=True)
-    youtube_url = models.URLField("Youtube URL", blank=True,
-    help_text="Format: https://www.youtube.com/embed/video_id. It can be obtained by clicking on Share > Embed on Youtube.",
-    validators=[ RegexValidator(regex='^https?:\/\/www\.youtube\.com\/embed\/.*$')])
+    youtube_url = models.URLField(
+        "Youtube URL",
+        blank=True,
+        help_text="Format: https://www.youtube.com/embed/video_id. It can be obtained by clicking on Share > Embed on Youtube.",  # noqa: E501
+        validators=[
+            RegexValidator(regex='^https?:\/\/www\.youtube\.com\/embed\/.*$')
+        ]
+    )
 
-    live_stream_availability = models.BooleanField("Streaming?", default=False,
-                                                   blank=True)
-    live_stream_url = models.URLField("URL", blank=True,
-    help_text="Format: https://www.ustream.tv/embed/video_id.  It can be obtained by following the instructions listed here: " \
-    "https://support.ustream.tv/hc/en-us/articles/207851917-How-to-embed-a-stream-or-video-on-your-site",
-    validators=[ RegexValidator(regex='^https?:\/\/www\.ustream\.tv\/embed\/.*$')])
-    live_stream_date = models.DateTimeField("Go Live Date", blank=True, null=True)
+    live_stream_availability = models.BooleanField(
+        "Streaming?",
+        default=False,
+        blank=True
+    )
+    live_stream_url = models.URLField(
+        "URL",
+        blank=True,
+        help_text="Format: https://www.ustream.tv/embed/video_id.  It can be obtained by following the instructions listed here: https://support.ustream.tv/hc/en-us/articles/207851917-How-to-embed-a-stream-or-video-on-your-site",  # noqa: E501
+        validators=[
+            RegexValidator(regex='^https?:\/\/www\.ustream\.tv\/embed\/.*$')
+        ]
+    )
+    live_stream_date = models.DateTimeField(
+        "Go Live Date",
+        blank=True,
+        null=True
+    )
     # Venue content fields
     venue_name = models.CharField(max_length=100, blank=True)
     venue_street = models.CharField(max_length=100, blank=True)
@@ -235,8 +262,10 @@ class EventPage(AbstractFilterPage):
         ObjectList(content_panels, heading='General Content'),
         ObjectList(venue_panels, heading='Venue Information'),
         ObjectList(agenda_panels, heading='Agenda Information'),
-        ObjectList(AbstractFilterPage.sidefoot_panels, heading='Sidebar'),
-        ObjectList(AbstractFilterPage.settings_panels, heading='Configuration'),
+        ObjectList(AbstractFilterPage.sidefoot_panels,
+                   heading='Sidebar'),
+        ObjectList(AbstractFilterPage.settings_panels,
+                   heading='Configuration'),
     ])
 
     template = 'events/event.html'
