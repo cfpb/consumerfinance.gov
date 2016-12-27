@@ -21,6 +21,10 @@
     {% endif %}
 {% endblock %}
 
+{% block content_main_modifiers -%}
+    {{ super() }} p-sublanding
+{%- endblock %}
+
 {% block content_main %}
     {% for block in page.content -%}
         {% if 'featured_content' in block.block_type %}

@@ -12,14 +12,6 @@
 // Combined CF components.
 
 @import (less) 'cf-core/src/cf-core.less';
-
-/* override respond-to-min to add print */
-.respond-to-min(@bp, @rules) {
-    @ems: unit((@bp / @base-font-size-px), em);
-    @media only all and (min-width: @ems), only print {
-        @rules();
-    }
-}
 @import (less) 'cf-icons/src/cf-icons.less';
 @import (less) 'cf-buttons/src/cf-buttons.less';
 @import (less) 'cf-forms/src/cf-forms.less';

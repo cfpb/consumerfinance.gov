@@ -15,3 +15,55 @@
         .u-info-unit-base__inline( @m-info-unit_img__lg );
     } );
 }
+
+@supports (-webkit-appearance:none) {
+    .p-home {
+        .content-l_col {
+            padding: 5px;
+            display: table-cell !important;
+        }
+
+        .content-l {
+            display: table !important;
+        }
+
+        .content_main__home .content-l_col-1-2 {
+            width: 50% !important;
+        }
+    }
+}
+
+@-moz-document url-prefix() {
+    .p-home {
+        /* home page tweaks */
+        .content-l_col + .content-l_col {
+            margin-top: 0 !important;
+        }
+
+        .content-l_col-1-2__on-lg {
+            width: 100% !important;
+            .m-card {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+
+        .content-l_col-1-3__on-lg +
+        .content-l_col-1-3__on-lg:before {
+            display: none;
+        }
+
+        .content-l_col-1-3__on-lg {
+            margin-top: 0 !important;
+
+            .m-info-unit {
+                display: block !important;
+            }
+
+            .m-info-unit_content {
+                width: 100%;
+                margin-left: 0 !important;
+            }
+        }
+    }
+}

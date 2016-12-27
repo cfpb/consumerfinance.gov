@@ -166,6 +166,13 @@
     }
 }
 
+.float-media, .media_image {
+    .respond-to-print( {
+        width: 0;
+        max-width: 0;
+        display: none;
+    } );
+}
 
 /* topdoc
   name: Responsive cropping
@@ -173,7 +180,7 @@
   notes:
     - "A simple cropping pattern. We may need more advanced ones in the future."
     - "How it works: At smaller screens .rwd-crop is cropped to 75% of its
-       original height and flexibily scales 100% of its parents width. At larger
+       original height and flexib`ily scales 100% of its parents width. At larger
        screens it is no longer flexible and uses its default width. For images
        the default width can be set using the width attribute."
   patterns:
