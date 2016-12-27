@@ -31,7 +31,7 @@ class CFPBCalendarEvent(models.Model):
         return self.dtstart.date()
 
     def save(self):
-        if self.uid is None or self.uid == "":
+        if not self.uid:
             self.uid = uuid.uuid4()
         super(CFPBCalendarEvent, self).save()
 

@@ -130,7 +130,7 @@ class Importer:
         user = authenticate(username=self.username, password=self.password)
         if user:
             if not user.is_active or not user.is_superuser:
-                raise PermissionDenied('This user does not have permissions to'
+                raise PermissionDenied('This user does not have permissions to '
                                        'perform this operation.')
         else:
             raise ValidationError('The username and password were incorrect.')

@@ -48,7 +48,7 @@ class CFPBCalendarImportICSFileAdmin(admin.ModelAdmin):
 
         leadership = CFPBCalendar.objects.all().order_by("title")
 
-        context.update({'leadership': leadership, })
+        context.update({'leadership': leadership})
         error = []
 
         if request.method == 'POST':
@@ -57,9 +57,9 @@ class CFPBCalendarImportICSFileAdmin(admin.ModelAdmin):
             if icsfile:
                 file_type = icsfile.content_type.split('/')[0]
 
-                if (file_type != "text"):
+                if (file_type != 'text'):
                     error.append((['There was an error with the File'],
-                                  ["Incorrect File Type"]))
+                                  ['Incorrect File Type']))
                     context.update({'error': error, })
                     return super(
                         CFPBCalendarImportICSFileAdmin,
@@ -97,7 +97,7 @@ class CFPBCalendarImportICSFileAdmin(admin.ModelAdmin):
             processed_events.sort(key=lambda x: x.e.dtstart, reverse=True)
             context.update({'processed_events': processed_events, })
 
-        context.update({'error': error, })
+        context.update({'error': error})
 
         return super(CFPBCalendarImportICSFileAdmin,
                      self).changelist_view(request, context)
