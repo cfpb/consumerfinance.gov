@@ -13,6 +13,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 4.4.1
+
+### Added
+- New `validate_page_html` command for checking/fixing HTTP image links in legacy pages.
+
+### Fixed
+- Fixed legacy supervision jobs page.
+
 ## 4.4.0
 
 ## Added
@@ -33,7 +41,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.
 - Fix blog post RSS subscription links
 - Fix for Wagtail admin page status string when live but not shared.
-- Fixed legacy supervision jobs page.
 
 ## 4.3.2
 
