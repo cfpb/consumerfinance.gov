@@ -1,7 +1,6 @@
 'use strict';
 
 var browserSync = require( 'browser-sync' );
-var cleanCSS = require('gulp-clean-css');
 var config = require( '../config' );
 var configPkg = config.pkg;
 var configBanner = config.banner;
@@ -9,6 +8,7 @@ var configStyles = config.styles;
 var configLegacy = config.legacy;
 var gulp = require( 'gulp' );
 var gulpAutoprefixer = require( 'gulp-autoprefixer' );
+var gulpCleanCss = require( 'gulp-clean-css' );
 var gulpHeader = require( 'gulp-header' );
 var gulpLess = require( 'gulp-less' );
 var gulpRename = require( 'gulp-rename' );
@@ -55,7 +55,7 @@ function stylesIe() {
       width: '75em'
     } ) )
     // mqr expands the minified file
-    .pipe( cleanCSS( {compatibility: 'ie8'} ) )
+    .pipe( gulpCleanCss( {compatibility: 'ie8'} ) )
     .pipe( gulpRename( {
       suffix:  '.ie',
       extname: '.css'
@@ -87,7 +87,7 @@ function stylesOnDemand() {
       width: '75em'
     } ) )
     // mqr expands the minified file
-    .pipe( cleanCSS( {compatibility: 'ie8'} ) )
+    .pipe( gulpCleanCss( {compatibility: 'ie8'} ) )
     .pipe( gulpRename( {
       suffix:  '.nonresponsive',
       extname: '.css'
