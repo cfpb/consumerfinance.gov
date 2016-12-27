@@ -149,7 +149,7 @@ var API = {
   stop: function( ) {
     this._super.stop.call( this );
     if ( this.state.isPlayerInitialized && this.player ) {
-        this.player.stopVideo();
+      this.player.stopVideo();
     } else {
       this.childElements.iFrameContainer.removeChild(
         this.childElements.iFrameContainer.firstChild

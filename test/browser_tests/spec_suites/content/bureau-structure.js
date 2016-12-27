@@ -53,7 +53,8 @@ describe( 'The Bureau Structure Page', function() {
             browser.name = cap.get( 'browserName' );
             browser.version = cap.get( 'version' );
           } );
-          var ie8 = browser.name === 'internet explorer' && browser.version === '8';
+          var ie8 = browser.name === 'internet explorer' &&
+                    browser.version === '8';
 
           if ( !ie8 ) {
             page.orgChartChildNodes.each( function( childNode ) {
