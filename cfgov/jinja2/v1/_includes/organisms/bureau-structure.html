@@ -16,20 +16,24 @@
 <ul class="o-bureau-structure_branches
            list
            list__unstyled">
+    <li class="u-show-on-mobile
+               org-chart_branch_name">
+        {{ _mobile_nav(categories) }}
+    </li>
     {% for category in categories %}
     {% set category_index = loop.index %}
     <li class="o-bureau-structure_branch">
-        <h4 class="o-bureau-structure_branch_name">{{ category.title }}</h4>
+        <h4 class="o-bureau-structure_branch_name u-hide-on-mobile">{{ category.title }}</h4>
         <ul class="o-bureau-structure_nodes
-                   nodes{{ category_index }}
                    list
                    list__unstyled">
             <li class="o-bureau-structure_branch_name">
-                <button class="content-hide
-                               link_text
+                <button class="o-bureau-structure_nav-item
                                jump-link
                                jump-link__before
-                               jump-link__left">
+                               jump-link__left
+                               u-show-on-mobile"
+                        data-show-slide-index="0">
                     {{ category.title }}
                 </button>
             </li>
@@ -50,37 +54,35 @@
 
 {# ==========================================================================
 
-   _content_slider()
+   mobile-nav.render()
 
    ==========================================================================
 
    Description:
 
-   Renders a content slider when given:
+   Renders a mobile navigation when given:
 
    categories: An Array of categories.
 
    ========================================================================== #}
-{% macro _content_slider(categories) -%}
-<div id="content-slider">
-    <div class="o-bureau-structure_categories">
-        <ul class="list__links">
-            {% for category in categories %}
-            <li class="link_item">
-                <button class="link_text
-                               jump-link
-                               jump-link__right
-                               jump-link__bg
-                               content-show"
-                        data-content=".nodes{{ loop.index }}">
-                    {{ category.title }}
-                </button>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+{% macro _mobile_nav(categories) -%}
+<div class="o-bureau-structure_nav">
+    <ul class="list__links">
+        {% for category in categories %}
+        <li>
+            <button class="jump-link
+                           jump-link__right
+                           jump-link__bg
+                           o-bureau-structure_nav-item"
+                    data-show-slide-index="{{ loop.index }}">
+                {{ category.title }}
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 {%- endmacro %}
+
 
 
 {# ==========================================================================
@@ -309,7 +311,6 @@
 
    ========================================================================== #}
 <div class="o-bureau-structure">
-    <link rel="stylesheet" href="{{ static('css/slick.css') }}">
     <h1>Bureau Structure</h1>
     {% if value.last_updated_date %}
     <p>
@@ -335,7 +336,6 @@
                 'office_name': 'Director'
             }) }}
         </div>
-        {{ _content_slider(categories) }}
         {{ _branches(categories) }}
     </div>
     {{ _footer( value.download_image.url ) }}

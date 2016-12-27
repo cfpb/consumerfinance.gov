@@ -3,7 +3,6 @@
 {% import '_vars-office-data.html' as office_data %}
 {% import '_vars-division-data.html' as division_data %}
 {% import '_macro-role.html' as role with context %}
-{% import '_macro-content-slider.html' as content_slider with context %}
 {% import '_macro-branches.html' as branches with context %}
 
 {% set active_nav_id = 'bureau-structure' %}
@@ -12,7 +11,7 @@
                         'title': 'Divisions',
                         'sub_title': 'Offices in this division',
                         'data': division_data.data
-                     },{
+                     }, {
                         'title':'Office of the Director',
                         'sub_title': 'Offices under this position',
                         'data': office_data.data
@@ -25,18 +24,6 @@
 
 {% block desc -%}
     Bureau Structure
-{%- endblock %}
-
-{% block css -%}
-    {{ super() }}
-    {# TODO: Resolve slick font issue.
-             For the slick stylesheet to pick up its font and img reference the
-             fonts and images found at /src/vendor/slick-carousel/slick/ should
-             be included in same directory as slick.css.
-             However, including the slick fonts makes the dots on the
-             /about-us/the-bureau/ page at mobile sizes enormous.
-    #}
-    <link rel="stylesheet" href="{{ static('css/slick.css')}}">
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -55,7 +42,6 @@
                 "titles": []
             }) }}
         </div>
-        {{ content_slider.render(categories) }}
         {{ branches.render(categories) }}
     </div>
     {% include '_footer.html' %}
