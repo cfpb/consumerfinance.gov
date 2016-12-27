@@ -1,4 +1,5 @@
 {% extends "front/base_nonresponsive.html" %}
+{% load static from staticfiles %}
 
 {% block page_meta %}
 <meta charset="UTF-8" />
@@ -11,16 +12,16 @@
 
 {% block breadcrumbs %}
 	<li><a href="/" class="internal-link">Home</a></li>
-	<li><a href="{% url 'careers:jobs' %}" class="internal-link">Jobs</a></li>
+  <li><a href="/about-us/careers/" class="internal-link">Jobs</a></li>
     <li>Supervision</li>
 {% endblock %}
 
 {% block page_css %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_PREFIX }}jobmanager/css/jobs2.css" />
+<link rel="stylesheet" type="text/css" href="{% static 'jobmanager/css/jobs2.css' %}" />
 {% endblock %}
 
 {% block page_js %}
-    <script src="{{ STATIC_PREFIX }}jobmanager/js/supervision.js"></script>
+    <script src="{% static 'jobmanager/js/supervision.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -157,7 +158,7 @@
         </li>
         <li>
             <h3>Other Current Job Opportunities</h3>
-            <p>Please go to <a href='{% url "careers:jobs" %}' class="internal-link">our jobs sections</a> to view other job opportunities</p>
+            <p>Please go to <a href='/about-us/careers/' class="internal-link">our jobs sections</a> to view other job opportunities</p>
         </li>
     </ul>
 </section>

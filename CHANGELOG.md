@@ -13,6 +13,14 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 4.4.1
+
+### Added
+- New `validate_page_html` command for checking/fixing HTTP image links in legacy pages.
+
+### Fixed
+- Fixed legacy supervision jobs page.
+
 ## 4.4.0
 
 ## Added
