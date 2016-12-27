@@ -81,7 +81,7 @@ class CFPBCalendarImportICSFileAdmin(admin.ModelAdmin):
 
             calendar_record = CFPBCalendar.objects.get(pk=int(leader_id))
 
-            context.update({'calendar_record': calendar_record, })
+            context.update({'calendar_record': calendar_record})
 
             processed_events = []
 
