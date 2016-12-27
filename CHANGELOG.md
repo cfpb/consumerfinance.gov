@@ -17,6 +17,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Added
 - Add RSS subscription button to newsroom posts.
+- New `validate_page_html` command for checking/fixing HTTP image links in legacy pages.
 
 ## Changed
 - Upgrade to Wagtail 1.7

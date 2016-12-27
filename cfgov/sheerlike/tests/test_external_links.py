@@ -1,14 +1,13 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from mock import call, patch
 
-from sheerlike.external_links import (
-    convert_http_image_links, process_external_links
-)
+from sheerlike.external_links import process_external_links
 
 
+@override_settings(AWS_STORAGE_BUCKET_NAME='foo.bucket')
 class TestProcessExternalLinks(TestCase):
-    def test_applies_parse_links(self):
-        doc = {
+    def setUp(self):
+        self.doc = {
             'foo': [
                 'a',
                 'b',
@@ -21,70 +20,35 @@ class TestProcessExternalLinks(TestCase):
             },
         }
 
+    def test_applies_convert_http_image_links(self):
+        url_mappings = [
+            ('http://foo.bucket/', 'https://s3.amazonaws.com/foo.bucket/'),
+        ]
+
+        with patch(
+            'sheerlike.external_links.convert_http_image_links',
+            return_value='html'
+        ) as convert:
+            process_external_links(self.doc)
+            convert.assert_has_calls(
+                [
+                    call(x, url_mappings)
+                    for x in ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i')
+                ],
+                any_order=True
+            )
+
+    def test_applies_parse_links(self):
         with patch('sheerlike.external_links.parse_links') as parse_links:
-            process_external_links(doc)
+            process_external_links(self.doc)
             parse_links.assert_has_calls(
                 list(map(call, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])),
                 any_order=True
             )
 
-    def test_converts_http_link(self):
-        with self.settings(AWS_STORAGE_BUCKET_NAME='bucket.name'):
-            doc = '<img src="http://bucket.name/img.png"/>'
+    def test_converts_http_s3_link(self):
+            doc = '<img src="http://foo.bucket/img.png"/>'
             self.assertEqual(
                 process_external_links(doc),
-                '<img src="https://bucket.name.s3.amazonaws.com/img.png"/>'
+                '<img src="https://s3.amazonaws.com/foo.bucket/img.png"/>'
             )
-
-
-class TestConvertHttpImageLinks(TestCase):
-    def test_no_links(self):
-        html = '<html><body><div>Hello</div></body></html>'
-        self.assertEqual(convert_http_image_links(html), html)
-
-    def test_no_bucket_defined(self):
-        with self.settings(AWS_STORAGE_BUCKET_NAME=None):
-            with self.assertRaises(RuntimeError):
-                html = '<img src="http://bucket.name/img.png">'
-                convert_http_image_links(html)
-
-    def test_link_not_in_s3_bucket(self):
-        with self.settings(AWS_STORAGE_BUCKET_NAME='bucket.name'):
-            with self.assertRaises(ValueError):
-                html = '<img src="http://other.url/img.png">'
-                convert_http_image_links(html)
-
-    def test_link_in_s3_bucket(self):
-        with self.settings(AWS_STORAGE_BUCKET_NAME='bucket.name'):
-            html = '<img src="http://bucket.name/img.png">'
-            self.assertEqual(
-                convert_http_image_links(html),
-                '<img src="https://bucket.name.s3.amazonaws.com/img.png">'
-            )
-
-    def test_multiple_links(self):
-        with self.settings(AWS_STORAGE_BUCKET_NAME='bucket.name'):
-            html = (
-                '<img src="http://bucket.name/img.png">'
-                '<div>Other text</div>'
-                '<img src="http://bucket.name/img2.png">'
-                '<img src="/relative/img3.png">'
-            )
-            self.assertEqual(
-                convert_http_image_links(html),
-                (
-                    '<img src="https://bucket.name.s3.amazonaws.com/img.png">'
-                    '<div>Other text</div>'
-                    '<img src="https://bucket.name.s3.amazonaws.com/img2.png">'
-                    '<img src="/relative/img3.png">'
-                )
-            )
-
-    def test_multiple_links_with_one_not_in_s3_bucket(self):
-        with self.settings(AWS_STORAGE_BUCKET_NAME='bucket.name'):
-            with self.assertRaises(ValueError):
-                html = (
-                    '<img src="http://bucket.name/img.png">'
-                    '<img src="http://other.url/img.png">'
-                )
-                convert_http_image_links(html)
