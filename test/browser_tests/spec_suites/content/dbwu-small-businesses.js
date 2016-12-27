@@ -45,11 +45,12 @@ describe( 'The Small Businesses Page', function() {
 
   xit( 'should have Small Business Info sections', function() {
     var BASE_URL = 'http://files.consumerfinance.gov/f/';
-    var smallBusinessLinks =
-    [ BASE_URL + '201305_cfpb_Small-business-guide.pdf',
+    var smallBusinessLinks = [
+      BASE_URL + '201305_cfpb_Small-business-guide.pdf',
       BASE_URL + '201310_cfpb_sb-intake-form.pdf',
       BASE_URL + '201310_cfpb_omwi_opportunities_trifold_final.pdf',
-      'https://www.sam.gov/' ];
+      'https://www.sam.gov/'
+    ];
 
     expect( page.smallBusinessDescriptions.count() ).toEqual( 2 );
     expect( page.smallBusinessLinks.getAttribute( 'href' ) )
@@ -57,11 +58,14 @@ describe( 'The Small Businesses Page', function() {
   } );
 
   it( 'should have two More Info sections', function() {
-    var moreInfoSectionTitles =
-    [ 'How to do business with us',
-      'Expected procurement requests' ];
-    var moreInfoSectionLinks = [ 'https://www.sam.gov/',
-    '/about-us/doing-business-with-us/upcoming-procurement-needs/' ];
+    var moreInfoSectionTitles = [
+      'How to do business with us',
+      'Expected procurement requests'
+    ];
+    var moreInfoSectionLinks = [
+      'https://www.sam.gov/',
+      '/about-us/doing-business-with-us/upcoming-procurement-needs/'
+    ];
 
     expect( page.moreInfoSectionTitles.getText() )
     .toEqual( moreInfoSectionTitles );

@@ -58,7 +58,8 @@ var BureauStructure = BS = {
   setElements: function setElements() {
     var elements = BS.elements;
     elements.base = document.querySelector( '.o-bureau-structure_chart' );
-    elements.branch = BS.elements.base.querySelector( '.o-bureau-structure_branches' );
+    elements.branch =
+      BS.elements.base.querySelector( '.o-bureau-structure_branches' );
     elements.branches =
       BS.elements.base.querySelectorAll( '.o-bureau-structure_branches > li' );
   },
@@ -69,21 +70,21 @@ var BureauStructure = BS = {
    * @returns {object} vendor prefixes.
   */
   getVendorPrefix: function getVendorPrefix( style ) {
-    var vendors = ['webkit', 'Moz', 'ms', 'O'];
+    var vendors = [ 'webkit', 'Moz', 'ms', 'O' ];
     var element = document.body;
-    var existingPrefix = BS.vendorPrefixes[ style ] ||
-                         element.style[ style.toLowerCase() ];
+    var existingPrefix = BS.vendorPrefixes[style] ||
+                         element.style[style.toLowerCase()];
 
     if ( existingPrefix ) return existingPrefix;
 
     for ( var i = 0; i < vendors.length; i++ ) {
-      if ( typeof element.style[ vendors[ i ] + style ] != 'undefined' ) {
-        BS.vendorPrefixes[ style ] = vendors[ i ] + style;
+      if ( typeof element.style[vendors[i] + style] != 'undefined' ) {
+        BS.vendorPrefixes[style] = vendors[i] + style;
         break;
       }
     }
 
-    return BS.vendorPrefixes[ style ] || style;
+    return BS.vendorPrefixes[style] || style;
   },
 
   /**
@@ -223,7 +224,7 @@ var BureauStructure = BS = {
      * Event handler called when height of the Bureau Structure changes.
      */
     heightChange: function heightChange() {
-      if( BS.isMobile === false ) return;
+      if ( BS.isMobile === false ) return;
       BS.setSliderHeight();
     },
 

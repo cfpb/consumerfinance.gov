@@ -17,6 +17,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Added
 - Add RSS subscription button to newsroom posts.
+- New `validate_page_html` command for checking/fixing HTTP image links in legacy pages.
 
 ## Changed
 - Upgrade to Wagtail 1.7
@@ -34,6 +35,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.
 - Fix blog post RSS subscription links
 - Fix for Wagtail admin page status string when live but not shared.
+- Fixed legacy supervision jobs page.
 
 
 ## 4.3.2

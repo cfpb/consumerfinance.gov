@@ -42,11 +42,14 @@ describe( 'The Past Awards Page', function() {
   } );
 
   it( 'should have two More Info sections', function() {
-    var moreInfoSectionTitles =
-    [ 'How to do business with us',
-      'Small and disadvantaged businesses' ];
-    var moreInfoSectionLinks = [ 'https://www.sam.gov/',
-    '/about-us/doing-business-with-us/small-businesses/' ];
+    var moreInfoSectionTitles = [
+      'How to do business with us',
+      'Small and disadvantaged businesses'
+    ];
+    var moreInfoSectionLinks = [
+      'https://www.sam.gov/',
+      '/about-us/doing-business-with-us/small-businesses/'
+    ];
 
     expect( page.moreInfoSectionTitles.getText() )
     .toEqual( moreInfoSectionTitles );

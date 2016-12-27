@@ -39,15 +39,17 @@ describe( 'The Doing Business with Us Page', function() {
   } );
 
   it( 'should have three Business Opportunity steps', function() {
-    var businessStepTitles =
-    [ 'STEP ONE\nRegister with System of Award Management (SAM)',
+    var businessStepTitles = [
+      'STEP ONE\nRegister with System of Award Management (SAM)',
       'STEP TWO\nIdentify a specific opportunity',
-      'STEP THREE\nMonitor upcoming procurement needs' ];
-    var businessStepLinks =
-    [ 'https://www.sam.gov/',
+      'STEP THREE\nMonitor upcoming procurement needs'
+    ];
+    var businessStepLinks = [
+      'https://www.sam.gov/',
       'https://www.fbo.gov/?s=agency&mode=form&tab=notices&' +
       'id=e4a0c57cfb98ca60165469a7f9a778a0',
-      '/about-us/doing-business-with-us/upcoming-procurement-needs/' ];
+      '/about-us/doing-business-with-us/upcoming-procurement-needs/'
+    ];
 
     expect( page.businessStepTitles.getText() )
     .toEqual( businessStepTitles );
@@ -57,11 +59,14 @@ describe( 'The Doing Business with Us Page', function() {
   } );
 
   it( 'should have two More Info sections', function() {
-    var moreInfoSectionTitles = [ 'Existing and past service contracts',
-      'Small, women-owned, and minority-owned businesses' ];
-    var moreInfoSectionLinks =
-      [ '/about-us/doing-business-with-us/past-awards/',
-        '/about-us/doing-business-with-us/small-businesses/' ];
+    var moreInfoSectionTitles = [
+      'Existing and past service contracts',
+      'Small, women-owned, and minority-owned businesses'
+    ];
+    var moreInfoSectionLinks = [
+      '/about-us/doing-business-with-us/past-awards/',
+      '/about-us/doing-business-with-us/small-businesses/'
+    ];
 
     expect( page.moreInfoSectionTitles.getText() )
     .toEqual( moreInfoSectionTitles );
