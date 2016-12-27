@@ -1,4 +1,6 @@
+from bs4 import BeautifulSoup
 from django.utils.module_loading import import_string
+from django.utils.safestring import SafeText
 from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
 
@@ -117,3 +119,33 @@ class Feedback(AbstractFormBlock):
 
     class Media:
         js = ['feedback-form.js']
+
+
+class PlaceholderFieldBlock(blocks.FieldBlock):
+    def __init__(self, *args, **kwargs):
+        super(PlaceholderFieldBlock, self).__init__(*args, **kwargs)
+        self.placeholder = kwargs.pop('placeholder', None)
+
+    def render_form(self, *args, **kwargs):
+        html = super(PlaceholderFieldBlock, self).render_form(*args, **kwargs)
+
+        if self.placeholder is not None:
+            html = self.replace_placeholder(html, self.placeholder)
+
+        return html
+
+    @staticmethod
+    def replace_placeholder(html, placeholder):
+        soup = BeautifulSoup(html, 'html.parser')
+        inputs = soup.findAll('input')
+
+        if 1 != len(inputs):
+            raise ValueError('block must contain a single input tag')
+
+        inputs[0]['placeholder'] = placeholder
+
+        return SafeText(soup)
+
+
+class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
+    pass

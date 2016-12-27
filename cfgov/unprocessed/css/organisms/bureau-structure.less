@@ -12,7 +12,7 @@
 @node-border-width: 3px;
 @node-border-color: @gray-20;
 
-.org-chart {
+.o-bureau-structure_chart {
     margin-top: @margin;
     background: @gray-10;
     border-top:1px solid @node-border-color;
@@ -23,76 +23,6 @@
         margin-left: -@margin;
         margin-right: -@margin;
     } );
-
-    #content-slider {
-        display: none;
-        position: relative;
-        margin-left: -10px;
-
-        .slick-slide {
-            margin-left: 10px;
-        }
-
-        .slick-slider {
-            margin-bottom: 0;
-        }
-
-        .link_text {
-            background: none;
-            color: @pacific;
-
-            &:hover {
-                color: @pacific-60;
-            }
-
-            &:active {
-                color: @navy;
-            }
-        }
-    }
-
-    .content-hide {
-        display: none;
-        margin-bottom: @margin;
-        background-color: inherit;
-    }
-
-    .content-show,
-    .content-hide {
-
-        .respond-to-max( @bp-xs-max, {
-            .cf-icon,
-            &:before,
-            &:after {
-                color: @pacific;
-            }
-
-            &:focus {
-                outline: thin dotted;
-            }
-
-            &:hover {
-                border-color: @pacific-60;
-                z-index: 2;
-
-                .cf-icon,
-                &:before,
-                &:after {
-                    color: @pacific-60;
-                }
-            }
-
-            &:active {
-                border-color: @navy;
-
-                .cf-icon,
-                &:before,
-                &:after {
-                    color: @navy;
-                }
-            }
-        } );
-    }
 
     // Expandable Overrides
     // TODO: Remove these when base expandable is created.
@@ -116,9 +46,38 @@
     .o-expandable_header-right {
         width: 27%;
     }
+
+    .respond-to-max( @bp-xs-max, {
+        overflow: hidden;
+    } );
 }
 
-.org-chart_branch {
+.o-bureau-structure_branch {
+
+    &_name {
+        position: relative;
+
+        .respond-to-min( @bp-sm-min, {
+            margin: ( @margin / 2 ) 0;
+            text-align: center;
+        } );
+
+        .respond-to-max( @bp-xs-max, {
+            margin-bottom: @margin;
+            background: @white;
+
+            &:after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: -@margin;
+                width: 0;
+                height: @margin;
+                border-left: @spine-width solid @spine-color;
+            }
+        } );
+    }
+
     /* Borders on .org-chart_branch pseudo elements (:after on first branch, :before on last)
        draw lines connecting the branch headers to the line from .org-chart_root.
     */
@@ -138,7 +97,7 @@
             border: 0 solid @spine-color;
         }
 
-        &:first-child {
+        &:nth-child( 2n ) {
             padding-right: @margin / 2;
 
             &:after {
@@ -155,44 +114,21 @@
                 border-width: @spine-width @spine-width 0 0;
             }
 
-            .org-chart_node:nth-last-child(2):after {
+            .o-bureau-structure_node:nth-last-child(2):after {
                 border: none;
             }
         }
     } );
-
-    &_name {
-        position: relative;
-
-        .respond-to-min( @bp-sm-min, {
-            margin: @margin / 2 0;
-            text-align: center;
-        } );
-
-        .respond-to-max( @bp-xs-max, {
-            margin-bottom: @margin;
-            background: @white;
-
-            &:after {
-                content: '';
-                position: absolute;
-                left: 50%;
-                width: 0;
-                height: @margin;
-                border-left: @spine-width solid @spine-color;
-            }
-        } );
-    }
 }
 
 /* Lines of the org chart are drawn with before & after
-   pseudo elements applied to .org-chart_branches & .org-chart_branch.
+   pseudo elements applied to .o-bureau-structure_branches & .o-bureau-structure_branch.
 */
-.org-chart_branches {
+.o-bureau-structure_branches {
     padding-top: @margin;
 
     /* :before pseudo element's left border draws a centered vertical line
-       down from .org-chart_root to .org-chart_branches.
+       down from o-bureau-structure_root to .o-bureau-structure_branches.
     */
     .respond-to-min( @bp-sm-min, {
         position: relative;
@@ -207,12 +143,23 @@
             border-left: @spine-width solid @spine-color;
         }
     } );
+
+    .respond-to-max( @bp-xs-max, {
+        padding-top: 0;
+        overflow: hidden;
+
+        > li {
+            overflow: hidden;
+            float: left;
+        }
+    } );
 }
 
-.org-chart_categories {
-    .link_item {
-        margin-bottom: 0;
+.o-bureau-structure_nav {
+
+    li {
         border-top: 1px solid @node-border-color;
+        margin-bottom: 0;
         background: @gray-5;
 
         &:last-child {
@@ -220,14 +167,60 @@
         }
     }
 
-    .link_text {
-       border: none;
+    .o-bureau-structure_nav-item {
+        margin-bottom: 0;
+        border: none;
+        background: none;
+        color: @pacific;
     }
 }
 
-.org-chart_node {
+.o-bureau-structure_nav-item {
+    margin-bottom: @margin;
+    background-color: inherit;
+    color: @pacific;
+
+    .respond-to-max( @bp-xs-max, {
+        display: inline-block;
+
+        .cf-icon,
+        &:before,
+        &:after {
+            color: @pacific;
+        }
+
+        &:focus {
+            outline: thin dotted;
+        }
+
+        &:hover {
+            color: @pacific-60;
+            border-color: @pacific-60;
+            z-index: 2;
+
+            .cf-icon,
+            &:before,
+            &:after {
+                color: @pacific-60;
+            }
+        }
+
+        &:active {
+            color: @navy;
+            border-color: @navy;
+
+            .cf-icon,
+            &:before,
+            &:after {
+                color: @navy;
+            }
+        }
+    } );
+}
+
+.o-bureau-structure_node {
     .webfont-regular();
-    position:relative;
+    position: relative;
     box-sizing: border-box;
     padding: @margin @margin / 2;
     border-bottom: @node-border-width solid @node-border-color;
@@ -235,10 +228,10 @@
     background: @white;
 
     // nested .org-chart_node blocks have different borders.
-    .org-chart_nodes {
+    .o-bureau-structure_nodes {
         border: none;
 
-        .org-chart_node {
+        .o-bureau-structure_node {
             padding-top: @margin / 2;
             border-width: 1px;
             margin-bottom: 0;
@@ -261,11 +254,10 @@
         &:not(:first-child) {
             margin: @margin / 2;
         }
-
     } );
 }
 
-.org-chart_node__root {
+.o-bureau-structure_node__root {
     margin-bottom: 0;
     max-width: @node-width__desktop;
 
@@ -276,7 +268,7 @@
         border: none;
         margin: 0;
 
-        .org-chart_role {
+        .o-bureau-structure_role {
             text-align: center;
         }
 
@@ -290,14 +282,14 @@
     } );
 }
 
-.org-chart_node_expander {
+.o-bureau-structure_node_expander {
     overflow: auto;
     padding: @margin / 2 0;
     border-top: 1px solid @node-border-color;
     border-bottom: 1px solid @node-border-color;
 }
 
-.org-chart_node_more-info {
+.o-bureau-structure_node_more-info {
     .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
     .u-link__no-border();
 
@@ -305,7 +297,7 @@
     margin-top: @margin;
 }
 
-.org-chart_role {
+.o-bureau-structure_role {
     text-align: left;
 
     &_name,
@@ -323,7 +315,7 @@
     }
 }
 
-.org-chart_legend {
+.o-bureau-structure_legend {
     padding: @margin;
     border-top: @node-border-width solid @green;
     margin-top:  @margin;
@@ -345,13 +337,13 @@
     } );
 }
 
-.org-chart_footer {
+.o-bureau-structure_footer {
     border-color: @node-border-color;
     margin-top: @margin * 2;
 
     .respond-to-min( @bp-sm-min, {
         padding-top: 0;
-        margin-top: @margin;
         border: none;
+        margin-top: @margin;
     } );
 }

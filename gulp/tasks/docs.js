@@ -1,6 +1,5 @@
 'use strict';
 
-var configScripts = require( '../config' ).scripts;
 var gulp = require( 'gulp' );
 var gulpUtil = require( 'gulp-util' );
 var paths = require( '../../config/environment' ).paths;

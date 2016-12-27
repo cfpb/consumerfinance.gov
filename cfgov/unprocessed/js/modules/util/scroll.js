@@ -7,8 +7,8 @@ var _requestAnimationFrame = window.requestAnimationFrame ||
     function( callback ) {
       return setTimeout( function() {
         callback( Number( new Date() ) );
-      },
-    1000 / 60 ); };
+      }, 1000 / 60 );
+    };
 
 /**
  * Easing

@@ -276,3 +276,29 @@ class TestFeedbackModel(TestCase):
                      "tester@example.com",
                      "{}".format(self.test_feedback.submitted_on.date())]:
             self.assertIn(term, test_csv)
+
+
+class CFGOVPageStatusStringTest(TestCase):
+        def test_expired(self):
+            page = CFGOVPage(expired=True)
+            self.assertEqual(page.status_string, 'expired')
+
+        def test_live(self):
+            page = CFGOVPage(live=True)
+            self.assertEqual(page.status_string, 'live')
+
+        def test_draft(self):
+            page = CFGOVPage(live=False, shared=False)
+            self.assertEqual(page.status_string, 'draft')
+
+        def test_shared(self):
+            page = CFGOVPage(live=False, shared=True)
+            self.assertEqual(page.status_string, 'shared')
+
+        def test_live_and_shared(self):
+            page = CFGOVPage(
+                live=True,
+                shared=True,
+                has_unpublished_changes=True
+            )
+            self.assertEqual(page.status_string, 'live + shared')

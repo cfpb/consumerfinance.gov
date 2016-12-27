@@ -49,7 +49,7 @@ function ExternalSite( element ) {
    */
   function _gotoUrl() {
     clearInterval( _intervalId );
-    $('#proceed').submit()
+    $('#proceed').submit();
   }
 
   /**

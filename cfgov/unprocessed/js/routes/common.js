@@ -4,8 +4,6 @@
 
 'use strict';
 
-// Vendor libraries.
-require( 'jquery' );
 
 // Global modules.
 require( '../modules/focus-target' ).init();

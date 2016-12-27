@@ -21,13 +21,13 @@ var HTML_SNIPPET =
 
 // JSdom hasn't implmented Element.dataset so I used Chrome to determine
 // the correct values : http://jsfiddle.net/0j9u66h0/13/.
-var datasetLookup =
-  { testValueA: 'testValueA',
-    testValueB: 'testValueB',
-    testvalueC: 'testValueC',
-    testValueD: 'testValueD',
-    testValueE: 'testValueE'
-  };
+var datasetLookup = {
+  testValueA: 'testValueA',
+  testValueB: 'testValueB',
+  testvalueC: 'testValueC',
+  testValueD: 'testValueD',
+  testValueE: 'testValueE'
+};
 
 describe( 'data-set', function() {
   jsdom();

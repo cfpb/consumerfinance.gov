@@ -41,6 +41,19 @@ def share_the_page(request, page):
         flush_akamai(page)
 
 
+@hooks.register('after_delete_page')
+def log_page_deletion(request, page):
+    logger.warning(
+        u'User {user} with ID {user_id} deleted page {title} with ID {page_id} at URL {url}'.format(
+            user=request.user,
+            user_id=request.user.id,
+            title=page.title,
+            page_id=page.id,
+            url=page.url_path,
+        )
+    )
+
+
 def check_permissions(parent, user, is_publishing, is_sharing):
     parent_perms = parent.permissions_for_user(user)
     if parent.slug != 'root':
@@ -75,6 +88,7 @@ def editor_js():
 def editor_css():
     css_files = [
         'css/table-block.css',
+        'css/bureau-structure.css'
     ]
     css_includes = format_html_join(
         '\n',

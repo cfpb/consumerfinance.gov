@@ -72,8 +72,7 @@
   },
   "browser": {
     "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",
-    "jquery": "./node_modules/jquery/dist/jquery.js",
-    "slick": "./node_modules/slick-carousel/slick/slick.js"
+    "jquery": "./node_modules/jquery/dist/jquery.js"
   },
   "scripts": {
     "test": "snyk test"

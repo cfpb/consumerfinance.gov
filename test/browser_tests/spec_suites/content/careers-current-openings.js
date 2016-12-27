@@ -25,11 +25,14 @@ describe( 'The Current Openings Page', function() {
   } );
 
   it( 'should have a career info section', function() {
-    var infoSectionTitles =
-    [ 'Job application process', 'Working at the CFPB' ];
-    var infoSectionLinks =
-    [ '/about-us/careers/application-process/',
-      '/about-us/careers/working-at-cfpb/' ];
+    var infoSectionTitles = [
+      'Job application process',
+      'Working at the CFPB'
+    ];
+    var infoSectionLinks = [
+      '/about-us/careers/application-process/',
+      '/about-us/careers/working-at-cfpb/'
+    ];
 
     expect( page.infoSectionTitles.getText() )
     .toEqual( infoSectionTitles );

@@ -7,9 +7,9 @@ from django.forms import widgets
 from django.forms.utils import ErrorList
 from taggit.models import Tag
 
-from util import ERROR_MESSAGES
-from v1.util import ref
+from .models.base import Feedback
 from v1.util.categories import clean_categories
+from v1.util import ref
 
 from .models.base import CFGOVPage, Feedback
 from .models.learn_page import AbstractFilterPage
@@ -151,22 +151,11 @@ class FilterableListForm(forms.Form):
         self.hostname = kwargs.pop('hostname')
         self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        page_ids = CFGOVPage.objects.live_shared(
-            self.hostname
-        ).values_list('id', flat=True)
+        page_ids = self.base_query.live_shared(self.hostname).values_list('id', flat=True)
 
         clean_categories(selected_categories=self.data.get('categories'))
         self.set_topics(page_ids)
         self.set_authors(page_ids)
-
-    def base_query(self):
-        base_query = AbstractFilterPage.objects.live_shared(
-            hostname=self.hostname)
-        if self.parent:
-            base_query = base_query.filter(
-                CFGOVPage.objects.child_of_q(self.parent))
-            logger.info('Filtering by parent {}'.format(self.parent))
-        return base_query
 
     def get_page_set(self):
         query = self.generate_query()
