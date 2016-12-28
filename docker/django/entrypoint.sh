@@ -7,7 +7,7 @@ if [ -f /src/mapbox_key.txt ]; then
     export MAPBOX_ACCESS_TOKEN=`cat /src/mapbox_key.txt`
 fi
 for d in /src/develop-apps/*/ ; do
-        pip install -e $d
+        export PYTHONPATH=$d:$PYTHONPATH
 done
 mysqladmin -h $MYSQL_HOST create v1 || true
 scl enable python27 "django-admin migrate --fake-initial --noinput"
