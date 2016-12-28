@@ -19,13 +19,10 @@ from django.conf import settings
 class PDFReactorNotConfigured(Exception):
     pass
 
-## TODO: Update to python 3 when PDFreactor's python wrapper supports it.
-if six.PY2:
-    try:
-        sys.path.append(os.environ.get('PDFREACTOR_LIB'))
-        from PDFreactor import *
-    except:
-       PDFreactor = None
+try:
+    from PDFreactor import *
+except ImportError:
+   PDFreactor = None
 
 class PDFGeneratorView(View):
     render_url = None

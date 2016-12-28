@@ -2,7 +2,6 @@ language: python
 
 python:
   - "2.7"
-
 cache: pip
 
 install:
@@ -31,4 +30,3 @@ script:
 
 notifications:
   webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN
-

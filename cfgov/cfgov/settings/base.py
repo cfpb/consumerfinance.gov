@@ -1,4 +1,5 @@
 import os, sys
+
 from unipath import Path
 from ..util import admin_emails
 
@@ -332,6 +333,10 @@ SHEER_ELASTICSEARCH_SETTINGS = \
 
 # PDFReactor
 PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/python/lib')
+if os.path.exists(PDFREACTOR_LIB):
+    sys.path.append(PDFREACTOR_LIB)
+
+PDFREACTOR_HOST = os.environ.get('PDFREACTOR_HOST', 'localhost')
 
 #LEGACY APPS
 
@@ -378,6 +383,12 @@ if os.environ.get('S3_ENABLED', 'False') == 'True':
     AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
     AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
+    if os.environ.get('AWS_S3_HOST'):
+        AWS_S3_HOST = os.environ['AWS_S3_HOST']
+        AWS_S3_USE_SSL = False
+
+    if os.environ.get('AWS_S3_PORT'):
+        AWS_S3_PORT = int(os.environ['AWS_S3_PORT'])
 
     MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 

@@ -1,0 +1,8 @@
+*.pyc
+.git
+node_modules
+collectstatic
+.tox
+develop-apps/*
+dbupload/*
+pdfreactor_key.txt

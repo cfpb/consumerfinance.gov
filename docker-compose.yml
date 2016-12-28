@@ -1,0 +1,69 @@
+version: "2"
+
+services:
+    gulp:
+        build:
+            context: .
+            dockerfile: docker/gulp/Dockerfile
+        volumes:
+            - .:/src
+        ports:
+            - "3000:3000"
+    django:
+        build:
+            context: .
+            dockerfile: docker/django/Dockerfile
+        volumes:
+            - .:/src
+        volumes_from: 
+            - fakes3
+            - pdfreactor
+        links:
+            - mysql
+            - pdfreactor
+            - elasticsearch
+        ports:
+            - "8000:8000"
+        environment:
+            SECRET_KEY: 'docker'
+            AWS_S3_ACCESS_KEY_ID: fake
+            AWS_S3_SECRET_ACCESS_KEY: fake
+            AWS_STORAGE_BUCKET_NAME: bucket
+            WORDPRESS: http://www.consumerfinance.gov
+            DJANGO_STAGING_HOSTNAME: content.localhost
+            ES_HOST: elasticsearch
+            AWS_S3_HOST: fakes3
+            AWS_S3_PORT: 4569
+            AWS_S3_URL: 'http://localhost:4569/bucket'
+            S3_ENABLED: 'True'
+            MEDIA_ROOT: '/fakes3_root/fakes3/bucket/'
+            PDFREACTOR_HOST: pdfreactor
+            PDFREACTOR_LIB: '/opt/PDFreactor/wrappers/python/lib'
+    mysql:
+        build:
+            context: docker/mysql
+        ports:
+            - "3306:3306"
+    pdfreactor:
+        build: docker/pdfreactor
+        ports:
+            - "9423:9423" 
+    elasticsearch:
+        image: elasticsearch:1.7
+        ports:
+            - "9200:9200"
+            - "9300:9300"
+    phpmyadmin:
+        build: docker/phpmyadmin
+        links:
+            - mysql
+        volumes:
+            - "./dbupload:/var/lib/phpMyAdmin/upload/"
+        ports:
+            - "8080:80"
+    fakes3:
+        image: lphoward/fake-s3
+        volumes:
+            - /fakes3_root
+        ports:
+            - "4569:4569"

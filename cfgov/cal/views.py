@@ -11,19 +11,18 @@ from django.db.models import Max, Min, Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template.loader import get_template
+from django.conf import settings
+
 from httplib import BadStatusLine
 
 from cal.forms import CalendarFilterForm, CalendarPDFForm
 from cal.models import CFPBCalendarEvent
 
 
-## TODO: Update to python 3 when PDFreactor's python wrapper supports it.
-if six.PY2:
-    try:
-        sys.path.append(os.environ.get('PDFREACTOR_LIB'))
-        from PDFreactor import *
-    except ImportError:
-       PDFreactor = None
+try:
+    from PDFreactor import *
+except ImportError:
+    PDFreactor = None
 
 
 class PaginatorForSheerTemplates(Paginator):
@@ -144,11 +143,14 @@ def pdf_response(request, context):
     template_name = 'about-us/the-bureau/leadership-calendar/print/index.html'
     license = os.environ.get('PDFREACTOR_LICENSE')
     stylesheet_url = '/static/css/pdfreactor-fonts.css'
-    pdf_reactor = PDFreactor()
 
+    pdf_reactor = PDFreactor(host=settings.PDFREACTOR_HOST)
     pdf_reactor.setBaseURL("http://localhost/")
+
     pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_FATAL)
-    pdf_reactor.setLicenseKey(str(license))
+    if license:
+        pdf_reactor.setLicenseKey(str(license))
+
     pdf_reactor.setAuthor('CFPB')
     pdf_reactor.setAddTags(True)
     pdf_reactor.setAddBookmarks(True)

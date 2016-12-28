@@ -34,7 +34,9 @@ class HousingCounselorPDFView(PDFGeneratorView):
 
         zip = self.form.cleaned_data['zip']
         api_url = 'hud-api-replace/%s.html/' % zip
-        url = '%s://%s/%s' % (request.scheme, 'localhost', api_url)
+        callback_host = os.environ.get('HOSTNAME', 'localhost')
+        callback_port= self.request.META['SERVER_PORT']
+        url = '%s://%s:%s/%s' % (request.scheme, callback_host, callback_port, api_url)
         return url
 
     def get(self, request):
@@ -55,16 +57,16 @@ class HousingCounselorPDFView(PDFGeneratorView):
     def generate_pdf(self):
         url = self.get_render_url()
 
-        if self.license is None:
-            raise Exception("PDFGeneratorView requires a license")
-
         try:
-            pdf_reactor = PDFreactor()
+            pdf_reactor = PDFreactor(host=settings.PDFREACTOR_HOST)
         except:
             raise PDFReactorNotConfigured('PDFreactor python library path needs to be configured.')
 
         pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_FATAL)
-        pdf_reactor.setLicenseKey(str(self.license))
+
+        if self.license:
+            pdf_reactor.setLicenseKey(str(self.license))
+
         pdf_reactor.setAuthor('CFPB')
         pdf_reactor.setAddTags(True)
         pdf_reactor.setAddBookmarks(True)
