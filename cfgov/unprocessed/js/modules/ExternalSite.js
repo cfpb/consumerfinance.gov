@@ -16,7 +16,6 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
  * @param {HTMLElement} element DOM Element.
  */
 function ExternalSite( element ) {
-
   var BASE_CLASS = 'external-site_container';
   var TOTAL_DURATION = 5;
   var INTERVAL = 1000;
@@ -24,7 +23,6 @@ function ExternalSite( element ) {
   var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _durationEl = _dom.querySelector( '.external-site_reload-container' );
   var _directEl = _dom.querySelector( '.external-site_proceed-btn' );
-  var _form = _dom.querySelector( 'form#proceed' );
   var _duration = TOTAL_DURATION;
   var _intervalId;
 
@@ -50,8 +48,9 @@ function ExternalSite( element ) {
    * Go to the redirect URL.
    */
   function _gotoUrl() {
+    var _formEl = _dom.querySelector( 'form#proceed' );
     clearInterval( _intervalId );
-    _form.submit();
+    _formEl.submit();
   }
 
   /**
