@@ -40,6 +40,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix blog post RSS subscription links
 - Fix for Wagtail admin page status string when live but not shared.
 - Fixed legacy supervision jobs page.
+- Fix for External Redirect proceed button and jQuery reference.
 
 
 ## 4.3.2
