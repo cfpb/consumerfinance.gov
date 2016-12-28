@@ -1,7 +1,6 @@
 'use strict';
 
 var browserSync = require( 'browser-sync' );
-var cleanCSS = require('gulp-clean-css');
 var config = require( '../config' );
 var configPkg = config.pkg;
 var configBanner = config.banner;
@@ -9,6 +8,7 @@ var configStyles = config.styles;
 var configLegacy = config.legacy;
 var gulp = require( 'gulp' );
 var gulpAutoprefixer = require( 'gulp-autoprefixer' );
+var gulpCleanCss = require( 'gulp-clean-css' );
 var gulpHeader = require( 'gulp-header' );
 var gulpLess = require( 'gulp-less' );
 var gulpRename = require( 'gulp-rename' );
@@ -25,13 +25,13 @@ function stylesModern() {
     .pipe( gulpSourcemaps.init() )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [ 'last 2 version',
-                  'not ie <= 8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
-    } ) )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'not ie <= 8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
     .pipe( gulp.dest( configStyles.dest ) )
@@ -55,7 +55,7 @@ function stylesIe() {
       width: '75em'
     } ) )
     // mqr expands the minified file
-    .pipe( cleanCSS( {compatibility: 'ie8'} ) )
+    .pipe( gulpCleanCss( { compatibility: 'ie8' } ) )
     .pipe( gulpRename( {
       suffix:  '.ie',
       extname: '.css'
@@ -74,20 +74,20 @@ function stylesOnDemand() {
   return gulp.src( configStyles.cwd + '/on-demand/*.less' )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [ 'last 2 version',
-                  'ie 7-8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
-    } ) )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'ie 7-8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( mqr( {
       width: '75em'
     } ) )
     // mqr expands the minified file
-    .pipe( cleanCSS( {compatibility: 'ie8'} ) )
+    .pipe( gulpCleanCss( { compatibility: 'ie8' } ) )
     .pipe( gulpRename( {
       suffix:  '.nonresponsive',
       extname: '.css'
@@ -106,13 +106,13 @@ function stylesFeatureFlags() {
   return gulp.src( configStyles.cwd + '/feature-flags/*.less' )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [ 'last 2 version',
-                  'ie 7-8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
-    } ) )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'ie 7-8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
     .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -127,13 +127,13 @@ function stylesNemoProd() {
   return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles.less' )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [ 'last 2 version',
-                  'not ie <= 8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
-    } ) )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'not ie <= 8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( 'es-styles.min.css' ) )
     .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
@@ -150,13 +150,13 @@ function stylesNemoIE() {
   return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles-ie.less' )
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( {
-      browsers: [ 'last 2 version',
-                  'not ie <= 8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
-    } ) )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'not ie <= 8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( 'es-styles-ie.min.css' ) )
     .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )

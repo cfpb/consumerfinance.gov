@@ -101,28 +101,6 @@
 }
 
 /* topdoc
-  name: Add 1/4 and 3/4 columns
-  family: cf-layout
-  notes:
-    - "Temporary addition until latest cf-layout is included in the project"
-  tags:
-    - cf-layout
-*/
-
-.content-l_col-1-4 {
-    .respond-to-min(@bp-sm-min, {
-        .grid_column(3);
-    });
-}
-
-.content-l_col-3-4 {
-    .respond-to-min(@bp-sm-min, {
-        margin-top: 0 !important;
-        .grid_column(9);
-    });
-}
-
-/* topdoc
   name: Add Large breakpoint only columns
   family: cf-layout
   notes:

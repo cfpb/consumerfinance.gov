@@ -33,13 +33,15 @@ describe( 'The Working At CFPB Page', function() {
   } );
 
   it( 'should have a career info section', function() {
-    var infoSectionTitles =
-    [ 'Current openings', 'Job application process',
-    'Students & recent graduates' ];
-    var infoSectionLinks =
-    [ '/about-us/careers/current-openings/',
+    var infoSectionTitles = [
+      'Current openings', 'Job application process',
+      'Students & recent graduates'
+    ];
+    var infoSectionLinks = [
+      '/about-us/careers/current-openings/',
       '/about-us/careers/application-process/',
-      '/about-us/careers/students-and-graduates/' ];
+      '/about-us/careers/students-and-graduates/'
+    ];
 
     expect( page.infoSectionTitles.getText() )
     .toEqual( infoSectionTitles );
