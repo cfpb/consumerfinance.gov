@@ -62,18 +62,36 @@ class FilterableListForm(forms.Form):
         'data-placeholder': 'Search for authors'
     }
 
-    title = forms.CharField(max_length=250, required=False, widget=widgets.TextInput(attrs=title_attrs))
+    title = forms.CharField(
+        max_length=250,
+        required=False,
+        widget=widgets.TextInput(attrs=title_attrs)
+    )
     from_date = FilterableFromDateField()
     to_date = FilterableToDateField()
-    categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
-    topics = MultipleChoiceFieldNoValidation(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
-    authors = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
+    categories = forms.MultipleChoiceField(
+        required=False,
+        choices=ref.page_type_choices,
+        widget=widgets.CheckboxSelectMultiple()
+    )
+    topics = MultipleChoiceFieldNoValidation(
+        required=False,
+        choices=[],
+        widget=widgets.SelectMultiple(attrs=topics_select_attrs)
+    )
+    authors = forms.MultipleChoiceField(
+        required=False,
+        choices=[],
+        widget=widgets.SelectMultiple(attrs=authors_select_attrs)
+    )
 
     def __init__(self, *args, **kwargs):
         self.hostname = kwargs.pop('hostname')
         self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        page_ids = self.base_query.live_shared(self.hostname).values_list('id', flat=True)
+
+        pages = self.base_query.live_shared(self.hostname)
+        page_ids = pages.values_list('id', flat=True)
 
         clean_categories(selected_categories=self.data.get('categories'))
         self.set_topics(page_ids)
