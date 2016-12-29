@@ -34,6 +34,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed deprecated fellowship view/model.
 - Removed deprecated fellowship notification sign up form.
 - Spokesperson who is no longer with the Bureau from the press page.
+- Removed legacy calendar app.
 
 ### Fixed
 - Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.
