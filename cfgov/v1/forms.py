@@ -1,4 +1,3 @@
-from util import ERROR_MESSAGES
 from collections import Counter
 
 from django import forms
@@ -9,7 +8,7 @@ from taggit.models import Tag
 
 from .models.base import Feedback
 from v1.util.categories import clean_categories
-from v1.util import ref
+from v1.util import ERROR_MESSAGES, ref
 
 
 import logging
@@ -91,6 +90,40 @@ class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
         pass
 
 
+class FilterableDateField(forms.DateField):
+    default_input_formats = (
+        '%m/%d/%Y',
+    )
+
+    default_widget_attrs = {
+        'class': 'js-filter_range-date',
+        'type': 'text',
+        'placeholder': 'mm/dd/yyyy',
+        'data-type': 'date'
+    }
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('required', False)
+        kwargs.setdefault('input_formats', self.default_input_formats)
+        kwargs.setdefault('widget', widgets.DateInput(
+            attrs=self.default_widget_attrs
+        ))
+        kwargs.setdefault('error_messages', ERROR_MESSAGES['DATE_ERRORS'])
+        super(FilterableDateField, self).__init__(*args, **kwargs)
+
+
+class FilterableFromDateField(FilterableDateField):
+    def __init__(self, *args, **kwargs):
+        self.default_widget_attrs['class'] += ' js-filter_range-date__gte'
+        super(FilterableFromDateField, self).__init__(*args, **kwargs)
+
+
+class FilterableToDateField(FilterableDateField):
+    def __init__(self, *args, **kwargs):
+        self.default_widget_attrs['class'] += ' js-filter_range-date__lte'
+        super(FilterableToDateField, self).__init__(*args, **kwargs)
+
+
 class FilterableListForm(forms.Form):
     title_attrs = {
         'placeholder': 'Search for a specific word in item title'
@@ -103,20 +136,10 @@ class FilterableListForm(forms.Form):
         'multiple': 'multiple',
         'data-placeholder': 'Search for authors'
     }
-    from_select_attrs = {
-        'class': 'js-filter_range-date js-filter_range-date__gte',
-        'type': 'text',
-        'placeholder': 'mm/dd/yyyy',
-        'data-type': 'date'
-    }
-    to_select_attrs = from_select_attrs.copy()
-    to_select_attrs.update({
-        'class': 'js-filter_range-date js-filter_range-date__lte',
-    })
 
     title = forms.CharField(max_length=250, required=False, widget=widgets.TextInput(attrs=title_attrs))
-    from_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
-    to_date = FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
+    from_date = FilterableFromDateField()
+    to_date = FilterableToDateField()
     categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
     topics = MultipleChoiceFieldNoValidation(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
     authors = forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
