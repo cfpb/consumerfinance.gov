@@ -21,8 +21,7 @@ ERROR_MESSAGES = {
         'required': 'Please select at least one of the "%s" options.'
     },
     'DATE_ERRORS': {
-        'invalid': 'You have entered an invalid date: %s.',
-        'one_required': 'Please enter at least one date.'
+        'invalid': 'You have entered an invalid date.',
     }
 }
 
