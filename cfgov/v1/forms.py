@@ -1,24 +1,13 @@
-from util import ERROR_MESSAGES
 from collections import Counter
 
 from django import forms
 from django.db.models import Q
-from django.forms.utils import ErrorList
 from django.forms import widgets
 from taggit.models import Tag
 
 from .models.base import Feedback
 from v1.util.categories import clean_categories
 from v1.util import ref
-
-
-import logging
-logger = logging.getLogger(__name__)
-
-
-class FilterErrorList(ErrorList):
-    def __str__(self):
-        return '\n'.join(str(e) for e in self)
 
 
 class FilterDateField(forms.DateField):
@@ -30,60 +19,6 @@ class FilterDateField(forms.DateField):
             except Exception as e:
                 pass
         return value
-
-
-class PDFFilterDateField(forms.DateField):
-    def clean(self, value):
-        if value:
-            try:
-                value = get_date_string(value)
-            except Exception as e:
-                pass
-        return value
-
-
-class FilterCheckboxList(forms.CharField):
-    def validate(self, value):
-        if value in self.empty_values and self.required:
-            msg = self.error_messages['required']
-            if self.label and '%s' in msg:
-                msg = msg % self.label
-            raise forms.ValidationError(msg, code='required')
-
-
-class CalenderPDFFilterForm(forms.Form):
-    filter_calendar = FilterCheckboxList(
-        label='Calendar',
-        error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS']
-    )
-    filter_range_date_gte = PDFFilterDateField(
-        required=False,
-        error_messages=ERROR_MESSAGES['DATE_ERRORS']
-    )
-    filter_range_date_lte = PDFFilterDateField(
-        required=False,
-        error_messages=ERROR_MESSAGES['DATE_ERRORS']
-    )
-
-    def __init__(self, *args, **kwargs):
-        kwargs['error_class'] = FilterErrorList
-        super(CalenderPDFFilterForm, self).__init__(*args, **kwargs)
-
-    def clean_filter_calendar(self):
-        return self.cleaned_data['filter_calendar'].replace(' ', '+')
-
-    def clean(self):
-        cleaned_data = super(CalenderPDFFilterForm, self).clean()
-        from_date_empty = 'filter_range_date_gte' in cleaned_data and \
-                          cleaned_data['filter_range_date_gte'] is None
-        to_date_empty = 'filter_range_date_lte' in cleaned_data and \
-                        cleaned_data['filter_range_date_lte'] is None
-
-        if from_date_empty and to_date_empty:
-            raise forms.ValidationError(
-                ERROR_MESSAGES['DATE_ERRORS']['one_required']
-            )
-        return cleaned_data
 
 
 class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
