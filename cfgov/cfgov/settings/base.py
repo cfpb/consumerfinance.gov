@@ -56,7 +56,6 @@ INSTALLED_APPS = (
     'v1',
     'core',
     'sheerlike',
-    'cal',
     'legacy',
     'django_extensions',
     'reversion',

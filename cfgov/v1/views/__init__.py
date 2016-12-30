@@ -1,4 +1,4 @@
-from core.services import PDFGeneratorView, ICSView
+from core.services import ICSView
 from wagtail.wagtailcore.models import Page
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
