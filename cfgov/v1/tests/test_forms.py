@@ -3,7 +3,7 @@ import mock
 
 from django.test import TestCase
 
-from ..forms import *
+from v1.forms import FilterableDateField, FilterableListForm
 
 
 class TestFilterableListForm(TestCase):
@@ -124,3 +124,13 @@ class TestFilterableListForm(TestCase):
 
         result = form.generate_query()
         assert result.children == [('field__contains', 'foobar')]
+
+
+class TestFilterableDateField(TestCase):
+    def test_default_required(self):
+        field = FilterableDateField()
+        self.assertFalse(field.required)
+
+    def test_set_required(self):
+        field = FilterableDateField(required=True)
+        self.assertTrue(field.required)
