@@ -1,9 +1,9 @@
 import boto
+import moto
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import get_storage_class
 from django.test import TestCase, override_settings
-from moto import mock_s3
 from wagtail.wagtailimages.tests.utils import get_test_image_file
 from wagtail.wagtailimages.models import get_image_model
 
@@ -12,7 +12,6 @@ from v1.s3utils import (
 )
 
 
-@mock_s3
 @override_settings(
     AWS_QUERYSTRING_AUTH=False,
     AWS_S3_ACCESS_KEY_ID='test',
@@ -25,6 +24,10 @@ from v1.s3utils import (
 )
 class S3UtilsTestCase(TestCase):
     def setUp(self):
+        mock_s3 = moto.mock_s3()
+        mock_s3.start()
+        self.addCleanup(mock_s3.stop)
+
         self.s3 = boto.connect_s3()
         self.s3.create_bucket('test_s3_bucket')
 

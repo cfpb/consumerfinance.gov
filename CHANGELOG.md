@@ -42,6 +42,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix for Wagtail admin page status string when live but not shared.
 - Fixed legacy supervision jobs page.
 - Fix for External Redirect proceed button and jQuery reference.
+- Fixed use of `moto.mock_s3` in unit tests.
 - Fixed handling of invalid date query string parameters for filterable list forms.
 
 
