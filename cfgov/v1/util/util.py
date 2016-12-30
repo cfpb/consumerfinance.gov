@@ -22,6 +22,7 @@ ERROR_MESSAGES = {
     },
     'DATE_ERRORS': {
         'invalid': 'You have entered an invalid date.',
+        'one_required': 'Please enter at least one date.',
     }
 }
 
