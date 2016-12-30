@@ -45,7 +45,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed use of `moto.mock_s3` in unit tests.
 - Fixed handling of invalid date query string parameters for filterable list forms.
 
-
 ## 4.3.2
 
 ### Changed
