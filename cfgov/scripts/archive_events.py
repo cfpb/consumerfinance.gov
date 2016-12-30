@@ -24,7 +24,7 @@ def run():
                         if event.end_dt < timezone.now():
                             if event.can_move_to(archived_events):
                                 event.move(archived_events, pos='last-child')
-                                loggger.info(event.title + ' Event .....archived')
+                                logger.info(event.title + ' Event .....archived')
         else:
             logger.info('No events to archive found....')
     elif not event_page_exists:
