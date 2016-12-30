@@ -276,7 +276,6 @@ if settings.DEBUG :
 
 urlpatterns.append(url(r'', include(wagtail_urls)))
 
-from sheerlike import register_permalink
 
 from django.shortcuts import render
 
@@ -297,10 +296,3 @@ def handle_error(code, request):
 
 handler404 = partial(handle_error, 404)
 handler500 = partial(handle_error, 500)
-
-
-register_permalink('posts', 'blog:detail')
-register_permalink('newsroom', 'newsroom:detail')
-register_permalink('office', 'offices:detail')
-register_permalink('sub_page', 'sub_page:detail')
-register_permalink('career', 'careers:career')
