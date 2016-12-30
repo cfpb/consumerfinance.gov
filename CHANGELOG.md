@@ -13,6 +13,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ---------------------------------------
 
+## 4.4.2
+
+### Fixed
+- Fixed handling of invalid date query string parameters for filterable list forms.
+
 ## 4.4.1
 
 ### Added
