@@ -356,8 +356,6 @@ for app in OPTIONAL_APPS:
             if name not in INSTALLED_APPS:
                 INSTALLED_APPS+=(name,)
         MIDDLEWARE_CLASSES += app.get("middleware", ())
-        if 'TEMPLATE_CONTEXT_PROCESSORS' in locals():
-            TEMPLATE_CONTEXT_PROCESSORS += app.get("context_processors", ())
     except ImportError:
         pass
 
