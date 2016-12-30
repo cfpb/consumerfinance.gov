@@ -67,9 +67,6 @@ class BrowsePage(CFGOVPage):
         super(BrowsePage, self).add_page_js(js)
         js['template'] += ['secondary-navigation.js']
 
-    def full_width_serif(self):
-        return true
-
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)
         context.update({'get_secondary_nav_items': get_secondary_nav_items})
