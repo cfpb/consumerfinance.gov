@@ -96,7 +96,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-    'transition_utilities.middleware.RewriteNemoURLsMiddleware',
     'v1.middleware.StagingMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware'
 )
@@ -253,51 +252,11 @@ ELASTICSEARCH_BIGINT = 50000
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
 SHEER_PROCESSORS = \
     {
-        "history": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=history",
-            "processor": "processors.wordpress_history",
-            "mappings": MAPPINGS.child("history.json")
-        },
-        "sub_page": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=sub_page",
-            "processor": "processors.wordpress_sub_page",
-            "mappings": MAPPINGS.child("sub_page.json")
-        },
-        "office": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=office",
-            "processor": "processors.wordpress_office",
-            "mappings": MAPPINGS.child("office.json")
-        },
-        "orgmember": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=orgmember",
-            "processor": "processors.wordpress_orgmember",
-            "mappings": MAPPINGS.child("orgmember.json")
-        },
         "pages": {
             "url": "$WORDPRESS/api/get_posts/?post_type=page",
             "processor": "processors.wordpress_page",
             "mappings": MAPPINGS.child("pages.json")
         },
-        "views": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=view",
-            "processor": "processors.wordpress_view",
-            "mappings": MAPPINGS.child("views.json")
-        },
-        "featured_topic": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=featured_topic",
-            "processor": "processors.wordpress_featured_topic",
-            "mappings": MAPPINGS.child("featured_topic.json")
-        },
-        "faq": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=faq",
-            "processor": "processors.wordpress_faq",
-            "mappings": MAPPINGS.child("faq.json")
-        },
-        "report": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=cfpb_report",
-            "processor": "processors.wordpress_cfpb_report",
-            "mappings": MAPPINGS.child("report.json")
-        }
     }
 
 SHEER_ELASTICSEARCH_SETTINGS = \
@@ -396,8 +355,6 @@ for app in OPTIONAL_APPS:
             if name not in INSTALLED_APPS:
                 INSTALLED_APPS+=(name,)
         MIDDLEWARE_CLASSES += app.get("middleware", ())
-        if 'TEMPLATE_CONTEXT_PROCESSORS' in locals():
-            TEMPLATE_CONTEXT_PROCESSORS += app.get("context_processors", ())
     except ImportError:
         pass
 
