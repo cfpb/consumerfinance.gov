@@ -1,7 +1,7 @@
 git+https://github.com/cfpb/college-costs.git@2.2.8#egg=college-costs
 git+https://github.com/cfpb/complaint.git@v1.2.8#egg=complaintdatabase
 git+https://github.com/cfpb/django-hud.git@1.2#egg=django-hud
-git+https://github.com/cfpb/owning-a-home-api.git@v0.9.91#egg=owning-a-home-api
+git+https://github.com/cfpb/owning-a-home-api.git@v0.9.92#egg=owning-a-home-api
 git+https://github.com/cfpb/regulations-core.git@1.2.3#egg=regcore
 git+https://github.com/cfpb/regulations-site.git@2.1.4#egg=regulations
 git+https://github.com/cfpb/retirement.git@0.5.3#egg=retirement
