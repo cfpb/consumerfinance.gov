@@ -38,6 +38,7 @@ class BrowsePage(CFGOVPage):
         ('job_listing_table', JobListingTable()),
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
+        ('html_block', organisms.HTMLBlock()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
