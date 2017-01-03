@@ -568,7 +568,7 @@ class HTMLBlock(blocks.StructBlock):
         label='Source URL',
         default='',
         required=True,
-        regex=r'^https://.+$',
+        regex=r'^https://(s3.amazonaws.com/)?files.consumerfinance.gov/.+$',
         error_messages={
             'required': 'The HTML URL field is required for rendering raw HTML from a remote source.',
             'invalid': 'The URL is invalid or not allowed. ',
