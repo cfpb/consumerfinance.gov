@@ -5,6 +5,6 @@
 git+https://private.repo/CFPB/agreement_database.git@v2.2.4#egg=agreement-database
 git+https://private.repo/CFPB/cfgov-selfregistration.git@v1.2#egg=selfregistration
 git+https://private.repo/CFPB/django-college-cost-comparison.git@v1.2.9#egg=comparisontool
-git+https://private.repo/CFPB/knowledgebase.git@v2.1.4#egg=knowledgebase
+git+https://private.repo/CFPB/knowledgebase.git@v2.2.1#egg=knowledgebase
 git+https://private.repo/CFPB/Picard.git@1.5.5#egg=picard
 git+https://private.repo/eregs/ip.git@1.0.3#egg=eregsip
