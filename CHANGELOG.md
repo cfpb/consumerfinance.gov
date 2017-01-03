@@ -47,6 +47,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix for External Redirect proceed button and jQuery reference.
 - Fixed use of `moto.mock_s3` in unit tests.
 - Fixed handling of invalid date query string parameters for filterable list forms.
+- Added missing `block` class from a block on the about the director page.
 
 ## 4.3.2
 
