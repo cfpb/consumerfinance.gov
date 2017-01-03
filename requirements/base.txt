@@ -33,12 +33,12 @@ pyelasticsearch==0.6
 python-dateutil==2.1
 PyYAML==3.11
 pytz
-requests==2.7.0
+requests==2.12.4
 requests_toolbelt==0.6.0
 simplejson==3.8.2
 six==1.9.0
 suds==0.4
 unipath>=1.1,<=2.0
 vobject==0.9.1
-wagtail==1.7
+wagtail==1.8
 Wand==0.4.2
