@@ -576,7 +576,7 @@ class HTMLBlock(blocks.StructBlock):
     )
 
     def render(self, value, context=None):
-        resp = requests.get(value['html_url'])
+        resp = requests.get(value['html_url'], timeout=5)
         resp.raise_for_status()
         return self.render_basic(resp.content, context=context)
 
