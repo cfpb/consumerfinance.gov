@@ -25,12 +25,7 @@ from .middleware import get_request
 
 from flags.template_functions import flag_enabled, flag_disabled
 
-PERMALINK_REGISTRY = {}
 default_app_config = 'sheerlike.apps.SheerlikeConfig'
-
-
-def register_permalink(sheer_type, url_pattern_name):
-    PERMALINK_REGISTRY[sheer_type] = url_pattern_name
 
 
 def global_render_template(name, **kwargs):
