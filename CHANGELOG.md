@@ -49,6 +49,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed handling of invalid date query string parameters for filterable list forms.
 - Added missing `block` class from a block on the about the director page.
 - Fixed issue with erroneously removed bureau stylesheet.
+- Fixed issue with breadcrumb on Leadership Calendar page.
 
 ## 4.3.2
 
