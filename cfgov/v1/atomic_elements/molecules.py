@@ -404,7 +404,8 @@ class SnippetList(blocks.StructBlock):
         )),
         ('snippet_field', blocks.ChoiceBlock(
             choices=ref.snippet_fields,
-            help_text='Corresponds to the available fields for the selected snippet type'
+            help_text='Corresponds to the available fields for the selected'
+                      'snippet type.'
         )),
     ]))
 
@@ -412,7 +413,10 @@ class SnippetList(blocks.StructBlock):
 
     tags = blocks.ListBlock(
         blocks.CharBlock(label='Tag'),
-        help_text='Enter tags to filter the snippets.'
+        help_text='Enter tag names to filter the snippets. For a snippet to '
+                  'match and be output in the list, it must have been tagged '
+                  'with all of the tag names listed here. The tag names '
+                  'are case-insensitive.'
     )
 
     class Meta:

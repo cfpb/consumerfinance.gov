@@ -49,12 +49,12 @@ class Contact(models.Model):
             hash=hashlib.md5(title + ';;' + slug).hexdigest())
 
 
-class DownloadTag(TaggedItemBase):
-    content_object = ParentalKey('v1.Download', related_name='tagged_items')
+class ResourceTag(TaggedItemBase):
+    content_object = ParentalKey('v1.Resource', related_name='tagged_items')
 
 
 @register_snippet
-class Download(ClusterableModel):
+class Resource(ClusterableModel):
     title = models.CharField(max_length=255)
     desc = RichTextField(verbose_name='Description', blank=True)
 
@@ -94,7 +94,7 @@ class Download(ClusterableModel):
         validators=[URLValidator]
     )
 
-    tags = TaggableManager(through=DownloadTag, blank=True)
+    tags = TaggableManager(through=ResourceTag, blank=True)
 
     hash = models.CharField(max_length=32, editable=False)
 
