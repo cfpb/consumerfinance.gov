@@ -11,13 +11,10 @@
    items:              An array of tuples used to display nav items.
                        format: (href, id, caption)
 
-   additional_classes: Extra classes you wish to add to the nav,
-                       space separated.
-
    ========================================================================== #}
 
-{% macro render(items, additional_classes='') %}
-<nav class="breadcrumbs {{ additional_classes  }}" aria-label="Breadcrumbs">
+{% macro render(items) %}
+<nav class="breadcrumbs" aria-label="Breadcrumbs">
     {% for href, id, caption in items %}
     <a class="breadcrumbs_link" href="{{ href }}">
         {{ caption | e }}
