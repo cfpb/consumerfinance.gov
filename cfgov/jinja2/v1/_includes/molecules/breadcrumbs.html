@@ -17,7 +17,7 @@
    ========================================================================== #}
 
 {# TODO: Remove additional_classes parameter from macros. #}
-{% macro render(breadcrumbs, additional_classes) %}
+{% macro render(breadcrumbs, additional_classes='') %}
     <nav class="breadcrumbs {{ additional_classes }}" aria-label="Breadcrumbs">
         {% for crumb in breadcrumbs %}
         <a class="breadcrumbs_link" href="{{ get_protected_url(crumb) }}">
