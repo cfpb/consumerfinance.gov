@@ -9,6 +9,13 @@
                 {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
                 {{ breadcrumbs.render(breadcrumb_items, 'breadcrumbs__main-first') }}
             </div>
+        {# TODO: Remove this ASAP once the-bureau gets migrated to Wagtail #}
+        {% elif page.slug == 'leadership-calendar' %}
+            <div class="content_wrapper">
+                {%- import 'breadcrumbs.html' as breadcrumbs -%}
+                {% set breadcrumb_items = [('/about-us/the-bureau/', 'None', 'The Bureau')] %}
+                {{ breadcrumbs.render(breadcrumb_items, 'breadcrumbs__main-first') }}
+            </div>
         {% endif %}
     {% else %}
         {% if breadcrumb_items | length > 0 %}
