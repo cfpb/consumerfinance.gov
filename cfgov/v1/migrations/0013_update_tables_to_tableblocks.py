@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from itertools import chain
+
 import logging
-logger = logging.getLogger(__name__)
 
 from django.db import migrations
-
-from v1.models.learn_page import LearnPage, DocumentDetailPage
-from v1.models.sublanding_page import SublandingPage
-from v1.models.sublanding_filterable_page import SublandingFilterablePage
-from v1.models.browse_page import BrowsePage
-from v1.models.blog_page import BlogPage
-from v1.models.browse_filterable_page import BrowseFilterablePage
-from v1.models.demo import DemoPage
 from v1.tests.wagtail_pages.helpers import publish_changes
+
+
+logger = logging.getLogger(__name__)
 
 
 def update_table_items(items, wagtail_page):
@@ -78,32 +72,31 @@ def create_tableblock_data(old_table):
 
 
 def create_tableblocks_for_every_table(apps, schema_editor):
-    logger.info("Updating tables in content field")
-    for p in chain(
-        BrowsePage.objects.all(),
-        SublandingPage.objects.all(),
-        LearnPage.objects.all(),
-        DocumentDetailPage.objects.all(),
-    ):
-        if update_tables_in_content_field(wagtail_page=p):
-            publish_changes(child=p)
+    logger.info('Updating tables in content field')
+    cf_page_types = (
+        'BrowsePage', 'SublandingPage', 'LearnPage', 'DocumentDetailPage',
+    )
 
-    logger.info("Updating tables in full width text organisms")
-    for p in chain(
-        BlogPage.objects.all(),
-        BrowseFilterablePage.objects.all(),
-        BrowsePage.objects.all(),
-        DemoPage.objects.all(),
-        LearnPage.objects.all(),
-        SublandingFilterablePage.objects.all(),
-        SublandingPage.objects.all(),
-    ):
-        if update_tables_in_full_width_text_organisms(wagtail_page=p):
-            publish_changes(child=p)
+    for cf_page_type in cf_page_types:
+        page_cls = apps.get_model('v1', cf_page_type)
+        for p in page_cls.objects.all():
+            if update_tables_in_content_field(wagtail_page=p):
+                publish_changes(child=p)
+
+    logger.info('Updating tables in full width text organisms')
+    fwt_page_types = (
+        'BlogPage', 'BrowseFilterablePage', 'BrowsePage', 'DemoPage',
+        'LearnPage', 'SublandingFilterablePage', 'SublandingPage',
+    )
+
+    for fwt_page_type in fwt_page_types:
+        page_cls = apps.get_model('v1', fwt_page_type)
+        for p in page_cls.objects.all():
+            if update_tables_in_full_width_text_organisms(wagtail_page=p):
+                publish_changes(child=p)
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('v1', '0012_create_tableblock'),
     ]
