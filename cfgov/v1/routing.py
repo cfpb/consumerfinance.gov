@@ -1,5 +1,7 @@
 from django.core.urlresolvers import reverse
+
 from wagtail.wagtailcore.utils import WAGTAIL_APPEND_SLASH
+from jinja2 import contextfunction
 
 
 def get_url_parts_for_site(page, site):
@@ -46,3 +48,17 @@ def get_page_relative_url(page, site):
         return page_path
     else:
         return root_url + page_path
+
+
+@contextfunction
+def get_protected_url(context, page):
+    if page:
+        request = context['request']
+
+        if page.live or page.shared and request.is_staging:
+            url = get_page_relative_url(page, request.site)
+
+            if url:
+                return url
+
+    return '#'

@@ -63,7 +63,7 @@ class HousingCounselorPDFView(PDFGeneratorView):
         except:
             raise PDFReactorNotConfigured('PDFreactor python library path needs to be configured.')
 
-        pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_WARN)
+        pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_FATAL)
         pdf_reactor.setLicenseKey(str(self.license))
         pdf_reactor.setAuthor('CFPB')
         pdf_reactor.setAddTags(True)

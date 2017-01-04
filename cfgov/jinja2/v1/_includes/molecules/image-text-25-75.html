@@ -10,24 +10,27 @@
    Create an image and text 25/75 molecule.
    See [GHE]/flapjack/Modules-V1/wiki/25-75-Image-&-Text
 
-   value:                  Object defined from a StreamField block.
+   value:                    Object defined from a StreamField block.
 
-   value.image:            A image object containing the image to be
-                           placed adjacent to the text.
+   value.image:              A image object containing the image to be
+                             placed adjacent to the text.
 
-   value.image.upload:     An image object.
+   value.image.upload:       An image object.
 
-   value.image.alt:        String for alt text for screenreaders.
+   value.image.alt:          String for alt text for screenreaders.
 
-   value.heading:          Heading of the text content.
+   value.heading:            Heading of the text content.
 
-   value.body:             Body of the text content.
+   value.body:               Body of the text content.
 
-   value.links:            A tuple of items to create a list of links, containing:
+   value.links:              A tuple of items to create a list of links, containing:
 
-   value.links[i].url:     A string for the URL of the link.
+   value.links[i].url:       A string for the URL of the link.
 
-   value.links[i].text:    A string for the text of the link.
+   value.links[i].text:      A string for the text of the link.
+
+   value.should_link_image:  Boolean for whether the image should be wrapped in
+                              a tag.
 
    ========================================================================== #}
 
@@ -46,5 +49,6 @@
     },
     'heading': '<h3>' ~ value.heading ~ '</h3>',
     'body': parse_links(value.body) | safe,
-    'links': value.links
+    'links': value.links,
+    'should_link_image': value.should_link_image or false
 } ) }}

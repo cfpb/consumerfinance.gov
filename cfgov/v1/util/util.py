@@ -21,8 +21,7 @@ ERROR_MESSAGES = {
         'required': 'Please select at least one of the "%s" options.'
     },
     'DATE_ERRORS': {
-        'invalid': 'You have entered an invalid date: %s.',
-        'one_required': 'Please enter at least one date.'
+        'invalid': 'You have entered an invalid date.',
     }
 }
 
@@ -35,7 +34,7 @@ def instanceOfBrowseOrFilterablePages(page):
 # TODO: Move into BrowsePage class once BrowseFilterablePage has been merged
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
-    from ..templatetags.share import get_page_state_url
+    from v1.templatetags.share import get_page_state_url
     on_staging = os.environ.get('DJANGO_STAGING_HOSTNAME') == request.site.hostname
     nav_items = []
     parent = current_page.get_parent().specific
@@ -63,6 +62,33 @@ def get_secondary_nav_items(request, current_page):
                 ],
             }
         ], True
+    # END TODO
+
+    # TODO: Remove this ASAP once the-bureau gets migrated to Wagtail
+    if page.slug == 'leadership-calendar':
+        BASE_URL = '/about-us/the-bureau'
+        return [{
+                'title': 'The Bureau',
+                'slug': 'the-bureau',
+                'url': '/the-bureau/',
+                'children': [{
+                    'title': 'The Director',
+                    'url': BASE_URL + '/about-director/',
+                    'slug': 'about-director',
+                },{
+                    'title': 'The Deputy Director',
+                    'url': BASE_URL + '/about-deputy-director/',
+                    'slug': 'about-deputy-director',
+                },{
+                    'title': 'Bureau Structure',
+                    'url': BASE_URL + '/bureau-structure/',
+                    'slug': 'bureau-structure',
+                },{
+                    'title': page.title,
+                    'url': get_page_state_url({}, page).replace('/about-us', BASE_URL),
+                    'slug': page.slug,
+                }]
+        }], True
     # END TODO
 
     pages = [page] if page.secondary_nav_exclude_sibling_pages else page.get_appropriate_siblings(request.site.hostname)

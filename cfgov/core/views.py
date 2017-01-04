@@ -2,17 +2,25 @@ import os
 
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
+from django.views.generic.edit import FormMixin
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
+from django.http import (JsonResponse,
+                         HttpResponseForbidden,
+                         HttpResponse,
+                         Http404)
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 import json
 from govdelivery.api import GovDelivery
 
 from core.utils import extract_answers_from_request
+from core.forms import ExternalURLForm
 from django.conf import settings
 
 import logging
@@ -143,3 +151,41 @@ def csp_violation_report(request):
         logger.warn(message)
         return HttpResponse()
     return HttpResponseForbidden()
+
+
+class ExternalURLNoticeView(FormMixin, TemplateView):
+    template_name = 'external-site/index.html'
+    form_class = ExternalURLForm
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super(ExternalURLNoticeView, self).dispatch(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(ExternalURLNoticeView, self).get_form_kwargs()
+
+        if self.request.method == 'GET':
+            kwargs['data'] = self.request.GET
+
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ExternalURLNoticeView, self).get_context_data(**kwargs)
+
+        form = self.get_form()
+        context['form'] = form
+
+        return context
+
+    def get(self, request):
+        form = self.get_form()
+        if form.is_valid():
+            return super(ExternalURLNoticeView, self).get(request)
+        else:
+            raise Http404("URL invalid, not whitelisted, or signature"
+                          " validation failed")
+
+    def post(self, request):
+        form = self.get_form()
+        if form.is_valid():
+            return redirect(form.cleaned_data['validated_url'])

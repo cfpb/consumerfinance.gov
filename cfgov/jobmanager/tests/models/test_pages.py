@@ -3,9 +3,9 @@ from django.test import TestCase
 from mock import patch
 from model_mommy import mommy
 
-from jobmanager.models.django import JobCategory, Grade
+from jobmanager.models.django import JobCategory, Grade, Location
 from jobmanager.models.pages import JobListingPage
-from jobmanager.models.panels import GradePanel
+from jobmanager.models.panels import GradePanel, RegionPanel
 from v1.tests.wagtail_pages.helpers import save_new_page
 
 
@@ -92,3 +92,23 @@ class JobListingPageTestCase(TestCase):
         page = self.make_page_with_grades('3', '2', '1')
         for grade in page.ordered_grades:
             self.assertIsInstance(grade, basestring)
+
+    def make_page_with_regions(self, *regions):
+        page = self.prepare_job_listing_page()
+        save_new_page(page)
+
+        for region in regions:
+            panel = RegionPanel.objects.create(
+                region=mommy.make(Location, region_long=str(region)),
+                job_listing=page
+            )
+            page.regions.add(panel)
+
+        return page
+
+    def test_ordered_regions(self):
+        page = self.make_page_with_regions('Washington, DC', 'Ohio', 'Iowa')
+        self.assertEqual(
+            page.ordered_regions,
+            ['Iowa', 'Ohio', 'Washington, DC']
+        )

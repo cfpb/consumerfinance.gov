@@ -1,9 +1,12 @@
 import mock
+import datetime
 
 from django.test import TestCase
 from django.test.client import RequestFactory
+from wagtail.wagtailcore.models import Site
 
-from v1.models.base import CFGOVPage
+from v1.models.base import CFGOVPage, Feedback
+from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
 class TestCFGOVPage(TestCase):
@@ -210,3 +213,92 @@ class TestCFGOVPage(TestCase):
             self.request, mock_get_template(), mock_get_context()
         )
         self.assertEqual(result, mock_response())
+
+
+class TestCFGOVPageQuerySet(TestCase):
+    def setUp(self):
+        default_site = Site.objects.get(is_default_site=True)
+        self.live_host = default_site.hostname
+
+        staging_site = Site.objects.get(is_default_site=False)
+        self.staging_host = staging_site.hostname
+
+    def check_live_shared_counts(self, on_live_host, on_staging_host):
+        pages = CFGOVPage.objects
+        self.assertEqual(
+            pages.live_shared(hostname=self.live_host).count(),
+            on_live_host
+        )
+        self.assertEqual(
+            pages.live_shared(hostname=self.staging_host).count(),
+            on_staging_host
+        )
+
+    def test_live_shared_with_only_root_page(self):
+        self.check_live_shared_counts(on_live_host=1, on_staging_host=1)
+
+    def test_live_shared_with_another_draft_page(self):
+        page = CFGOVPage(title='test', slug='test', live=False, shared=False)
+        save_new_page(page)
+        self.check_live_shared_counts(on_live_host=1, on_staging_host=1)
+
+    def test_live_shared_with_another_shared_page(self):
+        page = CFGOVPage(title='test', slug='test', live=False, shared=True)
+        save_new_page(page)
+        self.check_live_shared_counts(on_live_host=1, on_staging_host=2)
+
+    def test_live_shared_with_another_live_page(self):
+        page = CFGOVPage(title='test', slug='test', live=True, shared=False)
+        save_new_page(page)
+        self.check_live_shared_counts(on_live_host=2, on_staging_host=2)
+
+    def test_live_shared_with_another_live_shared_page(self):
+        page = CFGOVPage(title='test', slug='test', live=True, shared=True)
+        publish_page(page)
+        self.check_live_shared_counts(on_live_host=2, on_staging_host=2)
+
+
+class TestFeedbackModel(TestCase):
+    def setUp(self):
+        self.test_feedback = Feedback(
+            email='tester@example.com',
+            comment="Sparks on the curb.",
+            is_helpful=True,
+            referrer="http://www.consumerfinance.gov/owing-a-home/",
+            submitted_on=datetime.datetime.now()
+            )
+        self.test_feedback.save()
+
+    def test_assemble_csv(self):
+        test_csv = Feedback().assemble_csv(Feedback.objects.all())
+        for term in ["comment",
+                     "Sparks on the curb",
+                     "tester@example.com",
+                     "{}".format(self.test_feedback.submitted_on.date())]:
+            self.assertIn(term, test_csv)
+
+
+class CFGOVPageStatusStringTest(TestCase):
+        def test_expired(self):
+            page = CFGOVPage(expired=True)
+            self.assertEqual(page.status_string, 'expired')
+
+        def test_live(self):
+            page = CFGOVPage(live=True)
+            self.assertEqual(page.status_string, 'live')
+
+        def test_draft(self):
+            page = CFGOVPage(live=False, shared=False)
+            self.assertEqual(page.status_string, 'draft')
+
+        def test_shared(self):
+            page = CFGOVPage(live=False, shared=True)
+            self.assertEqual(page.status_string, 'shared')
+
+        def test_live_and_shared(self):
+            page = CFGOVPage(
+                live=True,
+                shared=True,
+                has_unpublished_changes=True
+            )
+            self.assertEqual(page.status_string, 'live + shared')

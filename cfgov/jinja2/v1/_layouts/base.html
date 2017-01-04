@@ -99,10 +99,17 @@
     If you come across a script that makes a convincing case to be included in
     the head, then file an issue or PR to discuss including it.
 -->
+    {# Google Tag Manager #}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+
     {# Customized Modernizr build that includes html5shiv.
        Built via gulp-modernizer in `scripts.js` task. #}
     <script src="{{ static('js/modernizr.min.js') }}"></script>
-    {% hashedscript %}
+    <script>
     //<![CDATA[
         if ( window.Modernizr && window.Modernizr.es5 === false ) {
             var script = document.createElement( 'script' );
@@ -111,13 +118,13 @@
             document.getElementsByTagName( 'head' )[0].appendChild( script );
         }
     //]]>
-    {% end_hashedscript %}
+    </script>
     <!--[if lt IE 9]>
-    {% hashedscript %}
+    <script>
         // If in IE8 reverse no-js/js class change made by modernizr.
         var docElement = document.documentElement;
         docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-    {% end_hashedscript %}
+    </script>
     <![endif]-->
 
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
@@ -128,8 +135,8 @@
              and initializing jQuery could be moved to the footer. #}
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    {% hashedscript %}if (!window.jQuery) { document.write('<script src="{{ static('js/jquery.min.js') }}"><\/script>'); }
-    {% end_hashedscript %}
+    <script>if (!window.jQuery) { document.write('<script src="{{ static('js/jquery.min.js') }}"><\/script>'); }
+    </script>
 
 </head>
 
@@ -140,14 +147,10 @@
     Analytics
     =========
 -->
-<!-- GOOGLE TAG MANAGER -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-{% hashedscript %}(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KMMLRS');{% end_hashedscript %}
+<!-- End Google Tag Manager (noscript) -->
 
 {% block body %}
 
@@ -188,14 +191,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% block javascript scoped %}
 <!--[if gt IE 8]><!-->
 {# Include site-wide JavaScript. #}
-{% hashedscript %}
+<script>
     {% include '/js/routes/common.js' %}
-{% end_hashedscript %}
+</script>
 {# Remove after sheer has been completely phased out #}
 {% if not page %}
-{% hashedscript %}
+<script>
     {% include '/js/routes/sheer.js' %}
-{% end_hashedscript %}
+</script>
 {% endif %}
 
 {# Include template and page-specific JavaScript. #}
@@ -217,13 +220,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% endmacro %}
 {% set js_source = page_template_js() | trim %}
 {% if js_source | length > 0 %}
-{% hashedscript %}
+<script>
     {{ js_source }}
-{% end_hashedscript %}
+</script>
 {% endif %}
 <!--<![endif]-->
 
-{% hashedscript %}
+<script>
 //<![CDATA[
     var usasearch_config = { siteHandle: 'cfpb' };
 
@@ -232,7 +235,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     script.src = 'https://search.usa.gov/javascripts/remote.loader.js';
     document.getElementsByTagName( 'head' )[0].appendChild( script );
 //]]>
-{% end_hashedscript %}
+</script>
 
 {% endblock javascript %}
 

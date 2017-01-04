@@ -1,58 +1,5 @@
 {# ==========================================================================
 
-   share_twitter_url()
-
-   ==========================================================================
-
-   Description:
-
-   Builds a generic Twitter share URL when given nothing.
-
-   Builds a custom Twitter share URL when given:
-
-   options (optional): An object to use for customizing the content of a tweet.
-                       If left blank a generic tweet will be generated using the
-                       URL of the current page and ` via @CFPB`.
-
-   options.text:       Pre-populated text highlighted in the Tweet.
-                       https://dev.twitter.com/web/tweet-button/parameters
-
-   options.related:    A comma-separated list of accounts related to the content
-                       of the shared URI.
-                       https://dev.twitter.com/web/tweet-button/parameters
-
-   options.language:   Loads text components in the specified language.
-                       https://dev.twitter.com/web/tweet-button/parameters
-
-   options.hashtags:   A comma-separated list of hashtags to be appended to
-                       default Tweet text.
-                       https://dev.twitter.com/web/tweet-button/parameters
-
-   ========================================================================== #}
-
-{% macro share_twitter_url(options) %}
-    {% set _share_twitter_url = 'http://twitter.com/intent/tweet' %}
-    {% set _share_twitter_url = _share_twitter_url + '?url=' + request.url | urlencode %}
-    {% set _share_twitter_url = _share_twitter_url + '&amp;via=CFPB' %}
-    {% set _share_twitter_url = _share_twitter_url + '&amp;text=' + options.title | urlencode %}
-    {% if options %}
-        {# If this is a options object, check for custom fields having been set #}
-        {% if options.related %}
-            {% set _share_twitter_url = _share_twitter_url + '&amp;related=' + options.related %}
-        {% endif %}
-        {% if options.language %}
-            {% set _share_twitter_url = _share_twitter_url + '&amp;lang=' + options.language %}
-        {% endif %}
-        {% if options.hashtags %}
-            {% set _share_twitter_url = _share_twitter_url + '&amp;hashtags=' + options.hashtags %}
-        {% endif %}
-    {% endif %}
-    {{ _share_twitter_url }}
-{% endmacro %}
-
-
-{# ==========================================================================
-
    share.render()
 
    ==========================================================================
@@ -118,7 +65,7 @@
             {% if settings.show_email %}
             <li class="list_item">
                 <a class="share-icon"
-                   href="mailto:?subject={{ settings.title }}&amp;body=Check out this page from the CFPB - {{ request.url|urlencode }}">
+                   href="{{ mail_url }}">
                     <span class="cf-icon cf-icon-email-social-square"></span>
                     <span class="u-visually-hidden">Share by email</span>
                 </a>
@@ -127,7 +74,7 @@
             {% if settings.show_facebook %}
             <li class="list_item">
                 <a class="share-icon"
-                   href="{{ external_redirect_url }}https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}"
+                   href="{{ facebook_url }}"
                    target="_blank">
                     <span class="cf-icon cf-icon-facebook-square"></span>
                     <span class="u-visually-hidden">Share on Facebook</span>
@@ -137,7 +84,7 @@
             {% if settings.show_twitter %}
             <li class="list_item">
                 <a class="share-icon"
-                   href="{{ external_redirect_url ~ share_twitter_url(settings.twitter_options) }}"
+                   href="{{ twitter_url }}"
                    target="_blank">
                     <span class="cf-icon cf-icon-twitter-square"></span>
                     <span class="u-visually-hidden">Share on Twitter</span>
@@ -147,7 +94,7 @@
             {% if settings.show_linkedin %}
             <li class="list_item">
                 <a class="share-icon"
-                   href="{{external_redirect_url}}https://www.linkedin.com/shareArticle?mini=true&url={{ request.url|urlencode }}&title={{ settings.title }}%20Developer%20Network"
+                   href="{{ linkedin_url }}"
                    target="_blank">
                     <span class="cf-icon cf-icon-linkedin-square"></span>
                     <span class="u-visually-hidden">Share on LinkedIn</span>

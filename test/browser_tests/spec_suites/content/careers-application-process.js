@@ -32,13 +32,15 @@ describe( 'The Application Process Page', function() {
   } );
 
   it( 'should have a career info section', function() {
-    var infoSectionTitles =
-    [ 'Current openings', 'Working at the CFPB',
-    'Students & recent graduates' ];
-    var infoSectionLinks =
-    [ '/about-us/careers/current-openings/',
+    var infoSectionTitles = [
+      'Current openings', 'Working at the CFPB',
+      'Students & recent graduates'
+    ];
+    var infoSectionLinks = [
+      '/about-us/careers/current-openings/',
       '/about-us/careers/working-at-cfpb/',
-      '/about-us/careers/students-and-graduates/' ];
+      '/about-us/careers/students-and-graduates/'
+    ];
 
     expect( page.infoSectionTitles.getText() )
     .toEqual( infoSectionTitles );

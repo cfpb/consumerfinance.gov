@@ -1,4 +1,6 @@
+from bs4 import BeautifulSoup
 from django.utils.module_loading import import_string
+from django.utils.safestring import SafeText
 from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
 
@@ -71,26 +73,20 @@ class Feedback(AbstractFormBlock):
         required=False,
         default='Was this page helpful to you?',
         help_text=(
-            'Leave blank for anything but a "Was this helpful" '
-            'radio-button feedback form.'
+            'Use this field only for feedback forms '
+            'that use "Was this helpful?" radio buttons.'
             )
         )
     intro_text = blocks.CharBlock(
         required=False,
-        default=(
-            'Have any additional feedback about the page you were just on? '
-            'Please use the form below to share your thoughts.'),
-        help_text=(
-            'Optional feedback intro')
+        help_text='Optional feedback intro'
         )
     question_text = blocks.CharBlock(
         required=False,
-        help_text=(
-            'Optional expansion on intro')
+        help_text='Optional expansion on intro'
     )
     radio_intro = blocks.CharBlock(
         required=False,
-        default='Optional: Tell us a bit more about yourself.',
         help_text=(
             'Leave blank unless you are building a feedback form with extra '
             'radio-button prompts, as in /owning-a-home/help-us-improve/.'
@@ -109,8 +105,47 @@ class Feedback(AbstractFormBlock):
         required=False,
         default='Do you currently own a home?'
     )
-    button_text = blocks.CharBlock(default='Submit')
+    button_text = blocks.CharBlock(
+        default='Submit'
+    )
+    contact_advisory = blocks.RichTextBlock(
+        required=False,
+        help_text='Use only for feedback forms that ask for a contact email'
+    )
 
     class Meta:
         handler = 'v1.handlers.blocks.feedback.FeedbackHandler'
         template = '_includes/blocks/feedback.html'
+
+    class Media:
+        js = ['feedback-form.js']
+
+
+class PlaceholderFieldBlock(blocks.FieldBlock):
+    def __init__(self, *args, **kwargs):
+        super(PlaceholderFieldBlock, self).__init__(*args, **kwargs)
+        self.placeholder = kwargs.pop('placeholder', None)
+
+    def render_form(self, *args, **kwargs):
+        html = super(PlaceholderFieldBlock, self).render_form(*args, **kwargs)
+
+        if self.placeholder is not None:
+            html = self.replace_placeholder(html, self.placeholder)
+
+        return html
+
+    @staticmethod
+    def replace_placeholder(html, placeholder):
+        soup = BeautifulSoup(html, 'html.parser')
+        inputs = soup.findAll('input')
+
+        if 1 != len(inputs):
+            raise ValueError('block must contain a single input tag')
+
+        inputs[0]['placeholder'] = placeholder
+
+        return SafeText(soup)
+
+
+class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
+    pass

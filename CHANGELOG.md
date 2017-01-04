@@ -15,10 +15,185 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Unreleased
 
+## Added
+- Add RSS subscription button to newsroom posts.
+- New `validate_page_html` command for checking/fixing HTTP image links in legacy pages.
+- New block `HTMLBlock` that allows rendering of arbitrary HTML. Enabled on browse pages.
+- OAH-api upgraded to v0.9.92
+
+## Changed
+- Upgrade to Wagtail 1.7
+- Added redirect for `Leadership Calendar` Wagtail Page.
+- Moved CSS npm dev modules to devDependencies in `package.json`.
+- Updated `gulp-clean-css` from `2.0.6` to `2.3.2`.
+- Updated `gulp-imagemin` from `3.0.3` to `3.1.1`.
+- Updated `gulp-less` from `3.1.0` to `3.3.0`.
+
+## Removed
+- Removed layout.less enhancements that have been moved to Capital Framework.
+- Wagtail pages from the Django admin
+- Delete option from Wagtail templates
+- Removed deprecated fellowship view/model.
+- Removed deprecated fellowship notification sign up form.
+- Spokesperson who is no longer with the Bureau from the press page.
+- Removed legacy calendar app.
+- cleaned up unusued, legacy code
+
+### Fixed
+- Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.
+- Fix blog post RSS subscription links
+- Fix for Wagtail admin page status string when live but not shared.
+- Fixed legacy supervision jobs page.
+- Fix for External Redirect proceed button and jQuery reference.
+- Fixed use of `moto.mock_s3` in unit tests.
+- Fixed handling of invalid date query string parameters for filterable list forms.
+- Added missing `block` class from a block on the about the director page.
+- Fixed issue with erroneously removed bureau stylesheet.
+
+## 4.3.2
+
+### Changed
+- external-site redirector now requires URLs to either be whitelisted or signed
+- Move logic for activity snippets out of template
+- Update privacy policy URL
+- Upgrade npm shrinkwrap endpoints to HTTPS
+- Updated Owning-a-home feedback modules to use Ajax form submission
+
+### Added
+- New PlaceholderFieldBlock and PlaceholderCharBlock to set block placeholder text.
+- New AWS_S3_ROOT setting to specify root S3 path.
+
+## Removed
+- Removed deprecated Django careers-related models, views, and templates.
+
+### Fixed
+- Fixed bug stopping videos in HTTPS pages.
+- bug that wasn't signing links already coded to /external-site.
+- Sort activity snippets by latest date
+- Added missing uniqueness constraint on CFGOVRendition.
+- Fix for YouTube API failures
+
+## 4.3.1
+
+### Changed
+- Fix incorrect django settings for picard
+- Bump picard to 1.5.5 to fix false positive error report
+
+## 4.3.0
+
+### Added
+- Add ability to individually customize the content of social media share links
+- Code to convert S3 HTTP image links to HTTPS during sheerlike imports
+- New Wagtail video player module that can be added to Learn pages
+- Add settings to settings/base.py enabling picard to integrate with Jenkins
+- Credit Market Trends to mega menu with a feature flag
+- New category support for stories (categorized by type of financial product)
+- Ability to output filterable list items as 50/50 info units
+- New `add_images` management command to programmaticaly add images to Wagtail.
+
+### Changed
+- Removed feedback-form default text and clarified help_text
+- Adjusted Django admin page for v1_feedback objects
+- Updated owning-a-home-api dependency to v0.9.91 for security update
+- Modified 25 / 75 Organisms to add Boolean `should_link_image` flag.
+- Credit card agreements database updated to 2.2.4
+- Picard upgraded to version 1.5.4.
+- CFGOVImage renditions behavior changed to always return original source image for GIFs.
+- Change table organism to be in line with design manual
+- Split Google Tag Manager code between page head and body
+
+### Fixed
+- Fixed file type link icons within info-units
+- Wordpress page processor properly uses WORDPRESS environment variable.
+
+
+## 4.2.1
+
+### Changed
+- Limit Activity Log posts to appropriate page categories.
+- Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
+
+
+## 4.2.0
+
+### Added
+- Forms and other bits for two new Owning a Home feedback modules
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
+- `conference_export` management command added to export conference registrations.
+- Add ability to individually customize the content of social media share links
+- Added CSV download option to v1_feedback django_admin page
+
+### Changed
+- Eregs/ip updated to version 1.0.3.
+- Simplified Akamai cache flushing logic to always flush on publish.
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+- Improved job listings view in Wagtail admin.
+- college-costs updated to version 2.2.8 for new URL field
+- Updated the analytics code to send events on form submission.
+- Fixed issue surrounding event venue not displaying on event page.
+- Limit Activity Log posts to appropriate page categories.
+- Flush Akamai when unpublishing or unsharing a page so those changes propagate immediately
+
+
+## 4.1.9
+
+### Changed
+- Bumping version of College Comparison Tool to 1.2.9
+
+
+## 4.1.8
+
+### Changed
+- roll complaints back to 1.2.6
+
+
+## 4.1.7
+
+### Changed
+- moved data_research into the db_router.py whitelist
+
+
+## 4.1.6
+
+### Changed
+- Fixed broken static assets on Technology and Innovation Fellowship page.
+- Conference Registration Form configurable error and success messages.
+
+
+## 4.1.5
+
+### Changed
+- update complaints to 1.2.7
+
+
+## 4.1.4
+
+### Fixed
+- an improved fix for the newsroom issue (see 4.1.2 and 4.1.3)
+
+
+## 4.1.3
+
+### Fixed
+- backed-out 4.1.2's newsroom fix
+
+
+## 4.1.2
+
+### Fixed
+- exclude reports from newsroom
+
+### Changed
+- Conference Registration Form display element improvements.
+- Conference Registration Form submission success message replaced.
+
+
+## 4.1.0
+
 ### Added
 - DownStreamCacheControl middleware, which sets the `Edge-Control: no-store` header pages use csrf_token.
-- Block, page and other bits for an Owning a Home feedback module that captures referrer
-- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context. 
+- django.middleware.locale.LocaleMiddleware, which controls translation in a current thread context.
 
 ### Changed
 - Fixed issue surrounding table link download / external icons not appearing.
@@ -36,6 +211,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Simplified Akamai cache flushing logic to always flush on publish.
 - Conference Registration Form display element improvements.
 - Conference Registration Form submission success message replaced.
+- Conference Registration Form configurable error and success messages.
+- Fixed broken static assets on Technology and Innovation Fellowship page.
+- Updated the analytics code to send events on form submission.
+- Fixed issue surrounding event venue not displaying on event page.
+- Limit Newsroom posts to appropriate page categories.
 
 ### Removed
 - `tax-time-saving` reference in `base.py` (it moved to Wagtail)

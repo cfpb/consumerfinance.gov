@@ -1,5 +1,6 @@
 
 import json
+import requests
 
 from django import forms
 from django.template.loader import render_to_string
@@ -11,9 +12,10 @@ from wagtail.contrib.table_block.blocks import TableBlock, TableInput
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-
+from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
 from . import atoms, molecules
+from .. import blocks as v1_blocks
 from ..util import ref
 from ..models.snippets import Contact as ContactSnippetClass
 
@@ -53,6 +55,9 @@ class ImageText5050Group(blocks.StructBlock):
 
 class ImageText2575Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
+    should_link_image = blocks.BooleanBlock(default=False,
+                                            required=False,
+                                            help_text='Check this to link all images to the URL of the first link in their unit\'s list, if there is a link.')
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
@@ -168,6 +173,45 @@ class Table(blocks.StructBlock):
         icon = None
         template = '_includes/organisms/table.html'
         label = ' '
+
+class BureauStructurePosition(blocks.StructBlock):
+    office_name = blocks.CharBlock()
+    lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
+    title = blocks.StructBlock([
+        ('line_1', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 1")),
+        ('line_2', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 2"))
+    ])
+
+
+class BureauStructureDivision(blocks.StructBlock):
+    division = v1_blocks.PlaceholderCharBlock(label='Division')
+    division_lead = v1_blocks.PlaceholderCharBlock(placeholder="Name")
+    title = blocks.StructBlock([
+        ('line_1', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 1")),
+        ('line_2', v1_blocks.PlaceholderCharBlock(required=False, placeholder="Title 2"))
+    ])
+    link_to_division_page = atoms.Hyperlink(required=False)
+    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+
+
+class BureauStructureOffice(BureauStructurePosition):
+    offices = blocks.ListBlock(BureauStructurePosition(required=False))
+
+
+class BureauStructure(blocks.StructBlock):
+    last_updated_date = blocks.DateBlock(required=False)
+    download_image = DocumentChooserBlock(icon='image')
+    director = blocks.CharBlock()
+    divisions = blocks.ListBlock(BureauStructureDivision())
+    office_of_the_director = blocks.ListBlock(BureauStructureOffice(),
+                             label='Office of the Director')
+    class Meta:
+        icon = None
+        template = '_includes/organisms/bureau-structure.html'
+        icon = "table"
+
+    class Media:
+        js = ['bureau-structure.js']
 
 
 class AtomicTableInput(TableInput):
@@ -487,6 +531,8 @@ class FilterControls(BaseExpandable):
                                   label='Filter Authors')
     date_range = blocks.BooleanBlock(default=True, required=False,
                                      label='Filter Date Range')
+    output_5050 = blocks.BooleanBlock(default=False, required=False,
+                                      label="Render preview items as 50-50s")
 
     class Meta:
         label = 'Filter Controls'
@@ -494,3 +540,47 @@ class FilterControls(BaseExpandable):
 
     class Media:
         js = ['filterable-list-controls.js']
+
+
+class VideoPlayer(blocks.StructBlock):
+    video_url = blocks.RegexBlock(
+        label='YouTube Embed URL',
+        default='https://www.youtube.com/embed/',
+        required=True,
+        regex=r'^https:\/\/www\.youtube\.com\/embed\/.+$',
+        error_messages={
+            'required': 'The YouTube URL field is required for video players.',
+            'invalid': "The YouTube URL is in the wrong format. "
+                       "You must use the embed URL "
+                       "(https://www.youtube.com/embed/video_id), "
+                       "which can be obtained by clicking Share > Embed "
+                       "on the YouTube video page.",
+        }
+    )
+
+    class Meta:
+        icon = 'media'
+        template = '_includes/organisms/video-player.html'
+
+
+class HTMLBlock(blocks.StructBlock):
+    html_url = blocks.RegexBlock(
+        label='Source URL',
+        default='',
+        required=True,
+        regex=r'^https://(s3.amazonaws.com/)?files.consumerfinance.gov/.+$',
+        error_messages={
+            'required': 'The HTML URL field is required for rendering raw HTML from a remote source.',
+            'invalid': 'The URL is invalid or not allowed. ',
+        }
+    )
+
+    def render(self, value, context=None):
+        resp = requests.get(value['html_url'], timeout=5)
+        resp.raise_for_status()
+        return self.render_basic(resp.content, context=context)
+
+
+    class Meta:
+        label = 'HTML Block'
+        icon = 'code'

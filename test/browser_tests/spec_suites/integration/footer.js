@@ -5,8 +5,8 @@ var Footer = require( '../../shared_objects/footer.js' );
 describe( 'Footer', function() {
   var _sharedObject;
 
-  var _footerLinkLookup =
-  { '/accessibility/':
+  var _footerLinkLookup = {
+    '/accessibility/':
       'accessibility',
     '/office-civil-rights/':
       'office of civil rights',
@@ -28,8 +28,8 @@ describe( 'Footer', function() {
       'plain writing',
     '/privacy/':
       'privacy, policy & legal notices',
-    '/privacy/digital-privacy-policy/':
-      'digital privacy policy',
+    '/privacy/website-privacy-policy/':
+      'website privacy policy',
     '/tribal/':
       'tribal',
     'http://usa.gov/':

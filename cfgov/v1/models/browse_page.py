@@ -24,6 +24,7 @@ class BrowsePage(CFGOVPage):
     ], blank=True)
 
     content = StreamField([
+        ('bureau_structure', organisms.BureauStructure()),
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
@@ -39,6 +40,7 @@ class BrowsePage(CFGOVPage):
         ('conference_registration_form', ConferenceRegistrationForm()),
         ('chart_group', ChartGroup()),
         ('line_chart', LineChart()),
+        ('html_block', organisms.HTMLBlock()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
@@ -67,9 +69,6 @@ class BrowsePage(CFGOVPage):
     def add_page_js(self, js):
         super(BrowsePage, self).add_page_js(js)
         js['template'] += ['secondary-navigation.js']
-
-    def full_width_serif(self):
-        return true
 
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)

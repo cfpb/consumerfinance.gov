@@ -5,7 +5,6 @@
 {% load staticversions %}
 {% load remit_var %}
 
-{% load csp %}
 {% is_remit as IS_REMIT %}
 
 <!DOCTYPE html>
@@ -77,7 +76,7 @@ please send an email with your full name to tech@cfpb.gov.
     <link rel="stylesheet" href="{% static 'nemo/_/c/eot.css' %}">
     <![endif]-->
     <link rel="stylesheet" href="{% static 'nemo/_/c/styles.css' %}">
-   
+
 
     {% endblock %}
 
@@ -89,6 +88,13 @@ please send an email with your full name to tech@cfpb.gov.
     <link rel="stylesheet" href="{% static 'css/header.nonresponsive.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/footer.nonresponsive.css' %}"/>
 
+    {# Google Tag Manager #}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+
     <!-- Feeds -->
     {% block page_feeds %}
     {% endblock %}
@@ -99,29 +105,21 @@ please send an email with your full name to tech@cfpb.gov.
 
 <body class="{% block body_class %}page{% endblock %}" data-lang="{% trans "en" %}">
 {% block gtm_js %}
-<!-- Google Tag Manager -->
-{# Should always be included immediately after the opening <body> tag #}
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-{% hashedscript %}
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KMMLRS');
-{% end_hashedscript %}
-<!-- End Google Tag Manager -->
+<!-- End Google Tag Manager (noscript) -->
 {% endblock %}
 <script src="{% static 'js/modernizr.min.js'  %}"></script>
 
 
 
 <!--[if lt IE 9]>
-    {% hashedscript %}
+    <script>
     // If in IE8 reverse no-js/js class change made by modernizr.
     var docElement = document.documentElement;
     docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-    {% end_hashedscript %}
+    </script>
 <![endif]-->
 
 <!--[if IE 9]><script src="{% static 'js/ie/common.ie.js'  %}"></script><![endif]-->
@@ -145,7 +143,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
     </div><!-- /#page -->
-        {% global_include "on-demand/footer.html" %}    
+        {% global_include "on-demand/footer.html" %}
 
     {% block app_modal %}
     {% endblock %}
@@ -163,7 +161,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% endblock %}
 
 <!-- for search.usa.gov indexing -->
-{% hashedscript %}
+<script>
   //<![CDATA[
     var aid = "cfpb";
     var script = document.createElement('script');
@@ -171,9 +169,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     script.src = "https://search.usa.gov/javascripts/stats.js";
     document.getElementsByTagName("head")[0].appendChild(script);
   //]]>
-  {% end_hashedscript %}
+  </script>
 
-  {% hashedscript %}
+  <script>
     // If there are no breadcrumbs on this page, remove the ul tag so that screen
     // readers don't read it (since the ul has nothing in it).
     $(function(){
@@ -182,7 +180,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             $("ul.bread").remove();
         }
     });
-    {% end_hashedscript %}
+    </script>
 <!--[if gt IE 8]><!-->
 <script type="text/javascript" src="{% static "js/atomic/header.nonresponsive.js" %}"></script>
 <!--<![endif]-->

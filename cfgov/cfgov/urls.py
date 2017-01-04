@@ -9,7 +9,7 @@ from django.views.generic.base import TemplateView, RedirectView
 from django.http import HttpResponse
 from functools import partial
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtailcore import urls as wagtail_urls
+from wagtail.wagtailcore import urls as wagtail_urls, views
 
 from legacy.views import (
     HousingCounselorPDFView, dbrouter_shortcut, token_provider
@@ -23,6 +23,8 @@ from v1.views import (
     password_reset_confirm, unshare, welcome
 )
 from v1.views.documents import DocumentServeView
+
+from core.views import ExternalURLNoticeView
 
 
 fin_ed = SheerSite('fin-ed-resources')
@@ -85,11 +87,12 @@ urlpatterns = [
             name='press-resources'),
 
     url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/%(path)s', permanent=True)),
+    url(r'^about-us/leadership-calendar/(?P<path>.*)$', RedirectView.as_view(url='/about-us/the-bureau/leadership-calendar/%(path)s', permanent=True)),
     url(r'^about-us/the-bureau/', include([
         url(r'^$', SheerTemplateView.as_view(template_name='about-us/the-bureau/index.html'),
             name='index'),
         url(r'^leadership-calendar/',
-            include('cal.urls'),
+            lambda request: views.serve(request, 'about-us/leadership-calendar'),
             name='leadership-calendar'),
         url(r'^(?P<page_slug>[\w-]+)/$',
             SheerTemplateView.as_view(),
@@ -107,6 +110,9 @@ urlpatterns = [
             SheerTemplateView.as_view(),
             name='page')],
         namespace='business')),
+
+    url(r'^external-site/$', ExternalURLNoticeView.as_view(),
+        name='external-site'),
 
     url(r'^subscriptions/new/$',
         'core.views.govdelivery_subscribe',
@@ -160,10 +166,8 @@ urlpatterns = [
 
     url(r'^about-us/$', SheerTemplateView.as_view(template_name='about-us/index.html'), name='about-us'),
 
-    url(r'^external-site/$', SheerTemplateView.as_view(template_name='external-site/index.html'), name='external-site'),
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(url='/about-us/careers/%(path)s', permanent=True)),
-    url(r'^about-us/careers/', include('jobmanager.urls', namespace='careers')),
 
     url(r'^transcripts/', include([
         url(r'^how-to-apply-for-a-federal-job-with-the-cfpb/$', SheerTemplateView.as_view(
@@ -195,7 +199,6 @@ urlpatterns = [
     url(r'^jobs/technology-innovation-fellows/$',
         TemplateView.as_view(template_name='jobmanager/technology-innovation-fellows.html'),
         name='technology_innovation_fellows'),
-    url(r'^jobs/fellowship_form_submit/$', 'jobmanager.views.fellowship_form_submit', name='fellowship_form_submit'),
 
     # credit cards KBYO
 
@@ -273,7 +276,6 @@ if settings.DEBUG :
 
 urlpatterns.append(url(r'', include(wagtail_urls)))
 
-from sheerlike import register_permalink
 
 from django.shortcuts import render
 
@@ -294,10 +296,3 @@ def handle_error(code, request):
 
 handler404 = partial(handle_error, 404)
 handler500 = partial(handle_error, 500)
-
-
-register_permalink('posts', 'blog:detail')
-register_permalink('newsroom', 'newsroom:detail')
-register_permalink('office', 'offices:detail')
-register_permalink('sub_page', 'sub_page:detail')
-register_permalink('career', 'careers:career')

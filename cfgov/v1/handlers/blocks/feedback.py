@@ -48,9 +48,12 @@ class FeedbackHandler(Handler):
     def get_response(self, form):
         if form.is_valid():
             feedback = form.save(commit=False)
-            is_helpful = self.request.POST.get('is_helpful', None)
-            if is_helpful is not None:
-                feedback.is_helpful = bool(int(is_helpful))
+            try:
+                feedback.is_helpful = bool(
+                    int(self.request.POST.get('is_helpful'))
+                )
+            except (ValueError, TypeError):
+                pass
             feedback.page = self.page
             feedback.save()
             return self.success()
@@ -59,22 +62,37 @@ class FeedbackHandler(Handler):
 
     def success(self):
         if self.request.is_ajax():
-            return JsonResponse({'result': 'pass'})
+            if get_feedback_type(self.block_value) == 'suggestion':
+                return JsonResponse(
+                    {'result': 'pass',
+                     'heading': 'Thank you!',
+                     'message': "Be sure to also sign up for our email list "
+                     "to get our blog posts and other tips about homebuying "
+                     "and mortgages in your inbox. We'll also let you know "
+                     "when we make updates to Owning a Home."}
+                )
+            else:
+                return JsonResponse(
+                    {'result': 'pass',
+                     'heading': '',
+                     'message': 'Thanks for your feedback!'}
+                )
         else:
             messages.success(self.request, message='Thanks for your feedback!')
-            return HttpResponseRedirect(self.page.url)
+            return HttpResponseRedirect(self.request.path)
 
     def fail(self, form):
-        if self.request.is_ajax():
-            return JsonResponse({'result': 'fail'})
-
+        if form.errors.get('is_helpful', None):
+            msg = 'You must select an option.'
+        elif form.errors.get('comment', None):
+            msg = 'You must enter a comment.'
+        elif form.errors.get('email', None):
+            msg = 'You must enter a valid email.'
         else:
-            if form.errors.get('is_helpful', None):
-                messages.error(self.request, 'You must select an option.')
-            elif form.errors.get('comment', None):
-                messages.error(self.request, 'You must enter a comment.')
-            else:
-                message = 'Something went wrong. Please try again.'
-                messages.error(self.request, message)
+            msg = 'Something went wrong. Please try again.'
 
-        return {'form': form}
+        if self.request.is_ajax():
+            return JsonResponse({'result': 'fail', 'message': msg})
+        else:
+            messages.error(self.request, msg)
+            return {'form': form}

@@ -290,15 +290,13 @@ class TestFlushAkamai(TestCase):
         with self.settings(ENABLE_AKAMAI_CACHE_PURGE=True):
             assert should_flush(self.page)
 
-    @mock.patch('v1.wagtail_hooks.should_flush')
-    def test_should_flush_gets_called_when_trying_to_flush(self, mock_should_flush):
-        with self.settings(
-            AKAMAI_OBJECT_ID='some-arbitrary-id',
-            AKAMAI_USER='some-arbitrary-user',
-            AKAMAI_PASSWORD='some-arbitrary-pw'
-        ):
-            flush_akamai(self.page)
-        assert mock_should_flush.called
+    def test_should_flush_gets_called_when_trying_to_flush(self):
+        with mock.patch(
+            'v1.wagtail_hooks.should_flush',
+            return_value=False
+        ) as should_flush:
+            self.assertFalse(flush_akamai(self.page))
+            should_flush.assert_called_once_with(self.page)
 
 
 class TestGetAkamaiCredentials(TestCase):

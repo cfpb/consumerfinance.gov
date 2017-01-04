@@ -19,7 +19,7 @@ var API = {
 
   constructor: YoutubePlayer,
 
-  SCRIPT_API: 'http://www.youtube.com/iframe_api',
+  SCRIPT_API: 'https://www.youtube.com/iframe_api',
 
   IMAGE_URL: 'https://img.youtube.com/vi/%video_id%/maxresdefault.jpg',
 
@@ -135,7 +135,7 @@ var API = {
    */
   play: function( ) {
     this._super.play.call( this );
-    if ( this.state.isPlayerInitialized ) {
+    if ( this.state.isPlayerInitialized && this.player ) {
       this.player.seekTo( 0 );
       this.player.playVideo();
     } else {
@@ -148,8 +148,13 @@ var API = {
    */
   stop: function( ) {
     this._super.stop.call( this );
-    if ( this.state.isPlayerInitialized ) {
+    if ( this.state.isPlayerInitialized && this.player ) {
       this.player.stopVideo();
+    } else {
+      this.childElements.iFrameContainer.removeChild(
+        this.childElements.iFrameContainer.firstChild
+      );
+      this.state.setIsIframeLoaded( false );
     }
   }
 };

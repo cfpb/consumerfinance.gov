@@ -1,4 +1,3 @@
-from core.services import PDFGeneratorView, ICSView
 from wagtail.wagtailcore.models import Page
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
@@ -36,34 +35,6 @@ from v1.signals import page_unshared
 from v1.util.util import (
     all_valid_destinations_for_request, valid_destination_for_request
 )
-
-
-class EventICSView(ICSView):
-    """
-    View for ICS generation in the /events/ section
-    """
-    # Constants
-    event_calendar_prodid = '-//CFPB//Event Calendar//EN',
-    event_source = 'http://localhost:9200/content/events/<event_slug>/_source'
-
-    # JSON key names
-    event_summary_keyname = 'summary'
-    event_dtstart_keyname = 'dtstart'
-    event_dtend_keyname = 'dtend'
-    event_dtstamp_keyname = 'dtstamp'
-    event_uid_keyname = 'uid'
-    event_priority_keyname = 'priority'
-    event_organizer_keyname = 'organizer'
-    event_organizer_addr_keyname = 'organizer_email'
-    event_location_keyname = 'location'
-    event_status_keyname = 'status'
-
-
-def renderDirectoryPDF(request):
-    pdf = open(settings.V1_TEMPLATE_ROOT + '/the-bureau/about-director/201410_cfpb_bio_cordray.pdf', 'rb').read()
-
-    return HttpResponse(pdf, content_type='application/pdf')
-
 
 def unshare(request, page_id):
     page = get_object_or_404(Page, id=page_id).specific

@@ -213,6 +213,13 @@ half_width_link_blob_group = {
         ]
     }
 }
+
+html_block = {
+    "type": "html_block",
+    "value": {
+        "html_url": "http://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/charts/auto-loans/borrower-age/figure-4a__30-to-44__auto-loans.html"
+    }
+}
 email_signup = {
     "type": "email_signup",
     "value": {
@@ -310,5 +317,23 @@ job_listing_table = {
         'is_stacked': False,
         'first_row_is_table_header': True,
         'first_col_is_header': False,
+    },
+}
+
+conference_registration_form = {
+    'type': 'conference_registration_form',
+    'value': {
+        'at_capacity_message': [
+            {
+                'type': 'content',
+                'value': 'Full.',
+            },
+        ],
+        'code': 'GDCODE',
+        'capacity': 100,
+        'failure_message': 'Oops.',
+        'heading': 'Register.',
+        'sessions': ['Morning', 'Afternoon'],
+        'success_message': 'Success!',
     },
 }

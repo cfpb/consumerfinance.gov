@@ -125,18 +125,6 @@ class QueryHit(object):
     def __repr__(self):
         return self.__str__()
 
-    @property
-    def permalink(self):
-        import sheerlike
-        if self.type in sheerlike.PERMALINK_REGISTRY:
-            pattern_name = sheerlike.PERMALINK_REGISTRY[self.type]
-            return reverse(pattern_name, kwargs=dict(doc_id=self._id))
-        else:
-            raise NotImplementedError(
-                "Please use django's reverse url system,"
-                "or register a permalink for %s" %
-                self.type)
-
     def __getattr__(self, attrname):
         value = field_or_source_value(attrname, self.hit_dict)
         datatype = datatype_for_fieldname_in_mapping(
