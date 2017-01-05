@@ -39,6 +39,7 @@ class BrowsePage(CFGOVPage):
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
         ('html_block', organisms.HTMLBlock()),
+        ('chart_block', organisms.ChartBlock()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

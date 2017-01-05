@@ -584,3 +584,19 @@ class HTMLBlock(blocks.StructBlock):
     class Meta:
         label = 'HTML Block'
         icon = 'code'
+
+
+class ChartBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=False)
+    chart_type = blocks.CharBlock(required=False)
+    market = blocks.CharBlock(required=False)
+    report_type = blocks.CharBlock(required=False)
+    source = blocks.CharBlock(required=False)
+    element_id = blocks.CharBlock(required=False)
+
+    def render(self, value, context=None):
+        return "<div class='svg_wrapper' id={element_id}></div><script src='https://s3.amazonaws.com/files.consumerfinance.gov/consumer-credit-trends/assets/js/consumer-credit-trends-charts.js'>".format(element_id=value['element_id'])
+
+    class Meta:
+        label = 'Chart Block'
+        icon = 'code'
