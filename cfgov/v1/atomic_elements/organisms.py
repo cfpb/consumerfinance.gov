@@ -635,3 +635,21 @@ class HTMLBlock(blocks.StructBlock):
     class Meta:
         label = 'HTML Block'
         icon = 'code'
+
+
+class ChartBlock(blocks.StructBlock):
+    element_id = blocks.CharBlock(
+        required=True,
+        label='Element ID',
+        help_text='See the element IDs in '
+        'https://github.com/cfpb/consumer-credit-trends/'
+        'blob/master/src/static/js/templates/charts.js'
+    )
+    title = blocks.CharBlock(required=False)
+    data_source = blocks.CharBlock(required=False)
+    note = blocks.CharBlock(required=False)
+
+    class Meta:
+        label = 'Chart Block'
+        icon = 'image'
+        template = '_includes/organisms/chart.html'

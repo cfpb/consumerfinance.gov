@@ -17,6 +17,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Added
 
+- New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
 
 ### Changed
 
