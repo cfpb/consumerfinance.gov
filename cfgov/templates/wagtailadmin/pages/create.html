@@ -80,6 +80,18 @@
     <script>
         $(function(){
             $('#page-edit-form .tab-content section.active input').first().focus();
+
+            /* Make user confirm before leaving the editor if there are unsaved changes */
+            {% trans "This page has unsaved changes." as confirmation_message %}
+            enableDirtyFormCheck(
+                '#page-edit-form',
+                {
+                    confirmationMessage: '{{ confirmation_message|escapejs }}',
+                    {% if has_unsaved_changes %}
+                      alwaysDirty: true,
+                    {% endif %}
+                }
+            );
         });
     </script>
 {% endblock %}
