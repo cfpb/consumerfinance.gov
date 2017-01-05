@@ -269,7 +269,8 @@ def page_listing_more_buttons(page, page_perms, is_parent=False):
     context = {'request': type('obj', (object,), {'user': page_perms.user})}
     v1_page_perms = v1page_permissions(context, page)
 
-    if page.shared and not page.live and v1_page_perms.can_unshare():
+    shared = getattr(page, 'shared', False)
+    if shared and not page.live and v1_page_perms.can_unshare():
         yield wagtailadmin_widgets.Button(
             _('Unshare'), reverse('unshare', args=[page.id]),
             attrs={"title": _('Unshare this page')}, priority=41
