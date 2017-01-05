@@ -15,5 +15,3 @@ from .images import *
 
 import os
 from django.conf import settings
-if settings.DEBUG or os.environ.get('DEMO_PAGE'):
-    from .demo import *
