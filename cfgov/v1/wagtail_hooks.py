@@ -1,22 +1,22 @@
+import logging
 import os
 import json
-from urlparse import urlsplit
-import logging
-from exceptions import ValueError
-
-from django.utils import timezone
-from django.conf import settings
-from django.http import Http404
-from django.contrib.auth.models import Permission
-from django.utils.html import escape, format_html_join
-
 import requests
 
+from django.conf import settings
+from django.contrib.auth.models import Permission
+from django.core.urlresolvers import reverse
+from django.http import Http404
+from django.utils import timezone
+from django.utils.html import escape, format_html_join
+from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
+from urlparse import urlsplit
 
 from .models import CFGOVPage
 from .util import util
+
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +46,10 @@ def share_the_page(request, page):
 @hooks.register('after_delete_page')
 def log_page_deletion(request, page):
     logger.warning(
-        u'User {user} with ID {user_id} deleted page {title} with ID {page_id} at URL {url}'.format(
+        (
+            u'User {user} with ID {user_id} deleted page {title} '
+            u'with ID {page_id} at URL {url}'
+        ).format(
             user=request.user,
             user_id=request.user.id,
             title=page.title,
@@ -244,3 +247,13 @@ def form_module_handlers(page, request, context, *args, **kwargs):
 
     if form_modules:
         context['form_modules'] = form_modules
+
+
+@hooks.register('register_admin_menu_item')
+def register_django_admin_menu_item():
+    return MenuItem(
+        'Django Admin',
+        reverse('admin:index'),
+        classnames='icon icon-redirect',
+        order=99999
+    )
