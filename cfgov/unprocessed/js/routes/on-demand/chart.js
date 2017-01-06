@@ -7,4 +7,4 @@
 var atomicHelpers = require( '../../modules/util/atomic-helpers' );
 var Chart = require( '../../molecules/Chart' );
 
-atomicHelpers.instantiateAll( '.m-chart_graphics', Chart );
+atomicHelpers.instantiateAll( '.chart_wrapper', Chart );

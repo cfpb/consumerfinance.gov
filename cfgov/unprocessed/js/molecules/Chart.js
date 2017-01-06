@@ -3,6 +3,7 @@
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var standardType = require( '../modules/util/standard-type' );
+var lineChart = require( './LineChart.js' );
 
 /**
  * Chart
@@ -16,7 +17,7 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function Chart( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  var BASE_CLASS = 'm-chart_graphics';
+  var BASE_CLASS = 'svg_wrapper';
 
   var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
@@ -30,6 +31,8 @@ function Chart( element ) { // eslint-disable-line max-statements, inline-commen
     }
 
     console.log('Chart init');
+
+    lineChart( '.svg_wrapper' );
 
     return this;
   }
