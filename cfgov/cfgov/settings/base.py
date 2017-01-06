@@ -1,8 +1,10 @@
-import os, sys
-from unipath import Path
-from ..util import admin_emails
+import os
+import sys
 
 from django.conf import global_settings
+from unipath import Path
+
+from ..util import admin_emails
 
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)

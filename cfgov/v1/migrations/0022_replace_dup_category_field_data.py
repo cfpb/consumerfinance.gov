@@ -4,10 +4,9 @@ from __future__ import unicode_literals
 import json
 
 from django.db import migrations
-
 from wagtail.wagtailcore.models import Page, PageRevision
 
-from v1.util.migrations import migrate_page_types_and_fields, is_page
+from v1.util.migrations import is_page, migrate_page_types_and_fields
 
 
 def migrate_category_field_forwards(page_or_revision, data):

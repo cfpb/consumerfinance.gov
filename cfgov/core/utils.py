@@ -1,6 +1,3 @@
-import hashlib
-import base64
-
 from urllib import urlencode
 
 from django.core.signing import Signer

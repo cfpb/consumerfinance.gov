@@ -1,25 +1,26 @@
-import six, sys, os
+import os
+import sys
 
-from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+import six
 from django import http
-from django.apps import apps
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.sites.requests import RequestSite
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils.translation import ugettext as _
-from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils.translation import ugettext as _
+from django.views.decorators.csrf import csrf_exempt
 
-from core.services import PDFGeneratorView
+from core.services import PDFGeneratorView, PDFReactorNotConfigured
 from v1.db_router import cfgov_apps
+
 from .forms import HousingCounselorForm
 
 if six.PY2:
     try:
         sys.path.append(os.environ.get('PDFREACTOR_LIB'))
-        from PDFreactor import *
+        from PDFreactor import PDFreactor
     except:
         PDFreactor = None
 
@@ -42,10 +43,12 @@ class HousingCounselorPDFView(PDFGeneratorView):
         self.request = request
         self.form = HousingCounselorForm(request.GET)
         if not self.form.is_valid():
-            return HttpResponse("That does not appear to be a valid zip code", status=400)
+            return HttpResponse("That does not appear to be a valid zip code",
+                                status=400)
 
         if settings.DEBUG and PDFreactor is None:
-            return HttpResponse("PDF Reactor is not configured, can not render %s" % self.get_render_url())
+            return HttpResponse("PDF Reactor is not configured, "
+                                "can not render %s" % self.get_render_url())
 
         return self.generate_pdf()
 
@@ -61,7 +64,8 @@ class HousingCounselorPDFView(PDFGeneratorView):
         try:
             pdf_reactor = PDFreactor()
         except:
-            raise PDFReactorNotConfigured('PDFreactor python library path needs to be configured.')
+            raise PDFReactorNotConfigured('PDFreactor python library path '
+                                          'needs to be configured.')
 
         pdf_reactor.setLogLevel(PDFreactor.LOG_LEVEL_FATAL)
         pdf_reactor.setLicenseKey(str(self.license))
@@ -79,8 +83,8 @@ class HousingCounselorPDFView(PDFGeneratorView):
         else:
             # Set the correct header for PDF output
             response = HttpResponse(result, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename={0}'.format(
-                self.get_filename())
+            response['Content-Disposition'] = \
+                'attachment; filename={0}'.format(self.get_filename())
             return response
 
 
@@ -92,23 +96,30 @@ def dbrouter_shortcut(request, content_type_id, object_id):
     try:
         content_type = ContentType.objects.get(pk=content_type_id)
         if not content_type.model_class():
-            raise http.Http404(_("Content type %(ct_id)s object has no associated model") %
-                               {'ct_id': content_type_id})
+            raise http.Http404(
+                _("Content type %(ct_id)s object has no associated model") %
+                {'ct_id': content_type_id}
+            )
 
         if content_type.app_label in cfgov_apps:
             obj = content_type.get_object_for_this_type(pk=object_id)
         else:
-            obj = content_type.model_class().objects.db_manager('legacy').get(pk=object_id)
+            obj = content_type.model_class().objects.db_manager(
+                'legacy').get(pk=object_id)
 
     except (ObjectDoesNotExist, ValueError):
-        raise http.Http404(_("Content type %(ct_id)s object %(obj_id)s doesn't exist") %
-                           {'ct_id': content_type_id, 'obj_id': object_id})
+        raise http.Http404(
+            _("Content type %(ct_id)s object %(obj_id)s doesn't exist") %
+            {'ct_id': content_type_id, 'obj_id': object_id}
+        )
 
     try:
         get_absolute_url = obj.get_absolute_url
     except AttributeError:
-        raise http.Http404(_("%(ct_name)s objects don't have a get_absolute_url() method") %
-                           {'ct_name': content_type.name})
+        raise http.Http404(
+            _("%(ct_name)s objects don't have a get_absolute_url() method") %
+            {'ct_name': content_type.name}
+        )
 
     return http.HttpResponseRedirect(get_absolute_url())
 

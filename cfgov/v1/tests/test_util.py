@@ -1,13 +1,14 @@
-import mock
 import json
 
+import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
+from wagtail.wagtailcore.models import PageRevision
+
+from v1.models import CFGOVPage
+from v1.tests.wagtail_pages import helpers
 
 from ..util import util
-from v1.tests.wagtail_pages import helpers
-from v1.models import CFGOVPage
-from wagtail.wagtailcore.models import PageRevision
 
 
 class TestUtilFunctions(TestCase):

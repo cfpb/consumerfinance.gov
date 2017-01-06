@@ -1,26 +1,14 @@
-import django
 import json
-import sys
-
-from mock import Mock, call, patch
-
-if sys.version_info[0] < 3:
-    from urlparse import urlparse
-else:
-    from urllib.parse import urlparse
-
 from urllib import urlencode
-from django.test import RequestFactory, TestCase
+
+import django
 from django.core.urlresolvers import reverse
 from django.http import QueryDict
-
-from django.contrib.messages.storage.cookie import CookieStorage
-from django.contrib.messages import SUCCESS
+from django.test import RequestFactory, TestCase
+from mock import Mock, call, patch
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-from core.utils import extract_answers_from_request
 from core.views import govdelivery_subscribe, regsgov_comment, submit_comment
-
 
 django.setup()
 
@@ -70,7 +58,7 @@ class GovDeliverySubscribeTest(TestCase):
         ))
 
         patcher = patch('core.views.GovDelivery', return_value=gd)
-        patched = patcher.start()
+        patcher.start()
         self.addCleanup(patcher.stop)
 
         return gd
@@ -263,19 +251,21 @@ class RegsgovCommentTest(TestCase):
                 'general_comment': u'FAKE_COMMENT',
                 'first_name': u'FAKE_FIRST',
                 'last_name': u'FAKE_LAST'}
-        response = submit_comment(QueryDict(urlencode(data)))
+        submit_comment(QueryDict(urlencode(data)))
         act_args, act_kwargs = mock_post.call_args
 
-        self.assertEqual(act_args[0], 'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
+        self.assertEqual(act_args[0],
+                         'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
         exp_data_field = data
         exp_data_field['email'] = u'NA'
         exp_data_field['organization'] = u'NA'
         exp_data = MultipartEncoder(fields=exp_data_field)
         self.assertTrue(act_kwargs.get('data'), exp_data)
         self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)
-        self.assertTrue(act_kwargs.get('headers').has_key('Content-Type'))
+        self.assertIn('Content-Type', act_kwargs.get('headers'))
 
-        self.assertIn('multipart/form-data', act_kwargs.get('headers').get('Content-Type'))
+        self.assertIn('multipart/form-data',
+                      act_kwargs.get('headers').get('Content-Type'))
 
     @patch('requests.post')
     @patch('django.conf.settings.REGSGOV_BASE_URL', 'FAKE_URL')
@@ -288,15 +278,17 @@ class RegsgovCommentTest(TestCase):
                 'first_name': u'FAKE_FIRST',
                 'last_name': u'FAKE_LAST',
                 'email': u'FAKE_EMAIL'}
-        response = submit_comment(QueryDict(urlencode(data)))
+        submit_comment(QueryDict(urlencode(data)))
         act_args, act_kwargs = mock_post.call_args
 
-        self.assertEqual(act_args[0], 'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
+        self.assertEqual(act_args[0],
+                         'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
         exp_data_field = data
         exp_data_field['organization'] = u'NA'
         exp_data = MultipartEncoder(fields=exp_data_field)
         self.assertTrue(act_kwargs.get('data'), exp_data)
         self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)
-        self.assertTrue(act_kwargs.get('headers').has_key('Content-Type'))
+        self.assertIn('Content-Type', act_kwargs.get('headers'))
 
-        self.assertIn('multipart/form-data', act_kwargs.get('headers').get('Content-Type'))
+        self.assertIn('multipart/form-data',
+                      act_kwargs.get('headers').get('Content-Type'))

@@ -1,8 +1,8 @@
+from datetime import datetime
+
+import pytz
 from django.contrib.syndication.views import Feed
 from wagtail.wagtailcore.url_routing import RouteResult
-
-from datetime import datetime
-import pytz
 
 eastern = pytz.timezone('US/Eastern')
 

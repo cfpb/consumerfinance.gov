@@ -1,12 +1,11 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.forms import modelformset_factory
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
-
 from wagtail.wagtailcore.models import Site
 
 from .decorators import flag_required
-from .forms import FeatureFlagForm, SelectSiteForm, FlagStateForm
+from .forms import FeatureFlagForm, FlagStateForm, SelectSiteForm
 from .models import Flag, FlagState
 from .utils import init_missing_flag_states_for_site
 

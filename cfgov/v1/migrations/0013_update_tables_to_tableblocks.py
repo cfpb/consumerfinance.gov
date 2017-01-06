@@ -6,6 +6,10 @@ import logging
 from django.db import migrations
 from v1.tests.wagtail_pages.helpers import publish_changes
 
+logger = logging.getLogger(__name__)
+
+
+
 
 logger = logging.getLogger(__name__)
 

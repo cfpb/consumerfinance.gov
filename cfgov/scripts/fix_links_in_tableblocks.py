@@ -1,8 +1,7 @@
-from django.shortcuts import get_object_or_404
 from bs4 import BeautifulSoup
-
-from wagtail.wagtaildocs.models import get_document_model
+from django.shortcuts import get_object_or_404
 from wagtail.wagtailcore.models import Page
+from wagtail.wagtaildocs.models import get_document_model
 
 from v1.models.base import CFGOVPage
 from v1.tests.wagtail_pages.helpers import publish_changes
@@ -17,11 +16,14 @@ def get_tableblocks(page):
         stream_data = page.specific.content.stream_data
     except:
         return []
-    tableblocks = list(filter(lambda item: item['type'] == 'table_block', stream_data))
-    full_width_text_items = list(filter(lambda item: item['type'] == 'full_width_text', stream_data))
+    tableblocks = list(
+        filter(lambda item: item['type'] == 'table_block', stream_data))
+    full_width_text_items = list(
+        filter(lambda item: item['type'] == 'full_width_text', stream_data))
     for item in full_width_text_items:
         sub_items = item['value']
-        for sub_item in list(filter(lambda i: i['type'] == 'table_block', sub_items)):
+        for sub_item in list(
+                filter(lambda i: i['type'] == 'table_block', sub_items)):
             tableblocks.append(sub_item)
     return tableblocks
 

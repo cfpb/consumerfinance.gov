@@ -1,12 +1,9 @@
 from django.contrib import messages
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+
+from v1.forms import FeedbackForm, ReferredFeedbackForm, SuggestionFeedbackForm
 
 from .. import Handler
-from v1.forms import (
-    FeedbackForm,
-    ReferredFeedbackForm,
-    SuggestionFeedbackForm
-)
 
 FEEDBACK_TYPES = {
     'helpful': FeedbackForm,
