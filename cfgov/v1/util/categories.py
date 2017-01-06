@@ -1,7 +1,9 @@
-from v1.util import ref 
-
 import logging
+
+from v1.util import ref
+
 logger = logging.getLogger(__name__)
+
 
 def clean_categories(selected_categories):
     """ This is a (hopefully) temporary solution for dealing w/ the fact

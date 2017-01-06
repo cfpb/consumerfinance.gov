@@ -1,9 +1,9 @@
-from django.test import TestCase
-from django.test import Client
-
-from v1.models.landing_page import LandingPage
-from helpers import publish_page, save_page, save_new_page
 import os
+
+from django.test import Client, TestCase
+
+from helpers import publish_page, save_new_page, save_page
+from v1.models.landing_page import LandingPage
 
 django_client = Client()
 
@@ -95,4 +95,3 @@ class PageStatesTestCase(TestCase):
         www_response = django_client.get('/page/')
         self.assertContains(www_response, 'Page Before Updates')
         self.assertNotContains(www_response, 'Draft Page Updates')
-

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
-import wagtail.wagtailcore.fields
 import modelcluster.fields
+import wagtail.wagtailcore.fields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):

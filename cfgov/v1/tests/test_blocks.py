@@ -1,5 +1,4 @@
 import mock
-
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.safestring import SafeText

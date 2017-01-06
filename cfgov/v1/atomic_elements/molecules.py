@@ -16,8 +16,8 @@ class HalfWidthLinkBlob(blocks.StructBlock):
             'A list of icon names can be obtained at: '
             'https://cfpb.github.io/capital-framework/components/cf-icons/. '
             'Examples: linkedin-square, facebook-square, etc.'
-            )
         )
+    )
     body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
 

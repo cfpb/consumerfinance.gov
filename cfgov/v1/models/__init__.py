@@ -1,3 +1,4 @@
+# flake8: noqa F403
 from .base import *
 from ..util.ref import *
 
@@ -13,5 +14,4 @@ from .blog_page import *
 from .newsroom_page import *
 from .images import *
 
-import os
 from django.conf import settings

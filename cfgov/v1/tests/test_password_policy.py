@@ -1,15 +1,14 @@
 from datetime import timedelta
-from django.test import TestCase
-from django.core.exceptions import ValidationError
-from django.utils import timezone
-from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
 
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.test import TestCase
+from django.utils import timezone
 from mock import Mock, patch
 
 from v1.models import PasswordHistoryItem
 from v1.util import password_policy
-
 
 PASSWORD_RULES = [
     [r'.{12,}', 'Minimum allowed length is 12 characters'],

@@ -8,7 +8,6 @@ from wagtail.wagtailcore.models import Page, Site
 
 from v1.models import HomePage
 
-
 logger = logging.getLogger(__name__)
 
 

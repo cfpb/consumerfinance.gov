@@ -1,5 +1,4 @@
 import datetime
-
 from unittest import TestCase
 
 from wagtail.wagtailcore.models import Site
@@ -8,6 +7,7 @@ from v1.models import BlogPage
 from v1.models.base import CFGOVPageCategory
 from v1.templatetags import activity_feed
 from v1.tests.wagtail_pages.helpers import publish_page
+
 
 class TestActivityFeed(TestCase):
 
@@ -50,5 +50,3 @@ class TestActivityFeed(TestCase):
         self.assertEquals(activities[0].specific, page3)
         self.assertEquals(activities[1].specific, page2)
         self.assertEquals(activities[2].specific, page1)
-
-

@@ -1,12 +1,11 @@
+import datetime as dt
+from unittest import TestCase
+
 import mock
 
-from unittest import TestCase
 from v1.models.base import CFGOVPage, CFGOVPageCategory
 from v1.models.learn_page import AbstractFilterPage
-
 from v1.tests.wagtail_pages import helpers
-
-import datetime as dt
 
 
 class RelatedPostsTestCase(TestCase):
@@ -248,6 +247,3 @@ class RelatedPostsTestCase(TestCase):
         self.assertEqual(related_posts['Blog'][1], self.blog_child1)
         self.assertEqual(related_posts['Events'][0], self.events_child1)
         self.assertEqual(related_posts['Newsroom'][0], self.newsroom_child1)
-
-
-
