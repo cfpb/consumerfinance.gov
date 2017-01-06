@@ -5,10 +5,6 @@ set -e
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
-    export CXX=clang++
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-    nvm install 5.5.0
-    nvm use 5.5.0
     npm install -g gulp
     chmod +x ./frontend.sh
     # ./frontend.sh test
