@@ -5,15 +5,12 @@ import icalendar
 import requests
 import six
 from dateutil.parser import parse
-from django.conf import settings
-from django.contrib import messages
-from django.core.exceptions import ImproperlyConfigured
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.views.generic.base import ContextMixin, View
 from pytz import timezone
-from dateutil.parser import parse
-from django.core.urlresolvers import reverse, resolve
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
+from django.http import Http404, HttpResponse
+from django.views.generic.base import ContextMixin, View
+
 
 class PDFReactorNotConfigured(Exception):
     pass
@@ -97,7 +94,6 @@ class PDFGeneratorView(View):
             response['Content-Disposition'] = \
                 'attachment; filename={0}'.format(self.get_filename())
             return response
-
 
 
 class ICSView(ContextMixin, View):

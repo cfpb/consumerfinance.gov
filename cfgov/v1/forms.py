@@ -2,7 +2,6 @@ from collections import Counter
 from django import forms
 from django.db.models import Q
 from django.forms import widgets
-from django.forms.utils import ErrorList
 from taggit.models import Tag
 
 from .models.base import Feedback
