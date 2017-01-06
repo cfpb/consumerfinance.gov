@@ -1,0 +1,40 @@
+{# ==========================================================================
+
+    Image Inset
+
+    ==========================================================================
+
+    Description:
+
+    Creates image inset markup when given:
+
+    value:               Object defined from a StreamField block.
+
+    value.heading:       The heading of the image inset.
+
+    value.image:         A basic image object to insert.
+
+    value.image.upload:  The image object.
+    
+    value.image.alt:     String for alt text for screenreaders.
+
+    value.paragraph:     String for text below the image.
+
+   ========================================================================== #}
+
+<div class="m-image-inset">
+    {% if value.heading %}
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
+                {{ value.heading }}
+            </span>
+        </h2>
+    {% endif %}
+
+    {% set photo = image(value.image.upload, 'original') %}
+    <img src="{{ photo.url }}"
+         alt="{{ value.image.alt if value.image.alt else '' }}"
+    >
+
+    {{ parse_links(value.paragraph) | safe }}
+</div>

@@ -246,6 +246,17 @@ class ContactPhone(blocks.StructBlock):
         label = 'Phone'
 
 
+class ImageInset(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    image = atoms.ImageBasic()
+    paragraph = blocks.RichTextBlock(required=False)
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/molecules/image-inset.html'
+        label = 'Image inset'
+
+
 class RelatedLinks(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     paragraph = blocks.RichTextBlock(required=False)
