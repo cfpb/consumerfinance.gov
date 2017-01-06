@@ -39,6 +39,7 @@ class BrowsePage(CFGOVPage):
         ('job_listing_table', JobListingTable()),
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
+        ('html_block', organisms.HTMLBlock()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
@@ -67,9 +68,6 @@ class BrowsePage(CFGOVPage):
     def add_page_js(self, js):
         super(BrowsePage, self).add_page_js(js)
         js['template'] += ['secondary-navigation.js']
-
-    def full_width_serif(self):
-        return True
 
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)

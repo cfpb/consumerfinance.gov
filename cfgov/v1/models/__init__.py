@@ -15,5 +15,3 @@ from .newsroom_page import *
 from .images import *
 
 from django.conf import settings
-if settings.DEBUG or os.environ.get('DEMO_PAGE'):
-    from .demo import *

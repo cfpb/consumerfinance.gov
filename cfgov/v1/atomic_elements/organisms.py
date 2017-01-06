@@ -1,5 +1,6 @@
 
 import json
+import requests
 
 from django import forms
 from django.apps import apps
@@ -611,3 +612,26 @@ class VideoPlayer(blocks.StructBlock):
     class Meta:
         icon = 'media'
         template = '_includes/organisms/video-player.html'
+
+
+class HTMLBlock(blocks.StructBlock):
+    html_url = blocks.RegexBlock(
+        label='Source URL',
+        default='',
+        required=True,
+        regex=r'^https://(s3.amazonaws.com/)?files.consumerfinance.gov/.+$',
+        error_messages={
+            'required': 'The HTML URL field is required for rendering raw HTML from a remote source.',
+            'invalid': 'The URL is invalid or not allowed. ',
+        }
+    )
+
+    def render(self, value, context=None):
+        resp = requests.get(value['html_url'], timeout=5)
+        resp.raise_for_status()
+        return self.render_basic(resp.content, context=context)
+
+
+    class Meta:
+        label = 'HTML Block'
+        icon = 'code'
