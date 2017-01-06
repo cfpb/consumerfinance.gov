@@ -1,95 +1,55 @@
-import logging
 from collections import Counter
-
 from django import forms
 from django.db.models import Q
 from django.forms import widgets
 from django.forms.utils import ErrorList
 from taggit.models import Tag
 
-from v1.util import ref
-from v1.util.categories import clean_categories
-from v1.util.util import ERROR_MESSAGES
-
 from .models.base import Feedback
-
-logger = logging.getLogger(__name__)
-
-
-class FilterErrorList(ErrorList):
-    def __str__(self):
-        return '\n'.join(str(e) for e in self)
-
-
-class FilterDateField(forms.DateField):
-    def clean(self, value):
-        from sheerlike.templates import get_date_obj
-        if value:
-            try:
-                value = get_date_obj(value)
-            except Exception:
-                pass
-        return value
-
-
-class PDFFilterDateField(forms.DateField):
-    def clean(self, value):
-        from sheerlike.templates import get_date_string
-        if value:
-            try:
-                value = get_date_string(value)
-            except Exception:
-                pass
-        return value
-
-
-class FilterCheckboxList(forms.CharField):
-    def validate(self, value):
-        if value in self.empty_values and self.required:
-            msg = self.error_messages['required']
-            if self.label and '%s' in msg:
-                msg = msg % self.label
-            raise forms.ValidationError(msg, code='required')
-
-
-class CalenderPDFFilterForm(forms.Form):
-    filter_calendar = FilterCheckboxList(
-        label='Calendar',
-        error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS']
-    )
-    filter_range_date_gte = PDFFilterDateField(
-        required=False,
-        error_messages=ERROR_MESSAGES['DATE_ERRORS']
-    )
-    filter_range_date_lte = PDFFilterDateField(
-        required=False,
-        error_messages=ERROR_MESSAGES['DATE_ERRORS']
-    )
-
-    def __init__(self, *args, **kwargs):
-        kwargs['error_class'] = FilterErrorList
-        super(CalenderPDFFilterForm, self).__init__(*args, **kwargs)
-
-    def clean_filter_calendar(self):
-        return self.cleaned_data['filter_calendar'].replace(' ', '+')
-
-    def clean(self):
-        cleaned_data = super(CalenderPDFFilterForm, self).clean()
-        from_date_empty = 'filter_range_date_gte' in cleaned_data and \
-                          cleaned_data['filter_range_date_gte'] is None
-        to_date_empty = 'filter_range_date_lte' in cleaned_data and \
-                        cleaned_data['filter_range_date_lte'] is None
-
-        if from_date_empty and to_date_empty:
-            raise forms.ValidationError(
-                ERROR_MESSAGES['DATE_ERRORS']['one_required']
-            )
-        return cleaned_data
+from v1.util.categories import clean_categories
+from v1.util import ERROR_MESSAGES, ref
 
 
 class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
     def validate(self, value):
         pass
+
+
+class FilterableDateField(forms.DateField):
+    default_input_formats = (
+        '%m/%d/%Y',     # 10/25/2016
+        '%m/%Y',        # 10/2016
+        '%m/%y',        # 10/16
+        '%Y',           # 2016
+    )
+
+    default_widget_attrs = {
+        'class': 'js-filter_range-date',
+        'type': 'text',
+        'placeholder': 'mm/dd/yyyy',
+        'data-type': 'date'
+    }
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('required', False)
+        kwargs.setdefault('input_formats', self.default_input_formats)
+        kwargs.setdefault('widget', widgets.DateInput(
+            attrs=self.default_widget_attrs
+        ))
+        kwargs.setdefault('error_messages', ERROR_MESSAGES['DATE_ERRORS'])
+        super(FilterableDateField, self).__init__(*args, **kwargs)
+
+
+class FilterableFromDateField(FilterableDateField):
+    def __init__(self, *args, **kwargs):
+        self.default_widget_attrs['class'] += ' js-filter_range-date__gte'
+        super(FilterableFromDateField, self).__init__(*args, **kwargs)
+
+
+class FilterableToDateField(FilterableDateField):
+    def __init__(self, *args, **kwargs):
+        self.default_widget_attrs['class'] += ' js-filter_range-date__lte'
+        super(FilterableToDateField, self).__init__(*args, **kwargs)
 
 
 class FilterableListForm(forms.Form):
@@ -104,32 +64,14 @@ class FilterableListForm(forms.Form):
         'multiple': 'multiple',
         'data-placeholder': 'Search for authors'
     }
-    from_select_attrs = {
-        'class': 'js-filter_range-date js-filter_range-date__gte',
-        'type': 'text',
-        'placeholder': 'mm/dd/yyyy',
-        'data-type': 'date'
-    }
-    to_select_attrs = from_select_attrs.copy()
-    to_select_attrs.update({
-        'class': 'js-filter_range-date js-filter_range-date__lte',
-    })
 
     title = forms.CharField(
         max_length=250,
         required=False,
         widget=widgets.TextInput(attrs=title_attrs)
     )
-    from_date = FilterDateField(
-        required=False,
-        input_formats=['%m/%d/%Y'],
-        widget=widgets.DateInput(attrs=from_select_attrs)
-    )
-    to_date = FilterDateField(
-        required=False,
-        input_formats=['%m/%d/%Y'],
-        widget=widgets.DateInput(attrs=to_select_attrs)
-    )
+    from_date = FilterableFromDateField()
+    to_date = FilterableToDateField()
     categories = forms.MultipleChoiceField(
         required=False,
         choices=ref.page_type_choices,
@@ -150,8 +92,9 @@ class FilterableListForm(forms.Form):
         self.hostname = kwargs.pop('hostname')
         self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        page_ids = self.base_query.live_shared(self.hostname).values_list(
-            'id', flat=True)
+
+        pages = self.base_query.live_shared(self.hostname)
+        page_ids = pages.values_list('id', flat=True)
 
         clean_categories(selected_categories=self.data.get('categories'))
         self.set_topics(page_ids)

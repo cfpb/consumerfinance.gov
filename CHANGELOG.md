@@ -22,6 +22,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Changed
 - Upgrade to Wagtail 1.7
 - Added redirect for `Leadership Calendar` Wagtail Page.
+- Moved CSS npm dev modules to devDependencies in `package.json`.
+- Updated `gulp-clean-css` from `2.0.6` to `2.3.2`.
+- Updated `gulp-imagemin` from `3.0.3` to `3.1.1`.
+- Updated `gulp-less` from `3.1.0` to `3.3.0`.
 
 ## Removed
 - Removed layout.less enhancements that have been moved to Capital Framework.
@@ -30,13 +34,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Removed deprecated fellowship view/model.
 - Removed deprecated fellowship notification sign up form.
 - Spokesperson who is no longer with the Bureau from the press page.
+- Removed legacy calendar app.
 
 ### Fixed
 - Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.
 - Fix blog post RSS subscription links
 - Fix for Wagtail admin page status string when live but not shared.
 - Fixed legacy supervision jobs page.
-
+- Fix for External Redirect proceed button and jQuery reference.
+- Fixed use of `moto.mock_s3` in unit tests.
+- Fixed handling of invalid date query string parameters for filterable list forms.
 
 ## 4.3.2
 

@@ -11,9 +11,9 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views.generic.base import ContextMixin, View
 from pytz import timezone
-
-from v1.forms import CalenderPDFFilterForm
-
+from dateutil.parser import parse
+from django.core.urlresolvers import reverse, resolve
+from django.conf import settings
 
 class PDFReactorNotConfigured(Exception):
     pass
@@ -98,30 +98,6 @@ class PDFGeneratorView(View):
                 'attachment; filename={0}'.format(self.get_filename())
             return response
 
-    def post(self, request):
-        index = request.POST.get('form-id')
-        filter_calendar = index + 'filter_calendar'
-        filter_range_date_gte = index + '-filter_range_date_gte'
-        filter_range_date_lte = index + '-filter_range_date_lte'
-        form = CalenderPDFFilterForm({
-            'filter_calendar': request.POST.get(filter_calendar),
-            'filter_range_date_gte': request.POST.get(filter_range_date_gte),
-            'filter_range_date_lte': request.POST.get(filter_range_date_lte),
-        })
-        if form.is_valid():
-            query_opts = {
-                'filter_calendar': form.cleaned_data.get('filter_calendar'),
-                'filter_range_date_gte':
-                    form.cleaned_data.get('filter_range_date_gte'),
-                'filter_range_date_lte':
-                    form.cleaned_data.get('filter_range_date_lte'),
-            }
-            return self.generate_pdf(query_opts)
-        else:
-            for error in form.errors.itervalues():
-                messages.error(request, str(error),
-                               extra_tags='leadership-calendar')
-            return HttpResponseRedirect('/the-bureau/leadership-calendar/')
 
 
 class ICSView(ContextMixin, View):
