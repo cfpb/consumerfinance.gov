@@ -29,7 +29,11 @@ exclude =
     # Generated migration files will throw errors. We need to find a way
     # to exclude django-generated migrations while including
     # manually-written migrations.
-    cfgov/*/migrations/*,
+    cfgov/core/migrations/*.py,
+    cfgov/data_research/migrations/*.py,
+    cfgov/flags/migrations/*.py,
+    cfgov/jobmanager/migrations/*.py,
+    cfgov/v1/migrations/*.py,
 
     # Our settings files might need to conform to different readability
     # standards
