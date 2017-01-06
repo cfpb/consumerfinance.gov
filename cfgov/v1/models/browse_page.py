@@ -14,7 +14,7 @@ from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
 from ..util.util import get_secondary_nav_items
 from jobmanager.models import JobListingTable
-from data_research.blocks import ConferenceRegistrationForm, ChartGroup, LineChart
+from data_research.blocks import ConferenceRegistrationForm, LineChart
 
 
 class BrowsePage(CFGOVPage):
@@ -38,7 +38,6 @@ class BrowsePage(CFGOVPage):
         ('job_listing_table', JobListingTable()),
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
-        ('chart_group', ChartGroup()),
         ('line_chart', LineChart()),
         ('html_block', organisms.HTMLBlock()),
     ], blank=True)

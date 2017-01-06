@@ -41,8 +41,11 @@ class ConferenceRegistrationForm(AbstractFormBlock):
 
 # @todo move to v1 atomic elements
 class LineChart(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    description = blocks.CharBlock(required=False)
+    title = blocks.CharBlock(required=False)
+    element_id = blocks.CharBlock(required=False)
+    chart_type = blocks.CharBlock(required=False)
+    market = blocks.CharBlock(required=False)
+    report_type = blocks.CharBlock(required=False)
     data_source = blocks.CharBlock(
         required=False,
         help_text='Github raw CSV url')
@@ -55,11 +58,3 @@ class LineChart(blocks.StructBlock):
     # how this works https://github.com/cfpb/cfgov-refresh/blob/12a5568f0e73ce016f98ae8a2d859219eb3ce01c/cfgov/v1/models/base.py#L416
     class Media:
         js = ['chart.js']
-
-
-class ChartGroup(blocks.StructBlock):
-    charts = blocks.ListBlock(LineChart())
-
-    class Meta:
-        icon = 'image'
-        template = '_includes/organisms/chart-group.html'
