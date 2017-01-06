@@ -6,7 +6,6 @@ from collections import namedtuple
 import elasticsearch
 from dateutil import parser
 from django.conf import settings
-from django.core.urlresolvers import reverse
 from django.utils.datastructures import MultiValueDict as MultiDict
 from django.utils.http import urlencode
 from pytz import timezone

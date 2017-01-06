@@ -16,7 +16,6 @@ from wagtail.wagtailcore import views
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
                           token_provider)
-from sheerlike import register_permalink
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
@@ -380,11 +379,6 @@ if settings.DEBUG:
 # Catch remaining URL patterns that did not match a route thus far.
 
 urlpatterns.append(url(r'', include(wagtail_urls)))
-
-
-from django.shortcuts import render
-
-
 
 
 def handle_error(code, request):

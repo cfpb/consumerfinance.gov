@@ -5,7 +5,7 @@ from wagtail.wagtailadmin import messages as wagtail_messages
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.http import HttpResponse, Http404
+from django.http import Http404
 
 from django.contrib.auth import get_user_model
 from django.contrib import messages
@@ -34,6 +34,7 @@ from v1.auth_forms import (
 )
 from v1.signals import page_unshared
 from v1.util.util import all_valid_destinations_for_request
+
 
 def unshare(request, page_id):
     page = get_object_or_404(Page, id=page_id).specific

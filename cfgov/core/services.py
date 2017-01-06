@@ -1,15 +1,11 @@
 import os
 import sys
 
-import icalendar
-import requests
 import six
-from dateutil.parser import parse
-from pytz import timezone
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.http import Http404, HttpResponse
-from django.views.generic.base import ContextMixin, View
+from django.http import HttpResponse
+from django.views.generic.base import View
 
 
 class PDFReactorNotConfigured(Exception):

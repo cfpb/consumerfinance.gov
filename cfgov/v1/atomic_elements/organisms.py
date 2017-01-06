@@ -621,7 +621,8 @@ class HTMLBlock(blocks.StructBlock):
         required=True,
         regex=r'^https://(s3.amazonaws.com/)?files.consumerfinance.gov/.+$',
         error_messages={
-            'required': 'The HTML URL field is required for rendering raw HTML from a remote source.',
+            'required': 'The HTML URL field is required for rendering raw '
+                        'HTML from a remote source.',
             'invalid': 'The URL is invalid or not allowed. ',
         }
     )
@@ -630,7 +631,6 @@ class HTMLBlock(blocks.StructBlock):
         resp = requests.get(value['html_url'], timeout=5)
         resp.raise_for_status()
         return self.render_basic(resp.content, context=context)
-
 
     class Meta:
         label = 'HTML Block'
