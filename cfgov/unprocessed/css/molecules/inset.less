@@ -47,6 +47,52 @@
         margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
     });
 
+    &_image {
+        margin: 0
+                0
+                unit( @grid_gutter-width / @base-font-size-px, em )
+                unit( @grid_gutter-width / @base-font-size-px, em );
+        float: right;
+
+        .respond-to-max( @bp-xs-max, {
+            img {
+                .u-flexible-container_inner();
+            }
+
+            &-container {
+                .u-flexible-container();
+            }
+        } );
+
+        .respond-to-min(@bp-sm-min, {
+            &__150 {
+                width: 150px;
+            }
+
+            &__270 {
+                width: 270px;
+            }
+
+            &__300 {
+                width: 300px;
+            }
+        } );
+
+        &__left {
+            float: left;
+            clear: left;
+            margin: 0 unit( @grid_gutter-width / @base-font-size-px, em ) 0 0;
+
+            .respond-to-max( @bp-xs-max, {
+                float: none;
+                margin: unit( @grid_gutter-width / @base-font-size-px, em )
+                        0
+                        unit( @grid_gutter-width / @base-font-size-px, em )
+                        0;
+            } );
+        }
+    }
+
     .m-call-to-action,
     .m-related-links {
         padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -61,6 +107,14 @@
         border-bottom: 1px solid @horizontal-rule;
         margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     }
+}
+
+// This should be at the template level
+.m-full-width-text + .m-inset_image {
+
+    .respond-to-min( @bp-sm-min, {
+        margin: unit( @grid_gutter-width / @base-font-size-px, em );
+    } );
 }
 
 /* topdoc

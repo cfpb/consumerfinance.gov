@@ -133,6 +133,11 @@ supported_languagues = [
     ('ht', 'Haitian Creole'),
 ]
 
+inset_image_widths = [
+    ('150', '150'),
+    ('270', '270'),
+    ('300', '300'),
+]
 
 def related_posts_category_lookup(related_categories):
     related = []
