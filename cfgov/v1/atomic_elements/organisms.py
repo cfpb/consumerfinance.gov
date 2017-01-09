@@ -299,7 +299,7 @@ class AtomicTableBlock(TableBlock):
 
     def get_has_data(self, value):
         has_data = False
-        if value:
+        if value and value['data']:
             first_row_index = 1 if value['first_row_is_table_header'] else 0
             first_col_index = 1 if value['first_col_is_header'] else 0
 
@@ -415,12 +415,10 @@ class ModelTable(ModelBlock):
         default=True,
         help_text='Stack the table columns on mobile.'
     )
-
     empty_table_msg = blocks.CharBlock(
-        label='No Jobs Message',
+        label='No Table Data Message.',
         required=False,
-        default='There are no current openings at this time.',
-        help_text='Message to display if there are no jobs.'
+        help_text='Message to display if there is no table data.'
     )
 
     def render(self, value, context=None):
