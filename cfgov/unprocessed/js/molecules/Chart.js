@@ -3,7 +3,7 @@
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var standardType = require( '../modules/util/standard-type' );
-var lineChart = require( './LineChart.js' );
+var LineChart = require( './LineChart.js' );
 
 /**
  * Chart
@@ -32,7 +32,9 @@ function Chart( element ) { // eslint-disable-line max-statements, inline-commen
 
     console.log('Chart init');
 
-    lineChart( '.svg_wrapper' );
+    // lineChart( '.svg_wrapper' );
+    var lineChart = new LineChart( '.svg_wrapper' );
+    lineChart.init();
 
     return this;
   }
