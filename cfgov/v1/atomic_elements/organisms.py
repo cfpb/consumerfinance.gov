@@ -416,7 +416,7 @@ class ModelTable(ModelBlock):
         help_text='Stack the table columns on mobile.'
     )
     empty_table_msg = blocks.CharBlock(
-        label='No Table Data Message.',
+        label='No Table Data Message',
         required=False,
         help_text='Message to display if there is no table data.'
     )
