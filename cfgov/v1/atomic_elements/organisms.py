@@ -291,6 +291,25 @@ class AtomicTableBlock(TableBlock):
         widget = AtomicTableInput(table_options=self.table_options)
         return forms.CharField(widget=widget, **self.field_options)
 
+    def to_python(self, value):
+        new_value = super(AtomicTableBlock, self).to_python(value)
+        if new_value:
+            new_value['has_data'] = self.get_has_data(new_value)
+        return new_value
+
+    def get_has_data(self, value):
+        has_data = False
+        if value:
+            first_row_index = 1 if value['first_row_is_table_header'] else 0
+            first_col_index = 1 if value['first_col_is_header'] else 0
+
+            for row in value['data'][first_row_index:]:
+                for cell in row[first_col_index:]:
+                    if cell:
+                        has_data = True
+                        break
+        return has_data
+
     class Meta:
         default = None
         icon = 'table'
@@ -397,6 +416,13 @@ class ModelTable(ModelBlock):
         help_text='Stack the table columns on mobile.'
     )
 
+    empty_table_msg = blocks.CharBlock(
+        label='No Jobs Message',
+        required=False,
+        default='There are no current openings at this time.',
+        help_text='Message to display if there are no jobs.'
+    )
+
     def render(self, value, context=None):
         rows = [self.field_headers]
 
@@ -414,6 +440,7 @@ class ModelTable(ModelBlock):
             'is_full_width',
             'is_striped',
             'is_stacked',
+            'empty_table_msg',
         ))
 
         table = AtomicTableBlock()

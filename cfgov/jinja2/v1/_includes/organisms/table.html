@@ -22,9 +22,7 @@
 
    ========================================================================== #}
 
-
-{% if value.data  %}
-
+{% if value.has_data %}
 {% macro _render_cell(cell) %}
     {{ (cell or '&nbsp;') | safe | trim | linebreaksbr }}
 {% endmacro %}
@@ -85,4 +83,7 @@
     {% endfor %}
     </tbody>
 </table>
+{% elif value.empty_table_msg %}
+    <h3>{{ value.empty_table_msg }}</h3>
 {% endif %}
+

@@ -139,17 +139,19 @@ class JobListingListTestCase(HtmlMixin, TestCase):
 
 
 class JobListingTableTestCase(HtmlMixin, TestCase):
-    def test_html_has_table(self):
+    def test_html_displays_no_table_message(self):
         table = JobListingTable()
         html = table.render(table.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
-            '^<table class="o-table o-table__stack-on-small">'
-            '.*'
-            '</table>$'
+            '<h3>There are no current openings at this time.</h3>'
         ))
 
     def test_html_has_header(self):
+        make_job_listing_page(
+            title='CEO',
+            close_date=date(2099, 12, 1)
+        )
         table = JobListingTable()
         html = table.render(table.to_python({}))
 
