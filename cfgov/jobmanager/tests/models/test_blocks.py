@@ -149,7 +149,9 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
 
     def test_html_displays_table_if_row_flag_false(self):
         table = JobListingTable()
-        html = table.render(table.to_python({'first_row_is_table_header': False}))
+        html = table.render(table.to_python(
+            {'first_row_is_table_header': False}
+        ))
 
         self.assertHtmlRegexpMatches(html, (
             '<tr>'
