@@ -638,6 +638,7 @@ class HTMLBlock(blocks.StructBlock):
 
 
 class ChartBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=False)
     element_id = blocks.CharBlock(
         required=True,
         label='Element ID',
@@ -645,11 +646,19 @@ class ChartBlock(blocks.StructBlock):
         'https://github.com/cfpb/consumer-credit-trends/'
         'blob/master/src/static/js/templates/charts.js'
     )
-    title = blocks.CharBlock(required=False)
-    data_source = blocks.CharBlock(required=False)
+    chart_type = blocks.CharBlock(required=False)
+    market = blocks.CharBlock(required=False)
+    report_type = blocks.CharBlock(required=False)
+    data_source = blocks.CharBlock(
+        required=True,
+        help_text='Github raw CSV url')
     note = blocks.CharBlock(required=False)
 
     class Meta:
         label = 'Chart Block'
         icon = 'image'
         template = '_includes/organisms/chart.html'
+
+    # how this works https://github.com/cfpb/cfgov-refresh/blob/12a5568f0e73ce016f98ae8a2d859219eb3ce01c/cfgov/v1/models/base.py#L416
+    class Media:
+        js = ['chart.js']

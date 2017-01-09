@@ -18,7 +18,12 @@
     {% endif %}
 
   <div class="svg_wrapper"
-       id="{{ value.element_id }}">
+       id="{{ value.element_id }}"
+       data-chart-type="{{ value.chart_type }}"
+       data-source="{{ value.data_source }}"
+       data-title="{{ value.title }}"
+       data-market="{{ value.market }}"
+       data-report-type="{{ value.report_type }}">
   </div>
 
   <p class="block__sub block__border-top block short-desc chart_footnote">
@@ -33,4 +38,4 @@
       {% endif %}
     </p>
 </div>
-<script src='https://s3.amazonaws.com/files.consumerfinance.gov/consumer-credit-trends/assets/js/consumer-credit-trends-charts.js'>
+<!-- <script src='https://s3.amazonaws.com/files.consumerfinance.gov/consumer-credit-trends/assets/js/consumer-credit-trends-charts.js'> -->

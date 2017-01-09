@@ -39,7 +39,6 @@ class BrowsePage(CFGOVPage):
         ('job_listing_table', JobListingTable()),
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
-        ('line_chart', LineChart()),
         ('html_block', organisms.HTMLBlock()),
         ('chart_block', organisms.ChartBlock()),
     ], blank=True)
