@@ -1,6 +1,8 @@
+from django.core.exceptions import MultipleObjectsReturned
 from django.core.management.base import BaseCommand, CommandError
 
 from v1.models import CFGOVPage
+from v1.wagtail_hooks import flush_akamai
 
 
 class Command(BaseCommand):
@@ -9,32 +11,35 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             '--slug',
-            nargs='+',
+            nargs='?',
             help='The slug for the page you wish to delete'
         )
         parser.add_argument(
             '--id',
-            nargs='+',
+            nargs='?',
             help='The ID for the page you wish to delete'
         )
 
     def handle(self, *args, **options):
         page_to_delete = None
-        if options['slug']:
-            slug = options['slug'][0]
+        slug = options['slug']
+        page_id = options['id']
+        if slug:
             try:
                 page_to_delete = CFGOVPage.objects.get(slug=slug)
-            except Exception as e:
+            except MultipleObjectsReturned as e:
                 self.stderr.write(str(e))
                 raise CommandError('Slug `{}` did not work'.format(slug))
-        elif options['id']:
-            page_id = options['id'][0]
+        elif page_id:
             page_to_delete = CFGOVPage.objects.get(id=page_id)
         else:
-            raise CommandError('Must supply a --slug or an --id')
+            raise CommandError('Must supply a slug or an id')
         try:
-            page_to_delete.unpublish()
             page_to_delete.delete()
+            flush_akamai()
+
         except Exception as e:
             self.stderr.write(str(e))
-            raise CommandError('Failed to delete page {}'.format(page_to_delete))
+            raise CommandError(
+                'Failed to delete page {}'.format(page_to_delete)
+            )
