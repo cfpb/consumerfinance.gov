@@ -1,0 +1,46 @@
+[flake8]
+ignore = 
+    # There's nothing wrong with assigning lambdas
+    E731,
+    # PEP8 weakly recommends Knuth-style line breaks before binary
+    # operators
+    W503
+exclude = 
+    # These are directories that it's a waste of time to traverse
+    .git,
+    .tox,
+    ansible,
+    bin,
+    config,
+    docs,
+    gulp,
+    picard_scripts,
+    requirements,
+    node_modules,
+    site,
+
+    # And directories in cfgov that don't have python files to lint
+    cfgov/es_mappings,
+    cfgov/jinja2,
+    cfgov/static_built,
+    cfgov/templates,
+    cfgov/unprocessed,
+
+    # Generated migration files will throw errors. We need to find a way
+    # to exclude django-generated migrations while including
+    # manually-written migrations.
+    cfgov/core/migrations/*.py,
+    cfgov/data_research/migrations/*.py,
+    cfgov/flags/migrations/*.py,
+    cfgov/jobmanager/migrations/*.py,
+    cfgov/v1/migrations/*.py,
+
+    # Our settings files might need to conform to different readability
+    # standards
+    cfgov/cfgov/settings/*,
+
+    # Now we come to the bits we exclude because they haven't had a
+    # proper cleanup yet.
+    cfgov/v1/tests
+
+# max-complexity = 10

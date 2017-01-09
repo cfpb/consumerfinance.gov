@@ -1,6 +1,5 @@
-from django.contrib.staticfiles.finders import BaseFinder
 from django.conf import settings
-
+from django.contrib.staticfiles.finders import BaseFinder
 from unipath import Path
 
 from .storage import SheerlikeStaticStorage

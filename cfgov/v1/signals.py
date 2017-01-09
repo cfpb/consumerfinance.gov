@@ -1,11 +1,9 @@
 import json
-
 from datetime import timedelta
+
 from django.dispatch import Signal
 from django.utils import timezone
-from django.core.exceptions import ObjectDoesNotExist
 from wagtail.wagtailcore.signals import page_published, page_unpublished
-
 
 page_unshared = Signal(providing_args=['instance'])
 
@@ -69,7 +67,8 @@ def unpublish_all_revisions(sender, **kwargs):
 def configure_page_and_revision(sender, **kwargs):
     from v1.wagtail_hooks import share, configure_page_revision, flush_akamai
     share(page=kwargs['instance'], is_sharing=False, is_live=True)
-    configure_page_revision(page=kwargs['instance'], is_sharing=False, is_live=True)
+    configure_page_revision(
+        page=kwargs['instance'], is_sharing=False, is_live=True)
     flush_akamai(page=kwargs['instance'])
 
 

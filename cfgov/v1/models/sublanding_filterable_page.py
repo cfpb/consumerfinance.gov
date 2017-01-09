@@ -1,20 +1,25 @@
 import itertools
 
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import (
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface
+)
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 from wagtail.wagtailcore.models import PageManager
 
-from v1.models.base import CFGOVPage
-from v1.models.learn_page import AbstractFilterPage
 from v1 import blocks as v1_blocks
 from v1.atomic_elements import molecules, organisms
 from v1.feeds import FilterableFeedPageMixin
+from v1.models.base import CFGOVPage
+from v1.models.learn_page import AbstractFilterPage
 from v1.util import ref
 from v1.util.filterable_list import FilterableListMixin
 
 
-class SublandingFilterablePage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
+class SublandingFilterablePage(FilterableFeedPageMixin,
+                               FilterableListMixin,
+                               CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
@@ -59,7 +64,9 @@ class ActivityLogPage(SublandingFilterablePage):
 
     @classmethod
     def base_query(cls, hostname):
-        """Activity log pages should only show content from certain categories."""
+        """
+        Activity log pages should only show content from certain categories.
+        """
         eligible_pages = AbstractFilterPage.objects.live_shared(hostname)
 
         return eligible_pages.filter(

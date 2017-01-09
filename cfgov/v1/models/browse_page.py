@@ -1,20 +1,20 @@
-import itertools
-
 from django.db import models
-
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel,
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface
+)
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
-    StreamFieldPanel, FieldPanel
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR, PageManager
-from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.wagtailcore.models import PageManager
 
-from .base import CFGOVPage
+from data_research.blocks import ConferenceRegistrationForm
+from jobmanager.models import JobListingTable
+
 from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
 from ..util.util import get_secondary_nav_items
-from jobmanager.models import JobListingTable
-from data_research.blocks import ConferenceRegistrationForm, LineChart
+from .base import CFGOVPage
 
 
 class BrowsePage(CFGOVPage):
@@ -34,12 +34,14 @@ class BrowsePage(CFGOVPage):
         ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
         ('table', organisms.Table(editable=False)),
-        ('table_block', organisms.AtomicTableBlock(table_options={'renderer':'html'})),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'})),
         ('job_listing_table', JobListingTable()),
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
         ('line_chart', LineChart()),
         ('html_block', organisms.HTMLBlock()),
+        ('chart_block', organisms.ChartBlock()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

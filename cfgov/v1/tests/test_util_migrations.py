@@ -2,21 +2,15 @@
 from __future__ import unicode_literals
 
 import mock
-from django.test import TestCase
-
 from django.apps import apps
-
-from wagtail.wagtailcore.models import Page, PageRevision
+from django.test import TestCase
 from wagtail.tests.testapp.models import StreamPage
+from wagtail.wagtailcore.models import Page, PageRevision
 
-from v1.util.migrations import (
-    migrate_page_types_and_fields,
-    migrate_stream_field,
-    get_stream_data,
-    set_stream_data,
-    is_page,
-)
 from v1.tests.wagtail_pages.helpers import save_new_page
+from v1.util.migrations import (get_stream_data, is_page,
+                                migrate_page_types_and_fields,
+                                migrate_stream_field, set_stream_data)
 
 
 class MigrationsUtilTestCase(TestCase):

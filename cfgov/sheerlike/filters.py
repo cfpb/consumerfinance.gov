@@ -1,6 +1,7 @@
-import re
 import calendar
 import datetime
+import re
+
 from dateutil.parser import parse
 
 from .middleware import get_request
@@ -18,7 +19,6 @@ def generate_term_filters(multidict, filter_keys):
         field = key.replace('filter_', '')
         filter_type_main = {"or": []}
         values = multidict.getlist(key)
-        #from nose.tools import set_trace; set_trace();
         for val in values:
             term_single = {"term": {}}
             term_single["term"][field] = val
@@ -65,17 +65,21 @@ def generate_range_filters(multidict, filter_keys):
                     range_clause['range']['date']['lte'],
                     default=datetime.date.today().replace(
                         day=1)):
-            range_clause['range']['date']['gte'], range_clause['range']['date']['lte'] = \
-                range_clause['range']['date'][
-                    'lte'], range_clause['range']['date']['gte']
+            gte = range_clause['range']['date']['gte']
+            lte = range_clause['range']['date']['lte']
+            range_clause['range']['date']['lte'] = gte
+            range_clause['range']['date']['gte'] = lte
+
         if 'lte' in range_clause['range']['date']:
             # If either date matches the YYYY-M[M] format, append the
             # appropriate day
             date_lte = range_clause['range']['date']['lte']
             if re.compile("^[0-9]{4}-[0-9]{1,2}$").match(date_lte):
                 year, month = date_lte.split('-')
-                last_day_of_month = calendar.monthrange(int(year), int(month))[1]
-                range_clause['range']['date']['lte'] += "-{0}".format(last_day_of_month)
+                last_day_of_month = \
+                    calendar.monthrange(int(year), int(month))[1]
+                range_clause['range']['date']['lte'] += \
+                    "-{0}".format(last_day_of_month)
             elif re.compile("\d{2}\/\d{2,4}").match(date_lte):
                 range_clause['range']['date']['lte'] = parse(date_lte)
 

@@ -15,21 +15,37 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Unreleased
 
-## Added
+### Added
+
+- New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
+
+### Changed
+
+
+### Removed
+
+
+### Fixed
+
+
+## 4.4.0 - 4.5.0
+
+### Added
 - Add RSS subscription button to newsroom posts.
 - New `validate_page_html` command for checking/fixing HTTP image links in legacy pages.
 - New block `HTMLBlock` that allows rendering of arbitrary HTML. Enabled on browse pages.
 - OAH-api upgraded to v0.9.92
 
-## Changed
+### Changed
 - Upgrade to Wagtail 1.7
 - Added redirect for `Leadership Calendar` Wagtail Page.
 - Moved CSS npm dev modules to devDependencies in `package.json`.
 - Updated `gulp-clean-css` from `2.0.6` to `2.3.2`.
 - Updated `gulp-imagemin` from `3.0.3` to `3.1.1`.
 - Updated `gulp-less` from `3.1.0` to `3.3.0`.
+- Updated regulations-site requirement to version `2.1.5`.
 
-## Removed
+### Removed
 - Removed layout.less enhancements that have been moved to Capital Framework.
 - Wagtail pages from the Django admin
 - Delete option from Wagtail templates
@@ -38,6 +54,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Spokesperson who is no longer with the Bureau from the press page.
 - Removed legacy calendar app.
 - cleaned up unusued, legacy code
+- Removed legacy demo code.
 
 ### Fixed
 - Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.

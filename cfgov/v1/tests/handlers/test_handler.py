@@ -1,5 +1,7 @@
-import mock
 from unittest import TestCase
+
+import mock
+
 from ...handlers import Handler
 
 

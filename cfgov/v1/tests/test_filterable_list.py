@@ -1,10 +1,9 @@
 import mock
+from django.test import RequestFactory, TestCase
 
-from django.test import TestCase
-from django.test import RequestFactory
+from v1.forms import FilterableListForm
 
 from ..util.filterable_list import FilterableListMixin
-from v1.forms import FilterableListForm
 
 
 class TestFilterableListMixin(TestCase):
