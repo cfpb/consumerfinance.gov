@@ -1,25 +1,19 @@
-import os
 import json
-from urlparse import urlsplit
 import logging
+import os
 from exceptions import ValueError
-
-from django.utils import timezone
-from django.conf import settings
-from django.http import Http404
-from django.contrib.auth.models import Permission
-from django.utils.html import escape, format_html_join
+from urlparse import urlsplit
 
 import requests
-
+from django.conf import settings
+from django.contrib.auth.models import Permission
+from django.utils.html import escape, format_html_join
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
 
-from .models import CFGOVPage
 from .util import util
 
 logger = logging.getLogger(__name__)
-
 
 
 @hooks.register('insert_editor_js')
@@ -67,13 +61,13 @@ def get_akamai_credentials():
     return object_id, (user, password)
 
 
-def should_flush(page):
+def should_flush():
     """Only initiate an Akamai flush if it is enabled in settings."""
     return settings.ENABLE_AKAMAI_CACHE_PURGE
 
 
-def flush_akamai(page):
-    if should_flush(page):
+def flush_akamai():
+    if should_flush():
         object_id, auth = get_akamai_credentials()
         headers = {'content-type': 'application/json'}
         payload = {

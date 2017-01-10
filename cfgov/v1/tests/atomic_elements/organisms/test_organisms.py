@@ -9,7 +9,6 @@ from v1.models.snippets import Contact
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
-
 django_client = Client()
 
 '''

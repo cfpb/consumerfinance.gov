@@ -1,7 +1,6 @@
-from django.views.generic.base import TemplateView
 from django.http import Http404
 from django.template import TemplateDoesNotExist
-
+from django.views.generic.base import TemplateView
 from elasticsearch import TransportError
 
 from sheerlike.query import get_document
@@ -61,7 +60,8 @@ class SheerTemplateView(TemplateView):
             raise Http404("could not find template in " +
                           str(response.template_name))
 
-        if template.template.name == self.default_template and self.local_name not in context:
+        if (template.template.name == self.default_template
+                and self.local_name not in context):
             raise Http404('fell back to %s, but %s with id %s not found' %
                           (self.default_template, self.doc_type, self.doc_id))
         return response

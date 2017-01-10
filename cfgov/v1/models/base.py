@@ -1,40 +1,30 @@
 import csv
-from cStringIO import StringIO
 from collections import OrderedDict
+from cStringIO import StringIO
 from itertools import chain
-import json
-import os
 from urllib import urlencode
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
-from django.http import (
-    Http404,
-    JsonResponse,
-    HttpResponseBadRequest,
-    HttpResponse
-)
-
+from django.http import (HttpResponse, HttpResponseBadRequest,
+                         JsonResponse)
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
-
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel, \
-    MultiFieldPanel, TabbedInterface, ObjectList
+from taggit.models import TaggedItemBase
+from wagtail.wagtailadmin.edit_handlers import (FieldPanel, InlinePanel,
+                                                MultiFieldPanel, ObjectList,
+                                                StreamFieldPanel,
+                                                TabbedInterface)
 from wagtail.wagtailcore import blocks, hooks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import Orderable, Page, PageManager, PagePermissionTester, \
-    PageQuerySet, UserPagePermissionsProxy
-from wagtail.wagtailcore.url_routing import RouteResult
-
-from taggit.models import TaggedItemBase
-
+from wagtail.wagtailcore.models import (Orderable, Page,
+                                        PagePermissionTester,
+                                        UserPagePermissionsProxy)
 
 from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms
@@ -57,14 +47,11 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 
-
-
-
 class CFGOVPage(Page):
     authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
                                      verbose_name='Authors',
                                      help_text='A comma separated list of '
-                                               + 'authors.',
+                                               'authors.',
                                      related_name='authored_pages')
     tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
                                   related_name='tagged_pages')
@@ -76,7 +63,6 @@ class CFGOVPage(Page):
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
-
 
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
@@ -131,8 +117,10 @@ class CFGOVPage(Page):
         activity_log = CFGOVPage.objects.get(slug='activity-log').specific
         tags = []
         index = activity_log.form_id()
-        tags = urlencode([('filter%s_topics' % index, tag) for tag in self.tags.slugs()])
-        return get_protected_url({'request': request}, activity_log) + '?' + tags
+        tags = urlencode([('filter%s_topics' % index, tag)
+                          for tag in self.tags.slugs()])
+        return (get_protected_url({'request': request}, activity_log) +
+                '?' + tags)
 
     def related_posts(self, block, hostname):
         from v1.models.learn_page import AbstractFilterPage
@@ -159,7 +147,8 @@ class CFGOVPage(Page):
             if parent:
                 child_query = Page.objects.child_of_q(parent)
                 if 'specific_categories' in block.value:
-                    child_query &= specific_categories_query(block, parent_slug)
+                    child_query &= specific_categories_query(
+                        block, parent_slug)
             else:
                 child_query = Q()
             return child_query
@@ -175,29 +164,32 @@ class CFGOVPage(Page):
             else:
                 return Q()
 
-        for parent_slug, search_type, search_type_name, search_query in search_types:
-            search_query &= fetch_children_by_specific_category(block, parent_slug)
+        for parent_slug, search_type, search_type_name, search_query in \
+                search_types:
+            search_query &= fetch_children_by_specific_category(
+                block, parent_slug)
             if parent_slug == 'events':
-                search_query |= fetch_children_by_specific_category(block, 'archive-past-events') & query
+                search_query |= fetch_children_by_specific_category(
+                    block, 'archive-past-events') & query
             relate = block.value.get('relate_{}'.format(search_type), None)
             if relate:
                 related[search_type_name] = \
                     AbstractFilterPage.objects.live().filter(
                         search_query).distinct().exclude(
-                        id=self.id).order_by('-date_published')[:block.value['limit']]
+                        id=self.id).order_by(
+                            '-date_published')[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
 
-
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
         home_page_children = request.site.root_page.get_children()
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
-                return [ancestor.specific for ancestor in ancestors[i+1:]]
+                return [ancestor.specific for ancestor in ancestors[i + 1:]]
         return []
 
     def get_appropriate_descendants(self, hostname, inclusive=True):
@@ -207,10 +199,12 @@ class CFGOVPage(Page):
         return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
     def get_next_appropriate_siblings(self, hostname, inclusive=False):
-        return self.siblings(inclusive=inclusive).filter(path__gte=self.path).order_by('path')
+        return self.siblings(inclusive=inclusive).filter(
+            path__gte=self.path).order_by('path')
 
     def get_prev_appropriate_siblings(self, hostname, inclusive=False):
-        return self.siblings(inclusive=inclusive).filter(path__lte=self.path).order_by('-path')
+        return self.siblings(inclusive=inclusive).filter(
+            path__lte=self.path).order_by('-path')
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
@@ -264,7 +258,6 @@ class CFGOVPage(Page):
                 context
             )
 
-
     def sharable_pages(self):
         """
         Return a queryset of the pages that this user has permission to share.
@@ -317,7 +310,7 @@ class CFGOVPage(Page):
 
     # Gets the JS from the Streamfield data
     def _add_streamfield_js(self, js):
-        # Create a dictionary with keys ordered organisms, molecules, then atoms
+        # Create a dict with keys ordered organisms, molecules, then atoms
         for child in self._get_streamfield_blocks():
             self._add_block_js(child.block, js)
 
@@ -337,12 +330,14 @@ class CFGOVPage(Page):
                 for key in js.keys():
                     if obj.__module__.endswith(key):
                         js[key] += obj.Media.js
-                if not [key for key in js.keys() if obj.__module__.endswith(key)]:
+                if not [key for key in js.keys()
+                        if obj.__module__.endswith(key)]:
                     js.update({'other': obj.Media.js})
         except:
             pass
 
-    # Returns all the JS files specific to this page and it's current Streamfield's blocks
+    # Returns all the JS files specific to this page and it's current
+    # Streamfield's blocks
     @property
     def media(self):
         js = OrderedDict()
@@ -425,17 +420,20 @@ class FailedLoginAttempt(models.Model):
     failed_attempts = models.CharField(max_length=1000)
 
     def __unicode__(self):
-        attempts_no = 0 if not self.failed_attempts else len(self.failed_attempts.split(','))
+        attempts_no = (0 if not self.failed_attempts
+                       else len(self.failed_attempts.split(',')))
         return "%s has %s failed login attempts" % (self.user, attempts_no)
 
     def clean_attempts(self, timestamp):
         """ Leave only those that happened after <timestamp> """
         attempts = self.failed_attempts.split(',')
-        self.failed_attempts = ','.join([fa for fa in attempts if int(fa) >= timestamp])
+        self.failed_attempts = ','.join([fa for fa in attempts
+                                         if int(fa) >= timestamp])
 
     def failed(self, timestamp):
         """ Add another failed attempt """
-        attempts = self.failed_attempts.split(',') if self.failed_attempts else []
+        attempts = (self.failed_attempts.split(',')
+                    if self.failed_attempts else [])
         attempts.append(str(int(timestamp)))
         self.failed_attempts = ','.join(attempts)
 

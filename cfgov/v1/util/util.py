@@ -1,13 +1,11 @@
-import collections, json, os, re
-from itertools import chain
+import os
 from time import time
-from django.conf import settings
-from django.http import Http404, HttpResponseRedirect
+
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.urlresolvers import resolve
+from django.http import Http404, HttpResponseRedirect
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
-from wagtail.wagtailcore.blocks.struct_block import StructValue
-from ref import related_posts_categories
+
 
 def get_unique_id(prefix='', suffix=''):
     index = hex(int(time() * 10000000))[2:]
@@ -25,6 +23,7 @@ ERROR_MESSAGES = {
     }
 }
 
+
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
     return isinstance(page, (BrowsePage, BrowseFilterablePage))
@@ -35,7 +34,8 @@ def instanceOfBrowseOrFilterablePages(page):
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
     from v1.templatetags.share import get_page_state_url
-    on_staging = os.environ.get('DJANGO_STAGING_HOSTNAME') == request.site.hostname
+    on_staging = (os.environ.get('DJANGO_STAGING_HOSTNAME')
+                  == request.site.hostname)
     nav_items = []
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
@@ -68,30 +68,37 @@ def get_secondary_nav_items(request, current_page):
     if page.slug == 'leadership-calendar':
         BASE_URL = '/about-us/the-bureau'
         return [{
-                'title': 'The Bureau',
-                'slug': 'the-bureau',
-                'url': '/the-bureau/',
-                'children': [{
+            'title': 'The Bureau',
+            'slug': 'the-bureau',
+            'url': '/the-bureau/',
+            'children': [
+                {
                     'title': 'The Director',
                     'url': BASE_URL + '/about-director/',
                     'slug': 'about-director',
-                },{
+                },
+                {
                     'title': 'The Deputy Director',
                     'url': BASE_URL + '/about-deputy-director/',
                     'slug': 'about-deputy-director',
-                },{
+                },
+                {
                     'title': 'Bureau Structure',
                     'url': BASE_URL + '/bureau-structure/',
                     'slug': 'bureau-structure',
-                },{
+                },
+                {
                     'title': page.title,
-                    'url': get_page_state_url({}, page).replace('/about-us', BASE_URL),
+                    'url': get_page_state_url({}, page).replace(
+                        '/about-us', BASE_URL),
                     'slug': page.slug,
-                }]
+                }
+            ]
         }], True
     # END TODO
 
-    pages = [page] if page.secondary_nav_exclude_sibling_pages else page.get_appropriate_siblings(request.site.hostname)
+    pages = ([page] if page.secondary_nav_exclude_sibling_pages
+             else page.get_appropriate_siblings(request.site.hostname))
 
     for sibling in pages:
         # Only if it's a Browse(Filterable) type page
@@ -107,7 +114,8 @@ def get_secondary_nav_items(request, current_page):
                 'children': [],
             }
             children = sibling.get_children().specific()
-            for child in [c for c in children if (on_staging and c.shared) or c.live]:
+            for child in [c for c in children
+                          if (on_staging and c.shared) or c.live]:
                 if instanceOfBrowseOrFilterablePages(child):
                     item['children'].append({
                         'title': child.title,
@@ -115,7 +123,8 @@ def get_secondary_nav_items(request, current_page):
                         'url': get_page_state_url({}, child),
                     })
             nav_items.append(item)
-    # Return a boolean about whether or not the current page has Browse children
+    # Return a boolean about whether or not the current page has Browse
+    # children
     for item in nav_items:
         if get_page_state_url({}, page) == item['url'] and item['children']:
             return nav_items, True
@@ -141,9 +150,12 @@ def valid_destination_for_request(request, url):
 
 
 def all_valid_destinations_for_request(request):
-    possible_destinations = (('Wagtail','/admin/'), ('Django admin', '/django-admin/'))
-    valid_destinations = [pair for pair in possible_destinations if
-                            valid_destination_for_request(request, pair[1])]
+    possible_destinations = (
+        ('Wagtail', '/admin/'),
+        ('Django admin', '/django-admin/')
+    )
+    valid_destinations = [pair for pair in possible_destinations
+                          if valid_destination_for_request(request, pair[1])]
 
     return valid_destinations
 

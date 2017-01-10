@@ -31,9 +31,10 @@ def add_workflow_bar_items(request, items):
 
     # sloppy assumption for demo purposes: the domain you are using is the
     # source "site"
-    destination = request.site.workflowdestinationsetting.destination
+    destination = (hasattr(request, 'site') and
+                   request.site.workflowdestinationsetting.destination)
     if destination:
-        items.append(WorkflowUserBarItem(destination,current_page))
+        items.append(WorkflowUserBarItem(destination, current_page))
 
 
 @hooks.register('register_admin_urls')

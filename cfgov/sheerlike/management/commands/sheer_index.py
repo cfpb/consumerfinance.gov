@@ -1,20 +1,13 @@
-import sys
 import os.path
-import codecs
-import json
 
-from importlib import import_module
-
-from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
+from django.core.management.base import BaseCommand
 
-from unipath import Path
+from sheerlike.indexer import index
 
 LOCATION = os.environ.get('SHEER_LOCATION', os.getcwd())
 ELASTICSEARCH_HOSTS = settings.SHEER_ELASTICSEARCH_SERVER
 ELASTICSEARCH_INDEX = settings.SHEER_ELASTICSEARCH_INDEX
-
-from sheerlike.indexer import index
 
 
 class Command(BaseCommand):
@@ -30,12 +23,16 @@ class Command(BaseCommand):
             '--elasticsearch',
             '-e',
             default=ELASTICSEARCH_HOSTS,
-            help="Elasticsearch host:port pairs. Separate hosts with commas. Default is localhost:9200. You can also set the SHEER_ELASTICSEARCH_HOSTS environment variable.")
+            help=("Elasticsearch host:port pairs. Separate hosts with commas. "
+                  "Default is localhost:9200. You can also set the "
+                  "SHEER_ELASTICSEARCH_HOSTS environment variable."))
         parser.add_argument(
             '--index',
             '-i',
             default=ELASTICSEARCH_INDEX,
-            help="Elasticsearch index name. Default is 'content'. You can also set the SHEER_ELASTICSEARCH_INDEX environment variable.")
+            help=("Elasticsearch index name. Default is 'content'. You can "
+                  "also set the SHEER_ELASTICSEARCH_INDEX environment "
+                  "variable."))
 
     def handle(self, *args, **options):
         index(args, options)

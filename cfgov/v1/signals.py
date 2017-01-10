@@ -1,11 +1,6 @@
-import json
-
 from datetime import timedelta
-from django.dispatch import Signal
-from django.utils import timezone
-from django.core.exceptions import ObjectDoesNotExist
-from wagtail.wagtailcore.signals import page_published, page_unpublished
 
+from django.utils import timezone
 
 
 def new_phi(user, expiration_days=90, locked_days=1):
@@ -40,5 +35,3 @@ def user_save_callback(sender, **kwargs):
         current_password_history = user.passwordhistoryitem_set.latest()
         if user.password != current_password_history.encrypted_password:
             new_phi(user)
-
-
