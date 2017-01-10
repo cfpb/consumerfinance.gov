@@ -21,56 +21,6 @@ from .util import util
 logger = logging.getLogger(__name__)
 
 
-@hooks.register('after_create_page')
-@hooks.register('after_edit_page')
-def share_the_page(request, page):
-    page = Page.objects.get(id=page.id).specific
-    parent_page = page.parent()
-    is_publishing = bool(request.POST.get('action-publish', False))
-    is_sharing = bool(request.POST.get('action-share', False))
-
-    check_permissions(parent_page, request.user, is_publishing, is_sharing)
-
-    is_live = False
-    goes_live_in_future = page.go_live_at and page.go_live_at > timezone.now()
-
-    if is_publishing and not goes_live_in_future:
-        is_live = True
-
-    share(page, is_sharing, is_live)
-    configure_page_revision(page, is_sharing, is_live)
-    if is_live:
-        flush_akamai(page)
-
-
-@hooks.register('after_delete_page')
-def log_page_deletion(request, page):
-    logger.warning(
-        u'User {user} with ID {user_id} deleted page {title} with ID {page_id} at URL {url}'.format(
-            user=request.user,
-            user_id=request.user.id,
-            title=page.title,
-            page_id=page.id,
-            url=page.url_path,
-        )
-    )
-
-
-def check_permissions(parent, user, is_publishing, is_sharing):
-    parent_perms = parent.permissions_for_user(user)
-    if parent.slug != 'root':
-        is_publishing = is_publishing and parent_perms.can_publish()
-        is_sharing = is_sharing and parent_perms.can_publish()
-
-
-def share(page, is_sharing, is_live):
-    if is_sharing or is_live:
-        page.shared = True
-        page.has_unshared_changes = False
-    else:
-        page.has_unshared_changes = True
-    page.save()
-
 
 @hooks.register('insert_editor_js')
 def editor_js():
@@ -101,20 +51,6 @@ def editor_css():
     return css_includes
 
 
-# `CFGOVPage.route()` will select the latest revision of the page where `live`
-# is set to True and return that revision as a page object to serve the request
-# so here we configure the latest revision to fall in line with that logic.
-#
-# This is also used as a signal callback when publishing in code or via
-# management command like publish_scheduled_pages.
-def configure_page_revision(page, is_sharing, is_live):
-    latest = page.get_latest_revision()
-    content_json = json.loads(latest.content_json)
-    content_json['live'] = is_live
-    content_json['shared'] = is_sharing or is_live
-    content_json['has_unshared_changes'] = not is_sharing and not is_live
-    latest.content_json = json.dumps(content_json)
-    latest.save()
 
 
 def get_akamai_credentials():
@@ -159,18 +95,6 @@ def flush_akamai(page):
             return True
     return False
 
-
-@hooks.register('before_serve_page')
-def check_request_site(page, request, serve_args, serve_kwargs):
-    if request.site.hostname == os.environ.get('DJANGO_STAGING_HOSTNAME'):
-        if isinstance(page, CFGOVPage):
-            if not page.shared:
-                raise Http404
-
-
-@hooks.register('register_permissions')
-def register_share_permissions():
-    return Permission.objects.filter(codename='share_page')
 
 
 class CFGovLinkHandler(object):

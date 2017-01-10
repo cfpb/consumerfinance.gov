@@ -11,7 +11,7 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from . import AbstractFilterPage, CFGOVPageManager
+from . import AbstractFilterPage
 from ..atomic_elements import molecules, organisms
 from .. import blocks as v1_blocks
 
@@ -26,15 +26,12 @@ class BlogPage(AbstractFilterPage):
     )
     template = 'blog/blog_page.html'
 
-    objects = PageManager()
-
 
 class LegacyBlogPage(AbstractFilterPage):
     content = StreamField([
         ('content', blocks.RawHTMLBlock(help_text='Content from WordPress unescaped.')),
         ('feedback', v1_blocks.Feedback()),
     ])
-    objects = CFGOVPageManager()
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel = StreamFieldPanel('content')
     )

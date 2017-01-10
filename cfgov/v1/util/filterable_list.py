@@ -24,7 +24,7 @@ class FilterableListMixin(object):
 
     def base_query(self, hostname):
         logger.info('Filtering by parent {}'.format(self))
-        return AbstractFilterPage.objects.live_shared(hostname).filter(CFGOVPage.objects.child_of_q(self))
+        return AbstractFilterPage.objects.live().filter(CFGOVPage.objects.child_of_q(self))
 
     def process_forms(self, request, forms):
         filter_data = {'forms': [], 'page_sets': []}

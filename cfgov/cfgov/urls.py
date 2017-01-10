@@ -20,7 +20,7 @@ from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (
     change_password, check_permissions, login_with_lockout,
-    password_reset_confirm, unshare, welcome
+    password_reset_confirm, welcome
 )
 from v1.views.documents import DocumentServeView
 
@@ -220,7 +220,6 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^picard/(?P<path>.*)$', RedirectView.as_view(url='/tasks/%(path)s',permanent=True)),
         url(r'^django-admin/password_change', change_password, name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
-        url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
         # - Override Django and Wagtail password views with our password policy - #
         url(r'^admin/password_reset/', include([
@@ -237,7 +236,6 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^admin/account/change_password/$', change_password, name='wagtailadmin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
         url(r'^admin/', include(wagtailadmin_urls)),
-        url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
     ]
 

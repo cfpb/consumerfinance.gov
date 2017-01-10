@@ -11,15 +11,13 @@ from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
     StreamFieldPanel, FieldPanel, FieldRowPanel, MultiFieldPanel, InlinePanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from . import BlogPage, LegacyBlogPage, CFGOVPageManager
+from . import BlogPage, LegacyBlogPage
 from ..atomic_elements import molecules, organisms
 
 
 class NewsroomPage(BlogPage):
     template = 'newsroom/newsroom-page.html'
-    objects = CFGOVPageManager()
 
 
 class LegacyNewsroomPage(LegacyBlogPage):
     template = 'newsroom/newsroom-page.html'
-    objects = CFGOVPageManager()

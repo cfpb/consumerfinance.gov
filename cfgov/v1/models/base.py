@@ -57,28 +57,7 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 
-class CFGOVPageQuerySet(PageQuerySet):
-    def shared_q(self):
-        return Q(shared=True)
 
-    def shared(self):
-        return self.filter(self.shared_q())
-
-    def live_shared_q(self):
-        return self.live_q() | self.shared_q()
-
-    def live_shared(self, hostname):
-        if settings.STAGING_HOSTNAME in hostname:
-            return self.filter(self.live_shared_q())
-        else:
-            return self.live()
-
-
-class BaseCFGOVPageManager(PageManager):
-    def get_queryset(self):
-        return CFGOVPageQuerySet(self.model).order_by('path')
-
-CFGOVPageManager = BaseCFGOVPageManager.from_queryset(CFGOVPageQuerySet)
 
 
 class CFGOVPage(Page):
@@ -98,7 +77,6 @@ class CFGOVPage(Page):
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
 
-    objects = CFGOVPageManager()
 
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
@@ -204,7 +182,7 @@ class CFGOVPage(Page):
             relate = block.value.get('relate_{}'.format(search_type), None)
             if relate:
                 related[search_type_name] = \
-                    AbstractFilterPage.objects.live_shared(hostname).filter(
+                    AbstractFilterPage.objects.live().filter(
                         search_query).distinct().exclude(
                         id=self.id).order_by('-date_published')[:block.value['limit']]
 
@@ -213,39 +191,26 @@ class CFGOVPage(Page):
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
 
-    def get_appropriate_page_version(self, request):
-        # If we're on the production site, make sure the version of the page
-        # displayed is the latest version that has `live` set to True for
-        # the live site or `shared` set to True for the staging site.
-        revisions = self.revisions.all().order_by('-created_at')
-        for revision in revisions:
-            page_version = json.loads(revision.content_json)
-            if not request.is_staging:
-                if page_version['live']:
-                    return revision.as_page_object()
-            else:
-                if page_version['shared']:
-                    return revision.as_page_object()
 
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
         home_page_children = request.site.root_page.get_children()
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
-                return [ancestor.specific.get_appropriate_page_version(request) for ancestor in ancestors[i+1:]]
+                return [ancestor.specific for ancestor in ancestors[i+1:]]
         return []
 
     def get_appropriate_descendants(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).descendant_of(self, inclusive)
+        return CFGOVPage.objects.live().descendant_of(self, inclusive)
 
     def get_appropriate_siblings(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).sibling_of(self, inclusive)
+        return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
     def get_next_appropriate_siblings(self, hostname, inclusive=False):
-        return self.get_appropriate_siblings(hostname=hostname, inclusive=inclusive).filter(path__gte=self.path).order_by('path')
+        return self.siblings(inclusive=inclusive).filter(path__gte=self.path).order_by('path')
 
     def get_prev_appropriate_siblings(self, hostname, inclusive=False):
-        return self.get_appropriate_siblings(hostname=hostname, inclusive=inclusive).filter(path__lte=self.path).order_by('-path')
+        return self.siblings(inclusive=inclusive).filter(path__lte=self.path).order_by('-path')
 
     def get_context(self, request, *args, **kwargs):
         context = super(CFGOVPage, self).get_context(request, *args, **kwargs)
@@ -299,35 +264,6 @@ class CFGOVPage(Page):
                 context
             )
 
-    @property
-    def status_string(self):
-        if self.expired:
-            return _("expired")
-        elif self.approved_schedule:
-            return _("scheduled")
-        elif self.live and self.shared:
-            if self.has_unpublished_changes:
-                if self.has_unshared_changes:
-                    for revision in self.revisions.order_by('-created_at', '-id'):
-                        content = json.loads(revision.content_json)
-                        if content['shared']:
-                            if content['live']:
-                                return _('live + draft')
-                            else:
-                                return _('live + (shared + draft)')
-                else:
-                    return _("live + shared")
-            else:
-                return _("live")
-        elif self.live:
-            return _("live")
-        elif self.shared:
-            if self.has_unshared_changes:
-                return _("shared + draft")
-            else:
-                return _("shared")
-        else:
-            return _("draft")
 
     def sharable_pages(self):
         """
@@ -352,26 +288,6 @@ class CFGOVPage(Page):
     def can_share_pages(self):
         """Return True if the user has permission to publish any pages"""
         return self.sharable_pages().exists()
-
-    def route(self, request, path_components):
-        if path_components:
-            # Request is for a child of this page.
-            child_slug = path_components[0]
-            remaining_components = path_components[1:]
-
-            try:
-                subpage = self.get_children().get(slug=child_slug)
-            except Page.DoesNotExist:
-                raise Http404
-
-            return subpage.specific.route(request, remaining_components)
-
-        else:
-            # Request is for this very page.
-            page = self.get_appropriate_page_version(request)
-            if page:
-                return RouteResult(page)
-            raise Http404
 
     def permissions_for_user(self, user):
         """

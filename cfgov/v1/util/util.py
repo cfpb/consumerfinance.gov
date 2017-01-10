@@ -39,9 +39,9 @@ def get_secondary_nav_items(request, current_page):
     nav_items = []
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
-        page = parent.get_appropriate_page_version(request)
+        page = parent
     else:
-        page = current_page.get_appropriate_page_version(request)
+        page = current_page
 
     if not page:
         return [], False
@@ -97,9 +97,9 @@ def get_secondary_nav_items(request, current_page):
         # Only if it's a Browse(Filterable) type page
         if instanceOfBrowseOrFilterablePages(sibling.specific):
             if page.id == sibling.id:
-                sibling = page.get_appropriate_page_version(request)
+                sibling = page
             else:
-                sibling = sibling.get_appropriate_page_version(request)
+                sibling = sibling
             item = {
                 'title': sibling.title,
                 'slug': sibling.slug,

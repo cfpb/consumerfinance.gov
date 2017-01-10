@@ -31,32 +31,10 @@ from wagtail.wagtailadmin.utils import permission_required
 from v1.auth_forms import (
     CFGOVPasswordChangeForm, CFGOVSetPasswordForm, LoginForm
 )
-from v1.signals import page_unshared
 from v1.util.util import (
     all_valid_destinations_for_request, valid_destination_for_request
 )
 
-def unshare(request, page_id):
-    page = get_object_or_404(Page, id=page_id).specific
-    if not page.permissions_for_user(request.user).can_unshare():
-        raise PermissionDenied
-
-    if request.method == 'POST':
-        page.shared = False
-        page.save_revision(user=request.user, submitted_for_moderation=False)
-        page.save()
-
-        page_unshared.send(sender=page.specific_class, instance=page.specific)
-
-        wagtail_messages.success(request, _("Page '{0}' unshared.").format(page.title), buttons=[
-            wagtail_messages.button(reverse('wagtailadmin_pages:edit', args=(page.id,)), _('Edit'))
-        ])
-
-        return redirect('wagtailadmin_explore', page.get_parent().id)
-
-    return render(request, 'wagtailadmin/pages/confirm_unshare.html', {
-        'page': page,
-    })
 
 
 # Overrided Wagtail Views
