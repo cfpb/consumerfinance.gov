@@ -10,8 +10,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtailcore import urls as wagtail_urls
-from wagtail.wagtailcore import views
+from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing import views
 
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
@@ -378,7 +378,7 @@ if settings.DEBUG:
 
 # Catch remaining URL patterns that did not match a route thus far.
 
-urlpatterns.append(url(r'', include(wagtail_urls)))
+urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
 
 def handle_error(code, request):
