@@ -114,7 +114,7 @@ class CFGOVPage(Page):
         return sorted(author_names, key=lambda x: x.name.split()[-1])
 
     def generate_view_more_url(self, request):
-        activity_log = CFGOVPage.objects.get(slug='activity-log').specific
+        activity_log = request.site.root_page.get_children().get(slug='activity-log').specific
         tags = []
         index = activity_log.form_id()
         tags = urlencode([('filter%s_topics' % index, tag)
