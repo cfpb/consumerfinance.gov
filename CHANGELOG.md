@@ -29,6 +29,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 4.5.1
+
+### Added
+- Add debt collection menu item behind feature flag
+
+### Changed
+- Updated regulations-site requirement to version `2.1.5`.
+
+
 ## 4.4.0 - 4.5.0
 
 ### Added
