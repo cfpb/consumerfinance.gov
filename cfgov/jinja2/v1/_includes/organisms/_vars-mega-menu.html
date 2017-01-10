@@ -151,12 +151,19 @@
     )])
 )] -%}
 
+
 {% if flag_enabled(request, 'PREPAID_RELEASE') %}
     {{ nav_items[0][0][2][1].append( ('Prepaid Cards', '/consumer-tools/prepaid-cards/', [(
         ('Choose the Right Card for Your Situation', '/consumer-tools/prepaid-cards/choose-the-right-card/', []),
         ('Know Your Rights', '/consumer-tools/prepaid-cards/know-your-rights/', []),
         ('Understand the Fees You Will Pay', '/consumer-tools/prepaid-cards/understand-fees/', [])
     )]) ) }}
+{% endif %}
+
+{% if flag_enabled(request, 'DEBT_COLLECTION_RELEASE') %}
+    {{ nav_items[0][0][2][1].append( 
+        ('Debt Collection', '/consumer-tools/debt-collection/', []) 
+    ) }}
 {% endif %}
 
 {% if flag_enabled(request, 'CREDIT_TRENDS_RELEASE') %}
