@@ -283,19 +283,19 @@ class TestFlushAkamai(TestCase):
 
     def test_should_not_flush_if_not_enabled(self):
         with self.settings(ENABLE_AKAMAI_CACHE_PURGE=None):
-            assert not should_flush(self.page)
+            assert not should_flush()
 
     def test_should_flush_if_enabled(self):
         with self.settings(ENABLE_AKAMAI_CACHE_PURGE=True):
-            assert should_flush(self.page)
+            assert should_flush()
 
     def test_should_flush_gets_called_when_trying_to_flush(self):
         with mock.patch(
             'v1.wagtail_hooks.should_flush',
             return_value=False
         ) as should_flush:
-            self.assertFalse(flush_akamai(self.page))
-            should_flush.assert_called_once_with(self.page)
+            self.assertFalse(flush_akamai())
+            should_flush.assert_called_once_with()
 
 
 class TestGetAkamaiCredentials(TestCase):
