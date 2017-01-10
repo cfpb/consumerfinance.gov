@@ -1,14 +1,13 @@
-import mock
-
-from django.template import Context, Template
 from unittest import TestCase
+
+import mock
+from django.template import Context, Template
 from wagtail.wagtailcore.models import Site
 
+from v1.models.base import (CFGOVPage, CFGOVPagePermissionTester,
+                            CFGOVUserPagePermissionsProxy, User)
 from v1.templatetags import share
 from v1.tests.wagtail_pages import helpers
-from v1.models.base import (
-    CFGOVPage, CFGOVPagePermissionTester, CFGOVUserPagePermissionsProxy, User
-)
 
 
 class TemplatetagsShareTestCase(TestCase):

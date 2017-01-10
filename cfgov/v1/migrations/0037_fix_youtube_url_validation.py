@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
-import wagtail.wagtailcore.fields
 import wagtail.wagtailcore.blocks
+import wagtail.wagtailcore.fields
 import wagtail.wagtailimages.blocks
+from django.db import migrations, models
+
 import v1.atomic_elements.organisms
 
 

@@ -1,8 +1,8 @@
+from urlparse import urlparse
+
 from django import template
 from django.conf import settings
-from urlparse import urlparse
 from wagtail.wagtailcore.models import Page
-
 
 register = template.Library()
 

@@ -1,14 +1,14 @@
+from unittest import TestCase
+
 from django.core.exceptions import ValidationError
 from mock import Mock
 from model_mommy import mommy
-from unittest import TestCase
 from wagtail.wagtailcore.models import Page
 
 from jobmanager.models.django import ApplicantType
 from jobmanager.models.pages import JobListingPage
-from jobmanager.models.panels import (
-    EmailApplicationLink, USAJobsApplicationLink
-)
+from jobmanager.models.panels import (EmailApplicationLink,
+                                      USAJobsApplicationLink)
 
 
 class ApplicationLinkTestCaseMixin(object):

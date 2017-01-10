@@ -1,12 +1,13 @@
-from django.db import models
+import hashlib
 
-from wagtail.wagtailsnippets.models import register_snippet
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
+from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.wagtailcore.fields import RichTextField, StreamField
+from wagtail.wagtailsnippets.models import register_snippet
+
 from ..atomic_elements import molecules
-import hashlib
 
 
 @register_snippet
@@ -34,7 +35,8 @@ class Contact(models.Model):
 
     @classmethod
     def get_by_title_slug(self, title, slug):
-        return self.objects.get(hash=hashlib.md5(title + ';;' + slug).hexdigest())
+        return self.objects.get(
+            hash=hashlib.md5(title + ';;' + slug).hexdigest())
 
 
 @receiver(pre_save, sender=Contact)

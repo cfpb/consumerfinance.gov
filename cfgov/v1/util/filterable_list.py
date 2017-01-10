@@ -1,11 +1,13 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import logging
 
-from ..util.util import get_secondary_nav_items
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
 from v1.forms import FilterableListForm
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
 
-import logging
+from ..util.util import get_secondary_nav_items
+
 logger = logging.getLogger(__name__)
 
 
@@ -14,7 +16,8 @@ class FilterableListMixin(object):
     def get_context(self, request, *args, **kwargs):
         context = {}
         try:
-            context = super(FilterableListMixin, self).get_context(request, *args, **kwargs)
+            context = super(FilterableListMixin, self).get_context(
+                request, *args, **kwargs)
         except AttributeError as e:
             raise e
         context['get_secondary_nav_items'] = get_secondary_nav_items
@@ -24,13 +27,15 @@ class FilterableListMixin(object):
 
     def base_query(self, hostname):
         logger.info('Filtering by parent {}'.format(self))
-        return AbstractFilterPage.objects.live_shared(hostname).filter(CFGOVPage.objects.child_of_q(self))
+        return AbstractFilterPage.objects.live_shared(hostname).filter(
+            CFGOVPage.objects.child_of_q(self))
 
     def process_forms(self, request, forms):
         filter_data = {'forms': [], 'page_sets': []}
         for form in forms:
             if form.is_valid():
-                paginator = Paginator(form.get_page_set(), self.per_page_limit())
+                paginator = Paginator(form.get_page_set(),
+                                      self.per_page_limit())
                 page = request.GET.get('page')
 
                 # Get the page number in the request and get the page from the
@@ -51,7 +56,8 @@ class FilterableListMixin(object):
 
     def get_forms(self, request):
         hostname = request.site.hostname
-        for form_data in self.get_form_specific_filter_data(request_dict=request.GET):
+        for form_data in self.get_form_specific_filter_data(
+                request_dict=request.GET):
             yield FilterableListForm(
                 form_data,
                 hostname=hostname,
@@ -88,7 +94,8 @@ class FilterableListMixin(object):
 
     def has_active_filters(self, request, index):
         active_filters = False
-        forms_data = self.get_form_specific_filter_data(request_dict=request.GET)
+        forms_data = self.get_form_specific_filter_data(
+            request_dict=request.GET)
         filter_ids = self.get_filter_ids()
         if forms_data and index in filter_ids:
             try:

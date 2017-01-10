@@ -1,17 +1,15 @@
-import os
 import json
-from urlparse import urlsplit
 import logging
+import os
 from exceptions import ValueError
-
-from django.utils import timezone
-from django.conf import settings
-from django.http import Http404
-from django.contrib.auth.models import Permission
-from django.utils.html import escape, format_html_join
+from urlparse import urlsplit
 
 import requests
-
+from django.conf import settings
+from django.contrib.auth.models import Permission
+from django.http import Http404
+from django.utils import timezone
+from django.utils.html import escape, format_html_join
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
 
@@ -40,13 +38,13 @@ def share_the_page(request, page):
     share(page, is_sharing, is_live)
     configure_page_revision(page, is_sharing, is_live)
     if is_live:
-        flush_akamai(page)
+        flush_akamai()
 
 
 @hooks.register('after_delete_page')
 def log_page_deletion(request, page):
     logger.warning(
-        u'User {user} with ID {user_id} deleted page {title} with ID {page_id} at URL {url}'.format(
+        u'User {user} with ID {user_id} deleted page {title} with ID {page_id} at URL {url}'.format(  # noqa: E501
             user=request.user,
             user_id=request.user.id,
             title=page.title,
@@ -131,13 +129,13 @@ def get_akamai_credentials():
     return object_id, (user, password)
 
 
-def should_flush(page):
+def should_flush():
     """Only initiate an Akamai flush if it is enabled in settings."""
     return settings.ENABLE_AKAMAI_CACHE_PURGE
 
 
-def flush_akamai(page):
-    if should_flush(page):
+def flush_akamai():
+    if should_flush():
         object_id, auth = get_akamai_credentials()
         headers = {'content-type': 'application/json'}
         payload = {

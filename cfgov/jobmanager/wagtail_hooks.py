@@ -1,13 +1,11 @@
 from django.forms.models import ModelForm
 from tinymce.widgets import TinyMCE
-from wagtail.contrib.modeladmin.options import (
-    ModelAdmin, ModelAdminGroup, modeladmin_register
-)
+from wagtail.contrib.modeladmin.options import (ModelAdmin, ModelAdminGroup,
+                                                modeladmin_register)
 from wagtail.contrib.modeladmin.views import CreateView, EditView, InspectView
 
-from jobmanager.models import (
-    ApplicantType, Grade, JobCategory, JobListingPage, Location
-)
+from jobmanager.models import (ApplicantType, Grade, JobCategory,
+                               JobListingPage, Location)
 
 
 class ApplicantTypeModelAdmin(ModelAdmin):

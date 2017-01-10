@@ -1,6 +1,4 @@
 from threading import local
-from django.http import HttpResponse
-from django.core.urlresolvers import resolve
 
 _active = local()
 

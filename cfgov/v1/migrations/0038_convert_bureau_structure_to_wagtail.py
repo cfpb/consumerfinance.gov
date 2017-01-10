@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
-import v1.atomic_elements.atoms
+import wagtail.wagtailcore.blocks
+import wagtail.wagtailcore.fields
 import wagtail.wagtaildocs.blocks
 import wagtail.wagtailimages.blocks
-import wagtail.wagtailcore.fields
-import wagtail.wagtailcore.blocks
-import v1.blocks
+from django.db import migrations, models
+
+import v1.atomic_elements.atoms
 import v1.atomic_elements.organisms
+import v1.blocks
 
 
 class Migration(migrations.Migration):

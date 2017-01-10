@@ -1,11 +1,8 @@
-import os
-
 from django.conf import settings
-from django.conf.urls import include, url
-
+from django.conf.urls import url
+from django.views.generic.base import RedirectView
 from unipath import Path
 
-from django.views.generic.base import RedirectView
 from sheerlike.views.generic import SheerTemplateView
 
 

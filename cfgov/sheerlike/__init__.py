@@ -3,19 +3,15 @@ from __future__ import absolute_import  # Python 2 only
 import os
 import os.path
 import functools
-import warnings
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.conf import settings
 from django.template import loader, RequestContext
 from django.utils.html import mark_safe
 
 from jinja2 import Environment
 import jinja2.runtime
 from jinja2.runtime import Context
-
-from unipath import Path
 
 from .query import QueryFinder, more_like_this, get_document, when
 from .filters import selected_filters_for_field, is_filter_selected
@@ -63,6 +59,7 @@ class SheerlikeContext(Context):
 # Monkey patch not needed in master version of Jinja2
 # https://github.com/mitsuhiko/jinja2/commit/f22fdd5ffe81aab743f78290071b0aa506705533
 jinja2.runtime.Context = SheerlikeContext
+
 
 class SheerlikeEnvironment(Environment):
 

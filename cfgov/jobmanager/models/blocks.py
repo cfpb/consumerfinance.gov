@@ -2,8 +2,9 @@ from __future__ import absolute_import
 
 from django.template.loader import render_to_string
 from django.utils import timezone
-from v1.atomic_elements import organisms
 from wagtail.wagtailcore import blocks
+
+from v1.atomic_elements import organisms
 
 
 class OpenJobListingsMixin(object):
