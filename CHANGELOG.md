@@ -28,6 +28,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fix filter categories on the `enforcement/actions/` page.
+- Fix for missing breadcrumb on Press Resources `about-us/newsroom/press-resources/` page.
+
 
 ## 4.5.1
 
@@ -75,6 +77,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed handling of invalid date query string parameters for filterable list forms.
 - Added missing `block` class from a block on the about the director page.
 - Fixed issue with erroneously removed bureau stylesheet.
+
 
 ## 4.3.2
 
