@@ -19,8 +19,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 - New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
 - Django management command to delete Wagtail pages by their slug or ID
+- Consumer Tools Featured Menu Content
 
 ### Changed
+
+- Navigation FMC logic to allow verticals without an overview url to include an FMC
 
 
 ### Removed
