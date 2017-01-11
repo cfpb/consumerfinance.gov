@@ -27,7 +27,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ### Fixed
-
+- Fix filter categories on the `enforcement/actions/` page.
 
 ## 4.5.1
 
