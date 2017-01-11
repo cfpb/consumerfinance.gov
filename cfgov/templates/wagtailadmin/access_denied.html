@@ -1,0 +1,18 @@
+{% overextends "wagtailadmin/login.html" %}
+{% load i18n admin_static %}
+
+
+{% block furniture %}
+    <div class="content-wrapper">
+        <h1>{% trans 'Sorry!' %} <br/>
+        	{% trans 'You do not have permission to access this page.' %}
+        </h1>
+        <h2>Perhaps you could try:</h2>
+        <ul>
+        {% for name, url in destinations %}
+            <li><a href="{{url}}"> {{name}}</a></li>
+        {% endfor %}
+        </ul>
+        <p>{% trans 'Otherwise, you may want to' %} <a href="/logout/">{% trans 'LOG OUT ' %}</a></p>
+    </div>
+{% endblock %}
