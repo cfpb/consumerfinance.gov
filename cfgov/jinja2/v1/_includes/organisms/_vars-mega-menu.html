@@ -46,13 +46,27 @@
             'replaces four disclosure forms with two new ones. ' +
             'We have resources to help you comply.'
 } %}
+{% set consumer_tools_content = {
+    'link': {
+        'text': 'Stories about debt collection',
+        'url':  '/yourstory/debtcollection',
+    },
+    'image': {
+        'src': 'img/fmc-consumer-tools-540x300.png',
+        'alt': 'Illustration of US Map represented as consumer stories',
+    },
+    'body': 'Consumers across the country shared their ' +
+            'experiences with debt collection. View their stories.'
+} %}
+
 {% set media_items = [
   ( '/about-us/', featured_menu_content.render( about_us_content ) ),
-  ( '/policy-compliance/', featured_menu_content.render( poly_com_content ) )
+  ( '/policy-compliance/', featured_menu_content.render( poly_com_content ) ),
+  ( '/consumer-tools/', featured_menu_content.render( consumer_tools_content ) )
 ] %}
 
 {% set nav_items = [(
-    ('Consumer Tools', '#', [(
+    ('Consumer Tools', '/consumer-tools/', [(
         ('Submit a Complaint', '/complaint/', []),
         ('Ask CFPB', '/askcfpb/', []),
         ('Tell Your Story', '/your-story/', []),
@@ -161,8 +175,8 @@
 {% endif %}
 
 {% if flag_enabled(request, 'DEBT_COLLECTION_RELEASE') %}
-    {{ nav_items[0][0][2][1].append( 
-        ('Debt Collection', '/consumer-tools/debt-collection/', []) 
+    {{ nav_items[0][0][2][1].append(
+        ('Debt Collection', '/consumer-tools/debt-collection/', [])
     ) }}
 {% endif %}
 
