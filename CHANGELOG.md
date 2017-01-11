@@ -21,6 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- JobListingPages are now only associated with a single region.
 
 ### Removed
 
