@@ -16,7 +16,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-
 - New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
 - Django management command to delete Wagtail pages by their slug or ID
 
@@ -27,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ### Fixed
+- Fix for missing breadcrumb on Press Resources `about-us/newsroom/press-resources/` page.
 
 
 ## 4.5.2
