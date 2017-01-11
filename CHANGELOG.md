@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 
+- Updated agreements database to 2.2.5
 
 ### Removed
 
