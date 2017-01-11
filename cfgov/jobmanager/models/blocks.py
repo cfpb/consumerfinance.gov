@@ -64,7 +64,7 @@ class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
         )
     )
 
-    fields = ['title', 'grades', 'close_date', 'regions']
+    fields = ['title', 'grades', 'close_date', 'region']
     field_headers = ['TITLE', 'GRADE', 'POSTING CLOSES', 'REGION']
 
     def make_title_value(self, instance, value):
@@ -78,6 +78,3 @@ class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
 
     def make_close_date_value(self, instance, value):
         return value.strftime('%b %d, %Y').upper()
-
-    def make_regions_value(self, instance, value):
-        return ', '.join(sorted(r.region.region_long for r in value.all()))
