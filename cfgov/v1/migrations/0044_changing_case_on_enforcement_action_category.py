@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0043_create_chart_block'),
+        ('v1', '0042_remove_demo_page'),
     ]
 
     operations = [
