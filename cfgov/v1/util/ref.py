@@ -139,6 +139,7 @@ inset_image_widths = [
     ('300', '300'),
 ]
 
+
 def related_posts_category_lookup(related_categories):
     related = []
     for category in related_categories:
@@ -188,9 +189,11 @@ def page_type_choices():
 
 def choices_for_page_type(page_type):
     for slug, name in page_types:
+        print slug
         if page_type == slug:
             for cat_slug, cat_tuples in page_type_choices():
-                if name == cat_slug:
+                if name.lower() == cat_slug.lower():
+                    print(cat_tuples)
                     return list(cat_tuples)
     return []
 

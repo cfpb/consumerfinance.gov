@@ -248,11 +248,15 @@ class ContactPhone(blocks.StructBlock):
 
 class ImageInset(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
-    image = atoms.ImageBasic()
     paragraph = blocks.RichTextBlock(required=False)
-    float_left = blocks.BooleanBlock(required=False)
-    image_width = blocks.ChoiceBlock(choices=ref.inset_image_widths, required=False)
-
+    image = atoms.ImageBasic()
+    is_image_left = blocks.BooleanBlock(required=False,
+                                        label='Image float left')
+    image_width = blocks.ChoiceBlock(choices=ref.inset_image_widths,
+                                     label='Image Width',
+                                     required=False)
+    is_image_decorative = blocks.BooleanBlock(required=False,
+                                             label='Image decorative')
     class Meta:
         icon = 'image'
         template = '_includes/molecules/image-inset.html'

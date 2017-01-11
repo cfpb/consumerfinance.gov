@@ -22,4 +22,11 @@
 
 .o-full-width-text-group {
     overflow: auto;
+
+    .m-full-width-text + .m-inset__image {
+
+        .respond-to-min( @bp-sm-min, {
+            margin: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+    }
 }

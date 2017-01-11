@@ -19,6 +19,10 @@
           .o-full-width-text
             .m-full-width-text
             .m-inset
+            .m-inset__left
+            .m-inset__150
+            .m-inset__240
+            .m-inset__300
               .m-quote
               .m-related-links
               .m-call-to-action
@@ -28,7 +32,7 @@
     - cfgov-molecules
   notes:
     - These are held in a full-width-text-group container to be held with
-      various full-width text blocks,  insets and tables as needed.
+      various full-width text blocks, insets and tables as needed.
 */
 
 .m-inset {
@@ -47,22 +51,25 @@
         margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
     });
 
-    &_image {
-        margin: 0
-                0
-                unit( @grid_gutter-width / @base-font-size-px, em )
-                unit( @grid_gutter-width / @base-font-size-px, em );
+    &__image {
+        margin-top: 0;
         float: right;
 
-        .respond-to-max( @bp-xs-max, {
-            img {
+        .respond-to-max(@bp-xs-max, {
+            .m-inset_image {
                 .u-flexible-container_inner();
             }
 
-            &-container {
+            div.m-inset_image {
+                height: 100% !important;
+                background-repeat: no-repeat;
+            }
+
+            .m-inset_image-container {
+                overflow: hidden;
                 .u-flexible-container();
             }
-        } );
+        });
 
         .respond-to-min(@bp-sm-min, {
             &__150 {
@@ -76,20 +83,45 @@
             &__300 {
                 width: 300px;
             }
-        } );
+        });
+
+        div.m-inset_image {
+            background-size: contain;
+        }
+
+        &__crop {
+
+            .respond-to-max(@bp-xs-max, {
+                img.m-inset_image {
+                    height: auto;
+                    width: auto;
+                }
+            });
+        }
 
         &__left {
             float: left;
             clear: left;
-            margin: 0 unit( @grid_gutter-width / @base-font-size-px, em ) 0 0;
+            margin: 0
+                    unit( @grid_gutter-width / @base-font-size-px, em )
+                    0
+                    0;
 
-            .respond-to-max( @bp-xs-max, {
-                float: none;
+            .respond-to-max(@bp-xs-max, {
                 margin: unit( @grid_gutter-width / @base-font-size-px, em )
                         0
                         unit( @grid_gutter-width / @base-font-size-px, em )
                         0;
-            } );
+            });
+        }
+
+        &__portrait {
+
+            .respond-to-max(@bp-xs-max, {
+                .m-inset_image-container {
+                    padding-bottom: 75%;
+                }
+            });
         }
     }
 
@@ -107,14 +139,6 @@
         border-bottom: 1px solid @horizontal-rule;
         margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
     }
-}
-
-// This should be at the template level
-.m-full-width-text + .m-inset_image {
-
-    .respond-to-min( @bp-sm-min, {
-        margin: unit( @grid_gutter-width / @base-font-size-px, em );
-    } );
 }
 
 /* topdoc
