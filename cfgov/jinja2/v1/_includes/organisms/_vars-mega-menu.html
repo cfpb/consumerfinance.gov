@@ -46,23 +46,23 @@
             'replaces four disclosure forms with two new ones. ' +
             'We have resources to help you comply.'
 } %}
-{% set consumer_tools_content = {
-    'link': {
-        'text': 'Stories about debt collection',
-        'url':  '/yourstory/debtcollection',
-    },
-    'image': {
-        'src': 'img/fmc-consumer-tools-540x300.png',
-        'alt': 'Illustration of US Map represented as consumer stories',
-    },
-    'body': 'Consumers across the country shared their ' +
-            'experiences with debt collection. View their stories.'
-} %}
-
+{% if flag_enabled(request, 'DEBT_COLLECTION_RELEASE') %}
+    {% set consumer_tools_content = {
+        'link': {
+            'text': 'Stories about debt collection',
+            'url':  '/yourstory/debtcollection',
+        },
+        'image': {
+            'src': 'img/fmc-consumer-tools-540x300.png',
+            'alt': 'Illustration of US Map represented as consumer stories',
+        },
+        'body': 'Consumers across the country shared their ' +
+                'experiences with debt collection. View their stories.'
+    } %}
+{% endif %}
 {% set media_items = [
   ( 'About Us', featured_menu_content.render( about_us_content ) ),
-  ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) ),
-  ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) )
+  ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) )
 ] %}
 
 {% set nav_items = [(
@@ -177,6 +177,9 @@
 {% if flag_enabled(request, 'DEBT_COLLECTION_RELEASE') %}
     {{ nav_items[0][0][2][1].append(
         ('Debt Collection', '/consumer-tools/debt-collection/', [])
+    ) }}
+    {{ media_items.append(
+        ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) )
     ) }}
 {% endif %}
 
