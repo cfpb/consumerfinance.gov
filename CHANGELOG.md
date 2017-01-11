@@ -31,6 +31,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ## 4.5.2
+
+### Changed
 - Updated category list for Stories
 - Navigation FMC logic to allow verticals without an overview url to include an FMC
 - Updated agreements database to 2.2.5
