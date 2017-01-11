@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
         ('wagtailforms', '0003_capitalizeverbose'),
         ('wagtailcore', '0030_index_on_pagerevision_created_at'),
         ('wagtailredirects', '0005_capitalizeverbose'),
-        ('v1', '0041_auto_20170103_1442'),
+        ('v1', '0041_create_html_block'),
     ]
 
     operations = [

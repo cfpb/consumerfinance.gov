@@ -43,7 +43,7 @@ def share_the_page(request, page):
     share(page, is_sharing, is_live)
     configure_page_revision(page, is_sharing, is_live)
     if is_live:
-        flush_akamai(page)
+        flush_akamai()
 
 
 @hooks.register('after_delete_page')
@@ -137,13 +137,13 @@ def get_akamai_credentials():
     return object_id, (user, password)
 
 
-def should_flush(page):
+def should_flush():
     """Only initiate an Akamai flush if it is enabled in settings."""
     return settings.ENABLE_AKAMAI_CACHE_PURGE
 
 
-def flush_akamai(page):
-    if should_flush(page):
+def flush_akamai():
+    if should_flush():
         object_id, auth = get_akamai_credentials()
         headers = {'content-type': 'application/json'}
         payload = {

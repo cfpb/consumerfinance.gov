@@ -19,10 +19,9 @@ class V1AppConfig(AppConfig):
         # yet, url(null) trips up the ManifestStaticFilesStorage, so we
         # monkeypatch the regex so that url(null) is ignored
 
-        storage.HashedFilesMixin.patterns = ((
-            "*.css",
-            (
+        storage.HashedFilesMixin.patterns = (
+            ("*.css", (
                 r"""(url\((?!null)['"]{0,1}\s*(.*?)["']{0,1}\))""",
                 (r"""(@import\s*["']\s*(.*?)["'])""", """@import url("%s")"""),
-            )
-        ))
+            )),
+        )
