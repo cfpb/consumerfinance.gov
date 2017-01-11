@@ -29,6 +29,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 4.5.1
+
+### Added
+- Add debt collection menu item behind feature flag
+
+### Changed
+- Updated regulations-site requirement to version `2.1.5`.
+
+
 ## 4.4.0 - 4.5.0
 
 ### Added
@@ -44,7 +53,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `gulp-clean-css` from `2.0.6` to `2.3.2`.
 - Updated `gulp-imagemin` from `3.0.3` to `3.1.1`.
 - Updated `gulp-less` from `3.1.0` to `3.3.0`.
-- Updated regulations-site requirement to version `2.1.5`.
 
 ### Removed
 - Removed layout.less enhancements that have been moved to Capital Framework.
