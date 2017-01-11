@@ -12,7 +12,6 @@ def preflight_check(page, new_root, relative_path):
     parent = new_root
 
     if len(path_components) == 0:
-        # we're updating a root page. Exciting!
         return strategies.update_existing_page, new_root
 
     if len(path_components) > 1:
