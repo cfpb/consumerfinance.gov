@@ -19,15 +19,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 - New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
 - Django management command to delete Wagtail pages by their slug or ID
+- Consumer Tools Featured Menu Content
 
 ### Changed
 
 - Updated agreements database to 2.2.5
+- Navigation FMC logic to allow verticals without an overview url to include an FMC
 
 ### Removed
 
 
 ### Fixed
+- Fix filter categories on the `enforcement/actions/` page.
+- Fix for missing breadcrumb on Press Resources `about-us/newsroom/press-resources/` page.
 
 
 ## 4.5.1
@@ -76,6 +80,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed handling of invalid date query string parameters for filterable list forms.
 - Added missing `block` class from a block on the about the director page.
 - Fixed issue with erroneously removed bureau stylesheet.
+
 
 ## 4.3.2
 

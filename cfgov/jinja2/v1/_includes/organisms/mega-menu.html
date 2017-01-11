@@ -136,8 +136,8 @@
                     {{ _nav_list( nav_depth, nav_items ) }}
                 </div>
             </div>
-            {% for url, fmc in media_items %}
-                {% if url == nav_overview_url %}
+            {% for parent_name, fmc in media_items %}
+                {% if parent_name + ' Overview' == nav_overview %}
                 {{ fmc }}
                 {% endif %}
             {% endfor %}
