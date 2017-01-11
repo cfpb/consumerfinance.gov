@@ -2,8 +2,10 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from workflow import strategies
 
+
 class PreflightCheckFailed(Exception):
     pass
+
 
 def preflight_check(page, new_root, relative_path):
     # the last value will always be an empty string
@@ -18,15 +20,13 @@ def preflight_check(page, new_root, relative_path):
         for slug in path_components[:-1]:
             parent = parent.get_children().get(slug=slug)
 
-
     new_slug = path_components[-1]
 
-    try: 
+    try:
         existing_page = parent.get_children().get(slug=new_slug)
-        if type(page.specific) != type(existing_page.specific):
-            raise PreflighCheckFailed
+        if not isinstance(existing_page.specific, type(page.specific)):
+            raise PreflightCheckFailed
         return strategies.update_existing_page, existing_page
 
     except ObjectDoesNotExist:
         return strategies.copy_into, parent
-    import pdb;pdb.set_trace()

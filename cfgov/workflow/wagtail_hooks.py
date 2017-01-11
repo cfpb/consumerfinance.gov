@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse
 
 from wagtail.wagtailcore import hooks
 
-from workflow.models import WorkflowDestinationSetting
 from workflow import urls
 
 
@@ -40,5 +39,6 @@ def add_workflow_bar_items(request, items):
 @hooks.register('register_admin_urls')
 def register_admin_urls():
     return [
-        url(r'^workflow/', include(urls, app_name='workflow', namespace='workflow')),
+        url(r'^workflow/', include(
+            urls, app_name='workflow', namespace='workflow')),
     ]
