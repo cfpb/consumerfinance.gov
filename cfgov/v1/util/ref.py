@@ -62,7 +62,7 @@ categories = [
         ('data-research-reports', 'Data, research & reports'),
         ('info-for-consumers', 'Info for consumers'),
     )),
-    ('Enforcement action', (
+    ('Enforcement Action', (
         ('fed-district-case', 'Federal District Court Case'),
         ('admin-filing', 'Administrative Filing'),
     )),
