@@ -60,13 +60,13 @@
 } %}
 
 {% set media_items = [
-  ( '/about-us/', featured_menu_content.render( about_us_content ) ),
-  ( '/policy-compliance/', featured_menu_content.render( poly_com_content ) ),
-  ( '/consumer-tools/', featured_menu_content.render( consumer_tools_content ) )
+  ( 'About Us', featured_menu_content.render( about_us_content ) ),
+  ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) ),
+  ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) )
 ] %}
 
 {% set nav_items = [(
-    ('Consumer Tools', '/consumer-tools/', [(
+    ('Consumer Tools', '#', [(
         ('Submit a Complaint', '/complaint/', []),
         ('Ask CFPB', '/askcfpb/', []),
         ('Tell Your Story', '/your-story/', []),
