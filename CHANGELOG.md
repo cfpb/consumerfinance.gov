@@ -19,9 +19,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 
 ### Changed
-
+- Updated category list for Stories
 - Navigation FMC logic to allow verticals without an overview url to include an FMC
-
 - Updated agreements database to 2.2.5
 
 ### Removed
@@ -29,6 +28,16 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fix filter categories on the `enforcement/actions/` page.
+
+
+## 4.5.2
+- Updated category list for Stories
+- Navigation FMC logic to allow verticals without an overview url to include an FMC
+- Updated agreements database to 2.2.5
+
+### Fixed
+- Fix filter categories on the `enforcement/actions/` page.
+
 
 ## 4.5.1
 
