@@ -5,7 +5,7 @@ from wagtail.contrib.modeladmin.options import (ModelAdmin, ModelAdminGroup,
 from wagtail.contrib.modeladmin.views import CreateView, EditView, InspectView
 
 from jobmanager.models import (ApplicantType, Grade, JobCategory,
-                               JobListingPage, Location)
+                               JobListingPage, JobRegion)
 
 
 class ApplicantTypeModelAdmin(ModelAdmin):
@@ -73,10 +73,10 @@ class JobListingModelAdmin(ModelAdmin):
 
 
 class JobRegionModelAdmin(ModelAdmin):
-    model = Location
+    model = JobRegion
     menu_label = 'Regions'
-    menu_icon = 'snippet'
-    list_display = ('description', 'region', 'region_long')
+    menu_icon = 'site'
+    list_display = ('abbreviation', 'name')
 
 
 @modeladmin_register
@@ -87,6 +87,5 @@ class MyModelAdminGroup(ModelAdminGroup):
         ApplicantTypeModelAdmin,
         JobCategoryModelAdmin,
         JobGradeModelAdmin,
-        JobListingModelAdmin,
         JobRegionModelAdmin,
     )

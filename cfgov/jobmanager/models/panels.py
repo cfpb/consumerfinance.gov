@@ -6,7 +6,7 @@ from modelcluster.fields import ParentalKey
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.models import Orderable
 
-from jobmanager.models.django import ApplicantType, Grade, Location
+from jobmanager.models.django import ApplicantType, Grade
 from jobmanager.models.pages import JobListingPage
 
 
@@ -67,18 +67,3 @@ class GradePanel(Orderable, models.Model):
 
     def __unicode__(self):
         return self.grade.grade
-
-
-class RegionPanel(Orderable, models.Model):
-    region = models.ForeignKey(Location, related_name='region_panels')
-    job_listing = ParentalKey(JobListingPage, related_name='regions')
-
-    class Meta:
-        ordering = ('region',)
-
-    panels = [
-        FieldPanel('region'),
-    ]
-
-    def __unicode__(self):
-        return self.region.region_long
