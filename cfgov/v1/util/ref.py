@@ -109,10 +109,14 @@ categories = [
     )),
     ('Story', (
         ('auto-loans', 'Auto loans'),
+        ('bank-accts-services', 'Bank accounts and services'),
         ('credit-cards', 'Credit cards'),
-        ('credit-reporting', 'Credit reporting'),
+        ('credit-reports-scores', 'Credit reports and scores'),
         ('debt-collection', 'Debt collection'),
+        ('money-transfers', 'Money transfers'),
         ('mortgages', 'Mortgages'),
+        ('payday-loans', 'Payday loans'),
+        ('prepaid-cards', 'Prepaid cards'),
         ('student-loans', 'Student loans'),
     )),
 ]
