@@ -9,8 +9,7 @@ cfgov_apps = [
     'jobmanager',
     'data_research',
     'countylimits',
-    'oah-api',
-    'mortgageinsurance',
+    'oahapi',
     'ratechecker',
 ]
 
