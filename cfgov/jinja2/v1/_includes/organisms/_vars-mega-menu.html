@@ -88,7 +88,8 @@
             ('Choose the Right Card for Your Situation', '/consumer-tools/prepaid-cards/choose-the-right-card/', []),
             ('Know Your Rights', '/consumer-tools/prepaid-cards/know-your-rights/', []),
             ('Understand the Fees You Will Pay', '/consumer-tools/prepaid-cards/understand-fees/', [])
-        )])
+        )]),
+        ('Debt Collection', '/consumer-tools/debt-collection/', [])
     ],(
         ('Know Before You Owe Mortgages', '/know-before-you-owe/', []),
         ('Trouble Paying Your Mortgage?', '/mortgagehelp/', []),
@@ -170,13 +171,3 @@
         ('Contact Us', '/about-us/contact-us/', [])
     )])
 )] -%}
-
-{% if flag_enabled(request, 'DEBT_COLLECTION_RELEASE') %}
-    {{ nav_items[0][0][2][1].append(
-        ('Debt Collection', '/consumer-tools/debt-collection/', [])
-    ) }}
-    {{ media_items.append(
-        ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) )
-    ) }}
-{% endif %}
-
