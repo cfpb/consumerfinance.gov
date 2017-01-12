@@ -51,6 +51,9 @@ def multiple_regions_to_single_region(apps, schema_editor):
     JobListingPage = apps.get_model('jobmanager', 'JobListingPage')
     JobRegion = apps.get_model('jobmanager', 'JobRegion')
 
+    if not JobListingPage.objects.exists():
+        return
+
     hq_region = JobRegion.objects.get(abbreviation=HQ_REGION_ABBREVIATION)
     for job_listing in JobListingPage.objects.all():
         if 1 < job_listing.regions.count():
