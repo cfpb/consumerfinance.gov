@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 - New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
 - Django management command to delete Wagtail pages by their slug or ID
+- add ratechecker, oahapi, countylimits, mortgageinsurance to the cfgov_apps list, which marks them as using a single database.
 
 ### Changed
 
