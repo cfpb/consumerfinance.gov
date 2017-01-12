@@ -19,8 +19,9 @@ def check_prerequisites(apps, schema_editor):
         if not page.regions.exists():
             raise RuntimeError('cannot migrate page without region')
 
-    # Assert that the headquarters region exists.
-    Location.objects.get(region=HQ_REGION_ABBREVIATION)
+    # Assert that the headquarters region exists, if any jobs do.
+    if JobListingPage.objects.exists():
+        Location.objects.get(region=HQ_REGION_ABBREVIATION)
 
 
 def create_jobregions(apps, schema_editor):
