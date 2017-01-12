@@ -11,7 +11,6 @@ cfgov_apps = [
     'jobmanager',
     'data_research',
     'countylimits',
-    'oahapi',
     'ratechecker',
 ]
 
