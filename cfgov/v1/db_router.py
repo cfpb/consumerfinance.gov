@@ -1,3 +1,5 @@
+from django.conf import settings
+
 cfgov_apps = [
     'auth',
     'sessions',
@@ -12,6 +14,11 @@ cfgov_apps = [
     'oahapi',
     'ratechecker',
 ]
+
+# filter out optional apps that are not installed
+for app_name in cfgov_apps:
+    if app_name not in settings.INSTALLED_APPS:
+        cfgov_apps.remove(app_name)
 
 
 class CFGOVRouter(object):
