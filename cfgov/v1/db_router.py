@@ -7,7 +7,11 @@ cfgov_apps = [
     'flags',
     'taggit',
     'jobmanager',
-    'data_research'
+    'data_research',
+    'countylimits',
+    'oah-api',
+    'mortgageinsurance',
+    'ratechecker',
 ]
 
 
