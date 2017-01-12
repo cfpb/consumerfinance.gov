@@ -10,14 +10,16 @@ cfgov_apps = [
     'taggit',
     'jobmanager',
     'data_research',
+]
+optional_apps = [
     'countylimits',
     'ratechecker',
 ]
 
-# filter out optional apps that are not installed
-for app_name in cfgov_apps:
-    if app_name not in settings.INSTALLED_APPS:
-        cfgov_apps.remove(app_name)
+# add optional apps that use the single DB scheme
+for app_name in optional_apps:
+    if app_name in settings.INSTALLED_APPS:
+        cfgov_apps.append(app_name)
 
 
 class CFGOVRouter(object):
