@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 - Fix for missing breadcrumb on Press Resources `about-us/newsroom/press-resources/` page.
 - Fix for unused breadcrumb css styles.
+- Fix for external link routing in the footer.
 
 ## 4.5.2
 
