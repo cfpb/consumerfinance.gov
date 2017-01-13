@@ -189,11 +189,9 @@ def page_type_choices():
 
 def choices_for_page_type(page_type):
     for slug, name in page_types:
-        print slug
         if page_type == slug:
             for cat_slug, cat_tuples in page_type_choices():
-                if name.lower() == cat_slug.lower():
-                    print(cat_tuples)
+                if name == cat_slug:
                     return list(cat_tuples)
     return []
 
