@@ -257,7 +257,8 @@ class ImageInset(blocks.StructBlock):
                                      label='Image Width',
                                      required=True)
     is_image_decorative = blocks.BooleanBlock(required=False,
-                                             label='Image decorative')
+                                              label='Image decorative')
+
     class Meta:
         icon = 'image'
         template = '_includes/molecules/image-inset.html'
