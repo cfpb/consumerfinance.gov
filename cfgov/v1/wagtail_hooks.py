@@ -1,22 +1,33 @@
 import json
 import logging
 import os
-from exceptions import ValueError
-from urlparse import urlsplit
-
 import requests
+
+from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.contrib.auth.models import Permission
+from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.utils import timezone
 from django.utils.html import escape, format_html_join
+from django.utils.translation import ugettext_lazy as _
+from wagtail.wagtailadmin import widgets as wagtailadmin_widgets
+from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
+from urlparse import urlsplit
 
-from .models import CFGOVPage
-from .util import util
+from v1.models import CFGOVPage
+from v1.templatetags.share import v1page_permissions
+from v1.util import util
+
 
 logger = logging.getLogger(__name__)
+
+
+@hooks.register('before_delete_page')
+def raise_delete_error(request, page):
+    raise PermissionDenied('Deletion via POST is disabled')
 
 
 @hooks.register('after_create_page')
@@ -44,7 +55,10 @@ def share_the_page(request, page):
 @hooks.register('after_delete_page')
 def log_page_deletion(request, page):
     logger.warning(
-        u'User {user} with ID {user_id} deleted page {title} with ID {page_id} at URL {url}'.format(  # noqa: E501
+        (
+            u'User {user} with ID {user_id} deleted page {title} '
+            u'with ID {page_id} at URL {url}'
+        ).format(
             user=request.user,
             user_id=request.user.id,
             title=page.title,
@@ -242,3 +256,28 @@ def form_module_handlers(page, request, context, *args, **kwargs):
 
     if form_modules:
         context['form_modules'] = form_modules
+
+
+@hooks.register('register_admin_menu_item')
+def register_django_admin_menu_item():
+    return MenuItem(
+        'Django Admin',
+        reverse('admin:index'),
+        classnames='icon icon-redirect',
+        order=99999
+    )
+
+
+@hooks.register('register_page_listing_more_buttons')
+def page_listing_more_buttons(page, page_perms, is_parent=False):
+    page = page.specific
+
+    context = {'request': type('obj', (object,), {'user': page_perms.user})}
+    v1_page_perms = v1page_permissions(context, page)
+
+    shared = getattr(page, 'shared', False)
+    if shared and not page.live and v1_page_perms.can_unshare():
+        yield wagtailadmin_widgets.Button(
+            _('Unshare'), reverse('unshare', args=[page.id]),
+            attrs={"title": _('Unshare this page')}, priority=41
+        )
