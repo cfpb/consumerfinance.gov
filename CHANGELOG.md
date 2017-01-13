@@ -28,7 +28,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fix for missing breadcrumb on Press Resources `about-us/newsroom/press-resources/` page.
-
+- Fix for unused breadcrumb css styles.
 
 ## 4.5.2
 
@@ -88,7 +88,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed handling of invalid date query string parameters for filterable list forms.
 - Added missing `block` class from a block on the about the director page.
 - Fixed issue with erroneously removed bureau stylesheet.
-- Fix for unused breadcrumb styles.
 
 
 
