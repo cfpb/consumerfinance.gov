@@ -7,8 +7,16 @@
         <div class="o-full-width-text-group">
             <div class="m-full-width-text"></div>
             <div class="m-inset">
-                <div class="m-quote">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                    </span>
+                </h2>
+                <div class="m-inset_image-container">
+                    <div class="m-inset_image m-inset_image__cover">
+                    </div>
+                    <img class="m-inset_image" />
                 </div>
+                <div class="m-quote"></div>
             </div>
             <div class="m-full-width-text"></div>
         </div>
@@ -19,15 +27,22 @@
           .o-full-width-text
             .m-full-width-text
             .m-inset
-            .m-inset__left
-            .m-inset__150
-            .m-inset__240
-            .m-inset__300
-              .m-quote
-              .m-related-links
-              .m-call-to-action
-              .m-image-inset
-            .m-full-width-text
+            .m-inset__image__left
+            .m-inset__image__portrait
+            .m-inset__image__150
+            .m-inset__image__240
+            .m-inset__image__300
+                .header-slug
+                    .header-slug_inner
+                .m-inset_image-container
+                    div.m-inset_image
+                    div.m-inset_image__cover
+                    img.m-inset_image
+                .m-quote
+                .m-related-links
+                .m-call-to-action
+                .m-image-inset
+                .m-full-width-text
   tags:
     - cfgov-molecules
   notes:
@@ -52,17 +67,34 @@
     });
 
     &__image {
-        margin-top: 0;
         float: right;
 
+        div.m-inset_image {
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
         .respond-to-max(@bp-xs-max, {
+            margin-left: 0;
+            margin-right: 0;
+
             .m-inset_image {
                 .u-flexible-container_inner();
             }
 
+            img.m-inset_image {
+                height: auto;
+                width: auto;
+            }
+
             div.m-inset_image {
+
+                // Important is necessary to override the inline height value;
                 height: 100% !important;
-                background-repeat: no-repeat;
+
+                &__cover {
+                    background-size: cover;
+                }
             }
 
             .m-inset_image-container {
@@ -85,27 +117,9 @@
             }
         });
 
-        div.m-inset_image {
-            background-size: contain;
-        }
-
-        &__crop {
-
-            .respond-to-max(@bp-xs-max, {
-                img.m-inset_image {
-                    height: auto;
-                    width: auto;
-                }
-            });
-        }
-
         &__left {
             float: left;
             clear: left;
-            margin: 0
-                    unit( @grid_gutter-width / @base-font-size-px, em )
-                    0
-                    0;
 
             .respond-to-max(@bp-xs-max, {
                 margin: unit( @grid_gutter-width / @base-font-size-px, em )

@@ -29,15 +29,18 @@
 
    ========================================================================== #}
 
-{% set image = image(value.image.upload, 'original') %}
+{# Image sizes are doubled for retina displays. Images created via Wagtail
+   are never stretched or upscaled and maintain their aspect ratio. #}
+{% set image_inset = image(value.image.upload, 'width-' ~ value.image_width
+                     | int * 2) %}
+{% set image_mobile = image(value.image.upload, 'width-1200') %}
 <div class="m-inset
             m-inset__image
             {{ 'm-inset__image__left' if value.is_image_left else '' }}
             {{ 'm-inset__image__' ~ ( value.image_width
                if value.image_width else '270' ) }}
             {{ 'm-inset__image__portrait'
-               if image.height > image.width else 'landscape' }}
-            {{ 'm-inset__image__crop' if image.width < 601 else '' }} ">
+               if image_inset.height > image_inset.width else 'landscape' }}">
     {% if value.heading %}
     <h2 class="header-slug">
         <span class="header-slug_inner">
@@ -47,15 +50,20 @@
     {% endif %}
     <div class="m-inset_image-container">
         {% if value.is_image_decorative %}
-        <div class="m-inset_image"
-             style="background-image: url( {{ image.url }} );
-                    height:{{ image.height * value.image_width | int /  image.width }}px;
-                    max-width: {{ image.width }}px">
+        <div class="m-inset_image
+                   {{ 'm-inset_image__cover'
+                       if image_mobile.width > 600 else '' }}"
+             style="background-image: url( {{ image_mobile.url }} );
+                    height: {{ image_mobile.height * value.image_width | int
+                               / image_mobile.width }}px;">
         </div>
         {% else %}
-        <img class="m-inset_image"
-             src="{{ image.url }}"
-             alt="{{ value.image.alt if value.image.alt else '' }}">
+         <img  class="m-inset_image"
+               src="{{ image_inset.url }}"
+               srcset="{{ image_inset.url }} {{ image_inset.width }}w,
+                       {{ image_mobile.url }} {{ image_mobile.width }}w"
+               sizes="(max-width: 600px) {{ image_mobile.width }}px, {{ image_inset.width }}px"
+               alt="{{ value.image.alt if value.image.alt else '' }}" />
         {% endif %}
     </div>
     {% if value.paragraph %}

@@ -253,8 +253,9 @@ class ImageInset(blocks.StructBlock):
     is_image_left = blocks.BooleanBlock(required=False,
                                         label='Image float left')
     image_width = blocks.ChoiceBlock(choices=ref.inset_image_widths,
+                                     default=270,
                                      label='Image Width',
-                                     required=False)
+                                     required=True)
     is_image_decorative = blocks.BooleanBlock(required=False,
                                              label='Image decorative')
     class Meta:
