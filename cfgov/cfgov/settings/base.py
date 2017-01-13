@@ -38,6 +38,7 @@ INSTALLED_APPS = (
 
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.table_block',
+    'wagtail.contrib.settings',
 
     'localflavor',
     'modelcluster',
@@ -63,6 +64,7 @@ INSTALLED_APPS = (
     'reversion',
     'tinymce',
     'jobmanager',
+    'workflow',
 )
 
 OPTIONAL_APPS = [

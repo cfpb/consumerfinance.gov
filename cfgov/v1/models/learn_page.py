@@ -20,7 +20,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from .. import blocks as v1_blocks
 from ..atomic_elements import molecules, organisms
-from .base import CFGOVPage, CFGOVPageManager
+from .base import CFGOVPage
 
 
 class AbstractFilterPage(CFGOVPage):
@@ -72,8 +72,6 @@ class AbstractFilterPage(CFGOVPage):
 
     # This page class cannot be created.
     is_creatable = False
-
-    objects = CFGOVPageManager()
 
     @classmethod
     def generate_edit_handler(self, content_panel):
@@ -211,8 +209,6 @@ class EventPage(AbstractFilterPage):
     venue_state = USStateField(blank=True)
     venue_zip = models.IntegerField(blank=True, null=True)
     agenda_items = StreamField([('item', AgendaItemBlock())], blank=True)
-
-    objects = CFGOVPageManager()
 
     # General content tab
     content_panels = CFGOVPage.content_panels + [

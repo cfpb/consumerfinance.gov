@@ -86,14 +86,12 @@ class SublandingPage(CFGOVPage):
         hostname = request.site.hostname
         filter_pages = [p.specific
                         for p in self.get_appropriate_descendants(hostname)
-                        if 'FilterablePage' in p.specific_class.__name__
-                        and 'archive' not in p.title.lower()]
+                        if 'FilterablePage' in p.specific_class.__name__ and
+                        'archive' not in p.title.lower()]
         posts_tuple_list = []
         for page in filter_pages:
-            base_query = AbstractFilterPage.objects.live_shared(
-                hostname
-            ).filter(CFGOVPage.objects.child_of_q(page))
-
+            base_query = AbstractFilterPage.objects.live().filter(
+                CFGOVPage.objects.child_of_q(page))
             logger.info('Filtering by parent {}'.format(page))
             form_id = str(page.form_id())
             form = FilterableListForm(hostname=hostname, base_query=base_query)

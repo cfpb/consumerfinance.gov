@@ -1,11 +1,9 @@
-from . import BlogPage, CFGOVPageManager, LegacyBlogPage
+from . import BlogPage, LegacyBlogPage
 
 
 class NewsroomPage(BlogPage):
     template = 'newsroom/newsroom-page.html'
-    objects = CFGOVPageManager()
 
 
 class LegacyNewsroomPage(LegacyBlogPage):
     template = 'newsroom/newsroom-page.html'
-    objects = CFGOVPageManager()

@@ -1,9 +1,8 @@
 from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import PageManager
 
-from . import AbstractFilterPage, CFGOVPageManager
+from . import AbstractFilterPage
 from .. import blocks as v1_blocks
 from ..atomic_elements import organisms
 
@@ -19,8 +18,6 @@ class BlogPage(AbstractFilterPage):
     )
     template = 'blog/blog_page.html'
 
-    objects = PageManager()
-
 
 class LegacyBlogPage(AbstractFilterPage):
     content = StreamField([
@@ -29,7 +26,6 @@ class LegacyBlogPage(AbstractFilterPage):
         )),
         ('feedback', v1_blocks.Feedback()),
     ])
-    objects = CFGOVPageManager()
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel('content')
     )

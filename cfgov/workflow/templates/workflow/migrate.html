@@ -1,0 +1,19 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% block titletag %}{% trans "Workflow" %}{% endblock %}
+{% block bodyclass %}menu-settings{% endblock %}
+{% block content %}
+
+    {% include "wagtailadmin/shared/header.html" with title="Workflow" icon="cogs" %}
+
+    <div class="nice-padding">
+        <h3>Migrating {{ page }} to {{destination_site }}</h3>
+        <p> You are requesting that we migrate {{ page.url_path }} to {{ new_path }}
+        <p> We will {{ strategy_text }} {{target}} ({{target.url_path}})
+        <form method="POST">
+            {% csrf_token %}
+            <input type=submit value="Do it!">
+        </form>
+
+    </div>
+{% endblock %}

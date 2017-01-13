@@ -1,15 +1,13 @@
 import csv
-import json
 from collections import OrderedDict
 from cStringIO import StringIO
 from itertools import chain
 from urllib import urlencode
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
-from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
+from django.http import (HttpResponse, HttpResponseBadRequest,
                          JsonResponse)
 from django.template.response import TemplateResponse
 from django.utils import timezone
@@ -24,10 +22,9 @@ from wagtail.wagtailadmin.edit_handlers import (FieldPanel, InlinePanel,
 from wagtail.wagtailcore import blocks, hooks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailcore.models import (Orderable, Page, PageManager,
-                                        PagePermissionTester, PageQuerySet,
+from wagtail.wagtailcore.models import (Orderable, Page,
+                                        PagePermissionTester,
                                         UserPagePermissionsProxy)
-from wagtail.wagtailcore.url_routing import RouteResult
 
 from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms
@@ -50,35 +47,11 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 
-class CFGOVPageQuerySet(PageQuerySet):
-    def shared_q(self):
-        return Q(shared=True)
-
-    def shared(self):
-        return self.filter(self.shared_q())
-
-    def live_shared_q(self):
-        return self.live_q() | self.shared_q()
-
-    def live_shared(self, hostname):
-        if settings.STAGING_HOSTNAME in hostname:
-            return self.filter(self.live_shared_q())
-        else:
-            return self.live()
-
-
-class BaseCFGOVPageManager(PageManager):
-    def get_queryset(self):
-        return CFGOVPageQuerySet(self.model).order_by('path')
-
-CFGOVPageManager = BaseCFGOVPageManager.from_queryset(CFGOVPageQuerySet)
-
-
 class CFGOVPage(Page):
     authors = ClusterTaggableManager(through=CFGOVAuthoredPages, blank=True,
                                      verbose_name='Authors',
                                      help_text='A comma separated list of '
-                                               + 'authors.',
+                                               'authors.',
                                      related_name='authored_pages')
     tags = ClusterTaggableManager(through=CFGOVTaggedPages, blank=True,
                                   related_name='tagged_pages')
@@ -90,8 +63,6 @@ class CFGOVPage(Page):
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
-
-    objects = CFGOVPageManager()
 
     # These fields show up in either the sidebar or the footer of the page
     # depending on the page type.
@@ -143,13 +114,13 @@ class CFGOVPage(Page):
         return sorted(author_names, key=lambda x: x.name.split()[-1])
 
     def generate_view_more_url(self, request):
-        activity_log = CFGOVPage.objects.get(slug='activity-log').specific
+        activity_log = request.site.root_page.get_children().get(slug='activity-log').specific
         tags = []
         index = activity_log.form_id()
         tags = urlencode([('filter%s_topics' % index, tag)
                           for tag in self.tags.slugs()])
-        return (get_protected_url({'request': request}, activity_log)
-                + '?' + tags)
+        return (get_protected_url({'request': request}, activity_log) +
+                '?' + tags)
 
     def related_posts(self, block, hostname):
         from v1.models.learn_page import AbstractFilterPage
@@ -202,59 +173,37 @@ class CFGOVPage(Page):
                     block, 'archive-past-events') & query
             relate = block.value.get('relate_{}'.format(search_type), None)
             if relate:
-                related[search_type_name] = (
-                    AbstractFilterPage.objects.live_shared(
-                        hostname
-                    ).filter(
-                        search_query
-                    ).distinct().exclude(id=self.id).order_by(
-                        '-date_published'
-                    )[:block.value['limit']])
+                related[search_type_name] = \
+                    AbstractFilterPage.objects.live().filter(
+                        search_query).distinct().exclude(
+                        id=self.id).order_by(
+                            '-date_published')[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
 
-    def get_appropriate_page_version(self, request):
-        # If we're on the production site, make sure the version of the page
-        # displayed is the latest version that has `live` set to True for
-        # the live site or `shared` set to True for the staging site.
-        revisions = self.revisions.all().order_by('-created_at')
-        for revision in revisions:
-            page_version = json.loads(revision.content_json)
-            if not request.is_staging:
-                if page_version['live']:
-                    return revision.as_page_object()
-            else:
-                if page_version['shared']:
-                    return revision.as_page_object()
-
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
         home_page_children = request.site.root_page.get_children()
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
-                return [ancestor.specific.get_appropriate_page_version(request)
-                        for ancestor in ancestors[i + 1:]]
+                return [ancestor.specific for ancestor in ancestors[i + 1:]]
         return []
 
     def get_appropriate_descendants(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).descendant_of(
-            self, inclusive)
+        return CFGOVPage.objects.live().descendant_of(self, inclusive)
 
     def get_appropriate_siblings(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).sibling_of(
-            self, inclusive)
+        return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
     def get_next_appropriate_siblings(self, hostname, inclusive=False):
-        return self.get_appropriate_siblings(
-            hostname=hostname, inclusive=inclusive).filter(
+        return self.siblings(inclusive=inclusive).filter(
             path__gte=self.path).order_by('path')
 
     def get_prev_appropriate_siblings(self, hostname, inclusive=False):
-        return self.get_appropriate_siblings(
-            hostname=hostname, inclusive=inclusive).filter(
+        return self.siblings(inclusive=inclusive).filter(
             path__lte=self.path).order_by('-path')
 
     def get_context(self, request, *args, **kwargs):
@@ -309,37 +258,6 @@ class CFGOVPage(Page):
                 context
             )
 
-    @property
-    def status_string(self):
-        if self.expired:
-            return _("expired")
-        elif self.approved_schedule:
-            return _("scheduled")
-        elif self.live and self.shared:
-            if self.has_unpublished_changes:
-                if self.has_unshared_changes:
-                    for revision in self.revisions.order_by(
-                            '-created_at', '-id'):
-                        content = json.loads(revision.content_json)
-                        if content['shared']:
-                            if content['live']:
-                                return _('live + draft')
-                            else:
-                                return _('live + (shared + draft)')
-                else:
-                    return _("live + shared")
-            else:
-                return _("live")
-        elif self.live:
-            return _("live")
-        elif self.shared:
-            if self.has_unshared_changes:
-                return _("shared + draft")
-            else:
-                return _("shared")
-        else:
-            return _("draft")
-
     def sharable_pages(self):
         """
         Return a queryset of the pages that this user has permission to share.
@@ -363,26 +281,6 @@ class CFGOVPage(Page):
     def can_share_pages(self):
         """Return True if the user has permission to publish any pages"""
         return self.sharable_pages().exists()
-
-    def route(self, request, path_components):
-        if path_components:
-            # Request is for a child of this page.
-            child_slug = path_components[0]
-            remaining_components = path_components[1:]
-
-            try:
-                subpage = self.get_children().get(slug=child_slug)
-            except Page.DoesNotExist:
-                raise Http404
-
-            return subpage.specific.route(request, remaining_components)
-
-        else:
-            # Request is for this very page.
-            page = self.get_appropriate_page_version(request)
-            if page:
-                return RouteResult(page)
-            raise Http404
 
     def permissions_for_user(self, user):
         """
