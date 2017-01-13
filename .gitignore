@@ -88,8 +88,8 @@ docs/*/pdfreactor-fonts.html
 /static/
 cfgov/static_built/*
 cfgov/f/
-images/
-documents/
+/images/
+/documents/
 original_images/
 collectstatic/*
 

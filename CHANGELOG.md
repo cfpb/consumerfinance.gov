@@ -16,16 +16,41 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-
 - New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
+- Django management command to delete Wagtail pages by their slug or ID
 
 ### Changed
 
+- JobListingPages are now only associated with a single region.
+- Updated custom Wagtail admin templates to 1.7 version.
 
 ### Removed
+- Can no longer delete via `/delete` in Wagtail
 
 
 ### Fixed
+- Fix for missing breadcrumb on Press Resources `about-us/newsroom/press-resources/` page.
+- Fix for unused breadcrumb css styles.
+
+## 4.5.2
+
+### Changed
+- Updated category list for Stories
+- Navigation FMC logic to allow verticals without an overview url to include an FMC
+- Updated agreements database to 2.2.5
+- Consumer Tools Featured Menu Content
+
+### Fixed
+- Fix filter categories on the `enforcement/actions/` page.
+
+
+## 4.5.1
+
+### Added
+- Add debt collection menu item behind feature flag
+
+### Changed
+- Updated regulations-site requirement to version `2.1.5`.
 
 
 ## 4.4.0 - 4.5.0
@@ -43,7 +68,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `gulp-clean-css` from `2.0.6` to `2.3.2`.
 - Updated `gulp-imagemin` from `3.0.3` to `3.1.1`.
 - Updated `gulp-less` from `3.1.0` to `3.3.0`.
-- Updated regulations-site requirement to version `2.1.5`.
 
 ### Removed
 - Removed layout.less enhancements that have been moved to Capital Framework.
@@ -66,6 +90,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fixed handling of invalid date query string parameters for filterable list forms.
 - Added missing `block` class from a block on the about the director page.
 - Fixed issue with erroneously removed bureau stylesheet.
+
+
 
 ## 4.3.2
 
