@@ -41,15 +41,15 @@
 
 {% macro _render_filter_fields(controls, form, index) -%}
     {% if controls.title %}
+        {% set field_id = 'filter' ~ index ~ '_title' %}
         <div class="form-l_col
                     form-l_col-1">
             <div class="form-group">
                 <label class="form-label-header"
-                       for="title">
+                       for="{{ field_id }}">
                     Item name
                 </label>
-                {{ form.render_with_id(form.title,
-                    'filter' ~ index ~ '_title') }}
+                {{ form.render_with_id(form.title, field_id) }}
             </div>
         </div>
     {% endif %}
@@ -81,28 +81,28 @@
                     form-l_col-2-3">
             <div class="form-l">
                 {% if controls.topics %}
+                    {% set field_id = 'filter' ~ index ~ '_topics' %}
                     <div class="form-l_col
                                 form-l_col-1-2">
                         <div class="form-group">
                             <label class="form-label-header"
-                                   for="topics">
+                                   for="{{ field_id }}">
                                 Topic
                             </label>
-                            {{ form.render_with_id(form.topics,
-                               'filter' ~ index ~ '_topics') }}
+                            {{ form.render_with_id(form.topics, field_id) }}
                         </div>
                     </div>
                 {% endif %}
                 {% if controls.authors %}
+                    {% set field_id = 'filter' ~ index ~ '_authors' %}
                     <div class="form-l_col
                                 form-l_col-1-2">
                         <div class="form-group">
                             <label class="form-label-header"
-                                   for="authors">
+                                   for="{{ field_id }}">
                                 Author
                             </label>
-                            {{ form.render_with_id(form.authors,
-                               'filter' ~ index ~ '_authors') }}
+                            {{ form.render_with_id(form.authors, field_id) }}
                         </div>
                     </div>
                 {% endif %}
@@ -160,7 +160,6 @@
 
         <div class="form-l">
             {{ _render_filter_fields(controls, form, index) }}
-
             <div class="form-l_col
                         form-l_col__flush-bottom
                         form-l_col-1">
@@ -176,12 +175,13 @@
     </form>
 {% endmacro %}
 
+{% from 'molecules/info-unit.html' import info_unit with context %}
 {% from 'molecules/notification.html' import render as notification with context %}
 {% from 'organisms/post-preview.html' import render as post_preview with context %}
 
 {% macro render(controls, index) %}
     <div class="o-filterable-list-controls"
-         id="o-filterable-list-controls">
+         id="o-filterable-list-controls-{{ index | string }}">
         {% set form = filter_data.forms.pop(0) %}
         {% set posts = filter_data.page_sets.pop(0) %}
         {% set has_active_filters = page.has_active_filters(request, index) %}
@@ -205,24 +205,67 @@
             {% endfor %}
         {% endif %}
         {% if 'filterable-list' in controls.form_type and posts is defined %}
+            {% set count = posts.paginator.count %}
             {% if has_active_filters == false %}
-                {{ notification('success', false, posts.paginator.count ~ ' filtered results') }}
-            {% elif posts.paginator.count == 0 %}
+                {{ notification('success', false, count ~ ' filtered results') }}
+            {% elif count == 0 %}
                 {{ notification('warning', true,
                     'Sorry, there were no results based on your filter selections.',
                     'Please reset the filter or change your selections and try again.') }}
             {% else %}
-                {{ notification('success', true, posts.paginator.count ~ ' filtered results') }}
+                {{ notification('success', true, count ~ ' filtered result' ~ count|pluralize('s')) }}
             {% endif %}
         {% endif %}
         {% if controls.categories.page_type == 'activity-log' %}
             {% import 'activity-log/_activity-list.html' as activity_list with context %}
             {{ activity_list.render(posts, index) }}
+        {% elif controls.output_5050 %}
+            <div class="o-info-unit-group u-mb30" data-qa-hook="image-text-50-50">
+                <div class="content-l">
+                    {% for post in posts %}
+                    <div class="content-l_col
+                                content-l_col-1-2">
+                        {% set post_url = get_protected_url(post) %}
+                        {% if post.preview_image %}
+                            {% set photo = image(post.preview_image, 'original') %}
+                        {% endif %}
+                        {% set heading = '<a href="' ~ post_url ~ '"><h2 class="h3">' ~
+                                         post.preview_title ~
+                                         '</h2></a>'
+                           if post.preview_title else null %}
+                        {% set sub_heading = '<a href="' ~ post_url ~ '"><h2 class="h4">' ~
+                                             post.preview_subheading ~
+                                             '</h2></a>'
+                           if post.preview_subheading else null %}
+                        {% if post.secondary_link_url and post.secondary_link_text %}
+                            {% set links = [
+                                {
+                                    'url': post.secondary_link_url,
+                                    'text': post.secondary_link_text
+                                }
+                            ] %}
+                        {% endif %}
+                        {{ info_unit( {
+                            'image': {
+                                'url': photo.url if photo else '/',
+                                'alt': post.preview_image.alt if post.preview_image.alt else '',
+                            },
+                            'heading': heading,
+                            'sub_heading': sub_heading,
+                            'body': parse_links(post.preview_description),
+                            'links': links or null,
+                        } ) }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         {% else %}
             {% for post in posts %}
                 {{ post_preview(post, controls, form_id=index) }}
             {% endfor %}
         {% endif %}
-        {% include 'molecules/pagination.html' %}
+        {% import 'molecules/pagination.html' as pagination with context %}
+        {% set fragment_id = 'o-filterable-list-controls-' + index | string %}
+        {{ pagination.render( posts.paginator.num_pages, posts.number, fragment_id, index ) }}
     </div>
 {% endmacro %}

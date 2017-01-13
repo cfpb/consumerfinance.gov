@@ -16,10 +16,6 @@ Short description explaining the high-level reason for the pull request
 
 -
 
-## Review
-
-- @user
-
 ## Screenshots
 
 
@@ -42,3 +38,4 @@ Short description explaining the high-level reason for the pull request
 * [ ] Placeholder code is flagged
 * [ ] Visually tested in supported browsers and devices
 * [ ] Project documentation has been updated (including the "Unreleased" section of the CHANGELOG)
+* [ ] Reviewers requested with the [Assignee tool](https://help.github.com/articles/assigning-issues-and-pull-requests-to-other-github-users/) :arrow_right:

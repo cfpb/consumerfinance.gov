@@ -4,12 +4,9 @@
 
 'use strict';
 
-// Vendor libraries.
-require( 'jquery' );
 
 // Global modules.
 require( '../modules/focus-target' ).init();
-require( '../modules/form-validation' ).init();
 require( '../modules/UStreamPlayer' ).init( '.video-player__ustream' );
 require( '../modules/YoutubePlayer' ).init( '.video-player__youtube' );
 

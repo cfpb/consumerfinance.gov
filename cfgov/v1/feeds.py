@@ -1,8 +1,8 @@
+from datetime import datetime
+
+import pytz
 from django.contrib.syndication.views import Feed
 from wagtail.wagtailcore.url_routing import RouteResult
-
-from datetime import datetime
-import pytz
 
 eastern = pytz.timezone('US/Eastern')
 
@@ -16,9 +16,6 @@ class FilterableFeed(Feed):
 
     def link(self):
         return self.page.full_url
-
-    def author_name(self):
-        return "Consumer Financial Protection Bureau"
 
     def title(self):
         return "%s | Consumer Financial Protection Bureau" % self.page.title
@@ -43,12 +40,6 @@ class FilterableFeed(Feed):
         categories = [cat.get_name_display() for cat in item.categories.all()]
         tags = [tag.name for tag in item.tags.all()]
         return categories + tags
-
-    def item_author_name(self, item):
-        if hasattr(item, 'authors'):
-            author_names = [a.name for a in item.authors.all()]
-            author_string = ', '.join(author_names)
-            return author_string
 
     def item_guid(self, item):
         return "%s<>consumerfinance.gov" % item.page_ptr_id

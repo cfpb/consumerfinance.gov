@@ -1,5 +1,20 @@
 ## Development tips
 
+### TIP: Updating npm shrinkwrapped dependencies
+For [security reasons](http://www.infoworld.com/article/3048526/security/nodejs-alert-google-engineer-finds-flaw-in-npm-scripts.html),
+the dependencies in [`package.json`](/package.json) are pinned to a version
+in [`npm-shrinkwrap.json`](/npm-shrinkwrap.json).
+This means updating a project dependency requires updating both files.
+The easiest way to do this is the following steps:
+
+ 1. Update the version of the dependency in `package.json`.
+ 2. Delete the `node_modules` directory.
+ 3. Delete the `npm-shrinkwrap.json` file.
+ 4. Run `npm install`.
+ 5. Run `npm shrinkwrap --dev`.
+
+Congrats! The dependency has been updated.
+
 ### TIP: Loading sibling projects
 Some projects fit within the cfgov-refresh architecture,
 but are not fully incorporated into the project.
@@ -11,9 +26,8 @@ and then indexed within this cfgov-refresh project.
 The non-v1 apps are the following:
 
  - [Owning a Home](https://github.com/cfpb/owning-a-home).
- - [Tax time savings](https://github.com/cfpb/tax-time-saving).
- - fin-ed-resources (not public) - for the Education Resources section.
- - know-before-you-owe (not public) - for the Consumer Tools > Know before you owe section.
+ - fin-ed-resources (ghe/CFGOV/fin-ed-resources) - for the Education Resources section.
+ - know-before-you-owe (ghe/CFGOV/know-before-you-owe) - for the Consumer Tools > Know before you owe section.
 
 After installing these projects as sibling directories to the `cfgov-refresh` repository,
 build the third-party projects per their directions,
@@ -21,9 +35,9 @@ stop the web server and return to `cfgov-refresh`
 and run `cfgov/manage.py sheer_index -r` to load the projects' data into ElasticSearch.
 
 !!! note
-	Do not install the projects directly into the `cfgov-refresh` directory.
-	Clone and install the projects as siblings to `cfgov-refresh`,
-	so that they share the same parent directory (`~/Projects` or similar).
+    Do not install the projects directly into the `cfgov-refresh` directory.
+    Clone and install the projects as siblings to `cfgov-refresh`,
+    so that they share the same parent directory (`~/Projects` or similar).
 
 ### TIP: Loading data into Django models
 The Django management command `import-data` will import data from the specified
@@ -96,8 +110,8 @@ named `DataConverter` that subclasses either `_helpers.PageDataConverter` or
 **Static assets** prior to processing (minifying etc.): `cfgov\unprocessed`.
 
 !!! note
-	After a `gulp build` they are copied over to the `cfgov\static_built` location,
-	ready to be served by Django.
+    After running `gulp build` the site's assets are copied over to `cfgov\static_built`,
+    ready to be served by Django.
 
 #### Simple static template setup
 

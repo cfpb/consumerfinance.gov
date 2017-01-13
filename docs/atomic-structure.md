@@ -2,11 +2,11 @@
 
 Check out [Don't Build Pages, Build Modules](http://www.ebaytechblog.com/?p=3113). It encompasses exactly what we are trying to achieve by building components using atomic design. It's important to note that our front-end atomic architecture is still evolving.
 
-Our components are broken down into templates, organisms, molecules, and atoms. We opted not to use the page component, although it exists in atomic design. Our components are composed of HTML, CSS, and Javascript. If a component doesn’t have user interactions or require styling, then it won’t have an associated js and/or css file. We compose our atomic components as follows:
+Our components are broken down into templates, organisms, molecules, and atoms. We opted not to use the page component, although it exists in atomic design. Our components are composed of HTML, CSS, and JavaScript. If a component doesn’t have user interactions or require styling, then it won’t have an associated js and/or css file. We compose our atomic components as follows:
 
 ### Atoms
 
-Prefixed with “a-” in CSS, Javascript, and HTML files.
+Prefixed with “a-” in CSS, JavaScript, and HTML files.
 
 #### HTML
 
@@ -27,7 +27,7 @@ Prefixed with “a-” in CSS, Javascript, and HTML files.
 
 ### Molecules ###
 
-Prefixed with “m-” in CSS, Javascript, and HTML files.
+Prefixed with “m-” in CSS, JavaScript, and HTML files.
 
 #### HTML
 
@@ -48,7 +48,7 @@ Prefixed with “m-” in CSS, Javascript, and HTML files.
     padding-left: 40px;
 ```
 
-#### Javascript
+#### JavaScript
 
 ```javascript
 function Notification( element ) { 
@@ -74,7 +74,7 @@ _notification.init();
 
 ### Organisms
 
-Prefixed with “o-” in CSS, Javascript, and HTML.
+Prefixed with “o-” in CSS, JavaScript, and HTML.
 
 #### HTML
 
@@ -124,7 +124,7 @@ atomicHelpers.instantiateAll( '.o-expandable', Expandable );
 
 ### Templates
 
-Prefixed with “t-” in CSS, Javascript, and HTML.
+Prefixed with “t-” in CSS, JavaScript, and HTML.
 
 #### CSS
 ```css
@@ -162,7 +162,7 @@ cfgov-refresh/cfgov/unprocessed/css/molecules/
 cfgov-refresh/cfgov/unprocessed/css/organisms/
 ```
 
-#### Javascript
+#### JavaScript
 
 ```
 cfgov-refresh/cfgov/unprocessed/js/atoms/
@@ -192,7 +192,7 @@ README.MD
 
 ### JavaScript Architecture
 
-There was considerable discussion on how we should create JS components. The components aren't constructed to be used on SPAs (Single Page Applications). They are built to be rendered on the sever and then enhanced via Javascript on the client. The basic interface for the components is as follows:
+There was considerable discussion on how we should create JS components. The components aren't constructed to be used on SPAs (Single Page Applications). They are built to be rendered on the sever and then enhanced via JavaScript on the client. The basic interface for the components is as follows:
 
 ```javascript
 function AtomicComponent( domElement ) {
@@ -235,7 +235,7 @@ Wepback is used as a module bundler although it's capable of more. We create pag
 
 #### Routes
 
-Routes are used to serve Javascript bundles to the browser based on the requested url or Wagtail page Media property. The happens via code contained in base.html.
+Routes are used to serve JavaScript bundles to the browser based on the requested URL or Wagtail page Media property. The happens via code contained in base.html.
 
 #### Base.html
 
@@ -243,11 +243,11 @@ This file serves as the base document for serving up assets and content. It's cu
 
 #### Wagtail Page Media Property
 
-Each Atomic component has a media property which list the Javascript files that should be rendered via base.html. When a page is requested via the browser, code contained in base.html will loop all Atomic components for the requested page and render the appropriate Atomic Javascript bundles.
+Each Atomic component has a media property which list the JavaScript files that should be rendered via base.html. When a page is requested via the browser, code contained in base.html will loop all Atomic components for the requested page and render the appropriate Atomic JavaScript bundles.
 
 #### Questions and Concerns
 
-- How do we support Single Page Applications and be functional when Javascript is disabled?
+- How do we support Single Page Applications and be functional when JavaScript is disabled?
 - How do we ensure creation of performant atomic components?
 - Is the codebase lacking uniformity?
 - CSS bloat when multiple components are on the same page but from different Django apps.

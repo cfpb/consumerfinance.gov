@@ -11,7 +11,7 @@
 
    value:                   An object with the following options for value.
 
-   value.category:         The category label text.
+   value.show_category:    Whether to show the category or not.
    value.heading:          Heading text.
    value.paragraph.source: Body introduction text.
    value.authors:          Array of author names and associated URLs.
@@ -31,17 +31,11 @@
 {% set form_id, ancestor = get_filter_data(page) %}
 {% set page_url = get_protected_url(ancestor) %}
 {% set published_date = value.date %}
-{% set page_authors = page.authors.all() %}
-{% set has_authors = page_authors|length > 0 %}
+{% set has_authors = page.authors.exists() %}
 
 <div class="o-item-introduction">
-    {% if value.category is string %}
-        {{ category_slug.render(value.category, page_url, index=form_id) }}
-    {% else %}
-        {% for category in page.categories.all() %}
-            {{ '|' if loop.index > 1 else '' }}
-            {{ category_slug.render(category.name, get_protected_url(ancestor), 'post_slug', index=index) }}
-        {% endfor %}
+    {% if page.categories.count() > 0 and value.show_category %}
+        {{ category_slug.render(page.categories.first().name, page_url, index=form_id) }}
     {% endif %}
     <h1>{{ value.heading | safe }}</h1>
 
@@ -54,10 +48,10 @@
     {% endif %}
         {% if has_authors %}
             <span class="byline">
-            {%- for author in page_authors -%}
+            {%- for author in page.get_authors() -%}
                 {{- 'By ' if loop.index == 1 else ' and ' }}
-                <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                    {{ author }}
+                <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                    {{ author.name }}
                 </a>
             {%- endfor -%}
                 &ndash;

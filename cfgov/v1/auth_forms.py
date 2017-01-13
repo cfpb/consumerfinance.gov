@@ -1,16 +1,12 @@
 import time
 from datetime import timedelta
 
-from django.contrib.auth.forms import (PasswordChangeForm, PasswordResetForm,
-                                       SetPasswordForm)
-
-from django.contrib.auth import authenticate
-from django.contrib.auth import get_user_model
-from django.utils import timezone
 from django.conf import settings
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.contrib.auth.forms import AuthenticationForm
-
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
+                                       PasswordResetForm, SetPasswordForm)
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.utils import timezone
 from wagtail.wagtailusers import forms as wagtailforms
 
 from .email import send_password_reset_email
@@ -29,8 +25,11 @@ class PasswordValidationMixin(object):
         if key1 in cleaned_data and key2 in cleaned_data:
             password = cleaned_data[key1]
 
-            password_policy._check_passwords(password, user, password_field = key1)
+            password_policy._check_passwords(password,
+                                             user,
+                                             password_field=key1)
         return cleaned_data
+
 
 class UserEditValidationMixin(PasswordValidationMixin):
     password_key = 'password'
@@ -64,7 +63,7 @@ class LoginForm(AuthenticationForm):
 
                 try:
                     user = UserModel._default_manager.get(
-                            username=username)
+                        username=username)
                 except ObjectDoesNotExist:
                     raise ValidationError(
                         self.error_messages['invalid_login'],
@@ -89,23 +88,41 @@ class LoginForm(AuthenticationForm):
 
                 if fa.too_many_attempts(attempts_allowed, time_period):
                     dt_now = timezone.now()
-                    lockout_expires = dt_now + timedelta(seconds=settings.LOGIN_FAIL_TIME_PERIOD)
-                    lockout = user.temporarylockout_set.create(expires_at=lockout_expires)
+                    lockout_expires = dt_now + timedelta(
+                        seconds=settings.LOGIN_FAIL_TIME_PERIOD)
+                    lockout = user.temporarylockout_set.create(
+                        expires_at=lockout_expires)
                     lockout.save()
-                    raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
+                    raise ValidationError(
+                        'This account is temporarily locked; '
+                        'please try later or <a href="/admin/password_reset/" '
+                        'style="color:white;font-weight:bold">'
+                        'reset your password</a>'
+                    )
                 else:
                     fa.save()
-                    raise ValidationError('Login failed. %s more attempts until your account will be temporarily locked.' % (attempts_allowed-attempts_used))
+                    raise ValidationError(
+                        'Login failed. {attempts} more attempts until your '
+                        'account will be temporarily locked.'.format(
+                            attempts=attempts_allowed - attempts_used)
+                    )
 
             else:
                 self.confirm_login_allowed(self.user_cache)
 
                 dt_now = timezone.now()
                 try:
-                    current_password_data = self.user_cache.passwordhistoryitem_set.latest()
+                    current_password_data = \
+                        self.user_cache.passwordhistoryitem_set.latest()
 
                     if dt_now > current_password_data.expires_at:
-                        raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
+                        raise ValidationError(
+                            'This account is temporarily locked; '
+                            'please try later or '
+                            '<a href="/admin/password_reset/" '
+                            'style="color:white;font-weight:bold">'
+                            'reset your password</a>'
+                        )
 
                 except ObjectDoesNotExist:
                     pass
@@ -118,11 +135,27 @@ class LoginForm(AuthenticationForm):
 
         lockout_query = user.temporarylockout_set.filter(expires_at__gt=now)
 
-        if lockout_query.count() > 0 :
-            raise ValidationError("This account is temporarily locked; please try later or <a href='/admin/password_reset/' style='color:white;font-weight:bold'>reset your password</a>")
+        if lockout_query.count() > 0:
+            raise ValidationError(
+                'This account is temporarily locked; '
+                'please try later or <a href="/admin/password_reset/" '
+                'style="color:white;font-weight:bold">'
+                'reset your password</a>'
+            )
 
 
 class UserCreationForm(wagtailforms.UserCreationForm):
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        try:
+            User = get_user_model()
+            User.objects.get(email=email)
+        except User.DoesNotExist:
+            return email
+        else:
+            raise ValidationError('This email is already in use.')
+
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=commit)
 
@@ -130,3 +163,16 @@ class UserCreationForm(wagtailforms.UserCreationForm):
             send_password_reset_email(user.email)
 
         return user
+
+
+class UserEditForm(wagtailforms.UserEditForm):
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        try:
+            User = get_user_model()
+            User.objects.exclude(pk=self.instance.pk).get(email=email)
+        except User.DoesNotExist:
+            return email
+        else:
+            raise ValidationError('This email is already in use.')

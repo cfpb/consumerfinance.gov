@@ -17,6 +17,18 @@
    value.is_share_view:     Whether the "Share this" heading is shown.
                             Default is true.
 
+   value.email_title        Sets subject for email
+
+   value.email_text         Sets body for email
+
+   value.email_signature    Sets signature for email
+
+   value.linkedin_title     Sets title for LinkedIn post
+
+   value.linkedin_text      Sets text for LinkedIn post
+
+   value.twitter_text:      Sets content for tweet
+
    value.twitter_hashtags:  A comma-separated list of hashtags
                             to be appended to default Tweet text.
                             https://dev.twitter.com/web/tweet-button/parameters
@@ -37,13 +49,19 @@
 {% set blurb = (value.blurb or (page.seo_title if page) or value.title or
                 'Look what I found on the CFPB’s site!') | urlencode %}
 {% set parsed_url = request.url | urlencode %}
-{% set external_redirect_url = '/external-site/?ext_url=' %}
 {% set is_share_view = value.is_share_view | default( true ) %}
+{% set email_title = value.email_title | urlencode or blurb %}
+{% set email_text = value.email_text | urlencode or 'Check out this page from the CFPB - ' %}
+{% set email_signature = '%0A%0A' + value.email_signature | urlencode if value.email_signature else '' %}
+{% set linkedin_title = value.linkedin_title | urlencode or blurb %}
+{% set linkedin_text = value.linkedin_text | urlencode or '' %}
+{% set twitter_text = value.twitter_text | urlencode or blurb %}
 
 <div class="m-social-media
             m-social-media__{{ 'share' if is_share_view else 'follow' }}">
     {% if is_share_view %}
         <div class="h5 m-social-media_heading">Share this</div>
+        <div class="h5 m-social-media_heading m-social-media_heading__es">Compartir</div>
     {% endif %}
 
     <ul class="list
@@ -53,28 +71,28 @@
 
         {% set facebook_info = {
             'name': 'Facebook',
-            'homepage': 'https://facebook.com/cfpb',
-            'share_url': 'https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ '&redirect_uri=' ~ parsed_url,
+            'homepage': unsigned_redirect('https://facebook.com/cfpb'),
+            'share_url': signed_redirect('https://www.facebook.com/dialog/share?app_id=210516218981921&display=page&href=' ~ parsed_url ~ '&redirect_uri=' ~ parsed_url),
             'class': 'cf-icon-facebook-square'
         } %}
 
         {% set twitter_info = {
             'name': 'Twitter',
-            'homepage': 'https://twitter.com/cfpb',
-            'share_url': _share_twitter_url(parsed_url, blurb, value),
+            'homepage': unsigned_redirect('https://twitter.com/cfpb'),
+            'share_url': signed_redirect(_share_twitter_url(parsed_url, twitter_text, value)|trim),
             'class': 'cf-icon-twitter-square'
         } %}
 
         {% set linkedin_info = {
             'name': 'LinkedIn',
-            'homepage': 'https://www.linkedin.com/company/consumer-financial-protection-bureau',
-            'share_url': 'https://www.linkedin.com/shareArticle?mini=true&url=' ~ parsed_url ~ '&title=' ~ blurb,
+            'homepage': unsigned_redirect('https://www.linkedin.com/company/consumer-financial-protection-bureau'),
+            'share_url': signed_redirect('https://www.linkedin.com/shareArticle?mini=true&url=' ~ parsed_url ~ '&title=' ~ linkedin_title ~ '&summary=' ~ linkedin_text),
             'class': 'cf-icon-linkedin-square'
         } %}
 
         {% set email_info = {
             'name': 'email',
-            'share_url': 'mailto:?subject=' ~ blurb ~ '&body=Check out this page from the CFPB - ' ~ parsed_url,
+            'share_url': 'mailto:?subject=' ~ email_title ~ '&body=' ~ email_text ~ ' ' ~ parsed_url ~ email_signature,
             'class': 'cf-icon-email-social-square'
         } %}
 
@@ -112,17 +130,15 @@
             {% if is_share_view %}
                 <li class="list_item">
                     <a class="m-social-media_icon"
-                       href="{{ external_redirect_url ~ link.share_url if link.name != 'email'
-                                else link.share_url | trim }}"
-                       {{ 'target=_blank' if link.name != 'email' else '' }}>
-                        <span class="cf-icon {{ link.class }}"></span>
+                       href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
+                       {{ 'target=_blank' if link.name != 'email' else '' }}> <span class="cf-icon {{ link.class }}"></span>
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
                     </a>
                 </li>
             {% else %}
                 <li class="list_item">
                     <a class="m-social-media_icon"
-                       href="{{ external_redirect_url ~ link.homepage | trim }}">
+                       href="{{ link.homepage | trim }}">
                         <span class="cf-icon {{ link.class }}"></span>
                         <span class="u-visually-hidden">Visit us on {{ link.name }}</span>
                     </a>
@@ -165,14 +181,14 @@
 
    ========================================================================== #}
 
-{% macro _share_twitter_url(parsed_url, blurb, options) %}
+{%- macro _share_twitter_url(parsed_url, blurb, options) -%}
     {%- set _share_twitter_url = 'http://twitter.com/intent/tweet' -%}
     {%- set _share_twitter_url = _share_twitter_url + '?url=' + parsed_url -%}
     {%- set _share_twitter_url = _share_twitter_url + '&via=CFPB' -%}
     {%- set _share_twitter_url = _share_twitter_url + '&text=' + blurb + '%20--' -%}
 
     {%- if options.twitter_hashtags %}
-        {% set _share_twitter_url = _share_twitter_url + '&hashtags=' + options.twitter_hashtags %}
+        {% set _share_twitter_url = _share_twitter_url + '&hashtags=' + options.twitter_hashtags.replace('#','')|urlencode %}
     {% endif -%}
 
     {%- if options.twitter_related %}
@@ -183,7 +199,5 @@
 
     {%- if options.twitter_lang %}
         {% set _share_twitter_url = _share_twitter_url + '&lang=' + options.twitter_lang %}
-    {% endif -%}
-
-    {{ _share_twitter_url }}
+    {% endif -%}{{- _share_twitter_url -}}
 {% endmacro %}

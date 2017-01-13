@@ -1,6 +1,7 @@
 import re
-from django.core.exceptions import ValidationError
 
+from django import forms
+from django.core.exceptions import ValidationError
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
@@ -20,8 +21,12 @@ class NumberBlock(blocks.StructBlock):
     text = blocks.CharBlock(max_length=100, required=False)
 
     def __init__(self, required=True):
-        self.required = required
+        self.is_required = required
         super(NumberBlock, self).__init__()
+
+    @property
+    def required(self):
+        return self.is_required
 
     def clean(self, data):
         error_dict = {}
@@ -49,13 +54,32 @@ class NumberBlock(blocks.StructBlock):
         template = '_includes/atoms/number.html'
 
 
+class IntegerBlock(blocks.FieldBlock):
+    def __init__(self, required=True, help_text=None, min_value=None,
+                 max_value=None, **kwargs):
+        self.field = forms.IntegerField(
+            required=required,
+            help_text=help_text,
+            min_value=min_value,
+            max_value=max_value
+        )
+        super(IntegerBlock, self).__init__(**kwargs)
+
+    class Meta:
+        icon = 'plus-inverse'
+
+
 class Hyperlink(blocks.StructBlock):
     text = blocks.CharBlock(required=False)
     url = blocks.CharBlock(default='/', required=False)
 
     def __init__(self, required=True):
-        self.required = required
+        self.is_required = required
         super(Hyperlink, self).__init__()
+
+    @property
+    def required(self):
+        return self.is_required
 
     def clean(self, data):
         error_dict = {}
@@ -70,7 +94,8 @@ class Hyperlink(blocks.StructBlock):
                 error_dict.update({'text': is_required('Text')})
 
         if error_dict:
-            raise ValidationError("Hyperlink validation errors", params=error_dict)
+            raise ValidationError("Hyperlink validation errors",
+                                  params=error_dict)
         else:
             return data
 
@@ -84,8 +109,12 @@ class ImageBasic(blocks.StructBlock):
     alt = blocks.CharBlock(required=False)
 
     def __init__(self, required=True):
-        self.required = required
+        self.is_required = required
         super(ImageBasic, self).__init__()
+
+    @property
+    def required(self):
+        return self.is_required
 
     def clean(self, data):
         error_dict = {}
@@ -102,7 +131,8 @@ class ImageBasic(blocks.StructBlock):
             error_dict.update({'upload': is_required("Upload")})
 
         if error_dict:
-            raise ValidationError("ImageBasic validation errors", params=error_dict)
+            raise ValidationError("ImageBasic validation errors",
+                                  params=error_dict)
         else:
             return data
 
@@ -126,7 +156,11 @@ class ImageBasicUrl(ImageBasic):
 
         if not data['upload'] and not data['url']:
             img_err = ['Please upload or enter an image path']
-            error_dict.update({'upload': img_err, 'url': img_err, 'alt': is_required('Image alt')})
+            error_dict.update({
+                'upload': img_err,
+                'url': img_err,
+                'alt': is_required('Image alt')
+            })
 
         if data['upload'] and data['url']:
             img_err = ['Please select one method of image rendering']
@@ -135,6 +169,7 @@ class ImageBasicUrl(ImageBasic):
                 'url': img_err})
 
         if error_dict:
-            raise ValidationError("ImageBasicUrlAlt validation errors", params=error_dict)
+            raise ValidationError("ImageBasicUrlAlt validation errors",
+                                  params=error_dict)
         else:
             return data

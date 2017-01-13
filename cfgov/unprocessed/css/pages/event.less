@@ -15,6 +15,23 @@
     }
 }
 
+/* Event-Agenda Table
+   ========================================================================== */
+.event-agenda_table {
+    h2 + & td[data-label]:before {
+        margin-top: 0;
+    }
+
+    th, td {
+        font-size: 16px;
+    }
+
+    .respond-to-min(@bp-med-min, {
+        th {
+            width: 25%;
+        }
+    } );
+}
 
 /* Event-Post
    ========================================================================== */
@@ -129,7 +146,8 @@
     text-transform: capitalize;
     display: inline-block;
 
-    .event-meta_street:not(:empty):after {
+    .event-meta_street:not(:empty):after,
+    .event-meta_suite:not(:empty):after {
         // Adding a linebreak after the street if it's contents
         // aren't empty.
         content: '\A';

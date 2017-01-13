@@ -207,7 +207,7 @@ rules:
   dot-notation:
     - 2
     -
-      allowKeywords: false
+      allowKeywords: true
       allowPattern: ''
 
   # Enforces use of === and !== over == and !=.

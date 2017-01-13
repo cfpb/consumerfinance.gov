@@ -1,11 +1,10 @@
-{% load static %}
+{% load static from staticfiles %}
 {% load global_include %}
-{% get_static_prefix as STATIC_PREFIX %}
-{% get_media_prefix as MEDIA_PREFIX %}
+
 {% load i18n %}
 {% load staticversions %}
-{% get_static_version as STATIC_VERSION %}
 {% load remit_var %}
+
 {% is_remit as IS_REMIT %}
 
 <!DOCTYPE html>
@@ -26,7 +25,8 @@ please send an email with your full name to tech@cfpb.gov.
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" dir="ltr" lang="{% trans "en-US" %}"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" dir="ltr" lang="{% trans "en-US" %}"> <![endif]-->
 <!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
-<!--[if gt IE 8]><!--> <html dir="ltr" lang="{% trans "en-US" %}"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html dir="ltr" lang="{% trans "en-US" %}" class="no-js"> <!--<![endif]-->
+
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
     <meta charset="utf-8">
@@ -42,7 +42,7 @@ please send an email with your full name to tech@cfpb.gov.
     <meta property="fb:app_id" content="210516218981921">
 
     {% block open_graph_image %}
-    <meta property="og:image" content="/static/nemo/_/img/logo.svg">
+    <meta property="og:image" content="{% static 'nemo/_/img/logo.svg' %}">
     {% endblock %}
 
     {% block page_meta %}
@@ -55,28 +55,28 @@ please send an email with your full name to tech@cfpb.gov.
     {% endblock %}
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="/static/nemo/_/img/apple-touch-icon-precomposed.png">
-    <link rel="apple-touch-icon" size="72x72" href="/static/nemo/_/img/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon" size="114x114" href="/static/nemo/_/img/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon" size="144x144" href="/static/nemo/_/img/apple-touch-icon-144x144-precomposed.png">
+    <link rel="apple-touch-icon" href="{% static 'nemo/_/img/apple-touch-icon-precomposed.png' %}">
+    <link rel="apple-touch-icon" size="72x72" href="{% static 'nemo/_/img/apple-touch-icon-72x72-precomposed.png' %}">
+    <link rel="apple-touch-icon" size="114x114" href="{% static 'nemo/_/img/apple-touch-icon-114x114-precomposed.png' %}">
+    <link rel="apple-touch-icon" size="144x144" href="{% static 'nemo/_/img/apple-touch-icon-144x144-precomposed.png' %}">
 
 
-    <script src="/static/nemo/_/js/jquery-1.9.1.min.js{{ STATIC_VERSION }}"></script>
+    <script src="{% static 'nemo/_/js/jquery-1.9.1.min.js' %}"></script>
     <!--[if lt IE 9]>
-    <script src="/static/nemo/_/js/html5shim.js"></script>
+    <script src="{% static 'nemo/_/js/html5shim.js' %}"></script>
     <![endif]-->
 
     {% block nemo_styles %}
     <!-- Styles -->
 
     <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="/static/nemo/_/c/woff.css{{ STATIC_VERSION }}">
+        <link rel="stylesheet" href="{% static 'nemo/_/c/woff.css' %}">
     <!--<![endif]-->
     <!--[if lt IE 9]>
-    <link rel="stylesheet" href="/static/nemo/_/c/eot.css">
+    <link rel="stylesheet" href="{% static 'nemo/_/c/eot.css' %}">
     <![endif]-->
-    <link rel="stylesheet" href="/static/nemo/_/c/styles.css{{ STATIC_VERSION }}">
-   
+    <link rel="stylesheet" href="{% static 'nemo/_/c/styles.css' %}">
+
 
     {% endblock %}
 
@@ -88,49 +88,38 @@ please send an email with your full name to tech@cfpb.gov.
     <link rel="stylesheet" href="{% static 'css/header.nonresponsive.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/footer.nonresponsive.css' %}"/>
 
+    {# Google Tag Manager #}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+
     <!-- Feeds -->
     {% block page_feeds %}
     {% endblock %}
 
     {% block analytics_js %}
-    <script src="{{ STATIC_PREFIX }}js/analytics.js{{ STATIC_VERSION }}"></script>
-
-    <!-- this is where we put our custom analytics -->
-    <script src="/static/nemo/_/js/analytics-global.js{{ STATIC_VERSION }}"></script>
-
-    <!-- H5BP's Asynchronous Google Analytics snippet. -->
-    <script>
-      var _gaq=[['_setAccount','UA-20466645-3'],['_setDomainName', '.consumerfinance.gov'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
-
     {% endblock %}
 </head>
 
 <body class="{% block body_class %}page{% endblock %}" data-lang="{% trans "en" %}">
 {% block gtm_js %}
-<!-- Google Tag Manager -->
-{# Should always be included immediately after the opening <body> tag #}
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KMMLRS');</script>
-<!-- End Google Tag Manager -->
+<!-- End Google Tag Manager (noscript) -->
 {% endblock %}
 <script src="{% static 'js/modernizr.min.js'  %}"></script>
 
 
+
 <!--[if lt IE 9]>
-<script>
+    <script>
     // If in IE8 reverse no-js/js class change made by modernizr.
     var docElement = document.documentElement;
     docElement.className = docElement.className.replace( /(^|\s)js(\s|$)/, '$1no-js$2' );
-</script>
+    </script>
 <![endif]-->
 
 <!--[if IE 9]><script src="{% static 'js/ie/common.ie.js'  %}"></script><![endif]-->
@@ -154,14 +143,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
     </div><!-- /#page -->
-        {% global_include "on-demand/footer.html" %}    
+        {% global_include "on-demand/footer.html" %}
 
     {% block app_modal %}
     {% endblock %}
 
 {% block nemo_js %}
-<script src="/static/nemo/_/js/functions.js"></script>
-<script type="text/javascript" src="/static/agreements/js/chosen.jquery.js"></script>
+<script src="{% static 'nemo/_/js/functions.js' %}"></script>
+<script type="text/javascript" src="{% static 'agreements/js/chosen.jquery.js' %}"></script>
 {% endblock %}
 
 
@@ -172,17 +161,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% endblock %}
 
 <!-- for search.usa.gov indexing -->
-<script type="text/javascript">
+<script>
   //<![CDATA[
     var aid = "cfpb";
     var script = document.createElement('script');
     script.type = "text/javascript";
-    script.src = "http://search.usa.gov/javascripts/stats.js";
+    script.src = "https://search.usa.gov/javascripts/stats.js";
     document.getElementsByTagName("head")[0].appendChild(script);
   //]]>
-</script>
+  </script>
 
-<script type="text/javascript">
+  <script>
     // If there are no breadcrumbs on this page, remove the ul tag so that screen
     // readers don't read it (since the ul has nothing in it).
     $(function(){
@@ -191,7 +180,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             $("ul.bread").remove();
         }
     });
-</script>
+    </script>
+<!--[if gt IE 8]><!-->
 <script type="text/javascript" src="{% static "js/atomic/header.nonresponsive.js" %}"></script>
+<!--<![endif]-->
 </body>
 </html>

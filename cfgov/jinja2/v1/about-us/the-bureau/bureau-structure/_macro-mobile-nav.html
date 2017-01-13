@@ -1,0 +1,30 @@
+{# ==========================================================================
+
+   mobile-nav.render()
+
+   ==========================================================================
+
+   Description:
+
+   Renders a mobile navigation when given:
+
+   categories: An Array of categories.
+
+   ========================================================================== #}
+{% macro render(categories) -%}
+<div class="o-bureau-structure_nav">
+    <ul class="list__links">
+        {% for category in categories %}
+        <li>
+            <button class="jump-link
+                           jump-link__right
+                           jump-link__bg
+                           o-bureau-structure_nav-item"
+                    data-show-slide-index="{{ loop.index }}">
+                {{ category.title }}
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{%- endmacro %}

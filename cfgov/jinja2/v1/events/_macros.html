@@ -72,6 +72,7 @@
     {%- set city   =  event.venue_city   | default('', true) -%}
     {%- set state  =  event.venue_state  | default('', true) -%}
     {%- set street =  event.venue_street | default('', true) -%}
+    {%- set suite  =  event.venue_suite  | default('', true) -%}
     {%- set name   =  event.venue_name   | default('', true) -%}
     {%- set zip    =  event.venue_zip    | default('', true) -%}
     <p class="event-meta_address h-adr">
@@ -87,6 +88,10 @@
             <span class="event-meta_street p-street-address">{{ street }}</span>
         {% endmacro -%}
 
+        {%- macro _suite() %}
+            <span class="event-meta_suite p-extended-address">{{ suite }}</span>
+        {% endmacro -%}
+
         {% macro _venue() %}
             <span class="event-meta_venue p-extended-address">{{ name }}</span>
         {% endmacro %}
@@ -100,6 +105,7 @@
                 'city'   : _city()   | trim,
                 'street' : _street() | trim,
                 'state'  : _state()  | trim,
+                'suite'  : _suite()  | trim,
                 'venue'  : _venue()  | trim,
                 'zip'    : _zip()    | trim
             }) | safe
@@ -145,7 +151,8 @@
             <div class="content-l">
                 <div class="event-meta content-l_col content-l_col-1-2">
                     {{ event_meta_address(event,
-                        address_format ='{venue} {street} {city}' ~ state_prefix ~ '{state} {zip}'
+                        address_format ='{venue} {street} {suite}
+                        {city}' ~ state_prefix ~ '{state} {zip}'
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
@@ -166,7 +173,7 @@
         <footer>
             <figure class="event-media_container">
             {% if (event_state == 'past' and event.youtube_url ) %}
-                {% import 'macros/video-player.html' as video_player %}
+                {% import 'macros/video-player.html' as video_player with context %}
                 {% set image_url  = event.flickr_url %}
                 {% set video_id   = event.video_id | default( '' ) %}
                 {{ video_player.render({
@@ -181,10 +188,10 @@
                    })
                 }}
             {% elif event_state == 'past' %}
-                {% set image_url = event.archive_image or '/static/img/cfpb_video_cover_card_1380x776.png' %}
+                {% set image_url = event.archive_image or static('img/cfpb_video_cover_card_1380x776.png') %}
                 <img src=" {{ image_url }}" alt="Video placeholder image" />
             {% elif event_state == 'present' and event.live_stream_url  %}
-                {% import 'macros/video-player.html' as video_player %}
+                {% import 'macros/video-player.html' as video_player with context %}
                 {% set video_id = event.video_id | default( '' ) %}
                 {{ video_player.render({
                     'button_pos': 'bottomRight',
@@ -226,33 +233,29 @@
    ========================================================================== #}
 
 {% macro event_agenda(event) %}
-  {% set options = {
-      'time_col_classes': 'u-w25pct',
-      'agenda_col_classes': 'u-w25pct',
-      'location_col_classes': 'u-w25pct',
-      'speaker_col_classes': 'u-w25pct',
-  } %}
   <div class="block
               block__padded-top
               block__border-top">
     <h2>Agenda</h2>
-    <table class="u-w100pct
+    <table class="o-table
+                  event-agenda_table
+                  o-table__stack-on-small
+                  u-w100pct
                   block
-                  block__flush-top
-                  simple-table">
+                  block__flush-top">
         <thead>
             <tr>
-                <th class="{{ options.time_col_classes }}">Time</th>
-                <th class="{{ options.desc_col_classes }}">Agenda</th>
-                <th class="{{ options.location_col_classes }}">Location</th>
-                <th class="{{ options.speaker_col_classes }}">Speakers</th>
+                <th>Time</th>
+                <th>Agenda</th>
+                <th>Location</th>
+                <th>Speakers</th>
             </tr>
         </thead>
         <tbody>
         {% for block in event.agenda_items %}
           {% set bound = block.value.bound_blocks %}
             <tr>
-                <td class="{{ options.time_col_classes }}">
+                <td>
                     {% import 'macros/time.html' as time %}
                     {{ time.render(
                         bound.start_time.render(),
@@ -261,15 +264,15 @@
                     &ndash;
                     {{ time.render(bound.end_time.render(), {'time':true, 'timezone':true}) }}
                 </td>
-                <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
+                <td data-label="Agenda">
                     {{ bound.description.render() }}
                 </td>
-                <td class="{{ options.location_col_classes }}" data-label="Location">
+                <td data-label="Location">
                   {% if bound.location.render() %}
                     {{ bound.location.render() }}
                   {% endif %}
                 </td>
-                <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
+                <td data-label="Speakers">
                 {% for speaker in bound.speakers.value %}
                     {%- if speaker.bound_blocks.url.render() -%}
                     <a href="{{ speaker.bound_blocks.url.render() }}">

@@ -1,8 +1,8 @@
 'use strict';
 
-var gulp = require( 'gulp' );
-var del = require( 'del' );
 var configClean = require( '../config' ).clean;
+var del = require( 'del' );
+var gulp = require( 'gulp' );
 
 gulp.task( 'clean', function() {
   del( configClean.dest + '/**/*' );

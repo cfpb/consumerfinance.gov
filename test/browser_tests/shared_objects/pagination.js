@@ -16,10 +16,10 @@ var pagination = {
     paginationContent.element( by.css( '.m-pagination_btn-next' ) ),
 
   paginationPageInput:
-    paginationContent.element( by.css( '#m-pagination_current-page' ) ),
+    paginationContent.element( by.css( '.m-pagination_current-page' ) ),
 
   paginationPageBtn:
-    paginationContent.element( by.css( '#m-pagination_submit-btn' ) )
+    paginationContent.element( by.css( '.m-pagination_submit-btn' ) )
 
 };
 

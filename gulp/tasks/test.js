@@ -1,12 +1,17 @@
 'use strict';
 
-var envvars = require( '../../config/environment' ).envvars;
-var gulp = require( 'gulp' );
-var plugins = require( 'gulp-load-plugins' )();
-var spawn = require( 'child_process' ).spawn;
 var configTest = require( '../config' ).test;
+var envvars = require( '../../config/environment' ).envvars;
 var fsHelper = require( '../utils/fs-helper' );
+var gulp = require( 'gulp' );
+var gulpCoveralls = require( 'gulp-coveralls' );
+var gulpIstanbul = require( 'gulp-istanbul' );
+var gulpMocha = require( 'gulp-mocha' );
+var gulpUtil = require( 'gulp-util' );
+var isReachable = require( 'is-reachable' );
+var localtunnel = require( 'localtunnel' );
 var minimist = require( 'minimist' );
+var spawn = require( 'child_process' ).spawn;
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -14,21 +19,21 @@ var minimist = require( 'minimist' );
  */
 function testUnitScripts( cb ) {
   gulp.src( configTest.src )
-    .pipe( plugins.istanbul( {
+    .pipe( gulpIstanbul( {
       includeUntested: false
     } ) )
-    .pipe( plugins.istanbul.hookRequire() )
+    .pipe( gulpIstanbul.hookRequire() )
     .on( 'finish', function() {
       gulp.src( configTest.tests + '/unit_tests/**/*.js' )
-        .pipe( plugins.mocha( {
+        .pipe( gulpMocha( {
           reporter: configTest.reporter ? 'spec' : 'nyan'
         } ) )
-        .pipe( plugins.istanbul.writeReports( {
+        .pipe( gulpIstanbul.writeReports( {
           dir: configTest.tests + '/unit_test_coverage'
         } ) )
 
         /* TODO: we want this but it breaks because we don't have good coverage
-        .pipe( plugins.istanbul.enforceThresholds( {
+        .pipe( gulpIstanbul.enforceThresholds( {
           thresholds: { global: 90 }
         } ) )
         */
@@ -46,10 +51,10 @@ function testUnitServer() {
     { stdio: 'inherit' }
   ).once( 'close', function( code ) {
     if ( code ) {
-      plugins.util.log( 'Tox tests exited with code ' + code );
+      gulpUtil.log( 'Tox tests exited with code ' + code );
       process.exit( 1 );
     }
-    plugins.util.log( 'Tox tests done!' );
+    gulpUtil.log( 'Tox tests done!' );
   } );
 }
 
@@ -79,7 +84,9 @@ function _getProtractorParams( suite ) {
 
   var commandLineParams = minimist( process.argv.slice( 2 ) );
 
-  var configFile = commandLineParams.a11y ? 'test/browser_tests/a11y_conf.js' : 'test/browser_tests/conf.js';
+  var configFile = commandLineParams.a11y ?
+                  'test/browser_tests/a11y_conf.js' :
+                  'test/browser_tests/conf.js';
 
   // Set default configuration command-line parameter.
   var params = [ configFile ];
@@ -126,9 +133,50 @@ function _getWCAGParams() {
   var checkerId = envvars.ACHECKER_ID;
   var urlPath = _parsePath( commandLineParams.u );
   var url = host + ':' + port + urlPath;
-  plugins.util.log( 'WCAG tests checking URL: http://' + url );
+  gulpUtil.log( 'WCAG tests checking URL: http://' + url );
 
   return [ '--u=' + url, '--id=' + checkerId ];
+}
+
+/**
+ * Processes command-line and environment variables
+ * for passing to the PageSpeed Insights (PSI) executable.
+ * An optional URL path comes from the command-line `--u=` flag.
+ * A PSI "strategy" (mobile vs desktop) can be specified with the `--s=` flag.
+ * @returns {Promise}
+ *   Promise containing an array of command-line arguments for PSI binary.
+ */
+function _createPSITunnel() {
+  var commandLineParams = minimist( process.argv.slice( 2 ) );
+  var host = envvars.TEST_HTTP_HOST;
+  var port = envvars.TEST_HTTP_PORT;
+  var path = _parsePath( commandLineParams.u );
+  var url = host + ':' + port + path;
+  var strategy = commandLineParams.s || 'mobile';
+
+  // Create a promise that the server is reachable and we can create a tunnel.
+  var promise = new Promise( function( resolve, reject ) {
+    // Check if server is reachable.
+    isReachable( url, function( err, reachable ) {
+      if ( err || !reachable ) {
+        reject( url + ' is not reachable. Is your local server running?' );
+      }
+      // Create the local tunnel.
+      localtunnel( port, function( tunErr, tunnel ) {
+        url = tunnel.url + path;
+        if ( tunErr ) {
+          tunnel.close();
+          reject( 'Error creating local tunnel for PSI: ' + tunErr );
+        }
+        resolve( {
+          url:    [ url, '--strategy=' + strategy ],
+          tunnel: tunnel
+        } );
+      } );
+    } );
+  } );
+
+  return promise;
 }
 
 /**
@@ -156,10 +204,30 @@ function testA11y() {
     { stdio: 'inherit' }
   ).once( 'close', function( code ) {
     if ( code ) {
-      plugins.util.log( 'WCAG tests exited with code ' + code );
+      gulpUtil.log( 'WCAG tests exited with code ' + code );
       process.exit( 1 );
     }
-    plugins.util.log( 'WCAG tests done!' );
+    gulpUtil.log( 'WCAG tests done!' );
+  } );
+}
+
+/**
+ * Run PageSpeed Insight tests.
+ */
+function testPerf() {
+  _createPSITunnel().then( function( params ) {
+    gulpUtil.log( 'PSI tests checking URL: http://' + params.url.split( ' ' ) );
+    spawn(
+      fsHelper.getBinary( 'psi', 'psi', '../.bin' ),
+      params.url,
+      { stdio: 'inherit' }
+    ).once( 'close', function() {
+      gulpUtil.log( 'PSI tests done!' );
+      params.tunnel.close();
+    } );
+  } ).catch( function( err ) {
+    gulpUtil.log( err );
+    process.exit( 1 );
   } );
 }
 
@@ -169,17 +237,17 @@ function testA11y() {
  */
 function _spawnProtractor( suite ) {
   var params = _getProtractorParams( suite );
-  plugins.util.log( 'Running Protractor with params: ' + params );
+  gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
     params,
     { stdio: 'inherit' }
   ).once( 'close', function( code ) {
     if ( code ) {
-      plugins.util.log( 'Protractor tests exited with code ' + code );
+      gulpUtil.log( 'Protractor tests exited with code ' + code );
       process.exit( 1 );
     }
-    plugins.util.log( 'Protractor tests done!' );
+    gulpUtil.log( 'Protractor tests done!' );
   } );
 }
 
@@ -188,7 +256,7 @@ function _spawnProtractor( suite ) {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function testAcceptanceBrowser( suite ) {
-    _spawnProtractor( suite );
+  _spawnProtractor( suite );
 }
 
 /**
@@ -196,13 +264,14 @@ function testAcceptanceBrowser( suite ) {
  */
 function testCoveralls() {
   gulp.src( configTest.tests + '/unit_test_coverage/lcov.info' )
-    .pipe( plugins.coveralls() );
+    .pipe( gulpCoveralls() );
 }
 
 // This task will only run on Travis
 gulp.task( 'test:coveralls', testCoveralls );
 
 gulp.task( 'test:a11y', testA11y );
+gulp.task( 'test:perf', testPerf );
 
 
 gulp.task( 'test:unit:scripts', testUnitScripts );
@@ -210,8 +279,7 @@ gulp.task( 'test:unit:server', testUnitServer );
 
 gulp.task( 'test:unit',
   [
-    'test:unit:scripts',
-    'test:unit:server'
+    'test:unit:scripts'
   ]
 );
 
@@ -225,4 +293,3 @@ gulp.task( 'test',
 gulp.task( 'test:acceptance', function() {
   testAcceptanceBrowser();
 } );
-

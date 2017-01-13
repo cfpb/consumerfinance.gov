@@ -1,77 +1,54 @@
-import time
-from datetime import timedelta
-from itertools import chain
-from util import ERROR_MESSAGES
-
+from collections import Counter
 from django import forms
 from django.db.models import Q
-from django.forms.utils import ErrorList
 from django.forms import widgets
 from taggit.models import Tag
 
-from .util import ref
-from .models.base import CFGOVPage
-from .util.util import most_common
+from .models.base import Feedback
+from v1.util.categories import clean_categories
+from v1.util import ERROR_MESSAGES, ref
 
 
-class FilterErrorList(ErrorList):
-    def __str__(self):
-        return '\n'.join(str(e) for e in self)
-
-
-class FilterDateField(forms.DateField):
-    def clean(self, value):
-        from sheerlike.templates import get_date_obj
-        if value:
-            try:
-                value = get_date_obj(value)
-            except Exception as e:
-                pass
-        return value
-
-class PDFFilterDateField(forms.DateField):
-    def clean(self, value):
-        if value:
-            try:
-                value = get_date_string(value)
-            except Exception as e:
-                pass
-        return value
-
-class FilterCheckboxList(forms.CharField):
+class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
     def validate(self, value):
-        if value in self.empty_values and self.required:
-            msg = self.error_messages['required']
-            if self.label and '%s' in msg:
-                msg = msg % self.label
-            raise forms.ValidationError(msg, code='required')
+        pass
 
 
-class CalenderPDFFilterForm(forms.Form):
-    filter_calendar = FilterCheckboxList(label='Calendar',
-        error_messages=ERROR_MESSAGES['CHECKBOX_ERRORS'])
-    filter_range_date_gte = PDFFilterDateField(required=False,
-        error_messages=ERROR_MESSAGES['DATE_ERRORS'])
-    filter_range_date_lte = PDFFilterDateField(required=False,
-        error_messages=ERROR_MESSAGES['DATE_ERRORS'])
+class FilterableDateField(forms.DateField):
+    default_input_formats = (
+        '%m/%d/%Y',     # 10/25/2016
+        '%m/%Y',        # 10/2016
+        '%m/%y',        # 10/16
+        '%Y',           # 2016
+    )
+
+    default_widget_attrs = {
+        'class': 'js-filter_range-date',
+        'type': 'text',
+        'placeholder': 'mm/dd/yyyy',
+        'data-type': 'date'
+    }
 
     def __init__(self, *args, **kwargs):
-        kwargs['error_class'] = FilterErrorList
-        super(CalenderPDFFilterForm, self).__init__(*args, **kwargs)
+        kwargs.setdefault('required', False)
+        kwargs.setdefault('input_formats', self.default_input_formats)
+        kwargs.setdefault('widget', widgets.DateInput(
+            attrs=self.default_widget_attrs
+        ))
+        kwargs.setdefault('error_messages', ERROR_MESSAGES['DATE_ERRORS'])
+        super(FilterableDateField, self).__init__(*args, **kwargs)
 
-    def clean_filter_calendar(self):
-        return self.cleaned_data['filter_calendar'].replace(' ', '+')
 
-    def clean(self):
-        cleaned_data = super(CalenderPDFFilterForm, self).clean()
-        from_date_empty = 'filter_range_date_gte' in cleaned_data and \
-                          cleaned_data['filter_range_date_gte']  == None
-        to_date_empty = 'filter_range_date_lte' in cleaned_data and \
-                        cleaned_data['filter_range_date_lte'] == None
+class FilterableFromDateField(FilterableDateField):
+    def __init__(self, *args, **kwargs):
+        self.default_widget_attrs['class'] += ' js-filter_range-date__gte'
+        super(FilterableFromDateField, self).__init__(*args, **kwargs)
 
-        if from_date_empty and to_date_empty :
-            raise forms.ValidationError(ERROR_MESSAGES['DATE_ERRORS']['one_required'])
-        return cleaned_data
+
+class FilterableToDateField(FilterableDateField):
+    def __init__(self, *args, **kwargs):
+        self.default_widget_attrs['class'] += ' js-filter_range-date__lte'
+        super(FilterableToDateField, self).__init__(*args, **kwargs)
 
 
 class FilterableListForm(forms.Form):
@@ -86,51 +63,80 @@ class FilterableListForm(forms.Form):
         'multiple': 'multiple',
         'data-placeholder': 'Search for authors'
     }
-    from_select_attrs = {
-        'class': 'js-filter_range-date js-filter_range-date__gte',
-        'type': 'text',
-        'placeholder': 'mm/dd/yyyy',
-        'data-type': 'date'
-    }
-    to_select_attrs = from_select_attrs.copy()
-    to_select_attrs.update({
-        'class': 'js-filter_range-date js-filter_range-date__lte',
-    })
 
-    title =      forms.CharField(max_length=250, required=False, widget=widgets.TextInput(attrs=title_attrs))
-    from_date =  FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=from_select_attrs))
-    to_date =    FilterDateField(required=False, input_formats=['%m/%d/%Y'], widget=widgets.DateInput(attrs=to_select_attrs))
-    categories = forms.MultipleChoiceField(required=False, choices=ref.page_type_choices, widget=widgets.CheckboxSelectMultiple())
-    topics =     forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=topics_select_attrs))
-    authors =    forms.MultipleChoiceField(required=False, choices=[], widget=widgets.SelectMultiple(attrs=authors_select_attrs))
+    title = forms.CharField(
+        max_length=250,
+        required=False,
+        widget=widgets.TextInput(attrs=title_attrs)
+    )
+    from_date = FilterableFromDateField()
+    to_date = FilterableToDateField()
+    categories = forms.MultipleChoiceField(
+        required=False,
+        choices=ref.page_type_choices,
+        widget=widgets.CheckboxSelectMultiple()
+    )
+    topics = MultipleChoiceFieldNoValidation(
+        required=False,
+        choices=[],
+        widget=widgets.SelectMultiple(attrs=topics_select_attrs)
+    )
+    authors = forms.MultipleChoiceField(
+        required=False,
+        choices=[],
+        widget=widgets.SelectMultiple(attrs=authors_select_attrs)
+    )
 
     def __init__(self, *args, **kwargs):
-        parent = kwargs.pop('parent')
-        hostname = kwargs.pop('hostname')
+        self.hostname = kwargs.pop('hostname')
+        self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
-        page_ids = CFGOVPage.objects.live_shared(hostname).descendant_of(parent).values_list('id', flat=True)
-        self.set_topics(parent, page_ids, hostname)
-        self.set_authors(parent, page_ids, hostname)
+
+        pages = self.base_query.live_shared(self.hostname)
+        page_ids = pages.values_list('id', flat=True)
+
+        clean_categories(selected_categories=self.data.get('categories'))
+        self.set_topics(page_ids)
+        self.set_authors(page_ids)
+
+    def get_page_set(self):
+        query = self.generate_query()
+        return self.base_query.filter(query).distinct().order_by(
+            '-date_published'
+        )
+
+    def prepare_options(self, arr):
+        """
+        Returns an ordered list of tuples of the format
+        ('tag-slug-name', 'Tag Display Name')
+        """
+        arr = Counter(arr).most_common()  # Order by most to least common
+        # Grab only the first tuple in the generated tuple,
+        # which includes a count we do not need
+        return [x[0] for x in arr]
 
     # Populate Topics' choices
-    def set_topics(self, parent, page_ids, hostname):
-        tags = Tag.objects.filter(v1_cfgovtaggedpages_items__content_object__id__in=page_ids).values_list('name', flat=True)
+    def set_topics(self, page_ids):
+        tags = Tag.objects.filter(
+            v1_cfgovtaggedpages_items__content_object__id__in=page_ids
+        ).values_list('slug', 'name')
 
-        # Orders by most to least common tags
-        options = most_common(list(tags))
-        most = [(option, option) for option in options[:3]]
-        other = [(option, option) for option in options[3:]]
+        options = self.prepare_options(arr=tags)
+        most = options[:3]
+        other = options[3:]
+
         self.fields['topics'].choices = \
-            (('Most frequent', tuple(most)),
-             ('All other topics', tuple(other)))
+            (('Most frequent', most),
+             ('All other topics', other))
 
     # Populate Authors' choices
-    def set_authors(self, parent, page_ids, hostname):
-        authors = Tag.objects.filter(v1_cfgovauthoredpages_items__content_object__id__in=page_ids).values_list('name', flat=True)
+    def set_authors(self, page_ids):
+        authors = Tag.objects.filter(
+            v1_cfgovauthoredpages_items__content_object__id__in=page_ids
+        ).values_list('slug', 'name')
+        options = self.prepare_options(arr=authors)
 
-        # Orders by most to least common authors
-        self.fields['authors'].choices = [(author, author) for author in
-                                          most_common(list(authors))]
+        self.fields['authors'].choices = options
 
     def clean(self):
         cleaned_data = super(FilterableListForm, self).clean()
@@ -177,7 +183,10 @@ class FilterableListForm(forms.Form):
     def generate_query(self):
         final_query = Q()
         if self.is_bound:
-            for query, field_name in zip(self.get_query_strings(), self.declared_fields):
+            for query, field_name in zip(
+                self.get_query_strings(),
+                self.declared_fields
+            ):
                 if self.cleaned_data.get(field_name):
                     final_query &= \
                         Q((query, self.cleaned_data.get(field_name)))
@@ -192,9 +201,10 @@ class FilterableListForm(forms.Form):
             'date_published__gte',   # from_date
             'date_published__lte',   # to_date
             'categories__name__in',  # categories
-            'tags__name__in',        # topics
-            'authors__name__in',     # authors
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
         ]
+
 
 class EventArchiveFilterForm(FilterableListForm):
     def get_query_strings(self):
@@ -203,39 +213,44 @@ class EventArchiveFilterForm(FilterableListForm):
             'start_dt__gte',         # from_date
             'end_dt__lte',           # to_date
             'categories__name__in',  # categories
-            'tags__name__in',        # topics
-            'authors__name__in',     # authors
+            'tags__slug__in',        # topics
+            'authors__slug__in',     # authors
         ]
 
 
-class NewsroomFilterForm(FilterableListForm):
+class FeedbackForm(forms.ModelForm):
+    """For feedback modules that simply ask 'Was this page helfpul?'"""
+    class Meta:
+        model = Feedback
+        fields = ['is_helpful', 'comment']
+
     def __init__(self, *args, **kwargs):
-        parent = kwargs.pop('parent')
-        hostname = kwargs.pop('hostname')
-        super(FilterableListForm, self).__init__(*args, **kwargs)
-        try:
-            blog = CFGOVPage.objects.get(slug='blog')
-        except CFGOVPage.DoesNotExist:
-            print 'A blog landing page needs to be made'
-        query = CFGOVPage.objects.child_of_q(parent)
-        query |= CFGOVPage.objects.child_of_q(blog)
-        page_ids = CFGOVPage.objects.live_shared(hostname).filter(query).values_list('id', flat=True)
-        self.set_topics(parent, page_ids, hostname)
-        self.set_authors(parent, page_ids, hostname)
+        super(FeedbackForm, self).__init__(*args, **kwargs)
+        self.fields['is_helpful'].required = True
 
 
-class ActivityLogFilterForm(NewsroomFilterForm):
+class ReferredFeedbackForm(forms.ModelForm):
+    """For feedback modules that need to capture the referring page"""
+    class Meta:
+        model = Feedback
+        fields = ['is_helpful', 'referrer', 'comment']
+
     def __init__(self, *args, **kwargs):
-        parent = kwargs.pop('parent')
-        hostname = kwargs.pop('hostname')
-        super(FilterableListForm, self).__init__(*args, **kwargs)
-        query = CFGOVPage.objects.child_of_q(parent)
-        for slug in ['blog', 'newsroom', 'research-reports']:
-            try:
-                parent = CFGOVPage.objects.get(slug=slug)
-                query |= CFGOVPage.objects.child_of_q(parent)
-            except CFGOVPage.DoesNotExist:
-                print slug, 'does not exist'
-        page_ids = CFGOVPage.objects.live_shared(hostname).filter(query).values_list('id', flat=True)
-        self.set_topics(parent, page_ids, hostname)
-        self.set_authors(parent, page_ids, hostname)
+        super(ReferredFeedbackForm, self).__init__(*args, **kwargs)
+        self.fields['comment'].required = True
+
+
+class SuggestionFeedbackForm(forms.ModelForm):
+    """For feedback modules seeking content suggestions"""
+
+    class Meta:
+        model = Feedback
+        fields = ['referrer',
+                  'comment',
+                  'expect_to_buy',
+                  'currently_own',
+                  'email']
+
+    def __init__(self, *args, **kwargs):
+        super(SuggestionFeedbackForm, self).__init__(*args, **kwargs)
+        self.fields['comment'].required = True

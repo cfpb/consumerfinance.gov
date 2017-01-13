@@ -25,11 +25,17 @@ if ! type "workon" &>/dev/null; then
   source $virtualenvwrapper_path
 fi
 
+if ! which python2.7 &>/dev/null; then
+  echo 'Error: python2.7 is not in your path.' \
+       'Please ensure python2.7 is installed and available'
+  return
+fi
+
 if workon $VENV_NAME; then
   echo "Virtualenv $VENV_NAME activated."
 else
   echo "Attempting to create new virtualenv $VENV_NAME..."
-  if mkvirtualenv $VENV_NAME; then
+  if mkvirtualenv -p `which python2.7` $VENV_NAME; then
     echo "Virtualenv $VENV_NAME created and activated."
   else
     echo 'Error: virtualenv not activated.' \

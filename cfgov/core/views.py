@@ -1,19 +1,24 @@
-import os
-
-from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import redirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.http import JsonResponse
-from django.contrib import messages
-import requests
-from requests_toolbelt.multipart.encoder import MultipartEncoder
 import json
-from govdelivery.api import GovDelivery
+import logging
 
-from core.utils import extract_answers_from_request
+import requests
 from django.conf import settings
+from django.contrib import messages
+from django.http import (Http404, HttpResponse, HttpResponseForbidden,
+                         JsonResponse)
+from django.shortcuts import redirect
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from django.views.generic import TemplateView
+from django.views.generic.edit import FormMixin
+from govdelivery.api import GovDelivery
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+
+from core.forms import ExternalURLForm
+from core.utils import extract_answers_from_request
+
+logger = logging.getLogger(__name__)
 
 REQUIRED_PARAMS_GOVDELIVERY = ['email', 'code']
 
@@ -34,7 +39,8 @@ def govdelivery_subscribe(request):
         passing_response = redirect('govdelivery:success')
         failing_response = redirect('govdelivery:server_error')
     for required_param in REQUIRED_PARAMS_GOVDELIVERY:
-        if required_param not in request.POST or not request.POST.get(required_param):
+        if (required_param not in request.POST or
+                not request.POST.get(required_param)):
             return failing_response if is_ajax else \
                 redirect('govdelivery:user_error')
     email_address = request.POST['email']
@@ -48,9 +54,9 @@ def govdelivery_subscribe(request):
         return failing_response
     answers = extract_answers_from_request(request)
     for question_id, answer_text in answers:
-        response = gd.set_subscriber_answers_to_question(email_address,
-                                                         question_id,
-                                                         answer_text)
+        gd.set_subscriber_answers_to_question(email_address,
+                                              question_id,
+                                              answer_text)
     return passing_response
 
 
@@ -108,9 +114,11 @@ def submit_comment(data):
 
     parsed_data = MultipartEncoder(
         fields={
-            'first_name': data['first_name'] if data.get('first_name') else u'Anonymous',
-            'last_name': data['last_name'] if data.get('last_name') else u'Anonymous',
-            'email': data['email'] if data.get('email') else u'NA',
+            'first_name': (data['first_name'] if data.get('first_name')
+                           else u'Anonymous'),
+            'last_name': (data['last_name'] if data.get('last_name')
+                          else u'Anonymous'),
+            'email': (data['email'] if data.get('email') else u'NA'),
             'general_comment': data['general_comment'],
             'comment_on': data['comment_on'],
             'organization': u'NA'
@@ -123,3 +131,59 @@ def submit_comment(data):
                              })
 
     return response
+
+
+@csrf_exempt
+def csp_violation_report(request):
+    if request.method == 'POST':
+        try:
+            csp_dict = json.loads(request.body)['csp-report']
+        # bare except is non-ideal, but if parsing fails for any reason
+        # we need to abort
+        except:
+            return HttpResponseForbidden()
+
+        message_template = ('{blocked-uri} blocked on {document-uri}, '
+                            'violated {violated-directive}')
+        message = message_template.format(**csp_dict)
+        logger.warn(message)
+        return HttpResponse()
+    return HttpResponseForbidden()
+
+
+class ExternalURLNoticeView(FormMixin, TemplateView):
+    template_name = 'external-site/index.html'
+    form_class = ExternalURLForm
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super(ExternalURLNoticeView, self).dispatch(*args, **kwargs)
+
+    def get_form_kwargs(self):
+        kwargs = super(ExternalURLNoticeView, self).get_form_kwargs()
+
+        if self.request.method == 'GET':
+            kwargs['data'] = self.request.GET
+
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ExternalURLNoticeView, self).get_context_data(**kwargs)
+
+        form = self.get_form()
+        context['form'] = form
+
+        return context
+
+    def get(self, request):
+        form = self.get_form()
+        if form.is_valid():
+            return super(ExternalURLNoticeView, self).get(request)
+        else:
+            raise Http404("URL invalid, not whitelisted, or signature"
+                          " validation failed")
+
+    def post(self, request):
+        form = self.get_form()
+        if form.is_valid():
+            return redirect(form.cleaned_data['validated_url'])

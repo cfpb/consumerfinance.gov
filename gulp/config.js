@@ -5,7 +5,7 @@ var paths = require( '../config/environment' ).paths;
 var globAll = require( 'glob-all' );
 
 module.exports = {
-  pkg:    JSON.parse( fs.readFileSync( 'bower.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
+  pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
   banner:
       '/*!\n' +
       ' *               ad$$               $$\n' +
@@ -20,7 +20,7 @@ module.exports = {
       ' *                     $$\n' +
       ' *                     $$\n' +
       ' *\n' +
-      ' *  <%= pkg.name %> - v<%= pkg.version %>\n' +
+      ' *  <%= pkg.name %>\n' +
       ' *  <%= pkg.homepage %>\n' +
       ' *  A public domain work of the Consumer Financial Protection Bureau\n' +
       ' */\n',
@@ -69,9 +69,7 @@ module.exports = {
       paths.legacy + '/nemo/_/js/appendAround.js',
       paths.legacy + '/nemo/_/js/plugins.js',
       paths.legacy + '/nemo/_/js/main.js',
-      paths.legacy + '/nemo/_/js/jquery.youtube-find-and-track.js',
-      paths.legacy + '/nemo/_/js/AnalyticsTarget.js',
-      paths.legacy + '/nemo/_/js/analytics-es.js'
+      paths.legacy + '/nemo/_/js/AnalyticsTarget.js'
     ]
   },
   images: {
@@ -89,22 +87,17 @@ module.exports = {
     },
     vendorCss: {
       src: [
-        paths.lib + '/slick-carousel/slick/slick.css',
-        paths.lib + '/slick-carousel/slick/slick.css.map',
         paths.unprocessed + '/css/pdfreactor-fonts.css'
       ],
       dest: paths.processed + '/css'
     },
     vendorImg: {
-      src: [
-        paths.lib + '/slick-carousel/slick/ajax-loader.gif'
-      ],
+      src: [],
       dest: paths.processed + '/img'
     },
     vendorJs: {
       src: [
-        paths.lib + '/jquery/dist/jquery.min.js',
-        paths.lib + '/box-sizing-polyfill/boxsizing.htc'
+        paths.modules + '/jquery/dist/jquery.min.js'
       ],
       dest: paths.processed + '/js/'
     }

@@ -1,37 +1,41 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import logging
 
-from ..models.learn_page import AbstractFilterPage
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
+from v1.forms import FilterableListForm
+from v1.models.base import CFGOVPage
+from v1.models.learn_page import AbstractFilterPage
+
 from ..util.util import get_secondary_nav_items
 
+logger = logging.getLogger(__name__)
+
+
 class FilterableListMixin(object):
-    # Returns a queryset of AbstractFilterPages
-    def get_page_set(self, form, hostname):
-        return AbstractFilterPage.objects.live_shared(hostname).child_of(
-            self).filter(form.generate_query()).distinct().order_by('-date_published')
-
-
-    # Returns a form class to use for the filterable list
-    def get_form_class(self):
-        from .. import forms
-        return forms.FilterableListForm
-
 
     def get_context(self, request, *args, **kwargs):
         context = {}
         try:
-            context = super(FilterableListMixin, self).get_context(request, *args, **kwargs)
+            context = super(FilterableListMixin, self).get_context(
+                request, *args, **kwargs)
         except AttributeError as e:
             raise e
         context['get_secondary_nav_items'] = get_secondary_nav_items
-        context['filter_data'] = self.process_forms(request, self.get_forms(request))
+        filter_data = self.process_forms(request, self.get_forms(request))
+        context['filter_data'] = filter_data
         return context
 
+    def base_query(self, hostname):
+        logger.info('Filtering by parent {}'.format(self))
+        return AbstractFilterPage.objects.live_shared(hostname).filter(
+            CFGOVPage.objects.child_of_q(self))
 
     def process_forms(self, request, forms):
         filter_data = {'forms': [], 'page_sets': []}
         for form in forms:
             if form.is_valid():
-                paginator = Paginator(self.get_page_set(form, request.site.hostname), self.per_page_limit())
+                paginator = Paginator(form.get_page_set(),
+                                      self.per_page_limit())
                 page = request.GET.get('page')
 
                 # Get the page number in the request and get the page from the
@@ -45,30 +49,29 @@ class FilterableListMixin(object):
 
                 filter_data['page_sets'].append(pages)
             else:
-                paginator = Paginator(AbstractFilterPage.objects.none(), self.per_page_limit())
+                paginator = Paginator([], self.per_page_limit())
                 filter_data['page_sets'].append(paginator.page(1))
             filter_data['forms'].append(form)
         return filter_data
 
-
     def get_forms(self, request):
-        form_class = self.specific.get_form_class()
-        form_specific_filters = self.get_form_specific_filter_data(form_class, request.GET)
-        return [form_class(form_data, parent=self, hostname=request.site.hostname) for form_data in form_specific_filters]
-
+        hostname = request.site.hostname
+        for form_data in self.get_form_specific_filter_data(
+                request_dict=request.GET):
+            yield FilterableListForm(
+                form_data,
+                hostname=hostname,
+                base_query=self.base_query(hostname)
+            )
 
     # Transform each GET parameter key from unique ID for the form in the
     # request and assign it to a dictionary under the form ID from where it
     # came from.
-    def get_form_specific_filter_data(self, form_class, request_dict):
-        try:
-            fields = getattr(form_class, 'declared_fields')
-        except AttributeError as e:
-            raise e
+    def get_form_specific_filter_data(self, request_dict):
         filters_data = []
         for i in self.get_filter_ids():
             data = {}
-            for field in fields:
+            for field in FilterableListForm.declared_fields:
                 request_field_name = 'filter' + str(i) + '_' + field
                 if field in ['categories', 'topics', 'authors']:
                     data[field] = request_dict.getlist(request_field_name, [])
@@ -89,11 +92,10 @@ class FilterableListMixin(object):
                 raise e
         return keys
 
-
     def has_active_filters(self, request, index):
-        active_filters = False;
-        form_class = self.get_form_class()
-        forms_data = self.get_form_specific_filter_data(form_class, request.GET)
+        active_filters = False
+        forms_data = self.get_form_specific_filter_data(
+            request_dict=request.GET)
         filter_ids = self.get_filter_ids()
         if forms_data and index in filter_ids:
             try:
@@ -105,6 +107,12 @@ class FilterableListMixin(object):
 
         return active_filters
 
-
     def per_page_limit(self):
         return 10
+
+    def form_id(self):
+        form_ids = self.get_filter_ids()
+        if form_ids:
+            return form_ids[0]
+        else:
+            return 0

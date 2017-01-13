@@ -9,7 +9,7 @@ git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 ```
 
-You may also wish to fork the repository on Github and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
+You may also wish to fork the repository on GitHub and clone the resultant personal fork. This is advised if you are going to be doing development on `cfgov-refresh` and contributing to the project.
 
 There are two ways to install cfgov-refresh:
 
@@ -123,7 +123,6 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 
 - [Gulp](http://gulpjs.com): task management for pulling in assets,
   linting and concatenating code, etc.
-- [Bower](http://bower.io): Package manager for front-end dependencies.
 - [Less](http://lesscss.org): CSS pre-processor.
 - [Capital Framework](https://cfpb.github.io/capital-framework/getting-started):
   User interface pattern-library produced by the CFPB.
@@ -134,11 +133,11 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 
 1. Install [Node.js](http://nodejs.org) however you’d like.
    We recommend using [nvm](https://github.com/creationix/nvm), though.
-	
-2. Install [Gulp](http://gulpjs.com) and [Bower](http://bower.io):
+
+2. Install [Gulp](http://gulpjs.com):
 
 ```bash
-npm install -g gulp bower
+npm install -g gulp
 ```
 
 !!! note
@@ -264,7 +263,20 @@ cfgov start django
 
 ## Optional steps
 
-### Load a database dump from the Build server
+### Load initial data into database
+
+The `initial-data.sh` script can be used to initialize a new database to make
+it easy to get started working on Wagtail. This script first ensures that all
+migrations are applied to the database, and then does the following:
+
+- Creates an `admin` superuser with a password as specified in the
+`WAGTAIL_ADMIN_PW` environment variable, if set.
+- If it doesn't already exist, creates a new Wagtail home page named `CFGOV`,
+with a slug of `cfgov`.
+- Updates the default Wagtail site to use the port defined by the `DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is set to 80.
+- If it doesn't already exist, creates a new Wagtail staging Site with a hostname defined by the `DJANGO_STAGING_HOSTNAME` environment variable, with the root page set to the `CFGOV` home page. The staging site port is set using the same logic as the default site port described above.
+
+### Load a database dump
 
 If you're installing this fresh, the initial data you receive will not be
 as extensive as you'd probably like it to be.
@@ -277,12 +289,12 @@ unzip it, and then run:
 ./refresh-data.sh /path/to/dump.sql
 ```
 
-This will remove the initial Wagtail admin user that was created by
-the `initial-data.sh` script that was called by `backend.sh`.
-If you need to access the Wagtail admin, create a new user with the following:
+The `refresh-data.sh` script will apply the same changes as the `initial-data.sh` script described above (including setting up the `admin` superuser), but will not apply migrations.
 
-```
-./cfgov/manage.py createsuperuser
+To apply any unapplied migrations to a database created from a dump, run:
+
+```bash
+python cfgov/manage.py migrate
 ```
 
 ### Install Protractor locally

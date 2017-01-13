@@ -1,24 +1,26 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
 import datetime
-import localflavor.us.models
-import v1.models.snippets
-import modelcluster.fields
-import wagtail.wagtailimages.blocks
-from django.conf import settings
-import taggit.managers
-import wagtail.wagtailadmin.taggable
-import wagtail.wagtailimages.models
-import wagtail.wagtailcore.fields
-import wagtail.wagtailcore.blocks
-import v1.util.filterable_list
-import wagtail.wagtailsnippets.blocks
-import v1.feeds
-import django.db.models.deletion
+
 import django.core.validators
+import django.db.models.deletion
+import localflavor.us.models
 import modelcluster.contrib.taggit
+import modelcluster.fields
+import taggit.managers
+import wagtail.wagtailcore.blocks
+import wagtail.wagtailcore.fields
+import wagtail.wagtailimages.blocks
+import wagtail.wagtailimages.models
+import wagtail.wagtailsearch.index
+import wagtail.wagtailsnippets.blocks
+from django.conf import settings
+from django.db import migrations, models
+
+import v1.feeds
+import v1.models.snippets
+import v1.util.filterable_list
 
 
 class Migration(migrations.Migration):
@@ -63,7 +65,7 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(models.Model, wagtail.wagtailadmin.taggable.TagSearchable),
+            bases=(models.Model, wagtail.wagtailsearch.index.Indexed),
         ),
         migrations.CreateModel(
             name='CFGOVPage',

@@ -27,6 +27,8 @@
 
    value.heading:             A string containing title of module.
 
+   value.sub_heading:         A string containing the subtitle of module.
+
    value.body:                A string containing the content to display below
                               the heading (typically a paragraph).
 
@@ -40,6 +42,9 @@
    value.is_button:           Boolean for whether the link should be a button.
                               Default is false.
 
+    value.should_link_image:  Boolean for whether the image should be wrapped in
+                              a tag.
+
    ========================================================================== #}
 
 {% macro info_unit(value) %}
@@ -47,8 +52,12 @@
          change to a boolean parameter. #}
 <div class="m-info-unit
             {{ 'm-info-unit__' ~ value.modifier if value.modifier else '' }}">
-
     {% if value.image %}
+        {% set should_link_image = value.should_link_image
+                                   and value.links[0] and value.links[0].url %}
+        {% if should_link_image %}
+            <a href="{{ value.links[0].url }}">
+        {% endif %}
         {% if value.image.is_decorative %}
         <div class="m-info-unit_image
                     {{ 'm-info-unit_image__square' if value.image.is_square else '' }}"
@@ -60,10 +69,15 @@
              class="m-info-unit_image
                     {{ 'm-info-unit_image__square' if value.image.is_square else '' }}">
         {% endif %}
+        {% if should_link_image %}
+            </a>
+        {% endif %}
     {% endif %}
 
     <div class="m-info-unit_content">
         {{ value.heading | safe if value.heading else '' }}
+
+        {{ value.sub_heading | safe if value.sub_heading else '' }}
 
         {{ value.body | safe }}
 
@@ -77,13 +91,13 @@
                         {% endif %}
                         {% include 'contact-email.html' with context %}
                     {% else %}
-                    <a class="{{ 'btn m-info-unit_btn' if value.is_button
-                                  else 'list_link' }}"
-                       href="{{ link.url }}">
-                        {# TODO: check for link.url otherwise show disabled
-                                 after testing is completed #}
-                        {{ link.text if link.text else 'Learn More' }}
-                    </a>
+                        {% set link_class = 'btn m-info-unit_btn' if
+                            value.is_button else 'list_link' %}
+                        {% set link_text = link.text if link.text
+                            else 'Learn More' %}
+                        {% set link = '<a class="' ~ link_class ~ '" href="' ~
+                            link.url ~ '">' ~ link_text ~ '</a>' %}
+                        {{ parse_links( link ) | safe }}
                     {% endif %}
                 </li>
             {% endfor %}

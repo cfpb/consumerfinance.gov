@@ -179,6 +179,7 @@ var config = {
   },
 
   onPrepare: function() {
+    // Ignore Selenium allowances for non-angular sites.
     browser.ignoreSynchronization = true;
 
     // If --windowSize=w,h flag was passed, set window dimensions.

@@ -28,15 +28,16 @@ page_types = [
     ('activity-log', 'Activity Log'),
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
-    ('enforcement', 'Enforcement action'),
+    ('enforcement', 'Enforcement Action'),
     ('final-rule', 'Final Rule'),
     ('foia-freq-req-record', 'FOIA Frequently Requested Record'),
     ('impl-resource', 'Implementation Resource'),
+    ('leadership-calendar', 'Leadership Calendar'),
     ('newsroom', 'Newsroom'),
     ('notice-opportunity-comment', 'Notice and Opportunity for Comment'),
     ('research-reports', 'Research Report'),
-    ('rule-under-dev', 'Rule under development'),
-    ('leadership-calendar', 'Leadership Calendar'),
+    ('rule-under-dev', 'Rule Under Development'),
+    ('story', 'Story'),
 ]
 
 fcm_types = [
@@ -61,7 +62,7 @@ categories = [
         ('data-research-reports', 'Data, research & reports'),
         ('info-for-consumers', 'Info for consumers'),
     )),
-    ('Enforcement action', (
+    ('Enforcement Action', (
         ('fed-district-case', 'Federal District Court Case'),
         ('admin-filing', 'Administrative Filing'),
     )),
@@ -105,6 +106,18 @@ categories = [
     ('Rule under development', (
         ('notice-proposed-rule-2', 'Advanced Notice of Proposed Rulemaking'),
         ('proposed-rule-2', 'Proposed Rule'),
+    )),
+    ('Story', (
+        ('auto-loans', 'Auto loans'),
+        ('bank-accts-services', 'Bank accounts and services'),
+        ('credit-cards', 'Credit cards'),
+        ('credit-reports-scores', 'Credit reports and scores'),
+        ('debt-collection', 'Debt collection'),
+        ('money-transfers', 'Money transfers'),
+        ('mortgages', 'Mortgages'),
+        ('payday-loans', 'Payday loans'),
+        ('prepaid-cards', 'Prepaid cards'),
+        ('student-loans', 'Student loans'),
     )),
 ]
 
@@ -175,6 +188,7 @@ def choices_for_page_type(page_type):
                 if name == cat_slug:
                     return list(cat_tuples)
     return []
+
 
 def category_label(category):
     for parent, children in page_type_choices():

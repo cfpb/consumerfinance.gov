@@ -65,7 +65,7 @@
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
         <meta property="og:image"
-              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
+              content="{{ static('nemo/_/img/logo.svg') }}">
         <!--   Optional -->
         <meta property="og:description" content="{% block og_desc %}{{- page.search_description if page and page.search_description -}}{% endblock %}">
         <meta property="og:site_name" content="Consumer Financial Protection Bureau">
@@ -74,8 +74,7 @@
         {% block og_article_author %}{% endblock %}
     <!-- End of Open Graph properties -->
 
-    {# TODO: Explicit favicon link needed for testing. Remove for production. #}
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ static('assets/favicon.ico') }}">
 
 <!--
     ======
@@ -100,11 +99,26 @@
     If you come across a script that makes a convincing case to be included in
     the head, then file an issue or PR to discuss including it.
 -->
+    {# Google Tag Manager #}
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+
     {# Customized Modernizr build that includes html5shiv.
        Built via gulp-modernizer in `scripts.js` task. #}
     <script src="{{ static('js/modernizr.min.js') }}"></script>
-    <script src="{{ static('js/es5-shim.js') }}"></script>
-
+    <script>
+    //<![CDATA[
+        if ( window.Modernizr && window.Modernizr.es5 === false ) {
+            var script = document.createElement( 'script' );
+            script.type = 'text/javascript';
+            script.src = '{{ static('js/es5-shim.js') }}';
+            document.getElementsByTagName( 'head' )[0].appendChild( script );
+        }
+    //]]>
+    </script>
     <!--[if lt IE 9]>
     <script>
         // If in IE8 reverse no-js/js class change made by modernizr.
@@ -133,14 +147,10 @@
     Analytics
     =========
 -->
-<!-- GOOGLE TAG MANAGER -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+<!-- End Google Tag Manager (noscript) -->
 
 {% block body %}
 
@@ -178,16 +188,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     The number of scripts here must be kept to a minimum.
 -->
 
-{% block javascript %}
+{% block javascript scoped %}
 <!--[if gt IE 8]><!-->
 {# Include site-wide JavaScript. #}
-<script type='text/javascript'>
+<script>
     {% include '/js/routes/common.js' %}
 </script>
-
 {# Remove after sheer has been completely phased out #}
 {% if not page %}
-<script type='text/javascript'>
+<script>
     {% include '/js/routes/sheer.js' %}
 </script>
 {% endif %}
@@ -211,22 +220,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 {% endmacro %}
 {% set js_source = page_template_js() | trim %}
 {% if js_source | length > 0 %}
-<script type='text/javascript'>
+<script>
     {{ js_source }}
 </script>
 {% endif %}
 <!--<![endif]-->
 
-<script type='text/javascript'>
+<script>
 //<![CDATA[
     var usasearch_config = { siteHandle: 'cfpb' };
 
     var script = document.createElement( 'script' );
     script.type = 'text/javascript';
-    script.src = 'http://search.usa.gov/javascripts/remote.loader.js';
+    script.src = 'https://search.usa.gov/javascripts/remote.loader.js';
     document.getElementsByTagName( 'head' )[0].appendChild( script );
 //]]>
 </script>
+
 {% endblock javascript %}
 
 </body>

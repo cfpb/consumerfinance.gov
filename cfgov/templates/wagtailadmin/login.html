@@ -17,7 +17,11 @@
             </div>
         {% endif %}
 
-        <h1>Log in to consumerfinance.gov</h1>
+        {% if 'build' in request.site.hostname %}
+            <h1>Log in to demo Wagtail</h1>
+        {% else %}
+            <h1>Log in to consumerfinance.gov</h1>
+        {% endif %}
         <form action="{% url 'cfpb_login' %}" method="post" autocomplete="off">
             {% csrf_token %}
 

@@ -51,6 +51,18 @@ var ieConf = {
   ]
 };
 
+var externalConf = {
+  entry: paths.unprocessed + JS_ROUTES_PATH + '/external-site/index.js',
+  output: {
+    filename: 'external-site.js'
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin( {
+      compress: { warnings: false }
+    } )
+  ]
+};
+
 var onDemandConf = {
   context: path.join( __dirname, '/../', paths.unprocessed,
                       JS_ROUTES_PATH + '/on-demand' ),
@@ -82,5 +94,6 @@ module.exports = {
   onDemandHeaderRawConf: onDemandHeaderRawConf,
   onDemandConf:          onDemandConf,
   ieConf:                ieConf,
-  modernConf:            modernConf
+  modernConf:            modernConf,
+  externalConf:          externalConf
 };

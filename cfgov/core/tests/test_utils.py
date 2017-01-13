@@ -1,4 +1,4 @@
-import unittest
+from django.test import TestCase
 
 from core.utils import extract_answers_from_request
 
@@ -9,7 +9,7 @@ class FakeRequest(object):
         self.POST = params
 
 
-class ExtractAnswersTest(unittest.TestCase):
+class ExtractAnswersTest(TestCase):
 
     def test_no_answers_to_extract(self):
         request = FakeRequest({'unrelated_key': 'unrelated_value'})

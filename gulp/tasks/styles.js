@@ -1,15 +1,20 @@
 'use strict';
 
-var gulp = require( 'gulp' );
-var plugins = require( 'gulp-load-plugins' )();
-var mqr = require( 'gulp-mq-remove' );
+var browserSync = require( 'browser-sync' );
 var config = require( '../config' );
 var configPkg = config.pkg;
 var configBanner = config.banner;
 var configStyles = config.styles;
 var configLegacy = config.legacy;
+var gulp = require( 'gulp' );
+var gulpAutoprefixer = require( 'gulp-autoprefixer' );
+var gulpCleanCss = require( 'gulp-clean-css' );
+var gulpHeader = require( 'gulp-header' );
+var gulpLess = require( 'gulp-less' );
+var gulpRename = require( 'gulp-rename' );
+var gulpSourcemaps = require( 'gulp-sourcemaps' );
 var handleErrors = require( '../utils/handle-errors' );
-var browserSync = require( 'browser-sync' );
+var mqr = require( 'gulp-mq-remove' );
 
 /**
  * Process modern CSS.
@@ -17,18 +22,18 @@ var browserSync = require( 'browser-sync' );
  */
 function stylesModern() {
   return gulp.src( configStyles.cwd + configStyles.src )
-    .pipe( plugins.sourcemaps.init() )
-    .pipe( plugins.less( configStyles.settings ) )
+    .pipe( gulpSourcemaps.init() )
+    .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
-      browsers: [ 'last 2 version',
-                  'not ie <= 8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
-    } ) )
-    .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
-    .pipe( plugins.sourcemaps.write( '.' ) )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'not ie <= 8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+    .pipe( gulpSourcemaps.write( '.' ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -41,17 +46,17 @@ function stylesModern() {
  */
 function stylesIe() {
   return gulp.src( configStyles.cwd + configStyles.src )
-    .pipe( plugins.less( configStyles.settings ) )
+    .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
+    .pipe( gulpAutoprefixer( {
       browsers: [ 'ie 7-8' ]
     } ) )
     .pipe( mqr( {
       width: '75em'
     } ) )
     // mqr expands the minified file
-    .pipe( plugins.cssmin() )
-    .pipe( plugins.rename( {
+    .pipe( gulpCleanCss( { compatibility: 'ie8' } ) )
+    .pipe( gulpRename( {
       suffix:  '.ie',
       extname: '.css'
     } ) )
@@ -67,27 +72,48 @@ function stylesIe() {
  */
 function stylesOnDemand() {
   return gulp.src( configStyles.cwd + '/on-demand/*.less' )
-    .pipe( plugins.less( configStyles.settings ) )
+    .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
-      browsers: [ 'last 2 version',
-                  'ie 7-8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
-    } ) )
-    .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'ie 7-8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( mqr( {
       width: '75em'
     } ) )
     // mqr expands the minified file
-    .pipe( plugins.cssmin() )
-    .pipe( plugins.rename( {
+    .pipe( gulpCleanCss( { compatibility: 'ie8' } ) )
+    .pipe( gulpRename( {
       suffix:  '.nonresponsive',
       extname: '.css'
     } ) )
     .pipe( gulp.dest( configStyles.dest ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
+/**
+ * Process CSS for Wagtail feature flags.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesFeatureFlags() {
+  return gulp.src( configStyles.cwd + '/feature-flags/*.less' )
+    .pipe( gulpLess( configStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'ie 7-8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
+    .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );
@@ -99,17 +125,17 @@ function stylesOnDemand() {
  */
 function stylesNemoProd() {
   return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles.less' )
-    .pipe( plugins.less( { compress: true } ) )
+    .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
-      browsers: [ 'last 2 version',
-                  'not ie <= 8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
-    } ) )
-    .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
-    .pipe( plugins.rename( 'es-styles.min.css' ) )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'not ie <= 8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+    .pipe( gulpRename( 'es-styles.min.css' ) )
     .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -122,17 +148,17 @@ function stylesNemoProd() {
  */
 function stylesNemoIE() {
   return gulp.src( configLegacy.cwd + '/nemo/_/c/less/es-styles-ie.less' )
-    .pipe( plugins.less( { compress: true } ) )
+    .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
-    .pipe( plugins.autoprefixer( {
-      browsers: [ 'last 2 version',
-                  'not ie <= 8',
-                  'android 4',
-                  'BlackBerry 7',
-                  'BlackBerry 10' ]
-    } ) )
-    .pipe( plugins.header( configBanner, { pkg: configPkg } ) )
-    .pipe( plugins.rename( 'es-styles-ie.min.css' ) )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'not ie <= 8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+    .pipe( gulpRename( 'es-styles-ie.min.css' ) )
     .pipe( gulp.dest( configLegacy.dest + '/nemo/_/c/' ) )
     .pipe( browserSync.reload( {
       stream: true
@@ -142,6 +168,7 @@ function stylesNemoIE() {
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:ie', stylesIe );
 gulp.task( 'styles:ondemand', stylesOnDemand );
+gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:nemoProd', stylesNemoProd );
 gulp.task( 'styles:nemoIE', stylesNemoIE );
 gulp.task( 'styles:nemo', [
@@ -153,5 +180,6 @@ gulp.task( 'styles', [
   'styles:modern',
   'styles:ie',
   'styles:ondemand',
+  'styles:featureFlags',
   'styles:nemo'
 ] );

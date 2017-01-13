@@ -1,43 +1,88 @@
 
 {# ==========================================================================
 
-   Table
+   Table - See [GHE]/flapjack/Modules-V1/wiki/Tables
 
    ==========================================================================
 
    Description:
 
-   Create a table.
-   See [GHE]/flapjack/Modules-V1/wiki/Tables
+   Creates Table markup when given:
+
+   value.data:          A multi-dimensional list representing table rows.
+
+   value.row_links:     Boolean indicating if the table contains row links.
+
+   value.is_stacked:    Boolean indicating if the table columns
+                        should be stacked on mobile.
+
+   value.is_striped:    Boolean indicating if the table should be striped.
+
+   value.is_full_width: Boolean indicating if the table should be full width.
 
    ========================================================================== #}
 
-<table class="table__stack-on-small table__entry-header-on-small">
+
+{% if value.data  %}
+
+{% macro _render_cell(cell) %}
+    {{ (cell or '&nbsp;') | safe | trim | linebreaksbr }}
+{% endmacro %}
+
+<table class="o-table
+              {{ 'o-table__row-links' if value.row_links else '' }}
+              {{ 'o-table__stack-on-small' if value.is_stacked else '' }}
+              {{ 'table__striped' if value.is_striped else '' }}
+              {{ 'u-w100pct' if value.is_full_width else '' }}">
+    {% set row_index = 0 %}
+    {% set first_row = value.data[row_index] %}
+    {% if value.first_row_is_table_header and value.data | list | length > 0 %}
+    {% set row_index = 1 %}
     <thead>
+
+        {# Check to verify the row isn't empty. #}
+        {% if first_row | reject('none') | list | length %}
         <tr>
-            {% for thead in value.headers %}
-                <th>{{ thead }}</th>
+            {% for cell in value.data[0] %}
+            <th scope="col">
+                {{ _render_cell(cell) }}
+            </th>
             {% endfor %}
         </tr>
+        {% endif %}
     </thead>
-    {% for row in value.rows %}
+    {% endif %}
+    <tbody>
+    {% for row in value.data[row_index:] or [] %}
+        {% if row | reject('none') | list | length %}
         <tr>
-        {% for cell in row %}
-            {% set colcount = loop.index %}
-            {% for thead in value.headers %}
-                {% if colcount == loop.index %}
-                    {% if 'rich_text_blob' in cell.block_type %}
-                        <td data-label="{{ thead }}">
-                            {{ parse_links(cell.value) | safe }}
-                        </td>
-                    {% else %}
-                        <td data-label="{{ thead }}">
-                            {{ cell | safe }}
-                        </td>
-                    {% endif %}
+            {% for cell in row or [] %}
+                {% set tag = 'td' %}
+                {% set attributes = '' %}
+
+                {# Logic to determine if the first column is a header. #}
+                {% if value.first_col_is_header and loop.first %}
+                    {% set tag = 'th' %}
+                    {% set attributes = ' scope="row"' %}
                 {% endif %}
+
+                {# Logic to add data labels for creating responsive tables on mobile. #}
+                {% if value.first_row_is_table_header and
+                      first_row[loop.index0] is not none and
+                      value.is_stacked
+                %}
+                    {% set attributes = attributes + ' data-label="{0}"'.format(first_row[loop.index0]
+                                        | striptags
+                                        | trim)
+                    %}
+                {% endif %}
+                <{{ tag | safe }}{{ attributes | safe }}>
+                    {{ _render_cell(parse_links(cell or '&nbsp;')) }}
+                </{{ tag | safe }}>
             {% endfor %}
-        {% endfor %}
         </tr>
+        {% endif %}
     {% endfor %}
+    </tbody>
 </table>
+{% endif %}

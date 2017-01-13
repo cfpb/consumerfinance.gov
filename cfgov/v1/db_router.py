@@ -6,6 +6,8 @@ cfgov_apps = [
     'v1',
     'flags',
     'taggit',
+    'jobmanager',
+    'data_research'
 ]
 
 
@@ -19,7 +21,8 @@ class CFGOVRouter(object):
         """
         Attempts to read cfgov-refresh models go to default.
         """
-        if model._meta.app_label in cfgov_apps or model._meta.app_label.find('wagtail') != -1:
+        if (model._meta.app_label in cfgov_apps or
+                model._meta.app_label.find('wagtail') != -1):
             return 'default'
         return None
 
@@ -27,7 +30,8 @@ class CFGOVRouter(object):
         """
         Attempts to write cfgov-refresh models go to default.
         """
-        if model._meta.app_label in cfgov_apps or model._meta.app_label.find('wagtail') != -1:
+        if (model._meta.app_label in cfgov_apps or
+                model._meta.app_label.find('wagtail') != -1):
             return 'default'
         return None
 
@@ -35,8 +39,10 @@ class CFGOVRouter(object):
         """
         Allow relations if a model in the cfgov-refresh app is involved.
         """
-        if obj1._meta.app_label in cfgov_apps or obj2._meta.app_label in cfgov_apps or \
-                        obj1._meta.app_label.find('wagtail') != -1 or obj2._meta.app_label.find('wagtail') != -1:
+        if (obj1._meta.app_label in cfgov_apps or
+                obj2._meta.app_label in cfgov_apps or
+                obj1._meta.app_label.find('wagtail') != -1 or
+                obj2._meta.app_label.find('wagtail') != -1):
             return True
         return None
 

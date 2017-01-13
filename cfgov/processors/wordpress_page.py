@@ -1,19 +1,29 @@
-import sys
 import json
-import os.path
+import os
+import sys
+
 import requests
+
 from sheerlike.external_links import process_external_links
+
+PAGE_IDS = (36601, 36603, 36605)
 
 
 def posts_at_url(url):
 
-    results = {'posts':[]}
-    for post_id in ['36603', '36605', '36601']:
-        resp = requests.get('http://www.consumerfinance.gov/api/get_post/', params={'post_type': 'page', 'post_id': post_id})
-        results['posts'].append(json.loads(resp.content)['post'])
+    current_page = 1
+    max_page = sys.maxint
 
-    for p in results['posts']:
-        yield p
+    while current_page <= max_page:
+        url = os.path.expandvars(url)
+        resp = requests.get(url, params={'page': current_page, 'count': '-1'})
+        results = json.loads(resp.content)
+        current_page += 1
+        max_page = results['pages']
+
+        for p in results['posts']:
+            if p['id'] in PAGE_IDS:
+                yield p
 
 
 def documents(name, url, **kwargs):

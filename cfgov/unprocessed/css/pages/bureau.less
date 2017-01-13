@@ -3,43 +3,6 @@
    Bureau mission page at /the-bureau/.
    ========================================================================== */
 
-// Override general slick carousel overrides defined in mobile-carousel.less.
-// Removes bottom border, because the-bureau has a bordered block below
-// its carousel.
-.the-bureau .mobile-carousel.slick-slider {
-    border-bottom: none;
-    padding-bottom: 0;
-
-    .respond-to-min(@bp-lg-min, {
-        margin-top: unit(60px / @base-font-size-px, em);
-    });
-
-    &_media .image-container {
-        margin-left: 10px;
-    }
-
-    &_section {
-        margin-top: unit(30px / @base-font-size-px, em);
-    }
-
-    &_section + &_section {
-        .respond-to-min(@bp-sm-min, {
-            border-top: 1px solid @gray-40;
-            padding-top: unit(30px / @base-font-size-px, em);
-        });
-    }
-
-    .slick-prev,
-    .slick-next {
-        // TODO:
-        // The top value relies on the height
-        // of the carousel slide image, which may vary.
-        // This overrides the default top of 140px set
-        // in mobile-carousel.less.
-        top: 150px;
-    }
-}
-
 .bureau-functions {
 
     .respond-to-min(@bp-sm-min, {

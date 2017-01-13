@@ -4,4 +4,4 @@
 
 'use strict';
 
-require( '../../../../modules/simple-table-row-links' ).init();
+require( '../../../../modules/o-table-row-links' ).init();

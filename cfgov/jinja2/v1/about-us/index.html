@@ -48,7 +48,7 @@
                     <div class="media_image-container">
                         <img class="media_image
                                     media_image__150"
-                             src="/static/img/director-cordray-round-300x300.jpg"
+                             src="{{ static('img/director-cordray-round-300x300.jpg')}}"
                              alt="Richard Cordray">
                     </div>
                     <div class="media_body">
@@ -66,7 +66,7 @@
                     <div class="media_image-container">
                         <img class="media_image
                                     media_image__150"
-                             src="/static/img/deputy-director-silberman-round-300x300.jpg"
+                             src="{{ static('img/deputy-director-silberman-round-300x300.jpg')}}"
                              alt="David Silberman">
                     </div>
                     <div class="media_body">
@@ -180,7 +180,7 @@
         {# TODO Add Events to the Activity Snippets #}
 
         {% import 'macros/activity-snippets.html' as activity_snippets with context %}
-        {% set activities_feed = activity_snippets.render(tags, ['posts', 'newsroom'], include_date_flag=true) %}
+        {% set activities_feed = activity_snippets.render(tags, ['blog', 'newsroom'], include_date_flag=true) %}
         {% include 'templates/activities-feed.html' %}
         <a class="jump-link jump-link__underline"
            href="/activity-log/">

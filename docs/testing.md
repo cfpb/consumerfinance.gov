@@ -1,4 +1,4 @@
-# Browser Tests
+# Browser tests
 
 ## Quick start:
 
@@ -17,6 +17,11 @@ edit the `HTTP_HOST` and `HTTP_PORT` values in your `.env` file
 and reload the settings with `cd .. && cd cfgov-refresh`. Type `y` if prompted.
 
 ## Sauce Connect - send tests to the cloud
+
+!!! danger
+    The instruction for automatically
+    running Sauce Connect from gulp are not working.
+    See https://github.com/cfpb/cfgov-refresh/issues/2324
 
 Sauce Labs can be used to run tests remotely in the cloud.
 
@@ -49,14 +54,14 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 7. Run the tests with `gulp test:acceptance`.
 
-    !!! Note: 
+    !!! Note:
         If you want to temporarily disable testing on Sauce Labs,
         run the command as: `gulp test:acceptance --sauce=false`.
 
 8. Monitor progress of the tests
    on the [Sauce Labs dashboard](https://saucelabs.com/dashboard) Automated Tests tab.
 
-!!! Note 
+!!! Note
     If you get the error `Error: ENOTFOUND getaddrinfo ENOTFOUND`
     while running a test, it likely means that Sauce Connect is not running.
     See step 4 above.
@@ -107,41 +112,41 @@ describe( 'Beta The Bureau Page', function() {
 } );
 ```
 
-## Further Reading
+## Further reading
 
 - [Protractor](http://angular.github.io/protractor/#/)
 - [Select elements on a page](http://www.seleniumhq.org/docs/03_webdriver.jsp#locating-ui-elements-webelements)
 - [Writing Jasmin expectations](http://jasmine.github.io/2.0/introduction.html#section-Expectations).
 - [Understanding Page Objects](http://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings)
 
-## Important note:
 
-Protractor was created by the Angular team to do end-to-end testing of angular sites. It extends the Selenium API and makes certain allowences for AngularJS. To make it work correctly with non-Angular sites you MUST include the following bit of code in your conf.js file.
-
-```js
-  beforeEach(function() {
-    return browser.ignoreSynchronization = true;
-  });
-```
-
-Enjoy! :relieved:
-
-
-# Performance Testing
+# Performance testing
 
 To audit if the site complies with performance best practices and guidelines,
 run `gulp test:perf`.
 
-The audit will run against [sitespeed.io performance rules](https://www.sitespeed.io/rules/)
-and crawl the website from the homepage.
-You can adjust the settings to skip rules and change the crawling depth
-by editing `/gulp/tasks/test.js`.
+The audit will run against
+[Google's PageSpeed Insights](https://github.com/addyosmani/psi).
 
-# Django Server Unit Tests
 
-To run the server unit tests using Tox,
-make sure the `TOXENV` variable is set in your `.env` file and
-run `gulp test:unit:server` from the command-line in the project root.
+# Django and Python unit tests
+
+To run the the full suite of Python 2.7 unit tests using Tox, cd to the project 
+root, make sure the `TOXENV` variable is set in your `.env` file and then run
+
+```
+tox
+```
+
+If you haven't changed any installed packages and you don't need to test all migrations, you can run a much faster Python code test using:
+```
+tox -e fast
+```
+
+To see Python code coverage information, run
+```
+./show_coverage.sh
+``
 
 
 # Accessibility Testing
@@ -151,9 +156,10 @@ to check every webpage for WCAG and Section 508 compliancy using Protractor's
 [accessibility plugin](https://github.com/angular/protractor-accessibility-plugin).
 
 If you'd like to audit a specific page, use `gulp test:a11y`:
+
   1. Enable the environment variable `ACHECKER_ID` in your `.env` file.
      Get a free [AChecker API ID](http://achecker.ca/register.php) for the value.
-  2. Reload your `.env` with `. ./.env` while in the project root directory.
+  2. Reload your `.env` with `source ./.env` while in the project root directory.
   3. Run `gulp test:a11y` to run an audit on the homepage.
   4. To test a page aside from the homepage, add the `--u=<path_to_test>` flag.
      For example, `gulp test:a11y --u=contact-us`
@@ -169,8 +175,9 @@ which checks the JavaScript against the rules configured in `.eslintrc`.
 for detailed rule descriptions.
 
 There are a number of options to the command:
- - Use `gulp lint:build` to only lint the build scripts.
- - Use `gulp lint:test` to only lint the test scripts.
- - Use `gulp lint:scripts` to only lint the project source scripts.
- - Add the `--fix` flag (like `gulp lint --fix`) to auto-fix
-   some errors, where ESLint has support to do so.
+
+ - `gulp lint:build`: Lint only the gulp build scripts.
+ - `gulp lint:test`: Lint only the test scripts.
+ - `gulp lint:scripts`: Lint only the project source scripts.
+ - `--fix`: Add this flag (like `gulp lint --fix` or `gulp lint:build --fix`)
+   to auto-fix some errors, where ESLint has support to do so.

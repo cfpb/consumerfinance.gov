@@ -165,6 +165,20 @@
     }
 }
 
+// Alternate language show/hide cues
+.o-expandable_cue-label__es {
+    display: none;
+}
+
+[lang="es"] {
+    .o-expandable_cue-label {
+        display: none;
+    }
+    .o-expandable_cue-label__es {
+        display: inline;
+    }
+}
+
 // Setting height to prevent flash on load.
 .o-expandable_content:not([aria-expanded='true']) {
     height: 0;

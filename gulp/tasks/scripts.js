@@ -77,6 +77,15 @@ function scriptsIE() {
 }
 
 /**
+ * Bundle external site scripts.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsExternal() {
+  return _processScript( webpackConfig.externalConf,
+                         '/js/routes/external-site/index.js', '/js/' );
+}
+
+/**
  * Bundle atomic component scripts.
  * Provides a means to bundle JS for specific atomic components,
  * which then can be carried over to other projects.
@@ -145,6 +154,7 @@ function scriptsEs5Shim() {
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:ie', scriptsIE );
+gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:ondemand:base', scriptsOnDemand );
 gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
 gulp.task( 'scripts:ondemand', [
@@ -158,6 +168,7 @@ gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
   'scripts:ie',
+  'scripts:external',
   'scripts:nemo',
   'scripts:es5-shim'
 ] );

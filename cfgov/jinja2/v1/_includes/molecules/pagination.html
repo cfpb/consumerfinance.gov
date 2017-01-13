@@ -1,7 +1,7 @@
 
 {# ==========================================================================
 
-   Pagination
+   pagination.render()
 
    ==========================================================================
 
@@ -9,55 +9,71 @@
 
    Builds pagination markup when given:
 
-   posts:                        TODO: fill in data type and description.
+   total_pages: Total number of pages.
 
-   posts.paginator:              TODO: fill in data type and description.
+   current_page:   Currently selected page (out of the total).
 
-   posts.paginator.num_pages:    Number of total pages.
+   fragment_id: The fragment identifier attached
+                to the prev/next pagination buttons.
+                Default is empty string.
 
-   posts.number:                 TODO: fill in data type and description.
-
-   posts.previous_page_number(): Method to return previous page number.
-
-   posts.page:                   Current page number of the iterable list.
+   index:       A unique number given to render the form and its fields with.
+                Default is 0.
 
    ========================================================================== #}
 
-{% if posts and posts.paginator.num_pages > 1 %}
+{% macro render(total_pages, current_page, fragment_id='', index=0) %}
+{% if total_pages > 1 and current_page <= total_pages %}
 {% from 'macros/util/url_parameters.html' import url_parameters %}
+
+{% set fragment_id = '#' + fragment_id if fragment_id else '' %}
 
     <nav class="m-pagination"
          role="navigation"
          aria-label="Pagination">
-        {%- if posts.number > 1 %}
-        <a class="btn btn__super m-pagination_btn-prev"
-           href="?page={{ posts.previous_page_number()
-                          ~ url_parameters(request.GET)
-                          ~ '#o-filterable-list-controls' }}">
+        {%- if current_page > 1 %}
+        <a class="btn
+                  btn__super
+                  m-pagination_btn-prev"
+           href="?page={{ (current_page - 1) ~
+                          url_parameters(request.GET) ~
+                          fragment_id }}">
         {%- else %}
-        <a class="btn btn__super
+        <a class="btn
+                  btn__super
                   btn__disabled
                   m-pagination_btn-prev">
         {% endif %}
-            <span class="btn_icon__left cf-icon cf-icon-left"></span>
+            <span class="btn_icon__left
+                         cf-icon
+                         cf-icon-left"></span>
             Newer
         </a>
-        {%- if posts.number < posts.paginator.num_pages %}
-        <a class="btn btn__super m-pagination_btn-next"
-           href="?page={{ posts.next_page_number()
-                          ~ url_parameters(request.GET)
-                          ~ '#o-filterable-list-controls' }}">
+        {%- if current_page < total_pages %}
+        <a class="btn
+                  btn__super
+                  m-pagination_btn-next"
+           href="?page={{ (current_page + 1) ~
+                          url_parameters(request.GET) ~
+                          fragment_id }}">
         {%- else %}
-        <a class="btn btn__super btn__disabled m-pagination_btn-next">
+        <a class="btn
+                  btn__super
+                  btn__disabled
+                  m-pagination_btn-next">
         {% endif -%}
             Older
-            <span class="btn_icon__right cf-icon cf-icon-right"></span>
+            <span class="btn_icon__right
+                         cf-icon
+                         cf-icon-right"></span>
         </a>
-        <form action="#o-filterable-list-controls">
-            <label for="m-pagination_current-page">
-                Page
+        <form action="{{ fragment_id }}">
+            <label for="m-pagination_current-page-{{ index | string }}">
+                <span class="m-pagination_label">
+                    Page
+                </span>
                 <span class="u-visually-hidden">
-                    number out of {{ posts.paginator.num_pages }} total pages
+                    {{ current_page }} out of {{ total_pages }} total pages
                 </span>
             </label>
             {% for (key, value) in request.GET.items() %}
@@ -67,22 +83,25 @@
                            value="{{ value }}">
                 {% endif %}
             {% endfor %}
-            <input id="m-pagination_current-page"
+            <input id="m-pagination_current-page-{{ index | string }}"
+                   class="m-pagination_current-page"
                    name="page"
                    type="number"
                    min="1"
-                   max="{{ posts.paginator.num_pages }}"
+                   max="{{ total_pages }}"
                    pattern="[0-9]*"
                    inputmode="numeric"
-                   value="{{ posts.number }}">
+                   value="{{ current_page }}">
             <span class="m-pagination_label">
-                of {{ posts.paginator.num_pages }}
+                of {{ total_pages }}
             </span>
-            <button class="btn btn__link"
-                    id="m-pagination_submit-btn"
+            <button class="btn
+                           btn__link
+                           m-pagination_submit-btn"
                     type="submit">
                 Go
             </button>
         </form>
     </nav>
 {% endif %}
+{% endmacro %}

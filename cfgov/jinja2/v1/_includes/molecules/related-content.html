@@ -1,0 +1,47 @@
+{# ==========================================================================
+
+    Related Content
+
+    ==========================================================================
+
+    Description:
+
+    Creates related content markup when given:
+
+    value:               Object defined from a StreamField block.
+
+    value.heading:       (Optional) The heading of the related content inset.
+                         Default is "Related content".
+
+    value.paragraph:     String for text above the links.
+
+    value.links:         (Optional) A list of links with the link first
+                         followed by the text of link.
+
+    value.links[i].url:  A string for the URL of the link.
+
+    value.links[i].text: A string for the text of the link.
+
+   ========================================================================== #}
+
+<div class="m-related-links">
+    {% if value.heading %}
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
+                {{ value.heading }}
+            </span>
+        </h2>
+    {% endif %}
+
+    {{ parse_links(value.paragraph) | safe }}
+
+    {% if value.links %}
+        <ul class="list list__unstyled list__links">
+        {% for link in value.links %}
+            <li class="list_item">
+                <a href="{{ link.url }}" class="list_link">{{ link.text }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</div>

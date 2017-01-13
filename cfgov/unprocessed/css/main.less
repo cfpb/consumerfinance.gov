@@ -20,10 +20,8 @@
 @import (less) 'cf-typography/src/cf-typography.less';
 @import (less) 'cf-pagination/src/cf-pagination.less';
 @import (less) 'cf-expandables/src/cf-expandables.less';
-
-// Remove CF Tables from the bower manifest when it's released under the
-// main capital-framework repo
 @import (less) 'cf-tables/src/cf-tables.less';
+
 
 // The Capital Framework (CF) brand color palette.
 @import (less) "brand-palette.less";
@@ -99,6 +97,8 @@
 /* Molecule pieces
    ========================================================================== */
 
+@import (less) "molecules/big-checkbox.less";
+@import (less) "molecules/big-radio-buttons.less";
 @import (less) "molecules/call-to-action.less";
 @import (less) "molecules/card.less";
 @import (less) "molecules/featured-menu-content.less";
@@ -109,6 +109,7 @@
 @import (less) "molecules/global-eyebrow.less";
 @import (less) "molecules/global-header-cta.less";
 @import (less) "molecules/global-search.less";
+@import (less) "molecules/hero.less";
 @import (less) "molecules/info-unit.less";
 @import (less) "molecules/inset.less";
 @import (less) "molecules/nav-link.less";
@@ -123,13 +124,14 @@
 
 /* Organism pieces
    ========================================================================== */
-
+@import (less) "organisms/bureau-structure.less";
 @import (less) "organisms/email-signup.less";
 @import (less) "organisms/expandable.less";
 @import (less) "organisms/expandable-group.less";
 @import (less) "organisms/filterable-list-controls.less";
 @import (less) "organisms/footer.less";
 @import (less) "organisms/form.less";
+@import (less) "organisms/form-input-group.less";
 @import (less) "organisms/full-width-text-group.less";
 @import (less) "organisms/header.less";
 @import (less) "organisms/info-unit-group.less";
@@ -150,28 +152,19 @@
 
 @import (less) "skip-nav.less";
 @import (less) "breadcrumbs.less";
-@import (less) "mobile-carousel.less";
 @import (less) "share.less";
 
 
 /* Page-specific styles
    ========================================================================== */
 
+@import (less) "pages/bureau.less";
 @import (less) "pages/business.less";
 @import (less) "pages/event.less";
 @import (less) "pages/external-site.less";
 @import (less) "pages/error.less";
-@import (less) "pages/bureau.less";
-@import (less) "pages/bureau-structure.less";
-@import (less) "pages/careers.less";
 @import (less) "pages/home.less";
 @import (less) "pages/press-resources.less";
-
-
-/* Demo-specific styles
-   ========================================================================== */
-
-@import (less) "demo.less";
 
 
 /* Print styles

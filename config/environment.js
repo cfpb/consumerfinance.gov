@@ -9,6 +9,7 @@
  * Environment variable mappings in JavaScript from the project root .env file.
  */
 var envvars = {
+
   /* eslint-disable no-process-env */
   DJANGO_STAGING_HOSTNAME: process.env.DJANGO_STAGING_HOSTNAME,
   TEST_HTTP_HOST:          process.env.TEST_HTTP_HOST,
@@ -17,6 +18,7 @@ var envvars = {
   SAUCE_USERNAME:          process.env.SAUCE_USERNAME,
   SAUCE_ACCESS_KEY:        process.env.SAUCE_ACCESS_KEY,
   ACHECKER_ID:             process.env.ACHECKER_ID
+
   /* eslint-enable no-process-env */
 };
 

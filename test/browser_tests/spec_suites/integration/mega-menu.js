@@ -69,7 +69,7 @@ describe( 'MegaMenu', function() {
         } );
 
         it( 'should ONLY show second link content', function() {
-          var EC = ExpectedConditions;
+          var EC = protractor.ExpectedConditions;
           browser.wait(
             EC.not( EC.elementToBeClickable( _dom.contentPolyCom ) )
           ).then( function() {

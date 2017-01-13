@@ -22,7 +22,7 @@
    ========================================================================== #}
 
 {% macro home_hero( value ) %}
-<div class="m-home-hero" style="background-image: url({{ value.lg_img }});">
+<div class="m-home-hero" style="background-image: url({{ static(value.lg_img) }});">
     <div class="content-l">
         <section class="m-home-hero_content">
             <h1 class="m-home-hero_heading">{{ value.heading }}</h1>
@@ -32,6 +32,6 @@
         </section>
     </div>
     <div class="m-home-hero_sm-img"
-         style="background-image: url({{ value.sm_img }});"></div>
+         style="background-image: url({{ static(value.sm_img) }});"></div>
 </div>
 {% endmacro %}

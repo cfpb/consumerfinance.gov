@@ -1,33 +1,34 @@
 # cfgov-refresh
 
-[![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=flapjack)](https://travis-ci.org/cfpb/cfgov-refresh?branch=flapjack)
-[![Code Climate](https://codeclimate.com/github/cfpb/cfgov-refresh.png?branch=flapjack)](https://codeclimate.com/github/cfpb/cfgov-refresh?branch=flapjack)
+[![Build Status](https://travis-ci.org/cfpb/cfgov-refresh.png?branch=master)](https://travis-ci.org/cfpb/cfgov-refresh?branch=master)
+[![Code Climate](https://codeclimate.com/github/cfpb/cfgov-refresh.png?branch=master)](https://codeclimate.com/github/cfpb/cfgov-refresh?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/cfpb/cfgov-refresh/badge.svg?branch=master)](https://coveralls.io/github/cfpb/cfgov-refresh?branch=master)
 
 The redesign of the [www.consumerfinance.gov](http://www.consumerfinance.gov) website.
 This Django project includes the front-end assets and build tools,
 [Jinja templates](http://jinja.pocoo.org) for front-end rendering,
 and [Wagtail CMS](https://wagtail.io) for content administration.
 
-![Screenshot of cfgov-refresh](screenshot.jpg)
+![Screenshot of cfgov-refresh](homepage.png)
 
 
 ## Quickstart
 
 Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
-and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions 
+and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions
 are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
 
 Ensure that Elasticsearch and MySQL are installed and that MySQL is
-either running or runnable by our 
-[backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41) 
-and our 
+either running or runnable by our
+[backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41)
+and our
 [runserver.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/runserver.sh#L12).
 
 ```
 git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
 pip install virtualenv virtualenvwrapper
-npm install -g gulp bower
+npm install -g gulp
 source load-env.sh
 source setup.sh
 ./runserver.sh
@@ -36,7 +37,7 @@ source setup.sh
 
 ## Documentation
 
-Documentation for this project is available in the [docs](docs/) directory 
+Documentation for this project is available in the [docs](docs/) directory
 and [online](https://cfpb.github.io/cfgov-refresh/).
 
 If you would like to browse the documentation locally, you can do so

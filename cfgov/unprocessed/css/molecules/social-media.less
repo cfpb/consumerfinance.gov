@@ -47,6 +47,18 @@
         padding-right: unit( @grid_gutter-width / @font-size - 0.25em, em );
         margin-bottom: 0;
         vertical-align: middle;
+
+        &__es {
+            display: none;
+        }
+
+        [lang="es"] & {
+            display: none;
+        }
+
+        [lang="es"] &__es {
+            display: inline-block;
+        }
     }
 
     .list {
