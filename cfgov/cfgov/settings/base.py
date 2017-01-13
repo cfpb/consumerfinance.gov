@@ -240,7 +240,7 @@ DOWNLOAD_LINK_PATTERN = r'(\.pdf|\.doc|\.docx|\.xls|\.xlsx|\.csv|\.zip)$'
 
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = 'v1'
+WAGTAIL_SITE_NAME = 'consumerfinance.gov'
 WAGTAILIMAGES_IMAGE_MODEL = 'v1.CFGOVImage'
 TAGGIT_CASE_INSENSITIVE = True
 
