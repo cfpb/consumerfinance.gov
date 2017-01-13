@@ -3,6 +3,7 @@ import logging
 import os
 import requests
 
+from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.core.urlresolvers import reverse
@@ -22,6 +23,11 @@ from v1.util import util
 
 
 logger = logging.getLogger(__name__)
+
+
+@hooks.register('before_delete_page')
+def raise_delete_error(request, page):
+    raise PermissionDenied('Deletion via POST is disabled')
 
 
 @hooks.register('after_create_page')
