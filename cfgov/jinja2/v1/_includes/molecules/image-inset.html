@@ -67,6 +67,8 @@
         {% endif %}
     </div>
     {% if value.paragraph %}
+    <div class="m-inset_text">
         {{ parse_links(value.paragraph) | safe }}
+    </div>
     {% endif %}
 </div>

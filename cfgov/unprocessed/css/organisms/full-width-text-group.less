@@ -25,14 +25,28 @@
 
       .respond-to-min( @bp-sm-min, {
 
-            .m-full-width-text + .m-inset__image {
-                margin: unit( @grid_gutter-width / @base-font-size-px, em );
-                margin-right: calc(~"100% - 41.875rem");
+            .m-inset__image {
+                margin: 0
+                        unit( @grid_gutter-width / @base-font-size-px, em )
+                        // Use this if you want full text wrapping
+                        // when the image is floated right:
+                        // calc(~"100% - 41.875rem");
+                        unit( @grid_gutter-width / @base-font-size-px, em )
+                        unit( @grid_gutter-width / @base-font-size-px, em );
             }
 
-            .m-full-width-text + .m-inset__image__left {
+            .m-inset__image__left {
+                margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
                 margin-left: 0;
-                margin-right: 0;
+            }
+
+            .m-full-width-text + .m-inset__image {
+                margin-top: unit( 15px / @base-font-size-px, em );
             }
       } );
+
+    .m-full-width-text + .m-inset__image {
+        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        border-bottom: 1px solid @horizontal-rule;
+    }
 }

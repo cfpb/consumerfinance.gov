@@ -18,6 +18,7 @@
                 </div>
                 <div class="m-quote"></div>
             </div>
+            <div class="m-inset_text"></div>
             <div class="m-full-width-text"></div>
         </div>
       codenotes:
@@ -38,6 +39,7 @@
                     div.m-inset_image
                     div.m-inset_image__cover
                     img.m-inset_image
+                .m-inset_text
                 .m-quote
                 .m-related-links
                 .m-call-to-action
@@ -72,6 +74,10 @@
         div.m-inset_image {
             background-size: contain;
             background-repeat: no-repeat;
+        }
+
+        .m-inset_text {
+            margin-top: unit( 5px / @base-font-size-px, em )
         }
 
         .respond-to-max(@bp-xs-max, {
