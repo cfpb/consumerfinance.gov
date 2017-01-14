@@ -12,7 +12,7 @@ var stickyElement, lock, topOffset, leftOffset;
 			leftOffset = $(element).offset().left;
 			$(window).scroll(checkPosition);
 		  	$(window).resize(checkPosition);
-		  	$(window).load(checkPosition);
+		  	$(window).on("load",checkPosition);
 		};
 
 		this.init(element, options);
