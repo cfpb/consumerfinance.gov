@@ -10,8 +10,6 @@ var strToNum = require( '../modules/util/string-to-number.js' );
 var formatTime = d3.utcFormat( '%b %Y' );
 var parseTime = d3.utcParse( '%Y-%m-%d' );
 
-// Get from HTML.
-// var charts = require( './templates/charts.js' );
 var DATA_FILE_PATH = 'https://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/data/';
 
 /**
@@ -45,13 +43,12 @@ function LineChart( element ) { // eslint-disable-line max-statements, inline-co
     var chartProps = {
       title: chart.getAttribute( 'data-title' ),
       chartType: chart.getAttribute( 'data-chart-type' ),
-      source: chart.getAttribute( 'data-source' ),
+      source: DATA_FILE_PATH + chart.getAttribute( 'data-source' ),
       BASE_CLASS: BASE_CLASS,
       group: chart.getAttribute( 'group' ), // add to back end
       yAxisUnit: _defineYAxisUnit( chart.getAttribute( 'data-source' ) )
     };
 
-    chartProps.dataUrl = DATA_FILE_PATH + chartProps.source;
     makeDataIntoLineCharts( chartProps );
 
     return this;
