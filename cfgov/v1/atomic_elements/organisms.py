@@ -639,20 +639,19 @@ class HTMLBlock(blocks.StructBlock):
 
 class ChartBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
-    element_id = blocks.CharBlock(
-        required=True,
-        label='Element ID',
-        help_text='See the element IDs in '
-        'https://github.com/cfpb/consumer-credit-trends/'
-        'blob/master/src/static/js/templates/charts.js'
-    )
+    # element_id = blocks.CharBlock(
+    #     required=True,
+    #     label='Element ID',
+    #     help_text='See the element IDs in '
+    #     'https://github.com/cfpb/consumer-credit-trends/'
+    #     'blob/master/src/static/js/templates/charts.js'
+    # )
     # todo: make radio buttons
     chart_type = blocks.ChoiceBlock(choices=[
         ('bar', 'Bar'),
         ('line', 'Line'),
         ('tile_map', 'Tile Map'),
     ], required=False)
-    market = blocks.CharBlock(required=False)
     # todo: make radio buttons. required because we need it for the CSS to apply colors to each report page chart
     report_type = blocks.ChoiceBlock(choices=[
         ('origination-activity', 'Origination Activity'),

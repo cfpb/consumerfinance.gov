@@ -46,16 +46,16 @@ function LineChart( element ) { // eslint-disable-line max-statements, inline-co
 
     var chart = element;
 
-    console.log( chart )
-    
+    console.log( chart );
+
     // add defaults for this in back end
     var chartProps = {
       title: chart.getAttribute( 'data-title' ),
       chartType: chart.getAttribute( 'data-chart-type' ),
-      yAxisUnit: 'M', // add to back end
       source: chart.getAttribute( 'data-source' ),
-      elementID: chart.getAttribute( 'id' ),
-      group: chart.getAttribute( 'group' ) // add to back end
+      BASE_CLASS: BASE_CLASS,
+      group: chart.getAttribute( 'group' ), // add to back end
+      yAxisUnit: _defineYAxisUnit( chart.getAttribute( 'data-source' ) )
     };
 
     console.log(chartProps)
@@ -87,14 +87,22 @@ function LineChart( element ) { // eslint-disable-line max-statements, inline-co
 // HELPER FUNCTIONS
 // ******** //
 
+function _defineYAxisUnit( fileName ) {
+  var yValue = 'B'; // M for Millions, B for Billions
+  var numberData = /num_/;
+
+  if ( numberData.test( fileName ) ) {
+    yValue = 'M';
+  }
+
+  console.log('y value is', yValue)
+
+  return yValue;
+}
+
 function makeDataIntoLineCharts( chartInfo ) {
 
-  d3
-  // .request( chartInfo.dataUrl   )
-  // .mimeType("text/csv")
-  // .on( 'load', function( rawData ) {
-  
-  .csv( chartInfo.dataUrl, function( error, rawData ) {
+  d3.csv( chartInfo.dataUrl, function( error, rawData ) {
 
     var defaultOpts = {
       baseWidth: 650,
@@ -126,7 +134,7 @@ function makeDataIntoLineCharts( chartInfo ) {
 
     var props = {
       data: data,
-      selector: '#' + chartInfo.elementID,
+      selector: '.' + chartInfo.BASE_CLASS,
       yAxisTickFactor: chartInfo.yAxisTickFactor,
         lineSets: {
           'Unadjusted': {
