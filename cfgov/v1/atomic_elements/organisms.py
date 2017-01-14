@@ -639,13 +639,6 @@ class HTMLBlock(blocks.StructBlock):
 
 class ChartBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
-    # element_id = blocks.CharBlock(
-    #     required=True,
-    #     label='Element ID',
-    #     help_text='See the element IDs in '
-    #     'https://github.com/cfpb/consumer-credit-trends/'
-    #     'blob/master/src/static/js/templates/charts.js'
-    # )
     # todo: make radio buttons
     chart_type = blocks.ChoiceBlock(choices=[
         ('bar', 'Bar'),
@@ -669,6 +662,5 @@ class ChartBlock(blocks.StructBlock):
         icon = 'image'
         template = '_includes/organisms/chart.html'
 
-    # how this works https://github.com/cfpb/cfgov-refresh/blob/12a5568f0e73ce016f98ae8a2d859219eb3ce01c/cfgov/v1/models/base.py#L416
     class Media:
         js = ['chart.js']
