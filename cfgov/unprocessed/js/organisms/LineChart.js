@@ -38,15 +38,8 @@ function LineChart( element ) { // eslint-disable-line max-statements, inline-co
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
       return standardType.UNDEFINED;
     }
-
-    console.log('LineChart init');
     
-
-    // console.log( svgEl );
-
     var chart = element;
-
-    console.log( chart );
 
     // add defaults for this in back end
     var chartProps = {
@@ -58,20 +51,8 @@ function LineChart( element ) { // eslint-disable-line max-statements, inline-co
       yAxisUnit: _defineYAxisUnit( chart.getAttribute( 'data-source' ) )
     };
 
-    console.log(chartProps)
-
-    // chartInfo.chartType === element['data-chart-type']; // data-chart-type attribute
-
-    // Draw bar chart for each object in charts config
-    // for ( var i = 0; i < charts.length; i++ ) {
-    //   var chartInfo = charts[i];
-
-    //   if ( chartInfo.chartType === 'line' && document.getElementById( chartInfo.elementID ) 
-    //     ) {
-        chartProps.dataUrl = DATA_FILE_PATH + chartProps.source;
-        makeDataIntoLineCharts( chartProps );
-    //   }
-    // };
+    chartProps.dataUrl = DATA_FILE_PATH + chartProps.source;
+    makeDataIntoLineCharts( chartProps );
 
     return this;
   }
@@ -95,8 +76,6 @@ function _defineYAxisUnit( fileName ) {
     yValue = 'M';
   }
 
-  console.log('y value is', yValue)
-
   return yValue;
 }
 
@@ -114,7 +93,6 @@ function makeDataIntoLineCharts( chartInfo ) {
     }
 
     var data = rawData;
-    // console.log( chartInfo.group.length )
     if ( chartInfo.group !== null ) {
       var dataGroups = separateLineDataGroups( rawData );
       data = dataGroups[chartInfo.group];
@@ -134,7 +112,8 @@ function makeDataIntoLineCharts( chartInfo ) {
 
     var props = {
       data: data,
-      selector: '.' + chartInfo.BASE_CLASS,
+      // todo: refactor Chart Builder to not require a selector; atomic cfgov-refresh JS should take care of selection
+      selector: '.' + chartInfo.BASE_CLASS + '[data-title="' + chartInfo.title + '"]',
       yAxisTickFactor: chartInfo.yAxisTickFactor,
         lineSets: {
           'Unadjusted': {
@@ -260,8 +239,6 @@ function separateLineDataGroups( rawData ) {
       }
       obj[rawData[x].group].push( rawData[x] );
     }
-
-    console.log('obj', obj)
 
     return obj;
 }
