@@ -646,9 +646,20 @@ class ChartBlock(blocks.StructBlock):
         'https://github.com/cfpb/consumer-credit-trends/'
         'blob/master/src/static/js/templates/charts.js'
     )
-    chart_type = blocks.CharBlock(required=False)
+    # todo: make radio buttons
+    chart_type = blocks.ChoiceBlock(choices=[
+        ('bar', 'Bar'),
+        ('line', 'Line'),
+        ('tile_map', 'Tile Map'),
+    ], required=False)
     market = blocks.CharBlock(required=False)
-    report_type = blocks.CharBlock(required=False)
+    # todo: make radio buttons. required because we need it for the CSS to apply colors to each report page chart
+    report_type = blocks.ChoiceBlock(choices=[
+        ('origination-activity', 'Origination Activity'),
+        ('borrower-risk-profiles', 'Borrower Risk Profiles'),
+        ('income-level', 'Lending by Neighborhood Income Level'),
+        ('borrower-age', 'Lending by Borrower Age'),
+    ], required=False)
     data_source = blocks.CharBlock(
         required=True,
         help_text='Github raw CSV url')
