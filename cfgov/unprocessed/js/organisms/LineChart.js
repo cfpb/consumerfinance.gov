@@ -5,14 +5,14 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var standardType = require( '../modules/util/standard-type' );
 var chartBuilder = require( 'cfpb-chart-builder' );
 var d3 = require( 'd3' );
-var formateDate = require( '../modules/util/format-date.js' );
+var formatDate = require( '../modules/util/format-date.js' );
 var strToNum = require( '../modules/util/string-to-number.js' );
 var formatTime = d3.utcFormat( '%b %Y' );
 var parseTime = d3.utcParse( '%Y-%m-%d' );
 
 // Get from HTML.
 // var charts = require( './templates/charts.js' );
-// var DATA_FILE_PATH = 'https://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/data/';
+var DATA_FILE_PATH = 'https://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/data/';
 
 /**
  * LineChart
@@ -26,20 +26,41 @@ var parseTime = d3.utcParse( '%Y-%m-%d' );
  */
 function LineChart( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  var BASE_CLASS = 'svg_wrapper';
+  var BASE_CLASS = 'm-chart-image';
 
-  // var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   /**
    * @returns {LineChart|undefined} An instance,
    *   or undefined if it was already initialized.
    */
   function init() {
-    // if ( !atomicHelpers.setInitFlag( _dom ) ) {
-    //   return standardType.UNDEFINED;
-    // }
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
 
     console.log('LineChart init');
+    
+
+    // console.log( svgEl );
+
+    var chart = element;
+
+    console.log( chart )
+    
+    // add defaults for this in back end
+    var chartProps = {
+      title: chart.getAttribute( 'data-title' ),
+      chartType: chart.getAttribute( 'data-chart-type' ),
+      yAxisUnit: 'M', // add to back end
+      source: chart.getAttribute( 'data-source' ),
+      elementID: chart.getAttribute( 'id' ),
+      group: chart.getAttribute( 'group' ) // add to back end
+    };
+
+    console.log(chartProps)
+
+    // chartInfo.chartType === element['data-chart-type']; // data-chart-type attribute
 
     // Draw bar chart for each object in charts config
     // for ( var i = 0; i < charts.length; i++ ) {
@@ -47,8 +68,8 @@ function LineChart( element ) { // eslint-disable-line max-statements, inline-co
 
     //   if ( chartInfo.chartType === 'line' && document.getElementById( chartInfo.elementID ) 
     //     ) {
-    //     chartInfo.dataUrl = DATA_FILE_PATH + chartInfo.source;
-    //     makeDataIntoLineCharts( chartInfo );
+        chartProps.dataUrl = DATA_FILE_PATH + chartProps.source;
+        makeDataIntoLineCharts( chartProps );
     //   }
     // };
 
@@ -67,7 +88,13 @@ function LineChart( element ) { // eslint-disable-line max-statements, inline-co
 // ******** //
 
 function makeDataIntoLineCharts( chartInfo ) {
-  d3.csv( chartInfo.dataUrl, function( error, rawData ) {
+
+  d3
+  // .request( chartInfo.dataUrl   )
+  // .mimeType("text/csv")
+  // .on( 'load', function( rawData ) {
+  
+  .csv( chartInfo.dataUrl, function( error, rawData ) {
 
     var defaultOpts = {
       baseWidth: 650,
@@ -79,14 +106,15 @@ function makeDataIntoLineCharts( chartInfo ) {
     }
 
     var data = rawData;
-    if ( chartInfo.hasOwnProperty( 'group') ) {
+    // console.log( chartInfo.group.length )
+    if ( chartInfo.group !== null ) {
       var dataGroups = separateLineDataGroups( rawData );
       data = dataGroups[chartInfo.group];
     }
 
     var maxMonth = getMaxMonth( data );
 
-    data = reformatLineData( data, maxMonth, chartInfo.hasOwnProperty( 'group') );
+    data = reformatLineData( data, maxMonth, chartInfo.group !== null );
 
     chartInfo.yAxisTickFactor = Math.pow( 10, 9 );
     chartInfo.yAxisLabel = 'Volume of Originations (in billions of dollars)'
@@ -152,7 +180,7 @@ function reformatLineData( rawData, maxMonth, multiGroup ) {
   // format the rawdata
   for ( var x = 0; x < rawData.length; x++ ) {
     var obj = {};
-    obj.x = parseTime( formateDate( +rawData[x].month ) );
+    obj.x = parseTime( formatDate( +rawData[x].month ) );
     obj.y = +rawData[x].num || +rawData[x].volume;
     obj.y = Math.floor( obj.y );
     if ( multiGroup === true ) {
@@ -189,7 +217,7 @@ function reformatLineData( rawData, maxMonth, multiGroup ) {
 }
 
 function addProjectedToLine( chartObject, date, height ) {
-  var date = parseTime( formateDate( date ) ),
+  var date = parseTime( formatDate( date ) ),
       x = chartObject.x,
       y = chartObject.y;
 
@@ -224,6 +252,8 @@ function separateLineDataGroups( rawData ) {
       }
       obj[rawData[x].group].push( rawData[x] );
     }
+
+    console.log('obj', obj)
 
     return obj;
 }

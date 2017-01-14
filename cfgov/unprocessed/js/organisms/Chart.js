@@ -17,7 +17,7 @@ var LineChart = require( './LineChart.js' );
  */
 function Chart( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  var BASE_CLASS = 'svg_wrapper';
+  var BASE_CLASS = 'o-chart';
 
   var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
@@ -32,8 +32,10 @@ function Chart( element ) { // eslint-disable-line max-statements, inline-commen
 
     console.log('Chart init');
 
-    // lineChart( '.svg_wrapper' );
-    var lineChart = new LineChart( '.svg_wrapper' );
+    var svgEl = _dom.querySelector( '.m-chart-image' );
+
+
+    var lineChart = new LineChart( svgEl );
     lineChart.init();
 
     return this;

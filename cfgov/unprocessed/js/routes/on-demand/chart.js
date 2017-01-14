@@ -5,6 +5,6 @@
 'use strict';
 
 var atomicHelpers = require( '../../modules/util/atomic-helpers' );
-var Chart = require( '../../molecules/Chart' );
+var Chart = require( '../../organisms/Chart' );
 
-atomicHelpers.instantiateAll( '.chart_wrapper', Chart );
+atomicHelpers.instantiateAll( '.o-chart', Chart );
