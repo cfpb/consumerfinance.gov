@@ -20,13 +20,14 @@
   <div class="m-chart-image"
        data-title="{{ value.title }}"
        data-chart-type="{{ value.chart_type }}"
+       data-group="{{ value.group }}"
        data-source="{{ value.data_source }}"
        data-report-type="{{ value.report_type }}">
   </div>
 
   <p class="m-chart-footnote block__sub block__border-top block short-desc">
     {% if value.data_source %}
-        <strong>Source:</strong> <a class="icon-link icon-link__download" href="{{ parse_links(value.data_source) | safe }}"> <span class="icon-link_text">Download CSV file</span> </a><br>
+        <strong>Source:</strong> <a class="icon-link icon-link__download" href="https://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/data/{{ value.data_source }}"> <span class="icon-link_text">Download CSV file</span> </a><br>
       {% endif %}
 
         <strong>Date published:</strong> automate this with JS<br>
