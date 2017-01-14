@@ -45,7 +45,7 @@ function LineChart( element ) { // eslint-disable-line max-statements, inline-co
       chartType: chart.getAttribute( 'data-chart-type' ),
       source: DATA_FILE_PATH + chart.getAttribute( 'data-source' ),
       BASE_CLASS: BASE_CLASS,
-      group: chart.getAttribute( 'group' ), // add to back end
+      group: chart.getAttribute( 'data-group' ),
       yAxisUnit: _defineYAxisUnit( chart.getAttribute( 'data-source' ) )
     };
 
@@ -78,7 +78,7 @@ function _defineYAxisUnit( fileName ) {
 
 function makeDataIntoLineCharts( chartInfo ) {
 
-  d3.csv( chartInfo.dataUrl, function( error, rawData ) {
+  d3.csv( chartInfo.source, function( error, rawData ) {
 
     var defaultOpts = {
       baseWidth: 650,
@@ -90,14 +90,14 @@ function makeDataIntoLineCharts( chartInfo ) {
     }
 
     var data = rawData;
-    if ( chartInfo.group !== null ) {
+    if ( chartInfo.group.length ) {
       var dataGroups = separateLineDataGroups( rawData );
       data = dataGroups[chartInfo.group];
     }
 
     var maxMonth = getMaxMonth( data );
 
-    data = reformatLineData( data, maxMonth, chartInfo.group !== null );
+    data = reformatLineData( data, maxMonth, chartInfo.group.length  );
 
     chartInfo.yAxisTickFactor = Math.pow( 10, 9 );
     chartInfo.yAxisLabel = 'Volume of Originations (in billions of dollars)'
