@@ -1,0 +1,197 @@
+/* topdoc
+  name: Chart
+  family: cfgov-organisms
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="o-chart">
+            <div class="m-chart-image"></div>
+            <div class="m-inset"></div>
+            <p class="m-chart-footnote"></p>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-chart
+            .m-chart-image
+            .m-chart-footnote
+  tags:
+    - cfgov-organisms
+*/
+
+.o-chart {
+
+
+    .line {
+      fill: none;
+      stroke: @gray-80;
+      stroke-width: 3px;
+    }
+
+    .line__projected {
+        stroke-dasharray: 4px, 5px;
+    }
+
+    .axis {
+        .short-desc();
+        font-size: 100%;
+    }
+
+    .axis-label {
+        .short-desc();
+        fill: @gray-80;    
+        font-size: 100%;
+    }
+
+    .axis__x {
+        .domain {
+            stroke: @gray-20;
+        }
+    }
+
+    .axis__y {
+        .domain {
+            stroke: transparent;
+        }
+    }
+
+    .axis__projected {
+        stroke-width: 2px;
+        stroke: @gray-80;
+    }
+
+    .tick {
+        line {
+            stroke: @gray-20;
+        }
+        text {
+            fill: @gray-80;    
+            font-size: 100%;
+        }
+    }
+
+    #bar {
+        text {
+            font-size: 200% !important;
+        }
+        .respond-to-min( @bp-sm-min, {
+            text {
+                font-size: 100% !important;
+            }
+        });
+    }
+
+    text {
+        .webfont-regular();
+    }
+
+
+    text.state-abbreviation {
+        .webfont-demi();
+    }
+
+    text.gray-text {
+        fill: @gray-80;
+    }
+    
+    text.y-axis-label {
+        fill: @gray-80;
+    }
+
+    .axis path.domain {
+      display: none;
+    }
+
+    [data-chart-type="map"] {
+        .legend {
+            transform: translate(30px, 0);
+            text {
+                &:first-of-type {
+                    transform: translate(-13px, 0);
+                }
+                &:last-of-type {
+                    transform: translate(20px, 0);
+                }
+            }
+        }
+    }
+
+    // Line and bar colors for each type of report
+    [data-report-type='origination-activity'] {
+        .line__adjusted {
+            stroke: @green;    
+        }
+        .line__unadjusted {
+            stroke: @green-60;
+        }
+        .bar {
+            fill: @green;
+        }
+        .bar__projected {
+            fill: @green-60;
+        }
+    }
+
+    [data-report-type='borrower-risk-profiles'] {
+        .line__adjusted {
+            stroke: @pacific;
+        }
+        .line__unadjusted {
+            stroke: @pacific-60;
+        }
+        .bar {
+            fill: @pacific;
+        }
+
+        .bar__projected {
+            fill: @pacific-60;
+        }
+    }
+
+    [data-report-type='income-level'] {
+        .line__adjusted {
+            stroke: @teal;
+        }
+        .line__unadjusted {
+            stroke: @teal-60;
+        }
+        .bar {
+            fill: @teal;
+        }
+
+        .bar__projected {
+            fill: @teal-60;
+        }
+    }
+
+    [data-report-type='borrower-age'] {
+        .line__adjusted {
+            stroke: @navy;
+        }
+        .line__unadjusted {
+            stroke: @navy-60;
+        }
+        .bar {
+            fill: @navy;
+        }
+
+        .bar__projected {
+            fill: @navy-60;
+        }
+    }
+
+}
+
+.m-chart-image {
+    overflow-x: auto;
+
+}
+
+.m-chart-footnote {
+  padding-top: unit(15px / @base-font-size-px, em);
+  margin-top: unit(30px / @base-font-size-px, em);
+  color: @gray-80;
+  @font-size: 12px;
+  font-size: unit(@font-size / @base-font-size-px, em);
+}

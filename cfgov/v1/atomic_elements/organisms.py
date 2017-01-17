@@ -663,18 +663,46 @@ class HTMLBlock(blocks.StructBlock):
 
 
 class ChartBlock(blocks.StructBlock):
-    element_id = blocks.CharBlock(
-        required=True,
-        label='Element ID',
-        help_text='See the element IDs in '
-        'https://github.com/cfpb/consumer-credit-trends/'
-        'blob/master/src/static/js/templates/charts.js'
-    )
     title = blocks.CharBlock(required=False)
-    data_source = blocks.CharBlock(required=False)
+    # todo: make radio buttons
+    chart_type = blocks.ChoiceBlock(choices=[
+        ('bar', 'Bar'),
+        ('line', 'Line'),
+        ('tile_map', 'Tile Map'),
+    ], required=False)
+    # todo: make radio buttons. required because we need it for the CSS to apply colors to each report page chart
+    report_type = blocks.ChoiceBlock(choices=[
+        ('origination-activity', 'Origination Activity'),
+        ('borrower-risk-profiles', 'Borrower Risk Profiles'),
+        ('income-level', 'Lending by Neighborhood Income Level'),
+        ('borrower-age', 'Lending by Borrower Age'),
+    ], required=False)
+    group = blocks.ChoiceBlock(choices=[
+        ('Number of Loans', 'Number of Loans'),
+        ('Dollar Volume', 'Dollar Volume'),
+        ('Deep Subprime', 'Deep Subprime'),
+        ('Subprime', 'Subprime'),
+        ('Near Prime', 'Near Prime'),
+        ('Prime', 'Prime'),
+        ('Superprime', 'Superprime'),
+        ('Low', 'Low'),
+        ('Moderate', 'Moderate'),
+        ('Middle', 'Middle'),
+        ('High', 'High'),
+        ('Younger than 30', 'Younger than 30'),
+        ('30 - 44', '30 - 44'),
+        ('45 - 64', '45 - 64'),
+        ('65 and older', '65 and older'),
+    ], required=False)
+    data_source = blocks.CharBlock(
+        required=True,
+        help_text='Github raw CSV url')
     note = blocks.CharBlock(required=False)
 
     class Meta:
         label = 'Chart Block'
         icon = 'image'
         template = '_includes/organisms/chart.html'
+
+    class Media:
+        js = ['chart.js']
