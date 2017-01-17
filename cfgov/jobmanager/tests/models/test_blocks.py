@@ -139,17 +139,51 @@ class JobListingListTestCase(HtmlMixin, TestCase):
 
 
 class JobListingTableTestCase(HtmlMixin, TestCase):
-    def test_html_has_table(self):
+    def test_html_displays_no_data_message(self):
+        table = JobListingTable()
+        html = table.render(table.to_python({'empty_table_msg': 'No Jobs'}))
+
+        self.assertHtmlRegexpMatches(html, (
+            '<h3>No Jobs</h3>'
+        ))
+
+    def test_html_displays_table_if_row_flag_false(self):
+        table = JobListingTable()
+        html = table.render(table.to_python(
+            {'first_row_is_table_header': False}
+        ))
+
+        self.assertHtmlRegexpMatches(html, (
+            '<tr>'
+            '<td>TITLE</td>'
+            '<td>GRADE</td>'
+            '<td>POSTING CLOSES</td>'
+            '<td>REGION</td>'
+            '</tr>'
+        ))
+
+    def test_html_displays_single_row(self):
+        make_job_listing_page(
+            title='CEO',
+            close_date=date(2099, 12, 1)
+        )
         table = JobListingTable()
         html = table.render(table.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
-            '^<table class="o-table o-table__stack-on-small">'
-            '.*'
-            '</table>$'
+            '<tr>'
+            '<th scope="col">TITLE</th>'
+            '<th scope="col">GRADE</th>'
+            '<th scope="col">POSTING CLOSES</th>'
+            '<th scope="col">REGION</th>'
+            '</tr>'
         ))
 
     def test_html_has_header(self):
+        make_job_listing_page(
+            title='CEO',
+            close_date=date(2099, 12, 1)
+        )
         table = JobListingTable()
         html = table.render(table.to_python({}))
 
