@@ -140,8 +140,8 @@ snippet_types = [
 
 snippet_fields = [
     ('Contacts', (
-        ('email', 'email'),
-        ('phone', 'phone'),
+        ('email', 'Email'),
+        ('phone', 'Phone'),
     )),
     ('Resources', (
         ('related_file', 'Related file'),

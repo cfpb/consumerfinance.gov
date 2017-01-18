@@ -137,7 +137,10 @@
     .m-info-unit_image {
         float: left;
         margin-bottom: 0;
-        margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+
+    .m-info-unit_content {
+        margin-left: unit( ( @img_size + @grid_gutter-width ) / @base-font-size-px, em );
     }
 }
 
