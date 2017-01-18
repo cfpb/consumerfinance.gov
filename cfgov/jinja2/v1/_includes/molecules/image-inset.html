@@ -8,39 +8,48 @@
 
     Creates image inset markup when given:
 
-    value:                   Object defined from a StreamField block.
+    value:                 Object defined from a StreamField block.
 
-    value.heading:           The heading of the image inset.
+    value.heading:         The heading of the image inset.
 
-    value.image:             A basic image object to insert.
+    value.is_decorative:   Boolean indicating whether the image is
+                           decorative. A good write-up on image assement:
+                           http://green-beast.com/blog/?p=81.
 
-    value.image.upload:      The image object.
+    value.is_float_left:   Boolean indicating whether to float the image
+                           to the left.
 
-    value.image.alt:         String for alt text for screenreaders.
+    value.image_width:     String representing the image width.
+                           Possible values: (150, 270, 300).
+                           Defaults to 270.
 
-    value.paragraph:         String for text below the image.
+    value.text:            String of text that is displayed below the image.
 
-    value.is_image_left:     Boolean indicating whether to float the image
-                             to the left.
+    value.image:           An object containing:
 
-    value.image_width:       String representing the image width.
-                             Possible values: (150, 270, 300).
-                             Defaults to 270.
+    value.image.upload:    Inset image object.
+
+    value.image.alt:       String for alt text for screenreaders.
+
+    value.has_bottom_rule: Boolean indicating whether the inset has a bottom
+                           rule.
 
    ========================================================================== #}
 
 {# Image sizes are doubled for retina displays. Images created via Wagtail
    are never stretched or upscaled and maintain their aspect ratio. #}
-{% set image_inset = image(value.image.upload, 'width-' ~ value.image_width
-                     | int * 2) %}
+{% set image_inset = image(value.image.upload, 'width-'
+                     ~ value.image_width * 2) %}
 {% set image_mobile = image(value.image.upload, 'width-1200') %}
 <div class="m-inset
             m-inset__image
-            {{ 'm-inset__image__left' if value.is_image_left else '' }}
-            {{ 'm-inset__image__' ~ ( value.image_width
-               if value.image_width else '270' ) }}
-            {{ 'm-inset__image__portrait'
-               if image_inset.height > image_inset.width else 'landscape' }}">
+            {{ 'm-inset__left' if value.is_float_left else '' }}
+            {{ 'm-inset__' ~ ( value.image_width
+               if value.image_width else 270 ) }}
+            {{ 'm-inset__portrait'
+               if image_inset.height > image_inset.width else 'landscape' }}
+            {{ 'm-inset__bottom-rule'
+               if value.is_bottom_rule else '' }}">
     {% if value.heading %}
     <h2 class="header-slug">
         <span class="header-slug_inner">
@@ -50,9 +59,8 @@
     {% endif %}
     <div class="m-inset_image-container">
         {% if value.is_image_decorative %}
-        <div class="m-inset_image
-                   {{ 'm-inset_image__cover'
-                       if image_mobile.width > 600 else '' }}"
+        <div class="m-inset_image m-inset_image__decorative
+                   {{ 'm-inset_image__cover' if image_mobile.width > 600 else '' }}"
              style="background-image: url( {{ image_mobile.url }} );
                     height: {{ image_mobile.height * value.image_width | int
                                / image_mobile.width }}px;">
@@ -66,9 +74,9 @@
                alt="{{ value.image.alt if value.image.alt else '' }}" />
         {% endif %}
     </div>
-    {% if value.paragraph %}
+    {% if value.text %}
     <div class="m-inset_text">
-        {{ parse_links(value.paragraph) | safe }}
+        {{ parse_links(value.text) | safe }}
     </div>
     {% endif %}
 </div>
