@@ -19,11 +19,13 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
 - Django management command to delete Wagtail pages by their slug or ID
 - Added code to enable displaying message when no table data is present on careers page.
+- Added to gulp task to generate `askCFPB` styles.
 
 ### Changed
 
 - JobListingPages are now only associated with a single region.
 - Updated custom Wagtail admin templates to 1.7 version.
+
 
 ### Removed
 - Can no longer delete via `/delete` in Wagtail
