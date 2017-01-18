@@ -135,7 +135,7 @@ supported_languagues = [
 
 snippet_types = [
     ('v1.models.snippets.Contact', 'Contacts'),
-    ('v1.models.snippets.Download', 'Downloads'),
+    ('v1.models.snippets.Resource', 'Resources'),
 ]
 
 snippet_fields = [
@@ -143,7 +143,7 @@ snippet_fields = [
         ('email', 'email'),
         ('phone', 'phone'),
     )),
-    ('Downloads', (
+    ('Resources', (
         ('related_file', 'Related file'),
         ('alternate_file', 'Alternate file'),
         ('link', 'Link'),

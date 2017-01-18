@@ -53,6 +53,15 @@ class ResourceTag(TaggedItemBase):
     content_object = ParentalKey('v1.Resource', related_name='tagged_items')
 
 
+class TaggableSnippetManager(models.Manager):
+    def filter_by_tags(self, tags):
+        snippets = self.all()
+        for tag in tags or []:
+            snippets = snippets.filter(tags__name=tag)
+
+        return snippets
+
+
 @register_snippet
 class Resource(ClusterableModel):
     title = models.CharField(max_length=255)
@@ -97,6 +106,8 @@ class Resource(ClusterableModel):
     tags = TaggableManager(through=ResourceTag, blank=True)
 
     hash = models.CharField(max_length=32, editable=False)
+
+    objects = TaggableSnippetManager()
 
     panels = [
         FieldPanel('title'),

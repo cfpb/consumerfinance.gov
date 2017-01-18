@@ -678,3 +678,36 @@ class ChartBlock(blocks.StructBlock):
         label = 'Chart Block'
         icon = 'image'
         template = '_includes/organisms/chart.html'
+
+
+class SnippetList(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    image = atoms.ImageBasic(required=False)
+
+    snippet_type = blocks.ChoiceBlock(
+        choices=ref.snippet_types,
+        required=True
+    )
+    actions = blocks.ListBlock(blocks.StructBlock([
+        ('link_label', blocks.CharBlock(
+            help_text='E.g., "Download" or "Order free prints"'
+        )),
+        ('snippet_field', blocks.ChoiceBlock(
+            choices=ref.snippet_fields,
+            help_text='Corresponds to the available fields for the selected'
+                      'snippet type.'
+        )),
+    ]))
+
+    tags = blocks.ListBlock(
+        blocks.CharBlock(label='Tag'),
+        help_text='Enter tag names to filter the snippets. For a snippet to '
+                  'match and be output in the list, it must have been tagged '
+                  'with all of the tag names listed here. The tag names '
+                  'are case-insensitive.'
+    )
+
+    class Meta:
+        icon = 'table'
+        template = '_includes/organisms/snippet-list.html'

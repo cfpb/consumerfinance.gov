@@ -1,0 +1,44 @@
+/* =========================================================================
+   cfgov-refresh
+   o-snippet-list
+   ========================================================================= */
+
+.o-snippet-list_list {
+    display: table;
+    width: 100%;
+    margin-top: unit( 30px / @base-font-size-px, em );
+    border-collapse: collapse; // must be set to allow borders on table-rows
+
+    > ul {
+        display: table-row-group;
+        padding: 0;
+    }
+
+    > header,
+    > ul > li {
+        display: table-row;
+        border-bottom: 1px solid @gray-40;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    &-heading,
+    &-item {
+        display: table-cell;
+    }
+
+    &-heading {
+        .heading-5();
+
+        padding: unit( 10px / @font-size, em);
+        background: @gray-10;
+    }
+
+    &-item {
+        padding: unit( 10px / @base-font-size-px, em);
+    }
+
+    &-item-title {
+        .webfont-medium();
+    }
+}

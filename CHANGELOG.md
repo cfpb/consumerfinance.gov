@@ -19,6 +19,8 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
 - Django management command to delete Wagtail pages by their slug or ID
 - Added code to enable displaying message when no table data is present on careers page.
+- Resources snippet definition
+- Snippet List module
 
 ### Changed
 

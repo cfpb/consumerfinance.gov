@@ -208,6 +208,7 @@ def get_filter_data(page):
             return ancestor.form_id(), ancestor
     return None, None
 
+
 def get_snippets(snippet_type):
     snippet_class = import_string(snippet_type)
-    return snippet_class.objects.all()
+    return snippet_class
