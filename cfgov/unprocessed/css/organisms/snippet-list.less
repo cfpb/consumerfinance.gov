@@ -9,22 +9,22 @@
     margin-top: unit( 30px / @base-font-size-px, em );
     border-collapse: collapse; // must be set to allow borders on table-rows
 
-    > ul {
+    [data-display-table="row-group"] {
         display: table-row-group;
         padding: 0;
     }
 
-    > header,
-    > ul > li {
+    [data-display-table="thead"],
+    [data-display-table="row"] {
         display: table-row;
         border-bottom: 1px solid @gray-40;
         margin-bottom: 0;
         list-style: none;
     }
 
-    &-heading,
-    &-item {
+    [data-display-table="cell"] {
         display: table-cell;
+        padding: unit( 10px / @base-font-size-px, em);
     }
 
     &-heading {
@@ -34,11 +34,15 @@
         background: @gray-10;
     }
 
-    &-item {
-        padding: unit( 10px / @base-font-size-px, em);
-    }
-
     &-item-title {
         .webfont-medium();
+    }
+
+    &-action-list {
+        .list__horizontal();
+
+        > li {
+            margin-bottom: 0;
+        }
     }
 }

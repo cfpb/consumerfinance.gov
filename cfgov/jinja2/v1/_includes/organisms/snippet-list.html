@@ -66,12 +66,12 @@
             <ul data-display-table="row-group">
             {% for snippet in filtered_snippets %}
                 <li data-display-table="row">
-                    <div class="o-snippet-list_list-item" data-display-table="cell">
+                    <div data-display-table="cell">
                         <div class="o-snippet-list_list-item-title">{{ snippet.title }}</div>
                         {{ snippet.desc if snippet.desc else '' }}
                     </div>
-                    <div class="o-snippet-list_list-item" data-display-table="cell">
-                        <ul class="list__horizontal">
+                    <div data-display-table="cell">
+                        <ul class="o-snippet-list_list-action-list">
                     {% for action in value.actions %}
                         {% if snippet[action.snippet_field] %}
                             {%- set href = snippet[action.snippet_field].url
