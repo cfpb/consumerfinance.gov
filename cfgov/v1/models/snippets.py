@@ -49,6 +49,17 @@ class Contact(models.Model):
             hash=hashlib.md5(title + ';;' + slug).hexdigest())
 
 
+@receiver(pre_save, sender=Contact)
+def set_hash(sender, instance, **kwargs):
+    heading = instance.heading
+    instance.hash = hashlib.md5(heading).hexdigest()
+
+    if ';;' in instance.heading:
+        heading = instance.heading.split(';;')[0]
+
+    instance.heading = heading
+
+
 class ResourceTag(TaggedItemBase):
     content_object = ParentalKey('v1.Resource', related_name='tagged_items')
 
@@ -105,8 +116,6 @@ class Resource(ClusterableModel):
 
     tags = TaggableManager(through=ResourceTag, blank=True)
 
-    hash = models.CharField(max_length=32, editable=False)
-
     objects = TaggableSnippetManager()
 
     panels = [
@@ -120,28 +129,22 @@ class Resource(ClusterableModel):
         FieldPanel('tags'),
     ]
 
-    def template(self, is_single=False):
-        # check if single or not, return concatenation of subtype and kind of
-        # template
-        if is_single:
-            return self.subtype + '-single.html'
-        else:
-            return self.subtype + '-list-item.html'
+    # Makes fields available to the Actions chooser in a Snippet List module
+    snippet_list_field_choices = [
+        ('related_file', 'Related file'),
+        ('alternate_file', 'Alternate file'),
+        ('link', 'Link'),
+        ('alternate_link', 'Alternate link'),
+    ]
+
+    # Not needed now, but potentially useful if we ever want to render resource
+    # snippets individually.
+    # def template(self, is_single=False):
+    #    # return concatenation of subtype and kind of template
+    #    if is_single:
+    #       return self.subtype + '-single.html'
+    #    else:
+    #        return self.subtype + '-list-item.html'
 
     def __str__(self):
         return self.title
-
-    @classmethod
-    def get_by_title_slug(self, title, slug):
-        return self.objects.get(hash=hashlib.md5(title + ';;' + slug).hexdigest())
-
-
-@receiver(pre_save, sender=Contact)
-def set_hash(sender, instance, **kwargs):
-    heading = instance.heading
-    instance.hash = hashlib.md5(heading).hexdigest()
-
-    if ';;' in instance.heading:
-        heading = instance.heading.split(';;')[0]
-
-    instance.heading = heading

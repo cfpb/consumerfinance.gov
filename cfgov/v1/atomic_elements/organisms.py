@@ -13,6 +13,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+from wagtail.wagtailsnippets.models import get_snippet_models
 
 from . import atoms, molecules
 from .. import blocks as v1_blocks
@@ -686,7 +687,13 @@ class SnippetList(blocks.StructBlock):
     image = atoms.ImageBasic(required=False)
 
     snippet_type = blocks.ChoiceBlock(
-        choices=ref.snippet_types,
+        # choices=ref.snippet_types,
+        choices=[
+            (
+                m.__module__ + '.' + m.__name__,
+                m._meta.verbose_name_plural.capitalize()
+            ) for m in get_snippet_models()
+        ],
         required=True
     )
     actions = blocks.ListBlock(blocks.StructBlock([
@@ -694,7 +701,12 @@ class SnippetList(blocks.StructBlock):
             help_text='E.g., "Download" or "Order free prints"'
         )),
         ('snippet_field', blocks.ChoiceBlock(
-            choices=ref.snippet_fields,
+            choices=[
+                (
+                    m._meta.verbose_name_plural.capitalize(),
+                    getattr(m, 'snippet_list_field_choices', [])
+                ) for m in get_snippet_models()
+            ],
             help_text='Corresponds to the available fields for the selected'
                       'snippet type.'
         )),

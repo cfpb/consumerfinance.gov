@@ -133,24 +133,6 @@ supported_languagues = [
     ('ht', 'Haitian Creole'),
 ]
 
-snippet_types = [
-    ('v1.models.snippets.Contact', 'Contacts'),
-    ('v1.models.snippets.Resource', 'Resources'),
-]
-
-snippet_fields = [
-    ('Contacts', (
-        ('email', 'Email'),
-        ('phone', 'Phone'),
-    )),
-    ('Resources', (
-        ('related_file', 'Related file'),
-        ('alternate_file', 'Alternate file'),
-        ('link', 'Link'),
-        ('alternate_link', 'Alternate link'),
-    )),
-]
-
 
 def related_posts_category_lookup(related_categories):
     related = []
