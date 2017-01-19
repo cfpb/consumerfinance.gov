@@ -13,6 +13,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+from wagtail.wagtailsnippets.models import get_snippet_models
 
 from . import atoms, molecules
 from .. import blocks as v1_blocks
@@ -678,3 +679,46 @@ class ChartBlock(blocks.StructBlock):
         label = 'Chart Block'
         icon = 'image'
         template = '_includes/organisms/chart.html'
+
+
+class SnippetList(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    image = atoms.ImageBasic(required=False)
+
+    snippet_type = blocks.ChoiceBlock(
+        choices=[
+            (
+                m.__module__ + '.' + m.__name__,
+                m._meta.verbose_name_plural.capitalize()
+            ) for m in get_snippet_models()
+        ],
+        required=True
+    )
+    actions = blocks.ListBlock(blocks.StructBlock([
+        ('link_label', blocks.CharBlock(
+            help_text='E.g., "Download" or "Order free prints"'
+        )),
+        ('snippet_field', blocks.ChoiceBlock(
+            choices=[
+                (
+                    m._meta.verbose_name_plural.capitalize(),
+                    getattr(m, 'snippet_list_field_choices', [])
+                ) for m in get_snippet_models()
+            ],
+            help_text='Corresponds to the available fields for the selected'
+                      'snippet type.'
+        )),
+    ]))
+
+    tags = blocks.ListBlock(
+        blocks.CharBlock(label='Tag'),
+        help_text='Enter tag names to filter the snippets. For a snippet to '
+                  'match and be output in the list, it must have been tagged '
+                  'with all of the tag names listed here. The tag names '
+                  'are case-insensitive.'
+    )
+
+    class Meta:
+        icon = 'table'
+        template = '_includes/organisms/snippet-list.html'

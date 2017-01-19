@@ -6,6 +6,7 @@ from urlparse import urlparse, parse_qs
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template.defaultfilters import pluralize, slugify, linebreaksbr
+from django.utils.module_loading import import_string
 from django.contrib import messages
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -58,6 +59,7 @@ def environment(**options):
         'unsigned_redirect': unsigned_redirect,
         'get_protected_url': get_protected_url,
         'get_latest_activities': get_latest_activities,
+        'get_snippets': get_snippets,
     })
 
     env.filters.update({
@@ -205,3 +207,8 @@ def get_filter_data(page):
                                                 'NewsroomLandingPage']:
             return ancestor.form_id(), ancestor
     return None, None
+
+
+def get_snippets(snippet_type):
+    snippet_class = import_string(snippet_type)
+    return snippet_class
