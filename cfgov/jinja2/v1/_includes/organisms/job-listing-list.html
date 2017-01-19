@@ -21,10 +21,10 @@
 
 <aside class="m-jobs-list"
        data-qa-hook="openings-section">
+    {% if careers.exists() %}
     <h3>
         {{ heading or 'Career Openings' }}
     </h3>
-    {% if careers.exists() %}
     {% import 'macros/time.html' as time %}
     <ul class="list list__unstyled">
         {% for job in careers %}
@@ -46,6 +46,6 @@
         </span>
     </a>
     {% else %}
-    <p class='short-desc'>There are no current openings at this time.</p>
+    <h3 class='short-desc'>There are no current openings at this time.</h3>
     {% endif %}
 </aside>
