@@ -26,6 +26,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 
+## 4.5.3
+
+### Changed
+- Bumped college-costs to release 2.3.0
 
 ## 4.5.2
 
