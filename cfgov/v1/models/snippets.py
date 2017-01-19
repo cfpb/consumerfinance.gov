@@ -137,14 +137,5 @@ class Resource(ClusterableModel):
         ('alternate_link', 'Alternate link'),
     ]
 
-    # Not needed now, but potentially useful if we ever want to render resource
-    # snippets individually.
-    # def template(self, is_single=False):
-    #    # return concatenation of subtype and kind of template
-    #    if is_single:
-    #       return self.subtype + '-single.html'
-    #    else:
-    #        return self.subtype + '-list-item.html'
-
     def __str__(self):
         return self.title

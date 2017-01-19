@@ -687,7 +687,6 @@ class SnippetList(blocks.StructBlock):
     image = atoms.ImageBasic(required=False)
 
     snippet_type = blocks.ChoiceBlock(
-        # choices=ref.snippet_types,
         choices=[
             (
                 m.__module__ + '.' + m.__name__,
