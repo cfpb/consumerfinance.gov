@@ -5,6 +5,6 @@
 'use strict';
 
 var atomicHelpers = require( '../../modules/util/atomic-helpers' );
-var Chart = require( '../../organisms/Chart' );
+var Chart = require( 'cfpb-chart-builder' );
 
 atomicHelpers.instantiateAll( '.o-chart', Chart );
