@@ -1,10 +1,8 @@
-import os
-import sys
+import os, sys
+from unipath import Path
+from ..util import admin_emails
 
 from django.conf import global_settings
-from unipath import Path
-
-from ..util import admin_emails
 
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
@@ -495,6 +493,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   '*.youtube.com',
                   '*.ytimg.com',
                   'trk.cetrk.com',
+                  's3.amazonaws.com',
+                  'raw.githubusercontent.com/cfpb/consumer-credit-trends/',
                   'universal.iperceptions.com')
 
 # These specify valid sources of CSS code
@@ -533,4 +533,5 @@ CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
 CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
+                   'raw.githubusercontent.com/cfpb/consumer-credit-trends/',
                    'api.iperceptions.com')
