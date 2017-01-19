@@ -6,17 +6,25 @@
       markup: |
         <div class="o-full-width-text-group">
             <div class="m-full-width-text"></div>
-            <div class="m-inset">
+            <div class="m-inset
+                        m-inset__bottom-rule
+                        m-inset__left
+                        m-inset__portrait
+                        m-inset__150">
                 <h2 class="header-slug">
                     <span class="header-slug_inner"></span>
                 </h2>
                 <div class="m-inset_image-container">
-                    <div class="m-inset_image"></div>
+                    <div class="m-inset_image
+                                m-inset_image__cover
+                                m-inset_image__decorative"></div>
                     <img class="m-inset_image" />
                 </div>
+                <div class="m-inset_text"></div>
                 <div class="m-quote"></div>
+                <div class="m-related-links"></div>
+                <div class="m-call-to-action"></div>
             </div>
-            <div class="m-inset_text"></div>
             <div class="m-full-width-text"></div>
         </div>
       codenotes:
@@ -30,10 +38,10 @@
             .m-inset__left
             .m-inset__portrait
             .m-inset__150
-            .m-inset__300
                 .header-slug
                     .header-slug_inner
                 .m-inset_image-container
+                    div.m-inset_image
                     div.m-inset_image__cover
                     div.m-inset_image__decorative
                     img.m-inset_image
@@ -41,13 +49,12 @@
                 .m-quote
                 .m-related-links
                 .m-call-to-action
-                .m-image-inset
-                .m-full-width-text
+            .m-full-width-text
   tags:
     - cfgov-molecules
   notes:
     - These are held in a full-width-text-group container to be held with
-      various full-width text blocks, insets and tables as needed.
+      various full-width text blocks, insets, and tables as needed.
 */
 
 .m-inset {
@@ -105,21 +112,22 @@
     } );
 
     .respond-to-min( @bp-sm-min, {
-        &__150 {
-            width: 150px;
-        }
-
-        &__300 {
-            width: 300px;
-        }
-
         &__image {
+            width: unit( 270px / @base-font-size-px, em );
             float: right;
         }
 
         &__left {
             float: left;
             clear: left;
+        }
+
+        &__150 {
+            width: 150px;
+        }
+
+        &__300 {
+            width: 300px;
         }
     } );
 

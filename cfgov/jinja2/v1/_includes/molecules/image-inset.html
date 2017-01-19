@@ -47,7 +47,7 @@
             {{ 'm-inset__' ~ ( value.image_width
                if value.image_width else 270 ) }}
             {{ 'm-inset__portrait'
-               if image_inset.height > image_inset.width else 'landscape' }}
+               if image_inset.height > image_inset.width else '' }}
             {{ 'm-inset__bottom-rule'
                if value.is_bottom_rule else '' }}">
     {% if value.heading %}
