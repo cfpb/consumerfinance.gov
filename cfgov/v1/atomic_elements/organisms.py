@@ -696,8 +696,13 @@ class ChartBlock(blocks.StructBlock):
     ], required=False)
     data_source = blocks.CharBlock(
         required=True,
-        help_text='Github raw CSV url')
-    note = blocks.CharBlock(required=False)
+        help_text='URL of the chart\'s data source. For example, "http://files.consumerfinance.gov/consumer-credit-trends/data/volume_data_Score_Level_AUT.csv".')
+    description = blocks.CharBlock(
+        required=True,
+        help_text='Briefly summarize the chart for visually impaired users.')
+    note = blocks.CharBlock(
+        required=False,
+        help_text='Text to display as a footnote. For example, "Data from the last six months are not final."')
 
     class Meta:
         label = 'Chart Block'
