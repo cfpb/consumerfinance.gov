@@ -663,7 +663,7 @@ class HTMLBlock(blocks.StructBlock):
 
 
 class ChartBlock(blocks.StructBlock):
-    title = blocks.CharBlock(required=False)
+    title = blocks.CharBlock(required=True)
     # todo: make radio buttons
     chart_type = blocks.ChoiceBlock(choices=[
         ('bar', 'Bar'),
@@ -696,7 +696,7 @@ class ChartBlock(blocks.StructBlock):
     ], required=False)
     data_source = blocks.CharBlock(
         required=True,
-        help_text='URL of the chart\'s data source. For example, "http://files.consumerfinance.gov/consumer-credit-trends/data/volume_data_Score_Level_AUT.csv".')
+        help_text='Location of the chart\'s data source relative to "http://files.consumerfinance.gov/data/". For example, "consumer-credit-trends/volume_data_Score_Level_AUT.csv".')
     description = blocks.CharBlock(
         required=True,
         help_text='Briefly summarize the chart for visually impaired users.')
