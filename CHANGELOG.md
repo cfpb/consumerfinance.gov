@@ -36,6 +36,11 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix for unused breadcrumb css styles.
 - Fix for external link routing in the footer.
 
+## 4.5.3
+
+### Changed
+- Bumped college-costs to release 2.3.0
+
 ## 4.5.2
 
 ### Changed
