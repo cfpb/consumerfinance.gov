@@ -16,6 +16,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Keep richtext fields within the desktop viewport at all times
 
 ### Changed
 
