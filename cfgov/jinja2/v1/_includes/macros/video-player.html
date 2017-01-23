@@ -1,3 +1,4 @@
+
 {# ==========================================================================
 
    video_player.render()
@@ -26,10 +27,6 @@
    ========================================================================== #}
 
 {% macro render(options={}) -%}
-    {# TODO: Update to use molecules/social-media.html and remove macros/share.html.
-             This will require moving the additional_classes up a level to the organism
-             or include a modifier for the social media icons for a compact appearance. #}
-    {% import 'macros/share.html' as share with context %}
     {% set video_url    = options.video.url | default('/') %}
     {% set video_player = options.video.player or
                           ( video_url.find( 'youtube.com') > -1 and 'youtube' ) or
@@ -87,15 +84,14 @@
                         close
                     </a>
                 </div>
-                {# TODO: Update Title #}
-                {{ share.render({
-                    'title': 'About the CFPB',
-                    'heading': 'Share this video',
-                    'additional_classes': 'video-player_share-actions',
-                    'twitter_options': {
-                        'text': 'Check out this video from the @CFPB'
-                    }
-                }) }}
+            {% import 'molecules/social-media.html' as social_media with context %}
+            {{ social_media.render( {
+                'is_share_view': true,
+                'linkedin_title': 'Consumer Financial Protection Bureau',
+                'linkedin_text': 'Check out this video from the @CFPB',
+                'twitter_text': 'Check out this video from the @CFPB',
+                'email_title': page.title if page else 'Consumer Financial Protection Bureau'
+            } ) }}
             </div>
         </div>
         <div class="video-player_image-container

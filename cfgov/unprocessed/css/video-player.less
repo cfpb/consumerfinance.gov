@@ -60,7 +60,7 @@
 .video-player_image {
     // Remove space below image created by inline display spacing
     display: block;
-    
+
     opacity: 0;
     transition: opacity .25s;
 
@@ -116,14 +116,14 @@
         left: 0;
     }
 
-    .video-player_share-actions {
+    .m-social-media {
 
         .respond-to-min( @bp-sm-min {
             text-align: right;
         } );
     }
 
-    .video-player_share-actions,
+    .m-social-media,
     .video-player_video-actions {
         margin-bottom: 0;
         .grid_column(6);
@@ -140,15 +140,16 @@
     margin: 1em 0;
     color: @white;
 
-    .share_heading {
+    .m-social-media_heading {
         margin-top: 0;
         margin-right: 0;
+        padding: 0;
         line-height: 1;
         white-space: nowrap;
     }
 }
 
-.video-player_share-actions {
+.video-player .m-social-media {
     // Adding white background to the share icons
     // without overlap.
     .cf-icon {
@@ -162,27 +163,28 @@
         }
     }
 
-    .share-icon {
+    .m-social-media_icon {
         color: @pacific;
     }
 
-    .respond-to-min(@bp-sm-min, {
-        text-align: right;
-    });
+    .m-social-media_icons {
+    	display: block;
+    	margin-right: unit( 5px / @base-font-size-px, em);
+    }
 }
 
-.video-player_share-actions,
+.m-social-media,
 .video-player_video-actions {
-    .respond-to-max(@bp-xs-max, {
+    .respond-to-max( @bp-xs-max, {
         margin-top: @gutter-half__em;
-    });
+    } );
 
-    .respond-to-range(@bp-sm-min, @fcm-bp-max {
+    .respond-to-range( @bp-sm-min, @fcm-bp-max {
         .grid_column(6);
-    });
+    } );
 }
 
-.respond-to-max(@fcm-bp-max, {
+.respond-to-max( @fcm-bp-max, {
     .video-player_iframe-container {
         .u-flexible-container();
     }
@@ -190,31 +192,39 @@
     .video-player_iframe {
         .u-flexible-container_inner();
     }
-});
+} );
 
-.respond-to-min(@fcm-bp-min, {
+.respond-to-min( @fcm-bp-min, {
     .video-player_video-actions-container {
         position: absolute;
         top: 0;
         left: @video-width__px;
     }
 
-    .video-player_share-actions,
+    .m-social-media,
     .video-player_video-actions {
         margin-bottom: @grid_gutter-width;
     }
-    .video-player_share-actions{
+
+    .m-social-media {
         text-align: left;
     }
-});
+} );
 
-.respond-to-min(@bp-xl-min, {
+.respond-to-min( @bp-xl-min, {
     .video-player_iframe-container {
         width: @video-width__px;
         margin: 0 auto;
     }
+
     .video-player_video-actions-container {
         right: 0;
         left: auto;
     }
-});
+} );
+
+.respond-to-range( @bp-xs-max, @fcm-bp-min, {
+	.m-social-media {
+		text-align: right;
+	}
+} );
