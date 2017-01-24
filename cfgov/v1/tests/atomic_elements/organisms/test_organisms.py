@@ -187,7 +187,8 @@ class OrganismsTestCase(TestCase):
 
     def test_tableblock_missing_attributes(self):
         """Table correctly displays when value dictionary is missing attributes"""
-        value = atomic.table_block.get( 'value', None )
+        table_context = dict(atomic.table_block)
+        value = table_context.get('value')
         del value['first_row_is_table_header']
         del value['first_col_is_header']
         table = TableBlock()
@@ -197,8 +198,8 @@ class OrganismsTestCase(TestCase):
         self.assertRegexpMatches(html, 'Row 1-1')
         self.assertRegexpMatches(html, 'Row 2-1')
 
-        self.assertEqual(value.get('first_row_is_table_header', None) , None)
-        self.assertEqual(value.get('first_col_is_header', None), None)
+        self.assertIsNone(value.get('first_row_is_table_header'), None)
+        self.assertIsNone(value.get('first_col_is_header'), None)
 
         with self.assertRaises(KeyError):
             value['first_row_is_table_header']
