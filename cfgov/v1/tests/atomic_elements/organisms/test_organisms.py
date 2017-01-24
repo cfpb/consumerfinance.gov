@@ -187,7 +187,6 @@ class OrganismsTestCase(TestCase):
 
     def test_tableblock_missing_attributes(self):
         """Table correctly displays when value dictionary is missing attributes"""
-        table_context = atomic.table_block.copy
         value = atomic.table_block.get( 'value', None )
         del value['first_row_is_table_header']
         del value['first_col_is_header']
