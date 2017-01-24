@@ -300,9 +300,11 @@ class AtomicTableBlock(TableBlock):
 
     def get_has_data(self, value):
         has_data = False
-        if value and value['data']:
-            first_row_index = 1 if value['first_row_is_table_header'] else 0
-            first_col_index = 1 if value['first_col_is_header'] else 0
+        if value and 'data' in value:
+            first_row_index = 1 if value.get('first_row_is_table_header',
+                                             None) else 0
+            first_col_index = 1 if value.get('first_col_is_header',
+                                             None) else 0
 
             for row in value['data'][first_row_index:]:
                 for cell in row[first_col_index:]:
