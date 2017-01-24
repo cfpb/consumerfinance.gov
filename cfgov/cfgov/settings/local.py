@@ -1,11 +1,20 @@
 from .base import *
 
+# Repository root is 4 levels above this file
+REPOSITORY_ROOT = Path(__file__).ancestor(4)
+
+# This is the root of the Django project, 'cfgov'
+PROJECT_ROOT = REPOSITORY_ROOT.child('cfgov')
+V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
+
 DEBUG = True
 SECRET_KEY = 'not-secret-key-for-testing'
 INSTALLED_APPS += (
     'sslserver',
     'wagtail.contrib.wagtailstyleguide',
 )
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
+                            os.path.join(PROJECT_ROOT, 'f'))
 
 if not COLLECTSTATIC:
     if os.environ.get('DATABASE_ROUTING', False):
@@ -70,3 +79,20 @@ LOGGING = {
 
 MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 CSP_REPORT_ONLY = True
+
+
+PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
+
+SHEER_SITES = {
+        'assets': V1_TEMPLATE_ROOT,
+        'owning-a-home':
+            Path(os.environ.get('OAH_SHEER_PATH') or
+            Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
+        'fin-ed-resources':
+            Path(os.environ.get('FIN_ED_SHEER_PATH') or
+            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
+        'know-before-you-owe':
+            Path(os.environ.get('KBYO_SHEER_PATH') or
+            Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
+}
+

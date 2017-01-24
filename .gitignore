@@ -6,7 +6,7 @@
 *.o
 _site/
 _build/
-cfgov/static_built/*
+cfgov/cfgov/static/*
 cfgov-refresh/
 
 # Packages #
