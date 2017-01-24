@@ -18,7 +18,7 @@ class SheerlikeConfig(AppConfig):
                         str(directory.child('_layouts'))
                     ],
                     'OPTIONS': {
-                        'environment': 'v1.environment',
+                        'environment': 'v1.template_environment.environment',
                         'site_slug': app,
                     }
                 }

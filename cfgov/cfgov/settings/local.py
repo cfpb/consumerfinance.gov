@@ -1,4 +1,4 @@
-from .base import *
+from cfgov.settings.base import *
 
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
@@ -8,7 +8,9 @@ PROJECT_ROOT = REPOSITORY_ROOT.child('cfgov')
 V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
 
 DEBUG = True
+
 SECRET_KEY = 'not-secret-key-for-testing'
+
 INSTALLED_APPS += (
     'sslserver',
     'wagtail.contrib.wagtailstyleguide',

@@ -25,7 +25,6 @@ from v1.routing import get_protected_url
 from v1.templatetags.share import get_page_state_url
 
 
-default_app_config = 'v1.apps.V1AppConfig'
 
 
 def environment(**options):

@@ -19,8 +19,7 @@ setup(
     author_email='tech@cfpb.gov',
     maintainer='cfpb',
     maintainer_email='tech@cfpb.gov',
-    # maybe controversial:  exclude tests from the build wheel?
-    packages= find_packages(where='./cfgov/', exclude=['*.tests', '*.tests.*']),
+    packages= find_packages(where='./cfgov/'),
     package_dir={'':'cfgov'},
     include_package_data=True,
     description=u'django project powering consumerfinance.gov',

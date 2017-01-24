@@ -12,7 +12,6 @@ import v1
 CFGOV_ROOT = Path(os.path.dirname(cfgov.__file__))
 V1_ROOT = Path(os.path.dirname(v1.__file__))
 V1_TEMPLATE_ROOT = V1_ROOT.child('jinja2','v1')
-
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 
 # Use the django default password hashing
@@ -135,10 +134,11 @@ TEMPLATES = [
             V1_TEMPLATE_ROOT,
             V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
+            CFGOV_ROOT.child('static'),
         ],
         'APP_DIRS': False,
         'OPTIONS': {
-            'environment': 'v1.environment',
+            'environment': 'v1.template_environment.environment',
             'extensions': [
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
@@ -388,12 +388,9 @@ LOGIN_URL = "/login/"
 
 SHEER_SITES = {
         'assets': V1_TEMPLATE_ROOT,
-        'owning-a-home':
-            Path(os.environ.get('OAH_SHEER_PATH') or
-        'fin-ed-resources':
-            Path(os.environ.get('FIN_ED_SHEER_PATH') or
-        'know-before-you-owe':
-            Path(os.environ.get('KBYO_SHEER_PATH') or
+        'owning-a-home': Path(os.environ.get('OAH_SHEER_PATH') or '/dummy'),
+        'fin-ed-resources': Path(os.environ.get('FIN_ED_SHEER_PATH') or '/dummy'),
+        'know-before-you-owe': Path(os.environ.get('KBYO_SHEER_PATH') or '/dummy'),
 }
 
 #The base URL for the API that we use to access layers and the regulation.
