@@ -189,8 +189,6 @@ class RelatedPosts(blocks.StructBlock):
 
 
 class MainContactInfo(blocks.StructBlock):
-    header = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
     contact = SnippetChooserBlock(ContactSnippetClass)
 
     class Meta:
