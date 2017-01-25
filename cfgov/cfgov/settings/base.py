@@ -6,13 +6,12 @@ from unipath import Path
 
 from ..util import admin_emails
 
-# Repository root is 4 levels above this file
-REPOSITORY_ROOT = Path(__file__).ancestor(4)
+import cfgov
+import v1
 
-# This is the root of the Django project, 'cfgov'
-PROJECT_ROOT = REPOSITORY_ROOT.child('cfgov')
-V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
-
+CFGOV_ROOT = Path(os.path.dirname(cfgov.__file__))
+V1_ROOT = Path(os.path.dirname(v1.__file__))
+V1_TEMPLATE_ROOT = V1_ROOT.child('jinja2','v1')
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 
 # Use the django default password hashing
@@ -52,6 +51,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'cfgov',
     'storages',
     'flags',
     'data_research',
@@ -117,7 +117,6 @@ ROOT_URLCONF = 'cfgov.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [PROJECT_ROOT.child('templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,11 +134,11 @@ TEMPLATES = [
             V1_TEMPLATE_ROOT,
             V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
-            PROJECT_ROOT.child('static_built')
+            CFGOV_ROOT.child('static'),
         ],
         'APP_DIRS': False,
         'OPTIONS': {
-            'environment': 'v1.environment',
+            'environment': 'v1.template_environment.environment',
             'extensions': [
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
@@ -202,8 +201,7 @@ STATIC_URL = '/static/'
 # Absolute path to the directory static files should be collected to.
 STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '/var/www/html/static')
 
-MEDIA_ROOT = os.environ.get('MEDIA_ROOT',
-                            os.path.join(PROJECT_ROOT, 'f'))
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT',)
 MEDIA_URL = '/f/'
 
 # List of finder classes that know how to find static files in
@@ -220,8 +218,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 # Used to include directories not traditionally found,
 # app-specific 'static' directories.
 STATICFILES_DIRS = [
-    PROJECT_ROOT.child('static_built'),
-    PROJECT_ROOT.child('templates', 'wagtailadmin')
+    V1_ROOT.child('templates', 'wagtailadmin')
 ]
 
 
@@ -251,7 +248,7 @@ SHEER_ELASTICSEARCH_SERVER = os.environ.get('ES_HOST', 'localhost') + ':' + os.e
 SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content')
 ELASTICSEARCH_BIGINT = 50000
 
-MAPPINGS = PROJECT_ROOT.child('es_mappings')
+MAPPINGS = V1_ROOT.child('es_mappings')
 SHEER_PROCESSORS = \
     {
         "pages": {
@@ -391,15 +388,9 @@ LOGIN_URL = "/login/"
 
 SHEER_SITES = {
         'assets': V1_TEMPLATE_ROOT,
-        'owning-a-home':
-            Path(os.environ.get('OAH_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
-        'fin-ed-resources':
-            Path(os.environ.get('FIN_ED_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
-        'know-before-you-owe':
-            Path(os.environ.get('KBYO_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
+        'owning-a-home': Path(os.environ.get('OAH_SHEER_PATH') or '/dummy'),
+        'fin-ed-resources': Path(os.environ.get('FIN_ED_SHEER_PATH') or '/dummy'),
+        'know-before-you-owe': Path(os.environ.get('KBYO_SHEER_PATH') or '/dummy'),
 }
 
 #The base URL for the API that we use to access layers and the regulation.
@@ -449,7 +440,7 @@ CACHES = {
     }
 }
 
-PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
+PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY')
 PICARD_TASK_RUNNER = os.environ.get('PICARD_TASK_RUNNER', 'shell')
 PICARD_JENKINS_HOST = os.environ.get('PICARD_JENKINS_HOST', None)
 PICARD_JENKINS_USER = os.environ.get('PICARD_JENKINS_USER', None)

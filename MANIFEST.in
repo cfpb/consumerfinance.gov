@@ -1,0 +1,10 @@
+graft cfgov/v1/templates 
+graft cfgov/legacy/templates
+graft cfgov/flags/templates
+graft cfgov/v1/jinja2
+graft cfgov/core/static
+graft cfgov/jobmanager/static
+graft cfgov/legacy/static
+graft cfgov/cfgov/static
+graft cfgov/v1/static
+graft cfgov/v1/es_mappings

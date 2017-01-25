@@ -27,7 +27,7 @@ var envvars = {
  */
 var paths = {
   unprocessed: './cfgov/unprocessed',
-  processed:   './cfgov/static_built',
+  processed:   './cfgov/cfgov/static',
   legacy:      './cfgov/legacy/static',
   lib:         './vendor',
   modules:     './node_modules',
