@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Keep richtext fields within the desktop viewport at all times
 
 ### Changed
+- Travis configuration now runs tests from optional public apps.
 
 ### Removed
 
