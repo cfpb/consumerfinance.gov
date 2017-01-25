@@ -247,15 +247,14 @@ class ContactPhone(blocks.StructBlock):
 
 
 class ImageInset(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
     image = atoms.ImageBasic()
-    is_float_left = blocks.BooleanBlock(required=False,
-                                        label='Image float left')
+    position = blocks.ChoiceBlock(choices=[('right', 'right'),
+                                           ('left', 'left')],
+                                  default='right')
     is_image_decorative = blocks.BooleanBlock(required=False,
                                               label='Image decorative')
-    image_width = blocks.ChoiceBlock(choices=[(150, '150px'),
-                                              (270, '270px'),
-                                              (300, '300px')],
+    image_width = blocks.ChoiceBlock(choices=[(170, '170px'),
+                                              (270, '270px')],
                                      default=270,
                                      label='Image Width',
                                      help_text='Default is 270px.')

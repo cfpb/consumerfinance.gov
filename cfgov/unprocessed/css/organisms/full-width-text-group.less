@@ -39,17 +39,16 @@
           }
 
           .m-inset__image {
-              margin: 0
-              unit( @grid_gutter-width / @base-font-size-px, em )
+              margin-top: 0;
               // Use this if you want full text wrapping
               // when the image is floated right:
               // calc(~"100% - 41.875rem");
-              unit( @grid_gutter-width / @base-font-size-px, em )
-              unit( @grid_gutter-width / @base-font-size-px, em );
+              margin-left: unit( @grid_gutter-width / @base-font-size-px, em );
           }
 
           .m-inset__left {
               margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
+              margin-bottom: unit( 20px / @base-font-size-px, em );
               margin-left: 0;
           }
 

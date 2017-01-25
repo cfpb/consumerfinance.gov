@@ -10,18 +10,18 @@
 
     value:                 Object defined from a StreamField block.
 
-    value.heading:         The heading of the image inset.
 
     value.is_decorative:   Boolean indicating whether the image is
                            decorative. A good write-up on image assement:
                            http://green-beast.com/blog/?p=81.
 
-    value.is_float_left:   Boolean indicating whether to float the image
-                           to the left.
-
     value.image_width:     String representing the image width.
-                           Possible values: (150, 270, 300).
+                           Possible values: (170, 270).
                            Defaults to 270.
+
+    value.position:        String indicating how to float the image.
+                           Possible values: (left, right).
+                           Defaults to right.
 
     value.text:            String of text that is displayed below the image.
 
@@ -43,20 +43,13 @@
 {% set image_mobile = image(value.image.upload, 'width-1200') %}
 <div class="m-inset
             m-inset__image
-            {{ 'm-inset__left' if value.is_float_left else '' }}
+            {{ 'm-inset__left' if value.position == 'left' else '' }}
             {{ 'm-inset__' ~ ( value.image_width
                if value.image_width else 270 ) }}
             {{ 'm-inset__portrait'
                if image_inset.height > image_inset.width else '' }}
             {{ 'm-inset__bottom-rule'
                if value.is_bottom_rule else '' }}">
-    {% if value.heading %}
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
-            {{ value.heading }}
-        </span>
-    </h2>
-    {% endif %}
     <div class="m-inset_image-container">
         {% if value.is_image_decorative %}
         <div class="m-inset_image m-inset_image__decorative

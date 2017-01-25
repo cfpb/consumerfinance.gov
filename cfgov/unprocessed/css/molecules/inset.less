@@ -10,10 +10,7 @@
                         m-inset__bottom-rule
                         m-inset__left
                         m-inset__portrait
-                        m-inset__150">
-                <h2 class="header-slug">
-                    <span class="header-slug_inner"></span>
-                </h2>
+                        m-inset__170">
                 <div class="m-inset_image-container">
                     <div class="m-inset_image
                                 m-inset_image__cover
@@ -37,9 +34,7 @@
             .m-inset__bottom-rule
             .m-inset__left
             .m-inset__portrait
-            .m-inset__150
-                .header-slug
-                    .header-slug_inner
+            .m-inset__170
                 .m-inset_image-container
                     div.m-inset_image
                     div.m-inset_image__cover
@@ -75,7 +70,7 @@
         margin-top: unit( 5px / @base-font-size-px, em );
     }
 
-    .respond-to-min( @bp-med-min, {
+    .respond-to-min( @bp-sm-min, {
         float: right;
         width: unit( 270px / @base-font-size-px, em );
     } );
@@ -114,7 +109,6 @@
     .respond-to-min( @bp-sm-min, {
         &__image {
             width: unit( 270px / @base-font-size-px, em );
-            float: right;
         }
 
         &__left {
@@ -122,12 +116,12 @@
             clear: left;
         }
 
-        &__150 {
-            width: 150px;
+        &__170 {
+            width: 170px;
         }
 
-        &__300 {
-            width: 300px;
+        .m-call-to-action {
+            width: 100%;
         }
     } );
 
