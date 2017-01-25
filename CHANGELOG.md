@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Keep richtext fields within the desktop viewport at all times
 
 ### Changed
+- Updated owning-a-home-api requirement to v0.9.93.
 
 ### Removed
 - `header` and `body` fields from `MainContactInfo`
