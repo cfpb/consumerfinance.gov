@@ -330,7 +330,10 @@ class CFGOVPage(Page):
             else:
                 return _("live")
         elif self.live:
-            return _("live")
+            if self.has_unpublished_changes:
+                return _('live + draft')
+            else:
+                return _('live')
         elif self.shared:
             if self.has_unshared_changes:
                 return _("shared + draft")
