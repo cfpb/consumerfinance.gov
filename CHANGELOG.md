@@ -23,6 +23,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 
 ### Fixed
+- Fixed issue with key access on datatable when table is empty.
 
 
 ## 4.6.1 
