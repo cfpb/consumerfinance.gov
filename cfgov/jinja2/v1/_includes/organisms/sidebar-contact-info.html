@@ -46,8 +46,8 @@
     </div>
 
     <div class="o-sidebar-contact-info_content">
-        {% if value.header %}
-            <h3>{{ value.header }}</h3>
+        {% if value.contact.heading %}
+            <h3>{{ value.contact.heading }}</h3>
         {% endif %}
 
         {{ parse_links(value.contact.body) |safe }}
