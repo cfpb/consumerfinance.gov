@@ -302,3 +302,11 @@ class CFGOVPageStatusStringTest(TestCase):
                 has_unpublished_changes=True
             )
             self.assertEqual(page.status_string, 'live + shared')
+
+        def test_live_and_draft(self):
+            page = CFGOVPage(
+                live=True,
+                shared=False,
+                has_unpublished_changes=True
+            )
+            self.assertEqual(page.status_string, 'live + draft')

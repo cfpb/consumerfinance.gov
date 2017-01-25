@@ -22,6 +22,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 
 ### Fixed
+- Correctly show "live + draft" page status for unshared pages.
 
 
 ## 4.6.2
