@@ -27,7 +27,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 4.6.1 
 
 ### Changed
--  Bumped college-costs to 2.3.1 
+-  Bumped college-costs to 2.3.2
 -  Bumped six dependency to 1.10.0
 
 ### Fixed
