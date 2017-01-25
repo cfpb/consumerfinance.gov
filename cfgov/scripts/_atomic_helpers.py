@@ -101,14 +101,17 @@ call_to_action = {
 #############
 
 main_contact_info = lambda contact_id: {
-    "type": "contact",
-    "value": {
-        "body": "",
-        "header": "Contact",
-        "contact": contact_id
+    'type': 'contact',
+    'value': {
+        'contact': contact_id
     }
 }
-sidebar_contact = main_contact_info
+sidebar_contact = lambda contact_id: {
+    'type': 'sidebar_contact',
+    'value': {
+        'contact': contact_id
+    }
+}
 well = {
     'type': 'well',
     'value': {
