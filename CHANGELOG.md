@@ -24,6 +24,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 4.6.2
+
+### Changed
+- Updated owning-a-home-api requirement to v0.9.93.
+
+
 ## 4.6.1 
 
 ### Changed
