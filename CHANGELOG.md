@@ -23,6 +23,15 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 
 ### Fixed
+
+
+## 4.6.1 
+
+### Changed
+-  Bumped college-costs to 2.3.2
+-  Bumped six dependency to 1.10.0
+
+### Fixed
 - Fixed issue with key access on datatable when table is empty.
 
 
