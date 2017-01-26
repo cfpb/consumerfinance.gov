@@ -671,26 +671,32 @@ class ChartBlock(blocks.StructBlock):
         ('line', 'Line'),
         ('tile_map', 'Tile Map'),
     ], required=True)
-    # todo: make radio buttons. required because we need it for the CSS to apply colors to each report page chart
-    color_scheme = blocks.ChoiceBlock(choices=[
-        ('green', 'Green'),
-        ('blue', 'Blue'),
-        ('teal', 'Teal'),
-        ('navy', 'Navy'),
-    ], required=False,
-    help_text='Chart\'s color scheme. See https://github.com/cfpb/cfpb-chart-builder#configuration.')
+    color_scheme = blocks.ChoiceBlock(
+        choices=[
+            ('green', 'Green'),
+            ('blue', 'Blue'),
+            ('teal', 'Teal'),
+            ('navy', 'Navy'),
+        ],
+        required=False,
+        help_text='Chart\'s color scheme. See '
+                  'https://github.com/cfpb/cfpb-chart-builder#configuration.')
     data_source = blocks.CharBlock(
         required=True,
-        help_text='Location of the chart\'s data source relative to "http://files.consumerfinance.gov/data/". For example, "consumer-credit-trends/volume_data_Score_Level_AUT.csv".')
+        help_text='Location of the chart\'s data source relative to '
+                  '"http://files.consumerfinance.gov/data/". For example,'
+                  '"consumer-credit-trends/volume_data_Score_Level_AUT.csv".')
     description = blocks.CharBlock(
         required=True,
         help_text='Briefly summarize the chart for visually impaired users.')
     metadata = blocks.CharBlock(
         required=False,
-        help_text='Optional metadata for the chart to use. For example, with CCT this would be the chart\'s "group".')
+        help_text='Optional metadata for the chart to use. '
+                  'For example, with CCT this would be the chart\'s "group".')
     note = blocks.CharBlock(
         required=False,
-        help_text='Text to display as a footnote. For example, "Data from the last six months are not final."')
+        help_text='Text to display as a footnote. For example, '
+                  '"Data from the last six months are not final."')
 
     class Meta:
         label = 'Chart Block'
