@@ -20,7 +20,7 @@ init() {
   echo "npm components directory: $NODE_DIR"
 }
 
-# Clean project dependencies if needed
+# Clean project dependencies if needed.
 clean() {
   # If the node directory exists, $NODE_DIR/CHECKSUM exists, and
   # the contents DO NOT match the checksum of package.json, clear
