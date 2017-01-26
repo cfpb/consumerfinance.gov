@@ -19,21 +19,26 @@ init() {
   echo "npm components directory: $NODE_DIR"
 }
 
-# Clean project dependencies.
+# Clean project dependencies if needed
 clean() {
-  # If the node directory already exists,
-  # clear it so we know we're working with a clean
-  # slate of the dependencies listed in package.json.
+  # If the node directory exists, $NODE_DIR/CHECKSUM exists, and
+  # the contents DO NOT match the checksum of package.json, clear
+  # $NODE_DIR so we know we're working with a clean slate of the
+  # dependencies listed in package.json.
   if [ -d $NODE_DIR ]; then
-    echo 'Removing project dependency directories...'
-    rm -rf $NODE_DIR
+    if [ ! -f $NODE_DIR/CHECKSUM ] || [ "`shasum package.json`" != "`cat $NODE_DIR/CHECKSUM`" ]; then
+      echo 'Removing project dependency directories…'
+      rm -rf $NODE_DIR
+      echo 'Project dependencies have been removed.'
+    else
+      echo 'Project dependencies checksum matches package.json…'
+    fi
   fi
-  echo 'Project dependencies have been removed.'
 }
 
 # Install project dependencies.
 install() {
-  echo 'Installing front-end dependencies...'
+  echo 'Installing front-end dependencies…'
 
   if [ "$cli_flag" = "development" ] ||
      [ "$cli_flag" = "test" ]; then
@@ -47,10 +52,10 @@ install() {
     # Copy globally-installed packages.
     # Protractor = JavaScript acceptance testing framework.
     if [ $is_installed_protractor = 0 ]; then
-      echo 'Installing Protractor dependencies locally...'
+      echo 'Installing Protractor dependencies locally…'
       ./$NODE_DIR/protractor/bin/webdriver-manager update
     else
-      echo 'Global Protractor installed. Copying global install locally...'
+      echo 'Global Protractor installed. Copying global install locally…'
       protractor_symlink=$(command -v protractor)
       protractor_binary=$(readlink $protractor_symlink)
       protractor_full_path=$(dirname $protractor_symlink)/$(dirname $protractor_binary)/../../protractor
@@ -65,11 +70,16 @@ install() {
   else
     npm install --production --loglevel warn
   fi
+
+  # Add a checksum file
+  if  [ ! -f $NODE_DIR/CHECKSUM ]; then
+    shasum package.json > $NODE_DIR/CHECKSUM
+  fi
 }
 
 # Run tasks to build the project for distribution.
 build() {
-  echo 'Building project...'
+  echo 'Building project…'
   gulp clean
   gulp build
 
