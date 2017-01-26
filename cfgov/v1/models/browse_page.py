@@ -41,6 +41,7 @@ class BrowsePage(CFGOVPage):
         ('conference_registration_form', ConferenceRegistrationForm()),
         ('html_block', organisms.HTMLBlock()),
         ('chart_block', organisms.ChartBlock()),
+        ('snippet_list', organisms.SnippetList()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

@@ -16,23 +16,53 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Keep richtext fields within the desktop viewport at all times
+
+### Changed
+- Updated owning-a-home-api requirement to v0.9.93.
+
+### Removed
+- `header` and `body` fields from `MainContactInfo`
+- `MainContactInfo` from sidefoot
+
+### Fixed
+
+
+## 4.6.1 
+
+### Changed
+-  Bumped college-costs to 2.3.2
+-  Bumped six dependency to 1.10.0
+
+### Fixed
+- Fixed issue with key access on datatable when table is empty.
+- `sidebar-contact-info.html` to display heading from snippet 
+
+## 4.6.0
+
+### Added
 - New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
 - Django management command to delete Wagtail pages by their slug or ID
 - Added code to enable displaying message when no table data is present on careers page.
+- Resources snippet definition
+- Snippet List module
 
 ### Changed
-
 - JobListingPages are now only associated with a single region.
 - Updated custom Wagtail admin templates to 1.7 version.
 
 ### Removed
 - Can no longer delete via `/delete` in Wagtail
 
-
 ### Fixed
 - Fix for missing breadcrumb on Press Resources `about-us/newsroom/press-resources/` page.
 - Fix for unused breadcrumb css styles.
 - Fix for external link routing in the footer.
+
+## 4.5.3
+
+### Changed
+- Bumped college-costs to release 2.3.0
 
 ## 4.5.2
 

@@ -27,7 +27,8 @@
 
    ========================================================================== #}
 
-{% if value.has_data %}
+
+{% if value.has_data is not defined or value.has_data %}
 {% macro _render_cell(cell) %}
     {{ (cell or '&nbsp;') | safe | trim | linebreaksbr }}
 {% endmacro %}
