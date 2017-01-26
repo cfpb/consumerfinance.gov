@@ -18,13 +18,14 @@
     {% endif %}
 
   <div class="m-chart-image cfpb-chart"
-       data-title="{{ value.title }}"
-       data-chart-type="{{ value.chart_type }}"
-       data-chart-metadata="{{ value.additional_metadata }}"
-       data-chart-source="{{ value.data_source }}"
-       data-chart-description="{{ value.description }}"
-       data-chart-color="{{ value.color_scheme }}">
-       {{ value.description }}
+       {% if value.title %}data-chart-title="{{ value.title }}"{% endif %}
+       {% if value.chart_type %}data-chart-type="{{ value.chart_type }}"{% endif %}
+       {% if value.metadata %}data-chart-metadata="{{ value.metadata }}"{% endif %}
+       {% if value.data_source %}data-chart-source="{{ value.data_source }}"{% endif %}
+       {% if value.description %}data-chart-description="{{ value.description }}"{% endif %}
+       {% if value.color_scheme %}data-chart-color="{{ value.color_scheme }}"{% endif %}
+       >
+       {% if value.description %}{{ value.description }}{% endif %}
   </div>
 
   <p class="m-chart-footnote block__sub block__border-top block short-desc">

@@ -670,7 +670,7 @@ class ChartBlock(blocks.StructBlock):
         ('bar', 'Bar'),
         ('line', 'Line'),
         ('tile_map', 'Tile Map'),
-    ], required=False)
+    ], required=True)
     # todo: make radio buttons. required because we need it for the CSS to apply colors to each report page chart
     color_scheme = blocks.ChoiceBlock(choices=[
         ('green', 'Green'),
@@ -685,7 +685,7 @@ class ChartBlock(blocks.StructBlock):
     description = blocks.CharBlock(
         required=True,
         help_text='Briefly summarize the chart for visually impaired users.')
-    additional_metadata = blocks.CharBlock(
+    metadata = blocks.CharBlock(
         required=False,
         help_text='Optional metadata for the chart to use. For example, with CCT this would be the chart\'s "group".')
     note = blocks.CharBlock(
