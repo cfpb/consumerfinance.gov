@@ -18,11 +18,19 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
+- Bumped the version of Node used by Travis to v6
+- Checksum package.json to avoid reinstalling dependencies that haven't changed
 
 ### Removed
 
 ### Fixed
 - Correctly show "live + draft" page status for unshared pages.
+
+
+## 4.6.3
+
+### Fixed
+- unicode handling of `str` method for snippets 
 
 
 ## 4.6.2
@@ -32,16 +40,27 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Updated owning-a-home-api requirement to v0.9.93.
-- Bumped the version of Node used by Travis to v6
-- Checksum package.json to avoid reinstalling dependencies that haven't changed
 
 ### Removed
 - `header` and `body` fields from `MainContactInfo`
 - `MainContactInfo` from sidefoot
 
+
+## 4.6.3
+
 ### Fixed
 - unicode handling of `str` method for snippets 
-- `sidebar-contact-info.html` to display heading from snippet
+
+
+## 4.6.2
+
+### Changed
+- Updated owning-a-home-api requirement to v0.9.93.
+
+### Removed
+- `header` and `body` fields from `MainContactInfo`
+- `MainContactInfo` from sidefoot
+
 
 ## 4.6.1
 
@@ -51,6 +70,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed issue with key access on datatable when table is empty.
+- `sidebar-contact-info.html` to display heading from snippet
 
 ## 4.6.0
 
