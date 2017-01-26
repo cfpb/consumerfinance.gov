@@ -310,14 +310,15 @@ class CFGOVPage(Page):
 
     @property
     def status_string(self):
-        if self.expired:
+        page = CFGOVPage.objects.get(id=self.id)
+        if page.expired:
             return _("expired")
-        elif self.approved_schedule:
+        elif page.approved_schedule:
             return _("scheduled")
-        elif self.live and self.shared:
-            if self.has_unpublished_changes:
-                if self.has_unshared_changes:
-                    for revision in self.revisions.order_by(
+        elif page.live and page.shared:
+            if page.has_unpublished_changes:
+                if page.has_unshared_changes:
+                    for revision in page.revisions.order_by(
                             '-created_at', '-id'):
                         content = json.loads(revision.content_json)
                         if content['shared']:
@@ -329,13 +330,13 @@ class CFGOVPage(Page):
                     return _("live + shared")
             else:
                 return _("live")
-        elif self.live:
-            if self.has_unpublished_changes:
+        elif page.live:
+            if page.has_unpublished_changes:
                 return _('live + draft')
             else:
                 return _('live')
-        elif self.shared:
-            if self.has_unshared_changes:
+        elif page.shared:
+            if page.has_unshared_changes:
                 return _("shared + draft")
             else:
                 return _("shared")

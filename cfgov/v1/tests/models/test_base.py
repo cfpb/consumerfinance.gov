@@ -280,33 +280,43 @@ class TestFeedbackModel(TestCase):
 
 class CFGOVPageStatusStringTest(TestCase):
         def test_expired(self):
-            page = CFGOVPage(expired=True)
+            page = CFGOVPage(expired=True, slug='foo', title='foo')
+            save_new_page(page)
             self.assertEqual(page.status_string, 'expired')
 
         def test_live(self):
-            page = CFGOVPage(live=True)
+            page = CFGOVPage(live=True, slug='foo', title='foo')
+            publish_page(page)
             self.assertEqual(page.status_string, 'live')
 
         def test_draft(self):
-            page = CFGOVPage(live=False, shared=False)
+            page = CFGOVPage(live=False, shared=False, slug='foo', title='foo')
+            save_new_page(page)
             self.assertEqual(page.status_string, 'draft')
 
         def test_shared(self):
-            page = CFGOVPage(live=False, shared=True)
+            page = CFGOVPage(live=False, shared=True, slug='foo', title='foo')
+            save_new_page(page)
             self.assertEqual(page.status_string, 'shared')
 
         def test_live_and_shared(self):
             page = CFGOVPage(
                 live=True,
                 shared=True,
-                has_unpublished_changes=True
+                has_unpublished_changes=True,
+                slug='foo',
+                title='foo'
             )
+            save_new_page(page)
             self.assertEqual(page.status_string, 'live + shared')
 
         def test_live_and_draft(self):
             page = CFGOVPage(
                 live=True,
                 shared=False,
-                has_unpublished_changes=True
+                has_unpublished_changes=True,
+                slug='foo',
+                title='foo'
             )
+            save_new_page(page)
             self.assertEqual(page.status_string, 'live + draft')
