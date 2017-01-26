@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Add image inset.
+- Modifield `@grid_wrapper-width` to match Capital Framework.
 
 ### Removed
 
