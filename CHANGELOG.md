@@ -16,6 +16,17 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 4.6.2
+
+### Added
 - Keep richtext fields within the desktop viewport at all times
 
 ### Changed
@@ -27,7 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `MainContactInfo` from sidefoot
 
 ### Fixed
-
+- `sidebar-contact-info.html` to display heading from snippet
 
 ## 4.6.1
 
@@ -37,7 +48,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed issue with key access on datatable when table is empty.
-- `sidebar-contact-info.html` to display heading from snippet
 
 ## 4.6.0
 
