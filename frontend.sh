@@ -15,28 +15,20 @@ init() {
   source cli-flag.sh 'Front end' $1
 
   NODE_DIR=node_modules
-  DEP_CHECKSUM=`cat npm-shrinkwrap.json package.json | shasum -a 256`
+  DEP_CHECKSUM=$(cat npm-shrinkwrap.json package.json | shasum -a 256)
 
   echo "npm components directory: $NODE_DIR"
 }
 
-# Clean project dependencies if needed.
+# Clean project dependencies.
 clean() {
-  # If the node directory exists, $NODE_DIR/CHECKSUM exists, and
-  # the contents DO NOT match the checksum of package.json, clear
-  # $NODE_DIR so we know we're working with a clean slate of the
-  # dependencies listed in package.json.
+  # If the node directory already exists,
+  # clear it so we know we're working with a clean
+  # slate of the dependencies listed in package.json.
   if [ -d $NODE_DIR ]; then
-    echo $DEP_CHECKSUM
-    echo `cat $NODE_DIR/CHECKSUM`
-    if [ ! -f $NODE_DIR/CHECKSUM ] || 
-       [ "$DEP_CHECKSUM" != "`cat $NODE_DIR/CHECKSUM`" ]; then
-      echo 'Removing project dependency directories…'
-      rm -rf $NODE_DIR
-      echo 'Project dependencies have been removed.'
-    else
-      echo 'Project dependencies checksum matches package.json…'
-    fi
+    echo 'Removing project dependency directories…'
+    rm -rf $NODE_DIR
+    echo 'Project dependencies have been removed.'
   fi
 }
 
@@ -75,9 +67,21 @@ install() {
     npm install --production --loglevel warn
   fi
 
-  # Add a checksum file
-  if  [ ! -f $NODE_DIR/CHECKSUM ]; then
-    echo -n $DEP_CHECKSUM > $NODE_DIR/CHECKSUM
+}
+
+# If the node directory exists, $NODE_DIR/CHECKSUM exists, and
+# the contents DO NOT match the checksum of package.json, clear
+# $NODE_DIR so we know we're working with a clean slate of the
+# dependencies listed in package.json.
+clean_and_install() {
+  if [ ! -f $NODE_DIR/CHECKSUM ] || 
+     [ "$DEP_CHECKSUM" != "$(cat $NODE_DIR/CHECKSUM)" ]; then
+    clean
+    install
+    # Add a checksum file
+    echo -n "$DEP_CHECKSUM" > $NODE_DIR/CHECKSUM
+  else
+    echo 'Dependencies are up to date.'
   fi
 }
 
@@ -108,14 +112,12 @@ is_installed() {
 if [ "$1" == "init" ] || [ "$1" == "build" ]; then
   if [ "$1" == "init" ]; then
     init ""
-    clean
-    install
+    clean_and_install
   else
     build
   fi
 else
   init "$1"
-  clean
-  install
+  clean_and_install
   build
 fi
