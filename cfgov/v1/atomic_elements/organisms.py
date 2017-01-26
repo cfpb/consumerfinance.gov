@@ -664,21 +664,47 @@ class HTMLBlock(blocks.StructBlock):
 
 
 class ChartBlock(blocks.StructBlock):
-    element_id = blocks.CharBlock(
+    title = blocks.CharBlock(required=True)
+    # todo: make radio buttons
+    chart_type = blocks.ChoiceBlock(choices=[
+        ('bar', 'Bar'),
+        ('line', 'Line'),
+        ('tile_map', 'Tile Map'),
+    ], required=True)
+    color_scheme = blocks.ChoiceBlock(
+        choices=[
+            ('green', 'Green'),
+            ('blue', 'Blue'),
+            ('teal', 'Teal'),
+            ('navy', 'Navy'),
+        ],
+        required=False,
+        help_text='Chart\'s color scheme. See '
+                  'https://github.com/cfpb/cfpb-chart-builder#configuration.')
+    data_source = blocks.CharBlock(
         required=True,
-        label='Element ID',
-        help_text='See the element IDs in '
-        'https://github.com/cfpb/consumer-credit-trends/'
-        'blob/master/src/static/js/templates/charts.js'
-    )
-    title = blocks.CharBlock(required=False)
-    data_source = blocks.CharBlock(required=False)
-    note = blocks.CharBlock(required=False)
+        help_text='Location of the chart\'s data source relative to '
+                  '"http://files.consumerfinance.gov/data/". For example,'
+                  '"consumer-credit-trends/volume_data_Score_Level_AUT.csv".')
+    description = blocks.CharBlock(
+        required=True,
+        help_text='Briefly summarize the chart for visually impaired users.')
+    metadata = blocks.CharBlock(
+        required=False,
+        help_text='Optional metadata for the chart to use. '
+                  'For example, with CCT this would be the chart\'s "group".')
+    note = blocks.CharBlock(
+        required=False,
+        help_text='Text to display as a footnote. For example, '
+                  '"Data from the last six months are not final."')
 
     class Meta:
         label = 'Chart Block'
         icon = 'image'
         template = '_includes/organisms/chart.html'
+
+    class Media:
+        js = ['chart.js']
 
 
 class SnippetList(blocks.StructBlock):
