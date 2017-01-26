@@ -678,7 +678,6 @@ class ChartBlock(blocks.StructBlock):
         ('navy', 'Navy'),
     ], required=False,
     help_text='Chart\'s color scheme. See https://github.com/cfpb/cfpb-chart-builder#configuration.')
-    ], required=False)
     data_source = blocks.CharBlock(
         required=True,
         help_text='Location of the chart\'s data source relative to "http://files.consumerfinance.gov/data/". For example, "consumer-credit-trends/volume_data_Score_Level_AUT.csv".')
