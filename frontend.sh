@@ -15,6 +15,7 @@ init() {
   source cli-flag.sh 'Front end' $1
 
   NODE_DIR=node_modules
+  DEP_CHECKSUM=`cat npm-shrinkwrap.json package.json | shasum -a 256`
 
   echo "npm components directory: $NODE_DIR"
 }
@@ -26,7 +27,10 @@ clean() {
   # $NODE_DIR so we know we're working with a clean slate of the
   # dependencies listed in package.json.
   if [ -d $NODE_DIR ]; then
-    if [ ! -f $NODE_DIR/CHECKSUM ] || [ "`shasum package.json`" != "`cat $NODE_DIR/CHECKSUM`" ]; then
+    echo $DEP_CHECKSUM
+    echo `cat $NODE_DIR/CHECKSUM`
+    if [ ! -f $NODE_DIR/CHECKSUM ] || 
+       [ "$DEP_CHECKSUM" != "`cat $NODE_DIR/CHECKSUM`" ]; then
       echo 'Removing project dependency directories…'
       rm -rf $NODE_DIR
       echo 'Project dependencies have been removed.'
@@ -73,7 +77,7 @@ install() {
 
   # Add a checksum file
   if  [ ! -f $NODE_DIR/CHECKSUM ]; then
-    shasum package.json > $NODE_DIR/CHECKSUM
+    echo -n $DEP_CHECKSUM > $NODE_DIR/CHECKSUM
   fi
 }
 
