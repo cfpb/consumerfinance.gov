@@ -21,8 +21,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 
 ### Removed
-- `header` and `body` fields from `MainContactInfo`
-- `MainContactInfo` from sidefoot
 
 ### Fixed
 
@@ -32,6 +30,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 - Updated owning-a-home-api requirement to v0.9.93.
 
+### Removed
+- `header` and `body` fields from `MainContactInfo`
+- `MainContactInfo` from sidefoot
+
+### Fixed
+- `sidebar-contact-info.html` to display heading from snippet
 
 ## 4.6.1 
 
@@ -41,7 +45,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed issue with key access on datatable when table is empty.
-- `sidebar-contact-info.html` to display heading from snippet 
 
 ## 4.6.0
 
