@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `MainContactInfo` from sidefoot
 
 ### Fixed
+- unicode handling of `str` method for snippets 
 
 
 ## 4.6.2
