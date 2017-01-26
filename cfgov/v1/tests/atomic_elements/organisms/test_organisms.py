@@ -24,6 +24,8 @@ TODO: Create tests for the following organisms:
 class OrganismsTestCase(TestCase):
     def get_contact(self):
         contact = Contact(heading='Test User')
+        contact.heading = 'this is a heading'
+        contact.body = 'this is a body'
         contact.contact_info = StreamValue(
             contact.contact_info.stream_block,
             [
@@ -68,6 +70,9 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'test@example.com')
         self.assertContains(response, '(515) 123-4567')
         self.assertContains(response, '123 abc street')
+        self.assertContains(response, 'this is a heading')
+        self.assertContains(response, 'this is a body')
+        self.assertNotContains(response, 'Contact Information') # Only shown on sidebar
 
     def test_sidebar_contact_info(self):
         """Sidebar contact info correctly displays on a Landing Page"""
@@ -86,6 +91,9 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'test@example.com')
         self.assertContains(response, '(515) 123-4567')
         self.assertContains(response, '123 abc street')
+        self.assertContains(response, 'this is a heading')
+        self.assertContains(response, 'this is a body')
+        self.assertContains(response, 'Contact Information') # This is specific to sidebar
 
     def test_full_width_text(self):
         """Full width text content correctly displays on a Learn Page"""

@@ -9,11 +9,11 @@
    Create a Contact Information Sidebar organism.
    See [GHE]/flapjack/Modules-V1/wiki/Contact-Information-(Sidebar)
 
-   content:                  An object containing sidebar content.
-   content.header:           A string containing a sidebar header.
-   content.body:             A string containing sidebar paragraph content.
-
    contact:                  An object with contact details.
+
+   contact.heading:          A string containing a sidebar header.
+   contact.body:             A string containing sidebar paragraph content.
+
    contact.emails:           An array containing email addresses.
 
    contact.phones:           An array containing phone number information.
@@ -46,8 +46,8 @@
     </div>
 
     <div class="o-sidebar-contact-info_content">
-        {% if value.header %}
-            <h3>{{ value.header }}</h3>
+        {% if value.contact.heading %}
+            <h3>{{ value.contact.heading }}</h3>
         {% endif %}
 
         {{ parse_links(value.contact.body) |safe }}
