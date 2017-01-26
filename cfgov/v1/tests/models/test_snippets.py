@@ -1,7 +1,6 @@
 from django.test import TestCase
-from wagtail.wagtailcore.models import Site
 
-from v1.models.snippets import (TaggableSnippetManager, Resource)
+from v1.models.snippets import Contact, Resource
 
 
 class TestFilterByTags(TestCase):
@@ -41,3 +40,25 @@ class TestFilterByTags(TestCase):
             self.snippet1,
             Resource.objects.filter_by_tags(['tagA', 'tagB'])
         )
+
+
+class TestUnicodeCompatibility(TestCase):
+    def test_unicode_contact_heading_str(self):
+        contact = Contact(heading=u'Unicod\xeb')
+        self.assertEqual(str(contact), 'Unicod\xc3\xab')
+        self.assertIsInstance(str(contact), str)
+
+    def test_unicode_contact_heading_unicode(self):
+        contact = Contact(heading=u'Unicod\xeb')
+        self.assertEqual(unicode(contact), u'Unicod\xeb')
+        self.assertIsInstance(unicode(contact), unicode)
+
+    def test_unicode_resource_title_str(self):
+        resource = Resource(title=u'Unicod\xeb')
+        self.assertEqual(str(resource), 'Unicod\xc3\xab')
+        self.assertIsInstance(str(resource), str)
+
+    def test_unicode_resource_title_unicode(self):
+        resource = Resource(title=u'Unicod\xeb')
+        self.assertEqual(unicode(resource), u'Unicod\xeb')
+        self.assertIsInstance(unicode(resource), unicode)
