@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.apps import apps as imported_apps
 from django.db import migrations, transaction
 
 from v1.util.migrations import get_stream_data, set_stream_data
@@ -70,7 +69,7 @@ def migrate_heroes(apps, mapper):
     ]
 
     for page_type, field_name in page_types_and_stream_fields_with_heroes:
-        page_cls = imported_apps.get_model('v1', page_type)
+        page_cls = apps.get_model('v1', page_type)
         for page in page_cls.objects.all():
             migrate_page(page, field_name, mapper)
 

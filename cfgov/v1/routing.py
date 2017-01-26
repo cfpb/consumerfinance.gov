@@ -1,7 +1,6 @@
 from django.core.urlresolvers import reverse
-
-from wagtail.wagtailcore.utils import WAGTAIL_APPEND_SLASH
 from jinja2 import contextfunction
+from wagtail.wagtailcore.utils import WAGTAIL_APPEND_SLASH
 
 
 def get_url_parts_for_site(page, site):

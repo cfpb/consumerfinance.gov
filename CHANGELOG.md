@@ -15,12 +15,97 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ## Unreleased
 
-## Added
+### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 4.6.2
+
+### Added
+- Keep richtext fields within the desktop viewport at all times
+
+### Changed
+- Updated owning-a-home-api requirement to v0.9.93.
+- Bumped the version of Node used by Travis to v6
+
+### Removed
+- `header` and `body` fields from `MainContactInfo`
+- `MainContactInfo` from sidefoot
+
+### Fixed
+- unicode handling of `str` method for snippets 
+- `sidebar-contact-info.html` to display heading from snippet
+
+## 4.6.1
+
+### Changed
+-  Bumped college-costs to 2.3.2
+-  Bumped six dependency to 1.10.0
+
+### Fixed
+- Fixed issue with key access on datatable when table is empty.
+
+## 4.6.0
+
+### Added
+- New block 'ChartBlock' to support rendering of charts for Consumer Credit Trends
+- Django management command to delete Wagtail pages by their slug or ID
+- Added code to enable displaying message when no table data is present on careers page.
+- Resources snippet definition
+- Snippet List module
+
+### Changed
+- JobListingPages are now only associated with a single region.
+- Updated custom Wagtail admin templates to 1.7 version.
+
+### Removed
+- Can no longer delete via `/delete` in Wagtail
+
+### Fixed
+- Fix for missing breadcrumb on Press Resources `about-us/newsroom/press-resources/` page.
+- Fix for unused breadcrumb css styles.
+- Fix for external link routing in the footer.
+
+## 4.5.3
+
+### Changed
+- Bumped college-costs to release 2.3.0
+
+## 4.5.2
+
+### Changed
+- Updated category list for Stories
+- Navigation FMC logic to allow verticals without an overview url to include an FMC
+- Updated agreements database to 2.2.5
+- Consumer Tools Featured Menu Content
+
+### Fixed
+- Fix filter categories on the `enforcement/actions/` page.
+
+
+## 4.5.1
+
+### Added
+- Add debt collection menu item behind feature flag
+
+### Changed
+- Updated regulations-site requirement to version `2.1.5`.
+
+
+## 4.4.0 - 4.5.0
+
+### Added
 - Add RSS subscription button to newsroom posts.
 - New `validate_page_html` command for checking/fixing HTTP image links in legacy pages.
+- New block `HTMLBlock` that allows rendering of arbitrary HTML. Enabled on browse pages.
 - OAH-api upgraded to v0.9.92
 
-## Changed
+### Changed
 - Upgrade to Wagtail 1.7
 - Added redirect for `Leadership Calendar` Wagtail Page.
 - Moved CSS npm dev modules to devDependencies in `package.json`.
@@ -28,7 +113,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Updated `gulp-imagemin` from `3.0.3` to `3.1.1`.
 - Updated `gulp-less` from `3.1.0` to `3.3.0`.
 
-## Removed
+### Removed
 - Removed layout.less enhancements that have been moved to Capital Framework.
 - Wagtail pages from the Django admin
 - Delete option from Wagtail templates
@@ -37,6 +122,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Spokesperson who is no longer with the Bureau from the press page.
 - Removed legacy calendar app.
 - cleaned up unusued, legacy code
+- Removed legacy demo code.
 
 ### Fixed
 - Now correctly allows for hyphens in the video ID of a Video Player's `video_url` field.
@@ -46,6 +132,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Fix for External Redirect proceed button and jQuery reference.
 - Fixed use of `moto.mock_s3` in unit tests.
 - Fixed handling of invalid date query string parameters for filterable list forms.
+- Added missing `block` class from a block on the about the director page.
+- Fixed issue with erroneously removed bureau stylesheet.
+
+
 
 ## 4.3.2
 

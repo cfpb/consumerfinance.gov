@@ -4,9 +4,7 @@ from mock import Mock, patch
 from wagtail.wagtailcore.models import Site
 
 from flags.models import Flag, FlagState
-from flags.template_functions import (
-    flag_disabled, flag_enabled, flags_enabled
-)
+from flags.template_functions import flag_disabled, flag_enabled, flags_enabled
 
 
 class FlagEnabledTestCase(TestCase):

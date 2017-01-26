@@ -1,5 +1,4 @@
 from django.test import TestCase
-
 from wagtail.wagtailcore.models import Site
 
 from v1.forms import FilterableListForm
@@ -8,6 +7,7 @@ from v1.models.base import CFGOVPageCategory
 from v1.models.learn_page import AbstractFilterPage, EventPage
 from v1.tests.wagtail_pages.helpers import publish_page
 from v1.util.categories import clean_categories
+
 
 class TestFilterableListForm(TestCase):
 

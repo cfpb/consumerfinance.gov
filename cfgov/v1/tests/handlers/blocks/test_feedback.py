@@ -1,10 +1,7 @@
 import mock
 from django.test import RequestFactory, TestCase
 
-from v1.handlers.blocks.feedback import (
-    FeedbackHandler,
-    get_feedback_type
-)
+from v1.handlers.blocks.feedback import FeedbackHandler, get_feedback_type
 
 
 class TestFeedbackHandler(TestCase):

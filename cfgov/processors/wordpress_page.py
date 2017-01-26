@@ -1,9 +1,10 @@
-import sys
 import json
-import os.path
-import requests
-from sheerlike.external_links import process_external_links
+import os
+import sys
 
+import requests
+
+from sheerlike.external_links import process_external_links
 
 PAGE_IDS = (36601, 36603, 36605)
 

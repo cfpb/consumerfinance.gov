@@ -22,10 +22,8 @@
                     {{ time.render(page.close_date, {'date':true}) }}
                 {% endif %}
             </dd>
-            {% if page.regions.exists() %}
-            <dt>Region{{ page.regions.all() | pluralize() }}:</dt>
-            <dd>{{ page.regions.all() | join(', ') }}</dd>
-            {% endif %}
+            <dt>Region:</dt>
+            <dd>{{ page.region }}</dd>
             <dt>Grade{{ page.grades.all() | pluralize() }}:</dt>
             <dd>
                 {% if page.grades.exists() %}

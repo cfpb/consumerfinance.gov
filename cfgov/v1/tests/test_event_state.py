@@ -1,8 +1,11 @@
-from django.test import TestCase
-from sheerlike.query import when
 import datetime
 from datetime import timedelta
+
+from django.test import TestCase
 from pytz import timezone
+
+from sheerlike.query import when
+
 
 class TestEventState(TestCase):
 

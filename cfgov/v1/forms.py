@@ -119,7 +119,7 @@ class FilterableListForm(forms.Form):
     def set_topics(self, page_ids):
         tags = Tag.objects.filter(
             v1_cfgovtaggedpages_items__content_object__id__in=page_ids
-            ).values_list('slug', 'name')
+        ).values_list('slug', 'name')
 
         options = self.prepare_options(arr=tags)
         most = options[:3]
@@ -133,7 +133,7 @@ class FilterableListForm(forms.Form):
     def set_authors(self, page_ids):
         authors = Tag.objects.filter(
             v1_cfgovauthoredpages_items__content_object__id__in=page_ids
-            ).values_list('slug', 'name')
+        ).values_list('slug', 'name')
         options = self.prepare_options(arr=authors)
 
         self.fields['authors'].choices = options

@@ -1,26 +1,27 @@
 from __future__ import absolute_import
-import os, re, HTMLParser
+import HTMLParser
+import os
+import re
 from urlparse import urlparse, parse_qs
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template.defaultfilters import pluralize, slugify, linebreaksbr
+from django.utils.module_loading import import_string
 from django.contrib import messages
 from django.conf import settings
-from django.http.request import QueryDict
 from django.core.urlresolvers import reverse
 
-from wagtail.wagtailcore.templatetags import wagtailcore_tags
-from jinja2 import Environment, contextfunction, Markup
+from jinja2 import contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
-from .util.util import get_unique_id, get_secondary_nav_items
+from .util.util import get_unique_id
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
 from processors.processors_common import fix_link
-from core.utils import signed_redirect, unsigned_redirect, sign_url
-from v1.routing import get_protected_url, get_page_relative_url
+from core.utils import signed_redirect, unsigned_redirect
+from v1.routing import get_protected_url
 from v1.templatetags.share import get_page_state_url
 
 
@@ -58,6 +59,7 @@ def environment(**options):
         'unsigned_redirect': unsigned_redirect,
         'get_protected_url': get_protected_url,
         'get_latest_activities': get_latest_activities,
+        'get_snippets': get_snippets,
     })
 
     env.filters.update({
@@ -112,8 +114,10 @@ EXTERNAL_LINK_PATTERN = re.compile(settings.EXTERNAL_LINK_PATTERN)
 NONCFPB_LINK_PATTERN = re.compile(settings.NONCFPB_LINK_PATTERN)
 FILES_LINK_PATTERN = re.compile(settings.FILES_LINK_PATTERN)
 DOWNLOAD_LINK_PATTERN = re.compile(settings.DOWNLOAD_LINK_PATTERN)
-EXTERNAL_A_CSS = os.environ.get('EXTERNAL_A_CSS', 'icon-link icon-link__external-link')
-DOWNLOAD_A_CSS = os.environ.get('DOWNLOAD_A_CSS', 'icon-link icon-link__download')
+EXTERNAL_A_CSS = os.environ.get('EXTERNAL_A_CSS',
+                                'icon-link icon-link__external-link')
+DOWNLOAD_A_CSS = os.environ.get('DOWNLOAD_A_CSS',
+                                'icon-link icon-link__download')
 EXTERNAL_SPAN_CSS = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
 
 
@@ -157,13 +161,16 @@ def add_link_markup(tags):
 def render_stream_child(context, stream_child):
     # Use the django_jinja to get the template content based on its name
     try:
-        template = context.environment.get_template(stream_child.block.meta.template)
+        template = context.environment.get_template(
+            stream_child.block.meta.template)
     except:
         return stream_child
 
-    # Create a new context based on the current one as we can't edit it directly
+    # Create a new context based on the current one as we can't edit it
+    # directly
     new_context = context.get_all()
-    # Add the value on the context (value is the keyword chosen by wagtail for the blocks context)
+    # Add the value on the context (value is the keyword chosen by
+    # wagtail for the blocks context)
     try:
         new_context['value'] = stream_child.value
     except:
@@ -178,7 +185,6 @@ def render_stream_child(context, stream_child):
 
 @contextfunction
 def related_metadata_tags(context, page):
-    request = context['request']
     # Set the tags to correct data format
     tags = {'links': []}
     # From an ancestor, get the form ids then use the first id since the
@@ -195,7 +201,14 @@ def related_metadata_tags(context, page):
 
 def get_filter_data(page):
     for ancestor in page.get_ancestors().reverse().specific():
-        if ancestor.specific_class.__name__ in ['BrowseFilterablePage', 'SublandingFilterablePage',
-                                                'EventArchivePage', 'NewsroomLandingPage']:
+        if ancestor.specific_class.__name__ in ['BrowseFilterablePage',
+                                                'SublandingFilterablePage',
+                                                'EventArchivePage',
+                                                'NewsroomLandingPage']:
             return ancestor.form_id(), ancestor
     return None, None
+
+
+def get_snippets(snippet_type):
+    snippet_class = import_string(snippet_type)
+    return snippet_class

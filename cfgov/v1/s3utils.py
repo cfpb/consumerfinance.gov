@@ -1,9 +1,8 @@
-from django.conf import settings
-from django.utils import six
-from django.utils.functional import lazy
-
-
 """Custom S3 storage backends to store files in subfolders."""
+
+from django.conf import settings
+
+
 def MediaRootS3BotoStorage():
     from storages.backends.s3boto import S3BotoStorage
     return S3BotoStorage(location=settings.AWS_S3_ROOT)

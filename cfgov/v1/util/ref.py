@@ -62,7 +62,7 @@ categories = [
         ('data-research-reports', 'Data, research & reports'),
         ('info-for-consumers', 'Info for consumers'),
     )),
-    ('Enforcement action', (
+    ('Enforcement Action', (
         ('fed-district-case', 'Federal District Court Case'),
         ('admin-filing', 'Administrative Filing'),
     )),
@@ -109,10 +109,14 @@ categories = [
     )),
     ('Story', (
         ('auto-loans', 'Auto loans'),
+        ('bank-accts-services', 'Bank accounts and services'),
         ('credit-cards', 'Credit cards'),
-        ('credit-reporting', 'Credit reporting'),
+        ('credit-reports-scores', 'Credit reports and scores'),
         ('debt-collection', 'Debt collection'),
+        ('money-transfers', 'Money transfers'),
         ('mortgages', 'Mortgages'),
+        ('payday-loans', 'Payday loans'),
+        ('prepaid-cards', 'Prepaid cards'),
         ('student-loans', 'Student loans'),
     )),
 ]
@@ -184,6 +188,7 @@ def choices_for_page_type(page_type):
                 if name == cat_slug:
                     return list(cat_tuples)
     return []
+
 
 def category_label(category):
     for parent, children in page_type_choices():

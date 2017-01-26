@@ -1,10 +1,10 @@
 """Check that static assets are available on consumerfinance.gov"""
-import time
-import requests
 import argparse
-import sys
 import logging
+import sys
+import time
 
+import requests
 from bs4 import BeautifulSoup as bs
 
 logger = logging.getLogger('static_asset_smoke_tests')
@@ -87,8 +87,7 @@ if __name__ == '__main__':
     logger.info("{} took {} seconds to check {}\n".format(
         sys.argv[0],
         int(time.time() - start),
-        CFPB_BASE
-        )
+        CFPB_BASE)
     )
     if not fail:
         logger.info('\x1B[32mSUCCESS! All static links return 200.\x1B[0m')

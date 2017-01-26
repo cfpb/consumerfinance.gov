@@ -80,6 +80,5 @@ class TestDateValidation(TestCase):
         args = MultiDict([('filter_range_date_gte', ['2014-6']),
                           ('filter_range_date_lte', ['2014-1'])])
         filter_dsl = filters.filter_dsl_from_multidict(args)
-        #from nose.tools import set_trace;set_trace()
         assert(filter_dsl[0]['range']['date']['gte'] == '2014-1-1')
         assert(filter_dsl[0]['range']['date']['lte'] == '2014-6-30')

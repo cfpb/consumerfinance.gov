@@ -9,5 +9,6 @@ if [ "$RUNTEST" == "frontend" ]; then
     gulp "test:coveralls"
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e travis
+    flake8
     coveralls
 fi
