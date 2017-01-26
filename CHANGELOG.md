@@ -38,6 +38,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - `MainContactInfo` from sidefoot
 
 ### Fixed
+- unicode handling of `str` method for snippets 
 - `sidebar-contact-info.html` to display heading from snippet
 
 ## 4.6.1
