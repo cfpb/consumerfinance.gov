@@ -4,7 +4,5 @@
 
 'use strict';
 
-var atomicHelpers = require( '../../modules/util/atomic-helpers' );
-var Chart = require( 'cfpb-chart-builder' );
-
-atomicHelpers.instantiateAll( '.o-chart', Chart );
+// See https://github.com/cfpb/cfpb-chart-builder
+require( 'cfpb-chart-builder' );

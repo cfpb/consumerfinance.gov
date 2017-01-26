@@ -671,28 +671,13 @@ class ChartBlock(blocks.StructBlock):
         ('tile_map', 'Tile Map'),
     ], required=False)
     # todo: make radio buttons. required because we need it for the CSS to apply colors to each report page chart
-    report_type = blocks.ChoiceBlock(choices=[
-        ('origination-activity', 'Origination Activity'),
-        ('borrower-risk-profiles', 'Borrower Risk Profiles'),
-        ('income-level', 'Lending by Neighborhood Income Level'),
-        ('borrower-age', 'Lending by Borrower Age'),
-    ], required=False)
-    group = blocks.ChoiceBlock(choices=[
-        ('Number of Loans', 'Number of Loans'),
-        ('Dollar Volume', 'Dollar Volume'),
-        ('Deep Subprime', 'Deep Subprime'),
-        ('Subprime', 'Subprime'),
-        ('Near Prime', 'Near Prime'),
-        ('Prime', 'Prime'),
-        ('Superprime', 'Superprime'),
-        ('Low', 'Low'),
-        ('Moderate', 'Moderate'),
-        ('Middle', 'Middle'),
-        ('High', 'High'),
-        ('Younger than 30', 'Younger than 30'),
-        ('30 - 44', '30 - 44'),
-        ('45 - 64', '45 - 64'),
-        ('65 and older', '65 and older'),
+    color_scheme = blocks.ChoiceBlock(choices=[
+        ('green', 'Green'),
+        ('blue', 'Blue'),
+        ('teal', 'Teal'),
+        ('navy', 'Navy'),
+    ], required=False,
+    help_text='Chart\'s color scheme. See https://github.com/cfpb/cfpb-chart-builder#configuration.')
     ], required=False)
     data_source = blocks.CharBlock(
         required=True,
@@ -700,6 +685,9 @@ class ChartBlock(blocks.StructBlock):
     description = blocks.CharBlock(
         required=True,
         help_text='Briefly summarize the chart for visually impaired users.')
+    additional_metadata = blocks.CharBlock(
+        required=False,
+        help_text='Optional metadata for the chart to use. For example, with CCT this would be the chart\'s "group".')
     note = blocks.CharBlock(
         required=False,
         help_text='Text to display as a footnote. For example, "Data from the last six months are not final."')
