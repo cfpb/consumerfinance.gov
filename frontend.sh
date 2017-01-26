@@ -15,6 +15,7 @@ init() {
   source cli-flag.sh 'Front end' $1
 
   NODE_DIR=node_modules
+  DEP_CHECKSUM=$(cat npm-shrinkwrap.json package.json | shasum -a 256)
 
   echo "npm components directory: $NODE_DIR"
 }
@@ -25,15 +26,15 @@ clean() {
   # clear it so we know we're working with a clean
   # slate of the dependencies listed in package.json.
   if [ -d $NODE_DIR ]; then
-    echo 'Removing project dependency directories...'
+    echo 'Removing project dependency directories…'
     rm -rf $NODE_DIR
+    echo 'Project dependencies have been removed.'
   fi
-  echo 'Project dependencies have been removed.'
 }
 
 # Install project dependencies.
 install() {
-  echo 'Installing front-end dependencies...'
+  echo 'Installing front-end dependencies…'
 
   if [ "$cli_flag" = "development" ] ||
      [ "$cli_flag" = "test" ]; then
@@ -47,10 +48,10 @@ install() {
     # Copy globally-installed packages.
     # Protractor = JavaScript acceptance testing framework.
     if [ $is_installed_protractor = 0 ]; then
-      echo 'Installing Protractor dependencies locally...'
+      echo 'Installing Protractor dependencies locally…'
       ./$NODE_DIR/protractor/bin/webdriver-manager update
     else
-      echo 'Global Protractor installed. Copying global install locally...'
+      echo 'Global Protractor installed. Copying global install locally…'
       protractor_symlink=$(command -v protractor)
       protractor_binary=$(readlink $protractor_symlink)
       protractor_full_path=$(dirname $protractor_symlink)/$(dirname $protractor_binary)/../../protractor
@@ -65,11 +66,28 @@ install() {
   else
     npm install --production --loglevel warn
   fi
+
+}
+
+# If the node directory exists, $NODE_DIR/CHECKSUM exists, and
+# the contents DO NOT match the checksum of package.json, clear
+# $NODE_DIR so we know we're working with a clean slate of the
+# dependencies listed in package.json.
+clean_and_install() {
+  if [ ! -f $NODE_DIR/CHECKSUM ] || 
+     [ "$DEP_CHECKSUM" != "$(cat $NODE_DIR/CHECKSUM)" ]; then
+    clean
+    install
+    # Add a checksum file
+    echo -n "$DEP_CHECKSUM" > $NODE_DIR/CHECKSUM
+  else
+    echo 'Dependencies are up to date.'
+  fi
 }
 
 # Run tasks to build the project for distribution.
 build() {
-  echo 'Building project...'
+  echo 'Building project…'
   gulp clean
   gulp build
 
@@ -91,17 +109,13 @@ is_installed() {
 }
 
 # Execute requested (or all) functions.
-if [ "$1" == "init" ] || [ "$1" == "build" ]; then
-  if [ "$1" == "init" ]; then
-    init ""
-    clean
-    install
-  else
-    build
-  fi
+if [ "$1" == "init" ]; then
+  init ""
+  clean_and_install
+elif [ "$1" == "build" ]; then
+  build
 else
   init "$1"
-  clean
-  install
+  clean_and_install
   build
 fi
