@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0040_fill_filter_spec'),
+        ('v1', '0049_remove_main_contact_info_from_sidefoot'),
     ]
 
     operations = [
