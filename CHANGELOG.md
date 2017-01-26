@@ -16,10 +16,22 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 4.6.2
+
+### Added
 - Keep richtext fields within the desktop viewport at all times
 
 ### Changed
 - Updated owning-a-home-api requirement to v0.9.93.
+- Bumped the version of Node used by Travis to v6
 
 ### Removed
 - `header` and `body` fields from `MainContactInfo`
@@ -27,9 +39,9 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - unicode handling of `str` method for snippets 
+- `sidebar-contact-info.html` to display heading from snippet
 
-
-## 4.6.1 
+## 4.6.1
 
 ### Changed
 -  Bumped college-costs to 2.3.2
@@ -37,7 +49,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Fixed issue with key access on datatable when table is empty.
-- `sidebar-contact-info.html` to display heading from snippet 
 
 ## 4.6.0
 
