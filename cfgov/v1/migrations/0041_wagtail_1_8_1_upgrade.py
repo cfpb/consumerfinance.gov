@@ -16,6 +16,11 @@ class Migration(migrations.Migration):
             name='filter_spec',
             field=models.CharField(max_length=255, db_index=True),
         ),
+        migrations.AlterField(
+            model_name='cfgovrendition',
+            name='focal_point_key',
+            field=models.CharField(default='', max_length=16, editable=False, blank=True),
+        ),
         migrations.AlterUniqueTogether(
             name='cfgovrendition',
             unique_together=set([('image', 'filter_spec', 'focal_point_key')]),
