@@ -16,7 +16,21 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
-- Keep richtext fields within the desktop viewport at all times
+
+### Changed
+
+### Removed
+
+### Fixed
+
+
+## 4.6.3
+
+### Fixed
+- unicode handling of `str` method for snippets 
+
+
+## 4.6.2
 
 ### Changed
 - Updated owning-a-home-api requirement to v0.9.93.
@@ -27,12 +41,6 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - unicode handling of `str` method for snippets 
-
-
-## 4.6.2
-
-### Changed
-- Updated owning-a-home-api requirement to v0.9.93.
 
 
 ## 4.6.1 
