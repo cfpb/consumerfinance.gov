@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Updated owning-a-home-api requirement to v0.9.93.
+- Checksum package.json to avoid reinstalling dependencies that haven't changed
 
 ### Removed
 - `header` and `body` fields from `MainContactInfo`
