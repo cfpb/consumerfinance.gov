@@ -31,6 +31,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Updated owning-a-home-api requirement to v0.9.93.
+- Bumped the version of Node used by Travis to v6
 
 ### Removed
 - `header` and `body` fields from `MainContactInfo`
@@ -39,7 +40,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 - `sidebar-contact-info.html` to display heading from snippet
 
-## 4.6.1 
+## 4.6.1
 
 ### Changed
 -  Bumped college-costs to 2.3.2
