@@ -7,6 +7,7 @@ from modelcluster.models import ClusterableModel
 from taggit.models import TaggedItemBase
 from taggit.managers import TaggableManager
 
+from django.utils.encoding import python_2_unicode_compatible
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
@@ -16,6 +17,7 @@ from wagtail.wagtailsnippets.models import register_snippet
 from ..atomic_elements import molecules
 
 
+@python_2_unicode_compatible
 @register_snippet
 class Contact(models.Model):
     heading = models.CharField(verbose_name=('Heading'), max_length=255,
@@ -51,6 +53,7 @@ class TaggableSnippetManager(models.Manager):
         return snippets
 
 
+@python_2_unicode_compatible
 @register_snippet
 class Resource(ClusterableModel):
     title = models.CharField(max_length=255)
