@@ -31,18 +31,18 @@ clean() {
     echo `cat $NODE_DIR/CHECKSUM`
     if [ ! -f $NODE_DIR/CHECKSUM ] || 
        [ "$DEP_CHECKSUM" != "`cat $NODE_DIR/CHECKSUM`" ]; then
-      echo 'Removing project dependency directories…'
+      echo 'Removing project dependency directories...'
       rm -rf $NODE_DIR
       echo 'Project dependencies have been removed.'
     else
-      echo 'Project dependencies checksum matches package.json…'
+      echo 'Project dependencies checksum matches package.json...'
     fi
   fi
 }
 
 # Install project dependencies.
 install() {
-  echo 'Installing front-end dependencies…'
+  echo 'Installing front-end dependencies...'
 
   if [ "$cli_flag" = "development" ] ||
      [ "$cli_flag" = "test" ]; then
@@ -56,10 +56,10 @@ install() {
     # Copy globally-installed packages.
     # Protractor = JavaScript acceptance testing framework.
     if [ $is_installed_protractor = 0 ]; then
-      echo 'Installing Protractor dependencies locally…'
+      echo 'Installing Protractor dependencies locally...'
       ./$NODE_DIR/protractor/bin/webdriver-manager update
     else
-      echo 'Global Protractor installed. Copying global install locally…'
+      echo 'Global Protractor installed. Copying global install locally...'
       protractor_symlink=$(command -v protractor)
       protractor_binary=$(readlink $protractor_symlink)
       protractor_full_path=$(dirname $protractor_symlink)/$(dirname $protractor_binary)/../../protractor
@@ -83,7 +83,7 @@ install() {
 
 # Run tasks to build the project for distribution.
 build() {
-  echo 'Building project…'
+  echo 'Building project...'
   gulp clean
   gulp build
 
