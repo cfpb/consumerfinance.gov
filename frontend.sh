@@ -109,13 +109,11 @@ is_installed() {
 }
 
 # Execute requested (or all) functions.
-if [ "$1" == "init" ] || [ "$1" == "build" ]; then
-  if [ "$1" == "init" ]; then
-    init ""
-    clean_and_install
-  else
-    build
-  fi
+if [ "$1" == "init" ]; then
+  init ""
+  clean_and_install
+elif [ "$1" == "build" ]; then
+  build
 else
   init "$1"
   clean_and_install
