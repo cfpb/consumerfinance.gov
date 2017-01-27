@@ -25,12 +25,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Fixed
 - Correctly show "live + draft" page status for unshared pages.
-
+- Fix for Washington, DC Google map image on `/archive-past-events/` page.
 
 ## 4.6.3
 
 ### Fixed
-- unicode handling of `str` method for snippets 
+- unicode handling of `str` method for snippets
 
 
 ## 4.6.2
@@ -49,7 +49,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## 4.6.3
 
 ### Fixed
-- unicode handling of `str` method for snippets 
+- unicode handling of `str` method for snippets
 
 
 ## 4.6.2
