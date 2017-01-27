@@ -1,56 +1,5 @@
 {# ==========================================================================
 
-   event_location_image()
-
-   ==========================================================================
-
-   Description:
-
-   Create HTML image when given:
-
-   options (optional):         An object to use for customizing an event
-                               location image using Google Maps.
-
-   options.additional_classes: Extra classes you wish to add to the image,
-                               space separated.
-
-   options.location:           A location as either a comma-separated
-                               {latitude,longitude} pair
-                               (e.g. "40.714728,-73.998672")
-                               or a string address
-                               (e.g. "city hall, new york, ny").
-                               Defaults to 'Washington, DC'.
-
-   options.scale:              Affects the number of pixels that are returned.
-                               Accepted values are 1, 2 and 4.
-                               Defaults to '2'.
-
-   options.size:               Defines the rectangular dimensions of the map image.
-                               {horizontal_value}x{vertical_value} (e.g. 500x400)
-                               Defaults to '276x155'.
-
-   options.zoom:               Sets pixel density for high-dpi devices.
-                               Defaults to '12'.
-
-   ========================================================================== #}
-
-{% macro event_location_image(options={}) %}
-    {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
-    <img class="{{ options.additional_classes if options.additional_classes else '' }}"
-         src="{{ location_image_url({
-                        'location': options.location
-                                    | default('Washington, DC', true)
-                                    | urlencode,
-                        'zoom':     options.zoom  | default('12'),
-                        'scale':    options.scale | default('2'),
-                        'size':     options.size  | default('276x155')
-                    }) }}"
-         alt="Google Maps image of {{ options.location }}">
-{% endmacro %}
-
-
-{# ==========================================================================
-
    event_meta_address()
 
    ==========================================================================
@@ -205,12 +154,8 @@
                     }
                 }) }}
             {% else %}
-                {{ event_location_image({
-                    'location': city_prefix_state,
-                    'zoom':     '12',
-                    'scale':    '2',
-                    'size':     '640x320'
-                }) }}
+              <img src="{{ event.location_image_url(size='640x320') }}"
+                   alt="Google Maps image of {{ event.venue_name }}">
             {% endif %}
             </figure>
         </footer>
