@@ -12,8 +12,6 @@ install:
   - nvm install 6
   - nvm use 6
   - npm install -g gulp
-  - chmod +x ./frontend.sh
-  - ./frontend.sh test
 
 env:
   global:
