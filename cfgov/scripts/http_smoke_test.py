@@ -207,16 +207,19 @@ def check_urls(base, full=False):
             len(timeouts)
         )
     )
+
     if failures:
         logger.error("These URLs failed: {}".format(failures))
     if timeouts:
         logger.error("These URLs timed out after {} seconds: "
                      "{}".format(TIMEOUT, timeouts))
+
     if failures or timeouts:
         logger.error("FAIL")
-        sys.exit(1)
-    else:
-        logger.info("\x1B[32mAll URLs return 200. No smoke!\x1B[0m")
+        return False
+
+    logger.info("\x1B[32mAll URLs return 200. No smoke!\x1B[0m")
+    return True
 
 if __name__ == '__main__':
     args = parser.parse_args()
@@ -226,4 +229,5 @@ if __name__ == '__main__':
         BASE = args.base
     if args.full:
         FULL = True
-    check_urls(BASE, full=FULL)
+    if not check_urls(BASE, full=FULL):
+        sys.exit(1)
