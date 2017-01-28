@@ -214,6 +214,7 @@ def check_urls(base, full=False):
                      "{}".format(TIMEOUT, timeouts))
     if failures or timeouts:
         logger.error("FAIL")
+        sys.exit(1)
     else:
         logger.info("\x1B[32mAll URLs return 200. No smoke!\x1B[0m")
 

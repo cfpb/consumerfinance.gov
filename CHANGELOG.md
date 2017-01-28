@@ -26,6 +26,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 - Correctly show "live + draft" page status for unshared pages.
 - Fix for Washington, DC Google map image on `/archive-past-events/` page.
+- Failing/timing out smoke tests return 1 not 0
 
 ## 4.6.3
 
