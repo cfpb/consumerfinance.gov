@@ -24,9 +24,18 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Removed
 
 ### Fixed
+
+
+## 4.6.4
+
+### Added
+- "Adds chart block to Wagtail for creating line charts, bar charts, and geographic tile maps"
+
+### Fixed
 - Correctly show "live + draft" page status for unshared pages.
 - Fix for Washington, DC Google map image on `/archive-past-events/` page.
 - Failing/timing out smoke tests return 1 not 0
+
 
 ## 4.6.3
 
