@@ -18,7 +18,7 @@
   "dependencies": {
     "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "capital-framework": "3.6.1",
-    "cfpb-chart-builder": "1.1.0",
+    "cfpb-chart-builder": "1.1.1",
     "del": "2.2.2",
     "gulp": "3.9.1",
     "gulp-changed": "1.3.2",
