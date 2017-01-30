@@ -20,6 +20,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Changed
 - Bumped the version of Node used by Travis to v6
 - Checksum package.json to avoid reinstalling dependencies that haven't changed
+- Updated knowledgebase requirement to 2.2.6.
 
 ### Removed
 
