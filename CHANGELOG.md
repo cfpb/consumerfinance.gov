@@ -26,6 +26,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Fixed
 
 
+## 4.6.5
+
+### Changed
+- Updated knowledgebase requirement to 2.2.6.
+
+
 ## 4.6.4
 
 ### Added
