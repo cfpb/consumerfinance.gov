@@ -2087,7 +2087,7 @@
     },
     "gulp-util": {
       "version": "3.0.8",
-      "from": "gulp-util@>=3.0.0 <4.0.0",
+      "from": "gulp-util@3.0.8",
       "resolved": "https://registry.npmjs.org/gulp-util/-/gulp-util-3.0.8.tgz",
       "dependencies": {
         "object-assign": {
@@ -2657,7 +2657,7 @@
     },
     "jquery": {
       "version": "1.11.3",
-      "from": "jquery@>=1.11.0 <1.12.0",
+      "from": "jquery@1.11.3",
       "resolved": "https://registry.npmjs.org/jquery/-/jquery-1.11.3.tgz"
     },
     "jquery.easing": {
