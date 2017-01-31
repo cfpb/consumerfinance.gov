@@ -1,7 +1,7 @@
 
 .hallotoolbar,
-.table-block-modal{
-  z-index: 10000
+.table-block-modal {
+    z-index: 10000;
 }
 
 
@@ -19,11 +19,11 @@
 }
 
 .table-block-modal .close {
-  padding: 0;
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 10px;
-  right: 10px;
-  z-index: 1;
+    padding: 0;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
 }
