@@ -19,6 +19,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 
 ### Changed
 - Upgraded Wagtail version from 1.7 to 1.8.1.
+- Travis configuration now runs tests from optional public apps.
 
 ### Removed
 - Removed `cfgov/jinja2/v1/_includes/macros/share.html` macro.
