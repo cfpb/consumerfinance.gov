@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-This is a script to determine which PRs have been merges since the last release,
-or between two releases on the same branch.
+This is a script to determine which PRs have been merges since the last
+release, or between two releases on the same branch.
 """
 import argparse
-import logging
 import re
 
 from collections import namedtuple
@@ -16,6 +15,7 @@ GITHUB_API_URL = 'https://api.github.com'
 
 Commit = namedtuple('Commit', ['sha', 'message'])
 PullRequest = namedtuple('PullRequest', ['number', 'title'])
+
 
 class GitHubError(Exception):
     pass
@@ -98,7 +98,8 @@ def extract_pr(message):
     return PullRequest(pr_number, title)
 
 
-def fetch_changes(owner, repo, previous_tag, current_tag=None, branch='master'):
+def fetch_changes(owner, repo, previous_tag, current_tag=None,
+                  branch='master'):
     previous_commit = get_commit_for_tag(owner, repo, previous_tag)
 
     current_commit = None
@@ -135,7 +136,8 @@ def format_changes(owner, repo, prs, markdown=False):
                 owner=owner, repo=repo, number=pr.number)
             number = '[{number}]({link})'.format(number=pr.number, link=link)
 
-        lines.append('- {title} {number}'.format(title=pr.title, number=number))
+        lines.append('- {title} {number}'.format(title=pr.title,
+                                                 number=number))
 
     return lines
 
@@ -156,12 +158,8 @@ if __name__ == '__main__':
                         help='branch both releases are tagged from')
     parser.add_argument('-m', '--markdown', action='store_true',
                         help='output in markdown')
-    parser.add_argument('-v', '--verbose', action='store_true')
 
     args = parser.parse_args()
-
-    if args.verbose:
-        logger.setLevel(logging.INFO)
 
     prs = fetch_changes(args.owner, args.repo, args.previous_tag,
                         current_tag=args.current_tag, branch=args.branch)

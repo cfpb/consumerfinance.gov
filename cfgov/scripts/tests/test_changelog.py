@@ -13,7 +13,6 @@ from scripts.changelog import (
 )
 
 
-
 class TestChangelog(TestCase):
 
     def setUp(self):
@@ -24,7 +23,7 @@ class TestChangelog(TestCase):
         """ Test getting the commit sha for a tag if the tag exists """
         response = mock.MagicMock()
         response.status_code = 200
-        response.json.return_value = {'object': { 'sha': '0123456789abcdef' }}
+        response.json.return_value = {'object': {'sha': '0123456789abcdef'}}
         mock_requests_get.return_value = response
         result = get_commit_for_tag('someone', 'one-repo', 'myorg')
         self.assertEqual(result, '0123456789abcdef')
@@ -44,7 +43,7 @@ class TestChangelog(TestCase):
         """ Test getting the commit sha for a tag if the tag exists """
         response = mock.MagicMock()
         response.status_code = 200
-        response.json.return_value = [{ 'sha': '0123456789abcdef' }]
+        response.json.return_value = [{'sha': '0123456789abcdef'}]
         mock_requests_get.return_value = response
         result = get_last_commit('someone', 'one-repo')
         self.assertEqual(result, '0123456789abcdef')
