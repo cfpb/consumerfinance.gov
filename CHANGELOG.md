@@ -21,6 +21,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Upgraded Wagtail version from 1.7 to 1.8.1.
 
 ### Removed
+- Flags app and moved it to https://github.com/cfpb/wagtail-flags.
 
 ### Fixed
 
