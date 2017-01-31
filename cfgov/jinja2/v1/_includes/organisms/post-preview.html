@@ -80,29 +80,23 @@
             {% endif %}
         </div>
          {% if 'EventPage' in post.specific_class.__name__ %}
-            {% if post.specific.start_dt %}
+            {% set event = post.specific %}
+            {% if event.start_dt %}
                 <div class="o-post-preview_image-container">
                     <time class="calendar-icon"
-                          data-month="{{ post.specific.start_dt | date('%b') }}"
-                          data-day="{{ post.specific.start_dt | date('%-d') }}"
-                          datetime="{{ post.specific.start_dt | date('%c') }}">
-                        <span class="u-visually-hidden">{{ post.specific.start_dt| date('%b %-d, %Y') }}</span>
+                          data-month="{{ event.start_dt | date('%b') }}"
+                          data-day="{{ event.start_dt | date('%-d') }}"
+                          datetime="{{ event.start_dt | date('%c') }}">
+                        <span class="u-visually-hidden">{{ event.start_dt| date('%b %-d, %Y') }}</span>
                     </time>
-                    {% if post.specific.live_stream_link %}
+                    {% if event.live_stream_link %}
                         <img class="o-post-preview_image"
                              src="http://placehold.it/160x90"
                              alt="Livestream event">
                     {% else %}
                         <img class="o-post-preview_image"
-                             src="{{ location_image_url({
-                                     'location': post.specific.venue_city
-                                     | default('Washington, DC', true)
-                                     | urlencode,
-                                     'zoom':     '12',
-                                     'scale':    '2',
-                                     'size':     '276x155'
-                                     }) }}"
-                             alt="Google Maps image of {{ post.specific.venue_name }}">
+                             src="{{ event.location_image_url() }}"
+                             alt="Google Maps image of {{ event.venue_name }}">
                     {% endif %}
                 </div>
             {% endif %}
