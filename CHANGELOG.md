@@ -21,8 +21,10 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Upgraded Wagtail version from 1.7 to 1.8.1.
 
 ### Removed
+- Removed `cfgov/jinja2/v1/_includes/macros/share.html` macro.
 
 ### Fixed
+- Fixed video player share buttons.
 
 
 ## 4.6.6
