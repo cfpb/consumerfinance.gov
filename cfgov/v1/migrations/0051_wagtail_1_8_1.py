@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0049_remove_main_contact_info_from_sidefoot'),
+        ('v1', '0050_refactor_chart_block'),
     ]
 
     operations = [
