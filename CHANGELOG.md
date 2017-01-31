@@ -18,13 +18,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
-- Bumped the version of Node used by Travis to v6
-- Checksum package.json to avoid reinstalling dependencies that haven't changed
-- Updated knowledgebase requirement to 2.2.7.
 
 ### Removed
 
 ### Fixed
+
+
+## 4.6.6
+
+- Move es5-shim into deps from dev deps [2721](https://github.com/cfpb/cfgov-refresh/pull/2721)
+- Add shrinkwrap file [2720](https://github.com/cfpb/cfgov-refresh/pull/2720)
+- Fixes for build [2715](https://github.com/cfpb/cfgov-refresh/pull/2715)
+- Bump chart builder to v1.1.1 [2719](https://github.com/cfpb/cfgov-refresh/pull/2719)
+- Update knowledgebase requirement to 2.2.7 [2717](https://github.com/cfpb/cfgov-refresh/pull/2717)
+- Use travis's containerized build [2718](https://github.com/cfpb/cfgov-refresh/pull/2718)
+- Update knowledgebase requirement to 2.2.6 [2711](https://github.com/cfpb/cfgov-refresh/pull/2711)
+- Make sure smoke tests that fail exit with an appropriate status [2714](https://github.com/cfpb/cfgov-refresh/pull/2714)
+- Don't always delete $NODE_DIR [2705](https://github.com/cfpb/cfgov-refresh/pull/2705)
+- add decorator to help model __str__ method in python 2 [2706](https://github.com/cfpb/cfgov-refresh/pull/2706)
+- Use the latest version of Node v6 in Travis builds [2703](https://github.com/cfpb/cfgov-refresh/pull/2703)
 
 
 ## 4.6.5
