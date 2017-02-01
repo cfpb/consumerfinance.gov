@@ -1,4 +1,5 @@
 from datetime import date
+from urllib import urlencode
 
 from django.core.validators import RegexValidator
 from django.db import models
@@ -269,3 +270,21 @@ class EventPage(AbstractFilterPage):
     ])
 
     template = 'events/event.html'
+
+    def location_image_url(self, scale='2', size='276x155', zoom='12'):
+        center = 'Washington, DC'
+        if self.venue_city:
+            center = self.venue_city
+        if self.venue_state:
+            center = center + ', ' + self.venue_state
+        options = {
+            'center': center,
+            'scale': scale,
+            'size': size,
+            'zoom': zoom
+        }
+        url = 'https://maps.googleapis.com/maps/api/staticmap?'
+        return '{url}{options}'.format(
+            url=url,
+            options=urlencode(options)
+        )

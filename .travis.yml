@@ -1,4 +1,5 @@
 language: python
+sudo: false
 
 python:
   - "2.7"
@@ -9,9 +10,9 @@ install:
   - pip install -r requirements/travis.txt
   - export CXX=clang++
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-  - nvm install 5.5.0
-  - nvm use 5.5.0
-  - npm install -g gulp
+  - nvm install 6
+  - nvm use 6
+  - npm install -g gulp npm@3.10.7
   - chmod +x ./frontend.sh
   - ./frontend.sh test
 
@@ -31,4 +32,3 @@ script:
 
 notifications:
   webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN
-

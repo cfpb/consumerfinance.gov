@@ -13,6 +13,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
+from wagtail.wagtailsnippets.models import get_snippet_models
 
 from . import atoms, molecules
 from .. import blocks as v1_blocks
@@ -188,8 +189,6 @@ class RelatedPosts(blocks.StructBlock):
 
 
 class MainContactInfo(blocks.StructBlock):
-    header = blocks.CharBlock(required=False)
-    body = blocks.RichTextBlock(required=False)
     contact = SnippetChooserBlock(ContactSnippetClass)
 
     class Meta:
@@ -299,9 +298,11 @@ class AtomicTableBlock(TableBlock):
 
     def get_has_data(self, value):
         has_data = False
-        if value and value['data']:
-            first_row_index = 1 if value['first_row_is_table_header'] else 0
-            first_col_index = 1 if value['first_col_is_header'] else 0
+        if value and 'data' in value:
+            first_row_index = 1 if value.get('first_row_is_table_header',
+                                             None) else 0
+            first_col_index = 1 if value.get('first_col_is_header',
+                                             None) else 0
 
             for row in value['data'][first_row_index:]:
                 for cell in row[first_col_index:]:
@@ -663,18 +664,87 @@ class HTMLBlock(blocks.StructBlock):
 
 
 class ChartBlock(blocks.StructBlock):
-    element_id = blocks.CharBlock(
+    title = blocks.CharBlock(required=True)
+    # todo: make radio buttons
+    chart_type = blocks.ChoiceBlock(choices=[
+        ('bar', 'Bar'),
+        ('line', 'Line'),
+        ('tile_map', 'Tile Map'),
+    ], required=True)
+    color_scheme = blocks.ChoiceBlock(
+        choices=[
+            ('green', 'Green'),
+            ('blue', 'Blue'),
+            ('teal', 'Teal'),
+            ('navy', 'Navy'),
+        ],
+        required=False,
+        help_text='Chart\'s color scheme. See '
+                  'https://github.com/cfpb/cfpb-chart-builder#configuration.')
+    data_source = blocks.CharBlock(
         required=True,
-        label='Element ID',
-        help_text='See the element IDs in '
-        'https://github.com/cfpb/consumer-credit-trends/'
-        'blob/master/src/static/js/templates/charts.js'
-    )
-    title = blocks.CharBlock(required=False)
-    data_source = blocks.CharBlock(required=False)
-    note = blocks.CharBlock(required=False)
+        help_text='Location of the chart\'s data source relative to '
+                  '"http://files.consumerfinance.gov/data/". For example,'
+                  '"consumer-credit-trends/volume_data_Score_Level_AUT.csv".')
+    description = blocks.CharBlock(
+        required=True,
+        help_text='Briefly summarize the chart for visually impaired users.')
+    metadata = blocks.CharBlock(
+        required=False,
+        help_text='Optional metadata for the chart to use. '
+                  'For example, with CCT this would be the chart\'s "group".')
+    note = blocks.CharBlock(
+        required=False,
+        help_text='Text to display as a footnote. For example, '
+                  '"Data from the last six months are not final."')
 
     class Meta:
         label = 'Chart Block'
         icon = 'image'
         template = '_includes/organisms/chart.html'
+
+    class Media:
+        js = ['chart.js']
+
+
+class SnippetList(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    body = blocks.RichTextBlock(required=False)
+    image = atoms.ImageBasic(required=False)
+
+    snippet_type = blocks.ChoiceBlock(
+        choices=[
+            (
+                m.__module__ + '.' + m.__name__,
+                m._meta.verbose_name_plural.capitalize()
+            ) for m in get_snippet_models()
+        ],
+        required=True
+    )
+    actions = blocks.ListBlock(blocks.StructBlock([
+        ('link_label', blocks.CharBlock(
+            help_text='E.g., "Download" or "Order free prints"'
+        )),
+        ('snippet_field', blocks.ChoiceBlock(
+            choices=[
+                (
+                    m._meta.verbose_name_plural.capitalize(),
+                    getattr(m, 'snippet_list_field_choices', [])
+                ) for m in get_snippet_models()
+            ],
+            help_text='Corresponds to the available fields for the selected'
+                      'snippet type.'
+        )),
+    ]))
+
+    tags = blocks.ListBlock(
+        blocks.CharBlock(label='Tag'),
+        help_text='Enter tag names to filter the snippets. For a snippet to '
+                  'match and be output in the list, it must have been tagged '
+                  'with all of the tag names listed here. The tag names '
+                  'are case-insensitive.'
+    )
+
+    class Meta:
+        icon = 'table'
+        template = '_includes/organisms/snippet-list.html'
