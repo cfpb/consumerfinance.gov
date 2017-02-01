@@ -18,13 +18,23 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
-- Upgraded Wagtail version from 1.7 to 1.8.1.
 
 ### Removed
-- Removed `cfgov/jinja2/v1/_includes/macros/share.html` macro.
 
 ### Fixed
-- Fixed video player share buttons.
+
+
+## 4.6.8
+
+- Bump chart builder dep [2725](https://github.com/cfpb/cfgov-refresh/pull/2725)
+
+
+## 4.6.7
+
+- Fix npm dependencies and shrinkwrap for production deploys [2724](https://github.com/cfpb/cfgov-refresh/pull/2724)
+- Fix for video sharing [2690](https://github.com/cfpb/cfgov-refresh/pull/2690)
+- Wagtail 1.8.1 [2708](https://github.com/cfpb/cfgov-refresh/pull/2708)
+- Update CHANGELOG for 4.6.6 [2722](https://github.com/cfpb/cfgov-refresh/pull/2722)
 
 
 ## 4.6.6
