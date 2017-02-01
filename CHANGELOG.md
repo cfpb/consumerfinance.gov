@@ -111,6 +111,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - JobListingPages are now only associated with a single region.
 - Updated custom Wagtail admin templates to 1.7 version.
 
+
 ### Removed
 - Can no longer delete via `/delete` in Wagtail
 
