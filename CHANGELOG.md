@@ -18,6 +18,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
+- Add image inset.
 
 ### Removed
 
@@ -106,6 +107,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added code to enable displaying message when no table data is present on careers page.
 - Resources snippet definition
 - Snippet List module
+- Added Image Inset molecule.
 
 ### Changed
 - JobListingPages are now only associated with a single region.
