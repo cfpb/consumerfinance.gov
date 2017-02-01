@@ -19,7 +19,7 @@
                            Possible values: (170, 270).
                            Defaults to 270.
 
-    value.position:        String indicating how to float the image.
+    value.image_position:  String indicating how to float the image.
                            Possible values: (left, right).
                            Defaults to right.
 
@@ -43,7 +43,7 @@
 {% set image_mobile = image(value.image.upload, 'width-1200') %}
 <div class="m-inset
             m-inset__image
-            {{ 'm-inset__left' if value.position == 'left' else '' }}
+            {{ 'm-inset__left' if value.image_position == 'left' else '' }}
             {{ 'm-inset__' ~ ( value.image_width
                if value.image_width else 270 ) }}
             {{ 'm-inset__portrait'
