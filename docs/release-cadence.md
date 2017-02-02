@@ -3,7 +3,7 @@
 cf.gov is on a two-week release cadence. The release process is as follows:
 
 - A new branch is created from the master branch representing the next minor release, e.g. 5.1. 
-- A new release is tagged from that branch with a 0 patch number, e.g. 5.1.0. The CHANGELOG is updated to reflect the new release.
+- A new release is tagged from that branch with a 0 patch number, e.g. 5.1.0.
 - That release is deployed to our beta server ("beta").
 - If any fixes are necessary before going to production, they are committed to the release branch, and back-merged to master. New "hotfix" releases are tagged from the branch with the appropriate patch number as needed to get urgent changes onto beta.
 - The latest release tagged on the release branch is deployed to production servers ("content" and "www"). 
