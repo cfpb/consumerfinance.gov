@@ -64,7 +64,7 @@ install() {
     fi
 
   else
-    npm install --production --loglevel warn
+    npm install --production --loglevel warn --no-optional
   fi
 
 }

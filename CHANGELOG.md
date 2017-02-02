@@ -18,12 +18,25 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ### Added
 
 ### Changed
-- Upgraded Wagtail version from 1.7 to 1.8.1.
+- Add image inset.
 
 ### Removed
 - Flags app and moved it to https://github.com/cfpb/wagtail-flags.
 
 ### Fixed
+
+
+## 4.6.8
+
+- Bump chart builder dep [2725](https://github.com/cfpb/cfgov-refresh/pull/2725)
+
+
+## 4.6.7
+
+- Fix npm dependencies and shrinkwrap for production deploys [2724](https://github.com/cfpb/cfgov-refresh/pull/2724)
+- Fix for video sharing [2690](https://github.com/cfpb/cfgov-refresh/pull/2690)
+- Wagtail 1.8.1 [2708](https://github.com/cfpb/cfgov-refresh/pull/2708)
+- Update CHANGELOG for 4.6.6 [2722](https://github.com/cfpb/cfgov-refresh/pull/2722)
 
 
 ## 4.6.6
@@ -95,10 +108,12 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 - Added code to enable displaying message when no table data is present on careers page.
 - Resources snippet definition
 - Snippet List module
+- Added Image Inset molecule.
 
 ### Changed
 - JobListingPages are now only associated with a single region.
 - Updated custom Wagtail admin templates to 1.7 version.
+
 
 ### Removed
 - Can no longer delete via `/delete` in Wagtail
