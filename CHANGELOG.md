@@ -16,6 +16,7 @@ Given the `MAJOR.MINOR.PATCH` pattern, here is how we decide to increment:
 ## Unreleased
 
 ### Added
+- Deprecate sharing server in favor of wagtail-sharing package.
 
 ### Changed
 - Add image inset.
