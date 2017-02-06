@@ -101,7 +101,6 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'v1.middleware.StagingMiddleware',
     'core.middleware.DownstreamCacheControlMiddleware',
-    'wagtailsharing.middleware.WagtailSharingMiddleware',
 )
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
@@ -537,9 +536,8 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'api.iperceptions.com')
 
-
-WAGTAILSHARING_REQUEST_CHECKS = (
-    'wagtailsharing.request_checks.HostnameRequestCheck',
-)
-
 WAGTAILSHARING_HOSTNAME = os.environ.get('WAGTAILSHARING_HOSTNAME')
+if WAGTAILSHARING_HOSTNAME:
+    WAGTAILSHARING_REQUEST_CHECKS = (
+        'wagtailsharing.request_checks.HostnameRequestCheck',
+    )
