@@ -54,6 +54,7 @@ module.exports = {
     settings: {
       paths:  globAll.sync( [
         paths.modules + '/capital-framework/**',
+        paths.modules + '/cfpb-chart-builder/**',
         paths.lib
       ] ),
       compress: true

@@ -14,6 +14,7 @@ from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing import views
 
 from core.views import ExternalURLNoticeView
+from flags.decorators import flag_required
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
                           token_provider)
 from sheerlike.sites import SheerSite
@@ -118,22 +119,44 @@ urlpatterns = [
             template_name='newsroom/press-resources/index.html'),
         name='press-resources'),
 
-    url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(
-        url='/about-us/the-bureau/%(path)s', permanent=True)),
+
+    url(r'^the-bureau/(?P<path>.*)$',
+            RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
+                                 permanent=True)
+    ),
     url(r'^about-us/leadership-calendar/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/the-bureau/leadership-calendar/%(path)s',
         permanent=True)),
+
+    # For our move of 'The Bureau' to Wagtail, we need a complicated mess of
+    # feature flags here. Once the move is complete, this url should be
+    # entirely removable.
     url(r'^about-us/the-bureau/', include([
         url(r'^$',
-            SheerTemplateView.as_view(
-                template_name='about-us/the-bureau/index.html'),
+            flag_required('WAGTAIL_THE_BUREAU',
+                          fallback_view=lambda request: views.serve(
+                              request, request.path),
+                          pass_if_set=False)(
+                SheerTemplateView.as_view(
+                    template_name='about-us/the-bureau/index.html')
+            ),
             name='index'),
         url(r'^leadership-calendar/',
-            lambda request: views.serve(request,
-                                        'about-us/leadership-calendar'),
+            flag_required('WAGTAIL_THE_BUREAU',
+                          fallback_view=lambda request: views.serve(
+                              request, request.path),
+                          pass_if_set=False)(
+                lambda request: views.serve(request,
+                                            'about-us/leadership-calendar')
+            ),
             name='leadership-calendar'),
         url(r'^(?P<page_slug>[\w-]+)/$',
-            SheerTemplateView.as_view(),
+            flag_required('WAGTAIL_THE_BUREAU',
+                          fallback_view=lambda request: views.serve(
+                              request, request.path),
+                          pass_if_set=False)(
+                SheerTemplateView.as_view()
+            ),
             name='page'),
         ],
         namespace='the-bureau')),
