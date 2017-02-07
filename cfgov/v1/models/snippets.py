@@ -95,7 +95,20 @@ class Resource(ClusterableModel):
         validators=[URLValidator]
     )
 
-    tags = TaggableManager(through=ResourceTag, blank=True)
+    order = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        help_text='Snippets will be listed alphabetically by title in a '
+        'Snippet List module, unless any in the list have a number in this '
+        'field; those with an order value will appear at the bottom of the '
+        'list, in ascending order.'
+    )
+
+    tags = TaggableManager(
+        through=ResourceTag,
+        blank=True,
+        help_text='Tags can be used to filter snippets in a Snippet List.'
+    )
 
     objects = TaggableSnippetManager()
 
@@ -107,6 +120,7 @@ class Resource(ClusterableModel):
         DocumentChooserPanel('alternate_file'),
         FieldPanel('link'),
         FieldPanel('alternate_link'),
+        FieldPanel('order'),
         FieldPanel('tags'),
     ]
 
