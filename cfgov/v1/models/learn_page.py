@@ -103,6 +103,7 @@ class LearnPage(AbstractFilterPage):
         ('call_to_action', molecules.CallToAction()),
         ('feedback', v1_blocks.Feedback()),
         ('video_player', organisms.VideoPlayer()),
+        ('email_signup', organisms.EmailSignUp()),
     ], blank=True)
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel('content')
