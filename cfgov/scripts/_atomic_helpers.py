@@ -232,7 +232,7 @@ email_signup = {
         'gd_code': 'TEST-GD-CODE',
         'form_field': [
             {
-                'btn_text': 'Subscribe',
+                'btn_text': 'this is a form field with button',
                 'required': False,
                 'info': 'We will never share your email address.',
                 'label': 'Learn more',
