@@ -134,3 +134,6 @@ class Resource(ClusterableModel):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ('order', 'title')

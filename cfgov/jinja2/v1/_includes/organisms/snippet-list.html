@@ -55,7 +55,7 @@
     } ) }}
 
     {% set snippets = get_snippets(value.snippet_type) %}
-    {% set filtered_snippets = snippets.objects.filter_by_tags(value.tags).order_by('order', 'title') %}
+    {% set filtered_snippets = snippets.objects.filter_by_tags(value.tags) if snippets.objects.filter_by_tags else snippets.objects.all() %}
     {% if filtered_snippets.exists() %}
         <div class="o-table__stack-on-small o-snippet-list_list" data-display-table="table">
             <header data-display-table="thead">
@@ -66,7 +66,7 @@
             {% for snippet in filtered_snippets %}
                 <li data-display-table="row">
                     <div data-display-table="cell">
-                        <div class="o-snippet-list_list-item-title">{{ snippet.title }}</div>
+                        <div class="o-snippet-list_list-item-title">{{ snippet }}</div>
                         {{ snippet.desc if snippet.desc else '' }}
                     </div>
                     <div data-display-table="cell">
