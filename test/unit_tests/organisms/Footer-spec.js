@@ -21,7 +21,7 @@ var HTML_SNIPPET =
     '</a>';
 
 function triggerClick( target ) {
-  var clickEvent = new MouseEvent( 'click', {
+  var clickEvent = new window.MouseEvent( 'click', {
     bubbles: true,
     cancelable: true,
     view: window
@@ -54,6 +54,9 @@ describe( 'Footer', function() {
 
   before( function() {
     sandbox = sinon.sandbox.create();
+
+    global.NodeList = window.NodeList;
+    global.Node= window.Node;
   } );
 
   beforeEach( function( ) {
