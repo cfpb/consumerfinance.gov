@@ -85,7 +85,7 @@ class RelatedPostsTestCase(TestCase):
             'limit': 3,
             'show_heading': True,
             'header_title': 'Further reading',
-            'relate_posts': False,
+            'relate_blog': False,
             'relate_newsroom': False,
             'relate_events': False,
             'specific_categories': []
@@ -111,7 +111,7 @@ class RelatedPostsTestCase(TestCase):
         be no other posts in either of the other categories.
         """
 
-        self.block.value['relate_posts'] = True
+        self.block.value['relate_blog'] = True
         self.block.value['relate_newsroom'] = False
         self.block.value['relate_events'] = False
         self.block.value['specific_categories'] = ['Info for Consumers', 'Policy &amp; Compliance']
@@ -134,7 +134,7 @@ class RelatedPostsTestCase(TestCase):
         (newsroom, events) to have, any posts in them.
         """
 
-        self.block.value['relate_posts'] = True
+        self.block.value['relate_blog'] = True
         self.block.value['relate_newsroom'] = False
         self.block.value['relate_events'] = False
         self.block.value['limit'] = 1
@@ -157,7 +157,7 @@ class RelatedPostsTestCase(TestCase):
         any posts in them.
         """
 
-        self.block.value['relate_posts'] = False
+        self.block.value['relate_blog'] = False
         self.block.value['relate_newsroom'] = True
         self.block.value['relate_events'] = False
         self.block.value['specific_categories'] = ['Op-Ed']
@@ -179,7 +179,7 @@ class RelatedPostsTestCase(TestCase):
         that no other categories (newsroom, blog) have any posts in them.
         """
 
-        self.block.value['relate_posts'] = False
+        self.block.value['relate_blog'] = False
         self.block.value['relate_newsroom'] = False
         self.block.value['relate_events'] = True
         self.block.value['specific_categories'] = ['anything', 'can', 'be', 'here']
@@ -204,7 +204,7 @@ class RelatedPostsTestCase(TestCase):
         """
         helpers.save_new_page(self.events_child2, self.archive_events_parent)
 
-        self.block.value['relate_posts'] = False
+        self.block.value['relate_blog'] = False
         self.block.value['relate_newsroom'] = False
         self.block.value['relate_events'] = True
         self.block.value['specific_categories'] = ['anything', 'can', 'be', 'here']
@@ -226,7 +226,7 @@ class RelatedPostsTestCase(TestCase):
         posts (two, one, and one of each, respectively).
         """
 
-        self.block.value['relate_posts'] = True
+        self.block.value['relate_blog'] = True
         self.block.value['relate_newsroom'] = True
         self.block.value['relate_events'] = True
         self.block.value['specific_categories'] = ['Info for Consumers',

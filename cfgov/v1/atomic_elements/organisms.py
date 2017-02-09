@@ -159,7 +159,7 @@ class RelatedPosts(blocks.StructBlock):
         label='Slug Title'
     )
 
-    relate_posts = blocks.BooleanBlock(
+    relate_blog = blocks.BooleanBlock(
         required=False,
         default=True,
         label='Blog Posts',

@@ -186,13 +186,8 @@ class CFGOVPage(Page):
             else:
                 return Q()
 
-        def show_related_posts(category, block):
-            if category == 'blog':
-                category = 'posts'
-            return block.value.get('relate_{}'.format(category))
-
         for slug in ['blog', 'newsroom', 'events']:
-            if show_related_posts(category=slug, block=block):
+            if block.value.get('relate_{}'.format(slug)):
                 search_query = models.Q(('tags__name__in', self.tags.names()))
                 search_query &= fetch_children_by_specific_category(
                     block=block,
