@@ -56,7 +56,7 @@ describe( 'Footer', function() {
     sandbox = sinon.sandbox.create();
 
     global.NodeList = window.NodeList;
-    global.Node= window.Node;
+    global.Node = window.Node;
   } );
 
   beforeEach( function( ) {
