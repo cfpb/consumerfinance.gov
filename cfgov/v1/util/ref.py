@@ -50,6 +50,10 @@ fcm_types = [
 ]
 
 categories = [
+    ('Administration adjudication docket', (
+        ('administrative-adjudication', 'Administrative adjudication'),
+        ('stipulation-and-constent-order', 'Stipulation and consent order'),
+    )),
     ('Amicus Brief', (
         ('us-supreme-court', 'U.S. Supreme Court'),
         ('fed-circuit-court', 'Federal Circuit Court'),
@@ -64,7 +68,8 @@ categories = [
     )),
     ('Enforcement Action', (
         ('fed-district-case', 'Federal District Court Case'),
-        ('admin-filing', 'Administrative Filing'),
+        ('administrative-adjudication-2', 'Administrative adjudication'),
+        ('stipulation-and-consent-order-2', 'Stipulation and consent order'),
     )),
     ('Final Rule', (
         ('interim-final-rule', 'Interim Final Rule'),
