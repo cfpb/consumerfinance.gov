@@ -38,7 +38,7 @@ class TestNewCategoriesMigration(TestCase):
         self.migration.migrate_forwards(apps, None)
         self.assertFalse(self.get_category_pages('admin-filing').exists())
         self.assertTrue(self.get_category_pages(
-            'administrative-adjudication-2'
+            'stipulation-and-consent-order-2'
         ).exists())
 
     def test_migrate_backwards(self):

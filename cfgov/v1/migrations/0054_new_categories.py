@@ -11,7 +11,7 @@ def change_categories(apps, before, after):
 
 
 def migrate_forwards(apps, schema_editor):
-    change_categories(apps, 'admin-filing', 'administrative-adjudication-2')
+    change_categories(apps, 'admin-filing', 'stipulation-and-consent-order-2')
 
 
 def migrate_backwards(apps, schema_editor):
