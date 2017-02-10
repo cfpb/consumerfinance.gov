@@ -67,7 +67,7 @@ categories = [
         ('info-for-consumers', 'Info for consumers'),
     )),
     ('Enforcement Action', (
-        ('fed-district-case', 'Federal District Court Case'),
+        ('fed-district-case', 'Federal district court case'),
         ('administrative-adjudication-2', 'Administrative adjudication'),
         ('stipulation-and-consent-order-2', 'Stipulation and consent order'),
     )),
