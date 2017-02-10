@@ -202,13 +202,13 @@
             <tr>
                 <td>
                     {% import 'macros/time.html' as time %}
-                    {% if bound.start_time | string != 'None' %}
+                    {% if bound.start_time.value is not none %}
                       {{ time.render(
                           bound.start_time.render(),
                           {'date':false,'time':true,'timezone':false}
                       ) }}
                     {% endif %}
-                    {% if bound.end_time | string != 'None' %}
+                    {% if bound.end_time.value is not none %}
                       &ndash;
                       {{ time.render(bound.end_time.render(), {'time':true, 'timezone':true}) }}
                     {% endif %}
