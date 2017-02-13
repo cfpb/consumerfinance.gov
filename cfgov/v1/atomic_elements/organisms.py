@@ -509,6 +509,7 @@ class FullWidthText(blocks.StreamBlock):
     related_links = molecules.RelatedLinks()
     table = Table(editable=False)
     table_block = AtomicTableBlock(table_options={'renderer': 'html'})
+    image_inset = molecules.ImageInset()
 
     class Meta:
         icon = 'edit'
