@@ -48,7 +48,11 @@ function scriptsPolyfill() {
       tests:   [ 'csspointerevents', 'classlist', 'es5' ],
       options: [ 'setClasses', 'html5printshiv' ]
     } ) )
-    .pipe( gulpUglify() )
+    .pipe( gulpUglify( {
+      compress: {
+         properties: false
+      }
+    }) )
     .pipe( gulpRename( 'modernizr.min.js' ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + '/js/' ) )
