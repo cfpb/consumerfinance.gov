@@ -7,8 +7,7 @@ from wagtail.wagtailcore.models import PageRevision
 
 from v1.models import CFGOVPage
 from v1.tests.wagtail_pages import helpers
-
-from ..util import util
+from v1.util import util
 
 
 class TestUtilFunctions(TestCase):
