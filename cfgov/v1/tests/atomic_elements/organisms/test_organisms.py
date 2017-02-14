@@ -145,22 +145,6 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'Half Width Link Blob Group')
 
     # TODO: More comprehensive test for this organism
-    def test_email_signup(self):
-        """Email signup correctly displays on a Sublanding Page"""
-        sublanding_page = SublandingPage(
-            title='Sublanding Page',
-            slug='sublanding',
-        )
-        sublanding_page.sidefoot = StreamValue(
-            sublanding_page.sidefoot.stream_block,
-            [atomic.email_signup],
-            True
-        )
-        publish_page(child=sublanding_page)
-        response = django_client.get('/sublanding/')
-        self.assertContains(response, 'Email Sign up')
-
-    # TODO: More comprehensive test for this organism
     def test_reg_comment(self):
         """RegComment correctly displays on a Sublanding Page"""
         sublanding_page = SublandingPage(
