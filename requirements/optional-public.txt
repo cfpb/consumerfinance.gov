@@ -4,4 +4,4 @@ git+https://github.com/cfpb/django-hud.git@1.2#egg=django-hud
 git+https://github.com/cfpb/owning-a-home-api.git@0.9.94#egg=owning-a-home-api
 git+https://github.com/cfpb/regulations-core.git@1.2.3#egg=regcore
 git+https://github.com/cfpb/regulations-site.git@2.1.6#egg=regulations
-git+https://github.com/cfpb/retirement.git@0.5.4#egg=retirement
+git+https://github.com/cfpb/retirement.git@0.5.5#egg=retirement
