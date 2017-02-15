@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'compressor',
     'taggit',
     'wagtailsharing',
+    'ask_cfpb',
 
     'overextends',
     'django.contrib.admin',
