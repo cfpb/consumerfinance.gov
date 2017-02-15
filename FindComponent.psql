@@ -1,0 +1,51 @@
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS FindAtomicComponents;
+
+CREATE PROCEDURE FindAtomicComponents(
+	in component_name varchar(100))
+BEGIN
+	DECLARE _table_name varchar(255);
+
+	DECLARE no_more_rows BOOLEAN DEFAULT FALSE;
+
+	DECLARE table_name_cursor CURSOR FOR SELECT table_name FROM
+	information_schema.tables WHERE table_name LIKE "v1%_%page";
+
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET no_more_rows = TRUE;
+
+	OPEN table_name_cursor;
+
+	get_components: LOOP
+		FETCH table_name_cursor INTO _table_name;
+
+		IF no_more_rows THEN
+       		CLOSE table_name_cursor;
+        	LEAVE get_components;
+    	END IF;
+
+		SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+		WHERE table_name = _table_name
+		AND COLUMN_KEY = 'PRI' into @primary_key;
+
+		IF EXISTS ( SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+		WHERE table_name = _table_name
+		AND COLUMN_NAME = 'content' ) THEN
+			SET @SQL = CONCAT( "select CASE WHEN INSTR( url_path, '/cfgov/')",
+						   " THEN replace(url_path, '/cfgov/', 'localhost:8000/')"
+						   " ELSE url_path END FROM ",
+			               _table_name,
+			               ", wagtailcore_page as wagtailpage where ",
+			               _table_name,
+			               ".",
+			               @primary_key,
+			               "= wagtailpage.id and content like '%\"type\": \"",
+			               component_name, "\"%' " );
+
+			PREPARE sql_statement FROM @SQL;
+	        EXECUTE sql_statement;
+	        DEALLOCATE PREPARE sql_statement;
+        END IF;
+
+  	END LOOP get_components;
+END$$
