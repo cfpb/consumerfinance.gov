@@ -8,10 +8,14 @@ import taggit.managers
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0052_add_image_inset'),
+        ('v1', '0054_new_categories'),
     ]
 
     operations = [
+        migrations.AlterModelOptions(
+            name='resource',
+            options={'ordering': ('order', 'title')},
+        ),
         migrations.AddField(
             model_name='resource',
             name='order',
