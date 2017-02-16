@@ -45,8 +45,60 @@
     - cfgov-print
 */
 
+
 .print-header {
     margin-bottom: unit(30px / @base-font-size-px, em);
     padding-bottom: unit(30px / @base-font-size-px, em);
     border-bottom: 5px solid @black;
+}
+
+@media only print {
+    html,
+    body {
+        margin: 1mm;
+        /* may need to adjust so print isn't too small w/ 1000px width */
+        font-size: 17px;
+    }
+
+    // Webkit only hacks
+    @supports (-webkit-appearance: none) {
+        .content {
+            display: table !important;
+        }
+
+        .content__2-1 {
+            .content_main {
+                margin: 0;
+                width: 66%;
+                display: table-cell !important;
+            }
+
+            .content_sidebar {
+                width: 33%;
+                display: table-cell !important;
+            }
+        }
+    }
+
+    // Mozilla only hacks
+    @-moz-document url-prefix() {
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content__2-1 {
+            .content_main {
+                margin: 0;
+                width: 66%;
+                display: table-cell !important;
+            }
+
+            .content_sidebar {
+                width: 33%;
+                display: table-cell !important;
+            }
+        }
+    }
 }

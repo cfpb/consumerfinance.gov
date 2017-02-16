@@ -1,0 +1,19 @@
+/* ==========================================================================
+   cfgov-refresh
+   Sublanding page.
+   ========================================================================== */
+
+// Mozilla only hacks
+@media only print {
+    .p-sublanding {
+        @-moz-document url-prefix() {
+            .content_sidebar .list_item,
+            .content_sidebar  .block,
+            .content_sidebar .o-email-signup,
+            .content_sidebar  p {
+                /* for Firefox; prevents sidebar items from displaying inline */
+                width: 100% !important;
+           }
+        }
+    }
+}
