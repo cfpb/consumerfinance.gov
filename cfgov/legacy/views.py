@@ -31,8 +31,6 @@ class InvalidZipException(Exception):
 
 class HousingCounselorPDFView(PDFGeneratorView):
     def get_render_url(self):
-        request = self.request
-
         zip = self.form.cleaned_data['zip']
         api_url = 'hud-api-replace/%s.html/' % zip
         url = '%s://%s/%s' % ('http', 'localhost', api_url)
