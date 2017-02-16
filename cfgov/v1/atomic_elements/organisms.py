@@ -611,6 +611,12 @@ class FilterControls(BaseExpandable):
                                      label='Filter Date Range')
     output_5050 = blocks.BooleanBlock(default=False, required=False,
                                       label="Render preview items as 50-50s")
+    should_link_image = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=('Check this to link all images to the URL of the first '
+                   'link in their unit\'s list, if there is a link.')
+    )
 
     class Meta:
         label = 'Filter Controls'
