@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'modelcluster',
     'compressor',
     'taggit',
+    'wagtailsharing',
 
     'overextends',
     'django.contrib.admin',
@@ -104,7 +105,7 @@ MIDDLEWARE_CLASSES = (
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
     'v1.middleware.StagingMiddleware',
-    'core.middleware.DownstreamCacheControlMiddleware'
+    'core.middleware.DownstreamCacheControlMiddleware',
 )
 
 CSP_MIDDLEWARE_CLASSES = ('csp.middleware.CSPMiddleware', )
@@ -539,3 +540,9 @@ CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
                    'api.iperceptions.com')
+
+WAGTAILSHARING_HOSTNAME = os.environ.get('WAGTAILSHARING_HOSTNAME')
+if WAGTAILSHARING_HOSTNAME:
+    WAGTAILSHARING_REQUEST_CHECKS = (
+        'wagtailsharing.request_checks.HostnameRequestCheck',
+    )

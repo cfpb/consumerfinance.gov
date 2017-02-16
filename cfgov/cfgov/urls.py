@@ -10,8 +10,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtailcore import urls as wagtail_urls
-from wagtail.wagtailcore import views
+from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
 
 from core.views import ExternalURLNoticeView
 from flags.decorators import flag_required
@@ -27,6 +27,14 @@ from v1.views.documents import DocumentServeView
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
+
+
+the_bureau_flag = flag_required(
+    'WAGTAIL_THE_BUREAU',
+    fallback_view=lambda request: ServeView.as_view()(request, request.path),
+    pass_if_set=False
+)
+
 
 urlpatterns = [
 
@@ -131,36 +139,29 @@ urlpatterns = [
     # For our move of 'The Bureau' to Wagtail, we need a complicated mess of
     # feature flags here. Once the move is complete, this url should be
     # entirely removable.
-    url(r'^about-us/the-bureau/', include([
-        url(r'^$',
-            flag_required('WAGTAIL_THE_BUREAU',
-                          fallback_view=lambda request: views.serve(
-                              request, request.path),
-                          pass_if_set=False)(
-                SheerTemplateView.as_view(
-                    template_name='about-us/the-bureau/index.html')
-            ),
-            name='index'),
-        url(r'^leadership-calendar/',
-            flag_required('WAGTAIL_THE_BUREAU',
-                          fallback_view=lambda request: views.serve(
-                              request, request.path),
-                          pass_if_set=False)(
-                lambda request: views.serve(request,
-                                            'about-us/leadership-calendar')
-            ),
-            name='leadership-calendar'),
-        url(r'^(?P<page_slug>[\w-]+)/$',
-            flag_required('WAGTAIL_THE_BUREAU',
-                          fallback_view=lambda request: views.serve(
-                              request, request.path),
-                          pass_if_set=False)(
-                SheerTemplateView.as_view()
-            ),
-            name='page'),
+    url(r'^about-us/the-bureau/', include(
+        [
+            url(r'^$',
+                the_bureau_flag(
+                    SheerTemplateView.as_view(
+                        template_name='about-us/the-bureau/index.html'
+                    )
+                ),
+                name='index'),
+            url(r'^leadership-calendar/',
+                the_bureau_flag(
+                    lambda request: ServeView.as_view()(
+                        request,
+                        'about-us/leadership-calendar'
+                    )
+                ),
+                name='leadership-calendar'),
+            url(r'^(?P<page_slug>[\w-]+)/$',
+                the_bureau_flag(SheerTemplateView.as_view()),
+                name='page'),
         ],
-        namespace='the-bureau')),
-
+        namespace='the-bureau'
+    )),
 
     url(r'^doing-business-with-us/(?P<path>.*)$',
         RedirectView.as_view(
@@ -401,7 +402,7 @@ if settings.DEBUG:
 
 # Catch remaining URL patterns that did not match a route thus far.
 
-urlpatterns.append(url(r'', include(wagtail_urls)))
+urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
 
 def handle_error(code, request):
