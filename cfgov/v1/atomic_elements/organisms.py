@@ -614,8 +614,7 @@ class FilterControls(BaseExpandable):
     should_link_image = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text=('Check this to link all images to the URL of the first '
-                   'link in their unit\'s list, if there is a link.')
+        help_text=('Add links to post preview images in filterable list results.')
     )
 
     class Meta:
