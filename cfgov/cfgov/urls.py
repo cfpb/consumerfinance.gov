@@ -128,40 +128,6 @@ urlpatterns = [
         url='/about-us/the-bureau/leadership-calendar/%(path)s',
         permanent=True)),
 
-    # For our move of 'The Bureau' to Wagtail, we need a complicated mess of
-    # feature flags here. Once the move is complete, this url should be
-    # entirely removable.
-    url(r'^about-us/the-bureau/', include([
-        url(r'^$',
-            flag_required('WAGTAIL_THE_BUREAU',
-                          fallback_view=lambda request: views.serve(
-                              request, request.path),
-                          pass_if_set=False)(
-                SheerTemplateView.as_view(
-                    template_name='about-us/the-bureau/index.html')
-            ),
-            name='index'),
-        url(r'^leadership-calendar/',
-            flag_required('WAGTAIL_THE_BUREAU',
-                          fallback_view=lambda request: views.serve(
-                              request, request.path),
-                          pass_if_set=False)(
-                lambda request: views.serve(request,
-                                            'about-us/leadership-calendar')
-            ),
-            name='leadership-calendar'),
-        url(r'^(?P<page_slug>[\w-]+)/$',
-            flag_required('WAGTAIL_THE_BUREAU',
-                          fallback_view=lambda request: views.serve(
-                              request, request.path),
-                          pass_if_set=False)(
-                SheerTemplateView.as_view()
-            ),
-            name='page'),
-        ],
-        namespace='the-bureau')),
-
-
     url(r'^doing-business-with-us/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
