@@ -129,15 +129,6 @@
 
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
 
-    {# TODO: jQuery CDN is provided in the head to satisfy
-             Google Tag Manager (GTM) requirements.
-             Ideally GTM would handle its own dependency management
-             and initializing jQuery could be moved to the footer. #}
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>if (!window.jQuery) { document.write('<script src="{{ static('js/jquery.min.js') }}"><\/script>'); }
-    </script>
-
 </head>
 
 <body>
