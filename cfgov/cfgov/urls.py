@@ -11,10 +11,8 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
-from wagtail.wagtailcore import views
 
 from core.views import ExternalURLNoticeView
-from flags.decorators import flag_required
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
                           token_provider)
 from sheerlike.sites import SheerSite
