@@ -21,7 +21,7 @@ django-treebeard==3.0
 elasticsearch==1.6.0
 feedparser==5.2.1
 geocoder==1.12.0
-git+https://github.com/cfpb/wagtail-sharing.git#egg=wagtailsharing
+git+https://github.com/cfpb/wagtail-sharing.git@0.1#egg=wagtail-sharing
 git+https://github.com/rosskarchner/govdelivery.git#egg=govdelivery
 html5lib==0.9999999
 icalendar==3.9.0
