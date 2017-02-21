@@ -173,14 +173,6 @@ def flush_akamai():
     return False
 
 
-@hooks.register('before_serve_page')
-def check_request_site(page, request, serve_args, serve_kwargs):
-    if request.site.hostname == os.environ.get('DJANGO_STAGING_HOSTNAME'):
-        if isinstance(page, CFGOVPage):
-            if not page.shared:
-                raise Http404
-
-
 @hooks.register('register_permissions')
 def register_share_permissions():
     return Permission.objects.filter(codename='share_page')
