@@ -46,23 +46,24 @@
             'replaces four disclosure forms with two new ones. ' +
             'We have resources to help you comply.'
 } %}
-{% if flag_enabled(request, 'DEBT_COLLECTION_RELEASE') %}
-    {% set consumer_tools_content = {
-        'link': {
-            'text': 'Stories about debt collection',
-            'url':  '/consumer-tools/everyone-has-a-story/debt-collection/',
-        },
-        'image': {
-            'src': 'img/fmc-consumer-tools-540x300.png',
-            'alt': 'Illustration of US Map represented as consumer stories',
-        },
-        'body': 'Consumers across the country shared their ' +
-                'experiences with debt collection. View their stories.'
-    } %}
-{% endif %}
+
+{% set consumer_tools_content = {
+    'link': {
+        'text': 'Stories about debt collection',
+        'url':  '/consumer-tools/everyone-has-a-story/debt-collection/',
+    },
+    'image': {
+        'src': 'img/fmc-consumer-tools-540x300.png',
+        'alt': 'Illustration of US Map represented as consumer stories',
+    },
+    'body': 'Consumers across the country shared their ' +
+            'experiences with debt collection. View their stories.'
+} %}
+
 {% set media_items = [
   ( 'About Us', featured_menu_content.render( about_us_content ) ),
-  ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) )
+  ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) ),
+  ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) )
 ] %}
 
 {% set nav_items = [(
@@ -83,7 +84,13 @@
         ('Paying for College', '/paying-for-college/', []),
         ('Owning a Home', '/owning-a-home/', []),
         ('Planning for Retirement', '/retirement/', []),
-        ('Sending Money Abroad', '/sending-money/', [])
+        ('Sending Money Abroad', '/sending-money/', []),
+        ('Prepaid Cards', '/consumer-tools/prepaid-cards/', [(
+            ('Choose the Right Card for Your Situation', '/consumer-tools/prepaid-cards/choose-the-right-card/', []),
+            ('Know Your Rights', '/consumer-tools/prepaid-cards/know-your-rights/', []),
+            ('Understand the Fees You Will Pay', '/consumer-tools/prepaid-cards/understand-fees/', [])
+        )]),
+        ('Debt Collection', '/consumer-tools/debt-collection/', [])
     ],(
         ('Know Before You Owe Mortgages', '/know-before-you-owe/', []),
         ('Trouble Paying Your Mortgage?', '/mortgagehelp/', []),
@@ -109,6 +116,7 @@
         ('Consumer Complaint Database', '/data-research/consumer-complaints/', []),
         ('Mortgage Database (HMDA)', '/data-research/mortgage-data-hmda/', [])
     ),[
+        ('Consumer Credit Trends', '/data-research/consumer-credit-trends/', []),
         ('Credit Card Surveys & Agreements', '/data-research/credit-card-data/', []),
     ]]),
     ('Policy & Compliance', '/policy-compliance/', [(
@@ -164,27 +172,3 @@
         ('Contact Us', '/about-us/contact-us/', [])
     )])
 )] -%}
-
-
-{% if flag_enabled(request, 'PREPAID_RELEASE') %}
-    {{ nav_items[0][0][2][1].append( ('Prepaid Cards', '/consumer-tools/prepaid-cards/', [(
-        ('Choose the Right Card for Your Situation', '/consumer-tools/prepaid-cards/choose-the-right-card/', []),
-        ('Know Your Rights', '/consumer-tools/prepaid-cards/know-your-rights/', []),
-        ('Understand the Fees You Will Pay', '/consumer-tools/prepaid-cards/understand-fees/', [])
-    )]) ) }}
-{% endif %}
-
-{% if flag_enabled(request, 'DEBT_COLLECTION_RELEASE') %}
-    {{ nav_items[0][0][2][1].append(
-        ('Debt Collection', '/consumer-tools/debt-collection/', [])
-    ) }}
-    {{ media_items.append(
-        ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) )
-    ) }}
-{% endif %}
-
-{% if flag_enabled(request, 'CREDIT_TRENDS_RELEASE') %}
-    {{ nav_items[0][2][2][2].insert( 0,
-        ('Consumer Credit Trends', '/data-research/consumer-credit-trends/', [])
-    ) }}
-{% endif %}
