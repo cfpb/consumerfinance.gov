@@ -31,7 +31,6 @@
     "require-dir": "0.3.1",
     "webpack": "1.13.2",
     "webpack-stream": "3.2.0",
-
     "browser-sync": "2.18.7",
     "glob-all": "3.1.0",
     "gulp-imagemin": "3.1.1",
@@ -71,7 +70,8 @@
   },
   "browser": {
     "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",
-    "jquery": "./node_modules/jquery/dist/jquery.js"
+    "jquery": "./node_modules/jquery/dist/jquery.js",
+    "ustream-embedapi": "./node_modules/ustream-embedapi/dist/ustream-embedapi.min.js"
   },
   "scripts": {
     "test": "snyk test"
