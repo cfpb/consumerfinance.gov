@@ -47,7 +47,8 @@
     "gulp-mocha": "3.0.1",
     "is-reachable": "2.3.2",
     "gulp-util": "3.0.8",
-    "jquery": "1.11.3"
+    "jquery": "1.11.3",
+    "ustream-embedapi": "1.0.0"
   },
   "devDependencies": {
     "chai": "3.5.0",
@@ -70,8 +71,7 @@
   },
   "browser": {
     "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",
-    "jquery": "./node_modules/jquery/dist/jquery.js",
-    "ustream-embedapi": "./node_modules/ustream-embedapi/dist/ustream-embedapi.min.js"
+    "jquery": "./node_modules/jquery/dist/jquery.js"
   },
   "scripts": {
     "test": "snyk test"
