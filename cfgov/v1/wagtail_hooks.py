@@ -1,13 +1,11 @@
 import json
 import logging
-import os
 import requests
 
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.core.urlresolvers import reverse
-from django.http import Http404
 from django.utils import timezone
 from django.utils.html import escape, format_html_join
 from django.utils.translation import ugettext_lazy as _
@@ -17,7 +15,6 @@ from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
 from urlparse import urlsplit
 
-from v1.models import CFGOVPage
 from v1.templatetags.share import v1page_permissions
 from v1.util import util
 
