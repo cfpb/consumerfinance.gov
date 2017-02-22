@@ -13,8 +13,7 @@
 {% block content_main %}
     {% for block in page.header %}
         {% if 'featured_content' in block.block_type %}
-            <div class="block
-                        block__flush-sides">
+            <div class="block">
                 {{ featured_content.render(block.value) }}
             </div>
         {% else %}
