@@ -11,10 +11,8 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
-from wagtail.wagtailcore import views
 
 from core.views import ExternalURLNoticeView
-from flags.decorators import flag_required
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
                           token_provider)
 from sheerlike.sites import SheerSite
@@ -127,40 +125,6 @@ urlpatterns = [
     url(r'^about-us/leadership-calendar/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/the-bureau/leadership-calendar/%(path)s',
         permanent=True)),
-
-    # For our move of 'The Bureau' to Wagtail, we need a complicated mess of
-    # feature flags here. Once the move is complete, this url should be
-    # entirely removable.
-    url(r'^about-us/the-bureau/', include([
-        url(r'^$',
-            flag_required('WAGTAIL_THE_BUREAU',
-                          fallback_view=lambda request: views.serve(
-                              request, request.path),
-                          pass_if_set=False)(
-                SheerTemplateView.as_view(
-                    template_name='about-us/the-bureau/index.html')
-            ),
-            name='index'),
-        url(r'^leadership-calendar/',
-            flag_required('WAGTAIL_THE_BUREAU',
-                          fallback_view=lambda request: views.serve(
-                              request, request.path),
-                          pass_if_set=False)(
-                lambda request: views.serve(request,
-                                            'about-us/leadership-calendar')
-            ),
-            name='leadership-calendar'),
-        url(r'^(?P<page_slug>[\w-]+)/$',
-            flag_required('WAGTAIL_THE_BUREAU',
-                          fallback_view=lambda request: views.serve(
-                              request, request.path),
-                          pass_if_set=False)(
-                SheerTemplateView.as_view()
-            ),
-            name='page'),
-        ],
-        namespace='the-bureau')),
-
 
     url(r'^doing-business-with-us/(?P<path>.*)$',
         RedirectView.as_view(

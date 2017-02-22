@@ -42,6 +42,52 @@ class TestFilterByTags(TestCase):
         )
 
 
+class TestOrderedResources(TestCase):
+    def setUp(self):
+        self.snippetBBC = Resource.objects.create(title='BBC')
+        self.snippetZebra = Resource.objects.create(title='Zebra')
+        self.snippetAbc = Resource.objects.create(title='Abc')
+
+    def test_default_alphabetical_ordering(self):
+        self.assertSequenceEqual(
+            Resource.objects.all(),
+            [self.snippetAbc, self.snippetBBC, self.snippetZebra]
+        )
+
+    def test_partial_explicit_ordering(self):
+        self.snippetBBC.order = 1
+        self.snippetBBC.save()
+
+        self.assertSequenceEqual(
+            Resource.objects.all(),
+            [self.snippetAbc, self.snippetZebra, self.snippetBBC]
+        )
+
+    def test_total_explicit_ordering(self):
+        self.snippetAbc.order = 23
+        self.snippetAbc.save()
+        self.snippetBBC.order = 1
+        self.snippetBBC.save()
+        self.snippetZebra.order = 32000
+        self.snippetZebra.save()
+
+        self.assertSequenceEqual(
+            Resource.objects.all(),
+            [self.snippetBBC, self.snippetAbc, self.snippetZebra]
+        )
+
+    def test_order_tiebreaking(self):
+        self.snippetAbc.order = 1
+        self.snippetAbc.save()
+        self.snippetBBC.order = 1
+        self.snippetBBC.save()
+
+        self.assertSequenceEqual(
+            Resource.objects.all(),
+            [self.snippetZebra, self.snippetAbc, self.snippetBBC]
+        )
+
+
 class TestUnicodeCompatibility(TestCase):
     def test_unicode_contact_heading_str(self):
         contact = Contact(heading=u'Unicod\xeb')
