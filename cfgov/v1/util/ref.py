@@ -48,8 +48,8 @@ categories = [
     ('Blog', (
         ('at-the-cfpb', 'At the CFPB'),
         ('policy-compliance', 'Policy & Compliance'),
-        ('data-research-reports', 'Data, research, & reports'),
-        ('info-for-consumers', 'Info for Consumers'),
+        ('data-research-reports', 'Data, research & reports'),
+        ('info-for-consumers', 'Info for consumers'),
     )),
     ('Enforcement Action', (
         ('fed-district-case', 'Federal district court case'),
@@ -110,7 +110,6 @@ categories = [
         ('student-loans', 'Student loans'),
     )),
 ]
-
 
 related_posts_categories = [
     categories[2],

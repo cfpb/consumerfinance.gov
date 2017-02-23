@@ -15,10 +15,10 @@ from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from wagtail.wagtailsnippets.models import get_snippet_models
 
-from . import atoms, molecules
-from .. import blocks as v1_blocks
-from ..models.snippets import Contact as ContactSnippetClass
-from ..util import ref
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import atoms, molecules
+from v1.models.snippets import Contact as ContactSnippetClass
+from v1.util import ref
 
 
 class Well(blocks.StructBlock):
@@ -177,8 +177,9 @@ class RelatedPosts(blocks.StructBlock):
         label='Events'
     )
 
+    # TODO: Remove this after migrations are run on www
     specific_categories = blocks.ListBlock(
-        blocks.ChoiceBlock(choices=ref.related_posts_categories,
+        blocks.ChoiceBlock(choices=[],
                            required=False),
         required=False
     )
