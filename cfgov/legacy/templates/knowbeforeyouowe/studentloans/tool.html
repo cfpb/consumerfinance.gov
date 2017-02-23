@@ -1,0 +1,85 @@
+{% extends "knowbeforeyouowe/base_kbyo.html" %}.
+
+{% block page_meta %}
+<!-- page-specific meta tags go here -->
+{% endblock %}
+
+{% block title %}Know Before You Owe (Student Loans){% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="/">Home</a></li>
+<li><a href="/students/">Students</a></li>
+<li>Know Before You Owe</li>
+{% endblock %}
+
+{% block page_css %}
+<style>
+
+
+.leftcol {
+  float: left;
+  width: 450px;
+  margin-right: 28px;
+  padding-bottom: 56px;
+  padding-top: 14px;
+}
+
+.leftcol p {
+  text-align: center;
+}
+
+.rightcol {
+  float: left;
+  width: 450px;
+  padding-top: 14px;
+}
+
+.rightcol textarea {
+  height: 165px;
+  width: 425px;
+}
+
+.rightcol #charsleft {
+  font-size: 11px;
+  font-family: '45o', Verdana, sans-serif;
+  font-style: italic;
+}
+
+ol.ranking { list-style: none !important; padding: 0; margin: 14px 40px !important; } 
+ol.ranking li { margin: 0 0 14px 0; background: #f6f3ee; padding: 15px; list-style: none !important;}
+ol.ranking li:hover {color: #fff; background: #d67353;}
+ol.ranking .handle { float: left; margin: 5px 10px 0 5px;}
+ol.ranking li .inner {
+  float: left;
+  margin-right: 5px;
+}
+
+ol.ranking li input {
+  padding: 3px;
+  margin: 0 !important;
+}
+
+#main_content ol.ranking li span {
+  display: block;
+}
+
+img:hover[class="handle"] {cursor:url("/wp-content/uploads/2011/02/open.cur"), move}
+img:active[class="handle"] {cursor:url("/wp-content/uploads/2011/02/grab.cur"), move}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h1><img src="/static/students/kbyo_sle.png" alt="Know Before You Owe: Student Loans"></h1>
+
+<p>Good news: The Department of Education has finalized the financial aid shopping sheet. Take a look at the <a href="http://collegecost.ed.gov/shopping_sheet.pdf">finished product.</a></p>
+
+<p>You can also read Director Cordray’s <a href="/speeches/prepared-remarks-by-richard-cordray-in-a-press-call-about-the-financial-aid-shopping-sheet/">remarks</a> on the project.</p>
+
+
+{% endblock %}
+{% block page_js %}
+<!-- page-specific javascript goes here -->
+<script src="/static/students/jquery-ui-1.8.9.custom.min_.js"></script>
+<script src="/static/students/ranking.js"></script>
+{% endblock %}

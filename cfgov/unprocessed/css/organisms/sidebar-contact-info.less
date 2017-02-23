@@ -37,16 +37,13 @@
 
 .o-sidebar-contact-info {
 
-    &_heading {
-        .respond-to-range( @bp-sm-min, @bp-sm-max {
-            .grid_column(12);
-        } );
+    &_content {
+        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
     }
 
-    &_column {
-        .respond-to-range( @bp-sm-min, @bp-sm-max {
-            .grid_column(6);
-        } );
+    .m-contact + .m-contact {
+        // Adds margin top to info contacts that follow another
+        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     }
 }
 

@@ -6,7 +6,7 @@
   vars_files:
     - vars/db.yml
   roles:
-    - { role: geerlingguy.mysql }
+    - { role: vickumar1981.mysql }
     - { role: geerlingguy.firewall }
 
 - hosts: app
@@ -22,7 +22,7 @@
     - { role: Ken24.python }
     - { role: geerlingguy.firewall }
     - { role: xcezx.httpd }
-    - { role: juwai.nodejs }
+    - { role: vickumar1981.nodejs }
   tasks:
     - name: Install python dependencies
       yum: pkg={{ item }} state=present
@@ -37,6 +37,8 @@
         - "mysql-devel.x86_64"
         - "alsa-lib-devel"
         - "libnotify"
+        - "libxslt-devel"
+        - "libxml2-devel"
 
     - name: Import CERN's GPG key
       shell: "rpm --import http://ftp.scientificlinux.org/linux/scientific/5x/x86_64/RPM-GPG-KEYs/RPM-GPG-KEY-cern"
@@ -84,15 +86,3 @@
 
     - name: Migrate django db to match application state
       shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py migrate"
-
-    - name: Create initial data 
-      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py runscript initial_data"
-
-    - name: Import contacts data 
-      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py import-data contact contact --snippet -u admin -p $WAGTAIL_ADMIN_PW"
-
-    - name: Import events data
-      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py import-data events eventpage --parent events -u admin -p $WAGTAIL_ADMIN_PW"
-
-    - name: Create Sheer Index
-      shell: "source /vagrant/.env; /vagrant/cfgov-refresh/bin/python /vagrant/cfgov/manage.py sheer_index"

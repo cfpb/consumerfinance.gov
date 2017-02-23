@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   Notification
+   notification.render()
 
    ==========================================================================
 
@@ -9,17 +9,17 @@
    Builds notification markup when given:
 
    type:        The type of notification to display.
-                  Values may be: 'success', 'error', or 'warning'.
+                Values may be: 'success', 'error', or 'warning'.
 
    is_visible:  Whether the notification is initially shown or not.
-                  Default is false.
+                Default is false.
 
    message:     Text to display within the notification markup.
-                  Default is 'Success.', 'Warning!', or 'Error!',
-                  depending on notification type.
+                Default is 'Success.', 'Warning!', or 'Error!',
+                depending on notification type.
 
    explanation: Text to display as an explanation
-                  within the notification markup.
+                within the notification markup.
 
    ========================================================================== #}
 
@@ -40,7 +40,7 @@
       <span class="m-notification_icon
                    cf-icon"></span>
       <div class="m-notification_content">
-          <p class="h4 m-notification_message">{{ message }}</p>
+          <div class="h4 m-notification_message">{{ message }}</div>
           {% if explanation %}
               <p class="h4 m-notification_explanation">{{ explanation }}</p>
           {% endif %}

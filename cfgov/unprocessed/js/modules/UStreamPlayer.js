@@ -10,7 +10,7 @@ var CLASSES = Object.freeze( {
 
 var API = {
 
-  SCRIPT_API: 'http://static.ustream.tv/js/libs/ustream-embedapi.min.js',
+  SCRIPT_API: 'https://developers.ustream.tv/js/ustream-embedapi.min.js',
 
   constructor: UStreamPlayer,
 
@@ -27,7 +27,7 @@ var API = {
       this.player = new UstreamPlayer( this.iFrameProperties.id );
       this.initPlayerEvents();
       this.state.isPlayerInitialized = true;
-    } else if( this.state.isScriptLoading === false ) {
+    } else if ( this.state.isScriptLoading === false ) {
       this.embedScript( this.SCRIPT_API, this.initPlayer.bind( this ) );
     }
   },

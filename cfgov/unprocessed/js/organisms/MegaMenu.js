@@ -5,11 +5,13 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var breakpointState = require( '../modules/util/breakpoint-state' );
 var dataHook = require( '../modules/util/data-hook' );
 var EventObserver = require( '../modules/util/EventObserver' );
-var FlyoutMenu = require( '../modules/FlyoutMenu' );
+var FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
+var fnBind = require( '../modules/util/fn-bind' ).fnBind;
 var MegaMenuDesktop = require( '../organisms/MegaMenuDesktop' );
 var MegaMenuMobile = require( '../organisms/MegaMenuMobile' );
 var MoveTransition = require( '../modules/transition/MoveTransition' );
 var Tree = require( '../modules/Tree' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * MegaMenu
@@ -24,7 +26,7 @@ var Tree = require( '../modules/Tree' );
 function MegaMenu( element ) {
   var BASE_CLASS = 'o-mega-menu';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'MegaMenu' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   // Tree data model.
   var _menus;
@@ -39,12 +41,17 @@ function MegaMenu( element ) {
   var KEY_TAB = 9;
 
   /**
-   * @returns {MegaMenu} An instance.
+   * @returns {MegaMenu|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     // DOM selectors.
     var rootMenuDom = _dom;
-    var rootContentDom = rootMenuDom.querySelector( FlyoutMenu.CONTENT_SEL );
+    var rootContentDom = rootMenuDom.querySelector( '.' + BASE_CLASS + '_content' );
 
     // Create model.
     _menus = new Tree();
@@ -66,13 +73,17 @@ function MegaMenu( element ) {
     _desktopNav = new MegaMenuDesktop( _menus ).init();
     _mobileNav = new MegaMenuMobile( _menus ).init();
     _mobileNav.addEventListener( 'rootExpandBegin',
-                                 _handleRootExpandBegin.bind( this ) );
+                                 fnBind( _handleRootExpandBegin, this ) );
     _mobileNav.addEventListener( 'rootCollapseEnd',
-                                 _handleRootCollapseEnd.bind( this ) );
+                                 fnBind( _handleRootCollapseEnd, this ) );
 
     window.addEventListener( 'resize', _resizeHandler );
+    // Pipe window resize handler into orientation change on supported devices.
+    if ( 'onorientationchange' in window ) {
+      window.addEventListener( 'orientationchange', _resizeHandler );
+    }
 
-    if ( _isInDesktop() ) {
+    if ( breakpointState.isInDesktop() ) {
       _desktopNav.resume();
     } else {
       _mobileNav.resume();
@@ -133,8 +144,9 @@ function MegaMenu( element ) {
    * @param {FlyoutMenu} menu - a menu on which to attach events.
    */
   function _addEvents( menu ) {
-    menu.addEventListener( 'triggerOver', _handleEvent );
     menu.addEventListener( 'triggerClick', _handleEvent );
+    menu.addEventListener( 'triggerOver', _handleEvent );
+    menu.addEventListener( 'triggerOut', _handleEvent );
     menu.addEventListener( 'expandBegin', _handleEvent );
     menu.addEventListener( 'expandEnd', _handleEvent );
     menu.addEventListener( 'collapseBegin', _handleEvent );
@@ -147,7 +159,7 @@ function MegaMenu( element ) {
    * @param {Object} event - A FlyoutMenu event object.
    */
   function _handleEvent( event ) {
-    var activeNav = _isInDesktop() ? _desktopNav : _mobileNav;
+    var activeNav = breakpointState.isInDesktop() ? _desktopNav : _mobileNav;
     activeNav.handleEvent( event );
   }
 
@@ -156,29 +168,13 @@ function MegaMenu( element ) {
    * suspends or resumes the mobile or desktop menu behaviors.
    */
   function _resizeHandler() {
-    if ( _isInDesktop() ) {
+    if ( breakpointState.isInDesktop() ) {
       _mobileNav.suspend();
       _desktopNav.resume();
     } else {
       _desktopNav.suspend();
       _mobileNav.resume();
     }
-  }
-
-  // TODO: Move this to breakpoint-state.js.
-  /**
-   * Whether currently in the desktop view.
-   * @returns {boolean} True if in the desktop view, otherwise false.
-   */
-  function _isInDesktop() {
-    var isInDesktop = false;
-    var currentBreakpoint = breakpointState.get();
-    if ( currentBreakpoint.isBpMED ||
-         currentBreakpoint.isBpLG ||
-         currentBreakpoint.isBpXL ) {
-      isInDesktop = true;
-    }
-    return isInDesktop;
   }
 
   /**
@@ -197,7 +193,7 @@ function MegaMenu( element ) {
    * @returns {MegaMenu} An instance.
    */
   function collapse() {
-    if ( !_isInDesktop() ) {
+    if ( !breakpointState.isInDesktop() ) {
       _mobileNav.collapse();
     }
 

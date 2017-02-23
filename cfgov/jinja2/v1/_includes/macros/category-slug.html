@@ -52,7 +52,7 @@
 {% macro _category_link(href, classes) %}
     {% if href %}
         <a href="{{ href }}"
-           class="category-slug {{ classes if classes }}">
+           class="category-slug {{ classes if classes else '' }}">
     {% endif %}
        {{ caller() }}
     {% if href %}

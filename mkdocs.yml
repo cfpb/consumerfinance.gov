@@ -1,0 +1,31 @@
+site_name: cfgov-refresh
+pages:
+- Introduction: index.md
+- Installation: installation.md
+- Usage: usage.md
+- Building and Deploying for cf.gov: 
+    - What's new: whats-new.md
+    - New projects: new-projects.md
+    - Branching and merging: branching-merging.md
+    - Release cadence: release-cadence.md
+    - Deployment: deployment.md
+    - Feature flags: feature-flags.md
+- Back-end guidelines:
+    - Wagtail and Django migrations: wagtail-migrations.md
+    - Wagtail Pages vs Django views: django-to-wagtail.md
+- Front-end guidelines:
+    - Atomic structure and design: atomic-structure.md
+    - Notes on adapting atomic design: notes-on-atomic-design.md
+    - Notes on frameworks: notes-on-frameworks.md
+- Testing: testing.md
+- Development tips: development-tips.md
+
+theme: mkDOCter
+extra:
+    brand_color: "#2CB34A"
+    logo_url: https://cfpb.github.io/img/logo_210.png
+    logo_alt: Consumer Financial Protection Bureau
+
+markdown_extensions:
+    - admonition
+    - tables

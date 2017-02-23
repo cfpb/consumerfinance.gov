@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   contact_address.render()
+   Contact Address
 
    ==========================================================================
 
@@ -9,17 +9,23 @@
    Create a Contact-Address molecule.
    See [GHE]/flapjack/Modules-V1/wiki/Contact:-Address
 
-   address:          An object containing address information.
-   address.label:    A string containing a label for the address.
-   address.title:    A string containing an address name.
-   address.street:   A string containing a street address.
-   address.city:     A string containing a city.
-   address.state:    A string containing a state.
-   address.zip_code: A string containing a zip code.
+   value:          Object defined from a StreamField block.
+
+   value.label:    A string containing a label for the address.
+
+   value.title:    (Optional) A string containing an address name.
+
+   value.street:   A string containing a street address.
+
+   value.city:     A string containing a city.
+
+   value.state:    A string containing a state.
+
+   value.zip_code: A string containing a zip code.
 
    ========================================================================== #}
 
-<div class="m-contact-address">
+<div class="m-contact m-contact-address" data-qa-hook="contact-address">
     <span class="cf-icon cf-icon-mail"></span>
     <span class="h5">{{ value.label }}</span>
 
@@ -33,5 +39,3 @@
         <span>{{ value.zip_code }}</span>
     </p>
 </div>
-
-

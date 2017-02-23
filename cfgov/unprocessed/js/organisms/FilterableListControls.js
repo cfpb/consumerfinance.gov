@@ -1,10 +1,14 @@
 'use strict';
 
 // Required modules.
+var Analytics = require( '../modules/Analytics' );
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
+var Expandable = require( '../organisms/Expandable' );
 var getClosestElement = require( '../modules/util/dom-traverse' ).closest;
+var Multiselect = require( '../molecules/Multiselect' );
 var Notification = require( '../molecules/Notification' );
+var standardType = require( '../modules/util/standard-type' );
 var validators = require( '../modules/util/validators' );
 
 /**
@@ -15,11 +19,12 @@ var validators = require( '../modules/util/validators' );
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the organism.
+ * @returns {FilterableListControls} An instance.
  */
 function FilterableListControls( element ) {
   var BASE_CLASS = 'o-filterable-list-controls';
-  var _dom = atomicHelpers.checkDom(
-    element, BASE_CLASS, 'FilterableListControls' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  var _expandable;
   var _form = _dom.querySelector( 'form' );
   var _notification;
   var _fieldGroups;
@@ -38,21 +43,79 @@ function FilterableListControls( element ) {
     ]
   };
 
+  var _cachedLabels = {};
+
   /**
-   * Initialize FilterableListControls instance.
+   * @returns {FilterableListControls|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
-  function init( ) {
+  function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
+    // instantiate multiselects before their containing expandable
+    // so height of any 'selected choice' buttons is included when
+    // expandable height is calculated initially
+    atomicHelpers.instantiateAll( 'select[multiple]', Multiselect );
+
+    // TODO: FilterableListControls should use expandable
+    //       behavior (FlyoutMenu), not an expandable directly.
+    _expandable = new Expandable( _dom );
+    _expandable.init();
+
     _notification = new Notification( _dom );
     _notification.init();
 
     _initEvents();
+
+    return this;
   }
 
   /**
    * Initialize FilterableListControls events.
    */
   function _initEvents() {
-    _form.addEventListener( 'submit', _formSubmitted );
+    var labelDom = _dom.querySelector( '.o-expandable_label' );
+    var label;
+    var getDataLayerOptions = Analytics.getDataLayerOptions;
+    var dataLayerArray = [];
+    var cachedFields = {};
+
+    if ( labelDom ) {
+      label = labelDom.textContent.trim();
+    }
+
+    _expandable.addEventListener( 'expandBegin', function sendEvent() {
+      Analytics.sendEvent( 'Filter:open', label );
+    } );
+
+    _expandable.addEventListener( 'collapseBegin', function sendEvent() {
+      Analytics.sendEvent( 'Filter:close', label );
+    } );
+
+    _form.addEventListener( 'change', function sendEvent( event ) {
+      var action;
+      var field = event.target;
+      var fieldValue;
+
+      if ( !field ) {
+        return;
+      }
+      action = field.name + ':change';
+      cachedFields[field.name] = getDataLayerOptions( action, field.value );
+    } );
+
+    _form.addEventListener( 'submit', function sendEvent( event ) {
+      event.preventDefault();
+      Object.keys( cachedFields ).forEach( function( key ) {
+        dataLayerArray.push( cachedFields[key] );
+      } );
+      dataLayerArray.push( getDataLayerOptions( 'Filter:submit', label,
+                           '', _formSubmitted ) );
+      Analytics.sendEvents( dataLayerArray );
+      dataLayerArray = [];
+    } );
   }
 
   /**
@@ -63,16 +126,16 @@ function FilterableListControls( element ) {
   }
 
   /**
-   * Show error notification.
-   * @param {Object} event Form submitted event.
+   * Handle form sumbmission and showing error notification.
    */
-  function _formSubmitted( event ) {
+  function _formSubmitted( ) {
     var validatedFields = _validateFields( [].slice.call( _form.elements ) );
 
     if ( validatedFields.invalid.length > 0 ) {
-      event.preventDefault();
       _setNotification( _notification.ERROR,
                         _buildErrorMessage( validatedFields.invalid ) );
+    } else {
+      _form.submit();
     }
   }
 
@@ -120,7 +183,7 @@ function FilterableListControls( element ) {
    * @param {string} type The type of notification to display.
    * @param {string} msg The message to display in the notification.
    * @param {string} methodName The method to use to control visibility
-                                of the notification.
+   *                            of the notification.
    */
   function _setNotification( type, msg, methodName ) {
     methodName = methodName || 'show';
@@ -133,7 +196,7 @@ function FilterableListControls( element ) {
    * @param {HTMLNode} field A form field.
    * @param {string} type The type of field.
    * @param {boolean} isInGroup A boolean that determines if field in a group.
-   * @returns {boolean} Value indicating whether to validate a field.
+   * @returns {boolean} True if the field should be validated, false otherwise.
    */
   function shouldValidateField( field, type, isInGroup ) {
     var isDisabled = field.getAttribute( 'disabled' ) !== null;
@@ -214,7 +277,7 @@ function FilterableListControls( element ) {
 
     if ( isInGroup ) {
       var groupName = field.getAttribute( 'data-group' ) ||
-                field.getAttribute( 'name' );
+                      field.getAttribute( 'name' );
       var groupSelector = '[name=' + groupName + ']:checked,' +
                           '[data-group=' + groupName + ']:checked';
       fieldset = _form.querySelectorAll( groupSelector ) || [];

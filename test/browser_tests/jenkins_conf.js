@@ -1,23 +1,25 @@
 'use strict';
 
+var environment = require( './environment.js' );
+var envvars = require( '../../config/environment' ).envvars;
 var JasmineReporters = require( 'jasmine-reporters' );
 var JasmineSpecReporter = require( 'jasmine-spec-reporter' );
 var mkdirp = require( 'mkdirp' );
-var environment = require( './environment.js' );
 
 exports.config = {
   framework:    'jasmine2',
   specs:        [ environment.specsBasePath + '.js' ],
   capabilities: {
     'browserName':       'chrome',
-    'name':              'flapjack-browser-tests ' + process.env.SITE_DESC,
-    'tunnel-identifier': process.env.SAUCE_TUNNEL
+    'name':              'flapjack-browser-tests ' + envvars.SITE_DESC,
+    'tunnel-identifier': envvars.SAUCE_TUNNEL
   },
 
-  sauceUser: process.env.SAUCE_USER,
-  sauceKey:  process.env.SAUCE_KEY,
+  sauceUser: envvars.SAUCE_USERNAME,
+  sauceKey:  envvars.SAUCE_ACCESS_KEY,
 
   onPrepare: function() {
+    // Ignore Selenium allowances for non-angular sites.
     browser.ignoreSynchronization = true;
 
     // Add jasmine spec reporter.
@@ -29,7 +31,7 @@ exports.config = {
 
     mkdirp( newFolder, function( err ) {
       if ( err ) {
-        console.error( err ); // eslint-disable-line no-console, no-inline-comments, max-len
+        console.error( err );
       } else {
         var jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter( {
           consolidateAll: true,

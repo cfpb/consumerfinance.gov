@@ -2,7 +2,8 @@
 
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var Expandable = require( '../molecules/Expandable' );
+var Expandable = require( '../organisms/Expandable' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * SecondaryNavigation
@@ -16,15 +17,21 @@ var Expandable = require( '../molecules/Expandable' );
 function SecondaryNavigation( element ) {
   var BASE_CLASS = 'o-secondary-navigation';
 
-  var _dom = atomicHelpers.checkDom(
-    element, BASE_CLASS, 'SecondaryNavigation' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
 
   /**
-   * Initialize FilterableListControls instance.
-  */
+   * @returns {SecondaryNavigation|undefined} An instance,
+   *   or undefined if it was already initialized.
+   */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     var expandable = new Expandable( _dom );
     expandable.init();
+
+    return this;
   }
 
   this.init = init;

@@ -3,13 +3,14 @@
 // Required modules.
 var EventObserver = require( '../../modules/util/EventObserver' );
 var BaseTransition = require( './BaseTransition' );
+var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 
 // Exported constants.
-var CLASSES = Object.seal( {
+var CLASSES = {
   BASE_CLASS: 'u-alpha-transition',
   ALPHA_100:  'u-alpha-100',
   ALPHA_0:    'u-alpha-0'
-} );
+};
 
 /**
  * AlphaTransition
@@ -23,51 +24,17 @@ var CLASSES = Object.seal( {
  */
 function AlphaTransition( element ) {
 
-  var _baseTransition = new BaseTransition( element, CLASSES ).init();
-  var _transitionCompleteBinded = _transitionComplete.bind( this );
-  _baseTransition.addEventListener( BaseTransition.END_EVENT,
-                                    _transitionCompleteBinded );
+  var _baseTransition = new BaseTransition( element, CLASSES );
 
   /**
    * @returns {AlphaTransition} An instance.
    */
   function init() {
+    _baseTransition.init();
+    var _transitionCompleteBinded = fnBind( _transitionComplete, this );
+    _baseTransition.addEventListener( BaseTransition.END_EVENT,
+                                      _transitionCompleteBinded );
     return this;
-  }
-
-  /**
-   * @param {HTMLNode} elem - Set HTML element target of the transition.
-   */
-  function setElement( elem ) {
-    _baseTransition.setElement( elem );
-  }
-
-  /**
-   * Remove all transition classes.
-   */
-  function remove() {
-    _baseTransition.remove();
-  }
-
-  /**
-   * Add a "transition-duration: 0" utility CSS class.
-   */
-  function animateOn() {
-    _baseTransition.animateOn();
-  }
-
-  /**
-   * Remove a "transition-duration: 0" utility CSS class.
-   */
-  function animateOff() {
-    _baseTransition.animateOff();
-  }
-
-  /**
-   * @returns {boolean} Whether the transition has a duration or not.
-   */
-  function isAnimated() {
-    return _baseTransition.isAnimated();
   }
 
   /**
@@ -81,7 +48,7 @@ function AlphaTransition( element ) {
    * Fade to 100% by applying a utility alpha class.
    * @returns {AlphaTransition} An instance.
    */
-  function fadeTo100() {
+  function fadeIn() {
     _baseTransition.applyClass( CLASSES.ALPHA_100 );
 
     return this;
@@ -91,7 +58,7 @@ function AlphaTransition( element ) {
    * Fade to nothing by applying a utility alpha class.
    * @returns {AlphaTransition} An instance.
    */
-  function fadeTo0() {
+  function fadeOut() {
     _baseTransition.applyClass( CLASSES.ALPHA_0 );
 
     return this;
@@ -103,14 +70,16 @@ function AlphaTransition( element ) {
   this.dispatchEvent = eventObserver.dispatchEvent;
   this.removeEventListener = eventObserver.removeEventListener;
 
-  this.animateOff = animateOff;
-  this.animateOn = animateOn;
-  this.fadeTo100 = fadeTo100;
-  this.fadeTo0 = fadeTo0;
+  this.animateOff = _baseTransition.animateOff;
+  this.animateOn = _baseTransition.animateOn;
+  this.halt = _baseTransition.halt;
+  this.isAnimated = _baseTransition.isAnimated;
+  this.remove = _baseTransition.remove;
+  this.setElement = _baseTransition.setElement;
+
+  this.fadeIn = fadeIn;
+  this.fadeOut = fadeOut;
   this.init = init;
-  this.isAnimated = isAnimated;
-  this.setElement = setElement;
-  this.remove = remove;
 
   return this;
 }

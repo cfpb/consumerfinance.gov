@@ -9,10 +9,10 @@
 
 'use strict';
 
-var fnBind = require( './fnBind' ).fnBind;
+var fnBind = require( './fn-bind' ).fnBind;
 
 /**
-* @param {Object} object - JavaScript object.
+* @param {object} object - JavaScript object.
 * @returns {boolean} True if object is plain Javascript object.
 */
 function _isPlainObject( object ) {

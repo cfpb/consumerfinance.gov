@@ -59,14 +59,15 @@
             nav_children in nav_group %}
     <li class="list_item
                {{ _classes( nav_depth, '-item' ) }}"
-        {{ 'data-js-hook=flyout-menu' if nav_children | count > 0 else '' }}>
+        {{ 'data-js-hook=behavior_flyout-menu' if nav_children | count > 0 else '' }}>
         {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
         <a class="{{ 'u-link__disabled' if nav_url == '' else '' }}
                   {{ _classes( nav_depth, '-link' ) }}
                   {{ _classes( nav_depth, '-link__has-children' ) if nav_children | count > 0 else '' }}
                   {{ _classes( nav_depth, '-link__current' ) if nav_url == request.path else '' }}"
            {{ '' if nav_url == '' else 'href=' + nav_url | e }}
-           {{ 'data-js-hook=flyout-menu_trigger' if nav_children | count > 0 else '' }}>
+           {{ 'data-js-hook=behavior_flyout-menu_trigger' if nav_children | count > 0 else '' }}
+           {{ 'aria-pressed=false' if nav_children | count > 0 else '' }}>
             {{ nav_caption }}
         </a>
         {% if nav_children | count > 0 %}
@@ -104,14 +105,14 @@
 <div class="{{ _classes( nav_depth ) }}
             u-hidden-overflow"
      aria-expanded="false"
-     data-js-hook="flyout-menu_content">
+     data-js-hook="behavior_flyout-menu_content">
 
     <div class="{{ _classes( nav_depth, '-wrapper' ) }}">
         {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
             {# Open wrapper if needed #}
             {% if nav_depth > 1 %}
             <button class="{{ _classes( nav_depth, '-alt-trigger' ) }}"
-                    data-js-hook="flyout-menu_alt-trigger">
+                    data-js-hook="behavior_flyout-menu_alt-trigger">
                 Back
             </button>
             {% endif %}
@@ -135,8 +136,8 @@
                     {{ _nav_list( nav_depth, nav_items ) }}
                 </div>
             </div>
-            {% for url, fmc in media_items %}
-                {% if url == nav_overview_url %}
+            {% for parent_name, fmc in media_items %}
+                {% if parent_name + ' Overview' == nav_overview %}
                 {{ fmc }}
                 {% endif %}
             {% endfor %}
@@ -165,10 +166,12 @@
    ========================================================================== #}
 <nav class="{{ base_class }}
             u-hidden"
-     data-js-hook="flyout-menu"
+     data-js-hook="behavior_flyout-menu"
      aria-label="main navigation"
      role="navigation">
-    <button class="{{ base_class ~ '_trigger' }}" data-js-hook="flyout-menu_trigger">
+    <button class="{{ base_class ~ '_trigger' }}"
+            data-js-hook="behavior_flyout-menu_trigger"
+            aria-pressed="false">
         <span class="u-visually-hidden">Menu</span>
     </button>
     {# Create a root menu at depth one.

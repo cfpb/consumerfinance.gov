@@ -25,17 +25,19 @@ related_posts_categories = [
 ]
 
 page_types = [
+    ('activity-log', 'Activity Log'),
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
-    ('enforcement', 'Enforcement action'),
+    ('enforcement', 'Enforcement Action'),
     ('final-rule', 'Final Rule'),
     ('foia-freq-req-record', 'FOIA Frequently Requested Record'),
     ('impl-resource', 'Implementation Resource'),
+    ('leadership-calendar', 'Leadership Calendar'),
     ('newsroom', 'Newsroom'),
     ('notice-opportunity-comment', 'Notice and Opportunity for Comment'),
-    ('research-report', 'Research Report'),
-    ('rule-under-dev', 'Rule under development'),
-    ('leadership-calendar', 'Leadership Calendar'),
+    ('research-reports', 'Research Report'),
+    ('rule-under-dev', 'Rule Under Development'),
+    ('story', 'Story'),
 ]
 
 fcm_types = [
@@ -48,6 +50,10 @@ fcm_types = [
 ]
 
 categories = [
+    ('Administration adjudication docket', (
+        ('administrative-adjudication', 'Administrative adjudication'),
+        ('stipulation-and-constent-order', 'Stipulation and consent order'),
+    )),
     ('Amicus Brief', (
         ('us-supreme-court', 'U.S. Supreme Court'),
         ('fed-circuit-court', 'Federal Circuit Court'),
@@ -60,9 +66,10 @@ categories = [
         ('data-research-reports', 'Data, research & reports'),
         ('info-for-consumers', 'Info for consumers'),
     )),
-    ('Enforcement action', (
-        ('fed-district-case', 'Federal District Court Case'),
-        ('admin-filing', 'Administrative Filing'),
+    ('Enforcement Action', (
+        ('fed-district-case', 'Federal district court case'),
+        ('administrative-adjudication-2', 'Administrative adjudication'),
+        ('stipulation-and-consent-order-2', 'Stipulation and consent order'),
     )),
     ('Final Rule', (
         ('interim-final-rule', 'Interim Final Rule'),
@@ -105,6 +112,18 @@ categories = [
         ('notice-proposed-rule-2', 'Advanced Notice of Proposed Rulemaking'),
         ('proposed-rule-2', 'Proposed Rule'),
     )),
+    ('Story', (
+        ('auto-loans', 'Auto loans'),
+        ('bank-accts-services', 'Bank accounts and services'),
+        ('credit-cards', 'Credit cards'),
+        ('credit-reports-scores', 'Credit reports and scores'),
+        ('debt-collection', 'Debt collection'),
+        ('money-transfers', 'Money transfers'),
+        ('mortgages', 'Mortgages'),
+        ('payday-loans', 'Payday loans'),
+        ('prepaid-cards', 'Prepaid cards'),
+        ('student-loans', 'Student loans'),
+    )),
 ]
 
 supported_languagues = [
@@ -120,8 +139,31 @@ supported_languagues = [
 ]
 
 
+def related_posts_category_lookup(related_categories):
+    related = []
+    for category in related_categories:
+        for name, related_posts_cats in related_posts_categories:
+            for cat in related_posts_cats:
+                if category == cat[0]:
+                    related.append(cat[1])
+    results = []
+    for r in related:
+        for name, cats in categories:
+            for c in cats:
+                if r == c[1]:
+                    results.append(c[0])
+    return results
+
+
 def page_type_choices():
     new_choices = [
+        ('Activity Log', (
+            ('blog', 'Blog'),
+            ('op-ed', 'Op-Ed'),
+            ('press-release', 'Press Release'),
+            ('research-reports', 'Report'),
+            ('speech', 'Speech'),
+            ('testimony', 'Testimony'))),
         ('Leadership Calendar', (
             ('richard-cordray', 'Richard Cordray'),
             ('david-silberman', 'David Silberman'),
@@ -136,6 +178,11 @@ def page_type_choices():
             ('speech', 'Speech'),
             ('testimony', 'Testimony'))),
     ]
+    categories_copy = list(categories)
+    for i, category in enumerate(categories_copy):
+        for choice in new_choices:
+            if choice[0] == category[0]:
+                del categories_copy[i]
     return sorted(categories + new_choices)
 
 
@@ -145,6 +192,7 @@ def choices_for_page_type(page_type):
             for cat_slug, cat_tuples in page_type_choices():
                 if name == cat_slug:
                     return list(cat_tuples)
+    return []
 
 
 def category_label(category):
@@ -162,6 +210,15 @@ def fcm_label(category):
 
 def is_blog(page):
     for category in page.categories.all():
-        for blog_category in choices_for_page_type('blog'):
-            if category.name == blog_category[0]:
+        for choice in choices_for_page_type('blog'):
+            if category.name == choice[0]:
+                return True
+    if 'Blog' in page.specific_class.__name__:
+        return True
+
+
+def is_report(page):
+    for category in page.categories.all():
+        for choice in choices_for_page_type('research-reports'):
+            if category.name == choice[0]:
                 return True

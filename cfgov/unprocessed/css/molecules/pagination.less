@@ -13,7 +13,7 @@
                   Next
                   <span class="btn_icon__right cf-icon cf-icon-right"></span>
               </a>
-              <form data-js-hook="validate_pagination" action="#o-pagination-content_list">
+              <form action="#o-pagination-content_list">
                   <label for="m-pagination_current-page">
                       Page
                       <span class="u-visually-hidden">
@@ -108,7 +108,7 @@
         .webfont-medium();
 
         &.btn__disabled {
-          background-color: @pagination-bg-color;
+            background-color: @pagination-bg-color;
         }
     }
 
@@ -118,14 +118,14 @@
         right: 0;
     }
 
-    .respond-to-max(@bp-xs-max, {
+    .respond-to-max( @bp-xs-max, {
         &_btn-prev,
         &_btn-next {
             margin-bottom: @pagination-font-size__em / 2;
         }
-    });
+    } );
 
-    .respond-to-min(@bp-sm-min, {
+    .respond-to-min( @bp-sm-min, {
         &_btn-prev {
             position: absolute;
             top: 0;
@@ -143,13 +143,12 @@
             &,
             &:link,
             &:visited {
-                  border-top-left-radius: 0;
-                  border-bottom-left-radius: 0;
-              }
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
         }
-    });
+    } );
 }
-
 
 /* topdoc
     name: EOF

@@ -63,12 +63,6 @@ rules:
 
   # Rules for flagging POSSIBLE ERRORS.
 
-  # Consistent use of trailing commas in object and array literals.
-  # This rule is needed for IE8- support.
-  comma-dangle:
-    - 2
-    - never
-
   # Disallows assignment in conditional expressions.
   no-cond-assign:
     - 2
@@ -135,6 +129,9 @@ rules:
   # Disallows use of the global Math and JSON objects as functions.
   no-obj-calls: 2
 
+  # Disallow use of Object.prototypes builtins directly.
+  no-prototype-builtins: 0
+
   # Disallows multiple spaces in a regular expression literal.
   no-regex-spaces: 2
 
@@ -142,8 +139,14 @@ rules:
   # Array values should be explicitly defined.
   no-sparse-arrays: 2
 
+  # Disallow confusing multiline expressions.
+  no-unexpected-multiline: 2
+
   # Disallows unreachable statements after a return, throw, continue, or break.
   no-unreachable: 2
+
+  # Disallow control flow statements in finally blocks.
+  no-unsafe-finally: 2
 
   # Disallows comparisons with the value NaN.
   use-isnan: 2
@@ -161,9 +164,6 @@ rules:
 
   # Enforces that the results of typeof are compared against a valid string.
   valid-typeof: 2
-
-  # Avoid code that looks like two expressions but is actually one.
-  no-unexpected-multiline: 2
 
 
   # Rules for encouraging BEST PRACTICES.
@@ -197,18 +197,18 @@ rules:
   # Enforces default case in switch statements.
   default-case: 2
 
+  # Enforces consistent newlines before or after dots.
+  dot-location:
+    - 2
+    - property
+
   # Enforces use of dot notation whenever possible.
   # `allowKeywords` = false follows ECMAScript version 3 compatible style.
   dot-notation:
     - 2
     -
-      allowKeywords: false
+      allowKeywords: true
       allowPattern: ''
-
-  # Enforces consistent newlines before or after dots.
-  dot-location:
-    - 2
-    - property
 
   # Enforces use of === and !== over == and !=.
   eqeqeq:
@@ -294,6 +294,8 @@ rules:
     - 0
     -
       ignoreArrayIndexes: true
+      enforceConst: true
+      detectObjects: true
 
   # Disallows use of multiple spaces.
   no-multi-spaces:
@@ -330,10 +332,6 @@ rules:
     - 0
     -
       props: false
-
-  # Disallows use of process.env.
-  # Only applicable to Node.js.
-  no-process-env: 2
 
   # Disallows usage of __proto__ property.
   no-proto: 2
@@ -373,11 +371,14 @@ rules:
   # Disallow unnecessary .call() and .apply().
   no-useless-call: 2
 
-  # Disallows use of void operator.
-  no-void: 2
-
   # Disallow unnecessary concatenation of literals or template literals.
   no-useless-concat: 2
+
+  # Disallow unnecessary escape characters.
+  no-useless-escape: 1
+
+  # Disallows use of void operator.
+  no-void: 2
 
   # Disallows use of configurable warning terms in comments, e. g. TODO.
   no-warning-comments:
@@ -426,6 +427,9 @@ rules:
 
   # Rules for VARIABLES.
 
+  # Require or disallow initialization in var declarations.
+  init-declarations: 0
+
   # Disallows the catch clause parameter name being the same as a variable
   # in the outer scope.
   # This rule is needed for IE8- support.
@@ -437,6 +441,9 @@ rules:
   # Disallows labels that share a name with a variable.
   no-label-var: 2
 
+  # Disallow specified global variables.
+  no-restricted-globals: 2
+
   # Disallows shadowing of names such as arguments.
   no-shadow-restricted-names: 2
 
@@ -446,13 +453,13 @@ rules:
     -
       hoist: functions
 
+  # Disallows use of undefined when initializing variables.
+  no-undef-init: 2
+
   # Disallows use of undeclared vars unless mentioned in a /*global */ block.
   no-undef:
     - 2
     - typeof: true
-
-  # Disallows use of undefined when initializing variables.
-  no-undef-init: 2
 
   # Disallows use of undefined variable.
   no-undefined: 2
@@ -462,7 +469,11 @@ rules:
     - 1
     -
       vars: all
+      varsIgnorePattern: ''
       args: after-used
+      argsIgnorePattern: ''
+      caughtErrors: 'none'
+      caughtErrorsIgnorePattern: ''
 
   # Disallows use of variables before they are defined.
   no-use-before-define:
@@ -472,7 +483,7 @@ rules:
       classes: true
 
 
-  # Rules for NODE.JS.
+  # Rules for Node.js and CommonJS.
 
   # Enforce return after a callback.
   # callback, cb, and next are possible callback function names.
@@ -506,11 +517,12 @@ rules:
   # Disallows string concatenation with __dirname and __filename.
   no-path-concat: 2
 
+  # Disallows use of process.env.
+  # Only applicable to Node.js.
+  no-process-env: 2
+
   # Disallows use of process.exit().
   no-process-exit: 1
-
-  # Restrict usage of specified node imports.
-  no-restricted-imports: 0
 
   # Restrict usage of specific node modules.
   no-restricted-modules: 0
@@ -544,6 +556,12 @@ rules:
     - 1
     -
       properties: always
+
+  # Consistent use of trailing commas in object and array literals.
+  # This rule is needed for IE8- support.
+  comma-dangle:
+    - 2
+    - never
 
   # Enforce spacing before and after comma.
   comma-spacing:
@@ -600,6 +618,13 @@ rules:
       exceptions:
         - i
 
+  # Require identifiers to match the provided regular expression.
+  id-match:
+    - 0
+    - '^[a-z]+([A-Z][a-z]+)*$'
+    -
+      properties: false
+
   # Set a specific tab width for your code.
   indent:
     - 2
@@ -624,6 +649,17 @@ rules:
       afterColon: true
       mode: minimum
 
+  # Enforce consistent spacing among keys/values in object literal properties.
+  keyword-spacing:
+    - 1
+    -
+      before: true
+
+  # Disallow mixed 'LF' and 'CRLF' as linebreaks.
+  linebreak-style:
+    - 2
+    - unix
+
   # Enforces empty lines around comments.
   lines-around-comment:
     - 1
@@ -635,15 +671,53 @@ rules:
       allowBlockStart: false
       allowBlockEnd: false
 
-  # Disallow mixed 'LF' and 'CRLF' as linebreaks.
-  linebreak-style:
-    - 2
-    - unix
+  # Specifies maximum depth that blocks can be nested.
+  max-depth:
+    - 1
+    - 5
+
+  # Specifies maximum length of a line in your program.
+  max-len:
+    - 1
+    -
+      code: 80
+      tabWidth: 4
+      comments: 80
+      ignorePattern: ''
+      ignoreTrailingComments: true
+      ignoreUrls: true
+
+  # Enforce a maximum file length.
+  max-lines:
+    - 0
+    -
+      max: 300
+      skipBlankLines: true
+      skipComments: true
 
   # Specify the maximum depth callbacks can be nested.
   max-nested-callbacks:
     - 2
     - 3
+
+  # Limits number of parameters that can be used in the function declaration.
+  max-params:
+    - 1
+    - 5
+
+  # Enforce a maximum number of statements allowed per line.
+  max-statements-per-line:
+    - 1
+    -
+      max: 2
+
+  # Specifies maximum number of statement allowed in a function.
+  max-statements:
+    - 1
+    - 25
+
+  # Enforce newlines between operands of ternary expressions.
+  multiline-ternary: 0
 
   # Require a capital letter for constructors.
   new-cap:
@@ -662,8 +736,21 @@ rules:
     - 0
     - always
 
+  # Require or disallow an empty line after var declarations.
+  newline-before-return:
+    - 0
+
+  # Require a newline after each call in a method chain.
+  newline-per-chained-call:
+    - 0
+    -
+      ignoreChainWithDepth: 2
+
   # Disallows use of the Array constructor.
   no-array-constructor: 2
+
+  # Disallows use of bitwise operators.
+  no-bitwise: 0
 
   # Disallow use of the continue statement.
   no-continue: 1
@@ -673,6 +760,9 @@ rules:
 
   # Disallows if as the only statement in an else block.
   no-lonely-if: 2
+
+  # Disallow mixes of different operators.
+  no-mixed-operators: 1
 
   # Disallows mixed spaces and tabs for indentation.
   # Include "smart-tabs" option to suppresses warnings tabs used for alignment.
@@ -694,6 +784,9 @@ rules:
 
   # Disallows use of the Object constructor.
   no-new-object: 2
+
+  # Disallows use of unary operators, ++ and --.
+  no-plusplus: 0
 
   # Disallow use of certain syntax in code.
   no-restricted-syntax:
@@ -720,6 +813,13 @@ rules:
   # Disallow whitespace before properties.
   no-whitespace-before-property: 2
 
+  # Enforce consistent line breaks inside braces.
+  object-curly-newline:
+    - 0
+    -
+      multiline: true
+      minProperties: 3
+
   # Require or disallow padding inside curly braces.
   object-curly-spacing:
     - 1
@@ -728,15 +828,21 @@ rules:
       objectsInObjects: false
       arraysInObjects: false
 
-  # Disallows multiple var statements per function.
-  one-var:
-    - 0
-    - always
+  # Enforce placing object properties on separate lines.
+  object-property-newline:
+    - 1
+    -
+      allowMultiplePropertiesPerLine: true
 
   # Require or disallow an newline around variable declarations.
   one-var-declaration-per-line:
     - 2
     - initializations
+
+  # Disallows multiple var statements per function.
+  one-var:
+    - 0
+    - always
 
   # Requires assignment operator shorthand or prohibit it entirely.
   operator-assignment:
@@ -772,18 +878,6 @@ rules:
   require-jsdoc:
     - 1
 
-  # Require identifiers to match the provided regular expression.
-  id-match:
-    - 0
-    - '^[a-z]+([A-Z][a-z]+)*$'
-    -
-      properties: false
-
-  # Requires or disallows use of semicolons instead of ASI.
-  semi:
-    - 2
-    - always
-
   # Disallows space before semicolon.
   semi-spacing:
     - 2
@@ -791,17 +885,10 @@ rules:
       before: false
       after: true
 
-  # Sort import declarations within module.
-  sort-imports:
-    - 1
-    -
-      ignoreCase: false
-      ignoreMemberSort: false
-      memberSyntaxSortOrder:
-        - none
-        - all
-        - multiple
-        - single
+  # Requires or disallows use of semicolons instead of ASI.
+  semi:
+    - 2
+    - always
 
   # Enforces sorting variables within the same declaration block.
   sort-vars: 0
@@ -844,11 +931,23 @@ rules:
     - 2
     - always
     -
-      exceptions:
-        - '-'
-        - +
-      markers:
-        - /
+      line:
+        markers:
+          - '/'
+        exceptions:
+          - '-'
+          - '+'
+      block:
+        markers:
+          - '!'
+        exceptions:
+          - '*'
+        balanced: true
+
+  # Require or disallow the Unicode BOM.
+  unicode-bom:
+    - 2
+    - never
 
   # Requires regex literals to be wrapped in parentheses.
   wrap-regex: 2
@@ -888,7 +987,10 @@ rules:
   no-class-assign: 2
 
   # Disallow arrow functions where they could be confused with comparisons.
-  no-confusing-arrow: 1
+  no-confusing-arrow:
+    - 1
+    -
+      allowParens: true
 
   # Disallow modifying variables that are declared using const.
   no-const-assign: 2
@@ -896,15 +998,35 @@ rules:
   # Disallow duplicate name in class members.
   no-dupe-class-members: 2
 
+  # Disallow duplicate module imports.
+  no-duplicate-imports:
+    - 2
+    -
+      includeExports: true
+
   # Disallow use of the new operator with the Symbol object.
   # This rule should not be used in ES3/5 environments.
   no-new-symbol: 0
 
+  # Restrict usage of specified node imports.
+  no-restricted-imports: 0
+
   # Disallow to use this/super before super() calling in constructors.
   no-this-before-super: 2
 
+  # Disallow unnecessary computed property keys in object literals.
+  no-useless-computed-key: 2
+
   # Disallow unnecessary constructor.
   no-useless-constructor: 2
+
+  # Disallow renaming import/export/destructured assignments to the same name.
+  no-useless-rename:
+    - 2
+    -
+      ignoreImport: false
+      ignoreExport: false
+      ignoreDestructuring: false
 
   # Requires using let or const instead of var.
   # This should be turned on when browser support is better.
@@ -922,10 +1044,6 @@ rules:
   # Suggest using of const declaration for variables that are never modified.
   prefer-const: 1
 
-  # Suggest using the spread operator instead of .apply().
-  # Should not be enabled in ES3/5 environments.
-  prefer-spread: 0
-
   # Suggest using Reflect methods where applicable.
   # Should not be enabled in ES3/5 environments.
   prefer-reflect: 0
@@ -934,12 +1052,33 @@ rules:
   # Should not be enabled in ES3/5 environments.
   prefer-rest-params: 0
 
+  # Suggest using the spread operator instead of .apply().
+  # Should not be enabled in ES3/5 environments.
+  prefer-spread: 0
+
   # Suggest using template literals instead of strings concatenation.
   # Should not be enabled in ES3/5 environments.
   prefer-template: 0
 
   # Disallow generator functions that do not have yield.
   require-yield: 1
+
+  # Enforce spacing between rest and spread operators and their expressions.
+  rest-spread-spacing:
+    - 2
+    - never
+
+  # Sort import declarations within module.
+  sort-imports:
+    - 1
+    -
+      ignoreCase: false
+      ignoreMemberSort: false
+      memberSyntaxSortOrder:
+        - none
+        - all
+        - multiple
+        - single
 
   # Enforce spacing around embedded expressions of template strings.
   template-curly-spacing:
@@ -952,35 +1091,3 @@ rules:
     -
       before: true
       after: false
-
-
-
-  # Rules for LEGACY SUPPORT.
-  # These rules provide compatibility with JSHint/JSLint rules.
-
-  # Specifies maximum depth that blocks can be nested.
-  max-depth:
-    - 1
-    - 5
-
-  # Specifies maximum length of a line in your program.
-  max-len:
-    - 1
-    - 80
-    - 4
-
-  # Limits number of parameters that can be used in the function declaration.
-  max-params:
-    - 1
-    - 5
-
-  # Specifies maximum number of statement allowed in a function.
-  max-statements:
-    - 1
-    - 25
-
-  # Disallows use of bitwise operators.
-  no-bitwise: 0
-
-  # Disallows use of unary operators, ++ and --.
-  no-plusplus: 0

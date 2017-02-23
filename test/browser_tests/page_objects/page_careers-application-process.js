@@ -2,11 +2,12 @@
 
 var _getQAelement = require( '../util/qa-element' ).get;
 var relatedLinksSection = require( '../shared_objects/related-links-section' );
+var videoPlayer = require( '../shared_objects/video-player' );
 
 
 function ApplicationProcess() {
 
-  Object.assign( this, relatedLinksSection );
+  Object.assign( this, relatedLinksSection, videoPlayer );
 
   this.get = function() {
     browser.get( '/about-us/careers/application-process/' );

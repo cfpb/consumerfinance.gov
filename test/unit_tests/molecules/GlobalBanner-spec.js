@@ -32,18 +32,18 @@ describe( 'Global Banner State', function() {
     '<div class="m-global-banner">' +
     '<div class="wrapper ' +
                 'wrapper__match-content ' +
-                'm-expandable ' +
-                'm-expandable__expanded">' +
+                'o-expandable ' +
+                'o-expandable__expanded">' +
         '<div class="m-global-banner_head">' +
             '<span class="cf-icon ' +
                          'cf-icon-error-round ' +
                          'm-global-banner_icon"></span>' +
             'This beta site is a work in progress.' +
         '</div>' +
-        '<div class="m-expandable_content" ' +
+        '<div class="o-expandable_content" ' +
               'aria-expanded="true" style="height: 22px;">' +
             '<p class="m-global-banner_desc ' +
-                      'm-expandable_content-animated">' +
+                      'o-expandable_content-animated">' +
                 'We’re prototyping new designs. ' +
                 'Things may not work as expected. ' +
                 'Our regular site continues to be at ' +
@@ -53,24 +53,24 @@ describe( 'Global Banner State', function() {
         '</div>' +
         '<button class="btn ' +
                        'm-global-banner_btn ' +
-                       'm-expandable_target ' +
-                       'm-expandable_link" id="m-global-banner_btn" ' +
+                       'o-expandable_target ' +
+                       'o-expandable_link" id="m-global-banner_btn" ' +
                  'aria-pressed="true">' +
-            '<span class="m-expandable_cue m-expandable_cue-close">' +
+            '<span class="o-expandable_cue o-expandable_cue-close">' +
                 'Collapse <span class="cf-icon cf-icon-up"></span>' +
             '</span>' +
-            '<span class="m-expandable_cue m-expandable_cue-open">' +
+            '<span class="o-expandable_cue o-expandable_cue-open">' +
                 'More info <span class="cf-icon cf-icon-down"></span>' +
             '</span>' +
         '</button>' +
     '</div>' +
     '</div>';
 
-    contentDom = document.querySelector( '.m-expandable_content' );
+    contentDom = document.querySelector( '.o-expandable_content' );
     contentAnimatedDom =
-      document.querySelector( '.m-expandable_content-animated' );
+      document.querySelector( '.o-expandable_content-animated' );
     contentAnimatedDom.offsetHeight = 300;
-    targetDom = document.querySelector( '.m-expandable_target' );
+    targetDom = document.querySelector( '.o-expandable_target' );
 
     clickEvent = document.createEvent( 'Event' );
     clickEvent.initEvent( 'click', true, true );

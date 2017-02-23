@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   Overlay Hero
+   home_hero()
 
    ==========================================================================
 
@@ -8,19 +8,21 @@
 
    Create an home-hero molecule when given:
 
-   value.heading:   A string containing title of module.
+   value:         Object defined from a StreamField block.
 
-   value.body:      A string containing the content to display below the
-                    heading (typically a paragraph).
+   value.lg_img:  The image url for background image on larger devices.
 
-   value.sm_img:     The image url for faux image on small devices.
+   value.heading: A string containing title of module.
 
-   value.lg_img:     The image url for background image on larger devices.
+   value.body:    A string containing the content to display below the
+                  heading (typically a paragraph).
+
+   value.sm_img:  The image url for faux image on small devices.
 
    ========================================================================== #}
 
 {% macro home_hero( value ) %}
-<div class="m-home-hero" style="background-image: url({{ value.lg_img }});">
+<div class="m-home-hero" style="background-image: url({{ static(value.lg_img) }});">
     <div class="content-l">
         <section class="m-home-hero_content">
             <h1 class="m-home-hero_heading">{{ value.heading }}</h1>
@@ -30,6 +32,6 @@
         </section>
     </div>
     <div class="m-home-hero_sm-img"
-         style="background-image: url({{ value.sm_img }});"></div>
+         style="background-image: url({{ static(value.sm_img) }});"></div>
 </div>
 {% endmacro %}

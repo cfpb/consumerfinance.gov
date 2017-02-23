@@ -32,14 +32,14 @@
                 <div class="m-global-search"></div>
                 <a class="o-header_logo" href="/">
                     <img class="header_logo u-js-only"
-                         src="/static/img/logo_sm-exec.svg"
-                         onerror="this.onerror=null;this.src='/static/img/logo_sm-exec.png';"
+                         src="{{ static('img/logo_sm-exec.svg')}}"
+                         onerror="this.onerror=null;this.src='{{ static('img/logo_sm-exec.png')}}';"
                          alt="Consumer Financial Protection Bureau"
                          width="237"
                          height="50">
                     <noscript>
                         <img class="header_logo logo__no-js"
-                             src="/static/img/logo_sm-exec.png"
+                             src="{{ static('img/logo_sm-exec.png')}}"
                              alt="Consumer Financial Protection Bureau"
                              width="237"
                              height="50">
@@ -76,19 +76,37 @@
     z-index: 10;
     background-color: @white;
 
-    // Desktop size
+    // Tablet/mobile sizes.
     .respond-to-max( @bp-sm-max, {
         > .m-global-eyebrow {
             display: none;
         }
     } );
 
+    .respond-to-min( @bp-lg-min, {
+        min-width: @bp-lg-min;
+    } );
+
     &_content {
         position: relative;
 
         > .wrapper {
+            // TODO: Remove when Capital Framework is updated to 3.x.x.
+            //       on outdated consumerfinance.gov projects.
+            position: initial;
+
             > .m-global-search {
                 float: right;
+
+                // Mobile size.
+                .respond-to-max( @bp-xs-max, {
+                    margin-right: -15px;
+                } );
+
+                // Tablet size.
+                .respond-to-range( @bp-sm-min, @bp-sm-max {
+                    margin-right: -30px;
+                } );
             }
         }
 
@@ -174,6 +192,14 @@
         padding-left: 10px;
     } );
 }
+
+// Move logo on print.
+.respond-to-print( {
+    .o-header_logo {
+        // Mega menu is hidden, so we need to remove logo offset.
+        margin-left: 15px !important;
+    }
+} );
 
 /* topdoc
     name: EOF

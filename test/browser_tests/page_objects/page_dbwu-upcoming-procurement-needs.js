@@ -21,7 +21,7 @@ function UpcomingProcurementNeeds() {
   element( by.css( '[data-qa-hook="main-summary"] + p a' ) );
 
   this.procurementNeedsTable =
-  element( by.css( '.content_main .simple-table' ) );
+  element( by.css( '.content_main table' ) );
 
   this.moreInfoSection = _getQAElement( 'more-info', true );
 

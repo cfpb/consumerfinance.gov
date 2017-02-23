@@ -9,30 +9,46 @@
    Create a Text Introduction molecule.
    See [GHE]/flapjack/Modules-V1/wiki/Text-Introduction
 
-   value:         An object with the following options for value.
+   value:               Object defined from a StreamField block.
 
-   value.heading: Heading text.
+   value.heading:       (Optional) String for heading text.
 
-   value.intro:   Body introduction text.
+   value.intro:         (Optional) String for body introduction text.
 
-   value.body:    Body text.
+   value.intro.source:  TODO: add type and description.
 
-   value.links:   A tuple of items to create a list of links, containing:
+   value.body:          (Optional) String for body text.
 
-                  url:  A string for the URL of the link.
-                  text: A string for the text of the link.
+   value.links:         A tuple of items to create a list of links, containing:
+
+   value.links[i].text: (Optional) A string for the text of the link.
+
+   value.links[i].url:  A string for the URL of the link.
+
+   value.has_rule:      Whether or not to render a rule line (border-bottom)
+                        at the bottom of the molecule.
 
    ========================================================================== #}
 
-<h1>{{ value.heading }}</h1>
-<div class="lead-paragraph">{{ parse_links(value.intro) | safe }}</div>
-{{ parse_links(value.body) | safe }}
-<ul class="list list__links">
-    {% for link in value.links %}
-        <li class="list_item">
-            <a class="list_link" href="{{ link.url }}">
-                {{ link.text }}
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+{% if value.heading %}
+    <h1>{{ value.heading }}</h1>
+{% endif %}
+{% if value.intro.source %}
+    <div class="lead-paragraph">
+        {{ parse_links(value.intro) | safe }}
+    </div>
+{% endif %}
+{% if value.body %}
+    {{ parse_links(value.body) | safe }}
+{% endif %}
+{% for link in value.links %}
+    {% if link.text %}
+        {% if loop.first %}<ul class="list list__links">{% endif %}
+            <li class="list_item">
+                <a class="list_link" href="{{ link.url }}">
+                    {{ link.text }}
+                </a>
+            </li>
+        {% if loop.last %}</ul>{% endif %}
+    {% endif %}
+{% endfor %}

@@ -13,53 +13,38 @@
 
     // TODO: Refactor to use flyout menu behavior and not include an expandable,
     //       so that these style overrides aren't necessary.
-    .m-expandable {
+    .o-expandable {
         transition: padding 0.2s ease-out;
     }
 
-    .m-expandable__expanded {
+    .o-expandable__expanded {
         padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
         padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) 0;
     }
 
-    .m-expandable_content {
+    .o-expandable_content {
         border-bottom: none;
+        background: transparent;
     }
 
-    .m-expandable_target {
-        border-top: none;
+    .o-expandable_content-animated {
+        // Don't want the extra bottom padding for this use.
+        padding-bottom: 0;
+        // Increase padding left to line up with text in heading above.
+        // Magic number derived from 1em block (roughly the width of the icon)
+        // at 18px, the font size of the heading, plus 4.5px for the
+        // standard inline word space (~ 0.25em) between the icon and the text.
+        padding-left: unit( 22.5px / @base-font-size-px, em );
     }
 
-    .respond-to-min(@bp-sm-min, {
-        font-size: 1em;
-    });
-
-    &_head {
-        .h4();
-        margin-bottom: 0;
-
-        .m-expandable__expanded & {
-            margin-bottom: unit( 5px / @base-font-size-px, em );
-        }
-    }
-
-    &_icon {
-        color: @gold;
-    }
-
-    &_desc {
-        margin-bottom: 0;
-        padding: 0;
-        background: @gold-20;
-    }
-
-    &_btn {
+    .o-expandable_target {
         .btn__secondary();
         width: 100%;
         // Restore standard btn padding, which is removed by .expandable_target.
         padding:
             unit( @btn-v-padding / @btn-font-size, em )
             unit( 14px / @btn-font-size, em );
+        border-top: none;
         margin-top: @grid_gutter-width / 2;
 
         .respond-to-min(@bp-sm-min, {
@@ -91,6 +76,29 @@
             top: unit( -12px / @base-font-size-px, em );
         } );
     }
+
+    .respond-to-min(@bp-sm-min, {
+        font-size: 1em;
+    });
+
+    &_head {
+        .h4();
+        margin-bottom: 0;
+
+        .o-expandable__expanded & {
+            margin-bottom: unit( 5px / @base-font-size-px, em );
+        }
+    }
+
+    &_icon {
+        color: @gold;
+    }
+
+    &_desc {
+        margin-bottom: 0;
+        padding: 0;
+        background: @gold-20;
+    }
 }
 
 .no-js {
@@ -98,3 +106,15 @@
         display: none;
     }
 }
+
+// Hide button on print.
+.respond-to-print( {
+    .m-global-banner_btn {
+        display: none;
+    }
+} );
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

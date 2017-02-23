@@ -1,0 +1,38 @@
+{% extends 'layout-full.html' %}
+
+{% block title -%}
+    Comment success | Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block desc -%}
+    Your comment was successfuly submitted.
+{%- endblock %}
+
+{% block content_main %}
+
+    <h1><span class="cf-icon cf-icon-approved-round"></span> Success!</h1>
+    <p>
+        Your comment was successfully submitted.
+
+        Your Comment Tracking Number is:
+        <b>
+            {% if get_messages(request) %}
+                {% for message in get_messages(request) %}
+                    {% if message.tags == 'success' %}{{ message }}{% endif %}
+
+                {% endfor %}
+            {% endif %}
+        </b>
+    </p>
+    <p>
+        Your comment may be viewable on
+        <a class="icon-link icon-link__external-link"
+           href="https://www.regulations.gov/">
+            <span class="icon-link_text">Regulations.gov</span>
+        </a>
+        once the CFPB has processed it.
+        Processing times are dependent on the number of comments received.
+        Use your tracking number to find out the
+        status of your comment at Regulations.gov.
+    </p>
+{% endblock %}

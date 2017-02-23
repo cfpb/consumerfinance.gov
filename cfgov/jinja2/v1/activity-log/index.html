@@ -1,14 +1,4 @@
 {% extends 'layout-full.html' %}
-{% import '_vars-activity-log.html' as vars with context %}
-{% import 'macros/time.html' as time %}
-
-{% block title -%}
-    Activity Log | Consumer Financial Protection Bureau
-{%- endblock %}
-
-{% block desc -%}
-    Activity Log
-{%- endblock %}
 
 {% block content_main %}
 
@@ -20,75 +10,17 @@
         </p>
     </div>
 
-    <div class="block block__flush-top">
-        <div class="o-filterable-list-controls">
+    {% for block in page.content %}
+        {% if 'filter_controls' in block.block_type %}
+            <div class="block
+                        block__flush-top">
+                {% import 'organisms/filterable-list-controls.html' as flc with context %}
+                {{ flc.render(block.value, loop.index0) }}
+            </div>
+        {% else %}
+            {% import 'templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {% endfor %}
 
-            {# Set the filters #}
-            {% set filter_by = {
-                'category':   true,
-                'tags':       true,
-                'author':     true,
-                'range_date': true
-            } %}
-            {% set archives = vars.query.search() %}
-
-            {% import 'macros/filters.html' as filters with context %}
-            {{ filters.render(
-                filter_by,
-                vars.query,
-                archives,
-                'calendar_event',
-                { 'expand_label': 'Filter activities' }
-            ) }}
-
-            {% import 'macros/category-icon.html' as category_icon %}
-            <table class="u-w100pct" data-qa-hook="filter-results">
-                <tbody>
-                    <tr class="u-visually-hidden">
-                        <th>
-                            Category
-                        </th>
-                        <th>
-                            Title
-                        </th>
-                        <th>
-                            Date published
-                        </th>
-                    </tr>
-                {%- for item in archives %}
-                    <tr>
-                        <td class="u-w20pct">
-                            {%- if item.type == 'newsroom' -%}
-                                {%- if item.category.0 %}
-                                    {%- set activity_type = item.category.0 %}
-                                {%- endif -%}
-                            {%- elif item.type == 'posts' -%}
-                                {% set activity_type = 'Blog' %}
-                            {%- endif %}
-                            <span class="category-slug u-mb0">
-                                {{ category_icon.render(activity_type, 'category-slug_icon')|safe }}
-                                <span class="u-visually-hidden">Activity type:</span>
-                                {{ activity_type }}
-                            </span>
-                        </td>
-                        <td class="u-w65pct">
-                            <a href="{{ item.permalink }}">
-                                <span class="h4 u-mb0">
-                                    {{ item.title }}
-                                </span>
-                            </a>
-                        </td>
-                        <td class="u-w15pct">
-                            {{ time.render(item.date, {'date':true}) }}
-                        </td>
-                    </tr>
-                {%- endfor %}
-                </tbody>
-            </table>
-
-            {% from 'post-macros.html' import pagination as pagination with context %}
-            {{- pagination(archives, ['activity_category', 'tags', 'range_date']) }}
-
-        </div>
-    </div>
 {% endblock %}

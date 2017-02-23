@@ -1,19 +1,14 @@
+import codecs
+import importlib
+import json
 import os
 import sys
-import codecs
-
 from collections import OrderedDict
-import json
-
-import glob
-import importlib
 
 from django.conf import settings
-
-from unipath import Path
-
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
+from unipath import Path
 
 from sheerlike.helpers import IndexHelper
 
@@ -57,13 +52,15 @@ def index_processor(es, index_name, processor, reindex=False):
     # flag, remove the mapping.
     mapping = es.indices.get_mapping(index=index_name, doc_type=processor.name)
     if mapping and reindex:
-        print "removing existing mapping for %s (%s)" % (processor.name, processor.processor_name)
+        print("removing existing mapping for %s (%s)"
+              % (processor.name, processor.processor_name))
         es.indices.delete_mapping(index=index_name, doc_type=processor.name)
         mapping = {}
 
     # Then create the mapping if it does not exist
     if not mapping:
-        print "creating mapping for %s (%s)" % (processor.name, processor.processor_name)
+        print("creating mapping for %s (%s)"
+              % (processor.name, processor.processor_name))
         # Only manually create the mapping if one is specified.
         # Otherwise, let Elasticsearch create a mapping
         mapping_supplied = processor.mapping()
@@ -110,8 +107,8 @@ def index(args, options):
     es = Elasticsearch(options["elasticsearch"])
     index_name = options["index"]
 
-    # If we're given args.reindex and NOT given a list of processors to reindex,
-    # we're expected to reindex everything. Delete the existing index.
+    # If we're given args.reindex and NOT given a list of processors to
+    # reindex, we're expected to reindex everything. Delete the existing index.
     if not options.get('processors') and options.get(
             'reindex') and es.indices.exists(index_name):
         print "reindexing %s" % index_name
@@ -140,10 +137,9 @@ def index(args, options):
     selected_processor_names = options.get('processors', []) or []
     if len(selected_processor_names) > 0:
         configured_processors = [
-            ContentProcessor(
-                name,
-                **details) for name,
-            details in processors.iteritems() if name in selected_processor_names]
+            ContentProcessor(name, **details)
+            for name, details in processors.iteritems()
+            if name in selected_processor_names]
 
     else:
         configured_processors = [ContentProcessor(name, **details)
@@ -152,9 +148,6 @@ def index(args, options):
 
     # If any specific content processors were selected, we run them. Otherwise
     # we run all of them.
-
-    # if  len(options['processors']) > 0:
-    #    selected_processors = [p for p in processors if p.name in optionsprocessors]
 
     failed_processors = []
     for processor in configured_processors:

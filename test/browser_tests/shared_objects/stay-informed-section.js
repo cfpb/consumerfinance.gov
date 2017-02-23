@@ -1,11 +1,8 @@
 'use strict';
 
-var _getQAelement = require( '../util/qa-element' ).get;
+var _stayInformedSection = element( by.css( '.o-email-signup' ) );
 
-var _stayInformedSection = _getQAelement( 'stay-informed-section' );
-
-var _emailSubscribeForm =
-_stayInformedSection.element( by.css( '#email-subscribe-form' ) );
+var _emailSubscribeForm = _stayInformedSection.element( by.css( 'form' ) );
 
 var stayInformedSection = {
 

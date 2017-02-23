@@ -9,7 +9,6 @@ __elasticsearch_url_version: "1.7.x"
 
 
 npm_packages:
-  - bower
   - gulp
   - less
   - protractor

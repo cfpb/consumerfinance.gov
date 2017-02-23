@@ -1,9 +1,10 @@
 'use strict';
 
 var gulp = require( 'gulp' );
-var $ = require( 'gulp-load-plugins' )();
-var config = require( '../config' ).copy;
-var handleErrors = require( '../utils/handleErrors' );
+var gulpChanged = require( 'gulp-changed' );
+var gulpReplace = require( 'gulp-replace' );
+var configCopy = require( '../config' ).copy;
+var handleErrors = require( '../utils/handle-errors' );
 var browserSync = require( 'browser-sync' );
 
 /**
@@ -14,7 +15,7 @@ var browserSync = require( 'browser-sync' );
  */
 function _genericCopy( src, dest ) {
   return gulp.src( src )
-    .pipe( $.changed( dest ) )
+    .pipe( gulpChanged( dest ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( dest ) )
     .pipe( browserSync.reload( {
@@ -23,33 +24,38 @@ function _genericCopy( src, dest ) {
 }
 
 gulp.task( 'copy:icons', function() {
-  return _genericCopy( config.icons.src, config.icons.dest );
+  var icons = configCopy.icons;
+  return _genericCopy( icons.src, icons.dest );
 } );
 
 gulp.task( 'copy:vendorfonts', function() {
-  return _genericCopy( config.vendorfonts.src, config.vendorfonts.dest );
+  var vendorFonts = configCopy.vendorFonts;
+  return _genericCopy( vendorFonts.src, vendorFonts.dest );
 } );
 
 gulp.task( 'copy:vendorcss', function() {
-  return gulp.src( config.vendorcss.src )
-    .pipe( $.changed( config.vendorcss.dest ) )
+  var vendorCss = configCopy.vendorCss;
+  return gulp.src( vendorCss.src )
+    .pipe( gulpChanged( vendorCss.dest ) )
     .on( 'error', handleErrors )
-    .pipe( $.replace(
+    .pipe( gulpReplace(
       /url\(".\/ajax-loader.gif"\)/ig,
       'url("/img/ajax-loader.gif")'
     ) )
-    .pipe( gulp.dest( config.vendorcss.dest ) )
+    .pipe( gulp.dest( vendorCss.dest ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );
 } );
 
 gulp.task( 'copy:vendorimg', function() {
-  return _genericCopy( config.vendorimg.src, config.vendorimg.dest );
+  var vendorImg = configCopy.vendorImg;
+  return _genericCopy( vendorImg.src, vendorImg.dest );
 } );
 
 gulp.task( 'copy:vendorjs', function() {
-  return _genericCopy( config.vendorjs.src, config.vendorjs.dest );
+  var vendorJs = configCopy.vendorJs;
+  return _genericCopy( vendorJs.src, vendorJs.dest );
 } );
 
 gulp.task( 'copy',

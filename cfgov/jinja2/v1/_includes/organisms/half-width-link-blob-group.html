@@ -1,12 +1,23 @@
-<div class="o-info-unit-group">
-    <h2>{{ value.heading }}</h2>
 
-    <div class="content-l">
-        {% for block in value.link_blobs %}
-        <div class="content-l_col
-                    content-l_col-1-2">
-            {{ block }}
-        </div>
-        {% endfor %}
-    </div>
-</div>
+{# ==========================================================================
+
+   Half Width Link Blob Group
+
+   ==========================================================================
+
+   Description:
+
+   Create a half-width-link-blob-group organism when given:
+
+   value:             Object defined from a StreamField block.
+
+   value.heading:     A string containing title of module.
+
+   value.link_blobs:  A list composed of Wagtail Streamfield blocks.
+
+
+   ========================================================================== #}
+
+{% from 'organisms/info-unit-group.html' import info_unit_group with context %}
+
+{{ info_unit_group( blocks=value.link_blobs, columns=2, heading=value.heading) }}

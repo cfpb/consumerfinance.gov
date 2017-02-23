@@ -1,17 +1,20 @@
-import itertools
-
 from django.db import models
-
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel,
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface
+)
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
-    StreamFieldPanel, FieldPanel
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.models import PAGE_TEMPLATE_VAR
+from wagtail.wagtailcore.models import PageManager
 
-from .base import CFGOVPage
-from . import molecules
-from . import organisms
+from data_research.blocks import ConferenceRegistrationForm
+from jobmanager.models import JobListingTable
+
+from .. import blocks as v1_blocks
+from ..atomic_elements import molecules, organisms
 from ..util.util import get_secondary_nav_items
+from .base import CFGOVPage
 
 
 class BrowsePage(CFGOVPage):
@@ -21,14 +24,24 @@ class BrowsePage(CFGOVPage):
     ], blank=True)
 
     content = StreamField([
+        ('bureau_structure', organisms.BureauStructure()),
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
+        ('third_width_link_blob_group', organisms.ThirdWidthLinkBlobGroup()),
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
-        ('expandable', molecules.Expandable()),
+        ('expandable', organisms.Expandable()),
         ('expandable_group', organisms.ExpandableGroup()),
-        ('table', organisms.Table()),
+        ('table', organisms.Table(editable=False)),
+        ('table_block', organisms.AtomicTableBlock(
+            table_options={'renderer': 'html'})),
+        ('job_listing_table', JobListingTable()),
+        ('feedback', v1_blocks.Feedback()),
+        ('conference_registration_form', ConferenceRegistrationForm()),
+        ('html_block', organisms.HTMLBlock()),
+        ('chart_block', organisms.ChartBlock()),
+        ('snippet_list', organisms.SnippetList()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
@@ -52,12 +65,11 @@ class BrowsePage(CFGOVPage):
 
     template = 'browse-basic/index.html'
 
+    objects = PageManager()
+
     def add_page_js(self, js):
         super(BrowsePage, self).add_page_js(js)
         js['template'] += ['secondary-navigation.js']
-
-    def full_width_serif(self):
-        return true
 
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)

@@ -16,7 +16,7 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 function ClearableInput( element ) {
   var BASE_CLASS = 'input-contains-label';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'ClearableInput' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _inputDom = _dom.querySelector( 'input' );
   var _clearBtnDom = _dom.querySelector( '.' + BASE_CLASS + '_after__clear' );
 

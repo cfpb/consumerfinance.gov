@@ -1,21 +1,23 @@
-from operator import attrgetter
+import itertools
 
-from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
-from django.db.models import Q
-
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
+from wagtail.wagtailadmin.edit_handlers import (FieldPanel, ObjectList,
+                                                StreamFieldPanel,
+                                                TabbedInterface)
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
+from wagtail.wagtailcore.models import PageManager
 
-from . import base, molecules, organisms, ref
-from .learn_page import AbstractFilterPage
-from .. import forms
-from ..util import filterable_context
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.feeds import FilterableFeedPageMixin
+from v1.models.base import CFGOVPage
+from v1.models.learn_page import AbstractFilterPage
+from v1.util import ref
+from v1.util.filterable_list import FilterableListMixin
 
 
-class BrowseFilterablePage(base.CFGOVPage):
+class BrowseFilterablePage(FilterableFeedPageMixin, FilterableListMixin,
+                           CFGOVPage):
     header = StreamField([
         ('text_introduction', molecules.TextIntroduction()),
         ('featured_content', molecules.FeaturedContent()),
@@ -23,17 +25,18 @@ class BrowseFilterablePage(base.CFGOVPage):
     content = StreamField([
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
+        ('feedback', v1_blocks.Feedback()),
     ])
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
 
     # General content tab
-    content_panels = base.CFGOVPage.content_panels + [
+    content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('header'),
         StreamFieldPanel('content'),
     ]
 
-    sidefoot_panels = base.CFGOVPage.sidefoot_panels + [
+    sidefoot_panels = CFGOVPage.sidefoot_panels + [
         FieldPanel('secondary_nav_exclude_sibling_pages'),
     ]
 
@@ -41,29 +44,47 @@ class BrowseFilterablePage(base.CFGOVPage):
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='General Content'),
         ObjectList(sidefoot_panels, heading='SideFoot'),
-        ObjectList(base.CFGOVPage.settings_panels, heading='Configuration'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
     template = 'browse-filterable/index.html'
+
+    objects = PageManager()
 
     def add_page_js(self, js):
         super(BrowseFilterablePage, self).add_page_js(js)
         js['template'] += ['secondary-navigation.js']
 
-    def get_context(self, request, *args, **kwargs):
-        context = super(BrowseFilterablePage, self).get_context(request, *args, **kwargs)
-        return filterable_context.get_context(self, request, context)
-
-    def get_form_class(self):
-        return filterable_context.get_form_class()
-
-    def get_page_set(self, form, hostname):
-        return filterable_context.get_page_set(self, form, hostname)
-
 
 class EventArchivePage(BrowseFilterablePage):
-    def get_form_class(self):
+    template = 'browse-filterable/index.html'
+
+    objects = PageManager()
+
+    @staticmethod
+    def get_form_class():
+        from .. import forms
         return forms.EventArchiveFilterForm
 
-    def get_template(self, request, *args, **kwargs):
-        return BrowseFilterablePage.template
+
+class NewsroomLandingPage(BrowseFilterablePage):
+    template = 'newsroom/index.html'
+
+    objects = PageManager()
+
+    @classmethod
+    def eligible_categories(cls):
+        categories = dict(ref.categories)
+        return sorted(itertools.chain(*(
+            dict(categories[category]).keys()
+            for category in ('Blog', 'Newsroom')
+        )))
+
+    @classmethod
+    def base_query(cls, hostname):
+        """Newsroom pages should only show content from certain categories."""
+        eligible_pages = AbstractFilterPage.objects.live_shared(hostname)
+
+        return eligible_pages.filter(
+            categories__name__in=cls.eligible_categories()
+        )

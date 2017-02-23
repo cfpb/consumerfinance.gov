@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # ==========================================================================
 # Setup script for installing project dependencies.
@@ -9,9 +9,5 @@
 # Set script to exit on any errors.
 set -e
 
-setup(){
-  ./frontend.sh $1
-  ./backend.sh $1
-}
-
-setup $1
+./frontend.sh $1
+./backend.sh $1

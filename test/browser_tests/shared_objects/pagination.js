@@ -1,19 +1,25 @@
 'use strict';
+var paginationContent = element( by.css( '.m-pagination' ) );
 
 var pagination = {
 
-  paginationContent: element.all( by.css( '#pagination_content' ) ),
+  paginationContent:
+    paginationContent,
 
-  paginationResults:
-  element.all( by.css( '#pagination_content .post-preview' ) ),
+  paginationForm:
+    paginationContent.element( by.css( 'form' ) ),
 
-  paginationForm: element( by.css( '.pagination_form' ) ),
+  paginationPrevBtn:
+    paginationContent.element( by.css( '.m-pagination_btn-prev' ) ),
 
-  paginationPrevBtn: element( by.css( '.pagination_prev' ) ),
+  paginationNextBtn:
+    paginationContent.element( by.css( '.m-pagination_btn-next' ) ),
 
-  paginationNextBtn: element( by.css( '.pagination_next' ) ),
+  paginationPageInput:
+    paginationContent.element( by.css( '.m-pagination_current-page' ) ),
 
-  paginationPageInput: element( by.css( '.pagination_current-page' ) )
+  paginationPageBtn:
+    paginationContent.element( by.css( '.m-pagination_submit-btn' ) )
 
 };
 

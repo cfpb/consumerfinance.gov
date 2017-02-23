@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   contact_email.render()
+   Contact Email
 
    ==========================================================================
 
@@ -9,12 +9,13 @@
    Create a Contact-Email molecule.
    See [GHE]/flapjack/Modules-V1/wiki/Contact:-Email
 
-   emails: An array containing the email addresses.
+   value         Object defined from a StreamField block.
+
+   value.emails: An array containing the email addresses.
 
    ========================================================================== #}
 
-
-<div class="m-contact-email">
+<div class="m-contact m-contact-email" data-qa-hook="contact-email">
     <span class="cf-icon cf-icon-email"></span>
     <span class="h5">Email</span>
     <p>
@@ -25,4 +26,3 @@
         {% endfor %}
     </p>
 </div>
-

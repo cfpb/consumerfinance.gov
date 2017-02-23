@@ -1,7 +1,7 @@
 
 {# ==========================================================================
 
-   image_text_25_75.render()
+   Image And Text 25/75
 
    ==========================================================================
 
@@ -10,18 +10,27 @@
    Create an image and text 25/75 molecule.
    See [GHE]/flapjack/Modules-V1/wiki/25-75-Image-&-Text
 
-   value:            An object with the following options for value.
+   value:                    Object defined from a StreamField block.
 
-   value.image:      A image object containing the URL & alt text for screenreaders
-                        of the image to be placed adjacent to the text.
+   value.image:              A image object containing the image to be
+                             placed adjacent to the text.
 
-   value.heading:    Heading of the text content.
-   value.body:       Body of the text content.
+   value.image.upload:       An image object.
 
-   value.links:      A list of links containing URL & Text of the link/button.
+   value.image.alt:          String for alt text for screenreaders.
 
-   value.has_rule:   Whether there is a top gray rule.
-                        Default is false.
+   value.heading:            Heading of the text content.
+
+   value.body:               Body of the text content.
+
+   value.links:              A tuple of items to create a list of links, containing:
+
+   value.links[i].url:       A string for the URL of the link.
+
+   value.links[i].text:      A string for the text of the link.
+
+   value.should_link_image:  Boolean for whether the image should be wrapped in
+                              a tag.
 
    ========================================================================== #}
 
@@ -29,6 +38,8 @@
 {% if value.image.upload %}
     {% set photo=image(value.image.upload, 'original') %}
 {% endif %}
+{% set heading = '<h3>' ~ value.heading ~ '</h3>' if value.heading else '' %}
+
 {{ info_unit( {
     'modifier': 'inline',
     'image': {
@@ -37,7 +48,8 @@
         'is_square': true,
         'is_decorative': value.image.alt == ''
     },
-    'heading': '<h3>' ~ value.heading ~ '</h3>',
-    'body': value.body,
-    'links': value.links
+    'heading': heading,
+    'body': parse_links(value.body) | safe,
+    'links': value.links,
+    'should_link_image': value.should_link_image or false
 } ) }}

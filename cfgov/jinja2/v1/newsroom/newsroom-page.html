@@ -1,0 +1,40 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author" content="https://www.facebook.com/CFPB">
+{%- endblock %}
+
+{% block content_main %}
+    {% include 'article.html' %}
+    <aside class="press-information">
+        <h2 class="header-slug">
+            <span class="header-slug_inner">
+                Press information
+            </span>
+        </h2>
+        <p>
+            If you want to republish the article or have questions about the content,
+            please contact the press office.
+        </p>
+        <a class="jump-link"
+           href="/about-us/newsroom/press-resources/">Go to press resources page</a>
+    </aside>
+{% endblock %}
+
+{% block content_sidebar %}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+    <div class="block block__sub" data-qa-hook="rss-subscribe-section">
+        {% import 'rss.html' as rss %}
+        {{ rss.render('/about-us/newsroom/feed/') }}
+    </div>
+{% endblock %}

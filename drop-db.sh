@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ==========================================================================
-# Setup script for MYSQL Databse Instantiation
+# Setup script used to drop MySQL database.
 # NOTE: Run this script while in the project root directory.
 # ==========================================================================
 
@@ -35,10 +35,3 @@ else
   $MYSQL -uroot -e "$SQL"
   ok "Database $1 dropped."
 fi
-
-
-
-
-
-
-

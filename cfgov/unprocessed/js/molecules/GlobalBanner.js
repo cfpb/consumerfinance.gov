@@ -7,8 +7,9 @@
 
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var Expandable = require( '../molecules/Expandable' );
+var Expandable = require( '../organisms/Expandable' );
 var webStorageProxy = require( '../modules/util/web-storage-proxy' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * GlobalBanner
@@ -25,19 +26,27 @@ function GlobalBanner( element ) {
   var BASE_CLASS = 'm-global-banner';
   var EXPANDED_STATE = 'globalBannerIsExpanded';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'GlobalBanner' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _expandable;
 
   /**
    * Set up DOM references and event handlers.
+   * @returns {GlobalBanner|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     // Init Expandable.
     var isExpanded = webStorageProxy.getItem( EXPANDED_STATE ) !== 'false';
-    _expandable = new Expandable( _dom.querySelector( '.m-expandable' ) );
+    _expandable = new Expandable( _dom.querySelector( '.o-expandable' ) );
     _expandable.init( isExpanded && _expandable.EXPANDED );
 
     _initEvents();
+
+    return this;
   }
 
   /**

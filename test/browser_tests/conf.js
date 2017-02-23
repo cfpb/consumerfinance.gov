@@ -1,6 +1,7 @@
 'use strict';
 
 var environment = require( './environment.js' );
+var envvars = require( '../../config/environment' ).envvars;
 var defaultSuites = require( './default-suites.js' );
 
 /**
@@ -48,9 +49,9 @@ function _chooseSuite( params ) {
  *   are not undefined or an empty string, false otherwise.
  */
 function _isSauceCredentialSet() {
-  var sauceSeleniumUrl = process.env.SAUCE_SELENIUM_URL;
-  var sauceUsername = process.env.SAUCE_USERNAME;
-  var sauceAccessKey = process.env.SAUCE_ACCESS_KEY;
+  var sauceSeleniumUrl = envvars.SAUCE_SELENIUM_URL;
+  var sauceUsername = envvars.SAUCE_USERNAME;
+  var sauceAccessKey = envvars.SAUCE_ACCESS_KEY;
 
   return typeof sauceSeleniumUrl !== 'undefined' &&
          sauceSeleniumUrl !== '' &&
@@ -58,6 +59,39 @@ function _isSauceCredentialSet() {
          sauceUsername !== '' &&
          typeof sauceAccessKey !== 'undefined' &&
          sauceAccessKey !== '';
+}
+
+/**
+ * Choose test specs based on passed parameters.
+ * @param {object} params Set of parameters from the command-line.
+ * @returns {Array} List of specs or spec patterns to execute.
+ */
+function _chooseProtractorSpecs( params ) {
+  var i;
+  var len;
+  var specs = [];
+
+  // If one or more suites are specified, use their specs.
+  if ( _paramIsSet( params.suite ) ) {
+    var suiteNames = params.suite.split( ',' );
+    for ( i = 0, len = suiteNames.length; i < len; i++ ) {
+      var suiteSpecs = environment.suites[suiteNames[i]];
+      if ( suiteSpecs ) {
+        specs = specs.concat( suiteSpecs );
+      }
+    }
+  // Otherwise if specs are specified, use them.
+  } else if ( _paramIsSet( params.specs ) ) {
+    var specPatterns = params.specs.split( ',' );
+    for ( i = 0, len = specPatterns.length; i < len; i++ ) {
+      specs = specs.concat( environment.specsBasePath + specPatterns[i] );
+    }
+  // If neither a suite or specs are specified, use all specs.
+  } else {
+    specs = specs.concat( environment.specsBasePath + '.js' );
+  }
+
+  return specs;
 }
 
 /**
@@ -69,13 +103,7 @@ function _isSauceCredentialSet() {
 function _retrieveProtractorParams( params ) { // eslint-disable-line complexity, no-inline-comments, max-len
   var parsedParams = {};
 
-  if ( _paramIsSet( params.specs ) ) {
-    var specsArray = params.specs.split( ',' );
-    for ( var i = 0, len = specsArray.length; i < len; i++ ) {
-      specsArray[i] = environment.specsBasePath + specsArray[i];
-    }
-    parsedParams.specs = specsArray;
-  }
+  parsedParams.specs = _chooseProtractorSpecs( params );
 
   if ( _paramIsSet( params.browserName ) ) {
     parsedParams.browserName = params.browserName;
@@ -134,7 +162,6 @@ var config = {
   jasmineNodeOpts: {
     defaultTimeoutInterval: 60000
   },
-
   getMultiCapabilities: function() {
     var params = this.params;
 
@@ -152,6 +179,7 @@ var config = {
   },
 
   onPrepare: function() {
+    // Ignore Selenium allowances for non-angular sites.
     browser.ignoreSynchronization = true;
 
     // If --windowSize=w,h flag was passed, set window dimensions.
@@ -180,7 +208,7 @@ var config = {
                                 ',' + String( windowHeightPx );
 
     browser.getProcessedConfig().then( function( cf ) {
-      console.log( 'Executing...', cf.capabilities.name ); // eslint-disable-line no-console, no-inline-comments, max-len
+      console.log( 'Executing...', cf.capabilities.name );
     } );
     return;
   }
@@ -188,9 +216,9 @@ var config = {
 
 // Set Sauce Labs credientials from .env file.
 if ( _isSauceCredentialSet() ) {
-  config.sauceSeleniumAddress = process.env.SAUCE_SELENIUM_URL;
-  config.sauceUser = process.env.SAUCE_USERNAME;
-  config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+  config.sauceSeleniumAddress = envvars.SAUCE_SELENIUM_URL;
+  config.sauceUser = envvars.SAUCE_USERNAME;
+  config.sauceKey = envvars.SAUCE_ACCESS_KEY;
 }
 
 exports.config = config;

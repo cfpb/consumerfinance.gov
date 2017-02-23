@@ -5,10 +5,10 @@
   - name: Filterable List Controls
     markup: |
       <div class="o-filterable-list-controls">
-          <div class="m-expandable
-                      m-expandable__borders
-                      m-expandable__midtone
-                      m-expandable__expanded">
+          <div class="o-expandable
+                      o-expandable__borders
+                      o-expandable__midtone
+                      o-expandable__expanded">
               …
           </div>
           <div class="m-notification"></div>
@@ -18,7 +18,7 @@
         Pattern structure
         -----------------
         .o-filterable-list-controls
-          .m-expandable
+          .o-expandable
             [...]
           .m-notification
             [...]
@@ -36,7 +36,7 @@
         margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
     }
     // TODO: Same as notification, explore a better solution in the future
-    .m-expandable {
+    .o-expandable {
         margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
     }
 }

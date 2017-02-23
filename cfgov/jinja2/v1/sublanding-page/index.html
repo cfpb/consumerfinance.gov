@@ -1,12 +1,14 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% import 'form_block.html' as form_block with context %}
 {% import 'molecules/featured-content.html' as featured_content %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block hero -%}
     {% for block in page.header -%}
-        {% include 'templates/render_block.html' with context %}
+        {% import 'templates/render_block.html' as render_block with context %}
+        {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 {% endblock %}
 
@@ -26,25 +28,28 @@
                         block__flush-sides">
                 {{ featured_content.render(block.value) }}
             </div>
+        {% elif block.block_type == 'feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
         {% elif 'post_preview_snapshot' in block.block_type %}
-            <div class="block 
+            <div class="block
                         {{ block.block.meta.classname if block.block.meta.classname else '' }}">
                 {% set limit = block.value.limit | int %}
                 {% set posts = page.get_browsefilterable_posts(request, limit) %}
                 {% for post in posts %}
-                    {{ post_preview.render(post=post[1], controls=none, form_id=post[0], url=get_protected_url(post[1].parent())) }}
+                    {{ post_preview.render(post=post[1], controls=none, form_id=post[0], url=get_protected_url(post[1].parent()), post_date_description=block.value.post_date_description) }}
                 {% endfor %}
              </div>
         {% elif 'filter_controls' in block.block_type %}
             <div class="block block__flush-top">
-                {% set f = forms.pop(0) %}
                 {% from 'organisms/filterable-list-controls.html' import render as flc with context %}
-                {{ flc(block.value, f, loop.index0) }}
+                {{ flc(block.value, loop.index0) }}
             </div>
         {% elif 'text_introduction' not in block.block_type %}
-            {% include 'templates/render_block.html' with context %}
+            {% import 'templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
         {% elif not page.sidebar_breakout %}
-            {% include 'templates/render_block.html' with context %}
+            {% import 'templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
 {% endblock %}

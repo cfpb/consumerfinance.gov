@@ -8,48 +8,53 @@
 
    Creates related posts markup when given:
 
-   is_half_width:    A Boolean indicating whether the posts should be at half
-                     width. Defaults to False.
+   posts:                    TODO: Add data type and description.
 
-   hide_header_slug: A Boolean indicating whether the header should be hidden.
-                     Defaults to False.
+   posts.iteritems():        TODO: Add data type and description.
+
+   block:                    TODO: Add data type and description.
+
+   block.value:              TODO: Add data type and description.
+
+   block.value.header_title: TODO: Add data type and description.
+
+   block.value.show_heading: TODO: Add data type and description.
+
+   is_half_width:            A Boolean indicating whether the posts
+                             should be at half width.
+                             Defaults to False.
+
+   hide_header_slug:         A Boolean indicating whether
+                             the header should be hidden.
+                             Defaults to False.
 
    ========================================================================== #}
 
-{% macro render(block, is_half_width=false, hide_header_slug=false) %}
+{% macro render(posts, block, is_half_width=false, hide_header_slug=false) %}
     {% import 'macros/category-icon.html' as category_icon %}
-    {% set related_post_types = page.related_posts(block, request.site.hostname) %}
-    {% if related_post_types %}
-        <div class="m-related-posts
-                    {{'m-related-posts__half-width'
-                      if is_half_width else ''}}">
-            {% if not hide_header_slug %}
-                <h2 class="header-slug">
-                    <span class="header-slug_inner">
-                        {{ block.value.header_title }}
-                    </span>
-                </h2>
-            {% endif %}
-            {% for post_type, post_type_list in related_post_types.iteritems() %}
-                {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", "cf-icon-speech-bubble") %}
-                <div class="m-related-posts_list-container">
-                    {% if block.value.show_heading %}
-                        <h3 class="h4">
-                            {{ icon }} {{ title }}
-                        </h3>
-                    {% endif %}
-                    {{ _related_posts_list(post_type_list, block.value.limit) }}
-                </div>
-            {% endfor %}
-            {% for block in page.sidefoot %}
-                {% if 'related_posts' in block.block_type %}
-                    {% if block.value.view_more %}
-                        {{ _view_more( block.value.view_more ) }}
-                    {% endif %}
+    <div class="m-related-posts
+                {{'m-related-posts__half-width'
+                  if is_half_width else ''}}">
+        {% if not hide_header_slug %}
+            <h2 class="header-slug">
+                <span class="header-slug_inner">
+                    {{ block.value.header_title }}
+                </span>
+            </h2>
+        {% endif %}
+        {% for post_type, post_type_list in posts.iteritems() %}
+            {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", "cf-icon-speech-bubble") %}
+            <div class="m-related-posts_list-container">
+                {% if block.value.show_heading %}
+                    <h3 class="h4">
+                        {{ icon }} {{ title }}
+                    </h3>
                 {% endif %}
-            {% endfor %}
-        </div>
-    {% endif %}
+                {{ _related_posts_list(post_type_list, block.value.limit) }}
+            </div>
+        {% endfor %}
+        {{ _view_more() }}
+    </div>
 {% endmacro %}
 
 
@@ -65,13 +70,16 @@
 
    posts: A list of dictionaries containing related posts.
 
+   limit: Number at which to limit displaying posts.
+
    ========================================================================== #}
 
 {% macro _related_posts_list(posts, limit) %}
     {% import 'macros/time.html' as time %}
-    {% set limit = limit|int if posts|length >= limit|int else posts|length %}
+    {% set limit = limit | int if posts | length >= limit | int else posts | length %}
     <ul class="m-related-posts_list
-               list list__unstyled
+               list
+               list__unstyled
                list__spaced">
         {% for i in range(limit) %}
             {% set post_url = slugurl(posts[i].slug) or '' %}
@@ -104,27 +112,13 @@
 
    _view_more()
 
-   ==========================================================================
-
-   Description:
-
-   Creates view more markup when given:
-
-   link:      A tuple of link information.
-
-   link.url:  The link URL.
-
-   link.text: The link text.
-
    ========================================================================== #}
 
-{% macro _view_more( link ) %}
-{% if link.text %}
-<a class="jump-link jump-link__underline"
-   href="{{ link.url }}">
-    <span class="jump-link_text">
-        {{ link.text }}
-    </span>
-</a>
-{% endif %}
+{% macro _view_more() %}
+    <a class="jump-link jump-link__underline"
+       href="{{ page.generate_view_more_url(request) }}">
+        <span class="jump-link_text">
+            View more
+        </span>
+    </a>
 {% endmacro %}

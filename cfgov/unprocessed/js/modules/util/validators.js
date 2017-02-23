@@ -11,11 +11,12 @@ var ERROR_MESSAGES = require( '../../config/error-messages-config' );
 var typeCheckers = require( '../../modules/util/type-checkers' );
 
 /**
- * date Determines if a field contains a valid date
+ * date Determines if a field contains a valid date.
  *
- * @param {Object} field         Field to test
- * @param {Object} currentStatus A previous tested status for the field
- * @returns {Object} empty if the field passes, msg and type if it failed
+ * @param {Object} field         Field to test.
+ * @param {Object} currentStatus A previous tested status for the field.
+ * @returns {Object} An empty object if the field passes,
+ *   otherwise an object with msg and type properties if it failed.
  */
 function date( field, currentStatus ) {
   var status = currentStatus || {};
@@ -30,18 +31,19 @@ function date( field, currentStatus ) {
 }
 
 /**
- * email Determines if a field contains a email date
+ * email Determines if a field contains a email date.
  *
- * @param {Object} field         Field to test
- * @param {Object} currentStatus A previous tested status for the field
- * @returns {Object} empty if the field passes, msg and type if it failed
+ * @param {Object} field         Field to test.
+ * @param {Object} currentStatus A previous tested status for the field.
+ * @returns {Object} An empty object if the field passes,
+ *   otherwise an object with msg and type properties if it failed.
  */
 function email( field, currentStatus ) {
   var status = currentStatus || {};
   var regex =
-    '^[a-z0-9\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9' +
+    '^[a-z0-9\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+(?:\\.[a-z0-9' +
     '\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]' +
-    '(?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$';
+    '(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$';
   var emailRegex = new RegExp( regex, 'i' );
   if ( field.value && emailRegex.test( field.value ) === false ) {
     status.msg = status.msg || '';
@@ -52,11 +54,12 @@ function email( field, currentStatus ) {
 }
 
 /**
- * empty Determines if a required field contains a value
+ * empty Determines if a required field contains a value.
  *
- * @param {Object} field         Field to test
- * @param {Object} currentStatus A previous tested status for the field
- * @returns {Object} empty if the field passes, msg and type if it failed
+ * @param {Object} field         Field to test.
+ * @param {Object} currentStatus A previous tested status for the field.
+ * @returns {Object} An empty object if the field passes,
+ *   otherwise an object with msg and type properties if it failed.
  */
 function empty( field, currentStatus ) {
   var status = currentStatus || {};
@@ -73,36 +76,55 @@ function empty( field, currentStatus ) {
  * checkbox
  * Determines if a field contains a required number of picked checkbox options.
  *
- * @param {Object} field         Field to test
- * @param {Object} currentStatus A previous tested status for the field
- * @param {array}  fieldset      An array of fields related to the parent field
- * @param {string} type          Defaults to checkbox, can pass as radio
- * @returns {Object} empty if the field passes, msg and type if it failed
+ * @param {Object} field         Field to test.
+ * @param {Object} currentStatus A previous tested status for the field.
+ * @param {Array}  fieldset      A list of fields related to the parent field.
+ * @returns {Object} An empty object if the field passes,
+ *   otherwise an object with msg and type properties if it failed.
  */
-function checkbox( field, currentStatus, fieldset, type ) {
+function checkbox( field, currentStatus, fieldset ) {
   var status = currentStatus || {};
-  var groupFieldsLength = fieldset.length;
-  var required = parseInt(
-                   field.getAttribute( 'data-required' ) || 0, 10
-                 );
-  if ( groupFieldsLength < required ) {
-    status.msg = status.msg || '';
-    status.msg += ERROR_MESSAGES.CHECKBOX.REQUIRED.replace( '%s', required );
-    status[type || 'checkbox'] = false;
-  }
-  return status;
+  return _checkableInput( field, status, fieldset, 'checkbox' );
 }
 
 /**
- * radio Determines if a field contains a picked radio option
+ * radio Determines if a field contains a picked radio option.
  *
- * @param {Object} field         Field to test
- * @param {Object} currentStatus A previous tested status for the field
- * @param {array}  fieldset      An array of fields related to the parent field
- * @returns {Object} empty if the field passes, msg and type if it failed
+ * @param {Object} field         Field to test.
+ * @param {Object} currentStatus A previous tested status for the field.
+ * @param {Array}  fieldset      A list of fields related to the parent field.
+ * @returns {Object} An empty object if the field passes,
+ *   otherwise an object with msg and type properties if it failed.
  */
 function radio( field, currentStatus, fieldset ) {
-  return checkbox( field, currentStatus, fieldset, 'radio' );
+  var status = currentStatus || {};
+  return _checkableInput( field, status, fieldset, 'radio' );
+}
+
+/**
+ * _checkableInput
+ * Determines if a field contains a required number of
+ * picked checkbox or radio button options.
+ *
+ * @param {Object} field         Field to test.
+ * @param {Object} currentStatus A previous tested status for the field.
+ * @param {Array}  fieldset      A list of fields related to the parent field.
+ * @param {string} type          Should be "radio" or "checkbox".
+ * @returns {Object} An empty object if the field passes,
+ *   otherwise an object with msg and type properties if it failed.
+ */
+function _checkableInput( field, currentStatus, fieldset, type ) {
+  var statusMsg = currentStatus.msg || '';
+  var required = parseInt( field.getAttribute( 'data-required' ) || 0, 10 );
+  var groupFieldsLength = fieldset.length;
+
+  if ( groupFieldsLength < required ) {
+    statusMsg += ERROR_MESSAGES.CHECKBOX.REQUIRED.replace( '%s', required );
+    currentStatus.msg = statusMsg;
+    currentStatus[type] = false;
+  }
+
+  return currentStatus;
 }
 
 module.exports = {

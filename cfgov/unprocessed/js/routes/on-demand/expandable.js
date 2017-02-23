@@ -5,6 +5,6 @@
 'use strict';
 
 var atomicHelpers = require( '../../modules/util/atomic-helpers' );
-var Expandable = require( '../../molecules/Expandable' );
+var Expandable = require( '../../organisms/Expandable' );
 
-atomicHelpers.instantiateAll( '.m-expandable', Expandable );
+atomicHelpers.instantiateAll( '.o-expandable', Expandable );

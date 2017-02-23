@@ -1,0 +1,32 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author" content="https://www.facebook.com/CFPB">
+{%- endblock %}
+
+{% block content_main %}
+    {% include 'article.html' %}
+    <div class="block">
+        <p>
+            Due to technical issues, the commenting feature of our blog is temporarily unavailable. We’re working to bring this functionality back, and look forward to hearing your feedback and comments about the CFPB’s work soon.
+        </p>
+    </div>
+{% endblock %}
+
+{% block content_sidebar %}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+    <div class="block block__sub" data-qa-hook="rss-subscribe-section">
+        {% import 'rss.html' as rss %}
+        {{ rss.render('/about-us/blog/feed/') }}
+    </div>
+{% endblock %}

@@ -27,7 +27,7 @@
         'url':  '/about-us/the-bureau/',
     },
     'image': {
-        'src': '/static/img/fmc-about-us-540x300.jpg',
+        'src': 'img/fmc-about-us-540x300.jpg',
         'alt': 'Still from about the CFPB video.',
     },
     'body': 'This short video covers what the CFPB is ' +
@@ -39,16 +39,31 @@
         'url':  '/policy-compliance/guidance/implementation-guidance/',
     },
     'image': {
-        'src': '/static/img/fmc-poly-com-540x300.jpg',
+        'src': 'img/fmc-poly-com-540x300.jpg',
         'alt': 'Still from Know Before You Owe video.',
     },
     'body': 'The TILA-RESPA integrated disclosure rule ' +
             'replaces four disclosure forms with two new ones. ' +
             'We have resources to help you comply.'
 } %}
+
+{% set consumer_tools_content = {
+    'link': {
+        'text': 'Stories about debt collection',
+        'url':  '/consumer-tools/everyone-has-a-story/debt-collection/',
+    },
+    'image': {
+        'src': 'img/fmc-consumer-tools-540x300.png',
+        'alt': 'Illustration of US Map represented as consumer stories',
+    },
+    'body': 'Consumers across the country shared their ' +
+            'experiences with debt collection. View their stories.'
+} %}
+
 {% set media_items = [
-  ( '/about-us/', featured_menu_content.render( about_us_content ) ),
-  ( '/policy-compliance/', featured_menu_content.render( poly_com_content ) )
+  ( 'About Us', featured_menu_content.render( about_us_content ) ),
+  ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) ),
+  ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) )
 ] %}
 
 {% set nav_items = [(
@@ -59,12 +74,24 @@
         ('Information for Students', '/students/', []),
         ('Information for Older Americans', '/older-americans/', []),
         ('Information for Servicemembers & Veterans', '/servicemembers/', [])
-    ),(
+    ),[
+        ('Getting an Auto Loan', '/consumer-tools/auto-loans/', [(
+            ('Plan to Shop for Your Auto Loan', '/consumer-tools/auto-loans/plan-to-shop-for-your-auto-loan/', []),
+            ('Learn to Explore Loan Choices', '/consumer-tools/auto-loans/learn-to-explore-loan-choices/', []),
+            ('Know What Is Negotiable', '/consumer-tools/auto-loans/know-what-is-negotiable/', []),
+            ('Understand How to Close the Deal', '/consumer-tools/auto-loans/understand-how-to-close-the-deal/', [])
+        )]),
         ('Paying for College', '/paying-for-college/', []),
         ('Owning a Home', '/owning-a-home/', []),
         ('Planning for Retirement', '/retirement/', []),
-        ('Sending Money Abroad', '/sending-money/', [])
-    ),(
+        ('Sending Money Abroad', '/sending-money/', []),
+        ('Prepaid Cards', '/consumer-tools/prepaid-cards/', [(
+            ('Choose the Right Card for Your Situation', '/consumer-tools/prepaid-cards/choose-the-right-card/', []),
+            ('Know Your Rights', '/consumer-tools/prepaid-cards/know-your-rights/', []),
+            ('Understand the Fees You Will Pay', '/consumer-tools/prepaid-cards/understand-fees/', [])
+        )]),
+        ('Debt Collection', '/consumer-tools/debt-collection/', [])
+    ],(
         ('Know Before You Owe Mortgages', '/know-before-you-owe/', []),
         ('Trouble Paying Your Mortgage?', '/mortgagehelp/', []),
         ('Protections Against Discrimination', '/fair-lending/', [])
@@ -80,16 +107,18 @@
     ),(
         ('Information for Economically Vulnerable Consumers', '/empowerment/', []),
         ('Managing Someone Else’s Money', '/managing-someone-elses-money/', []),
-        ('Free Brochures', 'http://promotions.usa.gov/cfpbpubs.html', [])
+        ('Free Brochures', 'http://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php', [])
     )]),
     ('Data & Research', '/data-research/', [(
         ('Research & Reports', '/data-research/research-reports/', []),
+        ('CFPB Research Conference', '/data-research/cfpb-research-conference/', [])
     ),(
         ('Consumer Complaint Database', '/data-research/consumer-complaints/', []),
         ('Mortgage Database (HMDA)', '/data-research/mortgage-data-hmda/', [])
-    ),(
+    ),[
+        ('Consumer Credit Trends', '/data-research/consumer-credit-trends/', []),
         ('Credit Card Surveys & Agreements', '/data-research/credit-card-data/', []),
-    )]),
+    ]]),
     ('Policy & Compliance', '/policy-compliance/', [(
         ('Rulemaking', '/policy-compliance/rulemaking/', [(
             ('Final Rules', '/policy-compliance/rulemaking/final-rules/', []),

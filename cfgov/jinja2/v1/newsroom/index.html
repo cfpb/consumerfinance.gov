@@ -1,70 +1,43 @@
 {% extends 'layout-side-nav.html' %}
-{% import '_vars-newsroom.html' as vars with context %}
 
-{% block title -%}
-    Newsroom | Consumer Financial Protection Bureau
-{%- endblock %}
-
-{% block desc -%}
-    Press releases, speeches, op-eds, testimony, and blog posts produced by our Office of Communications
-{%- endblock %}
+{% import 'molecules/featured-content.html' as featured_content %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
-
-    <div class="block block__flush-top">
-        <h1 class="u-mb30" data-qa-hook="main-title">Newsroom</h1>
-
-        {# Get the latest Featured Topic #}
-        {% import 'featured-topic.html' as featured_topics %}
-        {{ featured_topics.render(queries.featured_topic.search(size=1)) }}
-    </div>
-
-    <div class="block block__flush-top">
-        <div class="o-filterable-list-controls">
-            {# Set the filters #}
-            {% import 'macros/filters.html' as filters with context %}
-            {% set filter_by = {
-                'category':   true,
-                'tags':       true,
-                'author':     true,
-                'range_date': true
-            } %}
-            {{ filters.render(filter_by, vars.query, vars.newsrooms, 'newsroom',
-               { 'expand_label': 'Filter posts' }) }}
-
-            {# Show the posts #}
-            {% import 'posts-paginated.html' as posts_paginated with context %}
-            {{ posts_paginated.render(vars.newsrooms) }}
-        </div>
-    </div>
-
-    {# Footer #}
-    <aside>
-        <section class="block" data-qa-hook="stay-informed-section">
-            <h2 class="header-slug">
-                <span class="header-slug_inner">
-                    Stay informed
-                </span>
-            </h2>
-            <div class="content-l content-l__main">
-                <div class="block__sub content-l_col content-l_col-1-2">
-                    <p data-qa-hook="stay-informed-desc">
-                        Subscribe to get our press releases by email.
-                    </p>
-                    {% import 'macros/subscribe.html' as subscribe with context %}
-                    {{ subscribe.render('USCFPB_23') }}
-                </div>
-                <div class="block__sub content-l_col content-l_col-1-2"
-                     data-qa-hook="rss-subscribe-section">
-                    {% import 'rss.html' as rss %}
-                    {{ rss.render(vars.rss_path) }}
-                </div>
+    {% for block in page.header %}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block
+                        block__flush-sides">
+                {{ featured_content.render(block.value) }}
             </div>
-        </section>
+        {% elif loop.index == 1 %}
+        <div class="block
+                    block__flush-top">
+            {{ render_stream_child(block) }}
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% for block in page.content %}
+        {% if 'filter_controls' in block.block_type %}
+            <div class="block
+                    block__flush-top">
+
+                {% import 'organisms/filterable-list-controls.html' as flc with context %}
+                {{ flc.render(block.value, loop.index0) }}
+            </div>
+        {% else %}
+            {% import 'templates/render_block.html' as render_block with context %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {% endfor %}
+    <aside class="prefooter">
+        {% if page.sidefoot %}
+            {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+        {% endif %}
         <div class="block
                     block__bg
                     block__flush-sides
@@ -96,5 +69,4 @@
             </div>
         </div>
     </aside>
-
 {% endblock %}

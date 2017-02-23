@@ -24,84 +24,43 @@
 
    ========================================================================== #}
 
-{% macro render(post, path) %}
-
-{% import 'molecules/social-media.html' as social_media with context %}
+{% import 'form_block.html' as form_block with context %}
+{% import 'organisms/item-introduction.html' as item_introduction with context %}
+{%- import 'templates/render_block.html' as render_block with context -%}
+{%- import 'tags.html' as tags -%}
 
 <article class="post">
     <header>
-        {%- import 'macros/category-slug.html' as category_slug %}
-        {% if path == '/about-us/blog/' and post.blog_category.0 %}
-            {% set use_blog_category = true %}
-            {% for icon in post.blog_category %}
-                {% if loop.index > 1 %}
-                    |
-                {% endif %}
-                {{ category_slug.render(icon,
-                        path,
-                        'post_slug meta-header_left',
-                        use_blog_category,
-                        sheerpage=True) }}
-            {% endfor %}
-        {% elif post.category.0 %}
-            {% for icon in post.category %}
-                {% if loop.index > 1 %}
-                    |
-                {% endif %}
-                {{ category_slug.render(icon,
-                        path,
-                        'post_slug meta-header_left',
-                        sheerpage=True) }}
-            {% endfor %}
-        {% endif %}
-        <h1 class="post_heading">
-            {{ post.title|safe }}
-        </h1>
-    {% if post.dek %}
-        <p class="post_dek">
-            {{ post.dek|safe }}
-        </p>
-    {% endif %}
-        <div class="post_meta">
-        {% if post.author.0 %}
-            <span class="post_byline">
-                By <a href="{{ path }}?filter_author={{ post.author.0 }}">
-                    {{ post.author.0 }}
-                </a>
-                {% if post.author.1 %}
-                    and <a href="{{ path }}?filter_author={{ post.author.1 }}">
-                        {{ post.author.1 }}
-                    </a>
-                {% endif %}
-                &ndash;
-            </span>
-        {% endif %}
-            <span class="date">
-                {% import 'macros/time.html' as time %}
-                {{ time.render(post.date, {'date':true}) }}
-            </span>
-        </div>
-        {{ social_media.render( {
-            'title':            post.title,
-            'twitter_related':  post.twtr_rel,
-            'twitter_lang':     post.twtr_lang,
-            'twitter_hashtags': post.twtr_hash
-        } ) }}
-    {% if post.thumbnail.images %}
-        <img class="post_featured-img"
-             src="{{ post.thumbnail.images.full.url }}"
-             alt="{{ post.thumbnail.alt_text }}">
-    {% endif %}
-    </header>
-    <div class="post_body">
-        {{ post.content | safe }}
-    </div>
-{% if post.tags | length %}
-    <footer>
-        {%- import 'tags.html' as tags %}
-        {{ tags.render( post.tags, path, is_sheer=True ) }}
-    </footer>
-{% endif %}
-</article>
+        {% set data = {
+            'category': page.categories.all(),
+            'heading': page.title,
+            'date': page.date_published,
+            'has_social': True
+        } %}
 
-{% endmacro %}
+        {% for block in page.header -%}
+            {% if block.block_type == 'article_subheader' %}
+                {% do data.update({'paragraph': block.value}) %}
+            {% endif %}
+        {% endfor %}
+
+        {{ item_introduction.render(data) }}
+    </header>
+
+    <div class="post_body">
+        {% for block in page.content %}
+            {% if block.block_type == 'content' %}
+                {{ parse_links(block.value) | safe }}
+            {% elif block.block_type == 'feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+            {% else %}
+                {{ render_block.render(block, loop.index) }}
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% if page.tags.all() | length %}
+        <footer>
+            {{ tags.render( related_metadata_tags(page), '', is_wagtail=True) }}
+        </footer>
+    {% endif %}
+</article>

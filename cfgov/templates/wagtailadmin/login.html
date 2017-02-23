@@ -1,15 +1,6 @@
-{% extends "wagtailadmin/admin_base.html" %}
+{% overextends "wagtailadmin/login.html" %}
 {% load compress static i18n %}
-{% block titletag %}{% trans "Sign in" %}{% endblock %}
-{% block bodyclass %}login{% endblock %}
 
-{% block extra_css %}
-    {{ block.super }}
-
-    {% compress css %}
-        <link rel="stylesheet" href="{% static 'wagtailadmin/css/layouts/login.css' %}" type="text/css" />
-    {% endcompress %}
-{% endblock %}
 
 {% block furniture %}
     <div class="content-wrapper">
@@ -26,13 +17,17 @@
             </div>
         {% endif %}
 
-        <form action="{% url 'wagtailadmin_login' %}" method="post" autocomplete="off">
+        {% if 'build' in request.site.hostname %}
+            <h1>Log in to demo Wagtail</h1>
+        {% else %}
+            <h1>Log in to consumerfinance.gov</h1>
+        {% endif %}
+        <form action="{% url 'cfpb_login' %}" method="post" autocomplete="off">
             {% csrf_token %}
 
-            {% url 'wagtailadmin_home' as home_url %}
+            {% url 'user_welcome' as home_url %}
             <input type="hidden" name="next" value="{{ next|default:home_url }}" />
 
-            <h1>{% block branding_login %}{% trans "Sign in to Wagtail" %}{% endblock %}</h1>
 
             <ul class="fields">
                 <li class="full">
@@ -70,18 +65,9 @@
                     </li>
                 {% endcomment %}
                 <li class="submit">
-                    <button type="submit" class="button-longrunning" tabindex="3" data-clicked-text="{% trans 'Signing in...' %}"><span class="icon icon-spinner"></span><em>{% trans 'Sign in' %}</em></button>
+                    <button type="submit" class="button button-longrunning" tabindex="3" data-clicked-text="{% trans 'Signing in...' %}"><span class="icon icon-spinner"></span><em>{% trans 'Sign in' %}</em></button>
                 </li>
             </ul>
         </form>
     </div>
-{% endblock %}
-
-{% block extra_js %}
-{{ block.super }}
-<script>
-    $(function(){
-        $('form input[name=username]').focus();
-    })
-</script>
 {% endblock %}

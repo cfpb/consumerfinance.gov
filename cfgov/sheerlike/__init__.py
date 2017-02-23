@@ -3,11 +3,9 @@ from __future__ import absolute_import  # Python 2 only
 import os
 import os.path
 import functools
-import warnings
 
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.conf import settings
 from django.template import loader, RequestContext
 from django.utils.html import mark_safe
 
@@ -15,27 +13,21 @@ from jinja2 import Environment
 import jinja2.runtime
 from jinja2.runtime import Context
 
-from unipath import Path
-
 from .query import QueryFinder, more_like_this, get_document, when
 from .filters import selected_filters_for_field, is_filter_selected
-from .templates import get_date_string
+from .templates import get_date_string, get_date_obj
 from .middleware import get_request
 
 
 from flags.template_functions import flag_enabled, flag_disabled
 
-PERMALINK_REGISTRY = {}
 default_app_config = 'sheerlike.apps.SheerlikeConfig'
-
-
-def register_permalink(sheer_type, url_pattern_name):
-    PERMALINK_REGISTRY[sheer_type] = url_pattern_name
 
 
 def global_render_template(name, **kwargs):
     request = get_request()
     context = RequestContext(request, kwargs or None)
+    context['request'] = request
     template = loader.get_template(name, using='wagtail-env')
     return mark_safe(template.render(context.flatten()))
 
@@ -112,6 +104,7 @@ def environment(**options):
         'global_include': global_render_template,
     })
     env.filters.update({
-        'date': get_date_string
+        'date': get_date_string,
+        'dateobj': get_date_obj
     })
     return env

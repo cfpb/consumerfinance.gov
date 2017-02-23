@@ -1,3 +1,15 @@
-<div class="block {{ block.block.meta.classname if block.block.meta.classname else '' }}">
-    {{ render_stream_child(block) }}
-</div>
+{% macro render(block, index) %}
+    <div class="block
+                {{ 'block__flush-top' if index == 1
+                   and not block.value.has_top_border else '' }}
+
+                {{ 'block__padded-top block__border-top'
+                   if block.value.has_top_border else '' }}
+
+                {{ 'block__padded-bottom block__border-bottom'
+                   if block.value.has_rule or block.value.has_bottom_border else '' }}
+
+                {{ block.block.meta.classname if block.block.meta.classname else '' -}}">
+        {{ render_stream_child(block) | safe }}
+    </div>
+{% endmacro %}

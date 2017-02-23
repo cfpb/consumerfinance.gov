@@ -1,5 +1,7 @@
-<div class="o-info-unit-group">
+<div class="o-info-unit-group" data-qa-hook="image-text-25-75">
+    {% if value.heading %}
     <h2>{{ value.heading }}</h2>
+    {% endif %}
 
     <div class="content-l">
       {% for block in value.image_texts %}
@@ -8,6 +10,8 @@
             {% if block.has_rule %}
                 <div class="a-rule-break"></div>
             {% endif %}
+
+            {% do block.update({'should_link_image':value.should_link_image}) %}
 
             {{ block }}
         </div>

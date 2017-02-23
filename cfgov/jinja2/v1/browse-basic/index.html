@@ -1,6 +1,8 @@
 {% extends 'layout-side-nav.html' %}
 
+{% import 'form_block.html' as form_block with context %}
 {% import 'molecules/featured-content.html' as featured_content %}
+{% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main_modifiers -%}
@@ -14,20 +16,17 @@
                         block__flush-sides">
                 {{ featured_content.render(block.value) }}
             </div>
-        {% elif loop.index == 1 %}
-            <div class="block
-                        block__flush-top">
-                {{ render_stream_child(block) }}
-            </div>
         {% else %}
-            <div class="block">
-                {{ render_stream_child(block) }}
-            </div>
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
 
     {% for block in page.content -%}
-        {% include 'templates/render_block.html' with context %}
+        {% if block.block_type in ['feedback', 'conference_registration_form'] %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
     {%- endfor %}
 
     {% if page.sidefoot %}
@@ -36,4 +35,3 @@
         </aside>
     {% endif %}
 {% endblock %}
-

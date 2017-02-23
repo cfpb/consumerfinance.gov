@@ -2,6 +2,7 @@
 
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * Notification
@@ -11,7 +12,7 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
  *
  * @param {HTMLNode} element
  *   The DOM element within which to search for the molecule.
- * @returns {Object} An Notification instance.
+ * @returns {Notification} An instance.
  */
 function Notification( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
@@ -25,15 +26,20 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   // Constants for the Notification modifiers.
   var MODIFIER_VISIBLE = BASE_CLASS + '__visible';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'Notification' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
 
   var _currentType;
 
   /**
-   * @returns {Object} The Notification instance.
+   * @returns {Notification|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     // Check and set default type of notification.
     var classList = _dom.classList;
     if ( classList.contains( BASE_CLASS + '__' + SUCCESS ) ) {
@@ -52,7 +58,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
    * @param {string} messageText The content of the notifiation message.
    * @param {string|HTMLNode} explanationText
    *   The content of the notifiation explanation.
-   * @returns {Object} The Notification instance.
+   * @returns {Notification} An instance.
    */
   function setTypeAndContent( type, messageText, explanationText ) {
     _setType( type );
@@ -65,7 +71,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
    * @param {string} messageText The content of the notifiation message.
    * @param {string|HTMLNode} explanationText
    *   The content of the notifiation explanation.
-   * @returns {Object} The Notification instance.
+   * @returns {Notification} An instance.
    */
   function setContent( messageText, explanationText ) {
     var content = '<p class="h4">' +
@@ -83,7 +89,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
 
   /**
    * @param {number} type The notifiation type.
-   * @returns {Object} The Notification instance.
+   * @returns {Notification} An instance.
    */
   function _setType( type ) {
     // If type hasn't changed, return.
@@ -107,7 +113,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   }
 
   /**
-   * @returns {Object} The Notification instance.
+   * @returns {Notification} An instance.
    */
   function show() {
     if ( _currentType === ERROR || _currentType === WARNING ) {
@@ -120,7 +126,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   }
 
   /**
-   * @returns {Object} The Notification instance.
+   * @returns {Notification} An instance.
    */
   function hide() {
     _dom.classList.remove( MODIFIER_VISIBLE );

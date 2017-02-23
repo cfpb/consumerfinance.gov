@@ -1,6 +1,6 @@
 {# =========================================================================
 
-   Nav link
+   nav_link.render()
 
    =========================================================================
 
@@ -19,7 +19,7 @@
             Defaults to false.
 
    ========================================================================= #}
-{% macro nav_link(text, href, parent=true, current=false) %}
+{% macro render(text, href, parent=true, current=false) %}
 <a class="m-nav-link
           {{ 'm-nav-link__parent' if parent else '' }}
           {{ 'm-nav-link__current' if current else '' }}"

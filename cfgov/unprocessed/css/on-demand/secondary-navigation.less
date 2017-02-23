@@ -1,0 +1,54 @@
+/* ==========================================================================
+   cfgov-refresh
+   Master Less File.
+   ========================================================================== */
+
+
+/* Base styles
+   @import combined CF components Less file and make any overrides.
+   ========================================================================== */
+
+// Import required CF components.
+// Combined CF components.
+// TODO: Base CF styles should be delivered to the /test-fixture/ path
+//       so that the secondary navigation renders correctly at that path.
+//       These reference imports are used to pick up the variables and mixins
+//       needed later on so that the secondary navigation can be delivered to
+//       fin-ed-resources and other non-v1 repos without duplicating
+//       Capital Framework in those repos
+//       (since it's delivered via the header already).
+@import (reference) 'cf-core/src/cf-core.less';
+@import (reference) 'cf-icons/src/cf-icons.less';
+@import (reference) 'cf-forms/src/cf-forms.less';
+@import (reference) 'cf-layout/src/cf-layout.less';
+@import (reference) 'cf-typography/src/cf-typography.less';
+
+// The Capital Framework (CF) brand color palette.
+@import (reference) "../brand-palette.less";
+
+// Override the CF theme variables with colors from the brand color palette.
+@import (reference) "../cf-theme-overrides.less";
+
+// Enhancements that are on a migration path to being added to CF.
+// CF Core
+@import (reference) "../enhancements/vars.less";
+@import (reference) "../enhancements/media-queries.less";
+@import (less) "../enhancements/base.less";
+@import (less) "../enhancements/layout.less";
+
+/* Atom pieces
+   ========================================================================== */
+
+@import (less) "../atoms/rule-break.less";
+
+/* Molecule pieces
+   ========================================================================== */
+
+@import (less) "../organisms/expandable.less";
+@import (less) "../molecules/nav-link.less";
+
+
+/* Organism pieces
+   ========================================================================== */
+
+@import (less) "../organisms/secondary-navigation.less";

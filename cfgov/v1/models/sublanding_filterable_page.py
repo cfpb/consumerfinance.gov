@@ -1,25 +1,25 @@
-from operator import attrgetter
+import itertools
 
-from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db import models
-from django.db.models import Q
-
-from wagtail.wagtailadmin.edit_handlers import StreamFieldPanel, FieldPanel
+from wagtail.wagtailadmin.edit_handlers import (
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface
+)
 from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailimages.blocks import ImageChooserBlock
+from wagtail.wagtailcore.models import PageManager
 
-from . import base, molecules, organisms, ref
-from .learn_page import AbstractFilterPage
-from .. import forms
-from ..util import filterable_context
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import molecules, organisms
+from v1.feeds import FilterableFeedPageMixin
+from v1.models.base import CFGOVPage
+from v1.models.learn_page import AbstractFilterPage
+from v1.util import ref
+from v1.util.filterable_list import FilterableListMixin
 
-from .base import CFGOVPage
 
-
-class SublandingFilterablePage(base.CFGOVPage):
+class SublandingFilterablePage(FilterableFeedPageMixin,
+                               FilterableListMixin,
+                               CFGOVPage):
     header = StreamField([
         ('hero', molecules.Hero()),
     ], blank=True)
@@ -28,6 +28,7 @@ class SublandingFilterablePage(base.CFGOVPage):
         ('full_width_text', organisms.FullWidthText()),
         ('filter_controls', organisms.FilterControls()),
         ('featured_content', molecules.FeaturedContent()),
+        ('feedback', v1_blocks.Feedback()),
     ])
 
     # General content tab
@@ -45,14 +46,32 @@ class SublandingFilterablePage(base.CFGOVPage):
 
     template = 'sublanding-page/index.html'
 
-    def get_context(self, request, *args, **kwargs):
-        context = super(SublandingFilterablePage, self).get_context(request, *args, **kwargs)
-        return filterable_context.get_context(self, request, context)
+    objects = PageManager()
 
-    def get_form_class(self):
-        return filterable_context.get_form_class()
 
-    def get_page_set(self, form, hostname):
-        return filterable_context.get_page_set(self, form, hostname)
-     
+class ActivityLogPage(SublandingFilterablePage):
+    template = 'activity-log/index.html'
 
+    objects = PageManager()
+
+    @classmethod
+    def eligible_categories(cls):
+        categories = dict(ref.categories)
+        return sorted(itertools.chain(*(
+            dict(categories[category]).keys()
+            for category in ('Blog', 'Newsroom', 'Research Report')
+        )))
+
+    @classmethod
+    def base_query(cls, hostname):
+        """
+        Activity log pages should only show content from certain categories.
+        """
+        eligible_pages = AbstractFilterPage.objects.live_shared(hostname)
+
+        return eligible_pages.filter(
+            categories__name__in=cls.eligible_categories()
+        )
+
+    def per_page_limit(self):
+        return 100

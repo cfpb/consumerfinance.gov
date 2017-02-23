@@ -3,6 +3,7 @@
 var filter = require( '../shared_objects/filter.js' );
 var filterableListControl =
 require( '../shared_objects/filterable-list-control.js' );
+var multiSelect = require( '../shared_objects/multiselect' );
 var pagination = require( '../shared_objects/pagination' );
 var stayInformedSection = require( '../shared_objects/stay-informed-section' );
 var rssSection = require( '../shared_objects/rss-section' );
@@ -10,7 +11,7 @@ var _getQAelement = require( '../util/qa-element' ).get;
 
 function Blog() {
 
-  Object.assign( this, filter, filterableListControl,
+  Object.assign( this, filter, filterableListControl, multiSelect,
     pagination, stayInformedSection, rssSection );
 
   this.get = function() {

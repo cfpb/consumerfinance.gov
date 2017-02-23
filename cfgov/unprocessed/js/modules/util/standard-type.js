@@ -1,8 +1,47 @@
 'use strict';
 
-// Constant for the name of the JS hook used
-// for attaching JS behavior to HTML DOM elements.
+/**
+ * @constant
+ * @type {string}
+ * @description
+ * Constant for the name of the data-* attribute set on
+ * HTML DOM elements for access by JavaScript.
+ */
 var JS_HOOK = 'data-js-hook';
+
+/**
+ * @constant
+ * @type {string}
+ * @description
+ * Flag prefix for settings that describe what JavaScript
+ * behaviors should be attached to a component.
+ * This would be set in the markup and initialized when
+ * the JavaScript loads.
+ *
+ * @example
+ * A component may flag that it has certain JavaScript behaviors attached,
+ * such as:
+ * `data-js-hook="behavior_flyout-menu behavior_clearable-input"`,
+ * which defines that two scripts (FlyoutMenu) and (ClearableInput)
+ * should access this DOM element and initialize its behaviors.
+ */
+var BEHAVIOR_PREFIX = 'behavior_';
+
+/**
+ * @constant
+ * @type {string}
+ * @description
+ * Flag prefix for settings related to changes in a components
+ * state set in the data-* JavaScript hook.
+ *
+ * @example
+ * A component may flag that it has been initialized by setting
+ * `data-js-hook="state_atomic_init"` after page load.
+ * Which specifies that the init method of a atomic constructor
+ * has been called, such as
+ * `var globalSearch = new GlobalSearch( 'm-global-search' ).init()`.
+ */
+var STATE_PREFIX = 'state_';
 
 /**
  * Empty function that will do nothing.
@@ -10,7 +49,7 @@ var JS_HOOK = 'data-js-hook';
  * which are meant to be overridden with functionality, but if not,
  * noopFunct will fire and do nothing instead.
  *
- * e.g.
+ * @example
  * callback.onComplete = standardType.noopFunct;
  */
 function noopFunct() {
@@ -20,7 +59,9 @@ function noopFunct() {
 var UNDEFINED;
 
 module.exports = {
-  JS_HOOK:   JS_HOOK,
-  noopFunct: noopFunct,
-  UNDEFINED: UNDEFINED
+  BEHAVIOR_PREFIX: BEHAVIOR_PREFIX,
+  JS_HOOK:         JS_HOOK,
+  noopFunct:       noopFunct,
+  STATE_PREFIX:    STATE_PREFIX,
+  UNDEFINED:       UNDEFINED
 };

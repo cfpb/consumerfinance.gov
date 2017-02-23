@@ -1,29 +1,19 @@
-import os
-import codecs
-import logging
+import datetime
 import json
-
+import os
 from collections import namedtuple
 
-from django.utils.datastructures import MultiValueDict as MultiDict
-from django.conf import settings
-from django.utils.http import urlencode
-from django.core.urlresolvers import reverse
-
-import datetime
-from dateutil import parser
-from pytz import timezone
-from time import mktime, strptime
-
 import elasticsearch
-
+from dateutil import parser
+from django.conf import settings
+from django.utils.datastructures import MultiValueDict as MultiDict
+from django.utils.http import urlencode
+from pytz import timezone
 from unipath import Path
 
-#from sheer.utility import find_in_search_path
 from .filters import filter_dsl_from_multidict
-
 from .middleware import get_request
-
+from .templates import _convert_date
 
 ALLOWED_SEARCH_PARAMS = (
     'doc_type',
@@ -123,18 +113,6 @@ class QueryHit(object):
 
     def __repr__(self):
         return self.__str__()
-
-    @property
-    def permalink(self):
-        import sheerlike
-        if self.type in sheerlike.PERMALINK_REGISTRY:
-            pattern_name = sheerlike.PERMALINK_REGISTRY[self.type]
-            return reverse(pattern_name, kwargs=dict(doc_id=self._id))
-        else:
-            raise NotImplementedError(
-                "Please use django's reverse url system,"
-                "or register a permalink for %s" %
-                self.type)
 
     def __getattr__(self, attrname):
         value = field_or_source_value(attrname, self.hit_dict)
@@ -242,21 +220,25 @@ class Query(object):
         if not additional_args:
             query_dict['query'] = {'bool': {'should': []}}
             for tag in tags:
-                query_dict['query']['bool']['should'].append({'match': {'tags.lower': tag.lower()}})
+                query_dict['query']['bool']['should'].append(
+                    {'match': {'tags.lower': tag.lower()}})
 
         else:
-            filtered_query = json.loads(file(getattr(QueryFinder(), 'filtered_17').filename).read())
+            filtered_query = json.loads(file(
+                getattr(QueryFinder(), 'filtered_17').filename).read())
             query_dict['query'] = filtered_query
 
+            query_dict_filtered = query_dict['query']['filtered']
+
             for tag in tags:
-                query_dict['query']['filtered']['query']['bool']['should'].append({'term': {'tags.lower': tag.lower()}})
+                query_dict_filtered['query']['bool']['should'].append(
+                    {'term': {'tags.lower': tag.lower()}})
 
             for arg in additional_args:
-                query_dict['query']['filtered']['filter']['or'].append(arg)
+                query_dict_filtered['filter']['or'].append(arg)
 
         if size:
             query_dict['size'] = size
-
 
         response = self.es.search(index=self.es_index, doc_type=doc_type,
                                   body=query_dict, analyzer='tag_analyzer')
@@ -267,14 +249,17 @@ class Query(object):
             aggregations=None,
             use_url_arguments=True,
             size=10,
+            pdf_print=False,
             **kwargs):
         query_file = json.loads(file(self.filename).read())
         query_dict = query_file['query']
 
+        if pdf_print:
+            query_dict['size'] = settings.ELASTICSEARCH_BIGINT
         '''
         These dict constructors split the kwargs from the template into filter
-        arguments and arguments that can be placed directly into the query body.
-        The dict constructor syntax supports python 2.6, 2.7, and 3.x
+        arguments and arguments that can be placed directly into the query
+        body. The dict constructor syntax supports python 2.6, 2.7, and 3.x
         If python 2.7, use dict comprehension and iteritems()
         With python 3, use dict comprehension and items() (items() replaces
         iteritems and is just as fast)
@@ -312,9 +297,12 @@ class Query(object):
         else:
             if use_url_arguments:
                 if 'page' in args_flat:
+                    try:
+                        pagenum = int(args_flat['page'])
+                    except ValueError:
+                        pagenum = 1
                     args_flat['from_'] = int(query_dict.get(
-                        'size', '10')) * (int(args_flat['page']) - 1)
-                    pagenum = int(args_flat['page'])
+                        'size', '10')) * (pagenum - 1)
 
                 args_flat_filtered = dict(
                     [(k, v) for k, v in args_flat.items() if v])
@@ -395,19 +383,14 @@ def get_document(doctype, docid):
     return QueryHit(raw_results, es, es_index)
 
 
-def convert_to_datetime(timestamp):
-    date = parser.parse(timestamp)
-    if not date.tzinfo:
-        date = date.replace(tzinfo=timezone('America/New_York'))
-    return date.astimezone(timezone('UTC'))
-
-
-def when(starttime, endtime):
-    start = convert_to_datetime(starttime)
-    end = convert_to_datetime(endtime)
-    if start >= datetime.datetime.now(timezone('UTC')):
+def when(starttime, endtime, streamtime=None):
+    start = _convert_date(starttime, 'America/New_York')
+    if streamtime:
+        start = _convert_date(streamtime, 'America/New_York')
+    end = _convert_date(endtime, 'America/New_York')
+    if start > datetime.datetime.now(timezone('America/New_York')):
         return 'future'
-    elif end <= datetime.datetime.now(timezone('UTC')):
+    elif end < datetime.datetime.now(timezone('America/New_York')):
         return 'past'
     else:
         return 'present'

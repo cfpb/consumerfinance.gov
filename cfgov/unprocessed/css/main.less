@@ -20,8 +20,6 @@
 @import (less) 'cf-typography/src/cf-typography.less';
 @import (less) 'cf-pagination/src/cf-pagination.less';
 @import (less) 'cf-expandables/src/cf-expandables.less';
-// Remove CF Tables from the bower manifest when it's released under the
-// main capital-framework repo
 @import (less) 'cf-tables/src/cf-tables.less';
 
 
@@ -58,6 +56,7 @@
 
 // CF Expandables
 @import (less) "enhancements/expandables.less";
+
 // CF Tables
 @import (less) "enhancements/tables.less";
 
@@ -92,60 +91,69 @@
    ========================================================================== */
 
 @import (less) "atoms/rule-break.less";
-@import (less) "atoms/multi-select.less";
 @import (less) "atoms/overlay.less";
 
 
 /* Molecule pieces
    ========================================================================== */
 
+@import (less) "molecules/big-checkbox.less";
+@import (less) "molecules/big-radio-buttons.less";
 @import (less) "molecules/call-to-action.less";
 @import (less) "molecules/card.less";
-@import (less) "molecules/expandable.less";
 @import (less) "molecules/featured-menu-content.less";
 @import (less) "molecules/form-field-with-button.less";
+@import (less) "molecules/full-width-media.less";
 @import (less) "molecules/full-width-text.less";
 @import (less) "molecules/global-banner.less";
 @import (less) "molecules/global-eyebrow.less";
 @import (less) "molecules/global-header-cta.less";
 @import (less) "molecules/global-search.less";
+@import (less) "molecules/hero.less";
+@import (less) "molecules/home-hero.less";
 @import (less) "molecules/info-unit.less";
 @import (less) "molecules/inset.less";
+@import (less) "molecules/multi-select.less";
 @import (less) "molecules/nav-link.less";
 @import (less) "molecules/notification.less";
-@import (less) "molecules/home-hero.less";
 @import (less) "molecules/pagination.less";
 @import (less) "molecules/related-metadata.less";
 @import (less) "molecules/related-posts.less";
 @import (less) "molecules/social-media.less";
 
+
 /* Organism pieces
    ========================================================================== */
-
-@import (less) "organisms/sidebar-content.less";
-@import (less) "organisms/expandable-group.less";
+@import (less) "organisms/bureau-structure.less";
+@import (less) "organisms/chart.less";
 @import (less) "organisms/email-signup.less";
+@import (less) "organisms/expandable.less";
+@import (less) "organisms/expandable-group.less";
 @import (less) "organisms/filterable-list-controls.less";
 @import (less) "organisms/footer.less";
 @import (less) "organisms/form.less";
+@import (less) "organisms/form-input-group.less";
 @import (less) "organisms/full-width-text-group.less";
 @import (less) "organisms/header.less";
-@import (less) "organisms/item-introduction.less";
 @import (less) "organisms/info-unit-group.less";
+@import (less) "organisms/item-introduction.less";
 @import (less) "organisms/mega-menu.less";
 @import (less) "organisms/post-preview.less";
 @import (less) "organisms/prefooter.less";
+@import (less) "organisms/reg-comment.less";
+@import (less) "organisms/secondary-navigation.less";
 @import (less) "organisms/sidebar-breakout.less";
 @import (less) "organisms/sidebar-contact-info.less";
+@import (less) "organisms/sidebar-content.less";
+@import (less) "organisms/snippet-list.less";
 @import (less) "organisms/well.less";
-@import (less) "organisms/secondary-navigation.less";
+
 
 /* Template pieces
    ========================================================================== */
 
 @import (less) "skip-nav.less";
 @import (less) "breadcrumbs.less";
-@import (less) "mobile-carousel.less";
 @import (less) "share.less";
 
 
@@ -156,17 +164,8 @@
 @import (less) "pages/event.less";
 @import (less) "pages/external-site.less";
 @import (less) "pages/error.less";
-@import (less) "pages/bureau.less";
-@import (less) "pages/bureau-structure.less";
-@import (less) "pages/careers.less";
 @import (less) "pages/home.less";
 @import (less) "pages/press-resources.less";
-
-
-/* Demo-specific styles
-   ========================================================================== */
-
-@import (less) "demo.less";
 
 
 /* Print styles

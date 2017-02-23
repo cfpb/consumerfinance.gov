@@ -1,0 +1,217 @@
+{% extends "knowbeforeyouowe/base_kbyo.html" %}.
+
+{% load agreements_extras %}
+
+{% block page_meta %}
+
+<meta property="og:title" content="Know Before You Owe: Credit Cards &#8211; Consumer Financial Protection Bureau" />
+<meta property="og:type" content="government" />
+<meta property="og:url" content="http://www.consumerfinance.gov/credit-cards/knowbeforeyouowe"/>
+<meta property="og:image" content="http://consumerfinance.gov/static/cc/kbyoCreditCards.png"/>
+<meta property="og:site_name" content="Consumer Financial Protection Bureau" />
+<meta property="fb:page_id" content="141576752553390" />
+<meta property="fb:app_id" content="210516218981921" />
+<meta name="description" content="The Consumer Financial Protection Bureau has developed an idea for a simple, two-page credit card agreement. This interactive tool lets you explore it, learn more, and share your thoughts with the Bureau." />
+
+{% endblock %}
+
+{% block title %}Know Before You Owe: Credit Cards{% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="/">Home</a></li>
+<li><a href="/credit-cards/">Credit Cards</a></li>
+<li>Know Before You Owe</li>
+{% endblock %}
+
+{% block page_css %}
+<style>
+
+#kbyo_wrap {
+  position: relative;
+  margin: 1em 0;
+}
+
+#kbyo_wrap div.img {
+  border: 1px solid #c5c3c1;
+  margin-bottom: 10px;
+}
+
+.js .popup {
+	display: none;
+	position: absolute;
+	left: 25%;
+	width: 45%;
+	padding: 1em;
+	background: #fff;
+	-webkit-box-shadow: #C5C3C1 3px 3px 3px;
+	-moz-box-shadow: #C5C3C1 3px 3px 3px;
+	-ms-box-shadow: #C5C3C1 3px 3px 3px;
+	-o-box-shadow: #C5C3C1 3px 3px 3px;
+	box-shadow: #C5C3C1 3px 3px 3px;
+	border: 1px solid #4787bf;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	-ms-border-radius: 15px;
+	-o-border-radius: 15px;
+	border-radius: 15px;
+}
+
+.popup h3,
+h3.formheader {
+  color: #438108;
+  font-size: 15px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+area:hover,
+area:focus,
+a:focus {
+  outline: auto 5px -webkit-focus-ring-color;
+}
+
+textarea {
+  width: 95%;
+  margin: 1em 0;
+  height: 300px;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<h1><img src="/static/cc/kbyoCreditCards.png" alt="Know Before You Owe: Credit Cards"></h1>
+<p>We developed a shorter, simpler credit card agreement that spells out the terms for the consumer.  Note that this is not a model form, and use is not mandatory.  Our prototype is shown here.  We believe our approach will help consumers better understand their credit card agreements. Tell us what you think of it.</p>
+ <p>Review the sample agreement below. (You can also <a href="/static/cc/kbyo_cc.pdf">view a PDF copy</a>.) The terms that are underlined in the agreement are defined in <a href="/credit-cards/definitions">a separate list of definitions of credit card contract terms</a>. Click any section of the agreement to learn more about it. Then leave your comments about the agreement or the definitions at the bottom of the page.</p>
+<p>If you want to see what current agreements look like, check out our <a href="/credit-cards/agreements">Credit Card Agreement Database</a>.</p>
+
+<div id="kbyo_wrap">
+<div class="img">
+<img name="kbyo_cc" src="/static/cc/kbyo_cc.png" width="932" height="1206" usemap="#m_kbyo_cc" alt="Proposed credit card disclosure, page 1">
+</div>
+<div class="img">
+<img name="kbyo_cc2" id="kbyo_cc2" src="/static/cc/kbyo_cc2.png" width="932" height="1206" usemap="#m_kbyo_cc2" alt="Proposed credit card disclosure, page 2">
+</div>
+<map name="m_kbyo_cc">
+<area shape="rect" coords="572,55,876,212" href="#definitions" title="Definitions" alt="Definitions">
+<area shape="rect" coords="55,307,875,660" href="#charges" title="What are the charges?" alt="What are the charges?" >
+<area shape="rect" coords="55,675,875,946" href="#pay_when" title="What do I have to pay and when?" alt="What do I have to pay and when?" >
+<area shape="rect" coords="350,961,875,1186" href="#interest_calc" title="How is interest calculated?" alt="How is interest calculated?" >
+</map>
+<map name="m_kbyo_cc2">
+<area shape="rect" coords="55,55,877,534" href="#changes" title="Changes" alt="Changes" >
+<area shape="rect" coords="55,546,877,1191" href="#additional_info" title="Additional information" alt="Additional information" >
+</map>
+
+<div id="definitions" class="popup">
+  <h3>Definitions</h3>
+  <p>You can <a href="/credit-cards/definitions/" target="_blank">find our proposed definitions here</a>.</p>
+  <p><a href='#kbyo_wrap' class='close'>Return to the disclosure</a></p>
+</div>
+<div id="charges" class="popup">
+  <h3>Interest rates</h3>
+  <p>Interest rates, or APRs, are the price you pay for using a credit card. If you carry a balance even some of the time, a lower APR will cost you less. This may sound simple. However, most credit cards have more than one APR. Different APRs apply to different transaction types and different time periods. We place all APRs and transaction fees in this section to make it easier for you to see the interest rates and the fees. Sometimes there is an initial or promotional APR for a limited period of time, followed by higher long term APRs. If your card has an initial or promotional rate, you should pay close attention to exactly when the promotion ends to avoid paying higher interest.</p>
+  <h3>Fees</h3>
+  <p>APRs are important, but they are only one important element of the price you pay for using a credit card. You also may pay fees to hold the card, or for certain events. Fees can be a specific dollar amount or they may be based on a percentage of a credit card transaction. For example, your card may charge you an annual fee. Ask yourself if any benefits or rewards you get with the card are worth the fee. If you travel overseas frequently, you may consider a card with lower or no foreign transaction fee. If you transfer a balance, you will be charged a balance transfer fee which is a percentage of the amount transferred.</p>
+  <p><a href='#kbyo_wrap' class='close'>Return to the disclosure</a></p>
+</div>
+<div id="pay_when" class="popup">
+  <h3>What do I have to pay and when?</h3>
+  <p>Your minimum payment is the amount you must pay every month. If you fail to make a minimum payment, you may be charged a late fee and you will be in violation of your credit card agreement. You may also have your interest rates raised to the penalty APR for all new purchases. One missed or late minimum payment also could mean that you lose your introductory APR and have to start paying the higher long term rate on your existing balance. Late or missed payments can also hurt your credit history. While it is important to pay the minimum, you should try to pay more than the minimum to reduce your interest costs and pay off your balance more quickly.</p>
+  <p>Each month that you have a balance on your card, your credit card company will send you your statement. It will show both your minimum payment and the due date. You should also bear in mind that paying on time actually means paying at least the minimum on or before the due date. You can choose your due date and you will have the same due date each month.</p>
+  <p><a href='#kbyo_wrap' class='close'>Return to the disclosure</a></p>
+</div>
+<div id="interest_calc" class="popup">
+  <h3>How is interest calculated?</h3>
+  <p>How interest is charged is very important if you carry a balance on your credit card. Interest may be compounded daily on every credit card transaction and on all balances. Your credit card balance will grow more rapidly due to compounding of interest charges. If you are unable to avoid interest charges, you should at least do the following to lower them:</p>
+  <ul>
+    <li>Shop for a credit card with lower APRs;</li>
+    <li>Avoid transactions that incur high APRs such as cash advances;</li>
+    <li>Pay on time and pay more than the minimum;</li>
+    <li>If you can, pay before the due date.</li>
+  </ul>
+  <p><a href='#kbyo_wrap' class='close'>Return to the disclosure</a></p>
+</div>
+<div id="changes" class="popup">
+  <h3>What can change?</h3>
+  <p>Your credit card company can change your card agreement. Your credit card company can make any of the changes listed in this section to your credit card agreement. Most significant changes require 45 days notice to you. Read your mail and any online messages from your credit card issuer to see if your credit card rates, terms, or conditions are changing. If the card issuer decides to raise your interest rate on new purchases, you have the right to close your account and thereby avoid the increased rate. If the card issuer adds or increases certain fees, you have the right to decline these changes but the issuer may then close your account. In either case, you will still need to pay off your balance to the card issuer.</p>
+  <p><a href='#kbyo_cc2' class='close'>Return to the disclosure</a></p>
+</div>
+<div id="additional_info" class="popup">
+  <h3>What else should I know?</h3>
+  <p>The terms listed in this section are very important when a dispute arises, when you contest a charge, or when you decide to close your account. Read them carefully. Know your rights, options, and appropriate procedures in those special situations.</p>
+  <p><a href='#kbyo_cc2' class='close'>Return to the disclosure</a></p>
+</div>
+</div>
+
+{% if complete %}
+<a name="thanks"></a>
+<div id="#thanks">
+<h3 class="formheader">Thank you!</h3>
+<p>Thank you for your comments. Please use the buttons below to share this with others.</p>
+</div>
+{% else %}
+<h3 class="formheader">What do you think?</h3>
+<p>
+Due to technical issues, this commenting feature is temporarily unavailable.</p>
+{% endif %}
+
+
+
+{% endblock %}
+
+{% block page_js %}
+<script src="/static/cc/jquery.maphilight.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $(".subscribe_form_sle").each(function(){
+        var form = $(this); // this refers to individual form
+        form.submit(function(){
+            $.ajax({
+                type: "POST", 
+                url: "/gov-delivery/proxy3.php",
+                data: form.serialize(), // it creates data string handy :)
+                complete: function(req, status_msg) {
+                    if(status_msg == 'success') {
+                        $('.subscribe_form_sle').hide();
+  				        $("#kbyo_thankyou").attr("style","left: 0px;");
+                    } 
+                }
+            });
+            return false;
+        });
+    });
+    $("img[usemap]").maphilight();
+    $("area").focus(function(e) {
+      $(this).mouseover();
+    });
+    $("area").blur(function(e) {
+      $(this).mouseout();
+    });
+    $("area").click(function(e) {
+      e.preventDefault();
+      $(".popup h3").removeAttr("tabindex");
+      $(".popup").fadeOut();
+      var offset = ($(this).parent().attr("name").slice(-1) == 2 ? 1216 : 0);
+      var target = $($(this).attr("href"));
+      target.css("top",parseInt($(this).attr("coords").split(",")[1])+parseInt(offset)+"px");
+      /*target.css("left",(parseInt($(this).attr("coords").split(",")[0]) > 55) ? "50%" : "55px");*/
+      target.fadeIn();
+      target.children("h3:first").attr("tabindex","0").get(0).focus();
+    }); 
+	$(".close").click(function(e) {
+	  e.preventDefault();
+	  var closeid = "#" + $(this).parent().parent().attr("id");
+	  $(this).parent().parent().children("h3:first").removeAttr("tabindex");
+	  $(closeid).fadeOut();
+	  var targetArea = $("area[href='" + closeid + "']");
+	  var scrollTarget = $(document).scrollTop();
+	  targetArea.get(0).focus();
+	  targetArea.mouseout();
+	  $(document).scrollTop(scrollTarget);
+	});
+  });
+</script>
+
+{% endblock %}

@@ -13,12 +13,6 @@ mysql_users:
     password: "{{ mysql_user_password }}"
     priv: "{{ mysql_database }}.*:ALL"
 
-mysql_packages:
-  - mysql-5.1.73-5.el6_6
-  - mysql-server
-  - mysql-libs
-  - MySQL-python
-
 firewall_allowed_tcp_ports:
   - "22"
   - "3306"

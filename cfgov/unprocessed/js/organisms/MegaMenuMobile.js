@@ -1,7 +1,9 @@
 'use strict';
 
+
 // Required modules.
 var EventObserver = require( '../modules/util/EventObserver' );
+var fnBind = require( '../modules/util/fn-bind' ).fnBind;
 var MoveTransition = require( '../modules/transition/MoveTransition' );
 var treeTraversal = require( '../modules/util/tree-traversal' );
 
@@ -20,11 +22,11 @@ function MegaMenuMobile( menus ) {
   var _bodyDom = document.body;
 
   // Binded functions.
-  var _handleTriggerClickBinded = _handleTriggerClick.bind( this );
-  var _handleExpandBeginBinded = _handleExpandBegin.bind( this );
-  var _handleCollapseBeginBinded = _handleCollapseBegin.bind( this );
-  var _handleCollapseEndBinded = _handleCollapseEnd.bind( this );
-  var _suspendBinded = suspend.bind( this );
+  var _handleTriggerClickBinded = fnBind( _handleTriggerClick, this );
+  var _handleExpandBeginBinded = fnBind( _handleExpandBegin, this );
+  var _handleCollapseBeginBinded = fnBind( _handleCollapseBegin, this );
+  var _handleCollapseEndBinded = fnBind( _handleCollapseEnd, this );
+  var _suspendBinded = fnBind( suspend, this );
 
   // Tree model.
   var _menus = menus;
@@ -74,17 +76,16 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function handleEvent( event ) {
-    if ( !_suspended ) {
-      if ( event.type === 'triggerClick' ) {
-        _handleTriggerClickBinded( event );
-      } else if ( event.type === 'expandBegin' ) {
-        _handleExpandBeginBinded( event );
-      } else if ( event.type === 'collapseBegin' ) {
-        _handleCollapseBeginBinded( event );
-      } else if ( event.type === 'collapseEnd' ) {
-        _handleCollapseEndBinded( event );
-      }
-    }
+    if ( _suspended ) { return; }
+    var eventMap = {
+      triggerClick:  _handleTriggerClickBinded,
+      expandBegin:   _handleExpandBeginBinded,
+      collapseBegin: _handleCollapseBeginBinded,
+      collapseEnd:   _handleCollapseEndBinded
+    };
+
+    var currHandler = eventMap[event.type];
+    if ( currHandler ) { currHandler( event ); }
   }
 
   /**
@@ -98,6 +99,11 @@ function MegaMenuMobile( menus ) {
     var menuNode = menu.getData();
     var level = menuNode.level;
     var transition = rootMenu.getTransition();
+
+    // Halt any active transitions.
+    if ( _activeMenu ) {
+      _activeMenu.getTransition().halt();
+    }
 
     if ( menu === rootMenu ) {
       // Root menu clicked.
@@ -159,6 +165,7 @@ function MegaMenuMobile( menus ) {
    * @param {Event} event - A FlyoutMenu event.
    */
   function _handleExpandBegin( event ) {
+    window.scrollTo( 0, 0 );
     var menu = event.target;
     _handleToggle( menu );
     if ( menu === _rootMenu ) {
@@ -248,26 +255,7 @@ function MegaMenuMobile( menus ) {
     if ( !_suspended ) {
       _suspended = true;
 
-      _rootMenu.getTransition().remove();
-
-      var rootNode = _menus.getRoot();
-      treeTraversal.bfs( rootNode, function( node ) {
-        node.data.setCollapseTransition( null );
-        node.data.setExpandTransition( null );
-
-        // TODO: Investigate whether deferred collapse has another solution.
-        //       This check is necessary since a call to an already collapsed
-        //       menu will set a deferred collapse that will be called
-        //       on expandEnd next time the flyout is expanded.
-        //       The deferred collapse is used in cases where the
-        //       user clicks the flyout menu while it is animating open,
-        //       so that it appears like they can collapse it, even when
-        //       clicking during the expand animation.
-        if ( node.data.isExpanded() ) {
-          node.data.collapse();
-        }
-      } );
-
+      treeTraversal.bfs( _menus.getRoot(), _handleSuspendTraversal );
       _rootMenuContentDom.classList.remove( 'u-invisible' );
       _rootMenuContentDom.classList.remove( 'u-hidden-overflow' );
 
@@ -278,6 +266,27 @@ function MegaMenuMobile( menus ) {
     }
 
     return _suspended;
+  }
+
+  /**
+   * Iterate over the sub menus and handle setting the suspended state.
+   * @param {TreeNode} node - The data source for the current menu.
+   */
+  function _handleSuspendTraversal( node ) {
+    var menu = node.data;
+    menu.clearTransitions();
+
+    // TODO: Investigate whether deferred collapse has another solution.
+    //       This check is necessary since a call to an already collapsed
+    //       menu will set a deferred collapse that will be called
+    //       on expandEnd next time the flyout is expanded.
+    //       The deferred collapse is used in cases where the
+    //       user clicks the flyout menu while it is animating open,
+    //       so that it appears like they can collapse it, even when
+    //       clicking during the expand animation.
+    if ( menu.isExpanded() ) {
+      menu.collapse();
+    }
   }
 
   // Attach public events.

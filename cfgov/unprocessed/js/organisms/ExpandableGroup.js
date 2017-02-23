@@ -1,8 +1,9 @@
 'use strict';
 
 // Required modules.
-var Expandable = require( '../molecules/Expandable' );
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
+var Expandable = require( '../organisms/Expandable' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * ExpandableGroup
@@ -18,15 +19,20 @@ function ExpandableGroup( element ) {
 
   var BASE_CLASS = 'o-expandable-group';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'ExpandableGroup' );
-  var _domChildren = _dom.querySelectorAll( '.m-expandable' );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  var _domChildren = _dom.querySelectorAll( '.o-expandable' );
   var _lastOpenChild;
   var _isAccordion;
 
   /**
-   * @returns {Object} The ExpandableGroup instance.
+   * @returns {ExpandableGroup|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     _isAccordion = _dom.classList.contains( BASE_CLASS + '__accordion' );
 
     var child;
@@ -34,7 +40,7 @@ function ExpandableGroup( element ) {
 
     for ( var i = 0; i < len; i++ ) {
       child = new Expandable( _domChildren[i] ).init();
-      child.addEventListener( 'beginExpand', _childBeginExpand );
+      child.addEventListener( 'expandBegin', _childBeginExpand );
     }
 
     return this;

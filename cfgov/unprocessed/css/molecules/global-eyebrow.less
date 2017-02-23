@@ -52,11 +52,11 @@
     font-size: unit( 12px / @base-font-size-px, em);
 
     &_tagline {
-        padding-left: 37px; //22px flag + 15px spacing
-        background: url('/static/img/us-flag_22x13.png') no-repeat 0 0;
+        padding-left: 32px; //22px flag + 10px spacing
+        background: url('../img/us-flag_22x13.png') no-repeat 0 0;
 
         .respond-to-dpi(2, {
-            background-image: url('/static/img/us-flag_44x26.png');
+            background-image: url('../img/us-flag_44x26.png');
             background-size: 22px;
         });
 
@@ -71,16 +71,14 @@
 
     &_languages {
         display: inline;
-        list-style-type: none;
 
-        li {
-            display: inline-block;
-            margin-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        .list_item:not(:last-child) {
+            margin-right: unit( 7px / 12px, em );
             margin-bottom: 0;
 
-            &:last-child {
-                margin-right: 0;
-            }
+            .respond-to-min( @bp-lg-min, {
+                margin-right: unit( 10px / 12px, em );
+            } );
         }
 
         a {
@@ -93,41 +91,43 @@
     }
 
     &__horizontal {
-        padding: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+        padding-top: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
+        padding-bottom: unit( @grid_gutter-width / 3 / @base-font-size-px, em );
         background: @gray-5;
         border-bottom: 1px solid @gray-40;
 
         .m-global-eyebrow_tagline {
             float: left;
         }
+
         .m-global-eyebrow_languages {
             text-align: right;
         }
     }
 
     &__list {
-        padding-left: unit( ( @grid_gutter-width / 4 ) * 3 / @base-font-size-px, em );
-        padding-right: unit( ( @grid_gutter-width / 4 ) * 3 / @base-font-size-px, em );
-        padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        padding: unit( @grid_gutter-width / 2 / 12px, em )
+                 unit( @grid_gutter-width / 2 / 12px, em )
+                 unit( @grid_gutter-width / 12px, em );
         border-top: 1px solid @gray-40;
-
-        .m-global-eyebrow_tagline {
-            background-position-y: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-            padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-            padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-        }
 
         .m-global-eyebrow_actions {
             padding-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
             border-top: 1px solid @gray-40;
+            margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+
             text-align: left;
         }
 
         .m-global-eyebrow_phone,
         .m-global-eyebrow_languages {
-          display: block;
-          padding-left: 37px; //22px flag + 15px spacing
+            display: block;
+            padding-left: 32px; //22px flag + 15px spacing
         }
     }
 }
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

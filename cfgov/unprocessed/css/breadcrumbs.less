@@ -1,8 +1,8 @@
 .breadcrumbs {
-    .grid_column(1,1);
+    .grid_column( 1, 1 );
 
-    padding-top: unit(@grid_gutter-width / 14px, em);
-    font-size: unit(14px / @base-font-size-px, em);
+    padding-top: unit( @grid_gutter-width / 14px, em );
+    font-size: unit( 14px / @base-font-size-px, em );
     overflow-x: auto;
     white-space: nowrap;
 
@@ -12,15 +12,15 @@
       font-family: 'CFPB Minicons';
     }
 
-    .respond-to-max(@bp-sm-max, {
-        padding-top: unit(@grid_gutter-width / 2 / 14px, em);
-        padding-bottom: unit(@grid_gutter-width / 2 / 14px, em);
-    });
+    .respond-to-max( @bp-sm-max, {
+        padding-top: unit( @grid_gutter-width / 2 / 14px, em );
+        padding-bottom: unit( @grid_gutter-width / 2 / 14px, em );
+    } );
 
     &_link {
         padding-left: 4px;
 
-        &:not(:last-child):after {
+        &:not( :last-child ):after {
             padding-left: 4px;
             color: @text;
             content: ' /';
@@ -28,12 +28,9 @@
     }
 }
 
-.breadcrumbs__main-first {
-    margin-bottom: unit(@grid_gutter-width / 2 / 14px, em);
-}
-
-.breadcrumbs__sidebar-first {
-    .respond-to-min(@bp-med-min, {
-        margin-bottom: unit(@grid_gutter-width / 2 / 14px, em);
-    });
-}
+// Hide on print.
+.respond-to-print( {
+    .breadcrumbs {
+        display: none;
+    }
+} );

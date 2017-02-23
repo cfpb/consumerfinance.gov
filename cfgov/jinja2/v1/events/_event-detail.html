@@ -1,22 +1,20 @@
+{% import 'macros/time.html' as time %}
+
 <article class="post post__event">
     <header>
         <h1 class="post_heading">
             {{ page.title | safe }}
         </h1>
         <p class="post_dek">
-        {% if (event_state == 'past') %}
-            {{ page.archive_body | striptags }}
-        {% elif (event_state == 'present') %}
-            {{ page.live_body | striptags }}
-        {% elif (event_state == 'future') %}
-            {{ page.future_body | striptags }}
-        {% endif %}
+            {{ parse_links(page.body) | safe }}
         </p>
         <div class="t-event_details">
             <div class="modification-date date">
                 <span>Updated</span>
-                {% import 'macros/time.html' as time %}
-                {{ time.render(page.latest_revision_created_at, {'date':true}) }}
+                {{ time.render(
+                    page.latest_revision_created_at,
+                    {'date': true}
+                ) }}
             </div>
             {% import 'molecules/social-media.html' as social_media with context %}
             {{ social_media.render( {
@@ -26,27 +24,14 @@
                 'twitter_hashtags': page.twtr_hash
             } ) }}
         </div>
-        {% from 'events/_macros.html' import event_venue as event_venue %}
+        {% from 'events/_macros.html' import event_venue as event_venue with context %}
         {{ event_venue( page, event_state ) }}
     </header>
     <div class="post_body">
-        {% if ( event_state == 'future' ) %}
+        {% if event_state == 'future' and page.live_stream_availability %}
         <aside class="post_inset post_inset__right line-container event-status">
             <div class="line-container_body">
-                <h1 class="u-visually-hidden">Event reservation and viewing details</h1>
-                <div class="event-status_rsvp">
-                  <p>
-                      <strong>This event requires an RSVP.</strong>
-                  </p>
-                  <p>
-                      <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:"
-                         class="btn">
-                          <span class="btn_icon__left cf-icon cf-icon-email-social"></span>
-                           reserve@cfpb.gov
-                      </a>
-                  </p>
-                </div>
-                {% if page.live_stream_availability %}
+                <h1 class="u-visually-hidden">Event viewing details</h1>
                 <div class="event-status_livestream">
                   <p>
                       <span class="cf-icon cf-icon-livestream"></span>
@@ -56,12 +41,12 @@
                       <span class="event-meta_description event-meta_description__block">
                           Video link available:
                       </span>
-                      {% import 'macros/time.html' as time %}
-                      {{ time.render(page.live_stream_date,
-                                     {'date':true, 'time':true, 'timezone':true}) }}
+                      {{ time.render(
+                          page.live_stream_date,
+                          timezone=page.live_stream_date.tzinfo | string
+                      ) }}
                   </p>
                 </div>
-                {% endif %}
             </div>
         </aside>
         {% elif ( event_state == 'present' and page.live_stream_availability ) %}
@@ -78,8 +63,7 @@
                         Use the link below to troubleshoot the live video stream if it isn't playing properly.
                     </p>
                     <p>
-                        {# TODO: Add real link #}
-                        <a href="/">
+                        <a href="https://help.livestream.com/hc/en-us/sections/201923657-Watch">
                             Livestream video help FAQ
                         </a>
                     </p>
@@ -87,7 +71,13 @@
             </div>
         </aside>
         {% endif %}
-        {{ page.body | safe }}
+        {% if (event_state == 'past') %}
+            {{ parse_links(page.archive_body) | safe }}
+        {% elif (event_state == 'present') %}
+            {{ parse_links(page.live_body) | safe }}
+        {% elif (event_state == 'future') %}
+            {{ parse_links(page.future_body) | safe }}
+        {% endif %}
     </div>
     {% if page.tags.names() | length %}
     <footer>

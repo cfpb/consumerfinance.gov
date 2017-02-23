@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   featured_menu_content
+   featured_menu_content.render()
 
    ==========================================================================
 
@@ -9,18 +9,18 @@
    Create a featured content molecule. See
    [GHE]/flapjack/Modules-V1/wiki/Featured-Menu-Content
 
-   value: An object with the following options for value.
+   value:               Object defined from a StreamField block.
 
-   value.is_horizontal: Whether in a horizontal layout or not.
+   value.is_horizontal: Boolean on whether in a horizontal layout or not.
                         Default to false.
-
-   value.body:          Body text.
 
    value.link:          A tuple of link info, containing:
 
    value.link.url:      A string for the URL of the link.
 
    value.link.text:     A string for the text of the link.
+
+   value.body:          Body text.
 
    value.image:         A tuple of image info, containing:
 
@@ -46,7 +46,7 @@
     </div>
     <a href="{{ value.link.url }}"
        class="m-featured-menu-content_img">
-        <img src="{{ value.image.src }}"
+        <img src="{{ static(value.image.src) }}"
              alt="{{ value.image.alt }}"
              height="150"
              width="270">

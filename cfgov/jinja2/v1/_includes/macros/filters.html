@@ -80,6 +80,10 @@
         you need more than one filters form on a page you'll want to give it a
         unique prefix.
 
+  user_options.calendar_required:
+
+        Allows you to disable showing the Calendar required label.
+
    ==========================================================================
 
    Examples:
@@ -101,6 +105,7 @@
 
 {%- set options = {
     'action':                   '/',
+    'calendar_required':        false,
     'expand_label':             'Filter',
     'submit_label':             'Apply filters',
     'form_method':              'get',
@@ -133,33 +138,33 @@
                      and options.show_current_filters
 %}
 
-<div class="m-expandable
-            m-expandable__borders
-            m-expandable__midtone
-            m-expandable__expanded"
+<div class="o-expandable
+            o-expandable__borders
+            o-expandable__midtone
+            o-expandable__expanded"
       data-qa-hook="filter">
-    <button class="m-expandable_target" aria-pressed="true">
-        <div class="m-expandable_header">
-            <span class="m-expandable_header-left
-                         m-expandable_label">
+    <button class="o-expandable_target" aria-pressed="true">
+        <div class="o-expandable_header">
+            <span class="o-expandable_header-left
+                         o-expandable_label">
                 {{ options.expand_label }}
             </span>
-            <span class="m-expandable_header-right m-expandable_link">
-                <span class="m-expandable_cue
-                             m-expandable_cue-open">
-                    <span class="m-expandable_cue-label">Show</span>
+            <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue
+                             o-expandable_cue-open">
+                    <span class="o-expandable_cue-label">Show</span>
                     <span class="cf-icon cf-icon-plus-round"></span>
                 </span>
-                <span class="m-expandable_cue
-                             m-expandable_cue-close">
-                    <span class="m-expandable_cue-label">Hide</span>
+                <span class="o-expandable_cue
+                             o-expandable_cue-close">
+                    <span class="o-expandable_cue-label">Hide</span>
                     <span class="cf-icon cf-icon-minus-round"></span>
                 </span>
             </span>
         </div>
     </button>
-    <div class="m-expandable_content" aria-expanded="false">
-        <div class="m-expandable_content-animated">
+    <div class="o-expandable_content" aria-expanded="false">
+        <div class="o-expandable_content-animated">
             {%- if options.show_errors -%}
                 {{ _errors() }}
             {% endif %}
@@ -213,8 +218,6 @@
         {% if filters.calendar %}
         {% set directors_list = [
             'Richard Cordray',
-            'David Silberman',
-            'Meredith Fuchs',
             'Steve Antonakes',
             'Raj Date',
             'Elizabeth Warren'
@@ -223,6 +226,9 @@
             <div class="form-group required-check-group">
                 <label class="form-label-header">
                     Calendars
+                    {% if options.calendar_required %}
+                    <span class="short-desc">(required)</span>
+                    {% endif %}
                 </label>
                 {% for director in directors_list %}
                     {{ _filter_checkbox( 'calendar', director, '', options.id_prefix) | safe }}
@@ -311,8 +317,7 @@
                         <label for="{{ options.id_range_date_gte }}" class="form-label-header">
                             From <span class="date-range_label">mm/dd/yyyy</span>:
                         </label>
-                        <input class="js-filter_range-date js-filter_range-date__gte"
-                               id="{{ options.id_range_date_gte }}"
+                        <input id="{{ options.id_range_date_gte }}"
                                name="{{ options.id_range_date_gte }}"
                                type="text"
                                value="{{ from_date_formatted if from_date_formatted else '' }}"
@@ -330,8 +335,7 @@
                         <label for="{{ options.id_range_date_lte }}" class="form-label-header">
                             To <span class="date-range_label">mm/dd/yyyy</span>:
                         </label>
-                        <input class="js-filter_range-date js-filter_range-date__lte"
-                               id="{{ options.id_range_date_lte }}"
+                        <input id="{{ options.id_range_date_lte }}"
                                name="{{ options.id_range_date_lte }}"
                                type="text"
                                value="{{ to_date_formatted if to_date_formatted else '' }}"
@@ -372,12 +376,10 @@
         {% for error in errors %}
            {% do error_messages.append(error|string) %}
         {% endfor %}
-        {% set value = {
-            'message': '</br>'.join(error_messages) | safe,
-            'type': 'error'
-        } %}
         <div class="u-mt15 u-mb15">
-            {% include 'molecules/notification.html' with context %}
+            {% import 'molecules/notification.html' as notification %}
+            {% set error_messages = '</br>'.join(error_messages) | safe %}
+            {{ notification.render( 'error', true, error_messages ) }}
         </div>
     {%- endif -%}
 {% endmacro %}
@@ -394,7 +396,8 @@
            id="{{ id }}"
            {%- if is_filter_selected(field, value) %}
            checked
-           {%- endif -%}
+           {% endif -%}
+           data-required="1"
            >
     <label class="form-group_item" for="{{ id }}">
         {{ label | safe if label else value | safe }}

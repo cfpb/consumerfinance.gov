@@ -25,7 +25,7 @@
    ========================================================================== #}
 
 {% macro render(tag,
-                activity_types=['posts', 'op-ed', 'newsroom', 'press release', 'speech', 'testimony'],
+                activity_types=['blog', 'op-ed', 'newsroom', 'press release', 'speech', 'testimony'],
                 include_date_flag=false,
                 number_columns=1
                )
@@ -72,78 +72,29 @@
 
 {% macro _activity_snippet(activity_type, tags, quantity, include_date_flag=false) %}
     {% import 'macros/category-icon.html' as category_icon %}
-    {% if activity_type|lower == 'posts' %}
-        {% set doc_type = activity_type %}
-        {% set icon = category_icon.render('blog') %}
-        {% set header = 'Blog' %}
-        {% set feed = queries[doc_type].search(size=quantity,
-            filter_tags=tags) %}
-    {% elif activity_type|lower == 'op-ed' %}
-        {% set doc_type = 'newsroom' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Op-Ed' %}
-        {% set feed = queries[doc_type].search(size=quantity,
-            filter_category='Op-Ed', filter_tags=tags) %}
-    {% elif activity_type|lower == 'newsroom' %}
-        {% set doc_type = 'newsroom' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Newsroom' %}
-        {% set feed = queries[doc_type].search(size=quantity,
-           filter_tags=tags) %}
-    {% elif activity_type|lower == 'press release' %}
-        {% set doc_type = 'newsroom' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Press Release' %}
-        {% set feed = queries[doc_type].search(size=quantity,
-            filter_category='Press Release', filter_tags=tags) %}
-    {% elif activity_type|lower == 'speech' %}
-        {% set doc_type = 'newsroom' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Speech' %}
-        {% set feed = queries[doc_type].search(size=quantity,
-            filter_category='Speech', filter_tags=tags) %}
-    {% elif activity_type|lower == 'testimony' %}
-        {% set doc_type = 'newsroom' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Testimony' %}
-        {% set feed = queries[doc_type].search(size=quantity,
-            filter_category='Testimony', filter_tags=tags) %}
-    {% elif activity_type|lower == 'cfpb_report' %}
-        {% set doc_type = 'newsroom' %}
-        {% set icon = category_icon.render(activity_type) %}
-        {% set header = 'Reports' %}
-        {% set feed = queries[doc_type].search(size=quantity,
-            filter_category='Reports', filter_tags=tags) %}
-    {% else %}
-        {% set doc_type = 'posts' %}
-        {% set icon = category_icon.render('blog') %}
-        {% set header = 'Feed' %}
-        {% set feed = queries[doc_type].search(size=quantity,
-            filter_tags=tags) %}
-    {% endif %}
-    {% if feed.total > 0 %}
-    <div class="activity">
-        <h3 class="h4">{{ icon }} {{ header }}</h3>
-        <ul class="list list__unstyled list__spaced list__links">
-        {% for item in feed %}
-            {% if loop.index > quantity %}
-                {% break %}
-            {% endif %}
-            <li class="list_item">
-                <a class="list_link"
-                   href="{{ item.permalink }}">
-                    {{ item.title | safe  }}
-                    {%- if include_date_flag and item.date -%}
-                        <span class="date">
-                            &ndash;
-                            {% import 'macros/time.html' as time %}
-                            {{ time.render(item.date, {'date':true}) }}
-                        </span>
-                    {%- endif -%}
-                </a>
-            </li>
-        {% endfor %}
-        </ul>
-    </div>
+    {% set feed = get_latest_activities(activity_type, request.site.hostname) %}
+    {% if feed %}
+      {% set header = activity_type.title() %}
+      {% set icon = category_icon.render(activity_type) %}
+      <div class="activity">
+          <h3 class="h4">{{ icon }} {{ header }}</h3>
+          <ul class="list list__unstyled list__spaced list__links">
+          {% for item in feed %}
+              <li class="list_item">
+                  <a class="list_link"
+                     href="{{ get_protected_url(item) }}">
+                      {{ item.preview_title | safe if item.preview_title else item.title | safe  }}
+                      {%- if include_date_flag and item.specific.date_published -%}
+                          <span class="date">
+                              &ndash;
+                              {% import 'macros/time.html' as time %}
+                              {{ time.render(item.specific.date_published, {'date':true}) }}
+                          </span>
+                      {%- endif -%}
+                  </a>
+              </li>
+          {% endfor %}
+          </ul>
+      </div>
     {% endif %}
 {% endmacro %}

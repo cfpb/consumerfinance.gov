@@ -1,11 +1,12 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 {% import '_vars-events.html' as vars with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 {% if page.start_dt and page.end_dt %}
-    {% set event_state = when(page.start_dt | date('%c'), page.end_dt | date('%c')) %}
+    {% set event_state = when(page.start_dt, page.end_dt, page.live_stream_date) %}
 {% endif %}
 
 {% block desc -%}
-    {{ page.seo_description if page.seo_description else '' }}
+    {{ page.search_description if page.search_description else '' }}
 {%- endblock %}
 
 {% block og_type -%}
@@ -22,13 +23,13 @@
 
 {% block content_main %}
     {% include 'events/_event-detail.html' %}
-    {% from 'events/_macros.html' import event_media as event_media %}
-    {% if event_state and event_state == 'past' %}
+    {% from 'events/_macros.html' import event_media as event_media with context %}
+    {% if event_state and event_state != 'future' %}
         {{ event_media(page) }}
     {% endif %}
 
     {% if page.agenda_items %}
-        {% from 'events/_macros.html' import event_agenda as event_agenda %}
+        {% from 'events/_macros.html' import event_agenda as event_agenda with context%}
         {{ event_agenda(page) }}
     {% endif %}
     <div class="event-footer">
@@ -58,32 +59,12 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <section class="block block__flush-top">
-        {% for block in page.sidefoot %}
-            {% if 'related_posts' in block.block_type %}
-                {% import 'molecules/related-posts.html' as related_posts with context %}
-                {{ related_posts.render(block) }}
-            {% endif %}
-        {% endfor %}
-    </section>
-    <section class="block">
-        <h1 class="header-slug">
-            <span class="header-slug_inner">
-                Stay informed
-            </span>
-        </h1>
-        <div class="block block__sub block__flush-top">
-            <p>
-                Subscribe to our email newsletter. We will update you on new blogs.
-            </p>
-            {% import 'macros/subscribe.html' as subscribe with context %}
-            {{ subscribe.render('USCFPB_93') }}
-        </div>
-        <div class="block block__sub">
-            {% import 'rss.html' as rss %}
-            {{ rss.render(vars.rss_path) }}
-        </div>
-    </section>
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+    {# TODO: make events feed #}
+    {# <div class="block block__sub" data-qa-hook="rss-subscribe-section">
+        {% import 'rss.html' as rss %}
+        {{ rss.render(reverse('events_feed')) }}
+    </div> #}
     <section class="block">
         {%- import 'related-links.html' as related_links -%}
         {{- related_links.render([

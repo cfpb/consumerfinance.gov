@@ -1,56 +1,5 @@
 {# ==========================================================================
 
-   event_location_image()
-
-   ==========================================================================
-
-   Description:
-
-   Create HTML image when given:
-
-   options (optional):         An object to use for customizing an event
-                               location image using Google Maps.
-
-   options.additional_classes: Extra classes you wish to add to the image,
-                               space separated.
-
-   options.location:           A location as either a comma-separated
-                               {latitude,longitude} pair
-                               (e.g. "40.714728,-73.998672")
-                               or a string address
-                               (e.g. "city hall, new york, ny").
-                               Defaults to 'Washington, DC'.
-
-   options.scale:              Affects the number of pixels that are returned.
-                               Accepted values are 1, 2 and 4.
-                               Defaults to '2'.
-
-   options.size:               Defines the rectangular dimensions of the map image.
-                               {horizontal_value}x{vertical_value} (e.g. 500x400)
-                               Defaults to '276x155'.
-
-   options.zoom:               Sets pixel density for high-dpi devices.
-                               Defaults to '12'.
-
-   ========================================================================== #}
-
-{% macro event_location_image(options={}) %}
-    {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
-    <img class="{{ options.additional_classes if options.additional_classes else '' }}"
-         src="{{ location_image_url({
-                        'location': options.location
-                                    | default('Washington, DC', true)
-                                    | urlencode,
-                        'zoom':     options.zoom  | default('12'),
-                        'scale':    options.scale | default('2'),
-                        'size':     options.size  | default('276x155')
-                    }) }}"
-         alt="Google Maps image of {{ options.location }}">
-{% endmacro %}
-
-
-{# ==========================================================================
-
    event_meta_address()
 
    ==========================================================================
@@ -72,6 +21,7 @@
     {%- set city   =  event.venue_city   | default('', true) -%}
     {%- set state  =  event.venue_state  | default('', true) -%}
     {%- set street =  event.venue_street | default('', true) -%}
+    {%- set suite  =  event.venue_suite  | default('', true) -%}
     {%- set name   =  event.venue_name   | default('', true) -%}
     {%- set zip    =  event.venue_zip    | default('', true) -%}
     <p class="event-meta_address h-adr">
@@ -87,6 +37,10 @@
             <span class="event-meta_street p-street-address">{{ street }}</span>
         {% endmacro -%}
 
+        {%- macro _suite() %}
+            <span class="event-meta_suite p-extended-address">{{ suite }}</span>
+        {% endmacro -%}
+
         {% macro _venue() %}
             <span class="event-meta_venue p-extended-address">{{ name }}</span>
         {% endmacro %}
@@ -100,6 +54,7 @@
                 'city'   : _city()   | trim,
                 'street' : _street() | trim,
                 'state'  : _state()  | trim,
+                'suite'  : _suite()  | trim,
                 'venue'  : _venue()  | trim,
                 'zip'    : _zip()    | trim
             }) | safe
@@ -145,7 +100,8 @@
             <div class="content-l">
                 <div class="event-meta content-l_col content-l_col-1-2">
                     {{ event_meta_address(event,
-                        address_format ='{venue} {street} {city}' ~ state_prefix ~ '{state} {zip}'
+                        address_format ='{venue} {street} {suite}
+                        {city}' ~ state_prefix ~ '{state} {zip}'
                     ) }}
                 </div>
                 <div class="content-l_col content-l_col-1-2 event-calendar_container">
@@ -153,8 +109,11 @@
                     Video Replay will be<br> available shortly
                 {% else %}
                     {% import 'macros/time.html' as time %}
-                    {% if event.start_dt%}
-                        {{ time.render(event.start_dt) }}
+                    {% if event.start_dt %}
+                        {{ time.render(
+                            event.start_dt,
+                            timezone=event.start_dt.tzinfo | string
+                        ) }}
                     {% endif %}
                 {% endif %}
                 </div>
@@ -163,7 +122,7 @@
         <footer>
             <figure class="event-media_container">
             {% if (event_state == 'past' and event.youtube_url ) %}
-                {% import 'macros/video-player.html' as video_player %}
+                {% import 'macros/video-player.html' as video_player with context %}
                 {% set image_url  = event.flickr_url %}
                 {% set video_id   = event.video_id | default( '' ) %}
                 {{ video_player.render({
@@ -178,10 +137,10 @@
                    })
                 }}
             {% elif event_state == 'past' %}
-                {% set image_url = event.archive_image or '/static/img/cfpb_video_cover_card_1380x776.png' %}
+                {% set image_url = event.archive_image or static('img/cfpb_video_cover_card_1380x776.png') %}
                 <img src=" {{ image_url }}" alt="Video placeholder image" />
             {% elif event_state == 'present' and event.live_stream_url  %}
-                {% import 'macros/video-player.html' as video_player %}
+                {% import 'macros/video-player.html' as video_player with context %}
                 {% set video_id = event.video_id | default( '' ) %}
                 {{ video_player.render({
                     'button_pos': 'bottomRight',
@@ -195,12 +154,8 @@
                     }
                 }) }}
             {% else %}
-                {{ event_location_image({
-                    'location': city_prefix_state,
-                    'zoom':     '12',
-                    'scale':    '2',
-                    'size':     '640x320'
-                }) }}
+              <img src="{{ event.location_image_url(size='640x320') }}"
+                   alt="Google Maps image of {{ event.venue_name }}">
             {% endif %}
             </figure>
         </footer>
@@ -223,47 +178,50 @@
    ========================================================================== #}
 
 {% macro event_agenda(event) %}
-  {% set options = {
-      'time_col_classes': 'u-w25pct',
-      'agenda_col_classes': 'u-w25pct',
-      'location_col_classes': 'u-w25pct',
-      'speaker_col_classes': 'u-w25pct',
-  } %}
   <div class="block
               block__padded-top
               block__border-top">
     <h2>Agenda</h2>
-    <table class="u-w100pct
+    <table class="o-table
+                  event-agenda_table
+                  o-table__stack-on-small
+                  u-w100pct
                   block
-                  block__flush-top
-                  simple-table">
+                  block__flush-top">
         <thead>
             <tr>
-                <th class="{{ options.time_col_classes }}">Time</th>
-                <th class="{{ options.desc_col_classes }}">Agenda</th>
-                <th class="{{ options.location_col_classes }}">Location</th>
-                <th class="{{ options.speaker_col_classes }}">Speakers</th>
+                <th>Time</th>
+                <th>Agenda</th>
+                <th>Location</th>
+                <th>Speakers</th>
             </tr>
         </thead>
         <tbody>
         {% for block in event.agenda_items %}
           {% set bound = block.value.bound_blocks %}
             <tr>
-                <td class="{{ options.time_col_classes }}">
+                <td>
                     {% import 'macros/time.html' as time %}
-                    {{ time.render(bound.start_dt.render(), {'time':true, 'timezone':true}) }}
-                    &ndash;
-                    {{ time.render(bound.end_dt.render(), {'time':true, 'timezone':true}) }}
+                    {% if bound.start_time.value is not none %}
+                      {{ time.render(
+                          bound.start_time.render(),
+                          {'date':false,'time':true,'timezone':false}
+                      ) }}
+                    {% endif %}
+                    {% if bound.end_time.value is not none %}
+                      &ndash;
+                      {{ time.render(bound.end_time.render(), {'time':true, 'timezone':true}) }}
+                    {% endif %}
                 </td>
-                <td class="{{ options.agenda_col_classes }} simple-table_row-heading">
+                <td data-label="Agenda">
                     {{ bound.description.render() }}
                 </td>
-                <td class="{{ options.location_col_classes }}" data-label="Location">
+                <td data-label="Location">
                   {% if bound.location.render() %}
                     {{ bound.location.render() }}
                   {% endif %}
                 </td>
-                <td class='{{ options.speaker_col_classes }}' data-label="Speakers">
+                <td data-label="Speakers">
                 {% for speaker in bound.speakers.value %}
                     {%- if speaker.bound_blocks.url.render() -%}
                     <a href="{{ speaker.bound_blocks.url.render() }}">

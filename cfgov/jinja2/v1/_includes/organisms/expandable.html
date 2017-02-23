@@ -1,0 +1,84 @@
+{# ==========================================================================
+
+   Expandable
+
+   ==========================================================================
+
+   Description:
+
+   Create an Expandable molecule when given:
+
+   value:             Object defined from a StreamField block.
+
+   value.label:       Label you want on the Expandable.
+                      Default is an empty string.
+
+   value.paragraph:   Intro paragraph text.
+
+   value.content:     Main content of the expandable.
+
+   value.is_bordered: Whether the Expandable has a bottom border or not.
+                      Default is true.
+
+   value.is_midtone:  Whether the Expandable is gray or not.
+                      Default is false.
+
+   value.is_expanded: Whether the Expandable is expanded or not.
+                      Default is false.
+
+   ========================================================================== #}
+
+{% macro expandable(value) %}
+
+<div data-qa-hook="expandable" class="o-expandable
+            o-expandable__expanded
+            {{ 'o-expandable__borders' if value.is_bordered else '' }}
+            {{ 'o-expandable__midtone' if value.is_midtone else '' }}"
+            {{ 'data-state=expanded' if value.is_expanded else '' }}>
+
+    <button class="o-expandable_target">
+        <div class="o-expandable_header">
+            <span class="o-expandable_header-left
+                         o-expandable_label">
+                {{ value.label }}
+            </span>
+            <span class="o-expandable_header-right
+                         o-expandable_link
+                         u-hidden">
+                <span class="o-expandable_cue
+                             o-expandable_cue-open">
+                    <span class="o-expandable_cue-label">Show</span>
+                    <span class="o-expandable_cue-label o-expandable_cue-label__es">Mostrar</span>
+                    <span class="cf-icon cf-icon-plus-round"></span>
+                </span>
+                <span class="o-expandable_cue
+                             o-expandable_cue-close">
+                    <span class="o-expandable_cue-label">Hide</span>
+                    <span class="o-expandable_cue-label o-expandable_cue-label__es">Ocultar</span>
+                    <span class="cf-icon cf-icon-minus-round"></span>
+                </span>
+            </span>
+        </div>
+    </button>
+    <div class="o-expandable_content"
+            {{ 'aria-expanded=true' if value.is_expanded else '' }}>
+        <div class="o-expandable_content-animated">
+            {% if caller is defined %}
+                {{ caller() }}
+            {% else %}
+                {% for block in value.content %}
+                    {% if 'paragraph' in block.block_type %}
+                        {{ parse_links(block.value) |safe}}
+                    {% else %}
+                        {{ render_stream_child(block) }}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% if value %}
+    {{ expandable(value) }}
+{% endif %}

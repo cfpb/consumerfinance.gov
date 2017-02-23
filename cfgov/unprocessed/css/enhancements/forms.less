@@ -283,6 +283,23 @@ input {
 }
 
 /* topdoc
+  name: Ensure form legends wrap in IE
+  family: cf-form
+  notes:
+    - "Legends do not wrap in IE. Different styles are
+      required to ensure wrapping in different versions."
+  tags:
+    - cf-form
+*/
+
+legend {
+  box-sizing: border-box; /* IE9-11 & Edge 12-13 */
+  display: table; /* IE8-11 */
+  max-width: 100%; /* Patch for IE9-11 & Edge 12-13 */
+  white-space: normal; /* IE8-11 */
+}
+
+/* topdoc
   name: EOF
   eof: true
 */

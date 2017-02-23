@@ -1,6 +1,7 @@
 'use strict';
 
-var _searchFilter = element( by.css( '[data-qa-hook="filter"]' ) );
+var _searchFilter =
+  element( by.css( '.o-filterable-list-controls .o-expandable' ) );
 
 function _getFilterElement( selector ) {
   return _searchFilter.element( by.css( selector ) );
@@ -9,19 +10,17 @@ function _getFilterElement( selector ) {
 var filter = {
   searchFilter: _searchFilter,
 
-  searchFilterCategories:
-  _getFilterElement( '[data-qa-hook="filter-categories"]' ),
+  searchFilterBtn: _getFilterElement( '.o-expandable_target' ),
 
-  searchFilterBtn: _getFilterElement( '.m-expandable_target' ),
+  searchFilterShowBtn: _getFilterElement( '.o-expandable_cue-open' ),
 
-  searchFilterShowBtn: _getFilterElement( '.m-expandable_cue-open' ),
+  searchFilterHideBtn: _getFilterElement( '.o-expandable_cue-close' ),
 
-  searchFilterHideBtn: _getFilterElement( '.m-expandable_cue-close' ),
+  searchCategoryLabel: _getFilterElement(
+    'label[for="filter1_categories_at-the-cfpb"]'
+  ),
 
-  searchFilterResetBtn: _getFilterElement( '.js-form_clear' ),
-
-  searchFilterSubmitBtn: _getFilterElement( 'btn[type="submit"]' )
-
+  searchFilterSubmitBtn: _getFilterElement( 'input[type="submit"]' )
 };
 
 module.exports = filter;

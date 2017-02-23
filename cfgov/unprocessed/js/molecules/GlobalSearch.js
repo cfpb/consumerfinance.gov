@@ -5,8 +5,10 @@ var atomicHelpers = require( '../modules/util/atomic-helpers' );
 var breakpointState = require( '../modules/util/breakpoint-state' );
 var ClearableInput = require( '../modules/ClearableInput' );
 var EventObserver = require( '../modules/util/EventObserver' );
-var FlyoutMenu = require( '../modules/FlyoutMenu' );
+var FlyoutMenu = require( '../modules/behavior/FlyoutMenu' );
+var fnBind = require( '../modules/util/fn-bind' ).fnBind;
 var MoveTransition = require( '../modules/transition/MoveTransition' );
+var standardType = require( '../modules/util/standard-type' );
 
 /**
  * GlobalSearch
@@ -21,10 +23,7 @@ var MoveTransition = require( '../modules/transition/MoveTransition' );
 function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inline-comments, max-len
 
   var BASE_CLASS = 'm-global-search';
-
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS, 'GlobalSearch' );
-  var _triggerSel = '.' + BASE_CLASS + '_trigger';
-  var _triggerDom = _dom.querySelector( _triggerSel );
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
   var _flyoutMenu = new FlyoutMenu( _dom );
   var _searchInputDom;
@@ -38,9 +37,14 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   var KEY_TAB = 9;
 
   /**
-   * @returns {Object} The GlobalSearch instance.
+   * @returns {GlobalSearch|undefined} An instance,
+   *   or undefined if it was already initialized.
    */
   function init() {
+    if ( !atomicHelpers.setInitFlag( _dom ) ) {
+      return standardType.UNDEFINED;
+    }
+
     // Set initial appearance.
     var transition = new MoveTransition( _contentDom ).init();
     transition.moveRight();
@@ -63,8 +67,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     // Initialize new clearable input behavior on the input-contains-label.
     var clearableInput = new ClearableInput( inputContainsLabel );
     clearableInput.init();
-
-    var handleExpandBeginBinded = _handleExpandBegin.bind( this );
+    var handleExpandBeginBinded = fnBind( _handleExpandBegin, this );
     _flyoutMenu.addEventListener( 'expandBegin', handleExpandBeginBinded );
     _flyoutMenu.addEventListener( 'collapseBegin', _handleCollapseBegin );
     _flyoutMenu.addEventListener( 'collapseEnd', _handleCollapseEnd );
@@ -85,27 +88,11 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
   function _handleBodyClick( event ) {
     var target = event.target;
 
-    var isInDesktop = _isInDesktop();
+    var isInDesktop = breakpointState.isInDesktop();
     if ( isInDesktop && !_isDesktopTarget( target ) ||
          !isInDesktop && !_isMobileTarget( target ) ) {
       collapse();
     }
-  }
-
-  // TODO: Move this to breakpoint-state.js.
-  /**
-   * Whether currently in the desktop view.
-   * @returns {boolean} True if in the desktop view, otherwise false.
-   */
-  function _isInDesktop() {
-    var isInDesktop = false;
-    var currentBreakpoint = breakpointState.get();
-    if ( currentBreakpoint.isBpMED ||
-         currentBreakpoint.isBpLG ||
-         currentBreakpoint.isBpXL ) {
-      isInDesktop = true;
-    }
-    return isInDesktop;
   }
 
   /**
@@ -145,9 +132,15 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    */
   function _handleExpandBegin() {
     this.dispatchEvent( 'expandBegin', { target: this } );
-    // If it's the desktop view, hide the "Search" button.
-    if ( _isInDesktop() ) { _triggerDom.classList.add( 'u-invisible' ); }
+
+    // TODO: Remove when Android 4.0-4.4 support is dropped.
+    // Hack to fix reflow issues on legacy Android devices.
+    _contentDom.style.display = 'none';
+    _contentDom.offsetHeight; // eslint-disable-line no-unused-expressions, no-inline-comments, max-len
+    _contentDom.style.display = '';
+
     _contentDom.classList.remove( 'u-invisible' );
+
     _searchInputDom.select();
 
     document.body.addEventListener( 'mousedown', _handleBodyClick );
@@ -158,7 +151,6 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
    * Use this to perform post-collapseBegin actions.
    */
   function _handleCollapseBegin() {
-    _triggerDom.classList.remove( 'u-invisible' );
     document.body.removeEventListener( 'mousedown', _handleBodyClick );
   }
 

@@ -13,10 +13,10 @@
    value.paragraph_text: The text to display within the paragraph.
 
    value.button:         A dictionary containing options used to create
-                            the Button markup.
+                         the Button markup.
 
    value.button.url:     A link to a page.
-                            Defaults to '/'.
+                         Defaults to '/'.
 
    value.button.text:    The text to display on button.
 
@@ -25,11 +25,12 @@
 <div class="m-call-to-action">
     {% if value.slug_text %}
         <h2 class="header-slug">
-                <span class="header-slug_inner">
-                    {{ value.slug_text }}
-                </span>
+            <span class="header-slug_inner">
+                {{ value.slug_text }}
+            </span>
         </h2>
     {% endif %}
+
     {% if value.paragraph_text %}
         <p>
             {{ parse_links(value.paragraph_text) |safe }}

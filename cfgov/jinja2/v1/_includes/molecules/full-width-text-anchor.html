@@ -1,0 +1,25 @@
+
+{# ==========================================================================
+
+   Full Width Text with Anchor
+
+   ==========================================================================
+
+   Description:
+
+   Create a full width text organism with an id attribute for use in anchor links.
+   See [GHE]/flapjack/Modules-V1/wiki/Full-Width-Copy
+
+   ========================================================================== #}
+
+{% if value.bound_blocks['anchor_link'] -%}
+    {% set anchor_id =
+    'id=' + value.bound_blocks['anchor_link'] | safe
+    %}
+{% else %}
+    {% set anchor_id = '' %}
+{% endif %}
+
+<div class="m-full-width-text" {{ anchor_id }}>
+    {{ value.bound_blocks['content_block'] | safe }}
+</div>

@@ -1,9 +1,10 @@
 'use strict';
 
+var configLint = require( '../config' ).lint;
 var gulp = require( 'gulp' );
-var $ = require( 'gulp-load-plugins' )();
-var config = require( '../config' ).lint;
-var handleErrors = require( '../utils/handleErrors' );
+var gulpEslint = require( 'gulp-eslint' );
+var handleErrors = require( '../utils/handle-errors' );
+var minimist = require( 'minimist' );
 
 /**
  * Generic lint a script source.
@@ -11,9 +12,13 @@ var handleErrors = require( '../utils/handleErrors' );
  * @returns {Object} An output stream from gulp.
  */
 function _genericLint( src ) {
-  return gulp.src( src )
-    .pipe( $.eslint() )
-    .pipe( $.eslint.format() )
+  // Grab the --fix flag from the command-line, if available.
+  var commandLineParams = minimist( process.argv.slice( 2 ) );
+  var willFix = commandLineParams.fix || false;
+  return gulp.src( src, { base: './' } )
+    .pipe( gulpEslint( { fix: willFix } ) )
+    .pipe( gulpEslint.format() )
+    .pipe( gulp.dest( './' ) )
     .on( 'error', handleErrors );
 }
 
@@ -21,21 +26,21 @@ function _genericLint( src ) {
  * Lints the gulpfile for errors.
  */
 gulp.task( 'lint:build', function() {
-  return _genericLint( config.build );
+  return _genericLint( configLint.build );
 } );
 
 /**
  * Lints the test js files for errors.
  */
 gulp.task( 'lint:tests', function() {
-  return _genericLint( config.test );
+  return _genericLint( configLint.test );
 } );
 
 /**
  * Lints the source js files for errors.
  */
 gulp.task( 'lint:scripts', function() {
-  return _genericLint( config.src );
+  return _genericLint( configLint.src );
 } );
 
 /**

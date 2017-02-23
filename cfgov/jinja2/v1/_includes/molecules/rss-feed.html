@@ -1,0 +1,16 @@
+{# ==========================================================================
+
+   RSS Feed
+
+   ==========================================================================
+
+   Description:
+
+   Creates a block containing RSS feed markup.
+
+   ========================================================================== #}
+
+<div class="block block__sub" data-qa-hook="rss-subscribe-section">
+    {% import 'rss.html' as rss %}
+    {{ rss.render('feed/') }}
+</div>

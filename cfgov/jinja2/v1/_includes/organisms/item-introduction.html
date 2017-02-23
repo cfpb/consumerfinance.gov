@@ -11,7 +11,7 @@
 
    value:                   An object with the following options for value.
 
-   value.category:         The category label text.
+   value.show_category:    Whether to show the category or not.
    value.heading:          Heading text.
    value.paragraph.source: Body introduction text.
    value.authors:          Array of author names and associated URLs.
@@ -26,35 +26,49 @@
 {% import 'macros/category-slug.html' as category_slug %}
 {% import 'macros/time.html' as time %}
 
+{% macro render(value) %}
+
+{% set form_id, ancestor = get_filter_data(page) %}
+{% set page_url = get_protected_url(ancestor) %}
+{% set published_date = value.date %}
+{% set has_authors = page.authors.exists() %}
+
 <div class="o-item-introduction">
-    <div class="h4">
-        {{ category_slug.render(value.category) }}
-    </div>
-    <h1>{{ value.heading }}</h1>
+    {% if page.categories.count() > 0 and value.show_category %}
+        {{ category_slug.render(page.categories.first().name, page_url, index=form_id) }}
+    {% endif %}
+    <h1>{{ value.heading | safe }}</h1>
 
     {% if value.paragraph %}
         <div class="lead-paragraph">{{ parse_links(value.paragraph) | safe }}</div>
     {% endif %}
-    {% if value.date or value.authors.text %}
-        <p>
+
+    {% if published_date or has_authors %}
+        <div class="meta">
     {% endif %}
-    {% if value.authors.text %}
-        By
-        {% for link in value.authors %}
-            {% if loop.first == false %}
-            and
-            {% endif %}
-            <a href="{{ link.url }}">{{ link.text }}</a>
-        {% endfor %}
-        {{ '-' if value.date else ''}}
+        {% if has_authors %}
+            <span class="byline">
+            {%- for author in page.get_authors() -%}
+                {{- 'By ' if loop.index == 1 else ' and ' }}
+                <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                    {{ author.name }}
+                </a>
+            {%- endfor -%}
+                &ndash;
+            </span>
+        {% endif %}
+        {% if published_date %}
+            <span class="date">
+                {{ time.render(published_date, {'date':true}) }}
+            </span>
+        {% endif %}
+    {% if published_date or has_authors %}
+        </div>
     {% endif %}
-    {% if value.date %}
-        {{ time.render(value.date, {'date':true}) }}
-    {% endif %}
-    {% if value.date or value.authors.text %}
-        </p>
-    {% endif %}
+
     {% if value.has_social %}
         {{ social_media.render() }}
     {% endif %}
 </div>
+
+{% endmacro %}

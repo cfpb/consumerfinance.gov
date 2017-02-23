@@ -1,7 +1,5 @@
 'use strict';
 
-var environment = require( './environment.js' );
-
 var defaultSuites = {
   // Set default browser suites to test.
   // These values are passed to the `multiCapabilities` property
@@ -12,7 +10,6 @@ var defaultSuites = {
   // Essential browsers for running locally.
   essential: [
     {
-      specs:       [ environment.specsBasePath + '*.js' ],
       browserName: 'chrome',
       version:     '',
       platform:    'Windows',
@@ -23,7 +20,6 @@ var defaultSuites = {
   // Legacy browsers to run in the cloud.
   legacy: [
     {
-      specs:       [ environment.specsBasePath + '*.js' ],
       browserName: 'internet explorer',
       version:     '8.0',
       platform:    'Windows XP',
@@ -34,14 +30,12 @@ var defaultSuites = {
   // Modern browsers to run in the cloud.
   modern: [
     {
-      specs:       [ environment.specsBasePath + '*.js' ],
       browserName: 'firefox',
       version:     '',
       platform:    'Windows 10',
       maxDuration: 10800
     },
     {
-      specs:       [ environment.specsBasePath + '*.js' ],
       browserName: 'internet explorer',
       version:     '',
       platform:    'Windows 10',

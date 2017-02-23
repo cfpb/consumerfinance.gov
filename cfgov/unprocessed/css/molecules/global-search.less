@@ -254,6 +254,10 @@
         &_trigger {
             // Match height of input with button.
             padding: 7px 0;
+
+            &[aria-expanded="true"] {
+                .u-invisible();
+            }
         }
 
         .js & {
@@ -298,6 +302,14 @@
         top: -9999px;
         left: -9999px;
     }
+
+    // Hide on print.
+    .respond-to-print( {
+        & {
+            // Important needed to override JS display settings.
+            display: none !important;
+        }
+    } );
 }
 
 /* topdoc

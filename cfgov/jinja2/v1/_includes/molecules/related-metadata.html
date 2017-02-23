@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   Related Metadata
+   related_metadata.render()
 
    ==========================================================================
 
@@ -8,10 +8,26 @@
 
    Creates related metadata markup when given:
 
-   related_metadata_list: A list of relatated metadata items.
+   value:                              Object defined from a StreamField block.
 
-   is_half_width:         A Boolean indicating whether the list items should be at half
-                          width. Defaults to False.
+   value.half_width:                   A Boolean indicating whether the
+                                       list items should be at half width.
+                                       Defaults to False.
+
+   value.slug:                         TODO: Add data type and description.
+
+   value.content:
+
+   value.content[i].block_type:        String for a block type,
+                                       it should be date, list, text,
+                                       or topics.
+
+   value.content[i].value:             TODO: Add data type and description.
+
+   value.content[i].value.show_topics: Boolean for whether to
+                                       topic should be rendered.
+
+   value.content[i].value.heading:     TODO: Add data type and description.
 
    ========================================================================== #}
 
@@ -22,6 +38,8 @@
     'text':   _text,
     'topics': _topics,
 } %}
+{# TODO: Update `half_width` param to `is_half_width`
+         to make it clear it's a boolean. #}
 <div class="m-related-metadata
             {{ 'm-related-metadata__half-width' if value.half_width else '' }}">
     <h2 class="header-slug">
@@ -47,7 +65,7 @@
 
 {# ==========================================================================
 
-   _list( is_topics )
+   _list()
 
    ==========================================================================
 
@@ -123,6 +141,7 @@
 </p>
 {% endmacro %}
 
+{# TODO: This function is not used and can be removed. #}
 {# ==========================================================================
 
    _topics()
@@ -133,7 +152,7 @@
 
    Creates related metadata related topics markup
 
-   list: An object holding the tag information (Unused)
+   list: An object holding the tag information.
 
    ========================================================================== #}
 

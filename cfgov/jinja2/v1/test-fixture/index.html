@@ -8,6 +8,9 @@
 {# Set to the Header organism by default. #}
 {% set atomic_type = 'header' if atomic_type == None else atomic_type %}
 
+{% set suffix = request.GET.get( 'suffix' ) %}
+{% set suffix = '' if suffix == None else '.' + suffix %}
+
 <!DOCTYPE html>
 
 <!--[if IE 8]>         <html lang="en" class="no-js lt-ie10 lt-ie9"> <![endif]-->
@@ -35,33 +38,20 @@
 -->
 
     <title>{% block title %}MISSING TITLE{% endblock title %}</title>
-    <meta name="description"
-          content="{% block desc %}Prototyping for the consumerfinance.gov refresh{% endblock %}">
-
-    <!-- Open Graph properties -->
-        <!--   Required  -->
-        <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
-        <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-        <meta property="og:url" content="{{ request.url }}">
-        <meta property="og:image"
-              content="http://www.consumerfinance.gov/wp-content/themes/cfpb_nemo/_/img/logo.svg">
-        <!--   Optional -->
-        <meta property="og:description" content="{% block og_desc %}{{ self.desc() }}{% endblock %}">
-        <meta property="og:site_name" content="Consumer Financial Protection Bureau">
-        <!--   Facebook -->
-        <meta property="fb:app_id" content="210516218981921">
-        {% block og_article_author %}{% endblock %}
-    <!-- End of Open Graph properties -->
-
-    {# TODO: Explicit favicon link needed for testing. Remove for production. #}
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 {#
     ============
     ONDEMAND CSS
     ============
     The atomic CSS file. This includes legacy IE-specific prefixing.
 #}
-<link rel="stylesheet" href="{{ static('css/' + atomic_type + '.css') }}">
+
+<!--[if lt IE 9]>
+<link rel="stylesheet" href="{{ static('css/' + atomic_type + suffix + '.nonresponsive.css') }}">
+<![endif]-->
+
+<!--[if gt IE 8]><!-->
+<link rel="stylesheet" href="{{ static('css/' + atomic_type + suffix + '.css') }}">
+<!--<![endif]-->
 
 {#
     ================
@@ -93,15 +83,37 @@
 <body>
 
 {#
+    =====================
+    REQUIRED BACKEND DATA
+    =====================
+    Mock data needed to render a particular atomic component.
+#}
+
+{% if atomic_type == 'secondary-navigation' %}
+    {% set path = '/about-us/careers/' %}
+    {% set nav_items = [
+    (path, 'index', 'Careers at the CFPB', [
+          (path + 'working-at-cfpb/', 'working-at-cfpb', 'Working at the CFPB'),
+          (path + 'application-process/', 'application-process', 'Job Application Process'),
+          (path + 'students-and-graduates/', 'students-and-graduates', 'Students & Recent Graduates'),
+          (path + 'current-openings/', 'current-openings', 'Current Openings')
+        ])
+    ] %}
+    {% set vars = { 'nav_items': nav_items } %}
+    {% set active_nav_id = 'index' %}
+{% endif %}
+
+{#
     =================
     ONDEMAND TEMPLATE
     =================
     The jinja template and associate HTML to include for an atomic component.
 #}
-{% if atomic_type == 'header' %}
-    {% include 'on-demand/header.html' %}
-{% elif atomic_type == 'footer' %}
-    {% include 'on-demand/footer.html' %}
+{% if atomic_type == 'header' or
+      atomic_type == 'footer' or
+      atomic_type == 'secondary-navigation' %}
+    {% set atomic_type_template = 'on-demand/' + atomic_type + '.html' %}
+    {% include atomic_type_template %}
 {% endif %}
 
 {#
@@ -113,7 +125,7 @@
     (b) In the <head> with the `defer` and `async` attributes
         set on the <script> tag.
 #}
-<script type="text/javascript" src="{{ static('js/atomic/' + atomic_type + '.js') }}"></script>
+<script type="text/javascript" src="{{ static('js/atomic/' + atomic_type + suffix + '.js') }}"></script>
 
 </body>
 

@@ -1,0 +1,99 @@
+ {% load static from staticfiles %}
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" dir="ltr" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" dir="ltr" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" dir="ltr" lang="en-US"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html dir="ltr" lang="en-US"> <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>{% block title %}{% endblock %} - Consumer Financial Protection Bureau</title>
+
+	<!-- Meta -->
+	<meta name="google-site-verification" content=""> <!-- http://google.com/webmasters -->
+	<meta name="Copyright" content="Public domain">
+	<meta name="viewport" content="width=device-width">
+
+	{% block page_meta %}
+	{% endblock %}
+
+	<!-- Favicons -->
+	<link rel="shortcut icon" href="/static/nemo/_/img/favicon.png">
+	<link rel="apple-touch-icon" href="/static/nemo/_/img/apple-touch-icon.png">
+
+	<!-- Styles -->
+
+	<!--[if gt IE 8]><!-->
+	<link rel="stylesheet" href="/static/nemo/_/c/woff.css">
+	<!--<![endif]-->
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" href="/static/nemo/_/c/eot.css">
+	<!--<![endif]-->
+	<link rel="stylesheet" href="/static/nemo/_/c/styles.css">
+
+	<style>
+		body {
+			background: #fff;
+			padding: 1em;
+		}
+	</style>
+
+	{% block app_css %}
+	{% endblock %}
+
+	{% block page_css %}
+	{% endblock %}
+
+  {# Google Tag Manager #}
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+
+	<!-- Javascript -->
+	<!--[if lt IE 9]>
+	<script src="/static/nemo/_/js/html5shim.js"></script>
+	<![endif]-->
+
+	{% block page_feeds %}
+	{% endblock %}
+
+</head>
+
+<body>
+{% block gtm_js %}
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+{% endblock %}
+
+<script>
+  if(document.getElementsByTagName("body")) {
+    var bodyTag = document.getElementsByTagName("body")[0];
+    bodyTag.className += " js";
+  }
+</script>
+<header>
+	<a href="/" class="noStyles"><img id="logo" src="/static/nemo/_/img/logo.png" alt="Consumer Financial Protection Bureau" title="CFPB"></a>
+</header>
+		<ul class="bread meta">
+			{% block breadcrumbs %}
+			{% endblock %}
+    	</ul> <!-- /class=bread -->
+            {% block content %}
+            {% endblock %}
+
+{% block app_js %}
+{% endblock %}
+
+{% block page_js %}
+{% endblock %}
+
+</body>
+</html>

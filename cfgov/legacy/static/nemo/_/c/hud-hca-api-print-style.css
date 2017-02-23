@@ -1,0 +1,203 @@
+/***** PRINT STYLES FOR HUD HCA API LANDING PAGE *****/
+/***** File: page-hud-hca-api.php *****/
+
+@media print {
+    .page-template-page-hud-hca-api-php {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        font-family: Arial, Helvetica, "Helvetica Neue" sans-serif;
+        font-size: 12pt;
+        line-height: 1.4;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+	.page-template-page-hud-hca-api-php p {
+		font-family: Georgia, Times, "Times New Roman", serif;
+	}
+
+    a,
+    a:visited {
+        border: 0;
+		color: #000 !important; /* Black prints faster: h5bp.com/s */
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+    	size: letter;
+		margin: .5in .5in .5in .5in;
+		padding: 0;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        page-break-after: avoid;
+    }
+
+    /* Hide unneeded content */
+    /* From top of page to bottom */
+    .wrapper-banner,
+    #header,
+    #subnav, /* Hide nav menu on PDFs when JS doesn't render */
+    .bread,
+    .share,
+    #footer,
+    #hud_hca_api_row_template,
+    .hud_hca_api_print_hide {
+        display: none !important;
+    }
+
+    /* Some adjustments */
+    table, thead, tbody, tfoot, tr, td, th, caption {
+    	border: 0 !important;
+    	display: block !important;
+    	margin: 0 !important;
+    	padding: 0 !important;
+    }
+    
+    .pagetitle > h1 {
+        font-size: 16pt;
+    }
+
+    img.hud_hca_api_print_logo {
+        float: right;
+        max-width: 20% !important;
+    }
+
+    .hud_hca_api_the_results {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .hud_hca_api_print.border {
+        border-top: 4px solid #101820;
+    }
+
+    /* Grid adjustments */
+    tr.hud_hca_api_result:before,
+	tr.hud_hca_api_result:after {
+		content: " ";
+		display: table;
+	}
+
+	tr.hud_hca_api_result:after {
+		clear: both;
+	}
+
+	tr.hud_hca_api_result {
+		*zoom: 1;
+	}
+    
+    tr.hud_hca_api_result {
+    	border-bottom: 1px solid #babbbd !important;
+    	padding: 1.5em 0 !important;
+    }
+    
+    .hud_hca_api_counselors_td,
+    .hud_hca_api_services_td {
+    	float: left;
+    	width: 88%;
+    }
+    
+    .hud_hca_api_distances_td {
+    	float: right;
+    	margin-left: 2% !important;
+    	margin-top: -255px !important;
+    	text-align: right;
+    	width: 10%;
+    }
+
+    .hud_hca_api_counselor_address,
+	.hud_hca_api_site,
+	.hud_hca_api_tel,
+	.hud_hca_api_lang,
+	.hud_hca_api_serv,
+	.hud_hca_api_distance {
+		page-break-inside: avoid;
+	}
+
+    .hud_hca_api_print_show {
+        display: block !important;
+        visibility: visible;
+    }
+	
+	.hud_hca_api_results_listing_title {
+		margin-top: 1em;
+	}
+	
+	.hud_hca_api_services {
+		padding-left: 7.04918%;
+	}
+
+    .hud_hca_api_serv_item {
+        display: inline;
+    }
+
+    .hud_hca_api_serv_item:before {
+        content: " | ";
+    }
+
+    .hud_hca_api_serv_item:first-child:before {
+        content: "";
+    }
+	
+	.hud_hca_api_distances_td .hud_hca_api_results_listing_title {
+		margin-top: 0;
+	}
+	
+	.hud_hca_api_site > .hud_hca_api_results_listing_title,
+	.hud_hca_api_tel > .hud_hca_api_results_listing_title {
+		display: inline;
+	}
+	
+	.hud_hca_api_lang {
+		display: block;
+	}
+}

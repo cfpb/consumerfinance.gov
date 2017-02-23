@@ -164,7 +164,7 @@
     &_content-3 {
         &-overview {
             display: block;
-            border-bottom: 1px solid @gray-50;
+            border-bottom: 1px solid @gray-40;
         }
 
         &-link,
@@ -176,6 +176,19 @@
         }
     }
 
+    // Mobile sizes.
+    .respond-to-max( @bp-xs-max, {
+        &_trigger {
+            margin-left: -15px;
+        }
+    } );
+
+    // Tablet sizes.
+    .respond-to-range( @bp-sm-min, @bp-sm-max, {
+        &_trigger {
+            margin-left: -30px;
+        }
+    } );
 
     // Tablet/mobile sizes.
     .respond-to-max( @bp-sm-max, {
@@ -212,8 +225,8 @@
 
             &[aria-expanded="true"] {
                 background: @gray-10;
-                border-left: 1px solid @gray-50;
-                border-right: 1px solid @gray-50;
+                border-left: 1px solid @gray-40;
+                border-right: 1px solid @gray-40;
                 color: @black;
 
                 &:before {
@@ -239,8 +252,8 @@
             }
 
             background-color: @gray-5;
-            border-top: 1px solid @gray-50;
-            border-bottom: 1px solid @gray-50;
+            border-top: 1px solid @gray-40;
+            border-bottom: 1px solid @gray-40;
 
             .u-drop-shadow-after();
 
@@ -259,7 +272,7 @@
 
                 background-color: @gray-10;
                 border: none;
-                border-bottom: 1px solid @gray-50;
+                border-bottom: 1px solid @gray-40;
                 text-align: left;
                 text-transform: uppercase;
 
@@ -278,7 +291,7 @@
 
             &-overview {
                 display: block;
-                border-bottom: 1px solid @gray-50;
+                border-bottom: 1px solid @gray-40;
             }
 
             // Adjust padding and margin on unordered list menu items
@@ -289,7 +302,7 @@
             }
 
             &-item {
-                border-bottom: 1px solid @gray-50;
+                border-bottom: 1px solid @gray-40;
             }
 
             &-link,
@@ -425,17 +438,22 @@
             }
 
             &-list {
+                display: inline-block;
                 margin-bottom: 0;
             }
 
             &-item {
                 display: inline-block;
-                margin-right: @grid_gutter-width;
+                margin-right: unit( 25px / @base-font-size-px, em );
 
                 .no-js &:hover {
                     .o-mega-menu_content-2 {
                         display: block;
                     }
+                }
+
+                &:last-child {
+                    margin-right: 0;
                 }
             }
 
@@ -459,7 +477,7 @@
 
                 &:hover {
                     padding-bottom: @grid_gutter-width - 6px;
-                    border-bottom: 6px solid @gray-50;
+                    border-bottom: 6px solid @gray-40;
                     cursor: pointer;
                 }
             }
@@ -471,7 +489,7 @@
 
                 &:hover {
                     padding-bottom: @grid_gutter-width - 6px !important;
-                    border-bottom: 6px solid @gray-50 !important;
+                    border-bottom: 6px solid @gray-40 !important;
                     cursor: pointer !important;
                 }
             }
@@ -499,8 +517,8 @@
 
             &-wrapper {
                 background-color: @gray-5;
-                border-top: 1px solid @gray-50;
-                border-bottom: 1px solid @gray-50;
+                border-top: 1px solid @gray-40;
+                border-bottom: 1px solid @gray-40;
 
                 .u-drop-shadow-after();
 
@@ -621,6 +639,70 @@
       display: block;
     }
 }
+
+// Hide on print.
+.respond-to-print( {
+    .o-mega-menu {
+        display: none;
+    }
+} );
+
+// for IA_USER_TESTING_MENU feature flag
+.o-mega-menu__ia-testing {
+    .o-mega-menu_content-2 {
+        &-overview {
+            .respond-to-min( @bp-lg-min, {
+                margin-bottom: 20px;
+            } );
+        }
+
+        &-grid.full-width {
+            .respond-to-min( @bp-lg-min, {
+                .grid_column( 12 );
+
+                .o-mega-menu_content-list {
+                    .grid_column( 3 );
+                }
+            } );
+        }
+
+        &-list {
+            .respond-to-max( @bp-sm-max, {
+                h3 {
+                    margin-top: 15px;
+                }
+            } );
+        }
+    }
+
+    .nav_footer {
+        .respond-to-min( @bp-lg-min, {
+            margin-top: 30px;
+            font-size: 18px;
+        } );
+
+        span {
+            border-top: 1px solid @gray-40;
+            padding: 15px;
+
+            .respond-to-max( @bp-sm-max, {
+                display: block;
+                margin: 0 15px 10px 30px;
+                padding: 15px 0;
+            } );
+        }
+    }
+
+    .hide-title {
+        .respond-to-max( @bp-sm-max, {
+            .u-visually-hidden;
+        } );
+        .respond-to-min( @bp-lg-min, {
+            visibility: hidden;
+        } );
+    }
+}
+// end feature flag section
 
 /* topdoc
     name: EOF

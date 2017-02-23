@@ -7,15 +7,15 @@
       <div class="o-expandable-group">
           <h3>Expandable group header</h3>
           <p>Intro text</p>
-          <div class="m-expandable"></div>
-          <div class="m-expandable"></div>
-          <div class="m-expandable"></div>
+          <div class="o-expandable"></div>
+          <div class="o-expandable"></div>
+          <div class="o-expandable"></div>
       </div>
     codenotes:
       - |
         Pattern structure
         -----------------
-        .m-expandable-group
+        .o-expandable-group
           h3 (optional)
           p (optional)
           .expandable
@@ -29,9 +29,9 @@
       <div class="o-expandable-group o-expandable-group__accordion">
           <h3>Expandable group header</h3>
           <p>Intro text</p>
-          <div class="m-expandable"></div>
-          <div class="m-expandable"></div>
-          <div class="m-expandable"></div>
+          <div class="o-expandable"></div>
+          <div class="o-expandable"></div>
+          <div class="o-expandable"></div>
       </div>
     notes:
       - "Accordions can only show one open expandable at a time."
@@ -43,7 +43,7 @@
     margin-bottom: unit(30px / @base-font-size-px, em);
 }
 
-.o-expandable-group .m-expandable:not(:last-child) .m-expandable_content {
+.o-expandable-group .o-expandable:not(:last-child) .o-expandable_content {
     border-bottom: none;
 }
 

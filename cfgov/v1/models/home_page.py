@@ -1,11 +1,15 @@
-from .base import CFGOVPage
-from . import organisms, molecules, atoms
-from ..util import ref
-from django.db import models
-from wagtail.wagtailcore.fields import StreamField
-from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList, \
-    StreamFieldPanel, FieldPanel, PageChooserPanel
+from wagtail.wagtailadmin.edit_handlers import (
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface
+)
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore.models import PageManager
+
+from ..atomic_elements import atoms, molecules
+from ..util import ref
+from .base import CFGOVPage
 
 
 class HomePage(CFGOVPage):
@@ -35,9 +39,12 @@ class HomePage(CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    parent_page_types = ['wagtailcore.Page']  # Sets page to only be createable at the root
+    # Sets page to only be createable at the root
+    parent_page_types = ['wagtailcore.Page']
 
     template = 'index.html'
+
+    objects = PageManager()
 
     def get_category_name(self, category_icon_name):
         cats = dict(ref.limited_categories)

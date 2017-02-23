@@ -7,5 +7,12 @@
 
 {# Overlay for the page. Used for the mobile mega menu. #}
 <div class="a-overlay u-hidden"></div>
+
+{# Skip Link to skip to main content #}
+{# TODO: When projects standardize on #main,
+   remove this and empty after-header div #}
+<a href="#after-nav" id="skip-nav">Skip to main content</a>
+
 {% import 'organisms/header.html' as header with context %}
 {{ header.render( show_banner=false ) }}
+<div id="after-nav"></div>

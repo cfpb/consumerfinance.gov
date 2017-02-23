@@ -43,9 +43,8 @@
 {% import 'macros/time.html' as time %}
 {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
-{% macro render(post, controls, form_id=0, url='') %}
-    {% set type = controls.page_type or '' %}
-    {% set date_desc = controls.post_date_description or 'Published' %}
+{% macro render(post, controls, form_id=0, url='', post_date_description='') %}
+    {% set date_desc = controls.post_date_description  or post_date_description or 'Published' %}
     {% set cat_controls = controls.categories %}
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
     {% set page_url = url or get_protected_url(page) %}
@@ -53,17 +52,20 @@
     <article class="o-post-preview">
         <div class="meta-header">
             <span class="date meta-header_right">
-                {{ date_desc }} {{ time.render(post.date_published, {'date':true}) }}
+                {{ date_desc }}
+                {% if 'EventPage' in post.specific_class.__name__ %}
+                    {{ time.render(post.specific.start_dt, {'date':true}) }}
+                {% else %}
+                    {{ time.render(post.date_published, {'date':true}) }}
+                {% endif %}
             </span>
             {# Newsroom Blog category logic #}
             {% if show_categories %}
-                {% if 'newsroom' in type %}
-                    {% if is_blog(post) %}
-                        {{ category_slug.render('blog',
-                                page_url,
-                                'post_slug meta-header_left',
-                                false, form_id) }}
-                    {% endif %}
+                {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
+                    {{ category_slug.render('blog',
+                            page_url,
+                            'post_slug meta-header_left',
+                            false, form_id) }}
                 {% else %}
                     {% for cat in post.categories.all() %}
                         {% if loop.index > 1 %}
@@ -78,29 +80,23 @@
             {% endif %}
         </div>
          {% if 'EventPage' in post.specific_class.__name__ %}
-            {% if post.specific.start_dt %}
+            {% set event = post.specific %}
+            {% if event.start_dt %}
                 <div class="o-post-preview_image-container">
                     <time class="calendar-icon"
-                          data-month="{{ post.specific.start_dt | date('%b') }}"
-                          data-day="{{ post.specific.start_dt | date('%-d') }}"
-                          datetime="{{ post.specific.start_dt | date('%c') }}">
-                        <span class="u-visually-hidden">{{ post.specific.start_dt| date('%b %-d, %Y') }}</span>
+                          data-month="{{ event.start_dt | date('%b') }}"
+                          data-day="{{ event.start_dt | date('%-d') }}"
+                          datetime="{{ event.start_dt | date('%c') }}">
+                        <span class="u-visually-hidden">{{ event.start_dt| date('%b %-d, %Y') }}</span>
                     </time>
-                    {% if post.specific.live_stream_link %}
+                    {% if event.live_stream_link %}
                         <img class="o-post-preview_image"
                              src="http://placehold.it/160x90"
                              alt="Livestream event">
                     {% else %}
                         <img class="o-post-preview_image"
-                             src="{{ location_image_url({
-                                     'location': post.specific.venue_city
-                                     | default('Washington, DC', true)
-                                     | urlencode,
-                                     'zoom':     '12',
-                                     'scale':    '2',
-                                     'size':     '276x155'
-                                     }) }}"
-                             alt="Google Maps image of {{ post.specific.venue_name }}">
+                             src="{{ event.location_image_url() }}"
+                             alt="Google Maps image of {{ event.venue_name }}">
                     {% endif %}
                 </div>
             {% endif %}
@@ -145,31 +141,31 @@
             {% endif %}
             {% if post.preview_description %}
                 <div class="o-post-preview_description">
-                    {{ post.preview_description | safe }}
+                    {{ parse_links(post.preview_description) | safe }}
                 </div>
             {% endif %}
             <div class="post_meta">
-                {% for author in post.authors.names() %}
+                {% for author in post.get_authors() %}
                     <span class="o-post-preview_byline">
                         {% if loop.index == 1  %}
-                            By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                                {{ author }}
+                            By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                                {{ author.name }}
                                 </a>
                         {% elif loop.last == true %}
-                            and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                                {{ author }}
+                            and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                                {{ author.name }}
                                 </a>
                         {% else %}
-                            ,<a href="{{ page_url }}?filter{{ form_id }}_authors={{ author }}">
-                                {{ author }}
+                            ,<a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                                {{ author.name }}
                                 </a>
                         {% endif %}
                     </span>
                 {% endfor %}
 
-                {% if post.tags.names() | length %}
+                {% if post.tags.exists() %}
                     {%- import 'tags.html' as tags %}
-                    {{ tags.render(post.tags.names(), page_url, true, false, form_id) }}
+                    {{ tags.render(related_metadata_tags(post), page_url, true, false, form_id, is_wagtail=True) }}
                 {% endif %}
             </div>
             {% if post.secondary_link_url and post.secondary_link_text %}

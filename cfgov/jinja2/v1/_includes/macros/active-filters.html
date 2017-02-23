@@ -68,11 +68,7 @@
     {%- if options.show_filters_label -%}
         <li class="list_item filtered-by_header">
         {%- if posts | list | length > 0 -%}
-          {% if posts.paginator is defined -%}
-            {{ posts.paginator.count }} filtered result{{ 's' if posts.paginator.count > 1 }} for
-          {% else -%}
-            {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
-          {% endif -%}
+            {{ posts | list | length }} filtered result{{ 's' if posts | list | length > 1 }} for
         {%- else -%}
             No results for
         {%- endif -%}
@@ -81,16 +77,16 @@
     {%- for filter in active_filters %}
         <li class="list_item filtered-by_filter">
             {{ 'Blog' if filter == 'post' else filter }}
-        {%- if not loop.last or active_date_filters | length > 0 -%}
+        {% if not loop.last or active_date_filters | length > 0 %}
             ,
-        {%- endif %}
+        {% endif %}
         </li>
     {% endfor %}
     {%- if active_date_filters | length > 0 -%}
         <li class="list_item filtered-by_filter">
         {%- for filter in active_date_filters %}
             {{ filter | date("%B %Y") }}
-            {{ '&ndash;' | safe if not loop.last }}
+            {{ '&ndash;' | safe if not loop.last else '' }}
         {%- endfor -%}
         </li>
     {%- endif %}
@@ -98,11 +94,7 @@
     {% if options.show_unfiltered_count and options.show_filters_label %}
         <li class="list_item">
             <span class="filtered-by_header">
-              {% if posts.paginator is defined -%}
-                {{ posts.paginator.count }} result{{ 's' if posts.paginator.count > 1 }}
-              {% else -%}
-                {{ posts.total }} result{{ 's' if posts.total > 1 }}
-              {% endif -%}
+              {{ posts | list | length }} filtered result{{ 's' if posts | list | length > 1 }} for
             </span>
         </li>
     {% endif %}
@@ -115,15 +107,9 @@
    ========================================================================== #}
 {% macro _active_filters_notification(posts, has_active_filters=false) %}
 {%- if posts | list | length > 0 -%}
-    {% if posts.paginator is defined and posts.paginator -%}
-      {% set text = posts.paginator.count | string
-                    + ' filtered result'
-                    + ('s' if posts.paginator.count > 1 else '') %}
-    {% else -%}
-      {% set text = posts.total | string
-                    + ' filtered result'
-                    + ('s' if posts.total > 1 else '') %}
-    {% endif -%}
+    {% set text = posts | list | length | string
+                  + ' filtered result'
+                  + ('s' if posts | list | length > 1 else '') %}
     {% set type = 'success' %}
     {% set is_visible = has_active_filters %}
 {%- else -%}

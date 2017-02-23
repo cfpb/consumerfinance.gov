@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # ==========================================================================
-# Setup script for MYSQL Databse Instantiation
+# Setup script for MySQL database instantiation—used to create the database.
 # NOTE: Run this script while in the project root directory.
 # ==========================================================================
 
@@ -40,8 +40,3 @@ else
   $MYSQL -uroot -e "$SQL"
   ok "Database $1 and user $MYSQL_USER created with a password $MYSQL_PW"
 fi
-
-
-
-
-

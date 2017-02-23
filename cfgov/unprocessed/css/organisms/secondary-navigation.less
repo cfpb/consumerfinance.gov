@@ -32,29 +32,29 @@
             .o-secondary-navigation_list.o-secondary-navigation_list__parents
               li
                 m-nav-link
-    - name: Secondary nav mixed with cf-expandable
+    - name: Secondary nav mixed with atomic expandable
       markup: |
-        <nav class="expandable
+        <nav class="o-expandable
                     o-secondary-navigation">
-            <div class="expandable_header">
-                <button class="expandable_target
+            <div class="o-expandable_header">
+                <button class="o-expandable_target
                                o-secondary-navigation_button">
-                    <span class="expandable_header-left">
+                    <span class="o-expandable_header-left">
                         Nav Button
                     </span>
-                    <span class="expandable_header-right">
-                        <span class="expandable_cue-open">
+                    <span class="o-expandable_header-right">
+                        <span class="o-expandable_cue-open">
                             <span class="cf-icon
                                          cf-icon-down"></span>
                         </span>
-                        <span class="expandable_cue-close">
+                        <span class="o-expandable_cue-close">
                             <span class="cf-icon
                                          cf-icon-up"></span>
                         </span>
                     </span>
                 </button>
             </div>
-            <div class="expandable_content">
+            <div class="o-expandable_content">
                 <ul class="o-secondary-navigation_list
                            o-secondary-navigation_list__parents">
                     li
@@ -70,16 +70,16 @@
         - |
           Structural cheat sheet:
           -----------------------
-          .expandable.o-secondary-navigation
-            .expandable_header
-              .expandable_target.o-secondary-navigation_button
-                .expandable_header-left
-                .expandable_header-right
-                  .expandable_cue-open
+          .o-expandable.o-secondary-navigation
+            .o-expandable_header
+              .o-expandable_target.o-secondary-navigation_button
+                .o-expandable_header-left
+                .o-expandable_header-right
+                  .o-expandable_cue-open
                     .cf-icon.cf-icon-down
-                  .expandable_cue-close
+                  .o-expandable_cue-close
                     .cf-icon.cf-icon-up
-            .expandable_content
+            .o-expandable_content
               .o-secondary-navigation_list.o-secondary-navigation_list__parents
                 li
                   m-nav-link
@@ -90,22 +90,33 @@
 .o-secondary-navigation {
     .webfont-regular();
 
-    .m-expandable_target {
+    &__no-children {
+      .respond-to-max( @bp-sm-max, {
+          display: none;
+      } );
+    }
+
+    // TODO: If secondary navigation is overriding o-expandables appearance,
+    //       they aren't atomic expandables anymore per the design spec.
+    //       Secondary navigation should use FlyoutMenu for expandable-like
+    //       behavior and handle its own styling
+    //       (possibly shared with expandables).
+    .o-expandable_target {
         .webfont-demi();
 
         text-transform: uppercase;
 
-        .respond-to-min(@bp-med-min, {
+        .respond-to-min( @bp-med-min, {
           display: none;
-        });
+        } );
     }
 
-    .m-expandable_content {
-        .respond-to-min(@bp-med-min, {
+    .o-expandable_content {
+        .respond-to-min( @bp-med-min, {
           background: none;
           border: none;
           height: auto !important;
-        });
+        } );
 
         &-animated {
           padding: 0;
@@ -117,24 +128,35 @@
         padding: 0;
 
         &__parents {
-            .respond-to-max(@bp-sm-max, {
-                padding-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-                margin-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
-                margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+            .respond-to-max( @bp-sm-max, {
+                padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+                margin-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+                margin-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
 
                 border-top: 1px solid @gray-40;
-            });
+
+                li[data-nav-is-active="False"]{
+                    display: none;
+                }
+            } );
         }
 
         &__children {
-            margin-left: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+            margin-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
 
-            .respond-to-min(@bp-med-min, {
+            .respond-to-min( @bp-med-min, {
                 // Add 5px for the border to half the gutter
                 margin-left: unit( ( (@grid_gutter-width / 2 ) + 5px ) / @base-font-size-px, em) ;
-            });
+            } );
         }
     }
+
+    // Hide on print.
+    .respond-to-print( {
+        & {
+            display: none;
+        }
+    } );
 }
 
 /* topdoc

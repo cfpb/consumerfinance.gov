@@ -26,7 +26,7 @@ the public domain by waiving all of his or her rights to the work worldwide
 under copyright law, including all related and neighboring rights, to the
 extent allowed by law.
 
-You can copy, modify, distribute and perform the work, even for commercial 
+You can copy, modify, distribute and perform the work, even for commercial
 purposes, all without asking permission. See Other Information below.
 
 ### Other Information
@@ -47,25 +47,16 @@ author or the affirmer.
 
 ## Exceptions
 
-- [The HTML5 Shiv](https://github.com/aFarkas/html5shiv) by Alexander Farkas,
-  et al., is licensed under MIT/GPL2.
-- [Rainbow](https://github.com/ccampbell/rainbow) by Craig Campbell is licensed
-  under Apache 2.0.
-- The Brackets Theme by Garth Braithwaite is licensed under Apache 2.0.
-- [Normalize](http://necolas.github.io/normalize.css/) by Nicolas Gallagher,
-  co-created with Jonathan Neal, is licensed under the MIT License.
-- [jQuery](http://jquery.com/) by The jQuery Foundation is licensed under the
-  MIT License.
 - [box-sizing Polyfill](http://github.com/Schepp/box-sizing-polyfill) by
   Christian Schepp Schaefer is licensed under LGPL 3.0.
+- [HTML5 Shiv](https://github.com/aFarkas/html5shiv) by Alexander Farkas,
+  et al., is licensed under MIT/GPL2.
+- [jQuery](http://jquery.com/) by The jQuery Foundation is licensed under the
+  MIT License.
+- [Modernizr](https://github.com/Modernizr/Modernizr) by Faruk Ateş, et al.,
+  is licensed under MIT License.
+- [Normalize](http://necolas.github.io/normalize.css/) by Nicolas Gallagher,
+  co-created with Jonathan Neal, is licensed under the MIT License.
+- [PDFreactor v6.3](http://www.pdfreactor.com/) by realObjects.
 - [Slick](http://kenwheeler.github.io/slick/) by Ken Wheeler is licensed under
   the MIT License.
-- [Chosen](https://github.com/harvesthq/chosen) by Patrick Filler for Harvest is
-  licensed under the MIT License.
-- [History.js](https://github.com/browserstate/history.js) by Benjamin Arthur
-  Lupton is licensed under the New BSD License.
-- [jQuery Easing](http://gsgd.co.uk/sandbox/jquery/easing/) by George McGinley
-  Smith is licensed under the BSD License.
-- [String Scoring Algorithm](https://github.com/joshaven/string_score) by
-  Joshaven Potter is licensed under the MIT License.
-- [PDFreactor v6.3](http://www.pdfreactor.com/) by realObjects.

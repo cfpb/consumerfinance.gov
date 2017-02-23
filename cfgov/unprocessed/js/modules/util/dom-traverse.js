@@ -67,10 +67,7 @@ function not( elems, exclude ) {
 function closest( elem, selector ) {
   elem = elem.parentNode;
 
-  var matchesSelector = elem.matches ||
-                        elem.webkitMatchesSelector ||
-                        elem.mozMatchesSelector ||
-                        elem.msMatchesSelector;
+  var matchesSelector = _getMatchesMethod( elem );
   var match;
 
   while ( elem ) {
@@ -80,10 +77,24 @@ function closest( elem, selector ) {
       elem = elem.parentElement;
     }
 
-    if ( match ) return elem;
+    if ( match ) { return elem; }
   }
 
   return null;
+}
+
+/**
+ * Search for support of the matches() method by looking at
+ * browser prefixes.
+ * @param {HTMLNode} elem
+ *   The element to check for support of matches() method.
+ * @returns {Function} The appropriate matches() method of elem.
+ */
+function _getMatchesMethod( elem ) {
+  return elem.matches ||
+         elem.webkitMatchesSelector ||
+         elem.mozMatchesSelector ||
+         elem.msMatchesSelector;
 }
 
 module.exports = {

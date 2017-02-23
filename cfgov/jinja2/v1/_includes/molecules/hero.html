@@ -1,76 +1,110 @@
 {# ==========================================================================
 
-   hero.render()
+   Hero
 
    ==========================================================================
 
-   See [GHE]/flapjack/Modules-V1/wiki/Heros
+   See https://cfpb.github.io/design-manual/global-elements/heroes.html
 
    Description:
 
    Create a hero molecule.
 
-   value:               An object with the following requirements.
+   value:                  Object defined from a StreamField block.
 
-   value.is_overlay:    A boolean to change the hero to an overlay hero.
-   value.is_white_text: A boolean to change the text color to white.
+   value.heading:          A string containing title of module.
 
-   value.heading:       A string containing title of module.
+   value.body:             A string containing the content to display below
+                           the heading (typically a paragraph).
 
-   value.body:          A string containing the content to display below the
-                        heading (typically a paragraph).
+   value.links:            A tuple of items to create a list of links,
+                           containing:
 
-   value.lg_image:      An image object containing the URL of the image to be
-                        placed behind the hero.
+   value.links[i].url:     A string for the URL of the link.
 
-   value.image:         A image object containing the URL of the image to be
-                        placed adjacent to the text.
+   value.links[i].text:    A string for the text of the link.
 
+   value.is_button:        A boolean to change the CTA link(s) to a button.
 
-   value.background_color:
-                        A string containing the color code (in any format) to
-                        set as the hero background color.
+   value.image:            An image object containing the image to be
+                           placed adjacent to the text.
 
-   value.links:         A tuple of items to create a list of links, containing:
+   value.is_overlay:       A boolean to change the hero to an overlay hero.
 
-                        url:  A string for the URL of the link.
-                        text: A string for the text of the link.
+   value.background_color: A string containing the color code (in any format)
+                           to set as the hero background color.
 
-   value.is_button:     A boolean to change the CTA link to a button.
+   value.is_white_text:    A boolean to change the text color to white.
+
+   value.cta_link_color:   A string containing the color code (in any format)
+                           to set as the CTA link color. Should only be used
+                           in the event that the background_color value does
+                           not have sufficient contrast with the default
+                           link color.
+
+   value.is_bleeding:      A boolean that indicates that the image bleeds
+                           vertically.
+
+   value.small_image:      An image object containing the alternate image
+                           for smaller screens when bleeding or overlaying
+                           at larger screen sizes.
 
    ========================================================================== #}
 
-<section class="hero
-                {{ 'hero__overlay' if value.is_overlay else '' }}
-                {{ 'hero__white-text' if value.is_white_text else '' }}"
-         {{ 'style="background-color:' +
-                value.background_color + ';"'
-                if value.background_color else '' }}>
+<section class="m-hero
+                {{ 'm-hero__overlay' if value.is_overlay else '' }}
+                {{ 'm-hero__overlay-text' if value.is_white_text else '' }}"
+    {%- if value.background_color %}
+         style="background-color: {{ value.background_color }};"
+    {% endif -%}>
 
-    <div class="wrapper hero_wrapper"
-          {% if value.background_image %}
-            {% set background_image=image(value.background_image, 'original') %}
-               style="background-image: url( {{  background_image.url }});"
-          {% endif %}>
-        <div class="hero_text">
-            <h1 class="hero_heading">{{ value.heading | safe}}</h1>
-            <div class="hero_subhead">{{ parse_links(value.body) | safe }}</div>
+    <div class="m-hero_wrapper wrapper"
+    {% if value.is_overlay and value.image %}
+        {% set bg_img=image(value.image, 'original') %}
+            style="background-image: url(' {{- bg_img.url -}} ');"
+    {% endif %}>
+        <div class="m-hero_text">
+            <h1 class="m-hero_heading">{{ value.heading | safe}}</h1>
+            <div class="m-hero_subhead">{{ parse_links(value.body) | safe }}</div>
             {% for link in value.links %}
-                <a href="{{ link.url }}"
-                   class="hero_cta
-                          {{ 'btn' if value.is_button else '' }}">
+                <a class="m-hero_cta
+                          {{ 'btn' if value.is_button else '' }}"
+                   href="{{ link.url }}"
+                {% if value.cta_link_color %}
+                    style="color: {{ value.cta_link_color }};"
+                {% endif %}>
                     {{ link.text }}
                 </a>
             {% endfor %}
         </div>
 
-
-        <div class="hero_image"
-        {% if value.image.upload %}
-            {% set photo=image(value.image.upload, 'original') %}
-             style="background-image:
-                    url( {{- photo.url -}} );"
-        {% endif %}
-          ></div>
+    {% if value.is_bleeding %}
+        <div class="m-hero_image-wrapper m-hero_image-wrapper__bleed-vertical">
+            <img class="m-hero_image"
+                {% if value.small_image %}
+                    {% set sm_img=image(value.small_image, 'original') %}
+                    src="{{ sm_img.url }}"
+                {% endif %}
+                 alt="">
+            <div class="m-hero_image__bleeding"
+                {% if value.image %}
+                    {% set img=image(value.image, 'original') %}
+                    style="background-image: url(' {{- img.url -}} ');"
+                {% endif %}>
+            </div>
+        </div>
+    {% else %}
+        <div class="m-hero_image-wrapper">
+            <img class="m-hero_image"
+                {% if value.is_overlay and value.small_image %}
+                    {% set sm_img=image(value.small_image, 'original') %}
+                    src="{{ sm_img.url }}"
+                {% elif value.image %}
+                    {% set img=image(value.image, 'original') %}
+                    src="{{ img.url }}"
+                {% endif %}
+                 alt="">
+        </div>
+    {% endif %}
     </div>
 </section>

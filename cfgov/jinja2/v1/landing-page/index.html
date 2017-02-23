@@ -1,5 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% import 'form_block.html' as form_block with context %}
+{% import 'templates/render_block.html' as render_block with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main_modifiers -%}
@@ -17,17 +19,14 @@
 {% block content_main %}
     {% for block in page.header -%}
         {% if block.block_type != 'hero' %}
-            {% include 'templates/render_block.html' with context %}
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
     {% for block in page.content -%}
-        {% if loop.index == 1 %}
-            <div class="block
-                        block__flush-top">
-                {{ render_stream_child(block) }}
-            </div>
+        {% if block.block_type == 'feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
         {% else %}
-             {% include 'templates/render_block.html' with context %}
+            {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
 {% endblock %}

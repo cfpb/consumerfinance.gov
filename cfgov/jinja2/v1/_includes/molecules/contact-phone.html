@@ -1,6 +1,6 @@
 {# ==========================================================================
 
-   contact_phone.render()
+   Contact Phone
 
    ==========================================================================
 
@@ -9,19 +9,23 @@
    Create a Contact-Phone molecule.
    See [GHE]/flapjack/Modules-V1/wiki/Contact:-Phone
 
-   phones:                   An array containing phone number information.
-   phones.number:            A phone number.
-   phones.vanity (Optional): An associated vanity phone number.
-   phones.tty (Optional):    An associated TTY/TDD number.
+   value:                  Object defined from a StreamField block.
 
-   is_fax (Optional):        Boolean for phone type.
-                             Is a fax number if value is `true`.
-                             Default is `false`.
+   value.fax:              (Optional) A fax number.
+
+   value.phones:           An array containing objects with phone number details.
+
+   value.phones[i].number: A phone number.
+
+   value.phones[i].vanity: (Optional) An associated vanity phone number.
+
+   value.phones[i].tty:    (Optional) An associated TTY/TDD number.
 
    ========================================================================== #}
 
 {% from 'macros/util/format/contact.html' import format_phone as format_phone %}
-<div class="m-contact-phone">
+<div class="m-contact m-contact-phone" data-qa-hook="contact-phone">
+    {# TODO: Update fax param name to is_fax to make clear it's a boolean. #}
     {% if value.fax == true %}
         {% set icon = 'cf-icon-fax' %}
         {% set label = 'Fax' %}

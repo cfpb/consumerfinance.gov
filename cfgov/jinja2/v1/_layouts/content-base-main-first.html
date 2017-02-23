@@ -3,11 +3,11 @@
 {% block pre_content scoped -%}
     {# TODO: Remove non-wagtail logic once old pages have been converted #}
     {% if page %}
-        {% set breadcrumb_items = page.get_breadcrumbs(request.site) %}
+        {% set breadcrumb_items = page.get_breadcrumbs(request) %}
         {% if breadcrumb_items | length > 0 %}
             <div class="content_wrapper">
                 {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
-                {{ breadcrumbs.render(breadcrumb_items, 'breadcrumbs__main-first') }}
+                {{ breadcrumbs.render(breadcrumb_items) }}
             </div>
         {% endif %}
     {% else %}

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # ==========================================================================
 # Setup script for installing project dependencies.
@@ -10,72 +10,32 @@
 set -e
 
 # Initialize project dependency directories.
-init(){
-  # Set default command-line environment flag, if user didn't supply one.
-  if [ -z "$1" ]; then
-    cli_flag='development'
-  else
-    cli_flag=$1
-  fi
+init() {
+  # Set cli_flag variable.
+  source cli-flag.sh 'Front end' $1
 
-  # Warn if unsupported command-line flag was used.
-  if [ "$cli_flag" != "development" ] &&
-     [ "$cli_flag" != "test" ] &&
-     [ "$cli_flag" != "production" ]; then
-    echo "\033[33;33mWARNING: '$cli_flag' flag not found, reverting to development environment.\033[0m"
-    cli_flag='development'
-  fi
-
-  # Notify of environment that user is in.
-  if [ "$cli_flag" = "development" ]; then
-    echo 'Frontend:\033[33;33m development environment\033[0m.'
-  elif [ "$cli_flag" = "test" ]; then
-    echo 'Frontend:\033[33;1m test environment\033[0m.'
-  elif [ "$cli_flag" = "production" ]; then
-    echo 'Frontend:\033[32;1m production environment\033[0m.'
-  fi
-
-  ENVVAR_SAMPLE=.env_SAMPLE
-  ENVVAR=.env
   NODE_DIR=node_modules
-  BOWER_DIR=bower_components
+  DEP_CHECKSUM=$(cat npm-shrinkwrap.json package.json | shasum -a 256)
 
-  # Copy sample environment variables, if not already done.
-  if [ ! -f $ENVVAR ]; then
-    echo 'Setting default environment variables...'
-    cp -a $ENVVAR_SAMPLE $ENVVAR
-  fi
-
-  if [ -f .bowerrc ]; then
-    # Get the "directory" line from .bowerrc
-    BOWER_DIR=$(grep "directory" .bowerrc | cut -d '"' -f 4)
-  fi
-
-  echo 'Environment variables:' $ENVVAR
-  echo 'npm components directory:' $NODE_DIR
-  echo 'Bower components directory:' $BOWER_DIR
+  echo "npm components directory: $NODE_DIR"
 }
 
 # Clean project dependencies.
-clean(){
-  # If the node and bower directories already exist,
-  # clear them so we know we're working with a clean
-  # slate of the dependencies listed in package.json
-  # and bower.json.
-  if [ -d $NODE_DIR ] || [ -d $BOWER_DIR ]; then
-    echo 'Removing project dependency directories...'
+clean() {
+  # If the node directory already exists,
+  # clear it so we know we're working with a clean
+  # slate of the dependencies listed in package.json.
+  if [ -d $NODE_DIR ]; then
+    echo 'Removing project dependency directories…'
     rm -rf $NODE_DIR
-    rm -rf $BOWER_DIR
+    echo 'Project dependencies have been removed.'
   fi
-  echo 'Project dependencies have been removed.'
 }
 
 # Install project dependencies.
-install(){
-  echo 'Installing project dependencies...'
+install() {
+  echo 'Installing front-end dependencies…'
 
-  # Copy globally-installed packages.
-  # Protractor - JavaScript acceptance testing.
   if [ "$cli_flag" = "development" ] ||
      [ "$cli_flag" = "test" ]; then
 
@@ -88,15 +48,15 @@ install(){
     # Copy globally-installed packages.
     # Protractor = JavaScript acceptance testing framework.
     if [ $is_installed_protractor = 0 ]; then
-      echo 'Installing Protractor dependencies locally...'
+      echo 'Installing Protractor dependencies locally…'
       ./$NODE_DIR/protractor/bin/webdriver-manager update
     else
-      echo 'Global Protractor installed. Copying global install locally...'
+      echo 'Global Protractor installed. Copying global install locally…'
       protractor_symlink=$(command -v protractor)
       protractor_binary=$(readlink $protractor_symlink)
       protractor_full_path=$(dirname $protractor_symlink)/$(dirname $protractor_binary)/../../protractor
-      if [ ! -d $protractor_full_path/selenium ]; then
-        echo '\033[33;31mERROR: Please run `webdriver-manager update` and try again!\033[0m'
+      if [ ! -d $protractor_full_path/node_modules/webdriver-manager/selenium ]; then
+        echo 'ERROR: Please run `webdriver-manager update` and try again!'
         exit
       fi
       mkdir -p ./$NODE_DIR/protractor
@@ -104,14 +64,30 @@ install(){
     fi
 
   else
-    npm install --production --loglevel warn
+    npm install --production --loglevel warn --no-optional
   fi
-  bower install --config.interactive=false
+
+}
+
+# If the node directory exists, $NODE_DIR/CHECKSUM exists, and
+# the contents DO NOT match the checksum of package.json, clear
+# $NODE_DIR so we know we're working with a clean slate of the
+# dependencies listed in package.json.
+clean_and_install() {
+  if [ ! -f $NODE_DIR/CHECKSUM ] || 
+     [ "$DEP_CHECKSUM" != "$(cat $NODE_DIR/CHECKSUM)" ]; then
+    clean
+    install
+    # Add a checksum file
+    echo -n "$DEP_CHECKSUM" > $NODE_DIR/CHECKSUM
+  else
+    echo 'Dependencies are up to date.'
+  fi
 }
 
 # Run tasks to build the project for distribution.
-build(){
-  echo 'Building project...'
+build() {
+  echo 'Building project…'
   gulp clean
   gulp build
 
@@ -122,7 +98,7 @@ build(){
 
 # Returns 1 if a global command-line program installed, else 0.
 # For example, echo "node: $(is_installed node)".
-is_installed(){
+is_installed() {
   # Set to 1 initially.
   local return_=1
 
@@ -132,18 +108,14 @@ is_installed(){
   echo "$return_"
 }
 
-if [ "$1" == "init" ] || [ "$1" == "build" ]; then
-  if [ "$1" == "init" ]; then
-    init ""
-    clean
-    install
-  else
-    build
-  fi
+# Execute requested (or all) functions.
+if [ "$1" == "init" ]; then
+  init ""
+  clean_and_install
+elif [ "$1" == "build" ]; then
+  build
 else
   init "$1"
-  clean
-  install
+  clean_and_install
   build
 fi
-
