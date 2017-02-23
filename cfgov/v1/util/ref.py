@@ -9,21 +9,6 @@ limited_categories = [
     ('double-quote', 'Testimony'),
 ]
 
-related_posts_categories = [
-    ('Blog', (
-        ('At the CFPB', 'At the CFPB'),
-        ('Policy &amp; Compliance', 'Policy & Compliance'),
-        ('Data, Research &amp; Reports', 'Data, research & reports'),
-        ('Info for Consumers', 'Info for consumers'),
-    )),
-    ('Newsroom', (
-        ('Op-Ed', 'Op-Ed'),
-        ('Press Release', 'Press Release'),
-        ('Speech', 'Speech'),
-        ('Testimony', 'Testimony'),
-    )),
-]
-
 page_types = [
     ('activity-log', 'Activity Log'),
     ('amicus-brief', 'Amicus Brief'),
@@ -62,9 +47,9 @@ categories = [
     )),
     ('Blog', (
         ('at-the-cfpb', 'At the CFPB'),
-        ('policy_compliance', 'Policy & Compliance'),
-        ('data-research-reports', 'Data, research & reports'),
-        ('info-for-consumers', 'Info for consumers'),
+        ('policy-compliance', 'Policy & Compliance'),
+        ('data-research-reports', 'Data, research, & reports'),
+        ('info-for-consumers', 'Info for Consumers'),
     )),
     ('Enforcement Action', (
         ('fed-district-case', 'Federal district court case'),
@@ -126,6 +111,12 @@ categories = [
     )),
 ]
 
+
+related_posts_categories = [
+    categories[2],
+    categories[7]
+]
+
 supported_languagues = [
     ('en', 'English'),
     ('es', 'Spanish'),
@@ -137,22 +128,6 @@ supported_languagues = [
     ('ar', 'Arabic'),
     ('ht', 'Haitian Creole'),
 ]
-
-
-def related_posts_category_lookup(related_categories):
-    related = []
-    for category in related_categories:
-        for name, related_posts_cats in related_posts_categories:
-            for cat in related_posts_cats:
-                if category == cat[0]:
-                    related.append(cat[1])
-    results = []
-    for r in related:
-        for name, cats in categories:
-            for c in cats:
-                if r == c[1]:
-                    results.append(c[0])
-    return results
 
 
 def page_type_choices():
