@@ -15,9 +15,9 @@ init() {
   source cli-flag.sh 'Front end' $1
 
   NODE_DIR=node_modules
-  DEP_CHECKSUM=$(cat npm-shrinkwrap.json package.json | shasum -a 256)
+  DEP_CHECKSUM=$(cat yarn.lock | shasum -a 256)
 
-  echo "npm components directory: $NODE_DIR"
+  echo "Node.js components directory: $NODE_DIR"
 }
 
 # Clean project dependencies.
@@ -43,7 +43,8 @@ install() {
     # create variables for globally-installed ones.
     local is_installed_protractor=$(is_installed protractor)
 
-    npm install -d --loglevel warn
+    # yarn's default log level is equivalent to npm's `--loglevel warn`
+    yarn install
 
     # Copy globally-installed packages.
     # Protractor = JavaScript acceptance testing framework.
@@ -64,7 +65,7 @@ install() {
     fi
 
   else
-    npm install --production --loglevel warn --no-optional
+    yarn install --production --ignore-optional
   fi
 
 }
@@ -74,7 +75,7 @@ install() {
 # $NODE_DIR so we know we're working with a clean slate of the
 # dependencies listed in package.json.
 clean_and_install() {
-  if [ ! -f $NODE_DIR/CHECKSUM ] || 
+  if [ ! -f $NODE_DIR/CHECKSUM ] ||
      [ "$DEP_CHECKSUM" != "$(cat $NODE_DIR/CHECKSUM)" ]; then
     clean
     install
