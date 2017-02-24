@@ -97,8 +97,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     if ( atomicHelpers.destroyInitFlag( _dom ) ) {
       _target.removeEventListener( 'click', _handleClick );
       window.removeEventListener( 'resize', _resizeHandler );
-      _content.removeEventListener( 'DOMNodeInserted', _refreshHeight, false );
-      _content.removeEventListener( 'DOMNodeRemoved', _refreshHeight, false );
+      _content.removeEventListener( 'DOMNodeInserted', refreshHeight, false );
+      _content.removeEventListener( 'DOMNodeRemoved', refreshHeight, false );
       _observer.disconnect();
     }
 
@@ -131,7 +131,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function _addMutationObserverEvents() {
     _observer = new MutationObserver( function( mutations ) {
-      mutations.forEach( _refreshHeight );
+      mutations.forEach( refreshHeight );
     } );
 
     _observer.observe( _content, { childList: true, subtree: true } );
@@ -141,8 +141,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    * Add mutation observer events for when MutationObserver is not supported.
    */
   function _addMutationObserverEventsLegacy() {
-    _content.addEventListener( 'DOMNodeInserted', _refreshHeight );
-    _content.addEventListener( 'DOMNodeRemoved', _refreshHeight );
+    _content.addEventListener( 'DOMNodeInserted', refreshHeight );
+    _content.addEventListener( 'DOMNodeRemoved', refreshHeight );
   }
 
   /**
@@ -195,6 +195,17 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
     _setMinHeight();
     _transitionHeight( _collapseComplete, duration );
     return this;
+  }
+
+  /**
+   * Reset the height of the Expandables, when e.g. resizing the window.
+   */
+  function refreshHeight() {
+    if ( _isExpanded() ) {
+      _setMaxHeight();
+    } else {
+      _setMinHeight();
+    }
   }
 
   /**
@@ -277,21 +288,10 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    */
   function _resizeHandler() {
     if ( _contentAnimated.offsetHeight !== _contentHeight ) {
-      _refreshHeight();
+      refreshHeight();
       if ( _isInMobile() ) {
         _collapseBinded();
       }
-    }
-  }
-
-  /**
-   * Reset the height of the Expandables, when e.g. resizing the window.
-   */
-  function _refreshHeight() {
-    if ( _isExpanded() ) {
-      _setMaxHeight();
-    } else {
-      _setMinHeight();
     }
   }
 
@@ -370,6 +370,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
   this.init = init;
   this.toggle = toggle;
   this.expand = expand;
+  this.refreshHeight = refreshHeight;
   this.collapse = collapse;
   this.destroy = destroy;
 

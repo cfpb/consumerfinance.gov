@@ -57,12 +57,24 @@ function FilterableListControls( element ) {
     // instantiate multiselects before their containing expandable
     // so height of any 'selected choice' buttons is included when
     // expandable height is calculated initially
-    atomicHelpers.instantiateAll( 'select[multiple]', Multiselect );
+    var multiSelects = atomicHelpers.instantiateAll( 'select[multiple]', Multiselect );
 
     // TODO: FilterableListControls should use expandable
     //       behavior (FlyoutMenu), not an expandable directly.
     _expandable = new Expandable( _dom );
     _expandable.init();
+
+    if ( _dom.classList.contains( 'o-filterable-list-controls__mulit-select-test' ) ) {
+      multiSelects.forEach( function( multiSelect ) {
+        multiSelect.addEventListener( 'expandBegin', function refresh() {
+          window.setTimeout( _expandable.refreshHeight, 250 );
+        } );
+
+        multiSelect.addEventListener( 'expandEnd', function refresh() {
+          window.setTimeout( _expandable.refreshHeight, 250 );
+        } );
+      } );
+    }
 
     _notification = new Notification( _dom );
     _notification.init();
