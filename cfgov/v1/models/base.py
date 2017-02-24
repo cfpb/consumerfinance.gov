@@ -109,6 +109,10 @@ class CFGOVPage(Page):
     # Panels
     sidefoot_panels = [
         StreamFieldPanel('sidefoot'),
+        InlinePanel(
+            'related_posts_categories',
+            label="Related Posts Categories"
+        )
     ]
 
     settings_panels = [
@@ -152,15 +156,8 @@ class CFGOVPage(Page):
 
     def related_posts(self, block, hostname):
         from v1.models.learn_page import AbstractFilterPage
-        related = {}
-        query = models.Q(('tags__name__in', self.tags.names()))
-        search_types = [
-            ('blog', 'posts', 'Blog', query),
-            ('newsroom', 'newsroom', 'Newsroom', query),
-            ('events', 'events', 'Events', query),
-        ]
 
-        def fetch_children_by_specific_category(block, parent_slug):
+        def fetch_children(parent_slug):
             """
             This used to be a Page.objects.get, which would throw
             an exception if the requested parent wasn't found. As of
@@ -173,47 +170,46 @@ class CFGOVPage(Page):
             """
             parent = Page.objects.filter(slug=parent_slug).first()
             if parent:
-                child_query = Page.objects.child_of_q(parent)
-                if 'specific_categories' in block.value:
-                    child_query &= specific_categories_query(
-                        block, parent_slug)
-            else:
-                child_query = Q()
-            return child_query
+                return Page.objects.child_of_q(parent)
+            return Q()
 
-        def specific_categories_query(block, parent_slug):
-            specific_categories = ref.related_posts_category_lookup(
-                block.value['specific_categories']
-            )
-            choices = [c[0] for c in ref.choices_for_page_type(parent_slug)]
-            categories = [c for c in specific_categories if c in choices]
+        def categories_query(block, parent_slug):
+            related_posts_categories = [
+                c.name for c in self.related_posts_categories.get_object_list()
+            ]
+            choices = [c[0] for c in dict(ref.categories)[parent_slug.title()]]
+            categories = [c for c in related_posts_categories if c in choices]
             if categories:
                 return Q(('categories__name__in', categories))
-            else:
-                return Q()
+            return Q()
 
-        for parent_slug, search_type, search_type_name, search_query in \
-                search_types:
-            search_query &= fetch_children_by_specific_category(
-                block, parent_slug)
-            if parent_slug == 'events':
-                search_query |= fetch_children_by_specific_category(
-                    block, 'archive-past-events') & query
-            relate = block.value.get('relate_{}'.format(search_type), None)
-            if relate:
-                related[search_type_name] = (
-                    AbstractFilterPage.objects.live_shared(
-                        hostname
-                    ).filter(
-                        search_query
-                    ).distinct().exclude(id=self.id).order_by(
-                        '-date_published'
-                    )[:block.value['limit']])
+        related = {}
+        tag_query = models.Q(('tags__name__in', self.tags.names()))
 
-        # Return a dictionary of lists of each type when there's at least one
-        # hit for that type.
-        return {search_type: queryset for search_type, queryset in
-                related.items() if queryset}
+        for slug in ['blog', 'newsroom', 'events']:
+            if block.value.get('relate_{}'.format(slug)):
+                search_query = fetch_children(
+                    parent_slug=slug
+                ) & tag_query
+                if slug == 'events':  # Grab additional archive posts
+                    search_query |= fetch_children(
+                        parent_slug='archive-past-events'
+                    ) & tag_query
+                else:  # Filter by specific categories for blog & newsroom only
+                    search_query &= categories_query(
+                        block=block,
+                        parent_slug=slug
+                    )
+
+                related[slug.title()] = (
+                    AbstractFilterPage.objects.
+                    live_shared(hostname).filter(search_query).
+                    distinct().exclude(id=self.id).
+                    order_by('-date_published')
+                    [:block.value['limit']]
+                )
+
+        return related
 
     def get_appropriate_page_version(self, request):
         # If we're on the production site, make sure the version of the page
@@ -458,6 +454,18 @@ class CFGOVPage(Page):
 class CFGOVPageCategory(Orderable):
     page = ParentalKey(CFGOVPage, related_name='categories')
     name = models.CharField(max_length=255, choices=ref.categories)
+
+    panels = [
+        FieldPanel('name'),
+    ]
+
+
+class RelatedPostsCategory(Orderable):
+    page = ParentalKey(CFGOVPage, related_name='related_posts_categories')
+    name = models.CharField(
+        max_length=255,
+        choices=ref.related_posts_categories
+    )
 
     panels = [
         FieldPanel('name'),
