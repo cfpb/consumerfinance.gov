@@ -31,7 +31,6 @@
     "require-dir": "0.3.1",
     "webpack": "1.13.2",
     "webpack-stream": "3.2.0",
-
     "browser-sync": "2.18.7",
     "glob-all": "3.1.0",
     "gulp-imagemin": "3.1.1",
@@ -48,7 +47,8 @@
     "gulp-mocha": "3.0.1",
     "is-reachable": "2.3.2",
     "gulp-util": "3.0.8",
-    "jquery": "1.11.3"
+    "jquery": "1.11.3",
+    "ustream-embedapi": "1.0.0"
   },
   "devDependencies": {
     "chai": "3.5.0",
