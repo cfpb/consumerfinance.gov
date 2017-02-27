@@ -99,6 +99,19 @@
     margin: auto;
 }
 
+.respond-to-min( @fcm-bp-min, {
+    .video-player_video-actions-container {
+        position: absolute;
+        top: 0;
+        left: @video-width__px;
+    }
+
+    .video-player .m-social-media,
+    .video-player_video-actions {
+        margin-bottom: @grid_gutter-width;
+    }
+} );
+
 .video-player_video-container__flexible {
     .video-player_iframe-container {
         width: auto;
@@ -193,22 +206,6 @@
     }
 } );
 
-.respond-to-min( @fcm-bp-min, {
-    .video-player_video-actions-container {
-        position: absolute;
-        top: 0;
-        left: @video-width__px;
-    }
-
-    .video-player .m-social-media,
-    .video-player_video-actions {
-        margin-bottom: @grid_gutter-width;
-    }
-
-    .video-player .m-social-media {
-        text-align: left;
-    }
-} );
 
 .respond-to-min( @bp-xl-min, {
     .video-player_iframe-container {
