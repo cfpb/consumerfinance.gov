@@ -29,12 +29,12 @@
                 {% set media = image(block.value, 'original') %}
                 <img class="m-full-width-media_image" src="{{ media.url }}" alt="{{ media.alt }}">
             </div>
-        {% elif 'image_inset' in block.block_type %}
-            {{ block | safe }}
-        {% else %}
+        {% elif block.block_type in ['quote', 'cta', 'related-links'] %}
             <div class="m-inset">
                 {{ block | safe }}
             </div>
+        {% else %}
+            {{ block | safe }}
         {% endif %}
     {% endfor %}
 </div>
