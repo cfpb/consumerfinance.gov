@@ -52,6 +52,9 @@ function FormSubmit( element, baseClass, opts ) {
   function _onSubmit( event ) {
     event.preventDefault();
     var errors = _validateForm();
+
+    _baseElement.classList.add( 'form-submitted' );
+
     if ( errors ) {
       _displayNotification( _notification.ERROR, errors );
     } else {
@@ -113,7 +116,7 @@ function FormSubmit( element, baseClass, opts ) {
             result = response.result;
             message = response.message;
             heading = response.header;
-          } catch( err ) {
+          } catch ( err ) {
             // ignore lack of response
           }
           state = result === 'fail' ? 'ERROR' : 'SUCCESS';

@@ -12,7 +12,7 @@ var BASE_CLASS = 'o-email-signup';
 function emailValidation ( fields ) {
   if ( fields.email && !fields.email.value ) {
   	return 'Please enter an email address.';
-  } 
+  }
   return validators.email( fields.email ).msg;
 }
 
