@@ -50,7 +50,7 @@ var API = {
    * Action function used to play the Ustream video.
    */
   play: function( ) {
-    var winterIsComing = 'winter-2017-consumer-advisory-board-meeting-washington-dc';
+    var winterIsComing = '/events/winter-2017-consumer-advisory-board-meeting-washington-dc';
     if ( window.location.pathname.indexOf( winterIsComing > -1 ) ) {
       window.location = 'https://www.ustream.tv/channel/cfpblive ';
       return this;

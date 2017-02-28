@@ -59,9 +59,6 @@
     {% endif %}
     {% set button_pos   = options.button_pos or 'center' %}
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
-    {% if request.url and 'winter-2017-consumer-advisory-board-meeting-washington-dc' in request.url %}
-        {% set video_url = 'https://www.ustream.tv/channel/cfpblive' %}
-    {% endif %}
     <div class="video-player
                 video-player__{{ video_player }}
                 {{ 'featured-content-module_visual' if is_flexible == false else '' }}"
