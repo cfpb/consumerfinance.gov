@@ -5,13 +5,17 @@ release, or between two releases on the same branch.
 """
 import argparse
 import re
+import os
 
 from collections import namedtuple
 
 import requests
 
 GITHUB_API_URL = 'https://api.github.com'
-
+GITHUB_API_TOKEN = os.environ.get('GITHUB_API_TOKEN', None)
+GITHUB_HEADERS = {}
+if GITHUB_API_TOKEN is not None:
+    GITHUB_HEADERS['Authorization'] = 'token ' + GITHUB_API_TOKEN
 
 Commit = namedtuple('Commit', ['sha', 'message'])
 PullRequest = namedtuple('PullRequest', ['number', 'title'])
@@ -29,7 +33,7 @@ def get_commit_for_tag(owner, repo, tag):
         owner, repo,
         'git', 'refs', 'tags', tag
     ])
-    tag_response = requests.get(tag_url)
+    tag_response = requests.get(tag_url, headers=GITHUB_HEADERS)
     tag_json = tag_response.json()
     if tag_response.status_code != 200:
         raise GitHubError("Unable to get tag {}. {}".format(
@@ -46,7 +50,8 @@ def get_last_commit(owner, repo, branch='master'):
         owner, repo,
         'commits'
     ])
-    commits_response = requests.get(commits_url, params={'sha': 'master'})
+    commits_response = requests.get(commits_url, params={'sha': 'master'},
+                                    headers=GITHUB_HEADERS)
     commits_json = commits_response.json()
     if commits_response.status_code != 200:
         raise GitHubError("Unable to get commits. {}".format(
@@ -64,7 +69,8 @@ def get_commits_between(owner, repo, first_commit, last_commit):
         'compare',
         first_commit + '...' + last_commit
     ])
-    commits_response = requests.get(commits_url, params={'sha': 'master'})
+    commits_response = requests.get(commits_url, params={'sha': 'master'},
+                                    headers=GITHUB_HEADERS)
     commits_json = commits_response.json()
     if commits_response.status_code != 200:
         raise GitHubError("Unable to get commits between {} and {}. {}".format(
