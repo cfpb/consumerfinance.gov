@@ -12,9 +12,34 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtailsearch import index
+from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from wagtail.wagtailsnippets.models import register_snippet
 
-from ..atomic_elements import molecules
+from v1.atomic_elements import molecules
+
+
+class ReusableTextChooserBlock(SnippetChooserBlock):
+    class Meta:
+        template = '_includes/snippets/reusable_text.html'
+
+
+@python_2_unicode_compatible
+@register_snippet
+class ReusableText(index.Indexed, models.Model):
+    title = models.CharField(
+        verbose_name='Snippet title (internal only)',
+        max_length=255
+    )
+    text = RichTextField()
+
+    search_fields = [
+        index.SearchField('title', partial_match=True),
+        index.SearchField('text', partial_match=True),
+    ]
+
+    def __str__(self):
+        return self.title
 
 
 @python_2_unicode_compatible
@@ -95,7 +120,20 @@ class Resource(ClusterableModel):
         validators=[URLValidator]
     )
 
-    tags = TaggableManager(through=ResourceTag, blank=True)
+    order = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        help_text='Snippets will be listed alphabetically by title in a '
+        'Snippet List module, unless any in the list have a number in this '
+        'field; those with an order value will appear at the bottom of the '
+        'list, in ascending order.'
+    )
+
+    tags = TaggableManager(
+        through=ResourceTag,
+        blank=True,
+        help_text='Tags can be used to filter snippets in a Snippet List.'
+    )
 
     objects = TaggableSnippetManager()
 
@@ -107,6 +145,7 @@ class Resource(ClusterableModel):
         DocumentChooserPanel('alternate_file'),
         FieldPanel('link'),
         FieldPanel('alternate_link'),
+        FieldPanel('order'),
         FieldPanel('tags'),
     ]
 
@@ -120,3 +159,6 @@ class Resource(ClusterableModel):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ('order', 'title')

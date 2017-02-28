@@ -8,6 +8,7 @@ var domCreate = require( '../modules/util/dom-manipulators' ).create;
 var queryOne = require( '../modules/util/dom-traverse' ).queryOne;
 var standardType = require( '../modules/util/standard-type' );
 var strings = require( '../modules/util/strings' );
+var EventObserver = require( '../modules/util/EventObserver' );
 
 /**
  * Multiselect
@@ -62,6 +63,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   var _searchDom;
   var _fieldsetDom;
   var _optionsDom;
+  var _instance;
 
   /**
    * Set up and create the multi-select.
@@ -73,6 +75,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
       return standardType.UNDEFINED;
     }
 
+    _instance = this;
     _name = _dom.name;
     _options = _dom.options || [];
     _placeholder = _dom.getAttribute( 'placeholder' );
@@ -103,7 +106,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _containerDom.classList.add( 'active' );
     _fieldsetDom.classList.remove( 'u-invisible' );
     _fieldsetDom.setAttribute( 'aria-hidden', false );
-    return this;
+    _instance.dispatchEvent( 'expandBegin', { target: _instance } );
+
+    return _instance;
   }
 
   /**
@@ -115,7 +120,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     _fieldsetDom.classList.add( 'u-invisible' );
     _fieldsetDom.setAttribute( 'aria-hidden', true );
     _index = -1;
-    return this;
+    _instance.dispatchEvent( 'expandEnd', { target: _instance } );
+
+    return _instance;
   }
 
   /**
@@ -486,6 +493,11 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
   this.init = init;
   this.expand = expand;
   this.collapse = collapse;
+
+  var eventObserver = new EventObserver();
+  this.addEventListener = eventObserver.addEventListener;
+  this.removeEventListener = eventObserver.removeEventListener;
+  this.dispatchEvent = eventObserver.dispatchEvent;
 
   return this;
 }
