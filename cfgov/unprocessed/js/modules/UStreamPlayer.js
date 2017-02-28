@@ -52,7 +52,7 @@ var API = {
   play: function( ) {
     var winterIsComing = 'winter-2017-consumer-advisory-board-meeting-washington-dc';
     if ( window.location.pathname.indexOf( winterIsComing > -1 ) ) {
-      window.location = 'http://www.ustream.tv/channel/cfpblive ';
+      window.location = 'https://www.ustream.tv/channel/cfpblive ';
       return this;
     };
 
