@@ -140,7 +140,7 @@ def format_changes(owner, repo, prs, markdown=False):
         if markdown:
             link = 'https://github.com/{owner}/{repo}/pull/{number}'.format(
                 owner=owner, repo=repo, number=pr.number)
-            number = '[{number}]({link})'.format(number=pr.number, link=link)
+            number = '[#{number}]({link})'.format(number=pr.number, link=link)
 
         lines.append('- {title} {number}'.format(title=pr.title,
                                                  number=number))
