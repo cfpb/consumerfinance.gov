@@ -7,6 +7,7 @@ var BaseTransition = require( '../modules/transition/BaseTransition' );
 var ERROR_MESSAGES = require( '../config/error-messages-config' );
 var FORM_MESSAGES = ERROR_MESSAGES.FORM.SUBMISSION;
 var Notification = require( '../molecules/Notification' );
+var EventObserver = require( '../modules/util/EventObserver' );
 
 /**
  * FormSubmit
@@ -30,6 +31,11 @@ function FormSubmit( element, baseClass, opts ) {
   var _notificationElement = _baseElement.querySelector( '.m-notification' );
   var _notification = new Notification( _baseElement );
   var _cachedFields;
+  var eventObserver = new EventObserver();
+  var self = this;
+  this.addEventListener = eventObserver.addEventListener;
+  this.removeEventListener = eventObserver.removeEventListener;
+  this.dispatchEvent = eventObserver.dispatchEvent;
 
   /**
    * @returns {FormSubmit|undefined} An instance,
@@ -52,6 +58,9 @@ function FormSubmit( element, baseClass, opts ) {
   function _onSubmit( event ) {
     event.preventDefault();
     var errors = _validateForm();
+
+    _baseElement.classList.add( 'form-submitted' );
+
     if ( errors ) {
       _displayNotification( _notification.ERROR, errors );
     } else {
@@ -113,7 +122,7 @@ function FormSubmit( element, baseClass, opts ) {
             result = response.result;
             message = response.message;
             heading = response.header;
-          } catch( err ) {
+          } catch ( err ) {
             // ignore lack of response
           }
           state = result === 'fail' ? 'ERROR' : 'SUCCESS';
@@ -124,6 +133,9 @@ function FormSubmit( element, baseClass, opts ) {
         } else {
           _displayNotification( _notification[state],
                               message || FORM_MESSAGES[state] );
+        }
+        if ( state === 'SUCCESS' ) {
+          self.dispatchEvent( 'success', { target: this, form: _formElement} );
         }
       }
     };
