@@ -23,7 +23,9 @@ class TestChangelog(TestCase):
         """ Test getting the commit sha for a tag if the tag exists """
         response = mock.MagicMock()
         response.status_code = 200
-        response.json.return_value = {'object': {'sha': '0123456789abcdef'}}
+        response.json.return_value = {
+            'object': {'type': 'commit', 'sha': '0123456789abcdef'}
+        }
         mock_requests_get.return_value = response
         result = get_commit_for_tag('someone', 'one-repo', 'myorg')
         self.assertEqual(result, '0123456789abcdef')
@@ -37,6 +39,23 @@ class TestChangelog(TestCase):
         mock_requests_get.return_value = response
         with self.assertRaises(GitHubError):
             get_commit_for_tag('someone', 'one-repo', 'myorg')
+
+    @mock.patch('requests.get')
+    def test_get_commit_for_tag_tag_object(self, mock_requests_get):
+        """ Test getting the commit sha when tagged object is tag """
+        response = mock.MagicMock()
+        response.status_code = 200
+        response.json.side_effect = [
+            {'object': {
+                'type': 'tag',
+                'sha': 'abcdef0123456789',
+                'url': 'http://foo'
+            }},
+            {'object': {'type': 'commit', 'sha': '0123456789abcdef'}}
+        ]
+        mock_requests_get.return_value = response
+        result = get_commit_for_tag('someone', 'one-repo', 'myorg')
+        self.assertEqual(result, '0123456789abcdef')
 
     @mock.patch('requests.get')
     def test_get_last_commit_exists(self, mock_requests_get):

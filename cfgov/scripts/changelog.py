@@ -33,11 +33,19 @@ def get_commit_for_tag(owner, repo, tag):
         owner, repo,
         'git', 'refs', 'tags', tag
     ])
-    tag_response = requests.get(tag_url, headers=GITHUB_HEADERS)
-    tag_json = tag_response.json()
-    if tag_response.status_code != 200:
-        raise GitHubError("Unable to get tag {}. {}".format(
-            tag, tag_json['message']))
+    tag_json = {}
+
+    while 'object' not in tag_json or tag_json['object']['type'] != 'commit':
+        tag_response = requests.get(tag_url, headers=GITHUB_HEADERS)
+        tag_json = tag_response.json()
+
+        if tag_response.status_code != 200:
+            raise GitHubError("Unable to get tag {}. {}".format(
+                tag, tag_json['message']))
+
+        # If we're given a tag object we have to look up the commit for that tag.
+        if tag_json['object']['type'] == 'tag':
+            tag_url = tag_json['object']['url']
 
     return tag_json['object']['sha']
 
