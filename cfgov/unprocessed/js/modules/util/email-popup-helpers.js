@@ -13,15 +13,15 @@ var FOREVER = 10000;
 
 function getFutureDate( days ) {
   var date = new Date();
-  return date.setTime( date.getTime() + days * 24 * 60 * 60 * 1000 );
+  return date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) )
 }
 
 function recordEmailPopupView() {
   var count = Number( localStorage.getItem( DISPLAY_COUNT_KEY ) ) || 0;
   var max = POPUP_WAIT_PERIOD.length - 1;
-  count = count >= max ? max : count + 1;
+  count = count >= max ? max : count;
   var days = POPUP_WAIT_PERIOD[count];
-  localStorage.setItem( DISPLAY_COUNT_KEY, count );
+  localStorage.setItem( DISPLAY_COUNT_KEY, count + 1 );
   localStorage.setItem( DISPLAY_DATE_KEY, getFutureDate( days ) );
 }
 

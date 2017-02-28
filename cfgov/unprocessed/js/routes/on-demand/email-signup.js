@@ -6,6 +6,7 @@
 
 var FormSubmit = require( '../../organisms/FormSubmit.js' );
 var validators = require( '../../modules/util/validators' );
+var emailHelpers = require( '../../modules/util/email-popup-helpers' );
 
 var BASE_CLASS = 'o-email-signup';
 
@@ -22,5 +23,13 @@ var formSubmit = new FormSubmit(
   { validator: emailValidation }
 );
 
-
 formSubmit.init();
+
+formSubmit.addEventListener( 'success', function onEmailSignupSuccess( event ) {
+  var form = event.form;
+  var input = form.querySelector( 'input[name="code"]' );
+  var code = input.value;
+  if ( code === "USCFPB_127" ) {
+    emailHelpers.recordEmailRegistration();
+  }
+} );
