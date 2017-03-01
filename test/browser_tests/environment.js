@@ -5,7 +5,7 @@ var specsRoot = 'spec_suites/';
 
 module.exports = {
   // A base URL for your application under test.
-  baseUrl: 'http://' + envvars.TEST_HTTP_HOST + ':' + envvars.TEST_HTTP_PORT,
+  baseUrl: 'http://consumerfinance.gov',
 
   // The base path where the spec suites are located.
   specsBasePath: specsRoot + '**/*',

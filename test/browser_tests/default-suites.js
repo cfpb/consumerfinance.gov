@@ -10,10 +10,7 @@ var defaultSuites = {
   // Essential browsers for running locally.
   essential: [
     {
-      browserName: 'chrome',
-      version:     '',
-      platform:    'Windows',
-      maxDuration: 10800
+      browserName: 'chrome'
     }
   ],
 
