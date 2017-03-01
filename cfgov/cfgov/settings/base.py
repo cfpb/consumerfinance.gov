@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'modelcluster',
     'compressor',
     'taggit',
+    'wagtailsharing',
 
     'overextends',
     'django.contrib.admin',
