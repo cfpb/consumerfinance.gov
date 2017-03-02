@@ -1,0 +1,38 @@
+{% extends "content-base-main-first.html" %}
+{% import "_vars-sheer-layouts.html" as vars with context %}
+
+{% block title -%}
+    Content base layout with main content first
+{%- endblock %}
+
+{% block desc -%}
+    An example of using content-base-main-first.html
+{%- endblock %}
+
+{% block pre_content %}
+<div class="block__sub" style="text-align:center;">
+    <a class="jump-link jump-link__left jump-link__before" href="{{ vars.path }}">
+        <span class="jump-link_text">Back to Sheer layouts</span>
+    </a>
+</div>
+{% endblock %}
+
+{% block content_main %}
+<div class="padded-container" style="text-align:center; margin:0; background:#CCDFDF;">
+    <div class="padded-container_body">
+        <h1 class="h4">
+            <code>{% raw %}{% block content_main %}{% endraw %}</code>
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block content_sidebar %}
+<div class="padded-container" style="text-align:center; margin:0; background:#CCDFDF;">
+    <div class="padded-container_body">
+        <h1 class="h4">
+            <code>{% raw %}{% block content_sidebar %}{% endraw %}</code>
+        </h1>
+    </div>
+</div>
+{% endblock %}

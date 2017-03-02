@@ -1,0 +1,52 @@
+/* ==========================================================================
+   cfgov-refresh
+   Contact us
+   ========================================================================== */
+
+.helpful-terms_header {
+    .h5();
+    margin-right: unit(6px / @font-size, em);
+    vertical-align: middle;
+}
+
+.type-and-filter_message {
+    display: none;
+    .h3();
+    // 16px = 30px when facotring margins and line-height from elements above it.
+    // 26px = 30px when facotring line-height.
+    margin: unit(16px / @font-size, em)
+            0
+            unit(26px / @font-size, em);
+
+    .respond-to-min(801px, {
+        display: block;
+        // 47px = 60px when facotring margins and line-height from elements above it.
+        margin-top: unit(47px / @font-size, em);
+    });
+}
+
+.contact-list {
+    display: none;
+    .respond-to-min(801px, {
+        display: block;
+    });
+
+    .no-js & {
+        display: block;
+    }
+}
+
+.contact-list_btn {
+    width: 100%;
+    margin: unit(30px / @super-btn-font-size, em) 0;
+    .respond-to-min(801px, {
+        display: none;
+    });
+}
+
+.contact-us-map {
+    max-width: 330px;
+    .respond-to-range(600px, 801px, {
+        float: right;            
+    });
+}

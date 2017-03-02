@@ -1,0 +1,67 @@
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-blog.html" as vars with context %}
+
+{% set view = get_document('views', 'blog') %}
+
+{% block title -%}
+    Blog
+{%- endblock %}
+
+{% block desc -%}
+    The official blog of the Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block hero %}
+    {# Only show the hero when:
+       1. No filters have been applied
+       2. We are on the first page of paginated results
+       3. A hero exists
+    #}
+    {% import "hero.html" as hero with context %}
+    {% set active_filters_total =
+       selected_filters_for_field('category')|length +
+       selected_filters_for_field('tags')|length +
+       selected_filters_for_field('author')|length +
+       selected_filters_for_field('range_date_gte')|length + 
+       selected_filters_for_field('range_date_lte')|length
+    %}
+    {% if active_filters_total == 0 and vars.posts.current_page == 1 and view.hero %}
+        {{ hero.render(view.hero) }}
+    {% endif %}
+{% endblock %}
+
+{% block content_main %}
+    {% set filter_by = ['category', 'tags', 'author', 'range_date'] %}
+    {% from "post-macros.html" import filters as filters with context %}
+    {{ filters(filter_by, vars.query, vars.posts, 'posts',
+       { 'expand_label': 'Filter posts' }) }}
+    {% import "posts-paginated.html" as posts_paginated with context %}
+    {{ posts_paginated.render(vars.posts) }}
+{% endblock %}
+
+{% block content_sidebar %}
+    <section class="block u-mt0">
+        {% if view.popular_posts %}
+            {% import "popular-stories.html" as popular_stories with context %}
+            {{ popular_stories.render(view.popular_posts) }}
+        {% endif %}
+    </section>
+    <section class="block">
+        <h1 class="header-slug">
+            <span class="header-slug_inner">
+                Stay informed
+            </span>
+        </h1>
+        <div class="block block__sub u-mt0">
+            <p class="short-desc">
+                Subscribe to our email newsletter. We will update you on new blogs.
+            </p>
+            {% import "email-subscribe-form.html" as subscribe with context %}
+            {{ subscribe.render(vars.query) }}
+        </div>
+        <div class="block block__sub">
+            {% import "rss.html" as rss %}
+            {{ rss.render(vars.rss_path) }}
+        </div>
+    </section>
+{% endblock %}

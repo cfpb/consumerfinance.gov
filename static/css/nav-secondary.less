@@ -1,0 +1,236 @@
+/* ==========================================================================
+   cfgov-refresh
+   nav-secondary
+   ========================================================================== */
+
+/* topdoc
+  name: Secondary navigation
+  family: cfgov-nav-secondary
+  patterns:
+    - name: Default example
+      markup: |
+        <nav class="nav-secondary">
+            <button class="nav-secondary_link nav-secondary_link__button">
+                Item 1
+            </button>
+            <ul class="nav-secondary_list">
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 1
+                    </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                       Item 2
+                    </a>
+                </li>
+                <li class="nav-secondary_item">
+                    <a class="nav-secondary_link" href="#">
+                       Item 3
+                    </a>
+                </li>
+            </ul>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .nav-secondary
+            .nav-secondary_link.nav-secondary_link__button
+            .nav-secondary_list
+              .nav-secondary_item
+                .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current
+    - name: Current link modifier
+      markup: |
+        <a class="nav-secondary_link nav-secondary_link__current" href="#">
+           Current nav link
+        </a>
+      codenotes:
+        - ".nav-secondary_link__current"
+      notes:
+        - "Current links are hidden on small screens and the link button is
+           revealed."
+        - "Currentl links have a left green border on large screens."
+    - name: Link button modifier
+      markup: |
+        <button class="nav-secondary_link nav-secondary_link__button">
+            Button nav link
+        </button>
+      codenotes:
+        - ".nav-secondary_link__button"
+      notes:
+        - "This modifier is only visible on smaller screens."
+        - "The button link modifier is used to convey the current link for small
+           screens. It also acts as a toggle button when mixing this pattern
+           with the expandable pattern."
+        - "The inline style is for demonstration purposes only and is needed
+           because the modifier hides the element at larger screen size.
+           Please do not use it in production."
+    - name: Secondary nav mixed with cf-expandable
+      markup: |
+        <nav class="nav-secondary expandable">
+            <div class="expandable_header">
+                <button class="expandable_target
+                        nav-secondary_link
+                        nav-secondary_link__button">
+                    <span class="expandable_header-left">
+                        Item 2
+                    </span>
+                    <span class="expandable_header-right">
+                        <span class="expandable_cue-open">
+                            <span class="cf-icon cf-icon-down cf-icon__green"></span>
+                        </span>
+                        <span class="expandable_cue-close">
+                            <span class="cf-icon cf-icon-up cf-icon__green"></span>
+                        </span>
+                    </span>
+                </button>
+            </div>
+            <div class="expandable_content">
+                <ul class="nav-secondary_list">
+                    <li class="nav-secondary_item">
+                        <a class="nav-secondary_link" href="#">
+                           Item 1
+                        </a>
+                    </li>
+                    <li class="nav-secondary_item">
+                        <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                           Item 2
+                        </a>
+                    </li>
+                    <li class="nav-secondary_item">
+                        <a class="nav-secondary_link" href="#">
+                           Item 3
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .nav-secondary.expandable
+            .expandable_header
+              .expandable_target.nav-secondary_link.nav-secondary_link__button
+                .expandable_header-left
+                .expandable_header-right
+                  .expandable_cue-open
+                    .cf-icon.cf-icon-down.cf-icon__green
+                  .expandable_cue-close
+                    .cf-icon.cf-icon-up.cf-icon__green
+            .expandable_content
+              .nav-secondary_list
+                .nav-secondary_item
+                  .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current
+  tags:
+    - cfgov-nav-secondary
+*/
+
+.nav-secondary {
+    margin-bottom: unit(30px / @base-font-size-px, em);
+
+    &_list {
+        margin: 0;
+        padding: 0;
+    }
+
+    &_item {
+        list-style: none;
+
+        .respond-to-min(801px, {
+            & + & {
+                margin-top: 10px;
+            }
+        });
+    }
+
+    &_link {
+        @font-size-small: 16px;
+        @font-size-large: 18px;
+
+        .respond-to-max(800px, {
+            display: block;
+            // width: 100%; // Needed to override button styles
+            padding: unit((@grid_gutter-width / 2) / @font-size-small, em)
+                     unit(@grid_gutter-width / @font-size-small, em);
+            border-bottom-style: solid;
+            border-width: 0; // Needed to override button styles
+            border-bottom-width: 1px;
+            background: @gray-10;
+            .webfont-medium();
+            font-size: unit(@font-size-small / @base-font-size-px, em);
+            .u-link__colors(@darkgray, @darkgray, @darkgray, @darkgray, @darkgray,
+                            @gray-20, @gray-20, @gray-20, @gray-20, @gray-20);
+            text-align: left; // Needed to override button styles
+        });
+
+        .respond-to-max(600px, {
+            padding-left: unit((@grid_gutter-width / 2) / @font-size-small, em);
+            padding-right: unit((@grid_gutter-width / 2) / @font-size-small, em);
+        });
+
+        .respond-to-min(801px, {
+            display: inline-block;
+            padding: unit(5px / @font-size-large, em)
+                     unit(15px / @font-size-large, em);
+            border-left-style: solid;
+            border-left-width: 5px;
+            .webfont-medium();
+            font-size: unit(@font-size-large / @base-font-size-px, em);
+            .u-link__colors(@pacific, @pacific, @black, @black, @black,
+                            transparent, transparent, @green, @green, @green);
+        });
+
+        &__current {
+            .respond-to-max(800px, {
+                display: none;
+            });
+            .respond-to-min(801px, {
+                .u-link__colors(@black, @black, @black, @black, @black,
+                                @green, @green, @green, @green, @green);
+            });
+        }
+
+        &__button {
+            width: 100%;
+            .webfont-demi();
+            text-align: left;
+            text-transform: uppercase;
+
+            &:focus {
+                outline: thin dotted;
+            }
+
+            .respond-to-min(801px, {
+                display: none;
+            });
+        }
+    }
+
+    // This modifier should be moved to cf-icons.
+    .cf-icon__green {
+        color: @green;
+    }
+
+    // Overrides the overflow: hidden set in .expandable_header for float clearing.
+    // In cf-expandables we should try to change this to our clear float utility
+    // instead so we don't have to do this here.
+    & .expandable_header {
+        overflow: visible;
+    }
+
+    // Overrides the 1px padding used to prevent margin collapse. It's noticeable
+    // in this pattern because of the background colors and bottom borders.
+    // In cf-expandables we should try to change this to our clear float utility
+    // instead so we don't have to do this here.
+    & .expandable_content {
+        padding: 0;
+    }
+}
+
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

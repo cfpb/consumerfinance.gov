@@ -1,0 +1,38 @@
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-contact-us.html" as vars with context %}
+
+{% block title -%}
+    Contact us
+{%- endblock %}
+
+{% block desc -%}
+    Contact information for the Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block pre_content %}
+    <div class="wrapper">
+        <section class="content_intro">
+            <h1>Contact us</h1>
+            <div class="content-l content-l__full">
+                <section class="content-l_col content-l_col-1-2">
+                    {% include "general-inqueries.html" %}
+                </section>
+                <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                    {% include "submit-a-complaint.html" %}
+                </section>
+            </div>
+        </section>
+    </div>
+    <div class="content_line"></div>
+{% endblock %}
+
+{% block content_main %}
+    {% set contacts = vars.query.search_with_url_arguments(size=100) %}
+    {%- include "contact-list.html" %}
+{% endblock %}
+
+{% block content_sidebar %}
+    {%- include "mailing-addresses.html" %}
+    <div class="content_line"></div>
+    {%- include "promoted-contacts.html" %}
+{% endblock %}

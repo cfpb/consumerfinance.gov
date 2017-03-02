@@ -1,0 +1,60 @@
+
+{% macro render(posts) %}
+
+{% import "post-macros.html" as post_macros with context %}
+
+<div id="pagination_content">
+
+{% for post in posts %}
+
+    {#- Newsroom contains select Blog posts.
+        These Newsroom Blog posts can be identified by a special
+        `display_in_newsroom` property.
+        When a Blog post is listed in Newsroom we should ignore its category
+        name and instead categorize it as "Blog". #}
+    {%- if vars.path == '/newsroom/' and post.custom_fields.display_in_newsroom %}
+        {% set category = 'Blog' %}
+    {% elif post.category.0 %}
+        {% set category = post.category.0 %}
+    {% endif -%}
+    {%- import "category-slug.html" as category_slug %}
+    {%- set slug = category_slug.render(category, vars.path, 'meta-header_left') -%}
+
+    <article class="post-preview">
+        <div class="meta-header">
+            <span class="date meta-header_right">
+                {{ post.date|date('%b %d, %Y') }}
+            </span>
+            {{ slug if category else '&nbsp;' }}
+        </div>
+    {% if post.thumbnail.images and post.thumbnail.images.fj_thumbnail %}
+        <a class="media-object" href="{{ post.permalink }}">
+            <div class="media-object_image-container">
+                <img class="media-object_image"
+                     src="{{ post.thumbnail.images.fj_thumbnail.url }}"
+                     alt="{{ post.thumbnail.alt_text }}">
+            </div>
+            <div class="media-object_text-container summary">
+                {{ post_macros.post_summary(post) }}
+            </div>
+        </a>
+    {% else %}
+        <a class="summary" href="{{ post.permalink }}">
+            {{ post_macros.post_summary(post) }}
+        </a>
+    {% endif %}
+    </article>
+
+{% endfor %}
+
+{{ post_macros.pagination(posts, [
+    'category',
+    'tags',
+    'author',
+    'range_date_gte',
+    'range_date_lte'
+]) }}
+
+</div>
+
+{% endmacro %}

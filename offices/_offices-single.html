@@ -1,0 +1,83 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-offices.html" as vars with context %}
+{% set active_nav_id = initiative.slug %}
+
+{% block title -%}
+    {{ initiative.title | safe if initiative.title }}
+{%- endblock %}
+
+{% block desc -%}
+    {{ initiative.content | safe if initiative.content }}
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+    {% set activities_feed = activity_snippets(activity_type) %}
+    
+    {% if initiative.title %}
+    <h1>{{ initiative.title | safe }}</h1>
+    {% endif %}
+    
+    {% if initiative.content %}
+    <section class="initiative_description block block__flush-top">
+        {{ initiative.content | safe }}
+    </section>                   
+    {% endif %}
+    
+    {% if initiative.subinitiatives %}
+    <section class="block block__padded-top block__border-top block__flush-bottom">
+        <div class="content-l content-l__main">
+            {% for subinitiative in initiative.subinitiatives %}
+            <!-- TODO: link header styles -->
+            <div class="initiative_topic block__sub block__flush-top
+                        {{ 'office_col' if initiative.subinitiatives|length > 1 else 'content-l_col-1' -}}">
+
+                {% if subinitiative.header %}
+                <h2 class="h3">
+                    {{ subinitiative.header | safe }}
+                </h2>
+                {% endif %}
+                
+                {% if subinitiative.desc %}
+                <p class="short-desc">
+                    {{ subinitiative.desc | safe }}
+                </p>
+                {% endif %}
+                
+                {% if subinitiative.links %}
+                <ul class="list__links">
+                {% for link in subinitiative.links %}
+                    <li class="list_item">
+                        <a class="jump-link jump-link__right list_link" href="{{link[0] if link[0]}}">
+                            {{ link[1] if link[1] }}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    
+    {% if activities_feed %}
+    <aside class="block block__flush-sides block__bg u-mb0 u-mt0">    
+        <section class="office_activities">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Activities
+                </span>
+            </h1>     
+            {{ activities_feed }}
+        </section>
+    </aside>  
+    {% endif %}
+
+{% endblock %}

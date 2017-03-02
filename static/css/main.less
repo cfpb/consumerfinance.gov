@@ -1,0 +1,140 @@
+/* ==========================================================================
+   cfgov-refresh
+   Master Less File
+   ========================================================================== */
+
+
+// @import Normalize before all other Less/CSS
+@import (less) "../../vendor/normalize-css/normalize.css";
+@import (less) "../../vendor/normalize-legacy-addon/normalize-legacy-addon.css";
+
+// @import third party plugins
+@import (less) "../../vendor/chosen/chosen.css";
+
+// Chosen overrides
+.chosen-container {
+    font-size: 1em;
+
+    a {
+        border-bottom: none !important;
+    }
+
+    &,
+    * {
+        box-shadow: none !important;
+        font-family: Arial, sans-serif;
+    }
+
+    &.chosen-container-multi .chosen-choices li.search-field input[type=text] {
+        width: 90% !important;
+        height: auto;
+        margin: 0;
+        padding: unit(6px / @base-font-size-px, em);
+        color: @gray;
+    }
+
+    &.chosen-container .chosen-drop {
+        margin-top: 1px;
+        border-color: @pacific;
+        outline: 1px solid @pacific;
+    }
+
+    &.chosen-container-multi .chosen-choices {
+        border-color: @gray-80;
+        background-color: @white;
+        background-image: none !important;
+    }
+
+    &.chosen-container-multi.chosen-container-active .chosen-choices {
+        border-color: @pacific;
+        outline: 1px solid @pacific;
+    }
+
+    &.chosen-container-multi .chosen-choices li.search-choice {
+        margin-left: 3px;
+        border-color: @gray-80;
+        background-color: @gray-10;
+        background-image: none !important;
+        font-size: unit(13px / @base-font-size-px, em);
+        line-height: unit(12 / 13);
+    }
+
+    &.chosen-container-multi .chosen-drop .result-selected {
+        color: @gray;
+    }
+
+    .highlighted {
+        background-color: @pacific;
+        background-image: none !important;
+    }
+
+    &.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+        top: 3px;
+    }
+}
+
+
+/* Base styles
+   @import combined CF component Less and make any overrides
+   ========================================================================== */
+
+@import (less) "../../vendor/cf-concat/cf.less";
+@cf-icon-path: "/static/fonts";
+@grid_box-sizing-polyfill-path: "/cfgov-refresh/static/vendor/box-sizing-polyfill";
+@import (less) "cf-enhancements.less";
+
+
+/* Base patterns
+   ========================================================================== */
+
+@import (less) "forms.less";
+@import (less) "lists.less";
+@import (less) "media.less";
+@import (less) "media-object.less";
+@import (less) "meta.less";
+@import (less) "misc.less";
+@import (less) "summary.less";
+
+
+/* Amalgamated patterns
+   ========================================================================== */
+
+@import (less) "activity.less";
+@import (less) "blog-docs.less";
+@import (less) "post.less";
+@import (less) "calendar-icon.less";
+@import (less) "modification-date.less";
+
+
+/* Template pieces
+   ========================================================================== */
+
+@import (less) "nav-secondary.less";
+@import (less) "header.less";
+@import (less) "footer.less";
+
+
+/* Page-specific styles
+   ========================================================================== */
+
+@import (less) "beta.less";
+@import (less) "budget.less";
+@import (less) "event.less";
+@import (less) "bureau.less";
+@import (less) "bureau-structure.less";
+@import (less) "contact-us.less";
+@import (less) "history.less";
+@import (less) "offices.less";
+@import (less) "press-resources.less";
+
+
+/* Demo-specific styles
+   ========================================================================== */
+
+@import (less) "demo.less";
+
+
+/* Print styles
+   ========================================================================== */
+
+@import (less) "print.less";

@@ -1,0 +1,35 @@
+{% from "macros.html" import format_phone as format_phone %}
+{% set general_inqueries = get_document('contact', 'general-inqueries') %}
+
+<h1 class="h4">
+    {{ general_inqueries.title }}
+</h1>
+<p class="short-desc">
+    {{ general_inqueries.sitewide_desc }}
+</p>
+<ul class="list list__icons">
+{%- if general_inqueries.email_addr %}
+    <li class="list_item u-break-word">
+        <span class="cf-icon cf-icon-email list_icon"></span>
+        <a class="list_link" href="mailto:{{ general_inqueries.email_addr }}">
+            {{ general_inqueries.email_addr }}
+        </a>
+    </li>
+{%- endif %}
+{%- if general_inqueries.phone_num %}
+    <li class="list_item">
+        <span class="cf-icon cf-icon-phone list_icon"></span>
+        <span class="short-desc">
+            {{ format_phone(general_inqueries.phone_num) }}
+        </span>
+    </li>
+{%- endif %}
+{%- if general_inqueries.fax_num %}
+    <li class="list_item">
+        <span class="cf-icon cf-icon-fax list_icon"></span>
+        <span class="short-desc">
+            {{ format_phone(general_inqueries.fax_num) }}
+        </span>
+    </li>
+{%- endif %}                            
+</ul>

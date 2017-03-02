@@ -1,0 +1,20 @@
+{
+  "properties": {
+    "title": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "parent": {
+      "type":  "string",
+      "index": "not_analyzed"
+    },
+    "id": {
+      "type":  "string",
+      "index": "not_analyzed"
+    },
+    "has_parent": {
+      "type":  "string",
+      "index": "not_analyzed"
+    }
+  }
+}

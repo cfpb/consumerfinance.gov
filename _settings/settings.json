@@ -1,0 +1,22 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_edge_ngram_analyzer": {
+          "tokenizer": "my_edge_ngram_tokenizer"
+        }
+      },
+      "tokenizer": {
+        "my_edge_ngram_tokenizer": {
+          "type": "edgeNGram",
+          "min_gram": "2",
+          "max_gram": "5",
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        }
+      }
+    }
+  }
+}

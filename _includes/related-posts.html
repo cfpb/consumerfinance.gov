@@ -1,0 +1,24 @@
+
+{% macro render(post, doc_types='posts,newsroom', quantity=5, header='Related posts') %}
+
+{% from "macros.html" import slugify as slugify %}
+
+<div class="{{ slugify(header) }}">
+    <h1 class="header-slug">
+        <span class="header-slug_inner">
+            {{ header }}
+        </span>
+    </h1>
+    <ul class="list list__unstyled list__spaced">
+    {% for similar in more_like_this(post, search_types=doc_types, search_size=quantity) %}
+        <li class="list_item">
+            <a class="list_link"
+               href="{{ similar.permalink }}">
+                {{ similar.title|safe }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+
+{% endmacro %}

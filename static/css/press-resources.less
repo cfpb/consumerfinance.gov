@@ -1,0 +1,108 @@
+/* ==========================================================================
+   cfgov-refresh
+   Press resources (Newsroom)
+   ========================================================================== */
+
+.press-section + .press-section {
+    padding-top: unit(30px / @base-font-size-px, em);
+    border-top: 1px solid @gray-50;
+    margin-top: unit(45px / @base-font-size-px, em);
+}
+
+.press-section_title {
+    .h3();
+}
+
+.press-contacts_people {
+    margin-top: 1.75em; // works out to about 30px including line-height
+}
+
+.contact-person {
+    .webfont-regular();
+    margin-bottom: unit(30px / @base-font-size-px, em);
+    .respond-to-min(600px, {
+        margin-bottom: unit(10px / @base-font-size-px, em);
+    });
+}
+.contact-person_name {
+    .h4();
+}
+.contact-person__director {
+    margin-top: unit(30px / @base-font-size-px, em);
+
+    .contact-person_photo {
+        display: block;
+        margin: 0 auto unit(10px / @base-font-size-px, em);
+    }
+
+    .contact-person_title {
+        .h6();
+        line-height: 1;
+    }
+
+    .contact-person_name {
+        .h4();
+        margin-bottom: unit(15px / @font-size, em);
+    }
+}
+
+.press-logo_logo {
+    text-align: center;
+}
+
+.respond-to-min(768px, {
+    .press-section_title {
+        .h2();
+        margin-bottom: unit(30px / @font-size, em);
+    }
+
+    .press-contacts_main-contact-list {
+        .grid_nested-col-group();
+    }
+    .press-contacts_main-contact-list .list_item {
+        .grid_column(6);
+    }
+
+    .contact-person__director {
+        text-align: center;
+
+        .contact-person_title {
+            .h5();
+            line-height: 1;
+        }
+
+        .contact-person_name {
+            .h3();
+            margin-bottom: unit(15px / @font-size, em);
+        }
+    }
+
+    .press-logo_logo {
+        .grid_column(3);
+        .grid_push(1);
+    }
+});
+
+.respond-to-min(1024px, {
+    .press-contacts_main-contact-list .list_item,
+    .press-contacts .contact-person {
+        .grid_column(4);
+    }
+
+    .contact-person__director {
+        text-align: left;
+
+        .contact-person_photo {
+            width: 150px;
+            margin-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+            float: left;
+        }
+    }
+});
+
+.respond-to-min(1200px, {
+    .contact-person__director  .contact-person_photo {
+        width: 180px;
+        margin-right: unit(@grid_gutter-width / @base-font-size-px, em);
+    }
+});

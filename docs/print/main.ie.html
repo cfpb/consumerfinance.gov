@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / print docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / print docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="print-pages" class="docs-component">
+      <h2 class="docs-component_header"><span>Print pages</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Print pages are barebones printer friendly pages which are also sometimes used as the source to generate PDF's through PDF creation software.</li>
+          <li>The `.print` class acts a styling hook. When using the `.respond-to-print()` mixin, all stlyes will be nested under both `@media print` and `.print`.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Usage</h3>
+          <section class="docs-pattern_pattern">
+<div class="print">
+    <h1 class="superheader">
+        I am a green superheader
+    </h1>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;print&quot;&gt;
+    &lt;h1 class=&quot;superheader&quot;&gt;
+        I am a green superheader
+    &lt;/h1&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;print\&amp;quot;&gt;\n    &lt;h1 class=\&amp;quot;superheader\&amp;quot;&gt;\n        I am a green superheader\n    &lt;/h1&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>To trigger a print page simply add the `.print` class to a containing element.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div id="print-header" class="docs-component">
+      <h2 class="docs-component_header"><span>Print header</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Separates print header stuff from the rest of the page content.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.print-header</h3>
+          <section class="docs-pattern_pattern">
+<div class="print-header">
+    There should be a line underneath me =D
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;print-header&quot;&gt;
+    There should be a line underneath me =D
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;print-header\&amp;quot;&gt;\n    There should be a line underneath me =D\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.print-header {
+  margin-bottom: 1.875em;
+  padding-bottom: 1.875em;
+  border-bottom: 5px solid #101820;
+}</code></pre>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,193 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-the-bureau.html" as vars with context %}
+{% set active_nav_id = 'about-rich-cordray' %}
+
+{% block title -%}
+    About Richard Cordray
+{%- endblock %}
+
+{% block desc -%}
+    About Richard Cordray
+{%- endblock %}
+
+{% block content_main %}
+
+	{% from "macros.html" import share as share %}
+
+    <div class="block u-mt0">
+        <h1>
+            Director Richard Cordray
+        </h1>
+        <p class="h3">
+            Richard Cordray serves as the first Director of the
+            Consumer Financial Protection Bureau. He previously
+            led the Bureau’s Enforcement Division.
+        </p>
+        <p>
+            <figure class="float-media rwd-crop">
+                <img class="rwd-crop_item"
+                     src="/newsroom/press-resources/201402_cfpb_photo_richard-cordray_lo-res.jpg"
+                     width="155"
+                     alt="">
+            </figure>
+            Prior to joining the Bureau, Mr. Cordray served on the front lines of consumer protection as Ohio’s Attorney General. Mr. Cordray recovered more than $2 billion for Ohio’s retirees, investors, and business owners and took major steps to help protect its consumers from fraudulent foreclosures and financial predators. In 2010, his office responded to a record number of consumer complaints, but Mr. Cordray went further and opened that process for the first time to small businesses and non-profit organizations to ensure protections for even more Ohioans. To recognize his work on behalf of consumers as Attorney General, the Better Business Bureau presented Mr. Cordray with an award for promoting an ethical marketplace.
+        </p>
+        <p>
+            Mr. Cordray also served as Ohio Treasurer and Franklin County Treasurer, two elected positions in which he led state and county banking, investment, debt, and financing activities. As Ohio Treasurer, he resurrected a defunct economic development program that provides low-interest loan assistance to small businesses to create jobs, re-launched the original concept as GrowNOW, and pumped hundreds of millions of dollars into access for credit to small businesses. Mr. Cordray simultaneously created a Bankers Advisory Council to share ideas about the program with community bankers across Ohio.
+        </p>
+        <p>
+            Earlier in his career, Mr. Cordray was an adjunct professor at the Ohio State University College of Law, served as a State Representative for the 33rd Ohio House District, was the first Solicitor General in Ohio’s history, and was a sole practitioner and Of Counsel to Kirkland & Ellis. Mr. Cordray has argued seven cases before the United States Supreme Court, including by special appointment of both the Clinton and Bush Justice Departments. He is a graduate of Michigan State University, Oxford University, and the University of Chicago Law School. Mr. Cordray was Editor-in-Chief of the University of Chicago Law Review and later clerked for U.S. Supreme Court Justices Byron White and Anthony Kennedy.
+        </p>
+        <p>
+            Mr. Cordray lives in Grove City, Ohio with his wife Peggy – a Professor at Capital University Law School in Columbus – and twin children Danny and Holly.
+        </p>
+        {{ share(self.title(), true) }}
+    </div>
+
+    <section class="block
+                    block__padded-top
+                    block__border-top">
+        <div class="content-l content-l__main">
+            <div class="content-l_col content-l_col-1-2">
+                <div class="media">
+                    <div class="media_image-container
+                                media_image-container__wide-margin">
+                        <img src="cordray_round_90.jpg" alt="" width="60">
+                    </div>
+                    <div class="media_body">
+                        <h1 class="h4 u-mb5">Downloads</h1>
+                        <ul class="list list__links">
+                            <li class="list_item">
+                                <a class="list_link jump-link jump-link__download"
+                                   href="/newsroom/press-resources/201402_cfpb_photo_richard-cordray_high-res.jpg">
+                                    High-res photo
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link jump-link jump-link__download"
+                                   href="201410_cfpb_bio_cordray.pdf">
+                                    Biography
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content-l_col
+                        content-l_col-1-2">
+                <h1 class="h4 u-mb5">
+                    Request speaking info
+                </h1>
+                <a class="styled-link"
+                   href="mailto:externalaffairs@cfpb.gov">
+                    <span class="cf-icon cf-icon-email"></span>
+                    externalaffairs@cfpb.gov
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <aside>
+
+        <section class="block
+                        block__padded-top
+                        block__border-top">
+            <h1 class="h2">
+                More information about Richard Cordray
+            </h1>
+            <div class="content-l content-l__main">
+                <div class="content-l_col content-l_col-1-3">
+                    <h2 class="h5">
+                        <span class="cf-icon cf-icon-newspaper"></span>
+                        Newsroom
+                    </h2>
+                    <p class="short-desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita id minima ut nulla.
+                    </p>
+                    <a class="jump-link jump-link__right"
+                       href="/newsroom/?filter_author=Richard+Cordray">
+                        Read news about the director
+                    </a>
+                </div>
+                <div class="content-l_col content-l_col-1-3">
+                    <h2 class="h5">
+                        <span class="cf-icon cf-icon-newspaper"></span>
+                        Blogs
+                    </h2>
+                    <p class="short-desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita id minima ut nulla.
+                    </p>
+                    <a href="/blog/?filter_author=Richard+Cordray" class="jump-link jump-link__right">
+                        Blogs with the director
+                    </a>
+                </div>
+                <div class="content-l_col content-l_col-1-3">
+                    <h2 class="h5">
+                        <span class="cf-icon cf-icon-newspaper"></span>
+                        Calendar
+                    </h2>
+                    <p class="short-desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita id minima ut nulla.
+                    </p>
+                    <a class="jump-link jump-link__right"
+                       href="{{ vars.path + 'leadership-calendar/' }}">
+                        View Director Cordray's calendar
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="block
+                    block__padded-top
+                    block__border-top">
+            <div class="content-l content-l__main content-l__large-gutters">
+                <section class="content-l_col content-l_col-1-2">
+                    <h1 class="h2">
+                        Cordray’s Corner
+                    </h1>
+                    <figure class="figure__bordered">
+                        <a class="video-poster" href="#">
+                            <img src="cordrays_corner.jpg" alt="">
+                        </a>
+                    </figure>
+                    <p class="short-desc short-desc__large">
+                        View videos on Director Richard Cordray discussing various relevant fiancial topics and how the bureau is involved.
+                    </p>
+                    <a class="jump-link jump-link__external-link"
+                       href="https://www.youtube.com/user/cfpbvideo/search?query=Cordray%27s+Corner">
+                        View Cordray’s Corner videos on YouTube
+                    </a>
+                </section>
+                <section class="content-l_col
+                                content-l_col-1-2
+                                content-l_col__before-divider">
+                    <h1 class="h2">
+                        CFPB history
+                    </h1>
+                    <figure class="figure__bordered">
+                        <img src="../obama_cordray.jpg" alt="">
+                    </figure>
+                    <p class="short-desc short-desc__large">
+                        In January of 2012, President Barack Obama appointed Rich Cordray to be the first Director of the CFPB.
+                    </p>
+                    <a class="jump-link jump-link__right"
+                       href="{{ vars.path + 'history/' }}">
+                        Learn more about our history
+                    </a>
+                </section>
+            </div>
+        </div>
+
+        <section class="block u-mb0">
+            {%- import "related-links.html" as related_links %}
+            {{ related_links.render([
+                [ vars.path + 'about-steve-antonakes/',
+                  'Learn about Deputy Director Steven Antonkes' ],
+                [ vars.path + 'bureau-structure/',
+                  'Bureau organizational structure' ],
+            ]) -}}
+        </section>
+
+    </aside>
+
+{% endblock %}

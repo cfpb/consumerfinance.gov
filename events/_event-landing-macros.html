@@ -1,0 +1,92 @@
+{# ==========================================================================
+
+   event_preview()
+
+   ==========================================================================
+
+   Description:
+
+   Create an the event preview when given:
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+{% macro event_preview(post) %}
+  {% import "_event-post-macros.html" as event_post_macros with context %}
+  <article class="post-preview post-preview__event">
+      <div class="media-object">
+          <a class="media-object_image-container" href="{{ post.permalink }}">
+              {{ event_post_macros.event_location_image(post, {'class': 'media-object_image'}) }}
+          </a>
+          <div class="media-object_text-container summary">
+              {{ event_post_macros.post_summary(post) }}
+          </div>
+      </div>
+  </article>
+{% endmacro %}
+
+
+
+{# ==========================================================================
+
+   event_hero()
+
+   ==========================================================================
+
+   Description:
+
+   Create an the events landing hero when given:
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+{% macro event_hero(post) %}
+  {% from "post-macros.html" import category_icon as category_icon %}
+  <section class="content_hero hero">
+    <div class="hero_wrapper">
+        <a href="#" class="hero_card hero_card__events">
+            <article class="hero_preview">
+                <span class="category-slug">
+                    <!-- TODO replace temp category with post category. -->
+                    {{ category_icon('Announcements & updates', 'category-slug_icon') }}
+                    <span class="u-visually-hidden">Category:</span>
+                    {{ 'Event Category Name' }}
+                </span>
+                <div class="summary">
+                    <header class="summary_header">
+                        <h1 class="summary_heading">
+                            <!-- TODO replace temp title with post title. -->
+                            {{ 'Event Title Here, could possibly break two lines' }}
+                        </h1>
+                    </header>
+                    <p class="summary_text">
+                        <!-- TODO replace temp summary with post summary. -->
+                        {{ 'Include a short summary to give users a quick overview of the event. Should be less than 200 characters in length.' }}
+                    </p>
+                    <footer class="summary_footer">
+                        <time class="summary_event-date event-meta_datetime dt-start">
+                            <!-- TODO replace temp date/time with post date/time. -->
+                            <span class="event-meta_date">{{ '1/21/2014' }}</span>
+                            <span class="event-meta_time">{{ '2:30 PM CST' }}</span>
+                        </time>
+                    </footer>
+                </div>
+            </article>
+        </a>
+    </div>
+    <div class="hero_img-container hero_img-container__small">
+        <!-- TODO replace background-image with actual image. -->
+        <div class="hero_img"
+             style="background-image:url({{ 'http://placehold.it/660x300.jpg' }});">
+        </div>
+    </div>
+    <div class="hero_img-container hero_img-container__large">
+        <!-- TODO replace background-image with actual image. -->
+        <div class="hero_img"
+             style="background-image:url({{ 'http://placehold.it/1200x300.jpg ' }});">
+        </div>
+    </div>
+</section><!-- END .content_hero -->
+{% endmacro %}

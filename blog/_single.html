@@ -1,0 +1,53 @@
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-blog.html" as vars with context %}
+
+{% block title -%}
+    {{ post.title }}
+{%- endblock %}
+
+{% block desc -%}
+    {{ post.excerpt|striptags }}
+{%- endblock %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author" content="https://www.facebook.com/CFPB">
+{%- endblock %}
+
+{% block content_main %}
+    {% import "article.html" as article with context %}
+    {{ article.render(post, vars.path) }}
+    {% include "comments.html" %}
+{% endblock %}
+
+{% block content_sidebar %}
+    <section class="block u-mt0">
+        {% import "related-posts.html" as related_posts with context %}
+        {{ related_posts.render(post) }}
+    </section>
+    <section class="block">
+        <h1 class="header-slug">
+            <span class="header-slug_inner">
+                Stay informed
+            </span>
+        </h1>
+        <div class="block block__sub u-mt0">
+            <p class="short-desc">
+                Subscribe to our email newsletter. We will update you on new blogs.
+            </p>
+            {% import "email-subscribe-form.html" as subscribe with context %}
+            {{ subscribe.render(vars.query) }}
+        </div>
+        <div class="block block__sub">
+            {% import "rss.html" as rss %}
+            {{ rss.render(vars.rss_path) }}
+        </div>
+    </section>
+{% endblock %}

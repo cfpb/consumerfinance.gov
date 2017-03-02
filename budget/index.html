@@ -1,0 +1,108 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-budget.html" as vars with context %}
+
+{% block title -%}
+    Budget and Strategy
+{%- endblock %}
+
+{% block desc -%}
+    
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    <section class="media block block__flush-top block__sub">
+        <div class="media_image-container media_image-container__wide-margin media_image-container__right">
+            <img class="media_image" src="">
+        </div>
+        <div class="media_body">
+            <h1>Budget and strategy</h1>
+            <p class="h3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.<p>
+        </div>
+    </section>
+
+    <section class="block block__sub block__padded-top block__border-top">
+
+        <div class="content-l content-l__main content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-2 block block__flush-top block__sub">
+                <h2 class="h3">Our budget</h2>
+                <p class="short-desc">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
+                </p>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a class="list_link jump-link jump-link__right" href="">
+                            View our budget
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link jump-link jump-link__right" href="">
+                            2015 budget
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-l_col content-l_col-1-2 block block__flush-top block__sub">
+                <h2 class="h3">Our financial report</h2>
+                <p class="short-desc">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
+                </p>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a class="list_link jump-link jump-link__right" href="financial-report">
+                            View our financial report
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link jump-link jump-link__right" href="">
+                            2014 financial budget
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-l content-l__main content-l__large-gutters">
+            <div class="content-l_col content-l_col-1-2 block block__flush-top block__sub">
+                <h2 class="h3">Funding request</h2>
+                <p class="short-desc">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
+                </p>
+                <a class="jump-link jump-link__right" href="funding-request">
+                    View funding requests
+                </a>
+            </div>
+            <div class="content-l_col content-l_col-1-2 block block__flush-top block__sub">
+                <h2 class="h3">Service contracts</h2>
+                <p class="short-desc">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
+                </p>
+                <a class="jump-link jump-link__right" href="">
+                    View service contracts
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="block block__flush-sides block__flush-top block__flush-bottom block__bg">
+        {%- import "related-links.html" as related_links -%}
+        {{- related_links.render([
+            [ '/newsroom/',
+              'Newsroom' ],
+            [ '/the-bureau/',
+              'About us' ],
+            [ '/blog/',
+              'The blog' ]
+        ],[
+            [ '#',
+              'Civil penalty fund' ],
+            [ '#',
+              'Working with the CFPB' ]
+        ]) -}}
+    </section>
+
+{% endblock %}
+

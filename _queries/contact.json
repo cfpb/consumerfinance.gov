@@ -1,0 +1,8 @@
+{
+  "name": "CFPB Contacts",
+  "query": {
+    "doc_type": "contact",
+    "size": 500,
+    "sort": "date:asc"
+  }
+}

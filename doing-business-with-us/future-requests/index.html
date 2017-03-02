@@ -1,0 +1,39 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-doing-business-with-us.html" as vars with context %}
+{%- set active_nav_id = 'future-requests' -%}
+
+{% block title -%}
+    Doing Business with Us: Future Requests
+{%- endblock %}
+
+{% block desc -%}
+    Information about expected procurement requests by the CFPB.
+{%- endblock %}
+
+{% block content_main_modifiers %}
+    {{ super() }} content__flush-bottom
+{% endblock %}
+
+{% block content_main %}
+
+    <h1>Expected Procurement Requests</h1>
+    <p class="h3">
+        These are significant procurement requests we expect to make in the near future.
+        The Bureau’s strategic plan extends over five years, so we can make reasonable estimates about what
+        we’re likely to need, though of course these requests aren’t certain to happen as listed.
+    </p>
+    <p class="short-desc">
+        <a class="icon-link icon-link__external-link"
+           href="https://www.fbo.gov/?s=agency&mode=form&tab=notices&id=e4a0c57cfb98ca60165469a7f9a778a0">
+            <span class="icon-link_text">Find current openings at FedBizOpps</span>
+        </a>
+        The needs below are forecasted, not current. Our fiscal year starts in October, so, for example,
+        FY2015 Q1 is October–December 2014.
+    </p>
+
+    {% set page = get_document('pages', '63169') %}
+    {{ page.content | safe }}
+
+    {% include "_process-smbiz-footer.html" %}
+
+{% endblock %}

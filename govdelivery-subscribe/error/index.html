@@ -1,0 +1,21 @@
+{% extends "layout-full.html" %}
+
+{% block title -%}
+    Subscription error
+{%- endblock %}
+
+{% block desc -%}
+    Your subscription was not successfuly received.
+{%- endblock %}
+
+{% block content_main %}
+    <h1><span class="cf-icon cf-icon-error-round"></span> Please try again.</h1>
+    <p class="short-desc">
+        Your subscription was not successfuly received.<br>
+        Please go back and check the following:
+    </p>
+    <ol class="short-desc">
+        <li>Please include a valid email address</li>
+        <li>Please choose at least one category in the list of checkboxes</li>
+    </ol>
+{% endblock %}

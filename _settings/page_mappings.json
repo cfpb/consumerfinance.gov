@@ -1,0 +1,25 @@
+{
+  "properties": {
+    "title": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "content": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "date": {
+      "type":  "date",
+      "store": "yes"
+    },
+    "tags": {
+      "type":  "string",
+      "store": "yes",
+      "index": "not_analyzed"
+    },
+    "excerpt": {
+      "type":  "string",
+      "store": "yes"
+    }
+  }
+}

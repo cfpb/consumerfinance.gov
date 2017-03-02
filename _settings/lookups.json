@@ -1,0 +1,32 @@
+{
+  "contact": {
+    "url":       "/contact-us/<id>/",
+    "type":      "contact",
+    "permalink": true
+  },
+  "students_initiative": {
+    "url":       "/offices/students-2/<id>/",
+    "type":      "initiative",
+    "permalink": true
+  },
+  "newsroom": {
+    "url":       "/newsroom/<id>/",
+    "type":      "newsroom",
+    "permalink": true
+  },
+  "post": {
+    "url":       "/blog/<id>/",
+    "type":      "posts",
+    "permalink": true
+  },
+  "watchroom": {
+    "url":       "/watchroom/<id>/",
+    "type":      "watchroom",
+    "permalink": true
+  },
+  "event": {
+    "url":       "/events/<id>/",
+    "type":      "posts",
+    "permalink": true
+  }
+}

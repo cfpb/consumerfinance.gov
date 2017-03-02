@@ -1,0 +1,68 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-newsroom.html" as vars with context %}
+{% set view = get_document('views', 'newsroom') %}
+
+{% block title -%}
+    Newsroom
+{%- endblock %}
+
+{% block desc -%}
+    Press releases, speeches, op-eds, testimony, and blog posts produced by our Office of Communications
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    {# Get the latest Featured Topic #}
+    {% import "featured-topic.html" as featured_topics %}
+    {{ featured_topics.render(queries.watchroom.search_with_url_arguments(size=1)) }}
+
+    {# Set the filters #}
+    {% from "post-macros.html" import filters as filters with context %}
+    {% set filter_by = ['category', 'tags', 'author', 'range_date'] %}
+    {{ filters(filter_by, vars.query, vars.newsrooms, 'newsroom',
+       { 'expand_label': 'Filter posts' }) }}
+
+    {# Show the posts #}
+    {% import "posts-paginated.html" as posts_paginated with context %}
+    {{ posts_paginated.render(vars.newsrooms) }}
+
+    {# Footer #}
+    <aside>
+        <section class="block">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Stay informed
+                </span>
+            </h1>
+            <div class="content-l content-l__main">
+                <div class="block__sub content-l_col content-l_col-1-2">
+                    <p class="short-desc">
+                        Subscribe to our email newsletter. We will update you on new newsroom updates.
+                    </p>
+                    {% import "email-subscribe-form.html" as subscribe with context %}
+                    {{ subscribe.render(vars.query) }}
+                </div>
+                <div class="block__sub content-l_col content-l_col-1-2">
+                    {% import "rss.html" as rss %}
+                    {{ rss.render(vars.rss_path) }}
+                </div>
+            </div>
+        </section>
+        <div class="block u-mb0 block__flush-sides block__bg">
+            <div class="content-l content-l__main">
+                <section class="block u-mt0 content-l_col content-l_col-1-2">
+                    {% import "related-links.html" as related_links %}
+                    {{ related_links.render(view.related_links) }}
+                </section>
+                <section class="block content-l_col content-l_col-1-2">
+                    {% include "upcoming-events.html" %}
+                </section>
+            </div>
+        </div>
+    </aside>
+
+{% endblock %}

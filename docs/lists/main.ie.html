@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / lists docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / lists docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="lists" class="docs-component">
+      <h2 class="docs-component_header"><span>Lists</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Note that modifiers are the most common use cases for this block, hence the reason there are no direct styles associated with .list or .list_item.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Basic structure</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list">
+    <li class="list_item">
+        <a class="list_link" href="#">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link" href="#">List item 2</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link" href="#">List item 3</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link" href="#">List item 4</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 4&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list\&amp;quot;&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;List item 1&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;List item 2&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;List item 3&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;List item 4&lt;/a&gt;\n    &lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.list
+  .list_item
+    .list_link</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">List link</h3>
+          <section class="docs-pattern_pattern">
+<a class="list_link" href="#">List link</a>,&nbsp;
+<span class="list_link">List link</span>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List link&lt;/a&gt;,&amp;nbsp;
+&lt;span class=&quot;list_link&quot;&gt;List link&lt;/span&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;list_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;List link&lt;/a&gt;,&amp;nbsp;\n&lt;span class=\&amp;quot;list_link\&amp;quot;&gt;List link&lt;/span&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list_link</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Notice that you can use any element for .list_link.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list_link {
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.lt-ie9 .list_link {
+  font-weight: normal !important;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="unstyled-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Unstyled list modifier</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__unstyled">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 3</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__unstyled&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list list__unstyled\&amp;quot;&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 1&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 2&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 3&lt;/a&gt;\n    &lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list.list__unstyled</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__unstyled {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.list__unstyled .list_item {
+  margin-left: 0;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="spaced-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Spaced list modifier</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__spaced">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 3</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__spaced&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list list__spaced\&amp;quot;&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 1&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 2&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 3&lt;/a&gt;\n    &lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.list.list__spaced</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__spaced .list_item + .list_item {
+  margin-top: 1.5em;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="spaced-list-item-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Spaced list item modifier</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
+    </li>
+    <li class="list_item list_item__spaced">
+        <a class="list_link">List item 3</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 4</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item list_item__spaced&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 4&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list\&amp;quot;&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 1&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 2&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item list_item__spaced\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 3&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 4&lt;/a&gt;\n    &lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list_item__spaced {
+  margin-top: 1.5em;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="horizontal-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Horizontal list modifier</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__horizontal">
+    <li class="list_item">
+        <a class="list_link">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 2</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link">List item 3</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__horizontal&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list list__horizontal\&amp;quot;&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 1&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 2&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot;&gt;List item 3&lt;/a&gt;\n    &lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__horizontal {
+  padding-left: 0;
+}
+
+.list__horizontal .list_item {
+  display: inline-block;
+}
+
+.lt-ie8 .list__horizontal .list_item {
+  display: inline;
+}
+
+.list__horizontal .list_item {
+  margin-right: 0.25em;
+  margin-left: 0;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="icon-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Icon list modifier</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Set up a list with icons on the left, in place of bullets.</li>
+          <li>Will need some more work to allow lines to wrap.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__icons">
+    <li class="list_item">
+        <span class="cf-icon cf-icon-email list_icon"></span>
+        List item 1
+    </li>
+    <li class="list_item">
+        <span class="cf-icon cf-icon-phone list_icon"></span>
+        List item 1
+    </li>
+    <li class="list_item">
+        <span class="cf-icon cf-icon-fax list_icon"></span>
+        List item 1
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__icons&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;cf-icon cf-icon-email list_icon&quot;&gt;&lt;/span&gt;
+        List item 1
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;cf-icon cf-icon-phone list_icon&quot;&gt;&lt;/span&gt;
+        List item 1
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;cf-icon cf-icon-fax list_icon&quot;&gt;&lt;/span&gt;
+        List item 1
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list list__icons\&amp;quot;&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;cf-icon cf-icon-email list_icon\&amp;quot;&gt;&lt;/span&gt;\n        List item 1\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;cf-icon cf-icon-phone list_icon\&amp;quot;&gt;&lt;/span&gt;\n        List item 1\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;cf-icon cf-icon-fax list_icon\&amp;quot;&gt;&lt;/span&gt;\n        List item 1\n    &lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__icons {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.list__icons .list_item {
+  margin-left: 0;
+}
+
+.list__icons .list_icon {
+  width: 1.5em;
+  text-align: center;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="link-list-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Link list modifier</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>The link list modifier is intended to be used for lists where each item is a link. It converts to a finger-friendly link with a large tap area on smaller screens.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__links">
+    <li class="list_item">
+        <a class="list_link" href="#">List item 1</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link" href="#">List item 2</a>
+    </li>
+    <li class="list_item">
+        <a class="list_link" href="#">List item 3</a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__links&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 1&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 2&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link&quot; href=&quot;#&quot;&gt;List item 3&lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list list__links\&amp;quot;&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;List item 1&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;List item 2&lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;List item 3&lt;/a&gt;\n    &lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Link list with icons</h3>
+          <section class="docs-pattern_pattern">
+<ul class="list list__links list__icons">
+    <li class="list_item">
+        <a class="list_link icon-link icon-link__before icon-link__email"
+           href="#">
+            <span class="icon-link_text">List item 1</span>
+        </a>
+    </li>
+    <li class="list_item">
+        <a class="list_link icon-link icon-link__before icon-link__phone"
+           href="#">
+            <span class="icon-link_text">List item 2</span>
+        </a>
+    </li>
+    <li class="list_item">
+        <a class="list_link icon-link icon-link__before icon-link__fax"
+           href="#">
+            <span class="icon-link_text">List item 3</span>
+        </a>
+    </li>
+</ul>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;ul class=&quot;list list__links list__icons&quot;&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link icon-link icon-link__before icon-link__email&quot;
+           href=&quot;#&quot;&gt;
+            &lt;span class=&quot;icon-link_text&quot;&gt;List item 1&lt;/span&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link icon-link icon-link__before icon-link__phone&quot;
+           href=&quot;#&quot;&gt;
+            &lt;span class=&quot;icon-link_text&quot;&gt;List item 2&lt;/span&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;list_item&quot;&gt;
+        &lt;a class=&quot;list_link icon-link icon-link__before icon-link__fax&quot;
+           href=&quot;#&quot;&gt;
+            &lt;span class=&quot;icon-link_text&quot;&gt;List item 3&lt;/span&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;ul class=\&amp;quot;list list__links list__icons\&amp;quot;&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link icon-link icon-link__before icon-link__email\&amp;quot;\n           href=\&amp;quot;#\&amp;quot;&gt;\n            &lt;span class=\&amp;quot;icon-link_text\&amp;quot;&gt;List item 1&lt;/span&gt;\n        &lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link icon-link icon-link__before icon-link__phone\&amp;quot;\n           href=\&amp;quot;#\&amp;quot;&gt;\n            &lt;span class=\&amp;quot;icon-link_text\&amp;quot;&gt;List item 2&lt;/span&gt;\n        &lt;/a&gt;\n    &lt;/li&gt;\n    &lt;li class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;a class=\&amp;quot;list_link icon-link icon-link__before icon-link__fax\&amp;quot;\n           href=\&amp;quot;#\&amp;quot;&gt;\n            &lt;span class=\&amp;quot;icon-link_text\&amp;quot;&gt;List item 3&lt;/span&gt;\n        &lt;/a&gt;\n    &lt;/li&gt;\n&lt;/ul&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.list__links {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.list__links .list_item {
+  margin-left: 0;
+}
+
+.list__links .list_item {
+  margin-bottom: 0.625em;
+}
+
+.list__links.list__spaced .list_item + .list_item {
+  margin-top: 0;
+}
+
+.list__links.list__icons .list_link {
+  position: relative;
+  left: -0.125em;
+}
+
+.list__links.list__icons .icon-link:before,
+.list__links.list__icons .icon-link:after {
+  width: 1.125em;
+  text-align: center;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="filtered-by-list" class="docs-component">
+      <h2 class="docs-component_header"><span>Filtered-by list</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>A list of applied filters.</li>
+          <li>This pattern is subject to change. This initial style simply highlights the filters that have been applied. In the future this pattern will evolve so that each applied filter can be removed by clicking/tapping it.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<dl class="filtered-by list list__horizontal">
+    <dt class="list_item">
+        <span class="filtered-by_header">Filtered by</span>
+    </dt>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Lorem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Ipsum,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Dolor,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Sit,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Amet,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Lorem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Ipsum,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Dolor,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Sit,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Amet,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Lorem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Ipsum,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Dolor,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Sit,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Amet</span>
+    </dd>
+</dl>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;dl class=&quot;filtered-by list list__horizontal&quot;&gt;
+    &lt;dt class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_header&quot;&gt;Filtered by&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Lorem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Ipsum,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Dolor,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Sit,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Amet,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Lorem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Ipsum,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Dolor,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Sit,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Amet,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Lorem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Ipsum,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Dolor,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Sit,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Amet&lt;/span&gt;
+    &lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;dl class=\&amp;quot;filtered-by list list__horizontal\&amp;quot;&gt;\n    &lt;dt class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_header\&amp;quot;&gt;Filtered by&lt;/span&gt;\n    &lt;/dt&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Lorem,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Ipsum,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Dolor,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Sit,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Amet,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Lorem,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Ipsum,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Dolor,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Sit,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Amet,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Lorem,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Ipsum,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Dolor,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Sit,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Amet&lt;/span&gt;\n    &lt;/dd&gt;\n&lt;/dl&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Filters aligned with a button</h3>
+          <section class="docs-pattern_pattern">
+<a class="btn btn__secondary"
+   style="float:right;"
+   href="#">
+    Filter
+</a>
+<dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
+    <dt class="list_item">
+        <span class="filtered-by_header">Filtered by</span>
+    </dt>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Lorem,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Ipsum,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Dolor,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Sit,</span>
+    </dd>
+    <dd class="list_item">
+        <span class="filtered-by_filter">Amet,</span>
+    </dd>
+</dl>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;btn btn__secondary&quot;
+   style=&quot;float:right;&quot;
+   href=&quot;#&quot;&gt;
+    Filter
+&lt;/a&gt;
+&lt;dl class=&quot;filtered-by filtered-by__align-with-btn list list__horizontal&quot;&gt;
+    &lt;dt class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_header&quot;&gt;Filtered by&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Lorem,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Ipsum,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Dolor,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Sit,&lt;/span&gt;
+    &lt;/dd&gt;
+    &lt;dd class=&quot;list_item&quot;&gt;
+        &lt;span class=&quot;filtered-by_filter&quot;&gt;Amet,&lt;/span&gt;
+    &lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;btn btn__secondary\&amp;quot;\n   style=\&amp;quot;float:right;\&amp;quot;\n   href=\&amp;quot;#\&amp;quot;&gt;\n    Filter\n&lt;/a&gt;\n&lt;dl class=\&amp;quot;filtered-by filtered-by__align-with-btn list list__horizontal\&amp;quot;&gt;\n    &lt;dt class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_header\&amp;quot;&gt;Filtered by&lt;/span&gt;\n    &lt;/dt&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Lorem,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Ipsum,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Dolor,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Sit,&lt;/span&gt;\n    &lt;/dd&gt;\n    &lt;dd class=\&amp;quot;list_item\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;filtered-by_filter\&amp;quot;&gt;Amet,&lt;/span&gt;\n    &lt;/dd&gt;\n&lt;/dl&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.filtered-by {
+  margin: 0;
+}
+
+.filtered-by_header {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  margin: 0;
+  color: #101820;
+}
+
+.lt-ie9 .filtered-by_header {
+  font-weight: normal !important;
+}
+
+.filtered-by__align-with-btn .filtered-by_header {
+  display: inline-block;
+  padding-top: 0.64285714em;
+  line-height: normal;
+}
+
+.filtered-by_filter {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #75787b;
+}
+
+.filtered-by_filter em,
+.filtered-by_filter i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .filtered-by_filter em,
+.lt-ie9 .filtered-by_filter i {
+  font-style: normal !important;
+}
+
+.filtered-by_filter strong,
+.filtered-by_filter b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .filtered-by_filter strong,
+.lt-ie9 .filtered-by_filter b {
+  font-weight: normal !important;
+}
+
+@media print {
+  .filtered-by_filter {
+    font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    color: #101820;
+  }
+
+  .lt-ie9 .filtered-by_filter {
+    font-weight: normal !important;
+  }
+}
+
+.print .filtered-by_filter {
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  color: #101820;
+}
+
+.lt-ie9 .print .filtered-by_filter {
+  font-weight: normal !important;
+}
+</code></pre>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>

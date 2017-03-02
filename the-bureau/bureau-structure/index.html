@@ -1,0 +1,177 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-the-bureau.html" as vars with context %}
+{% set active_nav_id = 'bureau-structure' %}
+
+{% block title -%}
+    Bureau Structure
+{%- endblock %}
+
+{% block desc -%}
+    Bureau Structure
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/vendor/slick-carousel/slick.css">
+{%- endblock %}
+
+{% block content_main %}
+
+    {% import "role-macro.html" as role_macro with context %}
+
+    <div class="org-chart">
+        
+        <div class="org-chart_root">
+            <img src="/static/img/cordray_round_360.jpg" width="150">
+            <h1 class="h2 u-mb0">Richard Cordray</h1>
+            <h2 class="h4">Director</h2>
+        </div>
+        
+        <div id="content-slider-container">
+            <div id="content-slider">
+                <div>
+                    <ul class="list__links">
+                    {% for category in ['Divisions', 'Office of the Director'] %}
+                        <li>
+                            <button class="link-text jump-link jump-link__right jump-link__bg content-show" 
+                                    data-content=".nodes{{ loop.index }}">
+                                {{ category }}
+                            </button>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <ul class="org-chart_branches">
+        {% for category in ['Divisions', 'Office of the Director'] %}
+            {% set cat_loop = loop %}
+            <li class="org-chart_branch {% if loop.last %} last-child {% endif %}">
+                <h3 class="org-chart_branch_name">{{ category }}</h3>
+                <ul class="org-chart_nodes
+                           content-panel 
+                           nodes{{ cat_loop.index }}">
+                    <li>
+                        <button class="content-hide link-text jump-link jump-link__before jump-link__left">
+                            {{ category }}
+                        </button>
+                    </li>
+                {% set parents = queries.orgmember.search_with_url_arguments(
+                   q="has_parent:false AND category:{}".format(category)) %}
+                {% for parent in parents %}
+                    {% set par_loop = loop %}
+                    <li class="org-chart_node expandable">
+                        {% set children = queries.orgmember.search_with_url_arguments(
+                           q="parent:{}".format(parent.id)) %}
+                    {% if children|list|length %}
+                        <button class="org-chart_role expandable_target expandable_header content-show" 
+                                data-content=".nodes{{ cat_loop.index }}_{{ par_loop.index }}">
+                            <span class="node_expander">
+                                <span class="expandable_link u-hide-on-mobile">
+                                    <span class="expandable_cue-open">
+                                        <span class="cf-icon cf-icon-down"></span>
+                                    </span>
+                                    <span class="expandable_cue-close">
+                                        <span class="cf-icon cf-icon-up"></span>
+                                    </span>
+                                </span>
+                                <span class="expandable_link u-show-on-mobile">
+                                    <span class="cf-icon cf-icon-right"></span>
+                                </span>
+                            </span>
+                            {{ role_macro.display_role(parent) }}
+                        </button>
+                        <ul class="org-chart_nodes 
+                                   expandable_content 
+                                   content-panel    
+                                   nodes{{ cat_loop.index }}_{{ par_loop.index }}">
+                            <li>
+                                <button class="jump-link jump-link__before jump-link__left content-hide">
+                                    {{ role_macro.display_role(parent) }}
+                                </button>
+                            </li>
+                        {% for child in children %}
+                            <li class="org-chart_node">
+                                <div class="org-chart_role">
+                                    {{ role_macro.display_role(child) }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="org-chart_role">
+                            {{ role_macro.display_role(parent) }}
+                        </div>
+                    {% endif %}   
+                    </li>
+                {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+        </ul>
+        
+    </div>
+    
+    <aside class="block block__padded-top block__padded-bottom block__border-top">
+        <div class="content-l content-l__main">
+            <div class="content-l_col content-l_col-1-2">
+                <h2 class="h3">Download a copy</h2>
+                <p>
+                    Download a printable, PDF copy of this organizational chart. This version
+                    is expanded to show all offices.
+                </p>
+                <a class="btn btn__secondary" href="#">
+                    <span class="btn_icon__left cf-icon cf-icon-save"></span>
+                    Download PDF
+                </a>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <h2 class="h3">Request speaking info</h2>
+                <p>
+                    Ask a CFPB employee to be involved in a forum, publication, discussion, or
+                    other event; or to inquire about any CFPB events.
+                </p>
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                <a class="list_link" href="mailto:cfpb.events@cfpb.gov">
+                    cfpb.events@cfpb.gov
+                </a>
+            </div>
+        </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+    <script src="/static/vendor/slick-carousel/slick.min.js"></script>
+    <script>
+        $('document').ready(function () {
+            var slider, handler;
+            if (!$('html').hasClass('lt-ie9')) {     
+                handler = new BreakpointHandler({
+                    breakpoint: 599,
+                    type: "max",
+                    enter: function () {
+                        // close any open expandables
+                        $('.org-chart').find('.expandable__expanded .expandable_target').click();
+                        // hide org chart branches
+                        $('.org-chart_branches').hide();
+                        // show content slider & mobile nav links
+                        $('#content-slider, .content-hide').show();
+                        // init slider
+                        slider = new contentSlider('#content-slider', 1);
+                    },
+                    leave: function () {
+                        // destroy slider
+                        slider && slider.destroy();
+                        slider = null;
+                        // hide content slider & mobile nav links
+                        $('#content-slider, .content-hide').hide();
+                        // show org chart branches
+                        $('.org-chart_branches').show();
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

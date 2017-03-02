@@ -1,0 +1,26 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-budget.html" as vars with context %}
+{% set active_nav_id = 'financial-report' %}
+
+{% block title -%}
+    Financial Report & Update
+{%- endblock %}
+
+{% block desc -%}
+    
+{%- endblock %}
+
+{% block content_main %}
+
+    <div class="block block__flush-top block__sub">
+        <p class="h3">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
+        <p>
+    </div>
+    <div class="block block__flush-top budget_page-content financial-report">
+        {% set page = get_document('pages', '63177') %}
+        {{ page.content | safe }}
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,218 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-offices.html" as vars with context %}
+
+{% block title -%}
+    {{ office.title | safe if office.title }}
+{%- endblock %}
+
+{% block desc -%}
+    {{ office.desc | safe if office.desc }}
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    {% from "post-macros.html" import activity_snippets as activity_snippets with context %}
+    {% import "contact-macro.html" as contact_macro %}
+    {% set activities_feed = activity_snippets(activity_type) %}
+    
+    {% if office.title %}
+        <h1>{{ office.title | safe }}</h1>
+    {% endif %}
+
+    <section class="block block__flush-top content-l content-l__main content-l__large-gutters">
+        {% if office.intro_text %}
+        {% set show_subscription = office.intro_subscribe_form and office.intro_govdelivery_code %}
+        <section class="office_intro content-l_col
+                        {% if show_subscription -%}
+                            content-l_col-1-2
+                        {% else -%}
+                            content-l_col-1
+                        {%- endif %}">
+            <p class="h3">{{ office.intro_text | safe if office.intro_text }}</p>
+        </section>
+        {% endif %}
+        {% if show_subscription %}
+            <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                <p class="h3 u-show-on-mobile">Stay informed</p>
+                <p class="short-desc">Stay up to date with our email newsletter</p>
+                {% import "email-subscribe-form.html" as subscribe with context %}
+                {{ subscribe.render(null, office.intro_govdelivery_code) }}
+            </section>
+        {% endif %}
+    </section>
+    
+    {% if office.top_story %}
+    {% set top_story = office.top_story %}
+    <section class="office_featured block block__padded-top block__border-top">
+        {% if top_story.top_story_head %}
+        <h1 class="h3">{{ top_story.top_story_head | safe }}</h1>
+        {% endif %}
+        <div class="content-l content-l__main content-l__large-gutters">
+            {% if top_story.top_story_desc %}
+            <div class="content-l_col content-l_col-1-2">
+                <p class="short-desc">{{ top_story.top_story_desc | safe }}</p>
+            </div>
+            {% endif %}
+            {% if top_story.top_story_links %}
+            <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                <ul class="list__links">
+                {% for link in top_story.top_story_links %}
+                    <li class="list_item">
+                        <a class="jump-link jump-link__right list_link" href="{{ link[0] }}">
+                            {{link[1]}}
+                        </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+    {% if office.resources %}
+
+    <section class="office_resources block block__padded-top block__border-top">
+        <h1 class="h2">
+            {{ resource_title }}
+        </h1>
+        {% for resource in office.resources %}
+            <div class="media office_resource block__sub">
+                <div class="media_image-container media_image-container__wide-margin">
+                    <img class="media_image u-centered-on-mobile" 
+                         width="150"
+                         src="{{resource.icon if resource.icon}}">
+                </div>
+                <div class="media_body">
+                    {% if resource.head %}
+                    <h2 class="h3">{{ resource.head | safe }}</h2>
+                    {% endif %}
+                
+                    {% if resource.desc %}
+                    <p class="short-desc">{{ resource.desc | safe }}</p>
+                    {% endif %}
+                
+                    {% if resource.link %}
+                    <a class="jump-link jump-link__right" href="{{ resource.link[0] if resource.link }}">
+                          {{ resource.link[1] if resource.link }}
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+    
+    {% if initiatives %}
+    <section class="office_initiatives block block__sub block__padded-top block__border-top">
+        <h1 class="h2">
+            Our Work
+        </h1>
+        <div class="content-l content-l__main content-l__large-gutters expandables-group">
+        {% for initiative in initiatives %}
+            <div class="office_initiative
+                        expandable 
+                        expandable__expanded 
+                        expandable__mobile-only
+                        content-l_col
+                        {% if initiatives|list|length > 1 -%}
+                            content-l_col-1-2
+                        {% else -%}
+                            content-l_col-1
+                        {%- endif %}">
+                <button class="expandable_header expandable_target u-show-on-mobile">
+                    {% if initiative.title %}
+                    <span class="expandable_header-left expandable_label">
+                        {{ initiative.title | safe }}
+                    </span>
+                    {% endif %}
+                    <span class="expandable_header-right expandable_link">
+                        <span class="expandable_cue-open">
+                            <span class="cf-icon cf-icon-plus-round"></span>
+                        </span>
+                        <span class="expandable_cue-close">
+                            <span class="cf-icon cf-icon-minus-round"></span>
+                        </span>
+                    </span>
+                </button>
+                <div class="expandable_content">
+                    {% if initiative.title %}
+                    <h2 class="h4 u-hide-on-mobile">
+                        {{ initiative.title | safe }}
+                    </h2>
+                    {% endif %}
+                    {% if initiative.content %}
+                    <p class="short-desc">
+                        {{ initiative.content | safe }}
+                    </p>
+                    {% endif %} 
+                    {% if initiative.slug %}
+                    <a class="jump-link jump-link__right" href="{{ path + initiative.slug }}">
+                        Read more
+                    </a>
+                    {% endif %} 
+                </div>
+            </div><!-- END .expandable -->
+        {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <div class="block block__flush-sides block__bg u-mb0">
+
+        {% if activities_feed %}
+        <section class="office_activities">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Latest Office Activities
+                </span>
+            </h1>
+            {{ activities_feed }}
+            <!-- link to activities page? -->
+            <a class="jump-link jump-link__right">
+                View all of our activity
+            </a>
+        </section>
+        {% endif %}
+
+        {% if office.related_contact %}
+        {% set contact = get_document('contact', office.related_contact) %}
+        {% if contact %}
+        <section class="office_content block u-mb0">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Office Contact Information
+                </span>
+            </h1>
+            {% if contact.sitewide_desc %}
+            <p class="short-desc">{{ contact.sitewide_desc }}</p>
+            {% endif %}
+            <div class="content-l content-l__main content-l__large-gutters">
+                <div class="content-l_col content-l_col-1">
+                    <h2 class="h5">{{ contact.title }}</h2>
+                </div>
+            </div>
+            {{ contact_macro.render( contact, 'block block__flush-top' ) }}
+        </section>
+        {% endif %}
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+    <script>
+        $('document').ready(function () { 
+            if (!$('html').hasClass('lt-ie9')) { 
+                $('.expandable__mobile-only').each(function (i) {
+                    new MobileOnlyExpandable($(this), 599);
+                });
+            }
+        });
+    </script>
+{% endblock %}

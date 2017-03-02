@@ -1,0 +1,587 @@
+/* ==========================================================================
+   cfgov-refresh
+   cfgov-blog-docs
+   ========================================================================== */
+
+
+/* topdoc
+  name: Slugs
+  family: cfgov-blog-docs
+  patterns:
+    - name: Blog slugs
+      markup: |
+        <a href="#" class="category-slug">
+            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+            <span class="u-visually-hidden">Category:</span>
+            Announcements & updates
+        </a><br>
+        <a href="#" class="category-slug">
+            <span class="category-slug_icon cf-icon cf-icon-information"></span>
+            <span class="u-visually-hidden">Category:</span>
+            Consumer information
+        </a><br>
+        <a href="#" class="category-slug">
+            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
+            <span class="u-visually-hidden">Category:</span>
+            Engagement
+        </a><br>
+        <a href="#" class="category-slug">
+            <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
+            <span class="u-visually-hidden">Category:</span>
+            Innovation & data
+        </a>
+      notes:
+        - "Official icons are still being developed, hence the ?."
+  tags:
+    - cfgov-blog-docs
+*/
+
+
+/* topdoc
+  name: Hero
+  family: cfgov-blog-docs
+  patterns:
+    - name: Blog hero
+      markup: |
+        <section class="hero" style="background-color:#337E7D;">
+            <div class="hero_wrapper">
+                <a class="hero_card" href="#">
+                    <div class="hero_card-bg">
+                        <div class="hero_card-padding">
+                            <div class="category-slug">
+                                <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                                <span class="u-visually-hidden">Category:</span>
+                                Category slug
+                            </div>
+                            <div class="summary">
+                                <h1 class="summary_header">Header</h1>
+                                <p class="summary_text">Text.</p>
+                                <p class="summary_byline">Byline</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="hero_img-container hero_img-container__small u-flexible-container">
+                <div class="hero_img u-flexible-container_inner"
+                     style="background-image:url(../static/img/hero-small.png);">
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__large">
+                <div class="hero_img"
+                     style="background-image:url(../static/img/hero-large.png);">
+                </div>
+            </div>
+        </section>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .hero
+            .wrapper
+              .hero_card
+                .hero_card-bg
+                  .hero_card-padding
+                    .category-slug (collapsed for brevity)
+                    .summary (collapsed for brevity)
+            .hero_img-container.hero_img-container__small
+              .hero_img
+            .hero_img-container.hero_img-container__large
+              .hero_img
+*/
+
+
+/* topdoc
+  name: Post previews
+  family: cfgov-blog-docs
+  patterns:
+    - name: Featured Topic
+      markup: |
+        <article class="featured-topic summary">
+            <h1 class="summary_header summary_header__large">Featured Topic header</h1>
+            <div class="summary_cols">
+                <div class="summary_col">
+                    <p class="summary_text summary_text__dark">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                        voluptatem nihil.
+                    </p>
+                </div>
+                <div class="summary_col">
+                    <ul class="list list__spaced list__unstyled">
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                            <a class="list_link"
+                               href="#">
+                               Student Debt Domino Effect?
+                           </a>
+                        </li>
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-contract"></span>
+                            <a class="list_link"
+                               href="#">
+                               CFPB Takes Action Against RealtySouth for Mortgage Disclosure Violations
+                           </a>
+                        </li>
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-double-quote"></span>
+                            <a class="list_link"
+                               href="#">
+                               Student Debt Domino Effect?
+                           </a>
+                        </li>
+                        <li class="list_item">
+                            <span class="category-slug_icon cf-icon cf-icon-microphone"></span>
+                            <a class="list_link"
+                               href="#">
+                               Student Debt Domino Effect?
+                           </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+      codenotes:
+        - |
+          .featured-topic.summary
+            .summary__header.summary_header__large
+            .summary_cols
+              .summary_col
+                .summary_text
+              .summary_col
+                .list.list__spaced.list__unstyled
+                  .list_item
+                    .list_link
+    - name: Post preview (no image)
+      codenotes:
+        - |
+          .post-preview
+            .meta-header
+              .meta-header_right.date
+              .meta-header_left.category-slug
+            .summary
+              .summary_header
+              .summary_text
+              .summary_byline
+      markup: |
+        <article class="post-preview">
+            <div class="meta-header">
+                <span class="meta-header_right date">
+                    Nov 4, 2013
+                </span>
+                <a href="#" class="meta-header_left category-slug">
+                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                    <span class="u-visually-hidden">Category:</span>
+                    Announcements & updates
+                </a>
+            </div>
+            <a class="summary" href="#">
+                <h1 class="summary_header">Preventing illegal discrimination in auto lending</h1>
+                <p class="summary_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
+                <p class="summary_byline">By Patrice Ficklin</p>
+            </a>
+        </article>
+    - name: Post preview (with image)
+      codenotes:
+        - |
+          .post-preview
+            .meta-header
+              .meta-header_right.date
+              .meta-header_left.category-slug
+            .media-object
+              .media-object_image-container
+              .media-object_text-container.summary
+                .summary_header
+                .summary_text
+                .summary_byline
+      markup: |
+        <article class="post-preview">
+            <div class="meta-header">
+                <span class="meta-header_right date">
+                    Nov 4, 2013
+                </span>
+                <a href="#" class="meta-header_left category-slug">
+                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
+                    <span class="u-visually-hidden">Category:</span>
+                    Announcements & updates
+                </a>
+            </div>
+            <a class="media-object" href="#">
+                <div class="media-object_image-container">
+                    <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
+                </div>
+                <div class="media-object_text-container summary">
+                    <h1 class="summary_header">
+                        Live from Phoenix!
+                    </h1>
+                    <p class="summary_text">
+                        This event was a training for housing counselors, legal aid
+                        attorneys, and other advocates on the new mortgage servicing
+                        rules that take effect today.
+                    </p>
+                    <p class="summary_byline">
+                        By Patrice Ficklin
+                    </p>
+                </div>
+            </a>
+        </article>
+    - name: Press Information
+      markup: |
+        <div class="press-information">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Press information
+                </span>
+            </h1>
+            <p class="short-desc">
+                If you want to repbulish the article or have questions about the content,
+                please contact the press office.
+            </p>
+            <p>
+                <a class="sans"
+                   href="/newsroom/press-resources/">Go to press resources page</a>
+            </p>
+        </div>
+  tags:
+    - cfgov-blog-docs
+*/
+
+.featured-topic {
+    margin-bottom: unit(60px / @base-font-size-px, em);
+}
+
+.post-preview + .post-preview {
+    // Eyeballed to 60px
+    margin-top: unit(50px / @base-font-size-px, em);
+}
+
+.post-pagination {
+    // Eyeballed to 60px
+    margin: unit(54px / @base-font-size-px, em) 0 unit(28px / @base-font-size-px, em);
+}
+
+.press-information {
+    margin-top: unit(60px / @base-font-size-px, em);
+    .respond-to-min(600px, {
+        .grid_column(7, @grid_total-columns);
+        .grid_nested-col-group();
+    });
+}
+
+
+/* topdoc
+  name: Post filters
+  family: cfgov-blog-docs
+  notes:
+    - "Post filters are a combination of a few smaller patterns like expandables,
+      filtered-by, list, padded-container, and a few form patterns."
+  patterns:
+    - name: Post filters
+      markup: |
+        <div class="expandable expandable__filters expandable__expanded">
+            <div class="expandable_header expandable_header__spaced">
+                <div class="expandable_header-right">
+                    <div class="expandable_header-right u-hide-on-mobile">
+                        <span class="expandable_target">
+                            <button class="btn btn__secondary">
+                                Filter posts
+                                <span class="expandable_cue-open">
+                                    <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                                </span>
+                                <span class="expandable_cue-close">
+                                    <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                                </span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <dl class="filtered-by
+                           filtered-by__show-on-medium
+                           filtered-by__align-with-btn
+                           list
+                           list__horizontal">
+                    <dt class="list_item">
+                        <span class="filtered-by_header">Filtered by</span>
+                    </dt>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Lorem,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Ipsum,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Dolor,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Sit,</span>
+                    </dd>
+                    <dd class="list_item">
+                        <span class="filtered-by_filter">Amet,</span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="expandable_content padded-container">
+                <form class="padded-container_body" id="post-filters-form" method="get">
+                    <div class="form-l form-l__flush">
+                        <div class="form-l_col form-l_col-1-3">
+                            <div class="form-group">
+                                <label class="form-label-header">
+                                    Categories
+                                </label>
+                                <label class="form-group_item">
+                                    <input type="checkbox" name="filter_category" value="consumer">
+                                    Announcements &amp; updates
+                                </label>
+                                <label class="form-group_item">
+                                    <input type="checkbox" name="filter_category" value="regulation & compliance">
+                                    Consumer information
+                                </label>
+                                <label class="form-group_item">
+                                    <input type="checkbox" name="filter_category" value="innovation">
+                                    Engagement
+                                </label>
+                                <label class="form-group_item">
+                                    <input type="checkbox" name="filter_category" value="announcements">
+                                    Innovation &amp; data
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-l_col form-l_col-1-3">
+                            <div class="form-group">
+                                <label class="form-label-header">
+                                    Topics
+                                </label>
+                                <input type="text" name="filter_tags" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label-header">
+                                    Author
+                                </label>
+                                <input type="text" name="filter_author" value="">
+                            </div>
+                        </div>
+                        <!-- <div class="form-l_col form-l_col-1-3">
+                            <div class="form-group">
+                                <label class="form-label-header">
+                                    Date range
+                                </label>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="form-actions form-actions__right-on-med">
+                        <input class="btn btn__warning btn__link form-actions_item js-form_clear"
+                               type="button"
+                               value="Clear filters">
+                        <input class="btn form-actions_item"
+                               type="submit"
+                               value="Apply filters">
+                    </div>
+                </form>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .expandable.expandable__filters
+            .expandable_header__spaced
+              .expandable_header-right
+                .expandable_target
+                  .btn.btn__secondary
+                    .expandable_cue-open
+                      .cf-icon.cf-icon-down
+                    .expandable_cue-close
+                      .cf-icon.cf-icon-up
+              .filtered-by.filtered-by__show-on-medium.filtered-by__align-with-btn.list.list__horizontal
+            .expandable_content.padded-container
+              .padded-container_body
+                .form-l.form-l__flush
+                  .form-l_col.form-l_col-1-3
+                    .form-group
+                      .form-label-header
+                      .form-group_item
+                  .form-l_col.form-l_col-1-3
+                    .form-group
+                      .form-label-header
+                      .form-group_item
+                  .form-l_col.form-l_col-1-3
+                    .form-group
+                      .form-label-header
+                      .form-group_item
+                .form-actions.form-actions__right-on-med
+  tags:
+    - cfgov-blog-docs
+*/
+
+
+/* topdoc
+  name: Insets
+  family: cfgov-blog-docs
+  patterns:
+    - name: Inset (default layout and content type)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset post_inset__right line-container">
+                <div class="line-container_body pull-quote">
+                    <div class="pull-quote_body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum!
+                    </div>
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset]Quote text here[/inset]"
+        - "[inset layout='float' content='pullquote']Quote text here[/inset]"
+      notes:
+        - "Insets default to a floating right layout but can also span the full
+          width of the article using the layout attribute. They also default to
+          a pullquote content type."
+    - name: Inset (full layout)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset line-container">
+                <div class="line-container_body pull-quote pull-quote__large">
+                    <div class="pull-quote_body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum!
+                    </div>
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset layout='full']Quote text here[/inset]"
+      notes:
+        - "Note that .pull-quote needs the .pull-quote__large modifier class."
+    - name: Inset (with attribution)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset post_inset__right line-container">
+                <div class="line-container_body pull-quote">
+                    <div class="pull-quote_body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Cum corrupti tempora nam nihil qui mollitia consectetur
+                        corporis nemo culpa dolorum!
+                    </div>
+                    <footer>
+                        <cite class="pull-quote_citation">
+                            - Author Name
+                        </cite>
+                    </footer>
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset attribution='Author Name']Quote text here[/inset]"
+      notes:
+        - "Only the pullquote content type can make use of the atrribution
+          attribute."
+    - name: Inset (with HTML content)
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [inset] HTML -->
+            <aside class="post_inset post_inset__right line-container">
+                <div class="line-container_body">
+                    <!-- Begin custon HTML -->
+                    <h3>
+                        Final list of rural and underserved counties
+                    </h3>
+                    <p>
+                        View or download the list in any of these formats:
+                    </p>
+                    <ul class="list list__unstyled list__horizontal">
+                        <li class="list_item">
+                            <a class="list_link" href="#">
+                                CSV
+                            </a>
+                        </li>
+                        <li class="list_item">
+                            <a class="list_link" href="#">
+                                XLS
+                            </a>
+                        </li>
+                        <li class="list_item">
+                            <a class="list_link" href="#">
+                                PDF <span class="cf-icon cf-icon-pdf"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- End custon HTML -->
+                </div>
+            </aside>
+            <!-- End [inset] HTML -->
+
+        </div>
+      codenotes:
+        - "[inset content='html']
+             Custom HTML here.
+           [/inset]"
+      notes:
+        - "Note that .line-container_body no longer uses the .pull-quote class."
+        - "Insets using the html content type should not be allowed to use
+          layout='full'."
+    - name: More information
+      markup: |
+        <div style="overflow:hidden;">
+
+            <!-- Begin [moreinfo] HTML -->
+            <aside class="post_inset post_inset__right line-container line-container__no-top">
+                <div class="line-container_body">
+                    <h2 class="header-slug">
+                        <span class="header-slug_inner">
+                            More information
+                        </span>
+                    </h2>
+                    <ul class="list list__unstyled">
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link" href="#">
+                                Consumer help
+                            </a>
+                        </li>
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link" href="#">
+                                Know before you owe
+                            </a>
+                        </li>
+                        <li class="list_item list_item__spaced">
+                            <a class="list_link" href="#">
+                                Submit a complaint
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+            <!-- End [moreinfo] HTML -->
+
+        </div>
+      codenotes:
+        - "[moreinfo]"
+      notes:
+        - "There are no attribute customizations allowed in [moreinfo]."
+        - "Note that .line-containeruses the .line-container__no-top modifier."
+  tags:
+    - cfgov-blog-docs
+*/
+
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

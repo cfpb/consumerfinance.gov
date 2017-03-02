@@ -1,0 +1,83 @@
+/* ==========================================================================
+   cfgov-refresh
+   media-object
+   ========================================================================== */
+
+
+/* topdoc
+  name: Media object
+  family: cfgov-media-object
+  patterns:
+    - name: Default media object
+      markup: |
+        <article class="media-object">
+            <div class="media-object_image-container">
+                <img class="media-object_image" src="http://placekitten.com/276/155" alt="">
+            </div>
+            <div class="media-object_text-container">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum non sapiente nobis molestias delectus optio ipsam
+                    voluptas esse blanditiis ipsa debitis consequuntur excepturi
+                    accusantium doloribus dicta fugiat itaque ab porro.
+                </p>
+            </div>
+        </article>
+      codenotes:
+        - |
+          Structural sheat sheet:
+          -----------------------
+          .media-object
+            .media-object_image-container
+              .media-object_image
+            .media-object_text-container
+      notes:
+        - "The thumbnail uses a 16:9 aspect ratio."
+  tags:
+    - cfgov-media-object
+*/
+
+.media-object {
+
+    // The width of the image for medium screens and up.
+    @img-size-w: 276px;
+    // The height of the image for medium screens and up.
+    @img-size-h: 155px;
+
+    display: block;
+
+    .respond-to-min(600px, {
+        position: relative;
+        min-height: unit((@img-size-h + 4px) / @base-font-size-px, em);
+        padding-left: unit((@img-size-h + @grid_gutter-width) / @base-font-size-px, em);
+    });
+
+    &_image-container {
+        .respond-to-min(600px, {
+            position: absolute;
+            top: unit(4px / @base-font-size-px, em);
+            left: 0;
+            width: unit(@img-size-h / @base-font-size-px, em);
+            overflow: hidden;
+        });
+    }
+
+    &_image {
+        margin-bottom: unit(8px / @base-font-size-px, em);
+
+        .respond-to-min(600px, {
+            display: block;
+            width: unit(@img-size-w / @base-font-size-px, em);
+            max-width: unit(@img-size-w / @base-font-size-px, em);
+            max-height: unit(@img-size-h / @base-font-size-px, em);
+            margin-bottom: 0;
+            margin-left: unit(-((@img-size-w - @img-size-h) / 2) / @base-font-size-px, em);
+        });
+    }
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

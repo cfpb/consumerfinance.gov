@@ -1,13 +1,24 @@
-This project no longer uses `CHANGELOG.md` to track release changes.
+All notable changes to this project will be documented in this file.
+See the [README](README.md) for an explanation of our versioning conventions.
 
-See the project repository release history at:
 
-https://github.com/cfpb/cfgov-refresh/releases
+## 0.2.0 - 2014-12-29
 
-To see the legacy version of this file, visit:
+Apologies for ignoring our versioning for five months.
 
-https://github.com/cfpb/cfgov-refresh/blob/4.7.0/CHANGELOG.md
+### Added
+- Newsroom, Contact Us, About the Bureau, Offices, Doing Business with Us,
+  Activity Log, and Budget sections.
+- Many new design patterns.
+- Tests
 
-or, from the command line:
+### Changed
+- Significant template structure overhaul.
 
-`git show 4.7.0:CHANGELOG.md`
+### Fixed
+- Tons of stuff.
+
+
+## 0.1.0 - 2014-07-14
+
+Initial release. Contains fully functioning blog section.

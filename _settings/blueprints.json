@@ -1,0 +1,10 @@
+{
+  "flask_govdelivery": {
+    "package": "flask_govdelivery.govdelivery.controllers",
+    "module":  "govdelivery"
+  },
+  "flask_pdfreactor": {
+    "package": "flask_pdfreactor.controllers",
+    "module":  "reactorapp"
+  }
+}

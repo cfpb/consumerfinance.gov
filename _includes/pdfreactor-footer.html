@@ -1,0 +1,96 @@
+
+{# ==========================================================================
+
+   render(footer_text)
+
+   Creates a <style> block for adding a repeated footer for PDFreactor pages.
+
+   footer_text:
+
+       An optional message to add to the footer. A default message will be used
+       if none is provided.
+   
+   Usage:
+
+   Call this macro in the CSS block, for example:
+
+       {% block css %}
+           {{ super() }}
+           {% import "pdfreactor-footer.html" as pdfreactor_footer %}
+           {{ pdfreactor_footer.render('My footer message here') }}
+       {% endblock %}
+
+   ========================================================================== #}
+{% macro render(footer_text) %}
+<style type="text/css">
+@media print {
+
+    @page {
+        size: letter;
+        padding: 0;
+        margin: 0.35in 0.35in 1.25in;
+        /*border: 1px solid red;*/
+        counter-increment: page;
+    }
+
+    @page {
+        @bottom-center {
+            {# Linkbreaks within xhtml() cause syntax errors so we need to keep it
+                on one line using `replace()`. -#}
+            content: xhtml('{{ print_footer(footer_text)|replace("\n", "") }}');
+        }
+    }
+
+    .content_wrapper,
+    .content_main {
+        padding: 0;
+    }
+
+    .pdfreactor-footer {
+        float: left;
+        width: 100%;
+        padding-top: 1.25em; /* -20px / 16px = 1.25em */
+        text-align: right;
+    }
+    .pdfreactor-footer_logo {
+        float: left;
+        width: 200px;
+        margin-top: -1.25em; /* -20px / 16px = 1.25em */
+    }
+    .pdfreactor-footer_info {
+        font-size: 0.875em; /* 14px / 16px = 0.875em */
+        font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+        font-style: normal;
+        font-weight: bold;
+    }
+    .pdfreactor-footer_page-num {
+        margin-left: 2em;
+        font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+        font-style: normal;
+        font-weight: bold;
+    }
+    .pdfreactor-footer_page-num:after {
+        content: counter(page) ' of ' counter(pages);
+    }
+
+}
+</style>
+{% endmacro %}
+
+{# This markup gets inserted into the page via CSS using `content: xhtml()`.
+   Do not use HTML5 elements, your rules won't work on them here. #}
+{% macro print_footer(footer_text) %}
+
+<div class="pdfreactor-footer" role="contentinfo">
+    <div class="pdfreactor-footer_logo">
+        <img class="logo"
+             src="/static/img/logo.svg"
+             alt="Consumer Financial Protection Bureau">
+    </div>
+    <span class="pdfreactor-footer_info">
+        {{- footer_text|default('Learn more at consumerfinance.gov.') -}}
+    </span>
+    <span class="pdfreactor-footer_page-num"></span>
+</div>
+
+{% endmacro %}

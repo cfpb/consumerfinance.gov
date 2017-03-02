@@ -1,0 +1,64 @@
+{
+  "name": "cfgov-refresh",
+  "version": "0.2.0",
+  "description": "Refreshing consumerfinance.gov.",
+  "keywords": [
+    "cfpb",
+    "consumerfinance.gov",
+    "capital-framework"
+  ],
+  "authors": [
+    {
+      "name": "Consumer Financial Protection Bureau",
+      "url": "https://cfpb.github.io/"
+    }
+  ],
+  "homepage": "https://github.com/cfpb/cfgov-refresh",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cfpb/cfgov-refresh.git"
+  },
+  "license": "https://github.com/cfpb/cfgov-refresh/blob/master/TERMS.md",
+  "dependencies": {
+    "cf-buttons": "git://github.com/cfpb/cf-buttons.git#1.3.0",
+    "cf-core": "git://github.com/cfpb/cf-core.git#0.8.0",
+    "cf-expandables": "git://github.com/cfpb/cf-expandables.git#0.6.1",
+    "cf-forms": "git://github.com/cfpb/cf-forms.git#1.1.0",
+    "cf-grid": "git://github.com/cfpb/cf-grid.git#0.9.0",
+    "cf-icons": "git://github.com/cfpb/cf-icons.git#0.4.0",
+    "cf-layout": "git://github.com/cfpb/cf-layout.git#0.2.2",
+    "cf-pagination": "git://github.com/cfpb/cf-pagination.git#0.4.1",
+    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip",
+    "history.js": "~1.8.0",
+    "html5shiv": "latest",
+    "jquery": "~1.11.0",
+    "jquery.easing": "~1.3.0",
+    "string_score": "git://github.com/joshaven/string_score#0.1.20",
+    "slick-carousel": "~1.3.7"
+  },
+  "exportsOverride": {
+    "cf-*": {
+      "css": "src/**/*.css",
+      "less": "src/**/*.less",
+      "fonts": "src/fonts/*.*",
+      "js": "src/**/*.js"
+    },
+    "chosen": {
+      "css": "chosen.css",
+      "img": "*.png",
+      "js": "chosen.jquery.js"
+    },
+    "history.js": {
+      "js": "scripts/bundled-uncompressed/html5/jquery.history.js"
+    },
+    "html5shiv": {
+      "js": "dist/html5shiv-printshiv.min.js"
+    },
+    "jquery.easing": {
+      "js": "js/jquery.easing.js"
+    },
+    "string_score": {
+      "js": "string_score.js"
+    }
+  }
+}

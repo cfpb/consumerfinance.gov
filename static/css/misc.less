@@ -1,0 +1,1163 @@
+/* ==========================================================================
+   cfgov-refresh
+   misc
+   ========================================================================== */
+
+/* topdoc
+  name: Expandable customizations
+  family: cfgov-misc
+  patterns:
+    - name: Expandable filters
+      markup: |
+        <div class="expandable expandable__filters">
+            <div class="expandable_header expandable_header__spaced">
+                <div class="expandable_header-right u-hide-on-mobile">
+                    <span class="expandable_target">
+                        <button class="btn btn__secondary">
+                            Filter activities
+                            <span class="expandable_cue-open">
+                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+                <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
+                    <li class="list_item filtered-by_header">80 filtered results for</li>
+                    <li class="list_item filtered-by_filter">
+                        Blog,
+                    </li>
+                    <li class="list_item filtered-by_filter">
+                        Press Release,
+                    </li>
+                    <li class="list_item filtered-by_filter">
+                        January 2014&ndash;September 2014
+                    </li>
+                </ul>
+                <div class="expandable_header-right u-show-on-mobile">
+                    <span class="expandable_target">
+                        <button class="btn btn__secondary">
+                            Filter activities
+                            <span class="expandable_cue-open">
+                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                            </span>
+                            <span class="expandable_cue-close">
+                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="expandable_content padded-container">
+                <div class="padded-container_body">
+                    Filters body
+                </div>
+            </div>
+        </div>
+    - name: JavaScript setup
+      markup: |
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//cfpb.github.io/cf-expandables/docs/static/js/component.min.js"></script>
+  tags:
+    - cfgov-misc
+*/
+
+.expandable__filters {
+    margin-bottom: unit(15px / @base-font-size-px, em);
+
+    &.expandable__expanded {
+        margin-bottom: unit(30px / @base-font-size-px, em);
+    }
+
+    .respond-to-max(@mobile-max, {
+        .expandable_header-right {
+            float: none;
+            // Eyeballed to 15px
+            margin-top: unit(10px / @base-font-size-px, em);
+
+            .btn {
+                display: block;
+                width: 100%;
+            }
+        }
+    });
+}
+
+
+/* topdoc
+  name: Links with icons
+  family: cfgov-misc
+  notes:
+    - "Styles to enable adding an icon to a link and preventing the link's
+       underline from extending under the icon."
+    - "For the underlined icon prevention to work, you must wrap the link text
+       with a `span.icon-link_text`. There can be no whitespace between the text
+       and the opening and closing span tags."
+  patterns:
+    - name: Default link with icon
+      markup: |
+        <p>
+            For more information, email
+            <a class="icon-link icon-link__mail" href="#">
+                <span class="icon-link_text">john.smith@cfpb.gov</span>
+            </a>.
+            Alternatively, you can
+            <a class="icon-link icon-link__download" href="#">
+                <span class="icon-link_text">download the info sheet</span>
+            </a>.
+            Oh, you might also want to visit this
+            <a class="icon-link icon-link__external-link" href="#">
+                <span class="icon-link_text">other organization's website</span>
+            </a> for further details.
+        </p>
+        <a class="icon-link icon-link__right" href="#">
+            Visit another section of our site
+        </a>
+      notes:
+        - "The modifier names match the cf-icon names of commonly-used icons."
+        - "Icons appear to the right of a link, by default."
+    - name: Links with icons on the left (modifier)
+      markup: |
+        <a class="icon-link icon-link__mail icon-link__before" href="#">
+            <span class="icon-link_text">john.smith@cfpb.gov</span>
+        </a><br>
+        <a class="icon-link icon-link__phone icon-link__before" href="#">
+            (123) 456-7890
+        </a>
+      notes:
+        - "Simply add the `.icon-link__before` modifier to place the icon before
+           the link text."
+        - "You can omit the `span.icon-link_text` wrapper if you do not need
+           an underline on a particular link."
+    - name: Non-wrapping icon links
+      markup: |
+        <p>
+            For more information, email
+            <a class="icon-link icon-link__mail icon-link__no-wrap" href="#">
+                <span class="icon-link_text">john.smith@cfpb.gov</span>
+            </a>.
+        </p>
+      notes:
+        - "Warning: Icons added to inline links can sometimes break onto the
+           next line. If you want to prevent this, you can add the `__no-wrap`
+           modifier to `.icon-link`."
+  tags:
+    - cfgov-misc
+*/
+
+.icon-link {
+    border-bottom-width: 0;
+    position: relative;
+
+    &_text {
+        border-bottom-width: 1px;
+        border-bottom-style: inherit;
+    }
+
+    &:before,
+    &:after {
+        .cf-icon();
+        margin-right: 1px;
+        margin-left: 1px;
+    }
+
+    &__download:after,
+    &__download&__before:before {
+        // Inserts the cf-icon-download glyph.
+        content: "\e406";
+    }
+
+    &__email:after,
+    &__email&__before:before {
+        // Inserts the cf-icon-email glyph.
+        content: "\e302";
+    }
+
+    &__external-link:after,
+    &__external-link&__before:before {
+        // Inserts the cf-icon-external-link glyph.
+        content: "\e610";
+    }
+
+    &__fax:after,
+    &__fax&__before:before {
+        // Inserts the cf-icon-fax glyph.
+        content: "\e310";
+    }
+
+    &__left:after,
+    &__left&__before:before {
+          // Inserts the cf-icon-left glyph.
+          content: "\e000";
+      }
+
+    &__mail:after,
+    &__mail&__before:before {
+        // Inserts the cf-icon-mail glyph.
+        content: "\e304";
+    }
+
+    &__pdf:after,
+    &__pdf&__before:before {
+        // Inserts the cf-icon-pdf glyph.
+        content: "\e402";
+    }
+
+    &__pdf:after,
+    &__pdf&__before:before {
+        // Inserts the cf-icon-pdf glyph.
+        content: "\e402";
+    }
+
+    &__phone:after,
+    &__phone&__before:before {
+        // Inserts the cf-icon-phone glyph.
+        content: "\e306";
+    }
+
+    &__right:after,
+    &__right&__before:before {
+        // Inserts the cf-icon-right glyph.
+        content: "\e002";
+    }
+
+    // New icon modifiers must be added ABOVE this line.
+
+    &__before {
+        &:after {
+            content: '';
+        }
+    }
+
+    &__no-wrap {
+        white-space: nowrap;
+    }
+}
+
+/* topdoc
+  name: Styled link
+  family: cfgov-misc
+  patterns:
+    - name: .styled-link
+      markup: |
+        <a class="styled-link" href="#">
+            Default styled link
+        </a>
+      codenotes:
+        - .styled-link
+  tags:
+    - cfgov-misc
+*/
+
+.styled-link {
+    @font-size: 16px;
+
+    border-bottom-width: 1px;
+    .webfont-medium();
+    font-size: unit(@font-size / @base-font-size-px, em);
+}
+
+
+/* topdoc
+  name: Jump link
+  family: cfgov-misc
+  patterns:
+    - name: .jump-link
+      markup: |
+        <a class="jump-link" href="#">
+            <span class="jump-link_text">Default jump link</span>
+        </a>
+      codenotes:
+        - .jump-link
+    - name: .jump-link__large (modifier)
+      markup: |
+        <a class="jump-link jump-link__large" href="#">
+            <span class="jump-link_text">Large jump link</span>
+        </a>
+      codenotes:
+        - .jump-link__large
+      notes:
+        - "18px font-size, compared to the default of 16px"
+    - name: .jump-link__<icon> (modifier)
+      markup: |
+        <a class="jump-link jump-link__right" href="#">
+            <span class="jump-link_text">Jump link using the right icon from cf-icons</span>
+        </a>
+      codenotes:
+        - .jump-link__<icon>
+      notes:
+        - ".jump-link extends .icon-link, so all that is needed to add an icon
+           to a jump link is to add a modifier with the icon's name."
+    - name: .jump-link__before (modifier)
+      markup: |
+        <a class="jump-link jump-link__left jump-link__before" href="#">
+            <span class="jump-link_text">Jump link with icon on left</span>
+        </a>
+      codenotes:
+        - .jump-link__<icon>.jump-link__before
+      notes:
+        - "Jump links can also have icons before the text, like icon links."
+    - name: .jump-link__bg (modifier)
+      markup: |
+        <a class="jump-link jump-link__bg" href="#">
+            <span class="jump-link_text">Jump link with grey background and
+                solid borders on small screens</span>
+        </a>
+      codenotes:
+        - .jump-link__bg
+  tags:
+    - cfgov-misc
+*/
+
+.jump-link {
+    .webfont-medium();
+    font-size: unit(16px / @base-font-size-px, em);
+
+    .icon-link();
+
+    &__large {
+        font-size: unit(18px / @base-font-size-px, em);
+    }
+
+    .respond-to-max(599px, {
+        .block-link();
+
+        &:after {
+            position: absolute;
+            margin-bottom: -0.625em;
+            right: 0;
+            bottom: 50%;
+            text-align: right;
+        }
+
+        &__before {
+            padding-left: 1.25em;
+
+            &:before {
+                position: absolute;
+                margin-bottom: -0.625em;
+                bottom: 50%;
+                left: 0;
+            }
+        }
+
+        &_text {
+            border-bottom-width: 0;
+        }
+
+        &__bg {
+            background: @gray-10;
+            border: solid @gray-20;
+            border-width: 1px 0;
+            padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 1em;
+            &:after {
+                right: 1em;
+            }
+            &:before {
+                left: unit(10px / @base-font-size-px, em);
+            }
+        }
+    });
+}
+
+
+/* topdoc
+  name: Block link
+  family: cfgov-misc
+  patterns:
+    - name: .block-link
+      markup: |
+        <a class="block-link" href="#">
+            Default block link
+        </a>
+      codenotes:
+        - .block-link
+      notes:
+        - "Convert a standard inline link to a block-level element with padding,
+           background, and borders."
+        - "Primarily used within a max-width 599px media query (see .jump-link
+           and .list__links)."
+  tags:
+    - cfgov-misc
+*/
+
+.block-link {
+    box-sizing: border-box;
+    display: block;
+    padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 0;
+    border: dotted @pacific;
+    border-width: 1px 0;
+    margin-right: 0;
+    // 100% width is needed when .jump-link is applied to a <button>.
+    width: 100%;
+    text-align: left;
+}
+
+
+/* topdoc
+  name: Floating media
+  family: cfgov-misc
+  patterns:
+    - name: .float-media
+      markup: |
+        <p>
+            <img class="float-media"
+                 src="http://placekitten.com/200/230" alt="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      codenotes:
+        - .float-media
+      notes:
+        - "Float some media left with margins."
+    - name: .float-media__right (modifier)
+      markup: |
+        <p>
+            <img class="float-media float-media__right"
+                 src="http://placekitten.com/200/230" alt="">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      codenotes:
+        - .float-media.float-media__right
+      notes:
+        - "Float some media right with margins."
+  tags:
+    - cfgov-misc
+*/
+
+.float-media {
+    @gutter: @grid_gutter-width;
+
+    display: block;
+    margin: 0 0 @gutter;
+
+    .respond-to-min(600px, {
+        float: left;
+        margin-right: @gutter;
+    });
+
+    &__right {
+        .respond-to-min(600px, {
+            float: right;
+            margin-right: 0;
+            margin-left: @gutter;
+        });
+    }
+}
+
+
+/* topdoc
+  name: Responsive cropping
+  family: cfgov-misc
+  notes:
+    - "A simple cropping pattern. We may need more advanced ones in the future."
+    - "How it works: At smaller screens .rwd-crop is cropped to 75% of its
+       original height and flexibily scales 100% of its parents width. At larger
+       screens it is no longer flexible and uses its default width. For images
+       the default width can be set using the width attribute."
+  patterns:
+    - name: .rwd-crop
+      markup: |
+        <figure class="rwd-crop">
+            <img class="rwd-crop_item" src="http://placekitten.com/480/544" width="155" alt="">
+        </figure>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .rwd-crop
+            .rwd-crop_item
+      notes:
+        - "The default .rwd-crop pattern only supports square or portrait-style
+           images. We'll need to create a modifier to support landscape images."
+        - "Notice how the image has a default width of 155 which is set using
+           the width attribute."
+    - name: .float-media example
+      markup: |
+        <p>
+            <figure class="float-media rwd-crop">
+                <img class="rwd-crop_item" src="http://placekitten.com/480/480" width="200" alt="">
+            </figure>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      notes:
+        - "An example of using .rwd-crop in combination with .float-media."
+  tags:
+    - cfgov-misc
+*/
+
+.rwd-crop {
+    .respond-to-max(599px, {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 75%;
+        overflow: hidden;
+
+        &_item {
+            position: absolute;
+            width: 100%;
+            max-width: none;
+        }
+    });
+}
+
+
+/* topdoc
+  name: Micro copy
+  family: cfgov-misc
+  patterns:
+    - name: Standard micro copy
+      markup: |
+        <p class="micro-copy">
+            Lorem ipsum dolor sit amet
+        </p>
+      codenotes:
+        - .micro-copy
+    - name: Large micro copy
+      markup: |
+        <p class="micro-copy micro-copy__large">
+            Lorem ipsum dolor sit amet
+        </p>
+      codenotes:
+        - .micro-copy
+  tags:
+    - cfgov-misc
+*/
+
+.micro-copy {
+    color: @gray;
+    font-size: unit(14px / @base-font-size-px, em);
+    .webfont-regular();
+
+    &__large {
+        font-size: unit(16px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
+  name: Short description
+  family: cfgov-misc
+  patterns:
+    - name: .short-desc
+      markup: |
+        <p class="short-desc">I am short description.</p>
+      codenotes:
+        - .short-desc
+    - name: .short-desc__large (modifier)
+      markup: |
+        <p class="short-desc short-desc__large">I am large short description.</p>
+      codenotes:
+        - .short-desc__large
+  tags:
+    - cfgov-misc
+*/
+
+.short-desc {
+    .webfont-regular();
+
+    &__large {
+        font-size: unit(18px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
+  name: Video poster
+  family: cfgov-misc
+  patterns:
+    - name: .video-poster
+      markup: |
+        <figure>
+            <a class="video-poster" href="#link-to-video">
+                <img src="http://placekitten.com/600/338" alt="">
+            </a>
+        </figure>
+      codenotes:
+        - .video-poster
+  tags:
+    - cfgov-misc
+*/
+
+.video-poster {
+    @font-size: 26px;
+
+    position: relative;
+    display: inline-block;
+
+    &:after {
+        .cf-icon();
+        // cf-icon-play
+        content: "\e640";
+        position: absolute;
+        right: @grid_gutter-width / 2;
+        bottom: @grid_gutter-width / 2;
+        display: block;
+        width: 1em;
+        height: 1em;
+        padding: unit(10px / @font-size, em)
+                 unit(8px / @font-size, em)
+                 unit(10px / @font-size, em)
+                 unit(12px / @font-size, em);
+        background: @black;
+        background: fade(@black, 75%);
+        color: @white;
+        font-size: unit(@font-size / @base-font-size-px, em);
+        text-align: center;
+        border-radius: 100%;
+        transition: background 200ms;
+    }
+
+    &:hover {
+        &:after {
+            background: @green;
+            background: fade(@green, 75%);
+        }
+    }
+
+    & img {
+        vertical-align: middle;
+    }
+}
+
+
+/* topdoc
+  name: Hero
+  family: cfgov-misc
+  patterns:
+    - name: Basic hero
+      markup: |
+        <section class="hero" style="background-color:#337E7D;">
+            <div class="hero_wrapper">
+                <div class="hero_card">
+                    <article class="hero_preview">
+                        <div class="summary">
+                            Hero Summary
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__small u-flexible-container">
+                <div class="hero_img u-flexible-container_inner"
+                     style="background-image:url(../static/img/hero-small.png);">
+                </div>
+            </div>
+            <div class="hero_img-container hero_img-container__large">
+                <div class="hero_img"
+                     style="background-image:url(../static/img/hero-large.png);">
+                </div>
+            </div>
+        </section>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .hero
+            .hero_wrapper
+              .hero_card
+                .hero_preview
+            .hero_img-container.hero_img-container__small
+              .hero_img
+            .hero_img-container.hero_img-container__large
+              .hero_img
+    - codenotes:
+        - .hero
+      notes:
+        - "For full screen edge to edge background color. We have chosen to set
+          the background color using an inline style so that our templating
+          system can dynamically set it. If it makes more sense for your project
+          to set it with CSS then please do so."
+    - codenotes:
+        - .hero_wrapper
+      notes:
+        - "To center the hero content with a max-width."
+    - codenotes:
+        - .hero_img-container
+      notes:
+        - "By using a wrapping element we can responsibly load a small or large
+          screen background image by controling the display value of this element.
+          More info on this approach can be found here:
+          http://timkadlec.com/2012/04/media-query-asset-downloading-results/"
+    - codenotes:
+        - .hero_img
+      notes:
+        - "The reason for using a background image is noted above in
+          .hero_img-container. We have chosen to set the background image using
+          an inline style so that our templating system can dynamically set the
+          source. If it makes more sense for your project to set it with CSS
+          then please do so."
+  tags:
+    - cfgov-misc
+*/
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    background-color: @gray;
+
+    &_wrapper {
+        .wrapper();
+    }
+
+    // The image container is needed to suppress loading of the images until
+    // they are needed. Research: http://timkadlec.com/2012/04/media-query-asset-downloading-results/
+    &_img-container {
+        display: none;
+        line-height: 1;
+    }
+
+    // The small hero image container should scale proportionally to the image
+    // which is set as a background in the child .hero_img.
+    &_img-container__small {
+        .u-flexible-container();
+
+        & .hero_img {
+            .u-flexible-container_inner();
+        }
+    }
+
+    &_img {
+        display: block;
+        height: 100%;
+        line-height: 1;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .respond-to-max(659px, {
+        &_img-container__small {
+            .u-flexible-container-mixin(660,300);
+            display: block;
+        }
+    });
+
+    &_preview {
+        background: @white;
+        background: fade(@white, 90%);
+        padding: @grid_gutter-width @grid_gutter-width @grid_gutter-width + 10px;
+    }
+
+    .respond-to-min(660px, {
+        padding-top: unit(30px / @base-font-size-px, em);
+
+        &_wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        &_img-container__large {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            z-index: 1;
+        }
+
+        &_card {
+            .grid_column(6);
+            .grid_push(6);
+
+            a& {
+                // Columns that are links should not change border color when
+                // interacting with them.
+                border-color: transparent;
+            }
+        }
+    });
+
+    .respond-to-min(1024px, {
+        &_card {
+            .grid_column(4);
+            .grid_push(8);
+        }
+    });
+}
+
+
+/* topdoc
+  name: Share icon
+  family: cfgov-misc
+  patterns:
+    - name: .share-icon (base)
+      markup: |
+        <a class="share-icon" href="#">
+            <span class="cf-icon cf-icon-email-social-square"></span>
+            <span class="u-visually-hidden">
+                Share by email
+            </span>
+        </a>
+      notes:
+        - "Text for screenreaders is added with the .u-visually-hidden element."
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .share-icon
+            .cf-icon.cf-icon-name
+            .u-visually-hidden
+    - name: .share-icon__large (modifier)
+      markup: |
+        <a class="share-icon share-icon__large" href="#">
+            <span class="cf-icon cf-icon-email-social-square"></span>
+            <span class="u-visually-hidden">
+                Share by email
+            </span>
+        </a>
+      codenotes:
+        - .share-icon__large
+  tags:
+    - cfgov-misc
+*/
+
+.share-icon {
+    color: @darkgray;
+    font-size: unit(26px / @base-font-size-px, em);
+    line-height: 1;
+    .u-link__colors(@darkgray, @pacific-80);
+    .u-link__no-border();
+
+    &__large {
+        // 35px creates a 30px square icon.
+        font-size: unit(35px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
+  name: Line container
+  family: cfgov-misc
+  notes:
+    - ".line-container is meant to contain anything you want with consistent top
+      and bottom padding. It uses a margin collapsing trick in CSS to achieve
+      this consistency which this is why .line-container_body is needed. The
+      only caveat to this consistency is if you place something inside of it
+      that has a bottom-margin that is larger than the .line-container padding."
+  patterns:
+    - name: Basic line container
+      markup: |
+        <div class="line-container">
+            <div class="line-container_body">
+                <p>
+                    ¯\_(ツ)_/¯<br>
+                    There is a light border above and below me!
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .line-container
+            .line-container_body
+    - name: Line container with no top border or padding (example 1)
+      markup: |
+        <div class="line-container line-container__no-top">
+            <div class="line-container_body">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Blog summary
+                    </span>
+                </h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum ex provident dolorem ipsum molestias eius tenetur
+                    doloribus obcaecati illum autem! Fuga commodi natus
+                    distinctio accusantium esse ab dolore in aliquid.
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .line-container.line-container__no-top
+            .line-container_body
+    - name: Line container with no top border or padding (example 2)
+      markup: |
+        <div class="line-container">
+            <div class="line-container_body line-container__no-top">
+                <p>
+                    <img src="http://placekitten.com/700/200" alt="">
+                </p>
+                <h2>
+                    Photo heading
+                </h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolorum ex provident dolorem ipsum molestias eius tenetur
+                    doloribus obcaecati illum autem! Fuga commodi natus
+                    distinctio accusantium esse ab dolore in aliquid.
+                </p>
+            </div>
+        </div>
+  tags:
+    - cfgov-misc
+*/
+
+.line-container {
+    margin: 0 0 unit(30px / @base-font-size-px, em);
+    border-top: 1px solid @gray-20;
+    border-bottom: 1px solid @gray-20;
+
+    &_body {
+        // 26px is eyeballed to 30px when considering line heights of potential
+        // children.
+        margin: unit(26px / @base-font-size-px, em)
+                0
+                unit(26px / @base-font-size-px, em);
+    }
+
+    &__no-top {
+        border-top: 0;
+        .line-container_body {
+            margin-top: 0;
+        }
+    }
+}
+
+
+/* topdoc
+  name: Padded container
+  family: cfgov-misc
+  notes:
+    - ".padded-container is meant to contain anything you want with consistent
+      padding. It uses a margin collapsing trick in CSS to achieve this
+      consistency which this is why .line-container_body is needed. The only
+      caveat to this consistency is if you place something inside of it that has
+      a bottom-margin that is larger than the .padded-container padding."
+  patterns:
+    - name: Basic padded container
+      markup: |
+        <div class="padded-container">
+            <div class="padded-container_body">
+                <p>
+                    ¯\_(ツ)_/¯<br>
+                    There is padding all around me!
+                </p>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .padded-container
+            .padded-container_body
+  tags:
+    - cfgov-misc
+*/
+
+.padded-container {
+    margin-bottom: unit(30px / @base-font-size-px, em);
+    // Use pixels here, Opera doesn't like 1px represented as an em.
+    // Maybe it rounds down or something?
+    padding: 1px;
+    background: @gray-10;
+
+    &_body {
+        // 23px is eyeballed to 30px when considering line heights of potential
+        // children. One pixel has been taken off of each value to account for
+        // the 1px padding on the parent. This padding stops margin collapsing
+        // from extending outside of the padded box.
+        margin: unit(23px / @base-font-size-px, em)
+                unit(29px / @base-font-size-px, em)
+                unit(23px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
+  name: Character icons
+  family: cfgov-misc
+  notes:
+    - "A way to create icons that feature a single character on a circular
+       background. Useful because cf-icons does not have any of this type of
+       icon in its library. Typical use case would be to identify steps in a
+       process."
+  patterns:
+    - name: Default usage
+      markup: |
+        <h2 class="char-icon char-icon__1">This is the first thing</h2>
+  tags:
+    - cfgov-misc
+*/
+
+.char-icon {
+    &:before {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 1.5em;
+        height: 1.5em;
+        padding: 0.25em 0;
+        border-radius: 100%;
+        margin-right: 0.375em;
+
+        position: relative;
+        top: -( unit(1px / 13px, em) );
+
+        background: @green;
+        color: @white;
+        .webfont-medium();
+        font-size: percentage(13 / 14);
+        line-height: 1;
+        text-align: center;
+    }
+
+    &__1:before { content: '1'; }
+    &__2:before { content: '2'; }
+    &__3:before { content: '3'; }
+    &__4:before { content: '4'; }
+    &__5:before { content: '5'; }
+    &__6:before { content: '6'; }
+    &__7:before { content: '7'; }
+    &__8:before { content: '8'; }
+    &__9:before { content: '9'; }
+    &__0:before { content: '0'; }
+    &__A:before { content: 'A'; }
+    &__B:before { content: 'B'; }
+    &__C:before { content: 'C'; }
+    &__D:before { content: 'D'; }
+    &__E:before { content: 'E'; }
+    &__F:before { content: 'F'; }
+    &__G:before { content: 'G'; }
+    &__H:before { content: 'H'; }
+    &__I:before { content: 'I'; }
+    &__J:before { content: 'J'; }
+    &__K:before { content: 'K'; }
+    &__L:before { content: 'L'; }
+    &__M:before { content: 'M'; }
+    &__N:before { content: 'N'; }
+    &__O:before { content: 'O'; }
+    &__P:before { content: 'P'; }
+    &__Q:before { content: 'Q'; }
+    &__R:before { content: 'R'; }
+    &__S:before { content: 'S'; }
+    &__T:before { content: 'T'; }
+    &__U:before { content: 'U'; }
+    &__V:before { content: 'V'; }
+    &__W:before { content: 'W'; }
+    &__X:before { content: 'X'; }
+    &__Y:before { content: 'Y'; }
+    &__Z:before { content: 'Z'; }
+    &__a:before { content: 'a'; }
+    &__b:before { content: 'b'; }
+    &__c:before { content: 'c'; }
+    &__d:before { content: 'd'; }
+    &__e:before { content: 'e'; }
+    &__f:before { content: 'f'; }
+    &__g:before { content: 'g'; }
+    &__h:before { content: 'h'; }
+    &__i:before { content: 'i'; }
+    &__j:before { content: 'j'; }
+    &__k:before { content: 'k'; }
+    &__l:before { content: 'l'; }
+    &__m:before { content: 'm'; }
+    &__n:before { content: 'n'; }
+    &__o:before { content: 'o'; }
+    &__p:before { content: 'p'; }
+    &__q:before { content: 'q'; }
+    &__r:before { content: 'r'; }
+    &__s:before { content: 's'; }
+    &__t:before { content: 't'; }
+    &__u:before { content: 'u'; }
+    &__v:before { content: 'v'; }
+    &__w:before { content: 'w'; }
+    &__x:before { content: 'x'; }
+    &__y:before { content: 'y'; }
+    &__z:before { content: 'z'; }
+}
+
+
+/* topdoc
+  name: Step slugs
+  family: cfgov-misc
+  notes:
+    - "Styling for a slug that indicates a step in a process."
+  patterns:
+    - name: Embedded in a heading
+      markup: |
+        <h2>
+            <span class="step-slug char-icon char-icon__1">Step one</span>
+            Description of the step
+        </h2>
+      notes:
+        - "Useful when you want to include the slug text in the heading for the
+           purposes of visibility in the document outline."
+    - name: Standalone
+      markup: |
+        <h2 class="step-slug char-icon char-icon__1">Step one</h2>
+        <p>Description of the step</p>
+      notes:
+        - "Useful when the 'Step number' text itself serves as a heading."
+        - "Equivalent to the .char-icon default usage pattern, but with specific
+           styling for the text that follows."
+  tags:
+    - cfgov-misc
+*/
+
+.step-slug {
+    display: block;
+    margin-bottom: unit(15px / 14px, em);
+
+    color: @darkgray;
+    .webfont-demi();
+    font-size: 14px; // fallback for browsers that don't support rem units
+    // rem units needed because the main use case for this is within a heading
+    font-size: unit(14px / @base-font-size-px, rem);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

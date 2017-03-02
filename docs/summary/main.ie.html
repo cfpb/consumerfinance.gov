@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / summary docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / summary docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="summary" class="docs-component">
+      <h2 class="docs-component_header"><span>Summary</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default summary</h3>
+          <section class="docs-pattern_pattern">
+<article class="summary">
+    <header class="summary_header">
+        <h1 class="summary_heading">
+            Preventing illegal discrimination in auto lending
+        </h1>
+    </header>
+    <p class="summary_text">
+        Every year, millions of American families buy a car –
+        and it will be one of the most significant purchases they make.
+        One key priority for us is protecting consumers from the silent
+        pickpocket of discrimination.
+    </p>
+    <footer class="summary_footer">
+        <p class="summary_byline">
+            By Patrice Ficklin
+        </p>
+        <span class="summary_event-date">1/21/2015 @ 3:20 PM CST</span>
+    </footer>
+</article>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;summary&quot;&gt;
+    &lt;header class=&quot;summary_header&quot;&gt;
+        &lt;h1 class=&quot;summary_heading&quot;&gt;
+            Preventing illegal discrimination in auto lending
+        &lt;/h1&gt;
+    &lt;/header&gt;
+    &lt;p class=&quot;summary_text&quot;&gt;
+        Every year, millions of American families buy a car –
+        and it will be one of the most significant purchases they make.
+        One key priority for us is protecting consumers from the silent
+        pickpocket of discrimination.
+    &lt;/p&gt;
+    &lt;footer class=&quot;summary_footer&quot;&gt;
+        &lt;p class=&quot;summary_byline&quot;&gt;
+            By Patrice Ficklin
+        &lt;/p&gt;
+        &lt;span class=&quot;summary_event-date&quot;&gt;1/21/2015 @ 3:20 PM CST&lt;/span&gt;
+    &lt;/footer&gt;
+&lt;/article&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;summary\&amp;quot;&gt;\n    &lt;header class=\&amp;quot;summary_header\&amp;quot;&gt;\n        &lt;h1 class=\&amp;quot;summary_heading\&amp;quot;&gt;\n            Preventing illegal discrimination in auto lending\n        &lt;/h1&gt;\n    &lt;/header&gt;\n    &lt;p class=\&amp;quot;summary_text\&amp;quot;&gt;\n        Every year, millions of American families buy a car –\n        and it will be one of the most significant purchases they make.\n        One key priority for us is protecting consumers from the silent\n        pickpocket of discrimination.\n    &lt;/p&gt;\n    &lt;footer class=\&amp;quot;summary_footer\&amp;quot;&gt;\n        &lt;p class=\&amp;quot;summary_byline\&amp;quot;&gt;\n            By Patrice Ficklin\n        &lt;/p&gt;\n        &lt;span class=\&amp;quot;summary_event-date\&amp;quot;&gt;1/21/2015 @ 3:20 PM CST&lt;/span&gt;\n    &lt;/footer&gt;\n&lt;/article&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.summary
+  .summary_header
+      .summary_heading
+  .summary_text
+  .summary_footer
+      .summary_byline</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.summary {
+  display: block;
+}
+
+.summary_heading {
+  color: #101820;
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.95454545em;
+  font-size: 1.375em;
+  line-height: 1.27272727;
+  margin-bottom: 0.45454545em;
+}
+
+a:hover .summary_heading,
+a.hover .summary_heading,
+a:focus .summary_heading,
+a.focus .summary_heading {
+  color: #328ed8;
+}
+
+.summary_heading em,
+.summary_heading i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_heading em,
+.lt-ie9 .summary_heading i {
+  font-style: normal !important;
+}
+
+.summary_heading strong,
+.summary_heading b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_heading strong,
+.lt-ie9 .summary_heading b {
+  font-weight: normal !important;
+}
+
+.summary_heading {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.73076923em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+  margin-bottom: 0.34615385em;
+}
+
+.summary_heading em,
+.summary_heading i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_heading em,
+.lt-ie9 .summary_heading i {
+  font-style: normal !important;
+}
+
+.summary_heading strong,
+.summary_heading b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_heading strong,
+.lt-ie9 .summary_heading b {
+  font-weight: normal !important;
+}
+
+.summary_text {
+  margin-bottom: 0.625em;
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #43484e;
+}
+
+.summary_text em,
+.summary_text i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_text em,
+.lt-ie9 .summary_text i {
+  font-style: normal !important;
+}
+
+.summary_text strong,
+.summary_text b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_text strong,
+.lt-ie9 .summary_text b {
+  font-weight: normal !important;
+}
+
+.summary_footer {
+  color: #101820;
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.summary_footer em,
+.summary_footer i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_footer em,
+.lt-ie9 .summary_footer i {
+  font-style: normal !important;
+}
+
+.summary_footer strong,
+.summary_footer b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_footer strong,
+.lt-ie9 .summary_footer b {
+  font-weight: normal !important;
+}
+
+.summary_event-date {
+  color: #0072ce;
+}
+
+a:hover .summary_event-date,
+a.hover .summary_event-date,
+a:focus .summary_event-date,
+a.focus .summary_event-date {
+  color: #328ed8;
+}
+
+.summary &gt; *:last-child {
+  margin-bottom: 0;
+}
+
+.summary &gt; *:last-child &gt; *:last-child {
+  margin-bottom: 0;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="layouts" class="docs-component">
+      <h2 class="docs-component_header"><span>Layouts</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Two columns at large screen</h3>
+          <section class="docs-pattern_pattern">
+<article class="summary">
+    <h1 class="summary_header">
+        Preventing illegal discrimination in auto lending
+    </h1>
+    <div class="summary_cols">
+        <div class="summary_col">
+            <p class="summary_text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            </p>
+        </div>
+        <div class="summary_col">
+            <p class="summary_text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            </p>
+        </div>
+    </div>
+</article>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;summary&quot;&gt;
+    &lt;h1 class=&quot;summary_header&quot;&gt;
+        Preventing illegal discrimination in auto lending
+    &lt;/h1&gt;
+    &lt;div class=&quot;summary_cols&quot;&gt;
+        &lt;div class=&quot;summary_col&quot;&gt;
+            &lt;p class=&quot;summary_text&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;summary_col&quot;&gt;
+            &lt;p class=&quot;summary_text&quot;&gt;
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
+                praesentium eum eveniet accusamus ad provident neque. Earum numquam
+                tenetur voluptates adipisci expedita reiciendis libero fuga non quas
+                voluptatem nihil.
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;summary\&amp;quot;&gt;\n    &lt;h1 class=\&amp;quot;summary_header\&amp;quot;&gt;\n        Preventing illegal discrimination in auto lending\n    &lt;/h1&gt;\n    &lt;div class=\&amp;quot;summary_cols\&amp;quot;&gt;\n        &lt;div class=\&amp;quot;summary_col\&amp;quot;&gt;\n            &lt;p class=\&amp;quot;summary_text\&amp;quot;&gt;\n                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic\n                praesentium eum eveniet accusamus ad provident neque. Earum numquam\n                tenetur voluptates adipisci expedita reiciendis libero fuga non quas\n                voluptatem nihil.\n            &lt;/p&gt;\n        &lt;/div&gt;\n        &lt;div class=\&amp;quot;summary_col\&amp;quot;&gt;\n            &lt;p class=\&amp;quot;summary_text\&amp;quot;&gt;\n                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic\n                praesentium eum eveniet accusamus ad provident neque. Earum numquam\n                tenetur voluptates adipisci expedita reiciendis libero fuga non quas\n                voluptatem nihil.\n            &lt;/p&gt;\n        &lt;/div&gt;\n    &lt;/div&gt;\n&lt;/article&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.summary_cols
+  .summary_col</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.summary_col + .summary_col {
+  margin-top: 1.25em;
+}
+
+.summary_cols {
+  display: block;
+  position: relative;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.summary_col + .summary_col {
+  margin-top: 0;
+}
+
+.summary_col {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: solid transparent;
+  border-width: 0 15px;
+  margin-right: -0.25em;
+  vertical-align: top;
+  width: 50%;
+}
+
+.ie .summary_col {
+  margin-right: -0.26em;
+}
+
+.lt-ie8 .summary_col {
+  display: inline;
+  margin-right: 0;
+  zoom: 1;
+  behavior: url('/cfgov-refresh/static/vendor/box-sizing-polyfill/boxsizing.htc');
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="modifiers" class="docs-component">
+      <h2 class="docs-component_header"><span>Modifiers</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Large header</h3>
+          <section class="docs-pattern_pattern">
+<h1 class="summary_header summary_header__large">
+    Preventing illegal discrimination in auto lending
+</h1>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;h1 class=&quot;summary_header summary_header__large&quot;&gt;
+    Preventing illegal discrimination in auto lending
+&lt;/h1&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;h1 class=\&amp;quot;summary_header summary_header__large\&amp;quot;&gt;\n    Preventing illegal discrimination in auto lending\n&lt;/h1&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.summary_header__large</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Dark text</h3>
+          <section class="docs-pattern_pattern">
+<p class="summary_text summary_text__dark">
+    Every year, millions of American families buy a car –
+    and it will be one of the most significant purchases they make.
+    One key priority for us is protecting consumers from the silent
+    pickpocket of discrimination.
+</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p class=&quot;summary_text summary_text__dark&quot;&gt;
+    Every year, millions of American families buy a car –
+    and it will be one of the most significant purchases they make.
+    One key priority for us is protecting consumers from the silent
+    pickpocket of discrimination.
+&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p class=\&amp;quot;summary_text summary_text__dark\&amp;quot;&gt;\n    Every year, millions of American families buy a car –\n    and it will be one of the most significant purchases they make.\n    One key priority for us is protecting consumers from the silent\n    pickpocket of discrimination.\n&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.summary_text__dark</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Max-width text</h3>
+          <section class="docs-pattern_pattern">
+<p class="summary_text summary_text__max">
+    Every year, millions of American families buy a car –
+    and it will be one of the most significant purchases they make.
+    One key priority for us is protecting consumers from the silent
+    pickpocket of discrimination.
+</p>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;p class=&quot;summary_text summary_text__max&quot;&gt;
+    Every year, millions of American families buy a car –
+    and it will be one of the most significant purchases they make.
+    One key priority for us is protecting consumers from the silent
+    pickpocket of discrimination.
+&lt;/p&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;p class=\&amp;quot;summary_text summary_text__max\&amp;quot;&gt;\n    Every year, millions of American families buy a car –\n    and it will be one of the most significant purchases they make.\n    One key priority for us is protecting consumers from the silent\n    pickpocket of discrimination.\n&lt;/p&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.summary_text__max</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Optionally set a max-width on .summary_text to keep line lengths readable.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.summary_header__large {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.73076923em;
+  font-size: 1.625em;
+  line-height: 1.26923077;
+  margin-bottom: 0.61538462em;
+}
+
+.summary_header__large em,
+.summary_header__large i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_header__large em,
+.lt-ie9 .summary_header__large i {
+  font-style: normal !important;
+}
+
+.summary_header__large strong,
+.summary_header__large b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_header__large strong,
+.lt-ie9 .summary_header__large b {
+  font-weight: normal !important;
+}
+
+.summary_header__large {
+  font-family: &quot;AvenirNextLTW01-Regular&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.47058824em;
+  font-size: 2.125em;
+  line-height: 1.29411765;
+  margin-bottom: 0.32352941em;
+}
+
+.summary_header__large em,
+.summary_header__large i {
+  font-family: &quot;AvenirNextLTW01-Italic&quot;, Arial, sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.lt-ie9 .summary_header__large em,
+.lt-ie9 .summary_header__large i {
+  font-style: normal !important;
+}
+
+.summary_header__large strong,
+.summary_header__large b {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.lt-ie9 .summary_header__large strong,
+.lt-ie9 .summary_header__large b {
+  font-weight: normal !important;
+}
+
+.summary_text__dark {
+  color: #101820;
+}
+
+.summary_text__max {
+  max-width: 41em;
+}
+</code></pre>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>

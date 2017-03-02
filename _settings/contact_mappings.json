@@ -1,0 +1,68 @@
+{
+  "properties": {
+    "email": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "email_desc": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "email_2": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "email_2_desc": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "phone": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "phone_desc": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "sitewide_desc": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "fax": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "street": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "street_2": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "city": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "state": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "zip_code": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "addr_desc": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "web": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "web_desc": {
+      "type":  "string",
+      "store": "yes"
+    }
+  }
+}

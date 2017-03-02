@@ -1,0 +1,1576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bd59b230-847c-4240-8f3f-68fb253b0fe1" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/static/img/hero-large.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/static/img/hero-small.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/201402_cfpb_photo_richard-cordray_high-res.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/201402_cfpb_photo_richard-cordray_lo-res.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/201405_cfpb_photo_steve-antonakes_high-res.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/201405_cfpb_photo_steve-antonakes_lo-res.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/CFPB_2Tone_isolated_RGB_352.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/antonakes_round_360.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/cordray_round_360.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/screenshot.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/arrow_small_white_bottom.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/arrow_small_white_right.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/diag_texture.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/diagonal_texture.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/mortgage-sign-icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/paperclip_small.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/pdf.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/search_bg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/showhide_collapse.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/showhide_expand.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/us_flag_small.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/890bd988-5306-43ff-bd4b-922bc5ebdeb4.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.otf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/antonakes_round_360.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration_lg.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration_lg@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration_sm.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration_sm@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/chosen-sprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/chosen-sprite@2x.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/cordray_round_360.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/hero-large.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/hero-small.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/logo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/logo_sm-exec.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-rich-cordray/201410_cfpb_bio_cordray.pdf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-rich-cordray/cordray_round_90.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-rich-cordray/cordrays_corner.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-steve-antonakes/201410_cfpb_bio_antonakes.pdf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-steve-antonakes/antonakes_round_90.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/innovate.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/lead.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/obama_cordray.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/serve.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_defaults/mappings.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/article.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/category-slug.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/comments.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/contact-macro.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/email-subscribe-form.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/footer.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/header.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/hero.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/leadership-calendar-table.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/macros.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/nav-secondary.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/pdfreactor-footer.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/popular-stories.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/post-macros.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/posts-paginated.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/related-links.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/related-posts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/rss.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/sidenav.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/tags.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/upcoming-events.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/base.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/content-base-main-first.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/content-base-main-only.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/content-base-sidebar-first.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/content-base.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-1-3.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-2-1-bleedbar.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-2-1.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-full.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-side-nav.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/django_calendar_event_processor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_contact_processor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_history_processor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_initiative_processor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_office_processor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_orgmember_processor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_page_processor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_post_processor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_view_processor.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/archive.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/calendar_event.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/contact.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/history.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/initiative.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/newsroom.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/office.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/orgmember.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/posts.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/watchroom.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/blueprints.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/calendar_event_mappings.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/contact_mappings.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/history_mappings.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/lookups.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/orgmember_mappings.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/page_mappings.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/posts_mappings.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/processors.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/settings.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/environment.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/example-environment.cfg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/newsroom_filter.feature" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/base.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/navigation.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/newsroom.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/screenshot.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/utils.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/steps/steps_navigation.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/steps/steps_newsroom.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/fixtures/newsroom.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/fixtures/views.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/fixtures/watchroom.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/requirements.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/activity-log/_vars-activity-log.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/activity-log/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/blog/_single.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/blog/_vars-blog.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/blog/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/_vars-budget.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/financial-report/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/funding-request/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/performance-plan-report/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/strategic-plan/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/strategic-plan/interactive/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/_vars-contact-us.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/contact-list.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/general-inqueries.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/mailing-addresses.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/promoted-contacts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/submit-a-complaint.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/_vars-sheer-layouts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/content-base-main-first/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/content-base-sidebar-first/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/content-base/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/hero/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/jinja-content-blocks/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/layout-1-3/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/layout-2-1-bleedbar/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/layout-2-1/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/layout-side-nav/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/main.ie.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/static/docs/brackets.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/static/docs/docs.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/static/docs/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_future-block.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_process-block.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_process-future-footer.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_process-smbiz-footer.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_smbiz-block.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_vars-doing-business-with-us.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/future-requests/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/past-awards/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/small-businesses/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_event-landing-macros.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_event-post-macros.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_event.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_single.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_vars-events.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/archive/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/govdelivery-subscribe/error/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/govdelivery-subscribe/server-error/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/govdelivery-subscribe/success/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/_single.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/_vars-newsroom.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/featured-topic.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/_offices-index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/_offices-single.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/_vars-offices.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/students-2/_single.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/students-2/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/css/licensed-fonts.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/css/styles.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/js/functions.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/js/jquery-1.9.1.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/activity.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/beta.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/blog-docs.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/budget.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/bureau-structure.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/bureau.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/calendar-icon.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/cf-enhancements.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/contact-us.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/demo.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/event.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/footer.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/forms.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/header.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/history.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/lists.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.ie.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.ie.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/media-object.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/media.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/meta.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/misc.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/modification-date.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/nav-secondary.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/offices.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/pdfreactor-fonts.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/post.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/press-resources.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/print.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/summary.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/logo.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/logo_sm-exec.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/app.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/breakpoint-handler.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/content-slider.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.cf_input-split.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.cf_pagination.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.custom-input.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.custom-select.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.type-and-filter.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/main.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/box-sizing-polyfill/boxsizing.htc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/html5shiv/html5shiv-printshiv.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/requestNextAnimationFrame/requestNextAnimationFrame.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/slick-carousel/slick.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/slick-carousel/slick.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/_vars-the-bureau.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-rich-cordray/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-steve-antonakes/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/bureau-structure/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/bureau-structure/role-macro.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/history/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/leadership-calendar/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/leadership-calendar/print/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGELOG.md" afterPath="$PROJECT_DIR$/CHANGELOG.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/CONTRIBUTING.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gruntfile.js" afterPath="$PROJECT_DIR$/Gruntfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TERMS.md" afterPath="$PROJECT_DIR$/TERMS.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower.json" afterPath="$PROJECT_DIR$/bower.json" />
+    </list>
+    <ignored path="cfgov-refresh.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="cfgov-refresh" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="sauceless.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/browser_tests/sauceless.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test-results.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/browser_tests/reports/test-results.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jenkins_conf.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/browser_tests/jenkins_conf.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="795">
+              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bower.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bower.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CONTRIBUTING.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CONTRIBUTING.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gruntfile.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Gruntfile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="151">
+              <caret line="216" column="26" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="initial-data.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/initial-data.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TERMS.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TERMS.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-103">
+              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="291">
+              <caret line="232" column="30" selection-start-line="232" selection-start-column="30" selection-end-line="232" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="modificationStamps">
+      <map>
+        <entry key="$PROJECT_DIR$/../frogballs-plugin" value="1439581386000" />
+        <entry key="$PROJECT_DIR$/../jenkins" value="2938403822000" />
+        <entry key="$PROJECT_DIR$/../jenkins-automation" value="2901630172000" />
+        <entry key="$PROJECT_DIR$/../jenkins-automation-the-force" value="2899991925000" />
+        <entry key="$PROJECT_DIR$/../jenkins-migration" value="2894381797000" />
+        <entry key="$PROJECT_DIR$/../job-dsl-extension" value="2879742760000" />
+        <entry key="$PROJECT_DIR$/../job-dsl-gradle-example" value="1440701580000" />
+        <entry key="$PROJECT_DIR$/../job-dsl-plugin" value="4318596141000" />
+        <entry key="$PROJECT_DIR$/../operations-jenkins-automation" value="2926155190000" />
+        <entry key="$PROJECT_DIR$/../platform-ops-jenkins-automation" value="2926828572000" />
+      </map>
+    </option>
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/test/sauceless.js" />
+        <option value="$PROJECT_DIR$/frontend.sh" />
+        <option value="$PROJECT_DIR$/test/browser_tests/environment.js" />
+        <option value="$PROJECT_DIR$/test/browser_tests/sauceless.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/TERMS.md" />
+        <option value="$PROJECT_DIR$/README.md" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <gulpfiles>
+      <GulpfileState>
+        <gulpfile-path>$PROJECT_DIR$/gulpfile.js</gulpfile-path>
+      </GulpfileState>
+    </gulpfiles>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Bundled (Maven 3)" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="4" />
+    <option name="y" value="23" />
+    <option name="width" value="1306" />
+    <option name="height" value="877" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="1" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cfgov-refresh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cfgov-refresh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cfgov-refresh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cfgov-refresh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cfgov-refresh" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="js-jscs-nodeInterpreter" value="$USER_HOME$/.nvm/versions/node/v5.11.1/bin/node" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/browser_tests" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cfgov-refresh" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="passParentEnv" value="true" />
+      <setting name="launchBrowser" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Java Scratch" factoryName="Java Scratch">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SCRATCH_FILE_ID" value="0" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="cfgov-refresh" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cfgov-refresh" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PyLettuceRunConfigurationType" factoryName="Lettuce">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cfgov-refresh" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cfgov-refresh" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNGTestDiscovery" factoryName="TestNG Test Discovery" changeList="All">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <module name="cfgov-refresh" />
+      <method />
+    </configuration>
+    <configuration default="true" type="executeSpecs" factoryName="Gauge Execution">
+      <setting name="environment" value="" />
+      <setting name="specsToExecute" value="" />
+      <setting name="tags" value="" />
+      <setting name="parallelNodes" value="" />
+      <setting name="execInParallel" value="false" />
+      <setting name="programParameters" value="" />
+      <setting name="workingDirectory" value="" />
+      <setting name="moduleName" value="" />
+      <envMap />
+      <setting name="rowsRange" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cfgov-refresh" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cfgov-refresh" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cfgov-refresh" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cfgov-refresh" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cfgov-refresh" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bd59b230-847c-4240-8f3f-68fb253b0fe1" name="Default" comment="" />
+      <created>1487955434877</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1487955434877</updated>
+      <workItem from="1487955438861" duration="14439000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="14439000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="4" y="23" width="1306" height="877" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="CxGrid" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938075" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938075" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="CxPath" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22310127" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32938075" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="2" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ansible/cfgov_refresh_setup.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="10" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulp/tasks/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="257" column="30" selection-start-line="257" selection-start-column="9" selection-end-line="257" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulp/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-934">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulp/tasks/build.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulp/tasks/scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2205">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="104" column="28" selection-start-line="104" selection-start-column="28" selection-end-line="104" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-60">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/browser_tests/environment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/browser_tests/reports/test-results.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/browser_tests/jenkins_conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/browser_tests/sauceless.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore.orig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CHANGELOG.md.orig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bower.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CONTRIBUTING.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="232" column="30" selection-start-line="232" selection-start-column="30" selection-end-line="232" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TERMS.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-103">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="216" column="26" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/initial-data.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>groovy-2.4.4</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>cfgov-refresh</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3091954" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

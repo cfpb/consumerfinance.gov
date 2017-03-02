@@ -1,0 +1,94 @@
+
+{# ==========================================================================
+
+   render()
+
+   ==========================================================================
+
+   Description:
+
+   Render an article when given:
+
+   post:               The Sheer document that is available to a _single.html
+                       template. For example in events/_single.html the variable
+                       `event` is available and represents the event for the
+                       `_single` page.
+
+   path:               The path to which post filters are applies. For example,
+                       if the post is an event post then path should be '/events/'.
+                       Remember to leverage vars.path instead of using the
+                       literal string '/events/'. Path is used to create the
+                       filtered URL: {{ path }}?filter_tags={{ tag }}
+
+   ========================================================================== #}
+
+{% macro render(post, path) %}
+
+{% from "macros.html" import share as share %}
+
+<article class="post">
+    <header>
+        <h1 class="post_heading">
+            {{ post.title|safe }}
+        </h1>
+    {% if post.dek %}
+        <p class="post_dek">
+            {{ post.dek|safe }}
+        </p>
+    {% endif %}
+        <div class="modification-date date u-right">
+            <span>Updated</span>
+            <time datetime="{{ post.modified|date('%Y-%m-%dT%H:%M:%S.%f%z') }}">
+                {{ post.modified|date("%m/%d/%Y") }}
+            </time>
+        </div>
+        {{ share(post.title, false, {
+           'text':     post.twtr_text,
+           'related':  post.twtr_rel,
+           'language': post.twtr_lang,
+           'hashtags': post.twtr_hash
+        }) }}
+    {% if post.thumbnail.images %}
+        <img class="post_featured-img"
+             src="{{ post.thumbnail.images.full.url }}"
+             alt="{{ post.thumbnail.alt_text }}">
+    {% endif %}
+    {% from "_event-post-macros.html" import event_venue as event_venue %}
+    {{ event_venue(post) }}
+    </header>
+    <div class="post_body">
+        <aside class="post_inset post_inset__right line-container event-status">
+            <div class="line-container_body">
+                <p>
+                    <strong>This event requires an RSVP.</strong>
+                </p>
+                <p>
+                    <a href="mailto:reserve@cfpb.gov?subject=Event RSVP&body=To RSVP, please fill in your first and last name below and send this email.%0D%0A%0D%0AFirst name:%0D%0ALast name:" class="btn"><span class="btn_icon__left cf-icon cf-icon-email-social"></span> reserve@cfpb.gov</a>
+                </p>
+                <p>
+                    {# TODO Change to livestream icon when that's added to cf-icons. #}
+                    <span class="cf-icon cf-icon-wifi"></span>
+                    <strong>Available on Live stream.</strong>
+                </p>
+                <p class="event-meta">
+                    <span class="event-meta_description">
+                        Video link available
+                    </span>
+                    <time class="event-meta_datetime dt-start" datetime="2014-01-21 2:30 PM CST">
+                        <span class="event-meta_date">1/21/2014</span>
+                        <span class="event-meta_time">2:30 PM CST</span>
+                    </time>
+                </p>
+            </div>
+      </aside>
+      {{ post.content|safe }}
+    </div>
+{% if post.tags|length %}
+    <footer>
+        {%- import "tags.html" as tags %}
+        {{ tags.render(post.tags, path) }}
+    </footer>
+{% endif %}
+</article>
+
+{% endmacro %}

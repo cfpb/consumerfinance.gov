@@ -1,0 +1,441 @@
+/* ==========================================================================
+   cfgov-refresh
+   lists
+   ========================================================================== */
+
+/* topdoc
+  name: Lists
+  family: cfgov-lists
+  notes:
+    - "Note that modifiers are the most common use cases for this block, hence
+      the reason there are no direct styles associated with .list or .list_item."
+  patterns:
+    - name: Basic structure
+      markup: |
+        <ul class="list">
+            <li class="list_item">
+                <a class="list_link" href="#">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 3</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 4</a>
+            </li>
+        </ul>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .list
+            .list_item
+              .list_link
+    - name: List link
+      markup: |
+        <a class="list_link" href="#">List link</a>,&nbsp;
+        <span class="list_link">List link</span>
+      codenotes:
+        - .list_link
+      notes:
+        - "Notice that you can use any element for .list_link."
+  tags:
+    - cfgov-lists
+*/
+
+.list_link {
+    .webfont-medium();
+}
+
+
+/* topdoc
+  name: Unstyled list modifier
+  family: cfgov-lists
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__unstyled">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+        </ul>
+      codenotes:
+        - .list.list__unstyled
+  tags:
+    - cfgov-lists
+*/
+
+.list__unstyled {
+    padding-left: 0;
+    list-style-type: none;
+
+    // This is needed for dd elements.
+    .list_item {
+        margin-left: 0;
+    }
+}
+
+
+/* topdoc
+  name: Spaced list modifier
+  family: cfgov-lists
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__spaced">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+        </ul>
+      codenotes:
+        - .list.list__spaced
+  tags:
+    - cfgov-lists
+*/
+
+.list__spaced {
+    .list_item + .list_item {
+        margin-top: unit(24px / @base-font-size-px, em);
+    }
+}
+
+
+/* topdoc
+  name: Spaced list item modifier
+  family: cfgov-lists
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item list_item__spaced">
+                <a class="list_link">List item 3</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 4</a>
+            </li>
+        </ul>
+  tags:
+    - cfgov-lists
+*/
+
+.list_item__spaced {
+    margin-top: unit(24px / @base-font-size-px, em);
+}
+
+
+/* topdoc
+  name: Horizontal list modifier
+  family: cfgov-lists
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__horizontal">
+            <li class="list_item">
+                <a class="list_link">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link">List item 3</a>
+            </li>
+        </ul>
+  tags:
+    - cfgov-lists
+*/
+
+
+.list__horizontal {
+    padding-left: 0;
+
+    .list_item {
+        .u-inline-block();
+    }
+
+    .list_item {
+        // Assuming a natural space of 4px between inline block items
+        // then the space between would be 8px (4px natural + 4px added).
+        margin-right: unit(4px / @base-font-size-px, em);
+        margin-left: 0;
+    }
+}
+
+
+/* topdoc
+  name: Icon list modifier
+  family: cfgov-lists
+  notes:
+    - "Set up a list with icons on the left, in place of bullets."
+    - "Will need some more work to allow lines to wrap."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__icons">
+            <li class="list_item">
+                <span class="cf-icon cf-icon-email list_icon"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                List item 1
+            </li>
+            <li class="list_item">
+                <span class="cf-icon cf-icon-fax list_icon"></span>
+                List item 1
+            </li>
+        </ul>
+  tags:
+    - cfgov-lists
+*/
+
+
+.list__icons {
+    .list__unstyled();
+
+    .list_icon {
+        width: 1.5em;
+        text-align: center;
+    }
+}
+
+
+/* topdoc
+  name: Link list modifier
+  family: cfgov-lists
+  notes:
+    - "The link list modifier is intended to be used for lists where each item
+      is a link. It converts to a finger-friendly link with a large tap area
+      on smaller screens."
+  patterns:
+    - name: Default example
+      markup: |
+        <ul class="list list__links">
+            <li class="list_item">
+                <a class="list_link" href="#">List item 1</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 2</a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="#">List item 3</a>
+            </li>
+        </ul>
+    - name: Link list with icons
+      markup: |
+        <ul class="list list__links list__icons">
+            <li class="list_item">
+                <a class="list_link icon-link icon-link__before icon-link__email"
+                   href="#">
+                    <span class="icon-link_text">List item 1</span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link icon-link icon-link__before icon-link__phone"
+                   href="#">
+                    <span class="icon-link_text">List item 2</span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link icon-link icon-link__before icon-link__fax"
+                   href="#">
+                    <span class="icon-link_text">List item 3</span>
+                </a>
+            </li>
+        </ul>
+  tags:
+    - cfgov-lists
+*/
+
+
+.list__links {
+    .list__unstyled();
+
+    .list_item {
+        margin-bottom: unit(10x / @base-font-size-px, em);
+
+        .respond-to-max(599px, {
+            margin-bottom: -1px;
+        });
+    }
+
+    &.list__spaced .list_item + .list_item {
+        margin-top: 0;
+    }
+
+    .list_link {
+        .respond-to-max(599px, {
+            .block-link();
+
+            &.icon-link:after {
+                position: absolute;
+                margin-bottom: -0.625em;
+                right: 0;
+                bottom: 50%;
+                text-align: right;
+            }
+
+            .icon-link_text {
+                border-bottom-width: 0;
+            }
+        });
+    }
+
+    &.list__icons {
+        .list_link {
+            position: relative;
+            left: -0.125em; // adjust for optical alignment of icons
+        }
+
+        .icon-link:before,
+        .icon-link:after {
+            width: 1.125em;
+            text-align: center;
+        }
+    }
+}
+
+
+/* topdoc
+  name: Filtered-by list
+  family: cfgov-lists
+  notes:
+    - "A list of applied filters."
+    - "This pattern is subject to change. This initial style simply highlights
+      the filters that have been applied. In the future this pattern will evolve
+      so that each applied filter can be removed by clicking/tapping it."
+  patterns:
+    - name: Default example
+      markup: |
+        <dl class="filtered-by list list__horizontal">
+            <dt class="list_item">
+                <span class="filtered-by_header">Filtered by</span>
+            </dt>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet</span>
+            </dd>
+        </dl>
+    - name: Filters aligned with a button
+      markup: |
+        <a class="btn btn__secondary"
+           style="float:right;"
+           href="#">
+            Filter
+        </a>
+        <dl class="filtered-by filtered-by__align-with-btn list list__horizontal">
+            <dt class="list_item">
+                <span class="filtered-by_header">Filtered by</span>
+            </dt>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Lorem,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Ipsum,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Dolor,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Sit,</span>
+            </dd>
+            <dd class="list_item">
+                <span class="filtered-by_filter">Amet,</span>
+            </dd>
+        </dl>
+  tags:
+    - cfgov-lists
+*/
+
+
+.filtered-by {
+    margin: 0;
+
+    &_header {
+        .h5();
+        margin: 0;
+        color: @black;
+
+        .filtered-by__align-with-btn & {
+            .u-align-with-btn(@font-size);
+        }
+    }
+
+    &_filter {
+        .webfont-regular();
+        color: @gray;
+
+        .respond-to-print({
+            & {
+                .webfont-medium();
+                color: @black;
+            }            
+        });
+    }
+}
+
+
+/* topdoc
+  name: EOF
+  eof: true
+*/

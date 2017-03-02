@@ -1,0 +1,23 @@
+
+{% macro render(popular_posts) %}
+
+<div class="popular-stories">
+    <h1 class="header-slug">
+        <span class="header-slug_inner">
+            Popular stories
+        </span>
+    </h1>
+    <ul class="list list__unstyled list__spaced">
+    {% for slug in popular_posts %}
+        {% set pop_post = get_document('posts', slug) %}
+        <li class="list_item">
+            <a class="list_link"
+               href="{{ pop_post.permalink }}">
+                {{ pop_post.title|safe }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+
+{% endmacro %}

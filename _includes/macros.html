@@ -1,0 +1,217 @@
+{# ==========================================================================
+
+   share_twitter_url()
+
+   ==========================================================================
+
+   Description:
+
+   Builds a generic Twitter share URL when given nothing.
+
+   Builds a custom Twitter share URL when given:
+
+   options (optional): An object to use for customizing the content of a tweet.
+                       If left blank a generic tweet will be generated using the
+                       URL of the current page and ` via @CFPB`.
+
+   options.text:       Pre-populated text highlighted in the Tweet.
+                       https://dev.twitter.com/web/tweet-button/parameters
+
+   options.related:    A comma-separated list of accounts related to the content
+                       of the shared URI.
+                       https://dev.twitter.com/web/tweet-button/parameters
+
+   options.language:   Loads text components in the specified language.
+                       https://dev.twitter.com/web/tweet-button/parameters
+
+   options.hashtags:   A comma-separated list of hashtags to be appended to
+                       default Tweet text.
+                       https://dev.twitter.com/web/tweet-button/parameters
+
+   ========================================================================== #}
+
+{% macro share_twitter_url(options) %}
+    {% set share_twitter_url = "http://twitter.com/intent/tweet" %}
+    {% set share_twitter_url = share_twitter_url + "?url=" + request.url|urlencode %}
+    {% set share_twitter_url = share_twitter_url + "&amp;via=CFPB" %}
+    {% if options %}
+        {# If this is a options object, check for custom fields having been set #}
+        {% if options.text %}
+            {% set share_twitter_url = share_twitter_url + "&amp;text=" + options.text|urlencode + "%20--" %}
+        {% endif %}
+        {% if options.related %}
+            {% set share_twitter_url = share_twitter_url + "&amp;related=" + options.related %}
+        {% endif %}
+        {% if options.language %}
+            {% set share_twitter_url = share_twitter_url + "&amp;lang=" + options.language %}
+        {% endif %}
+        {% if options.hashtags %}
+            {% set share_twitter_url = share_twitter_url + "&amp;hashtags=" + options.hashtags %}
+        {% endif %}
+    {% endif %}
+    {{ share_twitter_url }}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   share()
+
+   ==========================================================================
+
+   Description:
+
+   Make share icons when given:
+
+   title:                      The title of the thing to share. Used by the
+                               'share via email'.
+
+   show_header (optional):     Toggles the heading. Defaults to false.
+
+   twitter_options (optional): See `options` under the `share_twitter_url()`
+                               macro.
+
+   ==========================================================================
+
+   Example:
+
+       {{ share('Title for email sharing', true,
+                { 'text': 'I can write my custom tweet text here' }) }}
+
+   ========================================================================== #}
+
+{% macro share(title, show_header=false, twitter_options={}) %}
+    <aside>
+    {% if show_header %}
+        <h1 class="h5">Share this page</h1>
+    {% endif %}
+        <ul class="post_share list__horizontal">
+            <li class="list_item">
+                <a class="share-icon"
+                   href="http://api.addthis.com/oexchange/0.8/forward/email/offer?url={{ request.url|urlencode }}&amp;title={{ title }}&amp;pubid=ra-4da354ee346886d2">
+                    <span class="cf-icon cf-icon-email-social-square"></span>
+                    <span class="u-visually-hidden">Share by email</span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="share-icon"
+                   href="https://www.facebook.com/dialog/share?app_id=210516218981921&amp;display=page&amp;href={{ request.url|urlencode }}&amp;redirect_uri={{ request.url|urlencode }}">
+                    <span class="cf-icon cf-icon-facebook-square"></span>
+                    <span class="u-visually-hidden">Share on Facebook</span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="share-icon"
+                   href="{{ share_twitter_url(twitter_options) }}"
+                   target="_blank">
+                    <span class="cf-icon cf-icon-twitter-square"></span>
+                    <span class="u-visually-hidden">Share on Twitter</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   format_phone()
+
+   ==========================================================================
+
+   Description:
+
+   Formats a phone number to:
+
+       (XXX) XXX-XXXX
+
+   when given:
+
+   number: A ten-digit string, no spaces.
+
+   ========================================================================== #}
+
+{% macro format_phone(number) %}
+    {%- for char in number -%}
+        {{- '(' if loop.index == 1 -}}
+        {{ char }}
+        {{- ') ' if loop.index == 3 -}}
+        {{- '-' if loop.index == 6 -}}
+    {%- endfor %}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   format_address()
+
+   ==========================================================================
+
+   Description:
+
+   Formats address to:
+
+       Line 1
+       Line 2 City, State Zip
+
+   when given:
+
+   contact: A contact document object.
+
+   ========================================================================== #}
+
+{% macro format_address(contact) %}
+    {{ contact.street if contact.street }}<br>
+    {{ contact.street_2 + '<br>'|safe if contact.street_2 }}
+    {{ contact.city + ',' if contact.city }}
+    {{ contact.state if contact.state }}
+    {{ contact.zip_code if contact.zip_code }}
+{% endmacro %}
+
+{# Format time to: `XX:XX a.m. &ndash; XX:XX p.m.` when given a date object #}
+{% macro format_time(datetime) %}
+    {{- datetime|date('%I:%M&nbsp;%p')|replace('PM', 'p.m.')|replace('AM', 'a.m.')|safe -}}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   string_length()
+
+   ==========================================================================
+
+   Description:
+
+   Get the length of a string after removing whitespace.
+   Macros can only return strings so you'll need to convert the value to an
+   integer using the `int` filter. The following example should return 6.
+
+       string_length('foo bar')|int
+
+   ========================================================================== #}
+
+{% macro string_length(string) %}
+    {{ string|replace('\n', '')|replace(' ', '')|list|length }}
+{% endmacro %}
+
+{# ==========================================================================
+
+   slugify()
+
+   ==========================================================================
+
+   Description:
+
+   Formats a string to:
+
+       'foo-bar'
+
+   when given:
+
+       'Foo Bar'
+
+   ========================================================================== #}
+
+{% macro slugify(string) -%}
+    {{ string|lower|replace(' ', '-') }}
+{%- endmacro %}

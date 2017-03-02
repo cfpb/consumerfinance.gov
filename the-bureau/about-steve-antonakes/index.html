@@ -1,0 +1,147 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-the-bureau.html" as vars with context %}
+{% set active_nav_id = 'about-steve-antonakes' %}
+
+{% block title -%}
+    About Steve Antonakes
+{%- endblock %}
+
+{% block desc -%}
+    About Steve Antonakes
+{%- endblock %}
+
+{% block content_main %}
+
+	{% from "macros.html" import share as share %}
+
+    <div class="block u-mt0">
+        <h1>
+            Deputy Director Steven Antonakes
+        </h1>
+        <p class="h3">
+            Steven L. Antonakes currently serves as the Deputy Director as well as the Associate Director for Supervision, Enforcement, and Fair Lending at the Consumer Financial Protection Bureau (CFPB).
+        </p>
+        <p>
+            <figure class="float-media rwd-crop">
+                <img class="rwd-crop_item"
+                     src="/newsroom/press-resources/201405_cfpb_photo_steve-antonakes_lo-res.jpg"
+                     width="155"
+                     alt="">
+            </figure>
+            He is responsible for the supervision of all banks and non-banks under the CFPB’s jurisdiction and the enforcement of federal consumer protection and fair lending laws. Mr. Antonakes previously served as the CFPB’s Assistant Director of Large Bank Supervision and was charged with establishing the consumer protection supervision program for the largest financial institutions in the country which collectively account for over 75 percent of the nation’s banking assets.
+        </p>
+        <p>
+            Mr. Antonakes began his professional career as an entry level bank examiner with the Commonwealth of Massachusetts Division of Banks in 1990. He later served in numerous managerial capacities before being appointed by successive Governors to serve as the Commissioner of Banks from December 2003 until November 2010, becoming only the second career bank examiner to ever serve in that capacity.
+        </p>
+        <p>
+            Mr. Antonakes also previously served as the first state voting member of the Federal Financial Institutions Examination Council (FFIEC), as the Vice Chairman of the Conference of State Bank Supervisors (CSBS), and as a founding member of the governing board of the Nationwide Mortgage Licensing System (NMLS). In March 2007, Mr. Antonakes received NeighborWorks America’s Government Service Award for his work in combatting foreclosures.
+        </p>
+        <p>
+            Mr. Antonakes received a Bachelor of Arts degree from Penn State University, a Masters of Business Administration from Salem State University, and a Doctorate of Philosophy in Law and Public Policy from Northeastern University.
+        </p>
+        {{ share(self.title(), true) }}
+    </div>
+
+    <section class="block block__padded-top block__padded-bottom block__border-top">
+        <div class="content-l content-l__main">
+            <div class="content-l_col content-l_col-1-2">
+                <div class="media">
+                    <div class="media_image-container media_image-container__wide-margin">
+                        <img src="antonakes_round_90.jpg" alt="" width="60">
+                    </div>
+                    <div class="media_body">
+                        <h1 class="h4 u-mb5">
+                            Downloads
+                        </h1>
+                        <ul class="list list__links">
+                            <li class="list_item">
+                                <a class="list_link jump-link jump-link__download"
+                                   href="/newsroom/press-resources/201405_cfpb_photo_steve-antonakes_high-res.jpg">
+                                    High-res photo
+                                </a>
+                            </li>
+                            <li class="list_item">
+                                <a class="list_link jump-link jump-link__download"
+                                   href="201410_cfpb_bio_antonakes.pdf">
+                                    Biography
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <h1 class="h4 u-mb5">
+                    Request speaking info
+                </h1>
+                <a class="styled-link"
+                   href="mailto:externalaffairs@cfpb.gov">
+                    <span class="cf-icon cf-icon-email"></span>
+                    externalaffairs@cfpb.gov
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <aside>
+
+        <section class="block block__padded-top block__border-top">
+            <h1 class="h2">
+                More information about Steve Antonakes
+            </h1>
+            <div class="content-l content-l__main">
+                <div class="content-l_col content-l_col-1-3">
+                    <h2 class="h5">
+                        <span class="cf-icon cf-icon-newspaper"></span>
+                        Newsroom
+                    </h2>
+                    <p class="short-desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita id minima ut nulla.
+                    </p>
+                    <a class="jump-link jump-link__right"
+                       href="/newsroom/?filter_author=Steve+Antonakes">
+                        Read news about the deputy director
+                    </a>
+                </div>
+                <div class="content-l_col content-l_col-1-3">
+                    <h2 class="h5">
+                        <span class="cf-icon cf-icon-newspaper"></span>
+                        Blogs
+                    </h2>
+                    <p class="short-desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita id minima ut nulla.
+                    </p>
+                    <a class="jump-link jump-link__right"
+                       href="/blog/?filter_author=Steve+Antonakes">
+                        Blogs with the deputy director
+                    </a>
+                </div>
+                <div class="content-l_col content-l_col-1-3">
+                    <h2 class="h5">
+                        <span class="cf-icon cf-icon-newspaper"></span>
+                        Calendar
+                    </h2>
+                    <p class="short-desc">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita id minima ut nulla.
+                    </p>
+                    <a class="jump-link jump-link__right"
+                       href="{{ vars.path + 'leadership-calendar/' }}">
+                        View Deputy Director Antonakes' calendar
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="block u-mb0">
+            {%- import "related-links.html" as related_links -%}
+            {{- related_links.render([
+                [ vars.path + 'about-rich-cordray/',
+                  'Learn about Director Richard Cordray' ],
+                [ vars.path + 'bureau-structure/',
+                  'Bureau organizational structure' ],
+            ]) -}}
+        </section>
+
+    </aside>
+
+{% endblock %}

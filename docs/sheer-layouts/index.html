@@ -1,0 +1,22 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-sheer-layouts.html" as vars with context %}
+
+{# Meta blocks #}
+{% block demo_title -%}
+    Layouts
+{%- endblock %}
+
+{% block title -%}
+    Layouts
+{%- endblock %}
+
+{% block desc -%}
+    A section showcasing the different layout templates available.
+{%- endblock %}
+
+{# Content blocks #}
+{% block content_main %}
+    <h1>Sheer layouts</h1>
+    <p class="short-desc">Use the navigation to the left to find the different layout templates available. Use the link below to view a page which shows the different content blocks that you can override.</p>
+    <a href="{{ vars.path }}content-blocks-html" class="jump-link">View the Content blocks page</a>
+{% endblock %}

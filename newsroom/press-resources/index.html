@@ -1,0 +1,258 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-newsroom.html" as vars with context %}
+{% set active_nav_id = 'press-resources' %}
+
+{% block title -%}
+    Press resources
+{%- endblock %}
+
+{% block desc -%}
+    Contact information and downloadable resources for members of the press.
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    <h1 class="u-visually-hidden">Press Resources</h1>
+
+    <section class="press-section press-contacts">
+
+        <h1 class="press-section_title press-contacts_title">Press contacts</h1>
+
+        <p class="press-section_intro press-contacts_intro">
+            We are committed to engaging with the public and members of the media regularly
+            with accurate and up-to-date information on our work. News media should use
+            this information to reach our Office of Communications. For other questions,
+            see <a href="/contact-us/">Contact Us</a>.
+        </p>
+
+        <ul class="press-contacts_main-contact-list list list__links list__icons">
+            <li class="list_item">
+                <a class="list_link" href="mailto:inquiries@cfpb.gov">
+                    <span class="cf-icon cf-icon-email list_icon"></span>
+                    press@consumerfinance.gov
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link" href="tel:2024357170">
+                    <span class="cf-icon cf-icon-phone list_icon"></span>
+                    (202) 435-7170
+                </a>
+            </li>
+        </ul>
+
+        <div class="press-contacts_people content-l content-l__main">
+
+            <section class="contact-person content-l_col-1-2">
+                <h1 class="contact-person_name">Jen Howard</h1>
+                <div class="contact-person_title">Assistant Director of Communications</div>
+                <ul class="contact-person_methods list list__unstyled">
+                    <li class="list_item">
+                        <a href="mailto:jennifer.howard@cfpb.gov">
+                            jennifer.howard@cfpb.gov
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="tel:2024357170">(202) 435-7170</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="contact-person content-l_col-1-2">
+                <h1 class="contact-person_name">Walter Suskind</h1>
+                <div class="contact-person_title">Press Assistant</div>
+                <ul class="contact-person_methods list list__unstyled">
+                    <li class="list_item">
+                        <a href="mailto:walter.suskind@cfpb.gov">
+                            walter.suskind@cfpb.gov
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="tel:2024359469">(202) 435-9469</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="contact-person content-l_col-1-2">
+                <h1 class="contact-person_name">Mallory McLean</h1>
+                <div class="contact-person_title">Regional Spokesperson</div>
+                <ul class="contact-person_methods list list__unstyled">
+                    <li class="list_item">
+                        <a href="mailto:mallory.mclean@cfpb.gov">
+                            mallory.mclean@cfpb.gov
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="tel:2024357955">(202) 435-7955</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="contact-person content-l_col-1-2">
+                <h1 class="contact-person_name">Moira Vahey</h1>
+                <div class="contact-person_title">Spokesperson</div>
+                <ul class="contact-person_methods list list__unstyled">
+                    <li class="list_item">
+                        <a href="mailto:moira.vahey@cfpb.gov">
+                            moira.vahey@cfpb.gov
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="tel:2024359151">(202) 435-9151</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="contact-person content-l_col-1-2">
+                <h1 class="contact-person_name">Sam Gilford</h1>
+                <div class="contact-person_title">Spokesperson</div>
+                <ul class="contact-person_methods list list__unstyled">
+                    <li class="list_item">
+                        <a href="mailto:samuel.gilford@cfpb.gov">
+                            samuel.gilford@cfpb.gov
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a href="tel:2024357673">(202) 435-7673</a>
+                    </li>
+                </ul>
+            </section>
+
+        </div> <!-- END .press-contacts_people.content-l -->
+
+    </section> <!-- END .press-section.press-contacts -->
+
+    <section class="press-section press-photos-bios">
+
+        <h1 class="press-section_title press-photos-bios_title">Photos and bios</h1>
+
+        <p class="press-section_intro">Our director is appointed by the president and
+            confirmed by the Senate. He heads a bureau of more than 1,200 people working for
+            American consumers. The CFPB works through six divisions, each headed by an
+            associate director.</p>
+
+        <div class="content-l content-l__main">
+
+            <section class="contact-person contact-person__director content-l_col-1-2">
+                <img class="contact-person_photo"
+                     src="cordray_round_360.jpg"
+                     alt=""
+                     width="180">
+                <div class="contact-person_title">Director</div>
+                <h1 class="contact-person_name">Richard Cordray</h1>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a class="list_link jump-link"
+                           href="/the-bureau/about-rich-cordray/">
+                            Biography
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link jump-link jump-link__download"
+                           href="201402_cfpb_photo_richard-cordray_high-res.jpg">
+                            High-res portrait
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link jump-link jump-link__download"
+                           href="201402_cfpb_photo_richard-cordray_low-res.jpg">
+                            Low-res portrait
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="contact-person contact-person__director content-l_col-1-2">
+                <img class="contact-person_photo"
+                     src="antonakes_round_360.jpg"
+                     alt=""
+                     width="180">
+                <div class="contact-person_title">Deputy Director</div>
+                <h1 class="contact-person_name">Steve Antonakes</h1>
+                <ul class="list list__links">
+                    <li class="list_item">
+                        <a class="list_link jump-link"
+                           href="/the-bureau/about-steve-antonakes/">
+                            Biography
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link jump-link jump-link__download"
+                           href="201405_cfpb_photo_steve-antonakes_high-res.jpg">
+                            High-res portrait
+                        </a>
+                    </li>
+                    <li class="list_item">
+                        <a class="list_link jump-link jump-link__download"
+                           href="201405_cfpb_photo_steve-antonakes_low-res.jpg">
+                            Low-res portrait
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
+        </div><!-- END .content-l -->
+
+        <a class="jump-link jump-link__large"
+           href="/the-bureau/bureau-structure/">
+            Find out more about our leadership
+        </a>
+
+    </section><!-- END .press-section.press-photos-bios -->
+
+    <section class="press-section press-logo">
+
+        <h1 class="press-section_title press-logo_title">Logo and usage</h1>
+
+        <div class="content-l content-l__main">
+
+            <p class="press-section_intro press-logo_intro content-l_col-2-3">
+                The CFPB logo was designed to symbolize vigilance, transparency, and
+                a consumer focus. Consumers are the foundation and focus of our mission and
+                our logo reflects that. A soft beam of light symbolizes our efforts to
+                illuminate the financial landscape and foster transparency in the
+                marketplace.</p>
+
+            <figure class="press-logo_logo">
+                <img src="CFPB_2Tone_isolated_RGB_352.png" alt="CFPB logo" width="176">
+            </figure>
+
+        </div><!-- END .content-l -->
+
+        <a class="jump-link jump-link__large"
+           href="https://cfpb.github.io/design-manual/identity/logo/">
+            Logo files and more in the CFPB Design Manual
+        </a>
+
+    </section><!-- END .press-section.press-logo -->
+
+    <aside class="block block__bg block__flush-sides u-mb0">
+        <div class="content-l content-l__main">
+            <section class="content-l_col content-l_col-1-2">
+                <h1 class="header-slug">
+                    <span class="header-slug_inner">
+                        Stay informed
+                    </span>
+                </h1>
+                <div class="block block__sub u-mt0">
+                    <p class="short-desc">
+                        Subscribe to our email newsletter. We will update you on new blogs.
+                    </p>
+                    {% import "email-subscribe-form.html" as subscribe with context %}
+                    {{ subscribe.render(vars.query) }}
+                </div>
+                <div class="block block__sub">
+                    {% import "rss.html" as rss %}
+                    {{ rss.render(vars.rss_path) }}
+                </div>
+            </section>
+            <section class="content-l_col content-l_col-1-2">
+                {% include "upcoming-events.html" %}
+            </section>
+        </div><!-- END .content-l -->
+    </aside><!-- END .block -->
+
+{% endblock %}

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / nav-secondary docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / nav-secondary docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="secondary-navigation" class="docs-component">
+      <h2 class="docs-component_header"><span>Secondary navigation</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default example</h3>
+          <section class="docs-pattern_pattern">
+<nav class="nav-secondary">
+    <button class="nav-secondary_link nav-secondary_link__button">
+        Item 1
+    </button>
+    <ul class="nav-secondary_list">
+        <li class="nav-secondary_item">
+            <a class="nav-secondary_link" href="#">
+               Item 1
+            </a>
+        </li>
+        <li class="nav-secondary_item">
+            <a class="nav-secondary_link nav-secondary_link__current" href="#">
+               Item 2
+            </a>
+        </li>
+        <li class="nav-secondary_item">
+            <a class="nav-secondary_link" href="#">
+               Item 3
+            </a>
+        </li>
+    </ul>
+</nav>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;nav class=&quot;nav-secondary&quot;&gt;
+    &lt;button class=&quot;nav-secondary_link nav-secondary_link__button&quot;&gt;
+        Item 1
+    &lt;/button&gt;
+    &lt;ul class=&quot;nav-secondary_list&quot;&gt;
+        &lt;li class=&quot;nav-secondary_item&quot;&gt;
+            &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
+               Item 1
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;nav-secondary_item&quot;&gt;
+            &lt;a class=&quot;nav-secondary_link nav-secondary_link__current&quot; href=&quot;#&quot;&gt;
+               Item 2
+            &lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;nav-secondary_item&quot;&gt;
+            &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
+               Item 3
+            &lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;nav class=\&amp;quot;nav-secondary\&amp;quot;&gt;\n    &lt;button class=\&amp;quot;nav-secondary_link nav-secondary_link__button\&amp;quot;&gt;\n        Item 1\n    &lt;/button&gt;\n    &lt;ul class=\&amp;quot;nav-secondary_list\&amp;quot;&gt;\n        &lt;li class=\&amp;quot;nav-secondary_item\&amp;quot;&gt;\n            &lt;a class=\&amp;quot;nav-secondary_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n               Item 1\n            &lt;/a&gt;\n        &lt;/li&gt;\n        &lt;li class=\&amp;quot;nav-secondary_item\&amp;quot;&gt;\n            &lt;a class=\&amp;quot;nav-secondary_link nav-secondary_link__current\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n               Item 2\n            &lt;/a&gt;\n        &lt;/li&gt;\n        &lt;li class=\&amp;quot;nav-secondary_item\&amp;quot;&gt;\n            &lt;a class=\&amp;quot;nav-secondary_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n               Item 3\n            &lt;/a&gt;\n        &lt;/li&gt;\n    &lt;/ul&gt;\n&lt;/nav&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.nav-secondary
+  .nav-secondary_link.nav-secondary_link__button
+  .nav-secondary_list
+    .nav-secondary_item
+      .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Current link modifier</h3>
+          <section class="docs-pattern_pattern">
+<a class="nav-secondary_link nav-secondary_link__current" href="#">
+   Current nav link
+</a>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;a class=&quot;nav-secondary_link nav-secondary_link__current&quot; href=&quot;#&quot;&gt;
+   Current nav link
+&lt;/a&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;a class=\&amp;quot;nav-secondary_link nav-secondary_link__current\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n   Current nav link\n&lt;/a&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.nav-secondary_link__current</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Current links are hidden on small screens and the link button is revealed.</li>
+              <li>Currentl links have a left green border on large screens.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Link button modifier</h3>
+          <section class="docs-pattern_pattern">
+<button class="nav-secondary_link nav-secondary_link__button">
+    Button nav link
+</button>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;button class=&quot;nav-secondary_link nav-secondary_link__button&quot;&gt;
+    Button nav link
+&lt;/button&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;button class=\&amp;quot;nav-secondary_link nav-secondary_link__button\&amp;quot;&gt;\n    Button nav link\n&lt;/button&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.nav-secondary_link__button</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>This modifier is only visible on smaller screens.</li>
+              <li>The button link modifier is used to convey the current link for small screens. It also acts as a toggle button when mixing this pattern with the expandable pattern.</li>
+              <li>The inline style is for demonstration purposes only and is needed because the modifier hides the element at larger screen size. Please do not use it in production.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Secondary nav mixed with cf-expandable</h3>
+          <section class="docs-pattern_pattern">
+<nav class="nav-secondary expandable">
+    <div class="expandable_header">
+        <button class="expandable_target
+                nav-secondary_link
+                nav-secondary_link__button">
+            <span class="expandable_header-left">
+                Item 2
+            </span>
+            <span class="expandable_header-right">
+                <span class="expandable_cue-open">
+                    <span class="cf-icon cf-icon-down cf-icon__green"></span>
+                </span>
+                <span class="expandable_cue-close">
+                    <span class="cf-icon cf-icon-up cf-icon__green"></span>
+                </span>
+            </span>
+        </button>
+    </div>
+    <div class="expandable_content">
+        <ul class="nav-secondary_list">
+            <li class="nav-secondary_item">
+                <a class="nav-secondary_link" href="#">
+                   Item 1
+                </a>
+            </li>
+            <li class="nav-secondary_item">
+                <a class="nav-secondary_link nav-secondary_link__current" href="#">
+                   Item 2
+                </a>
+            </li>
+            <li class="nav-secondary_item">
+                <a class="nav-secondary_link" href="#">
+                   Item 3
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;nav class=&quot;nav-secondary expandable&quot;&gt;
+    &lt;div class=&quot;expandable_header&quot;&gt;
+        &lt;button class=&quot;expandable_target
+                nav-secondary_link
+                nav-secondary_link__button&quot;&gt;
+            &lt;span class=&quot;expandable_header-left&quot;&gt;
+                Item 2
+            &lt;/span&gt;
+            &lt;span class=&quot;expandable_header-right&quot;&gt;
+                &lt;span class=&quot;expandable_cue-open&quot;&gt;
+                    &lt;span class=&quot;cf-icon cf-icon-down cf-icon__green&quot;&gt;&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span class=&quot;expandable_cue-close&quot;&gt;
+                    &lt;span class=&quot;cf-icon cf-icon-up cf-icon__green&quot;&gt;&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/span&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;expandable_content&quot;&gt;
+        &lt;ul class=&quot;nav-secondary_list&quot;&gt;
+            &lt;li class=&quot;nav-secondary_item&quot;&gt;
+                &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
+                   Item 1
+                &lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li class=&quot;nav-secondary_item&quot;&gt;
+                &lt;a class=&quot;nav-secondary_link nav-secondary_link__current&quot; href=&quot;#&quot;&gt;
+                   Item 2
+                &lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li class=&quot;nav-secondary_item&quot;&gt;
+                &lt;a class=&quot;nav-secondary_link&quot; href=&quot;#&quot;&gt;
+                   Item 3
+                &lt;/a&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;nav class=\&amp;quot;nav-secondary expandable\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;expandable_header\&amp;quot;&gt;\n        &lt;button class=\&amp;quot;expandable_target\n                nav-secondary_link\n                nav-secondary_link__button\&amp;quot;&gt;\n            &lt;span class=\&amp;quot;expandable_header-left\&amp;quot;&gt;\n                Item 2\n            &lt;/span&gt;\n            &lt;span class=\&amp;quot;expandable_header-right\&amp;quot;&gt;\n                &lt;span class=\&amp;quot;expandable_cue-open\&amp;quot;&gt;\n                    &lt;span class=\&amp;quot;cf-icon cf-icon-down cf-icon__green\&amp;quot;&gt;&lt;/span&gt;\n                &lt;/span&gt;\n                &lt;span class=\&amp;quot;expandable_cue-close\&amp;quot;&gt;\n                    &lt;span class=\&amp;quot;cf-icon cf-icon-up cf-icon__green\&amp;quot;&gt;&lt;/span&gt;\n                &lt;/span&gt;\n            &lt;/span&gt;\n        &lt;/button&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;expandable_content\&amp;quot;&gt;\n        &lt;ul class=\&amp;quot;nav-secondary_list\&amp;quot;&gt;\n            &lt;li class=\&amp;quot;nav-secondary_item\&amp;quot;&gt;\n                &lt;a class=\&amp;quot;nav-secondary_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n                   Item 1\n                &lt;/a&gt;\n            &lt;/li&gt;\n            &lt;li class=\&amp;quot;nav-secondary_item\&amp;quot;&gt;\n                &lt;a class=\&amp;quot;nav-secondary_link nav-secondary_link__current\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n                   Item 2\n                &lt;/a&gt;\n            &lt;/li&gt;\n            &lt;li class=\&amp;quot;nav-secondary_item\&amp;quot;&gt;\n                &lt;a class=\&amp;quot;nav-secondary_link\&amp;quot; href=\&amp;quot;#\&amp;quot;&gt;\n                   Item 3\n                &lt;/a&gt;\n            &lt;/li&gt;\n        &lt;/ul&gt;\n    &lt;/div&gt;\n&lt;/nav&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.nav-secondary.expandable
+  .expandable_header
+    .expandable_target.nav-secondary_link.nav-secondary_link__button
+      .expandable_header-left
+      .expandable_header-right
+        .expandable_cue-open
+          .cf-icon.cf-icon-down.cf-icon__green
+        .expandable_cue-close
+          .cf-icon.cf-icon-up.cf-icon__green
+  .expandable_content
+    .nav-secondary_list
+      .nav-secondary_item
+        .nav-secondary_link / .nav-secondary_link.nav-secondary_link__current</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.nav-secondary {
+  margin-bottom: 1.875em;
+}
+
+.nav-secondary_list {
+  margin: 0;
+  padding: 0;
+}
+
+.nav-secondary_item {
+  list-style: none;
+}
+
+.nav-secondary_item + .nav-secondary_item {
+  margin-top: 10px;
+}
+
+.nav-secondary_link {
+  display: inline-block;
+  padding: 0.27777778em 0.83333333em;
+  border-left-style: solid;
+  border-left-width: 5px;
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.125em;
+  color: #0072ce;
+  border-color: transparent;
+}
+
+.lt-ie9 .nav-secondary_link {
+  font-weight: normal !important;
+}
+
+.nav-secondary_link:visited,
+.nav-secondary_link.visited {
+  border-color: transparent;
+  color: #0072ce;
+}
+
+.nav-secondary_link:hover,
+.nav-secondary_link.hover {
+  border-color: #2cb34a;
+  color: #101820;
+}
+
+.nav-secondary_link:focus,
+.nav-secondary_link.focus {
+  border-color: #2cb34a;
+  color: #101820;
+}
+
+.nav-secondary_link:active,
+.nav-secondary_link.active {
+  border-color: #2cb34a;
+  color: #101820;
+}
+
+.nav-secondary_link__current {
+  color: #101820;
+  border-color: #2cb34a;
+}
+
+.nav-secondary_link__current:visited,
+.nav-secondary_link__current.visited {
+  border-color: #2cb34a;
+  color: #101820;
+}
+
+.nav-secondary_link__current:hover,
+.nav-secondary_link__current.hover {
+  border-color: #2cb34a;
+  color: #101820;
+}
+
+.nav-secondary_link__current:focus,
+.nav-secondary_link__current.focus {
+  border-color: #2cb34a;
+  color: #101820;
+}
+
+.nav-secondary_link__current:active,
+.nav-secondary_link__current.active {
+  border-color: #2cb34a;
+  color: #101820;
+}
+
+.nav-secondary_link__button {
+  width: 100%;
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.lt-ie9 .nav-secondary_link__button {
+  font-weight: normal !important;
+}
+
+.nav-secondary_link__button:focus {
+  outline: thin dotted;
+}
+
+.nav-secondary_link__button {
+  display: none;
+}
+
+.nav-secondary .cf-icon__green {
+  color: #2cb34a;
+}
+
+.nav-secondary .expandable_header {
+  overflow: visible;
+}
+
+.nav-secondary .expandable_content {
+  padding: 0;
+}
+</code></pre>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>

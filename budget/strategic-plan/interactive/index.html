@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% set page = get_document('pages', '22193') %}
+
+{% block title -%}
+    {{ page.title|safe }}
+{%- endblock %}
+
+{% block desc -%}
+    {{ page.title|safe }}
+{%- endblock %}
+
+{# This page is not responsive so let's leave out the viewport attribute. #}
+{% block meta_viewport %}{% endblock meta_viewport %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static-legacy/css/licensed-fonts.css">
+    <link rel="stylesheet" href="/static-legacy/css/styles.css">
+{% endblock %}
+
+{% block body %}
+<!--
+    ===================
+    PAGE-SPECIFIC NOTES
+    ===================
+    - #maincontent and .page are the wrappers needed to center the content with
+      a white background.
+    - page.content contains JS that references jQuery, hence the reason for
+      including jQuery here instead of at the bottom of <body>.
+    - #footer is needed for the sticky nav calculations.
+-->
+    <main id="maincontent">
+        <div class="page">
+            <script src="/static-legacy/js/jquery-1.9.1.min.js"></script>
+            {{ page.content }}
+        </div>
+        <div id="footer"></div>
+    </main>
+{% endblock %}
+
+{% block javascript %}
+    <script src="/static-legacy/js/functions.js"></script>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-sheer-layouts.html" as vars with context %}
+{% import "post-macros.html" as post_macros with context %}
+
+{# Variables #}
+
+{% set active_nav_id = "hero" -%}
+{% set view = get_document("views", "blog") %}
+
+{# Block overrides #}
+
+{% block demo_title -%}
+    Hero
+{%- endblock %}
+
+{% block title -%}
+    Hero
+{%- endblock %}
+
+{% block desc -%}
+    An example of using hero.html
+{%- endblock %}
+
+{% block hero %}
+    {% import "hero.html" as hero with context %}
+    {% set hero_content_home = {
+        'title': 'Example hero',
+        'content': 'Want to know what it takes to be a hero? It\'s easy, just import the hero macro and pass it an object representing hero content. Read more below.',
+        'custom_fields': {
+            'link': ['#hero-macro'],
+            'background_color': ['#ccdfdf'],
+            'desktop_image': ['/static/img/beta-illustration_lg.png'],
+            'mobile_image': ['/static/img/beta-illustration_sm.png']
+        }
+    } %}
+    {{ hero.render(hero_content_home) }}
+{% endblock %}
+
+{% block content_main %}
+    <div id="hero-macro">
+        <h1 class="u-mb0">Using the hero macro</h1>
+        <div class="block block__sub">
+            <h2>
+                <span class="step-slug char-icon char-icon__1">Step one</span>
+            </h2>
+            <pre><code class="inline-code">{% raw -%}
+{% import "hero.html" as hero with context %}
+            {%- endraw %}</code></pre>
+        </div>
+        <div class="block block__sub">
+            <h2>
+                <span class="step-slug char-icon char-icon__2">Step two</span>
+            </h2>
+            <pre><code class="inline-code">{% raw -%}
+{% block hero %}
+    {{ hero.render({...}) }}
+{% endblock %}
+            {%- endraw %}</code></pre>
+            <p class="short-desc">
+                Add the hero block to your template and call <code class="inline-code">hero.render()</code> passing it an object of hero data.
+            </p>
+        </div>
+    </div>
+    <div id="hero-data">
+        <h1>Hero data</h1>
+        <p class="short-desc">
+            TODO: simplify this to remove the custom fields property and so we don't have to access the first item in an array.
+        </p>
+        <div class="block__sub">
+            <p><code class="inline-code">title (string)</code></p>
+        </div>
+        <div class="block__sub">
+            <p><code class="inline-code">content (string)</code></p>
+            <p class="short-desc">
+                Tags will be stripped.
+            </p>
+        </div>
+        <div class="block__sub">
+            <p><code class="inline-code">custom_fields.link (array)</code></p>
+            <p class="short-desc">
+                Only the first item in the array will be used.
+            </p>
+        </div>
+        <div class="block__sub">
+            <p><code class="inline-code">custom_fields.background_color (array)</code></p>
+            <p class="short-desc">
+                Only the first item in the array will be used.
+            </p>
+        </div>
+        <div class="block__sub">
+            <p><code class="inline-code">custom_fields.mobile_image (array)</code></p>
+            <p class="short-desc">
+                Only the first item in the array will be used.
+            </p>
+        </div>
+        <div class="block__sub">
+            <p><code class="inline-code">custom_fields.desktop_image (array)</code></p>
+            <p class="short-desc">
+                Only the first item in the array will be used.
+            </p>
+        </div>
+        <div class="block__sub">
+            <p><code class="inline-code">related_post (string)</code></p>
+            <p class="short-desc">
+                A post slug. The hero macro will look up the post by it's slug and pull in some relevant data to use.
+            </p>
+        </div>
+    </div>
+    <div id="hero-wp">
+        <h1>The hero post type in WordPress</h1>
+        <p class="short-desc">
+            In WordPress there is a custom "hero" post type. Currently heroes aren't indexed, but
+            views are, and they may have related heroes. Here's an example of getting the hero data
+            from the Blog view:
+        </p>
+        <pre><code class="inline-code">{% raw -%}
+{% set view = get_document('views', 'blog') %}
+{% if view.hero %}
+    {% set hero = view.hero %}
+{% endif %}
+        {%- endraw %}</code></pre>
+    </div>
+{% endblock %}

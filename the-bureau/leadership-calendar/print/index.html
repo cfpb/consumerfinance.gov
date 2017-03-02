@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title -%}
+    Leadership calendar
+{%- endblock %}
+
+{% block desc -%}
+    Leadership calendar
+{%- endblock %}
+
+{% block css %}
+    {{ super() }}
+    {% import "pdfreactor-footer.html" as pdfreactor_footer %}
+    {{ pdfreactor_footer.render('consumerfinance.gov/the-bureau/leadership-calendar') }}
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block body %}
+
+    {% from "post-macros.html" import active_filters as active_filters with context %}
+    {% import "leadership-calendar-table.html" as calendar %}
+
+    <main class="content print" id="main" role="main">
+        <div class="content_wrapper">
+            <div class="content_main">
+                <div class="print-header">
+                    {% set query = queries.calendar_event -%}
+                    {%- set posts = query.search_with_url_arguments(size=20000) -%}
+                    <h1 class="superheader">Leadership Calendar</h1>
+                    {{ active_filters(posts, ['calendar', 'range_date'], {
+                        'show_filters_label': false, 'show_unfiltered_count': true
+                    }) }}
+                </div>
+                {{ calendar.render(posts, {
+                    'time_col_classes': 'u-w30pct',
+                    'name_col_classes': 'u-w30pct',
+                    'desc_col_classes': 'u-w40pct'
+                }) }}
+            </div>
+        </div><!-- END .wrapper -->
+    </main><!-- END .content -->
+
+{% endblock body %}

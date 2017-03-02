@@ -1,0 +1,41 @@
+{
+  "properties": {
+    "title": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "text": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "date": {
+      "type":  "date",
+      "store": "yes"
+    },
+    "category": {
+      "type":  "string",
+      "index": "not_analyzed"
+    },
+    "author": {
+      "type":  "string",
+      "index": "not_analyzed"
+    },
+    "tags": {
+      "type":  "string",
+      "store": "yes",
+      "index": "not_analyzed"
+    },
+    "excerpt": {
+      "type":  "string",
+      "store": "yes"
+    },
+    "custom_fields": {
+      "properties": {
+        "display_in_newsroom": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
+      }
+    }
+  }
+}

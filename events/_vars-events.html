@@ -1,0 +1,171 @@
+
+{% set path = '/events/' %}
+{% set rss_path = '/feed/events/' %}
+{% set nav_items = [
+    (path, 'index', 'Upcoming events and field hearings'),
+    (path + 'archive/', 'archive', 'Archive')
+]
+%}
+
+{# TODO Remove mock object for events when backend data is available. #}
+{% set mock_event =
+{
+  'taxonomy_post_format': [],
+  'attachments': [],
+  'excerpt': 'THIS IS THE EXCERPT Today, we’re posting a semi-annual update of our rulemaking agenda.',
+  'taxonomy_author': [],
+  'id': 61737.0,
+  'custom_fields': {},
+  'category': ['Announcements & updates'],
+  'author': ['Jane Doe'],
+  'taxonomy_post_tag': [],
+  'content': '<p>
+                  THIS IS THE CONTENT Lorem ipsum dolor sit amet,
+                  consectetur adipisicing elit.
+                  Cum corrupti tempora nam nihil qui mollitia consectetur
+                  corporis nemo culpa dolorum! Laborum at eos deleniti
+                  consequatur itaque officiis debitis quisquam! Provident!
+              </p>
+              <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Cum corrupti tempora nam nihil qui mollitia consectetur
+                  corporis nemo culpa dolorum! Laborum at eos deleniti
+                  consequatur itaque officiis debitis quisquam! Provident!
+              </p>
+              <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Cum corrupti tempora nam nihil qui mollitia consectetur
+                  corporis nemo culpa dolorum! Laborum at eos deleniti
+                  consequatur itaque officiis debitis quisquam! Provident!
+              </p>',
+  'comment_count': 0.0,
+  'categories': [],
+  'type': 'posts',
+  'thumbnail': {},
+  'status': 'publish',
+  'twtr_rel': 'anselmbradford',
+  'parent': 0.0,
+  'tags': [
+    'Debt collection',
+    'Mortgages',
+    'Payday loans',
+    'Regulations',
+    'Rulemaking'
+  ],
+  'taxonomy_fj_category': [],
+  'taxonomy_category': [],
+  'date': '2014-05-23',
+  'twtr_text': 'This is an example tweet',
+  'slug': 'spring-2014-rulemaking-agenda',
+  'comment_status': 'open',
+  'title_plain': 'TITLE PLAIN Spring 2014 rulemaking agenda',
+  'url': 'http://consumerfinance.gov/blog/spring-2014-rulemaking-agenda/',
+  'title': 'TITLE Spring 2014 rulemaking agenda',
+  'modified': '2014-10-20',
+  'twtr_hash': 'hashtag',
+  'dek': 'THIS IS THE DEK Portions of the Unified Agenda are published in the Federal Register, and the full set of materials is also available.',
+  '_id': 'spring-2014-rulemaking-agenda',
+  'order': 0.0,
+  'agenda': [
+    {
+      'dtstart': '10:00 a.m.',
+      'dtend': '10:30 a.m.',
+      'summary': 'Welcome and meeting overview',
+      'location': {
+        'street': '7000 Dandini Blvd.',
+        'city': 'Reno',
+        'state': 'Nevada',
+        'zip': 89512,
+      },
+      'speakers': [
+        {
+          'name': 'Steve Antonakes',
+          'position': 'Deputy Director',
+          'url': '/the-bureau/about-steve-antonakes/'
+        },
+        {
+          'name': 'Zixta Martinez',
+          'position': 'Associate Director, External Affairs',
+          'url': null
+        }
+      ]
+    },
+    {
+      'dtstart': '10:30 a.m.',
+      'dtend': '11:30 a.m.',
+      'summary': 'Title XIV Mortgage Rules, Trends and Themes in the Marketplace',
+      'location': {
+        'street': '7000 Dandini Blvd.',
+        'city': 'Reno',
+        'state': 'Nevada',
+        'zip': 89512,
+      },
+      'speakers': [
+        {
+          'name': 'Abhishek Agarwal',
+          'position': 'Acting Assistant Director, Mortgage Markets',
+          'url': null
+        },
+        {
+          'name': 'Brian Webster',
+          'position': 'Program Manager, Mortgage Markets',
+          'url': null
+        }
+      ]
+    },
+    {
+      'dtstart': '11:30 a.m.',
+      'dtend': '12:30 p.m.',
+      'summary': 'Title XIV Mortgage Rules, Trends and Themes in the Marketplace',
+      'location': {
+        'street': '7000 Dandini Blvd.',
+        'city': 'Reno',
+        'state': 'Nevada',
+        'zip': 89512,
+      },
+      'speakers': [
+        {
+          'name': 'Steve Antonakes',
+          'position': 'Deputy Director',
+          'url': '/the-bureau/about-steve-antonakes/'
+        }
+      ]
+    },
+    {
+      'dtstart': '12:30 p.m.',
+      'dtend': '1:15 p.m.',
+      'summary': 'Question & answer session with panel',
+      'location': {
+        'street': '7000 Dandini Blvd.',
+        'city': 'Reno',
+        'state': 'Nevada',
+        'zip': 89512,
+      },
+      'speakers': [
+        {
+          'name': 'Steve Antonakes',
+          'position': 'Deputy Director',
+          'url': '/the-bureau/about-steve-antonakes/'
+        }
+      ]
+    }
+
+  ],
+}
+%}
+
+{# TODO Once the events post type is created,
+the following needs to be added to `_settings/lookups.json`.
+
+  "event": {
+    "url":       "/events/<id>/",
+    "type":      "events",
+    "permalink": true
+  }
+
+#}
+
+
+{# Temp using blog query to render the signup form #}
+{% set query = queries.posts %}
+{% set events = query.search_with_url_arguments(size=10) %}

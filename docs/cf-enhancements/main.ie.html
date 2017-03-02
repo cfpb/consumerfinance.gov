@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / cf-enhancements docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / cf-enhancements docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="code-styles" class="docs-component">
+      <h2 class="docs-component_header"><span>Code styles</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.inline-code</h3>
+          <section class="docs-pattern_pattern">
+<code class="inline-code">code { color: red; }</code>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;code class=&quot;inline-code&quot;&gt;code { color: red; }&lt;/code&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;code class=\&amp;quot;inline-code\&amp;quot;&gt;code { color: red; }&lt;/code&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.inline-code {
+  display: inline-block;
+  padding: 0.21428571em 0.35714286em;
+  border-radius: 4px;
+  background: #f1f2f2;
+  color: #101820;
+  font-size: 0.875em;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="width-utilities" class="docs-component">
+      <h2 class="docs-component_header"><span>Width utilities</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Percent-based</h3>
+          <section class="docs-pattern_pattern">
+<div class="u-w95pct" style="background: #DBEDD4; margin-bottom: 1px;">
+    <code>.u-w95pct</code>
+</div>
+<div class="u-w85pct" style="background: #DBEDD4; margin-bottom: 1px;">
+    <code>.u-w85pct</code>
+</div>
+<div class="u-w65pct" style="background: #DBEDD4; margin-bottom: 1px;">
+    <code>.u-w65pct</code>
+</div>
+<div class="u-w55pct" style="background: #DBEDD4; margin-bottom: 1px;">
+    <code>.u-w55pct</code>
+</div>
+<div class="u-w45pct" style="background: #DBEDD4; margin-bottom: 1px;">
+    <code>.u-w45pct</code>
+</div>
+<div class="u-w35pct" style="background: #DBEDD4; margin-bottom: 1px;">
+    <code>.u-w35pct</code>
+</div>
+<div class="u-w15pct" style="background: #DBEDD4; margin-bottom: 1px;">
+    <code>.u-w15pct</code>
+</div>
+<div class="u-w5pct" style="background: #DBEDD4; margin-bottom: 1px;">
+    <code>.u-w5pct</code>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;u-w95pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
+    &lt;code&gt;.u-w95pct&lt;/code&gt;
+&lt;/div&gt;
+&lt;div class=&quot;u-w85pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
+    &lt;code&gt;.u-w85pct&lt;/code&gt;
+&lt;/div&gt;
+&lt;div class=&quot;u-w65pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
+    &lt;code&gt;.u-w65pct&lt;/code&gt;
+&lt;/div&gt;
+&lt;div class=&quot;u-w55pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
+    &lt;code&gt;.u-w55pct&lt;/code&gt;
+&lt;/div&gt;
+&lt;div class=&quot;u-w45pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
+    &lt;code&gt;.u-w45pct&lt;/code&gt;
+&lt;/div&gt;
+&lt;div class=&quot;u-w35pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
+    &lt;code&gt;.u-w35pct&lt;/code&gt;
+&lt;/div&gt;
+&lt;div class=&quot;u-w15pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
+    &lt;code&gt;.u-w15pct&lt;/code&gt;
+&lt;/div&gt;
+&lt;div class=&quot;u-w5pct&quot; style=&quot;background: #DBEDD4; margin-bottom: 1px;&quot;&gt;
+    &lt;code&gt;.u-w5pct&lt;/code&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;u-w95pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w95pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w85pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w85pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w65pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w65pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w55pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w55pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w45pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w45pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w35pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w35pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w15pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w15pct&lt;/code&gt;\n&lt;/div&gt;\n&lt;div class=\&amp;quot;u-w5pct\&amp;quot; style=\&amp;quot;background: #DBEDD4; margin-bottom: 1px;\&amp;quot;&gt;\n    &lt;code&gt;.u-w5pct&lt;/code&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>Inline styles are for demonstration purposes only, please don't use them.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.u-w95pct {
+  width: 95%;
+}
+
+.u-w85pct {
+  width: 85%;
+}
+
+.u-w65pct {
+  width: 65%;
+}
+
+.u-w55pct {
+  width: 55%;
+}
+
+.u-w45pct {
+  width: 45%;
+}
+
+.u-w35pct {
+  width: 35%;
+}
+
+.u-w15pct {
+  width: 15%;
+}
+
+.u-w5pct {
+  width: 5%;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="respond-to-print-(mixin)" class="docs-component">
+      <h2 class="docs-component_header"><span>respond-to-print() (mixin)</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>This mixin allows us to easily write styles that target both `@media print` and `.print`.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Usage</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>// Example Less
+.example {
+    color: @gray;
+
+    .respond-to-print({
+        color: @black;
+    });
+}
+
+// Exports to
+.example {
+    color: #75787B;
+}
+@media print {
+    .example {
+        color: #101820;
+    }
+}
+.print .example {
+    color: #101820;
+}</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div id="superheader-print-styles" class="docs-component">
+      <h2 class="docs-component_header"><span>Superheader print styles</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.superheader</h3>
+          <section class="docs-pattern_pattern">
+<div class="print">
+    <h1 class="superheader">
+        A big green header
+    </h1>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div class=&quot;print&quot;&gt;
+    &lt;h1 class=&quot;superheader&quot;&gt;
+        A big green header
+    &lt;/h1&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div class=\&amp;quot;print\&amp;quot;&gt;\n    &lt;h1 class=\&amp;quot;superheader\&amp;quot;&gt;\n        A big green header\n    &lt;/h1&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+@media print {
+  .superheader {
+    color: #2cb34a;
+  }
+}
+
+.print .superheader {
+  color: #2cb34a;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="centered-on-mobile-utility" class="docs-component">
+      <h2 class="docs-component_header"><span>Centered on mobile utility</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.u-centered-on-mobile</h3>
+          <section class="docs-pattern_pattern">
+<div>
+    <div class="u-centered-on-mobile" style="width:100px;height:100px;background-color:green;">
+        Block centered on mobile
+    </div>
+    <p class="u-centered-on-mobile">Paragraph centered on mobile</p>
+</div>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;div&gt;
+    &lt;div class=&quot;u-centered-on-mobile&quot; style=&quot;width:100px;height:100px;background-color:green;&quot;&gt;
+        Block centered on mobile
+    &lt;/div&gt;
+    &lt;p class=&quot;u-centered-on-mobile&quot;&gt;Paragraph centered on mobile&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;div&gt;\n    &lt;div class=\&amp;quot;u-centered-on-mobile\&amp;quot; style=\&amp;quot;width:100px;height:100px;background-color:green;\&amp;quot;&gt;\n        Block centered on mobile\n    &lt;/div&gt;\n    &lt;p class=\&amp;quot;u-centered-on-mobile\&amp;quot;&gt;Paragraph centered on mobile&lt;/p&gt;\n&lt;/div&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>Sometimes content (parts/all of a media block, for example) should be centered on mobile, but not on larger screen sizes.</li>
+              <li>This implementation conflates inline &amp; block element centering, though they could be made into separate classes.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div id="tables" class="docs-component">
+      <h2 class="docs-component_header"><span>Tables</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Updated table styling that needs to get ported to cf-core pending Design Manual approval.</li>
+          <li>At screens smaller than 960px wide the table cells stack.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default table</h3>
+          <section class="docs-pattern_pattern">
+<table>
+    <thead>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td>Lorem ipsum dolor.</td>
+        </tr>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td>Lorem ipsum dolor.</td>
+        </tr>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td>Lorem ipsum dolor.</td>
+        </tr>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td>Lorem ipsum dolor.</td>
+        </tr>
+    </tbody>
+</table>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Column 1&lt;/th&gt;
+            &lt;th&gt;Column 2&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;table&gt;\n    &lt;thead&gt;\n        &lt;tr&gt;\n            &lt;th&gt;Column 1&lt;/th&gt;\n            &lt;th&gt;Column 2&lt;/th&gt;\n        &lt;/tr&gt;\n    &lt;/thead&gt;\n    &lt;tbody&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n    &lt;/tbody&gt;\n&lt;/table&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+th,
+td {
+  padding: 0.625em 0.625em;
+  background: #ffffff;
+  vertical-align: top;
+}
+
+tbody &gt; tr:nth-child(odd) &gt; th,
+tbody &gt; tr:nth-child(odd) &gt; td {
+  background: inherit;
+}
+
+thead th {
+  font-family: &quot;AvenirNextLTW01-Demi&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0;
+  margin-bottom: 0.35714286em;
+  font-size: 0.875em;
+  line-height: 1.57142857;
+  padding: 0.57142857em 0.71428571em;
+  margin-bottom: 0;
+  border-bottom: 1px solid #babbbd;
+  background: #f1f2f2;
+  color: #43484e;
+}
+
+.lt-ie9 thead th {
+  font-weight: normal !important;
+}
+
+tbody {
+  border-top: 1px solid #babbbd;
+}
+
+tbody th {
+  font-family: &quot;AvenirNextLTW01-Medium&quot;, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.lt-ie9 tbody th {
+  font-weight: normal !important;
+}
+
+tbody tr {
+  border-bottom: 1px solid #babbbd;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="simple-tables" class="docs-component">
+      <h2 class="docs-component_header"><span>Simple Tables</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>Extends the above stacked tables for sm devices</li>
+          <li>Hides the thead</li>
+          <li>Styles first td as if it were the thead</li>
+          <li>Allows any other td to be styled as a heading level 4</li>
+          <li>Adds data-label attr for small td labels above td content</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Collapsable Table</h3>
+          <section class="docs-pattern_pattern">
+<table class="simple-table">
+    <thead>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+            <td data-label="Lorem">Lorem ipsum dolor.</td>
+            <td data-label="Ipsum">Lorem ipsum dolor.</td>
+        </tr>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+            <td data-label="Lorem">Lorem ipsum dolor.</td>
+            <td data-label="Ipsum">Lorem ipsum dolor.</td>
+        </tr>
+        <tr>
+            <td>Lorem ipsum dolor.</td>
+            <td class="simple-table_row-heading">Lorem ipsum dolor.</td>
+            <td data-label="Lorem">Lorem ipsum dolor.</td>
+            <td data-label="Ipsum">Lorem ipsum dolor.</td>
+        </tr>
+    </tbody>
+</table>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;table class=&quot;simple-table&quot;&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Column 1&lt;/th&gt;
+            &lt;th&gt;Column 2&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td class=&quot;simple-table_row-heading&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Lorem&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Ipsum&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td class=&quot;simple-table_row-heading&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Lorem&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Ipsum&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td class=&quot;simple-table_row-heading&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Lorem&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+            &lt;td data-label=&quot;Ipsum&quot;&gt;Lorem ipsum dolor.&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;table class=\&amp;quot;simple-table\&amp;quot;&gt;\n    &lt;thead&gt;\n        &lt;tr&gt;\n            &lt;th&gt;Column 1&lt;/th&gt;\n            &lt;th&gt;Column 2&lt;/th&gt;\n        &lt;/tr&gt;\n    &lt;/thead&gt;\n    &lt;tbody&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td class=\&amp;quot;simple-table_row-heading\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Lorem\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Ipsum\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td class=\&amp;quot;simple-table_row-heading\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Lorem\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Ipsum\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n        &lt;tr&gt;\n            &lt;td&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td class=\&amp;quot;simple-table_row-heading\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Lorem\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n            &lt;td data-label=\&amp;quot;Ipsum\&amp;quot;&gt;Lorem ipsum dolor.&lt;/td&gt;\n        &lt;/tr&gt;\n    &lt;/tbody&gt;\n&lt;/table&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div id="cf-grid-column-dividers" class="docs-component">
+      <h2 class="docs-component_header"><span>cf-grid column dividers</span></h2>
+      <div class="docs-component_intro">
+        <ul class="docs-notes">
+          <li>cf-grid columns use left and right borders for fixed margins which means it's not possible to set visual left and right borders directly on them. Instead we can use the :before pseudo element and position it absolutely. The added benefit of doing it this way is that the border spans the entire height of the next parent using `position: relative;`. This means that the border will always match the height of the tallest column in the row.</li>
+        </ul>
+      </div>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Classes</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.grid_column__top-divider</code></pre>
+              </li>
+              <li>
+                <pre class="docs-code"><code>.grid_column__left-divider</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Usage</h3>
+          <footer class="docs-pattern_footer">
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.my-column-1-2 {
+
+    // Creates a column that spans 6 out of 12 columns.
+    .grid_column(6, 12);
+
+    // Add a top divider only at screen 599px and smaller.
+    .respond-to-max(599px {
+        .grid_column__top-divider();
+    });
+
+    // Add a left divider only at screen 600px and larger.
+    .respond-to-min(600px, {
+        .grid_column__left-divider();
+    });
+
+}</code></pre>
+              </li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.grid_column__top-divider {
+  margin-top: 3.75em;
+}
+
+.grid_column__top-divider:before {
+  content: &quot;&quot;;
+  display: block;
+  height: 1px;
+  margin-bottom: 1.875em;
+  background-color: #babbbd;
+}
+
+.grid_column__left-divider {
+  border-left-width: 30px;
+}
+
+.grid_column__left-divider:before {
+  content: &quot;&quot;;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  display: block;
+  background-color: #babbbd;
+  margin-left: -30px;
+}
+</code></pre>
+      </div>
+    </div>
+    <div id="expandable-header-modifier" class="docs-component">
+      <h2 class="docs-component_header"><span>Expandable header modifier</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">expandable_header__jump-link (modifier)</h3>
+          <section class="docs-pattern_pattern">
+<button class="expandable_header expandable_header__jump-link expandable_target">
+    <span class="expandable_header-left expandable_label">
+        Expandable Header
+    </span>
+    <span class="expandable_header-right expandable_link">
+        <span class="expandable_cue-open">
+            <span class="cf-icon cf-icon-plus-round"></span>
+        </span>
+        <span class="expandable_cue-close">
+            <span class="cf-icon cf-icon-minus-round"></span>
+        </span>
+    </span>
+</button>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;button class=&quot;expandable_header expandable_header__jump-link expandable_target&quot;&gt;
+    &lt;span class=&quot;expandable_header-left expandable_label&quot;&gt;
+        Expandable Header
+    &lt;/span&gt;
+    &lt;span class=&quot;expandable_header-right expandable_link&quot;&gt;
+        &lt;span class=&quot;expandable_cue-open&quot;&gt;
+            &lt;span class=&quot;cf-icon cf-icon-plus-round&quot;&gt;&lt;/span&gt;
+        &lt;/span&gt;
+        &lt;span class=&quot;expandable_cue-close&quot;&gt;
+            &lt;span class=&quot;cf-icon cf-icon-minus-round&quot;&gt;&lt;/span&gt;
+        &lt;/span&gt;
+    &lt;/span&gt;
+&lt;/button&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;button class=\&amp;quot;expandable_header expandable_header__jump-link expandable_target\&amp;quot;&gt;\n    &lt;span class=\&amp;quot;expandable_header-left expandable_label\&amp;quot;&gt;\n        Expandable Header\n    &lt;/span&gt;\n    &lt;span class=\&amp;quot;expandable_header-right expandable_link\&amp;quot;&gt;\n        &lt;span class=\&amp;quot;expandable_cue-open\&amp;quot;&gt;\n            &lt;span class=\&amp;quot;cf-icon cf-icon-plus-round\&amp;quot;&gt;&lt;/span&gt;\n        &lt;/span&gt;\n        &lt;span class=\&amp;quot;expandable_cue-close\&amp;quot;&gt;\n            &lt;span class=\&amp;quot;cf-icon cf-icon-minus-round\&amp;quot;&gt;&lt;/span&gt;\n        &lt;/span&gt;\n    &lt;/span&gt;\n&lt;/button&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>.expandable_header__jump-link</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>This modifier styles the expandable header as a jump link on mobile screens. Can be used for mobile-only expandables.</li>
+              <li>Use the `button` element with `.expandable_header`. to make the whole header clickable.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>

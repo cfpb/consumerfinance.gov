@@ -1,0 +1,451 @@
+/* ==========================================================================
+   cfgov-refresh
+   header
+   ========================================================================== */
+
+/* topdoc
+  name: Header
+  family: cfgov-header
+  patterns:
+    - name: Logo
+      markup: |
+        <a href="/">
+            <img class="header_logo u-js-only"
+                 src="/static/img/logo_sm-exec.svg"
+                 onerror="this.onerror=null;this.src='/static/img/logo_sm-exec.png';"
+                 alt="Consumer Financial Protection Bureau"
+                 width="237"
+                 height="50">
+            <noscript>
+                <img class="header_logo logo__no-js"
+                     src="/static/img/logo_sm-exec.png"
+                     alt="Consumer Financial Protection Bureau"
+                     width="237"
+                     height="50">
+            </noscript>
+        </a>
+      notes:
+        - "The `onerror` attribute allows for the usage of an SVG logo for
+           browsers that support SVG, with a fallback to PNG for browsers that
+           don't."
+        - "The `noscript` element displays the PNG fallback in the event that
+           JavaScript is not available."
+        - "The path in the `src` attribute has been adjusted for these docs."
+    - name: Miscellaneous stuff (top right)
+      markup: |
+        <div style="position: relative; min-height: 80px;">
+            <div class="header_misc">
+                Contact us: <a class="header_misc_tel" href="tel:8554112372">(855) 411-2372</a>
+                <a class="header_misc_es">Español</a>
+            </div>
+        </div>
+      notes:
+        - "The outer div with the inline style is only for demonstration
+           purposes in these docs, because the `.header_misc` div is positioned
+           absolutely."
+  tags:
+    - cfgov-header
+*/
+
+.header {
+
+}
+
+.header_logo {
+    margin: @grid_gutter-width 0 unit(20px / @base-font-size-px, em) 0;
+    vertical-align: middle; // removes typical inline vertical whitespace
+
+    .respond-to-max(800px, {
+        width: 190px;
+        height: 40px;
+        margin: 10px;
+    });
+}
+
+.header_logo__no-js {
+    display: none;
+}
+
+.no-js .header_logo__no-js {
+    display: block;
+}
+
+.header_misc {
+    display: none;
+
+    .respond-to-min(801px, {
+        display: block;
+        // magic number for top margin aligns text baseline with logo baseline
+        margin: 52px
+                (@grid_gutter-width / 2)
+                (@grid_gutter-width / 2);
+        position: absolute;
+        top: 0;
+        right: @grid_gutter-width / 2;
+        color: @gray;
+        .webfont-regular();
+
+        &_tel {
+            padding-right: @grid_gutter-width / 2;
+            border-right: 1px solid @gray-50;
+            // subtracting typical inline horizonal whitespace from right margin
+            margin-right: unit(@grid_gutter-width / 2 / @base-font-size-px, em) - 0.25em;
+            .u-link__colors(@darkgray);
+        }
+
+        &_es {
+            .h5();
+            .u-link__border();
+        }
+    });
+}
+
+
+/* topdoc
+  name: Primary navigation
+  family: cfgov-header
+  patterns:
+    - name: TBD
+      markup: |
+        
+      notes:
+        - 
+  tags:
+    - cfgov-header
+*/
+
+.primary-nav_top-level-list > .list_item > .list_link {
+    .u-link__colors(@black, @green);
+    .webfont-regular();
+
+    &__disabled {
+        color: @gray-50 !important;
+        border: none !important;
+    }
+}
+
+.desktop-menu_horizontal-list .list_link {
+    // override standard visited link color
+    .u-link__colors(@pacific, @pacific, @pacific-50, @pacific, @navy);
+}
+
+
+/* Sliding nav for portrait tablets and smaller
+   ========================================================================== */
+
+.respond-to-max(800px, {
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    // Remove extra padding added by .wrapper__match-content so the nav button
+    // is flush left with the screen.
+    .primary-nav_header-space.wrapper__match-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .primary-nav_top-level-list.list-expanding {
+        // Nested list borders
+        // Negative bottom margin to remove duplicate bottom border
+        & .list-expanding {
+            margin: 0 0 -1px;
+        }
+     
+        & .list_item {
+            display: block;
+            border-bottom: 1px solid @gray-50;
+            margin-right: 0; // overriding .list-horizontal .list_item
+
+            &:first-child {
+                border-top: 1px solid @gray-50;
+            }
+        }
+
+        & .list_item__plain {
+            border-bottom: 0;
+            &:first-child {
+                border-top: 0;
+            }
+        }
+
+        & .list_item a {
+            display: block;
+            padding: (@grid_gutter-width / 2)
+                     @grid_gutter-width
+                     (@grid_gutter-width / 2)
+                     (@grid_gutter-width / 2);
+            position: relative;
+            background: @gray-20;
+            font-size: unit(18px / @base-font-size-px, em);
+        }
+        & > .list_item > a:hover {
+            background: @white;
+            color: @darkgray;
+        }
+        & > .list_item > a:focus {
+            background: @white;
+            color: @darkgray;
+        }
+        & > .list_item > a:active {
+            background: @gray-10;
+            color: @darkgray;
+        }
+
+        & .list_item .list_link__disabled {
+            background: @gray-20 !important;
+        }
+
+        // Two levels deep
+        & .list-expanding .list-expanding_list-item a {
+            padding-left: @grid_gutter-width;
+            background: @gray-10;
+            font-size: 1em;
+        }
+
+        // Three levels deep
+        & .list-expanding .list-expanding .list-expanding_list-item a {
+            padding-left: @grid_gutter-width * 1.5;
+            background: @gray-5;
+        }
+
+        // Give the expanding trigger an icon
+        .list-expanding_trigger:after {
+            position: absolute;
+            right: @grid_gutter-width / 2;
+            font-family: 'CFPB Minicons';
+            font-style: normal;
+            font-weight: normal;
+            -webkit-font-smoothing: antialiased;
+        }
+        .list-expanding_trigger[aria-pressed="false"]:after {
+            content: "\e006";
+        }
+        .list-expanding_trigger[aria-pressed="true"]:after {
+            content: "\e004";
+        }
+
+        // Hide a child list if the trigger is not pressed
+        .list-expanding_trigger[aria-pressed="false"] .list-expanding_child-list {
+            display: none;
+        }
+    }
+
+    .sliding-nav {
+        .u-clearfix();
+        // Putting the navigation background here instead of on .sliding-nav_nav
+        // is a trick to get the bg of the nav to match the height of .sliding-nav_page
+        background: @gray;
+    }
+    .sliding-nav.is-open {
+        overflow: hidden;
+    }
+
+    .sliding-nav_page {
+        box-sizing: border-box;
+        width: 100%;
+        float: left;
+        background: @white;
+        transition: .2s margin-right ease-in, .2s box-shadow ease-in;
+    }
+    .is-open .sliding-nav_page {
+        border-left: 1px solid @gray-80;
+        margin-right: -80%;
+        position: relative;
+        box-shadow: -6px 0 0 rgba(16, 24, 32, 0.2);
+    }
+
+    // This overlays the main content and when clicked closes the menu
+    .sliding-nav_page-overlay {
+        position: relative;
+    }
+    .sliding-nav_page-overlay:before {
+        position: absolute;
+        z-index: 999;
+        // background: @black;
+        opacity: 0;
+        -webkit-transition: .2s opacity ease-in;
+    }
+    .is-open .sliding-nav_page-overlay:before {
+        content: "";
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        // opacity: 0.7;
+    }
+
+    .sliding-nav_page.is-scroll-disabled {
+        position: fixed;
+        right: 0;
+        -webkit-transition: .2s right ease-in;
+    }
+    .is-open .sliding-nav_page.is-scroll-disabled {
+        position: fixed;
+        right: -80%;
+        margin-right: 0;
+        -webkit-transition: none;
+    }
+
+    .sliding-nav_nav {
+        float: left;
+        width: 80%;
+        height: 101%;
+        margin-left: -100%;
+        -webkit-transition: .2s margin-left ease-in;
+    }
+    .is-open .sliding-nav_nav {
+        margin-left: 0;
+    }
+
+    .sliding-nav_nav .list-expanding {
+        margin: 0;
+    }
+
+    .sliding-nav_trigger {
+        display: block;
+        width: 60px;
+        height: 60px;
+        padding: 19px 10px 17px;
+        border: none;
+        border-right: 1px solid @gray-50;
+        float: left;
+        background: @white;
+        color: @gray;
+        font-size: 1.5em;
+
+        &:focus {
+            outline: 1px dotted @black;
+        }
+        &:active {
+            background: @gray-10;
+            color: @black;
+        }
+    }
+
+});
+
+
+/* Horizontal mega menu for landscape tablets and larger
+   ========================================================================== */
+
+.respond-to-min(801px, {
+
+    .sliding-nav {
+        position: relative;
+    }
+
+    .sliding-nav_trigger {
+        display: none;
+    }
+
+    .primary-nav {
+        position: absolute;
+        top: 100px; // magic number - dependent on height of logo and its vertical padding
+        right: 0;
+        left: 0;
+        z-index: 100;
+    }
+
+    .primary-nav_header-space {
+        padding-bottom: 54px; // magic number - dependent on height of horizontal navbar
+    }
+
+    .primary-nav .primary-nav_top-level-list {
+        padding-left: @grid_gutter-width / 2;
+        margin-bottom: 0;
+        position: static;
+        overflow: visible;
+    }
+
+
+    .primary-nav_top-level-list.list__horizontal > .list_item {
+        display: inline-block;
+        vertical-align: top;
+
+        &:hover > .list_link,
+        &:focus > .list_link {
+            padding-bottom: @grid_gutter-width - 6px;
+            border-bottom: 6px solid @green;
+            color: @green;
+        }
+    }
+
+    .primary-nav_top-level-list > .list_item > .list_link {
+        display: block;
+        padding-bottom: @grid_gutter-width;
+        margin: 0 0 0 (@grid_gutter-width / 2); // margin on link for larger hit area
+        font-size: unit(18px / @base-font-size-px, em);
+    }
+
+    // Hide only when js is available
+    .desktop-menu_full-wrapper {
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        z-index: 100;
+        -webkit-transform: translate3d(0,0,0); // Maybe this will kick on the gpu?
+    }
+
+    // Expand the menu by looking for aria attributes.
+    // This will help us to keep our eye on a11y.
+    // The .no-js selector enables simple hover menu support for users without JavaScript
+    .desktop-menu_full-wrapper[aria-expanded="true"],
+    .no-js .list_item:hover .desktop-menu_full-wrapper {
+        z-index: 200;
+        max-height: 15em;
+        -webkit-transform: translate3d(0,0,0); // Maybe this will kick on the gpu?
+    }
+
+    // Only use transitions when allowed, js controls the transition toggling logic
+    // Transition off
+    .has-transition .desktop-menu_full-wrapper {
+        transition: 0.25s max-height linear;
+    }
+    // Transition on
+    .has-transition .desktop-menu_full-wrapper[aria-expanded="true"] {
+        transition: 0.275s max-height ease-out;
+    }
+
+    .desktop-menu_full-wrapper_decoration {
+        padding: @grid_gutter-width 0;
+        background: @gray-5;
+        border-top: 1px solid @gray-50;
+        border-bottom: 4px solid @gray-50;
+    }
+
+    .desktop-menu_vertical-list a,
+    .desktop-menu_horizontal-list a,
+    .desktop-menu_horizontal-list-small a {
+        display: inline-block;
+        .webfont-regular();
+    }
+
+    // Horizontal list
+    .desktop-menu_full-wrapper .desktop-menu_horizontal-list {
+        padding-left: @grid_gutter-width / 2;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .desktop-menu_horizontal-list.list__horizontal > .list_item {
+        margin: 0 @grid_gutter-width / 2;
+    }
+
+});
+
+.respond-to-min(1024px, {
+    .primary-nav_top-level-list > .list_item > .list_link {
+        margin: 0 (@grid_gutter-width / 2); // margin on link for larger hit area
+    }
+});
+
+
+/* topdoc
+    name: EOF
+    eof: true
+*/

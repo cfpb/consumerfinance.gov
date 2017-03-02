@@ -1,0 +1,73 @@
+{% import "contact-macro.html" as contact_macro %}
+
+<div class="type-and-filter">
+
+    <div class="u-js-only">
+        <p class="h2">
+            Looking for something more specific?
+        </p>
+        <p class="short-desc">
+            Type in the office, product, blah lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta cumque perspiciatis delectus ipsa illo praesentium quos omnis nemo quia itaque reprehenderit consequatur totam velit quisquam eos expedita ea sit vel.
+        </p>
+
+        <div class="input-with-btn">
+            <div class="input-with-btn_input btn-inside-input">
+                <input class="js-type-and-filter_input input__super" type="text" placeholder="Filter contacts by keyword">
+                <button class="js-type-and-filter_clear btn btn__super btn__link btn__secondary">
+                    Clear
+                    <span class="cf-icon cf-icon-delete"></span>
+                </button>
+            </div>
+            <div class="input-with-btn_btn">
+                <button class="js-type-and-filter_button btn btn__super">Filter</button>
+            </div>
+        </div>
+        
+        <div class="helpful-terms">
+            <span class="helpful-terms_header">Helpful filter terms:</span>
+            <button class="btn btn__link js-helpful-term">Regulations</button>
+            <button class="btn btn__link js-helpful-term">Compliance guides</button>
+            <button class="btn btn__link js-helpful-term">Mortgages</button>
+            <button class="btn btn__link js-helpful-term">Consumer help</button>
+        </div>
+
+        <p class="type-and-filter_message js-type-and-filter_message"></p>
+
+        <button class="btn btn__super btn__secondary u-js-only contact-list_btn"
+                id="contact-list_btn">
+            Show all contacts
+        </button>
+    </div>
+
+    <div class="block u-mt0 expandable-group contact-list"
+         data-accordion="true"
+         id ="contact-list">
+        <div class="expandable-group_header"
+             id ="contact-list_header">
+            Office name
+        </div>
+    {%- for contact in contacts|sort(attribute='title') %}
+        <article class="js-type-and-filter_item expandable expandable__padded">
+            <button class="expandable_header expandable_target">
+                <span class="expandable_header-left expandable_label">
+                    {{ contact.title }}
+                </span>
+                <span class="expandable_header-right expandable_link">
+                    <span class="expandable_cue-open">
+                        Show
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        Hide
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </button>
+            <div class="expandable_content">
+                {{ contact_macro.render(contact) }}
+            </div><!-- END .expandable_content -->
+        </article><!-- END .expandable -->
+    {%- endfor %}
+    </div><!-- END .block.expandable-group -->
+
+</div><!-- END .type-and-filter -->

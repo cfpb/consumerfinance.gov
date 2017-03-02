@@ -51,6 +51,7 @@ author or the affirmer.
   Christian Schepp Schaefer is licensed under LGPL 3.0.
 - [HTML5 Shiv](https://github.com/aFarkas/html5shiv) by Alexander Farkas,
   et al., is licensed under MIT/GPL2.
+
 - [jQuery](http://jquery.com/) by The jQuery Foundation is licensed under the
   MIT License.
 - [Modernizr](https://github.com/Modernizr/Modernizr) by Faruk Ateş, et al.,
@@ -60,3 +61,25 @@ author or the affirmer.
 - [PDFreactor v6.3](http://www.pdfreactor.com/) by realObjects.
 - [Slick](http://kenwheeler.github.io/slick/) by Ken Wheeler is licensed under
   the MIT License.
+
+- [Rainbow](https://github.com/ccampbell/rainbow) by Craig Campbell is licensed
+  under Apache 2.0.
+- The Brackets Theme by Garth Braithwaite is licensed under Apache 2.0.
+- [Normalize](http://necolas.github.io/normalize.css/) by Nicolas Gallagher,
+  co-created with Jonathan Neal, is licensed under the MIT License.
+- [jQuery](http://jquery.com/) by The jQuery Foundation is licensed under the
+  MIT License.
+- [box-sizing Polyfill](http://github.com/Schepp/box-sizing-polyfill) by
+  Christian Schepp Schaefer is licensed under LGPL 3.0.
+- requestNextAnimationFrame by David Geary is licensed under the MIT License.
+- [Slick](http://kenwheeler.github.io/slick/) by Ken Wheeler is licensed under
+  the MIT License.
+- [Chosen](https://github.com/harvesthq/chosen) by Patrick Filler for Harvest is
+  licensed under the MIT License.
+- [History.js](https://github.com/browserstate/history.js) by Benjamin Arthur
+  Lupton is licensed under the New BSD License.
+- [jQuery Easing](http://gsgd.co.uk/sandbox/jquery/easing/) by George McGinley
+  Smith is licensed under the BSD License.
+- [String Scoring Algorithm](https://github.com/joshaven/string_score) by
+  Joshaven Potter is licensed under the MIT License.
+  

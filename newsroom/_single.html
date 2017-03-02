@@ -1,0 +1,65 @@
+{% extends "layout-2-1-bleedbar.html" %}
+{% import "_vars-newsroom.html" as vars with context %}
+
+{% block title -%}
+    {{ newsroom.title }}
+{%- endblock %}
+
+{% block desc -%}
+    {{ newsroom.excerpt|striptags }}
+{%- endblock %}
+
+{% block og_type -%}
+    article
+{%- endblock %}
+
+{% block og_article_prefix -%}
+    article: http://ogp.me/ns/article#
+{%- endblock %}
+
+{% block og_article_author -%}
+    <meta property="article:author" content="https://www.facebook.com/CFPB">
+{%- endblock %}
+
+{% block content_main %}
+    {% import "article.html" as article with context %}
+    {{ article.render(newsroom, vars.path) }}
+    <aside class="press-information">
+        <h1 class="header-slug">
+            <span class="header-slug_inner">
+                Press information
+            </span>
+        </h1>
+        <p class="short-desc">
+            If you want to republish the article or have questions about the content,
+            please contact the press office.
+        </p>
+        <a class="jump-link"
+           href="{{ path }}press-resources/">Go to press resources page</a>
+    </aside>
+{% endblock %}
+
+{% block content_sidebar %}
+    <section class="block u-mt0">
+        {% import "related-posts.html" as related_posts with context %}
+        {{ related_posts.render(newsroom, 'posts,newsroom', 5) }}
+    </section>
+    <section class="block stay-informed">
+        <div class="block__sub">
+            <h1 class="header-slug">
+                <span class="header-slug_inner">
+                    Stay informed
+                </span>
+            </h1>
+            <p class="short-desc">
+                Subscribe to our email newsletter. We will update you on new newsroom updates.
+            </p>
+            {% import "email-subscribe-form.html" as subscribe with context %}
+            {{ subscribe.render(vars.query) }}
+        </div>
+        <div class="block__sub">
+            {% import "rss.html" as rss %}
+            {{ rss.render(vars.rss_path) }}
+        </div>
+    </section>
+{% endblock %}

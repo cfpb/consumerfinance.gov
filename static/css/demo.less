@@ -1,0 +1,67 @@
+/* ==========================================================================
+   cfgov-refresh
+   demo
+   ========================================================================== */
+
+.demo-placeholder {
+    @font-size: 14px;
+    display: inline-block;
+    padding:
+        unit(8px / @font-size, em)
+        unit(12px / @font-size, em);
+    color: @gray;
+    .webfont-regular();
+    font-size: unit( @font-size / @base-font-size-px, em );
+    line-height: 1;
+    border: 2px dashed @gray-50;
+    background: @gray-5;
+}
+
+.demo-logo {
+    margin: 26px 0;
+}
+
+.demo-file-name {
+    font-family: Consolas, monaco, monospace;
+}
+
+.demo-sheer-link {
+    .webfont-regular();
+    font-size: unit(12px / @base-font-size-px, em);
+}
+
+.demo-spaced {
+    margin-bottom: unit(26px / @base-font-size-px, em);
+}
+
+.demo-cols {
+    .respond-to-min(768px, {
+        .grid_nested-col-group();
+    });
+}
+
+.demo-col-12 {
+    .header &,
+    .footer & {
+        .grid_column(12);
+    }
+    .respond-to-min(768px, {
+        .grid_column(12);
+    });
+}
+
+.demo-col-6 {
+    .respond-to-min(768px, {
+        .grid_column(6);
+    });
+}
+
+.header .demo-placeholder,
+.footer .demo-placeholder {
+    // Temporary styling to bring in line with main columns.
+    margin: (@grid_gutter-width / 2);
+
+    .respond-to-range(600px, 800px, {
+        margin: @grid_gutter-width;
+    });
+}

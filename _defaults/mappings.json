@@ -1,0 +1,60 @@
+{
+  "properties": {
+    "title": {
+      "type":   "string",
+      "store":  "yes"
+    },
+    "text": {
+      "type":   "string",
+      "store":  "yes"
+    },
+    "date": {
+      "type":   "date",
+      "store":  "yes",
+      "format": "yyyy-MM-dd HH:mm:ss"
+    },
+    "start_datetime": {
+      "type":   "date",
+      "store":  "yes"
+    },
+    "end_datetime": {
+      "type":   "date",
+      "store":  "yes"
+    },
+    "location": {
+      "type":   "string",
+      "store":  "yes"
+    },
+    "activity_type": {
+      "type":   "string",
+      "store":  "yes"
+    },
+    "categories": {
+      "type":   "string",
+      "store":  "yes",
+      "index":  "not_analyzed"
+    },
+    "authors": {
+      "type":   "string",
+      "store":  "yes",
+      "index":  "not_analyzed"
+    },
+    "tags": {
+      "type":   "string",
+      "store":  "yes"
+    },
+    "_type": {
+      "type":   "string",
+      "store":  "yes",
+      "index":  "not_analyzed"
+    },
+    "excerpt": {
+      "type":   "string",
+      "store":  "yes"
+    },
+    "thumbnail": {
+      "type":   "string",
+      "store":  "yes"
+    }
+  }
+}

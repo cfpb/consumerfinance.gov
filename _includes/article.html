@@ -1,0 +1,85 @@
+
+{# ==========================================================================
+
+   render()
+
+   ==========================================================================
+
+   Description:
+
+   Render an article when given:
+
+   post:               The Sheer document that is available to a _single.html
+                       template. For example in blog/_single.html the variable
+                       `post` is available and represents the post for the
+                       `_single` page. In newsroom/_single.html this variables
+                       is called `newsroom`.
+
+   path:               The path to which post filters are applies. For example,
+                       if the post is a blog post then path should be '/blog/'.
+                       Remember to leverage vars.path instead of using the
+                       literal string '/blog/'. Path is used to create the
+                       filtered URL: {{ path }}?filter_tags={{ tag }}
+
+   ========================================================================== #}
+
+{% macro render(post, path) %}
+
+{% from "macros.html" import share as share %}
+
+<article class="post">
+    <header>
+        {% if post.category.0 %}
+            {%- import "category-slug.html" as category_slug %}
+            {{ category_slug.render(post.category.0, path, 'post_slug') }}
+        {% endif %}
+        <h1 class="post_heading">
+            {{ post.title|safe }}
+        </h1>
+    {% if post.dek %}
+        <p class="post_dek">
+            {{ post.dek|safe }}
+        </p>
+    {% endif %}
+        <div class="post_meta">
+        {% if post.author.0 %}
+            <span class="post_byline">
+                By <a href="{{ path }}?filter_author={{ post.author.0 }}">
+                    {{ post.author.0 }}
+                </a>
+                {% if post.author.1 %}
+                    and <a href="{{ path }}?filter_author={{ post.author.1 }}">
+                        {{ post.author.1 }}
+                    </a>
+                {% endif %}
+                &ndash;
+            </span>
+        {% endif %}
+            <span class="post_date date">
+                {{ post.date|date("%b %d, %Y") }}
+            </span>
+        </div>
+        {{ share(post.title, false, {
+           'text':     post.twtr_text,
+           'related':  post.twtr_rel,
+           'language': post.twtr_lang,
+           'hashtags': post.twtr_hash
+        }) }}
+    {% if post.thumbnail.images %}
+        <img class="post_featured-img"
+             src="{{ post.thumbnail.images.full.url }}"
+             alt="{{ post.thumbnail.alt_text }}">
+    {% endif %}
+    </header>
+    <div class="post_body">
+        {{ post.content|safe }}
+    </div>
+{% if post.tags|length %}
+    <footer>
+        {%- import "tags.html" as tags %}
+        {{ tags.render(post.tags, path) }}
+    </footer>
+{% endif %}
+</article>
+
+{% endmacro %}

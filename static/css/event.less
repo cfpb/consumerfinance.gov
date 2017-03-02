@@ -1,0 +1,210 @@
+/* ==========================================================================
+   cfgov-refresh
+   Page-specific styles for event post detail page.
+   ========================================================================== */
+
+.post-preview__event {
+    border-top: 1px solid @gray-50;
+    padding-top:  1em;
+
+    .media-object_image-container {
+         .respond-to-max(@mobile-max {
+            display: none;
+        });
+    }
+}
+
+.summary {
+    .calendar-icon {
+        .cf-calendar-icon( attr(data-month), attr(data-day), @gray-50, @white, 1);
+        float: left;
+        margin: 0 (@grid_gutter-width/2) 0 0;
+    }
+
+    .event-meta {
+        color: @black;
+    }
+
+    .event-meta_address {
+
+        .respond-to-max(@mobile-max {
+            display: block;
+        });
+
+        &:before {
+            content: none;
+            margin: 0;
+        }
+    }
+
+    .event-meta_venue:after {
+        content: "\2014";
+        margin-left: .5em;
+
+        .respond-to-max(@mobile-max {
+            content: none;
+        });
+    }
+}
+
+.summary_header {
+    margin-bottom: .5em;
+}
+
+.summary_heading, .event-meta_address {
+    margin: 0;
+}
+
+.summary-meta_container {
+    overflow: auto;
+}
+
+.event-meta {
+    .h5();
+}
+
+.event-meta_description {
+    text-transform: none;
+}
+
+.event-meta_address {
+    text-transform: capitalize;
+    display: inline-block;
+
+    // Adding em dash after address
+    &:before{
+        content: "\2014";
+        margin-right: .2em;
+    }
+}
+
+// Adding comma after city
+.event-meta_city:after {
+    content: "\2C";
+}
+
+.event-meta_datetime {
+    letter-spacing: normal;
+}
+
+// Adding "at" symbol before time
+.event-meta_time:before {
+    content: "\40";
+    margin-right: .2em;
+}
+
+.event-status {
+    color: @black;
+    .webfont-regular();
+
+    .event-meta {
+        color: @gray-50;
+        font-weight: normal !important;
+        .webfont-regular();
+    }
+}
+
+.event-venue {
+    background: @gray-10;
+    border-top: 5px solid @green;
+
+    .event-media_container  {
+        max-height:  400px;
+        overflow: hidden;
+    }
+}
+
+.event-venue_header {
+    padding: 1.5em 1.5em .5em;
+    .webfont-regular();
+
+    .respond-to-max(@mobile-max {
+        padding: 1.5em;
+    });
+
+    .event-calendar_container {
+        .h5();
+        text-transform: uppercase;
+    }
+
+    .event-calendar_download {
+        display: block;
+        font-weight: bold;
+        padding-top: .2em;
+        text-decoration: none;
+        text-transform: none;
+
+        .respond-to-max(@mobile-max {
+            margin-top: 1em;
+            padding-top: .5em;
+        });
+    }
+
+    .event-meta {
+        .webfont-regular();
+     }
+
+    .event-meta_address {
+        &:before {
+            content : none;
+        }
+
+        .respond-to-max(@mobile-max {
+            margin: 0;
+        });
+    }
+
+    .event-meta_city:after {
+        content : none;
+    }
+
+    .event-meta_venue {
+        display: block;
+    }
+}
+
+.event-venue_heading {
+    display: inline-block;
+}
+
+
+.event-footer {
+    .webfont-regular();
+
+    .respond-to-max(599px, {
+        a {
+            display: block;
+        }
+
+        .btn {
+            text-align: center;
+        }
+
+        &_link {
+            padding: .625em 0;
+
+            border-width: 1px 0;
+        }
+    });
+
+    &_banner {
+        padding: 15px 20px;
+
+        background-color: @gray-5;
+
+        .respond-to-min(600px, {
+            border-bottom: 1px solid @gray-50;
+        });
+    }
+
+    &_banner-message {
+        display: inline-block;
+
+        padding-right: 20px;
+        margin-bottom: 10px;
+
+        .respond-to-max(599px, {
+            display: block;
+        });
+    }
+}

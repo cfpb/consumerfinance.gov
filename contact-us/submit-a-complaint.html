@@ -1,0 +1,49 @@
+{% from "macros.html" import format_phone as format_phone %}
+{% set submit_a_complaint = get_document('contact', 'submit-a-complaint') %}
+
+<h1 class="h4">
+    {{ submit_a_complaint.title }}
+</h1>
+<p class="short-desc">
+    {{ submit_a_complaint.sitewide_desc }}
+</p>
+<div class="content-l">
+    <div class="content-l_col content-l_col-1-2">
+        <ul class="list list__unstyled">
+        {%- if submit_a_complaint.phone_num %}
+            <li class="list_item short-desc">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                {{ format_phone(submit_a_complaint.phone_num) }}
+            {%- if submit_a_complaint.phone_desc %}
+                <span class="micro-copy micro-copy__large">
+                    {{ submit_a_complaint.phone_desc }}
+                </span>
+            {%- endif %}
+            </li>
+        {%- endif %}
+        {%- if submit_a_complaint.phone_2_num %}
+            <li class="list_item short-desc">
+                <span class="cf-icon cf-icon-phone list_icon"></span>
+                {{ format_phone(submit_a_complaint.phone_2_num) }}
+            {%- if submit_a_complaint.phone_2_desc %}
+                <span class="micro-copy micro-copy__large">
+                    {{ submit_a_complaint.phone_2_desc }}
+                </span>
+            {%- endif %}
+            </li>
+        {%- endif %}
+        </ul>
+    </div>
+    <div class="content-l_col content-l_col-1-2">
+    {%- if submit_a_complaint.addr_desc %}
+        <p class="micro-copy">
+            {{ submit_a_complaint.addr_desc }}
+        </p>
+    {%- endif %}
+    </div>
+</div>
+{%- if submit_a_complaint.web_addr %}
+<a class="jump-link" href="{{ submit_a_complaint.web_addr }}">
+    {{ submit_a_complaint.web_desc if submit_a_complaint.web_desc else submit_a_complaint.web_addr }}
+</a>
+{%- endif %}

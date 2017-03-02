@@ -1,0 +1,43 @@
+{% from "macros.html" import format_address as format_address %}
+{% set administrative_offices = get_document('contact', 'administrative-offices') %}
+{% set consumer_contact_center = get_document('contact', 'consumer-contact-center') %}
+
+<section class="block u-mt0 content-l content-l__sidebar">
+
+    <h1 class="h3 content-l_col content-l_col-1-2">
+        Mailing addresses
+    </h1>
+
+    {# Google Image Maps API Docs:
+       https://developers.google.com/maps/documentation/staticmaps/index #}
+    {% if administrative_offices.street and
+          administrative_offices.city and
+          administrative_offices.state and
+          administrative_offices.zip_code %}
+        {% set administrative_offices_map = (administrative_offices.street + ', ' +
+           administrative_offices.city + ' ' +
+           administrative_offices.state + ' ' +
+           administrative_offices.zip_code)|urlencode %}
+    <figure class="content-l_col content-l_col-1-2 figure__bordered u-mt0 u-mb0 contact-us-map">
+        <a href="https://www.google.com/maps/place/{{ administrative_offices_map }}">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=330x250&markers=color:red%7C{{ administrative_offices_map }}&scale=2" alt="">
+        </a>
+    </figure>
+    {% endif %}
+
+    <div class="content-l_col content-l_col-1-2">
+        <h2 class="h5">
+            {{ administrative_offices.title }}
+        </h2>
+        <p class="short-desc">
+            {{- format_address(administrative_offices) -}}
+        </p>
+        <h2 class="h5">
+            {{ consumer_contact_center.title }}
+        </h2>
+        <p class="short-desc">
+            {{- format_address(consumer_contact_center) -}}
+        </p>
+    </div>
+    
+</section>

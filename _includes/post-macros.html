@@ -1,0 +1,832 @@
+
+{# ==========================================================================
+
+   category_icon()
+
+   ==========================================================================
+
+   Description:
+
+   Create an HTML icon when given:
+
+   category:           A document type category.
+
+   additional_classes: Extra classes you wish to add to the icon, space
+                       separated.
+
+   ========================================================================== #}
+
+{% macro category_icon(category, additional_classes) %}
+    {%- if category|lower == 'announcements & updates' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
+    {%- elif category|lower == 'consumer information' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-information"></span>
+    {%- elif category|lower == 'engagement' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-dialogue"></span>
+    {%- elif category|lower == 'innovation & data' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-lightbulb"></span>
+    {%- elif category|lower == 'speech' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-microphone"></span>
+    {%- elif category|lower == 'press release' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-bullhorn"></span>
+    {%- elif category|lower == 'op-ed' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-contract"></span>
+    {%- elif category|lower == 'testimony' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-double-quote"></span>
+    {%- elif category|lower == 'blog' -%}
+    <span class="{{ additional_classes }} cf-icon cf-icon-speech-bubble"></span>
+    {%- endif -%}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   post_summary()
+
+   ==========================================================================
+
+   Description:
+
+   Create an post summary when given:
+
+   post: A post from a query result.
+
+   ========================================================================== #}
+
+{% macro post_summary(post) %}
+    <header class="summary_header">
+        <h1 class="summary_heading">{{ post.title|safe }}</h1>
+    </header>
+    <p class="summary_text summary_text__max">
+    {% if post.dek %}
+        {{ post.dek|striptags }}
+    {% else %}
+        {{ post.excerpt|striptags }}
+    {% endif %}
+    </p>
+    {% if post.author.0 %}
+    <footer class="summary_footer">
+        <p class="summary_byline">
+            By {{ post.author.0 }}
+        {% if post.author.1 %}
+            and {{ post.author.1 }}
+        {% endif %}
+        </p>
+    </footer>
+    {% endif %}
+
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   activity_snippets()
+
+   ==========================================================================
+
+   Description:
+
+   List a bunch of activity snippets when given:
+
+   tag:            A tag to use in the query.
+
+   activity_types: An array of activity types.
+                   Possible values: posts, op-ed, press release, speech, testimony
+
+   ========================================================================== #}
+
+{% macro activity_snippets(tag, activity_types=['posts', 'op-ed', 'press release', 'speech', 'testimony']) %}
+    {% from 'macros.html' import string_length as string_length %}
+    {% from 'post-macros.html' import activity_snippet as snippet with context %}
+    <div class="content-l content-l__large-gutters">
+    {% for activity_type in activity_types %}
+        {% set activity = snippet(activity_type, tag, 2) %}
+        {% if string_length(activity)|int > 0 %}
+            <div class="content-l_col content-l_col-1-2">
+                {{ activity }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   activity_snippet()
+
+   ==========================================================================
+
+   Description:
+
+   List titles of recent document type posts when given:
+
+   doctype:     The document type you wish to display.
+                Note that newsroom is not a supported document tpye in this
+                macro. Use newsroom categories instead.
+
+   querystring: The elastic search query you'd like to make.
+                Example: 'category:"Press Release" AND tags:Students'.
+                Reference: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+
+   quantity:    The number of results you want to display.
+
+   ========================================================================== #}
+
+{% macro activity_snippet(activity_type, tags, quantity) %}
+    {% if activity_type|lower == 'posts' %}
+        {% set doc_type = activity_type %}
+        {% set icon = category_icon('blog') %}
+        {% set header = 'Blog' %}
+        {% set querystring = 'tags:"' + tags + '"' %}
+    {% elif activity_type|lower == 'op-ed' %}
+        {% set doc_type = 'newsroom' %}
+        {% set icon = category_icon(activity_type) %}
+        {% set header = 'Op-Ed' %}
+        {% set querystring = 'category:"Op-Ed" AND tags:"' + tags + '"' %}
+    {% elif activity_type|lower == 'press release' %}
+        {% set doc_type = 'newsroom' %}
+        {% set icon = category_icon(activity_type) %}
+        {% set header = 'Press Release' %}
+        {% set querystring = 'category:"Press Release" AND tags:"' + tags + '"' %}
+    {% elif activity_type|lower == 'speech' %}
+        {% set doc_type = 'newsroom' %}
+        {% set icon = category_icon(activity_type) %}
+        {% set header = 'Speech' %}
+        {% set querystring = 'category:"Speech" AND tags:"' + tags + '"' %}
+    {% elif activity_type|lower == 'testimony' %}
+        {% set doc_type = 'newsroom' %}
+        {% set icon = category_icon(activity_type) %}
+        {% set header = 'Testimony' %}
+        {% set querystring = 'category:"Testimony" AND tags:"' + tags + '"' %}
+    {% else %}
+        {% set doc_type = 'posts' %}
+        {% set icon = category_icon('blog') %}
+        {% set header = 'Feed' %}
+        {% set querystring = 'tags:"' + tags + '"' %}
+    {% endif %}
+    {% set feed = queries[doc_type].search_with_url_arguments(size=quantity,q=querystring) %}
+    {% if feed.total > 0 %}
+    <aside class="activity">
+        <h1 class="h4">{{ icon }} {{ header }}</h1>
+        <ul class="list list__unstyled list__spaced list__links">
+        {% for item in feed %}
+            <li class="list_item">
+                <a class="list_link jump-link jump-link__right"
+                   href="{{ item.permalink }}">
+                    {{ item.title|safe }}
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    </aside>
+    {% endif %}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   pagination()
+
+   ==========================================================================
+
+   Requirements:
+
+   - Must be imported `with context`.
+
+   ==========================================================================
+
+   Description:
+
+   Create a pagination component when given:
+
+   query:       The post type query object like `queries.posts`.
+                This gives us access to necessary pagination info like the
+                current page and the total number of pages.
+   filters:     An array of the filters that you want pagination to support.
+                Possible values: activity_category, author, calendar, category,
+                range_date_gte, range_date_lte, tags.
+
+   ========================================================================== #}
+
+{% macro pagination(query_obj, filters) %}
+{#- Pagination is only displayed if there is more than one page. -#}
+{%- if query_obj.pages > 1 %}
+    <nav class="post-pagination pagination"
+         role="navigation"
+         aria-label="Pagination"
+         data-ajax-action="posts-paginated.html">
+    {%- if query_obj.current_page > 1 %}
+        <a class="btn btn__super pagination_prev"
+           href="{{ query_obj.url_for_page(query_obj.current_page - 1) }}#pagination_content">
+    {%- else %}
+        <a class="btn btn__super btn__disabled pagination_prev">
+    {% endif %}
+            <span class="btn_icon__left cf-icon cf-icon-left"></span>
+            Newer
+        </a>
+    {%- if query_obj.current_page < query_obj.pages %}
+        <a class="btn btn__super pagination_next"
+           href="{{ query_obj.url_for_page(query_obj.current_page + 1) }}#pagination_content">
+    {%- else %}
+        <a class="btn btn__super btn__disabled pagination_next">
+    {% endif -%}
+            Older
+            <span class="btn_icon__right cf-icon cf-icon-right"></span>
+        </a>
+        <form class="pagination_form" action="#pagination_content">
+            <label class="pagination_label" for="pagination_current-page">
+                Page
+                <span class="u-visually-hidden">
+                    number out of {{ query_obj.pages }} total pages
+                </span>
+            </label>
+            <input class="pagination_current-page"
+                   id="pagination_current-page"
+                   name="page"
+                   type="number"
+                   min="1"
+                   max="{{ query_obj.pages }}"
+                   value="{{ query_obj.current_page }}">
+            {#- Include any current filters when submitting this form to allow
+                for paginating through a filtered set of results.
+                Without this the form would change the url to `?page=X` and we
+                would lose any currently applied filters that are in the URL. -#}
+    {%- for filter in filters -%}
+        {# Note that in order to gain access to selected_filters_for_field you
+           will need to import this macros file with context. #}
+        {% set selected_filters = selected_filters_for_field(filter) %}
+        {%- for value in selected_filters -%}
+            {%- if value %}
+            <input type="hidden" name="filter_{{ filter }}" value="{{ value }}">
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endfor -%}
+            <label class="pagination_label">
+                <span aria-hidden="true">
+                    of {{ query_obj.pages }}
+                </span>
+            </label>
+            <button class="btn btn__link pagination_submit"
+                    id="pagination_submit"
+                    type="submit">
+                Go
+            </button>
+        </form>
+    </nav>
+{%- endif -%}
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   filters()
+
+   ==========================================================================
+
+   Requirements:
+
+   - Must be imported `with context`.
+
+   ==========================================================================
+
+   Description:
+
+   Create an expandable of filters when given:
+
+   filters:
+
+        An array of the filters that you want.
+        Possible values: activity_category, author, calendar, category,
+                         range_date, tags.
+
+        Note that 'range_date_gte' and 'range_date_lte' have been condensed
+        into 'range_date' for this macro only.
+
+        You can add more in filters_form() by adding to the if statement, for
+        example: `{% elif filter == 'NEW_FILTER' %}`.
+
+        TODO: Maybe make each filter type its own macro to keep the form macro
+              a little shorter. This would also make the individual filters
+              more reusable elsewhere.
+
+   query:
+
+        The post type query object like `queries.posts`.
+        Needed so we can utilize `query.possible_values_for()` to get access to
+        the values of each filter.
+
+   posts:
+
+        The query object search results.
+        Used to show how many filtered items resulted.
+
+   doc_type:
+
+        The type of document that posts contains.
+        Mainly used for conditionals needed to support newsroom filters.
+
+   user_options:
+
+        An object of non-required options that can be overriden.
+
+   user_options.expand_label:
+
+        The label you want on the expandable button.
+
+   user_options.submit_label:
+
+        The label you want on the submit button.
+
+   user_options.show_current_filters:
+
+        Allows you to disable showing the currently applied filters.
+
+   user_options.show_unfiltered_count:
+
+        Allows you to enable the count label when no filters are applied.
+
+   user_options.show_filters_label:
+
+        Allows you to disable showing the count label.
+
+   user_options.id_prefix:
+
+        ID's are automatically added to certain elements that need them, but if
+        you need more than one filters form on a page you'll want to give it a
+        unique prefix.
+
+   ==========================================================================
+
+   Examples:
+
+   blog/index.html
+   newsroom/index.html
+
+        Standard filter usage.
+
+   the-bureau/leadership-calendar/index.html
+
+        This is an example of using two instances of the filters macro on the
+        same page. One of them uses the full set of options including
+        `id_prefix` so that there are no ID attribute conflicts.
+
+   ========================================================================== #}
+
+{% macro filters(filters, query, posts, doc_type, user_options) %}
+
+{%- set options = {
+    'action':                   '/',
+    'expand_label':             'Filter',
+    'submit_label':             'Apply filters',
+    'show_current_filters':     true,
+    'show_unfiltered_count':    false,
+    'show_filters_label':       true,
+    'id_prefix':                '',
+    'id_tags':                  'filter_tags',
+    'id_author':                'filter_author',
+    'id_range_date_gte':        'filter_range-date-gte',
+    'id_range_date_lte':        'filter_range-date-lte',
+    'id_from_month':            'filter_from-month',
+    'id_from_year':             'filter_from-year',
+    'id_to_month':              'filter_to-month',
+    'id_to_year':               'filter_to-year'
+} -%}
+{%- set _ignore = options.update(user_options) -%}
+
+{#- Create ID's for all of the form inputs and containers using `id_prefix`. -#}
+{%- if options.id_prefix != '' %}
+{%- set _ignore = options.update({
+    'id_tags':              options.id_prefix + '-filter_tags',
+    'id_author':            options.id_prefix + '-filter_author',
+    'id_range_date_gte':    options.id_prefix + '-filter_range-date-gte',
+    'id_range_date_lte':    options.id_prefix + '-filter_range-date-lte',
+    'id_from_month':        options.id_prefix + '-filter_from-month',
+    'id_from_year':         options.id_prefix + '-filter_from-year',
+    'id_to_month':          options.id_prefix + '-filter_to-month',
+    'id_to_year':           options.id_prefix + '-filter_to-year'
+}) -%}
+{%- endif -%}
+
+<div class="expandable expandable__filters">
+    <div class="expandable_header expandable_header__spaced">
+    {% if options.show_current_filters %}
+        <div class="expandable_header-right u-hide-on-mobile">
+    {% else %}
+        <div class="u-hide-on-mobile">
+    {% endif %}
+            <span class="expandable_target">
+                <button class="btn btn__secondary">
+                    {{ options.expand_label }}
+                    <span class="expandable_cue-open">
+                        <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                    </span>
+                </button>
+            </span>
+        </div>
+    {% if options.show_current_filters %}
+        {{ active_filters(posts, filters, options) }}
+        <div class="expandable_header-right u-show-on-mobile">
+    {% else %}
+        <div class="u-show-on-mobile">
+    {% endif %}
+            <span class="expandable_target">
+                <button class="btn btn__secondary">
+                    {{ options.expand_label }}
+                    <span class="expandable_cue-open">
+                        <span class="btn_icon__right cf-icon cf-icon-down"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="btn_icon__right cf-icon cf-icon-up"></span>
+                    </span>
+                </button>
+            </span>
+        </div>
+    </div>
+    <div class="expandable_content padded-container">
+        <div class="padded-container_body">
+            {{ filters_form(filters, query, doc_type, options) }}
+        </div>
+    </div>
+</div><!-- END .expandable -->
+
+{% endmacro %}
+
+
+{# A helper macro for filters()
+   ========================================================================== #}
+{% macro active_filters(posts, filters, options) %}
+
+{%- set active_filters = [] -%}
+{%- set active_date_filters = [] -%}
+
+{# This is a hack. `_ignore` is a variable we will never use but we can use
+   its var expression as a means to write the expression needed to update
+   `active_date_filters`. #}
+{%- for filter in filters %}
+    {%- if filter == 'range_date' -%}
+        {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_gte')) %}
+        {% set _ignore = active_date_filters.extend(selected_filters_for_field('range_date_lte')) %}
+    {%- elif filter == 'activity_category' -%}
+        {% set _ignore = active_filters.extend(selected_filters_for_field('type')) %}
+        {% set _ignore = active_filters.extend(selected_filters_for_field('category')) %}
+    {%- else -%}
+        {% set _ignore = active_filters.extend(selected_filters_for_field(filter)) %}
+    {%- endif -%}
+{% endfor -%}
+
+{%- set active_filters_total = active_filters|length + active_date_filters|length -%}
+
+{%- if active_filters_total > 0 -%}
+    <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
+        {%- if options.show_filters_label -%}
+        <li class="list_item filtered-by_header">
+        {%- if posts|list|length > 0 -%}
+            {{ posts.total }} filtered result{{ 's' if posts.total > 1 }} for
+        {%- else -%}
+            No results for
+        {%- endif -%}
+        </li>
+        {%- endif %}
+    {%- for filter in active_filters %}
+        <li class="list_item filtered-by_filter">
+            {{ 'Blog' if filter == 'post' else filter }}
+        {%- if not loop.last -%}
+            ,
+        {%- elif active_date_filters|length > 0 -%}
+            ,
+        {%- endif %}
+        </li>
+    {% endfor %}
+    {%- if active_date_filters|length > 0 -%}
+        <li class="list_item filtered-by_filter">
+        {%- for filter in active_date_filters %}
+            {{ filter|date("%B %Y") }}
+            {{ '&ndash;'|safe if not loop.last }}
+        {%- endfor -%}
+        </li>
+    {%- endif %}
+    </ul>
+{%- else -%}
+    {% if options.show_unfiltered_count and options.show_filters_label %}
+    <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
+        <li class="list_item">
+            <span class="filtered-by_header">
+                {{ posts.total }} results
+            </span>
+        </li>
+    </ul>
+    {% endif %}
+{%- endif -%}
+
+{% endmacro %}
+
+
+{# A helper macro for filters()
+   ========================================================================== #}
+{% macro filters_form(filters, query, doc_type, options) %}
+
+<form class="js-validate-filters"
+      method="get"
+{%- if options.action != '/' %}
+      action="{{ options.action }}">
+{%- else -%}
+      >
+{% endif %}
+
+    <div class="form-l form-l__float form-l__flush">
+{% for filter in filters %}
+
+    {# Category filters #}
+    {% if filter == 'category' %}
+        <div class="form-l_col form-l_col-1-3">
+            <div class="form-group">
+                <label class="form-label-header">
+                    Categories
+                </label>
+            {% if doc_type == 'newsroom' -%}
+                {% set categories = query.possible_values_for('category', doc_type='newsroom')|sort(attribute='key') %}
+            {%- else -%}
+                {% set categories = query.possible_values_for('category')|sort(attribute='key') %}
+            {% endif -%}
+            {% for category in categories -%}
+                <label class="form-group_item">
+                    {{ filter_checkbox('category', category.key)|safe }}
+                </label>
+            {% endfor %}
+            {% if doc_type == 'newsroom' -%}
+                <label class="form-group_item">
+                    {{ filter_checkbox('type', 'post', 'Blog')|safe }}
+                </label>
+            {%- endif %}
+            </div>
+        </div>
+
+    {# Activity category filters #}
+    {% elif filter == 'activity_category' %}
+        <div class="form-l_col form-l_col-1-3">
+            <div class="form-group">
+                <label class="form-label-header">
+                    Category type
+                </label>
+            {% set categories = query.possible_values_for('type')|sort(attribute='key') -%}
+            {% for category in categories -%}
+                {% if category.key != 'cfpb_newsroom' %}
+                    {% if category.key == 'post' %}
+                        <label class="form-group_item">
+                            {{ filter_checkbox('type', category.key, 'Blog')|safe }}
+                        </label>
+                    {% else %}
+                        <label class="form-group_item">
+                            {{ filter_checkbox('type', category.key)|safe }}
+                        </label>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% set newsroom_categories =
+               query.possible_values_for('category', doc_type='newsroom')|sort(attribute='key') %}
+            {% for category in newsroom_categories -%}
+                <label class="form-group_item">
+                    {{ filter_checkbox('category', category.key)|safe }}
+                </label>
+            {% endfor %}
+            </div>
+        </div>
+
+    {# Calendar filters #}
+    {% elif filter == 'calendar' %}
+        <div class="form-l_col form-l_col-1-3">
+            <div class="form-group">
+                <label class="form-label-header">
+                    Calendars
+                </label>
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Richard Cordray')|safe }}
+                </label>
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Steve Antonakes')|safe }}
+                </label>
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Raj Date')|safe }}
+                </label>
+                <label class="form-group_item">
+                    {{ filter_checkbox('calendar', 'Elizabeth Warren')|safe }}
+                </label>
+            </div>
+        </div>
+
+    {# Tag filters #}
+    {% elif filter == 'tags' %}
+        <div class="form-l_col form-l_col-1-3">
+            <label class="form-label-header" for="{{ options.id_tags }}">
+                Topics
+            </label>
+            <select class="chosen-select"
+                    id="{{ options.id_tags }}"
+                    name="{{ options.id_tags }}"
+                    multiple
+                    data-placeholder="Search for topics">
+                <optgroup label="Most frequent">
+            {% if doc_type == 'newsroom' -%}
+                {% set possible_tags = query.possible_values_for('tags', doc_type='newsroom') %}
+            {%- else -%}
+                {% set possible_tags = query.possible_values_for('tags') %}
+            {% endif -%}
+            {# Top 3 tags come first #}
+            {%- for tags in possible_tags -%}
+                {%- if loop.index < 4 -%}
+                    {{ filter_option('tags', tags.key)|safe }}
+                {%- endif -%}
+            {%- endfor -%}
+                </optgroup>
+                <optgroup label="All other topics">
+            {# Then the rest of the tags #}
+            {%- for tags in possible_tags[3:]|sort(attribute='key') -%}
+                    {{ filter_option('tags', tags.key)|safe }}
+            {%- endfor -%}
+                </optgroup>
+            </select>
+        </div>
+
+    {# Author filters #}
+    {% elif filter == 'author' %}
+        <div class="form-l_col form-l_col-1-3">
+            <label class="form-label-header" for="{{ options.id_author }}">
+                Author
+            </label>
+            <select class="chosen-select"
+                    id="{{ options.id_author }}"
+                    name="{{ options.id_author }}"
+                    multiple
+                    data-placeholder="Search for authors">
+            {% if doc_type == 'newsroom' -%}
+                {% set authors = query.possible_values_for('author', doc_type='newsroom')|sort(attribute='key') %}
+            {%- else -%}
+                {% set authors = query.possible_values_for('author')|sort(attribute='key') %}
+            {% endif -%}
+            {% for author in authors %}
+                {{ filter_option('author', author.key)|safe }}
+            {% endfor %}
+            </select>
+        </div>
+
+    {# Date range filters #}
+    {% elif filter == 'range_date' %}
+        <label class="form-l_col-2-3 form-label-header">
+            Date range
+        </label>
+        <!--
+            =================
+            "From" date input
+            =================
+        -->
+        <!-- No-JS date input -->
+        {% set from_date = selected_filters_for_field('range_date_gte')[0] %}
+        <div class="form-l_col-1-3 js-filter_range-date-wrapper">
+            <label for="{{ options.id_range_date_gte }}">
+                From:
+            </label>
+            <input class="js-filter_range-date js-filter_range-date__gte"
+                   id="{{ options.id_range_date_gte }}"
+                   name="filter_range_date_gte"
+                   type="text"
+                   value="{{ from_date if from_date }}"
+                   placeholder="YYYY-MM">
+        </div>
+        <!-- JS date input -->
+        <div class="form-l_col-1-3 input-group js-filter_range-date-replacement"
+             style="display:none;">
+            <label for="{{ options.id_from_month }}">
+                From:
+            </label>
+            <div class="input-group_item custom-select">
+                <select class="form-input-month js-filter_month"
+                        id="{{ options.id_from_month }}">
+                    <option value="">Month</option>
+                    <option value="01">Jan</option>
+                    <option value="02">Feb</option>
+                    <option value="03">Mar</option>
+                    <option value="04">Apr</option>
+                    <option value="05">May</option>
+                    <option value="06">Jun</option>
+                    <option value="07">Jul</option>
+                    <option value="08">Aug</option>
+                    <option value="09">Sep</option>
+                    <option value="10">Oct</option>
+                    <option value="11">Nov</option>
+                    <option value="12">Dec</option>
+                </select>
+                <span class="custom-select_icon cf-icon cf-icon-down"></span>
+            </div>
+            <div class="input-group_item custom-select">
+                <select class="form-input_year js-filter_year"
+                        id="{{ options.id_from_year }}">
+                    <option value="">Year</option>
+                {%- for year in range(2011, current_date|date("%Y")|int + 1) -%}
+                    <option value="{{ year }}">{{ year }}</option>
+                {%- endfor -%}
+                </select>
+                <span class="custom-select_icon cf-icon cf-icon-down"></span>
+            </div>
+        </div> <!-- END js date input -->
+        <!-- END "From" date input -->
+        <!--
+            ===============
+            "To" date input
+            ===============
+        -->
+        <!-- No-JS date input -->
+        {% set to_date = selected_filters_for_field('range_date_lte')[0] %}
+        <div class="form-l_col-1-3 js-filter_range-date-wrapper">
+            <label for="{{ options.id_range_date_lte }}">
+                To:
+            </label>
+            <input class="js-filter_range-date js-filter_range-date__lte"
+                   id="{{ options.id_range_date_lte }}"
+                   name="filter_range_date_lte"
+                   type="text"
+                   value="{{ to_date if to_date }}"
+                   placeholder="YYYY-MM">
+        </div>
+        <!-- JS date input -->
+        <div class="form-l_col-1-3 input-group js-filter_range-date-replacement"
+             style="display:none;">
+            <label for="{{ options.id_to_month }}">
+                To:
+            </label>
+            <div class="custom-select input-group_item">
+                <select class="form-input-month js-filter_month"
+                        id="{{ options.id_to_month }}">
+                    <option value="">Month</option>
+                    <option value="01">Jan</option>
+                    <option value="02">Feb</option>
+                    <option value="03">Mar</option>
+                    <option value="04">Apr</option>
+                    <option value="05">May</option>
+                    <option value="06">Jun</option>
+                    <option value="07">Jul</option>
+                    <option value="08">Aug</option>
+                    <option value="09">Sep</option>
+                    <option value="10">Oct</option>
+                    <option value="11">Nov</option>
+                    <option value="12">Dec</option>
+                </select>
+                <span class="custom-select_icon cf-icon cf-icon-down"></span>
+            </div>
+            <div class="custom-select input-group_item">
+                <select class="form-input_year js-filter_year"
+                        id="{{ options.id_to_year }}">
+                    <option value="">Year</option>
+                {%- for year in range(2011, current_date|date("%Y")|int + 1) %}
+                    <option value="{{ year }}">{{ year }}</option>
+                {%- endfor %}
+                </select>
+                <span class="custom-select_icon cf-icon cf-icon-down"></span>
+            </div>
+        </div> <!-- END JS date input -->
+        <!-- END "To" date input -->
+
+    {% endif %}
+{% endfor %}
+    </div> <!-- END .form-l__flush -->
+
+    <div class="form-actions form-actions__right-on-med">
+        <input class="btn btn__warning btn__link form-actions_item js-form_clear"
+               type="button"
+               value="Clear filters">
+        <input class="btn form-actions_item"
+               type="submit"
+               value="{{ options.submit_label }}">
+    </div>
+
+</form>
+{% endmacro %}
+
+{# A helper macro for filters()
+   ========================================================================== #}
+{% macro filter_checkbox(field, value, label, checked=false) %}
+    <input class="custom-input"
+           type="checkbox"
+           name="filter_{{ field }}"
+           value="{{ value }}"
+           {%- if is_filter_selected(field, value) or checked %}
+           checked
+           {%- endif -%}
+           >
+        {{ label if label else value }}
+{% endmacro %}
+
+{# A helper macro for filters()
+   ========================================================================== #}
+{% macro filter_option(field, value) %}
+    <option value="{{ value }}"
+        {%- if is_filter_selected(field, value) %}
+            selected
+        {%- endif -%}
+            >
+        {{ value }}
+    </option>
+{% endmacro %}

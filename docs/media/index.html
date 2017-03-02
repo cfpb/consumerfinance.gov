@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / media docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / media docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="media" class="docs-component">
+      <h2 class="docs-component_header"><span>Media</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Media object (OOCSS)</h3>
+          <section class="docs-pattern_pattern">
+<article class="media">
+    <div class="media_image-container">
+        <img class="media_image" src="http://placekitten.com/276/155" alt="">
+    </div>
+    <div class="media_body">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        </p>
+    </div>
+</article>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;media&quot;&gt;
+    &lt;div class=&quot;media_image-container&quot;&gt;
+        &lt;img class=&quot;media_image&quot; src=&quot;http://placekitten.com/276/155&quot; alt=&quot;&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;media_body&quot;&gt;
+        &lt;p&gt;
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;media\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;media_image-container\&amp;quot;&gt;\n        &lt;img class=\&amp;quot;media_image\&amp;quot; src=\&amp;quot;http://placekitten.com/276/155\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;media_body\&amp;quot;&gt;\n        &lt;p&gt;\n            Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n            Dolorum non sapiente nobis molestias delectus optio ipsam\n            voluptas esse blanditiis ipsa debitis consequuntur excepturi\n            accusantium doloribus dicta fugiat itaque ab porro.\n        &lt;/p&gt;\n    &lt;/div&gt;\n&lt;/article&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural cheat sheet:
+-----------------------
+.media
+  .media_image-container
+    .media_image
+  .media_body</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>Based on Object-oriented CSS' media object. In mobile sizes (less than 600px), image container stacks on top of media_body.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.media_image-container__right modifier</h3>
+          <section class="docs-pattern_pattern">
+<article class="media">
+    <div class="media_image-container media_image-container__right">
+        <img class="media_image" src="http://placekitten.com/276/155" alt="">
+    </div>
+    <div class="media_body">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        </p>
+    </div>
+</article>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;media&quot;&gt;
+    &lt;div class=&quot;media_image-container media_image-container__right&quot;&gt;
+        &lt;img class=&quot;media_image&quot; src=&quot;http://placekitten.com/276/155&quot; alt=&quot;&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;media_body&quot;&gt;
+        &lt;p&gt;
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;media\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;media_image-container media_image-container__right\&amp;quot;&gt;\n        &lt;img class=\&amp;quot;media_image\&amp;quot; src=\&amp;quot;http://placekitten.com/276/155\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;media_body\&amp;quot;&gt;\n        &lt;p&gt;\n            Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n            Dolorum non sapiente nobis molestias delectus optio ipsam\n            voluptas esse blanditiis ipsa debitis consequuntur excepturi\n            accusantium doloribus dicta fugiat itaque ab porro.\n        &lt;/p&gt;\n    &lt;/div&gt;\n&lt;/article&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>Image is positioned to right instead of left of content.</li>
+            </ul>
+          </footer>
+        </div>
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">.media_image-container__wide-margin modifier</h3>
+          <section class="docs-pattern_pattern">
+<article class="media">
+    <div class="media_image-container media_image-container__wide-margin">
+        <img class="media_image" src="http://placekitten.com/276/155" alt="">
+    </div>
+    <div class="media_body">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        </p>
+    </div>
+</article>
+<article class="media">
+    <div class="media_image-container media_image-container__wide-margin media_image-container__right">
+        <img class="media_image" src="http://placekitten.com/276/155" alt="">
+    </div>
+    <div class="media_body">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        </p>
+    </div>
+</article>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;media&quot;&gt;
+    &lt;div class=&quot;media_image-container media_image-container__wide-margin&quot;&gt;
+        &lt;img class=&quot;media_image&quot; src=&quot;http://placekitten.com/276/155&quot; alt=&quot;&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;media_body&quot;&gt;
+        &lt;p&gt;
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/article&gt;
+&lt;article class=&quot;media&quot;&gt;
+    &lt;div class=&quot;media_image-container media_image-container__wide-margin media_image-container__right&quot;&gt;
+        &lt;img class=&quot;media_image&quot; src=&quot;http://placekitten.com/276/155&quot; alt=&quot;&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;media_body&quot;&gt;
+        &lt;p&gt;
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;media\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;media_image-container media_image-container__wide-margin\&amp;quot;&gt;\n        &lt;img class=\&amp;quot;media_image\&amp;quot; src=\&amp;quot;http://placekitten.com/276/155\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;media_body\&amp;quot;&gt;\n        &lt;p&gt;\n            Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n            Dolorum non sapiente nobis molestias delectus optio ipsam\n            voluptas esse blanditiis ipsa debitis consequuntur excepturi\n            accusantium doloribus dicta fugiat itaque ab porro.\n        &lt;/p&gt;\n    &lt;/div&gt;\n&lt;/article&gt;\n&lt;article class=\&amp;quot;media\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;media_image-container media_image-container__wide-margin media_image-container__right\&amp;quot;&gt;\n        &lt;img class=\&amp;quot;media_image\&amp;quot; src=\&amp;quot;http://placekitten.com/276/155\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;media_body\&amp;quot;&gt;\n        &lt;p&gt;\n            Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n            Dolorum non sapiente nobis molestias delectus optio ipsam\n            voluptas esse blanditiis ipsa debitis consequuntur excepturi\n            accusantium doloribus dicta fugiat itaque ab porro.\n        &lt;/p&gt;\n    &lt;/div&gt;\n&lt;/article&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-notes">
+              <li>Increased right (or left, when used with .media_image-container__right modifier), margin on .media_image-container.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">.media {
+  display: block;
+}
+.media:after {
+  content: &quot;&quot;;
+  display: table;
+  clear: both;
+}
+.lt-ie8 .media {
+  zoom: 1;
+}
+@media only all and (min-width: 37.5em) {
+  .media_image-container {
+    float: left;
+    margin-right: 15px;
+  }
+}
+@media only all and (max-width: 37.4375em) {
+  .media_image-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+.media_image-container.media_image-container__wide-margin {
+  margin-right: 30px;
+}
+@media only all and (max-width: 37.4375em) {
+  .media_image-container.media_image-container__wide-margin {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+.media_image-container__right {
+  display: block;
+}
+@media only all and (min-width: 37.5em) {
+  .media_image-container__right {
+    float: right;
+    margin-left: 15px;
+    margin-right: 0;
+  }
+}
+.media_image-container__right.media_image-container__wide-margin {
+  margin-left: 30px;
+  margin-right: 0;
+}
+@media only all and (max-width: 37.4375em) {
+  .media_image-container__right.media_image-container__wide-margin {
+    margin-left: 0;
+  }
+}
+.media_image {
+  display: block;
+}
+@media only all and (max-width: 37.4375em) {
+  .media_body {
+    margin-top: 15px;
+  }
+}
+@media only all and (min-width: 37.5em) {
+  .media_body {
+    display: table-cell;
+    width: 10000px;
+    vertical-align: top;
+  }
+}
+.lt-ie8 .media_body {
+  zoom: 1;
+  display: block;
+  width: auto;
+}</code></pre>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "CFPB Newsroom",
+  "query": {
+    "size": 10,
+    "sort": "date:desc",
+    "doc_type": "newsroom,posts"
+  },
+  "filters": [
+    {
+      "or": [
+        {
+          "term": {
+            "display_in_newsroom": "on"
+          }
+        },
+        {
+          "type": {
+            "value": "newsroom"
+          }
+        }
+      ]
+    }
+  ]
+}

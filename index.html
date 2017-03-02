@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+
+{% block title -%}
+    Consumer Financial Protection Bureau
+{%- endblock %}
+
+{% block desc -%}
+    Our vision is a consumer finance marketplace that works for American consumers, responsible providers, and the economy as a whole.
+{%- endblock %}
+
+{# Set the percentage complete for each section HERE.
+   These values will propagate everywhere they are needed on the page.
+   When completing a section, uncomment the `background: #2CB34A;` line in the CSS below. #}
+{% set pct = {
+    'consumer_guides': '0%',
+    'submit_a_complaint': '0%',
+    'data_and_research': '0%',
+    'for_industry': '0%',
+    'about': '35%',
+} %}
+
+{% block css scoped -%}
+    {{ super() }}
+    <style>
+        /* These heights control the height of the "bar charts" in the non-SVG fallback. */
+        #consumer-guides .bar-chart {
+            height: {{ pct.consumer_guides }};
+            /* background: #2CB34A; */
+        }
+        #submit-a-complaint .bar-chart {
+            height: {{ pct.submit_a_complaint }};
+            /* background: #2CB34A; */
+        }
+        #data-and-research .bar-chart {
+            height: {{ pct.data_and_research }};
+            /* background: #2CB34A; */
+        }
+        #for-industry .bar-chart {
+            height: {{ pct.for_industry }};
+            /* background: #2CB34A; */
+        }
+        #about .bar-chart {
+            height: {{ pct.about }};
+            /* background: #2CB34A; */
+        }
+    </style>
+{%- endblock %}
+
+{% block content %}
+
+    <main class="content" id="main" role="main">
+
+        <section class="content_hero hero beta-hero">
+            <h1 class="beta-hero_title">Welcome to beta.<wbr>consumerfinance.gov!</h1>
+            <p class="beta-hero_desc">
+                We&rsquo;re redesigning consumerfinance.gov to make it easier to use.
+                Follow our work here as we build in the open.
+            </p>
+            <a class="btn btn__super" href="beta/">Learn more about beta</a>
+        </section>
+
+        <!-- .content_bar must come after .content_hero but before .content_wrapper -->
+        <div class="content_bar"></div>
+
+        <div class="wrapper content_wrapper">
+            <section class="content_main">
+                <h2 class="h1">What we&rsquo;re working on</h2>
+                <p class="short-desc">
+                    You deserve a website that works for you.
+                    We&rsquo;re redesigning and reorganizing, section by section,
+                    so you can find the information you need quickly and easily, on any device.
+                    These charts tell you how much of each section we've published in the new format.
+                </p>
+
+                <div class="progress-charts">
+                    <div class="progress-charts_container" id="consumer-guides">
+                        <canvas class="progress-charts_chart">
+                            <div class="chart-bg">
+                                <div class="bar-chart"></div>
+                            </div>
+                        </canvas>
+                        <h3 class="chart-name">Consumer Guides</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.consumer_guides }}</div>
+                    </div>
+                    <div class="progress-charts_container" id="submit-a-complaint">
+                        <canvas class="progress-charts_chart">
+                            <div class="chart-bg">
+                                <div class="bar-chart"></div>
+                            </div>
+                        </canvas>
+                        <h3 class="chart-name">Submit a Complaint</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.submit_a_complaint }}</div>
+                    </div>
+                    <div class="progress-charts_container" id="data-and-research">
+                        <canvas class="progress-charts_chart">
+                            <div class="chart-bg">
+                                <div class="bar-chart"></div>
+                            </div>
+                        </canvas>
+                        <h3 class="chart-name">Data & Research</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.data_and_research }}</div>
+                    </div>
+                    <div class="progress-charts_container" id="for-industry">
+                        <canvas class="progress-charts_chart">
+                            <div class="chart-bg">
+                                <div class="bar-chart"></div>
+                            </div>
+                        </canvas>
+                        <h3 class="chart-name">For Industry</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.for_industry }}</div>
+                    </div>
+                    <div class="progress-charts_container" id="about">
+                        <canvas class="progress-charts_chart">
+                            <div class="chart-bg">
+                                <div class="bar-chart"></div>
+                            </div>
+                        </canvas>
+                        <h3 class="chart-name">About</h3>
+                        <div class="chart-value u-visually-hidden">{{ pct.about }}</div>
+                    </div>
+                </div>
+
+                <div class="block
+                            block__padded-top
+                            block__border-top
+                            block__flush-bottom">
+                    <div class="content-l content-l__large-gutters">
+                        <section class="content-l_col content-l_col-1-2">
+                            <h3>Why are we redesigning in&nbsp;beta?</h3>
+                            <p class="short_desc">
+                                A beta release gives both users and developers a sense of
+                                new features and capabilities.
+                                It helps us identify what's working and what's not.
+                                But the content here is not necessarily accurate or up to date.
+                                If you need reliable information from us right now, visit the current site.
+                            </p>
+                            <ul class="list__links">
+                                <li class="list_item">
+                                    <a class="list_link jump-link" href="https://www.consumerfinance.gov/">
+                                        Go to consumerfinance.gov
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a class="list_link jump-link" href="beta/">
+                                        Learn more about the beta project
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+                        <section class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+                            <h3>Open government, open code</h3>
+                            <p class="short_desc">
+                                The new consumerfinance.gov is an open source project,
+                                but it's not our only one.
+                                All the software we build is open source by default.
+                                We release as much as possible.
+                            </p>
+                            <ul class="list__links">
+                                <li class="list_item">
+                                    <a class="list_link jump-link jump-link__external-link"
+                                       href="https://cfpb.github.io/">
+                                        Learn about out projects at CFPB Open Tech
+                                    </a>
+                                </li>
+                                <li class="list_item">
+                                    <a class="list_link jump-link jump-link__external-link"
+                                       href="https://github.com/cfpb/cfgov-refresh">
+                                        See the code for this redesign on GitHub
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+                    </div><!-- END .content-l -->
+                </div><!-- END .block -->
+            </section><!-- END .content_main -->
+        </div><!-- END .content_wrapper -->
+
+    </main>
+
+{% endblock content %}
+
+{% block javascript %}
+    {{ super() }}
+    <script src="/static/vendor/requestNextAnimationFrame/requestNextAnimationFrame.js"></script>
+    <script>
+        // Multiplier determines how pixel dense the canvas should be.
+        // This way canvas can look good even on retina displays.
+        var multiplier = 2;
+
+        // Boolean to end the animation loop so it's not just running continuously in the background.
+        var animationComplete = false;
+
+        // This variable keeps track of time by counting the number of frames drawn.
+        var iterationCount = 0;
+
+        var radius = ($(".progress-charts_container").width() * multiplier) / 2,
+            arcStart = 270,
+            center = {
+              x: radius,
+              y: radius
+            };
+
+        // Array of objects to store each chart's values.
+        var charts = [
+          {
+            name: "consumer guides",
+            done: parseInt( $("#consumer-guides .chart-value").text() ) / 100,
+            value: 0
+          },
+          {
+            name: "submit a complaint",
+            done: parseInt( $("#submit-a-complaint .chart-value").text() ) / 100,
+            value: 0
+          },
+          {
+            name: "data and research",
+            done: parseInt( $("#data-and-research .chart-value").text() ) / 100,
+            value: 0
+          },
+          {
+            name: "for industry",
+            done: parseInt( $("#for-industry .chart-value").text() ) / 100,
+            value: 0
+          },
+          {
+            name: "about",
+            done: parseInt( $("#about .chart-value").text() ) / 100,
+            value: 0
+          }
+        ];
+
+        // Set up each canvas element.
+        $( ".progress-charts_chart" ).each(function() {
+          var ctx = $(this)[0].getContext('2d');
+          ctx.canvas.width = $(".progress-charts_container").width() * multiplier;
+          ctx.canvas.height = ctx.canvas.width;
+        });
+
+        // Run everything on load (or switch to when in view).
+        $( document ).ready(function() {
+          if (!animationComplete) {
+            animate();
+          }
+        });
+
+        function animate() {
+          // Variable to keep track of when all charts are finished animating.
+          var completeCount = 0;
+          $( ".progress-charts_chart" ).each(function(i) {
+            // snag the context
+            var ctx = $(this)[0].getContext('2d');
+            if (charts[i].value < charts[i].done) {
+              // ease the value (90 being how long it should take)
+              // we're animating at 60fps so 90 is 1.5 seconds
+              charts[i].value = easeInOutQuint(iterationCount, 0, charts[i].done, 90);
+            } else {
+              completeCount++;
+            }
+            // send values to be drawn
+            drawGraph(ctx, charts[i].value);
+          });
+          // each loop through is a animation frame, so count up the frames
+          iterationCount++;
+          // if charts aren't finished animating, loop again
+          if (completeCount < 5) {
+            window.requestNextAnimationFrame(animate);
+          } else {
+            animationComplete = true;
+          }
+        };
+
+        function drawGraph(context, value) {
+          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+          // inner grey
+          context.beginPath();
+          context.arc(center.x, center.y, radius - (4 * multiplier), 0, 2 * Math.PI);
+          context.fillStyle = '#E3E4E5';
+          context.fill();
+
+          if (value < 1) {
+            // decimal 0.0 - 1 for percentage
+            var pct = arcStart + (value * 360);
+            // fill percentage arc
+            context.beginPath();
+            context.moveTo(center.x, center.y);
+            context.arc(center.x, center.y, radius, getRadians(arcStart), getRadians(pct), false);
+            context.closePath();
+            context.fillStyle = '#FF931B';
+            context.fill();
+            // center circle
+            context.beginPath();
+            context.arc(center.x, center.y, radius / 1.85, 0, 2 * Math.PI);
+            context.fillStyle = '#FFF';
+            context.fill();
+          } else { // switch to green
+            // decimal 0.0 - 1 for percentage
+            var pct = arcStart + (value * 360);
+            // fill percentage arc
+            context.beginPath();
+            context.moveTo(center.x, center.y);
+            context.arc(center.x, center.y, radius, getRadians(arcStart), getRadians(pct), false);
+            context.closePath();
+            context.fillStyle = '#2CB34A';
+            context.fill();
+            //center circle
+            context.beginPath();
+            context.arc(center.x, center.y, radius / 1.85, 0, 2 * Math.PI);
+            context.fillStyle = '#ADDC91';
+            context.fill();
+            //check mark
+            var unit = ( radius - (4 * multiplier) ) / 5;
+            context.beginPath();
+            context.moveTo(center.x - unit, center.y);
+            context.lineTo(center.x - unit / 2, center.y + unit);
+            context.lineWidth = 6 * (radius / 100) * multiplier;
+            context.strokeStyle = '#FFF';
+            context.lineCap = 'round';
+            context.stroke();
+            context.beginPath();
+            context.moveTo(center.x - unit / 2, center.y + unit);
+            context.lineTo(center.x + unit, center.y - unit);
+            context.stroke();
+          }
+        }
+
+
+        // ------------------------------------------------
+        // Events
+        // ------------------------------------------------
+
+        $( window ).resize(function() {
+          //reset after resize (just in case)
+          waitForFinalEvent();
+        });
+
+
+        // ------------------------------------------------
+        // utilities
+        // ------------------------------------------------
+
+        function getRadians(degrees) {
+          return degrees * Math.PI / 180;
+        }
+
+        function easeInOutQuint(currentIteration, startValue, changeInValue, totalIterations) {
+          if ( (currentIteration /= totalIterations / 2) < 1) {
+            return changeInValue / 2 * Math.pow(currentIteration, 5) + startValue;
+          }
+          return changeInValue / 2 * (Math.pow(currentIteration - 2, 5) + 2) + startValue;
+        }
+
+        // wait for timer
+        var waitForFinalEvent = (function () {
+          var timers = {};
+          return function (callback, ms, uniqueId) {
+            if (!uniqueId) {
+              uniqueId = "Don't call this twice without a uniqueId";
+            }
+            if (timers[uniqueId]) {
+              clearTimeout(timers[uniqueId]);
+            }
+            timers[uniqueId] = setTimeout(callback, ms);
+          };
+        })();
+    </script>
+{% endblock javascript %}

@@ -1,0 +1,255 @@
+.org-chart {
+    
+    .respond-to-min(600, {
+        width: 530px;
+        margin: 0 auto;
+    });
+    
+    .respond-to-min(1024, {
+        width: 660px;
+    });
+    
+    &_root {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    
+    &_branches,
+    &_nodes {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* On larger screen sizes, the lines of the org chart are drawn with before & after 
+       pseudo elements applied to .org-chart_branches & .org-chart_branch.
+     */
+    &_branches {
+        padding-top: unit(@grid_gutter-width, px);
+        
+        /* :before pseudo element's left border draws a centered vertical line
+           down from .org-chart_root to .org-chart_branches.*/
+        .respond-to-min(600px, {
+            position: relative;
+            
+            &:before{
+                content: '';
+                position: absolute; 
+                top: 0; 
+                left: 50%;
+                border-left: 1px solid @gray-50;
+                width: 0; 
+                height: unit(@grid_gutter-width, px);
+            }
+        });
+    }
+    
+    &_branch {        
+        /* Borders on .org-chart_branch pseudo elements (:after on first branch, :before on last)
+           draw lines connecting the branch headers to the line from .org-chart_root. */
+        .respond-to-min(600px, {
+            .grid_column(6);
+            position: relative;
+            padding-top: 45px;
+            border-width: 0;
+
+            &:before, 
+            &:after {
+                content: '';
+                position: absolute; 
+                top: 0; 
+                width: 50%; 
+                height: unit(@grid_gutter-width, px);
+                border-color: @gray-50;
+                border-style: solid;
+                border-width: 0;
+            }
+            
+            &:first-child {
+                padding-right: unit(@grid_gutter-width / 2, px);
+
+                &:after {
+                    left: 50%;
+                    border-width: 1px 0 0 1px;
+                }
+            }
+
+            &.last-child {
+                padding-left: unit(@grid_gutter-width / 2, px);
+
+                &:before{
+                    right: 50%;
+                    border-width: 1px 1px 0 0;
+                }
+            }
+
+        });
+
+        &_name {
+            .respond-to-min(600, {
+                .h4();
+                margin-bottom: unit(15px / @font-size, em);
+                text-align: center;
+            });
+        }
+    }
+    
+    &_role {
+        padding: unit(@grid_gutter-width / 2, px);
+        padding-right: unit(@grid_gutter-width, px);
+        position: relative;
+        background: @gray-10;
+        border-color: @gray-20;
+        border-style: solid;
+        border-width: 1px 0 0 0;
+        
+        .respond-to-max(599px, {
+            border-width: 1px 0 1px 0;
+        });
+    }
+    
+    &_node {
+        width: 100%;
+        
+        .respond-to-min(600px, {
+            position: relative;
+            margin-bottom: unit(@grid_gutter-width / 2, px);
+        });
+        
+        .respond-to-max(599px, {
+            margin-bottom: -1px;
+        });
+        
+        /* nested .org-chart_node blocks have different background color & borders */
+        .org-chart_nodes {
+            border-top: 5px solid @pacific-50;
+            
+            .org-chart_node {
+                .respond-to-min(600px, {
+                    margin-bottom: 0px;
+                });
+            }
+            
+            .org-chart_role {
+                .respond-to-min(600px, {
+                    background: @pacific-20;
+                    border-color: #E5F1FA;
+                    border-width: 0 0 1px 0;
+                });
+                
+                .respond-to-max(599px, {
+                    border-width: 1px 0 1px 0;
+                }); 
+            }
+        }
+    }
+    
+    .node_expander {
+        position: absolute;
+        right: 10px;
+        top: 20px;
+        z-index: 10;
+        
+        .respond-to-max(599px, {
+            height: 30px;
+            top: 50%;
+            margin-top: -@base-font-size-px/2;
+        });
+        
+        .expandable_link {
+            font-size: @base-font-size-px;
+        }
+    }
+    
+    #content-slider-container {
+        position: relative;
+        margin-left: -10px;
+        
+        #content-slider {
+            display: none;
+        }
+        
+        .slick-slide {
+            margin-left: 10px;
+        }
+
+        .slick-slider {
+            margin-bottom: 0;
+        }
+    }
+    
+    .content-hide {
+        display: none;
+        background-color: inherit;
+        margin-bottom: 20px;
+    }
+
+    .content-show, 
+    .content-hide {
+
+        .respond-to-max(599px, {
+            .cf-icon,
+            &:before,
+            &:after {
+                color: @pacific;
+            }
+
+            &:focus {
+                outline: thin dotted;
+            }    
+
+            &:hover {
+                border-color: @pacific-50;
+                z-index: 2;
+
+                .cf-icon,
+                &:before,
+                &:after {
+                    color: @pacific-50;
+                }
+            }
+
+            &:active {
+                border-color: @navy;
+
+                .cf-icon,
+                &:before,
+                &:after {
+                    color: @navy;
+                }
+            }
+        });
+    }
+}
+
+.role {
+    display: block;
+    
+    &_office {
+        display: block;
+        .h6();
+    }
+
+    &_name {
+        display: block;
+        .webfont-medium();
+    }
+
+    &_title {
+        display: block;
+        .webfont-regular();
+    }
+}
+
+.link-text {
+    color: @pacific;
+
+    &:hover {
+        color: @pacific-50;
+    }
+    
+    &:active{
+        color: @navy;
+    }
+}

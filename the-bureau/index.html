@@ -1,0 +1,219 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-the-bureau.html" as vars with context %}
+
+{% block title -%}
+    The Bureau
+{%- endblock %}
+
+{% block desc -%}
+    Information on the leadership, structure, and history of the CFPB
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/vendor/slick-carousel/slick.css">
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    <h1>Our mission</h1>
+    <p class="h3">Our mission is to make markets for consumer financial products and services work for Americans - whether they are applying for a mortgage, choosing among credit cards, or using any number of other consumer financial products.</p>
+    <p>Above all, this means ensuring that consumers get the information they need to make the financial decisions they believe are best for themselves and their families - that prices are clear up front, that risks are visible, and that nothing is buried in fine print. In a market that works, consumers should be able to make direct comparisons among products and no provider should be able to use unfair, deceptive, or abusive practices.<p>
+        
+    <section class="bureau-mission">
+        
+        <div class="bureau-mission_section">
+            <section class="media bureau-mission_media">
+                <div class="media_image-container media_image-container__wide-margin">
+                    <img class="media_image u-centered-on-mobile" src="serve.jpg">
+                </div>
+                <div class="media_body u-centered-on-mobile">
+                    <h1 class="h3">Serve</h1>
+                    <p class="short-desc">An informed consumer is the first line of defense against abusive practices.</p>
+                </div>
+            </section>
+        </div>
+    
+        <div class="bureau-mission_section">
+            <section class="media bureau-mission_media">
+                <div class="media_image-container media_image-container__wide-margin">
+                    <img class="media_image u-centered-on-mobile" src="lead.jpg">
+                </div>
+                <div class="media_body u-centered-on-mobile">
+                    <h1 class="h3">Lead</h1>
+                    <p class="short-desc">We supervise banks, credit unions, and other financial companies, and we enforce federal consumer financial laws.</p>
+                </div>
+            </section>
+        </div>
+    
+        <div class="bureau-mission_section">
+            <section class="media bureau-mission_media">
+                <div class="media_image-container media_image-container__wide-margin">
+                    <img class="media_image u-centered-on-mobile" src="innovate.jpg">
+                </div>
+                <div class="media_body u-centered-on-mobile">
+                    <h1 class="h3">Innovate</h1>
+                    <p class="short-desc">We gather and analyze available information to better understand consumers, financial services providers, and consumer financial markets.</p>
+                </div>
+            </section>
+        </div>
+        
+    </section><!-- END .bureau-mission -->
+    
+    <section class="block
+                    block__flush-sides
+                    u-mb0
+                    u-mt0
+                    block__bg
+                    block__border-top
+                    block__border-bottom">
+        <h1 class="h2">Our core functions</h1>
+        <p>We work to give consumers the information they need to understand the terms of their agreements with financial companies. We are working to make regulations and guidance as clear and streamlined as possible so providers of consumer financial products and services can follow the rules on their own.</p>
+        
+        <div class="expandable 
+                    expandable__expanded 
+                    expandable__mobile-only 
+                    u-mb0 
+                    bureau-functions">
+            <button class="expandable_header
+                           expandable_header__jump-link 
+                           expandable_target
+                           u-show-on-mobile">
+                <span class="expandable_header-left expandable_label">
+                    Expand to see what we do
+                </span>
+                <span class="expandable_header-right expandable_link">
+                    <span class="expandable_cue-open">
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                    </span>
+                    <span class="expandable_cue-close">
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                    </span>
+                </span>
+            </button>
+            <div class="expandable_content">
+                <section class="block__padded-top u-mb0 u-mt0">
+                    <h1 class="h4">Congress established the CFPB to protect consumers by carrying out federal consumer financial laws. Among other things, we:</h1>
+                    <ul class="list list__branded bureau-functions_list u-mb0">
+                        <li>Write rules, supervise companies, and enforce federal consumer financial protection laws.</li>
+                        <li>Restrict unfair, deceptive, or abusive acts or practices.</li>
+                        <li>Take consumer complaints</li>
+                        <li>Promote financial education</li>
+                    </ul>
+                    <ul class="list list__branded bureau-functions_list">
+                        <li>Research consumer behavior</li>
+                        <li>Monitor financial markets for new risks to consumers</li>
+                        <li>Enforce laws that outlaw discrimination and other unfair treatment in consumer finance</li>
+                    </ul>
+                </section>
+            </div><!-- END .expandable -->
+        </div><!-- END .bureau-functions -->
+    </section><!-- END .content-block -->
+    
+    <section class="block block__padded-top u-mt0">
+        <h1 class="h2">CFPB leadership</h1>
+        <p class="short-desc">In January of 2012, President Barack Obama appointed Rich Cordray to be the first Director of the CFPB.</p>
+        
+         <div class="block block__sub content-l content-l__main u-hide-on-mobile">
+            <section class="content-l_col-1-2">
+                <div class="media bureau-bio">
+                    <div class="media_image-container">
+                        <img class="media_image" src="../static/img/cordray_round_360.jpg">
+                    </div>
+                    <div class="media_body">
+                        <h1 class="h6">Director</h1>
+                        <h2 class="bureau-bio_name">Richard Cordray</h2>
+                        <a class="jump-link jump-link__right" href="about-rich-cordray">
+                            Read bio
+                        </a>
+                    </div>
+                </div>                                
+            </section>
+            <section class="content-l_col-1-2">
+                <div class="media bureau-bio">
+                    <div class="media_image-container">
+                        <img class="media_image" src="../static/img/antonakes_round_360.jpg">
+                    </div>
+                    <div class="media_body">
+                        <h1 class="h6">Deputy Director</h1>
+                        <h2 class="bureau-bio_name">Steve Antonakes</h2>
+                        <a class="jump-link jump-link__right" href="about-steve-antonakes">
+                            Read bio
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div><!-- END .block bios -->
+        
+        <ul class="list list__links">
+            <li class="list_item u-show-on-mobile">
+                <a class="list_link jump-link jump-link__right" href="about-rich-cordray">
+                    Learn more about Director Richard Cordray
+                </a>
+            </li>
+            <li class="list_item u-show-on-mobile">
+                <a class="list_link jump-link jump-link__right" href="about-steve-antonakes">
+                    Learn more about Deputy Director Steve Antonakes
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link jump-link jump-link__right" href="leadership-calendar">
+                    View our leadership calendar
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link jump-link jump-link__right" href="bureau-structure">
+                    Bureau organizational structure
+                </a>
+            </li>
+        </ul>                    
+    </section><!-- END .block leadership -->
+    
+    <section class="block block__padded-top block__border-top bureau-history">
+        <h1 class="h2 bureau-history_header">CFPB history</h1>
+        <div class="media">
+            <div class="media_image-container media_image-container__wide-margin">
+                <img class="media_image bureau-history_image" src="obama_cordray.jpg">
+            </div>
+            <div class="media_body">
+                <div class="bureau-history_text">
+                    <p class="h4">In January of 2012, President Barack Obama appointed Rich Cordray to be the first Director of the CFPB.</p>
+                    <a class="jump-link jump-link__right" href="history">
+                        Learn more about our history
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section><!-- END .bureau-history -->
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+    <script src="/static/vendor/slick-carousel/slick.min.js"></script>
+    <script>
+        var carouselHandler;
+        $('document').ready(function () { 
+            if (!$('html').hasClass('lt-ie9')) { 
+                carouselHandler = new BreakpointHandler({
+                    breakpoint: 599,
+                    type: 'max',
+                    enter: function () {
+                        $('.bureau-mission').slick({
+                            dots: true
+                        });
+                    },
+                    leave: function () {
+                        $('.bureau-mission').unslick();
+                    }
+                });
+                $('.expandable__mobile-only').each(function (i) {
+                    new MobileOnlyExpandable($(this), 599);
+                });
+            }
+        });
+    </script>
+{% endblock javascript %}

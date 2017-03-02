@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+  <!-- <![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cfgov-refresh / media-object docs</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic">
+    <link rel="stylesheet" type="text/css" href="static/docs/brackets.css">
+    <link rel="stylesheet" type="text/css" href="static/docs/docs.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/main.ie.css">
+    <script>
+      // Confirm availability of JS and remove no-js class from html
+      var docElement = document.documentElement;
+      docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1$2');
+    </script>
+  </head>
+  <body>
+    <div class="docs-masthead">
+      <h1 class="docs-title"><span class="docs-icon">&lt;/&gt;</span> cfgov-refresh / media-object docs
+      </h1><a href="https://github.com/cfpb/cfgov-refresh" class="docs-repo">view the repository</a>
+    </div>
+    <div id="media-object" class="docs-component">
+      <h2 class="docs-component_header"><span>Media object</span></h2>
+      <div class="docs-patterns">
+        <div class="docs-pattern">
+          <h3 class="docs-pattern_header">Default media object</h3>
+          <section class="docs-pattern_pattern">
+<article class="media-object">
+    <div class="media-object_image-container">
+        <img class="media-object_image" src="http://placekitten.com/276/155" alt="">
+    </div>
+    <div class="media-object_text-container">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        </p>
+    </div>
+</article>
+
+          </section>
+          <footer class="docs-pattern_footer">
+            <pre class="docs-code docs-pattern_markup"><code data-language="html">&lt;article class=&quot;media-object&quot;&gt;
+    &lt;div class=&quot;media-object_image-container&quot;&gt;
+        &lt;img class=&quot;media-object_image&quot; src=&quot;http://placekitten.com/276/155&quot; alt=&quot;&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;media-object_text-container&quot;&gt;
+        &lt;p&gt;
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Dolorum non sapiente nobis molestias delectus optio ipsam
+            voluptas esse blanditiis ipsa debitis consequuntur excepturi
+            accusantium doloribus dicta fugiat itaque ab porro.
+        &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre>
+            <form action="http://codepen.io/pen/define" method="POST" target="_blank" class="docs-pattern_footer-edit">
+              <input type="hidden" name="data" value="{&amp;quot;css&amp;quot;:&amp;quot;body { padding: 1em; }&amp;quot;,&amp;quot;css_external&amp;quot;:&amp;quot;http://cfpb.github.io/cfgov-refresh/static/css/main.ie.css&amp;quot;,&amp;quot;html&amp;quot;:&amp;quot;\n&lt;article class=\&amp;quot;media-object\&amp;quot;&gt;\n    &lt;div class=\&amp;quot;media-object_image-container\&amp;quot;&gt;\n        &lt;img class=\&amp;quot;media-object_image\&amp;quot; src=\&amp;quot;http://placekitten.com/276/155\&amp;quot; alt=\&amp;quot;\&amp;quot;&gt;\n    &lt;/div&gt;\n    &lt;div class=\&amp;quot;media-object_text-container\&amp;quot;&gt;\n        &lt;p&gt;\n            Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n            Dolorum non sapiente nobis molestias delectus optio ipsam\n            voluptas esse blanditiis ipsa debitis consequuntur excepturi\n            accusantium doloribus dicta fugiat itaque ab porro.\n        &lt;/p&gt;\n    &lt;/div&gt;\n&lt;/article&gt;\n&amp;quot;}">
+              <input type="submit" value="edit on codepen.io" class="docs-pattern_footer-edit-btn">
+            </form>
+            <ul class="docs-codenotes">
+              <li>
+                <pre class="docs-code"><code>Structural sheat sheet:
+-----------------------
+.media-object
+  .media-object_image-container
+    .media-object_image
+  .media-object_text-container</code></pre>
+              </li>
+            </ul>
+            <ul class="docs-notes">
+              <li>The thumbnail uses a 16:9 aspect ratio.</li>
+            </ul>
+          </footer>
+        </div>
+      </div>
+      <div class="docs-css">
+        <pre class="docs-code"><code data-language="css">
+.media-object {
+  display: block;
+}
+
+.media-object {
+  position: relative;
+  min-height: 9.9375em;
+  padding-left: 11.5625em;
+}
+
+.media-object_image-container {
+  position: absolute;
+  top: 0.25em;
+  left: 0;
+  width: 9.6875em;
+  overflow: hidden;
+}
+
+.media-object_image {
+  margin-bottom: 0.5em;
+}
+
+.media-object_image {
+  display: block;
+  width: 17.25em;
+  max-width: 17.25em;
+  max-height: 9.6875em;
+  margin-bottom: 0;
+  margin-left: -3.78125em;
+}
+</code></pre>
+      </div>
+    </div>
+    <script src="static/docs/main.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-the-bureau.html" as vars with context %}
+{% set active_nav_id = 'leadership-calendar' %}
+
+{% block title -%}
+    Leadership calendar
+{%- endblock %}
+
+{% block desc -%}
+    Leadership calendar
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+
+    {% import "leadership-calendar-table.html" as calendar %}
+    {% from "macros.html" import share as share %}
+    {% from "post-macros.html" import filters as filters with context %}
+    {% from "post-macros.html" import pagination as pagination with context %}
+
+    <div class="block u-mt0 block__padded-bottom block__border-bottom">
+        <h1 class="h3">
+            At the Consumer Financial Protection Bureau, we are committed to letting you
+            know how we’re working for you every day by, among other things, providing you
+            with a view into the workday of the CFPB’s senior leadership.
+        </h1>
+        <p>
+            Richard Cordray is the Director of the CFPB. We post his calendar online,
+            typically on a monthly basis, after reviewing it to determine whether any
+            information contained therein must or should be withheld from public disclosure
+            in accordance with the Freedom of Information Act. We update the calendar
+            retrospectively; we do not post current or future calendars. Due to the
+            time-intensive preparation process, each month’s calendar will appear on this
+            page a few weeks after that month has concluded. We will begin updating
+            Mr. Cordray’s calendar with his January appointments.
+        </p>
+        {{ share(self.title(), false) }}
+    </div>
+
+    <div id="pagination_content"></div>
+
+    <div class="block u-mt0">
+
+    {% set query = queries.calendar_event %}
+    {% set posts = query.search_with_url_arguments(size=20) %}
+
+        {{ filters(
+            ['calendar', 'range_date'], query, posts, 'calendar_event',
+            { 'expand_label': 'Filter calendars' }
+        ) }}
+
+    {{ calendar.render(posts) }}
+
+    </div><!-- END calendar -->
+
+    {{ pagination(posts, ['calendar', 'range_date_gte', 'range_date_lte']) }}
+
+    <section class="block block__padded-top block__border-top">
+        <h1 class="h2">
+            Download a copy
+        </h1>
+        <p>
+            Quisque consequat quam sem, a condimentum augue consequat nec. Aenean tristique
+            faucibus nisi, a posuere sapien pellentesque nec. Nulla placerat ipsum ac purus
+            dapibus, a viverra elit tempor.
+        </p>
+        {{ filters(
+            ['calendar', 'range_date'], query, posts, 'calendar_event',
+            {
+                'id_prefix': 'download',
+                'expand_label': 'Download options',
+                'show_current_filters': false,
+                'action': 'pdf/',
+                'submit_label': 'Download PDF'
+            }
+        ) }}
+    </section>
+
+    <aside class="block u-mb0 block__flush-sides block__bg">
+        {%- import "related-links.html" as related_links -%}
+        {{- related_links.render([
+            [ 'http://www.consumerfinance.gov/foia/',
+              'Read more about FOIA' ],
+            [ 'http://www.consumerfinance.gov/open/',
+              'Open government' ],
+            [ vars.path + 'history/',
+              'About our history' ]
+        ]) -}}
+    </aside>
+
+{% endblock %}

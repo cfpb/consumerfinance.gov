@@ -1,0 +1,191 @@
+/* ==========================================================================
+   cfgov-refresh
+   Beta splash page and banner
+   ========================================================================== */
+
+.beta-banner {
+    padding: (@grid_gutter-width / 2) 0;
+    margin-bottom: 0;
+    background: @gold-20;
+    .webfont-regular();
+    transition: padding 0.2s ease-out;
+
+    &.expandable__expanded {
+        padding: @grid_gutter-width 0;
+    }
+
+    .respond-to-max(599px, {
+        font-size: 0.875em;
+    });
+}
+
+.beta-banner_head {
+    .h4();
+    margin-bottom: 0;
+
+    .expandable__expanded & {
+        margin-bottom: unit(5px / @base-font-size-px, em);
+    }
+}
+
+.beta-banner_icon {
+    color: @gold;
+}
+
+.beta-banner_desc {
+    margin-bottom: 0;
+}
+
+.beta-banner_btn {
+    .btn__secondary();
+    width: 100%;
+    // restore standard btn padding, which is removed by .expandable_target
+    padding:
+        unit( @btn-v-padding / @btn-font-size, em )
+        unit( 14px / @btn-font-size, em );
+    margin-top: @grid_gutter-width / 2;
+
+    .respond-to-max(480px, {
+        .cf-icon-delete {
+            display: none;
+        }
+    });
+
+    .respond-to-min(481px, {
+        .btn__link();
+        width: auto;
+        padding: @grid_gutter-width / 2;
+        margin: 0;
+        position: absolute;
+        top: 1px;
+        right: 0;
+        .u-link__colors(@black, @darkgray);
+        .u-link__no-border();
+        text-transform: lowercase;
+    });
+
+    .respond-to-max(599px, {
+        font-size: 1em; // prevent double-shrinkage
+    });
+
+    .respond-to-min(600px, {
+        // Adjust to match increasing side margins
+        right: @grid_gutter-width / 2;
+    });
+
+    .respond-to-min(801px, {
+        // At this width, the wrapper gains position: relative, so the button
+        // position has to be adjusted accordingly.
+        top: -12px;
+    });
+}
+
+.beta-hero {
+    min-height: 420px;
+    // top padding reduced from 30px to compensate for line-height on title
+    padding: unit(25px / @base-font-size-px, em) (@grid_gutter-width / 2);
+    background: @teal-20;
+    background-image: url('/static/img/beta-illustration_sm.png');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: 1176px;
+    text-align: center;
+
+    .respond-to-min(601px, {
+        min-height: 520px;
+        padding: @grid_gutter-width;
+        background-image: url('/static/img/beta-illustration_lg.png');
+        background-size: 1470px;
+    });
+
+    .respond-to-min(1024px, {
+        min-height: 540px;
+        background-size: 1838px;
+    });
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+        /* Retina-specific stuff here */
+        background-image: url('/static/img/beta-illustration_sm@2x.png');
+
+        @media (min-width: 601px) {
+            background-image: url('/static/img/beta-illustration_lg@2x.png');
+        }
+    }
+}
+
+.beta-hero_title {
+    .h2();
+
+    .respond-to-min(601px, {
+        .superheader();
+    });
+}
+
+.beta-hero_desc {
+    .h4();
+    max-width: 32em;
+    margin: 0 auto 1em;
+
+    .respond-to-min(601px, {
+        .h2();
+        margin-bottom: 1em; // override the property set in .h2()
+    });
+}
+
+.progress-charts {
+    .u-clearfix();
+}
+
+.progress-charts_container {
+    box-sizing: border-box;
+    margin-bottom: 1em;
+    position: relative;
+    background-size: cover;
+    .u-clearfix();
+
+    .respond-to-min(480px, {
+        .u-w33pct();
+        height: 150px;
+        padding: 0 1em;
+        float: left;
+        text-align: center;
+    });
+
+    .respond-to-min(768px, {
+        .u-w20pct();
+    });
+}
+
+.progress-charts_chart {
+    width: 100px;
+    height: 100px;
+
+    .respond-to-max(479px, {
+        margin-right: 1em;
+        float: left;
+    });
+}
+
+.chart-bg {
+    position: relative;
+    background: @gray-20;
+    width: 100%;
+    height: 100%;
+}
+
+.bar-chart {
+    position: absolute;
+    bottom: 0;
+    background: @gold;
+    width: 100%;
+}
+
+.chart-name {
+    .h5();
+
+    .respond-to-max(479px, {
+        position: relative;
+        top: 39px; // Half height of graph (50px) - half of line-height (11px)
+    });
+}
+

@@ -1,0 +1,8 @@
+{
+  "name": "CFPB Watchroom",
+  "query": {
+    "doc_type": "watchroom",
+    "size": 10,
+    "sort": "date:desc"
+  }
+}

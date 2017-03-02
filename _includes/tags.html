@@ -1,0 +1,46 @@
+
+{# ==========================================================================
+
+   render()
+
+   ==========================================================================
+
+   Description:
+
+   Render a tags list when given:
+
+   tags:               An array of tags. "Tags" are simple strings.
+                       Example tag: 'Featured'
+                       Example tags: ['Featured', 'Mortgages']
+
+   path:               The path to which the filter applies. For example, if the
+                       tags are used on a blog article then path should be
+                       '/blog/'. Remember to leverage vars.path instead of
+                       using the literal string '/blog/'. Path is used to
+                       create the filtered URL: {{ path }}?filter_tags={{ tag }}.
+
+   display_header:     The optional boolean flag to display the tags_header element.
+                       Defaults to True. Adds class 'tags__hide-header' if falsy
+                       value passed (e.g., '', False, None).
+
+   display_inline:     The optional boolean flag to display the tags list inline.
+                       Defaults to True. Adds class 'tags__block-list' if falsy
+                       value passed.
+
+   ========================================================================== #}
+
+{% macro render(tags, path, display_header=True, display_inline=True) %}
+<div class="tags {{'tags__hide-header' if not display_header}} {{'tags__block-list' if not display_inline}}">
+    <h1 class="tags_header {{'u-visually-hidden' if not display_header}}">Topics:</h1>
+    <ul class="tags_list">
+    {% for tag in tags %}
+        <li class="tags_tag">
+            <a class="tags_link" href="{{ path }}?filter_tags={{ tag }}">
+                <span class="tags_bullet" aria-hidden="true">&bull;</span>
+                {{ tag }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endmacro %}

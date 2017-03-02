@@ -52,64 +52,22 @@ npm-debug.log
 # Bower packages #
 ##################
 bower_components/
-src/vendor
+/vendor
 
-# Vim swap files #
-##################
+# Sheer stuff #
+###############
 *.swp
-
-# Python #
-#################
 *.pyc
-__pycache__/
-*.eggs/
-*.egg/
+.env
 
-# Front-End #
-#############
-node_modules/
-bower_components/
-vendor/
-
-# Floobits #
-############
+# Floobits stuff #
+##################
 .floo*
 
-# Documentation #
-##########
-docs/scripts
-docs/*/slick.html
+# Topdoc stuff #
+##################
 docs/*/pdfreactor-fonts.html
 
-# Django #
-#################
-*.egg-info
-.installed.cfg
-/static/
-cfgov/static_built/*
-cfgov/f/
-/images/
-/documents/
-original_images/
-collectstatic/*
-
-# Ansible #
-#################
-ansible/roles/*
-
-# Unit test / coverage reports
-#################
-test/unit_test_coverage/
-test/perf_test_results/
-test/screenshot.png
-htmlcov/
-.tox/
-.coverage
-.cache
-nosetests.xml
-coverage.xml
-.snyk
-
-# IDE Specifc
-############
-*.idea
+# Testing stuff #
+##################
+_tests/browser_testing/features/environment.cfg

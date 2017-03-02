@@ -1,0 +1,44 @@
+{% extends "layout-side-nav.html" %}
+{% import "_vars-budget.html" as vars with context %}
+{% set active_nav_id = 'strategic-plan' %}
+
+{% block title -%}
+    Strategic Plan
+{%- endblock %}
+
+{% block desc -%}
+    
+{%- endblock %}
+
+{% block content_main %}
+
+    <h1>
+        Strategic Plan
+    </h1>
+    <p class="h3">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.
+    <p>
+    <div class="block block__sub">
+        <h2 class="h4">
+            CFPB Strategic Plan, Budget, and Performance Plan and Report
+        </h2>
+        <ul class="list list__horizontal">
+            <li class="list_item">
+                <a class="list_link icon-link icon-link__right" href="interactive/" target="_blank">
+                    <span class="icon-link_text">
+                        Interactive
+                    </span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="list_link icon-link icon-link__pdf"
+                   href="http://files.consumerfinance.gov/f/strategic-plan.pdf">
+                    <span class="icon-link_text">
+                        PDF
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+{% endblock %}

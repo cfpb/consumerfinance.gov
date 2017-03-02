@@ -1,0 +1,41 @@
+.office {
+
+    .content-l_col__before-divider.content-l_col-1-2 {
+        .respond-to-max(599px {
+            margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
+            &:before {
+                display: none;
+            }
+        });
+    }
+    
+    &_initiatives {
+        .expandables-group {
+            .respond-to-max(@mobile-max, {
+                  border-top: 1px solid @gray-20;
+            });
+        }
+
+        .expandable.content-l_col {
+            margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+
+            .respond-to-max(@mobile-max, {
+                .expandable__padded();
+                margin-bottom: 0;
+                margin-top: 0;
+                border-bottom: 1px solid @gray-20;
+
+                .expandable_content {
+                    padding-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+                    margin-bottom: 0;
+                }
+            });
+        }
+    }
+}
+
+.initiative {
+    &_description p:first-child {
+        .h3();
+    }
+}

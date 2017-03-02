@@ -1,0 +1,39 @@
+
+{% macro render(featured_topics) %}
+
+{% for post in featured_topics %}
+
+    <article class="featured-topic summary">
+        <div class="fancy-slug">
+            <span class="fancy-slug_text">
+                <span class="fancy-slug_ribbon-left"></span>
+                Featured Topic
+                <span class="fancy-slug_ribbon-right"></span>
+            </span>
+        </div>
+        <h1 class="summary_header summary_header__large">
+            {{ post.title }}
+        </h1>
+        <div class="summary_cols">
+            <div class="summary_col summary_text summary_text__dark">
+                {{ post.content|safe }}
+            </div>
+            <div class="summary_col">
+                <ul class="list list__spaced list__unstyled">
+                {% for link in post.links %}
+                    <li class="list_item">
+                        <!-- <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span> -->
+                        <a class="list_link"
+                           href="{{ link[0] }}">
+                           {{ link[1] }}
+                       </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </article>
+
+{% endfor %}
+
+{% endmacro %}
