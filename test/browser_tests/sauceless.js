@@ -8,7 +8,7 @@ var mkdirp = require( 'mkdirp' );
 exports.config = {
   framework:    'jasmine',
 
-  seleniumServerJar: '../../node_modules/protractor/selenium/selenium-server-standalone-2.45.0.jar',
+  seleniumServerJar: '../../node_modules/protractor/selenium/selenium-server-standalone-3.2.0.jar',
   //seleniumServerJar: '/Users/muchniki/.nvm/versions/node/v6.9.5/lib/node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-3.1.0.jar',
   //port of the server
   seleniumPort: 4444,
