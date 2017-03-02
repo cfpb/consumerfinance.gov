@@ -1,0 +1,9 @@
+{
+  "presets": ["es2015", "stage-2"],
+  "env": {
+    // only happens if NODE_ENV is undefined or set to 'development'
+    "development": {
+      // ignored when NODE_ENV is production!
+  	}
+  }
+}
