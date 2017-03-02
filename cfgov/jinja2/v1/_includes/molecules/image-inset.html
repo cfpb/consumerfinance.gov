@@ -38,8 +38,7 @@
 
 {# Image sizes are doubled for retina displays. Images created via Wagtail
    are never stretched or upscaled and maintain their aspect ratio. #}
-{% set image_inset = image(value.image.upload, 'width-'
-                     ~ value.image_width * 2) %}
+{% set image_inset = image(value.image.upload, 'original') %}
 {% set image_mobile = image(value.image.upload, 'width-1200') %}
 <div class="m-inset
             m-inset__image
