@@ -41,18 +41,18 @@ exports.config = {
 
     var newFolder = 'reports/';
 
-    mkdirp( newFolder, function( err ) {
-      if ( err ) {
-        console.error( err );
-      } else {
-        var jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter( {
-          consolidateAll: true,
-          savePath:       newFolder,
-          filePrefix:     'test-results'
-        } );
-        jasmine.getEnv().addReporter( jUnitXmlReporter );
-      }
-    } );
+    // mkdirp( newFolder, function( err ) {
+    //   if ( err ) {
+    //     console.error( err );
+    //   } else {
+    //     var jUnitXmlReporter = new JasmineReporters.JUnitXmlReporter( {
+    //       consolidateAll: true,
+    //       savePath:       newFolder,
+    //       filePrefix:     'test-results'
+    //     } );
+    //     jasmine.getEnv().addReporter( jUnitXmlReporter );
+    //   }
+    // } );
   },
 
   jasmineNodeOpts: {
