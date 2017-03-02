@@ -2,347 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd59b230-847c-4240-8f3f-68fb253b0fe1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/static/img/hero-large.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/static/img/hero-small.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/201402_cfpb_photo_richard-cordray_high-res.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/201402_cfpb_photo_richard-cordray_lo-res.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/201405_cfpb_photo_steve-antonakes_high-res.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/201405_cfpb_photo_steve-antonakes_lo-res.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/CFPB_2Tone_isolated_RGB_352.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/antonakes_round_360.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/cordray_round_360.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/screenshot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/arrow_small_white_bottom.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/arrow_small_white_right.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/diag_texture.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/diagonal_texture.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/mortgage-sign-icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/paperclip_small.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/pdf.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/search_bg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/showhide_collapse.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/showhide_expand.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/img/us_flag_small.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/890bd988-5306-43ff-bd4b-922bc5ebdeb4.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/a0f4c2f9-8a42-4786-ad00-fce42b57b148.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.otf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/antonakes_round_360.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration_lg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration_lg@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration_sm.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration_sm@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/chosen-sprite.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/chosen-sprite@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/cordray_round_360.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/hero-large.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/hero-small.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/logo_sm-exec.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-rich-cordray/201410_cfpb_bio_cordray.pdf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-rich-cordray/cordray_round_90.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-rich-cordray/cordrays_corner.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-steve-antonakes/201410_cfpb_bio_antonakes.pdf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-steve-antonakes/antonakes_round_90.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/innovate.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/lead.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/obama_cordray.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/serve.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_defaults/mappings.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/article.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/category-slug.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/comments.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/contact-macro.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/email-subscribe-form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/footer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/header.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/hero.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/leadership-calendar-table.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/macros.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/nav-secondary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/pdfreactor-footer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/popular-stories.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/post-macros.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/posts-paginated.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/related-links.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/related-posts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/rss.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/sidenav.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/tags.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_includes/upcoming-events.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/content-base-main-first.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/content-base-main-only.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/content-base-sidebar-first.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/content-base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-1-3.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-2-1-bleedbar.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-2-1.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-full.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/layout-side-nav.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/django_calendar_event_processor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_contact_processor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_history_processor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_initiative_processor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_office_processor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_orgmember_processor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_page_processor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_post_processor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_lib/wordpress_view_processor.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/archive.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/calendar_event.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/contact.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/history.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/initiative.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/newsroom.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/office.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/orgmember.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/posts.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_queries/watchroom.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/blueprints.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/calendar_event_mappings.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/contact_mappings.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/history_mappings.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/lookups.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/orgmember_mappings.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/page_mappings.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/posts_mappings.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/processors.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_settings/settings.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/environment.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/example-environment.cfg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/newsroom_filter.feature" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/base.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/navigation.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/newsroom.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/screenshot.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/pages/utils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/steps/steps_navigation.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/features/steps/steps_newsroom.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/fixtures/newsroom.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/fixtures/views.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/fixtures/watchroom.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_tests/browser_testing/requirements.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/activity-log/_vars-activity-log.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/activity-log/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/blog/_single.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/blog/_vars-blog.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/blog/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/_vars-budget.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/financial-report/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/funding-request/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/performance-plan-report/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/strategic-plan/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/budget/strategic-plan/interactive/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/_vars-contact-us.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/contact-list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/general-inqueries.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/mailing-addresses.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/promoted-contacts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contact-us/submit-a-complaint.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/blog-docs/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/calendar-icon/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/cf-enhancements/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-docs/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/event-meta/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/forms/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/header/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/lists/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media-object/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/media/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/meta/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/misc/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/nav-secondary/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/post/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/print/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/_vars-sheer-layouts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/content-base-main-first/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/content-base-sidebar-first/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/content-base/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/hero/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/jinja-content-blocks/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/layout-1-3/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/layout-2-1-bleedbar/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/layout-2-1/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/sheer-layouts/layout-side-nav/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/main.ie.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/static/docs/brackets.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/static/docs/docs.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/summary/static/docs/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_future-block.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_process-block.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_process-future-footer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_process-smbiz-footer.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_smbiz-block.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/_vars-doing-business-with-us.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/future-requests/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/past-awards/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/doing-business-with-us/small-businesses/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_event-landing-macros.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_event-post-macros.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_event.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_single.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/_vars-events.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/archive/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/events/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/govdelivery-subscribe/error/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/govdelivery-subscribe/server-error/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/govdelivery-subscribe/success/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/_single.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/_vars-newsroom.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/featured-topic.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/newsroom/press-resources/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/_offices-index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/_offices-single.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/_vars-offices.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/students-2/_single.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/offices/students-2/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/css/licensed-fonts.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/css/styles.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/js/functions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static-legacy/js/jquery-1.9.1.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/activity.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/beta.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/blog-docs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/budget.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/bureau-structure.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/bureau.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/calendar-icon.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/cf-enhancements.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/contact-us.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/demo.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/event.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/footer.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/forms.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/header.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/history.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/lists.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.ie.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.ie.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/main.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/media-object.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/media.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/meta.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/misc.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/modification-date.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/nav-secondary.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/offices.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/pdfreactor-fonts.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/post.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/press-resources.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/print.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/css/summary.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/fonts/cf-icons.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/beta-illustration.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/logo.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/logo_sm-exec.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/app.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/breakpoint-handler.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/content-slider.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.cf_input-split.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.cf_pagination.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.custom-input.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.custom-select.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/jquery.type-and-filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/main.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/box-sizing-polyfill/boxsizing.htc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/html5shiv/html5shiv-printshiv.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/requestNextAnimationFrame/requestNextAnimationFrame.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/slick-carousel/slick.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/vendor/slick-carousel/slick.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/_vars-the-bureau.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-rich-cordray/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/about-steve-antonakes/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/bureau-structure/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/bureau-structure/role-macro.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/history/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/leadership-calendar/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/the-bureau/leadership-calendar/print/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGELOG.md" afterPath="$PROJECT_DIR$/CHANGELOG.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/CONTRIBUTING.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gruntfile.js" afterPath="$PROJECT_DIR$/Gruntfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TERMS.md" afterPath="$PROJECT_DIR$/TERMS.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower.json" afterPath="$PROJECT_DIR$/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/browser_tests/sauceless.js" afterPath="$PROJECT_DIR$/test/browser_tests/sauceless.js" />
     </list>
     <ignored path="cfgov-refresh.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -364,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="sauceless.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sauceless.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/browser_tests/sauceless.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+            <state relative-caret-position="30">
+              <caret line="2" column="33" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -406,39 +66,6 @@
       </file>
       <file leaf-file-name="bower.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bower.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CONTRIBUTING.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CONTRIBUTING.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="MarkdownPreviewEditor">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Gruntfile.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Gruntfile.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="216" column="26" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="initial-data.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/initial-data.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -503,10 +130,10 @@
         <option value="$PROJECT_DIR$/test/sauceless.js" />
         <option value="$PROJECT_DIR$/frontend.sh" />
         <option value="$PROJECT_DIR$/test/browser_tests/environment.js" />
-        <option value="$PROJECT_DIR$/test/browser_tests/sauceless.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/TERMS.md" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/test/browser_tests/sauceless.js" />
       </list>
     </option>
   </component>
@@ -531,9 +158,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="4" />
+    <option name="x" value="722" />
     <option name="y" value="23" />
-    <option name="width" value="1306" />
+    <option name="width" value="718" />
     <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -1246,16 +873,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1487955434877</updated>
-      <workItem from="1487955438861" duration="14439000" />
+      <workItem from="1487955438861" duration="16392000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14439000" />
+    <option name="totallyTimeSpent" value="16392000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="4" y="23" width="1306" height="877" extended-state="0" />
-    <editor active="false" />
+    <frame x="722" y="23" width="718" height="877" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1272,9 +899,9 @@
       <window_info id="CxPath" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22310127" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41715977" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32938075" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32938075" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -1395,14 +1022,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/browser_tests/sauceless.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="795">
@@ -1427,10 +1046,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bower.json">
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="232" column="30" selection-start-line="232" selection-start-column="30" selection-end-line="232" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/initial-data.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="216" column="26" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1446,15 +1084,12 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/bower.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="232" column="30" selection-start-line="232" selection-start-column="30" selection-end-line="232" selection-end-column="30" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TERMS.md">
@@ -1468,18 +1103,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
+    <entry file="file://$PROJECT_DIR$/test/browser_tests/sauceless.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="216" column="26" selection-start-line="216" selection-start-column="25" selection-end-line="216" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/initial-data.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="30">
+          <caret line="2" column="33" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
           <folding />
         </state>
       </provider>
