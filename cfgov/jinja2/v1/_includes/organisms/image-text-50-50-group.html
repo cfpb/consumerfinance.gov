@@ -11,6 +11,8 @@
                 <div class="a-rule-break"></div>
             {% endif %}
 
+            {% do block.update({'should_link_image':value.should_link_image}) %}
+
             {{ block }}
         </div>
         {% endfor %}
@@ -24,7 +26,7 @@
         <div class="u-mt30">
             {{ social_media.render( {
                 'is_share_view': true,
-                'blurb': share_blurb
+                'blurb': share_blurb,
             } ) }}
         </div>
     {% endif %}
