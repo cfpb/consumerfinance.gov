@@ -69,7 +69,7 @@ def get_en_answer(question, cats, en_answer):
     for cat in cats:
         answer.category.add(cat)
     answer.last_edited = question.updated_at.date()
-    answer.question = en_answer.title
+    answer.question = en_answer.title.strip()
     return answer
 
 
@@ -81,14 +81,14 @@ def get_es_answer(question, cats, es_answer):
         answer.category.add(cat)
     answer.created_at = question.created_at
     answer.last_edited_es = question.updated_at.date()
-    answer.question_es = es_answer.title
+    answer.question_es = es_answer.title.strip()
     return answer
 
 
 def fill_out_es_answer(question, answer, es_answer):
     answer.slug_es = es_answer.slug
-    answer.question_es = es_answer.title
-    answer.answer_es = es_answer.answer
+    answer.question_es = es_answer.title.strip()
+    answer.answer_es = es_answer.answer.strip()
     answer.last_edited_es = question.updated_at.date()
     answer.snippet_es = ''
     return answer
@@ -97,9 +97,9 @@ def fill_out_es_answer(question, answer, es_answer):
 def build_answer(question, cats, en_answer=None, es_answer=None):
     if en_answer:
         answer_base = get_en_answer(question, cats, en_answer)
-        answer_base.answer = en_answer.answer
+        answer_base.answer = en_answer.answer.strip()
         answer_base.last_edited = question.updated_at.date()
-        answer_base.snippet = en_answer.one_sentence_answer
+        answer_base.snippet = en_answer.one_sentence_answer.strip()
         for cat in cats:
             answer_base.category.add(cat)
         for qc in question.question_category.exclude(parent=None):
