@@ -1,13 +1,13 @@
 from __future__ import absolute_import, unicode_literals
 
 import HTMLParser
-from django.utils import html
 
 from django import forms
 from django.apps import apps
 from django.db import models
+from django.utils import html
 from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailcore.models import Page  # , Orderable
+from wagtail.wagtailcore.models import Page
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,

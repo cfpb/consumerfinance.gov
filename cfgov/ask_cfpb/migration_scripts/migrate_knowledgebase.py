@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import time
 
 from knowledgebase.models import QuestionCategory as QC
@@ -88,7 +90,7 @@ def fill_out_es_answer(question, answer, es_answer):
     answer.question_es = es_answer.title
     answer.answer_es = es_answer.answer
     answer.last_edited_es = question.updated_at.date()
-    answer.snippet_es = u''
+    answer.snippet_es = ''
     return answer
 
 

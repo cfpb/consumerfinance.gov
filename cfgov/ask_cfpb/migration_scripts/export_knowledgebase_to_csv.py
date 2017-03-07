@@ -1,6 +1,5 @@
-"""
-Script for exporting original knowledgebase English answers to a spreadsheet.
-"""
+from __future__ import unicode_literals
+
 import datetime
 
 import HTMLParser
@@ -29,7 +28,7 @@ HEADINGS = [
 
 def clean_and_strip(data):
     unescaped = html_parser.unescape(data)
-    return html.strip_tags(unescaped)
+    return html.strip_tags(unescaped).strip()
 
 
 def assemble_output():
@@ -60,6 +59,11 @@ def assemble_output():
 
 
 def export_questions():
+    """
+    Script for exporting original knowledgebase English answers
+    to a spreadsheet.
+    """
+
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     with open('questions_{}.csv'.format(timestamp), 'w') as f:
         writer = csvkit.writer(f)
