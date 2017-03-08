@@ -11,8 +11,8 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
 
-from wagtail.wagtailcore import views
 from flags.urls import flagged_url
 
 from core.views import ExternalURLNoticeView
@@ -136,16 +136,17 @@ urlpatterns = [
         flagged_url(
             'WAGTAIL_DOING_BUSINESS_WITH_US',
             r'^$',
-            lambda request: views.serve(request, request.path),
+            lambda req: ServeView.as_view()(req, req.path),
             fallback=TemplateView.as_view(
                 template_name='about-us/doing-business-with-us/index.html'),
             name='index'),
         flagged_url(
             'WAGTAIL_DOING_BUSINESS_WITH_US',
             r'^(?P<page_slug>[\w-]+)/$',
-            lambda request, page_slug: views.serve(request, request.path),
+            lambda req, page_slug: ServeView.as_view()(req, req.path),
             fallback=SheerTemplateView.as_view(),
-            name='page')],
+            name='page')
+        ],
         namespace='business')),
 
     url(r'^external-site/$', ExternalURLNoticeView.as_view(),
