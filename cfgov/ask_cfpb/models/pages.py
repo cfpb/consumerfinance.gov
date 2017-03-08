@@ -30,6 +30,7 @@ class AnswerPage(CFGOVPage):
         Answer,
         blank=True,
         null=True,
+        related_name='answer_pages',
         on_delete=models.PROTECT)
 
     content_panels = CFGOVPage.content_panels + [
