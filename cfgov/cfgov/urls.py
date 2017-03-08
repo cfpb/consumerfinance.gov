@@ -11,6 +11,9 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
+
+from flags.urls import flagged_url
 
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
@@ -130,13 +133,20 @@ urlpatterns = [
         RedirectView.as_view(
             url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
     url(r'^about-us/doing-business-with-us/', include([
-        url(r'^$',
-            TemplateView.as_view(
+        flagged_url(
+            'WAGTAIL_DOING_BUSINESS_WITH_US',
+            r'^$',
+            lambda req: ServeView.as_view()(req, req.path),
+            fallback=TemplateView.as_view(
                 template_name='about-us/doing-business-with-us/index.html'),
             name='index'),
-        url(r'^(?P<page_slug>[\w-]+)/$',
-            SheerTemplateView.as_view(),
-            name='page')],
+        flagged_url(
+            'WAGTAIL_DOING_BUSINESS_WITH_US',
+            r'^(?P<page_slug>[\w-]+)/$',
+            lambda req, page_slug: ServeView.as_view()(req, req.path),
+            fallback=SheerTemplateView.as_view(),
+            name='page')
+        ],
         namespace='business')),
 
     url(r'^external-site/$', ExternalURLNoticeView.as_view(),
