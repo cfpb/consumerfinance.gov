@@ -156,14 +156,14 @@ class Answer(models.Model):
     ]
 
     def answer_text(self):
-        """Unescapes and removes html tags from answer html"""
+        """Unescapes and removes html tags from answer fields"""
         unescaped = ("{} {}".format(
             html_parser.unescape(self.snippet),
             html_parser.unescape(self.answer)))
         return html.strip_tags(unescaped).strip()
 
     def answer_text_es(self):
-        """Unescapes and removes html tags from answer html"""
+        """Unescapes and removes html tags from Spanish answer fields"""
         unescaped = ("{} {}".format(
             html_parser.unescape(self.snippet_es),
             html_parser.unescape(self.answer_es)))
