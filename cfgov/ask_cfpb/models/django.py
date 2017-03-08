@@ -212,7 +212,7 @@ class Answer(models.Model):
             _snippet = self.snippet_es
             _answer = self.answer_es
         else:
-            raise Exception('unsupported language: "{}"'.format(language))
+            raise ValueError('unsupported language: "{}"'.format(language))
         base_page = get_or_create_page(
             apps,
             'ask_cfpb',

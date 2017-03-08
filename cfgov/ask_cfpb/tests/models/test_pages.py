@@ -74,7 +74,7 @@ class AnswerModelTestCase(TestCase):
     def test_create_or_update_page_unsuppoted_language(self):
         answer = self.prepare_answer()
         answer.save()
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             answer.create_or_update_page(language='zz')
 
     def test_create_or_update_pages_english_only(self):
