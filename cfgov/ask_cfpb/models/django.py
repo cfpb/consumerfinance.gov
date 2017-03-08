@@ -249,7 +249,7 @@ class Answer(models.Model):
         super(Answer, self).save(*args, **kwargs)
 
     def delete(self):
-        self.answerpage_set.all().delete()
+        self.answer_pages.all().delete()
         super(Answer, self).delete()
 
 
