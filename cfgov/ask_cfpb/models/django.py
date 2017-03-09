@@ -227,6 +227,7 @@ class Answer(models.Model):
         page_update.question = _question
         page_update.answer = _answer
         page_update.snippet = _snippet
+        page_update.slug = _slug
         page_update.has_unpublished_changes = True
         page_update.shared = False
         page_update.save_revision()
