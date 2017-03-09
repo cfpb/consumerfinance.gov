@@ -1,0 +1,37 @@
+/* topdoc
+  name: Content Sidebar
+  family: cfgov-organism
+  patterns:
+    - name: Default example
+      markup: |
+          <aside class="o-content-sidebar">
+              <*></*>
+          </aside>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .o-content-sidebar
+  tags:
+    - cfgov-organism
+*/
+
+.o-content-sidebar {
+    border-width: 0;
+
+    > [class^="o-"] + [class^="m-"],
+    > [class^="o-"] + [class^="o-"],
+    > [class^="m-"] + [class^="o-"],
+    > [class^="m-"] + [class^="m-"]{
+        margin-top: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
+    }
+
+    > [class^="m-"]:last-child, > [class^="o-"]:last-child {
+        margin-bottom: unit(@grid_gutter-width * 2 / @base-font-size-px, em);
+    }
+}
+
+/* topdoc
+    name: EOF
+    eof: true
+*/
