@@ -5,6 +5,7 @@ import HTMLParser
 from django import forms
 from django.apps import apps
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.utils import html
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
@@ -217,7 +218,7 @@ class Answer(models.Model):
             apps,
             'ask_cfpb',
             'AnswerPage',
-            '{}: {}'.format(self.id, _question[:248]),
+            '{}-{}-{}'.format(_question[:247], language, self.id),
             _slug,
             answer_parent,
             language=language,
@@ -242,6 +243,12 @@ class Answer(models.Model):
         return counter
 
     def save(self, *args, **kwargs):
+        if self.answer:
+            self.slug = "{}-{}-{}".format(
+                slugify(self.question[:247]), 'en', self.id)
+        if self.answer_es:
+            self.slug_es = "{}-{}-{}".format(
+                slugify(self.question_es[:247]), 'es', self.id)
         if self.update_english_page:
             self.create_or_update_page(language='en')
         if self.update_spanish_page:

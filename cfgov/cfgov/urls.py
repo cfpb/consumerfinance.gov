@@ -229,6 +229,8 @@ urlpatterns = [
         include_if_app_enabled('agreements', 'agreements.urls')),
     url(r'^(?i)askcfpb/',
         include_if_app_enabled('knowledgebase', 'knowledgebase.urls')),
+    url(r'^(?i)ask-cfpb/([-\w]{1,244})-([-\w]{2})-(\d{1,6})$',
+        'ask_cfpb.views.view_answer', name='ask-cfpb-answer'),
     url(r'^es/obtener-respuestas/',
         include_if_app_enabled('knowledgebase', 'knowledgebase.babel_urls')),
     url(r'^selfregs/',

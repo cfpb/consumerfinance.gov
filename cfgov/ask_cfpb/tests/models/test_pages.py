@@ -26,7 +26,6 @@ class AnswerModelTestCase(TestCase):
         self.subcategories = mommy.make(
             SubCategory, name='stub_subcat', _quantity=3)
         self.next_step = mommy.make(NextStep, title='stub_step')
-
         page_clean = patch('ask_cfpb.models.pages.CFGOVPage.clean')
         page_clean.start()
         self.addCleanup(page_clean.stop)
@@ -219,9 +218,11 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(answer.cleaned_questions_es(), [clean])
 
     def test_answer_str(self):
-        answer = self.prepare_answer(slug='slug-tester')
+        answer = self.prepare_answer(question="Let's test an English slug")
         answer.save()
-        self.assertEqual(answer.__str__(), "{} slug-tester".format(answer.id))
+        self.assertEqual(
+            answer.__str__(),
+            "{} {}".format(answer.id, answer.slug))
 
     def test_category_str(self):
         category = self.category
