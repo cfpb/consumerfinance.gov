@@ -15,7 +15,6 @@ from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
-from ask_cfpb.views import view_answer
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
                           token_provider)
@@ -26,6 +25,10 @@ from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (change_password, check_permissions, login_with_lockout,
                       password_reset_confirm, unshare, welcome)
 from v1.views.documents import DocumentServeView
+
+if os.getenv('deploy_environment', '') == 'build':
+    from ask_cfpb.views import view_answer
+
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
@@ -232,12 +235,6 @@ urlpatterns = [
         include_if_app_enabled('knowledgebase', 'knowledgebase.urls')),
     url(r'^es/obtener-respuestas/',
         include_if_app_enabled('knowledgebase', 'knowledgebase.babel_urls')),
-    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})$',
-        view_answer,
-        name='ask-english-answer'),
-    url(r'^(?i)inicio/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})$',
-        view_answer,
-        name='ask-spanish-answer'),
     url(r'^selfregs/',
         include_if_app_enabled('selfregistration', 'selfregistration.urls')),
     url(r'^hud-api-replace/',
@@ -378,6 +375,17 @@ if settings.DEBUG:
             TemplateView.as_view(template_name='404.html'),
             name='404')
     )
+
+if os.getenv('deploy_environment', '') == 'build':
+    ask_patterns = [
+        url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})$',
+            view_answer,
+            name='ask-english-answer'),
+        url(r'^(?i)inicio/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})$',
+            view_answer,
+            name='ask-spanish-answer')
+    ]
+    urlpatterns += ask_patterns
 
 
 # Catch remaining URL patterns that did not match a route thus far.
