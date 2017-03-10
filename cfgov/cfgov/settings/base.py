@@ -72,9 +72,7 @@ INSTALLED_APPS = (
 )
 
 if os.getenv('deploy_environment', '') == 'build':
-    _install_list = list(INSTALLED_APPS)
-    _install_list.append('ask_cfpb')
-    INSTALLED_APPS = tuple(_install_list)
+    INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
