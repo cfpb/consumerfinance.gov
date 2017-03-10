@@ -15,6 +15,7 @@ from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
+from ask_cfpb.views import view_answer
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
                           token_provider)
@@ -229,10 +230,14 @@ urlpatterns = [
         include_if_app_enabled('agreements', 'agreements.urls')),
     url(r'^(?i)askcfpb/',
         include_if_app_enabled('knowledgebase', 'knowledgebase.urls')),
-    url(r'^(?i)ask-cfpb/([-\w]{1,244})-([-\w]{2})-(\d{1,6})$',
-        'ask_cfpb.views.view_answer', name='ask-cfpb-answer'),
     url(r'^es/obtener-respuestas/',
         include_if_app_enabled('knowledgebase', 'knowledgebase.babel_urls')),
+    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})$',
+        view_answer,
+        name='ask-english-answer'),
+    url(r'^(?i)obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})$',
+        view_answer,
+        name='ask-spanish-answer'),
     url(r'^selfregs/',
         include_if_app_enabled('selfregistration', 'selfregistration.urls')),
     url(r'^hud-api-replace/',

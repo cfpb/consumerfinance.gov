@@ -2,18 +2,18 @@ from __future__ import unicode_literals
 
 import HTMLParser
 
-from django.utils import html
-from django.test import TestCase
 import mock
 from mock import patch
 from model_mommy import mommy
 
 from django.apps import apps
-from wagtail.wagtailcore.models import Page
+from django.utils import html
+from django.test import TestCase
 
 from v1.util.migrations import get_or_create_page
 from ask_cfpb.models.django import (
-    Answer, Category, SubCategory, Audience, NextStep, PARENT_SLUG)
+    Answer, Category, SubCategory, Audience,
+    NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
 from ask_cfpb.models.pages import AnswerPage
 
 html_parser = HTMLParser.HTMLParser()
@@ -21,6 +21,8 @@ html_parser = HTMLParser.HTMLParser()
 
 class AnswerModelTestCase(TestCase):
     def setUp(self):
+        from v1.models import HomePage
+        ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.audiences = [mommy.make(Audience, name='stub_audience')]
         self.category = mommy.make(Category, name='stub_cat')
         self.subcategories = mommy.make(
@@ -29,13 +31,21 @@ class AnswerModelTestCase(TestCase):
         page_clean = patch('ask_cfpb.models.pages.CFGOVPage.clean')
         page_clean.start()
         self.addCleanup(page_clean.stop)
-        self.parent_page = get_or_create_page(
+        self.english_parent_page = get_or_create_page(
             apps,
             'v1',
             'LandingPage',
             'Ask CFPB',
-            PARENT_SLUG,
-            Page.objects.get(slug='cfgov'),
+            ENGLISH_PARENT_SLUG,
+            ROOT_PAGE,
+            live=True)
+        self.spanish_parent_page = get_or_create_page(
+            apps,
+            'v1',
+            'LandingPage',
+            'Obtener respuestas',
+            SPANISH_PARENT_SLUG,
+            ROOT_PAGE,
             live=True)
 
     def prepare_answer(self, **kwargs):

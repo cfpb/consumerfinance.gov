@@ -19,7 +19,8 @@ from v1.util.migrations import get_or_create_page
 
 html_parser = HTMLParser.HTMLParser()
 
-PARENT_SLUG = 'ask-cfpb'
+ENGLISH_PARENT_SLUG = 'ask-cfpb'
+SPANISH_PARENT_SLUG = 'obtener-respuestas'
 
 
 class Audience(models.Model):
@@ -203,13 +204,16 @@ class Answer(models.Model):
     def create_or_update_page(self, language=None):
         from .pages import AnswerPage
         """Create or update an English or Spanish Answer page"""
-        answer_parent = Page.objects.get(slug=PARENT_SLUG)
+        english_parent = Page.objects.get(slug=ENGLISH_PARENT_SLUG).specific
+        spanish_parent = Page.objects.get(slug=SPANISH_PARENT_SLUG).specific
         if language == 'en':
+            _parent = english_parent
             _slug = self.slug
             _question = self.question
             _snippet = self.snippet
             _answer = self.answer
         elif language == 'es':
+            _parent = spanish_parent
             _slug = self.slug_es
             _question = self.question_es
             _snippet = self.snippet_es
@@ -226,7 +230,7 @@ class Answer(models.Model):
                 'AnswerPage',
                 '{}-{}-{}'.format(_question[:244], language, self.id),
                 _slug,
-                answer_parent,
+                _parent,
                 language=language,
                 answer_base=self)
         base_page.has_unpublished_changes = True

@@ -9,4 +9,4 @@ def view_answer(request, slug, language, answer_id):
     if slug != answer_page.slug:
         return redirect(answer_page.url)
     else:
-        return(answer_page.serve())
+        return(answer_page.serve(request))
