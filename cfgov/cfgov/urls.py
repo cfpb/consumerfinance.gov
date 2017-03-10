@@ -376,6 +376,12 @@ if settings.DEBUG:
             name='404')
     )
 
+    try:
+        import debug_toolbar
+        urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
+    except ImportError:
+        pass
+
 if os.getenv('deploy_environment', '') == 'build':
     ask_patterns = [
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})$',
