@@ -372,6 +372,12 @@ if settings.DEBUG:
             name='404')
     )
 
+    try:
+        import debug_toolbar
+        urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
+    except ImportError:
+        pass
+
 
 # Catch remaining URL patterns that did not match a route thus far.
 

@@ -67,6 +67,17 @@ LOGGING = {
     }
 }
 
+# Django Debug Toolbar
+if not os.environ.get('DISABLE_DEBUG_TOOLBAR'):
+    INSTALLED_APPS += ('debug_toolbar',)
+
+    INTERNAL_IPS = ('127.0.0.1',)
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_COLLAPSED': True,
+    }
+
 
 MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
 CSP_REPORT_ONLY = True
