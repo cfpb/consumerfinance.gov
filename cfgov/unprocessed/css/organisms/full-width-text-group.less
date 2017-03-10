@@ -24,6 +24,7 @@
 .o-full-width-text-group {
     overflow: auto;
 
+
       .m-inset {
           margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
           margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -31,6 +32,11 @@
           .respond-to-min( @bp-lg-min, {
               margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
           } );
+      }
+
+      .m-related-links {
+          max-width: 41.875rem;
+          margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
       }
 
       .respond-to-min( @bp-sm-min, {
@@ -57,10 +63,6 @@
           .m-inset__image +
           .m-full-width-text {
               margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-          }
-
-          .m-related-links__half-width-test {
-              width: 50%;
           }
       } );
 
