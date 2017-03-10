@@ -49,7 +49,6 @@ INSTALLED_APPS = (
     'compressor',
     'taggit',
     'wagtailsharing',
-    'ask_cfpb',
 
     'overextends',
     'django.contrib.admin',
@@ -71,6 +70,11 @@ INSTALLED_APPS = (
     'tinymce',
     'jobmanager',
 )
+
+if os.getenv('deploy_environment', '') == 'build':
+    _install_list = list(INSTALLED_APPS)
+    _install_list.append('ask_cfpb')
+    INSTALLED_APPS = tuple(_install_list)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
