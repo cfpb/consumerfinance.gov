@@ -4,6 +4,7 @@ import HTMLParser
 
 from django import forms
 from django.apps import apps
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils import html
@@ -200,6 +201,7 @@ class Answer(models.Model):
                 yield tag
 
     def create_or_update_page(self, language=None):
+        from .pages import AnswerPage
         """Create or update an English or Spanish Answer page"""
         answer_parent = Page.objects.get(slug=PARENT_SLUG)
         if language == 'en':
@@ -214,24 +216,30 @@ class Answer(models.Model):
             _answer = self.answer_es
         else:
             raise ValueError('unsupported language: "{}"'.format(language))
-        base_page = get_or_create_page(
-            apps,
-            'ask_cfpb',
-            'AnswerPage',
-            '{}-{}-{}'.format(_question[:244], language, self.id),
-            _slug,
-            answer_parent,
-            language=language,
-            answer_base=self)
-        page_update = base_page.get_latest_revision_as_page()
-        page_update.question = _question
-        page_update.answer = _answer
-        page_update.snippet = _snippet
-        page_update.slug = _slug
-        page_update.has_unpublished_changes = True
-        page_update.shared = False
-        page_update.save_revision()
-        return page_update
+        try:
+            base_page = AnswerPage.objects.get(
+                language=language, answer_base=self)
+        except ObjectDoesNotExist:
+            base_page = get_or_create_page(
+                apps,
+                'ask_cfpb',
+                'AnswerPage',
+                '{}-{}-{}'.format(_question[:244], language, self.id),
+                _slug,
+                answer_parent,
+                language=language,
+                answer_base=self)
+        base_page.has_unpublished_changes = True
+        base_page.shared = False
+        base_page.save()
+        last_update = base_page.get_latest_revision_as_page()
+        last_update.question = _question
+        last_update.answer = _answer
+        last_update.snippet = _snippet
+        last_update.title = '{}-{}-{}'.format(
+            _question[:244], language, self.id)
+        last_update.save_revision()  # changed=False)
+        return last_update
 
     def create_or_update_pages(self):
         counter = 0
