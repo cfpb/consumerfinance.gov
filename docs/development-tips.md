@@ -251,6 +251,20 @@ This will return documents that have the tag Students OR Finance, AND have an au
 If you need more control over your filter than that,
 enter it manually in the `cfgov/jinja2/v1/_queries/[filtername].json` file.
 
+### TIP: Debugging site performance
+
+When running locally it is possible to enable the
+[Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/stable/)
+by defining the `ENABLE_DEBUG_TOOLBAR` environment variable:
+
+```sh
+$ ENABLE_DEBUG_TOOLBAR=1 ./runserver.sh
+```
+
+This tool exposes various useful pieces of information about things like HTTP headers,
+Django settings, SQL queries, and template variables. Note that running with the toolbar on
+may have an impact on local server performance.
+
 ### TIP: Updating the documentation
 
 Our documentation is written as Markdown files and served in GitHub pages 
