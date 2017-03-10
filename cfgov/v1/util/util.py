@@ -64,39 +64,6 @@ def get_secondary_nav_items(request, current_page):
         ], True
     # END TODO
 
-    # TODO: Remove this ASAP once the-bureau gets migrated to Wagtail
-    if page.slug == 'leadership-calendar':
-        BASE_URL = '/about-us/the-bureau'
-        return [{
-            'title': 'The Bureau',
-            'slug': 'the-bureau',
-            'url': '/the-bureau/',
-            'children': [
-                {
-                    'title': 'The Director',
-                    'url': BASE_URL + '/about-director/',
-                    'slug': 'about-director',
-                },
-                {
-                    'title': 'The Deputy Director',
-                    'url': BASE_URL + '/about-deputy-director/',
-                    'slug': 'about-deputy-director',
-                },
-                {
-                    'title': 'Bureau Structure',
-                    'url': BASE_URL + '/bureau-structure/',
-                    'slug': 'bureau-structure',
-                },
-                {
-                    'title': page.title,
-                    'url': get_page_state_url({}, page).replace(
-                        '/about-us', BASE_URL),
-                    'slug': page.slug,
-                }
-            ]
-        }], True
-    # END TODO
-
     pages = ([page] if page.secondary_nav_exclude_sibling_pages
              else page.get_appropriate_siblings(request.site.hostname))
 
