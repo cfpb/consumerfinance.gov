@@ -68,4 +68,4 @@ class AnswerIndex(indexes.SearchIndex, indexes.Indexable):
         return Answer
 
     def index_queryset(self, using=None):
-        return self.get_model().objects.filter(workflow_state='APPROVED')
+        return self.get_model().objects.all()
