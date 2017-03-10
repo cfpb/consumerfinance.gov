@@ -68,7 +68,7 @@ LOGGING = {
 }
 
 # Django Debug Toolbar
-if not os.environ.get('DISABLE_DEBUG_TOOLBAR'):
+if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
     INSTALLED_APPS += ('debug_toolbar',)
 
     INTERNAL_IPS = ('127.0.0.1',)
