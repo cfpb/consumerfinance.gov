@@ -2,15 +2,55 @@ from __future__ import unicode_literals
 
 import time
 
+from django.apps import apps
+
 from knowledgebase.models import QuestionCategory as QC
 from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
 from ask_cfpb.models import (
     Answer,
-    # AnswerPage,
     Category,
     NextStep,
     SubCategory)
 from ask_cfpb.models import Audience as ASK_audience
+from v1.util.migrations import get_or_create_page
+
+PARENT_MAP = {
+    'english_parent': {'slug': 'ask-cfpb',
+                       'title': 'Ask CFPB',
+                       'parent_slug': 'cfgov',
+                       'language': 'en'},
+    'spanish_parent': {'slug': 'inicio',
+                       'title': 'Inicio',
+                       'parent_slug': 'cfgov',
+                       'language': 'es'},
+    'spanish_subparent': {'slug': 'obtener-respuestas',
+                          'title': 'Obtener respuestas',
+                          'parent_slug': 'inicio',
+                          'language': 'es'},
+}
+
+
+def get_or_create_parent_pages():
+    from v1.models import CFGOVPage
+    counter = 0
+    for parent_type in sorted(PARENT_MAP.keys()):
+        _map = PARENT_MAP[parent_type]
+        parent_page = get_or_create_page(
+            apps,
+            'v1',
+            'LandingPage',
+            _map['title'],
+            _map['slug'],
+            CFGOVPage.objects.get(slug=_map['parent_slug']).specific,
+            language=_map['language'])
+        parent_page.has_unpublished_changes = True
+        revision = parent_page.save_revision()
+        parent_page.save()
+        revision.publish()
+        time.sleep(1)
+        counter += 1
+    print("Created {} parent pages".format(counter))
+    time.sleep(2)
 
 
 def get_kb_statuses(ask_id):
@@ -26,16 +66,18 @@ def create_answer_pages(queryset):
             kb_statuses = get_kb_statuses(answer.id)
             for lang in ['en', 'es']:
                 if kb_statuses[lang]:
-                    page = answer.create_or_update_page(language=lang)
-                    revision = page.get_latest_revision()
+                    _page = answer.create_or_update_page(language=lang)
+                    revision = _page.get_latest_revision()
                     revision.publish()
                     counter += 1
     else:
-        print "No Answer objects found in queryset."
-    print("\nCreated and publishd {} legacy Answer pages".format(counter))
+        print("No Answer objects found in queryset.")
+    print("\nCreated and published {} Answer pages.".format(counter))
 
 
 def create_pages():
+    time.sleep(2)
+    print("Creating Answer pages ...")
     create_answer_pages(Answer.objects.all())
 
 
@@ -139,9 +181,9 @@ def migrate_questions():
     for question in queryset:
         counter += 1
         if counter % 100 == 0:
-            print "{}".format(counter)
+            print("{}".format(counter))
         migrate_answer(question)
-    print "Migrated or updated {} answers.".format(counter)
+    print("Migrated or updated {} answers.".format(counter))
 
 
 def migrate_audiences():
@@ -250,21 +292,21 @@ def add_featured_questions():
 
 def add_related_questions():
     update_count = 0
-    print "Adding related_question links ..."
+    print("Adding related_question links ...")
     for q in Question.objects.exclude(related_questions=None):
         answer = Answer.objects.get(id=q.id)
         for related in q.related_questions.all():
             update_count += 1
             answer.related_questions.add(Answer.objects.get(id=related.id))
         answer.save()
-    print "Added {} related_question relations".format(update_count)
+    print("Added {} related_question relations".format(update_count))
 
 
 def clean_up_blank_answers():
     start_count = Answer.objects.count()
     Answer.objects.filter(answer='', answer_es='').delete()
-    print "Cleaned up {} blank answers".format(
-        start_count - Answer.objects.count())
+    print("Cleaned up {} blank answers".format(
+        start_count - Answer.objects.count()))
 
 
 def migrate_knowledgebase():
@@ -277,5 +319,5 @@ def migrate_knowledgebase():
     migrate_next_steps()
     add_related_questions()
     clean_up_blank_answers()
-    time.sleep(3)
+    get_or_create_parent_pages()
     create_pages()

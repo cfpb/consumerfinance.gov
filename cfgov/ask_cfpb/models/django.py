@@ -77,44 +77,65 @@ class Category(models.Model):
 
 
 class Answer(models.Model):
-    category = models.ManyToManyField('Category', blank=True)
+    category = models.ManyToManyField(
+        'Category',
+        blank=True,
+        help_text="This associates an answer with a portal page")
     question = models.TextField(blank=True)
     snippet = RichTextField(blank=True, help_text="Optional answer intro")
     answer = RichTextField(blank=True)
     slug = models.SlugField(max_length=255, blank=True)
-    question_es = models.TextField(blank=True)
+    question_es = models.TextField(
+        blank=True,
+        verbose_name="Spanish question")
     snippet_es = RichTextField(
-        blank=True, help_text="Optional Spanish answer intro")
-    answer_es = RichTextField(blank=True)
-    slug_es = models.SlugField(max_length=255, blank=True)
+        blank=True,
+        help_text="Optional Spanish answer intro",
+        verbose_name="Spanish snippet")
+    answer_es = RichTextField(
+        blank=True,
+        verbose_name="Spanish answer")
+    slug_es = models.SlugField(
+        max_length=255,
+        blank=True,
+        verbose_name="Spanish slug")
     tagging = models.CharField(
-        max_length=1000, blank=True, help_text="Tags used for search index")
+        max_length=1000,
+        blank=True,
+        help_text="Search words or phrases, separated by commas")
     update_english_page = models.BooleanField(
         default=False,
-        verbose_name="Update the English page when saving")
+        verbose_name="Send to English page for review")
     update_spanish_page = models.BooleanField(
         default=False,
-        verbose_name="Update the Spanish page when saving")
+        verbose_name="Send to Spanish page for review")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     last_edited = models.DateField(
         blank=True,
         null=True,
         help_text="Change the date to today "
-                  "if you edit an English question, snippet or answer.")
+                  "if you edit an English question, snippet or answer.",
+        verbose_name="Last edited English content")
     last_edited_es = models.DateField(
         blank=True,
         null=True,
         help_text="Change the date to today "
-                  "if you edit a Spanish question, snippet or answer.")
+                  "if you edit a Spanish question, snippet or answer.",
+        verbose_name="Last edited Spanish content")
     subcategory = models.ManyToManyField(
         'SubCategory',
-        blank=True)
-    audiences = models.ManyToManyField('Audience', blank=True)
+        blank=True,
+        help_text="Choose any subcategories related to the answer")
+    audiences = models.ManyToManyField(
+        'Audience',
+        blank=True,
+        help_text="Pick any audiences that may be interested in the answer")
     next_step = models.ForeignKey(
         NextStep,
         blank=True,
-        null=True)
+        null=True,
+        help_text="Also called action items or upsell items")
     related_questions = models.ManyToManyField(
         'self',
         symmetrical=False,
@@ -134,28 +155,37 @@ class Answer(models.Model):
 
     panels = [
         MultiFieldPanel([
-            FieldPanel('last_edited'),
-            FieldPanel('last_edited_es'),
             FieldRowPanel([
                 FieldPanel('update_english_page'),
-                FieldPanel('update_spanish_page')])],
+                FieldPanel('last_edited')]),
+            FieldRowPanel([
+                FieldPanel('update_spanish_page'),
+                FieldPanel('last_edited_es')])],
             heading="Workflow fields -- check before saving",
-            classname="collapsible collapsed"),
-        FieldPanel('question', classname="title"),
-        FieldPanel('snippet', classname="full"),
-        FieldPanel('answer', classname="full"),
-        FieldPanel('slug'),
-        FieldPanel('question_es', classname="title"),
-        FieldPanel('snippet_es', classname="full"),
-        FieldPanel('answer_es', classname="full"),
-        FieldPanel('slug_es'),
-        FieldPanel('audiences', widget=forms.CheckboxSelectMultiple),
-        FieldPanel('next_step'),
-        FieldPanel('category', widget=forms.CheckboxSelectMultiple),
-        FieldPanel(
-            'subcategory', widget=forms.CheckboxSelectMultiple),
-        FieldPanel('related_questions', widget=forms.SelectMultiple),
-        FieldPanel('tagging')
+            classname="collapsible"),
+        MultiFieldPanel([
+            FieldPanel('question', classname="title"),
+            FieldPanel('snippet', classname="full"),
+            FieldPanel('answer', classname="full"),
+            FieldPanel('slug')],
+            heading="English",
+            classname="collapsible"),
+        MultiFieldPanel([
+            FieldPanel('question_es', classname="title"),
+            FieldPanel('snippet_es', classname="full"),
+            FieldPanel('answer_es', classname="full"),
+            FieldPanel('slug_es')],
+            heading="Spanish",
+            classname="collapsible"),
+        MultiFieldPanel([
+            FieldPanel('audiences', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('next_step'),
+            FieldPanel('category', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('subcategory', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('related_questions', widget=forms.SelectMultiple),
+            FieldPanel('tagging')],
+            heading="Metadata",
+            classname="collapsible"),
     ]
 
     def answer_text(self):
@@ -204,6 +234,7 @@ class Answer(models.Model):
     def create_or_update_page(self, language=None):
         from .pages import AnswerPage
         """Create or update an English or Spanish Answer page"""
+        republish = False
         english_parent = Page.objects.get(slug=ENGLISH_PARENT_SLUG).specific
         spanish_parent = Page.objects.get(slug=SPANISH_PARENT_SLUG).specific
         if language == 'en':
@@ -223,6 +254,9 @@ class Answer(models.Model):
         try:
             base_page = AnswerPage.objects.get(
                 language=language, answer_base=self)
+            if base_page.live:
+                republish = True
+                current_state = base_page.get_latest_revision()
         except ObjectDoesNotExist:
             base_page = get_or_create_page(
                 apps,
@@ -233,17 +267,18 @@ class Answer(models.Model):
                 _parent,
                 language=language,
                 answer_base=self)
-        base_page.has_unpublished_changes = True
-        base_page.shared = False
-        base_page.save()
-        last_update = base_page.get_latest_revision_as_page()
-        last_update.question = _question
-        last_update.answer = _answer
-        last_update.snippet = _snippet
-        last_update.title = '{}-{}-{}'.format(
+        base_page.question = _question
+        base_page.answer = _answer
+        base_page.snippet = _snippet
+        base_page.title = '{}-{}-{}'.format(
             _question[:244], language, self.id)
-        last_update.save_revision()  # changed=False)
-        return last_update
+        base_page.save_revision()
+        base_page.shared = False
+        base_page.has_unpublished_changes = True
+        base_page.save()
+        if republish:
+            current_state.publish()
+        return base_page
 
     def create_or_update_pages(self):
         counter = 0

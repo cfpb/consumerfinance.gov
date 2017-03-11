@@ -12,13 +12,14 @@ from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtailsearch import index
 
 from v1.models import CFGOVPage
-from ask_cfpb.models import Answer
+# from ask_cfpb.models import Answer
 
 
 class AnswerPage(CFGOVPage):
     """
     Page type for Ask CFPB answers.
     """
+    from .django import Answer
     question = RichTextField(blank=True, editable=False)
     answer = RichTextField(blank=True, editable=False)
     snippet = RichTextField(
