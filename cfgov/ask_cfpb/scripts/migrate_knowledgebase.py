@@ -324,7 +324,7 @@ def clean_up_blank_answers():
         start_count - Answer.objects.count()))
 
 
-def migrate_knowledgebase():
+def run():
     migrate_categories()
     migrate_subcategories()
     add_related_categories()

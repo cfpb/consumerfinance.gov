@@ -8,7 +8,7 @@ omit =
     */python2.7/*
     *setup.py
     *settings/*
-    */ask_cfpb/migration_scripts/*
+    */ask_cfpb/scripts/*
     */ask_cfpb/search_indexes*
 data_file = ../.coverage
 
