@@ -234,7 +234,6 @@ class Answer(models.Model):
     def create_or_update_page(self, language=None):
         from .pages import AnswerPage
         """Create or update an English or Spanish Answer page"""
-        republish = False
         english_parent = Page.objects.get(slug=ENGLISH_PARENT_SLUG).specific
         spanish_parent = Page.objects.get(slug=SPANISH_PARENT_SLUG).specific
         if language == 'en':
@@ -252,13 +251,10 @@ class Answer(models.Model):
         else:
             raise ValueError('unsupported language: "{}"'.format(language))
         try:
-            base_page = AnswerPage.objects.get(
+            _page = AnswerPage.objects.get(
                 language=language, answer_base=self)
-            if base_page.live:
-                republish = True
-                current_state = base_page.get_latest_revision()
         except ObjectDoesNotExist:
-            base_page = get_or_create_page(
+            _page = get_or_create_page(
                 apps,
                 'ask_cfpb',
                 'AnswerPage',
@@ -267,18 +263,17 @@ class Answer(models.Model):
                 _parent,
                 language=language,
                 answer_base=self)
-        base_page.question = _question
-        base_page.answer = _answer
-        base_page.snippet = _snippet
-        base_page.title = '{}-{}-{}'.format(
+        _page.question = _question
+        _page.answer = _answer
+        _page.snippet = _snippet
+        _page.title = '{}-{}-{}'.format(
             _question[:244], language, self.id)
-        base_page.save_revision()
-        base_page.shared = False
-        base_page.has_unpublished_changes = True
-        base_page.save()
-        if republish:
-            current_state.publish()
-        return base_page
+        _page.save_revision()
+        _page.has_unpublished_changes = True
+        _page.shared = False
+        _page.has_unshared_changes = False
+        _page.save()
+        return _page
 
     def create_or_update_pages(self):
         counter = 0
