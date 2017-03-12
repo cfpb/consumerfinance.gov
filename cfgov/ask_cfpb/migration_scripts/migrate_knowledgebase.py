@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
+import sys
 import time
+import logging
 
 from django.apps import apps
 
@@ -13,6 +15,9 @@ from ask_cfpb.models import (
     SubCategory)
 from ask_cfpb.models import Audience as ASK_audience
 from v1.util.migrations import get_or_create_page
+
+logging.basicConfig(level=logging.WARNING)
+logging.disable(logging.INFO)
 
 PARENT_MAP = {
     'english_parent': {'slug': 'ask-cfpb',
@@ -50,7 +55,6 @@ def get_or_create_parent_pages():
         time.sleep(1)
         counter += 1
     print("Created {} parent pages".format(counter))
-    time.sleep(2)
 
 
 def get_kb_statuses(ask_id):
@@ -60,24 +64,35 @@ def get_kb_statuses(ask_id):
 
 
 def create_answer_pages(queryset):
-    counter = 0
+    count = 0
+    count_en = 0
+    count_es = 0
     if queryset:
         for answer in queryset:
             kb_statuses = get_kb_statuses(answer.id)
             for lang in ['en', 'es']:
                 if kb_statuses[lang]:
+                    count += 1
                     _page = answer.create_or_update_page(language=lang)
+                    if lang == 'en':
+                        count_en += 1
+                        sys.stdout.write('.')
+                        sys.stdout.flush()
+                    elif lang == 'es':
+                        count_es += 1
+                        sys.stdout.write('+')
+                        sys.stdout.flush()
                     revision = _page.get_latest_revision()
                     revision.publish()
-                    counter += 1
     else:
         print("No Answer objects found in queryset.")
-    print("\nCreated and published {} Answer pages.".format(counter))
+    print("\nCreated and published {} Answer pages.\n"
+          "  English: {}\n"
+          "  Spanish: {}".format(count, count_en, count_es))
 
 
 def create_pages():
-    time.sleep(2)
-    print("Creating Answer pages ...")
+    print("Creating Answer pages: . = English, + = Spanish")
     create_answer_pages(Answer.objects.all())
 
 
@@ -183,7 +198,7 @@ def migrate_questions():
         if counter % 100 == 0:
             print("{}".format(counter))
         migrate_answer(question)
-    print("Migrated or updated {} answers.".format(counter))
+    print("Migrated {} answers.".format(counter))
 
 
 def migrate_audiences():
@@ -201,9 +216,8 @@ def migrate_audiences():
             ask_cfpb_answer.audiences.add(
                 ASK_audience.objects.get(id=audience.id))
             audience_relation_count += 1
-    print("Found {} Audience objects; needed to migrate {}\n"
+    print("Migrated {} Audience objects\n"
           "Created {} Audience links".format(
-              Audience.objects.count(),
               audiences_created,
               audience_relation_count))
 
@@ -229,6 +243,7 @@ def migrate_next_steps():
             upsells_updated += 1
     print("Created {} NextStep objects "
           "and updated {}".format(upsells_created, upsells_updated))
+    print("Adding NextStep links ...")
     for ea in EnglishAnswer.objects.all():
         if ea.upsellitem:
             answer = Answer.objects.get(id=ea.question.id)
@@ -321,3 +336,4 @@ def migrate_knowledgebase():
     clean_up_blank_answers()
     get_or_create_parent_pages()
     create_pages()
+    logging.disable(logging.NOTSET)
