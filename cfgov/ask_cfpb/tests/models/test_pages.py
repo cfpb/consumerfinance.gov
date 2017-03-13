@@ -105,6 +105,17 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(result, 2)
 
     @mock.patch('ask_cfpb.models.django.Answer.create_or_update_page')
+    def test_save_skip_page_update(self, mock_create_page):
+        answer = self.prepare_answer(
+            question='Test question.',
+            question_es='Test Spanish question.',
+            answer_es='vamos',
+            update_english_page=True,
+            update_spanish_page=True)
+        answer.save(skip_page_update=True)
+        self.assertEqual(mock_create_page.call_count, 0)
+
+    @mock.patch('ask_cfpb.models.django.Answer.create_or_update_page')
     def test_save_english_to_page(self, mock_create_page):
         answer = self.prepare_answer(
             question='Test question.',

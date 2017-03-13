@@ -286,18 +286,21 @@ class Answer(models.Model):
             self.create_or_update_page(language='es')
         return counter
 
-    def save(self, *args, **kwargs):
-        if self.answer:
-            self.slug = "{}-{}-{}".format(
-                slugify(self.question[:244]), 'en', self.id)
-        if self.answer_es:
-            self.slug_es = "{}-{}-{}".format(
-                slugify(self.question_es[:244]), 'es', self.id)
-        if self.update_english_page:
-            self.create_or_update_page(language='en')
-        if self.update_spanish_page:
-            self.create_or_update_page(language='es')
-        super(Answer, self).save(*args, **kwargs)
+    def save(self, skip_page_update=False, *args, **kwargs):
+        if skip_page_update:
+            super(Answer, self).save(*args, **kwargs)
+        else:
+            if self.answer:
+                self.slug = "{}-{}-{}".format(
+                    slugify(self.question[:244]), 'en', self.id)
+            if self.answer_es:
+                self.slug_es = "{}-{}-{}".format(
+                    slugify(self.question_es[:244]), 'es', self.id)
+            if self.update_english_page:
+                self.create_or_update_page(language='en')
+            if self.update_spanish_page:
+                self.create_or_update_page(language='es')
+            super(Answer, self).save(*args, **kwargs)
 
     def delete(self):
         self.answer_pages.all().delete()

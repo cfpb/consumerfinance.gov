@@ -14,15 +14,15 @@ from ask_cfpb.models import (
     SubCategory)
 
 
-class ModelAdminSaveUserEditView(EditView):
+class AnswerModelAdminSaveUserEditView(EditView):
 
-    def save_instance(self):
+    def save_instance_user(self):
         self.instance.last_user = self.request.user
-        self.instance.save()
+        self.instance.save(skip_page_update=True)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        self.save_instance()
+        self.save_instance_user()
         return super(EditView, self).dispatch(request, *args, **kwargs)
 
 
@@ -35,7 +35,7 @@ class AnswerModelAdmin(ModelAdmin):
     search_fields = (
         'id', 'question', 'question_es', 'answer', 'answer_es')
     list_filter = ('category',)
-    edit_view_class = ModelAdminSaveUserEditView
+    edit_view_class = AnswerModelAdminSaveUserEditView
 
 
 class AudienceModelAdmin(ModelAdmin):
