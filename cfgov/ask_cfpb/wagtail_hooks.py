@@ -1,7 +1,13 @@
 from __future__ import unicode_literals
 
+import pdb
+
+# from django.contrib.auth.models import User
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register)
+from wagtail.contrib.modeladmin.views import EditView
 
 from ask_cfpb.models import (
     Answer,
@@ -9,6 +15,19 @@ from ask_cfpb.models import (
     Category,
     NextStep,
     SubCategory)
+
+
+class ModelAdminSaveUserEditView(EditView):
+
+    def save_instance(self):
+        self.instance.last_user = self.request.user
+        # pdb.set_trace()
+        self.instance.save()
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        self.save_instance()
+        return super(EditView, self).dispatch(request, *args, **kwargs)
 
 
 class AnswerModelAdmin(ModelAdmin):
@@ -20,6 +39,7 @@ class AnswerModelAdmin(ModelAdmin):
     search_fields = (
         'id', 'question', 'question_es', 'answer', 'answer_es')
     list_filter = ('category',)
+    edit_view_class = ModelAdminSaveUserEditView
 
 
 class AudienceModelAdmin(ModelAdmin):

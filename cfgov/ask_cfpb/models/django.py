@@ -4,6 +4,7 @@ import HTMLParser
 
 from django import forms
 from django.apps import apps
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -14,7 +15,6 @@ from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
     FieldRowPanel)
-
 from v1.util.migrations import get_or_create_page
 
 html_parser = HTMLParser.HTMLParser()
@@ -77,6 +77,7 @@ class Category(models.Model):
 
 
 class Answer(models.Model):
+    last_user = models.ForeignKey(User, blank=True, null=True)
     category = models.ManyToManyField(
         'Category',
         blank=True,
@@ -268,7 +269,7 @@ class Answer(models.Model):
         _page.snippet = _snippet
         _page.title = '{}-{}-{}'.format(
             _question[:244], language, self.id)
-        _page.save_revision()
+        _page.save_revision(user=self.last_user)
         _page.has_unpublished_changes = True
         _page.shared = False
         _page.has_unshared_changes = False
