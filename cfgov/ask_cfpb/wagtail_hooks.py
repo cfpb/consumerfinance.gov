@@ -1,8 +1,5 @@
 from __future__ import unicode_literals
 
-import pdb
-
-# from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from wagtail.contrib.modeladmin.options import (
@@ -21,7 +18,6 @@ class ModelAdminSaveUserEditView(EditView):
 
     def save_instance(self):
         self.instance.last_user = self.request.user
-        # pdb.set_trace()
         self.instance.save()
 
     @method_decorator(login_required)
