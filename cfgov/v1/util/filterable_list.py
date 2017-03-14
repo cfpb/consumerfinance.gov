@@ -5,8 +5,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from v1.forms import FilterableListForm
 from v1.models.base import CFGOVPage
 from v1.models.learn_page import AbstractFilterPage
-
-from ..util.util import get_secondary_nav_items
+from v1.util.util import get_secondary_nav_items
 
 logger = logging.getLogger(__name__)
 
@@ -116,3 +115,9 @@ class FilterableListMixin(object):
             return form_ids[0]
         else:
             return 0
+
+    def serve(self, request, *args, **kwargs):
+        """ Modify response header to set a shorter TTL in Akamai """
+        response = super(FilterableListMixin, self).serve(request)
+        response['Edge-Control'] = 'cache-maxage=10m'
+        return response
