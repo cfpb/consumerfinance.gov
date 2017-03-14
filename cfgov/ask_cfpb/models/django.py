@@ -252,10 +252,10 @@ class Answer(models.Model):
         else:
             raise ValueError('unsupported language: "{}"'.format(language))
         try:
-            _page = AnswerPage.objects.get(
+            base_page = AnswerPage.objects.get(
                 language=language, answer_base=self)
         except ObjectDoesNotExist:
-            _page = get_or_create_page(
+            base_page = get_or_create_page(
                 apps,
                 'ask_cfpb',
                 'AnswerPage',
@@ -264,17 +264,24 @@ class Answer(models.Model):
                 _parent,
                 language=language,
                 answer_base=self)
+            base_page.save_revision(user=self.last_user)
+        live_now = base_page.live
+        _page = base_page.get_latest_revision_as_page()
         _page.question = _question
         _page.answer = _answer
         _page.snippet = _snippet
         _page.title = '{}-{}-{}'.format(
             _question[:244], language, self.id)
-        _page.save_revision(user=self.last_user)
+        _page.live = False
         _page.has_unpublished_changes = True
         _page.shared = False
         _page.has_unshared_changes = False
-        _page.save()
-        return _page
+        _page.save_revision(user=self.last_user)
+        base_page.shared = False
+        base_page.has_unshared_changes = False
+        base_page.live = live_now
+        base_page.save()
+        return base_page
 
     def create_or_update_pages(self):
         counter = 0
