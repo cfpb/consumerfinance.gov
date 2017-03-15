@@ -5,12 +5,14 @@ from django.db import migrations, models
 import django.utils.timezone
 import django.db.models.deletion
 import wagtail.wagtailcore.fields
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0057_add_reusable_text'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('v1', '0058_adding_clickable_image_to_50_50'),
     ]
 
     operations = [
@@ -22,17 +24,17 @@ class Migration(migrations.Migration):
                 ('snippet', wagtail.wagtailcore.fields.RichTextField(help_text='Optional answer intro', blank=True)),
                 ('answer', wagtail.wagtailcore.fields.RichTextField(blank=True)),
                 ('slug', models.SlugField(max_length=255, blank=True)),
-                ('question_es', models.TextField(blank=True)),
-                ('snippet_es', wagtail.wagtailcore.fields.RichTextField(help_text='Optional Spanish answer intro', blank=True)),
-                ('answer_es', wagtail.wagtailcore.fields.RichTextField(blank=True)),
-                ('slug_es', models.SlugField(max_length=255, blank=True)),
-                ('tagging', models.CharField(help_text='Tags used for search index', max_length=1000, blank=True)),
-                ('update_english_page', models.BooleanField(default=False, verbose_name='Update the English page when saving')),
-                ('update_spanish_page', models.BooleanField(default=False, verbose_name='Update the Spanish page when saving')),
+                ('question_es', models.TextField(verbose_name='Spanish question', blank=True)),
+                ('snippet_es', wagtail.wagtailcore.fields.RichTextField(help_text='Optional Spanish answer intro', verbose_name='Spanish snippet', blank=True)),
+                ('answer_es', wagtail.wagtailcore.fields.RichTextField(verbose_name='Spanish answer', blank=True)),
+                ('slug_es', models.SlugField(max_length=255, verbose_name='Spanish slug', blank=True)),
+                ('tagging', models.CharField(help_text='Search words or phrases, separated by commas', max_length=1000, blank=True)),
+                ('update_english_page', models.BooleanField(default=False, verbose_name='Send to English page for review')),
+                ('update_spanish_page', models.BooleanField(default=False, verbose_name='Send to Spanish page for review')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('last_edited', models.DateField(help_text='Change the date to today if you edit an English question, snippet or answer.', null=True, blank=True)),
-                ('last_edited_es', models.DateField(help_text='Change the date to today if you edit a Spanish question, snippet or answer.', null=True, blank=True)),
+                ('last_edited', models.DateField(help_text='Change the date to today if you edit an English question, snippet or answer.', null=True, verbose_name='Last edited English content', blank=True)),
+                ('last_edited_es', models.DateField(help_text='Change the date to today if you edit a Spanish question, snippet or answer.', null=True, verbose_name='Last edited Spanish content', blank=True)),
             ],
         ),
         migrations.CreateModel(
@@ -41,11 +43,11 @@ class Migration(migrations.Migration):
                 ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
                 ('question', wagtail.wagtailcore.fields.RichTextField(editable=False, blank=True)),
                 ('answer', wagtail.wagtailcore.fields.RichTextField(editable=False, blank=True)),
-                ('snippet', wagtail.wagtailcore.fields.RichTextField(help_text=b'Optional answer intro', editable=False, blank=True)),
+                ('snippet', wagtail.wagtailcore.fields.RichTextField(help_text='Optional answer intro', editable=False, blank=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('publish_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('answer_base', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, blank=True, to='ask_cfpb.Answer', null=True)),
+                ('answer_base', models.ForeignKey(related_name='answer_pages', on_delete=django.db.models.deletion.PROTECT, blank=True, to='ask_cfpb.Answer', null=True)),
             ],
             options={
                 'abstract': False,
@@ -109,17 +111,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='answer',
             name='audiences',
-            field=models.ManyToManyField(to='ask_cfpb.Audience', blank=True),
+            field=models.ManyToManyField(help_text='Pick any audiences that may be interested in the answer', to='ask_cfpb.Audience', blank=True),
         ),
         migrations.AddField(
             model_name='answer',
             name='category',
-            field=models.ManyToManyField(to='ask_cfpb.Category', blank=True),
+            field=models.ManyToManyField(help_text='This associates an answer with a portal page', to='ask_cfpb.Category', blank=True),
+        ),
+        migrations.AddField(
+            model_name='answer',
+            name='last_user',
+            field=models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True),
         ),
         migrations.AddField(
             model_name='answer',
             name='next_step',
-            field=models.ForeignKey(blank=True, to='ask_cfpb.NextStep', null=True),
+            field=models.ForeignKey(blank=True, to='ask_cfpb.NextStep', help_text='Also called action items or upsell items', null=True),
         ),
         migrations.AddField(
             model_name='answer',
@@ -129,6 +136,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='answer',
             name='subcategory',
-            field=models.ManyToManyField(to='ask_cfpb.SubCategory', blank=True),
+            field=models.ManyToManyField(help_text='Choose any subcategories related to the answer', to='ask_cfpb.SubCategory', blank=True),
         ),
     ]
