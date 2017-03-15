@@ -1,3 +1,5 @@
+import os
+
 cfgov_apps = [
     'auth',
     'sessions',
@@ -9,6 +11,9 @@ cfgov_apps = [
     'jobmanager',
     'data_research'
 ]
+
+if os.getenv('deploy_environment', '') == 'build':
+    cfgov_apps.append('ask_cfpb')
 
 
 class CFGOVRouter(object):

@@ -195,7 +195,7 @@ def migrate_questions():
     counter = 0
     for question in queryset:
         counter += 1
-        if counter % 100 == 0:
+        if counter % 250 == 0:
             print("{}".format(counter))
         migrate_answer(question)
     print("Migrated {} answers.".format(counter))
