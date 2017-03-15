@@ -14,7 +14,9 @@ cfgov_apps = [
 optional_apps = [
     'countylimits',
     'ratechecker',
+    'ask_cfpb',
 ]
+
 
 # add optional apps that use the single DB scheme
 for app_name in optional_apps:
