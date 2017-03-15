@@ -265,7 +265,6 @@ class Answer(models.Model):
                 language=language,
                 answer_base=self)
             base_page.save_revision(user=self.last_user)
-        live_now = base_page.live
         _page = base_page.get_latest_revision_as_page()
         _page.question = _question
         _page.answer = _answer
@@ -277,9 +276,10 @@ class Answer(models.Model):
         _page.shared = False
         _page.has_unshared_changes = False
         _page.save_revision(user=self.last_user)
+        base_page.refresh_from_db()
         base_page.shared = False
         base_page.has_unshared_changes = False
-        base_page.live = live_now
+        base_page.has_unpublished_changes = True
         base_page.save()
         return base_page
 
