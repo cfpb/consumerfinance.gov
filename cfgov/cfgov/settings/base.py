@@ -71,6 +71,9 @@ INSTALLED_APPS = (
     'jobmanager',
 )
 
+if os.getenv('deploy_environment', '') == 'build':
+    INSTALLED_APPS += ('ask_cfpb',)
+
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
