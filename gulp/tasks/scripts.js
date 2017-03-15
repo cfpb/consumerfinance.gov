@@ -16,6 +16,7 @@ var gulpReplace = require( 'gulp-replace' );
 var gulpUglify = require( 'gulp-uglify' );
 var handleErrors = require( '../utils/handle-errors' );
 var paths = require( '../../config/environment' ).paths;
+var webpack = require( 'webpack' );
 var webpackConfig = require( '../../config/webpack-config.js' );
 var webpackStream = require( 'webpack-stream' );
 var configLegacy = require( '../config.js' ).legacy;
@@ -30,7 +31,7 @@ var configLegacy = require( '../config.js' ).legacy;
  */
 function _processScript( config, src, dest ) {
   return gulp.src( paths.unprocessed + src )
-    .pipe( webpackStream( config ) )
+    .pipe( webpackStream( config, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + dest ) )
     .pipe( browserSync.reload( {
@@ -48,7 +49,11 @@ function scriptsPolyfill() {
       tests:   [ 'csspointerevents', 'classlist', 'es5' ],
       options: [ 'setClasses', 'html5printshiv' ]
     } ) )
-    .pipe( gulpUglify() )
+    .pipe( gulpUglify( {
+      compress: {
+         properties: false
+      }
+    }) )
     .pipe( gulpRename( 'modernizr.min.js' ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + '/js/' ) )
@@ -104,7 +109,7 @@ function scriptsOnDemand() {
  */
 function scriptsNonResponsive() {
   return gulp.src( paths.unprocessed + '/js/routes/on-demand/header.js' )
-    .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf ) )
+    .pipe( webpackStream( webpackConfig.onDemandHeaderRawConf, webpack ) )
     .on( 'error', handleErrors )
     .pipe( gulpRename( 'header.nonresponsive.js' ) )
     .pipe( gulpReplace( 'breakpointState.isInDesktop()', 'true' ) )
@@ -142,7 +147,7 @@ function scriptsEs5Shim() {
       output: {
         filename: 'es5-shim.js'
       }
-    } ) )
+    }, webpack ) )
     .pipe( gulpUglify() )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + '/js/' ) )

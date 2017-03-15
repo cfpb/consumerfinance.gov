@@ -7,6 +7,7 @@ from wagtail.wagtailcore.models import Site
 
 from v1.models.base import CFGOVPage, Feedback
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
+from v1.wagtail_hooks import configure_page_revision
 
 
 class TestCFGOVPage(TestCase):
@@ -280,25 +281,66 @@ class TestFeedbackModel(TestCase):
 
 class CFGOVPageStatusStringTest(TestCase):
         def test_expired(self):
-            page = CFGOVPage(expired=True)
+            page = CFGOVPage(expired=True, slug='foo', title='foo')
+            save_new_page(page)
             self.assertEqual(page.status_string, 'expired')
 
         def test_live(self):
-            page = CFGOVPage(live=True)
+            page = CFGOVPage(live=True, slug='foo', title='foo')
+            publish_page(page)
             self.assertEqual(page.status_string, 'live')
 
         def test_draft(self):
-            page = CFGOVPage(live=False, shared=False)
+            page = CFGOVPage(live=False, shared=False, slug='foo', title='foo')
+            save_new_page(page)
             self.assertEqual(page.status_string, 'draft')
 
         def test_shared(self):
-            page = CFGOVPage(live=False, shared=True)
+            page = CFGOVPage(live=False, shared=True, slug='foo', title='foo')
+            save_new_page(page)
             self.assertEqual(page.status_string, 'shared')
 
         def test_live_and_shared(self):
             page = CFGOVPage(
                 live=True,
                 shared=True,
-                has_unpublished_changes=True
+                has_unpublished_changes=True,
+                slug='foo',
+                title='foo'
             )
+            save_new_page(page)
             self.assertEqual(page.status_string, 'live + shared')
+
+        def test_live_and_draft(self):
+            page = CFGOVPage(
+                live=True,
+                shared=False,
+                has_unpublished_changes=True,
+                slug='foo',
+                title='foo'
+            )
+            save_new_page(page)
+            self.assertEqual(page.status_string, 'live + draft')
+
+        def test_live_and_shared_and_draft(self):
+            page = CFGOVPage(
+                live=True,
+                shared=True,
+                has_unshared_changes=True,
+                has_unpublished_changes=True,
+                slug='foo',
+                title='foo'
+            )
+
+            # Save the new page, which creates a single revision.
+            # The page is marked as live, shared, and with changes that
+            # are both unshared and unpublished.
+            save_new_page(page)
+
+            # Modify the last revision as if it were a "share" action.
+            # This is consistent with how a page would appear if it were
+            # shared and then additional edits were made by saving, but
+            # not sharing or publishing again.
+            configure_page_revision(page, is_sharing=True, is_live=False)
+
+            self.assertEqual(page.status_string, 'live + (shared + draft)')

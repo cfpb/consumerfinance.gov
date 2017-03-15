@@ -6,7 +6,7 @@
       markup: |
         <div class="o-full-width-text-group">
             <div class="m-full-width-text"></div>
-            <div class="m-inset"></div>
+            <div class="m-inset m-inset__image"></div>
             <div class="m-full-width-text"></div>
         </div>
       codenotes:
@@ -16,10 +16,60 @@
           .o-full-width-text
             .m-full-width-text
             .m-inset
+            .m-inset__image
   tags:
     - cfgov-organisms
 */
 
 .o-full-width-text-group {
     overflow: auto;
+
+
+      .m-inset {
+          margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+          margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
+          .respond-to-min( @bp-lg-min, {
+              margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
+          } );
+      }
+
+      .m-related-links {
+          max-width: 41.875rem;
+          margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+      }
+
+      .respond-to-min( @bp-sm-min, {
+          .m-inset {
+              margin-left: unit( @grid_gutter-width / @base-font-size-px, em );
+          }
+
+          .m-inset__image {
+              margin-top: 0;
+              // Use this if you want full text wrapping
+              // when the image is floated right:
+              // calc(~"100% - 41.875rem");
+              margin-left: unit( @grid_gutter-width / @base-font-size-px, em );
+          }
+
+          .m-inset__left {
+              margin-right: unit( @grid_gutter-width / @base-font-size-px, em );
+              margin-bottom: unit( 20px / @base-font-size-px, em );
+              margin-left: 0;
+          }
+
+          .m-full-width-text + .m-inset__image,
+          .m-full-width-text +
+          .m-inset__image +
+          .m-full-width-text {
+              margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+          }
+      } );
+
+      .respond-to-max( @bp-xs-max, {
+          .m-inset__image {
+              margin-left: 0;
+              margin-right: 0;
+          }
+      } );
 }

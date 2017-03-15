@@ -31,6 +31,7 @@ from wagtail.wagtailcore.url_routing import RouteResult
 
 from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms
+from v1.models.snippets import ReusableText, ReusableTextChooserBlock
 from v1.util import ref
 
 
@@ -101,10 +102,10 @@ class CFGOVPage(Page):
         ('related_posts', organisms.RelatedPosts()),
         ('related_metadata', molecules.RelatedMetadata()),
         ('email_signup', organisms.EmailSignUp()),
-        ('contact', organisms.MainContactInfo()),
         ('sidebar_contact', organisms.SidebarContactInfo()),
         ('rss_feed', molecules.RSSFeed()),
         ('social_media', molecules.SocialMedia()),
+        ('reusable_text', ReusableTextChooserBlock(ReusableText)),
     ], blank=True)
 
     # Panels
@@ -311,14 +312,15 @@ class CFGOVPage(Page):
 
     @property
     def status_string(self):
-        if self.expired:
+        page = CFGOVPage.objects.get(id=self.id)
+        if page.expired:
             return _("expired")
-        elif self.approved_schedule:
+        elif page.approved_schedule:
             return _("scheduled")
-        elif self.live and self.shared:
-            if self.has_unpublished_changes:
-                if self.has_unshared_changes:
-                    for revision in self.revisions.order_by(
+        elif page.live and page.shared:
+            if page.has_unpublished_changes:
+                if page.has_unshared_changes:
+                    for revision in page.revisions.order_by(
                             '-created_at', '-id'):
                         content = json.loads(revision.content_json)
                         if content['shared']:
@@ -330,10 +332,13 @@ class CFGOVPage(Page):
                     return _("live + shared")
             else:
                 return _("live")
-        elif self.live:
-            return _("live")
-        elif self.shared:
-            if self.has_unshared_changes:
+        elif page.live:
+            if page.has_unpublished_changes:
+                return _('live + draft')
+            else:
+                return _('live')
+        elif page.shared:
+            if page.has_unshared_changes:
                 return _("shared + draft")
             else:
                 return _("shared")

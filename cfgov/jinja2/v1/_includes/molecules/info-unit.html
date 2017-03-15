@@ -54,7 +54,9 @@
             {{ 'm-info-unit__' ~ value.modifier if value.modifier else '' }}">
     {% if value.image %}
         {% set should_link_image = value.should_link_image
-                                   and value.links[0] and value.links[0].url %}
+                                   and value.links
+                                   and value.links[0]
+                                   and value.links[0].url %}
         {% if should_link_image %}
             <a href="{{ value.links[0].url }}">
         {% endif %}

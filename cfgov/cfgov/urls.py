@@ -10,8 +10,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtailcore import urls as wagtail_urls
-from wagtail.wagtailcore import views
+from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
+
+from flags.urls import flagged_url
 
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
@@ -118,38 +120,33 @@ urlpatterns = [
             template_name='newsroom/press-resources/index.html'),
         name='press-resources'),
 
-    url(r'^the-bureau/(?P<path>.*)$', RedirectView.as_view(
-        url='/about-us/the-bureau/%(path)s', permanent=True)),
+
+    url(r'^the-bureau/(?P<path>.*)$',
+            RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
+                                 permanent=True)
+    ),
     url(r'^about-us/leadership-calendar/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/the-bureau/leadership-calendar/%(path)s',
         permanent=True)),
-    url(r'^about-us/the-bureau/', include([
-        url(r'^$',
-            SheerTemplateView.as_view(
-                template_name='about-us/the-bureau/index.html'),
-            name='index'),
-        url(r'^leadership-calendar/',
-            lambda request: views.serve(request,
-                                        'about-us/leadership-calendar'),
-            name='leadership-calendar'),
-        url(r'^(?P<page_slug>[\w-]+)/$',
-            SheerTemplateView.as_view(),
-            name='page'),
-        ],
-        namespace='the-bureau')),
-
 
     url(r'^doing-business-with-us/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
     url(r'^about-us/doing-business-with-us/', include([
-        url(r'^$',
-            TemplateView.as_view(
+        flagged_url(
+            'WAGTAIL_DOING_BUSINESS_WITH_US',
+            r'^$',
+            lambda req: ServeView.as_view()(req, req.path),
+            fallback=TemplateView.as_view(
                 template_name='about-us/doing-business-with-us/index.html'),
             name='index'),
-        url(r'^(?P<page_slug>[\w-]+)/$',
-            SheerTemplateView.as_view(),
-            name='page')],
+        flagged_url(
+            'WAGTAIL_DOING_BUSINESS_WITH_US',
+            r'^(?P<page_slug>[\w-]+)/$',
+            lambda req, page_slug: ServeView.as_view()(req, req.path),
+            fallback=SheerTemplateView.as_view(),
+            name='page')
+        ],
         namespace='business')),
 
     url(r'^external-site/$', ExternalURLNoticeView.as_view(),
@@ -375,10 +372,16 @@ if settings.DEBUG:
             name='404')
     )
 
+    try:
+        import debug_toolbar
+        urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
+    except ImportError:
+        pass
+
 
 # Catch remaining URL patterns that did not match a route thus far.
 
-urlpatterns.append(url(r'', include(wagtail_urls)))
+urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
 
 def handle_error(code, request):

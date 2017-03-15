@@ -12,25 +12,31 @@
 
    ========================================================================== #}
 
-<div class="chart_wrapper block">
+<div class="o-chart block">
     {% if value.title %}
-        <h3>{{ value.title }}</h3>
+    <h3>{{ value.title }}</h3>
     {% endif %}
 
-  <div class="svg_wrapper"
-       id="{{ value.element_id }}">
+  <div class="m-chart-image cfpb-chart"
+       {% if value.title %}data-chart-title="{{ value.title }}"{% endif %}
+       {% if value.chart_type %}data-chart-type="{{ value.chart_type }}"{% endif %}
+       {% if value.metadata %}data-chart-metadata="{{ value.metadata }}"{% endif %}
+       {% if value.data_source %}data-chart-source="{{ value.data_source }}"{% endif %}
+       {% if value.description %}data-chart-description="{{ value.description }}"{% endif %}
+       {% if value.color_scheme %}data-chart-color="{{ value.color_scheme }}"{% endif %}
+       >
+       {% if value.description %}{{ value.description }}{% endif %}
   </div>
 
-  <p class="block__sub block__border-top block short-desc chart_footnote">
-    {% if value.data_source %}
-        <strong>Source:</strong> <a class="icon-link icon-link__download" href="{{ parse_links(value.data_source) | safe }}"> <span class="icon-link_text">Download CSV file</span> </a><br>
+  <p class="m-chart-footnote block__sub block__border-top block short-desc">
+      {% if value.data_source %}
+      <strong>Source:</strong> <a class="icon-link icon-link__download" href="https://s3.amazonaws.com/files.consumerfinance.gov/data/{{ value.data_source }}"> <span class="icon-link_text">Download CSV file</span> </a><br>
       {% endif %}
 
-        <strong>Date published:</strong> automate this with JS<br>
+      <strong>Date published:</strong> February 2017<br>
 
-    {% if value.note %}
-        <strong>Note:</strong> {{ value.note }}
+      {% if value.note %}
+      <strong>Note:</strong> {{ value.note }} The most recent data available in each visualization is for December 2016.
       {% endif %}
     </p>
 </div>
-<script src='https://s3.amazonaws.com/files.consumerfinance.gov/consumer-credit-trends/assets/js/consumer-credit-trends-charts.js'>

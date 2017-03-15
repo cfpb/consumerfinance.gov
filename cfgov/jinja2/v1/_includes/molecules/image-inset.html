@@ -1,0 +1,74 @@
+{# ==========================================================================
+
+    Image Inset
+
+    ==========================================================================
+
+    Description:
+
+    Creates image inset markup when given:
+
+    value:                 Object defined from a StreamField block.
+
+
+    value.is_decorative:   Boolean indicating whether the image is
+                           decorative. A good write-up on image assement:
+                           http://green-beast.com/blog/?p=81.
+
+    value.image_width:     String representing the image width.
+                           Possible values: (170, 270).
+                           Defaults to 270.
+
+    value.image_position:  String indicating how to float the image.
+                           Possible values: (left, right).
+                           Defaults to right.
+
+    value.text:            String of text that is displayed below the image.
+
+    value.image:           An object containing:
+
+    value.image.upload:    Inset image object.
+
+    value.image.alt:       String for alt text for screenreaders.
+
+    value.has_bottom_rule: Boolean indicating whether the inset has a bottom
+                           rule.
+
+   ========================================================================== #}
+
+{# Image sizes are doubled for retina displays. Images created via Wagtail
+   are never stretched or upscaled and maintain their aspect ratio. #}
+{% set image_inset = image(value.image.upload, 'original') %}
+{% set image_mobile = image(value.image.upload, 'width-1200') %}
+<div class="m-inset
+            m-inset__image
+            {{ 'm-inset__left' if value.image_position == 'left' else '' }}
+            {{ 'm-inset__' ~ ( value.image_width
+               if value.image_width else 270 ) }}
+            {{ 'm-inset__portrait'
+               if image_inset.height > image_inset.width else '' }}
+            {{ 'm-inset__bottom-rule'
+               if value.is_bottom_rule else '' }}">
+    <div class="m-inset_image-container">
+        {% if value.is_image_decorative %}
+        <div class="m-inset_image m-inset_image__decorative
+                   {{ 'm-inset_image__cover' if image_mobile.width > 600 else '' }}"
+             style="background-image: url( {{ image_mobile.url }} );
+                    height: {{ image_mobile.height * value.image_width | int
+                               / image_mobile.width }}px;">
+        </div>
+        {% else %}
+         <img  class="m-inset_image"
+               src="{{ image_inset.url }}"
+               srcset="{{ image_inset.url }} {{ image_inset.width }}w,
+                       {{ image_mobile.url }} {{ image_mobile.width }}w"
+               sizes="(max-width: 600px) {{ image_mobile.width }}px, {{ image_inset.width }}px"
+               alt="{{ value.image.alt if value.image.alt else '' }}" />
+        {% endif %}
+    </div>
+    {% if value.text %}
+    <div class="m-inset_text">
+        {{ parse_links(value.text) | safe }}
+    </div>
+    {% endif %}
+</div>

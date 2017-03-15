@@ -52,6 +52,10 @@
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
+
+    {% if flag_enabled(request, 'EMAIL-POPUP') %}
+        {% include 'organisms/email-popup.html' ignore missing %}
+    {% endif %}
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}

@@ -3,7 +3,7 @@ import os
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management.base import BaseCommand, CommandError
 from django.core.urlresolvers import reverse
-from wagtail.wagtailimages.models import get_image_model
+from wagtail.wagtailimages import get_image_model
 
 from .utils import WagtailClient
 

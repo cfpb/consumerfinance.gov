@@ -37,13 +37,12 @@ class JobCategory(models.Model):
         ordering = ['job_category']
 
 
-class Location(models.Model):
-    description = models.CharField(max_length=128)
-    region = models.CharField(max_length=2)
-    region_long = models.CharField(max_length=255)
+class JobRegion(models.Model):
+    abbreviation = models.CharField(max_length=2, primary_key=True)
+    name = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return self.region
+        return self.name
 
     class Meta:
-        ordering = ['region']
+        ordering = ('abbreviation',)

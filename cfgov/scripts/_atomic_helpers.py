@@ -101,14 +101,17 @@ call_to_action = {
 #############
 
 main_contact_info = lambda contact_id: {
-    "type": "contact",
-    "value": {
-        "body": "",
-        "header": "Contact",
-        "contact": contact_id
+    'type': 'contact',
+    'value': {
+        'contact': contact_id
     }
 }
-sidebar_contact = main_contact_info
+sidebar_contact = lambda contact_id: {
+    'type': 'sidebar_contact',
+    'value': {
+        'contact': contact_id
+    }
+}
 well = {
     'type': 'well',
     'value': {
@@ -220,24 +223,26 @@ html_block = {
         "html_url": "http://raw.githubusercontent.com/cfpb/consumer-credit-trends/master/charts/auto-loans/borrower-age/figure-4a__30-to-44__auto-loans.html"  # noqa
     }
 }
+
 email_signup = {
-    "type": "email_signup",
-    "value": {
-        "text": "",
-        "gd_code": "",
-        "heading": "Email Sign Up",
-        "form_field": [
+    'type': 'email_signup',
+    'value': {
+        'heading': 'Email Sign Up',
+        'text': 'Sign up for our newsletter.',
+        'gd_code': 'TEST-GD-CODE',
+        'form_field': [
             {
-                "info": "",
-                "type": "",
-                "required": False,
-                "label": "Email Sign up",
-                "btn_text": "this is a form field with button",
-                "placeholder": ""
+                'btn_text': 'this is a form field with button',
+                'required': False,
+                'info': 'We will never share your email address.',
+                'label': 'Learn more',
+                'type': 'email',
+                'placeholder': 'email@domain.com',
             }
         ]
     }
 }
+
 reg_comment = {
     "type": "reg_comment",
     "value": {

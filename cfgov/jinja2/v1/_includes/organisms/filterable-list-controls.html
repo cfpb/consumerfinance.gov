@@ -112,7 +112,7 @@
                                 form-l_col-1">
                         <div class="form-group">
                             <label class="form-label-header">
-                                Date Range
+                                Date range
                             </label>
                             <div class="form-l">
                                 <div class="form-l_col
@@ -165,7 +165,7 @@
                         form-l_col-1">
                 <input class="btn form-actions_item"
                        type="submit"
-                       value="Apply Filters">
+                       value="Apply filters">
                 <a class="btn btn__warning btn__link"
                    href="{{ request.path }}">
                     Clear filters
@@ -180,7 +180,10 @@
 {% from 'organisms/post-preview.html' import render as post_preview with context %}
 
 {% macro render(controls, index) %}
-    <div class="o-filterable-list-controls"
+    <div class="o-filterable-list-controls
+        {{ 'o-filterable-list-controls__mulit-select-test'
+           if flag_enabled(request, 'MULTI-SELECT-TEST')
+           else '' }}"
          id="o-filterable-list-controls-{{ index | string }}">
         {% set form = filter_data.forms.pop(0) %}
         {% set posts = filter_data.page_sets.pop(0) %}
@@ -254,6 +257,7 @@
                             'sub_heading': sub_heading,
                             'body': parse_links(post.preview_description),
                             'links': links or null,
+                            'should_link_image': controls.should_link_image
                         } ) }}
                     </div>
                     {% endfor %}

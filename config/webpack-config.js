@@ -19,17 +19,26 @@ var modernConf = {
   // so it needs to be defined here as an external script to ignore for
   // unmet dependency references.
   externals: { jquery: 'jQuery' },
-  context:   path.join( __dirname, '/../', paths.unprocessed, JS_ROUTES_PATH ),
-  entry:     scriptsManifest.getDirectoryMap( paths.unprocessed +
-                                              JS_ROUTES_PATH ),
+  cache: true,
+  context: path.join( __dirname, '/../', paths.unprocessed, JS_ROUTES_PATH ),
+  entry: scriptsManifest.getDirectoryMap( paths.unprocessed + JS_ROUTES_PATH ),
+  module: {
+    rules: [ {
+      test: /\.js$/,
+      use: [ {
+        loader: 'babel-loader?cacheDirectory=true'
+      } ],
+      exclude: /node_modules/
+    } ]
+  },
   output: {
-    path:     path.join( __dirname, 'js' ),
+    path: path.join( __dirname, 'js' ),
     filename: '[name]'
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin( COMMON_BUNDLE_NAME ),
-    new webpack.optimize.CommonsChunkPlugin( COMMON_BUNDLE_NAME,
-                                             [ COMMON_BUNDLE_NAME ] ),
+    new webpack.optimize.CommonsChunkPlugin( {
+      name: COMMON_BUNDLE_NAME
+    } ),
     // Change `warnings` flag to true to view linter-style warnings at runtime.
     new webpack.optimize.UglifyJsPlugin( {
       compress: { warnings: false }

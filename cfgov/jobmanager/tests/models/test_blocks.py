@@ -8,23 +8,23 @@ from wagtail.wagtailcore.models import Page, Site
 
 from cfgov.test import HtmlMixin
 from jobmanager.models.blocks import JobListingList, JobListingTable
-from jobmanager.models.django import Grade, JobCategory, Location
+from jobmanager.models.django import Grade, JobCategory, JobRegion
 from jobmanager.models.pages import JobListingPage
-from jobmanager.models.panels import GradePanel, RegionPanel
+from jobmanager.models.panels import GradePanel
 from scripts._atomic_helpers import job_listing_list
 from v1.models import SublandingPage
 from v1.tests.wagtail_pages.helpers import save_new_page
 from v1.util.migrations import set_stream_data
 
 
-def make_job_listing_page(title, close_date=None, grades=[], regions=[],
-                          **kwargs):
+def make_job_listing_page(title, close_date=None, grades=[], **kwargs):
     page = mommy.prepare(
         JobListingPage,
         title=title,
         close_date=close_date or timezone.now().date(),
         description='description',
         division=mommy.make(JobCategory),
+        region=mommy.make(JobRegion, name='Silicon Valley'),
         **kwargs
     )
 
@@ -34,10 +34,6 @@ def make_job_listing_page(title, close_date=None, grades=[], regions=[],
     for grade in grades:
         grade_model = mommy.make(Grade, grade=grade)
         GradePanel.objects.create(grade=grade_model, job_listing=page)
-
-    for region in regions:
-        region_model = mommy.make(Location, region_long=region)
-        RegionPanel.objects.create(region=region_model, job_listing=page)
 
     return page
 
@@ -60,8 +56,7 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         make_job_listing_page(
             title='Manager',
             grades=['1', '2', '3'],
-            close_date=date(2099, 8, 5),
-            regions=['NY', 'DC']
+            close_date=date(2099, 8, 5)
         )
 
         block = JobListingList()
@@ -78,14 +73,12 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         make_job_listing_page(
             title='Manager',
             grades=['1', '2', '3'],
-            close_date=date(2099, 8, 5),
-            regions=['NY', 'DC']
+            close_date=date(2099, 8, 5)
         )
         make_job_listing_page(
             title='Assistant',
             grades=['12'],
-            close_date=date(2099, 4, 21),
-            regions=['Silicon Valley']
+            close_date=date(2099, 4, 21)
         )
 
         block = JobListingList()
@@ -146,17 +139,51 @@ class JobListingListTestCase(HtmlMixin, TestCase):
 
 
 class JobListingTableTestCase(HtmlMixin, TestCase):
-    def test_html_has_table(self):
+    def test_html_displays_no_data_message(self):
+        table = JobListingTable()
+        html = table.render(table.to_python({'empty_table_msg': 'No Jobs'}))
+
+        self.assertHtmlRegexpMatches(html, (
+            '<h3>No Jobs</h3>'
+        ))
+
+    def test_html_displays_table_if_row_flag_false(self):
+        table = JobListingTable()
+        html = table.render(table.to_python(
+            {'first_row_is_table_header': False}
+        ))
+
+        self.assertHtmlRegexpMatches(html, (
+            '<tr>'
+            '<td>TITLE</td>'
+            '<td>GRADE</td>'
+            '<td>POSTING CLOSES</td>'
+            '<td>REGION</td>'
+            '</tr>'
+        ))
+
+    def test_html_displays_single_row(self):
+        make_job_listing_page(
+            title='CEO',
+            close_date=date(2099, 12, 1)
+        )
         table = JobListingTable()
         html = table.render(table.to_python({}))
 
         self.assertHtmlRegexpMatches(html, (
-            '^<table class="o-table o-table__stack-on-small">'
-            '.*'
-            '</table>$'
+            '<tr>'
+            '<th scope="col">TITLE</th>'
+            '<th scope="col">GRADE</th>'
+            '<th scope="col">POSTING CLOSES</th>'
+            '<th scope="col">REGION</th>'
+            '</tr>'
         ))
 
     def test_html_has_header(self):
+        make_job_listing_page(
+            title='CEO',
+            close_date=date(2099, 12, 1)
+        )
         table = JobListingTable()
         html = table.render(table.to_python({}))
 
@@ -175,14 +202,12 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
         make_job_listing_page(
             title='Manager',
             grades=['1', '2', '3'],
-            close_date=date(2099, 8, 5),
-            regions=['NY', 'DC']
+            close_date=date(2099, 8, 5)
         )
         make_job_listing_page(
             title='Assistant',
             grades=['12'],
-            close_date=date(2099, 4, 21),
-            regions=['Silicon Valley']
+            close_date=date(2099, 4, 21)
         )
 
         table = JobListingTable()
@@ -199,11 +224,11 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<td data-label="TITLE"><a class="" href=".*">Manager</a></td>'
             '<td data-label="GRADE">1, 2, 3</td>'
             '<td data-label="POSTING CLOSES">AUG 05, 2099</td>'
-            '<td data-label="REGION">DC, NY</td>'
+            '<td data-label="REGION">Silicon Valley</td>'
             '</tr>'
         ))
 
-    def test_html_formatting_no_grade_or_region(self):
+    def test_html_formatting_no_grade(self):
         make_job_listing_page(
             title='CEO',
             close_date=date(2099, 12, 1)
@@ -217,7 +242,7 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
             '<td data-label="TITLE"><a class="" href=".*">CEO</a></td>'
             '<td data-label="GRADE"></td>'
             '<td data-label="POSTING CLOSES">DEC 01, 2099</td>'
-            '<td data-label="REGION"></td>'
+            '<td data-label="REGION">Silicon Valley</td>'
             '</tr>'
         ))
 

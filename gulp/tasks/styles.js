@@ -119,6 +119,55 @@ function stylesFeatureFlags() {
     } ) );
 }
 
+
+/**
+ * Process AskCFPB CSS.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesKnowledgebaseProd() {
+  return gulp.src( configLegacy.cwd +
+    '/knowledgebase/less/es-ask-styles.less' )
+    .pipe( gulpLess( { compress: true } ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'not ie <= 8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+    .pipe( gulpRename( 'es-ask-styles.min.css' ) )
+    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
+/**
+ * Process AskCFPB IE CSS.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesKnowledgebaseIE() {
+  return gulp.src( configLegacy.cwd +
+    '/knowledgebase/less/es-ask-styles-ie.less' )
+    .pipe( gulpLess( { compress: true } ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpAutoprefixer( { browsers: [
+      'last 2 version',
+      'not ie <= 8',
+      'android 4',
+      'BlackBerry 7',
+      'BlackBerry 10'
+    ]} ) )
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+    .pipe( gulpRename( 'es-ask-styles-ie.min.css' ) )
+    .pipe( gulp.dest( configLegacy.dest + '/knowledgebase/' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
 /**
  * Process Nemo CSS.
  * @returns {PassThrough} A source stream.
@@ -169,6 +218,8 @@ gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:ie', stylesIe );
 gulp.task( 'styles:ondemand', stylesOnDemand );
 gulp.task( 'styles:featureFlags', stylesFeatureFlags );
+gulp.task( 'styles:knowledgebase', stylesKnowledgebaseProd );
+gulp.task( 'styles:knowledgebaseIE', stylesKnowledgebaseIE );
 gulp.task( 'styles:nemoProd', stylesNemoProd );
 gulp.task( 'styles:nemoIE', stylesNemoIE );
 gulp.task( 'styles:nemo', [
@@ -181,5 +232,7 @@ gulp.task( 'styles', [
   'styles:ie',
   'styles:ondemand',
   'styles:featureFlags',
+  'styles:knowledgebase',
+  'styles:knowledgebaseIE',
   'styles:nemo'
 ] );
