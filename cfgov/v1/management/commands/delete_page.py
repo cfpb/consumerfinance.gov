@@ -2,7 +2,6 @@ from django.core.exceptions import MultipleObjectsReturned
 from django.core.management.base import BaseCommand, CommandError
 
 from v1.models import CFGOVPage
-from v1.wagtail_hooks import flush_akamai
 
 
 class Command(BaseCommand):
@@ -36,7 +35,6 @@ class Command(BaseCommand):
             raise CommandError('Must supply a slug or an id')
         try:
             page_to_delete.delete()
-            flush_akamai()
 
         except Exception as e:
             self.stderr.write(str(e))

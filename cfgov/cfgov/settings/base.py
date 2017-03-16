@@ -483,11 +483,11 @@ REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
 
 # Akamai
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)
-AKAMAI_PURGE_URL = 'https://api.ccu.akamai.com/ccu/v2/queues/default'
 if ENABLE_AKAMAI_CACHE_PURGE:
-    AKAMAI_USER = os.environ.get('AKAMAI_USER')
-    AKAMAI_PASSWORD = os.environ.get('AKAMAI_PASSWORD')
-    AKAMAI_OBJECT_ID = os.environ.get('AKAMAI_OBJECT_ID')
+    AKAMAI_CLIENT_TOKEN = os.environ.get('AKAMAI_CLIENT_TOKEN')
+    AKAMAI_CLIENT_SECRET = os.environ.get('AKAMAI_CLIENT_SECRET')
+    AKAMAI_ACCESS_TOKEN = os.environ.get('AKAMAI_ACCESS_TOKEN')
+    AKAMAI_FAST_PURGE_URL = os.environ.get('AKAMAI_FAST_PURGE_URL')
 
 # Staging site
 STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')

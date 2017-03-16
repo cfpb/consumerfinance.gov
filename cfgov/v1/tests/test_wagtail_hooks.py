@@ -4,11 +4,12 @@ import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
 
+from akamai.edgegrid import EdgeGridAuth
+
 from v1.models.browse_page import BrowsePage
 from v1.wagtail_hooks import (check_permissions, configure_page_revision,
-                              flush_akamai, form_module_handlers,
-                              get_akamai_credentials, share, share_the_page,
-                              should_flush)
+                              form_module_handlers,
+                              get_akamai_credentials, share, share_the_page)
 
 
 class TestShareThePage(TestCase):
@@ -30,8 +31,7 @@ class TestShareThePage(TestCase):
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    @mock.patch('v1.wagtail_hooks.flush_akamai')
-    def test_save_draft(self, mock_flush_akamai, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
+    def test_save_draft(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure 'Save Draft' request sets correct values for
             is_publishing and is_sharing.
@@ -44,8 +44,7 @@ class TestShareThePage(TestCase):
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    @mock.patch('v1.wagtail_hooks.flush_akamai')
-    def test_share_on_content(self, mock_flush_akamai, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
+    def test_share_on_content(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure 'Share on Content' request sets correct values for
             is_publishing and is_sharing.
@@ -58,8 +57,7 @@ class TestShareThePage(TestCase):
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    @mock.patch('v1.wagtail_hooks.flush_akamai')
-    def test_publish_to_www(self, mock_flush_akamai, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
+    def test_publish_to_www(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure 'Publish to WWW' request sets correct values for
             is_publishing and is_sharing.
@@ -72,14 +70,12 @@ class TestShareThePage(TestCase):
     @mock.patch('v1.wagtail_hooks.check_permissions')
     @mock.patch('v1.wagtail_hooks.share')
     @mock.patch('v1.wagtail_hooks.configure_page_revision')
-    @mock.patch('v1.wagtail_hooks.flush_akamai')
-    def test_function_calls(self, mock_flush_akamai, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
+    def test_function_calls(self, mock_configure_page_revision, mock_share, mock_check_permissions, mock_page):
         """
             Make sure all functions are called once.
         """
         mock_page.objects.get.return_value = self.page
         share_the_page(self.mock_request['publishing'], self.page)
-        assert mock_flush_akamai.call_count == 1
         assert mock_configure_page_revision.call_count == 1
         assert mock_share.call_count == 1
         assert mock_check_permissions.call_count == 1
@@ -270,58 +266,32 @@ class TestFormModuleHandlers(TestCase):
         child.block.is_submitted.assert_called_with(self.request, 'name', 0)
 
 
-class TestFlushAkamai(TestCase):
-    """ Tests the appropriate conditions under which we should be flushing Akamai.
-    Not meant to test if the flush itself succeeded.
-    """
-
-    def setUp(self):
-        self.page = BrowsePage(
-            title='an arbitrary page',
-            slug='an-arbitrary-page'
-        )
-
-    def test_should_not_flush_if_not_enabled(self):
-        with self.settings(ENABLE_AKAMAI_CACHE_PURGE=None):
-            assert not should_flush()
-
-    def test_should_flush_if_enabled(self):
-        with self.settings(ENABLE_AKAMAI_CACHE_PURGE=True):
-            assert should_flush()
-
-    def test_should_flush_gets_called_when_trying_to_flush(self):
-        with mock.patch(
-            'v1.wagtail_hooks.should_flush',
-            return_value=False
-        ) as should_flush:
-            self.assertFalse(flush_akamai())
-            should_flush.assert_called_once_with()
-
-
 class TestGetAkamaiCredentials(TestCase):
     def test_no_credentials_raises(self):
         with self.settings(
-            AKAMAI_OBJECT_ID=None,
-            AKAMAI_USER=None,
-            AKAMAI_PASSWORD=None
+            AKAMAI_CLIENT_TOKEN=None,
+            AKAMAI_CLIENT_SECRET=None,
+            AKAMAI_ACCESS_TOKEN=None,
+            AKAMAI_FAST_PURGE_URL=None
         ):
             self.assertRaises(ValueError, get_akamai_credentials)
 
     def test_some_credentials_raises(self):
         with self.settings(
-            AKAMAI_OBJECT_ID='some-arbitrary-id',
-            AKAMAI_USER=None,
-            AKAMAI_PASSWORD=None
+            AKAMAI_CLIENT_TOKEN='some-arbitrary-token',
+            AKAMAI_CLIENT_SECRET=None,
+            AKAMAI_ACCESS_TOKEN=None,
+            AKAMAI_FAST_PURGE_URL=None
         ):
             self.assertRaises(ValueError, get_akamai_credentials)
 
     def test_all_credentials_returns(self):
         with self.settings(
-            AKAMAI_OBJECT_ID='object-id',
-            AKAMAI_USER='username',
-            AKAMAI_PASSWORD='password'
+            AKAMAI_CLIENT_TOKEN='token',
+            AKAMAI_CLIENT_SECRET='secret',
+            AKAMAI_ACCESS_TOKEN='access token',
+            AKAMAI_FAST_PURGE_URL='fast purge url'
         ):
-            object_id, auth = get_akamai_credentials()
-            self.assertEqual(object_id, 'object-id')
-            self.assertIsInstance(auth, tuple)
-            self.assertEqual(auth, ('username', 'password'))
+            auth, fast_purge_url = get_akamai_credentials()
+            self.assertEqual(fast_purge_url, 'fast purge url')
+            self.assertIsInstance(auth, EdgeGridAuth)

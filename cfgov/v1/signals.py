@@ -1,10 +1,12 @@
 import json
 from datetime import timedelta
+import logging
 
 from django.dispatch import Signal
 from django.utils import timezone
 from wagtail.wagtailcore.signals import page_published, page_unpublished
 
+logger = logging.getLogger(__name__)
 page_unshared = Signal(providing_args=['instance'])
 
 
@@ -53,25 +55,29 @@ def update_all_revisions(instance, attr):
 
 
 def unshare_all_revisions(sender, **kwargs):
-    from v1.wagtail_hooks import flush_akamai
     update_all_revisions(kwargs['instance'], 'shared')
-    flush_akamai()
 
 
 def unpublish_all_revisions(sender, **kwargs):
-    from v1.wagtail_hooks import flush_akamai
     update_all_revisions(kwargs['instance'], 'live')
-    flush_akamai()
 
 
 def configure_page_and_revision(sender, **kwargs):
-    from v1.wagtail_hooks import share, configure_page_revision, flush_akamai
-    share(page=kwargs['instance'], is_sharing=False, is_live=True)
+    from v1.wagtail_hooks import share, configure_page_revision
+    page = kwargs['instance']
+    share(page=page, is_sharing=False, is_live=True)
     configure_page_revision(
-        page=kwargs['instance'], is_sharing=False, is_live=True)
-    flush_akamai()
+        page=page, is_sharing=False, is_live=True)
+
+
+def flush_page(sender, **kwargs):
+    flush = getattr(kwargs['instance'], 'flush', None)
+    if flush and callable(flush):
+        flush()
 
 
 page_unshared.connect(unshare_all_revisions)
 page_unpublished.connect(unpublish_all_revisions)
+page_unpublished.connect(flush_page)
 page_published.connect(configure_page_and_revision)
+page_published.connect(flush_page)

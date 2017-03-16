@@ -1,6 +1,5 @@
 import json
 import logging
-import requests
 
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
@@ -17,6 +16,8 @@ from urlparse import urlsplit
 
 from v1.templatetags.share import v1page_permissions
 from v1.util import util
+
+from akamai.edgegrid import EdgeGridAuth
 
 
 logger = logging.getLogger(__name__)
@@ -45,8 +46,6 @@ def share_the_page(request, page):
 
     share(page, is_sharing, is_live)
     configure_page_revision(page, is_sharing, is_live)
-    if is_live:
-        flush_akamai()
 
 
 @hooks.register('after_delete_page')
@@ -128,46 +127,21 @@ def configure_page_revision(page, is_sharing, is_live):
 
 
 def get_akamai_credentials():
-    object_id = getattr(settings, 'AKAMAI_OBJECT_ID', None)
-    user = getattr(settings, 'AKAMAI_USER', None)
-    password = getattr(settings, 'AKAMAI_PASSWORD', None)
-
-    if not all((object_id, user, password)):
+    client_token = getattr(settings, 'AKAMAI_CLIENT_TOKEN', None)
+    client_secret = getattr(settings, 'AKAMAI_CLIENT_SECRET', None)
+    access_token = getattr(settings, 'AKAMAI_ACCESS_TOKEN', None)
+    fast_purge_url = getattr(settings, 'AKAMAI_FAST_PURGE_URL', None)
+    if not all((client_token, client_secret, access_token, fast_purge_url)):
         raise ValueError(
-            'AKAMAI_OBJECT_ID, AKAMAI_USER, and AKAMAI_PASSWORD '
-            'must be configured.'
+            'AKAMAI_CLIENT_TOKEN, AKAMAI_CLIENT_SECRET, AKAMAI_ACCESS_TOKEN,'
+            ' AKAMAI_FAST_PURGE_URL must be configured.'
         )
-
-    return object_id, (user, password)
-
-
-def should_flush():
-    """Only initiate an Akamai flush if it is enabled in settings."""
-    return settings.ENABLE_AKAMAI_CACHE_PURGE
-
-
-def flush_akamai():
-    if should_flush():
-        object_id, auth = get_akamai_credentials()
-        headers = {'content-type': 'application/json'}
-        payload = {
-            'action': 'invalidate',
-            'type': 'cpcode',
-            'domain': 'production',
-            'objects': [object_id]
-        }
-        r = requests.post(
-            settings.AKAMAI_PURGE_URL,
-            headers=headers,
-            data=json.dumps(payload),
-            auth=auth
-        )
-        logger.info(
-            'Initiated Akamai flush with response {text}'.format(text=r.text)
-        )
-        if r.status_code == 201:
-            return True
-    return False
+    auth = EdgeGridAuth(
+        client_token=client_token,
+        client_secret=client_secret,
+        access_token=access_token
+    )
+    return auth, fast_purge_url
 
 
 @hooks.register('register_permissions')
