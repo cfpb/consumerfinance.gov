@@ -79,17 +79,15 @@ def get_secondary_nav_items(request, current_page):
         if instanceOfBrowseOrFilterablePages(sibling.specific):
             if page.id == sibling.id:
                 sibling = page.get_appropriate_page_version(request)
-                active = True
             else:
                 sibling = sibling.get_appropriate_page_version(request)
-                active = False
 
             item = {
                 'title': sibling.title,
                 'slug': sibling.slug,
                 'url': get_page_state_url({}, sibling),
                 'children': [],
-                'active': active,
+                'active': current_page.pk == sibling.pk,
             }
 
             children = sibling.get_children().specific()
@@ -100,6 +98,7 @@ def get_secondary_nav_items(request, current_page):
                         'title': child.title,
                         'slug': child.slug,
                         'url': get_page_state_url({}, child),
+                        'active': current_page.pk == child.pk,
                     })
             nav_items.append(item)
 

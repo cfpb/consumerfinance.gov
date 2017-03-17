@@ -52,13 +52,13 @@
                    o-secondary-navigation_list__parents">
         {%- for item in nav_items %}
             <li data-nav-is-active="{{ item.active|default(false) }}">
-                {{ nav_link.render(item.title, item.url, true, item.url == request.url) }}
+                {{ nav_link.render(item.title, item.url, true, item.active) }}
             {%- if item.children -%}
                 <ul class="o-secondary-navigation_list
                            o-secondary-navigation_list__children">
                 {%- for child in item.children -%}
                     <li>
-                        {{ nav_link.render(child.title, child.url, false, child.url == request.url) }}
+                        {{ nav_link.render(child.title, child.url, false, child.active) }}
                     </li>
                 {%- endfor %}
                 </ul>
