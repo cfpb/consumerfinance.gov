@@ -26,9 +26,6 @@ from v1.views import (change_password, check_permissions, login_with_lockout,
                       password_reset_confirm, unshare, welcome)
 from v1.views.documents import DocumentServeView
 
-if os.getenv('DEPLOY_ENVIRONMENT', '') == 'build':
-    from ask_cfpb.views import view_answer
-
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
@@ -382,7 +379,9 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-if os.getenv('DEPLOY_ENVIRONMENT', '') == 'build':
+if settings.DEPLOY_ENVIRONMENT == 'build':
+    from ask_cfpb.views import view_answer
+
     ask_patterns = [
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
             view_answer,

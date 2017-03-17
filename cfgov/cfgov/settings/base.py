@@ -15,6 +15,9 @@ V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
 
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 
+# Deploy environment
+DEPLOY_ENVIRONMENT = os.getenv('DEPLOY_ENVIRONMENT')
+
 # signal that tells us that this is a proxied HTTPS request
 # effects how request.is_secure() responds
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -71,7 +74,7 @@ INSTALLED_APPS = (
     'jobmanager',
 )
 
-if os.getenv('DEPLOY_ENVIRONMENT', '') == 'build':
+if DEPLOY_ENVIRONMENT == 'build':
     INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [
