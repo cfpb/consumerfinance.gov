@@ -26,6 +26,7 @@ from v1.views import (change_password, check_permissions, login_with_lockout,
                       password_reset_confirm, unshare, welcome)
 from v1.views.documents import DocumentServeView
 
+
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
 
@@ -377,6 +378,19 @@ if settings.DEBUG:
         urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
     except ImportError:
         pass
+
+if settings.DEPLOY_ENVIRONMENT == 'build':
+    from ask_cfpb.views import view_answer
+
+    ask_patterns = [
+        url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+            view_answer,
+            name='ask-english-answer'),
+        url(r'^(?i)inicio/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+            view_answer,
+            name='ask-spanish-answer')
+    ]
+    urlpatterns += ask_patterns
 
 
 # Catch remaining URL patterns that did not match a route thus far.

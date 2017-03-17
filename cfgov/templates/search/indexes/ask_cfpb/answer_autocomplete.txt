@@ -1,0 +1,3 @@
+{% for answer_es in object.answer %}
+{{ answer }}
+{% endfor %}

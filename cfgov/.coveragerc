@@ -2,12 +2,14 @@
 omit = 
     *wsgi.py
     *admin*
-    *migrations/*
+    */migrations/*
     *templatetags/*
     */site-packages*
     */python2.7/*
     *setup.py
     *settings/*
+    */ask_cfpb/scripts/*
+    */ask_cfpb/search_indexes*
 data_file = ../.coverage
 
 [report]
