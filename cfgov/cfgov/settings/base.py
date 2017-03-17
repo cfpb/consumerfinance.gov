@@ -71,7 +71,7 @@ INSTALLED_APPS = (
     'jobmanager',
 )
 
-if os.getenv('deploy_environment', '') == 'build':
+if os.getenv('DEPLOY_ENVIRONMENT', '') == 'build':
     INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [

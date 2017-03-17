@@ -26,7 +26,7 @@ from v1.views import (change_password, check_permissions, login_with_lockout,
                       password_reset_confirm, unshare, welcome)
 from v1.views.documents import DocumentServeView
 
-if os.getenv('deploy_environment', '') == 'build':
+if os.getenv('DEPLOY_ENVIRONMENT', '') == 'build':
     from ask_cfpb.views import view_answer
 
 
@@ -382,7 +382,7 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-if os.getenv('deploy_environment', '') == 'build':
+if os.getenv('DEPLOY_ENVIRONMENT', '') == 'build':
     ask_patterns = [
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
             view_answer,
