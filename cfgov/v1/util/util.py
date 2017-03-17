@@ -33,7 +33,6 @@ def instanceOfBrowseOrFilterablePages(page):
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
     from v1.templatetags.share import get_page_state_url
-    on_staging = request.is_staging
 
     # If the parent page of the current page is a BrowsePage or a
     # BrowseFilterablePage, then use that as the top-level page for the
@@ -66,41 +65,59 @@ def get_secondary_nav_items(request, current_page):
                     }
                 ],
                 'active': True,
+                'expanded': True,
             }
         ], True
     # END TODO
 
-    pages = ([page] if page.secondary_nav_exclude_sibling_pages
-             else page.get_appropriate_siblings(request.site.hostname))
+    if page.secondary_nav_exclude_sibling_pages:
+        pages = [page]
+    else:
+        pages = filter(
+            lambda p: instanceOfBrowseOrFilterablePages(p.specific),
+            page.get_appropriate_siblings(request.site.hostname)
+        )
 
     nav_items = []
     for sibling in pages:
-        # Only if it's a Browse(Filterable) type page
-        if instanceOfBrowseOrFilterablePages(sibling.specific):
-            if page.id == sibling.id:
-                sibling = page.get_appropriate_page_version(request)
-            else:
-                sibling = sibling.get_appropriate_page_version(request)
+        if page.id == sibling.id:
+            sibling = page.get_appropriate_page_version(request)
+        else:
+            sibling = sibling.get_appropriate_page_version(request)
 
-            item = {
-                'title': sibling.title,
-                'slug': sibling.slug,
-                'url': get_page_state_url({}, sibling),
-                'children': [],
-                'active': current_page.pk == sibling.pk,
-            }
+        item_selected = current_page.pk == sibling.pk
 
-            children = sibling.get_children().specific()
-            for child in [c for c in children
-                          if (on_staging and c.shared) or c.live]:
-                if instanceOfBrowseOrFilterablePages(child):
-                    item['children'].append({
-                        'title': child.title,
-                        'slug': child.slug,
-                        'url': get_page_state_url({}, child),
-                        'active': current_page.pk == child.pk,
-                    })
-            nav_items.append(item)
+        item = {
+            'title': sibling.title,
+            'slug': sibling.slug,
+            'url': get_page_state_url({}, sibling),
+            'children': [],
+            'active': item_selected,
+            'expanded': item_selected,
+        }
+
+        visible_children = filter(
+            lambda c: (
+                instanceOfBrowseOrFilterablePages(c) and
+                (c.live or (c.shared and request.is_staging))
+            ),
+            sibling.get_children().specific()
+        )
+
+        for child in visible_children:
+            child_selected = current_page.pk == child.pk
+
+            if child_selected:
+                item['expanded'] = True
+
+            item['children'].append({
+                'title': child.title,
+                'slug': child.slug,
+                'url': get_page_state_url({}, child),
+                'active': child_selected,
+            })
+
+        nav_items.append(item)
 
     # Return a boolean about whether or not the current page has Browse
     # children
