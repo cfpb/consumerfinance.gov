@@ -1,4 +1,3 @@
-import os
 from time import time
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -34,18 +33,24 @@ def instanceOfBrowseOrFilterablePages(page):
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
     from v1.templatetags.share import get_page_state_url
-    on_staging = (os.environ.get('DJANGO_STAGING_HOSTNAME')
-                  == request.site.hostname)
-    nav_items = []
+    on_staging = request.is_staging
+
+    # If the parent page of the current page is a BrowsePage or a
+    # BrowseFilterablePage, then use that as the top-level page for the
+    # purposes of the navigation sidebar. Otherwise, treat the current page
+    # as top-level.
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
         page = parent.get_appropriate_page_version(request)
     else:
         page = current_page.get_appropriate_page_version(request)
 
+    # If there's no appropriate page version (e.g. not published for a sharing
+    # request), then return no sidebar at all.
     if not page:
         return [], False
 
+    # Handle the Newsroom page specially.
     # TODO: Remove this ASAP once Press Resources gets its own Wagtail page
     if page.slug == 'newsroom':
         return [
@@ -60,6 +65,7 @@ def get_secondary_nav_items(request, current_page):
                         'url': '/newsroom/press-resources/',
                     }
                 ],
+                'active': True,
             }
         ], True
     # END TODO
@@ -67,19 +73,25 @@ def get_secondary_nav_items(request, current_page):
     pages = ([page] if page.secondary_nav_exclude_sibling_pages
              else page.get_appropriate_siblings(request.site.hostname))
 
+    nav_items = []
     for sibling in pages:
         # Only if it's a Browse(Filterable) type page
         if instanceOfBrowseOrFilterablePages(sibling.specific):
             if page.id == sibling.id:
                 sibling = page.get_appropriate_page_version(request)
+                active = True
             else:
                 sibling = sibling.get_appropriate_page_version(request)
+                active = False
+
             item = {
                 'title': sibling.title,
                 'slug': sibling.slug,
                 'url': get_page_state_url({}, sibling),
                 'children': [],
+                'active': active,
             }
+
             children = sibling.get_children().specific()
             for child in [c for c in children
                           if (on_staging and c.shared) or c.live]:
@@ -90,12 +102,15 @@ def get_secondary_nav_items(request, current_page):
                         'url': get_page_state_url({}, child),
                     })
             nav_items.append(item)
+
     # Return a boolean about whether or not the current page has Browse
     # children
-    for item in nav_items:
-        if get_page_state_url({}, page) == item['url'] and item['children']:
-            return nav_items, True
-    return nav_items, False
+    has_children = any(
+        get_page_state_url({}, page) == item['url'] and item['children']
+        for item in nav_items
+    )
+
+    return nav_items, has_children
 
 
 def valid_destination_for_request(request, url):
