@@ -32,8 +32,6 @@ def instanceOfBrowseOrFilterablePages(page):
 # TODO: Move into BrowsePage class once BrowseFilterablePage has been merged
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
-    from v1.templatetags.share import get_page_state_url
-
     # If the parent page of the current page is a BrowsePage or a
     # BrowseFilterablePage, then use that as the top-level page for the
     # purposes of the navigation sidebar. Otherwise, treat the current page
@@ -56,7 +54,7 @@ def get_secondary_nav_items(request, current_page):
             {
                 'title': page.title,
                 'slug': page.slug,
-                'url': get_page_state_url({}, page),
+                'url': page.relative_url(request.site),
                 'children': [
                     {
                         'title': 'Press Resources',
@@ -90,7 +88,7 @@ def get_secondary_nav_items(request, current_page):
         item = {
             'title': sibling.title,
             'slug': sibling.slug,
-            'url': get_page_state_url({}, sibling),
+            'url': sibling.relative_url(request.site),
             'children': [],
             'active': item_selected,
             'expanded': item_selected,
@@ -113,7 +111,7 @@ def get_secondary_nav_items(request, current_page):
             item['children'].append({
                 'title': child.title,
                 'slug': child.slug,
-                'url': get_page_state_url({}, child),
+                'url': child.relative_url(request.site),
                 'active': child_selected,
             })
 
@@ -122,7 +120,7 @@ def get_secondary_nav_items(request, current_page):
     # Return a boolean about whether or not the current page has Browse
     # children
     has_children = any(
-        get_page_state_url({}, page) == item['url'] and item['children']
+        page.relative_url(request.site) == item['url'] and item['children']
         for item in nav_items
     )
 
