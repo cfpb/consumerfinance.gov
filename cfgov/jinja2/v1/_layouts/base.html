@@ -60,7 +60,7 @@
           ">
 
     <!-- Open Graph properties -->
-        <!--   Required  -->
+        <!-- Required  -->
         <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
@@ -70,9 +70,9 @@
               content="{{ preview_image.url }}">
     {% else %}
         <meta property="og:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph.png') }}">
+              content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
     {% endif %}
-        <!--   Optional -->
+        <!--  Optional -->
         <meta property="og:description"
               content="
                   {%- block og_desc -%}
@@ -82,9 +82,18 @@
                   {%- endblock -%}
               ">
         <meta property="og:site_name" content="Consumer Financial Protection Bureau">
-        <!--   Facebook -->
+        <!-- Facebook -->
         <meta property="fb:app_id" content="210516218981921">
         {% block og_article_author %}{% endblock %}
+        <!-- Twitter -->
+    {% if page and page.preview_image %}
+        {%- set preview_image = image(page.preview_image, 'original') %}
+        <meta property="twitter:image"
+              content="{{ preview_image.url }}">
+    {% else %}
+        <meta property="twitter:image"
+              content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_twitter.png') }}">
+    {% endif %}
     <!-- End of Open Graph properties -->
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ static('assets/favicon.ico') }}">
