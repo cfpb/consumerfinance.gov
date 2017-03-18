@@ -2,9 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 import HTMLParser
-# import pdb
 
-# from bs4 import BeautifulSoup as bs
 import mock
 from mock import patch
 from model_mommy import mommy
@@ -22,7 +20,6 @@ from ask_cfpb.models.django import (
     Answer, Category, SubCategory, Audience,
     NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
 from ask_cfpb.models.pages import AnswerPage
-# from ask_cfpb.views import view_answer
 
 html_parser = HTMLParser.HTMLParser()
 client = Client()
