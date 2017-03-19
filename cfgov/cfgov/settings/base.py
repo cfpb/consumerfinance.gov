@@ -378,7 +378,7 @@ WAGTAIL_ENABLE_UPDATE_CHECK = False  # Removes wagtail version update check bann
 ADMINS = admin_emails(os.environ.get('ADMIN_EMAILS'))
 
 if DEPLOY_ENVIRONMENT:
-    EMAIL_SUBJECT_PREFIX = u'[{}] '.format(DEPLOY_ENVIRONMENT)
+    EMAIL_SUBJECT_PREFIX = u'[{}] '.format(DEPLOY_ENVIRONMENT.title())
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get('WAGTAILADMIN_NOTIFICATION_FROM_EMAIL')
