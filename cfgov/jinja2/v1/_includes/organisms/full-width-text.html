@@ -31,7 +31,7 @@
                      src="{{ media.url }}"
                      alt="{{ block.value.alt or media.alt }}">
             </div>
-        {% elif block.block_type in ['quote', 'cta', 'related-links'] %}
+        {% elif block.block_type in ['quote', 'cta', 'related_links'] %}
             <div class="m-inset">
                 {{ block | safe }}
             </div>
