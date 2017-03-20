@@ -70,15 +70,5 @@ class AnswerPage(CFGOVPage):
                 return _("redirected but not live")
             else:
                 return _("redirected")
-        if not self.live:
-            if self.expired:
-                return _("expired")
-            elif self.approved_schedule:
-                return _("scheduled")
-            else:
-                return _("draft")
         else:
-            if self.has_unpublished_changes:
-                return _("live + draft")
-            else:
-                return _("live")
+            return super(AnswerPage, self).status_string

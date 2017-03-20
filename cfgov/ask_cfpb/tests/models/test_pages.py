@@ -1,6 +1,4 @@
 from __future__ import unicode_literals
-
-import datetime
 import HTMLParser
 
 import mock
@@ -92,14 +90,12 @@ class AnswerModelTestCase(TestCase):
     def test_view_answer_200(self):
         response_200 = client.get(reverse(
             'ask-english-answer', args=['mock-answer-page', 'en', 1234]))
-        # pdb.set_trace()
         self.assertTrue(isinstance(response_200, HttpResponse))
         self.assertEqual(response_200.status_code, 200)
 
     def test_view_answer_302(self):
         response_202 = client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
-        # pdb.set_trace()
         self.assertTrue(isinstance(response_202, HttpResponse))
         self.assertEqual(response_202.status_code, 302)
 
@@ -108,7 +104,6 @@ class AnswerModelTestCase(TestCase):
         self.page1.save()
         response_302 = client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
-        # pdb.set_trace()
         self.assertTrue(isinstance(response_302, HttpResponse))
         self.assertEqual(response_302.status_code, 302)
 
@@ -322,19 +317,6 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             test_page.status_string.lower(), "redirected")
         test_page.redirect_id = None
+        test_page.save()
         self.assertEqual(
             test_page.status_string.lower(), "live")
-        test_page.has_unpublished_changes = True
-        self.assertEqual(
-            test_page.status_string.lower(), "live + draft")
-        test_page.live = False
-        self.assertEqual(
-            test_page.status_string.lower(), "draft")
-        test_page.expired = True
-        self.assertEqual(
-            test_page.status_string.lower(), "expired")
-        test_page.expired = False
-        go_date = datetime.datetime.now() + datetime.timedelta(days=1)
-        test_page.save_revision(approved_go_live_at=go_date)
-        self.assertEqual(
-            test_page.status_string.lower(), "scheduled")
