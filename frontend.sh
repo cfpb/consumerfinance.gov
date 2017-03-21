@@ -70,7 +70,7 @@ install() {
   else
     npm install --production --loglevel warn --no-optional
   fi
-
+  npm prune
 }
 
 # Add a checksum file
