@@ -15,7 +15,11 @@ init() {
   source cli-flag.sh 'Front end' $1
 
   NODE_DIR=node_modules
-  DEP_CHECKSUM=$(cat npm-shrinkwrap.json package.json | shasum -a 256)
+  if [ -f "npm-shrinkwrap.json" ]; then
+    DEP_CHECKSUM=$(cat npm-shrinkwrap.json package.json | shasum -a 256)
+  else
+    DEP_CHECKSUM=$(cat package.json | shasum -a 256)
+  fi
 
   echo "npm components directory: $NODE_DIR"
 }
@@ -74,7 +78,7 @@ install() {
 # $NODE_DIR so we know we're working with a clean slate of the
 # dependencies listed in package.json.
 clean_and_install() {
-  if [ ! -f $NODE_DIR/CHECKSUM ] || 
+  if [ ! -f $NODE_DIR/CHECKSUM ] ||
      [ "$DEP_CHECKSUM" != "$(cat $NODE_DIR/CHECKSUM)" ]; then
     clean
     install
@@ -96,6 +100,16 @@ build() {
   fi
 }
 
+shrinkwrap() {
+  if [ -f "npm-shrinkwrap.json" ]; then
+    echo 'Removing npm-shrinkwrap.json…'
+    rm npm-shrinkwrap.json
+  fi
+  clean_and_install
+  echo 'Shrinkwrapping…'
+  npm shrinkwrap
+}
+
 # Returns 1 if a global command-line program installed, else 0.
 # For example, echo "node: $(is_installed node)".
 is_installed() {
@@ -112,6 +126,9 @@ is_installed() {
 if [ "$1" == "init" ]; then
   init ""
   clean_and_install
+elif [ "$1" == "shrinkwrap" ]; then
+  init "production"
+  shrinkwrap
 elif [ "$1" == "build" ]; then
   build
 else
