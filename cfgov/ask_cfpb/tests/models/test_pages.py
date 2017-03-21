@@ -317,6 +317,5 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             test_page.status_string.lower(), "redirected")
         test_page.redirect_id = None
-        # test_page.save()
         self.assertEqual(
             test_page.status_string.lower(), "live")
