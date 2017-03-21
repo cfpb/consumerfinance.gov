@@ -73,6 +73,11 @@ install() {
 
 }
 
+# Add a checksum file
+checksum() {
+  echo -n "$DEP_CHECKSUM" > $NODE_DIR/CHECKSUM
+}
+
 # If the node directory exists, $NODE_DIR/CHECKSUM exists, and
 # the contents DO NOT match the checksum of package.json, clear
 # $NODE_DIR so we know we're working with a clean slate of the
@@ -82,8 +87,7 @@ clean_and_install() {
      [ "$DEP_CHECKSUM" != "$(cat $NODE_DIR/CHECKSUM)" ]; then
     clean
     install
-    # Add a checksum file
-    echo -n "$DEP_CHECKSUM" > $NODE_DIR/CHECKSUM
+    checksum
   else
     echo 'Dependencies are up to date.'
   fi
@@ -105,9 +109,11 @@ shrinkwrap() {
     echo 'Removing npm-shrinkwrap.json…'
     rm npm-shrinkwrap.json
   fi
-  clean_and_install
+  clean
+  install
   echo 'Shrinkwrapping…'
   npm shrinkwrap
+  checksum
 }
 
 # Returns 1 if a global command-line program installed, else 0.
