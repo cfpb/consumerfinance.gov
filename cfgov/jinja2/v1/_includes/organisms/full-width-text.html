@@ -32,7 +32,9 @@
                      alt="{{ block.value.alt or media.alt }}">
             </div>
         {% elif block.block_type in ['quote', 'cta', 'related_links'] %}
-            <div class="m-inset">
+            <div class="m-inset
+                    {{ 'm-inset__test'
+                       if flag_enabled(request, 'INSET_TEST') else '' }}">
                 {{ block | safe }}
             </div>
         {% else %}
