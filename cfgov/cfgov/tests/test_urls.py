@@ -25,6 +25,7 @@ ADMIN_URL_WHITELIST = [
 
 # Based on django_extensions's show_urls command.
 def get_urlpatterns(urlpatterns, base=''):
+    """ Get a list of all patterns defined within the given urlpatterns """
     urls = []
     for p in urlpatterns:
         if isinstance(p, RegexURLPattern) or hasattr(p, '_get_callback'):
