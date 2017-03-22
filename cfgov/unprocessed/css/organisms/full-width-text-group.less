@@ -24,7 +24,6 @@
 .o-full-width-text-group {
     overflow: auto;
 
-
       .m-inset {
           margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
           margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -55,7 +54,14 @@
 
           .m-full-width-text + .m-inset__image,
           .m-full-width-text +
-          .m-inset +
+          .m-inset__image +
+          .m-full-width-text {
+              margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+          }
+
+          .m-full-width-text + .m-inset__test,
+          .m-full-width-text +
+          .m-inset__test +
           .m-full-width-text {
               margin-top: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
           }
