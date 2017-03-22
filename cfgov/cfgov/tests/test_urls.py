@@ -33,10 +33,7 @@ def get_urlpatterns(urlpatterns, base=''):
         elif (isinstance(p, RegexURLResolver) or
               hasattr(p, 'url_patterns') or
               hasattr(p, '_get_url_patterns')):
-            try:
-                patterns = p.url_patterns
-            except ImportError:
-                continue
+            patterns = p.url_patterns
             urls.extend(get_urlpatterns(patterns, base + p.regex.pattern))
         else:
             raise TypeError("%s does not appear to be a urlpattern object" % p)
