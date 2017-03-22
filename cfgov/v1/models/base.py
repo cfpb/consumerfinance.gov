@@ -1,8 +1,5 @@
 import csv
 import json
-import logging
-import requests
-
 from collections import OrderedDict
 from cStringIO import StringIO
 from itertools import chain
@@ -36,9 +33,6 @@ from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms
 from v1.models.snippets import ReusableText, ReusableTextChooserBlock
 from v1.util import ref
-from v1.wagtail_hooks import get_akamai_credentials
-
-logger = logging.getLogger(__name__)
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -222,41 +216,6 @@ class CFGOVPage(Page):
         # hit for that type.
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
-
-    def flush(self):
-        if not settings.ENABLE_AKAMAI_CACHE_PURGE:
-            logger.info(
-                'Page {slug} (id = {id}) was not invalidated because '
-                'ENABLE_AKAMAI_CACHE_PURGE is not set'.format(
-                    slug=self.slug,
-                    id=self.id
-                )
-            )
-            return
-        auth, fast_purge_url = get_akamai_credentials()
-        headers = {'content-type': 'application/json'}
-        payload = {
-            'action': 'invalidate',
-            'hostname': settings.WAGTAIL_SITE_NAME,
-            'objects': [
-                self.relative_url(self.get_site())
-            ]
-        }
-        resp = requests.post(
-            fast_purge_url,
-            headers=headers,
-            data=json.dumps(payload),
-            auth=auth
-        )
-        logger.info(
-            'Attempted to invalidate page {slug} (id = {id}), '
-            'got back response {message}'.format(
-                slug=self.slug,
-                id=self.id,
-                message=resp.text
-            )
-        )
-        resp.raise_for_status()
 
     def get_appropriate_page_version(self, request):
         # If we're on the production site, make sure the version of the page

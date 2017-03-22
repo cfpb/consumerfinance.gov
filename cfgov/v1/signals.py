@@ -1,12 +1,10 @@
 import json
 from datetime import timedelta
-import logging
 
 from django.dispatch import Signal
 from django.utils import timezone
 from wagtail.wagtailcore.signals import page_published, page_unpublished
 
-logger = logging.getLogger(__name__)
 page_unshared = Signal(providing_args=['instance'])
 
 
@@ -70,14 +68,6 @@ def configure_page_and_revision(sender, **kwargs):
         page=page, is_sharing=False, is_live=True)
 
 
-def flush_page(sender, **kwargs):
-    flush = getattr(kwargs['instance'], 'flush', None)
-    if flush and callable(flush):
-        flush()
-
-
 page_unshared.connect(unshare_all_revisions)
 page_unpublished.connect(unpublish_all_revisions)
-page_unpublished.connect(flush_page)
 page_published.connect(configure_page_and_revision)
-page_published.connect(flush_page)

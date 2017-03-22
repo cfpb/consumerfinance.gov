@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailusers',
     'wagtail.wagtailimages',
     'wagtail.wagtailembeds',
+    'wagtail.contrib.wagtailfrontendcache',
 #    'wagtail.wagtailsearch', # TODO: conflicts with haystack, will need to revisit.
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
@@ -484,10 +485,16 @@ REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
 # Akamai
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)
 if ENABLE_AKAMAI_CACHE_PURGE:
-    AKAMAI_CLIENT_TOKEN = os.environ.get('AKAMAI_CLIENT_TOKEN')
-    AKAMAI_CLIENT_SECRET = os.environ.get('AKAMAI_CLIENT_SECRET')
-    AKAMAI_ACCESS_TOKEN = os.environ.get('AKAMAI_ACCESS_TOKEN')
-    AKAMAI_FAST_PURGE_URL = os.environ.get('AKAMAI_FAST_PURGE_URL')
+    WAGTAILFRONTENDCACHE = {
+        'akamai': {
+            'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
+            'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
+            'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
+            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN'),
+            'FAST_PURGE_URL': os.environ.get('AKAMAI_FAST_PURGE_URL')
+        },
+}
+
 
 # Staging site
 STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
@@ -549,3 +556,4 @@ CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
                    'api.iperceptions.com')
+

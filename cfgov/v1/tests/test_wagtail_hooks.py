@@ -8,8 +8,7 @@ from akamai.edgegrid import EdgeGridAuth
 
 from v1.models.browse_page import BrowsePage
 from v1.wagtail_hooks import (check_permissions, configure_page_revision,
-                              form_module_handlers,
-                              get_akamai_credentials, share, share_the_page)
+                              form_module_handlers, share, share_the_page)
 
 
 class TestShareThePage(TestCase):
@@ -265,33 +264,3 @@ class TestFormModuleHandlers(TestCase):
         form_module_handlers(self.page, self.request, self.context)
         child.block.is_submitted.assert_called_with(self.request, 'name', 0)
 
-
-class TestGetAkamaiCredentials(TestCase):
-    def test_no_credentials_raises(self):
-        with self.settings(
-            AKAMAI_CLIENT_TOKEN=None,
-            AKAMAI_CLIENT_SECRET=None,
-            AKAMAI_ACCESS_TOKEN=None,
-            AKAMAI_FAST_PURGE_URL=None
-        ):
-            self.assertRaises(ValueError, get_akamai_credentials)
-
-    def test_some_credentials_raises(self):
-        with self.settings(
-            AKAMAI_CLIENT_TOKEN='some-arbitrary-token',
-            AKAMAI_CLIENT_SECRET=None,
-            AKAMAI_ACCESS_TOKEN=None,
-            AKAMAI_FAST_PURGE_URL=None
-        ):
-            self.assertRaises(ValueError, get_akamai_credentials)
-
-    def test_all_credentials_returns(self):
-        with self.settings(
-            AKAMAI_CLIENT_TOKEN='token',
-            AKAMAI_CLIENT_SECRET='secret',
-            AKAMAI_ACCESS_TOKEN='access token',
-            AKAMAI_FAST_PURGE_URL='fast purge url'
-        ):
-            auth, fast_purge_url = get_akamai_credentials()
-            self.assertEqual(fast_purge_url, 'fast purge url')
-            self.assertIsInstance(auth, EdgeGridAuth)

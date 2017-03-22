@@ -17,8 +17,6 @@ from urlparse import urlsplit
 from v1.templatetags.share import v1page_permissions
 from v1.util import util
 
-from akamai.edgegrid import EdgeGridAuth
-
 
 logger = logging.getLogger(__name__)
 
@@ -124,24 +122,6 @@ def configure_page_revision(page, is_sharing, is_live):
     content_json['has_unshared_changes'] = not is_sharing and not is_live
     latest.content_json = json.dumps(content_json)
     latest.save()
-
-
-def get_akamai_credentials():
-    client_token = getattr(settings, 'AKAMAI_CLIENT_TOKEN', None)
-    client_secret = getattr(settings, 'AKAMAI_CLIENT_SECRET', None)
-    access_token = getattr(settings, 'AKAMAI_ACCESS_TOKEN', None)
-    fast_purge_url = getattr(settings, 'AKAMAI_FAST_PURGE_URL', None)
-    if not all((client_token, client_secret, access_token, fast_purge_url)):
-        raise ValueError(
-            'AKAMAI_CLIENT_TOKEN, AKAMAI_CLIENT_SECRET, AKAMAI_ACCESS_TOKEN,'
-            ' AKAMAI_FAST_PURGE_URL must be configured.'
-        )
-    auth = EdgeGridAuth(
-        client_token=client_token,
-        client_secret=client_secret,
-        access_token=access_token
-    )
-    return auth, fast_purge_url
 
 
 @hooks.register('register_permissions')
