@@ -35,7 +35,7 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=''):
               hasattr(p, '_get_url_patterns')):
             patterns = p.url_patterns
             regexes.extend(extract_regexes_from_urlpatterns(
-                p atterns, base + p.regex.pattern))
+                patterns, base + p.regex.pattern))
         else:
             raise TypeError("%s does not appear to be a urlpattern object" % p)
     return regexes
