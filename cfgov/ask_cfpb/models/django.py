@@ -167,15 +167,13 @@ class Answer(models.Model):
         MultiFieldPanel([
             FieldPanel('question', classname="title"),
             FieldPanel('snippet', classname="full"),
-            FieldPanel('answer', classname="full"),
-            FieldPanel('slug')],
+            FieldPanel('answer', classname="full")],
             heading="English",
             classname="collapsible"),
         MultiFieldPanel([
             FieldPanel('question_es', classname="title"),
             FieldPanel('snippet_es', classname="full"),
-            FieldPanel('answer_es', classname="full"),
-            FieldPanel('slug_es')],
+            FieldPanel('answer_es', classname="full")],
             heading="Spanish",
             classname="collapsible"),
         MultiFieldPanel([
