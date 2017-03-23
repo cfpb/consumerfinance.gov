@@ -49,5 +49,6 @@ unipath>=1.1,<=2.0
 vobject==0.9.1
 wagtail==1.10.1
 wagtail-flags==2.0.5
+git+https://github.com/cfpb/wagtail-inventory.git@0.2#egg=wagtail-inventory
 wagtail-sharing==0.5
 Wand==0.4.2

@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'modelcluster',
     'compressor',
     'taggit',
+    'wagtailinventory',
     'wagtailsharing',
     'flags',
     'watchman',
