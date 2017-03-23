@@ -61,11 +61,11 @@ function stylesIE9() {
       suffix:  '.ie9',
       extname: '.css'
     } ) )
-    .pipe( gulpBless( { cacheBuster: false, suffix: 'part' } ) )
-    .pipe( gulpCleanCss( {
-      compatibility: 'ie8',
-      processImport: false
-    } ) )
+    .pipe( gulpBless( { suffix: 'part' } ) )
+    //.pipe( gulpCleanCss( {
+    //  compatibility: 'ie9',
+    //  processImport: false
+    //} ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( browserSync.reload( {
       stream: true
