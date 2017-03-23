@@ -11,15 +11,15 @@ from cfgov import urls
 # For example, ''^admin' will match any urlpattern regex that starts with
 # '^admin'.
 ADMIN_URL_WHITELIST = [
-    '^django-admin/',
     '^admin/',
-    '^picard/',
+    '^csp-report/',
+    '^d/admin/',
+    '^django-admin/',
     '^login',
     '^logout',
-    '^tasks/',
-    '^csp-report/',
     '^password/',
-    '^d/admin/',
+    '^picard/',
+    '^tasks/',
 ]
 
 
@@ -35,7 +35,7 @@ def extract_regexes_from_urlpatterns(urlpatterns, base=''):
               hasattr(p, '_get_url_patterns')):
             patterns = p.url_patterns
             regexes.extend(extract_regexes_from_urlpatterns(
-                patterns, base + p.regex.pattern))
+                p atterns, base + p.regex.pattern))
         else:
             raise TypeError("%s does not appear to be a urlpattern object" % p)
     return regexes
