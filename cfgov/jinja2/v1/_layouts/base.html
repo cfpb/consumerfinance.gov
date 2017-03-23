@@ -108,8 +108,9 @@
 -->
 
 {% block css %}
-<!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('css/main.ie.css') }}"> <![endif]-->
-<!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('css/main.css') }}"> <!--<![endif]-->
+<!--[if lt IE 9]><link rel="stylesheet" href="{{ static('css/main.ie8.css') }}"><![endif]-->
+<!--[if IE 9]><link rel="stylesheet" href="{{ static('css/main.ie9.css') }}"><![endif]-->
+<!--[if gt IE 9]><!--><link rel="stylesheet" href="{{ static('css/main.css') }}"><!--<![endif]-->
 {% endblock css %}
 
 <!--
