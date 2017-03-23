@@ -24,20 +24,21 @@ ADMIN_URL_WHITELIST = [
 
 
 # Based on django_extensions's show_urls command.
-def get_urlpatterns(urlpatterns, base=''):
-    """ Get a list of all patterns defined within the given urlpatterns """
-    urls = []
+def extract_regexes_from_urlpatterns(urlpatterns, base=''):
+    """ Extract a list of all regexes from the given urlpatterns """
+    regexes = []
     for p in urlpatterns:
         if isinstance(p, RegexURLPattern) or hasattr(p, '_get_callback'):
-            urls.append(base + p.regex.pattern)
+            regexes.append(base + p.regex.pattern)
         elif (isinstance(p, RegexURLResolver) or
               hasattr(p, 'url_patterns') or
               hasattr(p, '_get_url_patterns')):
             patterns = p.url_patterns
-            urls.extend(get_urlpatterns(patterns, base + p.regex.pattern))
+            regexes.extend(extract_regexes_from_urlpatterns(
+                patterns, base + p.regex.pattern))
         else:
             raise TypeError("%s does not appear to be a urlpattern object" % p)
-    return urls
+    return regexes
 
 
 class AdminURLSTestCase(TestCase):
@@ -46,12 +47,12 @@ class AdminURLSTestCase(TestCase):
         with override_settings(ALLOW_ADMIN_URL=False):
             # Reload cfgov.urls with the new ALLOW_ADMIN_URL
             reload(urls)
-            without_admin = get_urlpatterns(urls.urlpatterns)
+            without_admin = extract_regexes_from_urlpatterns(urls.urlpatterns)
 
         with override_settings(ALLOW_ADMIN_URL=True):
             # Reload cfgov.urls with the new ALLOW_ADMIN_URL
             reload(urls)
-            with_admin = get_urlpatterns(urls.urlpatterns)
+            with_admin = extract_regexes_from_urlpatterns(urls.urlpatterns)
 
         self.admin_urls = set(with_admin) - set(without_admin)
 
