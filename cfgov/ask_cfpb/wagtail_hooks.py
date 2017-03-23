@@ -6,6 +6,11 @@ from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register)
 from wagtail.contrib.modeladmin.views import EditView
 
+from django.conf import settings
+from django.utils.html import format_html, format_html_join
+from wagtail.wagtailcore import hooks
+from wagtail.wagtailcore.whitelist import attribute_rule, check_url, allow_without_attributes
+
 from ask_cfpb.models import (
     Answer,
     Audience,
@@ -82,3 +87,35 @@ class MyModelAdminGroup(ModelAdminGroup):
         CategoryModelAdmin,
         SubCategoryModelAdmin,
         NextStepModelAdmin)
+
+def editor_js():
+    js_files = [
+        'js/edit_html.js',
+        'js/question_tips.js'
+    ]
+    js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
+        ((settings.STATIC_URL, filename) for filename in js_files)
+    )
+
+    return js_includes + format_html(
+        """
+        <script>
+            registerHalloPlugin('editHtmlButton');
+            registerHalloPlugin('answermodule');
+        </script>
+        """
+    )
+
+hooks.register('insert_editor_js', editor_js)
+
+@hooks.register('construct_whitelister_element_rules')
+def whitelister_element_rules():
+    return {
+        'aside': attribute_rule({'class': True}),
+    }
+
+
+def editor_css():
+    return format_html('<link rel="stylesheet" href="'+ settings.STATIC_URL + 'css/question_tips.css">')
+
+hooks.register('insert_editor_css', editor_css)
