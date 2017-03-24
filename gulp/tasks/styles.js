@@ -49,16 +49,17 @@ function stylesIE9() {
   return gulp.src( configStyles.cwd + configStyles.src )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
-    .pipe( gulpAutoprefixer( { browsers: [
-      'last 2 version',
-      'not ie <= 8',
-      'android 4',
-      'BlackBerry 7',
-      'BlackBerry 10'
-    ]} ) )
-    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulpRename( { suffix:  '.ie9', extname: '.css' } ) )
-    .pipe( gulpCleanCss( { compatibility: 'ie9', inline: ['none'] } ) )
+    .pipe( gulpAutoprefixer( {
+      browsers: [ 'ie 9' ]
+    } ) )
+    .pipe( gulpRename( {
+      suffix:  '.ie9',
+      extname: '.css'
+    } ) )
+    .pipe( gulpCleanCss( {
+      compatibility: 'ie9',
+      inline: ['none']
+    } ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( browserSync.reload( {
       stream: true
