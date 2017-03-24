@@ -57,15 +57,8 @@ function stylesIE9() {
       'BlackBerry 10'
     ]} ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulpRename( {
-      suffix:  '.ie9',
-      extname: '.css'
-    } ) )
-    .pipe( gulpBless( { suffix: 'part' } ) )
-    //.pipe( gulpCleanCss( {
-    //  compatibility: 'ie9',
-    //  processImport: false
-    //} ) )
+    .pipe( gulpRename( { suffix:  '.ie9', extname: '.css' } ) )
+    .pipe( gulpCleanCss( { compatibility: 'ie9', inline: ['none'] } ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( browserSync.reload( {
       stream: true
