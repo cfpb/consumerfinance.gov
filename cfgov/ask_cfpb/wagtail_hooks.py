@@ -90,8 +90,8 @@ class MyModelAdminGroup(ModelAdminGroup):
 
 def editor_js():
     js_files = [
-        'js/edit_html.js',
-        'js/question_tips.js'
+        'js/admin/html_editor.js',
+        'js/admin/ask_cfpb_tips.js'
     ]
     js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
         ((settings.STATIC_URL, filename) for filename in js_files)
@@ -106,16 +106,16 @@ def editor_js():
         """
     )
 
-hooks.register('insert_editor_js', editor_js)
+def editor_css():
+    return format_html('<link rel="stylesheet" href="'+ settings.STATIC_URL + 'css/question_tips.css">')
 
-@hooks.register('construct_whitelister_element_rules')
+
 def whitelister_element_rules():
     return {
         'aside': attribute_rule({'class': True}),
     }
 
-
-def editor_css():
-    return format_html('<link rel="stylesheet" href="'+ settings.STATIC_URL + 'css/question_tips.css">')
-
-hooks.register('insert_editor_css', editor_css)
+if settings.DEPLOY_ENVIRONMENT == 'build':
+    hooks.register('insert_editor_js', editor_js)
+    hooks.register('insert_editor_css', editor_css)
+    hooks.register('construct_whitelister_element_rules', whitelister_element_rules)

@@ -17,7 +17,7 @@
                 buttonElement.hallobutton({
                     uuid: _this.options.uuid,
                     editable: _this.options.editable,
-                    label: "Ask answer module",
+                    label: "Ask CFPB answer module",
                     icon: 'icon-edit',
                     command: null
                 });
