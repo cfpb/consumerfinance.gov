@@ -48,18 +48,12 @@ var API = {
 
   /**
    * Action function used to play the Ustream video.
+   * @returns {UStreamPlayer} An instance.
    */
   play: function( ) {
     // TODO: Remove this code when the Ustream https issue is resolved.
     window.location = 'https://www.ustream.tv/channel/cfpblive';
     return this;
-
-    this._super.play.call( this );
-    if ( this.state.isPlayerInitialized ) {
-      this.player.callMethod( 'play' );
-    } else {
-      this.initPlayer();
-    }
   },
 
   /**
