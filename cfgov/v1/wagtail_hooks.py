@@ -1,6 +1,5 @@
 import json
 import logging
-import requests
 
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
@@ -45,8 +44,6 @@ def share_the_page(request, page):
 
     share(page, is_sharing, is_live)
     configure_page_revision(page, is_sharing, is_live)
-    if is_live:
-        flush_akamai()
 
 
 @hooks.register('after_delete_page')
@@ -125,49 +122,6 @@ def configure_page_revision(page, is_sharing, is_live):
     content_json['has_unshared_changes'] = not is_sharing and not is_live
     latest.content_json = json.dumps(content_json)
     latest.save()
-
-
-def get_akamai_credentials():
-    object_id = getattr(settings, 'AKAMAI_OBJECT_ID', None)
-    user = getattr(settings, 'AKAMAI_USER', None)
-    password = getattr(settings, 'AKAMAI_PASSWORD', None)
-
-    if not all((object_id, user, password)):
-        raise ValueError(
-            'AKAMAI_OBJECT_ID, AKAMAI_USER, and AKAMAI_PASSWORD '
-            'must be configured.'
-        )
-
-    return object_id, (user, password)
-
-
-def should_flush():
-    """Only initiate an Akamai flush if it is enabled in settings."""
-    return settings.ENABLE_AKAMAI_CACHE_PURGE
-
-
-def flush_akamai():
-    if should_flush():
-        object_id, auth = get_akamai_credentials()
-        headers = {'content-type': 'application/json'}
-        payload = {
-            'action': 'invalidate',
-            'type': 'cpcode',
-            'domain': 'production',
-            'objects': [object_id]
-        }
-        r = requests.post(
-            settings.AKAMAI_PURGE_URL,
-            headers=headers,
-            data=json.dumps(payload),
-            auth=auth
-        )
-        logger.info(
-            'Initiated Akamai flush with response {text}'.format(text=r.text)
-        )
-        if r.status_code == 201:
-            return True
-    return False
 
 
 @hooks.register('register_permissions')

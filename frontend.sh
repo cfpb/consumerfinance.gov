@@ -70,7 +70,6 @@ install() {
   else
     npm install --production --loglevel warn --no-optional
   fi
-  npm prune
 }
 
 # Add a checksum file
@@ -111,6 +110,7 @@ shrinkwrap() {
   fi
   clean
   install
+  npm prune
   echo 'Shrinkwrapping…'
   npm shrinkwrap
   checksum

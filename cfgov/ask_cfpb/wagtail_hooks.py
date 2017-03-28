@@ -9,7 +9,7 @@ from wagtail.contrib.modeladmin.views import EditView
 from django.conf import settings
 from django.utils.html import format_html, format_html_join
 from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.whitelist import attribute_rule, check_url, allow_without_attributes
+from wagtail.wagtailcore.whitelist import attribute_rule
 
 from ask_cfpb.models import (
     Answer,
@@ -88,12 +88,14 @@ class MyModelAdminGroup(ModelAdminGroup):
         SubCategoryModelAdmin,
         NextStepModelAdmin)
 
+
 def editor_js():
     js_files = [
         'js/admin/html_editor.js',
         'js/admin/ask_cfpb_tips.js'
     ]
-    js_includes = format_html_join('\n', '<script src="{0}{1}"></script>',
+    js_includes = format_html_join(
+        '\n', '<script src="{0}{1}"></script>',
         ((settings.STATIC_URL, filename) for filename in js_files)
     )
 
@@ -106,8 +108,12 @@ def editor_js():
         """
     )
 
+
 def editor_css():
-    return format_html('<link rel="stylesheet" href="'+ settings.STATIC_URL + 'css/question_tips.css">')
+    return format_html(
+        '<link rel="stylesheet" href="' +
+        settings.STATIC_URL +
+        'css/question_tips.css">')
 
 
 def whitelister_element_rules():
@@ -118,4 +124,5 @@ def whitelister_element_rules():
 if settings.DEPLOY_ENVIRONMENT == 'build':
     hooks.register('insert_editor_js', editor_js)
     hooks.register('insert_editor_css', editor_css)
-    hooks.register('construct_whitelister_element_rules', whitelister_element_rules)
+    hooks.register(
+        'construct_whitelister_element_rules', whitelister_element_rules)
