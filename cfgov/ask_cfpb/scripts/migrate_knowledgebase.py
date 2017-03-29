@@ -79,13 +79,9 @@ def clean_orphan_tips(answer_text):
 
 
 def fix_tips(answer_text):
-    try:
-        clean1 = convert_divs_to_asides(answer_text)
-        clean2 = clean_orphan_tips(clean1)
-    except Exception:
-        return answer_text
-    else:
-        return clean2
+    clean1 = convert_divs_to_asides(answer_text)
+    clean2 = clean_orphan_tips(clean1)
+    return clean2
 
 
 def get_or_create_parent_pages():
