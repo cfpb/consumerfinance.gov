@@ -52,9 +52,10 @@ def convert_divs_to_asides(answer_text):
 def clean_orphan_tips(answer_text):
     headings = ['TIP', 'WARNING', 'NOTE']
     soup = bs(answer_text.replace('<br/><br/>', '</p><p>'), 'lxml')
+    # wrap any orphan h4 tip headings
     h4s = soup('h4')
     for hed in h4s:
-        if hed.parent.name == 'p' and hed.text.strip(':').upper in headings:
+        if hed.parent.name == 'p' and hed.text.strip(':').upper() in headings:
             wrapper = hed.parent.wrap(
                 soup.new_tag('aside'))
             wrapper['class'] = 'answer-module'
