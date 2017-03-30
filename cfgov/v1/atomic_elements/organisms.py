@@ -607,8 +607,10 @@ class FilterControls(BaseExpandable):
          blocks.BooleanBlock(default=True, required=False)),
         ('show_preview_categories',
          blocks.BooleanBlock(default=True, required=False)),
-        ('page_type', blocks.ChoiceBlock(choices=ref.page_types,
-                                         required=False)),
+        ('page_type', blocks.ChoiceBlock(
+            choices=ref.filterable_list_page_types,
+            required=False
+        )),
     ])
     topics = blocks.BooleanBlock(default=True, required=False,
                                  label='Filter Topics')
