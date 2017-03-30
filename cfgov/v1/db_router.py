@@ -1,3 +1,5 @@
+from django.conf import settings
+
 cfgov_apps = [
     'auth',
     'sessions',
@@ -7,8 +9,19 @@ cfgov_apps = [
     'flags',
     'taggit',
     'jobmanager',
-    'data_research'
+    'data_research',
 ]
+optional_apps = [
+    'countylimits',
+    'ratechecker',
+    'ask_cfpb',
+]
+
+
+# add optional apps that use the single DB scheme
+for app_name in optional_apps:
+    if app_name in settings.INSTALLED_APPS:
+        cfgov_apps.append(app_name)
 
 
 class CFGOVRouter(object):

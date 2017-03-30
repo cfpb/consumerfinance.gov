@@ -9,7 +9,7 @@
 {% block content %}
     {% v1page_permissions page as page_perms %}
     <header class="merged tab-merged nice-padding">
-        {% include "wagtailadmin/shared/breadcrumb.html" with page=page %}
+        {% explorer_breadcrumb page %}
 
         <div class="row row-flush">
             <div class="left col9">

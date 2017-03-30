@@ -15,6 +15,9 @@ V1_TEMPLATE_ROOT = PROJECT_ROOT.child('jinja2', 'v1')
 
 SECRET_KEY = os.environ.get('SECRET_KEY', os.urandom(32))
 
+# Deploy environment
+DEPLOY_ENVIRONMENT = os.getenv('DEPLOY_ENVIRONMENT')
+
 # signal that tells us that this is a proxied HTTPS request
 # effects how request.is_secure() responds
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -36,6 +39,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailusers',
     'wagtail.wagtailimages',
     'wagtail.wagtailembeds',
+    'wagtail.contrib.wagtailfrontendcache',
 #    'wagtail.wagtailsearch', # TODO: conflicts with haystack, will need to revisit.
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
@@ -48,6 +52,7 @@ INSTALLED_APPS = (
     'modelcluster',
     'compressor',
     'taggit',
+    'wagtailsharing',
 
     'overextends',
     'django.contrib.admin',
@@ -69,6 +74,9 @@ INSTALLED_APPS = (
     'tinymce',
     'jobmanager',
 )
+
+if DEPLOY_ENVIRONMENT == 'build':
+    INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
@@ -369,7 +377,10 @@ WAGTAIL_ENABLE_UPDATE_CHECK = False  # Removes wagtail version update check bann
 
 # Email
 ADMINS = admin_emails(os.environ.get('ADMIN_EMAILS'))
-EMAIL_SUBJECT_PREFIX = os.environ.get('EMAIL_SUBJECT_PREFIX')
+
+if DEPLOY_ENVIRONMENT:
+    EMAIL_SUBJECT_PREFIX = u'[{}] '.format(DEPLOY_ENVIRONMENT.title())
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get('WAGTAILADMIN_NOTIFICATION_FROM_EMAIL')
 
@@ -473,11 +484,17 @@ REGSGOV_API_KEY = os.environ.get('REGSGOV_API_KEY')
 
 # Akamai
 ENABLE_AKAMAI_CACHE_PURGE = os.environ.get('ENABLE_AKAMAI_CACHE_PURGE', False)
-AKAMAI_PURGE_URL = 'https://api.ccu.akamai.com/ccu/v2/queues/default'
 if ENABLE_AKAMAI_CACHE_PURGE:
-    AKAMAI_USER = os.environ.get('AKAMAI_USER')
-    AKAMAI_PASSWORD = os.environ.get('AKAMAI_PASSWORD')
-    AKAMAI_OBJECT_ID = os.environ.get('AKAMAI_OBJECT_ID')
+    WAGTAILFRONTENDCACHE = {
+        'akamai': {
+            'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
+            'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
+            'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
+            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN'),
+            'FAST_PURGE_URL': os.environ.get('AKAMAI_FAST_PURGE_URL')
+        },
+}
+
 
 # Staging site
 STAGING_HOSTNAME = os.environ.get('DJANGO_STAGING_HOSTNAME')
@@ -539,3 +556,4 @@ CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
                    'api.iperceptions.com')
+

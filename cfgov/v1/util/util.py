@@ -1,4 +1,3 @@
-import os
 from time import time
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -33,26 +32,29 @@ def instanceOfBrowseOrFilterablePages(page):
 # TODO: Move into BrowsePage class once BrowseFilterablePage has been merged
 # into BrowsePage
 def get_secondary_nav_items(request, current_page):
-    from v1.templatetags.share import get_page_state_url
-    on_staging = (os.environ.get('DJANGO_STAGING_HOSTNAME')
-                  == request.site.hostname)
-    nav_items = []
+    # If the parent page of the current page is a BrowsePage or a
+    # BrowseFilterablePage, then use that as the top-level page for the
+    # purposes of the navigation sidebar. Otherwise, treat the current page
+    # as top-level.
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
         page = parent.get_appropriate_page_version(request)
     else:
         page = current_page.get_appropriate_page_version(request)
 
+    # If there's no appropriate page version (e.g. not published for a sharing
+    # request), then return no sidebar at all.
     if not page:
         return [], False
 
+    # Handle the Newsroom page specially.
     # TODO: Remove this ASAP once Press Resources gets its own Wagtail page
     if page.slug == 'newsroom':
         return [
             {
                 'title': page.title,
                 'slug': page.slug,
-                'url': get_page_state_url({}, page),
+                'url': page.relative_url(request.site),
                 'children': [
                     {
                         'title': 'Press Resources',
@@ -60,75 +62,69 @@ def get_secondary_nav_items(request, current_page):
                         'url': '/newsroom/press-resources/',
                     }
                 ],
+                'active': True,
+                'expanded': True,
             }
         ], True
     # END TODO
 
-    # TODO: Remove this ASAP once the-bureau gets migrated to Wagtail
-    if page.slug == 'leadership-calendar':
-        BASE_URL = '/about-us/the-bureau'
-        return [{
-            'title': 'The Bureau',
-            'slug': 'the-bureau',
-            'url': '/the-bureau/',
-            'children': [
-                {
-                    'title': 'The Director',
-                    'url': BASE_URL + '/about-director/',
-                    'slug': 'about-director',
-                },
-                {
-                    'title': 'The Deputy Director',
-                    'url': BASE_URL + '/about-deputy-director/',
-                    'slug': 'about-deputy-director',
-                },
-                {
-                    'title': 'Bureau Structure',
-                    'url': BASE_URL + '/bureau-structure/',
-                    'slug': 'bureau-structure',
-                },
-                {
-                    'title': page.title,
-                    'url': get_page_state_url({}, page).replace(
-                        '/about-us', BASE_URL),
-                    'slug': page.slug,
-                }
-            ]
-        }], True
-    # END TODO
+    if page.secondary_nav_exclude_sibling_pages:
+        pages = [page]
+    else:
+        pages = filter(
+            lambda p: instanceOfBrowseOrFilterablePages(p.specific),
+            page.get_appropriate_siblings(request.site.hostname)
+        )
 
-    pages = ([page] if page.secondary_nav_exclude_sibling_pages
-             else page.get_appropriate_siblings(request.site.hostname))
-
+    nav_items = []
     for sibling in pages:
-        # Only if it's a Browse(Filterable) type page
-        if instanceOfBrowseOrFilterablePages(sibling.specific):
-            if page.id == sibling.id:
-                sibling = page.get_appropriate_page_version(request)
-            else:
-                sibling = sibling.get_appropriate_page_version(request)
-            item = {
-                'title': sibling.title,
-                'slug': sibling.slug,
-                'url': get_page_state_url({}, sibling),
-                'children': [],
-            }
-            children = sibling.get_children().specific()
-            for child in [c for c in children
-                          if (on_staging and c.shared) or c.live]:
-                if instanceOfBrowseOrFilterablePages(child):
-                    item['children'].append({
-                        'title': child.title,
-                        'slug': child.slug,
-                        'url': get_page_state_url({}, child),
-                    })
-            nav_items.append(item)
+        if page.id == sibling.id:
+            sibling = page.get_appropriate_page_version(request)
+        else:
+            sibling = sibling.get_appropriate_page_version(request)
+
+        item_selected = current_page.pk == sibling.pk
+
+        item = {
+            'title': sibling.title,
+            'slug': sibling.slug,
+            'url': sibling.relative_url(request.site),
+            'children': [],
+            'active': item_selected,
+            'expanded': item_selected,
+        }
+
+        visible_children = filter(
+            lambda c: (
+                instanceOfBrowseOrFilterablePages(c) and
+                (c.live or (c.shared and request.is_staging))
+            ),
+            sibling.get_children().specific()
+        )
+
+        for child in visible_children:
+            child_selected = current_page.pk == child.pk
+
+            if child_selected:
+                item['expanded'] = True
+
+            item['children'].append({
+                'title': child.title,
+                'slug': child.slug,
+                'url': child.relative_url(request.site),
+                'active': child_selected,
+            })
+
+        nav_items.append(item)
+
     # Return a boolean about whether or not the current page has Browse
     # children
-    for item in nav_items:
-        if get_page_state_url({}, page) == item['url'] and item['children']:
-            return nav_items, True
-    return nav_items, False
+    has_children = any(
+        page.relative_url(request.site) == item['url'] and item['children']
+        for item in nav_items
+    )
+
+    return nav_items, has_children
 
 
 def valid_destination_for_request(request, url):

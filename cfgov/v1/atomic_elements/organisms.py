@@ -15,10 +15,11 @@ from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from wagtail.wagtailsnippets.models import get_snippet_models
 
-from . import atoms, molecules
-from .. import blocks as v1_blocks
-from ..models.snippets import Contact as ContactSnippetClass
-from ..util import ref
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import atoms, molecules
+from v1.models.snippets import Contact as ContactSnippetClass
+from v1.models.snippets import ReusableText, ReusableTextChooserBlock
+from v1.util import ref
 
 
 class Well(blocks.StructBlock):
@@ -32,7 +33,12 @@ class Well(blocks.StructBlock):
 
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-
+    should_link_image = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=('Check this to link all images to the URL of the first '
+                   'link in their unit\'s list, if there is a link.')
+    )
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
                                           help_text='If checked, share links '
@@ -510,6 +516,7 @@ class FullWidthText(blocks.StreamBlock):
     table = Table(editable=False)
     table_block = AtomicTableBlock(table_options={'renderer': 'html'})
     image_inset = molecules.ImageInset()
+    reusable_text = ReusableTextChooserBlock(ReusableText)
 
     class Meta:
         icon = 'edit'

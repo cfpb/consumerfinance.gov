@@ -10,7 +10,7 @@ var CLASSES = Object.freeze( {
 
 var API = {
 
-  SCRIPT_API: 'https://developers.ustream.tv/js/ustream-embedapi.min.js',
+  SCRIPT_API: '/static/js/ustream-embedapi.min.js',
 
   constructor: UStreamPlayer,
 
@@ -48,14 +48,12 @@ var API = {
 
   /**
    * Action function used to play the Ustream video.
+   * @returns {UStreamPlayer} An instance.
    */
   play: function( ) {
-    this._super.play.call( this );
-    if ( this.state.isPlayerInitialized ) {
-      this.player.callMethod( 'play' );
-    } else {
-      this.initPlayer();
-    }
+    // TODO: Remove this code when the Ustream https issue is resolved.
+    window.location = 'https://www.ustream.tv/channel/cfpblive';
+    return this;
   },
 
   /**

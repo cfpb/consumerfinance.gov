@@ -1,6 +1,6 @@
 # Feature flags
 
-Feature flags are stored in the Wagtail database and exposed in the Wagtail admin under “Settings”:
+Feature flags are implemented using our [Wagtail-Flags](https://github.com/cfpb/wagtail-flags) app. The [README](https://github.com/cfpb/wagtail-flags/blob/master/README.md) contains an overview and examples of how to use feature flags in Wagtail.
 
 ![Feature flags](img/image02.png)
 
@@ -10,7 +10,7 @@ Here flags can added, enabled, or disabled:
 
 The flag consists of a single string (by convention all uppercase, with underscores instead of whitespace). Flags are disabled by default, and checks for flags that do not exist will return False.
 
-Once a flag has been created it can be checked in Python and Jinja2 templates using the functions `flag_enabled` and `flag_disabled` found in [`flags.template_functions`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/flags/template_functions.py) and exposed to templates in v1. Checking the boolean value of a feature flag requires an `HttpRequest` object in order to determine the `Site` the flag is being checked against.
+Once a flag has been created it can be checked in Python and Jinja2 templates using the functions [documented in the Wagtail-Flags README](https://github.com/cfpb/wagtail-flags/blob/master/README.md#usage).
 
 ## Python example
 
@@ -50,7 +50,7 @@ def other_view(request):
 def view_with_fallback(request):
     return HttpResponse('flag was set')
 ```
-	
+
 ## Jinja2 template example:
 
 ```
@@ -61,12 +61,6 @@ I’m a beta banner.
 {% endif %}
 ```
 
-Feature flags are implemented as a Django app in [`cfgov-refresh/cfgov/flags`](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/flags).
-
 ## Feature flag hygiene
 
 Feature flags should be rare and ephemeral. Changes should be small and frequent, and not big-bang releases, and flags that are no longer used should be cleaned up and removed from code and the database.
-
-## Feature flag source
-
-Feature flags for cfgov-refresh are implemented [in the `flags` Django app](https://github.com/cfpb/cfgov-refresh/tree/master/cfgov/flags).

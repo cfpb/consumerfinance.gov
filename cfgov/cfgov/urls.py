@@ -10,7 +10,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
-from wagtail.wagtailcore import urls as wagtail_urls
+from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
+
+from flags.urls import flagged_url
 
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
@@ -22,6 +25,7 @@ from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (change_password, check_permissions, login_with_lockout,
                       password_reset_confirm, unshare, welcome)
 from v1.views.documents import DocumentServeView
+
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
@@ -90,19 +94,11 @@ urlpatterns = [
 
     url(r'^adult-financial-education/',
         include(fin_ed.urls_for_prefix('adult-financial-education'))),
-    url(r'^youth-financial-education/',
-        include(fin_ed.urls_for_prefix('youth-financial-education'))),
     url(r'^library-resources/',
         include(fin_ed.urls_for_prefix('library-resources'))),
-    url(r'^tax-preparer-resources/',
-        include(fin_ed.urls_for_prefix('tax-preparer-resources'))),
-    url(r'^managing-someone-elses-money/',
-        include(fin_ed.urls_for_prefix('managing-someone-elses-money'))),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
-    url(r'^money-as-you-grow/',
-        include(fin_ed.urls_for_prefix('money-as-you-grow'))),
     url(r'fin-ed/privacy-act-statement/',
         include(fin_ed.urls_for_prefix('privacy-act-statement'))),
     url(r'^blog/(?P<path>.*)$',
@@ -130,13 +126,20 @@ urlpatterns = [
         RedirectView.as_view(
             url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
     url(r'^about-us/doing-business-with-us/', include([
-        url(r'^$',
-            TemplateView.as_view(
+        flagged_url(
+            'WAGTAIL_DOING_BUSINESS_WITH_US',
+            r'^$',
+            lambda req: ServeView.as_view()(req, req.path),
+            fallback=TemplateView.as_view(
                 template_name='about-us/doing-business-with-us/index.html'),
             name='index'),
-        url(r'^(?P<page_slug>[\w-]+)/$',
-            SheerTemplateView.as_view(),
-            name='page')],
+        flagged_url(
+            'WAGTAIL_DOING_BUSINESS_WITH_US',
+            r'^(?P<page_slug>[\w-]+)/$',
+            lambda req, page_slug: ServeView.as_view()(req, req.path),
+            fallback=SheerTemplateView.as_view(),
+            name='page')
+        ],
         namespace='business')),
 
     url(r'^external-site/$', ExternalURLNoticeView.as_view(),
@@ -274,11 +277,11 @@ if settings.ALLOW_ADMIN_URL:
             name='check_permissions'),
         url(r'^login/welcome/$', welcome, name='welcome'),
         url(r'^logout/$', auth_views.logout),
-        url('admin/login/$',
+        url('^admin/login/$',
             RedirectView.as_view(url='/login/',
                                  permanent=True,
                                  query_string=True)),
-        url('django-admin/login/$',
+        url('^django-admin/login/$',
             RedirectView.as_view(url='/login/',
                                  permanent=True,
                                  query_string=True)),
@@ -362,10 +365,29 @@ if settings.DEBUG:
             name='404')
     )
 
+    try:
+        import debug_toolbar
+        urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
+    except ImportError:
+        pass
+
+if settings.DEPLOY_ENVIRONMENT == 'build':
+    from ask_cfpb.views import view_answer
+
+    ask_patterns = [
+        url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+            view_answer,
+            name='ask-english-answer'),
+        url(r'^(?i)inicio/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+            view_answer,
+            name='ask-spanish-answer')
+    ]
+    urlpatterns += ask_patterns
+
 
 # Catch remaining URL patterns that did not match a route thus far.
 
-urlpatterns.append(url(r'', include(wagtail_urls)))
+urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
 
 def handle_error(code, request):

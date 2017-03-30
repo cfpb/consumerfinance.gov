@@ -58,9 +58,7 @@ mkdocs serve
 Use the [issue tracker](https://github.com/cfpb/cfgov-refresh/issues) to follow the
 development conversation.
 If you find a bug not listed in the issue tracker,
-please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new?body=
-%23%23%20URL%0D%0D%0D%23%23%20Actual%20Behavior%0D%0D%0D%23%23%20Expected%20Behavior
-%0D%0D%0D%23%23%20Steps%20to%20Reproduce%0D%0D%0D%23%23%20Screenshot&labels=bug).
+please [file a bug report](https://github.com/cfpb/cfgov-refresh/issues/new).
 
 
 ## Getting involved

@@ -98,7 +98,8 @@ module.exports = {
     },
     vendorJs: {
       src: [
-        paths.modules + '/jquery/dist/jquery.min.js'
+        paths.modules + '/jquery/dist/jquery.min.js',
+        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js'
       ],
       dest: paths.processed + '/js/'
     }

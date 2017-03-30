@@ -34,6 +34,7 @@ exclude =
     cfgov/flags/migrations/*.py,
     cfgov/jobmanager/migrations/*.py,
     cfgov/v1/migrations/*.py,
+    cfgov/ask_cfpb/migrations/*.py,
 
     # Our settings files might need to conform to different readability
     # standards
