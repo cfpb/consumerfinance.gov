@@ -15,6 +15,7 @@ var gulpRename = require( 'gulp-rename' );
 var gulpSourcemaps = require( 'gulp-sourcemaps' );
 var handleErrors = require( '../utils/handle-errors' );
 var mqr = require( 'gulp-mq-remove' );
+var gulpBless = require( 'gulp-bless' );
 
 /**
  * Process modern CSS.
@@ -41,10 +42,35 @@ function stylesModern() {
 }
 
 /**
+ * Process legacy CSS for IE9 only.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesIE9() {
+  return gulp.src( configStyles.cwd + configStyles.src )
+    .pipe( gulpLess( configStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpAutoprefixer( {
+      browsers: [ 'ie 9' ]
+    } ) )
+    .pipe( gulpRename( {
+      suffix:  '.ie9',
+      extname: '.css'
+    } ) )
+    .pipe( gulpCleanCss( {
+      compatibility: 'ie9',
+      inline: ['none']
+    } ) )
+    .pipe( gulp.dest( configStyles.dest ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
+/**
  * Process legacy CSS for IE7 and 8 only.
  * @returns {PassThrough} A source stream.
  */
-function stylesIe() {
+function stylesIE8() {
   return gulp.src( configStyles.cwd + configStyles.src )
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
@@ -57,7 +83,7 @@ function stylesIe() {
     // mqr expands the minified file
     .pipe( gulpCleanCss( { compatibility: 'ie8' } ) )
     .pipe( gulpRename( {
-      suffix:  '.ie',
+      suffix:  '.ie8',
       extname: '.css'
     } ) )
     .pipe( gulp.dest( configStyles.dest ) )
@@ -215,7 +241,8 @@ function stylesNemoIE() {
 }
 
 gulp.task( 'styles:modern', stylesModern );
-gulp.task( 'styles:ie', stylesIe );
+gulp.task( 'styles:stylesIE8', stylesIE8 );
+gulp.task( 'styles:stylesIE9', stylesIE9 );
 gulp.task( 'styles:ondemand', stylesOnDemand );
 gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:knowledgebase', stylesKnowledgebaseProd );
@@ -226,6 +253,7 @@ gulp.task( 'styles:nemo', [
   'styles:nemoProd',
   'styles:nemoIE'
 ] );
+gulp.task( 'styles:ie', ['styles:stylesIE8', 'styles:stylesIE9'] );
 
 gulp.task( 'styles', [
   'styles:modern',

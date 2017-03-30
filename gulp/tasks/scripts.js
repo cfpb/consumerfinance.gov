@@ -51,7 +51,7 @@ function scriptsPolyfill() {
     } ) )
     .pipe( gulpUglify( {
       compress: {
-         properties: false
+        properties: false
       }
     }) )
     .pipe( gulpRename( 'modernizr.min.js' ) )
