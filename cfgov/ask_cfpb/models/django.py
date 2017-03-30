@@ -271,12 +271,8 @@ class Answer(models.Model):
             _question[:244], language, self.id)
         _page.live = False
         _page.has_unpublished_changes = True
-        _page.shared = False
-        _page.has_unshared_changes = False
         _page.save_revision(user=self.last_user)
         base_page.refresh_from_db()
-        base_page.shared = False
-        base_page.has_unshared_changes = False
         base_page.has_unpublished_changes = True
         base_page.save()
         return base_page

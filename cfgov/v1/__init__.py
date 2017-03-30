@@ -22,7 +22,6 @@ from bs4 import BeautifulSoup, NavigableString
 from processors.processors_common import fix_link
 from core.utils import signed_redirect, unsigned_redirect
 from v1.routing import get_protected_url
-from v1.templatetags.share import get_page_state_url
 
 
 default_app_config = 'v1.apps.V1AppConfig'
@@ -50,7 +49,6 @@ def environment(**options):
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
         'is_report': ref.is_report,
-        'get_page_state_url': get_page_state_url,
         'parse_links': parse_links,
         'related_metadata_tags': related_metadata_tags,
         'get_filter_data': get_filter_data,
