@@ -92,6 +92,13 @@
             </div>
             <div class="o-footer_col">
                 <ul class="o-footer_list">
+                    {% if flag_enabled(request, 'OAA_FOOTER_LINK') %}
+                    <li class="list_item">
+                        <a class="list_link" href="/administrative-adjudication-proceedings/">
+                            Administrative Adjudication
+                        </a>
+                    </li>
+                    {% endif %}
                     <li class="list_item">
                         <a class="list_link" href="/accessibility/">
                             Accessibility
