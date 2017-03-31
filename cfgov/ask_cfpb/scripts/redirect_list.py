@@ -144,3 +144,32 @@ def run():
     assemble_legacy_redirects()
     (answer_info, missing_ids) = assemble_answer_info()
     return (answer_info, missing_ids)
+
+missing = [
+    397,
+    399,
+    431,
+    735,
+    737,
+    741,
+    775,
+    793,
+    829,
+    847,
+    859,
+    863,
+    867,
+    869,
+    875,
+    879,
+    885,
+    1173,
+    1175,
+    1177,
+    1183,
+    1189,
+    1193,
+    1197,
+    1199,
+    1203
+]
