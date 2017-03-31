@@ -4,6 +4,7 @@ import sys
 import time
 import logging
 
+from bs4 import BeautifulSoup as bs
 from django.apps import apps
 
 from knowledgebase.models import QuestionCategory as QC
@@ -33,6 +34,54 @@ PARENT_MAP = {
                           'parent_slug': 'inicio',
                           'language': 'es'},
 }
+
+
+def unwrap_soup(soup):
+    soup.html.unwrap()
+    soup.body.unwrap()
+    return unicode(soup)
+
+
+def convert_divs_to_asides(answer_text):
+    soup = bs(answer_text, 'lxml')
+    for div in soup.findAll('div', {'class': 'answer-module'}):
+        div.name = 'aside'
+    return unwrap_soup(soup)
+
+
+def clean_orphan_tips(answer_text):
+    headings = ['TIP', 'WARNING', 'NOTE']
+    soup = bs(answer_text.replace('<br/><br/>', '</p><p>'), 'lxml')
+    # wrap any orphan h4 tip headings
+    h4s = soup('h4')
+    for hed in h4s:
+        if hed.parent.name == 'p' and hed.text.strip(':').upper() in headings:
+            wrapper = hed.parent.wrap(
+                soup.new_tag('aside'))
+            wrapper['class'] = 'answer-module'
+    strongs = soup('strong')
+    for strong in strongs:
+        # clean out spans
+        if strong('span'):
+            for span in strong('span'):
+                span.unwrap()
+        # turn strong tips into h4 and wrap in aside
+        if strong.text.strip(':').upper() in headings:
+            strong.name = 'h4'
+            if strong.parent.name == 'p':
+                wrapper = strong.parent.wrap(
+                    soup.new_tag('aside'))
+                wrapper['class'] = 'answer-module'
+                if ':' in wrapper.contents:
+                    i = wrapper.contents.index(':')
+                    del(wrapper.contents[i])
+    return unwrap_soup(soup)
+
+
+def fix_tips(answer_text):
+    clean1 = convert_divs_to_asides(answer_text)
+    clean2 = clean_orphan_tips(clean1)
+    return clean2
 
 
 def get_or_create_parent_pages():
@@ -154,7 +203,7 @@ def fill_out_es_answer(question, answer, es_answer):
 def build_answer(question, cats, en_answer=None, es_answer=None):
     if en_answer:
         answer_base = get_en_answer(question, cats, en_answer)
-        answer_base.answer = en_answer.answer.strip()
+        answer_base.answer = fix_tips(en_answer.answer.strip())
         answer_base.last_edited = question.updated_at.date()
         answer_base.snippet = en_answer.one_sentence_answer.strip()
         for cat in cats:
