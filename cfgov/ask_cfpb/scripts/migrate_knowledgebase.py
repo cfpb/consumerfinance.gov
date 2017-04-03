@@ -25,14 +25,10 @@ PARENT_MAP = {
                        'title': 'Ask CFPB',
                        'parent_slug': 'cfgov',
                        'language': 'en'},
-    'spanish_parent': {'slug': 'inicio',
-                       'title': 'Inicio',
+    'spanish_parent': {'slug': 'obtener-respuestas',
+                       'title': 'Obtener respuestas',
                        'parent_slug': 'cfgov',
                        'language': 'es'},
-    'spanish_subparent': {'slug': 'obtener-respuestas',
-                          'title': 'Obtener respuestas',
-                          'parent_slug': 'inicio',
-                          'language': 'es'},
 }
 
 
