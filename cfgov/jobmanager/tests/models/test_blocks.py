@@ -101,23 +101,12 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         ))
 
     def test_excludes_draft_jobs(self):
-        make_job_listing_page('Job', live=False, shared=False)
-        qs = JobListingList().get_queryset({})
-        self.assertFalse(qs.exists())
-
-    def test_excludes_shared_jobs(self):
-        make_job_listing_page('Job', live=False, shared=True)
+        make_job_listing_page('Job', live=False)
         qs = JobListingList().get_queryset({})
         self.assertFalse(qs.exists())
 
     def test_includes_live_jobs(self):
-        job = make_job_listing_page('Job', live=True, shared=False)
-        qs = JobListingList().get_queryset({})
-        self.assertTrue(qs.exists())
-        self.assertEqual(job.title, qs[0].title)
-
-    def test_includes_live_and_shared_jobs(self):
-        job = make_job_listing_page('Job', live=True, shared=True)
+        job = make_job_listing_page('Job', live=True)
         qs = JobListingList().get_queryset({})
         self.assertTrue(qs.exists())
         self.assertEqual(job.title, qs[0].title)
@@ -247,23 +236,12 @@ class JobListingTableTestCase(HtmlMixin, TestCase):
         ))
 
     def test_excludes_draft_jobs(self):
-        make_job_listing_page('Job', live=False, shared=False)
-        qs = JobListingTable().get_queryset({})
-        self.assertFalse(qs.exists())
-
-    def test_excludes_shared_jobs(self):
-        make_job_listing_page('Job', live=False, shared=True)
+        make_job_listing_page('Job', live=False)
         qs = JobListingTable().get_queryset({})
         self.assertFalse(qs.exists())
 
     def test_includes_live_jobs(self):
-        job = make_job_listing_page('Job', live=True, shared=False)
-        qs = JobListingTable().get_queryset({})
-        self.assertTrue(qs.exists())
-        self.assertEqual(job.title, qs[0].title)
-
-    def test_includes_live_and_shared_jobs(self):
-        job = make_job_listing_page('Job', live=True, shared=True)
+        job = make_job_listing_page('Job', live=True)
         qs = JobListingTable().get_queryset({})
         self.assertTrue(qs.exists())
         self.assertEqual(job.title, qs[0].title)

@@ -4,6 +4,7 @@ import os
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db import transaction
+
 from wagtail.wagtailcore.models import Page, Site
 from wagtailsharing.models import SharingSite
 
@@ -58,15 +59,11 @@ def run():
     default_site.root_page_id = home_page.id
     default_site.save()
 
-    # Setup a staging site if it doesn't exist already. Use the correct
-    # hostname and port, and the same root home page.
-    staging_site, _ = Site.objects.update_or_create(
-        is_default_site=False,
-        defaults={
-            'hostname': staging_hostname,
-            'port': http_port,
-            'root_page_id': home_page.id,
-        }
+    # Setup a sharing site using the staging hostname and same port as www
+    SharingSite.objects.update_or_create(
+        site=default_site,
+        hostname=staging_hostname,
+        port=http_port
     )
 
     # Setup a sharing site if it doesn't exist already. Use the default
