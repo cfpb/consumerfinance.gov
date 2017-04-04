@@ -54,7 +54,7 @@ def get_protected_url(context, page):
     if page:
         request = context['request']
 
-        if page.live or page.shared and request.is_staging:
+        if page.live:
             url = get_page_relative_url(page, request.site)
 
             if url:

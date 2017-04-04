@@ -32,7 +32,7 @@ def get_free_path(apps, parent_page):
 
 @transaction.atomic
 def get_or_create_page(apps, page_cls_app, page_cls_name, title, slug,
-                       parent_page, live=False, shared=False, **kwargs):
+                       parent_page, live=False, **kwargs):
     try:
         return get_page(apps, slug)
     except ObjectDoesNotExist:
@@ -52,7 +52,6 @@ def get_or_create_page(apps, page_cls_app, page_cls_name, title, slug,
         path=get_free_path(apps, parent_page),
         content_type=page_content_type,
         live=live,
-        shared=shared,
         **kwargs
     )
 

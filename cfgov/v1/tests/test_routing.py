@@ -9,7 +9,6 @@ class GetUrlPartsForSiteTestCase(TestCase):
     def setUp(self):
         self.root = Page.objects.get(slug='cfgov')
         self.www = Site.objects.get(hostname='localhost')
-        self.content = Site.objects.get(hostname='content.localhost')
 
     def test_get_root_from_www(self):
         self.assertEqual(
@@ -24,15 +23,6 @@ class GetUrlPartsForSiteTestCase(TestCase):
         self.assertEqual(
             get_url_parts_for_site(new_page, self.www),
             (self.www.id, self.www.root_url, '/foo/')
-        )
-
-    def test_get_page_from_content(self):
-        new_page = Page(title='test', slug='foo')
-        save_new_page(new_page, root=self.root)
-
-        self.assertEqual(
-            get_url_parts_for_site(new_page, self.content),
-            (self.content.id, self.content.root_url, '/foo/')
         )
 
     def test_page_not_routable_on_site_returns_none(self):

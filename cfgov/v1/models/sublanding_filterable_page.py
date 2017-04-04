@@ -67,7 +67,7 @@ class ActivityLogPage(SublandingFilterablePage):
         """
         Activity log pages should only show content from certain categories.
         """
-        eligible_pages = AbstractFilterPage.objects.live_shared(hostname)
+        eligible_pages = AbstractFilterPage.objects.live()
 
         return eligible_pages.filter(
             categories__name__in=cls.eligible_categories()
