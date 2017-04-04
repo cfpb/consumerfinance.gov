@@ -10,6 +10,7 @@ from wagtailsharing.models import SharingSite
 
 from v1.models import HomePage
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -58,11 +59,14 @@ def run():
     default_site.root_page_id = home_page.id
     default_site.save()
 
-    # Setup a sharing site using the staging hostname and same port as www
+    # Setup a sharing site if it doesn't exist already. Use the default
+    # Wagtail site.
     SharingSite.objects.update_or_create(
         site=default_site,
-        hostname=staging_hostname,
-        port=http_port
+        defaults={
+            'hostname': staging_hostname,
+            'port': http_port,
+        }
     )
 
     # Delete the legacy Wagtail "hello world" page, if it exists.
