@@ -38,9 +38,9 @@ def get_secondary_nav_items(request, current_page):
     # as top-level.
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
-        page = parent.get_appropriate_page_version(request)
+        page = parent
     else:
-        page = current_page.get_appropriate_page_version(request)
+        page = current_page
 
     # If there's no appropriate page version (e.g. not published for a sharing
     # request), then return no sidebar at all.
@@ -79,9 +79,9 @@ def get_secondary_nav_items(request, current_page):
     nav_items = []
     for sibling in pages:
         if page.id == sibling.id:
-            sibling = page.get_appropriate_page_version(request)
+            sibling = page
         else:
-            sibling = sibling.get_appropriate_page_version(request)
+            sibling = sibling
 
         item_selected = current_page.pk == sibling.pk
 
@@ -97,7 +97,7 @@ def get_secondary_nav_items(request, current_page):
         visible_children = filter(
             lambda c: (
                 instanceOfBrowseOrFilterablePages(c) and
-                (c.live or (c.shared and request.is_staging))
+                (c.live)
             ),
             sibling.get_children().specific()
         )

@@ -33,50 +33,14 @@ class ImportDataTest(TestCase):
 
 class GetProtectedUrlTestCase(TestCase):
     def test_get_live_page_from_www_returns_relative_url(self):
-        page = self.make_page(path='foo', live=True, shared=False)
+        page = self.make_page(path='foo', live=True)
         context = {'request': self.request_for_hostname('localhost')}
-        protected_url = get_protected_url(context, page)
-        self.assertEquals(protected_url, '/foo/')
-
-    def test_get_live_page_from_content_returns_relative_url(self):
-        page = self.make_page(path='foo', live=True, shared=False)
-        context = {'request': self.request_for_hostname('content.localhost')}
-        protected_url = get_protected_url(context, page)
-        self.assertEquals(protected_url, '/foo/')
-
-    def test_get_live_and_shared_page_from_www_returns_relative_url(self):
-        page = self.make_page(path='foo', live=True, shared=True)
-        context = {'request': self.request_for_hostname('localhost')}
-        protected_url = get_protected_url(context, page)
-        self.assertEquals(protected_url, '/foo/')
-
-    def test_get_live_and_shared_page_from_content_returns_relative_url(self):
-        page = self.make_page(path='foo', live=True, shared=True)
-        context = {'request': self.request_for_hostname('content.localhost')}
-        protected_url = get_protected_url(context, page)
-        self.assertEquals(protected_url, '/foo/')
-
-    def test_get_shared_page_from_www_returns_hash(self):
-        page = self.make_page(path='foo', live=False, shared=True)
-        context = {'request': self.request_for_hostname('localhost')}
-        protected_url = get_protected_url(context, page)
-        self.assertEquals(protected_url, '#')
-
-    def test_get_shared_page_from_content_returns_relative_url(self):
-        page = self.make_page(path='foo', live=False, shared=True)
-        context = {'request': self.request_for_hostname('content.localhost')}
         protected_url = get_protected_url(context, page)
         self.assertEquals(protected_url, '/foo/')
 
     def test_get_draft_page_from_www_returns_hash(self):
-        page = self.make_page(path='foo', live=False, shared=False)
+        page = self.make_page(path='foo', live=False)
         context = {'request': self.request_for_hostname('localhost')}
-        protected_url = get_protected_url(context, page)
-        self.assertEquals(protected_url, '#')
-
-    def test_get_draft_page_from_content_returns_hash(self):
-        page = self.make_page(path='foo', live=False, shared=False)
-        context = {'request': self.request_for_hostname('content.localhost')}
         protected_url = get_protected_url(context, page)
         self.assertEquals(protected_url, '#')
 
@@ -85,13 +49,8 @@ class GetProtectedUrlTestCase(TestCase):
         protected_url = get_protected_url(context, None)
         self.assertEquals(protected_url, '#')
 
-    def test_get_null_page_from_content_returns_hash(self):
-        context = {'request': self.request_for_hostname('content.localhost')}
-        protected_url = get_protected_url(context, None)
-        self.assertEquals(protected_url, '#')
-
     def test_context_without_request_raises_keyerror(self):
-        page = self.make_page(path='foo', live=True, shared=False)
+        page = self.make_page(path='foo', live=True)
         context = {}
 
         with self.assertRaises(KeyError):
@@ -101,7 +60,7 @@ class GetProtectedUrlTestCase(TestCase):
         template_string = 'url: {{ get_protected_url(page) }}'
         template = engines['wagtail-env'].from_string(template_string)
 
-        page = self.make_page(path='foo', live=True, shared=False)
+        page = self.make_page(path='foo', live=True)
         request = self.request_for_hostname('localhost')
         context = page.get_context(request)
 
@@ -110,10 +69,9 @@ class GetProtectedUrlTestCase(TestCase):
 
         self.assertEqual(response.content, 'url: /foo/')
 
-    def make_page(self, path, live, shared):
+    def make_page(self, path, live):
         page = CFGOVPage(slug=path, title=path)
         page.live = live
-        page.shared = shared
         save_new_page(page)
         return page
 
