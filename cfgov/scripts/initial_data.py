@@ -59,16 +59,9 @@ def run():
     default_site.root_page_id = home_page.id
     default_site.save()
 
-    # Setup a sharing site using the staging hostname and same port as www
-    SharingSite.objects.update_or_create(
-        site=default_site,
-        hostname=staging_hostname,
-        port=http_port
-    )
-
     # Setup a sharing site if it doesn't exist already. Use the default
     # Wagtail site.
-    sharing_site, _ = SharingSite.objects.update_or_create(
+    SharingSite.objects.update_or_create(
         site=default_site,
         defaults={
             'hostname': staging_hostname,
