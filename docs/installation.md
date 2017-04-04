@@ -275,6 +275,7 @@ migrations are applied to the database, and then does the following:
 with a slug of `cfgov`.
 - Updates the default Wagtail site to use the port defined by the `DJANGO_HTTP_PORT` environment variable, if defined; otherwise this port is set to 80.
 - If it doesn't already exist, creates a new Wagtail staging Site with a hostname defined by the `DJANGO_STAGING_HOSTNAME` environment variable, with the root page set to the `CFGOV` home page. The staging site port is set using the same logic as the default site port described above.
+- If it doesn't already exist, creates a new [wagtail-sharing](https://github.com/cfpb/wagtail-sharing) `SharingSite` with a hostname and port defined by the `DJANGO_STAGING_HOSTNAME` and `DJANGO_HTTP_PORT` environment variables.
 
 ### Load a database dump
 
