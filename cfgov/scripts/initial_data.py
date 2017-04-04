@@ -5,8 +5,10 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.db import transaction
 from wagtail.wagtailcore.models import Page, Site
+from wagtailsharing.models import SharingSite
 
 from v1.models import HomePage
+
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +66,16 @@ def run():
             'hostname': staging_hostname,
             'port': http_port,
             'root_page_id': home_page.id,
+        }
+    )
+
+    # Setup a sharing site if it doesn't exist already. Use the default
+    # Wagtail site.
+    sharing_site, _ = SharingSite.objects.update_or_create(
+        site=default_site,
+        defaults={
+            'hostname': staging_hostname,
+            'port': http_port,
         }
     )
 
