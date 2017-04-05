@@ -34,6 +34,7 @@
 	    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 	    <input type="hidden" name="form_id" value="{{ form_id }}">
 	    <input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER or '' }}">
+	    <input type="hidden" name="language" value="{{ page.language }}">
 
 	    {% if value.was_it_helpful_text %}
 	    <fieldset class="o-form-input-group o-form-input-group__two-column">
