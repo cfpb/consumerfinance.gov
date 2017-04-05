@@ -1,0 +1,163 @@
+{% extends 'spanish-ask-base.html' %}
+{% set tweet_text = page.answer.get_twitter_text %}
+{% set utm_campaign = page.answer.utm_campaign %}
+
+{% block babel_title %}
+    <title>{{ page.title }} > Oficina para la Protección Financiera del Consumidor</title>
+    <meta name="title" content="{{ page.title }} > Oficina para la Protección Financiera del Consumidor">
+{% endblock %}
+
+{% block page_meta %}
+    <meta property="og:title" content="{{ page.question }}">
+    <meta property="og:description" content="{{ page.get_open_graph_description if page.get_open_graph_description }}">
+    <meta property="og:image" content="{{ page.open_graph_image_url if page.open_graph_image_url else 'http://www.consumerfinance.gov/static/nemo/_/img/cfpb-logo-spanish.png' }}">
+    <meta property="og:url" content="{{ request.url }}">
+{% endblock %}
+
+
+{% block babel_content %}
+    <section class="content row">
+
+        <div class="primary span8">
+
+            <article class="ac-qa">
+                <h1 class="ac-qa-question">{{ page.question | striptags }}</h1>
+                <div class="ac-qa-answer">
+                    {{ page.answer|safe }}
+                </div>
+            </article><!-- .ac-qa -->
+
+            <aside class="s-hide-on-small supplement share split">
+                <span class="split-left"><a class="print" href="{{ page.answer.get_print_url }}">
+                        <img src="{{ static('nemo/_/img/icon-print-retina.png') }}" alt="" class="icon-20"> <span class="share-label">Imprimir</span></a></span>
+                <span class="split-right"><span class="share-label">Compartir esta página</span>
+                    
+                    {% include "ask-es/_share_links.html" with context %}
+                    
+                </span>
+            </aside><!-- .supplement -->
+
+        <!--
+            ============
+            Rating forms
+            ============
+            The question asked is "Was this answer helpful?"
+            If the user chooses "yes" then the first form is submitted
+            If the user chooses no then the second form is toggled into view
+            and the user is asked to clarify what was wrong with the answer.
+            Without js both forms are viewable at the same time.
+            -->
+            <div id="ac-qrating-container" class="supplement" style="display: none">
+
+                <!-- Waiting message for both forms -->
+                <div class="ac-qrating-message js-simpleform-waiting">
+                    <p>Enviando sus comentarios, espere por favor...</p>
+                </div>
+
+                <!-- Results message if the answer was helpful -->
+                <div class="ac-qrating-message js-simpleform-results-share">
+                    <p>Estamos contentos de esta respuesta fue útil para usted!</p>
+                    <div class="share">
+                        <span><span class="share-label">Compartir esta página</span>
+                            
+                            {% include "ask-es/_share_links.html" with context %}
+
+                        </span>
+                    </div>
+                </div><!-- .share -->
+
+                <!-- Results message if the answer was not helpful -->
+                <div class="ac-qrating-message js-simpleform-results">
+                    <p>¡Gracias por sus comentarios!</p>
+                </div>
+
+                <!-- The user toggles which form to show -->
+                <div class="js-showtoggle">
+
+                    <!-- "Is this answer helpful" form -->
+                    <form method="post" action=" url "babel_rate_question" answer.question.id " id="js-ac-qrating-helpful" class="ac-qrating js-showtoggle-content js-showtoggle-content-open">
+                        <h3>¿Fue util esta respuesta?</h3>
+                        <div class="form-controls">
+                            <input type="submit" value="Sí" class="btn-primary"> <button class="js-showtoggle-trigger btn-secondary">No</button>
+                        </div>
+                    </form>
+
+                    <!-- "This answer is NOT helpful" form -->
+                    <form method="post" action=" url "babel_rate_question" answer.question.id " id="js-ac-qrating-not-helpful" class="ac-qrating js-showtoggle-content">
+                        <h3>Comuniquese con nosotros para informarnos de como podemos mejorar esta respuesta:</h3>
+                        <p>¿Por qué esta respuesta no fue útil?</p>
+                        <ul class="horizontal-spaced">
+                            {% set adjectives = [ {'value': 1, 'word_es': 'demasiado larga', 'id': 1} ]%}
+                            {% for term in adjectives %}
+                                {% if term.value <= 0 %}
+                                    <li><input type="checkbox" name="ac-qrating" id="ac-qrating-{{ forloop.counter }}" value="{{ term.id }}"> <label for="ac-qrating-{{ forloop.counter }}">{{ term.word_es }}</label></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <label for="ac-qrating-suggestion">¿Sugerencias?</label>
+                        <textarea name="ac-qrating-suggestion" id="ac-qrating-suggestion" cols="30" rows="10"></textarea>
+                        <div class="form-controls">
+                            <button class="js-showtoggle-trigger btn">Cancelar</button> <input type="submit" value="Enviar comentarios" class="btn-primary">
+                        </div>
+                    </form>
+
+                </div><!-- .js-showtoggle -->
+
+              
+
+            </div><!-- #ac-qrating-container.supplement -->
+            <div class="supplement">
+              {% import 'blocks/feedback.html' as feedback_template with context %}
+{{- feedback_template.render({'was_it_helpful_text': '¿Fue util esta respuesta?', 'button_text': 'Enviar', 'language': 'es'}, {'form': feedback}, 'form-content-0') -}}
+            </div>
+            {% for a in related_questions %}
+                {% if loop.first %}
+                    <aside class="supplement ac-similar-answers">
+                    <h4 class="supplement-title">Preguntas similares</h4>
+                    <ul class="unstyled spaced">
+                {% endif %}
+                    <li><a href="{{ slugurl(a.slug_es) }}">{{ a.question_es|safe }}</a></li>
+                {% if loop.last %}
+                    </ul>
+                    </aside>
+                {% endif %}
+            {% endfor %}<!-- .supplement -->
+        </div><!-- .primary -->
+        <aside class="secondary span4">
+
+            {% for tag in page.answer_base.tags() %}
+                {% if loop.first %}
+                    <section class="supplement ac-related-topics">
+                        <h3>Temas relacionados</h3>
+                        <ul class="nav-list">
+                {% endif %}
+                            <li><a href="babel_search?selected_facets=tag_exact:{{ tag }}">{{ tag }}</a></li>
+                {% if loop.last %}
+                        </ul>
+                    </section>
+                {% endif %}
+            {% endfor %}
+
+            <section class="supplement supplement-plain js-showtoggle ac-disclaimer">
+                <button class="btn btn-block btn-block-on-small js-showtoggle-trigger">Acerca de estas respuestas</button>
+                <div class="js-showtoggle-content well">
+                    Estas respuestas se proveen solamente para efectos informativos generales. Si bien no le aconsejarán sobre su situación exacta, esperamos que le ayuden a entender mejor los productos y servicios financieros. Estas respuestas no constituyen asesoramiento legal ni interpretación del CFPB.
+                </div>
+            </section>
+
+        </aside><!-- .secondary -->
+        <div class="share s-hide-on-small" data-set="share"></div><!-- .share -->
+
+
+    </section><!-- .row -->
+{% endblock %}
+
+{% block babel_share %}
+    <div class="share s-show-on-small" data-set="share">
+        <span><span class="share-label">Compartir esta página</span>
+            
+            {% include "ask-es/_share_links.html" with context %}
+
+        </span>
+    </div><!-- .share -->
+{% endblock %}

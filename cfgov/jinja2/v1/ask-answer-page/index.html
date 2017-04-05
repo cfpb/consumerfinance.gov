@@ -1,37 +1,56 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'macros/time.html' as time %}
+{% import 'blocks/feedback.html' as feedback_template with context %}
+{% import 'tags.html' as tags with context %}
+
+{% block title %}
+    {{ page.question|striptags }}
+{% endblock %}
+
+{% block desc %}
+    {% if page.snippet %}
+        {{ page.snippet|striptags|safe}}
+    {% elif page.answer %}
+        {{ page.answer[:500]|striptags|safe}}
+    {% endif %}
+{% endblock %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
+    <div class="block
+                block__flush-top
+                block__sub">
+        <h2>{{ page.question | striptags }}</h2>
+    </div>
 
-{% import 'molecules/social-media.html' as social_media with context %}
-    <section class="block
-                    block__flush-top
-                    block__sub">
-        <h1>{{ page.question | striptags }}</h1>
-    </section>
-
-    <section class="block
-                    block__padded-top
-                    block__border-top">
-        {% if page.language == 'es' %}
-        <h2>Respuesta</h2>
-        {% else %}
-        <h2>Answer</h2>
-        {% endif %}
+    <div class="block
+                block__flush-top">
         {% if page.snippet %}
-        <h3 class="answer-snippet">{{ page.snippet | safe }}</h3>
+            <h3 class="answer-snippet">
+                <strong>
+                    Answer:
+                </strong>
+                {{ page.snippet | safe }}
+            </h3>
         {% endif %}
-        <p> {{ page.answer | safe }} </p>
+        <div>
+            {{ page.answer | safe }}
 
-    </section>
+        </div>
 
+        {% if page.answer_base.audiences.all() %} 
+            <div class="u-mt15">
+                {{ tags.render(page.answer_base.audience_strings(), '/askcfpb/search/') }}
+            </div>
+        {% endif %}
 
+        {{- feedback_template.render({'was_it_helpful_text': 'Was this page helpful to you?', 'button_text': 'Submit'}, {'form': feedback}, 'form-content-0') -}}
 
+    </div>
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}
@@ -39,31 +58,65 @@
 {%- endblock %}
 
 {% block content_sidebar scoped  %}
-<div class="block block__flush-top">
-</div>
-<p data-qa-hook="info-section-desc">
-    {% if page.language == 'en' and page.answer_base.next_step %}
-    <h3>Next steps</h3>
-    <p><strong>{{ page.answer_base.next_step.title }}</strong></p>
-    {{page.answer_base.next_step.text|safe}}
+
+    {% if page.answer_base.next_step %}
+        <div class="block block__flush-top">
+            <h3 >
+                Next steps 
+            </h3>
+            {{ parse_links(page.answer_base.next_step.text) | safe }}
+        </div>
     {% endif %}
-    {% if page.language == 'es' %}
-    Somos la nueva agencia federal que trabaja para que los productos y servicios financieros sean más justos y transparentes para usted y su familia.
-    <h4>Más recursos</h4>
-    <a href="/retirement/before-you-claim/es/" target="_blank">Cómo planificar su jubilación</a><br>
-    <a href="/sending-money/es/" target="_blank">¿Envía dinero al extranjero?</a><br>
-    <a href="http://promotions.usa.gov/cfpbpubs.html#anuncios" target="_blank">Folletos de información</a>
-    {% else %}
-    The CFPB is one of the most searched for agencies
-    in the federal government.
-    Connect with us to stay updated on the work
-    we do and new opportunities to be a part of it.
+
+    {% if category and subcategories %}
+        <div class="block {% if not page.answer_base.next_step %}block__flush-top{% endif %}">
+            <div class="m-related-links">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Related {{category.name}} subjects
+                    </span>
+                </h2>
+                <ul class="list list__unstyled list__links">
+                    {% for subcat in subcategories %}
+                        <li class="list_item">
+                            <a href="/askcfpb/search?selected_facets=category_exact:{{subcat.slug}}" class="list_link">{{ subcat.name }}</a>
+                        </li>
+                        {% for related_subcat in subcat.related_subcategories.all() %}
+                            <li class="list_item">
+                                <a href="/askcfpb/search?selected_facets=category_exact:{{related_subcat.slug}}" class="list_link">{{ related_subcat.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                    <li class="list_item">
+                      <a class="btn category-button" href="/askcfpb/search?selected_facets=category_exact:{{category.slug}}" data="{{page.question_topic|lower}}">      
+                        See all {{category.name | lower}} questions
+                      </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     {% endif %}
-</p>
-{% if page.language == 'en' %}
-<a href="https://www.linkedin.com/company/consumer-financial-protection-bureau"
-   class="jump-link jump-link__external-link jump-link__underline">
-    Follow us on LinkedIn
-</a>
-{% endif %}
+
+    {% if related_questions %}
+        <div class="block">
+            <div class="m-related-links">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Related questions
+                    </span>
+                </h2>
+                 <ul class="list list__unstyled list__links">
+                    {% for question in related_questions %}
+                    <li class="list_item">
+                        <a href="{{ slugurl(question.slug) }}" class="list_link">
+                            {{ question.question | safe }}
+                        </a>
+                        </li>
+                    {% endfor %}  
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock %}
+

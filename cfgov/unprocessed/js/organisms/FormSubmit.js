@@ -131,6 +131,9 @@ function FormSubmit( element, baseClass, opts ) {
           heading = heading || 'Thank you!';
           _replaceFormWithNotification( heading + ' ' + message );
         } else {
+          if ( _cachedFields.language && _cachedFields.language.value == 'es' ) {
+            state = state + '_ES';
+          }
           _displayNotification( _notification[state],
                               message || FORM_MESSAGES[state] );
         }

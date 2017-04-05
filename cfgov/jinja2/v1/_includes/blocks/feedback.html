@@ -3,9 +3,9 @@
 {% macro render(value, settings, form_id) %}
 
     {% set form = settings.form %}
+    {% set language = page.language if page and page.language else 'en'%}
 
     {# JS-disabled result handling #}
-
 <div class="o-feedback 
 			block
 	        {% if value.was_it_helpful_text %}
@@ -29,11 +29,12 @@
 	      action="."
 	      class="o-form"
 	      novalidate>
-	
+
 	<div class="form-l">
 	    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 	    <input type="hidden" name="form_id" value="{{ form_id }}">
 	    <input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER or '' }}">
+	    <input type="hidden" name="language" value="{{ language }}">
 
 	    {% if value.was_it_helpful_text %}
 	    <fieldset class="o-form-input-group o-form-input-group__two-column">
@@ -54,7 +55,11 @@
 	                       {{ 'checked' if request.POST.is_helpful == '1' else '' }}>
 	                <label class="cf-input_label"
 	                       for="is_helpful_1">
+	                    {% if language == 'es' %}
+	                    Sí
+	                    {% else %}
 	                    Yes
+	                    {% endif %}
 	                </label>
 	            </div>
 	        </div>
@@ -95,11 +100,23 @@
 	            {% endif %}
 
 	            {% if value.was_it_helpful_text %}
+		            
 	            <label for="comment">
-	                <em>Optional</em> <span class="h4">Additional comment</span>
+		            {% if language == 'es' %}
+		                <em>Opcional</em> <span class="h4">Comentarios adicionales</span>
+		            {% else %}
+		                <em>Optional</em> <span class="h4">Additional comment</span>
+		           	{% endif %}
 	            </label>
-	            {% endif %}
+	           	{% endif %}
+
+	            {% if language == 'es' %}
+	            <p><small><em>Nota: No incluya ninguna información sensible como 
+	            su nombre, información del contacto, número de cuenta, o número de seguridad social en este campo.</em></small></p>
+
+	            {% else %}
 	            <p><small><em>Note: Do not include sensitive information like your name, contact information, account number, or social security number in this field.</em></small></p>
+	            {% endif %}
 	        </div>
 	        <div class="form-l_col
 	                    form-l_col-1">
