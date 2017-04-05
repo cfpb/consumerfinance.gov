@@ -168,15 +168,13 @@ class Answer(models.Model):
         MultiFieldPanel([
             FieldPanel('question', classname="title"),
             FieldPanel('snippet', classname="full"),
-            FieldPanel('answer', classname="full"),
-            FieldPanel('slug')],
+            FieldPanel('answer', classname="full")],
             heading="English",
             classname="collapsible"),
         MultiFieldPanel([
             FieldPanel('question_es', classname="title"),
             FieldPanel('snippet_es', classname="full"),
-            FieldPanel('answer_es', classname="full"),
-            FieldPanel('slug_es')],
+            FieldPanel('answer_es', classname="full")],
             heading="Spanish",
             classname="collapsible"),
         MultiFieldPanel([
@@ -274,12 +272,8 @@ class Answer(models.Model):
             _question[:244], language, self.id)
         _page.live = False
         _page.has_unpublished_changes = True
-        _page.shared = False
-        _page.has_unshared_changes = False
         _page.save_revision(user=self.last_user)
         base_page.refresh_from_db()
-        base_page.shared = False
-        base_page.has_unshared_changes = False
         base_page.has_unpublished_changes = True
         base_page.save()
         return base_page

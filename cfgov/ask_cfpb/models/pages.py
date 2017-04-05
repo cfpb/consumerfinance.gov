@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.utils import timezone
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel,
@@ -35,10 +36,15 @@ class AnswerPage(CFGOVPage):
         null=True,
         related_name='answer_pages',
         on_delete=models.PROTECT)
+    redirect_id = models.IntegerField(
+        blank=True,
+        null=True,
+        help_text="Enter an Answer ID to redirect this page to")
 
 
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('answer_base', Answer),
+        FieldPanel('redirect_id')
     ]
 
 
@@ -76,3 +82,13 @@ class AnswerPage(CFGOVPage):
             return '{}: {}'.format(self.answer_base.id, self.title)
         else:
             return self.title
+
+    @property
+    def status_string(self):
+        if self.redirect_id:
+            if not self.live:
+                return _("redirected but not live")
+            else:
+                return _("redirected")
+        else:
+            return super(AnswerPage, self).status_string

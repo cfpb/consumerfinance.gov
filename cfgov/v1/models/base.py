@@ -1,16 +1,13 @@
 import csv
-import json
 from collections import OrderedDict
 from cStringIO import StringIO
 from itertools import chain
 from urllib import urlencode
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
-from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
-                         JsonResponse)
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -25,9 +22,7 @@ from wagtail.wagtailcore import blocks, hooks
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import (Orderable, Page, PageManager,
-                                        PagePermissionTester, PageQuerySet,
-                                        UserPagePermissionsProxy)
-from wagtail.wagtailcore.url_routing import RouteResult
+                                        PageQuerySet)
 
 from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms
@@ -51,28 +46,11 @@ class CFGOVTaggedPages(TaggedItemBase):
         verbose_name_plural = _("Tags")
 
 
-class CFGOVPageQuerySet(PageQuerySet):
-    def shared_q(self):
-        return Q(shared=True)
-
-    def shared(self):
-        return self.filter(self.shared_q())
-
-    def live_shared_q(self):
-        return self.live_q() | self.shared_q()
-
-    def live_shared(self, hostname):
-        if settings.STAGING_HOSTNAME in hostname:
-            return self.filter(self.live_shared_q())
-        else:
-            return self.live()
-
-
 class BaseCFGOVPageManager(PageManager):
     def get_queryset(self):
-        return CFGOVPageQuerySet(self.model).order_by('path')
+        return PageQuerySet(self.model).order_by('path')
 
-CFGOVPageManager = BaseCFGOVPageManager.from_queryset(CFGOVPageQuerySet)
+CFGOVPageManager = BaseCFGOVPageManager.from_queryset(PageQuerySet)
 
 
 class CFGOVPage(Page):
@@ -204,9 +182,7 @@ class CFGOVPage(Page):
             relate = block.value.get('relate_{}'.format(search_type), None)
             if relate:
                 related[search_type_name] = (
-                    AbstractFilterPage.objects.live_shared(
-                        hostname
-                    ).filter(
+                    AbstractFilterPage.objects.live().filter(
                         search_query
                     ).distinct().exclude(id=self.id).order_by(
                         '-date_published'
@@ -217,36 +193,20 @@ class CFGOVPage(Page):
         return {search_type: queryset for search_type, queryset in
                 related.items() if queryset}
 
-    def get_appropriate_page_version(self, request):
-        # If we're on the production site, make sure the version of the page
-        # displayed is the latest version that has `live` set to True for
-        # the live site or `shared` set to True for the staging site.
-        revisions = self.revisions.all().order_by('-created_at')
-        for revision in revisions:
-            page_version = json.loads(revision.content_json)
-            if not request.is_staging:
-                if page_version['live']:
-                    return revision.as_page_object()
-            else:
-                if page_version['shared']:
-                    return revision.as_page_object()
-
     def get_breadcrumbs(self, request):
         ancestors = self.get_ancestors()
         home_page_children = request.site.root_page.get_children()
         for i, ancestor in enumerate(ancestors):
             if ancestor in home_page_children:
-                return [ancestor.specific.get_appropriate_page_version(request)
-                        for ancestor in ancestors[i + 1:]]
+                return [ancestor for ancestor in ancestors[i + 1:]]
         return []
 
     def get_appropriate_descendants(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).descendant_of(
+        return CFGOVPage.objects.live().descendant_of(
             self, inclusive)
 
     def get_appropriate_siblings(self, hostname, inclusive=True):
-        return CFGOVPage.objects.live_shared(hostname).sibling_of(
-            self, inclusive)
+        return CFGOVPage.objects.live().sibling_of(self, inclusive)
 
     def get_next_appropriate_siblings(self, hostname, inclusive=False):
         return self.get_appropriate_siblings(
@@ -309,93 +269,6 @@ class CFGOVPage(Page):
                 self.get_template(request, *args, **kwargs),
                 context
             )
-
-    @property
-    def status_string(self):
-        page = CFGOVPage.objects.get(id=self.id)
-        if page.expired:
-            return _("expired")
-        elif page.approved_schedule:
-            return _("scheduled")
-        elif page.live and page.shared:
-            if page.has_unpublished_changes:
-                if page.has_unshared_changes:
-                    for revision in page.revisions.order_by(
-                            '-created_at', '-id'):
-                        content = json.loads(revision.content_json)
-                        if content['shared']:
-                            if content['live']:
-                                return _('live + draft')
-                            else:
-                                return _('live + (shared + draft)')
-                else:
-                    return _("live + shared")
-            else:
-                return _("live")
-        elif page.live:
-            if page.has_unpublished_changes:
-                return _('live + draft')
-            else:
-                return _('live')
-        elif page.shared:
-            if page.has_unshared_changes:
-                return _("shared + draft")
-            else:
-                return _("shared")
-        else:
-            return _("draft")
-
-    def sharable_pages(self):
-        """
-        Return a queryset of the pages that this user has permission to share.
-        """
-        # Deal with the trivial cases first...
-        if not self.user.is_active:
-            return Page.objects.none()
-        if self.user.is_superuser:
-            return Page.objects.all()
-
-        sharable_pages = Page.objects.none()
-
-        for perm in self.permissions.filter(permission_type='share'):
-            # User has share permission on any subpage of perm.page
-            # (including perm.page itself).
-            sharable_pages |= Page.objects.descendant_of(perm.page,
-                                                         inclusive=True)
-
-        return sharable_pages
-
-    def can_share_pages(self):
-        """Return True if the user has permission to publish any pages"""
-        return self.sharable_pages().exists()
-
-    def route(self, request, path_components):
-        if path_components:
-            # Request is for a child of this page.
-            child_slug = path_components[0]
-            remaining_components = path_components[1:]
-
-            try:
-                subpage = self.get_children().get(slug=child_slug)
-            except Page.DoesNotExist:
-                raise Http404
-
-            return subpage.specific.route(request, remaining_components)
-
-        else:
-            # Request is for this very page.
-            page = self.get_appropriate_page_version(request)
-            if page:
-                return RouteResult(page)
-            raise Http404
-
-    def permissions_for_user(self, user):
-        """
-        Return a CFGOVPagePermissionTester object defining what actions the
-        user can perform on this page
-        """
-        user_perms = CFGOVUserPagePermissionsProxy(user)
-        return user_perms.for_page(self)
 
     class Meta:
         app_label = 'v1'
@@ -464,34 +337,6 @@ class CFGOVPageCategory(Orderable):
     panels = [
         FieldPanel('name'),
     ]
-
-
-class CFGOVPagePermissionTester(PagePermissionTester):
-    def can_unshare(self):
-        if not self.user.is_active:
-            return False
-        if not self.page.shared or self.page_is_root:
-            return False
-
-        # Must check edit in self.permissions because `share` cannot be added.
-        return self.user.is_superuser or ('edit' in self.permissions)
-
-    def can_share(self):
-        if not self.user.is_active:
-            return False
-        if self.page_is_root:
-            return False
-
-        # Must check edit in self.permissions because `share` cannot be added.
-        return self.user.is_superuser or ('edit' in self.permissions)
-
-
-class CFGOVUserPagePermissionsProxy(UserPagePermissionsProxy):
-    def for_page(self, page):
-        """Return a CFGOVPagePermissionTester object that can be used to query
-            whether this user has permission to perform specific tasks on the
-            given page."""
-        return CFGOVPagePermissionTester(self, page)
 
 
 # keep encrypted passwords around to ensure that user does not re-use

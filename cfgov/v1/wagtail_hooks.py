@@ -1,21 +1,14 @@
-import json
 import logging
-import requests
 
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
-from django.contrib.auth.models import Permission
 from django.core.urlresolvers import reverse
-from django.utils import timezone
 from django.utils.html import escape, format_html_join
-from django.utils.translation import ugettext_lazy as _
-from wagtail.wagtailadmin import widgets as wagtailadmin_widgets
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
 from urlparse import urlsplit
 
-from v1.templatetags.share import v1page_permissions
 from v1.util import util
 
 
@@ -25,28 +18,6 @@ logger = logging.getLogger(__name__)
 @hooks.register('before_delete_page')
 def raise_delete_error(request, page):
     raise PermissionDenied('Deletion via POST is disabled')
-
-
-@hooks.register('after_create_page')
-@hooks.register('after_edit_page')
-def share_the_page(request, page):
-    page = Page.objects.get(id=page.id).specific
-    parent_page = page.parent()
-    is_publishing = bool(request.POST.get('action-publish', False))
-    is_sharing = bool(request.POST.get('action-share', False))
-
-    check_permissions(parent_page, request.user, is_publishing, is_sharing)
-
-    is_live = False
-    goes_live_in_future = page.go_live_at and page.go_live_at > timezone.now()
-
-    if is_publishing and not goes_live_in_future:
-        is_live = True
-
-    share(page, is_sharing, is_live)
-    configure_page_revision(page, is_sharing, is_live)
-    if is_live:
-        flush_akamai()
 
 
 @hooks.register('after_delete_page')
@@ -69,16 +40,6 @@ def check_permissions(parent, user, is_publishing, is_sharing):
     parent_perms = parent.permissions_for_user(user)
     if parent.slug != 'root':
         is_publishing = is_publishing and parent_perms.can_publish()
-        is_sharing = is_sharing and parent_perms.can_publish()
-
-
-def share(page, is_sharing, is_live):
-    if is_sharing or is_live:
-        page.shared = True
-        page.has_unshared_changes = False
-    else:
-        page.has_unshared_changes = True
-    page.save()
 
 
 @hooks.register('insert_editor_js')
@@ -109,70 +70,6 @@ def editor_css():
     )
 
     return css_includes
-
-
-# `CFGOVPage.route()` will select the latest revision of the page where `live`
-# is set to True and return that revision as a page object to serve the request
-# so here we configure the latest revision to fall in line with that logic.
-#
-# This is also used as a signal callback when publishing in code or via
-# management command like publish_scheduled_pages.
-def configure_page_revision(page, is_sharing, is_live):
-    latest = page.get_latest_revision()
-    content_json = json.loads(latest.content_json)
-    content_json['live'] = is_live
-    content_json['shared'] = is_sharing or is_live
-    content_json['has_unshared_changes'] = not is_sharing and not is_live
-    latest.content_json = json.dumps(content_json)
-    latest.save()
-
-
-def get_akamai_credentials():
-    object_id = getattr(settings, 'AKAMAI_OBJECT_ID', None)
-    user = getattr(settings, 'AKAMAI_USER', None)
-    password = getattr(settings, 'AKAMAI_PASSWORD', None)
-
-    if not all((object_id, user, password)):
-        raise ValueError(
-            'AKAMAI_OBJECT_ID, AKAMAI_USER, and AKAMAI_PASSWORD '
-            'must be configured.'
-        )
-
-    return object_id, (user, password)
-
-
-def should_flush():
-    """Only initiate an Akamai flush if it is enabled in settings."""
-    return settings.ENABLE_AKAMAI_CACHE_PURGE
-
-
-def flush_akamai():
-    if should_flush():
-        object_id, auth = get_akamai_credentials()
-        headers = {'content-type': 'application/json'}
-        payload = {
-            'action': 'invalidate',
-            'type': 'cpcode',
-            'domain': 'production',
-            'objects': [object_id]
-        }
-        r = requests.post(
-            settings.AKAMAI_PURGE_URL,
-            headers=headers,
-            data=json.dumps(payload),
-            auth=auth
-        )
-        logger.info(
-            'Initiated Akamai flush with response {text}'.format(text=r.text)
-        )
-        if r.status_code == 201:
-            return True
-    return False
-
-
-@hooks.register('register_permissions')
-def register_share_permissions():
-    return Permission.objects.filter(codename='share_page')
 
 
 class CFGovLinkHandler(object):
@@ -256,18 +153,3 @@ def register_django_admin_menu_item():
         classnames='icon icon-redirect',
         order=99999
     )
-
-
-@hooks.register('register_page_listing_more_buttons')
-def page_listing_more_buttons(page, page_perms, is_parent=False):
-    page = page.specific
-
-    context = {'request': type('obj', (object,), {'user': page_perms.user})}
-    v1_page_perms = v1page_permissions(context, page)
-
-    shared = getattr(page, 'shared', False)
-    if shared and not page.live and v1_page_perms.can_unshare():
-        yield wagtailadmin_widgets.Button(
-            _('Unshare'), reverse('unshare', args=[page.id]),
-            attrs={"title": _('Unshare this page')}, priority=41
-        )

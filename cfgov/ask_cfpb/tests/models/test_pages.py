@@ -1,25 +1,46 @@
 from __future__ import unicode_literals
-
 import HTMLParser
 
 import mock
 from mock import patch
 from model_mommy import mommy
 
+from django.utils import timezone
 from django.apps import apps
-from django.utils import html
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.test import TestCase
+from django.test import Client
+from django.utils import html
 
-from v1.util.migrations import get_or_create_page
+from v1.util.migrations import get_or_create_page, get_free_path
 from ask_cfpb.models.django import (
     Answer, Category, SubCategory, Audience,
     NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
 from ask_cfpb.models.pages import AnswerPage
 
 html_parser = HTMLParser.HTMLParser()
+client = Client()
+now = timezone.now()
 
 
 class AnswerModelTestCase(TestCase):
+
+    def prepare_answer(self, **kwargs):
+        kwargs.setdefault('answer', 'Mock answer')
+        kwargs.setdefault('slug', 'mock-answer')
+        return mommy.prepare(Answer, **kwargs)
+
+    def create_answer_page(self, **kwargs):
+        kwargs.setdefault(
+            'path', get_free_path(apps, self.english_parent_page))
+        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
+        kwargs.setdefault('slug', 'mock-answer-page-en-1234')
+        kwargs.setdefault('title', 'Mock answer page title')
+        page = mommy.prepare(AnswerPage, **kwargs)
+        page.save()
+        return page
+
     def setUp(self):
         from v1.models import HomePage
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
@@ -47,24 +68,49 @@ class AnswerModelTestCase(TestCase):
             SPANISH_PARENT_SLUG,
             ROOT_PAGE,
             live=True)
+        self.answer1234 = self.prepare_answer(
+            id=1234,
+            answer='Mock answer 1',
+            question='Mock question1')
+        self.answer1234.save()
+        self.page1 = self.create_answer_page()
+        self.page1.answer_base = self.answer1234
+        self.page1.parent = self.english_parent_page
+        self.page1.save()
+        self.answer5678 = self.prepare_answer(
+            id=5678,
+            answer='Mock answer 2',
+            question='Mock question2')
+        self.answer5678.save()
+        self.page2 = self.create_answer_page(slug='mock-answer-page-en-5678')
+        self.page2.answer_base = self.answer5678
+        self.page2.parent = self.english_parent_page
+        self.page2.save()
 
-    def prepare_answer(self, **kwargs):
-        kwargs.setdefault('answer', 'Mock answer')
-        kwargs.setdefault('slug', 'mock-answer')
-        return mommy.prepare(Answer, **kwargs)
+    def test_view_answer_200(self):
+        response_200 = client.get(reverse(
+            'ask-english-answer', args=['mock-answer-page', 'en', 1234]))
+        self.assertTrue(isinstance(response_200, HttpResponse))
+        self.assertEqual(response_200.status_code, 200)
 
-    def create_answer_page(self, **kwargs):
-        kwargs.setdefault('path', 001)
-        kwargs.setdefault('depth', 3)
-        kwargs.setdefault('slug', 'mock-answer-page')
-        kwargs.setdefault('title', 'Mock answer page title')
-        page = mommy.prepare(AnswerPage, **kwargs)
-        page.save()
-        return page
+    def test_view_answer_302(self):
+        response_202 = client.get(reverse(
+            'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
+        self.assertTrue(isinstance(response_202, HttpResponse))
+        self.assertEqual(response_202.status_code, 302)
+
+    def test_view_answer_redirected(self):
+        self.page1.redirect_id = 5678
+        self.page1.save()
+        response_302 = client.get(reverse(
+            'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
+        self.assertTrue(isinstance(response_302, HttpResponse))
+        self.assertEqual(response_302.status_code, 302)
 
     def test_answer_deletion(self):
         """deleting an answer should also delete its related pages"""
         answer = self.prepare_answer(
+            created_at=now,
             question='Mock question',
             question_es='Mock Spanish question',
             answer_es='Mock Spanish Answer.')
@@ -260,3 +306,16 @@ class AnswerModelTestCase(TestCase):
     def test_audience_str(self):
         audience = self.audiences[0]
         self.assertEqual(audience.__str__(), audience.name)
+
+    def test_status_string(self):
+        test_page = self.create_answer_page()
+        test_page.live = False
+        test_page.redirect_id = 1234
+        self.assertEqual(
+            test_page.status_string.lower(), "redirected but not live")
+        test_page.live = True
+        self.assertEqual(
+            test_page.status_string.lower(), "redirected")
+        test_page.redirect_id = None
+        self.assertEqual(
+            test_page.status_string.lower(), "live")

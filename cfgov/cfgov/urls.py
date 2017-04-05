@@ -23,7 +23,7 @@ from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (change_password, check_permissions, login_with_lockout,
-                      password_reset_confirm, unshare, welcome)
+                      password_reset_confirm, welcome)
 from v1.views.documents import DocumentServeView
 
 
@@ -94,19 +94,11 @@ urlpatterns = [
 
     url(r'^adult-financial-education/',
         include(fin_ed.urls_for_prefix('adult-financial-education'))),
-    url(r'^youth-financial-education/',
-        include(fin_ed.urls_for_prefix('youth-financial-education'))),
     url(r'^library-resources/',
         include(fin_ed.urls_for_prefix('library-resources'))),
-    url(r'^tax-preparer-resources/',
-        include(fin_ed.urls_for_prefix('tax-preparer-resources'))),
-    url(r'^managing-someone-elses-money/',
-        include(fin_ed.urls_for_prefix('managing-someone-elses-money'))),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
-    url(r'^money-as-you-grow/',
-        include(fin_ed.urls_for_prefix('money-as-you-grow'))),
     url(r'fin-ed/privacy-act-statement/',
         include(fin_ed.urls_for_prefix('privacy-act-statement'))),
     url(r'^blog/(?P<path>.*)$',
@@ -285,11 +277,11 @@ if settings.ALLOW_ADMIN_URL:
             name='check_permissions'),
         url(r'^login/welcome/$', welcome, name='welcome'),
         url(r'^logout/$', auth_views.logout),
-        url('admin/login/$',
+        url('^admin/login/$',
             RedirectView.as_view(url='/login/',
                                  permanent=True,
                                  query_string=True)),
-        url('django-admin/login/$',
+        url('^django-admin/login/$',
             RedirectView.as_view(url='/login/',
                                  permanent=True,
                                  query_string=True)),
@@ -303,7 +295,6 @@ if settings.ALLOW_ADMIN_URL:
             change_password,
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
-        url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([
@@ -322,7 +313,6 @@ if settings.ALLOW_ADMIN_URL:
             name='wagtailadmin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
         url(r'^admin/', include(wagtailadmin_urls)),
-        url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
     ]
 
