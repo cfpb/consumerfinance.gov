@@ -6,18 +6,15 @@ from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel,
-    StreamFieldPanel,
     ObjectList,
     TabbedInterface)
 # from wagtail.wagtailcore.blocks import StreamBlock
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtailsearch import index
-from wagtail.wagtailcore.fields import StreamField
 # from modelcluster.fields import ParentalKey
 # from wagtail.wagtailcore.models import Orderable
 
-from v1 import blocks as v1_blocks
 from v1.models import CFGOVPage
 # from ask_cfpb.models import Answer
 
@@ -55,16 +52,8 @@ class AnswerPage(CFGOVPage):
         related_name='redirected_pages',
         help_text="Choose another Answer to redirect this page to")
 
-    feedback_block = StreamField([
-        ('feedback', v1_blocks.Feedback())
-    ], default=None)
-
     content_panels = CFGOVPage.content_panels + [
-        FieldPanel('redirect_to'),
-    ]
-
-    settings_panels = CFGOVPage.settings_panels + [
-        StreamFieldPanel('feedback_block'),
+        FieldPanel('redirect_to')
     ]
     search_fields = Page.search_fields + [
         index.SearchField('question'),
@@ -74,7 +63,7 @@ class AnswerPage(CFGOVPage):
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(settings_panels, heading='Configuration'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
     template = 'ask-answer-page/index.html'
