@@ -33,19 +33,7 @@
                 HEIGHT: 1
             },
 
-            $colWidthSelect: {},
-
-            addInputTableCol: function addInputTableCol( ) {
-              // console.log( a, b, c )
-              // HandsonTableWagtailBridge.ui.$fixedWidthColInput
-              //   .find( 'td' ).eq( index )
-              //   .after( '<td>' + utilities.colWidthSelect + '</td>' );
-            },
-
-            removeInputTableCol: function removeInputTableCol( index ) {
-              // console.log( 'remove?' );
-              // this.ui.$fixedWidthColInput.find( 'td' ).eq( index ).remove()
-            }
+            $colWidthSelect: {}
         };
 
         var HandsonTable = {
@@ -56,11 +44,13 @@
                 }
 
                 var onTableChange = $.proxy( this.onTableChange, this );
+                var onCreateCol = $.proxy( this.onCreateCol, this );
+                var onRemoveCol = $.proxy( this.onRemoveCol, this );
 
                 options.afterChange = onTableChange;
-                options.afterCreateCol = onTableChange;
+                options.afterCreateCol = onCreateCol;
                 options.afterCreateRow = onTableChange;
-                options.afterRemoveCol = onTableChange;
+                options.afterRemoveCol = onRemoveCol;
                 options.afterRemoveRow = onTableChange;
                 options.contextMenu = [ 'row_above',
                                         'row_below',
@@ -116,7 +106,6 @@
             },
 
             onTableChange: function onTableChange( index, change ) {
-              console.log( arguments );
                 if ( change === 'loadData' ) {
                     return
                 }
@@ -124,6 +113,18 @@
                 this.$element.trigger( 'table:change', [this.instance.getData()] );
 
                 return this;
+            },
+
+            onCreateCol: function onCreateCol( index, change ) {
+              HandsonTableWagtailBridge.ui.$fixedWidthColInput
+                .find( 'td' ).eq( index - 1 )
+                .after( '<td>' + utilities.$colWidthSelect + '</td>' );
+            },
+
+            onRemoveCol: function onRemoveCol( index, change ) {
+              HandsonTableWagtailBridge.ui.$fixedWidthColInput
+                .find( 'td' ).eq( index )
+                .remove();
             }
         };
 
@@ -132,6 +133,8 @@
             initialize: function initialize( id , options ) {
                 var _this = this;
                 var hiddenFieldData;
+
+                utilities.$colWidthSelect = $( this.ui.$inputContainer + ' .column-width-input' ).prop( 'outerHTML' );
 
                 this.options = utilities.assign( {} , options );
                 this.element = document.querySelector( this.ui.$inputContainer );
@@ -148,10 +151,11 @@
                 this.handsonTable.$element.on( 'table:change', function( event, data ) {
                     _this.saveDataToHiddenField( data );
                 } );
+
                 this.initializeEvents();
                 this.initializeForm( hiddenFieldData );
 
-                utilities.$colWidthSelect = this.ui.$fixedWidthColInput.find( 'column-width-input' ).clone();
+
             },
 
 
@@ -181,16 +185,19 @@
                     } );
                 }
 
+                // On click, toggle visibility of fixed width inputs
                 $( id + '-handsontable-col-fixed' ).click( function() {
                   if ( $( this ).is( ':checked' ) ) {
                     _this.toggleInputTable( true );
                   } else {
                     _this.toggleInputTable( false );
                   }
-
                 } );
 
-                this.handsonTable.instance.addHook( 'afterCreateCol', utilities.addInputTableCol )
+                // On change of fixed width values, save data
+                $( id + '-fixed-width-column-input' ).on( 'change', '.column-width-input', function() {
+                  _this.saveDataToHiddenField( 'no data' );
+                } )
 
             },
 
@@ -228,6 +235,36 @@
                         }
                     } );
                 }
+
+                // update fixed width input to match table
+                var count = this.handsonTable.instance.countCols();
+                var row = this.ui.$fixedWidthColInput.find( 'tr' );
+                row.empty();
+                for ( var x = 0; x < count; x++ ) {
+                  row.append( '<td>' + utilities.$colWidthSelect + '</td>' );
+                }
+
+                if ( ui.$fixedWidthColsCheckbox.is( ':checked' ) ) {
+                  console.log( hiddenFieldData.column_widths );
+                  this.toggleInputTable( true );
+                  ui.$fixedWidthColInput.find( 'td' ).each( function( index, value) {
+                    $( this ).find( 'select' ).val( hiddenFieldData.column_widths[index] );
+                  } )
+                }
+            },
+
+            getColumnWidths: function getColumnWidths() {
+              var colCount = this.ui.$fixedWidthColInput.find( 'tr td' ).length,
+                  array = [];
+
+              for ( var x = 0; x <  colCount; x++ ) {
+                var i = x + 1;
+                array[x] = this.ui.$fixedWidthColInput.find( 'tr td:nth-child( ' + i + ') select option:selected' ).val()
+              }
+
+              console.log( array );
+
+              return array;
             },
 
             getWidth: function getWidth() {
@@ -281,11 +318,13 @@
 
                 ui.$hiddenField.val( JSON.stringify( {
                     data:                      this.handsonTable.instance.getData(),
+                    column_widths:             this.getColumnWidths(),
                     first_row_is_table_header: ui.$hasRowHeaderCheckbox.prop( 'checked' ),
                     first_col_is_header:       ui.$hasColHeaderCheckbox.prop( 'checked' ),
                     is_full_width:             ui.$isFullWidthCheckbox.prop( 'checked' ),
                     is_striped:                ui.$isTableStripedCheckbox.prop( 'checked' ),
-                    is_stacked:                ui.$isStackedOnMobileCheckbox.prop( 'checked' )
+                    is_stacked:                ui.$isStackedOnMobileCheckbox.prop( 'checked' ),
+                    fixed_col_widths:          ui.$fixedWidthColsCheckbox.prop( 'checked' )
                 } ) );
             },
 
@@ -306,10 +345,10 @@
                 }
             },
 
-            // onTableChange: function onTableChange( index, change ) {
-            //     this.resize( utilities.DIMENSIONS.HEIGHT, this.getHeight() );
-            //     this.saveDataToHiddenField();
-            // },
+            onTableChange: function onTableChange( index ) {
+                this.resize( utilities.DIMENSIONS.HEIGHT, this.getHeight() );
+                this.saveDataToHiddenField();
+            },
 
             toggleInputTable: function toggleInputTable( visible ) {
               if ( visible === true ) {
