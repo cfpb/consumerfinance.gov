@@ -31,6 +31,20 @@
             DIMENSIONS: {
                 WIDTH:  0,
                 HEIGHT: 1
+            },
+
+            $colWidthSelect: {},
+
+            addInputTableCol: function addInputTableCol( ) {
+              // console.log( a, b, c )
+              // HandsonTableWagtailBridge.ui.$fixedWidthColInput
+              //   .find( 'td' ).eq( index )
+              //   .after( '<td>' + utilities.colWidthSelect + '</td>' );
+            },
+
+            removeInputTableCol: function removeInputTableCol( index ) {
+              // console.log( 'remove?' );
+              // this.ui.$fixedWidthColInput.find( 'td' ).eq( index ).remove()
             }
         };
 
@@ -102,6 +116,7 @@
             },
 
             onTableChange: function onTableChange( index, change ) {
+              console.log( arguments );
                 if ( change === 'loadData' ) {
                     return
                 }
@@ -135,6 +150,8 @@
                 } );
                 this.initializeEvents();
                 this.initializeForm( hiddenFieldData );
+
+                utilities.$colWidthSelect = this.ui.$fixedWidthColInput.find( 'column-width-input' ).clone();
             },
 
 
@@ -163,6 +180,18 @@
                         $window.resize();
                     } );
                 }
+
+                $( id + '-handsontable-col-fixed' ).click( function() {
+                  if ( $( this ).is( ':checked' ) ) {
+                    _this.toggleInputTable( true );
+                  } else {
+                    _this.toggleInputTable( false );
+                  }
+
+                } );
+
+                this.handsonTable.instance.addHook( 'afterCreateCol', utilities.addInputTableCol )
+
             },
 
             ui: {
@@ -174,6 +203,8 @@
                 $isFullWidthCheckbox:       id + '-handsontable-full-width',
                 $isStackedOnMobileCheckbox: id + '-handsontable-stack-on-mobile',
                 $isTableStripedCheckbox:    id + '-handsontable-striped-rows',
+                $fixedWidthColsCheckbox:    id + '-handsontable-col-fixed',
+                $fixedWidthColInput:        id + '-fixed-width-column-input',
                 $resizeTargets:             '.input > .handsontable, .wtHider, .wtHolder'
             },
 
@@ -187,7 +218,8 @@
                               first_col_is_header:         ui.$hasColHeaderCheckbox,
                               is_full_width:               ui.$isFullWidthCheckbox,
                               is_striped:                  ui.$isTableStripedCheckbox,
-                              is_stacked:                  ui.$isStackedOnMobileCheckbox
+                              is_stacked:                  ui.$isStackedOnMobileCheckbox,
+                              fixed_col_widths:            ui.$fixedWidthColsCheckbox
                           };
 
                     Object.keys( uiMap ).forEach( function( key ) {
@@ -274,10 +306,19 @@
                 }
             },
 
-            onTableChange: function onTableChange( index ) {
-                this.resize( utilities.DIMENSIONS.HEIGHT, this.getHeight() );
-                this.saveDataToHiddenField();
+            // onTableChange: function onTableChange( index, change ) {
+            //     this.resize( utilities.DIMENSIONS.HEIGHT, this.getHeight() );
+            //     this.saveDataToHiddenField();
+            // },
+
+            toggleInputTable: function toggleInputTable( visible ) {
+              if ( visible === true ) {
+                this.ui.$fixedWidthColInput.show();
+              } else {
+                this.ui.$fixedWidthColInput.hide();
+              }
             }
+
         };
 
         return HandsonTableWagtailBridge.initialize( id, options );
@@ -457,4 +498,3 @@
     win.initAtomicTable = initAtomicTable;
 
 } ) ( window );
-
