@@ -8,12 +8,22 @@ from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel,
     ObjectList,
     TabbedInterface)
+# from wagtail.wagtailcore.blocks import StreamBlock
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtailsearch import index
+# from modelcluster.fields import ParentalKey
+# from wagtail.wagtailcore.models import Orderable
 
 from v1.models import CFGOVPage
 # from ask_cfpb.models import Answer
+
+
+# class FeedbackBlock(StreamBlock):
+#     feedback_block = v1_blocks.Feedback()
+
+#     class Meta:
+#         default = None
 
 
 class AnswerPage(CFGOVPage):
@@ -33,15 +43,17 @@ class AnswerPage(CFGOVPage):
         blank=True,
         null=True,
         related_name='answer_pages',
-        on_delete=models.PROTECT)
-    redirect_id = models.IntegerField(
+        on_delete=models.SET_NULL)
+    redirect_to = models.ForeignKey(
+        Answer,
         blank=True,
         null=True,
-        help_text="Enter an Answer ID to redirect this page to")
+        on_delete=models.SET_NULL,
+        related_name='redirected_pages',
+        help_text="Choose another Answer to redirect this page to")
 
     content_panels = CFGOVPage.content_panels + [
-        FieldPanel('answer_base', Answer),
-        FieldPanel('redirect_id')
+        FieldPanel('redirect_to')
     ]
     search_fields = Page.search_fields + [
         index.SearchField('question'),
@@ -65,7 +77,7 @@ class AnswerPage(CFGOVPage):
 
     @property
     def status_string(self):
-        if self.redirect_id:
+        if self.redirect_to:
             if not self.live:
                 return _("redirected but not live")
             else:

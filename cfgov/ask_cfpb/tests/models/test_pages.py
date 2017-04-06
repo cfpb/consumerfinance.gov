@@ -45,7 +45,7 @@ class AnswerModelTestCase(TestCase):
         from v1.models import HomePage
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.audiences = [mommy.make(Audience, name='stub_audience')]
-        self.category = mommy.make(Category, name='stub_cat')
+        self.category = mommy.make(Category, name='stub_cat', name_es='que')
         self.subcategories = mommy.make(
             SubCategory, name='stub_subcat', _quantity=3)
         self.next_step = mommy.make(NextStep, title='stub_step')
@@ -94,13 +94,13 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(response_200.status_code, 200)
 
     def test_view_answer_302(self):
-        response_202 = client.get(reverse(
+        response_302 = client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
-        self.assertTrue(isinstance(response_202, HttpResponse))
-        self.assertEqual(response_202.status_code, 302)
+        self.assertTrue(isinstance(response_302, HttpResponse))
+        self.assertEqual(response_302.status_code, 302)
 
     def test_view_answer_redirected(self):
-        self.page1.redirect_id = 5678
+        self.page1.redirect_to = self.page2.answer_base
         self.page1.save()
         response_302 = client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
@@ -197,6 +197,18 @@ class AnswerModelTestCase(TestCase):
         mock_create_page.assert_called_with(language='es')
         self.assertEqual(mock_create_page.call_count, 2)
 
+    def test_has_live_page(self):
+        answer = self.prepare_answer()
+        answer.save()
+        self.assertEqual(answer.has_live_page(), False)
+        answer.update_english_page = True
+        answer.save()
+        _page = answer.answer_pages.get(language='en')
+        self.assertEqual(answer.has_live_page(), False)
+        _revision = _page.save_revision()
+        _revision.publish()
+        self.assertEqual(answer.has_live_page(), True)
+
     def test_available_subcategories(self):
         parent_category = self.category
         for sc in self.subcategories:
@@ -217,6 +229,9 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             answer.subcat_slugs(),
             [cat.slug for cat in answer.subcategory.all()])
+        self.assertEqual(
+            answer.subcat_slugs_es(),
+            [cat.slug_es for cat in answer.subcategory.all()])
 
     def test_bass_string_no_base(self):  # sic
         test_page = self.create_answer_page()
@@ -254,11 +269,13 @@ class AnswerModelTestCase(TestCase):
         answer.category.add(self.category)
         answer.save()
         self.assertEqual(answer.category_text(), [self.category.name])
+        self.assertEqual(answer.category_text_es(), [self.category.name_es])
 
     def test_category_text_no_category(self):
         answer = self.prepare_answer()
         answer.save()
         self.assertEqual(answer.category_text(), '')
+        self.assertEqual(answer.category_text_es(), '')
 
     def test_answer_text(self):
         raw_snippet = "<strong>Snippet</strong>."
@@ -271,8 +288,8 @@ class AnswerModelTestCase(TestCase):
             snippet_es=raw_snippet,
             answer_es=raw_answer)
         answer.save()
-        self.assertEqual(answer.answer_text(), clean)
-        self.assertEqual(answer.answer_text_es(), clean)
+        self.assertEqual(answer.answer_text, clean)
+        self.assertEqual(answer.answer_text_es, clean)
 
     def test_cleaned_questions(self):
         answer = self.prepare_answer(
@@ -308,14 +325,24 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(audience.__str__(), audience.name)
 
     def test_status_string(self):
-        test_page = self.create_answer_page()
+        answer1 = self.prepare_answer()
+        answer1.save()
+        answer2 = self.prepare_answer()
+        answer2.save()
+        test_page = self.create_answer_page(answer_base=answer1)
         test_page.live = False
-        test_page.redirect_id = 1234
+        test_redirect_page = self.create_answer_page(answer_base=answer2)
+        test_page.redirect_to = test_redirect_page.answer_base
         self.assertEqual(
             test_page.status_string.lower(), "redirected but not live")
         test_page.live = True
         self.assertEqual(
             test_page.status_string.lower(), "redirected")
-        test_page.redirect_id = None
+        test_page.redirect_to = None
         self.assertEqual(
             test_page.status_string.lower(), "live")
+
+    def test_search_query(self):
+        from haystack.query import SearchQuerySet
+        subcat = SubCategory.objects.first()
+        self.assertTrue(isinstance(subcat.search_query(), SearchQuerySet))
