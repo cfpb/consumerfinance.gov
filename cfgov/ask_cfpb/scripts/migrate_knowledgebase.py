@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import sys
@@ -34,18 +35,25 @@ PARENT_MAP = {
 
 
 def add_feedback_module(page):
+    translation_text = {
+        'helpful': {'es': '¿Fue esta página útil?',
+                    'en': 'Was this page helpful to you?'},
+        'button': {'es': 'Enviar',
+                   'en': 'Submit'}
+    }
     stream_value = [
         {'type': 'feedback',
-         'value': {'was_it_helpful_text': 'Was this page helpful to you?',
-                   'button_text': 'Submit',
-                   'intro_text': '',
-                   'question_text': '',
-                   'radio_intro': '',
-                   'radio_text': ('This information helps us '
-                                  'understand your question better.'),
-                   'radio_question_1': 'How soon do you expect to buy a home?',
-                   'radio_question_2': 'Do you currently own a home?',
-                   'contact_advisory': ''}}]
+         'value': {
+             'was_it_helpful_text': translation_text['helpful'][page.language],
+             'button_text': translation_text['button'][page.language],
+             'intro_text': '',
+             'question_text': '',
+             'radio_intro': '',
+             'radio_text': ('This information helps us '
+                            'understand your question better.'),
+             'radio_question_1': 'How soon do you expect to buy a home?',
+             'radio_question_2': 'Do you currently own a home?',
+             'contact_advisory': ''}}]
     stream_block = page.content.stream_block
     page.content = StreamValue(stream_block, stream_value, is_lazy=True)
     page.save_revision()
