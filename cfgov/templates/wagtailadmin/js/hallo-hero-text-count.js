@@ -207,7 +207,7 @@
         this.textCount.updateDOM( this._getDOMData() );
       },
 
-      headingModified: function halloModified( ) {
+      headingModified: function headingModified( ) {
         this._setThresholds();
         this.textCount.updateDOM( this._getDOMData() );
       }
