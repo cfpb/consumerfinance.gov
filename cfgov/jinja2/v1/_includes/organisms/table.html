@@ -25,6 +25,15 @@
    value.empty_table_msg: String containing message to display if table has no
                           data.
 
+   value.first_row_is_table_header: Boolean indicating if the first row is the
+                          table header.
+
+   value.fixed_col_widths: Boolean indicating if the table has fixed column
+                           widths.
+
+   value.column_widths:   A list of column width (classes) to be applied in
+                          order to the table columns.
+
    ========================================================================== #}
 
 
@@ -48,7 +57,10 @@
         {% if first_row | reject('none') | list | length %}
         <tr>
             {% for cell in value.data[0] %}
-            <th scope="col">
+            <th scope="col"
+                {% if value.fixed_col_widths %}
+                   {{ 'class="' + value.column_widths[loop.index - 1] + '"' }}
+                {% endif %} >
                 {{ _render_cell(cell) }}
             </th>
             {% endfor %}
@@ -68,6 +80,11 @@
                 {% if value.first_col_is_header and loop.first %}
                     {% set tag = 'th' %}
                     {% set attributes = ' scope="row"' %}
+                {% endif %}
+
+                {# Logic to determine if fixed widths need to be added. #}
+                {% if value.fixed_col_widths %}
+                    {% set attributes = attributes + ' class="' + value.column_widths[loop.index - 1] + '"' %}
                 {% endif %}
 
                 {# Logic to add data labels for creating responsive tables on mobile. #}
