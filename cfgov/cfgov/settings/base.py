@@ -92,9 +92,9 @@ OPTIONAL_APPS = [
      'complaintdatabase', 'complaint_common',)},
     {'import': 'ratechecker', 'apps': ('ratechecker', 'rest_framework')},
     {'import': 'countylimits', 'apps': ('countylimits', 'rest_framework')},
-    # {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
-    # {'import': 'eregsip', 'apps': ('eregsip',)},
-    # {'import': 'regulations', 'apps': ('regulations',)},
+    {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
+    {'import': 'eregsip', 'apps': ('eregsip',)},
+    {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'picard', 'apps': ('picard',)},
 ]
 
