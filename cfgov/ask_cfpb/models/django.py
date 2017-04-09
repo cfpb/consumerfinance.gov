@@ -9,12 +9,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils import html
-from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailcore.models import Page
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
     FieldRowPanel)
+from wagtail.wagtailcore.fields import RichTextField
+from wagtail.wagtailcore.models import Page
+
 from v1.util.migrations import get_or_create_page
 
 html_parser = HTMLParser.HTMLParser()
@@ -56,8 +57,6 @@ class Category(models.Model):
     slug_es = models.SlugField()
     intro = RichTextField(blank=True)
     intro_es = RichTextField(blank=True)
-    featured_questions = models.ManyToManyField(
-        'Answer', blank=True, related_name='featured_questions')
     panels = [
         FieldPanel('name', classname="title"),
         FieldPanel('slug'),
@@ -65,11 +64,15 @@ class Category(models.Model):
         FieldPanel('name_es', classname="title"),
         FieldPanel('slug_es'),
         FieldPanel('intro_es'),
-        FieldPanel('featured_questions'),
     ]
 
     def __str__(self):
         return self.name
+
+    def featured_answers(self):
+        return Answer.objects.filter(
+            category=self,
+            featured=True).order_by('featured_rank')
 
     class Meta:
         ordering = ['name']
@@ -86,6 +89,11 @@ class Answer(models.Model):
     snippet = RichTextField(blank=True, help_text="Optional answer intro")
     answer = RichTextField(blank=True)
     slug = models.SlugField(max_length=255, blank=True)
+    featured = models.BooleanField(
+        default=False,
+        help_text="Makes the answer available to cards on the landing page")
+    featured_rank = models.IntegerField(blank=True, null=True)
+
     question_es = models.TextField(
         blank=True,
         verbose_name="Spanish question")
@@ -100,7 +108,7 @@ class Answer(models.Model):
         max_length=255,
         blank=True,
         verbose_name="Spanish slug")
-    tagging = models.CharField(
+    search_tags = models.CharField(
         max_length=1000,
         blank=True,
         help_text="Search words or phrases, separated by commas")
@@ -148,10 +156,18 @@ class Answer(models.Model):
         return "{} {}".format(self.id, self.slug)
 
     @property
+    def english_page(self):
+        return self.answer_pages.filter(language='en').first()
+
+    @property
+    def spanish_page(self):
+        return self.answer_pages.filter(language='es').first()
+
+    @property
     def available_subcategories(self):
         subcats = []
         for parent in self.category.all():
-            subcats += list(parent.subcategory_set.all())
+            subcats += list(parent.subcategories.all())
         return subcats
 
     panels = [
@@ -177,12 +193,19 @@ class Answer(models.Model):
             heading="Spanish",
             classname="collapsible"),
         MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('featured'),
+                FieldPanel('featured_rank')]),
             FieldPanel('audiences', widget=forms.CheckboxSelectMultiple),
             FieldPanel('next_step'),
-            FieldPanel('category', widget=forms.CheckboxSelectMultiple),
-            FieldPanel('subcategory', widget=forms.CheckboxSelectMultiple),
+            FieldRowPanel([
+                FieldPanel(
+                    'category', widget=forms.CheckboxSelectMultiple),
+                FieldPanel(
+                    'subcategory',
+                    widget=forms.CheckboxSelectMultiple)]),
             FieldPanel('related_questions', widget=forms.SelectMultiple),
-            FieldPanel('tagging')],
+            FieldPanel('search_tags')],
             heading="Metadata",
             classname="collapsible"),
     ]
@@ -202,6 +225,10 @@ class Answer(models.Model):
             html_parser.unescape(self.snippet_es),
             html_parser.unescape(self.answer_es)))
         return html.strip_tags(unescaped).strip()
+
+    @property
+    def available_subcategory_qs(self):
+        return SubCategory.objects.filter(parent__in=self.category.all())
 
     def cleaned_questions(self):
         cleaned_terms = html_parser.unescape(self.question)
@@ -228,7 +255,7 @@ class Answer(models.Model):
             yield audience.name
 
     def tags(self):
-        for tag in self.tagging.split(','):
+        for tag in self.search_tags.split(','):
             tag = tag.replace('"', '')
             tag = tag.strip()
             if tag != u'':
@@ -326,7 +353,6 @@ class SubCategory(models.Model):
     name_es = models.CharField(max_length=255, null=True, blank=True)
     slug = models.SlugField()
     slug_es = models.SlugField(null=True, blank=True)
-    featured = models.BooleanField(default=False)
     weight = models.IntegerField(default=1)
     description = RichTextField(blank=True)
     description_es = RichTextField(blank=True)
@@ -335,7 +361,8 @@ class SubCategory(models.Model):
         Category,
         null=True,
         blank=True,
-        default=None)
+        default=None,
+        related_name='subcategories')
     related_subcategories = models.ManyToManyField(
         'self',
         blank=True,
@@ -361,7 +388,7 @@ class SubCategory(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['-weight']
+        ordering = ['weight']
         verbose_name_plural = "Subcategories"
 
     def search_query(self):
@@ -370,6 +397,7 @@ class SubCategory(models.Model):
         sqs = sqs.models(Answer)
         sqs = sqs.filter(category=self.name)
         return sqs
+
 
 # Search faceting to come
 
