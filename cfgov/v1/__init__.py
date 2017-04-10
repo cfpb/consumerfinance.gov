@@ -4,18 +4,23 @@ import os
 import re
 from urlparse import urlparse, parse_qs
 
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.template.defaultfilters import pluralize, slugify, linebreaksbr
-from django.utils.module_loading import import_string
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import (
+    date,
+    linebreaksbr,
+    pluralize,
+    slugify,
+)
+from django.utils.module_loading import import_string
 
 from jinja2 import contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
-from .util.util import get_unique_id
+from v1.util.util import get_unique_id
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
