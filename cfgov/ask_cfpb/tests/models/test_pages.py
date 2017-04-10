@@ -220,19 +220,6 @@ class AnswerModelTestCase(TestCase):
         answer.save()
         self.assertEqual(answer.available_subcategories, self.subcategories)
 
-    def test_subcat_slugs(self):
-        answer = self.prepare_answer()
-        answer.save()
-        for sc in self.subcategories:
-            answer.subcategory.add = sc
-        answer.save()
-        self.assertEqual(
-            answer.subcat_slugs(),
-            [cat.slug for cat in answer.subcategory.all()])
-        self.assertEqual(
-            answer.subcat_slugs_es(),
-            [cat.slug_es for cat in answer.subcategory.all()])
-
     def test_bass_string_no_base(self):  # sic
         test_page = self.create_answer_page()
         result = test_page.__str__()

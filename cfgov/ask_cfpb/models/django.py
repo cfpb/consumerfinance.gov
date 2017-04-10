@@ -211,14 +211,6 @@ class Answer(models.Model):
         cleaned_terms = html_parser.unescape(self.question_es)
         return [html.strip_tags(cleaned_terms).strip()]
 
-    def subcat_slugs(self):
-        cats = [cat.slug for cat in self.subcategory.all()]
-        return cats
-
-    def subcat_slugs_es(self):
-        cats = [cat.slug_es for cat in self.subcategory.all()]
-        return cats
-
     def category_text(self):
         if self.category.all():
             return [cat.name for cat in self.category.all()]
