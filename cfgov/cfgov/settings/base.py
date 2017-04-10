@@ -331,6 +331,7 @@ DJANGO_HUD_NOTIFY_EMAILS = os.environ.get('DJANGO_HUD_NOTIFY_EMAILS')
 # in seconds, 2592000 == 30 days. Google allows no more than a month of caching
 DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 
+
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
