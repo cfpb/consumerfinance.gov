@@ -212,6 +212,7 @@
                 $isTableStripedCheckbox:    id + '-handsontable-striped-rows',
                 $fixedWidthColsCheckbox:    id + '-handsontable-col-fixed',
                 $fixedWidthColInput:        id + '-fixed-width-column-input',
+                $widthWarning:             id + '-width_warning',
                 $resizeTargets:             '.input > .handsontable, .wtHider, .wtHolder'
             },
 
@@ -245,7 +246,6 @@
                 }
 
                 if ( ui.$fixedWidthColsCheckbox.is( ':checked' ) ) {
-                  console.log( hiddenFieldData.column_widths );
                   this.toggleInputTable( true );
                   ui.$fixedWidthColInput.find( 'td' ).each( function( index, value) {
                     $( this ).find( 'select' ).val( hiddenFieldData.column_widths[index] );
@@ -255,14 +255,24 @@
 
             getColumnWidths: function getColumnWidths() {
               var colCount = this.ui.$fixedWidthColInput.find( 'tr td' ).length,
-                  array = [];
+                  array = [],
+                  totalWidth = 0;
 
               for ( var x = 0; x <  colCount; x++ ) {
                 var i = x + 1;
-                array[x] = this.ui.$fixedWidthColInput.find( 'tr td:nth-child( ' + i + ') select option:selected' ).val()
+                var widthClass = this.ui.$fixedWidthColInput.find( 'tr td:nth-child( ' + i + ') select option:selected' ).val()
+                totalWidth += Number( widthClass.substring(3, 5) );
+
+                array[x] = widthClass;
+
               }
 
-              console.log( array );
+              // Display warning for width > 100%
+              if ( totalWidth > 100 ) {
+                this.ui.$widthWarning.show();
+              } else {
+                this.ui.$widthWarning.hide();
+              }
 
               return array;
             },
