@@ -67,13 +67,14 @@ class FeedbackAdmin(admin.ModelAdmin):
 
     export_selection_as_csv.short_description = 'Export selection as CSV'
 
-    list_filter = ('submitted_on',)
+    list_filter = ('submitted_on', 'language')
     list_display = (
         'submitted_on',
         feedback_page_title,
         'referrer',
         'is_helpful',
         'comment',
-        'email'
+        'email',
+        'language'
     )
     search_fields = ['referrer', 'comment', 'page__title']
