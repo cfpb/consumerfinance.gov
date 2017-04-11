@@ -34,6 +34,7 @@
 	    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 	    <input type="hidden" name="form_id" value="{{ form_id }}">
 	    <input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER or '' }}">
+	    <input type="hidden" name="language" value="{{ page.language }}">
 
 	    {% if value.was_it_helpful_text %}
 	    <fieldset class="o-form-input-group o-form-input-group__two-column">
@@ -54,7 +55,7 @@
 	                       {{ 'checked' if request.POST.is_helpful == '1' else '' }}>
 	                <label class="cf-input_label"
 	                       for="is_helpful_1">
-	                    Yes
+	                    {% if page.language == 'es' %}Sí{% else %}Yes{% endif %}
 	                </label>
 	            </div>
 	        </div>
@@ -96,10 +97,11 @@
 
 	            {% if value.was_it_helpful_text %}
 	            <label for="comment">
-	                <em>Optional</em> <span class="h4">Additional comment</span>
+	                <em>{% if page.language == 'es' %}Opcional: {% else %}Optional: {% endif %}</em> <span class="h4">{% if page.language == 'es' %}Comentario adicional{% else %}Additional comment{% endif %}</span>
 	            </label>
 	            {% endif %}
-	            <p><small><em>Note: Do not include sensitive information like your name, contact information, account number, or social security number in this field.</em></small></p>
+	            <p><small><em>{% if page.language == 'es' %}Nota: No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo.{% else %}Note: Do not include sensitive information like your name, contact information, account number, or social security number in this field.{% endif %}
+	            </em></small></p>
 	        </div>
 	        <div class="form-l_col
 	                    form-l_col-1">

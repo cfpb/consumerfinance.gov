@@ -3,6 +3,7 @@
 // Required modules.
 var BaseTransition = require( '../../modules/transition/BaseTransition' );
 var behavior = require( '../../modules/util/behavior' );
+var breakpointState = require( '../../modules/util/breakpoint-state' );
 var EventObserver = require( '../../modules/util/EventObserver' );
 var fnBind = require( '../../modules/util/fn-bind' ).fnBind;
 var standardType = require( '../../modules/util/standard-type' );
@@ -86,7 +87,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   function init() {
     // Ignore Google Analytics on the trigger if it is a link,
     // since we're preventing the default link behavior.
-    if ( _triggerDom.tagName === 'A' ) {
+    if ( _triggerDom.tagName === 'A' && _isInMobile() ) {
       _triggerDom.setAttribute( 'data-gtm_ignore', 'true' );
     }
 
@@ -116,7 +117,7 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         //       instead of a primary and alternative.
         // Ignore Google Analytics on the trigger if it is a link,
         // since we're preventing the default link behavior.
-        if ( _altTriggerDom.tagName === 'A' ) {
+        if ( _altTriggerDom.tagName === 'A' && _isInMobile() ) {
           _altTriggerDom.setAttribute( 'data-gtm_ignore', 'true' );
         }
 
@@ -193,6 +194,20 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
         this.expand();
       }
     }
+  }
+
+  // TODO: Move this to breakpoint-state.js.
+  /**
+   * Whether currently in the desktop view.
+   * @returns {boolean} True if in the desktop view, otherwise false.
+   */
+  function _isInMobile() {
+    var isInMobile = false;
+    var currentBreakpoint = breakpointState.get();
+    if ( currentBreakpoint.isBpXS ) {
+      isInMobile = true;
+    }
+    return isInMobile;
   }
 
   /**
