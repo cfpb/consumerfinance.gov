@@ -19,11 +19,7 @@
    ========================================================================== #}
 
 {% macro format_time(datetime, timezone=none) %}
-    {% if timezone %}
-        {{- datetime | date('%I:%M %p %Z', timezone) -}}
-    {% else %}
-        {{- datetime | date('%I:%M %p') -}}
-    {% endif %}
+    {{- datetime | date('%I:%M %p %Z') -}}
 {% endmacro %}
 
 
