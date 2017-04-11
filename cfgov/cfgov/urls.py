@@ -108,11 +108,13 @@ urlpatterns = [
         RedirectView.as_view(
             url='/about-us/newsroom/%(path)s', permanent=True)),
 
-    url(r'^about-us/newsroom/press-resources/$',
-        TemplateView.as_view(
+    flagged_url(
+        'WAGTAIL_ABOUT_US',
+        r'^about-us/newsroom/press-resources/$',
+        lambda req: ServeView.as_view()(req, req.path),
+        fallback=TemplateView.as_view(
             template_name='newsroom/press-resources/index.html'),
         name='press-resources'),
-
 
     url(r'^the-bureau/(?P<path>.*)$',
             RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
@@ -199,10 +201,13 @@ urlpatterns = [
     url(r'^newsroom-feed/$',
         RedirectView.as_view(url='/about-us/newsroom/feed/', permanent=True)),
 
-    url(r'^about-us/$',
-        SheerTemplateView.as_view(
-            template_name='about-us/index.html'), name='about-us'),
-
+    flagged_url(
+        'WAGTAIL_ABOUT_US',
+        r'^about-us/$',
+        lambda req: ServeView.as_view()(req, req.path),
+        fallback=SheerTemplateView.as_view(
+            template_name='about-us/index.html'),
+        name='about-us'),
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/careers/%(path)s', permanent=True)),
