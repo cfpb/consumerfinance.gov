@@ -16,7 +16,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0059_alj_filterable_list'),
+        ('v1', '0060_feedback_language'),
     ]
 
     operations = [
