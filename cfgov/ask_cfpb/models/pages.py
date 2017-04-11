@@ -1,4 +1,5 @@
 from __future__ import absolute_import, unicode_literals
+# import collections
 
 from django.utils import timezone
 from django.db import models
@@ -6,12 +7,16 @@ from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel,
+    StreamFieldPanel,
     ObjectList,
     TabbedInterface)
+# from wagtail.wagtailcore.blocks import CharBlock
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtailsearch import index
+from wagtail.wagtailcore.fields import StreamField
 
+from v1 import blocks as v1_blocks
 from v1.models import CFGOVPage
 
 
@@ -41,8 +46,13 @@ class AnswerPage(CFGOVPage):
         related_name='redirected_pages',
         help_text="Choose another Answer to redirect this page to")
 
+    content = StreamField([
+        ('feedback', v1_blocks.Feedback()),
+    ], blank=True)
+
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('redirect_to'),
+        StreamFieldPanel('content'),
     ]
 
     search_fields = Page.search_fields + [
