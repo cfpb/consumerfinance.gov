@@ -119,12 +119,20 @@
               HandsonTableWagtailBridge.ui.$fixedWidthColInput
                 .find( 'td' ).eq( index - 1 )
                 .after( '<td>' + utilities.$colWidthSelect + '</td>' );
+
+              this.$element.trigger( 'table:change', [this.instance.getData()] );
+
+              return this;
             },
 
             onRemoveCol: function onRemoveCol( index, change ) {
               HandsonTableWagtailBridge.ui.$fixedWidthColInput
                 .find( 'td' ).eq( index )
                 .remove();
+
+              this.$element.trigger( 'table:change', [this.instance.getData()] );
+
+              return this;
             }
         };
 
@@ -261,7 +269,11 @@
               for ( var x = 0; x <  colCount; x++ ) {
                 var i = x + 1;
                 var widthClass = this.ui.$fixedWidthColInput.find( 'tr td:nth-child( ' + i + ') select option:selected' ).val()
-                totalWidth += Number( widthClass.substring(3, 5) );
+                if ( widthClass !== '' ) {
+                  totalWidth += Number( widthClass.substring(3, 5) );
+                } else {
+                  totalWidth += 1;
+                }
 
                 array[x] = widthClass;
 
