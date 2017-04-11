@@ -11,7 +11,9 @@
                 <div class="a-rule-break"></div>
             {% endif %}
 
-            {% do block.update({'should_link_image':value.should_link_image}) %}
+            {% do block.update( {
+              'link_image_and_heading': value.link_image_and_heading
+            } ) %}
 
             {{ block }}
         </div>

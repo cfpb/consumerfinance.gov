@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 import sys
@@ -6,6 +7,7 @@ import logging
 
 from bs4 import BeautifulSoup as bs
 from django.apps import apps
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
 
 from knowledgebase.models import QuestionCategory as QC
 from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
@@ -25,15 +27,36 @@ PARENT_MAP = {
                        'title': 'Ask CFPB',
                        'parent_slug': 'cfgov',
                        'language': 'en'},
-    'spanish_parent': {'slug': 'inicio',
-                       'title': 'Inicio',
+    'spanish_parent': {'slug': 'obtener-respuestas',
+                       'title': 'Obtener respuestas',
                        'parent_slug': 'cfgov',
                        'language': 'es'},
-    'spanish_subparent': {'slug': 'obtener-respuestas',
-                          'title': 'Obtener respuestas',
-                          'parent_slug': 'inicio',
-                          'language': 'es'},
 }
+
+
+def add_feedback_module(page):
+    translation_text = {
+        'helpful': {'es': '¿Fue esta página útil?',
+                    'en': 'Was this page helpful to you?'},
+        'button': {'es': 'Enviar',
+                   'en': 'Submit'}
+    }
+    stream_value = [
+        {'type': 'feedback',
+         'value': {
+             'was_it_helpful_text': translation_text['helpful'][page.language],
+             'button_text': translation_text['button'][page.language],
+             'intro_text': '',
+             'question_text': '',
+             'radio_intro': '',
+             'radio_text': ('This information helps us '
+                            'understand your question better.'),
+             'radio_question_1': 'How soon do you expect to buy a home?',
+             'radio_question_2': 'Do you currently own a home?',
+             'contact_advisory': ''}}]
+    stream_block = page.content.stream_block
+    page.content = StreamValue(stream_block, stream_value, is_lazy=True)
+    page.save_revision()
 
 
 def unwrap_soup(soup):
@@ -131,6 +154,10 @@ def create_answer_pages(queryset):
                         count_es += 1
                         sys.stdout.write('+')
                         sys.stdout.flush()
+                    revision = _page.get_latest_revision()
+                    revision.publish()
+                    _page.refresh_from_db()
+                    add_feedback_module(_page)
                     revision = _page.get_latest_revision()
                     revision.publish()
     else:

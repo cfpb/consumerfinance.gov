@@ -20,8 +20,7 @@
    ========================================================================== #}
 
 {% macro render(datetime,
-                show_value_for={'date':true, 'time':true, 'timezone':true},
-                timezone=none) %}
+                show_value_for={'date':true, 'time':true, 'timezone':true}) %}
 <span class="datetime">
     {% if show_value_for.date == true  %}
     <time class="datetime_date" datetime="{{ dt.format_datetime(datetime) }}">
@@ -36,7 +35,7 @@
     {% if show_value_for.time == true %}
     <time class="datetime_time" datetime="{{ dt.format_datetime(datetime) }}">
         {% if show_value_for.timezone == true %}
-        {{ dt.format_time(datetime, timezone) }}
+        {{ dt.format_time(localtime(datetime), show_timezone=true) }}
         {% else %}
         {{ dt.format_time(datetime) }}
         {% endif %}

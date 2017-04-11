@@ -411,6 +411,7 @@ class Feedback(models.Model):
         on_delete=models.SET_NULL,
     )
     comment = models.TextField(blank=True, null=True)
+    language = models.CharField(max_length=8, blank=True, null=True)
     referrer = models.CharField(max_length=255, blank=True, null=True)
     is_helpful = models.NullBooleanField()
     expect_to_buy = models.CharField(max_length=255, blank=True, null=True)
@@ -426,7 +427,8 @@ class Feedback(models.Model):
             'is_helpful',
             'page',
             'referrer',
-            'submitted_on'
+            'submitted_on',
+            'language'
         ]
         csvfile = StringIO()
         writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)

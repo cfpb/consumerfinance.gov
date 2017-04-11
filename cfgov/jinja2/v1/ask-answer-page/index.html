@@ -1,6 +1,6 @@
 {% extends 'layout-2-1-bleedbar.html' %}
-
 {% import 'macros/time.html' as time %}
+{% import 'form_block.html' as form_block with context %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -30,7 +30,9 @@
 
     </section>
 
-
+{% for block in page.content %}
+{{- form_block.render(block, 'content', loop.index0) -}}
+{% endfor %}
 
 {% endblock %}
 
