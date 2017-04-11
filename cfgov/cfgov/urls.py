@@ -381,7 +381,7 @@ if settings.DEPLOY_ENVIRONMENT == 'build':
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
             view_answer,
             name='ask-english-answer'),
-        url(r'^(?i)inicio/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+        url(r'^(?i)obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
             view_answer,
             name='ask-spanish-answer')
     ]

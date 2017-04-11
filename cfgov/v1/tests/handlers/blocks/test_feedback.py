@@ -13,6 +13,7 @@ class TestFeedbackHandler(TestCase):
             'is_helpful': 1,
             'comment': 'Example comment.',
         }
+        page.language = 'en'
         request = self.factory.post('/', post_data)
         self.handler = FeedbackHandler(
             page, request, block_value={'was_it_helpful_text': 1,
