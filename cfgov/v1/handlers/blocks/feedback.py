@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 
@@ -9,6 +12,11 @@ FEEDBACK_TYPES = {
     'helpful': FeedbackForm,
     'referred': ReferredFeedbackForm,
     'suggestion': SuggestionFeedbackForm
+}
+
+THANKS_MAP = {
+    'en': 'Thanks for your feedback!',
+    'es': '¡Gracias por tus comentarios!'
 }
 
 
@@ -72,10 +80,11 @@ class FeedbackHandler(Handler):
                 return JsonResponse(
                     {'result': 'pass',
                      'heading': '',
-                     'message': 'Thanks for your feedback!'}
+                     'message': THANKS_MAP[self.page.language]}
                 )
         else:
-            messages.success(self.request, message='Thanks for your feedback!')
+            messages.success(
+                self.request, message=THANKS_MAP[self.page.language])
             return HttpResponseRedirect(self.request.path)
 
     def fail(self, form):
