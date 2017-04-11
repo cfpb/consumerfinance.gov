@@ -41,10 +41,7 @@
                       <span class="event-meta_description event-meta_description__block">
                           Video link available:
                       </span>
-                      {{ time.render(
-                          page.live_stream_date,
-                          timezone=page.live_stream_date.tzinfo | string
-                      ) }}
+                      {{ time.render(page.live_stream_date) }}
                   </p>
                 </div>
             </div>
