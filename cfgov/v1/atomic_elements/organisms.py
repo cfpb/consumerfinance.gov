@@ -33,11 +33,11 @@ class Well(blocks.StructBlock):
 
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    should_link_image = blocks.BooleanBlock(
+    link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text=('Check this to link all images to the URL of the first '
-                   'link in their unit\'s list, if there is a link.')
+        help_text=('Check this to link all images and headings to the URL of '
+                   'the first link in their unit\'s list, if there is a link.')
     )
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
@@ -60,11 +60,11 @@ class ImageText5050Group(blocks.StructBlock):
 
 class ImageText2575Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    should_link_image = blocks.BooleanBlock(
+    link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text=('Check this to link all images to the URL of the first '
-                   'link in their unit\'s list, if there is a link.')
+        help_text=('Check this to link all images and headings to the URL of '
+                   'the first link in their unit\'s list, if there is a link.')
     )
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
