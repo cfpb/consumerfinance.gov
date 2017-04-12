@@ -1,7 +1,6 @@
 {% extends 'layout-2-1-bleedbar.html' %}
-
 {% import 'macros/time.html' as time %}
-{% import 'blocks/feedback.html' as feedback_template with context %}
+
 {% import 'tags.html' as tags with context %}
 
 {% block title %}
@@ -15,6 +14,7 @@
         {{ page.answer[:500]|striptags|safe}}
     {% endif %}
 {% endblock %}
+{% import 'form_block.html' as form_block with context %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -48,7 +48,10 @@
             </div>
         {% endif %}
 
-        {{- feedback_template.render({'was_it_helpful_text': 'Was this page helpful to you?', 'button_text': 'Submit'}, {'form': feedback}, 'form-content-0') -}}
+
+        {% for block in page.content %}
+        {{- form_block.render(block, 'content', loop.index0) -}}
+        {% endfor %}
 
     </div>
 {% endblock %}

@@ -188,6 +188,36 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script src="{{ static('jquery/jquery-ui-1.8.16.custom.min.js') }}"></script>
 
 {% block page_js %}{% endblock %}
+{% block javascript scoped %}
+<!--[if gt IE 8]><!-->
+
+{# Include template and page-specific JavaScript. #}
+{% macro page_template_js() %}
+    {# Check and include template-level JavaScript. #}
+    {% include '/js/routes/' + request.path.split('/')[1] + '/single.js' ignore missing %}
+
+    {# TODO: Remove Else conditional when this is fully moved to wagtail. #}
+    {# Check and include page-level JavaScript. #}
+    {% if page and page.media %}
+        {% for type, jsfiles in page.media.iteritems() %}
+            {% for js in jsfiles %}
+                {% include '/js/routes/on-demand/' + js ignore missing %}
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        {% include '/js/routes/' + request.path[1:] + 'index.js' ignore missing %}
+    {% endif %}
+{% endmacro %}
+{% set js_source = page_template_js() | trim %}
+SOURCE{{js_source}}
+{% if js_source | length > 0 %}
+<script>
+    {{ js_source }}
+</script>
+{% endif %}
+<!--<![endif]-->
+
+{% endblock javascript %}
 
 </body>
 </html>

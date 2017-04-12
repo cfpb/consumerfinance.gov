@@ -188,6 +188,7 @@ class Answer(models.Model):
             classname="collapsible"),
     ]
 
+    @property
     def answer_text(self):
         """Unescapes and removes html tags from answer fields"""
         unescaped = ("{} {}".format(
@@ -195,6 +196,7 @@ class Answer(models.Model):
             html_parser.unescape(self.answer)))
         return html.strip_tags(unescaped).strip()
 
+    @property
     def answer_text_es(self):
         """Unescapes and removes html tags from Spanish answer fields"""
         unescaped = ("{} {}".format(
@@ -210,13 +212,15 @@ class Answer(models.Model):
         cleaned_terms = html_parser.unescape(self.question_es)
         return [html.strip_tags(cleaned_terms).strip()]
 
-    def subcat_slugs(self):
-        cats = [cat.slug for cat in self.subcategory.all()]
-        return cats
-
     def category_text(self):
         if self.category.all():
             return [cat.name for cat in self.category.all()]
+        else:
+            return ''
+
+    def category_text_es(self):
+        if self.category.all():
+            return [cat.name_es for cat in self.category.all()]
         else:
             return ''
 
@@ -230,6 +234,14 @@ class Answer(models.Model):
             tag = tag.strip()
             if tag != u'':
                 yield tag
+
+    def has_live_page(self):
+        if not self.answer_pages.all():
+            return False
+        for page in self.answer_pages.all():
+            if page.live:
+                return True
+        return False
 
     def create_or_update_page(self, language=None):
         from .pages import AnswerPage
@@ -261,6 +273,7 @@ class Answer(models.Model):
                 '{}-{}-{}'.format(_question[:244], language, self.id),
                 _slug,
                 _parent,
+                show_in_menus=True,
                 language=language,
                 answer_base=self)
             base_page.save_revision(user=self.last_user)
@@ -352,7 +365,14 @@ class SubCategory(models.Model):
         ordering = ['-weight']
         verbose_name_plural = "Subcategories"
 
-# Search implementation to come
+    def search_query(self):
+        from haystack.query import SearchQuerySet
+        sqs = SearchQuerySet()
+        sqs = sqs.models(Answer)
+        sqs = sqs.filter(category=self.name)
+        return sqs
+
+# Search faceting to come
 
     # def get_absolute_url(self):
     #     return reverse('kbsearch') + \
@@ -361,13 +381,6 @@ class SubCategory(models.Model):
     # def get_babel_absolute_url(self):
     #     return reverse('babel_search') + \
     #         "?selected_facets=category_exact:" + self.slug_es
-
-    # def search_query(self):
-    #     from haystack.query import SearchQuerySet
-    #     sqs = SearchQuerySet()
-    #     sqs = sqs.models(Answer)
-    #     sqs = sqs.filter(category=self.name)
-    #     return sqs
 
     # def top_tags(self):
     #     sqs = self.search_query()

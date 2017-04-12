@@ -110,10 +110,7 @@
                 {% else %}
                     {% import 'macros/time.html' as time %}
                     {% if event.start_dt %}
-                        {{ time.render(
-                            event.start_dt,
-                            timezone=event.start_dt.tzinfo | string
-                        ) }}
+                        {{ time.render(event.start_dt) }}
                     {% endif %}
                 {% endif %}
                 </div>

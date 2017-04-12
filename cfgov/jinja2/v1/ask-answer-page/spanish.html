@@ -1,6 +1,7 @@
 {% extends 'spanish-ask-base.html' %}
 {% set tweet_text = page.answer.get_twitter_text %}
 {% set utm_campaign = page.answer.utm_campaign %}
+{% import 'form_block.html' as form_block with context %}
 
 {% block babel_title %}
     <title>{{ page.title }} > Oficina para la Protección Financiera del Consumidor</title>
@@ -36,79 +37,10 @@
                     
                 </span>
             </aside><!-- .supplement -->
-
-        <!--
-            ============
-            Rating forms
-            ============
-            The question asked is "Was this answer helpful?"
-            If the user chooses "yes" then the first form is submitted
-            If the user chooses no then the second form is toggled into view
-            and the user is asked to clarify what was wrong with the answer.
-            Without js both forms are viewable at the same time.
-            -->
-            <div id="ac-qrating-container" class="supplement" style="display: none">
-
-                <!-- Waiting message for both forms -->
-                <div class="ac-qrating-message js-simpleform-waiting">
-                    <p>Enviando sus comentarios, espere por favor...</p>
-                </div>
-
-                <!-- Results message if the answer was helpful -->
-                <div class="ac-qrating-message js-simpleform-results-share">
-                    <p>Estamos contentos de esta respuesta fue útil para usted!</p>
-                    <div class="share">
-                        <span><span class="share-label">Compartir esta página</span>
-                            
-                            {% include "ask-es/_share_links.html" with context %}
-
-                        </span>
-                    </div>
-                </div><!-- .share -->
-
-                <!-- Results message if the answer was not helpful -->
-                <div class="ac-qrating-message js-simpleform-results">
-                    <p>¡Gracias por sus comentarios!</p>
-                </div>
-
-                <!-- The user toggles which form to show -->
-                <div class="js-showtoggle">
-
-                    <!-- "Is this answer helpful" form -->
-                    <form method="post" action=" url "babel_rate_question" answer.question.id " id="js-ac-qrating-helpful" class="ac-qrating js-showtoggle-content js-showtoggle-content-open">
-                        <h3>¿Fue util esta respuesta?</h3>
-                        <div class="form-controls">
-                            <input type="submit" value="Sí" class="btn-primary"> <button class="js-showtoggle-trigger btn-secondary">No</button>
-                        </div>
-                    </form>
-
-                    <!-- "This answer is NOT helpful" form -->
-                    <form method="post" action=" url "babel_rate_question" answer.question.id " id="js-ac-qrating-not-helpful" class="ac-qrating js-showtoggle-content">
-                        <h3>Comuniquese con nosotros para informarnos de como podemos mejorar esta respuesta:</h3>
-                        <p>¿Por qué esta respuesta no fue útil?</p>
-                        <ul class="horizontal-spaced">
-                            {% set adjectives = [ {'value': 1, 'word_es': 'demasiado larga', 'id': 1} ]%}
-                            {% for term in adjectives %}
-                                {% if term.value <= 0 %}
-                                    <li><input type="checkbox" name="ac-qrating" id="ac-qrating-{{ forloop.counter }}" value="{{ term.id }}"> <label for="ac-qrating-{{ forloop.counter }}">{{ term.word_es }}</label></li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                        <label for="ac-qrating-suggestion">¿Sugerencias?</label>
-                        <textarea name="ac-qrating-suggestion" id="ac-qrating-suggestion" cols="30" rows="10"></textarea>
-                        <div class="form-controls">
-                            <button class="js-showtoggle-trigger btn">Cancelar</button> <input type="submit" value="Enviar comentarios" class="btn-primary">
-                        </div>
-                    </form>
-
-                </div><!-- .js-showtoggle -->
-
-              
-
-            </div><!-- #ac-qrating-container.supplement -->
             <div class="supplement">
-              {% import 'blocks/feedback.html' as feedback_template with context %}
-{{- feedback_template.render({'was_it_helpful_text': '¿Fue util esta respuesta?', 'button_text': 'Enviar', 'language': 'es'}, {'form': feedback}, 'form-content-0') -}}
+                {% for block in page.content %}
+                {{- form_block.render(block, 'content', loop.index0) -}}
+                {% endfor %}
             </div>
             {% for a in related_questions %}
                 {% if loop.first %}
