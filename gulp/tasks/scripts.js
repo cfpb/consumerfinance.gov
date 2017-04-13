@@ -101,6 +101,14 @@ function scriptsOnDemand() {
                          '/js/routes/on-demand/*.js', '/js/atomic/' );
 }
 
+ /**
+  * Bundle feedback js for Spanish Ask CFPB pages.
+  */
+function scriptsSpanish() {
+  return _processScript( webpackConfig.spanishConf,
+                          '/js/routes/on-demand/feedback-form.js', '/js/' );
+}
+
 /**
  * Bundle atomic component scripts for non-responsive pages.
  * Provides a means to bundle JS for specific atomic components,
@@ -160,6 +168,7 @@ gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
+gulp.task( 'scripts:spanish', scriptsSpanish );
 gulp.task( 'scripts:ondemand:base', scriptsOnDemand );
 gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
 gulp.task( 'scripts:ondemand', [
@@ -175,5 +184,6 @@ gulp.task( 'scripts', [
   'scripts:ie',
   'scripts:external',
   'scripts:nemo',
-  'scripts:es5-shim'
+  'scripts:es5-shim',
+  'scripts:spanish'
 ] );

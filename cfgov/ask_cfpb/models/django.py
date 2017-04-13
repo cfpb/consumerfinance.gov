@@ -16,7 +16,6 @@ from wagtail.wagtailadmin.edit_handlers import (
     MultiFieldPanel,
     FieldRowPanel)
 from v1.util.migrations import get_or_create_page
-from django.core.serializers.json import DjangoJSONEncoder
 
 html_parser = HTMLParser.HTMLParser()
 

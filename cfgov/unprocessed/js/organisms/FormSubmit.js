@@ -131,11 +131,12 @@ function FormSubmit( element, baseClass, opts ) {
           heading = heading || 'Thank you!';
           _replaceFormWithNotification( heading + ' ' + message );
         } else {
+          var key = state;
           if ( _cachedFields.language && _cachedFields.language.value == 'es' ) {
-            state = state + '_ES';
-          }
-          _displayNotification( _notification[state],
-                              message || FORM_MESSAGES[state] );
+            key = state + '_ES';
+          } 
+           _displayNotification( _notification[state],
+                                 message || FORM_MESSAGES[key] );
         }
         if ( state === 'SUCCESS' ) {
           self.dispatchEvent( 'success', { target: this, form: _formElement} );

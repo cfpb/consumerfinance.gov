@@ -14,7 +14,7 @@ function validateFeedback( fields ) {
 		if ( fields.comment.value ) {
 			return;
 		} else if ( fields.comment.hasAttribute('required') ) {
-			if ( fields.language == 'es' ) {
+			if ( fields.language && fields.language.value == 'es' ) {
 				return "Por favor, introduzca un comentario."
 			}
 			return "Please enter a comment."
@@ -26,7 +26,7 @@ function validateFeedback( fields ) {
 				return;
 			}
 		}
-		if ( fields.language == 'es' ) {
+		if ( fields.language && fields.language.value == 'es' ) {
 			return 'Por favor, seleccione una opción.'
 		}
 		return 'Please select an option.'
@@ -35,14 +35,10 @@ function validateFeedback( fields ) {
 
 var element = document.body.querySelector( '.' + BASE_CLASS );
 
-if (element )
-
 var opts = {
   validator: validateFeedback, 
-  replaceForm: element.getAttribute('data-replace')
- }
-
-
+  replaceForm: element ? element.getAttribute('data-replace') : false
+}
 
 var formSubmit = new FormSubmit(
   element,

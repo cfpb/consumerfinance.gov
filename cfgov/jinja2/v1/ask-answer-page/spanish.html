@@ -93,3 +93,10 @@
         </span>
     </div><!-- .share -->
 {% endblock %}
+
+
+{% block page_js %}
+    <!--[if gt IE 8]><!-->
+    <script src="{{ static('js/spanish.js') }}"></script>
+    <!--<![endif]-->
+{% endblock %}
