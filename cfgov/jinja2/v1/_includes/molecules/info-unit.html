@@ -8,56 +8,57 @@
 
    Create an info-unit molecule when given:
 
-   value:                     Object defined from a StreamField block.
+   value:                        Object defined from a StreamField block.
 
-   value.modifier:            A modifier CSS class used to alternate
-                              the info unit from stacked to inline layouts.
+   value.modifier:               A modifier CSS class used to alternate
+                                 the info unit from stacked to inline layouts.
 
-   value.image:               (Optional) An object containing:
+   value.image:                  (Optional) An object containing:
 
-   value.image.is_decorative: Whether the image is a bg image or not.
-                              Default is false.
+   value.image.is_decorative:    Whether the image is a bg image or not.
+                                 Default is false.
 
-   value.image.is_square:     Whether the image is square or not.
-                              Default is false.
+   value.image.is_square:        Whether the image is square or not.
+                                 Default is false.
 
-   value.image.url:           String for the image URL.
+   value.image.url:              String for the image URL.
 
-   value.image.alt:           String for image alt text.
+   value.image.alt:              String for image alt text.
 
-   value.heading:             A string containing title of module.
+   value.heading:                A string containing title of module.
 
-   value.sub_heading:         A string containing the subtitle of module.
+   value.sub_heading:            A string containing the subtitle of module.
 
-   value.body:                A string containing the content to display below
-                              the heading (typically a paragraph).
+   value.body:                   A string containing the content to display
+                                 below the heading (typically a paragraph).
 
-   value.links:               A tuple of items to create a list of links,
-                              containing:
+   value.links:                  A tuple of items to create a list of links,
+                                 containing:
 
-   value.links[i].url:        A string for the URL of the link.
+   value.links[i].url:           A string for the URL of the link.
 
-   value.links[i].text:       A string for the text of the link.
+   value.links[i].text:          A string for the text of the link.
 
-   value.is_button:           Boolean for whether the link should be a button.
-                              Default is false.
+   value.is_button:              Boolean for whether the link should be
+                                 rendered as a button. Default is false.
 
-    value.should_link_image:  Boolean for whether the image should be wrapped in
-                              a tag.
+   value.link_image_and_heading: Boolean for whether the image and heading
+                                 should be linked to the value.links[0].url.
 
    ========================================================================== #}
 
 {% macro info_unit(value) %}
 {# TODO: If value.modifier is just to switch between two layouts,
          change to a boolean parameter. #}
+{% set link_image_and_heading = value.link_image_and_heading
+                                and value.links
+                                and value.links[0]
+                                and value.links[0].url %}
+
 <div class="m-info-unit
             {{ 'm-info-unit__' ~ value.modifier if value.modifier else '' }}">
     {% if value.image %}
-        {% set should_link_image = value.should_link_image
-                                   and value.links
-                                   and value.links[0]
-                                   and value.links[0].url %}
-        {% if should_link_image %}
+        {% if link_image_and_heading %}
             <a href="{{ value.links[0].url }}">
         {% endif %}
         {% if value.image.is_decorative %}
@@ -71,15 +72,20 @@
              class="m-info-unit_image
                     {{ 'm-info-unit_image__square' if value.image.is_square else '' }}">
         {% endif %}
-        {% if should_link_image %}
+        {% if link_image_and_heading %}
             </a>
         {% endif %}
     {% endif %}
 
     <div class="m-info-unit_content">
-        {{ value.heading | safe if value.heading else '' }}
-
-        {{ value.sub_heading | safe if value.sub_heading else '' }}
+    {% if link_image_and_heading %}
+        <a class="m-info-unit_heading-link" href="{{ value.links[0].url }}">
+    {% endif %}
+            {{ value.heading | safe if value.heading else '' }}
+            {{ value.sub_heading | safe if value.sub_heading else '' }}
+    {% if link_image_and_heading %}
+        </a>
+    {% endif %}
 
         {{ value.body | safe }}
 

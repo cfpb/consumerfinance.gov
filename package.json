@@ -23,7 +23,7 @@
     "banner-footer-webpack-plugin": "git://github.com/dtothefp/banner-footer-webpack-plugin.git",
     "browser-sync": "2.18.7",
     "capital-framework": "3.6.1",
-    "cfpb-chart-builder": "1.1.5",
+    "cfpb-chart-builder": "1.2.0",
     "del": "2.2.2",
     "es5-shim": "4.5.9",
     "glob-all": "3.1.0",
