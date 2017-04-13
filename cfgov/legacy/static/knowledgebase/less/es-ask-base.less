@@ -624,6 +624,37 @@ legend {
     background: #e7e8e9
 }
 
+/* ==========================================================================
+   Transition utility classes.
+   ========================================================================== */
+
+.u-alpha-100 {
+   opacity: 1;
+}
+
+.u-alpha-0 {
+   opacity: 0;
+}
+   
+.u-move-transition {
+    transition: transform 0.25s ease-out;
+}
+
+.u-alpha-transition {
+    transition: opacity 0.25s ease-out;
+}
+
+.u-no-animation {
+    transition-duration: 0s;
+}
+
+// The mega-menu code doesn't work with a transition of 0ms
+.u-move-transition__disabled {
+  .u-move-transition {
+    transition: transform 1ms ease;
+  }
+}
+
 
 /* ==========================================================================
    Print stylesheet
