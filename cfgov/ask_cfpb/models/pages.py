@@ -10,7 +10,6 @@ from wagtail.wagtailadmin.edit_handlers import (
     StreamFieldPanel,
     ObjectList,
     TabbedInterface)
-
 # from wagtail.wagtailcore.blocks import CharBlock
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, PageManager
@@ -19,8 +18,6 @@ from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
 from v1.models import CFGOVPage
-
-# from ask_cfpb.models import Answer
 
 class AnswerPage(CFGOVPage):
     """
@@ -51,7 +48,6 @@ class AnswerPage(CFGOVPage):
     content = StreamField([
         ('feedback', v1_blocks.Feedback()),
     ], blank=True)
-
 
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('redirect_to'),

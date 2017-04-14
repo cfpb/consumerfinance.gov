@@ -3,7 +3,6 @@
 {% macro render(value, settings, form_id) %}
 
     {% set form = settings.form %}
-    {% set language = page.language if page and page.language else 'en'%}
 
     {# JS-disabled result handling #}
 <div class="o-feedback 
@@ -29,7 +28,6 @@
 	      action="."
 	      class="o-form"
 	      novalidate>
-
 	<div class="form-l">
 	    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 	    <input type="hidden" name="form_id" value="{{ form_id }}">
@@ -96,7 +94,6 @@
 	            {% endif %}
 
 	            {% if value.was_it_helpful_text %}
-		            
 	            <label for="comment">
 	                <em>{% if page.language == 'es' %}Opcional: {% else %}Optional: {% endif %}</em> <span class="h4">{% if page.language == 'es' %}Comentario adicional{% else %}Additional comment{% endif %}</span>
 	            </label>

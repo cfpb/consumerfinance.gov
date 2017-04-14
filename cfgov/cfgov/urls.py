@@ -384,7 +384,6 @@ if settings.DEPLOY_ENVIRONMENT == 'build':
         url(r'^(?i)obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
             view_answer,
             name='ask-spanish-answer'),
-        
     ]
     urlpatterns += ask_patterns
 

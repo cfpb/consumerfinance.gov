@@ -140,7 +140,6 @@ def form_module_handlers(page, request, context, *args, **kwargs):
                         is_submitted
                     )
                     form_modules[fieldname].update({index: module_context})
-    
     if form_modules:
         context['form_modules'] = form_modules
 

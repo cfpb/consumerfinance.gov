@@ -127,21 +127,16 @@ function FormSubmit( element, baseClass, opts ) {
           }
           state = result === 'fail' ? 'ERROR' : 'SUCCESS';
         }
-        console.log(message)
-        console.log(heading)
         if ( state === 'SUCCESS' && opts.replaceForm ) {
-          //heading = heading || 'Thank you!';
+          // heading = heading || 'Thank you!';
           _replaceFormWithNotification( heading + ' ' + message );
         } else {
           var key = opts.language === 'es' ? state + '_ES' : state;
-          console.log(key)
-          console.log(FORM_MESSAGES[key])
- 
-           _displayNotification( _notification[state],
-                                 message || FORM_MESSAGES[key] );
+          _displayNotification( _notification[state],
+                                message || FORM_MESSAGES[key] );
         }
         if ( state === 'SUCCESS' ) {
-          self.dispatchEvent( 'success', { target: this, form: _formElement} );
+          self.dispatchEvent( 'success', { target: this, form: _formElement } );
         }
       }
     };
