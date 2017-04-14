@@ -19,6 +19,7 @@ from wagtail.wagtailcore.fields import StreamField
 from v1 import blocks as v1_blocks
 from v1.models import CFGOVPage
 
+
 class AnswerPage(CFGOVPage):
     """
     Page type for Ask CFPB answers.

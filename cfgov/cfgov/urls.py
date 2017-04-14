@@ -383,7 +383,7 @@ if settings.DEPLOY_ENVIRONMENT == 'build':
             name='ask-english-answer'),
         url(r'^(?i)obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
             view_answer,
-            name='ask-spanish-answer'),
+            name='ask-spanish-answer')
     ]
     urlpatterns += ask_patterns
 
