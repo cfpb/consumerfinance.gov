@@ -26,7 +26,8 @@ ERROR_MESSAGES = {
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
     from ask_cfpb.models import AnswerCategoryPage
-    return isinstance(page, (BrowsePage, BrowseFilterablePage, AnswerCategoryPage))
+    return isinstance(
+        page, (BrowsePage, BrowseFilterablePage, AnswerCategoryPage))
 
 
 # For use by Browse type pages to get the secondary navigation items
@@ -68,13 +69,13 @@ def get_secondary_nav_items(request, current_page):
             }
         ], True
     # END TODO
-    
+
     if page.slug.startswith("category"):
         from ask_cfpb.models import Category
         return [
             {
-                'title': cat.name, 
-                'url': '/ask-cfpb/category-' + cat.slug, 
+                'title': cat.name,
+                'url': '/ask-cfpb/category-' + cat.slug,
                 'active': cat.name == page.ask_category.name
             } for cat in Category.objects.all()
         ], True
