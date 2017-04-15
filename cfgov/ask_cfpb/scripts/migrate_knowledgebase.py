@@ -36,7 +36,7 @@ PARENT_MAP = {
 
 def add_feedback_module(page):
     translation_text = {
-        'helpful': {'es': '¿Fue esta página útil?',
+        'helpful': {'es': '¿Fue útil esta respuesta?',
                     'en': 'Was this page helpful to you?'},
         'button': {'es': 'Enviar',
                    'en': 'Submit'}
