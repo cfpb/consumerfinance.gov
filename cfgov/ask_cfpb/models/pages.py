@@ -71,7 +71,7 @@ class AnswerPage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(AnswerPage, self).get_context(request)
         context['related_questions'] = self.answer_base.related_questions.all()
-        context['category'] = self.answer_base.category.all()[0]
+        context['category'] = self.answer_base.category.first()
         context['subcategories'] = self.answer_base.subcategory.all()
         return context
 
