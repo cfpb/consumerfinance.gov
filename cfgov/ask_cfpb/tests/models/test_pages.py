@@ -8,7 +8,7 @@ from model_mommy import mommy
 from django.utils import timezone
 from django.apps import apps
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.test import TestCase
 from django.test import Client
 from django.utils import html
@@ -17,7 +17,7 @@ from v1.util.migrations import get_or_create_page, get_free_path
 from ask_cfpb.models.django import (
     Answer, Category, SubCategory, Audience,
     NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
-from ask_cfpb.models.pages import AnswerPage
+from ask_cfpb.models.pages import AnswerPage, AnswerCategoryPage
 
 html_parser = HTMLParser.HTMLParser()
 client = Client()
@@ -41,6 +41,16 @@ class AnswerModelTestCase(TestCase):
         page.save()
         return page
 
+    def create_category_page(self, **kwargs):
+        kwargs.setdefault(
+            'path', get_free_path(apps, self.english_parent_page))
+        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
+        kwargs.setdefault('slug', 'category-mortgages')
+        kwargs.setdefault('title', 'Mortgages')
+        page = mommy.prepare(AnswerCategoryPage, **kwargs)
+        page.save()
+        return page
+
     def setUp(self):
         from v1.models import HomePage
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
@@ -48,6 +58,8 @@ class AnswerModelTestCase(TestCase):
         self.category = mommy.make(Category, name='stub_cat', name_es='que')
         self.subcategories = mommy.make(
             SubCategory, name='stub_subcat', _quantity=3)
+        self.category.subcategories.add(self.subcategories[0])
+        self.category.save()
         self.next_step = mommy.make(NextStep, title='stub_step')
         page_clean = patch('ask_cfpb.models.pages.CFGOVPage.clean')
         page_clean.start()
@@ -209,7 +221,7 @@ class AnswerModelTestCase(TestCase):
         _revision.publish()
         self.assertEqual(answer.has_live_page(), True)
 
-    def test_available_subcategories(self):
+    def test_available_subcategories_qs(self):
         parent_category = self.category
         for sc in self.subcategories:
             sc.parent = parent_category
@@ -218,7 +230,8 @@ class AnswerModelTestCase(TestCase):
         answer.save()
         answer.category.add(parent_category)
         answer.save()
-        self.assertEqual(answer.available_subcategories, self.subcategories)
+        for subcat in self.subcategories:
+            self.assertIn(subcat, answer.available_subcategory_qs)
 
     def test_bass_string_no_base(self):  # sic
         test_page = self.create_answer_page()
@@ -242,9 +255,9 @@ class AnswerModelTestCase(TestCase):
         answer.save()
         self.assertIn(audience.name, answer.audience_strings())
 
-    def test_tagging(self):
+    def test_search_tags(self):
         """Test the generator produced by answer.tags()"""
-        answer = self.prepare_answer(tagging='Chutes, Ladders')
+        answer = self.prepare_answer(search_tags='Chutes, Ladders')
         answer.save()
         taglist = [tag for tag in answer.tags()]
         for name in ['Chutes', 'Ladders']:
@@ -299,6 +312,14 @@ class AnswerModelTestCase(TestCase):
         category = self.category
         self.assertEqual(category.__str__(), category.name)
 
+    def test_category_featured_answers(self):
+        category = self.category
+        mock_answer = self.answer1234
+        mock_answer.featured = True
+        mock_answer.category.add(category)
+        mock_answer.save()
+        self.assertIn(mock_answer, category.featured_answers())
+
     def test_subcategory_str(self):
         subcategory = self.subcategories[0]
         self.assertEqual(subcategory.__str__(), subcategory.name)
@@ -333,3 +354,24 @@ class AnswerModelTestCase(TestCase):
         from haystack.query import SearchQuerySet
         subcat = SubCategory.objects.first()
         self.assertTrue(isinstance(subcat.search_query(), SearchQuerySet))
+
+    def test_category_page_context(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(ask_category=self.category)
+        test_context = cat_page.get_context(mock_request)
+        self.assertEqual(test_context['choices'][0][1], 'stub_subcat')
+
+    def test_category_page_add_js_function(self):
+        cat_page = self.create_category_page(ask_category=self.category)
+        js = {}
+        cat_page.add_page_js(js)
+        self.assertEqual(js, {'template': [u'secondary-navigation.js']})
+
+    def test_answer_language_page_true(self):
+        self.assertEqual(self.answer5678.english_page, self.page2)
+
+    def test_answer_language_page_false(self):
+        self.assertEqual(self.answer5678.spanish_page, None)

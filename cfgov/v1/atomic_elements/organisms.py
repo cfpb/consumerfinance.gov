@@ -1,4 +1,3 @@
-
 import json
 import requests
 
@@ -20,6 +19,7 @@ from v1.atomic_elements import atoms, molecules
 from v1.models.snippets import Contact as ContactSnippetClass
 from v1.models.snippets import ReusableText, ReusableTextChooserBlock
 from v1.util import ref
+import ask_cfpb
 
 
 class Well(blocks.StructBlock):
@@ -763,3 +763,13 @@ class SnippetList(blocks.StructBlock):
     class Meta:
         icon = 'table'
         template = '_includes/organisms/snippet-list.html'
+
+
+class AskCategoryCard(ModelList):
+
+    def render(self, value, context=None):
+        value['category'] = ask_cfpb.models.Category.objects.first()
+        value.update(context or {})
+
+        template = '_includes/organisms/ask-cfpb-card.html'
+        return render_to_string(template, value)

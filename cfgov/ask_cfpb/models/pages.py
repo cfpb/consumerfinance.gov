@@ -1,5 +1,4 @@
 from __future__ import absolute_import, unicode_literals
-# import collections
 
 from django.utils import timezone
 from django.db import models
@@ -17,7 +16,68 @@ from wagtail.wagtailsearch import index
 from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
-from v1.models import CFGOVPage
+from v1.atomic_elements.organisms import FilterControls
+from v1.feeds import FilterableFeedPageMixin
+from v1.models import CFGOVPage, LandingPage
+from v1.util.filterable_list import FilterableListMixin
+
+
+class AnswerLandingPage(LandingPage):
+    """
+    Page type for Ask CFPB's landing page.
+    """
+    content_panels = [
+        StreamFieldPanel('header'),
+        StreamFieldPanel('content'),
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(LandingPage.settings_panels, heading='Configuration'),
+    ])
+    objects = PageManager()
+    template = 'ask-cfpb/landing-page.html'
+
+
+class AnswerCategoryPage(
+        FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
+    """
+    Page type for Ask CFPB parent-category pages.
+    """
+    from .django import Category
+
+    objects = PageManager()
+    content = StreamField([
+        ('filter_controls', FilterControls()),
+    ], null=True)
+    ask_category = models.ForeignKey(
+        Category,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        related_name='category_page')
+    content_panels = CFGOVPage.content_panels + [
+        FieldPanel('ask_category', Category),
+        StreamFieldPanel('content'),
+    ]
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+    template = 'ask-cfpb/category-page.html'
+
+    def add_page_js(self, js):
+        super(AnswerCategoryPage, self).add_page_js(js)
+        js['template'] += ['secondary-navigation.js']
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(
+            AnswerCategoryPage, self).get_context(request, *args, **kwargs)
+        context.update({
+            'choices':
+            self.ask_category.subcategories.all().values_list(
+                'slug', 'name')
+        })
+        return context
 
 
 class AnswerPage(CFGOVPage):
@@ -77,9 +137,9 @@ class AnswerPage(CFGOVPage):
 
     def get_template(self, request):
         if self.language == 'es':
-            return 'ask-answer-page/spanish.html'
+            return 'ask-cfpb/answer-page-spanish.html'
 
-        return 'ask-answer-page/index.html'
+        return 'ask-cfpb/answer-page.html'
 
     def __str__(self):
         if self.answer_base:

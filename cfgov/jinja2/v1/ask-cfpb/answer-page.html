@@ -1,7 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 {% import 'macros/time.html' as time %}
-
 {% import 'tags.html' as tags with context %}
+{% import 'form_block.html' as form_block with context %}
 
 {% block title %}
     {{ page.question|striptags }}
@@ -14,7 +14,7 @@
         {{ page.answer[:500]|striptags|safe}}
     {% endif %}
 {% endblock %}
-{% import 'form_block.html' as form_block with context %}
+
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -48,10 +48,10 @@
             </div>
         {% endif %}
 
-
-        {% for block in page.content %}
-        {{- form_block.render(block, 'content', loop.index0) -}}
-        {% endfor %}
+{# This brings in the feedback module #}
+{% for block in page.content %}
+{{- form_block.render(block, 'content', loop.index0) -}}
+{% endfor %}
 
     </div>
 {% endblock %}

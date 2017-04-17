@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import re
 import sys
 import time
 import logging
@@ -32,6 +33,50 @@ PARENT_MAP = {
                        'parent_slug': 'cfgov',
                        'language': 'es'},
 }
+FEATURED_ANSWER_IDS = {
+    763: 1,
+    779: 2,
+    1023: 1,
+    1145: 2,
+    44: 1,
+    61: 2,
+    311: 1,
+    316: 2,
+    1397: 1,
+    1695: 2,
+    1641: 1,
+    1679: 2,
+    1161: 1,
+    1507: 2,
+    100: 1,
+    122: 2,
+    1567: 1,
+    1589: 2,
+    503: 1,
+    545: 1,
+    601: 2
+}
+
+swap_chars = {
+    b'\xC2\x91': b"'",
+    b'\xC2\x92': b"'",
+    b'\xC2\x93': b'"',
+    b'\xC2\x94': b'"',
+    b'\xC2\x96': b'-',
+    b'\xE2\x80\x8B': b'',  # ZERO WIDTH SPACE
+    b'\xE2\x97\xA6': b'-',  # small hollow circle (bullet?)
+    b'\xEF\x82\xA7': b'-',  # hollow box
+}
+
+
+def replace_chars(match):
+    char = match.group(0)
+    return swap_chars[char]
+
+
+def clean_chars(utf8_string):
+    return re.sub(
+        b'(' + b'|'.join(swap_chars.keys()) + b')', replace_chars, utf8_string)
 
 
 def add_feedback_module(page):
@@ -114,8 +159,8 @@ def get_or_create_parent_pages():
         _map = PARENT_MAP[parent_type]
         parent_page = get_or_create_page(
             apps,
-            'v1',
-            'LandingPage',
+            'ask_cfpb',
+            'AnswerLandingPage',
             _map['title'],
             _map['slug'],
             CFGOVPage.objects.get(slug=_map['parent_slug']).specific,
@@ -127,6 +172,49 @@ def get_or_create_parent_pages():
         time.sleep(1)
         counter += 1
     print("Created {} parent pages".format(counter))
+
+
+def get_or_create_category_pages():
+    from v1.models import CFGOVPage
+    parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
+    counter = 0
+    for cat in Category.objects.all():
+        cat_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerCategoryPage',
+            '{} > Consumer Financial Protection Bureau'.format(cat.name),
+            "category-{}".format(cat.slug),
+            parent,
+            language='en',
+            ask_category=cat)
+        cat_page.has_unpublished_changes = True
+        revision = cat_page.save_revision()
+        cat_page.save()
+        revision.publish()
+        time.sleep(1)
+        counter += 1
+    print("Created {} category pages".format(counter))
+
+
+# def get_or_create_category_search_page():
+#     from v1.models import CFGOVPage
+#     parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
+#     cat_page = get_or_create_page(
+#         apps,
+#         'ask_cfpb',
+#         'AnswerCategoryPage',
+#         'Category search > Consumer Financial Protection Bureau',
+#         "category-search",
+#         parent,
+#         language='en',
+#         ask_category=None)
+#     cat_page.has_unpublished_changes = True
+#     revision = cat_page.save_revision()
+#     cat_page.save()
+#     revision.publish()
+#     time.sleep(1)
+#     print("Created the category search page")
 
 
 def get_kb_statuses(ask_id):
@@ -202,7 +290,7 @@ def get_en_answer(question, cats, en_answer):
     for cat in cats:
         answer.category.add(cat)
     answer.last_edited = question.updated_at.date()
-    answer.question = en_answer.title.strip()
+    answer.question = clean_chars(en_answer.title.strip())
     return answer
 
 
@@ -214,14 +302,14 @@ def get_es_answer(question, cats, es_answer):
         answer.category.add(cat)
     answer.created_at = question.created_at
     answer.last_edited_es = question.updated_at.date()
-    answer.question_es = es_answer.title.strip()
+    answer.question_es = clean_chars(es_answer.title.strip())
     return answer
 
 
 def fill_out_es_answer(question, answer, es_answer):
     answer.slug_es = es_answer.slug
     answer.question_es = es_answer.title.strip()
-    answer.answer_es = es_answer.answer.strip()
+    answer.answer_es = clean_chars(es_answer.answer.strip())
     answer.last_edited_es = question.updated_at.date()
     answer.snippet_es = ''
     return answer
@@ -230,7 +318,7 @@ def fill_out_es_answer(question, answer, es_answer):
 def build_answer(question, cats, en_answer=None, es_answer=None):
     if en_answer:
         answer_base = get_en_answer(question, cats, en_answer)
-        answer_base.answer = fix_tips(en_answer.answer.strip())
+        answer_base.answer = clean_chars(fix_tips(en_answer.answer.strip()))
         answer_base.last_edited = question.updated_at.date()
         answer_base.snippet = en_answer.one_sentence_answer.strip()
         for cat in cats:
@@ -368,19 +456,6 @@ def add_related_categories():
         update_count)
 
 
-def add_featured_questions():
-    update_count = 0
-    for cat in QC.objects.exclude(parent=None):
-        subcategory = SubCategory.objects.get(id=cat.id)
-        for featured in cat.featured_questions.all():
-            subcategory.featured_questions.add(
-                Answer.objects.get(id=featured.id))
-        subcategory.save()
-        update_count += 1
-    print("Updated featured questions for {} ASK categories.").format(
-        update_count)
-
-
 def add_related_questions():
     update_count = 0
     print("Adding related_question links ...")
@@ -400,16 +475,27 @@ def clean_up_blank_answers():
         start_count - Answer.objects.count()))
 
 
+def set_featured_ids():
+    featured = Answer.objects.filter(id__in=FEATURED_ANSWER_IDS)
+    for answer in featured:
+        answer.featured = True
+        answer.featured_rank = FEATURED_ANSWER_IDS[answer.id]
+        answer.save()
+    print "Marked {} answers as 'featured'".format(featured.count())
+
+
 def run():
     migrate_categories()
     migrate_subcategories()
     add_related_categories()
     migrate_questions()
-    add_featured_questions()
     migrate_audiences()
     migrate_next_steps()
     add_related_questions()
+    set_featured_ids()
     clean_up_blank_answers()
     get_or_create_parent_pages()
+    get_or_create_category_pages()
+    # get_or_create_category_search_page()
     create_pages()
     logging.disable(logging.NOTSET)
