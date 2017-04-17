@@ -144,13 +144,6 @@ class AnswerModelTestCase(TestCase):
         with self.assertRaises(ValueError):
             answer.create_or_update_page(language='zz')
 
-    def test_answer_available_subcategory_qs(self):
-        answer = self.prepare_answer()
-        answer.save()
-        answer.category.add(self.category)
-        answer.subcategory.add(self.subcategories[0])
-        self.assertIn(self.subcategories[0], answer.available_subcategory_qs)
-
     def test_create_or_update_pages_english_only(self):
         answer = self.prepare_answer()
         answer.save()
@@ -228,7 +221,7 @@ class AnswerModelTestCase(TestCase):
         _revision.publish()
         self.assertEqual(answer.has_live_page(), True)
 
-    def test_available_subcategories(self):
+    def test_available_subcategories_qs(self):
         parent_category = self.category
         for sc in self.subcategories:
             sc.parent = parent_category
@@ -237,7 +230,8 @@ class AnswerModelTestCase(TestCase):
         answer.save()
         answer.category.add(parent_category)
         answer.save()
-        self.assertEqual(answer.available_subcategories, self.subcategories)
+        for subcat in self.subcategories:
+            self.assertIn(subcat, answer.available_subcategory_qs)
 
     def test_bass_string_no_base(self):  # sic
         test_page = self.create_answer_page()

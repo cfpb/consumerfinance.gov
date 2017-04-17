@@ -163,13 +163,6 @@ class Answer(models.Model):
     def spanish_page(self):
         return self.answer_pages.filter(language='es').first()
 
-    @property
-    def available_subcategories(self):
-        subcats = []
-        for parent in self.category.all():
-            subcats += list(parent.subcategories.all())
-        return subcats
-
     panels = [
         MultiFieldPanel([
             FieldRowPanel([
