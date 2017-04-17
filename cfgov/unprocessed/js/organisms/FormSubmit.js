@@ -128,7 +128,9 @@ function FormSubmit( element, baseClass, opts ) {
           state = result === 'fail' ? 'ERROR' : 'SUCCESS';
         }
         if ( state === 'SUCCESS' && opts.replaceForm ) {
-          // heading = heading || 'Thank you!';
+          if ( !heading && opts.language !== 'es' ) {
+            heading = 'Thank you!';
+          }
           _replaceFormWithNotification( heading + ' ' + message );
         } else {
           var key = opts.language === 'es' ? state + '_ES' : state;
