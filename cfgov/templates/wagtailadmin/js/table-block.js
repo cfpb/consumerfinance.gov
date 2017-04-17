@@ -100,6 +100,7 @@
                         $( win ).resize();
                     } );
                 }
+
                 options.editor = RichTextEditor;
 
                 return options;
@@ -162,8 +163,6 @@
 
                 this.initializeEvents();
                 this.initializeForm( hiddenFieldData );
-
-
             },
 
 
@@ -258,7 +257,17 @@
                   ui.$fixedWidthColInput.find( 'td' ).each( function( index, value) {
                     $( this ).find( 'select' ).val( hiddenFieldData.column_widths[index] );
                   } )
+                  this.getColumnWidths();
                 }
+            },
+
+            displayWidthWarning: function displayWidthWarning( totalWidth ) {
+              // Display warning for width > 100%
+              if ( totalWidth > 100 && this.ui.$fixedWidthColsCheckbox.is( ':checked' ) ) {
+                this.ui.$widthWarning.show();
+              } else {
+                this.ui.$widthWarning.hide();
+              }
             },
 
             getColumnWidths: function getColumnWidths() {
@@ -276,15 +285,9 @@
                 }
 
                 array[x] = widthClass;
-
               }
 
-              // Display warning for width > 100%
-              if ( totalWidth > 100 ) {
-                this.ui.$widthWarning.show();
-              } else {
-                this.ui.$widthWarning.hide();
-              }
+              this.displayWidthWarning( totalWidth );
 
               return array;
             },
@@ -379,7 +382,6 @@
                 this.ui.$fixedWidthColInput.hide();
               }
             }
-
         };
 
         return HandsonTableWagtailBridge.initialize( id, options );

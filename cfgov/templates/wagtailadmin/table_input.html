@@ -70,22 +70,8 @@
     </div>
 </div>
 <br/>
-<style>
-    table[id $= fixed-width-column-input] .column-width-input {
-        border: 1px solid #b4b5b6 !important;
-        height: 1.875em;
-        width: 100%;
-        padding: .25em .375em;
-        -webkit-appearance: menulist !important;
-        -moz-appearance: menulist !important;
-        appearance: menulist !important;
-        border-radius: 0;
-        color: #101820;
-    }
-
-</style>
-<div id="{{ attrs.id }}-width_warning" style="font-weight: bold; background-color: #ffecd1; display: none; border: 2px solid #ff9e1b; padding: 15px; font-size: 1.25em;">Warning! Your total column width is greater than 100%! Please adjust your column widths to be less than 100% total before continuing.</div>
-<table id="{{ attrs.id }}-fixed-width-column-input" style="width: 100%; margin-bottom: 10px; display: none;">
+<div id="{{ attrs.id }}-width_warning" class="table-block-warning">Warning! Your total column width is greater than 100%! Please adjust your column widths to be less than 100% total before continuing.</div>
+<table id="{{ attrs.id }}-fixed-width-column-input">
   <tr>
     <td>
       <p class="column-width-input_container">

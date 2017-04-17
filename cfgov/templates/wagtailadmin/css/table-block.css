@@ -27,3 +27,30 @@
     right: 10px;
     z-index: 1;
 }
+
+.table-block-warning {
+    font-weight: bold;
+    background-color: #ffecd1;
+    display: none;
+    border: 2px solid #ff9e1b;
+    padding: 15px;
+    font-size: 1.25em;
+}
+
+table[id $=fixed-width-column-input] {
+    width: 100%;
+    margin-bottom: 10px;
+    display: none;
+}
+
+table[id $=fixed-width-column-input] .column-width-input {
+    border: 1px solid #b4b5b6 !important;
+    height: 1.875em;
+    width: 100%;
+    padding: .25em .375em;
+    -webkit-appearance: menulist !important;
+    -moz-appearance: menulist !important;
+    appearance: menulist !important;
+    border-radius: 0;
+    color: #101820;
+}

@@ -59,7 +59,7 @@
             {% for cell in value.data[0] %}
             <th scope="col"
                 {% if value.fixed_col_widths %}
-                   {{ 'class="' + value.column_widths[loop.index - 1] + '"' }}
+                   {{ 'class="' + value.column_widths[loop.index0] + '"' }}
                 {% endif %} >
                 {{ _render_cell(cell) }}
             </th>
