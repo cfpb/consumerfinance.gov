@@ -57,10 +57,10 @@
         {% if first_row | reject('none') | list | length %}
         <tr>
             {% for cell in value.data[0] %}
-            <th scope="col"
                 {% if value.fixed_col_widths %}
-                   {{ 'class="' + value.column_widths[loop.index0] + '"' }}
-                {% endif %} >
+                    {% set width_class = 'class="' + value.column_widths[loop.index0] + '"' %}
+                {% endif %}
+            <th scope="col"{{ width_class | default }}>
                 {{ _render_cell(cell) }}
             </th>
             {% endfor %}
@@ -84,7 +84,7 @@
 
                 {# Logic to determine if fixed widths need to be added. #}
                 {% if value.fixed_col_widths %}
-                    {% set attributes = attributes + ' class="' + value.column_widths[loop.index - 1] + '"' %}
+                    {% set attributes = attributes + ' class="' + value.column_widths[loop.index0] + '"' %}
                 {% endif %}
 
                 {# Logic to add data labels for creating responsive tables on mobile. #}
