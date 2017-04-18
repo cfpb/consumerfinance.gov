@@ -181,7 +181,9 @@ class EventPage(AbstractFilterPage):
     youtube_url = models.URLField(
         "Youtube URL",
         blank=True,
-        help_text="Format: https://www.youtube.com/embed/video_id. It can be obtained by clicking on Share > Embed on Youtube.",
+        help_text="Format: https://www.youtube.com/embed/video_id. "
+                  "It can be obtained by clicking on Share > "
+                  "Embed on Youtube.",
         validators=[
             RegexValidator(regex='^https?:\/\/www\.youtube\.com\/embed\/.*$')
         ]
@@ -195,9 +197,12 @@ class EventPage(AbstractFilterPage):
     live_stream_url = models.URLField(
         "URL",
         blank=True,
-        help_text="Format: https://www.ustream.tv/embed/video_id or https://www.youtube.com/embed/video_id.",
+        help_text="Format: https://www.ustream.tv/embed/video_id "
+                  "or https://www.youtube.com/embed/video_id.",
         validators=[
-            RegexValidator(regex='^https?:\/\/www\.(ustream\.tv|youtube\.com)\/embed\/.*$')
+            RegexValidator(
+                regex='^https?:\/\/www\.(ustream\.tv|youtube\.com)\/embed\/.*$'
+            )
         ]
     )
     live_stream_date = models.DateTimeField(
