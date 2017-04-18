@@ -181,7 +181,7 @@ class EventPage(AbstractFilterPage):
     youtube_url = models.URLField(
         "Youtube URL",
         blank=True,
-        help_text="Format: https://www.youtube.com/embed/video_id. It can be obtained by clicking on Share > Embed on Youtube.",  # noqa: E501
+        help_text="Format: https://www.youtube.com/embed/video_id. It can be obtained by clicking on Share > Embed on Youtube.",
         validators=[
             RegexValidator(regex='^https?:\/\/www\.youtube\.com\/embed\/.*$')
         ]
