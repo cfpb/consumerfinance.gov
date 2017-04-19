@@ -133,7 +133,8 @@ class AnswerPage(CFGOVPage):
         context['related_questions'] = self.answer_base.related_questions.all()
         context['category'] = self.answer_base.category.first()
         context['subcategories'] = self.answer_base.subcategory.all()
-        context['description'] = self.snippet if self.snippet else self.answer[:500]
+        context['description'] = self.snippet if self.snippet \
+            else self.answer[:500]
         return context
 
     def get_template(self, request):
