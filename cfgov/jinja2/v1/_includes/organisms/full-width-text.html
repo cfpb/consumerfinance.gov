@@ -14,24 +14,26 @@
 
 <div class="o-full-width-text-group">
     {% for block in value %}
-        {% if 'content_with_anchor' in block.block_type %}
+        {% set block_type = block.block_type %}
+        {% if 'content_with_anchor' in block_type %}
                 {{ render_stream_child(block) | safe }}
-        {% elif 'content' in block.block_type %}
+        {% elif 'content' in block_type %}
             <div class="m-full-width-text">
                 {{ parse_links(block.value) | safe }}
             </div>
-        {% elif 'table' in block.block_type %}
+        {% elif 'table' in block_type %}
             <div class="m-full-width-text">
                 {{ render_stream_child(block) | safe}}
             </div>
-        {% elif 'media' in block.block_type %}
+        {% elif 'media' in block_type %}
             <div class="m-full-width-media">
                 {% set media = image(block.value, 'original') %}
                 <img class="m-full-width-media_image"
                      src="{{ media.url }}"
                      alt="{{ block.value.alt or media.alt }}">
             </div>
-        {% elif block.block_type in ['quote', 'cta', 'related_links'] %}
+        {% elif block_type in ['quote', 'related_links']
+           or 'cta' in block_type and block.value.is_inset %}
             <div class="m-inset
                     {{ 'm-inset__test'
                        if flag_enabled(request, 'INSET_TEST') else '' }}">
