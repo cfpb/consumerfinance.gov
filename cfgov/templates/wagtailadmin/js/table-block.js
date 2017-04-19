@@ -31,7 +31,9 @@
             DIMENSIONS: {
                 WIDTH:  0,
                 HEIGHT: 1
-            }
+            },
+
+            $colWidthSelect: {}
         };
 
         var HandsonTable = {
@@ -42,11 +44,13 @@
                 }
 
                 var onTableChange = $.proxy( this.onTableChange, this );
+                var onCreateCol = $.proxy( this.onCreateCol, this );
+                var onRemoveCol = $.proxy( this.onRemoveCol, this );
 
                 options.afterChange = onTableChange;
-                options.afterCreateCol = onTableChange;
+                options.afterCreateCol = onCreateCol;
                 options.afterCreateRow = onTableChange;
-                options.afterRemoveCol = onTableChange;
+                options.afterRemoveCol = onRemoveCol;
                 options.afterRemoveRow = onTableChange;
                 options.contextMenu = [ 'row_above',
                                         'row_below',
@@ -96,6 +100,7 @@
                         $( win ).resize();
                     } );
                 }
+
                 options.editor = RichTextEditor;
 
                 return options;
@@ -109,6 +114,26 @@
                 this.$element.trigger( 'table:change', [this.instance.getData()] );
 
                 return this;
+            },
+
+            onCreateCol: function onCreateCol( index, change ) {
+              HandsonTableWagtailBridge.ui.$fixedWidthColInput
+                .find( 'td' ).eq( index - 1 )
+                .after( '<td>' + utilities.$colWidthSelect + '</td>' );
+
+              this.$element.trigger( 'table:change', [this.instance.getData()] );
+
+              return this;
+            },
+
+            onRemoveCol: function onRemoveCol( index, change ) {
+              HandsonTableWagtailBridge.ui.$fixedWidthColInput
+                .find( 'td' ).eq( index )
+                .remove();
+
+              this.$element.trigger( 'table:change', [this.instance.getData()] );
+
+              return this;
             }
         };
 
@@ -117,6 +142,8 @@
             initialize: function initialize( id , options ) {
                 var _this = this;
                 var hiddenFieldData;
+
+                utilities.$colWidthSelect = $( this.ui.$inputContainer + ' .column-width-input' ).prop( 'outerHTML' );
 
                 this.options = utilities.assign( {} , options );
                 this.element = document.querySelector( this.ui.$inputContainer );
@@ -133,6 +160,7 @@
                 this.handsonTable.$element.on( 'table:change', function( event, data ) {
                     _this.saveDataToHiddenField( data );
                 } );
+
                 this.initializeEvents();
                 this.initializeForm( hiddenFieldData );
             },
@@ -163,6 +191,21 @@
                         $window.resize();
                     } );
                 }
+
+                // On click, toggle visibility of fixed width inputs
+                $( id + '-handsontable-col-fixed' ).click( function() {
+                  if ( $( this ).is( ':checked' ) ) {
+                    _this.toggleInputTable( true );
+                  } else {
+                    _this.toggleInputTable( false );
+                  }
+                } );
+
+                // On change of fixed width values, save data
+                $( id + '-fixed-width-column-input' ).on( 'change', '.column-width-input', function() {
+                  _this.saveDataToHiddenField( 'no data' );
+                } )
+
             },
 
             ui: {
@@ -174,6 +217,9 @@
                 $isFullWidthCheckbox:       id + '-handsontable-full-width',
                 $isStackedOnMobileCheckbox: id + '-handsontable-stack-on-mobile',
                 $isTableStripedCheckbox:    id + '-handsontable-striped-rows',
+                $fixedWidthColsCheckbox:    id + '-handsontable-col-fixed',
+                $fixedWidthColInput:        id + '-fixed-width-column-input',
+                $widthWarning:             id + '-width_warning',
                 $resizeTargets:             '.input > .handsontable, .wtHider, .wtHolder'
             },
 
@@ -187,7 +233,8 @@
                               first_col_is_header:         ui.$hasColHeaderCheckbox,
                               is_full_width:               ui.$isFullWidthCheckbox,
                               is_striped:                  ui.$isTableStripedCheckbox,
-                              is_stacked:                  ui.$isStackedOnMobileCheckbox
+                              is_stacked:                  ui.$isStackedOnMobileCheckbox,
+                              fixed_col_widths:            ui.$fixedWidthColsCheckbox
                           };
 
                     Object.keys( uiMap ).forEach( function( key ) {
@@ -196,6 +243,53 @@
                         }
                     } );
                 }
+
+                // update fixed width input to match table
+                var count = this.handsonTable.instance.countCols();
+                var row = this.ui.$fixedWidthColInput.find( 'tr' );
+                row.empty();
+                for ( var x = 0; x < count; x++ ) {
+                  row.append( '<td>' + utilities.$colWidthSelect + '</td>' );
+                }
+
+                if ( ui.$fixedWidthColsCheckbox.is( ':checked' ) ) {
+                  this.toggleInputTable( true );
+                  ui.$fixedWidthColInput.find( 'td' ).each( function( index, value) {
+                    $( this ).find( 'select' ).val( hiddenFieldData.column_widths[index] );
+                  } )
+                  this.getColumnWidths();
+                }
+            },
+
+            displayWidthWarning: function displayWidthWarning( totalWidth ) {
+              // Display warning for width > 100%
+              if ( totalWidth > 100 && this.ui.$fixedWidthColsCheckbox.is( ':checked' ) ) {
+                this.ui.$widthWarning.show();
+              } else {
+                this.ui.$widthWarning.hide();
+              }
+            },
+
+            getColumnWidths: function getColumnWidths() {
+              var colCount = this.ui.$fixedWidthColInput.find( 'tr td' ).length,
+                  array = [],
+                  totalWidth = 0;
+
+              for ( var x = 0; x <  colCount; x++ ) {
+                var i = x + 1;
+                var widthClass = this.ui.$fixedWidthColInput.find( 'tr td:nth-child( ' + i + ') select option:selected' ).val()
+                if ( widthClass !== '' ) {
+                  totalWidth += Number( widthClass.substring(3, 5) );
+                } else {
+                  totalWidth += 1;
+                }
+
+                array[x] = widthClass;
+              }
+
+              this.displayWidthWarning( totalWidth );
+
+              return array;
             },
 
             getWidth: function getWidth() {
@@ -249,11 +343,13 @@
 
                 ui.$hiddenField.val( JSON.stringify( {
                     data:                      this.handsonTable.instance.getData(),
+                    column_widths:             this.getColumnWidths(),
                     first_row_is_table_header: ui.$hasRowHeaderCheckbox.prop( 'checked' ),
                     first_col_is_header:       ui.$hasColHeaderCheckbox.prop( 'checked' ),
                     is_full_width:             ui.$isFullWidthCheckbox.prop( 'checked' ),
                     is_striped:                ui.$isTableStripedCheckbox.prop( 'checked' ),
-                    is_stacked:                ui.$isStackedOnMobileCheckbox.prop( 'checked' )
+                    is_stacked:                ui.$isStackedOnMobileCheckbox.prop( 'checked' ),
+                    fixed_col_widths:          ui.$fixedWidthColsCheckbox.prop( 'checked' )
                 } ) );
             },
 
@@ -277,6 +373,14 @@
             onTableChange: function onTableChange( index ) {
                 this.resize( utilities.DIMENSIONS.HEIGHT, this.getHeight() );
                 this.saveDataToHiddenField();
+            },
+
+            toggleInputTable: function toggleInputTable( visible ) {
+              if ( visible === true ) {
+                this.ui.$fixedWidthColInput.show();
+              } else {
+                this.ui.$fixedWidthColInput.hide();
+              }
             }
         };
 
@@ -457,4 +561,3 @@
     win.initAtomicTable = initAtomicTable;
 
 } ) ( window );
-
