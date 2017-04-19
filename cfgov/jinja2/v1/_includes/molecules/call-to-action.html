@@ -24,23 +24,24 @@
 
 <div class="m-call-to-action">
     {% if value.slug_text %}
-        <h2 class="header-slug">
-            <span class="header-slug_inner">
-                {{ value.slug_text }}
-            </span>
-        </h2>
+    <h2 class="header-slug">
+        <span class="header-slug_inner">
+            {{ value.slug_text }}
+        </span>
+    </h2>
     {% endif %}
 
     {% if value.paragraph_text %}
-        <p>
-            {{ parse_links(value.paragraph_text) |safe }}
-        </p>
+    <div class="m-call-to-action_text">
+        {{ parse_links(value.paragraph_text) | safe }}
+    </div>
     {% endif %}
 
     {% if value.button %}
-        <a class="btn btn__full"
-           href="{{ value.button.url or '/' }}">
-            {{ value.button.text }}
-        </a>
+    <a class="btn btn__full
+             {{ 'btn__super' if value.button.size == 'large' else '' }}"
+       href="{{ value.button.url or '/' }}">
+        {{ value.button.text }}
+    </a>
     {% endif %}
 </div>

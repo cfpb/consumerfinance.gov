@@ -29,6 +29,14 @@
 {%- import 'templates/render_block.html' as render_block with context -%}
 {%- import 'tags.html' as tags -%}
 
+{% macro setCTAFlag( blocks ) %}
+  {% for block in blocks.value %}
+      {% if block.block_type == 'cta' %}
+        {% do block.value.update({ 'is_inset': true }) %}
+      {% endif %}
+  {% endfor %}
+{% endmacro %}
+
 <article class="post">
     <header>
         {% set data = {
@@ -53,6 +61,9 @@
                 {{ parse_links(block.value) | safe }}
             {% elif block.block_type == 'feedback' %}
             {{- form_block.render(block, 'content', loop.index0) -}}
+            {% elif block.block_type == 'full_width_text' %}
+                {{ setCTAFlag( block ) }}
+                {{ render_block.render(block, loop.index) }}
             {% else %}
                 {{ render_block.render(block, loop.index) }}
             {% endif %}
