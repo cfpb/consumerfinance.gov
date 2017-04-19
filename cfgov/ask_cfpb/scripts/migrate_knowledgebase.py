@@ -183,7 +183,7 @@ def get_or_create_category_pages():
             apps,
             'ask_cfpb',
             'AnswerCategoryPage',
-            '{} > Consumer Financial Protection Bureau'.format(cat.name),
+            cat.name,
             "category-{}".format(cat.slug),
             parent,
             language='en',
