@@ -561,3 +561,35 @@ CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
                    'api.iperceptions.com')
+
+FLAGS = {
+    # Beta banner, seen on beta.consumerfinance.gov
+    'BETA_NOTICE': {},
+
+    # IA changes to mega menu for user testing
+    'IA_USER_TESTING_MENU': {},
+
+    # Email pop-up "nudgy guy" for Owning a Home
+    'EMAIL-POPUP': {},
+
+    # Fix for margin-top when using the text inset
+    'INSET_TEST': {},
+
+    # Fix for multi-select issues on Filterable list control
+    'MULTI-SELECT-TEST': {},
+
+    # Footer link for the Office of Administrative Adjudication
+    'OAA_FOOTER_LINK': {},
+
+    # Transition of "About Us" to Wagtail
+    'WAGTAIL_ABOUT_US': {},
+
+    # Transition of "Doing Business with Us" to Wagtail
+    'WAGTAIL_DOING_BUSINESS_WITH_US': {},
+
+    # Transition of /compltain to Wagtail
+    'MOSAIC_COMPLAINTS': {},
+
+    # Transition of CCDB landing page to Mosaic version
+    'MOSAIC_CCDB': {},
+}

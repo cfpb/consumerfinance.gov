@@ -34,7 +34,7 @@
         {% elif block.block_type in ['quote', 'cta', 'related_links'] %}
             <div class="m-inset
                     {{ 'm-inset__test'
-                       if flag_enabled(request, 'INSET_TEST') else '' }}">
+                       if flag_enabled('INSET_TEST', request) else '' }}">
                 {{ block | safe }}
             </div>
         {% else %}

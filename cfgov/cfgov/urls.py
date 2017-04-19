@@ -242,7 +242,7 @@ urlpatterns = [
                 r'^complaint/',
                 include_if_app_enabled('complaint', 'complaint.urls'),
                 fallback=lambda req: ServeView.as_view()(req, req.path),
-                condition=False),
+                state=False),
     url(r'^data-research/consumer-complaints/',
         include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
 

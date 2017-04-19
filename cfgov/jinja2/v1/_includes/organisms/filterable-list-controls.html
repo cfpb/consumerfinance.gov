@@ -182,7 +182,7 @@
 {% macro render(controls, index) %}
     <div class="o-filterable-list-controls
         {{ 'o-filterable-list-controls__mulit-select-test'
-           if flag_enabled(request, 'MULTI-SELECT-TEST')
+           if flag_enabled('MULTI-SELECT-TEST', request)
            else '' }}"
          id="o-filterable-list-controls-{{ index | string }}">
         {% set form = filter_data.forms.pop(0) %}
