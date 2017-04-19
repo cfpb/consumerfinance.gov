@@ -198,12 +198,7 @@ class EventPage(AbstractFilterPage):
         "URL",
         blank=True,
         help_text="Format: https://www.ustream.tv/embed/video_id "
-                  "or https://www.youtube.com/embed/video_id.",
-        validators=[
-            RegexValidator(
-                regex='^https?:\/\/www\.(ustream\.tv|youtube\.com)\/embed\/.*$'
-            )
-        ]
+                  "or https://www.youtube.com/embed/video_id."
     )
     live_stream_date = models.DateTimeField(
         "Go Live Date",
