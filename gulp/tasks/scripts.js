@@ -103,6 +103,7 @@ function scriptsOnDemand() {
 
  /**
   * Bundle feedback js for Spanish Ask CFPB pages.
+  * @returns {PassThrough} A source stream.
   */
 function scriptsSpanish() {
   return _processScript( webpackConfig.spanishConf,

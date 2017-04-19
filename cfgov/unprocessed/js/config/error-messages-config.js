@@ -37,6 +37,14 @@ var ERROR_MESSAGES = {
   DEFAULT: 'Error!',
   DOM: {
     INVALID: 'Invalid dom element was provided.'
+  },
+  COMMENT: {
+    REQUIRED: 'Please enter a comment.',
+    REQUIRED_ES: 'Por favor, introduzca un comentario.'
+  },
+  OPTION: {
+    REQUIRED: 'Please select an option.',
+    REQUIRED_ES: 'Por favor, seleccione una opción.'
   }
 };
 

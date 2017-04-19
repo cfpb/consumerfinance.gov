@@ -8,11 +8,7 @@
 {% endblock %}
 
 {% block desc %}
-    {% if page.snippet %}
-        {{ page.snippet|striptags|safe}}
-    {% elif page.answer %}
-        {{ page.answer[:500]|striptags|safe}}
-    {% endif %}
+    {{ description|striptags|safe}}
 {% endblock %}
 
 
@@ -91,7 +87,7 @@
                         {% endfor %}
                     {% endfor %}
                     <li class="list_item">
-                      <a class="btn category-button" href="/askcfpb/search?selected_facets=category_exact:{{category.slug}}" data="{{page.question_topic|lower}}">      
+                      <a class="btn category-button" href="{{slugurl('category-' + category.slug)}}"> 
                         See all {{category.name | lower}} questions
                       </a>
                     </li>
