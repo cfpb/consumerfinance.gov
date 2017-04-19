@@ -2,24 +2,6 @@
   name: Tables
   family: cf-tables
   notes:
-    - A fix that makes stacking cells 100% width when stacked
-  tags:
-    - cfgov-cf-tables
-*/
-
-.respond-to-max(@bp-xs-max, {
-    .o-table__stack-on-small {
-        thead tr th,
-        tbody tr td {
-            width: 100%;
-        }
-    }
-});
-
-/* topdoc
-  name: Tables
-  family: cf-tables
-  notes:
     - Adjustments for cf-tables to allow them to be full-width
   tags:
     - cfgov-cf-tables
@@ -149,6 +131,7 @@
         [data-display-table="row"],
         [data-display-table="cell"] {
             display: block;
+            width: 100%;
         }
 
         tr,
