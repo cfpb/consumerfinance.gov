@@ -103,6 +103,7 @@ class Hyperlink(blocks.StructBlock):
         icon = 'link'
         template = '_includes/atoms/hyperlink.html'
 
+
 class Button(Hyperlink):
     size = blocks.ChoiceBlock(choices=[
         ('regular', 'Regular'),
