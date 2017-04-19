@@ -5,8 +5,8 @@
     - name: Default example
       markup: |
           <div class="m-call-to-action">
-              <p class="short-desc">
-              </p>
+              <div class="m-call-to-action_text">
+              </div>
               <a class="btn btn__full" href="/">
               </a>
           </div>
@@ -15,8 +15,9 @@
           Structural cheat sheet:
           -----------------------
           .m-call-to-action
-            .short-desc
+            .m-call-to-action_text
             .btn.btn__full
+            .btn.btn__large
   tags:
     - cfgov-molecules
 */
@@ -25,11 +26,15 @@
     padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em ) * 2;
 
     .respond-to-range(@bp-sm-min, @bp-sm-max, {
-        .grid_column(6);
+        .grid_column( 6 );
     });
 
     .btn {
         text-align: center;
+    }
+
+    &_text {
+        margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
     }
 }
 
