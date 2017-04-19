@@ -17,7 +17,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0062_modifying_video_player'),
+        ('v1', '0063_remove_validation_from_video_player'),
     ]
 
     operations = [
