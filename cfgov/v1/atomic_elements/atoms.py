@@ -104,6 +104,13 @@ class Hyperlink(blocks.StructBlock):
         template = '_includes/atoms/hyperlink.html'
 
 
+class Button(Hyperlink):
+    size = blocks.ChoiceBlock(choices=[
+        ('regular', 'Regular'),
+        ('large', 'Large Primary'),
+    ], default='regular')
+
+
 class ImageBasic(blocks.StructBlock):
     upload = ImageChooserBlock(required=False)
     alt = blocks.CharBlock(required=False)
