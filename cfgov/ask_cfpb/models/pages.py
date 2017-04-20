@@ -127,8 +127,22 @@ class AnswerPage(CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    template = 'ask-cfpb/answer-page.html'
     objects = PageManager()
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(AnswerPage, self).get_context(request)
+        context['related_questions'] = self.answer_base.related_questions.all()
+        context['category'] = self.answer_base.category.first()
+        context['subcategories'] = self.answer_base.subcategory.all()
+        context['description'] = self.snippet if self.snippet \
+            else self.answer[:500]
+        return context
+
+    def get_template(self, request):
+        if self.language == 'es':
+            return 'ask-cfpb/answer-page-spanish.html'
+
+        return 'ask-cfpb/answer-page.html'
 
     def __str__(self):
         if self.answer_base:

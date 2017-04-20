@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import requests
 
 from akamai.edgegrid import EdgeGridAuth
@@ -13,40 +14,63 @@ class AkamaiBackend(BaseBackend):
         self.client_token = params.pop('CLIENT_TOKEN')
         self.client_secret = params.pop('CLIENT_SECRET')
         self.access_token = params.pop('ACCESS_TOKEN')
-        self.fast_purge_url = params.pop('FAST_PURGE_URL')
         if not all((
             self.client_token,
             self.client_secret,
             self.access_token,
-            self.fast_purge_url
         )):
             raise ValueError(
                 'AKAMAI_CLIENT_TOKEN, AKAMAI_CLIENT_SECRET, '
-                'AKAMAI_ACCESS_TOKEN, AKAMAI_FAST_PURGE_URL '
-                'must be configured.'
+                'AKAMAI_ACCESS_TOKEN must be configured.'
             )
+        self.auth = self.get_auth()
+        self.headers = {'content-type': 'application/json'}
 
-    def purge(self, url):
-        auth = EdgeGridAuth(
+    def get_auth(self):
+        return EdgeGridAuth(
             client_token=self.client_token,
             client_secret=self.client_secret,
             access_token=self.access_token
         )
-        headers = {'content-type': 'application/json'}
-        payload = {
+
+    def get_payload(self, obj):
+        return {
             'action': 'invalidate',
-            'objects': [url]
+            'objects': [obj]
         }
+
+    def purge(self, url):
         resp = requests.post(
-            self.fast_purge_url,
-            headers=headers,
-            data=json.dumps(payload),
-            auth=auth
+            os.environ['AKAMAI_FAST_PURGE_URL'],
+            headers=self.headers,
+            data=json.dumps(self.get_payload(obj=url)),
+            auth=self.auth
         )
         logger.info(
             u'Attempted to invalidate page {url}, '
             'got back response {message}'.format(
                 url=url,
+                message=resp.text
+            )
+        )
+        resp.raise_for_status()
+
+    def purge_all(self):
+        payload = self.get_payload(
+            obj=os.environ['AKAMAI_OBJECT_ID']
+        )
+        payload['type'] = 'cpcode'
+        payload['domain'] = 'production'
+
+        resp = requests.post(
+            os.environ['AKAMAI_PURGE_ALL_URL'],
+            headers=self.headers,
+            data=json.dumps(payload),
+            auth=self.auth
+        )
+        logger.info(
+            u'Initiated site-wide Akamai flush, '
+            'got back response {message}'.format(
                 message=resp.text
             )
         )

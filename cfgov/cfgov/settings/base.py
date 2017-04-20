@@ -492,8 +492,7 @@ if ENABLE_AKAMAI_CACHE_PURGE:
             'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
             'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
             'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
-            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN'),
-            'FAST_PURGE_URL': os.environ.get('AKAMAI_FAST_PURGE_URL')
+            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN')
         },
     }
 
