@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from wagtail.contrib.wagtailfrontendcache.utils import purge_url_from_cache
 
