@@ -387,7 +387,6 @@ class AnswerModelTestCase(TestCase):
 
     def test_category_subcategory_json(self):
         self.answer1234.subcategory.add(self.subcategories[0])
-        self.answer1234.save()
         self.assertEqual(
             self.category.subcategory_json,
             '{"stub_subcat": ["1234"]}')
