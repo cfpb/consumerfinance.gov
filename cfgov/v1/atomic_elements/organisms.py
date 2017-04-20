@@ -189,6 +189,15 @@ class RelatedPosts(blocks.StructBlock):
         required=False
     )
 
+    and_filtering = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        label='Match all topics this page is tagged with',
+        help_text=('If checked, the related posts that are pulled in will '
+                   'have to include ALL topic tags that are set on this page, '
+                   'as opposed to ANY ONE of the topic tags on this page.')
+    )
+
     class Meta:
         icon = 'link'
         template = '_includes/molecules/related-posts.html'
