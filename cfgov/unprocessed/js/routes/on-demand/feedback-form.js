@@ -4,39 +4,53 @@
 
 'use strict';
 
+var COMMENT_ERRORS = require( '../../config/error-messages-config' ).COMMENT || {};
+var OPTION_ERRORS = require( '../../config/error-messages-config' ).OPTION || {};
 var FormSubmit = require( '../../organisms/FormSubmit.js' );
-
 var BASE_CLASS = 'o-feedback';
-
-function validateFeedback( fields ) {
-	if ( fields.comment ) {
-		if ( fields.comment.value ) {
-			return;
-		} else if ( fields.comment.hasAttribute('required') ) {
-			return "Please enter a comment."
-		} 
-	} 
-	if ( fields['is_helpful'] ) {
-		for ( var i = 0; i < fields['is_helpful'].length; i ++ ) {
-			if ( fields['is_helpful'][i].checked ) {
-				return;
-			}
-		}
-		return 'Please select an option.'
-	}
-}
-
+var requiredKey = 'REQUIRED';
+var UNDEFINED;
 var element = document.body.querySelector( '.' + BASE_CLASS );
 
-var opts = {
-  validator: validateFeedback, 
-  replaceForm: element.getAttribute('data-replace')
- }
+function validateFeedback( fields ) {
+  if ( fields.comment ) {
+    if ( fields.comment.value ) {
+      return UNDEFINED;
+    } else if ( fields.comment.hasAttribute( 'required' ) ) {
+      return COMMENT_ERRORS[requiredKey];
+    }
+  }
+  if ( fields.is_helpful ) {
+    for ( var i = 0; i < fields.is_helpful.length; i++ ) {
+      if ( fields.is_helpful[i].checked ) {
+        return UNDEFINED;
+      }
+    }
+    return OPTION_ERRORS[requiredKey];
+  }
+  return UNDEFINED;
+}
 
-var formSubmit = new FormSubmit(
-  element,
-  BASE_CLASS,
-  opts
-);
+if ( element ) {
+  var replaceForm = element.getAttribute( 'data-replace' );
+  var languageField = element.querySelector( 'input[name="language"]' );
+  var language = languageField && languageField.value === 'es' ? 'es' : 'en';
+  if ( language === 'es' ) {
+    requiredKey = 'REQUIRED_ES';
+  }
 
-formSubmit.init();
+  var opts = {
+    validator: validateFeedback,
+    replaceForm:  replaceForm || language === 'es',
+    minReplacementHeight: replaceForm,
+    language: language
+  };
+
+  var formSubmit = new FormSubmit(
+    element,
+    BASE_CLASS,
+    opts
+  );
+
+  formSubmit.init();
+}
