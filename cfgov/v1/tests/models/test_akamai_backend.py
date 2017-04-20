@@ -8,7 +8,6 @@ class TestAkamaiBackend(TestCase):
                 'CLIENT_TOKEN': None,
                 'CLIENT_SECRET': None,
                 'ACCESS_TOKEN': None,
-                'FAST_PURGE_URL': None,
         }
         with self.assertRaises(ValueError):
             AkamaiBackend(credentials)
@@ -18,7 +17,6 @@ class TestAkamaiBackend(TestCase):
                 'CLIENT_TOKEN': 'some-arbitrary-token',
                 'CLIENT_SECRET': None,
                 'ACCESS_TOKEN': None,
-                'FAST_PURGE_URL': None,
         }
         with self.assertRaises(ValueError):
             AkamaiBackend(credentials)
@@ -28,10 +26,8 @@ class TestAkamaiBackend(TestCase):
                 'CLIENT_TOKEN': 'token',
                 'CLIENT_SECRET': 'secret',
                 'ACCESS_TOKEN': 'access token',
-                'FAST_PURGE_URL': 'fast purge url',
         }
         akamai_backend = AkamaiBackend(credentials)
         self.assertEquals(akamai_backend.client_token, 'token')
         self.assertEquals(akamai_backend.client_secret, 'secret')
         self.assertEquals(akamai_backend.access_token, 'access token')
-        self.assertEquals(akamai_backend.fast_purge_url, 'fast purge url')
