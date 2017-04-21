@@ -31,7 +31,7 @@ SPANISH_PARENT_SLUG = 'obtener-respuestas'
 def get_feedback_stream_value(page):
     """Delivers a basic feedback module with yes/no buttons and comment box"""
     translation_text = {
-        'helpful': {'es': '¿Fue esta página útil?',
+        'helpful': {'es': '¿Fue útil esta respuesta?',
                     'en': 'Was this page helpful to you?'},
         'button': {'es': 'Enviar',
                    'en': 'Submit'}
