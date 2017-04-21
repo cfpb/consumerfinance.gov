@@ -451,10 +451,3 @@ class SubCategory(models.Model):
     class Meta:
         ordering = ['weight']
         verbose_name_plural = "Subcategories"
-
-    # def search_query(self):
-    #     from haystack.query import SearchQuerySet
-    #     sqs = SearchQuerySet()
-    #     sqs = sqs.models(Answer)
-    #     sqs = sqs.filter(category=self.name)
-    #     return sqs

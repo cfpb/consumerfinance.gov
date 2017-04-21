@@ -44,16 +44,6 @@ class AnswerModelTestCase(TestCase):
         page.save()
         return page
 
-    # def create_spanish_answer_page(self, **kwargs):
-    #     kwargs.setdefault(
-    #         'path', get_free_path(apps, self.spanish_parent_page))
-    #     kwargs.setdefault('depth', self.english_parent_page.depth + 1)
-    #     kwargs.setdefault('slug', 'mock-spanish-answer-page-es-999')
-    #     kwargs.setdefault('title', 'Mock Spanish answer page title')
-    #     page = mommy.prepare(AnswerPage, **kwargs)
-    #     page.save()
-    #     return page
-
     def create_category_page(self, **kwargs):
         kwargs.setdefault(
             'path', get_free_path(apps, self.english_parent_page))
@@ -372,11 +362,6 @@ class AnswerModelTestCase(TestCase):
         test_page.redirect_to = None
         self.assertEqual(
             test_page.status_string.lower(), "live")
-
-    # def test_search_query(self):
-    #     from haystack.query import SearchQuerySet
-    #     subcat = SubCategory.objects.first()
-    #     self.assertTrue(isinstance(subcat.search_query(), SearchQuerySet))
 
     def test_category_page_context(self):
         mock_site = mock.Mock()
