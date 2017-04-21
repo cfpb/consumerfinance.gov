@@ -181,21 +181,19 @@ class CFGOVPage(Page):
                     block, 'archive-past-events') & query
             relate = block.value.get('relate_{}'.format(search_type), None)
             if relate:
-                related[search_type_name] = (
+                type_query = (
                     AbstractFilterPage.objects.live().filter(
                         search_query
                     ).distinct().exclude(id=self.id).order_by(
                         '-date_published'
-                    ))
+                    )
+                )
                 # Apply similar logic as snippets.py's filter_by_tags method
                 # to enable AND filtering
                 if block.value['and_filtering']:
                     for tag in self.tags.names() or []:
-                        related[search_type_name] = (
-                            related[search_type_name].filter(tags__name=tag)
-                        )
-                related[search_type_name] = \
-                    related[search_type_name][:block.value['limit']]
+                        type_query = type_query.filter(tags__name=tag)
+                related[search_type_name] = type_query[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.
