@@ -88,7 +88,8 @@ class RelatedPostsTestCase(TestCase):
             'relate_posts': False,
             'relate_newsroom': False,
             'relate_events': False,
-            'specific_categories': []
+            'specific_categories': [],
+            'and_filtering': False,
         })
 
     def tearDown(self):
@@ -146,6 +147,25 @@ class RelatedPostsTestCase(TestCase):
         self.assertEqual(len(related_posts['Blog']), 1)
         self.assertEqual(related_posts['Blog'][0], self.blog_child2)
         self.assertNotIn('Newsroom', related_posts)
+        self.assertNotIn('Events', related_posts)
+
+    def test_related_posts_and_filtering(self):
+        """
+        Tests whether related posts are retrieved if and only if they match ALL
+        of the tags on the calling page.
+        """
+
+        self.block.value['relate_posts'] = True
+        self.block.value['relate_newsroom'] = True
+        self.block.value['relate_events'] = True
+        self.block.value['and_filtering'] = True
+
+        related_posts = self.page_with_authors.related_posts(self.block, self.hostname)
+
+        self.assertNotIn('Blog', related_posts)
+        self.assertIn('Newsroom', related_posts)
+        self.assertEqual(len(related_posts['Newsroom']), 1)
+        self.assertEqual(related_posts['Newsroom'][0], self.newsroom_child1)
         self.assertNotIn('Events', related_posts)
 
     def test_related_posts_newsroom(self):
