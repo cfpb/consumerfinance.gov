@@ -152,7 +152,11 @@ class RegComment(blocks.StructBlock):
 
 
 class RelatedPosts(blocks.StructBlock):
-    limit = blocks.CharBlock(default='3', label='Limit')
+    limit = blocks.IntegerBlock(
+        default='3',
+        help_text=('This limit applies to EACH TYPE of post this module '
+                   'retrieves, not the total number of retrieved posts.')
+    )
     show_heading = blocks.BooleanBlock(
         required=False,
         default=True,
@@ -192,10 +196,10 @@ class RelatedPosts(blocks.StructBlock):
     and_filtering = blocks.BooleanBlock(
         required=False,
         default=False,
-        label='Match all topics this page is tagged with',
-        help_text=('If checked, the related posts that are pulled in will '
-                   'have to include ALL topic tags that are set on this page, '
-                   'as opposed to ANY ONE of the topic tags on this page.')
+        label='Match all topic tags',
+        help_text=('If checked, related posts will only be pulled in if they '
+                   'match ALL topic tags set on this page. Otherwise, related '
+                   'posts can match any one topic tag.')
     )
 
     class Meta:
