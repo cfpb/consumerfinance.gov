@@ -6,6 +6,8 @@ import mock
 from mock import patch
 from model_mommy import mommy
 
+from bs4 import BeautifulSoup as bs
+
 from django.utils import timezone
 from django.apps import apps
 from django.core.urlresolvers import reverse
@@ -41,6 +43,16 @@ class AnswerModelTestCase(TestCase):
         page = mommy.prepare(AnswerPage, **kwargs)
         page.save()
         return page
+
+    # def create_spanish_answer_page(self, **kwargs):
+    #     kwargs.setdefault(
+    #         'path', get_free_path(apps, self.spanish_parent_page))
+    #     kwargs.setdefault('depth', self.english_parent_page.depth + 1)
+    #     kwargs.setdefault('slug', 'mock-spanish-answer-page-es-999')
+    #     kwargs.setdefault('title', 'Mock Spanish answer page title')
+    #     page = mommy.prepare(AnswerPage, **kwargs)
+    #     page.save()
+    #     return page
 
     def create_category_page(self, **kwargs):
         kwargs.setdefault(
@@ -138,6 +150,16 @@ class AnswerModelTestCase(TestCase):
             AnswerPage.objects.filter(answer_base=answer).count(), 0)
         self.assertEqual(
             Answer.objects.filter(id=ID).count(), 0)
+
+    def test_spanish_template_used(self):
+        spanish_answer = self.prepare_answer(
+            answer_es='Spanish answer',
+            slug_es='spanish-answer',
+            update_spanish_page=True)
+        spanish_answer.save()
+        spanish_page = spanish_answer.spanish_page
+        soup = bs(spanish_page.serve(HttpRequest()).rendered_content)
+        self.assertIn('Oficina', soup.title.string)
 
     def test_create_or_update_page_unsuppoted_language(self):
         answer = self.prepare_answer()
