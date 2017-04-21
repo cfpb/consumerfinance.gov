@@ -152,7 +152,7 @@ class RegComment(blocks.StructBlock):
 
 
 class RelatedPosts(blocks.StructBlock):
-    limit = blocks.IntegerBlock(
+    limit = blocks.CharBlock(
         default='3',
         help_text=('This limit applies to EACH TYPE of post this module '
                    'retrieves, not the total number of retrieved posts.')
