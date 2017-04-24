@@ -106,8 +106,8 @@ function FormSubmit( element, baseClass, opts ) {
       205: 'reset content',
       206: 'partial content'
     };
-    var message;
-    var heading;
+    var message = '';
+    var heading = '';
     var state = 'ERROR';
     var xhr = new XMLHttpRequest();
     xhr.open( 'POST', _formElement.action );
@@ -120,22 +120,25 @@ function FormSubmit( element, baseClass, opts ) {
           try {
             var response = JSON.parse( xhr.responseText );
             result = response.result;
-            message = response.message;
-            heading = response.header;
+            message = response.message || '';
+            heading = response.header || '';
           } catch ( err ) {
             // ignore lack of response
           }
           state = result === 'fail' ? 'ERROR' : 'SUCCESS';
         }
         if ( state === 'SUCCESS' && opts.replaceForm ) {
-          heading = heading || 'Thank you!';
+          if ( !heading && opts.language !== 'es' ) {
+            heading = 'Thank you!';
+          }
           _replaceFormWithNotification( heading + ' ' + message );
         } else {
+          var key = opts.language === 'es' ? state + '_ES' : state;
           _displayNotification( _notification[state],
-                              message || FORM_MESSAGES[state] );
+                                message || FORM_MESSAGES[key] );
         }
         if ( state === 'SUCCESS' ) {
-          self.dispatchEvent( 'success', { target: this, form: _formElement} );
+          self.dispatchEvent( 'success', { target: this, form: _formElement } );
         }
       }
     };
@@ -156,7 +159,9 @@ function FormSubmit( element, baseClass, opts ) {
     }
 
     function fadeInMessage() {
-      _baseElement.style.marginBottom = Math.min( _formElement.offsetHeight, 100 ) + 'px';
+      if ( opts.minReplacementHeight ) {
+        _baseElement.style.marginBottom = Math.min( _formElement.offsetHeight, 100 ) + 'px';
+      }
       _formElement.style.display = 'none';
       _notification.setTypeAndContent( _notification.SUCCESS, message );
       _notification.show();
