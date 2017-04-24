@@ -13,7 +13,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0064_adding_button_atom'),
+        ('v1', '0065_add_related_posts_and_filtering'),
     ]
 
     operations = [
