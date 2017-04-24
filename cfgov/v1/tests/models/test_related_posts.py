@@ -1,8 +1,7 @@
 import datetime as dt
-from unittest import TestCase
-
 import mock
 
+from django.test import TestCase
 from v1.models.base import CFGOVPage, CFGOVPageCategory
 from v1.models.learn_page import AbstractFilterPage
 from v1.tests.wagtail_pages import helpers
@@ -11,8 +10,6 @@ from v1.tests.wagtail_pages import helpers
 class RelatedPostsTestCase(TestCase):
 
     def setUp(self):
-
-        self.hostname = 'localhost'
 
         # add some authors to a CFGOV page and give it some tags
 
@@ -92,18 +89,6 @@ class RelatedPostsTestCase(TestCase):
             'and_filtering': False,
         })
 
-    def tearDown(self):
-
-        # you don't need to delete the children independently,
-        # you can just delete the parent and it cascades
-
-        self.blog_parent.delete()
-        self.newsroom_parent.delete()
-        self.events_parent.delete()
-        self.archive_events_parent.delete()
-
-        self.page_with_authors.delete()
-
     def test_related_posts_blog(self):
         """
         Tests whether related posts from the blog from the supplied specific
@@ -117,7 +102,7 @@ class RelatedPostsTestCase(TestCase):
         self.block.value['relate_events'] = False
         self.block.value['specific_categories'] = ['Info for Consumers', 'Policy &amp; Compliance']
 
-        related_posts = self.page_with_authors.related_posts(self.block, self.hostname)
+        related_posts = self.page_with_authors.related_posts(self.block)
 
         self.assertIn('Blog', related_posts)
         self.assertEqual(len(related_posts['Blog']), 2)
@@ -141,7 +126,7 @@ class RelatedPostsTestCase(TestCase):
         self.block.value['limit'] = 1
         self.block.value['specific_categories'] = ['Info for Consumers', 'Policy &amp; Compliance']
 
-        related_posts = self.page_with_authors.related_posts(self.block, self.hostname)
+        related_posts = self.page_with_authors.related_posts(self.block)
 
         self.assertIn('Blog', related_posts)
         self.assertEqual(len(related_posts['Blog']), 1)
@@ -149,10 +134,11 @@ class RelatedPostsTestCase(TestCase):
         self.assertNotIn('Newsroom', related_posts)
         self.assertNotIn('Events', related_posts)
 
-    def test_related_posts_and_filtering(self):
+    def test_related_posts_and_filtering_true(self):
         """
-        Tests whether related posts are retrieved if and only if they match ALL
-        of the tags on the calling page.
+        Tests whether related posts are retrieved if the 'and_filtering' option
+        is checked, and that the only posts retrieved match ALL of the tags on
+        the calling page.
         """
 
         self.block.value['relate_posts'] = True
@@ -160,13 +146,30 @@ class RelatedPostsTestCase(TestCase):
         self.block.value['relate_events'] = True
         self.block.value['and_filtering'] = True
 
-        related_posts = self.page_with_authors.related_posts(self.block, self.hostname)
+        related_posts = self.page_with_authors.related_posts(self.block)
 
         self.assertNotIn('Blog', related_posts)
         self.assertIn('Newsroom', related_posts)
         self.assertEqual(len(related_posts['Newsroom']), 1)
         self.assertEqual(related_posts['Newsroom'][0], self.newsroom_child1)
         self.assertNotIn('Events', related_posts)
+
+    def test_related_posts_and_filtering_false(self):
+        """
+        Tests whether related posts are retrieved if, when the 'and_filtering'
+        option is not checked, they match at least one of the tags on the
+        calling page.
+        """
+
+        self.block.value['relate_posts'] = True
+        self.block.value['and_filtering'] = False
+
+        related_posts = self.page_with_authors.related_posts(self.block)
+
+        self.assertIn('Blog', related_posts)
+        self.assertEqual(len(related_posts['Blog']), 2)
+        self.assertEqual(related_posts['Blog'][0], self.blog_child2)
+        self.assertEqual(related_posts['Blog'][1], self.blog_child1)
 
     def test_related_posts_newsroom(self):
         """
@@ -182,7 +185,7 @@ class RelatedPostsTestCase(TestCase):
         self.block.value['relate_events'] = False
         self.block.value['specific_categories'] = ['Op-Ed']
 
-        related_posts = self.page_with_authors.related_posts(self.block, self.hostname)
+        related_posts = self.page_with_authors.related_posts(self.block)
 
         self.assertIn('Newsroom', related_posts)
         self.assertEqual(len(related_posts['Newsroom']), 1)
@@ -204,7 +207,7 @@ class RelatedPostsTestCase(TestCase):
         self.block.value['relate_events'] = True
         self.block.value['specific_categories'] = ['anything', 'can', 'be', 'here']
 
-        related_posts = self.page_with_authors.related_posts(self.block, self.hostname)
+        related_posts = self.page_with_authors.related_posts(self.block)
 
         self.assertIn('Events', related_posts)
         self.assertEqual(len(related_posts), 1)
@@ -229,7 +232,7 @@ class RelatedPostsTestCase(TestCase):
         self.block.value['relate_events'] = True
         self.block.value['specific_categories'] = ['anything', 'can', 'be', 'here']
 
-        related_posts = self.page_with_authors.related_posts(self.block, self.hostname)
+        related_posts = self.page_with_authors.related_posts(self.block)
 
         self.assertIn('Events', related_posts)
         self.assertEqual(len(related_posts['Events']), 2)
@@ -253,7 +256,7 @@ class RelatedPostsTestCase(TestCase):
                                                    'Policy &amp; Compliance',
                                                    'Op-Ed']
 
-        related_posts = self.page_with_authors.related_posts(self.block, self.hostname)
+        related_posts = self.page_with_authors.related_posts(self.block)
 
         self.assertIn('Blog', related_posts)
         self.assertIn('Newsroom', related_posts)

@@ -130,7 +130,7 @@ class CFGOVPage(Page):
         return (get_protected_url({'request': request}, activity_log)
                 + '?' + tags)
 
-    def related_posts(self, block, hostname):
+    def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
@@ -191,7 +191,7 @@ class CFGOVPage(Page):
                 # Apply similar logic as snippets.py's filter_by_tags method
                 # to enable AND filtering
                 if block.value['and_filtering']:
-                    for tag in self.tags.names() or []:
+                    for tag in self.tags.names():
                         type_query = type_query.filter(tags__name=tag)
                 related[search_type_name] = type_query[:block.value['limit']]
 
