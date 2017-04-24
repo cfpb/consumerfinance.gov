@@ -12,7 +12,7 @@ var BASE_CLASS = 'o-email-signup';
 
 function emailValidation ( fields ) {
   if ( fields.email && !fields.email.value ) {
-  	return 'Please enter an email address.';
+    return 'Please enter an email address.';
   }
   return validators.email( fields.email ).msg;
 }
@@ -29,7 +29,7 @@ formSubmit.addEventListener( 'success', function onEmailSignupSuccess( event ) {
   var form = event.form;
   var input = form.querySelector( 'input[name="code"]' );
   var code = input.value;
-  if ( code === "USCFPB_127" ) {
+  if ( code === 'USCFPB_127' ) {
     emailHelpers.recordEmailRegistration();
   }
 } );
