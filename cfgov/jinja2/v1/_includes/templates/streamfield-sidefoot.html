@@ -6,7 +6,7 @@
 {% macro render(streamfield, half_width=false) %}
     {% for block in streamfield recursive %}
         {% if 'related_posts' in block.block_type %}
-            {% set posts = page.related_posts(block, request.site.hostname) %}
+            {% set posts = page.related_posts(block) %}
             {% if posts %}
                 <div class="block {{ 'block__flush-top' if loop.index == 1 else '' -}}">
                     {{ related_posts.render(posts, block, half_width) }}
