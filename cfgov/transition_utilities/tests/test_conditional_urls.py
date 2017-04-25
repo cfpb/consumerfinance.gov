@@ -24,7 +24,8 @@ class ConditionalURLTests(TestCase):
     @mock.patch('transition_utilities.conditional_urls.wagtail_fail_through')
     def test_include_if_app_enabled_false_in_legacy_apps(
             self, mock_wagtail_fail_through):
-        """ Test fail-through if LEGACY_APP_URLS[app] is False """
+        """ Test that fail-through is called if LEGACY_APP_URLS[app] is
+        False """
         result = include_if_app_enabled('core', None)
         self.assertEqual(mock_wagtail_fail_through, result)
 
@@ -32,7 +33,8 @@ class ConditionalURLTests(TestCase):
     @mock.patch('transition_utilities.conditional_urls.wagtail_fail_through')
     def test_include_if_app_enabled_not_in_legacy_apps(
             self, mock_wagtail_fail_through):
-        """ Test fail-through if LEGACY_APP_URLS[app] doesn't exist """
+        """ Test that fail-through is called if LEGACY_APP_URLS[app] doesn't
+        exist """
         result = include_if_app_enabled('core', None)
         self.assertEqual(mock_wagtail_fail_through, result)
 
@@ -43,6 +45,7 @@ class ConditionalURLTests(TestCase):
     @mock.patch('transition_utilities.conditional_urls.wagtail_fail_through')
     def test_include_if_app_enabled_not_in_installed_apps(
             self, mock_wagtail_fail_through):
-        """ Test fail-through if app isn't in INSTALLED_APPS"""
+        """ Test that fail-through is called if app isn't in INSTALLED_APPS
+        """
         result = include_if_app_enabled('core', None)
         self.assertEqual(mock_wagtail_fail_through, result)
