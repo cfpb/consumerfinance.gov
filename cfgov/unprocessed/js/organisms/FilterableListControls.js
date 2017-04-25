@@ -64,7 +64,7 @@ function FilterableListControls( element ) {
     _expandable = new Expandable( _dom );
     _expandable.init();
 
-    if ( _dom.classList.contains( 'o-filterable-list-controls__mulit-select-test' ) ) {
+    if ( _dom.classList.contains( 'o-filterable-list-controls' ) ) {
       multiSelects.forEach( function( multiSelect ) {
         multiSelect.addEventListener( 'expandBegin', function refresh() {
           window.setTimeout( _expandable.refreshHeight, 250 );
