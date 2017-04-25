@@ -180,10 +180,7 @@
 {% from 'organisms/post-preview.html' import render as post_preview with context %}
 
 {% macro render(controls, index) %}
-    <div class="o-filterable-list-controls
-        {{ 'o-filterable-list-controls__mulit-select-test'
-           if flag_enabled(request, 'MULTI-SELECT-TEST')
-           else '' }}"
+    <div class="o-filterable-list-controls"
          id="o-filterable-list-controls-{{ index | string }}">
         {% set form = filter_data.forms.pop(0) %}
         {% set posts = filter_data.page_sets.pop(0) %}
