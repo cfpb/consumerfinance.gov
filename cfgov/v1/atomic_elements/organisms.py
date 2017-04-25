@@ -636,7 +636,7 @@ class FilterControls(BaseExpandable):
     link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text='Add links to post preview images in filterable list results'
+        help_text='Add links to post preview images and headings in filterable list results'
     )
 
     class Meta:
