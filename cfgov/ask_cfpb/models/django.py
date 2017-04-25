@@ -409,6 +409,18 @@ class Answer(models.Model):
         super(Answer, self).delete()
 
 
+class EnglishAnswerProxy(Answer):
+    """A no-op proxy class to allow separate language indexing in Haystack"""
+    class Meta:
+        proxy = True
+
+
+class SpanishAnswerProxy(Answer):
+    """A no-op proxy class to allow separate language indexing in Haystack"""
+    class Meta:
+        proxy = True
+
+
 class SubCategory(models.Model):
     name = models.CharField(max_length=255)
     name_es = models.CharField(max_length=255, null=True, blank=True)

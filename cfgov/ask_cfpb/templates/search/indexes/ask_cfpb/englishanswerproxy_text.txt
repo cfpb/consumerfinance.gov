@@ -1,0 +1,2 @@
+{{ object.answer|striptags|safe }}
+{{ object.question|striptags|safe }} 

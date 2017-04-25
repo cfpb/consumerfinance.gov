@@ -10,6 +10,8 @@ from wagtail.wagtailadmin.edit_handlers import (
     ObjectList,
     TabbedInterface)
 # from wagtail.wagtailcore.blocks import CharBlock
+# from wagtail.contrib.wagtailroutablepage.models import (
+#     RoutablePageMixin, route)
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtailsearch import index
@@ -79,6 +81,24 @@ class AnswerCategoryPage(
                 'slug', 'name')
         })
         return context
+
+
+class AnswerResultsPage(CFGOVPage):
+
+    objects = PageManager()
+    answers = []
+
+    def get_context(self, request, **kwargs):
+        context = super(
+            AnswerResultsPage, self).get_context(request, **kwargs)
+        context.update(**kwargs)
+        return context
+
+    def get_template(self, request):
+        if self.language == 'en':
+            return 'ask-cfpb/answer-search-results.html'
+        elif self.language == 'es':
+            return 'ask-cfpb/answer-search-spanish-results.html'
 
 
 class AnswerPage(CFGOVPage):

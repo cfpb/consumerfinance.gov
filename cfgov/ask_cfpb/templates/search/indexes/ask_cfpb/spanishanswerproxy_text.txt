@@ -1,0 +1,6 @@
+{{ object.answer_es|striptags|safe }}
+{{ object.question_es|striptags|safe }} 
+
+{% for tag in object.tags %}
+tag:{{ tag }}
+{% endfor %}
