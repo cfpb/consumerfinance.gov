@@ -18,7 +18,7 @@
     {% include 'article.html' %}
     <div class="block">
         <p>
-            Join the conversation. Follow CFPB on <a class="icon-link icon-link__external-link" href="https://twitter.com/cfpb"><span class="icon-link_text">Twitter</span> </a> and <a class="icon-link icon-link__external-link" href="https://www.facebook.com/cfpb"><span class="icon-link_text">Facebook</span> </a>.
+            Join the conversation. Follow CFPB on <a class="icon-link icon-link__external-link" href="{{ unsigned_redirect('https://twitter.com/cfpb') }}"><span class="icon-link_text">Twitter</span> </a> and <a class="icon-link icon-link__external-link" href="{{ unsigned_redirect('https://facebook.com/cfpb') }}"><span class="icon-link_text">Facebook</span> </a>.
         </p>
     </div>
 {% endblock %}
