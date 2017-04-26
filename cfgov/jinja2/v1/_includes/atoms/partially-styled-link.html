@@ -1,0 +1,29 @@
+{# ==========================================================================
+
+   Partially styled link
+
+   ==========================================================================
+
+   Description:
+
+   Create a partially underlined link atom when given:
+
+   value:         An object with the following options for value.
+
+   value.url:     A string for the URL of the link.
+
+   value.unstyled:    A string for the text of the link.
+
+   value.styled: A string for the underlined text of the link.
+
+   ========================================================================== #}
+
+{% macro render(value) -%}
+
+<a href="{{ value.url }}" class="a-partially-styled-link"> 
+	<span class="a-partially-styled-link_unstyled">{{ value.unstyled|safe }} </span>
+	<span class="a-partially-styled-link_styled">{{ value.styled }}</span>
+</a>
+
+{%- endmacro %}
+

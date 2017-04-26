@@ -1,0 +1,60 @@
+/* topdoc
+  name: Equal height columns
+  family: cfgov-molecules
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="m-equal-height_container">
+            <div class="m-equal-height_col">
+                <div class="m-equal-height_content">
+                	Equal height box contents
+            	</div>
+            </div>
+            <div class="m-equal-height_col">
+                <div class="m-equal-height_content">
+                	Equal height box contents
+                	<div class="m-equal-height_footer">
+                		Bottom aligned footer
+                	</div>
+            	</div>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .m-equal-height_container
+            .m-equal-height_col
+              .m-equal-height_content
+              	.m-equal-height_footer
+  tags:
+    - cfgov-molecules
+  notes:
+    - No support for equal-height columns below IE10.
+      Can be used in conjunction with content-layout
+      classes to provide column widths and layout for
+      browsers that do not support flexbox. 
+*/
+
+.m-equal-height_container {
+	.respond-to-min(@bp-sm-min, {
+		display: flex;
+		flex-wrap: wrap;
+
+		.m-equal-height_col {
+			display: flex;
+
+			.m-equal-height_content {
+				display: flex;
+				box-sizing: border-box;
+				flex-direction: column;
+				width: 100%;
+				height: 100%;
+
+				.m-equal-height_footer {
+					margin-top: auto;
+				}
+			}   
+		}
+	});
+}

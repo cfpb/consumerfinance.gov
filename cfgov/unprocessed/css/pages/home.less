@@ -15,3 +15,20 @@
         .u-info-unit-base__inline( @m-info-unit_img__lg );
     } );
 }
+
+.o-well__home {
+    .respond-to-min(@bp-sm-min, {
+        .content-l__large-gutters {
+            display: flex;
+
+            & > .content-l_col {
+                display: flex; 
+                flex-direction: column;
+            }
+
+            .m-equal-height_container {
+                height: 100%;
+            }
+        }
+    });
+}

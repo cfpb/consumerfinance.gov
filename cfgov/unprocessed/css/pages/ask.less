@@ -31,3 +31,44 @@
         margin-bottom: 0 !important;
     } 
 }
+
+.ask-landing-page {
+    .content_main {
+        padding-top: 0;
+        padding-bottom: 0;
+        
+        .respond-to-range(@bp-sm-min, @bp-med-max, {
+            border-width: 0;
+        });
+    }
+
+    .question-categories {
+        .respond-to-min(@bp-sm-min, {
+            background: @block__bg;
+            padding: unit(45 / @base-font-size-px, em)
+                     unit(@grid_gutter-width / @base-font-size-px, em);
+        });
+
+        .content-l_col {
+            margin: 0 0 unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+        }
+
+        .content-l_col-1-3 {
+            .respond-to-range(@bp-sm-min, @bp-med-max, {
+                .grid_column(6);
+            });
+        }
+
+        .m-card {
+            h2 {
+                .respond-to-range(@bp-sm-min, @bp-sm-max, {
+                    .h3();
+                });
+
+                a {
+                    color: @black;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+/* topdoc
+  name: Partially styled link
+  family: cfgov-atoms
+  patterns:
+    - name: Default example
+      markup: |
+          <a class="a-partially-styled-link">
+            <span class="a-partially-styled-link_unstyled">
+              Unstyled text
+            </span>
+            <span class="a-partially-styled-link_styled">
+              Underlined text
+            </span>
+          </a>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          a.a-partially-styled-link
+            span.a-partially-styled-link_unstyled
+            span.a-partially-styled-link_styled
+  tags:
+    - cfgov-atoms
+*/
+
+.a-partially-styled-link {
+  border-bottom-width: 0px;
+  
+  .a-partially-styled-link_unstyled {
+    color: @black;
+    border-bottom: 1px dotted transparent;
+  }
+  
+  .a-partially-styled-link_styled {
+    border-bottom: 1px dotted @link-underline;
+  }
+  
+  &:visited .a-partially-styled-link_styled {
+    border-bottom: 1px dotted @link-underline-visited;
+  }
+  
+  &:hover span,
+  &:focus span {
+    border-bottom: 1px solid @link-underline-hover !important;
+  }
+  
+  &:active span {    
+    border-bottom: 1px solid @link-underline-active !important;
+  }  
+}
