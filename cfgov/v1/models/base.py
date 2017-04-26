@@ -130,7 +130,7 @@ class CFGOVPage(Page):
         return (get_protected_url({'request': request}, activity_log)
                 + '?' + tags)
 
-    def related_posts(self, block, hostname):
+    def related_posts(self, block):
         from v1.models.learn_page import AbstractFilterPage
         related = {}
         query = models.Q(('tags__name__in', self.tags.names()))
@@ -181,12 +181,19 @@ class CFGOVPage(Page):
                     block, 'archive-past-events') & query
             relate = block.value.get('relate_{}'.format(search_type), None)
             if relate:
-                related[search_type_name] = (
+                type_query = (
                     AbstractFilterPage.objects.live().filter(
                         search_query
                     ).distinct().exclude(id=self.id).order_by(
                         '-date_published'
-                    )[:block.value['limit']])
+                    )
+                )
+                # Apply similar logic as snippets.py's filter_by_tags method
+                # to enable AND filtering
+                if block.value['and_filtering']:
+                    for tag in self.tags.names():
+                        type_query = type_query.filter(tags__name=tag)
+                related[search_type_name] = type_query[:block.value['limit']]
 
         # Return a dictionary of lists of each type when there's at least one
         # hit for that type.

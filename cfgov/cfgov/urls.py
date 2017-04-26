@@ -235,10 +235,17 @@ urlpatterns = [
         include_if_app_enabled('hud_api_replace', 'hud_api_replace.urls')),
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
-    url(r'^complaint/',
-        include_if_app_enabled('complaint', 'complaint.urls')),
+
+    # If 'MOSAIC_COMPLAINTS' is false, include complaint.urls.
+    # Otherwise fallback to Wagtail if MOSAIC_COMPLAINTS is true.
+    flagged_url('MOSAIC_COMPLAINTS',
+                r'^complaint/',
+                include_if_app_enabled('complaint', 'complaint.urls'),
+                fallback=lambda req: ServeView.as_view()(req, req.path),
+                condition=False),
     url(r'^data-research/consumer-complaints/',
         include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+
     url(r'^oah-api/rates/',
         include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/',
