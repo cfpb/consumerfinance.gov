@@ -3,12 +3,14 @@ from time import time
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
+from django.conf import settings
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 
 
 def get_unique_id(prefix='', suffix=''):
     index = hex(int(time() * 10000000))[2:]
     return prefix + str(index) + suffix
+
 
 # These messages are manually mirrored on the
 # Javascript side in error-messages-config.js
@@ -25,9 +27,12 @@ ERROR_MESSAGES = {
 
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
-    from ask_cfpb.models import AnswerCategoryPage
-    return isinstance(
-        page, (BrowsePage, BrowseFilterablePage, AnswerCategoryPage))
+    if settings.DEPLOY_ENVIRONMENT == 'build':
+        from ask_cfpb.models import AnswerCategoryPage
+        pages = (BrowsePage, BrowseFilterablePage, AnswerCategoryPage)
+    else:
+        pages = (BrowsePage, BrowseFilterablePage)
+    return isinstance(page, pages)
 
 
 # For use by Browse type pages to get the secondary navigation items
@@ -69,16 +74,6 @@ def get_secondary_nav_items(request, current_page):
             }
         ], True
     # END TODO
-
-    if page.slug.startswith("category"):
-        from ask_cfpb.models import Category
-        return [
-            {
-                'title': cat.name,
-                'url': '/ask-cfpb/category-' + cat.slug,
-                'active': cat.name == page.ask_category.name
-            } for cat in Category.objects.all()
-        ], True
 
     if page.secondary_nav_exclude_sibling_pages:
         pages = [page]

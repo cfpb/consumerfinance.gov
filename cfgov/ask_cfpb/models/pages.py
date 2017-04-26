@@ -59,6 +59,7 @@ class AnswerCategoryPage(
         FieldPanel('ask_category', Category),
         StreamFieldPanel('content'),
     ]
+    secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
