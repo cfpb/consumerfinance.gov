@@ -27,11 +27,14 @@ def view_answer(request, slug, language, answer_id):
         return answer_page.serve(request)
 
 
-def ask_search_en(request, as_json=False):
-    sqs = SearchQuerySet().models(EnglishAnswerProxy)
+def ask_search(request, language='en', as_json=False):
+    if language == 'en':
+        sqs = SearchQuerySet().models(EnglishAnswerProxy)
+    elif language == 'es':
+        sqs = SearchQuerySet().models(SpanishAnswerProxy)
     sqs = sqs.filter(content=Clean(request.GET.get('q', '')))
 
-    if as_json is True:
+    if as_json:
         results = [{'question': result.autocomplete,
                     'url': result.url}
                    for result in sqs]
@@ -40,28 +43,7 @@ def ask_search_en(request, as_json=False):
     else:
         page = get_object_or_404(
             AnswerResultsPage,
-            slug='ask-cfpb-answer-results')
-        page.answers = []
-        for result in sqs:
-            page.answers.append((result.url, result.autocomplete))
-        return page.serve(request)
-
-
-def ask_search_es(request, as_json=False):
-
-    sqs = SearchQuerySet().models(SpanishAnswerProxy)
-    sqs = sqs.filter(content=Clean(request.GET.get('q', '')))
-
-    if as_json is True:
-        results = [{'question': result.autocomplete,
-                    'url': result.url}
-                   for result in sqs]
-        json_results = json.dumps(results)
-        return HttpResponse(json_results, content_type='application/json')
-    else:
-        page = get_object_or_404(
-            AnswerResultsPage,
-            slug='respuestas')
+            language=language)
         page.answers = []
         for result in sqs:
             page.answers.append((result.url, result.autocomplete))

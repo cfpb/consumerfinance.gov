@@ -32,13 +32,15 @@
             {{ render_block.render(block, loop.index) }}
         {% endif %}
     {%- endfor %}
+    <div class="block
+                block__flush-top">
     <h2>Ask CFPB search results</h2>
     <ul>
     {% for pairing in page.answers %}
         <li><a href="{{ pairing[0] }}">{{ pairing[1] }} </a></li>
     {% endfor %}
     </ul>
-
+    </div>
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}

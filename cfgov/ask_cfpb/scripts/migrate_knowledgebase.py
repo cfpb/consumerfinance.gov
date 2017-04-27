@@ -8,6 +8,7 @@ import logging
 
 from bs4 import BeautifulSoup as bs
 from django.apps import apps
+from django.core.management import call_command
 
 from knowledgebase.models import QuestionCategory as QC
 from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
@@ -22,16 +23,6 @@ from v1.util.migrations import get_or_create_page
 logging.basicConfig(level=logging.WARNING)
 logging.disable(logging.INFO)
 
-PARENT_MAP = {
-    'english_parent': {'slug': 'ask-cfpb',
-                       'title': 'Ask CFPB',
-                       'parent_slug': 'cfgov',
-                       'language': 'en'},
-    'spanish_parent': {'slug': 'obtener-respuestas',
-                       'title': 'Obtener respuestas',
-                       'parent_slug': 'cfgov',
-                       'language': 'es'},
-}
 FEATURED_ANSWER_IDS = {
     763: 1,
     779: 2,
@@ -128,9 +119,19 @@ def fix_tips(answer_text):
 
 def get_or_create_parent_pages():
     from v1.models import CFGOVPage
+    parent_map = {
+        'english_parent': {'slug': 'ask-cfpb',
+                           'title': 'Ask CFPB',
+                           'parent_slug': 'cfgov',
+                           'language': 'en'},
+        'spanish_parent': {'slug': 'obtener-respuestas',
+                           'title': 'Obtener respuestas',
+                           'parent_slug': 'cfgov',
+                           'language': 'es'}
+    }
     counter = 0
-    for parent_type in sorted(PARENT_MAP.keys()):
-        _map = PARENT_MAP[parent_type]
+    for parent_type in sorted(parent_map.keys()):
+        _map = parent_map[parent_type]
         parent_page = get_or_create_page(
             apps,
             'ask_cfpb',
@@ -146,6 +147,35 @@ def get_or_create_parent_pages():
         time.sleep(1)
         counter += 1
     print("Created {} parent pages".format(counter))
+
+
+def get_or_create_search_results_pages():
+    from v1.models import CFGOVPage
+    language_map = {
+        'en': {'title': 'Ask CFPB search results',
+               'slug': 'ask-cfpb-search-results'},
+        'es': {'title': 'Respuestas',
+               'slug': 'respuestas'}
+    }
+    parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
+    counter = 0
+    for key in language_map:
+        _map = language_map[key]
+        results_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerResultsPage',
+            _map['title'],
+            _map['slug'],
+            parent,
+            language=key)
+        results_page.has_unpublished_changes = True
+        revision = results_page.save_revision()
+        results_page.save()
+        revision.publish()
+        time.sleep(1)
+        counter += 1
+    print("Created {} search results pages".format(counter))
 
 
 def get_or_create_category_pages():
@@ -169,26 +199,6 @@ def get_or_create_category_pages():
         time.sleep(1)
         counter += 1
     print("Created {} category pages".format(counter))
-
-
-# def get_or_create_category_search_page():
-#     from v1.models import CFGOVPage
-#     parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
-#     cat_page = get_or_create_page(
-#         apps,
-#         'ask_cfpb',
-#         'AnswerCategoryPage',
-#         'Category search > Consumer Financial Protection Bureau',
-#         "category-search",
-#         parent,
-#         language='en',
-#         ask_category=None)
-#     cat_page.has_unpublished_changes = True
-#     revision = cat_page.save_revision()
-#     cat_page.save()
-#     revision.publish()
-#     time.sleep(1)
-#     print("Created the category search page")
 
 
 def get_kb_statuses(ask_id):
@@ -466,6 +476,7 @@ def run():
     clean_up_blank_answers()
     get_or_create_parent_pages()
     get_or_create_category_pages()
-    # get_or_create_category_search_page()
+    get_or_create_search_results_pages()
     create_pages()
     logging.disable(logging.NOTSET)
+    call_command('update_index', 'ask_cfpb', r=True)

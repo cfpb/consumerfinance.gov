@@ -34,7 +34,10 @@
             </div>
         {% endif %}
     {% endfor %}
-{% include '_search-bar.html' %}
+            <div class="block
+                        block__flush-top">
+                {% include '_search-bar.html' %}
+            </div>
 {% endblock %}
 {% block javascript %}
 {{ super() }}
