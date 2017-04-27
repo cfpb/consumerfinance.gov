@@ -32,6 +32,11 @@ LOGGING = {
         'django': {
             'level': 'ERROR',
             'propagate': False,
+        },
+        'v1': {
+            'handlers': ['disk'],
+            'level': 'INFO',
+            'propagate': True,
         }
     }
 }
