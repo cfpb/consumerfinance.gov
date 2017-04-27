@@ -101,11 +101,11 @@ class CFGOVRenditionTest(TestCase):
             file=get_test_image_file()
         )
 
-        filt = Filter.objects.create(spec='original')
+        filt = Filter(spec='original')
 
         def create_rendition(image, filt):
             return CFGOVRendition.objects.create(
-                filter=filt,
+                filter_spec=filt.spec,
                 image=image,
                 file=image.file,
                 width=100,
