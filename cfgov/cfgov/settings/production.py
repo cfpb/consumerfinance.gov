@@ -18,7 +18,7 @@ LOGGING = {
         'disk': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/django.log',
+            'filename': '/var/log/httpd24/django.log',
             'maxBytes': 1024*1024*10,  # max 10 MB per file
             'backupCount': 5,  # keep 5 files around
         },
