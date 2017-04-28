@@ -103,7 +103,7 @@
     </section>
 
     {% set usajobs_links = page.usajobs_application_links.order_by(
-      'applicant_type' 
+      'applicant_type'
     ) %}
     {% for usajobs_link in usajobs_links %}
     <div class="block
@@ -130,10 +130,6 @@
     {% endfor %}
 
 {% endblock %}
-
-{% block content_sidebar_modifiers -%}
-    o-sidebar-content
-{%- endblock %}
 
 {% block content_sidebar scoped  %}
 <div class="block block__flush-top">

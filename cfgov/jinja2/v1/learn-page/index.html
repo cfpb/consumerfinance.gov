@@ -27,10 +27,6 @@
     {%- endfor %}
 {% endblock %}
 
-{% block content_sidebar_modifiers -%}
-    o-sidebar-content
-{%- endblock %}
-
 {% block content_sidebar scoped -%}
     {{ streamfield_sidefoot.render(page.sidefoot) }}
 {%- endblock %}
