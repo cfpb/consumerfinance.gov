@@ -55,6 +55,9 @@ class AnswerViewTestCase(django.test.TestCase):
         self.assertEqual(mock_query.call_count, 1)
         self.assertEqual(page.language, 'en')
         self.assertEqual(page.answers, [])
+        self.assertEqual(
+            page.get_template(HttpRequest()),
+            'ask-cfpb/answer-search-results.html')
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_search_page_es_selection(self, mock_query):
