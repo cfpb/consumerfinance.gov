@@ -9,9 +9,6 @@ from wagtail.wagtailadmin.edit_handlers import (
     StreamFieldPanel,
     ObjectList,
     TabbedInterface)
-# from wagtail.wagtailcore.blocks import CharBlock
-# from wagtail.contrib.wagtailroutablepage.models import (
-#     RoutablePageMixin, route)
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtailsearch import index
