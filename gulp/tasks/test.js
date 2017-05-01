@@ -270,6 +270,7 @@ function _spawnProtractor( suite ) {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function testAcceptanceBrowser( suite ) {
+  console.log( suite )
   _spawnProtractor( suite );
 }
 
@@ -303,6 +304,6 @@ gulp.task( 'test',
 
 gulp.task( 'test:acceptance', function() {
   return createAcceptantTestEnv().on('exit', function onClose() {
-    console.log( 'here')
+    testAcceptanceBrowser();
   } )
 } );
