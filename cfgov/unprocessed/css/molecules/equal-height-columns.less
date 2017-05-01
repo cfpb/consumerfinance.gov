@@ -7,16 +7,16 @@
         <div class="m-equal-height_container">
             <div class="m-equal-height_col">
                 <div class="m-equal-height_content">
-                	Equal height box contents
-            	</div>
+                    Equal height box contents
+                </div>
             </div>
             <div class="m-equal-height_col">
                 <div class="m-equal-height_content">
-                	Equal height box contents
-                	<div class="m-equal-height_footer">
-                		Bottom aligned footer
-                	</div>
-            	</div>
+                    Equal height box contents
+                    <div class="m-equal-height_footer">
+                        Bottom aligned footer
+                    </div>
+                </div>
             </div>
         </div>
       codenotes:
@@ -26,7 +26,7 @@
           .m-equal-height_container
             .m-equal-height_col
               .m-equal-height_content
-              	.m-equal-height_footer
+                .m-equal-height_footer
   tags:
     - cfgov-molecules
   notes:
@@ -37,24 +37,24 @@
 */
 
 .m-equal-height_container {
-	.respond-to-min(@bp-sm-min, {
-		display: flex;
-		flex-wrap: wrap;
 
-		.m-equal-height_col {
-			display: flex;
+    .respond-to-min(@bp-sm-min, {
+        display: flex;
+        flex-wrap: wrap;
 
-			.m-equal-height_content {
-				display: flex;
-				box-sizing: border-box;
-				flex-direction: column;
-				width: 100%;
-				height: 100%;
+        .m-equal-height_col {
+            display: flex !important;
 
-				.m-equal-height_footer {
-					margin-top: auto;
-				}
-			}   
-		}
-	});
+            .m-equal-height_content {
+                display: flex !important;
+                flex-direction: column;
+                align-content: stretch;
+                flex: 1;
+
+                .m-equal-height_footer {
+                    margin-top: auto;
+                }
+            }   
+        }
+    });
 }

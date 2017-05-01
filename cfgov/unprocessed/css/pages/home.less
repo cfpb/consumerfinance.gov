@@ -17,18 +17,21 @@
 }
 
 .o-well__home {
-    .respond-to-min(@bp-sm-min, {
+    .respond-to-min( @bp-sm-min, {
         .content-l__large-gutters {
-            display: flex;
 
-            & > .content-l_col {
-                display: flex; 
+            & > .m-equal-height_col {
                 flex-direction: column;
+                align-items: stretch;
             }
 
             .m-equal-height_container {
-                height: 100%;
+                flex-grow: 1; 
             }
+
         }
     });
 }
+
+
+
