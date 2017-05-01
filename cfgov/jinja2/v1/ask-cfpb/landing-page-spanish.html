@@ -6,16 +6,23 @@
         <div class="ac-catnav-row">              
         {% for cat in categories %}
             <article class="ac-catnav ac-cat-{{ cat.slug_es }}">
-                <h2 class="ac-catnav-heading"><a href="">
-    			<img src="{{static('nemo/_/img/icon-' + cat.slug + '-retina.png') }}" alt="" class="icon-40">{{ cat.name_es }}</a></h2>
+                <h2 class="ac-catnav-heading">
+                    <a href="">
+                        <img src="{{ static( 'nemo/_/img/icon-' + cat.slug + '-retina.png' ) }}" alt="" class="icon-40">
+                        {{ cat.name_es }}
+                    </a>
+                </h2>
                 <ul class="ac-catnav-list unstyled spaced">
                     {% for a in cat.featured_answers() %}
                      <li>
-                     	<a href="{{ slugurl(a.slug_es) }}">{{ a.question_es|safe }}</a>
+                        <a href="{{ slugurl( a.slug_es ) }}">{{ a.question_es|safe }}</a>
                      </li>
                     {% endfor %}
                 </ul>
-                <a href="" class="ac-catnav-learn"><img src="{{ static('nemo/_/img/icon-arrow-right-disc-retina.png')}}" alt="" class="icon-18">Más acerca de {{ cat.name_es|lower }}</a>
+                <a href="" class="ac-catnav-learn">
+                    <img src="{{ static( 'nemo/_/img/icon-arrow-right-disc-retina.png' ) }}" alt="" class="icon-18">
+                    Más acerca de {{ cat.name_es|lower }}
+                </a>
             </article>
             {% if loop.last %}
             </div>
@@ -24,7 +31,7 @@
             <div class="ac-catnav-row">
             {% endif %}                
         {% endfor %}
-	</div><!-- .primary -->        
+    </div><!-- .primary -->        
 </section>
 {% endblock %}
 

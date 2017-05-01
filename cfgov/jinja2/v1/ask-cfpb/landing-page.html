@@ -25,9 +25,9 @@
                         {% for category in categories %}
                             <li class="list_item">
                                 <a class="list_link jump-link jump-link__right" 
-                                   href="{{slugurl('category-' + category.slug)}}">
+                                   href="{{ slugurl( 'category-' + category.slug ) }}">
                                     <span class="jump-link_text">
-                                        {{ category_icon.render(category.name) }}
+                                        {{ category_icon.render( category.name ) }}
                                         {{ category.name }}
                                     </span>
                                 </a>
@@ -45,8 +45,8 @@
                                         <article class="m-card m-equal-height_content ">
 
                                             <h2>
-                                                <a href="{{slugurl('category-' + category.slug)}}">
-                                                {{ category_icon.render(category.name) }}
+                                                <a href="{{ slugurl( 'category-' + category.slug ) }}">
+                                                {{ category_icon.render( category.name ) }}
                                                 {{ category.name }}
                                                 </a>
                                             </h2>
@@ -61,7 +61,7 @@
 
                                             <div class="m-equal-height_footer">
                                                 <p class="short-desc u-mb0">
-                                                    <a href="{{slugurl('category-' + category.slug)}}">
+                                                    <a href="{{ slugurl( 'category-' + category.slug ) }}">
                                                         See all {{ category.name|lower }} questions
                                                     </a>
                                                 </p>
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="block block__sub">
-                            {{ tags.render(audiences, '/askcfpb/search/') }}
+                            {{ tags.render( audiences, '/askcfpb/search/' ) }}
                         </div>
                     </div>
                 </section>
