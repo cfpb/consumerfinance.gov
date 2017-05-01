@@ -2,6 +2,7 @@
 
 var configTest = require( '../config' ).test;
 var envvars = require( '../../config/environment' ).envvars;
+var fs = require('fs');
 var fsHelper = require( '../utils/fs-helper' );
 var gulp = require( 'gulp' );
 var gulpCoveralls = require( 'gulp-coveralls' );
@@ -12,6 +13,8 @@ var isReachable = require( 'is-reachable' );
 var localtunnel = require( 'localtunnel' );
 var minimist = require( 'minimist' );
 var spawn = require( 'child_process' ).spawn;
+var SimpleCrawler = require( 'simplecrawler' );
+
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -56,6 +59,16 @@ function testUnitServer() {
     }
     gulpUtil.log( 'Tox tests done!' );
   } );
+}
+
+/**
+ * Run tox unit tests.
+ */
+function createAcceptantTestEnv() {
+  return spawn(
+    'tox', ['-e', 'acceptance'],
+    { stdio: 'inherit' }
+  )
 }
 
 /**
@@ -232,11 +245,69 @@ function testPerf() {
 }
 
 /**
+ * Run visual regression tests.
+ */
+function _createIndexFile( fileName, content ) {
+  parseInt( console.timeEnd('SITE_INDEX') ) / 100 / 60;
+  fs.writeFile( fileName, content, function( error ) {
+    if ( error ) return console.log( error );
+    console.log( 'The index file was successfully created' );
+  } );
+}
+
+/**
+ * Run visual regression tests.
+ */
+function _createSiteIndex( siteLocation ) {
+  var host = envvars.TEST_HTTP_HOST;
+  var port = envvars.TEST_HTTP_PORT;
+  var indexArray = [];
+  var IGNORE_ITEMS =
+    /\.(png|jpg|jpeg|gif|ico|css|js|csv|doc|docx|pdf|woff|html|zip)$/i;
+  var SITE_LOCATION = 'http://' + host + ':' + port;
+
+  siteLocation = siteLocation || SITE_LOCATION;
+  var siteCrawler = SimpleCrawler( siteLocation )
+
+  siteCrawler.on( 'fetchcomplete', function( queueItem ) {
+    console.log( 'indexing ' + queueItem.url );
+    indexArray.push( queueItem.url )
+  } );
+
+  siteCrawler.on( 'complete', function() {
+    var indexLocation = configTest.tests + '/site.idx';
+    _createIndexFile( indexLocation,  indexArray.join( '\n' ) );
+  } );
+
+  siteCrawler.addFetchCondition( function( queueItem ) {
+    return !queueItem.path.match( IGNORE_ITEMS );
+  } );
+
+  siteCrawler.parseHTMLComments = false;
+  siteCrawler.parseScriptTags = false;
+  siteCrawler.stripQuerystring = true;
+  siteCrawler.maxConcurrency = 20;
+
+  console.time('SITE_INDEX');
+
+  siteCrawler.start();
+}
+
+/**
+ * Run visual regression tests.
+ * @param {string} siteLocation Name of specific suite or suites to run, if any.
+ */
+function testVisualRegression( ) {
+  _createSiteIndex();
+}
+
+/**
  * Spawn the appropriate acceptance tests.
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function _spawnProtractor( suite ) {
   var params = _getProtractorParams( suite );
+
   gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
@@ -269,10 +340,9 @@ function testCoveralls() {
 
 // This task will only run on Travis
 gulp.task( 'test:coveralls', testCoveralls );
-
 gulp.task( 'test:a11y', testA11y );
 gulp.task( 'test:perf', testPerf );
-
+gulp.task( 'test:visualRegression', testVisualRegression );
 
 gulp.task( 'test:unit:scripts', testUnitScripts );
 gulp.task( 'test:unit:server', testUnitServer );
@@ -291,5 +361,7 @@ gulp.task( 'test',
 );
 
 gulp.task( 'test:acceptance', function() {
-  testAcceptanceBrowser();
+  return createAcceptantTestEnv().on('exit', function onClose() {
+    console.log( 'here')
+  } )
 } );
