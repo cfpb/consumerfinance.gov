@@ -24,27 +24,27 @@
 */
 
 .a-link__partially-styled {
-  border-bottom-width: 0px;
+    border-bottom-width: 0px;
   
-  &_unstyled {
-    color: @black;
-    border-bottom: 1px dotted transparent;
-  }
+    &_unstyled {
+        color: @black;
+        border-bottom: 1px dotted transparent;
+    }
   
-  &_styled {
-    border-bottom: 1px dotted @link-underline;
-  }
+    &_styled {
+        border-bottom: 1px dotted @link-underline;
+    }
   
-  &:visited &_styled {
-    border-bottom: 1px dotted @link-underline-visited;
-  }
+    &:visited &_styled {
+        border-bottom: 1px dotted @link-underline-visited;
+    }
   
-  &:hover span,
-  &:focus span {
-    border-bottom: 1px solid @link-underline-hover !important;
-  }
+    &:hover span,
+    &:focus span {
+        border-bottom: 1px solid @link-underline-hover !important;
+    }
   
-  &:active span {    
-    border-bottom: 1px solid @link-underline-active !important;
-  }  
+    &:active span {    
+        border-bottom: 1px solid @link-underline-active !important;
+    }  
 }
