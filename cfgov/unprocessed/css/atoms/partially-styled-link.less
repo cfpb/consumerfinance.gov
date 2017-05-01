@@ -4,11 +4,11 @@
   patterns:
     - name: Default example
       markup: |
-          <a class="a-partially-styled-link">
-            <span class="a-partially-styled-link_unstyled">
+          <a class="a-link a-link__partially-styled">
+            <span class="a-link__partially-styled_unstyled">
               Unstyled text
             </span>
-            <span class="a-partially-styled-link_styled">
+            <span class="a-link__partially-styled_styled">
               Underlined text
             </span>
           </a>
@@ -16,26 +16,26 @@
         - |
           Structural cheat sheet:
           -----------------------
-          a.a-partially-styled-link
-            span.a-partially-styled-link_unstyled
-            span.a-partially-styled-link_styled
+          .a-link.a-link__partially-styled
+            span.a-link__partially-styled_unstyled
+            span.a-link__partially-styled_styled
   tags:
     - cfgov-atoms
 */
 
-.a-partially-styled-link {
+.a-link__partially-styled {
   border-bottom-width: 0px;
   
-  .a-partially-styled-link_unstyled {
+  &_unstyled {
     color: @black;
     border-bottom: 1px dotted transparent;
   }
   
-  .a-partially-styled-link_styled {
+  &_styled {
     border-bottom: 1px dotted @link-underline;
   }
   
-  &:visited .a-partially-styled-link_styled {
+  &:visited &_styled {
     border-bottom: 1px dotted @link-underline-visited;
   }
   
