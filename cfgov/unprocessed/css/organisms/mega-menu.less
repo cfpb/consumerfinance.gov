@@ -18,6 +18,22 @@
 @mobile_trigger_ht__px: 54px;
 
 /* topdoc
+  name: Body Overflow
+  notes:
+    - "Hides menu overflow on mobile sizes."
+  patterns:
+    - name: Body
+      codenotes:
+        - |
+          body
+*/
+body {
+    .respond-to-max( @bp-sm-max, {
+        overflow-x: hidden;
+    } );
+}
+
+/* topdoc
   name: Mega Menu
   family: cfgov-organisms
   patterns:
