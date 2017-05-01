@@ -88,6 +88,8 @@ function scrollIntoView( elem, opts ) {
     var elementTop = elem.getBoundingClientRect().top;
     var to = Math.max( window.pageYOffset + elementTop - opts.offset, 0 );
     scrollTo( to, opts );
+  } else if ( opts.callback && typeof opts.callback === 'function' ) {
+    opts.callback();
   }
 }
 

@@ -1,0 +1,47 @@
+{% extends 'layout-side-nav.html' %}
+{% import 'organisms/filterable-list-controls.html' as flc with context %}
+
+{% import 'macros/time.html' as time %}
+
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    <section class="block
+                    block__flush-top
+                    block__sub">
+        <h1>{{ page.ask_category.name }}</h1>
+        <div class="lead-paragraph">
+            <p>{{ page.ask_category.intro|safe }}</p>
+        </div>
+        <h3>What is your question about?</h3>
+        <ul>
+        {%- for subcat in page.ask_category.subcategories.all() -%}
+            <li>{{ subcat.name }}</li>
+        {% endfor %}
+        </ul>
+    </section>
+    <section class="search-results"></section>
+
+    {% for block in page.content %}
+        {% if 'filter_controls' in block.block_type %}
+            <div class="block
+                        block__flush-top">
+                {% import 'organisms/filterable-list-controls.html' as flc with context %}
+                {{ flc.render(block.value, loop.index0) }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+{% block javascript %}
+{{ super() }}
+<script>
+    var audienceMap = {{ page.ask_category.audience_json|safe }};
+    var subcatMap = {{ page.ask_category.subcategory_json|safe }};
+    var answerMap = {{ page.ask_category.answer_json|safe }};
+</script>    
+{% endblock %}
+
+

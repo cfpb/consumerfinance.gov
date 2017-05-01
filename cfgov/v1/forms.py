@@ -92,7 +92,7 @@ class FilterableListForm(forms.Form):
         self.base_query = kwargs.pop('base_query')
         super(FilterableListForm, self).__init__(*args, **kwargs)
 
-        pages = self.base_query.live_shared(self.hostname)
+        pages = self.base_query.live()
         page_ids = pages.values_list('id', flat=True)
 
         clean_categories(selected_categories=self.data.get('categories'))
@@ -222,7 +222,7 @@ class FeedbackForm(forms.ModelForm):
     """For feedback modules that simply ask 'Was this page helfpul?'"""
     class Meta:
         model = Feedback
-        fields = ['is_helpful', 'comment']
+        fields = ['is_helpful', 'comment', 'language']
 
     def __init__(self, *args, **kwargs):
         super(FeedbackForm, self).__init__(*args, **kwargs)
@@ -233,7 +233,7 @@ class ReferredFeedbackForm(forms.ModelForm):
     """For feedback modules that need to capture the referring page"""
     class Meta:
         model = Feedback
-        fields = ['is_helpful', 'referrer', 'comment']
+        fields = ['is_helpful', 'referrer', 'comment', 'language']
 
     def __init__(self, *args, **kwargs):
         super(ReferredFeedbackForm, self).__init__(*args, **kwargs)
@@ -249,7 +249,8 @@ class SuggestionFeedbackForm(forms.ModelForm):
                   'comment',
                   'expect_to_buy',
                   'currently_own',
-                  'email']
+                  'email',
+                  'language']
 
     def __init__(self, *args, **kwargs):
         super(SuggestionFeedbackForm, self).__init__(*args, **kwargs)

@@ -1,0 +1,33 @@
+/* ==========================================================================
+   cfgov-refresh
+   Ask CFPB pages at /ask-cfpb/.
+   ========================================================================== */
+
+
+.answer-module {
+    border-top: 3px solid @green;
+    border-bottom: 1px solid @block__border-bottom;
+    padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em) 0;
+    margin: unit(@grid_gutter-width / @base-font-size-px, em) 0;
+    color: @gray;
+
+    .respond-to-min(@bp-sm-min, {
+        padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+    });
+
+    .respond-to-min(@bp-med-min, {
+       width: 80%;
+    });
+
+    h1, h2, h3, h4, h6 {
+        .heading-5();
+        margin-top: 0;
+        margin-bottom: unit((@grid_gutter-width / 3) / @base-font-size-px, em);
+    }
+
+    p:last-child,
+    ul:last-child,
+    ol:last-child {
+        margin-bottom: 0 !important;
+    } 
+}

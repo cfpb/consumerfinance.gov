@@ -99,10 +99,23 @@ var onDemandHeaderRawConf = {
   }
 };
 
+var spanishConf = {
+  entry: paths.unprocessed + JS_ROUTES_PATH + '/on-demand/feedback-form.js',
+  output: {
+    filename: 'spanish.js'
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin( {
+      compress: { warnings: false }
+    } )
+  ]
+};
+
 module.exports = {
   onDemandHeaderRawConf: onDemandHeaderRawConf,
   onDemandConf:          onDemandConf,
   ieConf:                ieConf,
   modernConf:            modernConf,
-  externalConf:          externalConf
+  externalConf:          externalConf,
+  spanishConf:           spanishConf
 };

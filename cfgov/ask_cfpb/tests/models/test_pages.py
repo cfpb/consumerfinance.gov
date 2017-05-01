@@ -1,14 +1,17 @@
 from __future__ import unicode_literals
 import HTMLParser
 
+import json
 import mock
 from mock import patch
 from model_mommy import mommy
 
+from bs4 import BeautifulSoup as bs
+
 from django.utils import timezone
 from django.apps import apps
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.test import TestCase
 from django.test import Client
 from django.utils import html
@@ -17,7 +20,7 @@ from v1.util.migrations import get_or_create_page, get_free_path
 from ask_cfpb.models.django import (
     Answer, Category, SubCategory, Audience,
     NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
-from ask_cfpb.models.pages import AnswerPage
+from ask_cfpb.models.pages import AnswerPage, AnswerCategoryPage
 
 html_parser = HTMLParser.HTMLParser()
 client = Client()
@@ -41,13 +44,25 @@ class AnswerModelTestCase(TestCase):
         page.save()
         return page
 
+    def create_category_page(self, **kwargs):
+        kwargs.setdefault(
+            'path', get_free_path(apps, self.english_parent_page))
+        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
+        kwargs.setdefault('slug', 'category-mortgages')
+        kwargs.setdefault('title', 'Mortgages')
+        page = mommy.prepare(AnswerCategoryPage, **kwargs)
+        page.save()
+        return page
+
     def setUp(self):
         from v1.models import HomePage
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
-        self.audiences = [mommy.make(Audience, name='stub_audience')]
-        self.category = mommy.make(Category, name='stub_cat')
+        self.audience = mommy.make(Audience, name='stub_audience')
+        self.category = mommy.make(Category, name='stub_cat', name_es='que')
         self.subcategories = mommy.make(
             SubCategory, name='stub_subcat', _quantity=3)
+        self.category.subcategories.add(self.subcategories[0])
+        self.category.save()
         self.next_step = mommy.make(NextStep, title='stub_step')
         page_clean = patch('ask_cfpb.models.pages.CFGOVPage.clean')
         page_clean.start()
@@ -94,13 +109,13 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(response_200.status_code, 200)
 
     def test_view_answer_302(self):
-        response_202 = client.get(reverse(
+        response_302 = client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
-        self.assertTrue(isinstance(response_202, HttpResponse))
-        self.assertEqual(response_202.status_code, 302)
+        self.assertTrue(isinstance(response_302, HttpResponse))
+        self.assertEqual(response_302.status_code, 302)
 
     def test_view_answer_redirected(self):
-        self.page1.redirect_id = 5678
+        self.page1.redirect_to = self.page2.answer_base
         self.page1.save()
         response_302 = client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
@@ -125,6 +140,16 @@ class AnswerModelTestCase(TestCase):
             AnswerPage.objects.filter(answer_base=answer).count(), 0)
         self.assertEqual(
             Answer.objects.filter(id=ID).count(), 0)
+
+    def test_spanish_template_used(self):
+        spanish_answer = self.prepare_answer(
+            answer_es='Spanish answer',
+            slug_es='spanish-answer',
+            update_spanish_page=True)
+        spanish_answer.save()
+        spanish_page = spanish_answer.spanish_page
+        soup = bs(spanish_page.serve(HttpRequest()).rendered_content)
+        self.assertIn('Oficina', soup.title.string)
 
     def test_create_or_update_page_unsuppoted_language(self):
         answer = self.prepare_answer()
@@ -197,7 +222,19 @@ class AnswerModelTestCase(TestCase):
         mock_create_page.assert_called_with(language='es')
         self.assertEqual(mock_create_page.call_count, 2)
 
-    def test_available_subcategories(self):
+    def test_has_live_page(self):
+        answer = self.prepare_answer()
+        answer.save()
+        self.assertEqual(answer.has_live_page(), False)
+        answer.update_english_page = True
+        answer.save()
+        _page = answer.answer_pages.get(language='en')
+        self.assertEqual(answer.has_live_page(), False)
+        _revision = _page.save_revision()
+        _revision.publish()
+        self.assertEqual(answer.has_live_page(), True)
+
+    def test_available_subcategories_qs(self):
         parent_category = self.category
         for sc in self.subcategories:
             sc.parent = parent_category
@@ -206,17 +243,8 @@ class AnswerModelTestCase(TestCase):
         answer.save()
         answer.category.add(parent_category)
         answer.save()
-        self.assertEqual(answer.available_subcategories, self.subcategories)
-
-    def test_subcat_slugs(self):
-        answer = self.prepare_answer()
-        answer.save()
-        for sc in self.subcategories:
-            answer.subcategory.add = sc
-        answer.save()
-        self.assertEqual(
-            answer.subcat_slugs(),
-            [cat.slug for cat in answer.subcategory.all()])
+        for subcat in self.subcategories:
+            self.assertIn(subcat, answer.available_subcategory_qs)
 
     def test_bass_string_no_base(self):  # sic
         test_page = self.create_answer_page()
@@ -240,9 +268,9 @@ class AnswerModelTestCase(TestCase):
         answer.save()
         self.assertIn(audience.name, answer.audience_strings())
 
-    def test_tagging(self):
+    def test_search_tags(self):
         """Test the generator produced by answer.tags()"""
-        answer = self.prepare_answer(tagging='Chutes, Ladders')
+        answer = self.prepare_answer(search_tags='Chutes, Ladders')
         answer.save()
         taglist = [tag for tag in answer.tags()]
         for name in ['Chutes', 'Ladders']:
@@ -254,11 +282,13 @@ class AnswerModelTestCase(TestCase):
         answer.category.add(self.category)
         answer.save()
         self.assertEqual(answer.category_text(), [self.category.name])
+        self.assertEqual(answer.category_text_es(), [self.category.name_es])
 
     def test_category_text_no_category(self):
         answer = self.prepare_answer()
         answer.save()
         self.assertEqual(answer.category_text(), '')
+        self.assertEqual(answer.category_text_es(), '')
 
     def test_answer_text(self):
         raw_snippet = "<strong>Snippet</strong>."
@@ -271,8 +301,8 @@ class AnswerModelTestCase(TestCase):
             snippet_es=raw_snippet,
             answer_es=raw_answer)
         answer.save()
-        self.assertEqual(answer.answer_text(), clean)
-        self.assertEqual(answer.answer_text_es(), clean)
+        self.assertEqual(answer.answer_text, clean)
+        self.assertEqual(answer.answer_text_es, clean)
 
     def test_cleaned_questions(self):
         answer = self.prepare_answer(
@@ -295,6 +325,14 @@ class AnswerModelTestCase(TestCase):
         category = self.category
         self.assertEqual(category.__str__(), category.name)
 
+    def test_category_featured_answers(self):
+        category = self.category
+        mock_answer = self.answer1234
+        mock_answer.featured = True
+        mock_answer.category.add(category)
+        mock_answer.save()
+        self.assertIn(mock_answer, category.featured_answers())
+
     def test_subcategory_str(self):
         subcategory = self.subcategories[0]
         self.assertEqual(subcategory.__str__(), subcategory.name)
@@ -304,18 +342,65 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(next_step.__str__(), next_step.title)
 
     def test_audience_str(self):
-        audience = self.audiences[0]
+        audience = self.audience
         self.assertEqual(audience.__str__(), audience.name)
 
     def test_status_string(self):
-        test_page = self.create_answer_page()
+        answer1 = self.prepare_answer()
+        answer1.save()
+        answer2 = self.prepare_answer()
+        answer2.save()
+        test_page = self.create_answer_page(answer_base=answer1)
         test_page.live = False
-        test_page.redirect_id = 1234
+        test_redirect_page = self.create_answer_page(answer_base=answer2)
+        test_page.redirect_to = test_redirect_page.answer_base
         self.assertEqual(
             test_page.status_string.lower(), "redirected but not live")
         test_page.live = True
         self.assertEqual(
             test_page.status_string.lower(), "redirected")
-        test_page.redirect_id = None
+        test_page.redirect_to = None
         self.assertEqual(
             test_page.status_string.lower(), "live")
+
+    def test_category_page_context(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(ask_category=self.category)
+        test_context = cat_page.get_context(mock_request)
+        self.assertEqual(test_context['choices'][0][1], 'stub_subcat')
+
+    def test_category_page_add_js_function(self):
+        cat_page = self.create_category_page(ask_category=self.category)
+        js = {}
+        cat_page.add_page_js(js)
+        self.assertEqual(js, {'template': [u'secondary-navigation.js']})
+
+    def test_answer_language_page_exists(self):
+        self.assertEqual(self.answer5678.english_page, self.page2)
+
+    def test_answer_language_page_nonexistent(self):
+        self.assertEqual(self.answer5678.spanish_page, None)
+
+    def test_category_audience_json(self):
+        self.answer1234.audiences.add(self.audience)
+        self.answer1234.category.add(self.category)
+        self.answer1234.save()
+        self.assertEqual(
+            self.category.audience_json,
+            '{"stub_audience": ["1234"]}')
+
+    def test_category_subcategory_json(self):
+        self.answer1234.subcategory.add(self.subcategories[0])
+        self.assertEqual(
+            self.category.subcategory_json,
+            '{"stub_subcat": ["1234"]}')
+
+    def test_category_answer_json(self):
+        self.answer1234.category.add(self.category)
+        result_dict = json.loads(self.category.answer_json)
+        self.assertEqual(result_dict.keys()[0], '1234')
+        self.assertEqual(result_dict['1234']['url'], '/ask-cfpb/slug-en-1234')
+        self.assertEqual(result_dict['1234']['question'], 'Mock question1')

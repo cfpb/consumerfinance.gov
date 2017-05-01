@@ -1,4 +1,3 @@
-
 import json
 import requests
 
@@ -20,6 +19,7 @@ from v1.atomic_elements import atoms, molecules
 from v1.models.snippets import Contact as ContactSnippetClass
 from v1.models.snippets import ReusableText, ReusableTextChooserBlock
 from v1.util import ref
+import ask_cfpb
 
 
 class Well(blocks.StructBlock):
@@ -33,11 +33,11 @@ class Well(blocks.StructBlock):
 
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    should_link_image = blocks.BooleanBlock(
+    link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text=('Check this to link all images to the URL of the first '
-                   'link in their unit\'s list, if there is a link.')
+        help_text=('Check this to link all images and headings to the URL of '
+                   'the first link in their unit\'s list, if there is a link.')
     )
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
@@ -60,11 +60,11 @@ class ImageText5050Group(blocks.StructBlock):
 
 class ImageText2575Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    should_link_image = blocks.BooleanBlock(
+    link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text=('Check this to link all images to the URL of the first '
-                   'link in their unit\'s list, if there is a link.')
+        help_text=('Check this to link all images and headings to the URL of '
+                   'the first link in their unit\'s list, if there is a link.')
     )
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
@@ -152,7 +152,11 @@ class RegComment(blocks.StructBlock):
 
 
 class RelatedPosts(blocks.StructBlock):
-    limit = blocks.CharBlock(default='3', label='Limit')
+    limit = blocks.CharBlock(
+        default='3',
+        help_text=('This limit applies to EACH TYPE of post this module '
+                   'retrieves, not the total number of retrieved posts.')
+    )
     show_heading = blocks.BooleanBlock(
         required=False,
         default=True,
@@ -187,6 +191,15 @@ class RelatedPosts(blocks.StructBlock):
         blocks.ChoiceBlock(choices=ref.related_posts_categories,
                            required=False),
         required=False
+    )
+
+    and_filtering = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        label='Match all topic tags',
+        help_text=('If checked, related posts will only be pulled in if they '
+                   'match ALL topic tags set on this page. Otherwise, related '
+                   'posts can match any one topic tag.')
     )
 
     class Meta:
@@ -607,8 +620,10 @@ class FilterControls(BaseExpandable):
          blocks.BooleanBlock(default=True, required=False)),
         ('show_preview_categories',
          blocks.BooleanBlock(default=True, required=False)),
-        ('page_type', blocks.ChoiceBlock(choices=ref.page_types,
-                                         required=False)),
+        ('page_type', blocks.ChoiceBlock(
+            choices=ref.filterable_list_page_types,
+            required=False
+        )),
     ])
     topics = blocks.BooleanBlock(default=True, required=False,
                                  label='Filter Topics')
@@ -618,10 +633,11 @@ class FilterControls(BaseExpandable):
                                      label='Filter Date Range')
     output_5050 = blocks.BooleanBlock(default=False, required=False,
                                       label="Render preview items as 50-50s")
-    should_link_image = blocks.BooleanBlock(
+    link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text='Add links to post preview images in filterable list results'
+        help_text='Add links to post preview images and'
+                  ' headings in filterable list results'
     )
 
     class Meta:
@@ -761,3 +777,13 @@ class SnippetList(blocks.StructBlock):
     class Meta:
         icon = 'table'
         template = '_includes/organisms/snippet-list.html'
+
+
+class AskCategoryCard(ModelList):
+
+    def render(self, value, context=None):
+        value['category'] = ask_cfpb.models.Category.objects.first()
+        value.update(context or {})
+
+        template = '_includes/organisms/ask-cfpb-card.html'
+        return render_to_string(template, value)

@@ -23,7 +23,7 @@ from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
 from v1.views import (change_password, check_permissions, login_with_lockout,
-                      password_reset_confirm, unshare, welcome)
+                      password_reset_confirm, welcome)
 from v1.views.documents import DocumentServeView
 
 
@@ -108,11 +108,13 @@ urlpatterns = [
         RedirectView.as_view(
             url='/about-us/newsroom/%(path)s', permanent=True)),
 
-    url(r'^about-us/newsroom/press-resources/$',
-        TemplateView.as_view(
+    flagged_url(
+        'WAGTAIL_ABOUT_US',
+        r'^about-us/newsroom/press-resources/$',
+        lambda req: ServeView.as_view()(req, req.path),
+        fallback=TemplateView.as_view(
             template_name='newsroom/press-resources/index.html'),
         name='press-resources'),
-
 
     url(r'^the-bureau/(?P<path>.*)$',
             RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
@@ -199,10 +201,13 @@ urlpatterns = [
     url(r'^newsroom-feed/$',
         RedirectView.as_view(url='/about-us/newsroom/feed/', permanent=True)),
 
-    url(r'^about-us/$',
-        SheerTemplateView.as_view(
-            template_name='about-us/index.html'), name='about-us'),
-
+    flagged_url(
+        'WAGTAIL_ABOUT_US',
+        r'^about-us/$',
+        lambda req: ServeView.as_view()(req, req.path),
+        fallback=SheerTemplateView.as_view(
+            template_name='about-us/index.html'),
+        name='about-us'),
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/careers/%(path)s', permanent=True)),
@@ -230,10 +235,17 @@ urlpatterns = [
         include_if_app_enabled('hud_api_replace', 'hud_api_replace.urls')),
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
-    url(r'^complaint/',
-        include_if_app_enabled('complaint', 'complaint.urls')),
+
+    # If 'MOSAIC_COMPLAINTS' is false, include complaint.urls.
+    # Otherwise fallback to Wagtail if MOSAIC_COMPLAINTS is true.
+    flagged_url('MOSAIC_COMPLAINTS',
+                r'^complaint/',
+                include_if_app_enabled('complaint', 'complaint.urls'),
+                fallback=lambda req: ServeView.as_view()(req, req.path),
+                condition=False),
     url(r'^data-research/consumer-complaints/',
         include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+
     url(r'^oah-api/rates/',
         include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/',
@@ -295,7 +307,6 @@ if settings.ALLOW_ADMIN_URL:
             change_password,
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
-        url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([
@@ -314,7 +325,6 @@ if settings.ALLOW_ADMIN_URL:
             name='wagtailadmin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
         url(r'^admin/', include(wagtailadmin_urls)),
-        url(r'^admin/pages/(\d+)/unshare/$', unshare, name='unshare'),
 
     ]
 
@@ -378,7 +388,7 @@ if settings.DEPLOY_ENVIRONMENT == 'build':
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
             view_answer,
             name='ask-english-answer'),
-        url(r'^(?i)inicio/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+        url(r'^(?i)obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
             view_answer,
             name='ask-spanish-answer')
     ]

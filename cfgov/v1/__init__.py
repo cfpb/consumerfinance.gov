@@ -4,25 +4,29 @@ import os
 import re
 from urlparse import urlparse, parse_qs
 
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.template.defaultfilters import pluralize, slugify, linebreaksbr
-from django.utils.module_loading import import_string
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import (
+    linebreaksbr,
+    pluralize,
+    slugify,
+)
+from django.utils.module_loading import import_string
+from django.utils.timezone import template_localtime
 
 from jinja2 import contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
-from .util.util import get_unique_id
+from v1.util.util import get_unique_id
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
 from processors.processors_common import fix_link
 from core.utils import signed_redirect, unsigned_redirect
 from v1.routing import get_protected_url
-from v1.templatetags.share import get_page_state_url
 
 
 default_app_config = 'v1.apps.V1AppConfig'
@@ -50,7 +54,6 @@ def environment(**options):
         'choices_for_page_type': ref.choices_for_page_type,
         'is_blog': ref.is_blog,
         'is_report': ref.is_report,
-        'get_page_state_url': get_page_state_url,
         'parse_links': parse_links,
         'related_metadata_tags': related_metadata_tags,
         'get_filter_data': get_filter_data,
@@ -60,10 +63,12 @@ def environment(**options):
         'get_protected_url': get_protected_url,
         'get_latest_activities': get_latest_activities,
         'get_snippets': get_snippets,
+        'localtime': template_localtime,
     })
 
     env.filters.update({
         'linebreaksbr': linebreaksbr,
+        'localtime': template_localtime,
         'pluralize': pluralize,
         'slugify': slugify,
     })

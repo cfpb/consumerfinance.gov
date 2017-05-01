@@ -1,0 +1,6 @@
+{{ object.answer_text_es }}
+{{ object.question_es }} 
+
+{% for tag in object.tags %}
+tag:{{ tag }}
+{% endfor %}

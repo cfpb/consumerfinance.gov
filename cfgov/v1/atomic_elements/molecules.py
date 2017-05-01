@@ -199,7 +199,7 @@ class FeaturedContent(blocks.StructBlock):
 class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
     paragraph_text = blocks.RichTextBlock(required=False)
-    button = atoms.Hyperlink()
+    button = atoms.Button()
 
     class Meta:
         template = '_includes/molecules/call-to-action.html'

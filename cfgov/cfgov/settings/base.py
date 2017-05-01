@@ -76,7 +76,7 @@ INSTALLED_APPS = (
 )
 
 if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('ask_cfpb',)
+    INSTALLED_APPS += ('ask_cfpb', 'haystack')
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
@@ -340,6 +340,9 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+if DEPLOY_ENVIRONMENT == 'build':
+    HAYSTACK_CONNECTIONS['default']['EXCLUDED_INDEXES'] = ['knowledgebase.search_indexes.AnswerIndex']
+
 # S3 Configuration
 AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
@@ -366,9 +369,9 @@ GOVDELIVERY_ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 for app in OPTIONAL_APPS:
     try:
         __import__(app["import"])
-        for name in app.get("apps",()):
+        for name in app.get("apps", ()):
             if name not in INSTALLED_APPS:
-                INSTALLED_APPS+=(name,)
+                INSTALLED_APPS += (name,)
         MIDDLEWARE_CLASSES += app.get("middleware", ())
     except ImportError:
         pass
@@ -382,9 +385,8 @@ if DEPLOY_ENVIRONMENT:
     EMAIL_SUBJECT_PREFIX = u'[{}] '.format(DEPLOY_ENVIRONMENT.title())
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get('WAGTAILADMIN_NOTIFICATION_FROM_EMAIL')
-
-
+WAGTAILADMIN_NOTIFICATION_FROM_EMAIL = os.environ.get(
+    'WAGTAILADMIN_NOTIFICATION_FROM_EMAIL')
 
 
 # Password Policies
@@ -401,28 +403,28 @@ CFPB_COMMON_PASSWORD_RULES = [
 LOGIN_FAIL_TIME_PERIOD = os.environ.get('LOGIN_FAIL_TIME_PERIOD', 120 * 60)
 # number of failed attempts
 LOGIN_FAILS_ALLOWED = os.environ.get('LOGIN_FAILS_ALLOWED', 5)
-LOGIN_REDIRECT_URL='/login/welcome/'
+LOGIN_REDIRECT_URL = '/login/welcome/'
 LOGIN_URL = "/login/"
 
 
 SHEER_SITES = {
-        'assets': V1_TEMPLATE_ROOT,
-        'owning-a-home':
-            Path(os.environ.get('OAH_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
-        'fin-ed-resources':
-            Path(os.environ.get('FIN_ED_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
-        'know-before-you-owe':
-            Path(os.environ.get('KBYO_SHEER_PATH') or
-            Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
+    'assets': V1_TEMPLATE_ROOT,
+    'owning-a-home':
+        Path(os.environ.get('OAH_SHEER_PATH') or
+             Path(REPOSITORY_ROOT, '../owning-a-home/dist')),
+    'fin-ed-resources':
+        Path(os.environ.get('FIN_ED_SHEER_PATH') or
+             Path(REPOSITORY_ROOT, '../fin-ed-resources/dist')),
+    'know-before-you-owe':
+        Path(os.environ.get('KBYO_SHEER_PATH') or
+             Path(REPOSITORY_ROOT, '../know-before-you-owe/dist')),
 }
 
-#The base URL for the API that we use to access layers and the regulation.
+# The base URL for the API that we use to access layers and the regulation.
 API_BASE = os.environ.get('EREGS_API_BASE', '')
 
-#When we generate an full HTML version of the regulation, we want to
-#write it out somewhere. This is where.
+# When we generate an full HTML version of the regulation, we want to
+# write it out somewhere. This is where.
 OFFLINE_OUTPUT_DIR = ''
 
 DATE_FORMAT = 'n/j/Y'
@@ -434,7 +436,7 @@ CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'eregs'
 CACHE_MIDDLEWARE_SECONDS = 1800
 
-#eRegs
+# eRegs
 BACKENDS = {
     'regulations': 'regcore.db.django_models.DMRegulations',
     'layers': 'regcore.db.django_models.DMLayers',
@@ -490,10 +492,9 @@ if ENABLE_AKAMAI_CACHE_PURGE:
             'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
             'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
             'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
-            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN'),
-            'FAST_PURGE_URL': os.environ.get('AKAMAI_FAST_PURGE_URL')
+            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN')
         },
-}
+    }
 
 
 # Staging site
@@ -520,40 +521,42 @@ CSP_SCRIPT_SRC = ("'self'",
                   'universal.iperceptions.com')
 
 # These specify valid sources of CSS code
-CSP_STYLE_SRC = ("'self'",
-                 "'unsafe-inline'",
-                 'fast.fonts.net',
-                 'api.mapbox.com')
+CSP_STYLE_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    'fast.fonts.net',
+    'api.mapbox.com')
 
 # These specify valid image sources
-CSP_IMG_SRC= ("'self'",
-              's3.amazonaws.com',
-              'stats.g.doubleclick.net',
-              'files.consumerfinance.gov',
-              'img.youtube.com',
-              '*.google-analytics.com',
-              'trk.cetrk.com',
-              'searchstats.usa.gov',
-              'gtrk.s3.amazonaws.com',
-              '*.googletagmanager.com',
-              'api.mapbox.com',
-              '*.tiles.mapbox.com',
-              'data:')
+CSP_IMG_SRC = (
+    "'self'",
+    's3.amazonaws.com',
+    'stats.g.doubleclick.net',
+    'files.consumerfinance.gov',
+    'img.youtube.com',
+    '*.google-analytics.com',
+    'trk.cetrk.com',
+    'searchstats.usa.gov',
+    'gtrk.s3.amazonaws.com',
+    '*.googletagmanager.com',
+    'api.mapbox.com',
+    '*.tiles.mapbox.com',
+    'data:')
 
 # These specify what URL's we allow to appear in frames/iframes
-CSP_FRAME_SRC= ("'self'",
-                '*.googletagmanager.com',
-                '*.google-analytics.com',
-                'www.youtube.com',
-                '*.doubleclick.net',
-                'universal.iperceptions.com')
+CSP_FRAME_SRC = (
+    "'self'",
+    '*.googletagmanager.com',
+    '*.google-analytics.com',
+    'www.youtube.com',
+    '*.doubleclick.net',
+    'universal.iperceptions.com')
 
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
 
-# These specify what hosts we can make (potentially) cross-domain AJAX requests to.
+# These specify hosts we can make (potentially) cross-domain AJAX requests to.
 CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
                    'api.iperceptions.com')
-

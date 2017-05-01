@@ -66,7 +66,7 @@ describe( 'Multiselect', function() {
 
       expect( results.count() ).toBe( 1 );
       expect( results.first().getAttribute( 'data-option' ) )
-        .toContain( 'Students' );
+        .toContain( 'students' );
       expect( page.multiSelectOptions.getAttribute( 'class' ) )
         .toContain( 'filtered' );
     } );
@@ -104,8 +104,8 @@ describe( 'Multiselect', function() {
       var results = browser.element
         .all( by.css( '.cf-multi-select_options li input' ) );
 
-      expect( results.first().getInnerHtml() )
-        .toBe( browser.driver.switchTo().activeElement().getInnerHtml() );
+      expect( results.first().getText() )
+        .toBe( browser.driver.switchTo().activeElement().getText() );
     } );
   } );
 
@@ -125,7 +125,7 @@ describe( 'Multiselect', function() {
         .all( by.css( '.cf-multi-select_choices label' ) );
 
       expect( choices.count() ).toBe( 1 );
-      expect( choices.first().getInnerHtml() ).toContain( 'Mortgages' );
+      expect( choices.first().getText() ).toContain( 'Mortgages' );
     } );
 
     it( 'should remove an option from choices when clicked', function() {
@@ -158,7 +158,7 @@ describe( 'Multiselect', function() {
         .all( by.css( '.cf-multi-select_choices label' ) );
 
       expect( choices.count() ).toBe( 1 );
-      expect( choices.first().getInnerHtml() ).toContain( 'Mortgages' );
+      expect( choices.first().getText() ).toContain( 'Mortgages' );
     } );
 
     xit( 'should remove an option with RETURN key', function() {

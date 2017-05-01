@@ -26,6 +26,7 @@ related_posts_categories = [
 
 page_types = [
     ('activity-log', 'Activity Log'),
+    ('administrative-adjudication', 'Administrative adjudication'),
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
     ('enforcement', 'Enforcement Action'),
@@ -38,6 +39,7 @@ page_types = [
     ('research-reports', 'Research Report'),
     ('rule-under-dev', 'Rule Under Development'),
     ('story', 'Story'),
+    ('ask', 'Ask CFPB'),
 ]
 
 fcm_types = [
@@ -50,7 +52,7 @@ fcm_types = [
 ]
 
 categories = [
-    ('Administration adjudication docket', (
+    ('Administrative adjudication docket', (
         ('administrative-adjudication', 'Administrative adjudication'),
         ('stipulation-and-constent-order', 'Stipulation and consent order'),
     )),
@@ -164,6 +166,13 @@ def page_type_choices():
             ('research-reports', 'Report'),
             ('speech', 'Speech'),
             ('testimony', 'Testimony'))),
+        ('Administrative adjudication', (
+            ('administrative-adjudication', 'Administrative adjudication'),
+            (
+                'stipulation-and-constent-order',
+                'Stipulation and consent order'
+            )
+        )),
         ('Leadership Calendar', (
             ('richard-cordray', 'Richard Cordray'),
             ('david-silberman', 'David Silberman'),
@@ -222,3 +231,7 @@ def is_report(page):
         for choice in choices_for_page_type('research-reports'):
             if category.name == choice[0]:
                 return True
+
+
+def filterable_list_page_types():
+    return page_types

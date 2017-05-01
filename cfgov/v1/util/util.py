@@ -3,12 +3,14 @@ from time import time
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.core.urlresolvers import resolve
 from django.http import Http404, HttpResponseRedirect
+from django.conf import settings
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 
 
 def get_unique_id(prefix='', suffix=''):
     index = hex(int(time() * 10000000))[2:]
     return prefix + str(index) + suffix
+
 
 # These messages are manually mirrored on the
 # Javascript side in error-messages-config.js
@@ -25,7 +27,12 @@ ERROR_MESSAGES = {
 
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
-    return isinstance(page, (BrowsePage, BrowseFilterablePage))
+    if settings.DEPLOY_ENVIRONMENT == 'build':
+        from ask_cfpb.models import AnswerCategoryPage
+        pages = (BrowsePage, BrowseFilterablePage, AnswerCategoryPage)
+    else:
+        pages = (BrowsePage, BrowseFilterablePage)
+    return isinstance(page, pages)
 
 
 # For use by Browse type pages to get the secondary navigation items
@@ -38,9 +45,9 @@ def get_secondary_nav_items(request, current_page):
     # as top-level.
     parent = current_page.get_parent().specific
     if instanceOfBrowseOrFilterablePages(parent):
-        page = parent.get_appropriate_page_version(request)
+        page = parent
     else:
-        page = current_page.get_appropriate_page_version(request)
+        page = current_page
 
     # If there's no appropriate page version (e.g. not published for a sharing
     # request), then return no sidebar at all.
@@ -79,9 +86,9 @@ def get_secondary_nav_items(request, current_page):
     nav_items = []
     for sibling in pages:
         if page.id == sibling.id:
-            sibling = page.get_appropriate_page_version(request)
+            sibling = page
         else:
-            sibling = sibling.get_appropriate_page_version(request)
+            sibling = sibling
 
         item_selected = current_page.pk == sibling.pk
 
@@ -97,7 +104,7 @@ def get_secondary_nav_items(request, current_page):
         visible_children = filter(
             lambda c: (
                 instanceOfBrowseOrFilterablePages(c) and
-                (c.live or (c.shared and request.is_staging))
+                (c.live)
             ),
             sibling.get_children().specific()
         )
