@@ -219,6 +219,88 @@
     } )
 }
 
+
+/* topdoc
+  name: Equal height columns
+  family: cf-layout
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="m-equal-height_container">
+            <div class="m-equal-height_col">
+                <div class="m-equal-height_content">
+                    Equal height box contents
+                </div>
+            </div>
+            <div class="m-equal-height_col">
+                <div class="m-equal-height_content">
+                    Equal height box contents
+                    <div class="m-equal-height_footer">
+                        Bottom aligned footer
+                    </div>
+                </div>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .content-l__equal-height
+            .content-l_col__equal-height
+              .content-l_body__equal-height
+                .content-l_footer__equal-height
+  tags:
+    - cf-layout
+  notes:
+    - No support for equal-height columns below IE10.
+      Can be used in conjunction with other content-l
+      classes to provide column widths and layout for
+      browsers that do not support flexbox. 
+*/
+
+.equal-height_container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.equal-height_col {
+    display: flex !important;
+}
+
+.equal-height_body {
+    display: flex !important;
+    flex-direction: column;
+    align-content: stretch;
+    flex: 1;
+}
+
+.equal-height_footer {
+    margin-top: auto;
+}
+
+
+.content-l {
+    .respond-to-min( @bp-sm-min, {
+        &__equal-height {
+            .equal-height_container;    
+        }
+
+        &_col__equal-height {
+            .equal-height_col;
+        }
+
+        &_body__equal-height {
+            .equal-height_body;
+        }
+
+        &_footer__equal-height {
+            .equal-height_footer;
+        }  
+    } );
+}
+
+
+
 /* topdoc
   name: EOF
   eof: true

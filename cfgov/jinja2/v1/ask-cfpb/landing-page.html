@@ -38,11 +38,11 @@
                     <div class="block block__flush-top block__flush-bottom question-categories">
                         <div class="u-hide-on-mobile">
 
-                            <div class="m-equal-height_container content-l">
+                            <div class="content-l content-l__equal-height">
 
                                 {% for category in categories %}
-                                    <div class="content-l_col content-l_col-1-3 m-equal-height_col">
-                                        <article class="m-card m-equal-height_content ">
+                                    <div class="content-l_col content-l_col-1-3 content-l_col__equal-height">
+                                        <article class="m-card content-l_body__equal-height">
 
                                             <h2>
                                                 <a href="{{ slugurl( 'category-' + category.slug ) }}">
@@ -59,7 +59,7 @@
                                                 {% endfor %}
                                             </ul>
 
-                                            <div class="m-equal-height_footer">
+                                            <div class="content-l_footer__equal-height">
                                                 <p class="short-desc u-mb0">
                                                     <a href="{{ slugurl( 'category-' + category.slug ) }}">
                                                         See all {{ category.name|lower }} questions
