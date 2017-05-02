@@ -28,6 +28,11 @@ gulp.task( 'copy:icons', function() {
   return _genericCopy( icons.src, icons.dest );
 } );
 
+gulp.task( 'copy:codeJson', function() {
+  var codeJson = configCopy.codejson;
+  return _genericCopy( codeJson.src, codeJson.dest );
+} );
+
 gulp.task( 'copy:vendorfonts', function() {
   var vendorFonts = configCopy.vendorFonts;
   return _genericCopy( vendorFonts.src, vendorFonts.dest );
@@ -61,6 +66,7 @@ gulp.task( 'copy:vendorjs', function() {
 gulp.task( 'copy',
   [
     'copy:icons',
+    'copy:codeJson',
     'copy:vendorfonts',
     'copy:vendorcss',
     'copy:vendorimg',
