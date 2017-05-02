@@ -1,8 +1,11 @@
 from django.contrib.auth.models import User
 
 def run():
-	User.objects.create_superuser(
-	         	username='test',
-	            email='test@email.com',
-	            password='password'
-	        )
+	try:
+		User.objects.get(username='test')
+	except User.DoesNotExist:
+		User.objects.create_superuser(
+		         	username='test',
+		            email='test@email.com',
+		            password='password'
+		        )
