@@ -333,6 +333,6 @@ gulp.task( 'test',
 gulp.task( 'test:acceptance', function() {
 
   return createAcceptantTestEnv().on('close', function onClose() {
-    isServerReady().then( testAcceptanceBrowser.bind() );
+    isServerReady().then( testAcceptanceBrowser );
   } )
 } );
