@@ -162,6 +162,7 @@ var config = {
   jasmineNodeOpts: {
     defaultTimeoutInterval: 60000
   },
+  baseUrl: 'http://127.0.0.1:9500',
   getMultiCapabilities: function() {
     var params = this.params;
 

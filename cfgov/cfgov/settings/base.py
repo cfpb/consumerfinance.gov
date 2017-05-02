@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailsites',
 
     'wagtail.contrib.modeladmin',
+    'wagtail.contrib.settings',
     'wagtail.contrib.table_block',
 
     'localflavor',

@@ -249,6 +249,8 @@ function testPerf() {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function _spawnProtractor( suite ) {
+  console.log( suite, '_spawnProtractor' );
+
   var params = _getProtractorParams( suite );
 
   gulpUtil.log( 'Running Protractor with params: ' + params );
@@ -270,7 +272,6 @@ function _spawnProtractor( suite ) {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function testAcceptanceBrowser( suite ) {
-  console.log( suite )
   _spawnProtractor( suite );
 }
 
@@ -281,6 +282,33 @@ function testCoveralls() {
   gulp.src( configTest.tests + '/unit_test_coverage/lcov.info' )
     .pipe( gulpCoveralls() );
 }
+
+
+function isServerReady() {
+  let host = envvars.TEST_HTTP_HOST;
+  let url = host + ':' + 9500;
+  let _resolve;
+  let dummyPromise = new Promise( function( resolve ) {
+    _resolve = resolve;
+  } );
+
+  function _resolveIsReachable( isReachable = false ) {
+    if ( isReachable === true ) {
+      return _resolve();
+    } else {
+      setTimeout( _isServerRunning, 3000 );
+      return dummyPromise;
+    }
+  }
+
+  function _isServerRunning() {
+    return isReachable( url )
+           .then( _resolveIsReachable );
+  }
+
+  return _isServerRunning();
+}
+
 
 // This task will only run on Travis
 gulp.task( 'test:coveralls', testCoveralls );
@@ -303,7 +331,8 @@ gulp.task( 'test',
 );
 
 gulp.task( 'test:acceptance', function() {
-  return createAcceptantTestEnv().on('exit', function onClose() {
-    testAcceptanceBrowser();
+
+  return createAcceptantTestEnv().on('close', function onClose() {
+    isServerReady().then( testAcceptanceBrowser.bind() );
   } )
 } );
