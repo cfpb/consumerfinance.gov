@@ -1,7 +1,7 @@
 'use strict';
 
 var Blog = require(
-    '../../page_objects/page_blog.js'
+    '../../page_objects/sublanding_filterable_page.js'
   );
 
 describe( 'Pagination', function() {

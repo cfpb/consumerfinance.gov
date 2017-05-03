@@ -122,7 +122,11 @@ filter_controls = {
     'type': 'filter_controls',
     'value': [
         {
-            'title': 'this is a filter'
+            'title': 'this is a filter',
+            'categories': {
+                'filter_category': False,
+                'show_preview_categories': False
+            }
         }
     ]
 }
