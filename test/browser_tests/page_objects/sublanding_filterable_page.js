@@ -15,7 +15,7 @@ function Blog() {
     pagination, stayInformedSection, rssSection );
 
   this.get = function() {
-    browser.get( '/blog/' );
+    browser.get( '/sfp/' );
   };
 
   this.pageTitle = function() { return browser.getTitle(); };
@@ -29,6 +29,8 @@ function Blog() {
 
   this.popularStoriesTitle =
   this.popularStories.element( by.css( '.header-slug_inner' ) );
+
+  this.results = element( by.css( '.o-post-preview_content' ) );
 }
 
 module.exports = Blog;
