@@ -149,6 +149,18 @@
     } );
 }
 
+.content-l_col-1-2__on-med {
+    .respond-to-max( @bp-xs-max, {
+        + .content-l_col-1-2__on-med {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
+    } );
+
+    .respond-to-range( @bp-sm-min, @bp-med-max, {
+        .grid_column( 6 );
+    } );
+}
+
 /*
   name: Adjustments to Featured Content Module
   notes:
@@ -278,7 +290,6 @@
     margin-top: auto;
 }
 
-
 .content-l {
     .respond-to-min( @bp-sm-min, {
         &__equal-height {
@@ -298,8 +309,6 @@
         }  
     } );
 }
-
-
 
 /* topdoc
   name: EOF
