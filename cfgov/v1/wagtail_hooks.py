@@ -3,11 +3,9 @@ import logging
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.utils.html import escape, format_html_join
+from django.utils.html import format_html_join
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
-from wagtail.wagtailcore.models import Page
-from urlparse import urlsplit
 
 from v1.util import util
 
@@ -72,46 +70,6 @@ def editor_css():
     return css_includes
 
 
-class CFGovLinkHandler(object):
-    """
-    CFGovLinkHandler will be invoked whenever we encounter an <a> element in
-    HTML content with an attribute of data-linktype="page". The resulting
-    element in the database representation will be:
-    <a linktype="page" id="42">hello world</a>
-    """
-
-    @staticmethod
-    def get_db_attributes(tag):
-        """
-        Given an <a> tag that we've identified as a page link embed (because it
-        has a data-linktype="page" attribute), return a dict of the attributes
-        we should have on the resulting <a linktype="page"> element.
-        """
-        return {'id': tag['data-id']}
-
-    @staticmethod
-    def expand_db_attributes(attrs, for_editor):
-        try:
-            page = Page.objects.get(id=attrs['id'])
-
-            if for_editor:
-                editor_attrs = 'data-linktype="page" data-id="%d" ' % page.id
-            else:
-                editor_attrs = ''
-
-            return '<a %shref="%s">' % (
-                editor_attrs,
-                escape(urlsplit(page.url).path)
-            )
-        except Page.DoesNotExist:
-            return "<a>"
-
-
-@hooks.register('register_rich_text_link_handler')
-def register_cfgov_link_handler():
-    return ('page', CFGovLinkHandler)
-
-
 @hooks.register('cfgovpage_context_handlers')
 def form_module_handlers(page, request, context, *args, **kwargs):
     """
@@ -140,7 +98,6 @@ def form_module_handlers(page, request, context, *args, **kwargs):
                         is_submitted
                     )
                     form_modules[fieldname].update({index: module_context})
-
     if form_modules:
         context['form_modules'] = form_modules
 

@@ -1,9 +1,12 @@
 from __future__ import unicode_literals
 import HTMLParser
 
+import json
 import mock
 from mock import patch
 from model_mommy import mommy
+
+from bs4 import BeautifulSoup as bs
 
 from django.utils import timezone
 from django.apps import apps
@@ -54,7 +57,7 @@ class AnswerModelTestCase(TestCase):
     def setUp(self):
         from v1.models import HomePage
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
-        self.audiences = [mommy.make(Audience, name='stub_audience')]
+        self.audience = mommy.make(Audience, name='stub_audience')
         self.category = mommy.make(Category, name='stub_cat', name_es='que')
         self.subcategories = mommy.make(
             SubCategory, name='stub_subcat', _quantity=3)
@@ -137,6 +140,16 @@ class AnswerModelTestCase(TestCase):
             AnswerPage.objects.filter(answer_base=answer).count(), 0)
         self.assertEqual(
             Answer.objects.filter(id=ID).count(), 0)
+
+    def test_spanish_template_used(self):
+        spanish_answer = self.prepare_answer(
+            answer_es='Spanish answer',
+            slug_es='spanish-answer',
+            update_spanish_page=True)
+        spanish_answer.save()
+        spanish_page = spanish_answer.spanish_page
+        soup = bs(spanish_page.serve(HttpRequest()).rendered_content)
+        self.assertIn('Oficina', soup.title.string)
 
     def test_create_or_update_page_unsuppoted_language(self):
         answer = self.prepare_answer()
@@ -329,7 +342,7 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(next_step.__str__(), next_step.title)
 
     def test_audience_str(self):
-        audience = self.audiences[0]
+        audience = self.audience
         self.assertEqual(audience.__str__(), audience.name)
 
     def test_status_string(self):
@@ -350,11 +363,6 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             test_page.status_string.lower(), "live")
 
-    def test_search_query(self):
-        from haystack.query import SearchQuerySet
-        subcat = SubCategory.objects.first()
-        self.assertTrue(isinstance(subcat.search_query(), SearchQuerySet))
-
     def test_category_page_context(self):
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
@@ -370,8 +378,29 @@ class AnswerModelTestCase(TestCase):
         cat_page.add_page_js(js)
         self.assertEqual(js, {'template': [u'secondary-navigation.js']})
 
-    def test_answer_language_page_true(self):
+    def test_answer_language_page_exists(self):
         self.assertEqual(self.answer5678.english_page, self.page2)
 
-    def test_answer_language_page_false(self):
+    def test_answer_language_page_nonexistent(self):
         self.assertEqual(self.answer5678.spanish_page, None)
+
+    def test_category_audience_json(self):
+        self.answer1234.audiences.add(self.audience)
+        self.answer1234.category.add(self.category)
+        self.answer1234.save()
+        self.assertEqual(
+            self.category.audience_json,
+            '{"stub_audience": ["1234"]}')
+
+    def test_category_subcategory_json(self):
+        self.answer1234.subcategory.add(self.subcategories[0])
+        self.assertEqual(
+            self.category.subcategory_json,
+            '{"stub_subcat": ["1234"]}')
+
+    def test_category_answer_json(self):
+        self.answer1234.category.add(self.category)
+        result_dict = json.loads(self.category.answer_json)
+        self.assertEqual(result_dict.keys()[0], '1234')
+        self.assertEqual(result_dict['1234']['url'], '/ask-cfpb/slug-en-1234')
+        self.assertEqual(result_dict['1234']['question'], 'Mock question1')

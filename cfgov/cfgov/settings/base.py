@@ -492,8 +492,7 @@ if ENABLE_AKAMAI_CACHE_PURGE:
             'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
             'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
             'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
-            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN'),
-            'FAST_PURGE_URL': os.environ.get('AKAMAI_FAST_PURGE_URL')
+            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN')
         },
     }
 
@@ -574,9 +573,6 @@ FLAGS = {
 
     # Fix for margin-top when using the text inset
     'INSET_TEST': {},
-
-    # Fix for multi-select issues on Filterable list control
-    'MULTI-SELECT-TEST': {},
 
     # Footer link for the Office of Administrative Adjudication
     'OAA_FOOTER_LINK': {},
