@@ -25,3 +25,5 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
         'WIDGET': 'wagtail.tests.testapp.rich_text.CustomRichTextArea',
     },
 }
+
+WAGTAIL_ADMIN_PW = 'password'

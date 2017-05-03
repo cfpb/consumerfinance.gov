@@ -2,6 +2,7 @@
 
 var configTest = require( '../config' ).test;
 var envvars = require( '../../config/environment' ).envvars;
+var fs = require('fs');
 var fsHelper = require( '../utils/fs-helper' );
 var gulp = require( 'gulp' );
 var gulpCoveralls = require( 'gulp-coveralls' );
@@ -12,6 +13,7 @@ var isReachable = require( 'is-reachable' );
 var localtunnel = require( 'localtunnel' );
 var minimist = require( 'minimist' );
 var spawn = require( 'child_process' ).spawn;
+
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -56,6 +58,16 @@ function testUnitServer() {
     }
     gulpUtil.log( 'Tox tests done!' );
   } );
+}
+
+/**
+ * Run tox unit tests.
+ */
+function createAcceptantTestEnv() {
+  return spawn(
+    'tox', ['-e', 'acceptance'],
+    { stdio: 'inherit' }
+  )
 }
 
 /**
@@ -231,12 +243,16 @@ function testPerf() {
   } );
 }
 
+
 /**
  * Spawn the appropriate acceptance tests.
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function _spawnProtractor( suite ) {
+  console.log( suite, '_spawnProtractor' );
+
   var params = _getProtractorParams( suite );
+
   gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
@@ -267,13 +283,37 @@ function testCoveralls() {
     .pipe( gulpCoveralls() );
 }
 
+
+function isServerReady() {
+  let host = envvars.TEST_HTTP_HOST;
+  let url = host + ':' + 9500;
+  let _resolve;
+  let dummyPromise = new Promise( function( resolve ) {
+    _resolve = resolve;
+  } );
+
+  function _resolveIsReachable( isReachable = false ) {
+    if ( isReachable === true ) {
+      return _resolve();
+    } else {
+      setTimeout( _isServerRunning, 3000 );
+      return dummyPromise;
+    }
+  }
+
+  function _isServerRunning() {
+    return isReachable( url )
+           .then( _resolveIsReachable );
+  }
+
+  return _isServerRunning();
+}
+
+
 // This task will only run on Travis
 gulp.task( 'test:coveralls', testCoveralls );
-
 gulp.task( 'test:a11y', testA11y );
 gulp.task( 'test:perf', testPerf );
-
-
 gulp.task( 'test:unit:scripts', testUnitScripts );
 gulp.task( 'test:unit:server', testUnitServer );
 
@@ -291,5 +331,8 @@ gulp.task( 'test',
 );
 
 gulp.task( 'test:acceptance', function() {
-  testAcceptanceBrowser();
+
+  return createAcceptantTestEnv().on('close', function onClose() {
+    isServerReady().then( testAcceptanceBrowser );
+  } )
 } );

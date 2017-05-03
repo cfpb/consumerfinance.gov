@@ -93,7 +93,7 @@ describe( 'GlobalSearch', function() {
             } );
         } );
 
-        it( 'should navigate to search portal', function() {
+        xit( 'should navigate to search portal', function() {
 
           // Wait for search button to show after expanding search.
           browser.wait( function() {
@@ -101,8 +101,7 @@ describe( 'GlobalSearch', function() {
           } )
           .then( function() {
             _dom.searchBtn.click();
-            var portalUrl = 'https://search.consumerfinance.gov/' +
-                            'search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
+            var portalUrl = '/search?utf8=%E2%9C%93&affiliate=cfpb&query=test';
             expect( browser.getCurrentUrl() ).toBe( portalUrl );
           } );
         } );
