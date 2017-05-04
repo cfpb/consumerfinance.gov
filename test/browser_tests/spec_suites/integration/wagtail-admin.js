@@ -14,7 +14,7 @@ describe( 'Wagtail', function() {
   } );
 
   describe( 'on page load', function() {
-    it( 'should create the multiselect', function() {
+    it( 'should log admin in', function() {
       page.userName.sendKeys( 'admin' );
       page.userPassword.sendKeys( 'password' );
       page.loginBtn.click();

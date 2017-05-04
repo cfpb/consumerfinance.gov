@@ -13,7 +13,7 @@ describe( 'Browse filterable', function() {
     } );
 
 
-    xit ('should show the results when no filters are selected', function() {
+    it ('should show the results when no filters are selected', function() {
       expect( page.results.getText() ).toContain('sfp child');
     } );
 

@@ -36,7 +36,7 @@ describe( 'Multiselect', function() {
     xit( 'should show the dropdown on focus', function() {
       // Couldn't get this to tab over, not sure why
       var prevInput = browser.element(
-        by.css( 'label[for="filter1_categories_info-for-consumers"]' )
+        by.css( 'label[for="filter0_categories_info-for-consumers"]' )
       );
       prevInput.click();
       browser.sleep( 1000 );
@@ -58,7 +58,7 @@ describe( 'Multiselect', function() {
 
   describe( 'when typing in search input', function() {
     it( 'should return the matched results', function() {
-      page.multiSelectSearch.sendKeys( 'students' );
+      page.multiSelectSearch.sendKeys( 'tag1' );
       browser.sleep( 1000 );
 
       var results = browser.element
@@ -66,24 +66,24 @@ describe( 'Multiselect', function() {
 
       expect( results.count() ).toBe( 1 );
       expect( results.first().getAttribute( 'data-option' ) )
-        .toContain( 'students' );
+        .toContain( 'tag1' );
       expect( page.multiSelectOptions.getAttribute( 'class' ) )
         .toContain( 'filtered' );
     } );
 
     it( 'should not return the unmatched results', function() {
-      page.multiSelectSearch.sendKeys( 'students' );
+      page.multiSelectSearch.sendKeys( 'tag2' );
       browser.sleep( 1000 );
 
       var results = browser.element
         .all( by.css( '.cf-multi-select .filter-match' ) );
 
       expect( results.first().getAttribute( 'data-option' ) )
-        .not.toContain( 'Mortgages' );
+        .not.toContain( 'tag1' );
     } );
 
     it( 'should clear the input and close the results', function() {
-      page.multiSelectSearch.sendKeys( 'students' );
+      page.multiSelectSearch.sendKeys( 'tag1' );
       browser.sleep( 1000 );
       page.multiSelectSearch.sendKeys( protractor.Key.ESCAPE );
 
@@ -125,7 +125,7 @@ describe( 'Multiselect', function() {
         .all( by.css( '.cf-multi-select_choices label' ) );
 
       expect( choices.count() ).toBe( 1 );
-      expect( choices.first().getText() ).toContain( 'Mortgages' );
+      expect( choices.first().getText() ).toContain( 'tag' );
     } );
 
     it( 'should remove an option from choices when clicked', function() {
