@@ -292,6 +292,7 @@ def fill_out_es_answer(question, answer, es_answer):
     answer.answer_es = clean_chars(es_answer.answer.strip())
     answer.last_edited_es = question.updated_at.date()
     answer.snippet_es = ''
+    answer.search_tags_es = es_answer.tagging
     return answer
 
 
@@ -301,6 +302,7 @@ def build_answer(question, cats, en_answer=None, es_answer=None):
         answer_base.answer = clean_chars(fix_tips(en_answer.answer.strip()))
         answer_base.last_edited = question.updated_at.date()
         answer_base.snippet = en_answer.one_sentence_answer.strip()
+        answer_base.search_tags = en_answer.tagging
         for cat in cats:
             answer_base.category.add(cat)
         for qc in question.question_category.exclude(parent=None):

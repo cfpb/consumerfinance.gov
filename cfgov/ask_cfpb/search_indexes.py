@@ -14,11 +14,17 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
     url = indexes.CharField(
         use_template=True,
         indexed=False)
+    tags = indexes.MultiValueField(
+        indexed=True,
+        boost=10.0)
     last_edited = indexes.DateTimeField(
         indexed=True,
         null=True,
         model_attr='last_edited',
         boost=2.0)
+
+    def prepare_tags(self, obj):
+        return obj.tags()
 
     def prepare_answer(self, obj):
         data = super(AnswerBaseIndex, self).prepare(obj)
@@ -46,15 +52,17 @@ class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
     url = indexes.CharField(
         use_template=True,
         indexed=False)
-    tag = indexes.MultiValueField(
+    tags = indexes.MultiValueField(
         indexed=True,
-        model_attr='search_tags',
         boost=10.0)
     last_edited = indexes.DateTimeField(
         indexed=True,
         null=True,
         model_attr='last_edited_es',
         boost=2.0)
+
+    def prepare_tags(self, obj):
+        return obj.tags_es()
 
     def prepare_spanish_answer_index(self, obj):
         data = super(SpanishBaseIndex, self).prepare(obj)

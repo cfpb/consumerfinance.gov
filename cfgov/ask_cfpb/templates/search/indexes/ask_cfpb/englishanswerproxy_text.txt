@@ -1,2 +1,6 @@
 {{ object.answer|striptags|safe }}
-{{ object.question|striptags|safe }} 
+{{ object.snippet|striptags|safe }}
+{{ object.question }}
+{% for tag in tags %}
+{{ tag }}
+{% endfor %}

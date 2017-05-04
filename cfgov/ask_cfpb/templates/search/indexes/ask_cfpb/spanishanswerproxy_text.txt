@@ -1,6 +1,12 @@
+{% load accent_stripper %}
+{{ object.snippet_es|striptags|safe }}
+{{ object.snippet_es|striptags|stripaccents|safe }}
 {{ object.answer_es|striptags|safe }}
-{{ object.question_es|striptags|safe }} 
+{{ object.answer_es|striptags|stripaccents|safe }}
+{{ object.question_es }} 
+{{ object.question_es|stripaccents }} 
 
-{% for tag in object.tags %}
-tag:{{ tag }}
+{% for tag in tags_es %}
+{{tag}}
+{{tag|stripaccents}}
 {% endfor %}

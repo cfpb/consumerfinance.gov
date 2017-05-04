@@ -1,14 +1,13 @@
 from __future__ import unicode_literals
 import json
 
-# from haystack.generic_views import SearchView
 from haystack.query import SearchQuerySet
 from haystack.inputs import Clean
 
 from django.shortcuts import get_object_or_404, redirect  # render_to_response
 from django.http import HttpResponse
 
-from .models import (
+from ask_cfpb.models import (
     AnswerPage,
     AnswerResultsPage,
     EnglishAnswerProxy,

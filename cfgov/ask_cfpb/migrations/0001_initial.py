@@ -35,6 +35,7 @@ class Migration(migrations.Migration):
                 ('answer_es', wagtail.wagtailcore.fields.RichTextField(verbose_name='Spanish answer', blank=True)),
                 ('slug_es', models.SlugField(max_length=255, verbose_name='Spanish slug', blank=True)),
                 ('search_tags', models.CharField(help_text='Search words or phrases, separated by commas', max_length=1000, blank=True)),
+                ('search_tags_es', models.CharField(help_text='Spanish search words or phrases, separated by commas', max_length=1000, blank=True)),
                 ('update_english_page', models.BooleanField(default=False, verbose_name='Send to English page for review')),
                 ('update_spanish_page', models.BooleanField(default=False, verbose_name='Send to Spanish page for review')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
