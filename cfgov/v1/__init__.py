@@ -2,6 +2,7 @@ from __future__ import absolute_import
 import HTMLParser
 import os
 import re
+import unicodedata
 from urlparse import urlparse, parse_qs
 
 from django.conf import settings
@@ -30,6 +31,12 @@ from v1.routing import get_protected_url
 
 
 default_app_config = 'v1.apps.V1AppConfig'
+
+
+def strip_accents(value):
+    nfkd_form = unicodedata.normalize('NFKD', unicode(value))
+    only_ascii = nfkd_form.encode('ASCII', 'ignore')
+    return only_ascii
 
 
 def environment(**options):
@@ -64,6 +71,7 @@ def environment(**options):
         'get_latest_activities': get_latest_activities,
         'get_snippets': get_snippets,
         'localtime': template_localtime,
+        'strip_accents': strip_accents,
     })
 
     env.filters.update({

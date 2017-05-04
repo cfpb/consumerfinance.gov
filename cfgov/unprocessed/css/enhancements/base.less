@@ -19,11 +19,11 @@
 */
 
 body {
-    .webfont-regular();
+    .webfont-regular(); // Moved to CF, delete freely when migrating to CF4
+}
 
-    .respond-to-max( @bp-sm-max, {
-        overflow-x: hidden;
-    } );
+ul, ol {
+    padding-left: unit( 18px / @base-font-size-px, em );
 }
 
 /* topdoc
