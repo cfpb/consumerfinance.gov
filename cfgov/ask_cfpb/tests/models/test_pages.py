@@ -269,12 +269,20 @@ class AnswerModelTestCase(TestCase):
         self.assertIn(audience.name, answer.audience_strings())
 
     def test_search_tags(self):
-        """Test the generator produced by answer.tags()"""
+        """Test the list produced by answer.tags()"""
         answer = self.prepare_answer(search_tags='Chutes, Ladders')
         answer.save()
-        taglist = [tag for tag in answer.tags()]
+        taglist = answer.tags()
         for name in ['Chutes', 'Ladders']:
             self.assertIn(name, taglist)
+
+    def test_search_tags_es(self):
+        """Test the list produced by answer.tags_es()"""
+        answer = self.prepare_answer(search_tags_es='sistema judicial, tipos')
+        answer.save()
+        taglist = answer.tags_es()
+        for term in ['sistema judicial', 'tipos']:
+            self.assertIn(term, taglist)
 
     def test_category_text(self):
         answer = self.prepare_answer()

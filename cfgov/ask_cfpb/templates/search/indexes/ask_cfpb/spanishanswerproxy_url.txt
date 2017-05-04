@@ -1,0 +1,1 @@
+{{ object.spanish_page.url }}

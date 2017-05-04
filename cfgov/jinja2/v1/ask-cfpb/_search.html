@@ -1,0 +1,52 @@
+<section class="ac_search">
+    <script language="JavaScript">
+
+       $( document ).ready(function() {
+             <!-- create a fade effect to show/hide example message to user as they type question -->
+             exampleStr = "example: how do I lower my interest rate";
+             $('#q').val(exampleStr).css('font-style', 'italic');
+             $('#q').val(exampleStr).css('color', '#ededed');
+
+             $('#q').focus(function(){
+
+                    if($(this).val() == exampleStr){
+                        $(this).animate({
+                            color: '#fff'
+
+                        }, 500, 'linear', function(){
+
+                            $(this).val('').css('color','#000000');
+                            $(this).val('').css('font-style','normal');
+                        });
+                    }
+                }).blur(function(){
+
+                    if($(this).val() == ''){
+                        $('#q').val(exampleStr).css('color', '#ededed');
+                        $('#q').css('font-style', 'italic');
+                    }
+                });
+
+             <!--bind the search input and button to only submit a search if there is text in it---->
+             $('#q').on('input', function() {
+                 if($('#q').val() && $('#q').val() != exampleStr)
+                   {
+                       $("#btnSearch").removeAttr('disabled');
+                   }
+                   else
+                   {
+                         $("#btnSearch").attr('disabled', true);
+                   }
+              });
+          });
+    </script>
+    <h1 class="ac_logo"><a href="/ask-cfpb/"><img src="/static/knowledgebase/images/crick_logo.png"%}" alt="Ask CFPB" title="Ask CFPB"></a></h1>
+
+
+     <form method="get" action="/ask-cfpb/ask-search-{{ page.language }}/" id="asksearch"  >
+
+        <input type="text" name="q" id="q"     /><button name="btnSearch" id="btnSearch"     disabled="disabled">Search</button>
+
+     </form>
+
+</section>
