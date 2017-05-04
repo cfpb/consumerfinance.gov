@@ -11,6 +11,7 @@ start() {
 }
 
 end() {
+	python manage.py flush --no-input
 	lsof -i tcp:9500| awk 'NR!=1 {print $2}' | xargs kill
 }
 
