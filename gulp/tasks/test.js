@@ -2,7 +2,6 @@
 
 var configTest = require( '../config' ).test;
 var envvars = require( '../../config/environment' ).envvars;
-var fs = require('fs');
 var fsHelper = require( '../utils/fs-helper' );
 var gulp = require( 'gulp' );
 var gulpCoveralls = require( 'gulp-coveralls' );
@@ -249,8 +248,6 @@ function testPerf() {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function _spawnProtractor( suite ) {
-  console.log( suite, '_spawnProtractor' );
-
   var params = _getProtractorParams( suite );
 
   gulpUtil.log( 'Running Protractor with params: ' + params );
@@ -285,8 +282,7 @@ function testCoveralls() {
 
 
 function isServerReady() {
-  let host = envvars.TEST_HTTP_HOST;
-  let url = host + ':' + 9500;
+  let url = envvars.TEST_HTTP_HOST + ':' + envvars.TEST_HTTP_PORT;
   let _resolve;
   let dummyPromise = new Promise( function( resolve ) {
     _resolve = resolve;
@@ -302,6 +298,7 @@ function isServerReady() {
   }
 
   function _isServerRunning() {
+
     return isReachable( url )
            .then( _resolveIsReachable );
   }
@@ -332,7 +329,9 @@ gulp.task( 'test',
 
 gulp.task( 'test:acceptance', function() {
 
-  return createAcceptantTestEnv().on('close', function onClose() {
-    isServerReady().then( testAcceptanceBrowser );
-  } )
+  return createAcceptantTestEnv()
+         .on('close', function onClose() {
+            isServerReady()
+            .then( testAcceptanceBrowser );
+         } )
 } );
