@@ -54,8 +54,8 @@ utf8_swap_chars = {
     b'\xC2\x94': b'"',
     b'\xC2\x96': b'-',
     b'\xE2\x80\x8B': b'',  # ZERO WIDTH SPACE
-    b'\xE2\x97\xA6': b'-',  # small hollow circle
-    b'\xEF\x82\xA7': b'-',  # hollow box
+    b'\xE2\x97\xA6': b'- ',  # small hollow circle
+    b'\xEF\x82\xA7': b'- ',  # hollow box
 }
 
 unicode_swap_chars = {
@@ -65,8 +65,8 @@ unicode_swap_chars = {
     '\x94': '"',
     '\x96': '-',
     '\u200b': '',  # ZERO WIDTH SPACE
-    '\u25e6': '-',  # small hollow circle
-    '\uf0a7': '-',  # hollow box
+    '\u25e6': '- ',  # small hollow circle
+    '\uf0a7': '- ',  # hollow box
 }
 
 
