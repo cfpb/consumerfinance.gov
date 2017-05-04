@@ -3,9 +3,12 @@ import logging
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.utils.html import format_html_join
+from django.utils.html import escape, format_html_join
+from urlparse import urlsplit
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
+from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.rich_text import PageLinkHandler
 
 from v1.util import util
 
@@ -110,3 +113,57 @@ def register_django_admin_menu_item():
         classnames='icon icon-redirect',
         order=99999
     )
+
+
+class RelativePageLinkHandler(PageLinkHandler):
+    """
+    Rich text link handler that forces all page links to be relative.
+
+    This special page link handler makes it so that any internal Wagtail page
+    links inserted into rich text fields, for example:
+
+        <a linktype="page" id="123">foo</a>
+
+    always get replaced with a relative URL to that page, never an absolute
+    one, like this:
+
+        <a href="/path/to/page">foo</a>
+
+    In standard Wagtail behavior, this may be an absolute URL if an
+    installation has multiple Wagtail Sites. In our current custom usage we
+    have multiple Wagtail Sites (one for production, one for staging) that
+    share the same root page. So forcing the use of relative URLs would work
+    fine and allow for easier navigation within a single domain.
+
+    This will explicitly break things if users ever wanted to host some
+    additional site that doesn't share the same root page.
+
+    This code is modified from `wagtail.wagtailcore.rich_text.PageLinkHandler`.
+
+    """
+    @staticmethod
+    def expand_db_attributes(attrs, for_editor):
+        try:
+            page = Page.objects.get(id=attrs['id'])
+
+            if for_editor:
+                editor_attrs = 'data-linktype="page" data-id="%d" ' % page.id
+                parent_page = page.get_parent()
+                if parent_page:
+                    editor_attrs += 'data-parent-id="%d" ' % parent_page.id
+            else:
+                editor_attrs = ''
+
+            page_url = page.specific.url
+
+            if page_url:
+                page_url = urlsplit(page_url).path
+
+            return '<a %shref="%s">' % (editor_attrs, escape(page_url))
+        except Page.DoesNotExist:
+            return "<a>"
+
+
+@hooks.register('register_rich_text_link_handler')
+def register_cfgov_link_handler():
+    return ('page', RelativePageLinkHandler)
