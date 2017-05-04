@@ -69,6 +69,7 @@ function createAcceptantTestEnv() {
   )
 }
 
+
 /**
  * Add a command-line flag to a list of Protractor parameters, if present.
  * @param {object} protractorParams Parameters to pass to Protractor binary.
@@ -261,6 +262,7 @@ function _spawnProtractor( suite ) {
       process.exit( 1 );
     }
     gulpUtil.log( 'Protractor tests done!' );
+    spawn( './acceptance-test.sh', ['end'],  { stdio: 'inherit' } )
   } );
 }
 
