@@ -31,6 +31,15 @@ The non-v1 apps are the following:
 
 After installing these projects as sibling directories to the `cfgov-refresh` repository,
 
+##### Option 1: Sheer Index and Elasticsearch (e.g. owning-a-home)
+
+1. build the third-party projects per their directions,
+1. stop the web server and return to `cfgov-refresh`
+1. and run `cfgov/manage.py sheer_index -r` to load the projects' data into ElasticSearch.
+
+
+##### Option 2: Direct dependencies
+
 1. Build the third-party projects per their directions
 1. Stop the web server and return to `cfgov-refresh`
 1. Run `pip install -e ../<sibling>` to load the projects' dependencies
