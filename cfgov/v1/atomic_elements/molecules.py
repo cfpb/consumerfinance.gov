@@ -200,6 +200,22 @@ class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
     paragraph_text = blocks.RichTextBlock(required=False)
     button = atoms.Button()
+    topMargin = blocks.ChoiceBlock(choices=[('u-mt0', '0px'),
+                                            ('u-mt15', '15px'),
+                                            ('u-mt20', '20px'),
+                                            ('u-mt30', '30px'),
+                                            ('u-mt45', '45px'),
+                                            ('u-mt60', '60px')],
+                                   default='u-mt30',
+                                   required=False)
+    bottomMargin = blocks.ChoiceBlock(choices=[('u-mb0', '0px'),
+                                               ('u-mb15', '15px'),
+                                               ('u-mb20', '20px'),
+                                               ('u-mb30', '30px'),
+                                               ('u-mb45', '45px'),
+                                               ('u-mb60', '60px')],
+                                      default='u-mb30',
+                                      required=False)
 
     class Meta:
         template = '_includes/molecules/call-to-action.html'

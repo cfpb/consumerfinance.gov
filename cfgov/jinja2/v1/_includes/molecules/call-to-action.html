@@ -20,9 +20,13 @@
 
    value.button.text:    The text to display on button.
 
+   value.topMargin:      The Capitial Framework margin top utility class.
+
+   value.topBottom:      The Capitial Framework margin bottom utility class.
+
    ========================================================================== #}
 
-<div class="m-call-to-action">
+<div class="m-call-to-action {{ value.topMargin ~ ' ' ~ value.bottomMargin }}">
     {% if value.slug_text %}
     <h2 class="header-slug">
         <span class="header-slug_inner">
