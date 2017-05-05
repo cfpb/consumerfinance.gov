@@ -30,9 +30,19 @@ The non-v1 apps are the following:
  - know-before-you-owe (ghe/CFGOV/know-before-you-owe) - for the Consumer Tools > Know before you owe section.
 
 After installing these projects as sibling directories to the `cfgov-refresh` repository,
-build the third-party projects per their directions,
-stop the web server and return to `cfgov-refresh`
-and run `cfgov/manage.py sheer_index -r` to load the projects' data into ElasticSearch.
+
+##### Option 1: Sheer Index and Elasticsearch (e.g. owning-a-home)
+
+1. build the third-party projects per their directions,
+1. stop the web server and return to `cfgov-refresh`
+1. and run `cfgov/manage.py sheer_index -r` to load the projects' data into ElasticSearch.
+
+
+##### Option 2: Direct dependencies
+
+1. Build the third-party projects per their directions
+1. Stop the web server and return to `cfgov-refresh`
+1. Run `pip install -e ../<sibling>` to load the projects' dependencies
 
 !!! note
     Do not install the projects directly into the `cfgov-refresh` directory.
