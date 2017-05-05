@@ -9,6 +9,7 @@ import logging
 from bs4 import BeautifulSoup as bs
 from django.apps import apps
 from django.core.management import call_command
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
 
 from knowledgebase.models import QuestionCategory as QC
 from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
@@ -140,36 +141,52 @@ def fix_tips(answer_text):
     return clean2
 
 
-def get_or_create_parent_pages():
+def get_or_create_landing_pages():
+    """Create English and Spanish landing pages"""
     from v1.models import CFGOVPage
+    parent = CFGOVPage.objects.get(slug='cfgov').specific
+    hero_stream_value = [
+        {'type': 'hero',
+         'value': {
+             'heading': 'Ask CFPB',
+             'links': [],
+             'body': ('We offer clear, impartial answers to hundreds '
+                      'of financial questions. Find the information you need '
+                      'to make more informed choices about your money.')}}]
     parent_map = {
         'english_parent': {'slug': 'ask-cfpb',
                            'title': 'Ask CFPB',
-                           'parent_slug': 'cfgov',
-                           'language': 'en'},
+                           'language': 'en',
+                           'hero': hero_stream_value},
         'spanish_parent': {'slug': 'obtener-respuestas',
                            'title': 'Obtener respuestas',
-                           'parent_slug': 'cfgov',
-                           'language': 'es'}
+                           'language': 'es',
+                           'hero': None}
     }
     counter = 0
     for parent_type in sorted(parent_map.keys()):
         _map = parent_map[parent_type]
-        parent_page = get_or_create_page(
+        landing_page = get_or_create_page(
             apps,
             'ask_cfpb',
             'AnswerLandingPage',
             _map['title'],
             _map['slug'],
-            CFGOVPage.objects.get(slug=_map['parent_slug']).specific,
+            parent,
             language=_map['language'])
-        parent_page.has_unpublished_changes = True
-        revision = parent_page.save_revision()
-        parent_page.save()
+        landing_page.has_unpublished_changes = True
+        if _map['hero']:
+            stream_block = landing_page.header.stream_block
+            landing_page.header = StreamValue(
+                stream_block,
+                _map['hero'],
+                is_lazy=True)
+        revision = landing_page.save_revision()
+        landing_page.save()
         revision.publish()
         time.sleep(1)
         counter += 1
-    print("Created {} parent pages".format(counter))
+    print("Created {} landing pages".format(counter))
 
 
 def get_or_create_search_results_pages():
@@ -499,7 +516,7 @@ def run():
     add_related_questions()
     set_featured_ids()
     clean_up_blank_answers()
-    get_or_create_parent_pages()
+    get_or_create_landing_pages()
     get_or_create_category_pages()
     get_or_create_search_results_pages()
     create_pages()
