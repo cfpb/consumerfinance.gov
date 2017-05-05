@@ -103,6 +103,48 @@ class Category(models.Model):
             featured=True).order_by('featured_rank')
 
     @cached_property
+    def facet_map(self):
+        answers = self.answer_set.all().select_related()
+        subcats = self.subcategories.all().select_related()
+        audiences = Audience.objects.all()
+        container = {
+            'answers': {},
+            'subcategories': {},
+            'audiences': {}
+        }
+        answer_data = {str(answer.pk):
+                       {'question': answer.question,
+                        'url': '/ask-cfpb/slug-en-{}'.format(answer.pk)}
+                       for answer in answers
+                       if answer.english_page}
+        container['answers'].update(answer_data)
+        subcat_data = {}
+        for subcat in subcats:
+            key = subcat.name
+            subcat_data[key] = [
+                str(answer.pk) for answer
+                in subcat.answer_set.all()
+                if answer.english_page]
+        container['subcategories'].update(subcat_data)
+        audience_map = {audience: {'all': []}
+                        for audience in audiences}
+        for answer in answers:
+            for audience in audience_map:
+                if audience in answer.audiences.all():
+                    audience_map[audience]['all'].append(str(answer.pk))
+        for subcat in subcats:
+            for audience in audience_map:
+                _map = audience_map[audience]
+                _map[subcat.name] = []
+                for answer_id in subcat_data[subcat.name]:
+                    if answer_id in _map['all']:
+                        _map[subcat.name].append(answer_id)
+        container['audiences'].update(
+            {audience.name.split(' ')[0].lower(): audience_map[audience]
+             for audience in audience_map.keys()})
+        return json.dumps(container)
+
+    @cached_property
     def audience_json(self):
         audience_map = {audience: []
                         for audience in Audience.objects.all()}
