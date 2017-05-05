@@ -47,26 +47,49 @@ FEATURED_ANSWER_IDS = {
     601: 2
 }
 
-swap_chars = {
+utf8_swap_chars = {
     b'\xC2\x91': b"'",
     b'\xC2\x92': b"'",
     b'\xC2\x93': b'"',
     b'\xC2\x94': b'"',
     b'\xC2\x96': b'-',
     b'\xE2\x80\x8B': b'',  # ZERO WIDTH SPACE
-    b'\xE2\x97\xA6': b'-',  # small hollow circle (bullet?)
-    b'\xEF\x82\xA7': b'-',  # hollow box
+    b'\xE2\x97\xA6': b'- ',  # small hollow circle
+    b'\xEF\x82\xA7': b'- ',  # hollow box
+}
+
+unicode_swap_chars = {
+    '\x91': "'",
+    '\x92': "'",
+    '\x93': '"',
+    '\x94': '"',
+    '\x96': '-',
+    '\u200b': '',  # ZERO WIDTH SPACE
+    '\u25e6': '\u25CB ',  # small hollow circle
+    '\uf0a7': '',  # hollow box
 }
 
 
-def replace_chars(match):
+def replace_utf8_chars(match):
     char = match.group(0)
-    return swap_chars[char]
+    return utf8_swap_chars[char]
 
 
-def clean_chars(utf8_string):
+def replace_unicode_chars(match):
+    char = match.group(0)
+    return unicode_swap_chars[char]
+
+
+def clean_utf8(utf8_string):
     return re.sub(
-        b'(' + b'|'.join(swap_chars.keys()) + b')', replace_chars, utf8_string)
+        b'(' + b'|'.join(utf8_swap_chars.keys()) +
+        b')', replace_utf8_chars, utf8_string)
+
+
+def clean_unicode(unicode_string):
+    return re.sub(
+        '(' + '|'.join(unicode_swap_chars.keys()) +
+        ')', replace_unicode_chars, unicode_string)
 
 
 def unwrap_soup(soup):
@@ -270,7 +293,7 @@ def get_en_answer(question, cats, en_answer):
     for cat in cats:
         answer.category.add(cat)
     answer.last_edited = question.updated_at.date()
-    answer.question = clean_chars(en_answer.title.strip())
+    answer.question = clean_unicode(en_answer.title.strip())
     return answer
 
 
@@ -282,14 +305,14 @@ def get_es_answer(question, cats, es_answer):
         answer.category.add(cat)
     answer.created_at = question.created_at
     answer.last_edited_es = question.updated_at.date()
-    answer.question_es = clean_chars(es_answer.title.strip())
+    answer.question_es = clean_unicode(es_answer.title.strip())
     return answer
 
 
 def fill_out_es_answer(question, answer, es_answer):
     answer.slug_es = es_answer.slug
     answer.question_es = es_answer.title.strip()
-    answer.answer_es = clean_chars(es_answer.answer.strip())
+    answer.answer_es = clean_unicode(es_answer.answer.strip())
     answer.last_edited_es = question.updated_at.date()
     answer.snippet_es = ''
     answer.search_tags_es = es_answer.tagging
@@ -299,7 +322,7 @@ def fill_out_es_answer(question, answer, es_answer):
 def build_answer(question, cats, en_answer=None, es_answer=None):
     if en_answer:
         answer_base = get_en_answer(question, cats, en_answer)
-        answer_base.answer = clean_chars(fix_tips(en_answer.answer.strip()))
+        answer_base.answer = clean_unicode(fix_tips(en_answer.answer.strip()))
         answer_base.last_edited = question.updated_at.date()
         answer_base.snippet = en_answer.one_sentence_answer.strip()
         answer_base.search_tags = en_answer.tagging
