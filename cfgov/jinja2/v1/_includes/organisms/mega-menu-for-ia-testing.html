@@ -1,3 +1,5 @@
+{% set oa_link_ext = '2' if flag_enabled(request, 'IA_USER_TESTING_LINK2') else '1' %}
+
 <nav aria-label="main navigation" class="o-mega-menu u-hidden o-mega-menu__ia-testing" data-js-hook="behavior_flyout-menu" role="navigation">
     <button aria-pressed="false" class="o-mega-menu_trigger" data-js-hook="behavior_flyout-menu_trigger"><span class=
     "u-visually-hidden">Menu</span></button>
@@ -108,7 +110,7 @@
                                                         <ul class="list list__unstyled">
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "http://build.consumerfinance.gov/consumer-tools/older-adults-1/">
+                                                                "http://build.consumerfinance.gov/consumer-tools/older-adults-{{oa_link_ext}}/">
                                                                 Older adults and caregivers</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
