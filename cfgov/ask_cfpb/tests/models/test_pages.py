@@ -431,7 +431,9 @@ class AnswerModelTestCase(TestCase):
         mock_request.site = mock_site
         cat_page = self.create_category_page(ask_category=self.category)
         test_context = cat_page.get_context(mock_request)
-        self.assertEqual(test_context['choices'][0][1], 'stub_subcat')
+        self.assertEqual(
+            test_context['choices'].count(),
+            self.category.subcategories.count())
 
     def test_category_page_get_english_template(self):
         mock_site = mock.Mock()

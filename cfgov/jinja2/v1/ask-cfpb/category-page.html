@@ -49,7 +49,7 @@
 {% block javascript %}
 {{ super() }}
 <script>
-    var facetMap = {{ page.ask_category.facet_map|safe }};
+    var facetMap = {{ page.ask_category.facet_json|safe }};
 </script>    
 {% endblock %}
 
