@@ -5,6 +5,7 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.core import mail
+from django.db.models import Q
 from django.utils import timezone
 from django.utils.formats import date_format
 
@@ -30,11 +31,14 @@ class Command(BaseCommand):
         period = options['period']
         emails = options['emails']
 
-        last_possible_login = timezone.now() - timedelta(days=period)
+        last_possible_date = timezone.now() - timedelta(days=period)
 
         User = get_user_model()
         inactive_users = User.objects.filter(
-            is_active=True, last_login__lt=last_possible_login)
+            Q(is_active=True),
+            Q(date_joined__lt=last_possible_date),
+            Q(last_login__lt=last_possible_date) | Q(last_login__isnull=True)
+        )
 
         if len(inactive_users) == 0:
             return
@@ -50,10 +54,15 @@ class Command(BaseCommand):
     def format_inactive_users(self, inactive_users):
         inactive_users_str = ''
         for user in inactive_users:
+            if user.last_login is not None:
+                last_login = date_format(user.last_login,
+                                         "SHORT_DATETIME_FORMAT")
+            else:
+                last_login = 'never'
+
             inactive_users_str += '\t{username}: {last_login}\n'.format(
-                username=user.username,
-                last_login=date_format(user.last_login,
-                                       "SHORT_DATETIME_FORMAT"))
+                username=user.username, last_login=last_login)
+
         return inactive_users_str
 
     def send_email(self, emails, period, inactive_users):
