@@ -34,6 +34,18 @@
             </div>
         {% endif %}
     {% endfor %}
+            <div class="block
+                        block__flush-top">
+                {% include '_search-bar.html' %}
+            </div>
+{% endblock %}
+{% block javascript %}
+{{ super() }}
+<script>
+    var audienceMap = {{ page.ask_category.audience_json|safe }};
+    var subcatMap = {{ page.ask_category.subcategory_json|safe }};
+    var answerMap = {{ page.ask_category.answer_json|safe }};
+</script>    
 {% endblock %}
 
 

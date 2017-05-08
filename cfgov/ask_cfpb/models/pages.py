@@ -9,7 +9,6 @@ from wagtail.wagtailadmin.edit_handlers import (
     StreamFieldPanel,
     ObjectList,
     TabbedInterface)
-# from wagtail.wagtailcore.blocks import CharBlock
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, PageManager
 from wagtail.wagtailsearch import index
@@ -20,6 +19,7 @@ from v1.atomic_elements.organisms import FilterControls
 from v1.feeds import FilterableFeedPageMixin
 from v1.models import CFGOVPage, LandingPage
 from v1.util.filterable_list import FilterableListMixin
+from ask_cfpb.models import (Category, Audience)
 
 
 class AnswerLandingPage(LandingPage):
@@ -27,15 +27,25 @@ class AnswerLandingPage(LandingPage):
     Page type for Ask CFPB's landing page.
     """
     content_panels = [
-        StreamFieldPanel('header'),
-        StreamFieldPanel('content'),
+        StreamFieldPanel('header')
     ]
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(LandingPage.settings_panels, heading='Configuration'),
     ])
     objects = PageManager()
-    template = 'ask-cfpb/landing-page.html'
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(AnswerLandingPage, self).get_context(request)
+        context['categories'] = Category.objects.all()
+        context['audiences'] = Audience.objects.all()
+        return context
+
+    def get_template(self, request):
+        if self.language == 'es':
+            return 'ask-cfpb/landing-page-spanish.html'
+
+        return 'ask-cfpb/landing-page.html'
 
 
 class AnswerCategoryPage(
@@ -81,6 +91,24 @@ class AnswerCategoryPage(
         return context
 
 
+class AnswerResultsPage(CFGOVPage):
+
+    objects = PageManager()
+    answers = []
+
+    def get_context(self, request, **kwargs):
+        context = super(
+            AnswerResultsPage, self).get_context(request, **kwargs)
+        context.update(**kwargs)
+        return context
+
+    def get_template(self, request):
+        if self.language == 'en':
+            return 'ask-cfpb/answer-search-results.html'
+        elif self.language == 'es':
+            return 'ask-cfpb/answer-search-spanish-results.html'
+
+
 class AnswerPage(CFGOVPage):
     """
     Page type for Ask CFPB answers.
@@ -122,6 +150,7 @@ class AnswerPage(CFGOVPage):
         index.SearchField('answer_base'),
         index.FilterField('language')
     ]
+
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),

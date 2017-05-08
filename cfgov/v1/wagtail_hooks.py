@@ -4,10 +4,13 @@ from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.html import escape, format_html_join
+
+from urlparse import urlsplit
+
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
-from urlparse import urlsplit
+from wagtail.wagtailcore.rich_text import PageLinkHandler
 
 from v1.util import util
 
@@ -72,46 +75,6 @@ def editor_css():
     return css_includes
 
 
-class CFGovLinkHandler(object):
-    """
-    CFGovLinkHandler will be invoked whenever we encounter an <a> element in
-    HTML content with an attribute of data-linktype="page". The resulting
-    element in the database representation will be:
-    <a linktype="page" id="42">hello world</a>
-    """
-
-    @staticmethod
-    def get_db_attributes(tag):
-        """
-        Given an <a> tag that we've identified as a page link embed (because it
-        has a data-linktype="page" attribute), return a dict of the attributes
-        we should have on the resulting <a linktype="page"> element.
-        """
-        return {'id': tag['data-id']}
-
-    @staticmethod
-    def expand_db_attributes(attrs, for_editor):
-        try:
-            page = Page.objects.get(id=attrs['id'])
-
-            if for_editor:
-                editor_attrs = 'data-linktype="page" data-id="%d" ' % page.id
-            else:
-                editor_attrs = ''
-
-            return '<a %shref="%s">' % (
-                editor_attrs,
-                escape(urlsplit(page.url).path)
-            )
-        except Page.DoesNotExist:
-            return "<a>"
-
-
-@hooks.register('register_rich_text_link_handler')
-def register_cfgov_link_handler():
-    return ('page', CFGovLinkHandler)
-
-
 @hooks.register('cfgovpage_context_handlers')
 def form_module_handlers(page, request, context, *args, **kwargs):
     """
@@ -152,3 +115,64 @@ def register_django_admin_menu_item():
         classnames='icon icon-redirect',
         order=99999
     )
+
+
+class RelativePageLinkHandler(PageLinkHandler):
+    """
+    Rich text link handler that forces all page links to be relative.
+
+    This special page link handler makes it so that any internal Wagtail page
+    links inserted into rich text fields are rendered as relative links.
+
+    Standard Wagtail behavior stores rich text link content in the database in
+    a psuedo-HTML format like this, including only a page's ID:
+
+        <a linktype="page" id="123">foo</a>
+
+    When this content is rendered for preview or viewing, it's replaced with
+    valid HTML including the page's URL. This custom handler ensures that page
+    URLs are always rendered as relative, like this:
+
+        <a href="/path/to/page">foo</a>
+
+    Pages rendered with this handler should never be rendered like this:
+
+        <a href="http://my.domain/path/to/page">foo</a>
+
+    In standard Wagtail behavior, pages will be rendered with an absolute URL
+    if an installation has multiple Wagtail Sites. In our current custom usage
+    we have multiple Wagtail Sites (one for production, one for staging) that
+    share the same root page. So forcing the use of relative URLs would work
+    fine and allow for easier navigation within a single domain.
+
+    This will explicitly break things if users ever wanted to host some
+    additional site that doesn't share the same root page.
+
+    This code is modified from `wagtail.wagtailcore.rich_text.PageLinkHandler`.
+    """
+    @staticmethod
+    def expand_db_attributes(attrs, for_editor):
+        try:
+            page = Page.objects.get(id=attrs['id'])
+
+            if for_editor:
+                editor_attrs = 'data-linktype="page" data-id="%d" ' % page.id
+                parent_page = page.get_parent()
+                if parent_page:
+                    editor_attrs += 'data-parent-id="%d" ' % parent_page.id
+            else:
+                editor_attrs = ''
+
+            page_url = page.specific.url
+
+            if page_url:
+                page_url = urlsplit(page_url).path
+
+            return '<a %shref="%s">' % (editor_attrs, escape(page_url))
+        except Page.DoesNotExist:
+            return "<a>"
+
+
+@hooks.register('register_rich_text_link_handler')
+def register_cfgov_link_handler():
+    return ('page', RelativePageLinkHandler)
