@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
@@ -37,13 +39,13 @@ class Command(BaseCommand):
         if len(inactive_users) == 0:
             return
 
+        self.stdout.write('Users inactive for {}+ days:\n'.format(period))
+        self.stdout.write(self.format_inactive_users(inactive_users))
+
         if len(emails) > 0:
             self.stdout.write('Sending inactive user list to '
                               '{}\n'.format(','.join(emails)))
             self.send_email(emails, period, inactive_users)
-        else:
-            self.stdout.write('Users inactive for {}+ days:\n'.format(period))
-            self.stdout.write(self.format_inactive_users(inactive_users))
 
     def format_inactive_users(self, inactive_users):
         inactive_users_str = ''
@@ -60,4 +62,5 @@ class Command(BaseCommand):
         msg = ('The following active users have not logged in for '
                '{period}+ days:\n'.format(period=period))
         msg += self.format_inactive_users(inactive_users)
-        return mail.EmailMessage(subject, msg, None, emails)
+        email_message = mail.EmailMessage(subject, msg, None, emails)
+        email_message.send()
