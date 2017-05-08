@@ -248,9 +248,8 @@ function testPerf() {
  * Spawn the appropriate acceptance tests.
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
-function _spawnProtractor( suite ) {
-  var params = _getProtractorParams( suite );
-
+function _spawnProtractor() {
+  var params = _getProtractorParams();
   gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
@@ -271,7 +270,7 @@ function _spawnProtractor( suite ) {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function testAcceptanceBrowser( suite ) {
-  _spawnProtractor( suite );
+  _spawnProtractor( );
 }
 
 /**
@@ -315,6 +314,7 @@ gulp.task( 'test:a11y', testA11y );
 gulp.task( 'test:perf', testPerf );
 gulp.task( 'test:unit:scripts', testUnitScripts );
 gulp.task( 'test:unit:server', testUnitServer );
+gulp.task( 'test:acceptance:spawnProtractor', _spawnProtractor );
 
 gulp.task( 'test:unit',
   [

@@ -4,6 +4,9 @@ import importlib
 import itertools
 import logging
 import re
+import subprocess
+import os
+import inspect
 
 from django.apps import apps
 from django.conf import settings
@@ -11,9 +14,13 @@ from django.db import connection
 from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
 from django.test.runner import DiscoverRunner, is_discoverable
+from django.test.testcases import LiveServerThread, FSFilesHandler
+from django.conf import settings
+
 from mock import Mock
 
-from scripts import initial_data
+from scripts import initial_data, test_data
+
 
 
 class OptionalAppsMixin(object):
@@ -56,7 +63,11 @@ class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
 
         # Set up additional required test data that isn't contained in data
         # migrations, for example an admin user.
+
+
+
         initial_data.run()
+        test_data.run()
 
         return dbs
 
@@ -73,6 +84,7 @@ class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
         )
 
         loader = MigrationLoader(connection)
+
         for migration, method in migration_methods:
             if not self.is_migration_applied(loader, migration):
                 print('applying migration {}'.format(migration))
@@ -84,6 +96,48 @@ class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
         parts = migration.split('.')
         migration_tuple = (parts[-3], parts[-1])
         return migration_tuple in loader.applied_migrations
+
+class StaticFilesHandler(FSFilesHandler):
+    """
+    Handler for serving static files. A private class that is meant to be used
+    solely as a convenience by LiveServerThread.
+    """
+
+    def get_base_dir(self):
+        return settings.STATIC_ROOT
+
+    def get_base_url(self):
+        return settings.STATIC_URL
+
+
+class AcceptanceTestRunner(TestDataTestRunner):
+    def run_suite(self, **kwargs):
+        subprocess.check_call( ['gulp', 'test:acceptance:spawnProtractor'] )
+
+        return ''
+
+    def setup_server(self, debug=None):
+        self.server_thread = LiveServerThread( 'localhost',
+                                               [9500],
+                                               StaticFilesHandler )
+        return self.server_thread
+
+    def run_tests(self, test_labels, extra_tests=None, **kwargs):
+        self.setup_test_environment()
+        db = self.setup_databases()
+        self.setup_server()
+
+        print( connection.introspection.table_names() )
+
+        self.server_thread.start()
+        # Wait for the live server to be ready
+        self.server_thread.is_ready.wait()
+
+        result = self.run_suite()
+        self.teardown_databases(db)
+        self.teardown_test_environment()
+
+        return result
 
 
 class HtmlMixin(object):
