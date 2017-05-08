@@ -4,7 +4,9 @@ from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.html import escape, format_html_join
+
 from urlparse import urlsplit
+
 from wagtail.wagtailadmin.menu import MenuItem
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.models import Page
@@ -120,18 +122,26 @@ class RelativePageLinkHandler(PageLinkHandler):
     Rich text link handler that forces all page links to be relative.
 
     This special page link handler makes it so that any internal Wagtail page
-    links inserted into rich text fields, for example:
+    links inserted into rich text fields are rendered as relative links.
+
+    Standard Wagtail behavior stores rich text link content in the database in
+    a psuedo-HTML format like this, including only a page's ID:
 
         <a linktype="page" id="123">foo</a>
 
-    always get replaced with a relative URL to that page, never an absolute
-    one, like this:
+    When this content is rendered for preview or viewing, it's replaced with
+    valid HTML including the page's URL. This custom handler ensures that page
+    URLs are always rendered as relative, like this:
 
         <a href="/path/to/page">foo</a>
 
-    In standard Wagtail behavior, this may be an absolute URL if an
-    installation has multiple Wagtail Sites. In our current custom usage we
-    have multiple Wagtail Sites (one for production, one for staging) that
+    Pages rendered with this handler should never be rendered like this:
+
+        <a href="http://my.domain/path/to/page">foo</a>
+
+    In standard Wagtail behavior, pages will be rendered with an absolute URL
+    if an installation has multiple Wagtail Sites. In our current custom usage
+    we have multiple Wagtail Sites (one for production, one for staging) that
     share the same root page. So forcing the use of relative URLs would work
     fine and allow for easier navigation within a single domain.
 
@@ -139,7 +149,6 @@ class RelativePageLinkHandler(PageLinkHandler):
     additional site that doesn't share the same root page.
 
     This code is modified from `wagtail.wagtailcore.rich_text.PageLinkHandler`.
-
     """
     @staticmethod
     def expand_db_attributes(attrs, for_editor):
