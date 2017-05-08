@@ -39,7 +39,7 @@
 
 {% if value.has_data is not defined or value.has_data %}
 {% macro _render_cell(cell) %}
-    {{ (cell or '&nbsp;') | safe | trim | linebreaksbr }}
+    {{ parse_links(cell or '&nbsp;') | safe | trim | linebreaksbr }}
 {% endmacro %}
 
 <table class="o-table
@@ -98,7 +98,7 @@
                     %}
                 {% endif %}
                 <{{ tag | safe }}{{ attributes | safe }}>
-                    {{ _render_cell(parse_links(cell or '&nbsp;')) }}
+                    {{ _render_cell(cell) }}
                 </{{ tag | safe }}>
             {% endfor %}
         </tr>
