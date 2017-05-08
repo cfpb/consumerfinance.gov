@@ -11,6 +11,9 @@ from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import TestCase
 from django.utils import timezone
+from django.utils.formats import date_format
+
+from core.management.commands.inactive_users import Command
 
 
 class InactiveUsersTestCase(TestCase):
@@ -48,6 +51,20 @@ class InactiveUsersTestCase(TestCase):
 
     def get_stdout(self):
         return self.stdout.getvalue().decode('utf-8')
+
+    def test_format_inactive_users_last_login(self):
+        short_date = date_format(self.user_1.last_login,
+                                 "SHORT_DATETIME_FORMAT")
+        self.assertEqual(
+            Command().format_inactive_users([self.user_1]),
+            '\tuser_1: {}\n'.format(short_date)
+        )
+
+    def test_format_inactive_users_never_logged_in(self):
+        self.assertEqual(
+            Command().format_inactive_users([self.user_5]),
+            '\tuser_5: never\n'
+        )
 
     def test_get_inactive_users(self):
         """ Test that two users are listed for the default 90 period
