@@ -597,4 +597,10 @@ FLAGS = {
     # Transition of CCDB landing page to Mosaic version
     # When enabled, the CCDB landing page is the Mosaic version
     'MOSAIC_CCDB': {},
+
+    # Migration of Ask CFPB to Wagtail
+    # When enabled, Ask CFPB is served from Wagtail
+    'WAGTAIL_ASK_CFPB': {
+        'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
+    },
 }

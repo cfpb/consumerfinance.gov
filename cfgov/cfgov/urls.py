@@ -14,6 +14,7 @@ from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
+from flags.state import flag_enabled
 
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
@@ -381,11 +382,12 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-if settings.DEPLOY_ENVIRONMENT == 'build':
+if flag_enabled('WAGTAIL_ASK_CFPB'):
     from ask_cfpb.views import (
         ask_search,
         ask_autocomplete,
-        view_answer)
+        view_answer
+    )
 
     ask_patterns = [
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
