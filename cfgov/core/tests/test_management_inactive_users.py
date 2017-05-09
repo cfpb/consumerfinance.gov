@@ -2,12 +2,10 @@
 from __future__ import unicode_literals
 
 from StringIO import StringIO
-
 from datetime import timedelta
 
-import mock
-
 from django.contrib.auth import get_user_model
+from django.core import mail
 from django.core.management import call_command
 from django.test import TestCase
 from django.utils import timezone
@@ -94,15 +92,20 @@ class InactiveUsersTestCase(TestCase):
         self.assertNotIn("user_4", self.get_stdout())
         self.assertNotIn("user_5", self.get_stdout())
 
-    @mock.patch('core.management.commands.inactive_users.mail.EmailMessage')
-    def test_sends_email(self, mock_EmailMessage):
+    def test_sends_email(self):
         """ Test that mail.EmailMessage is called with the appropriate
         list of users """
         call_command('inactive_users',
                      emails=['test@example.com'],
                      stdout=self.stdout)
-        mock_EmailMessage.return_value.send.assert_called_once()
-        message = mock_EmailMessage.call_args[0][1]
+        self.assertEqual(len(mail.outbox), 1)
+
+        email = mail.outbox[0]
+        self.assertEqual(email.to, ['test@example.com'])
+        self.assertEqual(email.from_email, 'webmaster@localhost')
+        self.assertIn('Inactive users as of', email.subject)
+
+        message = email.message().as_string()
         self.assertIn("user_1", message)
         self.assertIn("user_2", message)
         self.assertIn("user_4", message)
