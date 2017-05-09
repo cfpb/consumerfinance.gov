@@ -35,9 +35,9 @@ class Command(BaseCommand):
 
         User = get_user_model()
         inactive_users = User.objects.filter(
-            Q(is_active=True),
-            Q(date_joined__lt=last_possible_date),
-            Q(last_login__lt=last_possible_date) | Q(last_login__isnull=True)
+            Q(last_login__lt=last_possible_date) | Q(last_login__isnull=True),
+            is_active=True,
+            date_joined__lt=last_possible_date
         )
 
         if len(inactive_users) == 0:
