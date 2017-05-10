@@ -6,9 +6,12 @@ from django.apps import apps
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_text
 from django.utils.functional import cached_property
+from functools import partial
 from jinja2 import Markup
-from wagtail.contrib.table_block.blocks import TableBlock, TableInput
+from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.utils.widgets import WidgetWithScript
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
@@ -281,32 +284,53 @@ class BureauStructure(blocks.StructBlock):
         js = ['bureau-structure.js']
 
 
-class AtomicTableInput(TableInput):
+class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
+    def __init__(self, table_options=None, attrs=None):
+        super(RichTextTableInput, self).__init__(attrs=attrs)
+        self.table_options = table_options
 
     def render(self, name, value, attrs=None):
-        # Calling the grandparents render method and bypassing TableInputs,
-        # in order to control how we render the form.
-        original_field_html = super(TableInput, self).render(
-            name, value, attrs
+        value = self.json_dict_apply(
+            value,
+            partial(expand_db_html, for_editor=True)
         )
 
+        html = super(RichTextTableInput, self).render(name, value, attrs)
         return Markup(render_to_string('wagtailadmin/table_input.html', {
-            'original_field_html': original_field_html,
+            'original_field_html': html,
             'attrs': attrs,
             'value': value,
         }))
 
     def render_js_init(self, id_, name, value):
-        return "initAtomicTable({0}, {1});".format(
+        return "initRichTextTable({0}, {1});".format(
             json.dumps(id_),
             json.dumps(self.table_options)
         )
+
+    def value_from_datadict(self, data, files, name):
+        value = super(RichTextTableInput, self).value_from_datadict(
+            data, files, name
+        )
+
+        return self.json_dict_apply(value, DbWhitelister.clean)
+
+    @staticmethod
+    def json_dict_apply(value, callback):
+        value = json.loads(value)
+
+        for row in (value or {}).get('data') or []:
+            for i, cell in enumerate(row or []):
+                if cell:
+                    row[i] = callback(cell)
+
+        return json.dumps(value)
 
 
 class AtomicTableBlock(TableBlock):
     @cached_property
     def field(self):
-        widget = AtomicTableInput(table_options=self.table_options)
+        widget = RichTextTableInput(table_options=self.table_options)
         return forms.CharField(widget=widget, **self.field_options)
 
     def to_python(self, value):
