@@ -72,7 +72,14 @@ function testAcceptanceBrowser() {
     toxParams.push( SPECS_KEY + '=' + params[ SPECS_KEY ] );
   }
 
-  spawn( 'tox', toxParams, { stdio: 'inherit' } );
+  spawn( 'tox', toxParams, { stdio: 'inherit' } )
+  .once( 'close', function( code ) {
+    if ( code ) {
+      gulpUtil.log( 'Tox tests exited with code ' + code );
+      process.exit( 1 );
+    }
+    gulpUtil.log( 'Tox tests done!' );
+  } );
 }
 
 /**
@@ -270,8 +277,9 @@ function spawnProtractor( suite ) {
         gulpUtil.log( 'Protractor tests exited with code ' + code );
         process.exit( 1 );
       }
-      gulpUtil.log('Protractor tests done!');
-    } );
+      gulpUtil.log( 'Protractor tests done!' );
+    }
+  );
 }
 
 /**

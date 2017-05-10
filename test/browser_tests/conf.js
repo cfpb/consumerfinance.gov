@@ -88,7 +88,7 @@ function _chooseProtractorSpecs( params ) {
     }
   // If neither a suite or specs are specified, use all specs.
   } else {
-    specs = specs.concat( environment.specsBasePath + '.js' );
+    specs = specs.concat( environment.specsBasePath + '/.feature' );
   }
 
   return specs;
@@ -131,6 +131,7 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
   var newCapabilities = [];
   var injectParams = _retrieveProtractorParams( params );
   var capability;
+
   for ( var i = 0, len = capabilities.length; i < len; i++ ) {
     capability = capabilities[i];
     for ( var p in injectParams ) {
@@ -157,13 +158,17 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 }
 
 var config = {
-  baseUrl:         environment.baseUrl,
-  framework:       'jasmine2',
-  directConnect:   true,
-  jasmineNodeOpts: {
-    defaultTimeoutInterval: 60000
+  baseUrl:       environment.baseUrl,
+   cucumberOpts: {
+    require:     'cucumber/step_definitions/*.js',
+    tags:        false,
+    format:      'pretty',
+    profile:     false,
+    'no-source': true
   },
-
+  directConnect: true,
+  framework:     'custom',
+  frameworkPath: require.resolve( 'protractor-cucumber-framework' ),
   getMultiCapabilities: function() {
     var params = this.params;
 
@@ -209,9 +214,7 @@ var config = {
     browser.params.windowSize = String( windowWidthPx ) +
                                 ',' + String( windowHeightPx );
 
-    browser.getProcessedConfig().then( function( cf ) {
-      console.log( 'Executing...', cf.capabilities.name );
-    } );
+
     return;
   }
 };
