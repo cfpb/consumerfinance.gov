@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from datetime import timedelta
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.core import mail
@@ -67,7 +68,8 @@ class Command(BaseCommand):
 
     def send_email(self, emails, period, inactive_users):
         now = date_format(timezone.now(), "SHORT_DATETIME_FORMAT")
-        subject = 'Inactive users as of {}'.format(now)
+        subject = '{prefix}Inactive users as of {now}'.format(
+            prefix=settings.EMAIL_SUBJECT_PREFIX, now=now)
         msg = ('The following active users have not logged in for '
                '{period}+ days:\n'.format(period=period))
         msg += self.format_inactive_users(inactive_users)
