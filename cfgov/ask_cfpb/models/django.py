@@ -172,6 +172,10 @@ class Answer(models.Model):
         max_length=1000,
         blank=True,
         help_text="Search words or phrases, separated by commas")
+    search_tags_es = models.CharField(
+        max_length=1000,
+        blank=True,
+        help_text="Spanish search words or phrases, separated by commas")
     update_english_page = models.BooleanField(
         default=False,
         verbose_name="Send to English page for review")
@@ -307,15 +311,20 @@ class Answer(models.Model):
             return ''
 
     def audience_strings(self):
-        for audience in self.audiences.all():
-            yield audience.name
+        return [audience.name for audience in self.audiences.all()]
+
+    @staticmethod
+    def clean_tag_list(taglist):
+        return [
+            tag.replace('"', '').strip()
+            for tag in taglist.split(',')
+            if tag.replace('"', '').strip()]
 
     def tags(self):
-        for tag in self.search_tags.split(','):
-            tag = tag.replace('"', '')
-            tag = tag.strip()
-            if tag != u'':
-                yield tag
+        return self.clean_tag_list(self.search_tags)
+
+    def tags_es(self):
+        return self.clean_tag_list(self.search_tags_es)
 
     def has_live_page(self):
         if not self.answer_pages.all():
@@ -407,6 +416,18 @@ class Answer(models.Model):
     def delete(self):
         self.answer_pages.all().delete()
         super(Answer, self).delete()
+
+
+class EnglishAnswerProxy(Answer):
+    """A no-op proxy class to allow separate language indexing in Haystack"""
+    class Meta:
+        proxy = True
+
+
+class SpanishAnswerProxy(Answer):
+    """A no-op proxy class to allow separate language indexing in Haystack"""
+    class Meta:
+        proxy = True
 
 
 class SubCategory(models.Model):
