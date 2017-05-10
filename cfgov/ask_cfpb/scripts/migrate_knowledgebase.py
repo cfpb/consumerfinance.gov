@@ -9,6 +9,7 @@ import logging
 from bs4 import BeautifulSoup as bs
 from django.apps import apps
 from django.core.management import call_command
+from wagtail.wagtailcore.blocks.stream_block import StreamValue
 
 from knowledgebase.models import QuestionCategory as QC
 from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
@@ -47,26 +48,49 @@ FEATURED_ANSWER_IDS = {
     601: 2
 }
 
-swap_chars = {
+utf8_swap_chars = {
     b'\xC2\x91': b"'",
     b'\xC2\x92': b"'",
     b'\xC2\x93': b'"',
     b'\xC2\x94': b'"',
     b'\xC2\x96': b'-',
     b'\xE2\x80\x8B': b'',  # ZERO WIDTH SPACE
-    b'\xE2\x97\xA6': b'-',  # small hollow circle (bullet?)
-    b'\xEF\x82\xA7': b'-',  # hollow box
+    b'\xE2\x97\xA6': b'- ',  # small hollow circle
+    b'\xEF\x82\xA7': b'- ',  # hollow box
+}
+
+unicode_swap_chars = {
+    '\x91': "'",
+    '\x92': "'",
+    '\x93': '"',
+    '\x94': '"',
+    '\x96': '-',
+    '\u200b': '',  # ZERO WIDTH SPACE
+    '\u25e6': '\u25CB ',  # small hollow circle
+    '\uf0a7': '',  # hollow box
 }
 
 
-def replace_chars(match):
+def replace_utf8_chars(match):
     char = match.group(0)
-    return swap_chars[char]
+    return utf8_swap_chars[char]
 
 
-def clean_chars(utf8_string):
+def replace_unicode_chars(match):
+    char = match.group(0)
+    return unicode_swap_chars[char]
+
+
+def clean_utf8(utf8_string):
     return re.sub(
-        b'(' + b'|'.join(swap_chars.keys()) + b')', replace_chars, utf8_string)
+        b'(' + b'|'.join(utf8_swap_chars.keys()) +
+        b')', replace_utf8_chars, utf8_string)
+
+
+def clean_unicode(unicode_string):
+    return re.sub(
+        '(' + '|'.join(unicode_swap_chars.keys()) +
+        ')', replace_unicode_chars, unicode_string)
 
 
 def unwrap_soup(soup):
@@ -117,36 +141,53 @@ def fix_tips(answer_text):
     return clean2
 
 
-def get_or_create_parent_pages():
+def get_or_create_landing_pages():
+    """Create English and Spanish landing pages"""
     from v1.models import CFGOVPage
+    parent = CFGOVPage.objects.get(slug='cfgov').specific
+    hero_stream_value = [
+        {'type': 'hero',
+         'value': {
+             'heading': 'Ask CFPB',
+             'links': [],
+             'background_color': '#ffffff',
+             'body': ('We offer clear, impartial answers to hundreds '
+                      'of financial questions. Find the information you need '
+                      'to make more informed choices about your money.')}}]
     parent_map = {
         'english_parent': {'slug': 'ask-cfpb',
                            'title': 'Ask CFPB',
-                           'parent_slug': 'cfgov',
-                           'language': 'en'},
+                           'language': 'en',
+                           'hero': hero_stream_value},
         'spanish_parent': {'slug': 'obtener-respuestas',
                            'title': 'Obtener respuestas',
-                           'parent_slug': 'cfgov',
-                           'language': 'es'}
+                           'language': 'es',
+                           'hero': None}
     }
     counter = 0
     for parent_type in sorted(parent_map.keys()):
         _map = parent_map[parent_type]
-        parent_page = get_or_create_page(
+        landing_page = get_or_create_page(
             apps,
             'ask_cfpb',
             'AnswerLandingPage',
             _map['title'],
             _map['slug'],
-            CFGOVPage.objects.get(slug=_map['parent_slug']).specific,
+            parent,
             language=_map['language'])
-        parent_page.has_unpublished_changes = True
-        revision = parent_page.save_revision()
-        parent_page.save()
+        landing_page.has_unpublished_changes = True
+        if _map['hero']:
+            stream_block = landing_page.header.stream_block
+            landing_page.header = StreamValue(
+                stream_block,
+                _map['hero'],
+                is_lazy=True)
+        revision = landing_page.save_revision()
+        landing_page.save()
         revision.publish()
         time.sleep(1)
         counter += 1
-    print("Created {} parent pages".format(counter))
+    print("Created {} landing pages".format(counter))
 
 
 def get_or_create_search_results_pages():
@@ -280,7 +321,7 @@ def get_en_answer(question, cats, en_answer):
     for cat in cats:
         answer.category.add(cat)
     answer.last_edited = question.updated_at.date()
-    answer.question = clean_chars(en_answer.title.strip())
+    answer.question = clean_unicode(en_answer.title.strip())
     return answer
 
 
@@ -292,14 +333,14 @@ def get_es_answer(question, cats, es_answer):
         answer.category.add(cat)
     answer.created_at = question.created_at
     answer.last_edited_es = question.updated_at.date()
-    answer.question_es = clean_chars(es_answer.title.strip())
+    answer.question_es = clean_unicode(es_answer.title.strip())
     return answer
 
 
 def fill_out_es_answer(question, answer, es_answer):
     answer.slug_es = es_answer.slug
     answer.question_es = es_answer.title.strip()
-    answer.answer_es = clean_chars(es_answer.answer.strip())
+    answer.answer_es = clean_unicode(es_answer.answer.strip())
     answer.last_edited_es = question.updated_at.date()
     answer.snippet_es = ''
     answer.search_tags_es = es_answer.tagging
@@ -309,7 +350,7 @@ def fill_out_es_answer(question, answer, es_answer):
 def build_answer(question, cats, en_answer=None, es_answer=None):
     if en_answer:
         answer_base = get_en_answer(question, cats, en_answer)
-        answer_base.answer = clean_chars(fix_tips(en_answer.answer.strip()))
+        answer_base.answer = clean_unicode(fix_tips(en_answer.answer.strip()))
         answer_base.last_edited = question.updated_at.date()
         answer_base.snippet = en_answer.one_sentence_answer.strip()
         answer_base.search_tags = en_answer.tagging
@@ -486,7 +527,7 @@ def run():
     add_related_questions()
     set_featured_ids()
     clean_up_blank_answers()
-    get_or_create_parent_pages()
+    get_or_create_landing_pages()
     get_or_create_category_pages()
     get_or_create_search_results_pages()
     create_pages()
