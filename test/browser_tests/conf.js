@@ -88,7 +88,7 @@ function _chooseProtractorSpecs( params ) {
     }
   // If neither a suite or specs are specified, use all specs.
   } else {
-    specs = specs.concat( environment.specsBasePath + '/.feature' );
+    specs = specs.concat( environment.specsBasePath + '.feature' );
   }
 
   return specs;
