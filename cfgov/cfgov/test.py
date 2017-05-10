@@ -3,24 +3,23 @@ from __future__ import print_function
 import importlib
 import itertools
 import logging
+import os
 import re
 import subprocess
-import os
-import inspect
+import sys
 
 from django.apps import apps
 from django.conf import settings
-from django.db import connection
+from django.db import connection, connections
 from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
 from django.test.runner import DiscoverRunner, is_discoverable
-from django.test.testcases import LiveServerThread, FSFilesHandler
-from django.conf import settings
+from django.test.testcases import LiveServerThread
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from mock import Mock
 
 from scripts import initial_data, test_data
-
 
 
 class OptionalAppsMixin(object):
@@ -63,11 +62,7 @@ class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
 
         # Set up additional required test data that isn't contained in data
         # migrations, for example an admin user.
-
-
-
         initial_data.run()
-        test_data.run()
 
         return dbs
 
@@ -97,47 +92,50 @@ class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
         migration_tuple = (parts[-3], parts[-1])
         return migration_tuple in loader.applied_migrations
 
-class StaticFilesHandler(FSFilesHandler):
-    """
-    Handler for serving static files. A private class that is meant to be used
-    solely as a convenience by LiveServerThread.
-    """
-
-    def get_base_dir(self):
-        return settings.STATIC_ROOT
-
-    def get_base_url(self):
-        return settings.STATIC_URL
-
 
 class AcceptanceTestRunner(TestDataTestRunner):
+
     def run_suite(self, **kwargs):
-        subprocess.check_call( ['gulp', 'test:acceptance:spawnProtractor'] )
+        gulp_command = ['gulp', 'test:acceptance']
+        specs = sys.argv[2:]
 
-        return ''
+        if (specs):
+            gulp_command.append('--' + ''.join(specs))
+        try:
+            subprocess.check_call(gulp_command)
+        except subprocess.CalledProcessError:
+            sys.exit(1)
+        finally:
+            self.teardown()
 
-    def setup_server(self, debug=None):
-        self.server_thread = LiveServerThread( 'localhost',
-                                               [9500],
-                                               StaticFilesHandler )
-        return self.server_thread
+    def set_env_test_url(self):
+        server_thread = StaticLiveServerTestCase.server_thread
+        os.environ['TEST_HTTP_HOST'] = server_thread.host
+        os.environ['TEST_HTTP_PORT'] = str(server_thread.port)
+
+    def setup_databases(self, **kwargs):
+        dbs = super(AcceptanceTestRunner, self).setup_databases(**kwargs)
+        test_data.run()
+
+        return dbs
+
+    def teardown(self):
+        self.teardown_databases(self.db)
+        self.teardown_test_environment()
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
         self.setup_test_environment()
-        db = self.setup_databases()
-        self.setup_server()
+        self.db = self.setup_databases()
 
-        print( connection.introspection.table_names() )
+        # Create a static server, it start immediately.
+        StaticLiveServerTestCase.setUpClass()
 
-        self.server_thread.start()
-        # Wait for the live server to be ready
-        self.server_thread.is_ready.wait()
+        # Set the environment variables used by Protractor.
+        self.set_env_test_url()
 
-        result = self.run_suite()
-        self.teardown_databases(db)
-        self.teardown_test_environment()
+        self.run_suite()
 
-        return result
+        return
 
 
 class HtmlMixin(object):

@@ -243,25 +243,23 @@ function testPerf() {
   } );
 }
 
-
 /**
  * Spawn the appropriate acceptance tests.
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
-function _spawnProtractor() {
-  var params = _getProtractorParams();
+function _spawnProtractor( suite ) {
+  var params = _getProtractorParams( suite );
   gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
-    fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
-    params,
-    { stdio: 'inherit' }
-  ).once( 'close', function( code ) {
-    if ( code ) {
-      gulpUtil.log( 'Protractor tests exited with code ' + code );
-      process.exit( 1 );
-    }
-    gulpUtil.log( 'Protractor tests done!' );
-    spawn( './acceptance-test.sh', ['end'],  { stdio: 'inherit' } )
+  fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
+  params, {
+      stdio: 'inherit'
+  } ).once( 'close', function( code ) {
+      if ( code ) {
+          gulpUtil.log( 'Protractor tests exited with code ' + code );
+          process.exit( 1 );
+      }
+      gulpUtil.log('Protractor tests done!');
   } );
 }
 
@@ -270,8 +268,9 @@ function _spawnProtractor() {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function testAcceptanceBrowser( suite ) {
-  _spawnProtractor( );
+  _spawnProtractor( suite );
 }
+
 
 /**
  * Run coveralls reports on Travis.
@@ -279,32 +278,6 @@ function testAcceptanceBrowser( suite ) {
 function testCoveralls() {
   gulp.src( configTest.tests + '/unit_test_coverage/lcov.info' )
     .pipe( gulpCoveralls() );
-}
-
-
-function isServerReady() {
-  let url = envvars.TEST_HTTP_HOST + ':' + envvars.TEST_HTTP_PORT;
-  let _resolve;
-  let dummyPromise = new Promise( function( resolve ) {
-    _resolve = resolve;
-  } );
-
-  function _resolveIsReachable( isReachable = false ) {
-    if ( isReachable === true ) {
-      return _resolve();
-    } else {
-      setTimeout( _isServerRunning, 3000 );
-      return dummyPromise;
-    }
-  }
-
-  function _isServerRunning() {
-
-    return isReachable( url )
-           .then( _resolveIsReachable );
-  }
-
-  return _isServerRunning();
 }
 
 
@@ -330,10 +303,5 @@ gulp.task( 'test',
 );
 
 gulp.task( 'test:acceptance', function() {
-
-  return createAcceptantTestEnv()
-         .on('close', function onClose() {
-            isServerReady()
-            .then( testAcceptanceBrowser );
-         } )
+    testAcceptanceBrowser();
 } );
