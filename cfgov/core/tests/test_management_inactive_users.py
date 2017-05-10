@@ -7,7 +7,7 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.core.management import call_command
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils import timezone
 from django.utils.formats import date_format
 
@@ -92,6 +92,7 @@ class InactiveUsersTestCase(TestCase):
         self.assertNotIn("user_4", self.get_stdout())
         self.assertNotIn("user_5", self.get_stdout())
 
+    @override_settings(EMAIL_SUBJECT_PREFIX='[Prefix]')
     def test_sends_email(self):
         """ Test that mail.EmailMessage is called with the appropriate
         list of users """
@@ -103,6 +104,7 @@ class InactiveUsersTestCase(TestCase):
         email = mail.outbox[0]
         self.assertEqual(email.to, ['test@example.com'])
         self.assertEqual(email.from_email, 'webmaster@localhost')
+        self.assertIn('[Prefix]', email.subject)
         self.assertIn('Inactive users as of', email.subject)
 
         message = email.message().as_string()
