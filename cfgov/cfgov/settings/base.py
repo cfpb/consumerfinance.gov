@@ -53,6 +53,8 @@ INSTALLED_APPS = (
     'compressor',
     'taggit',
     'wagtailsharing',
+    'flags',
+    'haystack',
 
     'overextends',
     'django.contrib.admin',
@@ -63,7 +65,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'storages',
-    'flags',
     'data_research',
     'v1',
     'core',
@@ -73,10 +74,8 @@ INSTALLED_APPS = (
     'reversion',
     'tinymce',
     'jobmanager',
+    'ask_cfpb'
 )
-
-if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('ask_cfpb', 'haystack')
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
