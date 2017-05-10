@@ -16,7 +16,7 @@
 
    ========================================================================== #}
 
-{% macro render(category, additional_classes) %}
+{% macro render(category, additional_classes, round) %}
     {% set icons = {
         'at the cfpb': 'cf-icon-bullhorn',
         'auto loans': 'cf-icon-buying-car',
@@ -51,7 +51,7 @@
         'testimony': 'cf-icon-double-quote',
       }
     %}
-    {% set icon = icons[category | lower] %}
+    {% set icon = icons[category | lower] + ('-round' if round else '') %}
     {% if icon %}
     <span class="cf-icon {{ icon }} cf-icon__before
                  {{ additional_classes or '' }}"></span>

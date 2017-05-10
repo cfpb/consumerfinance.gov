@@ -2,6 +2,7 @@
 {% import 'macros/time.html' as time %}
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
+{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block title %}
     {{ page.question|striptags }}
@@ -13,7 +14,7 @@
 
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
+    {{ super() }} content__flush-bottom ask-answer-page ask-cfpb-page
 {%- endblock %}
 
 {% block content_main %}
@@ -50,6 +51,8 @@
 {% endfor %}
 
     </div>
+    {{ ask_search_bar.render( 'left' ) }}
+
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}

@@ -183,20 +183,30 @@ def get_or_create_category_pages():
     parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
     counter = 0
     for cat in Category.objects.all():
-        cat_page = get_or_create_page(
-            apps,
-            'ask_cfpb',
-            'AnswerCategoryPage',
-            cat.name,
-            "category-{}".format(cat.slug),
-            parent,
-            language='en',
-            ask_category=cat)
-        cat_page.has_unpublished_changes = True
-        revision = cat_page.save_revision()
-        cat_page.save()
-        revision.publish()
-        time.sleep(1)
+        for language in ['en', 'es']:
+            if language == 'en':
+                cat_name = cat.name
+                page_title = "category-{}".format(cat.slug)
+                parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
+            else:
+                cat_name = cat.name_es
+                page_title = "categoria-{}".format(cat.slug_es)
+                parent = CFGOVPage.objects.get(slug='obtener-respuestas').specific
+
+            cat_page = get_or_create_page(
+                apps,
+                'ask_cfpb',
+                'AnswerCategoryPage',
+                cat_name,
+                page_title,
+                parent,
+                language=language,
+                ask_category=cat)
+            cat_page.has_unpublished_changes = True
+            revision = cat_page.save_revision()
+            cat_page.save()
+            revision.publish()
+            time.sleep(1)
         counter += 1
     print("Created {} category pages".format(counter))
 
