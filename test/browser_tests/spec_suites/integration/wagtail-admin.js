@@ -4,7 +4,7 @@ var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 var Wagtail = require( '../../page_objects/wagtail.js' );
 
-var page  = new Wagtail();
+var page = new Wagtail();
 
 describe( 'Wagtail', function() {
 

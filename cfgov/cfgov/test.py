@@ -95,10 +95,11 @@ class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
 class AcceptanceTestRunner(TestDataTestRunner):
 
     def run_suite(self, **kwargs):
-        gulp_command = ['gulp', 'test:acceptance']
-        specs = sys.argv[2:]
+        gulp_command = ['gulp', 'test:acceptance:protractor']
+        SPECS_KEY = 'specs'
+        specs = ''.join(sys.argv[2:])
 
-        if (specs):
+        if (SPECS_KEY in specs):
             gulp_command.append('--' + ''.join(specs))
         try:
             subprocess.check_call(gulp_command)
@@ -119,12 +120,12 @@ class AcceptanceTestRunner(TestDataTestRunner):
         return dbs
 
     def teardown(self):
-        self.teardown_databases(self.db)
+        self.teardown_databases(self.dbs)
         self.teardown_test_environment()
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
         self.setup_test_environment()
-        self.db = self.setup_databases()
+        self.dbs = self.setup_databases()
 
         # Create a static server, it start immediately.
         StaticLiveServerTestCase.setUpClass()
