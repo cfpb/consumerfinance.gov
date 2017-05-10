@@ -265,14 +265,6 @@ SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content
 ELASTICSEARCH_BIGINT = 50000
 
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
-SHEER_PROCESSORS = \
-    {
-        "pages": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=page",
-            "processor": "processors.wordpress_page",
-            "mappings": MAPPINGS.child("pages.json")
-        },
-    }
 
 SHEER_ELASTICSEARCH_SETTINGS = \
     {
@@ -334,7 +326,7 @@ DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
         'URL': SHEER_ELASTICSEARCH_SERVER,
         'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX', SHEER_ELASTICSEARCH_INDEX+'_haystack'),
     },

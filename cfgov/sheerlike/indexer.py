@@ -83,7 +83,18 @@ def index_processor(es, index_name, processor, reindex=False):
         index_success = False
 
     try:
-        result = bulk(es, document_iterator, index=index_name)
+        # as of Elasticsearch 2.x, _source can not contain _id
+        # by fixing this here, we don't need to make equivalent changes is
+        # th other sheer projects
+        
+        def id_scrubber(document_iterator):
+            for document in document_iterator:
+                if '_id' in document['_source']:
+                    del document['_source']['_id']
+                yield document
+
+        result = bulk(es, id_scrubber(document_iterator), index=index_name)
+
     except ValueError:
         # There may be a ValueError (or JSONDecodeError, a subclass of
         # ValueError) raised by json.loads() with the API's supposedly JSON
@@ -123,7 +134,11 @@ def index(args, options):
         else:
             es.indices.create(index=index_name)
 
-    processors = settings.SHEER_PROCESSORS
+    if hasattr(settings, 'SHEER_PROCESSORS'):
+        processors = settings.SHEER_PROCESSORS
+    else:
+        processors = {}
+
     for slug, site_path in settings.SHEER_SITES.items():
         sys.path.append(site_path.child('_lib'))
         processors_path = Path(site_path, '_settings/processors.json')

@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+    mysql:
+        image: mysql:5.7
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: v1
+            MYSQL_USER: v1
+            MYSQL_PASSWORD: v1
+    elasticsearch:
+        image: elasticsearch:2.4
+        ports:
+            - "9200:9200"
+            - "9300:9300"
