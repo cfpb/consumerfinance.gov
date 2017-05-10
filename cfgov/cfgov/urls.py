@@ -400,10 +400,10 @@ if settings.DEPLOY_ENVIRONMENT == 'build':
         url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
             ask_search,
             name='ask-search-en-json'),
-        url(r'^(?i)obtener-respuestas/search-(?P<language>es)/$',
+        url(r'^(?i)obtener-respuestas/buscar-(?P<language>es)/$',
             ask_search,
             name='ask-search-es'),
-        url(r'^(?i)obtener-respuestas/search-(?P<language>es)/'
+        url(r'^(?i)obtener-respuestas/buscar-(?P<language>es)/'
             '(?P<as_json>json)/$',
             ask_search,
             name='ask-search-es-json'),
