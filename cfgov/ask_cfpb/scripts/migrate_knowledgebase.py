@@ -150,6 +150,7 @@ def get_or_create_landing_pages():
          'value': {
              'heading': 'Ask CFPB',
              'links': [],
+             'background_color': '#ffffff',
              'body': ('We offer clear, impartial answers to hundreds '
                       'of financial questions. Find the information you need '
                       'to make more informed choices about your money.')}}]
