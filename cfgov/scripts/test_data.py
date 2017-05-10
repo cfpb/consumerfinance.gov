@@ -8,6 +8,19 @@ from v1.tests.wagtail_pages.helpers import publish_page, publish_changes
 from scripts import _atomic_helpers as atomic
 
 
+def add_children(parent, num):
+    for i in range(num):
+        child = parent.add_child(
+            instance=BlogPage(
+                title="sfp child {}".format(i),
+                slug="sfp-child-{}".format(i)
+            )
+        )
+        child.tags.add(u'tag{}'.format(i))
+        child.tags.add('shared-tag')
+        publish_changes(child)
+
+
 def run():
     sfp = SublandingFilterablePage.objects.filter(slug='sfp')
     if not sfp:
@@ -22,13 +35,7 @@ def run():
         )
         publish_page(sfp)
 
-        # Add a child
-        child = sfp.add_child(
-            instance=BlogPage(title="sfp child", slug="sfp-child")
-        )
-        child.tags.add(u'tag1')
-        child.tags.add(u'tag2')
-        publish_changes(child)
+        add_children(parent=sfp, num=10)
 
     user = User.objects.filter(username='admin')
     if user:
