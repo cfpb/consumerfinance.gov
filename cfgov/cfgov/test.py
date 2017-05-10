@@ -10,11 +10,10 @@ import sys
 
 from django.apps import apps
 from django.conf import settings
-from django.db import connection, connections
+from django.db import connection
 from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
 from django.test.runner import DiscoverRunner, is_discoverable
-from django.test.testcases import LiveServerThread
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from mock import Mock
