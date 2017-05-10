@@ -20,7 +20,7 @@ def run():
 
     admin_password = os.environ.get('WAGTAIL_ADMIN_PW')
     staging_hostname = os.environ['DJANGO_STAGING_HOSTNAME']
-    http_port = 9500
+    http_port = os.environ.get('DJANGO_HTTP_PORT', '80')
 
     # Create admin user if it doesn't exist already.
     # Update existing one with admin password and active state.
@@ -58,13 +58,6 @@ def run():
     default_site.port = http_port
     default_site.root_page_id = home_page.id
     default_site.save()
-
-    Site.objects.update_or_create(
-        defaults={
-            'hostname': staging_hostname,
-            'port': http_port,
-        }
-    )
 
     # Setup a sharing site if it doesn't exist already. Use the default
     # Wagtail site.
