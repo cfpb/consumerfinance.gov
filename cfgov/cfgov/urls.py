@@ -400,15 +400,16 @@ if settings.DEPLOY_ENVIRONMENT == 'build':
         url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
             ask_search,
             name='ask-search-en-json'),
-        url(r'^(?i)ask-cfpb/search-(?P<language>es)/$',
+        url(r'^(?i)obtener-respuestas/search-(?P<language>es)/$',
             ask_search,
             name='ask-search-es'),
-        url(r'^(?i)ask-cfpb/search-(?P<language>es)/(?P<as_json>json)/$',
+        url(r'^(?i)obtener-respuestas/search-(?P<language>es)/'
+            '(?P<as_json>json)/$',
             ask_search,
             name='ask-search-es-json'),
-        url(r'^(?i)ask-cfpb/api/autocomplete-(?P<language>en)/$',
+        url(r'^(?i)ask-cfpb/api/autocomplete/$',
             ask_autocomplete, name='ask-autocomplete-en'),
-        url(r'^(?i)ask-cfpb/api/autocomplete-(?P<language>es)/$',
+        url(r'^(?i)obtener-respuestas/api/autocomplete-(?P<language>es)/$',
             ask_autocomplete, name='ask-autocomplete-es'),
     ]
     urlpatterns += ask_patterns
