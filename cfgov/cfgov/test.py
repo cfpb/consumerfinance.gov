@@ -122,12 +122,14 @@ class AcceptanceTestRunner(TestDataTestRunner):
     def teardown(self):
         self.teardown_databases(self.dbs)
         self.teardown_test_environment()
+        StaticLiveServerTestCase.tearDownClass()
+
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
         self.setup_test_environment()
         self.dbs = self.setup_databases()
 
-        # Create a static server, it start immediately.
+        # Create a static server, it should start immediately.
         StaticLiveServerTestCase.setUpClass()
 
         # Set the environment variables used by Protractor.
