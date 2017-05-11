@@ -1,7 +1,10 @@
 'use strict';
 
 var _oFilterableListControls =
-  element( by.css( '.o-filterable-list-controls' ) );
+	element( by.css( '.o-filterable-list-controls' ) );
+
+var _multiselect = require( '../shared_objects/multiselect' );
+
 
 function _getFilterableElement( selector ) {
   return _oFilterableListControls.element( by.css( selector ) );
@@ -14,5 +17,7 @@ var oFilterableListControls = {
 
   oPostPreview: _getFilterableElement( '.o-post-preview' )
 };
+
+Object.assign( oFilterableListControls, _multiselect );
 
 module.exports = oFilterableListControls;
