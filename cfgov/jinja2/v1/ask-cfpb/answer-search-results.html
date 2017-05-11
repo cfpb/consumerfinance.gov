@@ -2,12 +2,8 @@
 
 {% extends 'layout-side-nav.html' %}
 
-{% block content_modifiers -%}
-    {{ super() }} content__hide-horizontal-overflow
-{%- endblock %}
-
 {% block content_wrapper_modifiers -%}
-    {{ super() }} content_wrapper__full-height-left-sidebar ask-search-page ask-cfpb-page
+    {{ super() }} ask-search-page ask-cfpb-page
 {%- endblock %}
 
 {% block content_main_modifiers -%}

@@ -6,11 +6,11 @@
 {% import 'molecules/pagination.html' as pagination with context %}
 
 {% block content_modifiers -%}
-    {{ super() }} content__hide-horizontal-overflow ask-category-page ask-cfpb-page
+    {{ super() }} ask-category-page ask-cfpb-page
 {%- endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom category-page
+    {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
