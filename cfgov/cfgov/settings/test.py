@@ -14,6 +14,7 @@ TEST_RUNNER = 'cfgov.test.TestDataTestRunner'
 LOGGING = {}
 
 INSTALLED_APPS += (
+    'wagtail.contrib.settings',
     'wagtail.tests.testapp',
 )
 

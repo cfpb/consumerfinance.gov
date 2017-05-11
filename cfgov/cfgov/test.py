@@ -124,7 +124,6 @@ class AcceptanceTestRunner(TestDataTestRunner):
         self.teardown_test_environment()
         StaticLiveServerTestCase.tearDownClass()
 
-
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
         self.setup_test_environment()
         self.dbs = self.setup_databases()
