@@ -4,7 +4,6 @@
 {% import 'macros/category-icon.html' as category_icon %}
 {% import 'atoms/partially-styled-link.html' as partially_styled_link with context %}
 {% import 'molecules/pagination.html' as pagination with context %}
-{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block content_modifiers -%}
     {{ super() }} content__hide-horizontal-overflow ask-category-page ask-cfpb-page
@@ -46,7 +45,6 @@
             {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
         </div>  
     </section>
-    {{ ask_search_bar.render( 'right' ) }}
 
 {% endblock %}
 

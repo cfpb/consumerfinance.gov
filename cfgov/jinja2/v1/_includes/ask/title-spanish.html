@@ -1,1 +1,7 @@
-title-spanish.html
+{% if search_page %}
+    <title>Buscar por '{{ page_title }}' > Oficina para la Protección Financiera del Consumidor</title>
+    <meta name="title" content="Buscar por '{{ page_title }}' > Oficina para la Protección Financiera del Consumidor">
+{% else %}
+    <title>{{ page_title }} > Oficina para la Protección Financiera del Consumidor</title>
+    <meta name="title" content="{{ page_title }} > Oficina para la Protección Financiera del Consumidor">
+{% endif %}

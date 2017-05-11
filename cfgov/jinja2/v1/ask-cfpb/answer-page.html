@@ -2,7 +2,6 @@
 {% import 'macros/time.html' as time %}
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
-{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block title %}
     {{ page.question|striptags }}
@@ -51,7 +50,6 @@
 {% endfor %}
 
     </div>
-    {{ ask_search_bar.render( 'left' ) }}
 
 {% endblock %}
 

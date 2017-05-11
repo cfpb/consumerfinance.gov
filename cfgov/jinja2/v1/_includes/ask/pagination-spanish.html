@@ -16,7 +16,7 @@
     {% endif %}
 {% endfor %}
 
-{% if current_page | int < paginator.num_pages %}
+{% if current_page < paginator.num_pages %}
 <li>
 	<a href="?page={{ (current_page | int + 1) ~ url_parameters(request.GET)}}">
 		<img src="{{ static('nemo/_/img/icon-arrow-right-retina.png') }}" alt="Next Page" class="icon-18">

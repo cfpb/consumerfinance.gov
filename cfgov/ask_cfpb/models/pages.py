@@ -15,12 +15,12 @@ from wagtail.wagtailsearch import index
 from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
-from v1.atomic_elements.organisms import FilterControls
 from v1.feeds import FilterableFeedPageMixin
 from v1.models import CFGOVPage, LandingPage
 from v1.util.filterable_list import FilterableListMixin
 from ask_cfpb.models import (Category, Audience)
 from django.core.paginator import Paginator
+
 
 class AnswerLandingPage(LandingPage):
     """
@@ -48,7 +48,8 @@ class AnswerLandingPage(LandingPage):
         return 'ask-cfpb/landing-page.html'
 
 
-class AnswerCategoryPage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
+class AnswerCategoryPage(
+        FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
     """
     Page type for Ask CFPB parent-category pages.
     """
@@ -104,14 +105,15 @@ class AnswerCategoryPage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage
         return context
 
 
-class AnswerResultsPage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
+class AnswerResultsPage(
+        FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
 
     objects = PageManager()
     answers = []
 
     content = StreamField([
     ], null=True)
-    
+
     content_panels = CFGOVPage.content_panels + [
         StreamFieldPanel('content'),
     ]
@@ -131,11 +133,13 @@ class AnswerResultsPage(FilterableFeedPageMixin, FilterableListMixin, CFGOVPage)
             AnswerResultsPage, self).get_context(request, **kwargs)
         context.update(**kwargs)
         paginator = Paginator(self.answers, 20)
-        page = request.GET.get('page', 1)
+        page = int(request.GET.get('page', 1))
+
         context['current_page'] = page
         context['paginator'] = paginator
         context['results'] = paginator.page(page)
         context['results_count'] = len(self.answers)
+
         return context
 
     def get_template(self, request):
@@ -206,7 +210,7 @@ class AnswerPage(CFGOVPage):
     def get_template(self, request):
         printable = request.GET.get('print', False)
         if self.language == 'es':
-            if printable == 'true': 
+            if printable == 'true':
                 return 'ask-cfpb/answer-page-spanish-printable.html'
 
             return 'ask-cfpb/answer-page-spanish.html'

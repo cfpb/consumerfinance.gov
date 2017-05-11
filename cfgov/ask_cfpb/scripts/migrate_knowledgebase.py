@@ -232,7 +232,8 @@ def get_or_create_category_pages():
             else:
                 cat_name = cat.name_es
                 page_title = "categoria-{}".format(cat.slug_es)
-                parent = CFGOVPage.objects.get(slug='obtener-respuestas').specific
+                parent = CFGOVPage.objects.get(
+                    slug='obtener-respuestas').specific
 
             cat_page = get_or_create_page(
                 apps,

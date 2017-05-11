@@ -46,7 +46,7 @@ def ask_search(request, language='en', as_json=False):
             language=language)
         page.query = query
         page.answers = []
-        
+
         for result in sqs:
             page.answers.append((result.url, result.autocomplete, result.text))
             print result

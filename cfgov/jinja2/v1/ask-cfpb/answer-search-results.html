@@ -1,5 +1,4 @@
 {% import 'molecules/pagination.html' as pagination with context %}
-{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% extends 'layout-side-nav.html' %}
 
@@ -18,39 +17,42 @@
 {% block content_main %}
     <div class="block
                 block__flush-top">
-    <h1>Ask CFPB</h1>
-  
-    {{ ask_search_bar.render( 'right', '', 'block__bg-branded u-mt30 u-mb30' ) }}
+        <h1>Ask CFPB</h1>
+      
+        {% if results %}
+            <h3 class="results-header">Results for ‘{{ page.query }}’</h3>
+            <section class="search-results block
+                        block__flush-top">
 
-    {% if page.answers %}
-        <h3 class="results-header">Results for ‘{{page.query}}’</h3>
+                <div class="question_list">
+                {% for question in results %}
+                    <article class="question_summary question_summary__full">
+                        <p class="question_title"><a href="{{ question[0] }}" class="kbq">{{ question[1]|safe }}</a></p>
+                        <p class="qans">{{ question[2] | safe | striptags | truncate }}</p>
+                    </article>
+                {% endfor %}
+
+                </div>
+
+                <div class="block block__sub">
+                    {{ pagination.render( paginator.num_pages, current_page | int, '', index, 'Previous', 'Next' ) }}
+                </div>
+
+            </section>
+
+        {% else %}
+
         <section class="search-results block
-                    block__flush-top">
-        <div class="question_list">
-
-        {% for pairing in page.answers %}
-            <article class="question_summary question_summary__full">
-                <p class="question_title"><a href="{{pairing[0]}}" class="kbq">{{ pairing[1]|safe }}</a></p>
-                <p class="qans">{{ pairing[2]|safe|striptags|truncate}}</p>
-            </article>
-        {% endfor %}
-
-        </div>
-
-        <div class="block block__sub">
-            {{ pagination.render( paginator.num_pages, current_page | int, '', index, 'Previous', 'Next' ) }}
-        </div>
+                        block__flush-top">
+            <div class="no-results-message">
+                <h2 class="results-header">No results found</h2>
+                <p class="short-desc u-mb30">
+                    Can't find your question? <a href="/askcfpb">Browse questions by category</a>
+                </p>
+            </div>
         </section>
-    {% else %}
-    <section class="search-results block
-                    block__flush-top">
-        <div class="no-results-message">
-            <h2 class="results-header">No results found</h2>
-            <p class="short-desc u-mb30">Can't find your question? <a href="/askcfpb">Browse questions by category</a>
-            </p>
-        </div>
-    </section>
-    {% endif %}
+        {% endif %}
+
     </div>
 
 {% endblock %}

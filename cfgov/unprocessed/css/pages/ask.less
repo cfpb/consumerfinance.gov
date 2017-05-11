@@ -38,14 +38,6 @@
 /* Landing page */
 
 .ask-landing-page {
-    .content_main {
-        padding-top: 0;
-        padding-bottom: 0;
-        
-        .respond-to-range( @bp-sm-min, @bp-med-max, {
-            border-width: 0;
-        } );
-    }
 
     .question-categories {
         .respond-to-min( @bp-sm-min, {
@@ -80,6 +72,10 @@
     h1 .cf-icon {
         color: @green;
     }
+
+    .lead-paragraph {
+        max-width: 600px;
+    }
 }
 
 .ask-cfpb-page {
@@ -91,72 +87,6 @@
         border-bottom: 1px solid @block__border-bottom;
     }
 
-    .o-search-bar {
-        &_label .break {
-            display: block;
-        }
-
-        &__full {
-            .respond-to-min(@bp-lg-min, {
-                form {
-                    .grid_column(8);
-                }
-            }); 
-        }
-
-        &__with-sidebar {   
-            .search-bar__full-width-content {
-                .search-bar_label .break {
-                    display: inline;
-                }
-                .content-l_col-1-2 {
-                    width: 100%;
-                }
-                .content-l_col + .content-l_col {
-                    margin-top: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-                }
-            }
-
-            .search-bar__variable-cols {
-                form {
-                    display: table;
-                    width: 100%;
-                }
-                .content-l_col-1-2 {
-                    display: table-cell;
-                }
-                .o-search-bar_label {
-                    width: auto;
-                    vertical-align: top;
-                    padding-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-                    white-space: nowrap;
-                    .break {
-                        display: block;
-                    }
-                }
-                .o-search-bar_input {
-                    width: 100%;
-                    margin-top: 0;
-                }
-            }
-
-            .respond-to-range(@bp-xs-max, 700px, {
-                .search-bar__full-width-content;
-            });
-        
-            .respond-to-range(700px, @bp-sm-max, {
-                .search-bar__variable-cols;
-            });
-        
-            .respond-to-range(@bp-med-min, @bp-med-max, {
-                .search-bar__full-width-content;
-            });
-        
-            .respond-to-min(@bp-lg-min, {
-                .search-bar__variable-cols;
-            });
-        }
-    }
 }
 
 .ask-category-page,
@@ -173,9 +103,6 @@
 }
 
 .ask-search-page {
-    .o-search-bar form {
-        max-width: 600px;
-    }
 
     .question_summary {
         padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em) 0;

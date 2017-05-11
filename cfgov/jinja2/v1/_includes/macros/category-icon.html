@@ -51,9 +51,9 @@
         'testimony': 'cf-icon-double-quote',
       }
     %}
-    {% set icon = icons[category | lower] + ('-round' if round else '') %}
+    {% set icon = icons[category | lower] %}
     {% if icon %}
-    <span class="cf-icon {{ icon }} cf-icon__before
+    <span class="cf-icon {{ icon + ( '-round' if round else '' ) }} cf-icon__before
                  {{ additional_classes or '' }}"></span>
     {% endif %}
 {% endmacro %}
