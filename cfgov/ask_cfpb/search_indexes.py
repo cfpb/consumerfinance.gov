@@ -1,6 +1,9 @@
 from haystack import indexes
 
-from ask_cfpb.models.django import EnglishAnswerProxy, SpanishAnswerProxy
+from ask_cfpb.models.django import (
+    EnglishAnswerProxy, SpanishAnswerProxy)
+
+VALID_SPANISH_TAGS = SpanishAnswerProxy.valid_spanish_tags()
 
 
 class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
@@ -24,7 +27,7 @@ class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
         boost=2.0)
 
     def prepare_tags(self, obj):
-        return obj.tags()
+        return obj.tags
 
     def prepare_answer(self, obj):
         data = super(AnswerBaseIndex, self).prepare(obj)
@@ -62,7 +65,7 @@ class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
         boost=2.0)
 
     def prepare_tags(self, obj):
-        return obj.tags_es()
+        return obj.tags_es
 
     def prepare_spanish_answer_index(self, obj):
         data = super(SpanishBaseIndex, self).prepare(obj)

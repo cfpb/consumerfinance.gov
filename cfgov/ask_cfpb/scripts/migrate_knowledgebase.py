@@ -66,7 +66,7 @@ unicode_swap_chars = {
     '\x94': '"',
     '\x96': '-',
     '\u200b': '',  # ZERO WIDTH SPACE
-    '\u25e6': '\u25CB ',  # small hollow circle
+    '\u25e6': '- ',  # small hollow circle; tried \u25CB
     '\uf0a7': '',  # hollow box
 }
 
@@ -142,9 +142,48 @@ def fix_tips(answer_text):
 
 
 def get_or_create_landing_pages():
-    """Create English and Spanish landing pages"""
+    """
+    Create two Spanish and one English landing pages.
+
+    Spanish gets two parents:
+    - `/es/`, as a placeholder for a future Spanish home page in Wagtail
+    - `/obtener-respuestas/`, the landing page for Spanish ask-cfpb
+    """
+
     from v1.models import CFGOVPage
-    parent = CFGOVPage.objects.get(slug='cfgov').specific
+    root = CFGOVPage.objects.get(slug='cfgov').specific
+
+    def get_or_create_es_parent_page():
+        """Create the Spanish /es/ parent placeholder page"""
+        text_intro_stream_value = [
+            {'type': 'text_introduction',
+             'value': {
+                 'heading': 'Placeholder for future Spanish home page',
+                 'links': []}}]
+        dinero = CFGOVPage.objects.get(id=51)
+        dinero.slug = 'es-dinero'
+        dinero.save()
+        es_parent = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerLandingPage',
+            'Oficina para la Protección Financiera del Consumidor',
+            'es',
+            root,
+            language='es')
+        es_parent.has_unpublished_changes = True
+        stream_block = es_parent.specific.header.stream_block
+        es_parent.header = StreamValue(
+            stream_block,
+            text_intro_stream_value,
+            is_lazy=True)
+        revision = es_parent.save_revision()
+        es_parent.save()
+        revision.publish()
+        return es_parent
+
+    es_parent = get_or_create_es_parent_page()
+
     hero_stream_value = [
         {'type': 'hero',
          'value': {
@@ -158,11 +197,13 @@ def get_or_create_landing_pages():
         'english_parent': {'slug': 'ask-cfpb',
                            'title': 'Ask CFPB',
                            'language': 'en',
-                           'hero': hero_stream_value},
+                           'hero': hero_stream_value,
+                           'parent': root},
         'spanish_parent': {'slug': 'obtener-respuestas',
                            'title': 'Obtener respuestas',
                            'language': 'es',
-                           'hero': None}
+                           'hero': None,
+                           'parent': es_parent}
     }
     counter = 0
     for parent_type in sorted(parent_map.keys()):
@@ -173,7 +214,7 @@ def get_or_create_landing_pages():
             'AnswerLandingPage',
             _map['title'],
             _map['slug'],
-            parent,
+            _map['parent'],
             language=_map['language'])
         landing_page.has_unpublished_changes = True
         if _map['hero']:
@@ -187,29 +228,42 @@ def get_or_create_landing_pages():
         revision.publish()
         time.sleep(1)
         counter += 1
-    print("Created {} landing pages".format(counter))
+    print("Created an 'es' parent and {} landing pages".format(counter))
 
 
 def get_or_create_search_results_pages():
     from v1.models import CFGOVPage
+    parent_en = CFGOVPage.objects.get(slug='ask-cfpb').specific
+    parent_es = CFGOVPage.objects.get(slug='obtener-respuestas').specific
     language_map = {
         'en': {'title': 'Ask CFPB search results',
-               'slug': 'ask-cfpb-search-results'},
+               'slug': 'ask-cfpb-search-results',
+               'page_type': 'AnswerResultsPage',
+               'language': 'en',
+               'parent': parent_en},
         'es': {'title': 'Respuestas',
-               'slug': 'respuestas'}
+               'slug': 'respuestas',
+               'page_type': 'AnswerResultsPage',
+               'language': 'es',
+               'parent': parent_es},
+        'tag': {'title': 'Buscar por etiqueta',
+                'slug': 'buscar-por-etiqueta',
+                'page_type': 'TagResultsPage',
+                'language': None,
+                'parent': parent_es}
     }
-    parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
     counter = 0
     for key in language_map:
         _map = language_map[key]
         results_page = get_or_create_page(
             apps,
             'ask_cfpb',
-            'AnswerResultsPage',
+            _map['page_type'],
             _map['title'],
             _map['slug'],
-            parent,
-            language=key)
+            _map['parent'])
+        if _map['language']:
+            results_page.language = _map['language']
         results_page.has_unpublished_changes = True
         revision = results_page.save_revision()
         results_page.save()
@@ -219,7 +273,7 @@ def get_or_create_search_results_pages():
     print("Created {} search results pages".format(counter))
 
 
-def get_or_create_category_pages():
+def get_or_create_english_category_pages():
     from v1.models import CFGOVPage
     parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
     counter = 0
@@ -239,7 +293,7 @@ def get_or_create_category_pages():
         revision.publish()
         time.sleep(1)
         counter += 1
-    print("Created {} category pages".format(counter))
+    print("Created {} English category pages".format(counter))
 
 
 def get_kb_statuses(ask_id):
@@ -518,7 +572,7 @@ def run():
     set_featured_ids()
     clean_up_blank_answers()
     get_or_create_landing_pages()
-    get_or_create_category_pages()
+    get_or_create_english_category_pages()
     get_or_create_search_results_pages()
     create_pages()
     logging.disable(logging.NOTSET)

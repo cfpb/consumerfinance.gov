@@ -27,25 +27,32 @@ def view_answer(request, slug, language, answer_id):
 
 
 def ask_search(request, language='en', as_json=False):
+    slug_map = {
+        'en': 'ask-cfpb-search-results',
+        'es': 'respuestas'
+    }
     if language == 'en':
         sqs = SearchQuerySet().models(EnglishAnswerProxy)
     elif language == 'es':
         sqs = SearchQuerySet().models(SpanishAnswerProxy)
-    sqs = sqs.filter(content=Clean(request.GET.get('q', '')))
+    query = Clean(request.GET.get('q', ''))
+    sqs = sqs.filter(content=query)
 
     if as_json:
         results = [{'question': result.autocomplete,
-                    'url': result.url}
+                    'url': result.url,
+                    'text': result.text}
                    for result in sqs]
         json_results = json.dumps(results)
         return HttpResponse(json_results, content_type='application/json')
     else:
         page = get_object_or_404(
             AnswerResultsPage,
-            language=language)
+            language=language,
+            slug=slug_map[language])
         page.answers = []
         for result in sqs:
-            page.answers.append((result.url, result.autocomplete))
+            page.answers.append((result.url, result.autocomplete, result.text))
         return page.serve(request)
 
 

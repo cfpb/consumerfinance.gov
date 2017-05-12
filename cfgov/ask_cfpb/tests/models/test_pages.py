@@ -57,6 +57,7 @@ class AnswerModelTestCase(TestCase):
 
     def setUp(self):
         from v1.models import HomePage
+        import ask_cfpb.search_indexes
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.audience = mommy.make(Audience, name='stub_audience')
         self.category = mommy.make(Category, name='stub_cat', name_es='que')
@@ -86,10 +87,20 @@ class AnswerModelTestCase(TestCase):
             ROOT_PAGE,
             language='es',
             live=True)
+        self.tag_results_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'TagResultsPage',
+            'Tag results page',
+            'buscar-por-etiqueta',
+            ROOT_PAGE,
+            language='es',
+            live=True)
         self.answer1234 = self.prepare_answer(
             id=1234,
             answer='Mock answer 1',
-            question='Mock question1')
+            question='Mock question1',
+            search_tags_es='hipotecas')
         self.answer1234.save()
         self.page1 = self.create_answer_page()
         self.page1.answer_base = self.answer1234
@@ -98,12 +109,51 @@ class AnswerModelTestCase(TestCase):
         self.answer5678 = self.prepare_answer(
             id=5678,
             answer='Mock answer 2',
-            question='Mock question2')
+            question='Mock question2',
+            search_tags_es='hipotecas')
         self.answer5678.save()
         self.page2 = self.create_answer_page(slug='mock-answer-page-en-5678')
         self.page2.answer_base = self.answer5678
         self.page2.parent = self.english_parent_page
         self.page2.save()
+        ask_cfpb.search_indexes.VALID_SPANISH_TAGS = (
+            Answer.valid_spanish_tags())
+
+    def test_answer_valid_tags(self):
+        test_list = Answer.valid_spanish_tags()
+        self.assertIn('hipotecas', test_list)
+
+    def test_routable_page_template(self):
+        self.assertEqual(
+            self.tag_results_page.get_template(HttpRequest()),
+            'ask-cfpb/answer-tag-spanish-results.html')
+
+    def test_routable_page_base_returns_404(self):
+        response = client.get(
+            self.tag_results_page.url +
+            self.tag_results_page.reverse_subpage('spanish_tag_base'))
+        self.assertEqual(response.status_code, 404)
+
+    def test_routable_page_subpage_bad_tag_returns_404(self):
+        page = self.tag_results_page
+        response = client.get(
+            page.url + page.reverse_subpage(
+                'buscar_por_etiqueta',
+                kwargs={'tag': 'hippopotamus'}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_routable_page_subpage_valid_tag_returns_200(self):
+        page = self.tag_results_page
+        response = client.get(
+            page.url + page.reverse_subpage(
+                'buscar_por_etiqueta',
+                kwargs={'tag': 'hipotecas'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_page_returns_url_suffix(self):
+        response = self.tag_results_page.reverse_subpage(
+            'buscar_por_etiqueta', kwargs={'tag': 'hipotecas'})
+        self.assertEqual(response, 'hipotecas/')
 
     def test_view_answer_200(self):
         response_200 = client.get(reverse(
@@ -275,7 +325,7 @@ class AnswerModelTestCase(TestCase):
         """Test the list produced by answer.tags()"""
         answer = self.prepare_answer(search_tags='Chutes, Ladders')
         answer.save()
-        taglist = answer.tags()
+        taglist = answer.tags
         for name in ['Chutes', 'Ladders']:
             self.assertIn(name, taglist)
 
@@ -283,7 +333,7 @@ class AnswerModelTestCase(TestCase):
         """Test the list produced by answer.tags_es()"""
         answer = self.prepare_answer(search_tags_es='sistema judicial, tipos')
         answer.save()
-        taglist = answer.tags_es()
+        taglist = answer.tags_es
         for term in ['sistema judicial', 'tipos']:
             self.assertIn(term, taglist)
 

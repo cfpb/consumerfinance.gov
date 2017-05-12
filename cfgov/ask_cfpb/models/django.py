@@ -320,11 +320,34 @@ class Answer(models.Model):
             for tag in taglist.split(',')
             if tag.replace('"', '').strip()]
 
+    @cached_property
     def tags(self):
         return self.clean_tag_list(self.search_tags)
 
+    @cached_property
     def tags_es(self):
         return self.clean_tag_list(self.search_tags_es)
+
+    @classmethod
+    def valid_spanish_tags(cls):
+        """
+        Search tags are arbitrary and messy. This function serves 2 purposes:
+        - Assemble a whitelist of tags that are safe for search.
+        - Exclude tags that are attached to only one answer.
+        Tags are useless until they can be used to collect at least 2 answers.
+        """
+        cleaned = []
+        valid = []
+        for a in cls.objects.all():
+            if a.search_tags_es.strip():
+                cleaned += [
+                    tag.strip() for tag
+                    in a.search_tags_es.strip().split(',')
+                    if tag.strip()]
+        for tag in sorted(set(cleaned)):
+            if cls.objects.filter(search_tags_es__contains=tag).count() > 1:
+                valid.append(tag)
+        return valid
 
     def has_live_page(self):
         if not self.answer_pages.all():
