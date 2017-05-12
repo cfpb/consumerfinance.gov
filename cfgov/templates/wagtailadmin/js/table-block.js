@@ -11,7 +11,7 @@
  */
 ( function( win ) {
 
-    function initAtomicTable( id, options ) {
+    function initRichTextTable( id, options ) {
         id = '#' + id;
 
         var utilities = {
@@ -558,6 +558,6 @@
         } );
     } );
 
-    win.initAtomicTable = initAtomicTable;
+    win.initRichTextTable = initRichTextTable;
 
 } ) ( window );
