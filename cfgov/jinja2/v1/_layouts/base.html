@@ -123,6 +123,13 @@
     the head, then file an issue or PR to discuss including it.
 -->
 
+    {# TODO: jQuery is provided in the head to satisfy
+             Google Tag Manager (GTM) & Optimize requirements.
+             Ideally GTM would handle its own dependency management
+             and initializing jQuery could be moved to the footer.
+             (Ideally, also, we will move away from jQuery entirely.) #}
+    <script src="{{ static('js/jquery.min.js') }}"></script>
+
     <!-- Google Optimize page-hiding snippet -->
     <style>
         .optimize-loading {
@@ -182,13 +189,6 @@
     <![endif]-->
 
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
-
-    {# TODO: jQuery CDN is provided in the head to satisfy
-             Google Tag Manager (GTM) requirements.
-             Ideally GTM would handle its own dependency management
-             and initializing jQuery could be moved to the footer. #}
-
-    <script src="{{ static('js/jquery.min.js') }}" ></script>
 </head>
 
 <body>
