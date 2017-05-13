@@ -383,6 +383,30 @@ class AnswerModelTestCase(TestCase):
         test_context = cat_page.get_context(mock_request)
         self.assertEqual(test_context['choices'][0][1], 'stub_subcat')
 
+    def test_category_page_get_english_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='en')
+        test_get_template = cat_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/category-page.html')
+
+    def test_category_page_get_spanish_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='es')
+        test_get_template = cat_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/category-page-spanish.html')
+
     def test_landing_page_context(self):
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
@@ -451,3 +475,14 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(result_dict.keys()[0], '1234')
         self.assertEqual(result_dict['1234']['url'], '/ask-cfpb/slug-en-1234')
         self.assertEqual(result_dict['1234']['question'], 'Mock question1')
+
+    def test_answer_page_print_template_used(self):
+        answer_page = self.create_answer_page(language='es')
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        mock_request.GET = {'print': 'true'}
+        self.assertEqual(
+            answer_page.get_template(mock_request),
+            'ask-cfpb/answer-page-spanish-printable.html')
