@@ -1,7 +1,7 @@
 'use strict';
 
 var envvars = require( '../../config/environment' ).envvars;
-var specsRoot = 'spec_suites/';
+var specsRoot = 'cucumber/features/';
 
 module.exports = {
   // A base URL for your application under test.
@@ -10,14 +10,7 @@ module.exports = {
   // The base path where the spec suites are located.
   specsBasePath: specsRoot + '**/*',
 
-  suites: {
-    integration: [
-      specsRoot + 'integration/**/*.js'
-    ],
-    content: [
-      specsRoot + 'content/**/*.js'
-    ]
-  },
+  suites: {},
 
   // The default window width and height.
   // Can be overridden with the --windowSize=w,h command-line flag.
