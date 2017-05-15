@@ -181,7 +181,6 @@ class AnswerPage(CFGOVPage):
 
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('redirect_to'),
-        StreamFieldPanel('content'),
     ]
 
     search_fields = Page.search_fields + [
