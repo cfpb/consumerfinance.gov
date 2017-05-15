@@ -160,6 +160,7 @@ def get_or_create_landing_pages():
              'value': {
                  'heading': 'Placeholder for future Spanish home page',
                  'links': []}}]
+        # this unserved archived page was squatting on the /es/ slug
         dinero = CFGOVPage.objects.get(id=51)
         dinero.slug = 'es-dinero'
         dinero.save()
