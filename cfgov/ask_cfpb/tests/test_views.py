@@ -3,18 +3,55 @@ from __future__ import unicode_literals
 import json
 import mock
 
-from django.utils import timezone
+from model_mommy import mommy
+
+from ask_cfpb.models.pages import AnswerResultsPage
+from django.apps import apps
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.http import HttpRequest
 import django.test
 from django.test import Client
-from ask_cfpb.models.pages import AnswerResultsPage
+from django.utils import timezone
+from v1.util.migrations import get_or_create_page, get_free_path
 
 client = Client()
 now = timezone.now()
 
 
 class AnswerViewTestCase(django.test.TestCase):
+
+    def setUp(self):
+        from v1.models import HomePage
+        from ask_cfpb.models import ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG
+        ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.english_parent_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerLandingPage',
+            'Ask CFPB',
+            ENGLISH_PARENT_SLUG,
+            ROOT_PAGE,
+            language='en',
+            live=True)
+        self.spanish_parent_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerLandingPage',
+            'Obtener respuestas',
+            SPANISH_PARENT_SLUG,
+            ROOT_PAGE,
+            language='es',
+            live=True)
+
+    def create_answer_results_page(self, **kwargs):
+        kwargs.setdefault(
+            'path', get_free_path(apps, self.english_parent_page))
+        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
+        kwargs.setdefault('slug', 'mock-answer-page-en-1234')
+        kwargs.setdefault('title', 'Mock answer page title')
+        page = mommy.prepare(AnswerResultsPage, **kwargs)
+        page.save()
+        return page
 
     def test_bad_language_search(self):
         with self.assertRaises(NoReverseMatch):
@@ -42,13 +79,7 @@ class AnswerViewTestCase(django.test.TestCase):
         mock_query.return_value = [return_mock]
         return_mock.url = 'url'
         return_mock.autocomplete = 'question text'
-        page = AnswerResultsPage(
-            language='en',
-            depth=3,
-            slug='results',
-            path=001001001,
-            title='Results')
-        page.save()
+        page = self.create_answer_results_page(language='en')
         client.get(reverse(
             'ask-search-en'))
         self.assertEqual(mock_query.call_count, 1)
@@ -64,13 +95,7 @@ class AnswerViewTestCase(django.test.TestCase):
         mock_query.return_value = [return_mock]
         return_mock.url = 'url'
         return_mock.autocomplete = 'question text'
-        page = AnswerResultsPage(
-            language='es',
-            depth=3,
-            slug='results',
-            path=001001001,
-            title='Results')
-        page.save()
+        page = self.create_answer_results_page(language='es')
         client.get(reverse(
             'ask-search-es',
             kwargs={'language': 'es'}))

@@ -53,11 +53,10 @@ class AnswerCategoryPage(
     """
     Page type for Ask CFPB parent-category pages.
     """
-    from .django import Category
+    from ask_cfpb.models import Category
 
     objects = PageManager()
-    content = StreamField([
-    ], null=True)
+    content = StreamField([], null=True)
     ask_category = models.ForeignKey(
         Category,
         blank=True,

@@ -3,7 +3,10 @@ from __future__ import print_function
 import importlib
 import itertools
 import logging
+import os
 import re
+import subprocess
+import sys
 
 from django.apps import apps
 from django.conf import settings
@@ -11,9 +14,11 @@ from django.db import connection
 from django.db.migrations.loader import MigrationLoader
 from django.test import RequestFactory
 from django.test.runner import DiscoverRunner, is_discoverable
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+
 from mock import Mock
 
-from scripts import initial_data
+from scripts import initial_data, test_data
 
 
 class OptionalAppsMixin(object):
@@ -73,6 +78,7 @@ class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
         )
 
         loader = MigrationLoader(connection)
+
         for migration, method in migration_methods:
             if not self.is_migration_applied(loader, migration):
                 print('applying migration {}'.format(migration))
@@ -84,6 +90,53 @@ class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
         parts = migration.split('.')
         migration_tuple = (parts[-3], parts[-1])
         return migration_tuple in loader.applied_migrations
+
+
+class AcceptanceTestRunner(TestDataTestRunner):
+
+    def run_suite(self, **kwargs):
+        gulp_command = ['gulp', 'test:acceptance:protractor']
+        SPECS_KEY = 'specs'
+        specs = ''.join(sys.argv[2:])
+
+        if (SPECS_KEY in specs):
+            gulp_command.append('--' + ''.join(specs))
+        try:
+            subprocess.check_call(gulp_command)
+        except subprocess.CalledProcessError:
+            sys.exit(1)
+        finally:
+            self.teardown()
+
+    def set_env_test_url(self):
+        server_thread = StaticLiveServerTestCase.server_thread
+        os.environ['TEST_HTTP_HOST'] = server_thread.host
+        os.environ['TEST_HTTP_PORT'] = str(server_thread.port)
+
+    def setup_databases(self, **kwargs):
+        dbs = super(AcceptanceTestRunner, self).setup_databases(**kwargs)
+        test_data.run()
+
+        return dbs
+
+    def teardown(self):
+        self.teardown_databases(self.dbs)
+        self.teardown_test_environment()
+        StaticLiveServerTestCase.tearDownClass()
+
+    def run_tests(self, test_labels, extra_tests=None, **kwargs):
+        self.setup_test_environment()
+        self.dbs = self.setup_databases()
+
+        # Create a static server, it should start immediately.
+        StaticLiveServerTestCase.setUpClass()
+
+        # Set the environment variables used by Protractor.
+        self.set_env_test_url()
+
+        self.run_suite()
+
+        return
 
 
 class HtmlMixin(object):
