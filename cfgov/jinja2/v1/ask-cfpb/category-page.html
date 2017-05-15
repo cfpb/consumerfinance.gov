@@ -18,7 +18,6 @@
                     block__flush-top
                     block__sub">
         <h1>
-          {{ category_icon.render(page.ask_category.name, '', 'round') }}
           {{ page.ask_category.name }}
         </h1>
 
@@ -42,7 +41,7 @@
         </div>
   
         <div class="block block__sub">
-            {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
+            {{ pagination.render( paginator.num_pages, current_page, '', 0 ) }}
         </div>  
     </section>
 

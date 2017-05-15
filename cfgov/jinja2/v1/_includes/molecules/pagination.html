@@ -26,7 +26,7 @@
 
    ========================================================================== #}
 
-{% macro render(total_pages, current_page, fragment_id='', index=0, prev='Newer', next='Older') %}
+{% macro render(total_pages, current_page, fragment_id='', index=0) %}
 {% if total_pages > 1 and current_page <= total_pages %}
 {% from 'macros/util/url_parameters.html' import url_parameters %}
 
@@ -51,7 +51,7 @@
             <span class="btn_icon__left
                          cf-icon
                          cf-icon-left"></span>
-            {{ prev }}
+            Newer
         </a>
         {%- if current_page < total_pages %}
         <a class="btn
@@ -66,7 +66,7 @@
                   btn__disabled
                   m-pagination_btn-next">
         {% endif -%}
-            {{ next }}
+            Older
             <span class="btn_icon__right
                          cf-icon
                          cf-icon-right"></span>
