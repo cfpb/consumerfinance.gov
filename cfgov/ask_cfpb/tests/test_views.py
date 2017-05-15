@@ -39,7 +39,7 @@ class AnswerViewTestCase(django.test.TestCase):
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_en_search(self, mock_query):
         from v1.util.migrations import get_or_create_page
-        mock_page = get_or_create_page(  # noqa
+        mock_page = get_or_create_page(
             apps,
             'ask_cfpb',
             'AnswerResultsPage',
@@ -54,7 +54,6 @@ class AnswerViewTestCase(django.test.TestCase):
         mock_query.return_value = [mock_return]
         response = client.get(reverse(
             'ask-search-en'), {'q': 'payday'})
-        # import pdb; pdb.set_trace()
         self.assertEqual(mock_query.call_count, 1)
         self.assertTrue(mock_query.called_with(language='en', q='payday'))
         self.assertEqual(response.status_code, 200)
