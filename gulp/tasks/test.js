@@ -13,6 +13,7 @@ var localtunnel = require( 'localtunnel' );
 var minimist = require( 'minimist' );
 var spawn = require( 'child_process' ).spawn;
 
+
 /**
  * Run Mocha JavaScript unit tests.
  * @param {Function} cb - Callback function to call on completion.
@@ -50,6 +51,29 @@ function testUnitServer() {
     'tox',
     { stdio: 'inherit' }
   ).once( 'close', function( code ) {
+    if ( code ) {
+      gulpUtil.log( 'Tox tests exited with code ' + code );
+      process.exit( 1 );
+    }
+    gulpUtil.log( 'Tox tests done!' );
+  } );
+}
+
+/**
+ * Run tox Acceptance tests.
+ */
+function testAcceptanceBrowser() {
+  var params = minimist( process.argv.slice( 2 ) );
+  var toxParams = ['-e', 'acceptance'];
+  var SPECS_KEY = 'specs';
+
+  // Modifying specs format to pass to tox.
+  if ( params && params[SPECS_KEY] ) {
+    toxParams.push( SPECS_KEY + '=' + params[ SPECS_KEY ] );
+  }
+
+  spawn( 'tox', toxParams, { stdio: 'inherit' } )
+  .once( 'close', function( code ) {
     if ( code ) {
       gulpUtil.log( 'Tox tests exited with code ' + code );
       process.exit( 1 );
@@ -235,28 +259,27 @@ function testPerf() {
  * Spawn the appropriate acceptance tests.
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
-function _spawnProtractor( suite ) {
+function spawnProtractor( suite ) {
+  var UNDEFINED;
+
+  if( typeof suite === 'function' ) {
+    suite = UNDEFINED;
+  }
+
   var params = _getProtractorParams( suite );
   gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
-    params,
-    { stdio: 'inherit' }
-  ).once( 'close', function( code ) {
-    if ( code ) {
-      gulpUtil.log( 'Protractor tests exited with code ' + code );
-      process.exit( 1 );
+    params, {
+      stdio: 'inherit'
+    } ).once( 'close', function( code ) {
+      if ( code ) {
+        gulpUtil.log( 'Protractor tests exited with code ' + code );
+        process.exit( 1 );
+      }
+      gulpUtil.log( 'Protractor tests done!' );
     }
-    gulpUtil.log( 'Protractor tests done!' );
-  } );
-}
-
-/**
- * Run the protractor acceptance tests.
- * @param {string} suite Name of specific suite or suites to run, if any.
- */
-function testAcceptanceBrowser( suite ) {
-  _spawnProtractor( suite );
+  );
 }
 
 /**
@@ -267,29 +290,16 @@ function testCoveralls() {
     .pipe( gulpCoveralls() );
 }
 
-// This task will only run on Travis
-gulp.task( 'test:coveralls', testCoveralls );
 
+gulp.task( 'test', [ 'lint', 'test:unit' ] );
 gulp.task( 'test:a11y', testA11y );
+gulp.task( 'test:acceptance', testAcceptanceBrowser );
+gulp.task( 'test:acceptance:protractor', spawnProtractor );
+gulp.task( 'test:coveralls', testCoveralls );
 gulp.task( 'test:perf', testPerf );
-
-
+gulp.task( 'test:unit', [ 'test:unit:scripts' ] );
 gulp.task( 'test:unit:scripts', testUnitScripts );
+
+// This task will only run on Travis
 gulp.task( 'test:unit:server', testUnitServer );
 
-gulp.task( 'test:unit',
-  [
-    'test:unit:scripts'
-  ]
-);
-
-gulp.task( 'test',
-  [
-    'lint',
-    'test:unit'
-  ]
-);
-
-gulp.task( 'test:acceptance', function() {
-  testAcceptanceBrowser();
-} );
