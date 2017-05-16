@@ -62,7 +62,7 @@ class AnswerModelTestCase(TestCase):
         self.audience = mommy.make(Audience, name='stub_audience')
         self.category = mommy.make(Category, name='stub_cat', name_es='que')
         self.subcategories = mommy.make(
-            SubCategory, name='stub_subcat', _quantity=3)
+            SubCategory, name='stub_subcat', parent=self.category, _quantity=3)
         self.category.subcategories.add(self.subcategories[0])
         self.category.save()
         self.next_step = mommy.make(NextStep, title='stub_step')
@@ -118,6 +118,23 @@ class AnswerModelTestCase(TestCase):
         self.page2.save()
         ask_cfpb.search_indexes.VALID_SPANISH_TAGS = (
             Answer.valid_spanish_tags())
+
+    def test_facet_map(self):
+        self.answer1234.category.add(self.category)
+        self.answer1234.audiences.add(self.audience)
+        self.answer1234.subcategory.add(self.subcategories[1])
+        facet_map = self.category.facet_map
+        self.assertEqual(
+            facet_map['answers']['1234']['question'], 'Mock question1')
+        self.assertEqual(
+            facet_map['audiences']['1']['name'], 'stub_audience')
+        self.assertEqual(
+            facet_map['subcategories']['1'], [])
+
+    def test_facet_json(self):
+        facet_json = self.category.facet_json
+        self.assertEqual(type(facet_json), str)
+        self.assertEqual(type(json.loads(facet_json)), dict)
 
     def test_answer_valid_tags(self):
         test_list = Answer.valid_spanish_tags()
@@ -506,27 +523,6 @@ class AnswerModelTestCase(TestCase):
 
     def test_answer_language_page_nonexistent(self):
         self.assertEqual(self.answer5678.spanish_page, None)
-
-    def test_category_audience_json(self):
-        self.answer1234.audiences.add(self.audience)
-        self.answer1234.category.add(self.category)
-        self.answer1234.save()
-        self.assertEqual(
-            self.category.audience_json,
-            '{"stub_audience": ["1234"]}')
-
-    def test_category_subcategory_json(self):
-        self.answer1234.subcategory.add(self.subcategories[0])
-        self.assertEqual(
-            self.category.subcategory_json,
-            '{"stub_subcat": ["1234"]}')
-
-    def test_category_answer_json(self):
-        self.answer1234.category.add(self.category)
-        result_dict = json.loads(self.category.answer_json)
-        self.assertEqual(result_dict.keys()[0], '1234')
-        self.assertEqual(result_dict['1234']['url'], '/ask-cfpb/slug-en-1234')
-        self.assertEqual(result_dict['1234']['question'], 'Mock question1')
 
     def test_answer_page_print_template_used(self):
         answer_page = self.create_answer_page(language='es')

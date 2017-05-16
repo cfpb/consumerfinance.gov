@@ -98,8 +98,8 @@ class AnswerCategoryPage(
         paginator = Paginator(answers, 20)
 
         context.update({
-            'choices':
-            self.ask_category.subcategories.all().values_list(
+            'facet_json': self.ask_category.facet_json,
+            'choices': self.ask_category.subcategories.all().values_list(
                 'slug', 'name'),
             'current_page': int(page),
             'paginator': paginator,

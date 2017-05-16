@@ -160,7 +160,7 @@ def get_or_create_landing_pages():
              'value': {
                  'heading': 'Placeholder for future Spanish home page',
                  'links': []}}]
-        # this unserved archived page was squatting on the /es/ slug
+        # this unserved archived page is squatting on the /es/ slug
         dinero = CFGOVPage.objects.get(id=51)
         dinero.slug = 'es-dinero'
         dinero.save()
@@ -274,19 +274,19 @@ def get_or_create_search_results_pages():
     print("Created {} search results pages".format(counter))
 
 
-def get_or_create_english_category_pages():
+def get_or_create_category_pages():
     from v1.models import CFGOVPage
     parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
     counter = 0
     for cat in Category.objects.all():
         for language in ['en', 'es']:
             if language == 'en':
-                cat_name = cat.name
-                page_title = "category-{}".format(cat.slug)
+                title = cat.name
+                page_slug = "category-{}".format(cat.slug)
                 parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
             else:
-                cat_name = cat.name_es
-                page_title = "categoria-{}".format(cat.slug_es)
+                title = cat.name_es
+                page_slug = "categoria-{}".format(cat.slug_es)
                 parent = CFGOVPage.objects.get(
                     slug='obtener-respuestas').specific
 
@@ -294,8 +294,8 @@ def get_or_create_english_category_pages():
                 apps,
                 'ask_cfpb',
                 'AnswerCategoryPage',
-                cat_name,
-                page_title,
+                title,
+                page_slug,
                 parent,
                 language=language,
                 ask_category=cat)
@@ -304,8 +304,8 @@ def get_or_create_english_category_pages():
             cat_page.save()
             revision.publish()
             time.sleep(1)
-        counter += 1
-    print("Created {} English category pages".format(counter))
+            counter += 1
+    print("Created {} category pages".format(counter))
 
 
 def get_kb_statuses(ask_id):
@@ -584,7 +584,7 @@ def run():
     set_featured_ids()
     clean_up_blank_answers()
     get_or_create_landing_pages()
-    get_or_create_english_category_pages()
+    get_or_create_category_pages()
     get_or_create_search_results_pages()
     create_pages()
     logging.disable(logging.NOTSET)

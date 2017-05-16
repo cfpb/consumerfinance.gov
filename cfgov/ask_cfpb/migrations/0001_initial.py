@@ -2,13 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import wagtail.wagtailcore.fields
+import v1.feeds
 import wagtail.wagtailcore.blocks
 import v1.util.filterable_list
-import v1.feeds
-import django.db.models.deletion
-import v1.util.ref
 import django.utils.timezone
+import wagtail.contrib.wagtailroutablepage.models
+import wagtail.wagtailcore.fields
+import django.db.models.deletion
 from django.conf import settings
 
 
@@ -25,6 +25,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('question', models.TextField(blank=True)),
+                ('statement', models.TextField(help_text='Text to be used on portal pages to refer to this answer', blank=True)),
                 ('snippet', wagtail.wagtailcore.fields.RichTextField(help_text='Optional answer intro', blank=True)),
                 ('answer', wagtail.wagtailcore.fields.RichTextField(blank=True)),
                 ('slug', models.SlugField(max_length=255, blank=True)),
@@ -51,8 +52,7 @@ class Migration(migrations.Migration):
             name='AnswerCategoryPage',
             fields=[
                 ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
-                ('content', wagtail.wagtailcore.fields.StreamField([('filter_controls', wagtail.wagtailcore.blocks.StructBlock([(b'label', wagtail.wagtailcore.blocks.CharBlock(required=False)), (b'is_bordered', wagtail.wagtailcore.blocks.BooleanBlock(required=False)), (b'is_midtone', wagtail.wagtailcore.blocks.BooleanBlock(required=False)), (b'is_expanded', wagtail.wagtailcore.blocks.BooleanBlock(required=False)), (b'form_type', wagtail.wagtailcore.blocks.ChoiceBlock(default=b'filterable-list', choices=[(b'filterable-list', b'Filterable List'), (b'pdf-generator', b'PDF Generator')])), (b'title', wagtail.wagtailcore.blocks.BooleanBlock(default=True, required=False, label=b'Filter Title')), (b'post_date_description', wagtail.wagtailcore.blocks.CharBlock(default=b'Published')), (b'categories', wagtail.wagtailcore.blocks.StructBlock([(b'filter_category', wagtail.wagtailcore.blocks.BooleanBlock(default=True, required=False)), (b'show_preview_categories', wagtail.wagtailcore.blocks.BooleanBlock(default=True, required=False)), (b'page_type', wagtail.wagtailcore.blocks.ChoiceBlock(required=False, choices=v1.util.ref.filterable_list_page_types))])), (b'topics', wagtail.wagtailcore.blocks.BooleanBlock(default=True, required=False, label=b'Filter Topics')), (b'authors', wagtail.wagtailcore.blocks.BooleanBlock(default=True, required=False, label=b'Filter Authors')), (b'date_range', wagtail.wagtailcore.blocks.BooleanBlock(default=True, required=False, label=b'Filter Date Range')), (b'output_5050', wagtail.wagtailcore.blocks.BooleanBlock(default=False, required=False, label=b'Render preview items as 50-50s')), (b'link_image_and_heading', wagtail.wagtailcore.blocks.BooleanBlock(help_text=b'Add links to post preview images and headings in filterable list results', default=False, required=False))]))], null=True)),
-                ('secondary_nav_exclude_sibling_pages', models.BooleanField(default=False)),
+                ('content', wagtail.wagtailcore.fields.StreamField([], null=True)),
             ],
             options={
                 'abstract': False,
@@ -92,11 +92,12 @@ class Migration(migrations.Migration):
             name='AnswerResultsPage',
             fields=[
                 ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
+                ('content', wagtail.wagtailcore.fields.StreamField([], null=True)),
             ],
             options={
                 'abstract': False,
             },
-            bases=('v1.cfgovpage',),
+            bases=(v1.feeds.FilterableFeedPageMixin, v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
         ),
         migrations.CreateModel(
             name='Audience',
@@ -149,6 +150,16 @@ class Migration(migrations.Migration):
                 'ordering': ['weight'],
                 'verbose_name_plural': 'Subcategories',
             },
+        ),
+        migrations.CreateModel(
+            name='TagResultsPage',
+            fields=[
+                ('answerresultspage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='ask_cfpb.AnswerResultsPage')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(wagtail.contrib.wagtailroutablepage.models.RoutablePageMixin, 'ask_cfpb.answerresultspage'),
         ),
         migrations.AddField(
             model_name='answercategorypage',

@@ -149,47 +149,6 @@ class Category(models.Model):
     def facet_json(self):
         return json.dumps(self.facet_map)
 
-    @cached_property
-    def audience_counts(self):
-        _audience_map = self.facet_map['audiences']
-        audiences = {ID: {'name': _audience_map[ID]['name'],
-                          'count': len(_audience_map[ID]['all'])}
-                     for ID in _audience_map.keys()
-                     if _audience_map[ID]['all']}
-        return audiences
-
-    @cached_property
-    def audience_json(self):
-        audience_map = {audience: []
-                        for audience in Audience.objects.all()}
-        for answer in self.answer_set.all():
-            for key in audience_map:
-                if key in answer.audiences.all():
-                    audience_map[key].append(str(answer.pk))
-        return json.dumps({audience.name.split(' ')[0].lower():
-                          audience_map[audience]
-                          for audience in audience_map.keys()})
-
-    @cached_property
-    def subcategory_json(self):
-        subcat_data = {}
-        for subcat in self.subcategories.all():
-            key = subcat.name
-            subcat_data[key] = [
-                str(answer.pk) for answer
-                in subcat.answer_set.all()
-                if answer.english_page]
-        return json.dumps(subcat_data)
-
-    @cached_property
-    def answer_json(self):
-        answer_data = {str(answer.pk):
-                       {'question': answer.question,
-                        'url': '/ask-cfpb/slug-en-{}'.format(answer.pk)}
-                       for answer in self.answer_set.all()
-                       if answer.english_page}
-        return json.dumps(answer_data)
-
     class Meta:
         ordering = ['name']
         verbose_name_plural = 'Categories'
@@ -202,6 +161,9 @@ class Answer(models.Model):
         blank=True,
         help_text="This associates an answer with a portal page")
     question = models.TextField(blank=True)
+    statement = models.TextField(
+        blank=True,
+        help_text="Text to be used on portal pages to refer to this answer")
     snippet = RichTextField(blank=True, help_text="Optional answer intro")
     answer = RichTextField(blank=True)
     slug = models.SlugField(max_length=255, blank=True)
@@ -284,6 +246,7 @@ class Answer(models.Model):
             classname="collapsible"),
         MultiFieldPanel([
             FieldPanel('question', classname="title"),
+            FieldPanel('statement', classname="title"),
             FieldPanel('snippet', classname="full"),
             FieldPanel('answer', classname="full")],
             heading="English",
