@@ -143,11 +143,7 @@ class Category(models.Model):
         container['audiences'].update(
             {str(audience.id): audience_map[audience]
              for audience in audience_map.keys()})
-        return container
-
-    @cached_property
-    def facet_json(self):
-        return json.dumps(self.facet_map)
+        return json.dumps(container)
 
     class Meta:
         ordering = ['name']
@@ -458,6 +454,12 @@ class Answer(models.Model):
     def delete(self):
         self.answer_pages.all().delete()
         super(Answer, self).delete()
+
+
+class AnswerTagProxy(Answer):
+    """A no-op proxy class to allow index store of expensive queries"""
+    class Meta:
+        proxy = True
 
 
 class EnglishAnswerProxy(Answer):

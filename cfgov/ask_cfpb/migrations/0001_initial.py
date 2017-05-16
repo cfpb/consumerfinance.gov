@@ -197,6 +197,15 @@ class Migration(migrations.Migration):
             field=models.ManyToManyField(help_text='Choose any subcategories related to the answer', to='ask_cfpb.SubCategory', blank=True),
         ),
         migrations.CreateModel(
+            name='AnswerTagProxy',
+            fields=[
+            ],
+            options={
+                'proxy': True,
+            },
+            bases=('ask_cfpb.answer',),
+        ),
+        migrations.CreateModel(
             name='EnglishAnswerProxy',
             fields=[
             ],

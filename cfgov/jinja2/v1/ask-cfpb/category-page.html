@@ -49,7 +49,7 @@
 {% block javascript %}
 {{ super() }}
 <script>
-    var facetMap = {{ facet_json|safe }};
+    var facetMap = {{ facet_map|safe }};
 </script>    
 {% endblock %}
 

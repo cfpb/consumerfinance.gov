@@ -1,9 +1,7 @@
 from haystack import indexes
 
-from ask_cfpb.models.django import (
-    EnglishAnswerProxy, SpanishAnswerProxy)
-
-VALID_SPANISH_TAGS = SpanishAnswerProxy.valid_spanish_tags()
+from ask_cfpb.models import (
+    AnswerTagProxy, Category, EnglishAnswerProxy, SpanishAnswerProxy)
 
 
 class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
@@ -80,3 +78,41 @@ class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
         ids = [record.id for record in self.get_model().objects.all()
                if record.spanish_page and record.spanish_page.live is True]
         return self.get_model().objects.filter(id__in=ids)
+
+
+class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(
+        document=True,
+        use_template=True)
+    facet_map = indexes.CharField(
+        indexed=True)
+    slug = indexes.CharField(
+        model_attr='slug')
+    slug_es = indexes.CharField(
+        model_attr='slug_es')
+
+    def prepare_facet_map(self, obj):
+        return obj.facet_map
+
+    def get_model(self):
+        return Category
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.all()
+
+
+class TagIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(
+        use_template=True,
+        document=True)
+
+    valid_spanish = indexes.MultiValueField()
+
+    def get_model(self):
+        return AnswerTagProxy
+
+    def prepare_valid_spanish(self, obj):
+        return self.get_model().valid_spanish_tags()
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.filter(id=1)

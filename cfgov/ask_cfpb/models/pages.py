@@ -1,5 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
+import json
+
 from django.core.paginator import Paginator
 from django.db import models
 from django.http import Http404
@@ -7,6 +9,7 @@ from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
+from haystack.query import SearchQuerySet
 
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface)
@@ -24,6 +27,16 @@ from v1.util.filterable_list import FilterableListMixin
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
+
+
+def get_valid_spanish_tags():
+    from ask_cfpb.models import AnswerTagProxy
+    try:
+        sqs = SearchQuerySet().models(AnswerTagProxy)
+        valid_spanish_tags = sqs.filter(content='tags')[0].valid_spanish
+    except (IndexError, AttributeError):  # ES not available; go to plan B
+        valid_spanish_tags = AnswerTagProxy.valid_spanish_tags()
+    return valid_spanish_tags
 
 
 class AnswerLandingPage(LandingPage):
@@ -58,7 +71,7 @@ class AnswerCategoryPage(
     """
     Page type for Ask CFPB parent-category pages.
     """
-    from ask_cfpb.models import Category
+    from ask_cfpb.models import Answer, Audience, Category, SubCategory
 
     objects = PageManager()
     content = StreamField([], null=True)
@@ -92,15 +105,38 @@ class AnswerCategoryPage(
     def get_context(self, request, *args, **kwargs):
         context = super(
             AnswerCategoryPage, self).get_context(request, *args, **kwargs)
-
-        answers = self.ask_category.answer_set.all()
+        sqs = SearchQuerySet().models(self.Category)
+        if self.language == 'es':
+            sqs = sqs.filter(content=self.ask_category.name_es)
+        else:
+            sqs = sqs.filter(content=self.ask_category.name)
+        if sqs:
+            facet_map = sqs[0].facet_map
+        else:
+            facet_map = self.ask_category.facet_map
+        facet_dict = json.loads(facet_map)
+        subcat_ids = facet_dict['subcategories'].keys()
+        answer_ids = facet_dict['answers'].keys()
+        audience_ids = facet_dict['audiences'].keys()
+        subcats = self.SubCategory.objects.filter(
+            pk__in=subcat_ids).values(
+                'id', 'slug', 'slug_es', 'name', 'name_es')
+        answers = self.Answer.objects.filter(
+            pk__in=answer_ids).order_by('-pk').values(
+                'id', 'question', 'question_es',
+                'slug', 'slug_es', 'answer_es')
+        for a in answers:
+            a['answer_es'] = Truncator(a['answer_es']).words(
+                40, truncate=' ...')
+        audiences = self.Audience.objects.filter(
+            pk__in=audience_ids).values('id', 'name')
         page = request.GET.get('page', 1)
         paginator = Paginator(answers, 20)
-
         context.update({
-            'facet_json': self.ask_category.facet_json,
-            'choices': self.ask_category.subcategories.all().values_list(
-                'slug', 'name'),
+            'answers': answers,
+            'audiences': audiences,
+            'facet_map': facet_map,
+            'choices': subcats,
             'current_page': int(page),
             'paginator': paginator,
             'questions': paginator.page(page),
@@ -170,9 +206,9 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     @route(r'^(?P<tag>[^/]+)/$')
     def buscar_por_etiqueta(self, request, **kwargs):
         from ask_cfpb.models import Answer
-        from ask_cfpb.search_indexes import VALID_SPANISH_TAGS
+        valid_tags = get_valid_spanish_tags()
         tag = kwargs.get('tag').replace('_', ' ')
-        if not tag or tag not in VALID_SPANISH_TAGS:
+        if not tag or tag not in valid_tags:
             raise Http404
         self.answers = [
             (SPANISH_ANSWER_SLUG_BASE.format(a.id),
@@ -237,15 +273,15 @@ class AnswerPage(CFGOVPage):
     objects = PageManager()
 
     def get_context(self, request, *args, **kwargs):
-        from ask_cfpb.search_indexes import VALID_SPANISH_TAGS
         context = super(AnswerPage, self).get_context(request)
         context['related_questions'] = self.answer_base.related_questions.all()
         context['category'] = self.answer_base.category.first()
         context['subcategories'] = self.answer_base.subcategory.all()
         context['description'] = self.snippet if self.snippet \
             else Truncator(self.answer).words(40, truncate=' ...')
-        context['tags_es'] = [tag for tag in self.answer_base.tags_es
-                              if tag in VALID_SPANISH_TAGS]
+        if self.language == 'es':
+            context['tags_es'] = [tag for tag in self.answer_base.tags_es
+                                  if tag in get_valid_spanish_tags()]
         return context
 
     def get_template(self, request):

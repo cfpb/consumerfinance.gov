@@ -57,7 +57,6 @@ class AnswerModelTestCase(TestCase):
 
     def setUp(self):
         from v1.models import HomePage
-        import ask_cfpb.search_indexes
         ROOT_PAGE = HomePage.objects.get(slug='cfgov')
         self.audience = mommy.make(Audience, name='stub_audience')
         self.category = mommy.make(Category, name='stub_cat', name_es='que')
@@ -116,8 +115,6 @@ class AnswerModelTestCase(TestCase):
         self.page2.answer_base = self.answer5678
         self.page2.parent = self.english_parent_page
         self.page2.save()
-        ask_cfpb.search_indexes.VALID_SPANISH_TAGS = (
-            Answer.valid_spanish_tags())
 
     def test_facet_map(self):
         self.answer1234.category.add(self.category)
@@ -125,19 +122,28 @@ class AnswerModelTestCase(TestCase):
         self.answer1234.subcategory.add(self.subcategories[1])
         facet_map = self.category.facet_map
         self.assertEqual(
-            facet_map['answers']['1234']['question'], 'Mock question1')
+            json.loads(facet_map)['answers']['1234']['question'],
+            'Mock question1')
         self.assertEqual(
-            facet_map['audiences']['1']['name'], 'stub_audience')
+            json.loads(facet_map)['audiences']['1']['name'],
+            'stub_audience')
         self.assertEqual(
-            facet_map['subcategories']['1'], [])
-
-    def test_facet_json(self):
-        facet_json = self.category.facet_json
-        self.assertEqual(type(facet_json), str)
-        self.assertEqual(type(json.loads(facet_json)), dict)
+            json.loads(facet_map)['subcategories']['1'], [])
 
     def test_answer_valid_tags(self):
         test_list = Answer.valid_spanish_tags()
+        self.assertIn('hipotecas', test_list)
+
+    def test_get_valid_tags(self):
+        from ask_cfpb.models import get_valid_spanish_tags
+        test_list = get_valid_spanish_tags()
+        self.assertIn('hipotecas', test_list)
+
+    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
+    def test_get_valid_tags_works_without_elasticsearch(self, mock_sqs):
+        from ask_cfpb.models import get_valid_spanish_tags
+        mock_sqs.return_value = [None]
+        test_list = get_valid_spanish_tags()
         self.assertIn('hipotecas', test_list)
 
     def test_routable_page_template(self):
@@ -451,6 +457,55 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             test_context['choices'].count(),
             self.category.subcategories.count())
+
+    def test_category_page_truncation(self):
+        answer = self.answer1234
+        answer.answer_es = ("We need an answer with more than 40 words to"
+                            "prove that truncation is working as expected."
+                            "It just so happens that the standard maximum "
+                            "length for a news story's lead graph is around "
+                            "40 words, which I have now managed to exceeded.")
+        answer.category.add(self.category)
+        answer.save()
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='es')
+        test_context = cat_page.get_context(mock_request)
+        self.assertTrue(
+            test_context['answers'][0]['answer_es'].endswith('...'))
+
+    def test_category_page_context_es(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='es')
+        test_context = cat_page.get_context(mock_request)
+        self.assertEqual(
+            test_context['choices'].count(),
+            self.category.subcategories.count())
+
+    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
+    def test_category_page_context_no_es(self, mock_es_query):
+        mock_return_value = mock.Mock()
+        mock_return_value.facet_map = json.dumps(
+            {'answers': {},
+             'audiences': {},
+             'subcategories': {}})
+        mock_es_query.return_value = [mock_return_value]
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(ask_category=self.category)
+        test_context = cat_page.get_context(mock_request)
+        self.assertEqual(
+            test_context['facet_map'],
+            mock_return_value.facet_map)
 
     def test_category_page_get_english_template(self):
         mock_site = mock.Mock()
