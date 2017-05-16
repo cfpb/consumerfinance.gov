@@ -74,8 +74,10 @@ INSTALLED_APPS = (
     'reversion',
     'tinymce',
     'jobmanager',
-    'ask_cfpb'
 )
+
+if DEPLOY_ENVIRONMENT == 'build':
+    INSTALLED_APPS += ('ask_cfpb')
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
