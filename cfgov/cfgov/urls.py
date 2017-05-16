@@ -14,7 +14,6 @@ from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url, flagged_urls
-from flags.state import flag_enabled
 
 from ask_cfpb.views import (
     ask_search,
@@ -238,10 +237,6 @@ urlpatterns = [
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
         include_if_app_enabled('agreements', 'agreements.urls')),
-    url(r'^(?i)askcfpb/',
-        include_if_app_enabled('knowledgebase', 'knowledgebase.urls')),
-    url(r'^es/obtener-respuestas/',
-        include_if_app_enabled('knowledgebase', 'knowledgebase.babel_urls')),
     url(r'^selfregs/',
         include_if_app_enabled('selfregistration', 'selfregistration.urls')),
     url(r'^hud-api-replace/',
@@ -394,7 +389,20 @@ if settings.DEBUG:
     except ImportError:
         pass
 
+# If WAGTAIL_ASK_CFPB is False, serve the old knowledgebase
+with flagged_urls('WAGTAIL_ASK_CFPB', state=False) as url:
+    knowledgebase_patterns = [
+        url(r'^(?i)askcfpb/',
+            include_if_app_enabled('knowledgebase', 'knowledgebase.urls')),
+        url(r'^es/obtener-respuestas/',
+            include_if_app_enabled('knowledgebase',
+                                   'knowledgebase.babel_urls')),
+    ]
 
+urlpatterns += knowledgebase_patterns
+
+
+# If WAGTAIL_ASK_CFPB is True, serve the new ask_cfpb
 with flagged_urls('WAGTAIL_ASK_CFPB') as url:
     ask_patterns = [
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
