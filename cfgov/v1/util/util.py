@@ -28,8 +28,9 @@ ERROR_MESSAGES = {
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
     if settings.DEPLOY_ENVIRONMENT == 'build':
-        from ask_cfpb.models import AnswerCategoryPage
-        pages = (BrowsePage, BrowseFilterablePage, AnswerCategoryPage)
+        from ask_cfpb.models import AnswerCategoryPage, AnswerResultsPage
+        pages = (BrowsePage, BrowseFilterablePage,
+                 AnswerCategoryPage, AnswerResultsPage)
     else:
         pages = (BrowsePage, BrowseFilterablePage)
     return isinstance(page, pages)
@@ -74,6 +75,19 @@ def get_secondary_nav_items(request, current_page):
             }
         ], True
     # END TODO
+
+    if settings.DEPLOY_ENVIRONMENT == 'build':
+        from ask_cfpb.models import AnswerCategoryPage, AnswerResultsPage
+        if isinstance(page, (AnswerCategoryPage, AnswerResultsPage)):
+            from ask_cfpb.models import Category
+            return [
+                {'title': cat.name,
+                 'url': '/ask-cfpb/category-' + cat.slug,
+                 'active': False if not
+                 isinstance(page, AnswerCategoryPage)
+                 else cat.name == page.ask_category.name}
+                for cat in Category.objects.all()
+            ], True
 
     if page.secondary_nav_exclude_sibling_pages:
         pages = [page]
