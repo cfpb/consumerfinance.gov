@@ -77,7 +77,7 @@ INSTALLED_APPS = (
 )
 
 if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('ask_cfpb')
+    INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
