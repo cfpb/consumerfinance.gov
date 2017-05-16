@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 
 class AkamaiBackend(BaseBackend):
     def __init__(self, params):
-        self.client_token = params.pop('CLIENT_TOKEN')
-        self.client_secret = params.pop('CLIENT_SECRET')
-        self.access_token = params.pop('ACCESS_TOKEN')
+        self.client_token = params.get('CLIENT_TOKEN')
+        self.client_secret = params.get('CLIENT_SECRET')
+        self.access_token = params.get('ACCESS_TOKEN')
         if not all((
             self.client_token,
             self.client_secret,
