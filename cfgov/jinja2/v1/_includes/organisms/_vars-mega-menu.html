@@ -173,3 +173,9 @@
         ('Contact Us', '/about-us/contact-us/', [])
     )])
 )] -%}
+
+{% if flag_enabled(request, 'CCDB5_RELEASE') %}        
+    {{ nav_items[0][2][2][2].insert( 0,       
+        ('Search the Complaint Database', '/platzhalter/', [])      
+    ) }}      
+{% endif %}

@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'reversion',
     'tinymce',
     'jobmanager',
+    'ccdb5'
 )
 
 if DEPLOY_ENVIRONMENT == 'build':

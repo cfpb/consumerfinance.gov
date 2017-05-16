@@ -15,6 +15,7 @@ from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
+import ccdb5.views as CCDB5
 from core.views import ExternalURLNoticeView
 from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
                           token_provider)
@@ -279,6 +280,13 @@ urlpatterns = [
         name='cckbyo'),
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
+
+    url(r'^platzhalter/$', TemplateView.as_view(
+        template_name='ccdb5_landing_page.html')),
+    url(r'^platzhalter/api/v1/_suggest', CCDB5.suggest),
+    url(r'^platzhalter/api/v1/export', CCDB5.export),
+    url(r'^platzhalter/api/v1/(?P<id>[0-9]+)$', CCDB5.document),
+    url(r'^platzhalter/api/v1/', CCDB5.search),
 ]
 
 if settings.ALLOW_ADMIN_URL:
