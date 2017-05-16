@@ -47,7 +47,6 @@ class HousingCounselorView(TemplateView):
             if zipcode_valid:
                 context['counselors'] = self.get_counselors(zipcode)
 
-        print(context)
         return context
 
     @staticmethod
