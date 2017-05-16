@@ -1,7 +1,8 @@
 import os
+import re
+import six
 import sys
 
-import six
 from django import http
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -11,6 +12,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
 
 from core.services import PDFGeneratorView, PDFReactorNotConfigured
 from v1.db_router import cfgov_apps
@@ -27,6 +29,37 @@ if six.PY2:
 
 class InvalidZipException(Exception):
     pass
+
+
+class HousingCounselorView(TemplateView):
+    template_name = 'find_a_housing_counselor.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HousingCounselorView, self).get_context_data(**kwargs)
+
+        zipcode = self.request.GET.get('zipcode')
+        context['zipcode'] = zipcode
+
+        if zipcode:
+            zipcode_valid = re.match(r'\d{5}', zipcode)
+            context['zipcode_valid'] = zipcode_valid
+
+            if zipcode_valid:
+                context['counselors'] = self.get_counselors(zipcode)
+
+        print(context)
+        return context
+
+    @staticmethod
+    def get_counselors(zipcode):
+        """Return list of housing counselors closest to a given zipcode.
+
+        This could alternatively be an HTTP request to a django-hud API
+        instance running locally.
+        """
+        from hud_api_replace.views import get_counsel_list
+        response = get_counsel_list(zipcode, GET={})
+        return response.get('counseling_agencies') or []
 
 
 class HousingCounselorPDFView(PDFGeneratorView):

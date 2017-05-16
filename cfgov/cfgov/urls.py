@@ -16,8 +16,10 @@ from wagtailsharing.views import ServeView
 from flags.urls import flagged_url
 
 from core.views import ExternalURLNoticeView
-from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
-                          token_provider)
+from legacy.views import (
+    HousingCounselorView, HousingCounselorPDFView, dbrouter_shortcut,
+    token_provider
+)
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
@@ -256,7 +258,8 @@ urlpatterns = [
         include_if_app_enabled('regulations', 'regulations.urls')),
 
     url(r'^find-a-housing-counselor/$',
-        TemplateView.as_view(template_name='find_a_housing_counselor.html')),
+        HousingCounselorView.as_view(),
+        name='housing-counselor'),
     url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
     # Report redirects
     url(r'^reports/(?P<path>.*)$',
