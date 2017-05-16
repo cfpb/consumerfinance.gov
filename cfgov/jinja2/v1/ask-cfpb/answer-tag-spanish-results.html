@@ -42,7 +42,7 @@
     <ul>
     {% for pairing in page.answers %}
         <li><a href="{{ pairing[0] }}">{{ pairing[1] }} </a>
-        <p>{{ pairing[2] }}</p>
+        <p>{{ pairing[2]|safe }}</p>
 
         </li>
     {% endfor %}

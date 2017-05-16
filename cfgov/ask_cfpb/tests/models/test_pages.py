@@ -464,7 +464,7 @@ class AnswerModelTestCase(TestCase):
                             "prove that truncation is working as expected."
                             "It just so happens that the standard maximum "
                             "length for a news story's lead graph is around "
-                            "40 words, which I have now managed to exceeded.")
+                            "40 words, which I have now managed to exceed.")
         answer.category.add(self.category)
         answer.save()
         mock_site = mock.Mock()
