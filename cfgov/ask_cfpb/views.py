@@ -31,7 +31,8 @@ def ask_search(request, language='en', as_json=False):
         sqs = SearchQuerySet().models(EnglishAnswerProxy)
     elif language == 'es':
         sqs = SearchQuerySet().models(SpanishAnswerProxy)
-    sqs = sqs.filter(content=Clean(request.GET.get('q', '')))
+    query = Clean(request.GET.get('q', ''))
+    sqs = sqs.filter(content=query)
 
     if as_json:
         results = [{'question': result.autocomplete,
@@ -43,9 +44,11 @@ def ask_search(request, language='en', as_json=False):
         page = get_object_or_404(
             AnswerResultsPage,
             language=language)
+        page.query = query
         page.answers = []
+
         for result in sqs:
-            page.answers.append((result.url, result.autocomplete))
+            page.answers.append((result.url, result.autocomplete, result.text))
         return page.serve(request)
 
 
