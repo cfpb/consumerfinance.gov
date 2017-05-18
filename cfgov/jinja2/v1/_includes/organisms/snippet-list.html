@@ -43,9 +43,9 @@
        else '/' %}
     {% set image = {
          'url': img.url,
-         'alt': value.image.alt,
+         'alt': image_alt_value(value.image),
          'is_square': true,
-         'is_decorative': value.image.alt == ''
+         'is_decorative': image_alt_value(value.image) == ''
        }
        if value.image.upload
        else null %}
