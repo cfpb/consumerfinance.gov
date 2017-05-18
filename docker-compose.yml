@@ -11,7 +11,7 @@ services:
             MYSQL_USER: v1
             MYSQL_PASSWORD: v1
     elasticsearch:
-        image: elasticsearch:2.4
+        image: elasticsearch:2.3
         ports:
             - "9200:9200"
             - "9300:9300"
