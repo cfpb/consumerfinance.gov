@@ -102,15 +102,17 @@ Find a housing counselor
                 <div class="hud_hca_api_num"></div>
                 <div class="hud_hca_api_counselor_info_container">
                   <div class="hud_hca_api_counselor">
+                    <a href="{{ counselor.weburl|signed_redirect }}" class="icon-link icon-link__external-link"><span class="icon-link_text">{{ counselor.nme }} </span></a>
                   </div>
                   <div class="hud_hca_api_counselor_address">
-                    <span class="hud_hca_api_adr">
-                    </span>
-                    <span class="hud_hca_api_region">
-                    </span>
+                    <span class="hud_hca_api_adr">{{ counselor.adr1 }}</span>
+                    {% if counselor.adr2 and counselor.adr2 != ' '  %}
+                        </br>{{ counselor.adr2 }}
+                    {% endif %}
+                    <span class="hud_hca_api_region">{{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}</span>
                   </div>
                   <div class="hud_hca_api_counselor_meta">
-                    <span class="hud_hca_api_results_listing_title">Website: <span class="hud_hca_api_site"><a href="{{ counselor.weburl|signed_redirect }}">{{ counselor.weburl }}</a></span></span>
+                    <span class="hud_hca_api_results_listing_title">Website: <span class="hud_hca_api_site"><a href="{{ counselor.weburl|signed_redirect }}" class="icon-link icon-link__external-link"><span class="icon-link_text">{{ counselor.nme }} </span></a></span></span>
                     <span class="hud_hca_api_results_listing_title">Phone: <span class="hud_hca_api_tel">{{ counselor.phone1 }}</span></span>
                     <span class="hud_hca_api_results_listing_title">Email Address: <span class="hud_hca_api_email">{{ counselor.email }}</span></span>
                     <span class="hud_hca_api_results_listing_title">Languages: <span class="hud_hca_api_lang">{{ counselor.languages }}</span></span>
