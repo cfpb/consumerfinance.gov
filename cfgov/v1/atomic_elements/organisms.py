@@ -31,7 +31,6 @@ class Well(blocks.StructBlock):
     class Meta:
         icon = 'title'
         template = '_includes/organisms/well.html'
-        classname = 'block__flush'
 
 
 class ImageText5050Group(blocks.StructBlock):
