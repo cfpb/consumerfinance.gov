@@ -86,7 +86,7 @@ def index_processor(es, index_name, processor, reindex=False):
         # as of Elasticsearch 2.x, _source can not contain _id
         # by fixing this here, we don't need to make equivalent changes is
         # th other sheer projects
-        
+
         def id_scrubber(document_iterator):
             for document in document_iterator:
                 if '_id' in document['_source']:
