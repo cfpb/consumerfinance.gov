@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import six
@@ -45,7 +46,10 @@ class HousingCounselorView(TemplateView):
             context['zipcode_valid'] = zipcode_valid
 
             if zipcode_valid:
-                context['counselors'] = self.get_counselors(zipcode)
+                counselors = self.get_counselors(zipcode)
+                context['counselors'] = counselors
+                context['counselors_json'] = json.dumps(counselors)
+                context['zip_json'] = self.get_coords(zipcode)
 
         return context
 
@@ -59,6 +63,17 @@ class HousingCounselorView(TemplateView):
         from hud_api_replace.views import get_counsel_list
         response = get_counsel_list(zipcode, GET={})
         return response.get('counseling_agencies') or []
+
+    @staticmethod
+    def get_coords(zipcode):
+        """Return list of housing counselors closest to a given zipcode.
+
+        This could alternatively be an HTTP request to a django-hud API
+        instance running locally.
+        """
+        from hud_api_replace.views import geocode_zip
+        response = geocode_zip(zipcode)
+        return response.get('zip') or ''
 
 
 class HousingCounselorPDFView(PDFGeneratorView):

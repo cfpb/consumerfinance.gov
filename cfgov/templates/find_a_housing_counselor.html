@@ -165,8 +165,8 @@ Find a housing counselor
 
 {% block app_css %}
 <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
-<link href='{% static 'hud_api/css/hud_api.css' %}' rel='stylesheet' ></link>
-<link href='{% static 'hud_api/css/print_hud_api.css' %}' rel='stylesheet' ></link>
+<link href='{% static 'hud/hud.css' %}' rel='stylesheet' ></link>
+<link href='{% static 'hud/hud_print.css' %}' rel='stylesheet' ></link>
 {% endblock %}
 
 {% block app_js %}
@@ -175,6 +175,7 @@ Find a housing counselor
 document.agc_base="/static/nemo/_/img/hud_gmap/agc_";
 </script>
 
-<script type='text/javascript' src='{% static 'hud_api/js/hud_api.js' %}'></script>
+<script type='text/javascript'>var hud_data = { counseling_agencies: {{ counselors_json|safe }}, zip: {{ zip_json|safe }} };</script>
+<script type='text/javascript' src='{% static 'hud/hud.js' %}'></script>
 
 {% endblock %}

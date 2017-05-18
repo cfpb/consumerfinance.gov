@@ -233,8 +233,6 @@ urlpatterns = [
         include_if_app_enabled('knowledgebase', 'knowledgebase.babel_urls')),
     url(r'^selfregs/',
         include_if_app_enabled('selfregistration', 'selfregistration.urls')),
-    url(r'^hud-api-replace/',
-        include_if_app_enabled('hud_api_replace', 'hud_api_replace.urls')),
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
