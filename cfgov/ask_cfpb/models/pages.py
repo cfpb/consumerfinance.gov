@@ -24,7 +24,6 @@ from v1 import blocks as v1_blocks
 from v1.feeds import FilterableFeedPageMixin
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
 from v1.util.filterable_list import FilterableListMixin
-from ask_cfpb.models import (Category, Audience)
 from v1.models.snippets import ReusableText
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
