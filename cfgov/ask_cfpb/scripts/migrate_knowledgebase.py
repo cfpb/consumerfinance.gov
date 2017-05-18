@@ -10,7 +10,6 @@ from bs4 import BeautifulSoup as bs
 from django.apps import apps
 from django.core.management import call_command
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
-from wagtail.wagtailcore.models import Page
 
 from knowledgebase.models import QuestionCategory as QC
 from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
@@ -142,59 +141,14 @@ def fix_tips(answer_text):
     return clean2
 
 
-def dinero_set_aside():
-    "Temporarily set aside the slug of the dinero page"
-    dinero = Page.objects.get(id=51).specific
-    dinero.slug = 'es-dinero'
-    dinero.save()
-
-
-def dinero_restore():
-    "Restore the dinero page's slug"
-    dinero = Page.objects.get(id=51).specific
-    dinero.slug = 'es'
-    dinero.save()
-
-
 def get_or_create_landing_pages():
     """
-    Create two Spanish and one English landing pages.
-
-    Spanish gets two parents:
-    - `/es/`, as a placeholder for a future Spanish home page in Wagtail
-    - `/obtener-respuestas/`, the landing page for Spanish ask-cfpb
+    Create Spanish and English landing pages.
     """
 
-    from v1.models import CFGOVPage
-    root = CFGOVPage.objects.get(slug='cfgov').specific
-
-    def get_or_create_es_parent_page():
-        """Create the Spanish /es/ parent placeholder page"""
-        text_intro_stream_value = [
-            {'type': 'text_introduction',
-             'value': {
-                 'heading': 'Placeholder for future Spanish home page',
-                 'links': []}}]
-        es_parent = get_or_create_page(
-            apps,
-            'ask_cfpb',
-            'AnswerLandingPage',
-            'Oficina para la Protección Financiera del Consumidor',
-            'es',
-            root,
-            language='es')
-        es_parent.has_unpublished_changes = True
-        stream_block = es_parent.specific.header.stream_block
-        es_parent.header = StreamValue(
-            stream_block,
-            text_intro_stream_value,
-            is_lazy=True)
-        revision = es_parent.save_revision()
-        es_parent.save()
-        revision.publish()
-        return es_parent
-
-    es_parent = get_or_create_es_parent_page()
+    from v1.models import CFGOVPage, LandingPage
+    en_root = CFGOVPage.objects.get(slug='cfgov').specific
+    es_root = LandingPage.objects.get(slug='es').specific
 
     hero_stream_value = [
         {'type': 'hero',
@@ -210,12 +164,12 @@ def get_or_create_landing_pages():
                            'title': 'Ask CFPB',
                            'language': 'en',
                            'hero': hero_stream_value,
-                           'parent': root},
+                           'parent': en_root},
         'spanish_parent': {'slug': 'obtener-respuestas',
                            'title': 'Obtener respuestas',
                            'language': 'es',
                            'hero': None,
-                           'parent': es_parent}
+                           'parent': es_root}
     }
     counter = 0
     for parent_type in sorted(parent_map.keys()):
@@ -595,9 +549,7 @@ def run():
     add_related_questions()
     set_featured_ids()
     clean_up_blank_answers()
-    dinero_set_aside()
     get_or_create_landing_pages()
-    dinero_restore()
     get_or_create_category_pages()
     get_or_create_search_results_pages()
     create_pages()
