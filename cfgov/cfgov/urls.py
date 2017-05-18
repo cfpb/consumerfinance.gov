@@ -13,7 +13,7 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
-from flags.urls import flagged_url, flagged_urls
+from flags.urls import flagged_url
 
 from ask_cfpb.views import (
     ask_search,
