@@ -159,21 +159,19 @@ def get_or_create_landing_pages():
              'body': ('We offer clear, impartial answers to hundreds '
                       'of financial questions. Find the information you need '
                       'to make more informed choices about your money.')}}]
-    parent_map = {
-        'english_parent': {'slug': 'ask-cfpb',
-                           'title': 'Ask CFPB',
-                           'language': 'en',
-                           'hero': hero_stream_value,
-                           'parent': en_root},
-        'spanish_parent': {'slug': 'obtener-respuestas',
-                           'title': 'Obtener respuestas',
-                           'language': 'es',
-                           'hero': None,
-                           'parent': es_root}
+    landing_map = {
+        'en': {'slug': 'ask-cfpb',
+               'title': 'Ask CFPB',
+               'hero': hero_stream_value,
+               'parent': en_root},
+        'es': {'slug': 'obtener-respuestas',
+               'title': 'Obtener respuestas',
+               'hero': None,
+               'parent': es_root}
     }
     counter = 0
-    for parent_type in sorted(parent_map.keys()):
-        _map = parent_map[parent_type]
+    for language in sorted(landing_map.keys()):
+        _map = landing_map[language]
         landing_page = get_or_create_page(
             apps,
             'ask_cfpb',
@@ -181,7 +179,7 @@ def get_or_create_landing_pages():
             _map['title'],
             _map['slug'],
             _map['parent'],
-            language=_map['language'])
+            language=language)
         landing_page.has_unpublished_changes = True
         if _map['hero']:
             stream_block = landing_page.header.stream_block

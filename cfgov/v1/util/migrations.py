@@ -6,9 +6,8 @@ from treebeard.mp_tree import MP_Node
 from wagtail.wagtailcore.blocks import StreamValue
 
 
-def get_page(apps, slug):
-    base_page_cls = apps.get_model('wagtailcore', 'Page')
-    return base_page_cls.objects.get(slug=slug)
+def get_page(page_cls, slug):
+    return page_cls.objects.get(slug=slug)
 
 
 def get_free_path(apps, parent_page):
@@ -33,17 +32,18 @@ def get_free_path(apps, parent_page):
 @transaction.atomic
 def get_or_create_page(apps, page_cls_app, page_cls_name, title, slug,
                        parent_page, live=False, **kwargs):
+    page_cls = apps.get_model(page_cls_app, page_cls_name)
+
     try:
-        return get_page(apps, slug)
+        return get_page(page_cls, slug)
     except ObjectDoesNotExist:
         pass
 
     ContentType = apps.get_model('contenttypes.ContentType')
-    page_cls = apps.get_model(page_cls_app, page_cls_name)
 
     page_content_type = ContentType.objects.get_for_model(page_cls)
 
-    parent_page = get_page(apps, slug=parent_page.slug)
+    parent_page = get_page(parent_page.specific_class, parent_page.slug)
 
     page = page_cls.objects.create(
         title=title,
