@@ -47,7 +47,7 @@
             </div>
         {% endif %}
 
-        {# This brings in the feedback module and disclaimer #}
+        {# This brings in the feedback module #}
         {% for block in page.content -%}
             {% if block.block_type == 'feedback' %}
                 {{- form_block.render(block, 'content', loop.index0) -}}
