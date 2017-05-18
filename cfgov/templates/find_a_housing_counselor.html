@@ -43,11 +43,11 @@ Find a housing counselor
             <div id="hud_hca_api_interactions_container" class="hud_hca_api_interactions">
               <div class="hud_hca_api_grid_twothird clearfix hud_hca_api_print_hide">
   <div id="hud_hca_api_form_container" class="hud_hca_api_form_container col">
-    <div id="hud_hca_api_form_nojs" class="hud_hca_api_form">
+    <div id="hud_hca_api_form" class="hud_hca_api_form">
       <form action="." method="get">
-         <label for="hud_hca_api_query_nojs">Search by ZIP code:</label>
-         <input type="text" name="zipcode" id="hud_hca_api_query_nojs" value="{{ zipcode|default:'' }}" placeholder="Please enter a 5-digit ZIP code">
-         <button class="hud_hca_api_form_button_nojs">Find a counselor</button>
+         <label for="hud_hca_api_query">Search by ZIP code:</label>
+         <input type="text" name="zipcode" id="hud_hca_api_query" value="{{ zipcode|default:'' }}" placeholder="Please enter a 5-digit ZIP code">
+         <button class="hud_hca_api_form_button">Find a counselor</button>
       </form>
       <a class="cfpb_visually_hide" href="#hud_hca_api_results_meta_container">Skip to results</a>
     </div>
@@ -64,15 +64,15 @@ Find a housing counselor
 </div><!-- end .hud_hca_api_grid_twothird -->
 
 {% if zipcode %}
-<div id="hud_hca_api_results_container_nojs" class="hud_hca_api_results">
+<div id="hud_hca_api_results_container" class="hud_hca_api_results">
   {% if not zipcode_valid %}
-  <div id="hud_hca_api_message_nojs" role="alert" class="hud_hca_api_message">
+  <div id="hud_hca_api_message" role="alert" class="hud_hca_api_message">
     <p>Sorry, you have entered an invalid zip code.</p>
     <p>Please enter a valid five-digit ZIP code above.</p>
   </div>
   {% else %}
     <div id="hud_hca_api_results_meta_container" class="hud_hca_api_results_meta clearfix">
-        <div id="hud_hca_api_results_info_nojs" class="hud_hca_api_results_info hud_hca_api_print_hide clearfix">
+        <div id="hud_hca_api_results_info" class="hud_hca_api_results_info hud_hca_api_print_hide clearfix">
             <div class="hud_hca_api_results_total">
               <p>Displaying the {{ counselors|length }} locations closest to ZIP code <span class="hud_hca_api_search_zip">{{ zipcode|escape }}</span></p>
             </div><!-- end .hud_hca_api_results_total -->
@@ -87,7 +87,7 @@ Find a housing counselor
         </div><!-- end .hud_hca_api_results_info -->
         <div id="hud_hca_api_results_list_container" class="hud_hca_api_results_list">
           <div id="hud_hca_api_the_results" class="hud_hca_api_the_results_list_container">
-          <table id="hud_hca_api_results_table_nojs" class="hud_hca_api_results_listing hud_hca_api_print">
+          <table id="hud_hca_api_results_table" class="hud_hca_api_results_listing hud_hca_api_print">
           <thead class="hud_hca_api_print_hide">
             <tr>
               <th scope="col" class="hud_hca_api_titles hud_hca_api_titles_left">Agency</th>
@@ -111,22 +111,21 @@ Find a housing counselor
                   </div>
                   <div class="hud_hca_api_counselor_meta">
                     <span class="hud_hca_api_results_listing_title">Website: <span class="hud_hca_api_site"><a href="{{ counselor.weburl|signed_redirect }}">{{ counselor.weburl }}</a></span></span>
-                    <span class="hud_hca_api_results_listing_title">Phone: <span class="hud_hca_api_tel"></span></span>
-                    <span class="hud_hca_api_results_listing_title">Email Address: <span class="hud_hca_api_email">
-                    </span></span>
-                    <span class="hud_hca_api_results_listing_title">Languages: <span class="hud_hca_api_lang"></span></span>
+                    <span class="hud_hca_api_results_listing_title">Phone: <span class="hud_hca_api_tel">{{ counselor.phone1 }}</span></span>
+                    <span class="hud_hca_api_results_listing_title">Email Address: <span class="hud_hca_api_email">{{ counselor.email }}</span></span>
+                    <span class="hud_hca_api_results_listing_title">Languages: <span class="hud_hca_api_lang">{{ counselor.languages }}</span></span>
                   </div>
                 </div>
               </td>
               <td class="hud_hca_api_result hud_hca_api_services_td">
                 <div class="hud_hca_api_services">
-                  <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span><span class="hud_hca_api_serv"></span>
+                  <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span><span class="hud_hca_api_serv">{{ counselor.services }}</span>
                 </div>
               </td>
               <td class="hud_hca_api_result hud_hca_api_distances_td">
                 <div class="hud_hca_api_distance">
                   <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Distance</span>
-                  <span class="hud_hca_api_the_distance"><span class="hud_hca_api_miles"></span> miles</span>
+                  <span class="hud_hca_api_the_distance"><span class="hud_hca_api_miles">{{ counselor.distance }}</span> miles</span>
                 </div>
               </td>
             </tr>
