@@ -1,0 +1,60 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% import 'form_block.html' as form_block with context %}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block hero -%}
+    {% for block in page.header -%}
+        {% if 'hero' in block.block_type %}
+            {{ render_stream_child(block) }}
+        {% endif %}
+    {%- endfor %}
+{% endblock %}
+
+{% block content_main %}
+    {% for block in page.header -%}
+        {% if block.block_type != 'hero' %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+    {% for block in page.cards -%}
+            {{ render_block.render(block, loop.index) }}
+    {%- endfor %}
+    {% for block in page.content -%}
+        {% if block.block_type == 'feedback' %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+    <div class="block
+                block__flush-top">
+    {% if tag %}
+    <h2>"{{ tag }}"</h2>
+    {% else %}
+    <h2>No tag provided</h2>
+    {% endif %}
+    <ul>
+    {% for pairing in page.answers %}
+        <li><a href="{{ pairing[0] }}">{{ pairing[1] }} </a>
+        <p>{{ pairing[2]|safe }}</p>
+
+        </li>
+    {% endfor %}
+    </ul>
+    </div>
+
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped -%}
+    {{ streamfield_sidefoot.render(page.sidefoot) }}
+{%- endblock %}

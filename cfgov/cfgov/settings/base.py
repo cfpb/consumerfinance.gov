@@ -1,3 +1,4 @@
+
 import os
 import sys
 
@@ -47,7 +48,7 @@ INSTALLED_APPS = (
 
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.table_block',
-
+    'wagtail.contrib.wagtailroutablepage',
     'localflavor',
     'modelcluster',
     'compressor',
@@ -154,6 +155,7 @@ TEMPLATES = [
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
+                'v1.jinja2tags.images',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',

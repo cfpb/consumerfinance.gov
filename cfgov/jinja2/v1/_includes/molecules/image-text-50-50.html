@@ -11,10 +11,9 @@
 
    value:                        Object defined from a StreamField block.
 
-   value.image:                  A image object containing the image to be
-                                 placed adjacent to the text.
+   value.image:                  An ImageBasic atom object containing:
 
-   value.image.upload:           An image object.
+   value.image.upload:           A CFGOVImage object.
 
    value.image.alt:              String for alt text for screenreaders.
 
@@ -41,6 +40,7 @@
                                  should be linked to the value.links[0].url.
 
    ========================================================================== #}
+
 {% from 'molecules/info-unit.html' import info_unit with context %}
 {% if value.image.upload %}
     {% set photo=image(value.image.upload, 'original') %}
@@ -49,9 +49,9 @@
 {{ info_unit( {
     'image': {
         'url': photo.url if photo else '/',
-        'alt': value.image.alt,
+        'alt': image_alt_value(value.image),
         'is_square': value.is_widescreen == false,
-        'is_decorative': value.image.alt == ''
+        'is_decorative': image_alt_value(value.image) == ''
     },
     'heading': '<h3>' ~ value.heading ~ '</h3>',
     'body': parse_links(value.body) | safe,
