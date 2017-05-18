@@ -84,9 +84,18 @@ class CFGOVImage(AbstractImage):
         operation.run(mock_image, image=None, env={})
         return mock_image.width, mock_image.height
 
+    @property
+    def default_alt_text(self):
+        # Override Wagtail default of setting alt text to the image title.
+        return self.alt
+
 
 class CFGOVRendition(AbstractRendition):
     image = models.ForeignKey(CFGOVImage, related_name='renditions')
+
+    @property
+    def alt(self):
+        return self.image.alt
 
     class Meta:
         unique_together = (

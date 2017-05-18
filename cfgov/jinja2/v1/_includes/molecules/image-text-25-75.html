@@ -11,10 +11,9 @@
 
    value:                        Object defined from a StreamField block.
 
-   value.image:                  A image object containing the image to be
-                                 placed adjacent to the text.
+   value.image:                  An ImageBasic atom object containing:
 
-   value.image.upload:           An image object.
+   value.image.upload:           A CFGOVImage object.
 
    value.image.alt:              String for alt text for screenreaders.
 
@@ -44,9 +43,9 @@
     'modifier': 'inline',
     'image': {
         'url': photo.url if photo else '/',
-        'alt': value.image.alt,
+        'alt': image_alt_value(value.image),
         'is_square': true,
-        'is_decorative': value.image.alt == ''
+        'is_decorative': image_alt_value(value.image) == ''
     },
     'heading': heading,
     'body': parse_links(value.body) | safe,
