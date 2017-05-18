@@ -18,6 +18,24 @@
 @mobile_trigger_ht__px: 54px;
 
 /* topdoc
+  name: Body Overflow
+  notes:
+    - "Hides menu overflow on mobile sizes."
+  patterns:
+    - name: Body
+      codenotes:
+        - |
+          body
+*/
+// TODO: Reduce global scope and reign it in to the menu only if possible.
+
+body {
+    .respond-to-max( @bp-sm-max, {
+        overflow-x: hidden;
+    } );
+}
+
+/* topdoc
   name: Mega Menu
   family: cfgov-organisms
   patterns:
@@ -649,60 +667,97 @@
 
 // for IA_USER_TESTING_MENU feature flag
 .o-mega-menu__ia-testing {
-    .o-mega-menu_content-2 {
-        &-overview {
-            .respond-to-min( @bp-lg-min, {
-                margin-bottom: 20px;
-            } );
-        }
-
-        &-grid.full-width {
+     .o-mega-menu_content-2 {
+        .o-mega-menu_content-grid.full-width {
             .respond-to-min( @bp-lg-min, {
                 .grid_column( 12 );
-
                 .o-mega-menu_content-list {
                     .grid_column( 3 );
                 }
-            } );
+            });
         }
-
-        &-list {
+        .o-mega-menu-list {
             .respond-to-max( @bp-sm-max, {
+
                 h3 {
                     margin-top: 15px;
                 }
-            } );
+            });
         }
     }
-
-    .nav_footer {
-        .respond-to-min( @bp-lg-min, {
-            margin-top: 30px;
-            font-size: 18px;
-        } );
-
-        span {
-            border-top: 1px solid @gray-40;
-            padding: 15px;
-
-            .respond-to-max( @bp-sm-max, {
-                display: block;
-                margin: 0 15px 10px 30px;
-                padding: 15px 0;
-            } );
+    .respond-to-min( @bp-med-min, {
+        .consumer-tools-overview {
+            display: none;
         }
-    }
+    });
 
-    .hide-title {
+    .respond-to-min( @bp-lg-min, {
+        .o-mega-menu_content-2-overview {
+            margin-bottom: 20px;
+        }
+    });
+
+    .hide-title span {
         .respond-to-max( @bp-sm-max, {
             .u-visually-hidden;
-        } );
+        });
         .respond-to-min( @bp-lg-min, {
             visibility: hidden;
-        } );
+        });
     }
+
+    .group-title,
+    .hide-title {
+        font-size: unit( 18px / @base-font-size-px, em );
+
+        .respond-to-min( @bp-med-min, {
+            span {
+                padding-left: unit( ( @grid_gutter-width *  2 / 3 ) / @base-font-size-px, em);
+            }
+        });
+    }
+
+    .group-title {
+        margin-top: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
+        margin-bottom: 0;
+
+        &:after {
+            content: "";
+            display: block;
+            height: 1px;
+            background-color: @grid_column__top-divider;
+            position: static;
+            width: 100%;
+            margin-top: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
+            margin-bottom: 0;
+            margin-left: auto !important;
+        }
+
+        .respond-to-min( @bp-med-min, {
+            margin-top: 0;
+            margin-bottom: auto;
+            &:after {
+                margin-bottom: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
+            }
+        });
+    }
+
+    .respond-to-min( @bp-med-min, {
+        .hide-title:after {
+            content: "";
+            display: block;
+            height: 1px;
+            margin-bottom: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
+            background-color: @grid_column__top-divider;
+            position: static;
+            width: 100%;
+            margin-top: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
+            margin-left: -30px;
+        }
+    });
 }
 // end feature flag section
+
 
 /* topdoc
     name: EOF

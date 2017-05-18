@@ -382,7 +382,10 @@ if settings.DEBUG:
         pass
 
 if settings.DEPLOY_ENVIRONMENT == 'build':
-    from ask_cfpb.views import view_answer
+    from ask_cfpb.views import (
+        ask_search,
+        ask_autocomplete,
+        view_answer)
 
     ask_patterns = [
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
@@ -390,7 +393,24 @@ if settings.DEPLOY_ENVIRONMENT == 'build':
             name='ask-english-answer'),
         url(r'^(?i)obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
             view_answer,
-            name='ask-spanish-answer')
+            name='ask-spanish-answer'),
+        url(r'^(?i)ask-cfpb/search/$',
+            ask_search,
+            name='ask-search-en'),
+        url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
+            ask_search,
+            name='ask-search-en-json'),
+        url(r'^(?i)obtener-respuestas/buscar-(?P<language>es)/$',
+            ask_search,
+            name='ask-search-es'),
+        url(r'^(?i)obtener-respuestas/buscar-(?P<language>es)/'
+            '(?P<as_json>json)/$',
+            ask_search,
+            name='ask-search-es-json'),
+        url(r'^(?i)ask-cfpb/api/autocomplete/$',
+            ask_autocomplete, name='ask-autocomplete-en'),
+        url(r'^(?i)obtener-respuestas/api/autocomplete-(?P<language>es)/$',
+            ask_autocomplete, name='ask-autocomplete-es'),
     ]
     urlpatterns += ask_patterns
 

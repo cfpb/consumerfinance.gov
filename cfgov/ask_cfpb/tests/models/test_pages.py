@@ -20,7 +20,8 @@ from v1.util.migrations import get_or_create_page, get_free_path
 from ask_cfpb.models.django import (
     Answer, Category, SubCategory, Audience,
     NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
-from ask_cfpb.models.pages import AnswerPage, AnswerCategoryPage
+from ask_cfpb.models.pages import (
+    AnswerPage, AnswerCategoryPage)
 
 html_parser = HTMLParser.HTMLParser()
 client = Client()
@@ -69,19 +70,21 @@ class AnswerModelTestCase(TestCase):
         self.addCleanup(page_clean.stop)
         self.english_parent_page = get_or_create_page(
             apps,
-            'v1',
-            'LandingPage',
+            'ask_cfpb',
+            'AnswerLandingPage',
             'Ask CFPB',
             ENGLISH_PARENT_SLUG,
             ROOT_PAGE,
+            language='en',
             live=True)
         self.spanish_parent_page = get_or_create_page(
             apps,
-            'v1',
-            'LandingPage',
+            'ask_cfpb',
+            'AnswerLandingPage',
             'Obtener respuestas',
             SPANISH_PARENT_SLUG,
             ROOT_PAGE,
+            language='es',
             live=True)
         self.answer1234 = self.prepare_answer(
             id=1234,
@@ -269,12 +272,20 @@ class AnswerModelTestCase(TestCase):
         self.assertIn(audience.name, answer.audience_strings())
 
     def test_search_tags(self):
-        """Test the generator produced by answer.tags()"""
+        """Test the list produced by answer.tags()"""
         answer = self.prepare_answer(search_tags='Chutes, Ladders')
         answer.save()
-        taglist = [tag for tag in answer.tags()]
+        taglist = answer.tags()
         for name in ['Chutes', 'Ladders']:
             self.assertIn(name, taglist)
+
+    def test_search_tags_es(self):
+        """Test the list produced by answer.tags_es()"""
+        answer = self.prepare_answer(search_tags_es='sistema judicial, tipos')
+        answer.save()
+        taglist = answer.tags_es()
+        for term in ['sistema judicial', 'tipos']:
+            self.assertIn(term, taglist)
 
     def test_category_text(self):
         answer = self.prepare_answer()
@@ -372,6 +383,66 @@ class AnswerModelTestCase(TestCase):
         test_context = cat_page.get_context(mock_request)
         self.assertEqual(test_context['choices'][0][1], 'stub_subcat')
 
+    def test_category_page_get_english_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='en')
+        test_get_template = cat_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/category-page.html')
+
+    def test_category_page_get_spanish_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='es')
+        test_get_template = cat_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/category-page-spanish.html')
+
+    def test_landing_page_context(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        landing_page = self.english_parent_page
+        test_context = landing_page.get_context(mock_request)
+        self.assertEqual(
+            test_context['categories'].count(),
+            Category.objects.count())
+        self.assertEqual(
+            test_context['audiences'].count(),
+            Audience.objects.count())
+
+    def test_landing_page_get_english_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        landing_page = self.english_parent_page
+        test_get_template = landing_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/landing-page.html')
+
+    def test_landing_page_get_spanish_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        landing_page = self.spanish_parent_page
+        test_get_template = landing_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/landing-page-spanish.html')
+
     def test_category_page_add_js_function(self):
         cat_page = self.create_category_page(ask_category=self.category)
         js = {}
@@ -404,3 +475,14 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(result_dict.keys()[0], '1234')
         self.assertEqual(result_dict['1234']['url'], '/ask-cfpb/slug-en-1234')
         self.assertEqual(result_dict['1234']['question'], 'Mock question1')
+
+    def test_answer_page_print_template_used(self):
+        answer_page = self.create_answer_page(language='es')
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        mock_request.GET = {'print': 'true'}
+        self.assertEqual(
+            answer_page.get_template(mock_request),
+            'ask-cfpb/answer-page-spanish-printable.html')

@@ -1,8 +1,13 @@
 {% extends 'layout-side-nav.html' %}
-{% import 'organisms/filterable-list-controls.html' as flc with context %}
 
 {% import 'macros/time.html' as time %}
+{% import 'macros/category-icon.html' as category_icon %}
+{% import 'atoms/partially-styled-link.html' as partially_styled_link with context %}
+{% import 'molecules/pagination.html' as pagination with context %}
 
+{% block content_modifiers -%}
+    {{ super() }} ask-category-page ask-cfpb-page
+{%- endblock %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -12,29 +17,36 @@
     <section class="block
                     block__flush-top
                     block__sub">
-        <h1>{{ page.ask_category.name }}</h1>
+        <h1>
+          {{ page.ask_category.name }}
+        </h1>
+
         <div class="lead-paragraph">
             <p>{{ page.ask_category.intro|safe }}</p>
         </div>
-        <h3>What is your question about?</h3>
-        <ul>
-        {%- for subcat in page.ask_category.subcategories.all() -%}
-            <li>{{ subcat.name }}</li>
-        {% endfor %}
-        </ul>
-    </section>
-    <section class="search-results"></section>
 
-    {% for block in page.content %}
-        {% if 'filter_controls' in block.block_type %}
-            <div class="block
-                        block__flush-top">
-                {% import 'organisms/filterable-list-controls.html' as flc with context %}
-                {{ flc.render(block.value, loop.index0) }}
-            </div>
-        {% endif %}
-    {% endfor %}
+    </section>
+
+    <section class="search-results block
+                    block__flush-top">
+        <div class="message">
+        </div>
+        
+        <div class="question_list">
+            {% for question in questions %}
+            <article class="question_summary question_summary__basic">
+                {{ partially_styled_link.render( {'plain_text': question.question, 'underlined_text': 'Read answer', 'url': slugurl( question.slug )} ) }}  
+            </article>
+            {% endfor %}
+        </div>
+  
+        <div class="block block__sub">
+            {{ pagination.render( paginator.num_pages, current_page, '', 0 ) }}
+        </div>  
+    </section>
+
 {% endblock %}
+
 {% block javascript %}
 {{ super() }}
 <script>

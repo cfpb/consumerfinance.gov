@@ -37,7 +37,7 @@
 
 {% from 'molecules/info-unit.html' import info_unit with context %}
 
-<div class="o-snippet-list">
+<div class="o-snippet-list"{{ ' id="' ~ value.heading|slugify ~ '"' if value.heading else '' }}>
     {% set img = image(value.image.upload, 'original')
        if value.image.upload
        else '/' %}

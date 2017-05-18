@@ -79,7 +79,7 @@ module.exports = {
   },
   copy: {
     codejson: {
-      src:  '/code.json',
+      src:  'code.json',
       dest: paths.processed
     },
     icons: {

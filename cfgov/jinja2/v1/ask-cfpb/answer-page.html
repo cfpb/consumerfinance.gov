@@ -13,7 +13,7 @@
 
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
+    {{ super() }} content__flush-bottom ask-answer-page ask-cfpb-page
 {%- endblock %}
 
 {% block content_main %}
@@ -50,6 +50,7 @@
 {% endfor %}
 
     </div>
+
 {% endblock %}
 
 {% block content_sidebar_modifiers -%}

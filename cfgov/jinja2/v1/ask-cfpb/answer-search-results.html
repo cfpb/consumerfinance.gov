@@ -1,0 +1,55 @@
+{% import 'molecules/pagination.html' as pagination with context %}
+
+{% extends 'layout-side-nav.html' %}
+
+{% block content_wrapper_modifiers -%}
+    {{ super() }} ask-search-page ask-cfpb-page
+{%- endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom search-page
+{%- endblock %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top">
+        <h1>Ask CFPB</h1>
+      
+        {% if results %}
+            <h3 class="results-header">Results for ‘{{ page.query }}’</h3>
+            <section class="search-results block
+                        block__flush-top">
+
+                <div class="question_list">
+                {% for question in results %}
+                    <article class="question_summary question_summary__full">
+                        <p class="question_title"><a href="{{ question[0] }}" class="kbq">{{ question[1]|safe }}</a></p>
+                        <p class="qans">{{ question[2] | safe | striptags | truncate }}</p>
+                    </article>
+                {% endfor %}
+
+                </div>
+
+                <div class="block block__sub">
+                    {{ pagination.render( paginator.num_pages, current_page | int, '', index ) }}
+                </div>
+
+            </section>
+
+        {% else %}
+
+        <section class="search-results block
+                        block__flush-top">
+            <div class="no-results-message">
+                <h2 class="results-header">No results found</h2>
+                <p class="short-desc u-mb30">
+                    Can't find your question? <a href="/askcfpb">Browse questions by category</a>
+                </p>
+            </div>
+        </section>
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+

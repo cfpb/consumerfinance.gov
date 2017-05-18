@@ -332,9 +332,6 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-if DEPLOY_ENVIRONMENT == 'build':
-    HAYSTACK_CONNECTIONS['default']['EXCLUDED_INDEXES'] = ['knowledgebase.search_indexes.AnswerIndex']
-
 # S3 Configuration
 AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
