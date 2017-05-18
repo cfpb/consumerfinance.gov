@@ -20,6 +20,7 @@ from v1.models import CFGOVPage, LandingPage
 from v1.util.filterable_list import FilterableListMixin
 from ask_cfpb.models import (Category, Audience)
 from django.core.paginator import Paginator
+from v1.models.snippets import ReusableText
 
 
 class AnswerLandingPage(LandingPage):
@@ -204,6 +205,9 @@ class AnswerPage(CFGOVPage):
         context['subcategories'] = self.answer_base.subcategory.all()
         context['description'] = self.snippet if self.snippet \
             else self.answer[:500]
+        context['last_edited'] = self.answer_base.last_edited
+        context['disclaimer'] = ReusableText.objects.get(
+            title='Legal disclaimer for educational materials')
         return context
 
     def get_template(self, request):

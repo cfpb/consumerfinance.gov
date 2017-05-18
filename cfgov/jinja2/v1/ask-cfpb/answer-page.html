@@ -2,6 +2,7 @@
 {% import 'macros/time.html' as time %}
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
+{% import 'macros/util/format/datetime.html' as dt %}
 
 {% block title %}
     {{ page.question|striptags }}
@@ -20,6 +21,8 @@
     <div class="block
                 block__flush-top
                 block__sub">
+        <time datetime='{{ last_edited }}' pubdate class="answer-edited-date">updated {{ dt.format_date(last_edited) }}</time>
+
         <h2>{{ page.question | striptags }}</h2>
     </div>
 
@@ -44,10 +47,16 @@
             </div>
         {% endif %}
 
-{# This brings in the feedback module #}
-{% for block in page.content %}
-{{- form_block.render(block, 'content', loop.index0) -}}
-{% endfor %}
+        {# This brings in the feedback module and disclaimer #}
+        {% for block in page.content -%}
+            {% if block.block_type == 'feedback' %}
+                {{- form_block.render(block, 'content', loop.index0) -}}
+            {% endif %}
+        {%- endfor %}
+
+        <div class="block">
+            {{ disclaimer.text | safe }}
+        </div>
 
     </div>
 
