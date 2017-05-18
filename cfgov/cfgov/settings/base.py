@@ -1,3 +1,4 @@
+
 import os
 import sys
 
@@ -47,7 +48,7 @@ INSTALLED_APPS = (
 
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.table_block',
-
+    'wagtail.contrib.wagtailroutablepage',
     'localflavor',
     'modelcluster',
     'compressor',
