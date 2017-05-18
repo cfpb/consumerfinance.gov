@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup as bs
 from django.apps import apps
 from django.core.management import call_command
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from wagtail.wagtailcore.models import Page
 
 from knowledgebase.models import QuestionCategory as QC
 from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
@@ -141,6 +142,20 @@ def fix_tips(answer_text):
     return clean2
 
 
+def dinero_set_aside():
+    "Temporarily set aside the slug of the dinero page"
+    dinero = Page.objects.get(id=51).specific
+    dinero.slug = 'es-dinero'
+    dinero.save()
+
+
+def dinero_restore():
+    "Restore the dinero page's slug"
+    dinero = Page.objects.get(id=51).specific
+    dinero.slug = 'es'
+    dinero.save()
+
+
 def get_or_create_landing_pages():
     """
     Create two Spanish and one English landing pages.
@@ -160,10 +175,6 @@ def get_or_create_landing_pages():
              'value': {
                  'heading': 'Placeholder for future Spanish home page',
                  'links': []}}]
-        # this unserved archived page is squatting on the /es/ slug
-        dinero = CFGOVPage.objects.get(id=51)
-        dinero.slug = 'es-dinero'
-        dinero.save()
         es_parent = get_or_create_page(
             apps,
             'ask_cfpb',
@@ -229,6 +240,7 @@ def get_or_create_landing_pages():
         revision.publish()
         time.sleep(1)
         counter += 1
+
     print("Created an 'es' parent and {} landing pages".format(counter))
 
 
@@ -583,7 +595,9 @@ def run():
     add_related_questions()
     set_featured_ids()
     clean_up_blank_answers()
+    dinero_set_aside()
     get_or_create_landing_pages()
+    dinero_restore()
     get_or_create_category_pages()
     get_or_create_search_results_pages()
     create_pages()
