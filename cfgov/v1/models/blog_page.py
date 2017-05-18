@@ -14,6 +14,7 @@ class BlogPage(AbstractFilterPage):
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('feedback', v1_blocks.Feedback()),
         ('email_signup', organisms.EmailSignUp()),
+        ('expandable', organisms.Expandable()),
     ])
     edit_handler = AbstractFilterPage.generate_edit_handler(
         content_panel=StreamFieldPanel('content')
