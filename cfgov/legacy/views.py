@@ -1,6 +1,6 @@
-import json
 import os
 import re
+import requests
 import six
 import sys
 
@@ -8,6 +8,7 @@ from django import http
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -37,6 +38,7 @@ class HousingCounselorView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HousingCounselorView, self).get_context_data(**kwargs)
+        context['mapbox_access_token'] = settings.MAPBOX_ACCESS_TOKEN
 
         zipcode = self.request.GET.get('zipcode')
         context['zipcode'] = zipcode
@@ -46,34 +48,27 @@ class HousingCounselorView(TemplateView):
             context['zipcode_valid'] = zipcode_valid
 
             if zipcode_valid:
-                counselors = self.get_counselors(zipcode)
-                context['counselors'] = counselors
-                context['counselors_json'] = json.dumps(counselors)
-                context['zip_json'] = self.get_coords(zipcode)
+                api_json = self.get_counselors(self.request, zipcode)
+                context['api_json'] = api_json
 
         return context
 
     @staticmethod
-    def get_counselors(zipcode):
+    def get_counselors(request, zipcode):
         """Return list of housing counselors closest to a given zipcode.
 
-        This could alternatively be an HTTP request to a django-hud API
-        instance running locally.
+        Queries a locally running django-hud API.
         """
-        from hud_api_replace.views import get_counsel_list
-        response = get_counsel_list(zipcode, GET={})
-        return response.get('counseling_agencies') or []
+        api_path = reverse(
+            'hud_api_replace:index',
+            kwargs={'zipcode': zipcode}
+        )
 
-    @staticmethod
-    def get_coords(zipcode):
-        """Return list of housing counselors closest to a given zipcode.
+        api_url = request.build_absolute_uri(api_path)
+        response = requests.get(api_url)
+        response.raise_for_status()
 
-        This could alternatively be an HTTP request to a django-hud API
-        instance running locally.
-        """
-        from hud_api_replace.views import geocode_zip
-        response = geocode_zip(zipcode)
-        return response.get('zip') or ''
+        return response.json()
 
 
 class HousingCounselorPDFView(PDFGeneratorView):

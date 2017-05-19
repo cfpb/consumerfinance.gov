@@ -1,5 +1,6 @@
 {% extends "front/base_nonresponsive.html" %}
-{% load housing_counselor %}
+{% load jsonify %}
+{% load signed_redirect %}
 {% load static from staticfiles %}
 
 {% block title %}
@@ -177,7 +178,10 @@ Find a housing counselor
 document.agc_base="/static/nemo/_/img/hud_gmap/agc_";
 </script>
 
-<script type='text/javascript'>var hud_data = { counseling_agencies: {{ counselors_json|safe }}, zip: {{ zip_json|safe }} };</script>
+<script type='text/javascript'>
+var hud_data = JSON.parse("{{ api_json|jsonify|escapejs }}"),
+    mapbox_access_token = "{{ mapbox_access_token }}";
+</script>
 <script type='text/javascript' src='{% static 'hud/hud.js' %}'></script>
 
 {% endblock %}

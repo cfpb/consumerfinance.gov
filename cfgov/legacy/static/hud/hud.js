@@ -72,7 +72,7 @@ var cfpb_hud_hca = (function() {
 
 	/*	initialize_map() sets options and creates the map */
 	function initialize_map() {
-    L.mapbox.accessToken = 'pk.eyJ1IjoiY2ZwYiIsImEiOiJodmtiSk5zIn0.VkCynzmVYcLBxbyHzlvaQw';
+    L.mapbox.accessToken = mapbox_access_token,
     map = L.mapbox.map('hud_hca_api_map_container', 'mapbox.streets')
     .setView([40, -80], 2);
 
