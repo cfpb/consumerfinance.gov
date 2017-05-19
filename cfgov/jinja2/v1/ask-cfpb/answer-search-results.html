@@ -1,52 +1,55 @@
-{% extends 'layout-2-1-bleedbar.html' %}
+{% import 'molecules/pagination.html' as pagination with context %}
 
-{% import 'form_block.html' as form_block with context %}
-{% import 'templates/render_block.html' as render_block with context %}
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+{% extends 'layout-side-nav.html' %}
+
+{% block content_wrapper_modifiers -%}
+    {{ super() }} ask-search-page ask-cfpb-page
+{%- endblock %}
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
+    {{ super() }} content__flush-bottom search-page
 {%- endblock %}
-
-{% block hero -%}
-    {% for block in page.header -%}
-        {% if 'hero' in block.block_type %}
-            {{ render_stream_child(block) }}
-        {% endif %}
-    {%- endfor %}
-{% endblock %}
 
 {% block content_main %}
-    {% for block in page.header -%}
-        {% if block.block_type != 'hero' %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
-    {%- endfor %}
-    {% for block in page.cards -%}
-            {{ render_block.render(block, loop.index) }}
-    {%- endfor %}
-    {% for block in page.content -%}
-        {% if block.block_type == 'feedback' %}
-            {{- form_block.render(block, 'content', loop.index0) -}}
-        {% else %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
-    {%- endfor %}
     <div class="block
                 block__flush-top">
-    <h2>Ask CFPB search results</h2>
-    <ul>
-    {% for pairing in page.answers %}
-        <li><a href="{{ pairing[0] }}">{{ pairing[1] }} </a></li>
-    {% endfor %}
-    </ul>
+        <h1>Ask CFPB</h1>
+      
+        {% if results %}
+            <h3 class="results-header">Results for ‘{{ page.query }}’</h3>
+            <section class="search-results block
+                        block__flush-top">
+
+                <div class="question_list">
+                {% for question in results %}
+                    <article class="question_summary question_summary__full">
+                        <p class="question_title"><a href="{{ question[0] }}" class="kbq">{{ question[1]|safe }}</a></p>
+                        <p class="qans">{{ question[2] | safe | striptags | truncate }}</p>
+                    </article>
+                {% endfor %}
+
+                </div>
+
+                <div class="block block__sub">
+                    {{ pagination.render( paginator.num_pages, current_page | int, '', index ) }}
+                </div>
+
+            </section>
+
+        {% else %}
+
+        <section class="search-results block
+                        block__flush-top">
+            <div class="no-results-message">
+                <h2 class="results-header">No results found</h2>
+                <p class="short-desc u-mb30">
+                    Can't find your question? <a href="/ask-cfpb/">Browse questions by category</a>
+                </p>
+            </div>
+        </section>
+        {% endif %}
+
     </div>
+
 {% endblock %}
 
-{% block content_sidebar_modifiers -%}
-    o-sidebar-content
-{%- endblock %}
-
-{% block content_sidebar scoped -%}
-    {{ streamfield_sidefoot.render(page.sidefoot) }}
-{%- endblock %}

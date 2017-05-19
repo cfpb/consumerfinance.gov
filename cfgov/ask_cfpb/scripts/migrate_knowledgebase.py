@@ -66,7 +66,7 @@ unicode_swap_chars = {
     '\x94': '"',
     '\x96': '-',
     '\u200b': '',  # ZERO WIDTH SPACE
-    '\u25e6': '\u25CB ',  # small hollow circle
+    '\u25e6': '- ',  # small hollow circle; tried \u25CB
     '\uf0a7': '',  # hollow box
 }
 
@@ -142,9 +142,14 @@ def fix_tips(answer_text):
 
 
 def get_or_create_landing_pages():
-    """Create English and Spanish landing pages"""
-    from v1.models import CFGOVPage
-    parent = CFGOVPage.objects.get(slug='cfgov').specific
+    """
+    Create Spanish and English landing pages.
+    """
+
+    from v1.models import CFGOVPage, LandingPage
+    en_root = CFGOVPage.objects.get(slug='cfgov').specific
+    es_root = LandingPage.objects.get(slug='es').specific
+
     hero_stream_value = [
         {'type': 'hero',
          'value': {
@@ -154,27 +159,27 @@ def get_or_create_landing_pages():
              'body': ('We offer clear, impartial answers to hundreds '
                       'of financial questions. Find the information you need '
                       'to make more informed choices about your money.')}}]
-    parent_map = {
-        'english_parent': {'slug': 'ask-cfpb',
-                           'title': 'Ask CFPB',
-                           'language': 'en',
-                           'hero': hero_stream_value},
-        'spanish_parent': {'slug': 'obtener-respuestas',
-                           'title': 'Obtener respuestas',
-                           'language': 'es',
-                           'hero': None}
+    landing_map = {
+        'en': {'slug': 'ask-cfpb',
+               'title': 'Ask CFPB',
+               'hero': hero_stream_value,
+               'parent': en_root},
+        'es': {'slug': 'obtener-respuestas',
+               'title': 'Obtener respuestas',
+               'hero': None,
+               'parent': es_root}
     }
     counter = 0
-    for parent_type in sorted(parent_map.keys()):
-        _map = parent_map[parent_type]
+    for language in sorted(landing_map.keys()):
+        _map = landing_map[language]
         landing_page = get_or_create_page(
             apps,
             'ask_cfpb',
             'AnswerLandingPage',
             _map['title'],
             _map['slug'],
-            parent,
-            language=_map['language'])
+            _map['parent'],
+            language=language)
         landing_page.has_unpublished_changes = True
         if _map['hero']:
             stream_block = landing_page.header.stream_block
@@ -187,29 +192,43 @@ def get_or_create_landing_pages():
         revision.publish()
         time.sleep(1)
         counter += 1
-    print("Created {} landing pages".format(counter))
+
+    print("Created an 'es' parent and {} landing pages".format(counter))
 
 
 def get_or_create_search_results_pages():
     from v1.models import CFGOVPage
+    parent_en = CFGOVPage.objects.get(slug='ask-cfpb').specific
+    parent_es = CFGOVPage.objects.get(slug='obtener-respuestas').specific
     language_map = {
         'en': {'title': 'Ask CFPB search results',
-               'slug': 'ask-cfpb-search-results'},
+               'slug': 'ask-cfpb-search-results',
+               'page_type': 'AnswerResultsPage',
+               'language': 'en',
+               'parent': parent_en},
         'es': {'title': 'Respuestas',
-               'slug': 'respuestas'}
+               'slug': 'respuestas',
+               'page_type': 'AnswerResultsPage',
+               'language': 'es',
+               'parent': parent_es},
+        'tag': {'title': 'Buscar por etiqueta',
+                'slug': 'buscar-por-etiqueta',
+                'page_type': 'TagResultsPage',
+                'language': None,
+                'parent': parent_es}
     }
-    parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
     counter = 0
     for key in language_map:
         _map = language_map[key]
         results_page = get_or_create_page(
             apps,
             'ask_cfpb',
-            'AnswerResultsPage',
+            _map['page_type'],
             _map['title'],
             _map['slug'],
-            parent,
-            language=key)
+            _map['parent'])
+        if _map['language']:
+            results_page.language = _map['language']
         results_page.has_unpublished_changes = True
         revision = results_page.save_revision()
         results_page.save()
@@ -224,21 +243,32 @@ def get_or_create_category_pages():
     parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
     counter = 0
     for cat in Category.objects.all():
-        cat_page = get_or_create_page(
-            apps,
-            'ask_cfpb',
-            'AnswerCategoryPage',
-            cat.name,
-            "category-{}".format(cat.slug),
-            parent,
-            language='en',
-            ask_category=cat)
-        cat_page.has_unpublished_changes = True
-        revision = cat_page.save_revision()
-        cat_page.save()
-        revision.publish()
-        time.sleep(1)
-        counter += 1
+        for language in ['en', 'es']:
+            if language == 'en':
+                title = cat.name
+                page_slug = "category-{}".format(cat.slug)
+                parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
+            else:
+                title = cat.name_es
+                page_slug = "categoria-{}".format(cat.slug_es)
+                parent = CFGOVPage.objects.get(
+                    slug='obtener-respuestas').specific
+
+            cat_page = get_or_create_page(
+                apps,
+                'ask_cfpb',
+                'AnswerCategoryPage',
+                title,
+                page_slug,
+                parent,
+                language=language,
+                ask_category=cat)
+            cat_page.has_unpublished_changes = True
+            revision = cat_page.save_revision()
+            cat_page.save()
+            revision.publish()
+            time.sleep(1)
+            counter += 1
     print("Created {} category pages".format(counter))
 
 

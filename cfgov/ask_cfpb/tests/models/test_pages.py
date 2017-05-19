@@ -61,7 +61,7 @@ class AnswerModelTestCase(TestCase):
         self.audience = mommy.make(Audience, name='stub_audience')
         self.category = mommy.make(Category, name='stub_cat', name_es='que')
         self.subcategories = mommy.make(
-            SubCategory, name='stub_subcat', _quantity=3)
+            SubCategory, name='stub_subcat', parent=self.category, _quantity=3)
         self.category.subcategories.add(self.subcategories[0])
         self.category.save()
         self.next_step = mommy.make(NextStep, title='stub_step')
@@ -86,10 +86,20 @@ class AnswerModelTestCase(TestCase):
             ROOT_PAGE,
             language='es',
             live=True)
+        self.tag_results_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'TagResultsPage',
+            'Tag results page',
+            'buscar-por-etiqueta',
+            ROOT_PAGE,
+            language='es',
+            live=True)
         self.answer1234 = self.prepare_answer(
             id=1234,
             answer='Mock answer 1',
-            question='Mock question1')
+            question='Mock question1',
+            search_tags_es='hipotecas')
         self.answer1234.save()
         self.page1 = self.create_answer_page()
         self.page1.answer_base = self.answer1234
@@ -98,12 +108,75 @@ class AnswerModelTestCase(TestCase):
         self.answer5678 = self.prepare_answer(
             id=5678,
             answer='Mock answer 2',
-            question='Mock question2')
+            question='Mock question2',
+            search_tags_es='hipotecas')
         self.answer5678.save()
         self.page2 = self.create_answer_page(slug='mock-answer-page-en-5678')
         self.page2.answer_base = self.answer5678
         self.page2.parent = self.english_parent_page
         self.page2.save()
+
+    def test_facet_map(self):
+        self.answer1234.category.add(self.category)
+        self.answer1234.audiences.add(self.audience)
+        self.answer1234.subcategory.add(self.subcategories[1])
+        facet_map = self.category.facet_map
+        self.assertEqual(
+            json.loads(facet_map)['answers']['1234']['question'],
+            'Mock question1')
+        self.assertEqual(
+            json.loads(facet_map)['audiences']['1']['name'],
+            'stub_audience')
+        self.assertEqual(
+            json.loads(facet_map)['subcategories']['1'], [])
+
+    def test_answer_valid_tags(self):
+        test_list = Answer.valid_spanish_tags()
+        self.assertIn('hipotecas', test_list)
+
+    def test_get_valid_tags(self):
+        from ask_cfpb.models import get_valid_spanish_tags
+        test_list = get_valid_spanish_tags()
+        self.assertIn('hipotecas', test_list)
+
+    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
+    def test_get_valid_tags_works_without_elasticsearch(self, mock_sqs):
+        from ask_cfpb.models import get_valid_spanish_tags
+        mock_sqs.return_value = [None]
+        test_list = get_valid_spanish_tags()
+        self.assertIn('hipotecas', test_list)
+
+    def test_routable_page_template(self):
+        self.assertEqual(
+            self.tag_results_page.get_template(HttpRequest()),
+            'ask-cfpb/answer-tag-spanish-results.html')
+
+    def test_routable_page_base_returns_404(self):
+        response = client.get(
+            self.tag_results_page.url +
+            self.tag_results_page.reverse_subpage('spanish_tag_base'))
+        self.assertEqual(response.status_code, 404)
+
+    def test_routable_page_subpage_bad_tag_returns_404(self):
+        page = self.tag_results_page
+        response = client.get(
+            page.url + page.reverse_subpage(
+                'buscar_por_etiqueta',
+                kwargs={'tag': 'hippopotamus'}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_routable_page_subpage_valid_tag_returns_200(self):
+        page = self.tag_results_page
+        response = client.get(
+            page.url + page.reverse_subpage(
+                'buscar_por_etiqueta',
+                kwargs={'tag': 'hipotecas'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_page_returns_url_suffix(self):
+        response = self.tag_results_page.reverse_subpage(
+            'buscar_por_etiqueta', kwargs={'tag': 'hipotecas'})
+        self.assertEqual(response, 'hipotecas/')
 
     def test_view_answer_200(self):
         response_200 = client.get(reverse(
@@ -275,7 +348,7 @@ class AnswerModelTestCase(TestCase):
         """Test the list produced by answer.tags()"""
         answer = self.prepare_answer(search_tags='Chutes, Ladders')
         answer.save()
-        taglist = answer.tags()
+        taglist = answer.tags
         for name in ['Chutes', 'Ladders']:
             self.assertIn(name, taglist)
 
@@ -283,7 +356,7 @@ class AnswerModelTestCase(TestCase):
         """Test the list produced by answer.tags_es()"""
         answer = self.prepare_answer(search_tags_es='sistema judicial, tipos')
         answer.save()
-        taglist = answer.tags_es()
+        taglist = answer.tags_es
         for term in ['sistema judicial', 'tipos']:
             self.assertIn(term, taglist)
 
@@ -381,7 +454,82 @@ class AnswerModelTestCase(TestCase):
         mock_request.site = mock_site
         cat_page = self.create_category_page(ask_category=self.category)
         test_context = cat_page.get_context(mock_request)
-        self.assertEqual(test_context['choices'][0][1], 'stub_subcat')
+        self.assertEqual(
+            test_context['choices'].count(),
+            self.category.subcategories.count())
+
+    def test_category_page_truncation(self):
+        answer = self.answer1234
+        answer.answer_es = ("We need an answer with more than 40 words to"
+                            "prove that truncation is working as expected."
+                            "It just so happens that the standard maximum "
+                            "length for a news story's lead graph is around "
+                            "40 words, which I have now managed to exceed.")
+        answer.category.add(self.category)
+        answer.save()
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='es')
+        test_context = cat_page.get_context(mock_request)
+        self.assertTrue(
+            test_context['answers'][0]['answer_es'].endswith('...'))
+
+    def test_category_page_context_es(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='es')
+        test_context = cat_page.get_context(mock_request)
+        self.assertEqual(
+            test_context['choices'].count(),
+            self.category.subcategories.count())
+
+    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
+    def test_category_page_context_no_es(self, mock_es_query):
+        mock_return_value = mock.Mock()
+        mock_return_value.facet_map = json.dumps(
+            {'answers': {},
+             'audiences': {},
+             'subcategories': {}})
+        mock_es_query.return_value = [mock_return_value]
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(ask_category=self.category)
+        test_context = cat_page.get_context(mock_request)
+        self.assertEqual(
+            test_context['facet_map'],
+            mock_return_value.facet_map)
+
+    def test_category_page_get_english_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='en')
+        test_get_template = cat_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/category-page.html')
+
+    def test_category_page_get_spanish_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        cat_page = self.create_category_page(
+            ask_category=self.category, language='es')
+        test_get_template = cat_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/category-page-spanish.html')
 
     def test_landing_page_context(self):
         mock_site = mock.Mock()
@@ -431,23 +579,13 @@ class AnswerModelTestCase(TestCase):
     def test_answer_language_page_nonexistent(self):
         self.assertEqual(self.answer5678.spanish_page, None)
 
-    def test_category_audience_json(self):
-        self.answer1234.audiences.add(self.audience)
-        self.answer1234.category.add(self.category)
-        self.answer1234.save()
+    def test_answer_page_print_template_used(self):
+        answer_page = self.create_answer_page(language='es')
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        mock_request.GET = {'print': 'true'}
         self.assertEqual(
-            self.category.audience_json,
-            '{"stub_audience": ["1234"]}')
-
-    def test_category_subcategory_json(self):
-        self.answer1234.subcategory.add(self.subcategories[0])
-        self.assertEqual(
-            self.category.subcategory_json,
-            '{"stub_subcat": ["1234"]}')
-
-    def test_category_answer_json(self):
-        self.answer1234.category.add(self.category)
-        result_dict = json.loads(self.category.answer_json)
-        self.assertEqual(result_dict.keys()[0], '1234')
-        self.assertEqual(result_dict['1234']['url'], '/ask-cfpb/slug-en-1234')
-        self.assertEqual(result_dict['1234']['question'], 'Mock question1')
+            answer_page.get_template(mock_request),
+            'ask-cfpb/answer-page-spanish-printable.html')

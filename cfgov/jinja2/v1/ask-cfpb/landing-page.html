@@ -16,8 +16,8 @@
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 
-    <main class="content" id="main" role="main">
-        <div class="wrapper content_wrapper ask-landing-page">
+    <main class="content ask-landing-page ask-cfpb-page" id="main" role="main">
+        <div class="wrapper content_wrapper">
             <div class="content-l">
                 <section class="content_main content-l_col content-l_col-1">
                     <h2 class="u-show-on-mobile">Browse questions by category</h2>
@@ -77,11 +77,14 @@
                         </div>
 
                         <div class="block block__sub">
-                            {{ tags.render( audiences, '/askcfpb/search/' ) }}
+                            {{ tags.render( audiences, '/askcfpb/' ) }}
                         </div>
                     </div>
+
+                    
+
                 </section>
-            
+                
             </div>
         </div>
     </main>

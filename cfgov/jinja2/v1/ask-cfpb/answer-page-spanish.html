@@ -4,8 +4,8 @@
 {% import 'form_block.html' as form_block with context %}
 
 {% block babel_title %}
-    <title>{{ page.title }} > Oficina para la Protección Financiera del Consumidor</title>
-    <meta name="title" content="{{ page.title }} > Oficina para la Protección Financiera del Consumidor">
+    {% set page_title=page.question %}
+    {% include 'ask/title-spanish.html' with context %}
 {% endblock %}
 
 {% block page_meta %}
@@ -29,11 +29,11 @@
             </article><!-- .ac-qa -->
 
             <aside class="s-hide-on-small supplement share split">
-                <span class="split-left"><a class="print" href="{{ page.answer.get_print_url }}">
+                <span class="split-left"><a class="print" href="{{ request.url }}?print=true">
                         <img src="{{ static('nemo/_/img/icon-print-retina.png') }}" alt="" class="icon-20"> <span class="share-label">Imprimir</span></a></span>
                 <span class="split-right"><span class="share-label">Compartir esta página</span>
                     
-                    {% include "ask-es/_share_links.html" with context %}
+                    {% include "ask/share-links-spanish.html" with context %}
                     
                 </span>
             </aside><!-- .supplement -->
@@ -57,13 +57,13 @@
         </div><!-- .primary -->
         <aside class="secondary span4">
 
-            {% for tag in page.answer_base.tags() %}
+            {% for tag in tags_es %}
                 {% if loop.first %}
                     <section class="supplement ac-related-topics">
                         <h3>Temas relacionados</h3>
                         <ul class="nav-list">
                 {% endif %}
-                            <li><a href="babel_search?selected_facets=tag_exact:{{ tag }}">{{ tag }}</a></li>
+                            <li><a href="/es/obtener-respuestas/buscar-por-etiqueta/{{ tag.replace(' ', '_') }}/">{{ tag }}</a></li>
                 {% if loop.last %}
                         </ul>
                     </section>
@@ -88,7 +88,7 @@
     <div class="share s-show-on-small" data-set="share">
         <span><span class="share-label">Compartir esta página</span>
             
-            {% include "ask-es/_share_links.html" with context %}
+            {% include "ask/share-links-spanish.html" %}
 
         </span>
     </div><!-- .share -->
