@@ -8,12 +8,6 @@ def search(request):
     return JsonResponse(results)
 
 
-def export(request):
-    now = datetime.datetime.now()
-    results = {'export': {'timestamp': '%s' % now}}
-    return JsonResponse(results)
-
-
 def suggest(request):
     now = datetime.datetime.now()
     results = {'suggest': {'timestamp': '%s' % now}}

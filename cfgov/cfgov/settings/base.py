@@ -607,4 +607,7 @@ FLAGS = {
     'WAGTAIL_ASK_CFPB': {
         'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
     },
+
+    # The next version of the public consumer complaint database
+    'CCDB5_RELEASE': {}
 }
