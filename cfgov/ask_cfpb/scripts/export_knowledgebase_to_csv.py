@@ -72,5 +72,5 @@ def export_questions():
             writer.writerow([row[key] for key in HEADINGS])
 
 
-if __name__ == "__main__":
+def run():
     export_questions()
