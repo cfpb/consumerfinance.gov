@@ -130,6 +130,7 @@
              (Ideally, also, we will move away from jQuery entirely.) #}
     <script src="{{ static('js/jquery.min.js') }}"></script>
 
+    {% if flag_enabled('AB_TESTING', request) %}
     <!-- Google Optimize page-hiding snippet -->
     <style>
         .optimize-loading {
@@ -158,6 +159,7 @@
         // the Google Tag Manager tag (code included below).
     </script>
     <!-- end Google Analytics/Optimize snippet -->
+    {% endif %}
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
