@@ -76,7 +76,7 @@ var cfpb_hud_hca = (function() {
     map = L.mapbox.map('hud_hca_api_map_container', 'mapbox.streets')
     .setView([40, -80], 2);
 
-    if (hud_data.counseling_agencies.length) {
+    if (hud_data.counseling_agencies) {
       update_map(hud_data);
     }
 	}

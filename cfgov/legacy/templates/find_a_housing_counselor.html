@@ -75,7 +75,7 @@ Find a housing counselor
     <div id="hud_hca_api_results_meta_container" class="hud_hca_api_results_meta clearfix">
         <div id="hud_hca_api_results_info" class="hud_hca_api_results_info hud_hca_api_print_hide clearfix">
             <div class="hud_hca_api_results_total">
-              <p>Displaying the {{ counselors|length }} locations closest to ZIP code <span class="hud_hca_api_search_zip">{{ zipcode|escape }}</span></p>
+              <p>Displaying the {{ api_json.counseling_agencies|length }} locations closest to ZIP code <span class="hud_hca_api_search_zip">{{ zipcode|escape }}</span></p>
             </div><!-- end .hud_hca_api_results_total -->
             <div class="hud_hca_api_results_actions">
                 <p>
@@ -97,7 +97,7 @@ Find a housing counselor
             </tr>
           </thead>
           <tbody>
-            {% for counselor in counselors %}
+            {% for counselor in api_json.counseling_agencies %}
             <tr class="hud_hca_api_result">
               <td class="hud_hca_api_result hud_hca_api_counselors_td">
                 <div class="hud_hca_api_num"></div>
