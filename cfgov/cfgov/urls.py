@@ -15,15 +15,27 @@ from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
+from ask_cfpb.views import (
+    ask_search,
+    ask_autocomplete,
+    view_answer
+)
 from core.views import ExternalURLNoticeView
-from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
-                          token_provider)
+from legacy.views import (
+    HousingCounselorPDFView,
+    dbrouter_shortcut,
+    token_provider
+)
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
-from v1.views import (change_password, check_permissions, login_with_lockout,
-                      password_reset_confirm, welcome)
+from v1.views import (
+    change_password,
+    check_permissions,
+    login_with_lockout,
+    password_reset_confirm,
+    welcome)
 from v1.views.documents import DocumentServeView
 
 
@@ -238,7 +250,7 @@ urlpatterns = [
                 r'^complaint/',
                 include_if_app_enabled('complaint', 'complaint.urls'),
                 fallback=lambda req: ServeView.as_view()(req, req.path),
-                condition=False),
+                state=False),
     url(r'^data-research/consumer-complaints/',
         include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
 
@@ -390,11 +402,6 @@ if settings.DEPLOY_ENVIRONMENT != 'build':
 
 
 if settings.DEPLOY_ENVIRONMENT == 'build':
-    from ask_cfpb.views import (
-        ask_search,
-        ask_autocomplete,
-        view_answer)
-
     ask_patterns = [
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
             view_answer,

@@ -18,7 +18,7 @@
 <header class="o-header"
         role="banner">
 
-    {% if flag_enabled(request, 'BETA_NOTICE') and show_banner %}
+    {% if flag_enabled('BETA_NOTICE', request) and show_banner %}
     <div class="m-global-banner">
         <div class="wrapper
                     wrapper__match-content
@@ -92,7 +92,7 @@
             </a>
 
             {% block primary_nav %}
-                {% if flag_enabled(request, 'IA_USER_TESTING_MENU') %}
+                {% if flag_enabled('IA_USER_TESTING_MENU', request) %}
                     {% include 'organisms/mega-menu-for-ia-testing.html' %}
                 {% else %}
                     {% include 'organisms/mega-menu.html' with context %}
