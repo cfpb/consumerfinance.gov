@@ -68,7 +68,8 @@ unicode_swap_chars = {
     '\x94': '"',
     '\x96': '-',
     '\u200b': '',  # ZERO WIDTH SPACE
-    '\u25e6': '- ',  # small hollow circle; tried \u25CB
+    '\u25e6': '- ',  # small hollow circle
+    '\u25cb': '- ',  # alternate small hollow circle
     '\uf0a7': '',  # hollow box
 }
 
