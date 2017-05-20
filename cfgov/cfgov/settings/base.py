@@ -606,4 +606,9 @@ FLAGS = {
     'WAGTAIL_ASK_CFPB': {
         'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
     },
+
+    # Google Optimize code snippets for A/B testing
+    # When enabled this flag will add various Google Optimize code snippets.
+    # Intended for use with path conditions.
+    'AB_TESTING': {},
 }
