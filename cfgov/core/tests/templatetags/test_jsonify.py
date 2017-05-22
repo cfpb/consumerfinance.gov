@@ -10,7 +10,4 @@ class TestJsonify(TestCase):
         self.assertEqual(jsonify('foo'), '"foo"')
 
     def test_dict(self):
-        self.assertEqual(
-            jsonify({'foo': 123, 'bar': 'abc'}),
-            '{"foo": 123, "bar": "abc"}'
-        )
+        self.assertEqual(jsonify({'foo': 123}), '{"foo": 123}')
