@@ -1,37 +1,80 @@
-{% extends 'layout-2-1-bleedbar.html' %}
+{% extends 'spanish-ask-base.html' %}
 
-{% import 'form_block.html' as form_block with context %}
-{% import 'templates/render_block.html' as render_block with context %}
-{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
-
-{% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom
-{%- endblock %}
-
-{% block hero -%}
-    {% for block in page.header -%}
-        {% if 'hero' in block.block_type %}
-            {{ render_stream_child(block) }}
-        {% endif %}
-    {%- endfor %}
+{% block babel_title %}
+    {% set page_title=tag %}
+    {% set search_page = 1 %}
+    {% include "ask/title-spanish.html" %}
 {% endblock %}
 
+{% block babel_content %}
+
+    <section class="content row">
+            {% if results %}
+                <div class="primary span8">
+                    <header class="header">
+                        {% if tag %}
+                            <h1>"{{ tag }}"</h1>
+                        {% else %}
+                            <h1>No etiqueta</h1>
+                        {% endif %}
+                        
+                    </header><!-- .header -->
+
+                    <nav class="pagination">
+                        <ul class="s-hide-on-small">
+                        {% include "ask/pagination-spanish.html" with context %}
+                        </ul>
+                        <div class="pagination-details"><span class="pagination-count"><strong>{{ results_count }}</strong> respuestas</span> 
+                        </div>                    
+                    </nav><!-- .pagination -->          
+
+                    {% for question in results %}
+                        <a href=" {{ question[0] }} " class="ac-qa-summary">
+                            <article>
+                                <h3 class="ac-qa-question">{{ question[1]|safe }}</h3>
+                                <div class="ac-qa-answer">
+                                    <p> {{ question[2]|safe|striptags }} </p>
+                                    
+                                </div>
+                            </article>
+                        </a>
+                    {% endfor %}                
+                    
+                    <nav class="pagination">
+                        <ul>                    
+                        {% include "ask/pagination-spanish.html" with context %}
+                        </ul>
+                    </nav>
+
+                </div><!-- .primary -->
+
+                <aside class="secondary span4">            
+                    <div id="facets" class="supplement js-showtoggle ac-filters"><!-- @todo change #facets to something else -->
+                    </div><!-- .js-showtoggle -->
+
+                </aside><!-- .secondary -->          
+
+                <div class="share s-hide-on-small" data-set="share"></div><!-- .share -->
+
+           
+            {% endif %}  
+
+        </section><!-- .content -->
+
+{% endblock %}
+
+{% block babel_share %}
+        <div class="share s-show-on-small" data-set="share">
+            <span><span class="share-label">Compartir esta página</span>
+                {% include "ask/share-links-spanish.html" %}
+            </span>
+        </div><!-- .share -->
+{% endblock %}
+
+
+
 {% block content_main %}
-    {% for block in page.header -%}
-        {% if block.block_type != 'hero' %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
-    {%- endfor %}
-    {% for block in page.cards -%}
-            {{ render_block.render(block, loop.index) }}
-    {%- endfor %}
-    {% for block in page.content -%}
-        {% if block.block_type == 'feedback' %}
-            {{- form_block.render(block, 'content', loop.index0) -}}
-        {% else %}
-            {{ render_block.render(block, loop.index) }}
-        {% endif %}
-    {%- endfor %}
+
     <div class="block
                 block__flush-top">
     {% if tag %}
@@ -51,10 +94,3 @@
 
 {% endblock %}
 
-{% block content_sidebar_modifiers -%}
-    o-sidebar-content
-{%- endblock %}
-
-{% block content_sidebar scoped -%}
-    {{ streamfield_sidefoot.render(page.sidefoot) }}
-{%- endblock %}
