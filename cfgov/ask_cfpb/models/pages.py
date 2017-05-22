@@ -45,7 +45,7 @@ def get_disclaimer(language):
         try:
             return ReusableText.objects.get(
                 title='Legal disclaimer for educational materials')
-        except:
+        except ReusableText.DoesNotExist:
             pass
 
 
