@@ -143,47 +143,12 @@ def fix_tips(answer_text):
 
 def get_or_create_landing_pages():
     """
-    Create two Spanish and one English landing pages.
-
-    Spanish gets two parents:
-    - `/es/`, as a placeholder for a future Spanish home page in Wagtail
-    - `/obtener-respuestas/`, the landing page for Spanish ask-cfpb
+    Create Spanish and English landing pages.
     """
 
-    from v1.models import CFGOVPage
-    root = CFGOVPage.objects.get(slug='cfgov').specific
-
-    def get_or_create_es_parent_page():
-        """Create the Spanish /es/ parent placeholder page"""
-        text_intro_stream_value = [
-            {'type': 'text_introduction',
-             'value': {
-                 'heading': 'Placeholder for future Spanish home page',
-                 'links': []}}]
-        # this unserved archived page is squatting on the /es/ slug
-        dinero = CFGOVPage.objects.get(id=51)
-        dinero.slug = 'es-dinero'
-        dinero.save()
-        es_parent = get_or_create_page(
-            apps,
-            'ask_cfpb',
-            'AnswerLandingPage',
-            'Oficina para la Protección Financiera del Consumidor',
-            'es',
-            root,
-            language='es')
-        es_parent.has_unpublished_changes = True
-        stream_block = es_parent.specific.header.stream_block
-        es_parent.header = StreamValue(
-            stream_block,
-            text_intro_stream_value,
-            is_lazy=True)
-        revision = es_parent.save_revision()
-        es_parent.save()
-        revision.publish()
-        return es_parent
-
-    es_parent = get_or_create_es_parent_page()
+    from v1.models import CFGOVPage, LandingPage
+    en_root = CFGOVPage.objects.get(slug='cfgov').specific
+    es_root = LandingPage.objects.get(slug='es').specific
 
     hero_stream_value = [
         {'type': 'hero',
@@ -194,21 +159,19 @@ def get_or_create_landing_pages():
              'body': ('We offer clear, impartial answers to hundreds '
                       'of financial questions. Find the information you need '
                       'to make more informed choices about your money.')}}]
-    parent_map = {
-        'english_parent': {'slug': 'ask-cfpb',
-                           'title': 'Ask CFPB',
-                           'language': 'en',
-                           'hero': hero_stream_value,
-                           'parent': root},
-        'spanish_parent': {'slug': 'obtener-respuestas',
-                           'title': 'Obtener respuestas',
-                           'language': 'es',
-                           'hero': None,
-                           'parent': es_parent}
+    landing_map = {
+        'en': {'slug': 'ask-cfpb',
+               'title': 'Ask CFPB',
+               'hero': hero_stream_value,
+               'parent': en_root},
+        'es': {'slug': 'obtener-respuestas',
+               'title': 'Obtener respuestas',
+               'hero': None,
+               'parent': es_root}
     }
     counter = 0
-    for parent_type in sorted(parent_map.keys()):
-        _map = parent_map[parent_type]
+    for language in sorted(landing_map.keys()):
+        _map = landing_map[language]
         landing_page = get_or_create_page(
             apps,
             'ask_cfpb',
@@ -216,7 +179,7 @@ def get_or_create_landing_pages():
             _map['title'],
             _map['slug'],
             _map['parent'],
-            language=_map['language'])
+            language=language)
         landing_page.has_unpublished_changes = True
         if _map['hero']:
             stream_block = landing_page.header.stream_block
@@ -229,6 +192,7 @@ def get_or_create_landing_pages():
         revision.publish()
         time.sleep(1)
         counter += 1
+
     print("Created an 'es' parent and {} landing pages".format(counter))
 
 

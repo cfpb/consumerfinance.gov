@@ -16,13 +16,13 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.contrib.wagtailroutablepage.models import (
     RoutablePageMixin, route)
 from wagtail.wagtailcore.fields import RichTextField
-from wagtail.wagtailcore.models import Page, PageManager
+from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch import index
 from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
 from v1.feeds import FilterableFeedPageMixin
-from v1.models import CFGOVPage, LandingPage
+from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
 from v1.util.filterable_list import FilterableListMixin
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
@@ -50,7 +50,7 @@ class AnswerLandingPage(LandingPage):
         ObjectList(content_panels, heading='Content'),
         ObjectList(LandingPage.settings_panels, heading='Configuration'),
     ])
-    objects = PageManager()
+    objects = CFGOVPageManager()
 
     def get_context(self, request, *args, **kwargs):
         from ask_cfpb.models import Category, Audience
@@ -73,7 +73,7 @@ class AnswerCategoryPage(
     """
     from ask_cfpb.models import Answer, Audience, Category, SubCategory
 
-    objects = PageManager()
+    objects = CFGOVPageManager()
     content = StreamField([], null=True)
     ask_category = models.ForeignKey(
         Category,
@@ -148,7 +148,7 @@ class AnswerCategoryPage(
 class AnswerResultsPage(
         FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
 
-    objects = PageManager()
+    objects = CFGOVPageManager()
     answers = []
 
     content = StreamField([
@@ -192,7 +192,7 @@ class AnswerResultsPage(
 class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     """A routable page for serving Answers by tag"""
 
-    objects = PageManager()
+    objects = CFGOVPageManager()
     language = 'es'
 
     def get_template(self, request):
@@ -280,7 +280,7 @@ class AnswerPage(CFGOVPage):
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
-    objects = PageManager()
+    objects = CFGOVPageManager()
 
     def get_context(self, request, *args, **kwargs):
         context = super(AnswerPage, self).get_context(request)
