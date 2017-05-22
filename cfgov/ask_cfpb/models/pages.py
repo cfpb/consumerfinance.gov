@@ -24,7 +24,6 @@ from v1 import blocks as v1_blocks
 from v1.feeds import FilterableFeedPageMixin
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
 from v1.util.filterable_list import FilterableListMixin
-from v1.atomic_elements import organisms
 from v1.models.snippets import ReusableText
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
@@ -43,8 +42,11 @@ def get_valid_spanish_tags():
 
 def get_disclaimer(language):
     if language == 'en':
-        return ReusableText.objects.get(
-            title='Legal disclaimer for educational materials')
+        try:
+            return ReusableText.objects.get(
+                title='Legal disclaimer for educational materials')
+        except:
+            pass
 
 
 class AnswerLandingPage(LandingPage):
