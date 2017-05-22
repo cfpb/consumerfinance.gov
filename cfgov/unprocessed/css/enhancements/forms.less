@@ -300,6 +300,83 @@ legend {
 }
 
 /* topdoc
+  name: Input with button bar
+  family: cf-form
+  patterns:
+    - name: Default example
+      markup: |
+          <form>
+              <div class="input-with-btn input-with-btn__bar">
+                  <div class="input-with-btn_input">
+                      <input type="text" name="q" id="q" >
+                  </div>
+                  <div class="input-with-btn_btn">
+                      <button class="btn" name="btnSearch" id="btnSearch">
+                          Search
+                      </button>
+                  </div>
+              </div>
+          </form>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .input-with-btn.input-with-btn__bar
+            .input-with-btn_input
+            .input-with-btn_btn
+  notes: "Displays as single unit, with button attached to end of input. 
+          Input fills all space that is not needed for button."
+  tags:
+    - cf-form
+*/
+
+.input-with-btn__bar {
+    display: table; 
+    width: 100%;
+
+    @supports( display: flex ) {
+        display: flex;
+        width: auto;
+    }
+
+    .input-with-btn_input {
+        display: table-cell;
+        width: 100%;
+        float: left;
+        margin-bottom: 0;
+
+        @supports( display: flex ) {
+            display: flex;
+            width: auto;
+            float: none;
+            flex: 1;
+        }
+    }
+
+    .input-with-btn_btn {
+        margin: 0;
+        border: 0;
+        display: table-cell; 
+        // overrides default .input-with-btn_btn width.
+        // setting button to very small width & input to 100%
+        // means button will only take up space it needs
+        width: 1%; 
+        vertical-align: middle;
+
+        @supports( display: flex ) {
+            display: flex;
+            width: auto;
+        }
+
+        button {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            height: 33px;
+        }
+    }
+}
+
+/* topdoc
   name: EOF
   eof: true
 */
