@@ -166,7 +166,7 @@ This lambda takes the request and calls the [Wagtail-Sharing](https://github.com
 
 ## Enabling a flag
 
-Feature flags are enabled based on a set of conditions that are given either in the Django settings files (in `cfgov/cfgov/settings/`) or in the Django or Wagtail admin. Multiple conditions can be given, both in settings and in the admin, and all conditions must be satisfied before a flag is enabled.
+Feature flags are enabled based on a set of conditions that are given either in the Django settings files (in `cfgov/cfgov/settings/`) or in the Django or Wagtail admin. Multiple conditions can be given, both in settings and in the admin, and if any condition is satisfied a flag is enabled.
 
 [A list of available conditions and how to use them is available in the Wagtail-Flags documentation](https://github.com/cfpb/wagtail-flags/blob/master/README.md#built-in-conditions).
 
