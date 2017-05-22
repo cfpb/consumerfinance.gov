@@ -24,7 +24,6 @@
         <div class="lead-paragraph">
             <p>{{ page.ask_category.intro|safe }}</p>
         </div>
-
     </section>
 
     <section class="search-results block
@@ -50,9 +49,7 @@
 {% block javascript %}
 {{ super() }}
 <script>
-    var audienceMap = {{ page.ask_category.audience_json|safe }};
-    var subcatMap = {{ page.ask_category.subcategory_json|safe }};
-    var answerMap = {{ page.ask_category.answer_json|safe }};
+    var facetMap = {{ facet_map|safe }};
 </script>    
 {% endblock %}
 
