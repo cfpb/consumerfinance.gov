@@ -41,13 +41,13 @@
     {% endif %}
         <form method="get" action="{{ value.action }}" class="content-l">
             {% if value.label %}
-                <div class="o-search-bar_label content-l_col content-l_col-1-2">
+                <div class="o-search-bar_label o-search-bar_col">
                     <h4 class="u-mb0">
                         {{ value.label | safe }}
                     </h4>
                 </div>
             {% endif %}
-            <div class="o-search-bar_input content-l_col content-l_col-1-2">
+            <div class="o-search-bar_input o-search-bar_col">
                 <div class="input-with-btn input-with-btn__bar">
                     <div class="input-with-btn_input">
                         <input type="text" name="q" id="q" >

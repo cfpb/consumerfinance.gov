@@ -357,7 +357,10 @@ legend {
         margin: 0;
         border: 0;
         display: table-cell; 
-        width: 1%;
+        // overrides default .input-with-btn_btn width.
+        // setting button to very small width & input to 100%
+        // means button will only take up space it needs
+        width: 1%; 
         vertical-align: middle;
 
         @supports( display: flex ) {

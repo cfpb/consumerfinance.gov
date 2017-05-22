@@ -311,69 +311,6 @@
 }
 
 /* topdoc
-  name: Adds block background that bleeds off page 
-  family: cf-layout
-  notes:
-    - ".block__bg-extend-right requires that overflow-x be set to 
-       hidden on a parent element."
-  tags:
-    - cf-layout
-*/
-
-.block {
-    .respond-to-min(@bp-med-min, {
-        &__bg-extend-right,
-        &__bg-extend-left {
-            position: relative;
-          
-          &:after {
-              content: '';
-              display: block;
-              width: 9999px;
-              height: 100%;
-              position: absolute;
-              top: 0;
-              background: @block__bg;   
-              z-index: 0;
-          }
-        }
-      
-        &__bg-extend-right {
-          &:after {
-              left: 100%;
-          }
-        }
-        
-        &__bg-extend-left {
-          &:after {
-              margin-left: 10px;
-              left: -9999px;
-          }
-        }
-    });
-}
-
-
-/* topdoc
-  name: Adds branded background to block
-  family: cf-layout
-  tags:
-    - cf-layout
-*/
-
-.block {
-    &__bg-branded {
-        background: @green-20; 
-    }
-    &__bg-branded&__bg-extend-right,
-    &__bg-branded&__bg-extend-left {
-        &:after {
-            background-color: @green-20;
-        }
-    }
-}
-
-/* topdoc
   name: Sets overflow-x to hidden on content element
   family: cf-layout
   tags:
