@@ -227,7 +227,6 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
         context['results'] = paginator.page(page)
         context['results_count'] = len(self.answers)
 
-
         return TemplateResponse(
             request,
             self.get_template(request),
