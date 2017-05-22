@@ -13,13 +13,14 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
-from flags.urls import flagged_url
+from flags.urls import flagged_url, flagged_urls
 
 from ask_cfpb.views import (
     ask_search,
     ask_autocomplete,
     view_answer
 )
+import ccdb5.views as CCDB5
 from core.views import ExternalURLNoticeView
 from legacy.views import (
     HousingCounselorPDFView,
@@ -251,8 +252,18 @@ urlpatterns = [
                 include_if_app_enabled('complaint', 'complaint.urls'),
                 fallback=lambda req: ServeView.as_view()(req, req.path),
                 state=False),
-    url(r'^data-research/consumer-complaints/',
-        include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+
+    # If 'CCDB5_RELEASE' is false, include CCDB4 urls.
+    # Otherwise use CCDB5.
+    flagged_url('CCDB5_RELEASE',
+                r'^data-research/consumer-complaints/',
+                include_if_app_enabled(
+                    'complaintdatabase', 'complaintdatabase.urls'
+                ),
+                state=False,
+                fallback=TemplateView.as_view(
+                    template_name='ccdb5_landing_page.html'
+                )),
 
     url(r'^oah-api/rates/',
         include_if_app_enabled('ratechecker', 'ratechecker.urls')),
@@ -288,6 +299,16 @@ urlpatterns = [
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
 ]
+
+with flagged_urls('CCDB5_RELEASE') as _url:
+    apiBase = '^data-research/consumer-complaints/api/v1'
+    ccdb5_patterns = [
+        _url(apiBase + '/_suggest', CCDB5.suggest),
+        _url(apiBase + '/(?P<id>[0-9]+)$', CCDB5.document),
+        _url(apiBase, CCDB5.search)
+    ]
+urlpatterns += ccdb5_patterns
+
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
