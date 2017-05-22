@@ -79,6 +79,12 @@
                         <div class="block block__sub">
                             {{ tags.render( audiences, '/askcfpb/' ) }}
                         </div>
+
+                        {% if disclaimer %}
+                        <div class="block">
+                            {{ disclaimer.text | safe }}
+                        </div>
+                        {% endif %}
                     </div>
 
                     

@@ -21,7 +21,9 @@
     <div class="block
                 block__flush-top
                 block__sub">
+        {% if last_edited %}
         <time datetime='{{ last_edited }}' pubdate class="answer-edited-date">updated {{ dt.format_date(last_edited) }}</time>
+        {% endif %}
 
         <h2>{{ page.question | striptags }}</h2>
     </div>
@@ -54,9 +56,11 @@
             {% endif %}
         {%- endfor %}
 
+        {% if disclaimer %}
         <div class="block">
             {{ disclaimer.text | safe }}
         </div>
+        {% endif %}
 
     </div>
 
