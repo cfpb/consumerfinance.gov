@@ -30,13 +30,13 @@
                 {% set media = image(block.value, 'original') %}
                 <img class="m-full-width-media_image"
                      src="{{ media.url }}"
-                     alt="{{ block.value.alt or media.alt }}">
+                     alt="{{ image_alt_value(media) }}">
             </div>
         {% elif block_type in ['quote', 'related_links']
            or 'cta' in block_type and block.value.is_inset %}
             <div class="m-inset
                     {{ 'm-inset__test'
-                       if flag_enabled(request, 'INSET_TEST') else '' }}">
+                       if flag_enabled('INSET_TEST', request) else '' }}">
                 {{ block | safe }}
             </div>
         {% else %}
