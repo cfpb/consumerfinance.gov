@@ -607,7 +607,11 @@ FLAGS = {
     'WAGTAIL_ASK_CFPB': {
         'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
     },
-
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {}
+
+    # Google Optimize code snippets for A/B testing
+    # When enabled this flag will add various Google Optimize code snippets.
+    # Intended for use with path conditions.
+    'AB_TESTING': {},
 }
