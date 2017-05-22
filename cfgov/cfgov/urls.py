@@ -16,9 +16,9 @@ from wagtailsharing.views import ServeView
 from flags.urls import flagged_url
 
 from core.views import ExternalURLNoticeView
-from legacy.views import (
-    HousingCounselorView, HousingCounselorPDFView, dbrouter_shortcut,
-    token_provider
+from legacy.views import dbrouter_shortcut, token_provider
+from legacy.views.housing_counselor import (
+    HousingCounselorView, HousingCounselorPDFView
 )
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView

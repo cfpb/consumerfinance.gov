@@ -14,7 +14,7 @@
 
 	<meta name="title" content="Housing counselors near you >Consumer Financial Protection Bureau">
 	<meta name="Copyright" content="Public domain">
-	<link rel='stylesheet' id='nemo_pdf_style_css-css'  href='/wp-content/themes/cfpb_nemo/_/c/hud-hca-api-pdf-style.css' type='text/css' media='all' />
+  <link rel='stylesheet' id='nemo_pdf_style_css-css'  href='{% static "nemo/_/c/hud-hca-api-pdf-style.css" %}' type='text/css' media='all' />
 </head>
 
 <body class="page page-id-43619 page-template page-template-page-hud-generate-pdf-php logged-in admin-bar no-customize-support page">
@@ -23,16 +23,16 @@
 		<section id="maincontent">
 						<article class="page">
 
-					<img class="hud_hca_api_print_logo hud_hca_api_print_show cfpb_hide" src="/wp-content/themes/cfpb_nemo/_/img/logo.png" alt="Consumer Financial Protection Bureau">
+              <img class="hud_hca_api_print_logo hud_hca_api_print_show cfpb_hide" src="{% static 'nemo/_/img/logo.png' %}" alt="Consumer Financial Protection Bureau">
 					<header class="pagetitle"><h1>Housing counselors near you</h1></header>
-					<p class="hud_hca_api_the_results hud_hca_api_print_show cfpb_hide">10 closest results to ZIP code <span class="hud_hca_api_search_zip">{{zip.zipcode}}</span></p>
+					<p class="hud_hca_api_the_results hud_hca_api_print_show cfpb_hide">10 closest results to ZIP code <span class="hud_hca_api_search_zip">{{ zipcode }}</span></p>
 					<p class="cfpb_hud_hca_api_print_text">The counseling agencies on this list are approved by the U.S. Department of Housing and Urban Development (HUD), and they can offer independent advice about whether a particular set of mortgage loan terms is a good fit based on your objectives and circumstances, often at little or no cost to you.  This list shows you several approved agencies in your area.  You can find other approved counseling agencies at the Consumer Financial Protection Bureau’s (CFPB) website: consumerfinance.gov/mortgagehelp or by calling 1-855-411-CFPB (2372).  You can also access a list of nationwide HUD-approved counseling intermediaries at http://portal.hud.gov/hudportal/HUD?src=/ohc_nint</p>
 
 					<div id="hud_hca_api_results_container" class="hud_hca_api_results">
 						<div id="hud_hca_api_results_meta_container" class="hud_hca_api_results_meta clearfix">
 							<div id="hud_hca_api_results_info" class="hud_hca_api_results_info two-col hud_hca_api_print_hide">
 								<div class="hud_hca_api_results_total col">
-                                    <p>10 closest results to ZIP code <span class="hud_hca_api_search_zip">{{zip.zipcode}}</span></p>
+                                    <p>10 closest results to ZIP code <span class="hud_hca_api_search_zip">{{ zipcode }}</span></p>
 								</div><!-- end .hud_hca_api_results_total -->
 								<div class="hud_hca_api_results_actions col">
 									<p>
@@ -54,7 +54,7 @@
 							</div><!-- end .hud_hca_api_results_info -->
 							<div id="hud_hca_api_results_list_container" class="hud_hca_api_results_list">
 								<ol class="hud_hca_api_results_listing hud_hca_api_print">
-										{% for counselor in counseling_agencies %}
+										{% for counselor in api_json.counseling_agencies %}
 										<li class="hud_hca_api_result hud_hca_api_grid_three">
 										<div class="col">
 											<h2 class="cfpb_visually_hide">Agency</h2>
@@ -64,11 +64,10 @@
 											<div class="hud_hca_api_counselor_address">
 												<span class="hud_hca_api_adr">
 												{{ counselor.adr1 }}
-												{% if counselor.adr2 %}
+												{% if counselor.adr2 and counselor.adr2 != ' ' %}
   													</br> {{ counselor.adr2 }}
 												{% endif %}
-												<span class="hud_hca_api_region">
-                                                    {{ counselor.city }}
+												<span class="hud_hca_api_region">{{ counselor.city }}, {{ counselor.statecd }} {{ counselor.zipcd }}</span>
 											</div>
 											<div class="hud_hca_api_counselor_meta">
 												<span class="hud_hca_api_results_listing_title">Website: <span class="hud_hca_api_site">
