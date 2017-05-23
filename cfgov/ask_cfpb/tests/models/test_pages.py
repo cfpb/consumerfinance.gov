@@ -564,7 +564,7 @@ class AnswerModelTestCase(TestCase):
             test_context['categories'].count(),
             Category.objects.count())
         self.assertEqual(
-            test_context['audiences'].count(),
+            len(test_context['audiences']),
             Audience.objects.count())
 
     def test_landing_page_get_english_template(self):
