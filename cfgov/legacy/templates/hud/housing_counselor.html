@@ -1,6 +1,7 @@
 {% extends "front/base_nonresponsive.html" %}
 {% load jsonify %}
 {% load signed_redirect %}
+{% load split %}
 {% load static from staticfiles %}
 
 {% block title %}
@@ -129,7 +130,12 @@ Find a housing counselor
               </td>
               <td class="hud_hca_api_result hud_hca_api_services_td">
                 <div class="hud_hca_api_services">
-                  <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span><span class="hud_hca_api_serv">{{ counselor.services }}</span>
+                  <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span>
+                  <span class="hud_hca_api_serv">
+                    {% for service in counselor.services|split:', ' %}
+                      <span class="hud_hca_api_serv_item">{{ service|safe }}</span>
+                    {% endfor %}
+                  </span>
                 </div>
               </td>
               <td class="hud_hca_api_result hud_hca_api_distances_td">
