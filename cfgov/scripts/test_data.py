@@ -17,7 +17,7 @@ def add_children(parent, num):
             )
         )
         child.tags.add(u'tag{}'.format(i))
-        child.tags.add('shared-tag')
+        child.tags.add(u'shared-tag')
         publish_changes(child)
 
 
