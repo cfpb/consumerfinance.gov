@@ -457,6 +457,39 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             test_page.status_string.lower(), "live")
 
+    def test_get_ask_nav_items(self):
+        from ask_cfpb.models import get_ask_nav_items
+        mommy.make(Category, name='test_cat')
+        test_nav_items = get_ask_nav_items({}, {})[0]
+        self.assertEqual(
+            len(test_nav_items),
+            Category.objects.count())
+
+    def test_audience_page_get_english_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        audience_page = self.create_audience_page(
+            ask_audience=self.audience, language='en')
+        test_get_template = audience_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/audience-page.html')
+
+    def test_audience_page_context(self):
+        from ask_cfpb.models import get_ask_nav_items
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        audience_page = self.create_audience_page(
+            ask_audience=self.audience, language='en')
+        test_context = audience_page.get_context(mock_request)
+        self.assertEqual(
+            test_context['get_secondary_nav_items'],
+            get_ask_nav_items)
+
     def test_category_page_context(self):
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
@@ -540,18 +573,6 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             test_get_template,
             'ask-cfpb/category-page-spanish.html')
-
-    def test_audience_page_get_english_template(self):
-        mock_site = mock.Mock()
-        mock_site.hostname = 'localhost'
-        mock_request = HttpRequest()
-        mock_request.site = mock_site
-        cat_page = self.create_audience_page(
-            ask_audience=self.audience, language='en')
-        test_get_template = cat_page.get_template(mock_request)
-        self.assertEqual(
-            test_get_template,
-            'ask-cfpb/audience-page.html')
 
     def test_landing_page_context(self):
         mock_site = mock.Mock()
