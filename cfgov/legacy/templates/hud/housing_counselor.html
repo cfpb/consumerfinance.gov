@@ -1,7 +1,7 @@
 {% extends "front/base_nonresponsive.html" %}
 {% load jsonify %}
 {% load signed_redirect %}
-{% load split %}
+{% load split_services from housing_counselor %}
 {% load static from staticfiles %}
 
 {% block title %}
@@ -132,8 +132,8 @@ Find a housing counselor
                 <div class="hud_hca_api_services">
                   <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span>
                   <span class="hud_hca_api_serv">
-                    {% for service in counselor.services|split:', ' %}
-                      <span class="hud_hca_api_serv_item">{{ service|safe }}</span>
+                    {% for service in counselor.services|split_services %}
+                      <span class="hud_hca_api_serv_item">{{ service }}</span>
                     {% endfor %}
                   </span>
                 </div>
