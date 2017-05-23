@@ -273,6 +273,7 @@ def get_or_create_category_pages():
             counter += 1
     print("Created {} category pages".format(counter))
 
+
 def get_or_create_audience_pages():
     from v1.models import CFGOVPage
     parent = CFGOVPage.objects.get(slug='ask-cfpb').specific

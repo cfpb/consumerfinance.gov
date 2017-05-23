@@ -46,10 +46,11 @@ def get_ask_nav_items(request, current_page):
             'title': cat.name,
             'url': '/ask-cfpb/category-' + cat.slug,
             'active': False if not hasattr(current_page, 'ask_category')
-                else cat.name == current_page.ask_category.name
+            else cat.name == current_page.ask_category.name
         }
         for cat in Category.objects.all()
     ], True
+
 
 class AnswerLandingPage(LandingPage):
     """
@@ -204,6 +205,7 @@ class AnswerResultsPage(CFGOVPage):
         elif self.language == 'es':
             return 'ask-cfpb/answer-search-spanish-results.html'
 
+
 class AnswerAudiencePage(CFGOVPage):
     from ask_cfpb.models import Audience
 
@@ -250,6 +252,7 @@ class AnswerAudiencePage(CFGOVPage):
         return context
 
     template = 'ask-cfpb/audience-page.html'
+
 
 class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     """A routable page for serving Answers by tag"""
