@@ -100,9 +100,9 @@ Find a housing counselor
           <tbody>
             {% for counselor in api_json.counseling_agencies %}
             {% with valid_url=counselor.weburl|is_url signed_url=counselor.weburl|signed_redirect %}
-            <tr class="hud_hca_api_result">
+            <tr class="hud_hca_api_result" id="hud-result-{{ forloop.counter|stringformat:"02d" }}">
               <td class="hud_hca_api_result hud_hca_api_counselors_td">
-                <div class="hud_hca_api_num"></div>
+                <div class="hud_hca_api_num">{{ forloop.counter }}.</div>
                 <div class="hud_hca_api_counselor_info_container">
                   <div class="hud_hca_api_counselor">
                     {% if valid_url %}<a href="{{ signed_url }}" class="icon-link icon-link__external-link">{% endif %}

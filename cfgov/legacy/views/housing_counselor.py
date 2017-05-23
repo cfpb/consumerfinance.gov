@@ -27,7 +27,7 @@ class HousingCounselorView(TemplateView):
         context['zipcode'] = zipcode
 
         if zipcode:
-            zipcode_valid = re.match(r'\d{5}', zipcode)
+            zipcode_valid = re.match(r'^\d{5}$', zipcode)
             context['zipcode_valid'] = zipcode_valid
 
             if zipcode_valid:
