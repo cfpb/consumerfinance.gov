@@ -1,0 +1,33 @@
+{# ==========================================================================
+
+   Banner
+
+   ==========================================================================
+
+   Description:
+
+   Create an banner when given:
+
+    value:         				An object used to customize the markup.
+
+   	value.border_top:       	Whether banner should have a top border.
+
+   	value.border_bottom:    	Whether banner should have a bottom border.
+
+   	value.content:          	Banner content
+
+   	value.additional_classes: 	Additional banner classes
+
+   ========================================================================== #}
+	<div class="content_banner 
+	           {% if value.border_top %} 
+	            content_banner__border-top 
+	            {% endif %}
+	            {% if value.border_bottom %}
+	            content_banner__border-bottom
+	            {% endif %}
+	            {{ value.additional_classes }}">
+		<div class="wrapper wrapper__match-content">
+	    	{{ value.content|safe }}
+	    </div>
+	</div>
