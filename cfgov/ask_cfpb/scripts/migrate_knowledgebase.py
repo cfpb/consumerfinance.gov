@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup as bs
 from django.apps import apps
 from django.core.management import call_command
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from django.template.defaultfilters import slugify
 
 from knowledgebase.models import QuestionCategory as QC
 from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
@@ -20,6 +21,7 @@ from ask_cfpb.models import (
     SubCategory)
 from ask_cfpb.models import Audience as ASK_audience
 from v1.util.migrations import get_or_create_page
+
 
 logging.basicConfig(level=logging.WARNING)
 logging.disable(logging.INFO)
@@ -251,6 +253,28 @@ def get_or_create_category_pages():
             time.sleep(1)
         counter += 1
     print("Created {} category pages".format(counter))
+
+def get_or_create_audience_pages():
+    from v1.models import CFGOVPage
+    parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
+    counter = 0
+    for audience in ASK_audience.objects.all():
+        audience_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerAudiencePage',
+            audience.name,
+            "audience-{}".format(slugify(audience.name)),
+            parent,
+            language='en',
+            ask_audience=audience)
+        audience_page.has_unpublished_changes = True
+        revision = audience_page.save_revision()
+        audience_page.save()
+        revision.publish()
+        time.sleep(1)
+        counter += 1
+    print("Created {} audience pages".format(counter))
 
 
 def get_kb_statuses(ask_id):
@@ -530,6 +554,7 @@ def run():
     clean_up_blank_answers()
     get_or_create_landing_pages()
     get_or_create_category_pages()
+    get_or_create_audience_pages()
     get_or_create_search_results_pages()
     create_pages()
     logging.disable(logging.NOTSET)
