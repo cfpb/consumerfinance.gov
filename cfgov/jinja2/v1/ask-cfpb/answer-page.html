@@ -2,6 +2,7 @@
 {% import 'macros/time.html' as time %}
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
+{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block title %}
     {{ page.question|striptags }}
@@ -13,7 +14,7 @@
 
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom ask-answer-page ask-cfpb-page
+    {{ super() }} content__flush-bottom ask-cfpb-page ask-cfpb-page__answer
 {%- endblock %}
 
 {% block content_main %}
@@ -38,18 +39,20 @@
 
         </div>
 
-        {% if page.answer_base.audiences.all() %} 
+        {% if audiences %} 
             <div class="u-mt15">
-                {{ tags.render(page.answer_base.audience_strings(), '/askcfpb/search/') }}
+                {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
             </div>
         {% endif %}
 
-{# This brings in the feedback module #}
-{% for block in page.content %}
-{{- form_block.render(block, 'content', loop.index0) -}}
-{% endfor %}
+        {# This brings in the feedback module #}
+        {% for block in page.content %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+        {% endfor %}
 
     </div>
+    {{ ask_search_bar.render( 'left' ) }}
+
 
 {% endblock %}
 

@@ -4,15 +4,13 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 import wagtail.wagtailcore.fields
 import django.db.models.deletion
-import v1.feeds
-import v1.util.filterable_list
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0066_fix_for_linking_video_stills'),
-        ('ask_cfpb', '0002_category_results_page_nav'),
+        ('v1', '0067_auto_20170517_1344'),
+        ('ask_cfpb', '0001_initial'),
     ]
 
     operations = [
@@ -26,6 +24,6 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-            bases=(v1.feeds.FilterableFeedPageMixin, v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
+            bases=('v1.cfgovpage',),
         ),
     ]

@@ -3,7 +3,7 @@
 {% import 'molecules/pagination.html' as pagination with context %}
 
 {% block content_modifiers -%}
-    {{ super() }} content__hide-horizontal-overflow
+    {{ super() }} content__hide-horizontal-overflow ask-cfpb-page ask-cfpb-page__audience
 {%- endblock %}
 
 {% block content_main_modifiers -%}
@@ -22,7 +22,7 @@
 <section class="search-results">
     <div class="question_list">
   		{% for answer in answers %}
-      	<article class="question_summary question_summary__basic">
+      	<article class="question_summary">
     		{{ partially_styled_link.render( {'plain_text': answer.question, 'underlined_text': 'Read answer', 'url': slugurl( answer.slug )} ) }}  
   		</article>
   		{% endfor %}
