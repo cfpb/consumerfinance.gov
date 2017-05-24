@@ -94,7 +94,11 @@ class HousingCounselorPDFView(View):
         reactor = PDFreactor()
 
         reactor.setLogLevel(PDFreactor.LOG_LEVEL_FATAL)
-        reactor.setLicenseKey(os.environ['PDFREACTOR_LICENSE'])
+
+        # License key needs to be cast to str here because PDFReactor
+        # doesn't play well with unicode.
+        reactor.setLicenseKey(str(os.environ['PDFREACTOR_LICENSE']))
+
         reactor.setAuthor('CFPB')
         reactor.setAddTags(True)
         reactor.setAddBookmarks(True)
