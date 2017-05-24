@@ -59,7 +59,7 @@ def ask_search(request, language='en', as_json=False):
 
 
 def ask_autocomplete(request, language='en'):
-    term = request.GET.get('term', '').strip()
+    term = Clean(request.GET.get('term', '').strip())
     if language == 'en':
         sqs = SearchQuerySet().models(EnglishAnswerProxy)
         sqs = sqs.filter()
