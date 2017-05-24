@@ -334,6 +334,7 @@ GOOGLE_MAPS_API_CLIENT_ID = os.environ.get('GOOGLE_MAPS_API_CLIENT_ID')
 DJANGO_HUD_NOTIFY_EMAILS = os.environ.get('DJANGO_HUD_NOTIFY_EMAILS')
 # in seconds, 2592000 == 30 days. Google allows no more than a month of caching
 DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
+MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 
 
 HAYSTACK_CONNECTIONS = {
@@ -598,15 +599,12 @@ FLAGS = {
     # When enabled, the "Submit a complaint" page is served from Wagtail
     'MOSAIC_COMPLAINTS': {},
 
-    # Transition of CCDB landing page to Mosaic version
-    # When enabled, the CCDB landing page is the Mosaic version
-    'MOSAIC_CCDB': {},
-
     # Migration of Ask CFPB to Wagtail
     # When enabled, Ask CFPB is served from Wagtail
     'WAGTAIL_ASK_CFPB': {
         'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
     },
+
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},
 
