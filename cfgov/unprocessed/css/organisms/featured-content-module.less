@@ -17,13 +17,13 @@
   background-color: @block__bg;
 
   .respond-to-max( @bp-xs-max, {
-    padding-right: unit( 15px / @base-font-size-px, em);
-    padding-left: unit( 15px / @base-font-size-px, em);
+    padding-right: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em);
+    padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em);
   } );
 
   .respond-to-range( @bp-sm-min, @fcm-bp-max, {
-    padding-right: unit( 30px / @base-font-size-px, em);
-    padding-left: unit( 30px / @base-font-size-px, em);
+    padding-right: unit( @grid_gutter-width / @base-font-size-px, em);
+    padding-left: unit( @grid_gutter-width / @base-font-size-px, em);
   } );
 
   &_text {
@@ -31,7 +31,7 @@
     padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em);
 
     .respond-to-min( @fcm-bp-min, {
-      width: 300px; // width of 5 of 12 cols at 799px - 30px padding
+      width: 300px; // width of 5 of 12 cols at 799px - @grid_gutter-width padding
 
       padding-right: unit( @grid_gutter-width / @base-font-size-px, em);
       padding-left: unit( @grid_gutter-width / @base-font-size-px, em);
