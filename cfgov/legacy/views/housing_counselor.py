@@ -47,7 +47,7 @@ class HousingCounselorView(TemplateView):
             kwargs={'zipcode': zipcode}
         )
 
-        api_url = request.build_absolute_uri(api_path)
+        api_url = 'http://localhost' + api_path
         response = requests.get(api_url)
         response.raise_for_status()
 
