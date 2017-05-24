@@ -69,9 +69,7 @@ class HousingCounselorPDFView(View):
 
     def get_render_url(self, zipcode):
         html_path = reverse('housing-counselor')
-        return self.request.build_absolute_uri(
-            html_path + '?zipcode={}&pdf'.format(zipcode)
-        )
+        return 'http://localhost{}?zipcode={}&pdf'.format(html_path, zipcode)
 
     def generate_pdf_from_url(self, url, filename):
         result = self.pdfreactor.renderDocumentFromURL(url)
