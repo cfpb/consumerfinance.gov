@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
+from collections import OrderedDict
 import HTMLParser
 import json
 
@@ -103,36 +104,46 @@ class Category(models.Model):
             featured=True).order_by('featured_rank')
 
     @cached_property
-    def audience_json(self):
-        audience_map = {audience: []
-                        for audience in Audience.objects.all()}
-        for answer in self.answer_set.all():
-            for key in audience_map:
-                if key in answer.audiences.all():
-                    audience_map[key].append(str(answer.pk))
-        return json.dumps({audience.name.split(' ')[0].lower():
-                          audience_map[audience]
-                          for audience in audience_map.keys()})
-
-    @cached_property
-    def subcategory_json(self):
+    def facet_map(self):
+        answers = self.answer_set.order_by('-pk').select_related()
+        subcats = self.subcategories.all().select_related()
+        audiences = Audience.objects.all()
+        container = {
+            'subcategories': {},
+            'audiences': {}
+        }
+        container['answers'] = OrderedDict([
+            (str(answer.pk),
+             {'question': answer.question,
+              'url': '/ask-cfpb/slug-en-{}'.format(answer.pk)}
+             ) for answer in answers if answer.english_page])
         subcat_data = {}
-        for subcat in self.subcategories.all():
-            key = subcat.name
+        for subcat in subcats:
+            key = str(subcat.id)
             subcat_data[key] = [
                 str(answer.pk) for answer
                 in subcat.answer_set.all()
                 if answer.english_page]
-        return json.dumps(subcat_data)
-
-    @cached_property
-    def answer_json(self):
-        answer_data = {str(answer.pk):
-                       {'question': answer.question,
-                        'url': '/ask-cfpb/slug-en-{}'.format(answer.pk)}
-                       for answer in self.answer_set.all()
-                       if answer.english_page}
-        return json.dumps(answer_data)
+        container['subcategories'].update(subcat_data)
+        audience_map = {audience: {'all': [], 'name': audience.name}
+                        for audience in audiences}
+        for answer in answers:
+            for audience in audience_map:
+                if audience in answer.audiences.all():
+                    audience_map[audience]['all'].append(str(answer.pk))
+        for subcat in subcats:
+            ID = str(subcat.id)
+            for audience in audience_map:
+                _map = audience_map[audience]
+                if _map['all']:
+                    _map[ID] = []
+                    for answer_id in subcat_data[ID]:
+                        if answer_id in _map['all']:
+                            _map[ID].append(answer_id)
+        container['audiences'].update(
+            {str(audience.id): audience_map[audience]
+             for audience in audience_map.keys()})
+        return json.dumps(container)
 
     class Meta:
         ordering = ['name']
@@ -146,6 +157,9 @@ class Answer(models.Model):
         blank=True,
         help_text="This associates an answer with a portal page")
     question = models.TextField(blank=True)
+    statement = models.TextField(
+        blank=True,
+        help_text="Text to be used on portal pages to refer to this answer")
     snippet = RichTextField(blank=True, help_text="Optional answer intro")
     answer = RichTextField(blank=True)
     slug = models.SlugField(max_length=255, blank=True)
@@ -228,6 +242,7 @@ class Answer(models.Model):
             classname="collapsible"),
         MultiFieldPanel([
             FieldPanel('question', classname="title"),
+            FieldPanel('statement', classname="title"),
             FieldPanel('snippet', classname="full"),
             FieldPanel('answer', classname="full")],
             heading="English",
@@ -320,11 +335,34 @@ class Answer(models.Model):
             for tag in taglist.split(',')
             if tag.replace('"', '').strip()]
 
+    @cached_property
     def tags(self):
         return self.clean_tag_list(self.search_tags)
 
+    @cached_property
     def tags_es(self):
         return self.clean_tag_list(self.search_tags_es)
+
+    @classmethod
+    def valid_spanish_tags(cls):
+        """
+        Search tags are arbitrary and messy. This function serves 2 purposes:
+        - Assemble a whitelist of tags that are safe for search.
+        - Exclude tags that are attached to only one answer.
+        Tags are useless until they can be used to collect at least 2 answers.
+        """
+        cleaned = []
+        valid = []
+        for a in cls.objects.all():
+            if a.search_tags_es.strip():
+                cleaned += [
+                    tag.strip() for tag
+                    in a.search_tags_es.strip().split(',')
+                    if tag.strip()]
+        for tag in sorted(set(cleaned)):
+            if cls.objects.filter(search_tags_es__contains=tag).count() > 1:
+                valid.append(tag)
+        return valid
 
     def has_live_page(self):
         if not self.answer_pages.all():
@@ -416,6 +454,12 @@ class Answer(models.Model):
     def delete(self):
         self.answer_pages.all().delete()
         super(Answer, self).delete()
+
+
+class AnswerTagProxy(Answer):
+    """A no-op proxy class to allow index store of expensive queries"""
+    class Meta:
+        proxy = True
 
 
 class EnglishAnswerProxy(Answer):

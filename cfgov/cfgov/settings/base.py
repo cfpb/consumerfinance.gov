@@ -1,3 +1,4 @@
+
 import os
 import sys
 
@@ -47,12 +48,14 @@ INSTALLED_APPS = (
 
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.table_block',
-
+    'wagtail.contrib.wagtailroutablepage',
     'localflavor',
     'modelcluster',
     'compressor',
     'taggit',
     'wagtailsharing',
+    'flags',
+    'haystack',
 
     'overextends',
     'django.contrib.admin',
@@ -63,7 +66,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'storages',
-    'flags',
     'data_research',
     'v1',
     'core',
@@ -73,10 +75,11 @@ INSTALLED_APPS = (
     'reversion',
     'tinymce',
     'jobmanager',
+    'ccdb5'
 )
 
 if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('ask_cfpb', 'haystack')
+    INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
@@ -154,6 +157,7 @@ TEMPLATES = [
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
+                'v1.jinja2tags.images',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
@@ -322,6 +326,7 @@ GOOGLE_MAPS_API_CLIENT_ID = os.environ.get('GOOGLE_MAPS_API_CLIENT_ID')
 DJANGO_HUD_NOTIFY_EMAILS = os.environ.get('DJANGO_HUD_NOTIFY_EMAILS')
 # in seconds, 2592000 == 30 days. Google allows no more than a month of caching
 DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
+MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 
 
 HAYSTACK_CONNECTIONS = {
@@ -549,3 +554,57 @@ CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
                    'api.iperceptions.com')
+
+FLAGS = {
+    # Beta banner, seen on beta.consumerfinance.gov
+    # When enabled, a banner appears across the top of the site proclaiming
+    # "This beta site is a work in progress."
+    'BETA_NOTICE': {},
+
+    # IA changes to mega menu for user testing
+    # When enabled, the mega menu under "Consumer Tools" is arranged by topic
+    'IA_USER_TESTING_MENU': {},
+
+    # Email pop-up "nudgy guy" for Owning a Home
+    # When enabled, an modal email sign-up prompt appears at the bottom of
+    # /owning-a-home when scrolling.
+    'EMAIL-POPUP': {},
+
+    # Fix for margin-top when using the text inset
+    # When enabled, the top margin of full-width text insets is increased
+    'INSET_TEST': {},
+
+    # Footer link for the Office of Administrative Adjudication
+    # When enabled, a link to "Administrative Adjudication" appears in the
+    # footer
+    'OAA_FOOTER_LINK': {},
+
+    # Transition of "About Us" to Wagtail
+    # When enabled, the "About Us" pages are served from Wagtail
+    'WAGTAIL_ABOUT_US': {},
+
+    # Transition of "Doing Business with Us" to Wagtail
+    # When enabled, the "Doing Business With Us" pages are served from Wagtail
+    'WAGTAIL_DOING_BUSINESS_WITH_US': {},
+
+    # Transition of /compltain to Wagtail
+    # When enabled, the "Submit a complaint" page is served from Wagtail
+    'MOSAIC_COMPLAINTS': {},
+
+    # Transition of CCDB landing page to Mosaic version
+    # When enabled, the CCDB landing page is the Mosaic version
+    'MOSAIC_CCDB': {},
+
+    # Migration of Ask CFPB to Wagtail
+    # When enabled, Ask CFPB is served from Wagtail
+    'WAGTAIL_ASK_CFPB': {
+        'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
+    },
+    # The next version of the public consumer complaint database
+    'CCDB5_RELEASE': {},
+
+    # Google Optimize code snippets for A/B testing
+    # When enabled this flag will add various Google Optimize code snippets.
+    # Intended for use with path conditions.
+    'AB_TESTING': {},
+}
