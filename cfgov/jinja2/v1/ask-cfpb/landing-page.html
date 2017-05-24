@@ -94,7 +94,7 @@
                             block__flush-bottom
                             ask-cfpb-banner">
                     
-                    {{ about_us.text|safe }}
+                    {{ parse_links( about_us.text )|safe }}
                    
                 </div>
                 {% endif %}

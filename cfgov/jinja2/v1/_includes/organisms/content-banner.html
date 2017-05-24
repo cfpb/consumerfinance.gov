@@ -28,6 +28,6 @@
 	            {% endif %}
 	            {{ value.additional_classes }}">
 		<div class="wrapper wrapper__match-content">
-	    	{{ value.content|safe }}
+	    	{{ parse_links( value.content )|safe }}
 	    </div>
 	</div>
