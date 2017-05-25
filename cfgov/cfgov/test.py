@@ -93,7 +93,6 @@ class TestDataTestRunner(OptionalAppsMixin, DiscoverRunner):
 
 
 class AcceptanceTestRunner(TestDataTestRunner):
-
     def run_suite(self, **kwargs):
         gulp_command = ['gulp', 'test:acceptance:protractor']
         SPECS_KEY = 'specs'
@@ -116,7 +115,6 @@ class AcceptanceTestRunner(TestDataTestRunner):
     def setup_databases(self, **kwargs):
         dbs = super(AcceptanceTestRunner, self).setup_databases(**kwargs)
         test_data.run()
-
         return dbs
 
     def teardown(self):
@@ -125,6 +123,9 @@ class AcceptanceTestRunner(TestDataTestRunner):
         StaticLiveServerTestCase.tearDownClass()
 
     def run_tests(self, test_labels, extra_tests=None, **kwargs):
+        # Disable logging below CRITICAL during tests.
+        logging.disable(logging.CRITICAL)
+
         self.setup_test_environment()
         self.dbs = self.setup_databases()
 

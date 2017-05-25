@@ -13,17 +13,29 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
-from flags.urls import flagged_url
+from flags.urls import flagged_url, flagged_urls
 
+from ask_cfpb.views import (
+    ask_search,
+    ask_autocomplete,
+    view_answer
+)
+import ccdb5.views as CCDB5
 from core.views import ExternalURLNoticeView
-from legacy.views import (HousingCounselorPDFView, dbrouter_shortcut,
-                          token_provider)
+from legacy.views import dbrouter_shortcut, token_provider
+from legacy.views.housing_counselor import (
+    HousingCounselorView, HousingCounselorPDFView
+)
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
 from v1.auth_forms import CFGOVPasswordChangeForm
-from v1.views import (change_password, check_permissions, login_with_lockout,
-                      password_reset_confirm, welcome)
+from v1.views import (
+    change_password,
+    check_permissions,
+    login_with_lockout,
+    password_reset_confirm,
+    welcome)
 from v1.views.documents import DocumentServeView
 
 
@@ -227,8 +239,10 @@ urlpatterns = [
         include_if_app_enabled('agreements', 'agreements.urls')),
     url(r'^selfregs/',
         include_if_app_enabled('selfregistration', 'selfregistration.urls')),
-    url(r'^hud-api-replace/',
-        include_if_app_enabled('hud_api_replace', 'hud_api_replace.urls')),
+    url(r'^hud-api-replace/', include_if_app_enabled(
+        'hud_api_replace',
+        'hud_api_replace.urls',
+        namespace='hud_api_replace')),
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
@@ -238,9 +252,19 @@ urlpatterns = [
                 r'^complaint/',
                 include_if_app_enabled('complaint', 'complaint.urls'),
                 fallback=lambda req: ServeView.as_view()(req, req.path),
-                condition=False),
-    url(r'^data-research/consumer-complaints/',
-        include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+                state=False),
+
+    # If 'CCDB5_RELEASE' is false, include CCDB4 urls.
+    # Otherwise use CCDB5.
+    flagged_url('CCDB5_RELEASE',
+                r'^data-research/consumer-complaints/',
+                include_if_app_enabled(
+                    'complaintdatabase', 'complaintdatabase.urls'
+                ),
+                state=False,
+                fallback=TemplateView.as_view(
+                    template_name='ccdb5_landing_page.html'
+                )),
 
     url(r'^oah-api/rates/',
         include_if_app_enabled('ratechecker', 'ratechecker.urls')),
@@ -252,7 +276,8 @@ urlpatterns = [
         include_if_app_enabled('regulations', 'regulations.urls')),
 
     url(r'^find-a-housing-counselor/$',
-        TemplateView.as_view(template_name='find_a_housing_counselor.html')),
+        HousingCounselorView.as_view(),
+        name='housing-counselor'),
     url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
     # Report redirects
     url(r'^reports/(?P<path>.*)$',
@@ -276,6 +301,16 @@ urlpatterns = [
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
 ]
+
+with flagged_urls('CCDB5_RELEASE') as _url:
+    apiBase = '^data-research/consumer-complaints/api/v1'
+    ccdb5_patterns = [
+        _url(apiBase + '/_suggest', CCDB5.suggest),
+        _url(apiBase + '/(?P<id>[0-9]+)$', CCDB5.document),
+        _url(apiBase, CCDB5.search)
+    ]
+urlpatterns += ccdb5_patterns
+
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
@@ -390,11 +425,6 @@ if settings.DEPLOY_ENVIRONMENT != 'build':
 
 
 if settings.DEPLOY_ENVIRONMENT == 'build':
-    from ask_cfpb.views import (
-        ask_search,
-        ask_autocomplete,
-        view_answer)
-
     ask_patterns = [
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
             view_answer,

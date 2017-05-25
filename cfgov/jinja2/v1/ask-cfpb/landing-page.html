@@ -4,7 +4,7 @@
 {% import 'atoms/partially-styled-link.html' as partially_styled_link with context %}
 {% import 'macros/category-icon.html' as category_icon %}
 {% import 'templates/render_block.html' as render_block with context %}
-
+{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -16,10 +16,10 @@
         {{ render_block.render(block, loop.index) }}
     {%- endfor %}
 
-    <main class="content ask-landing-page ask-cfpb-page" id="main" role="main">
+    <main class="content ask-cfpb-page ask-cfpb-page__landing" id="main" role="main">
         <div class="wrapper content_wrapper">
             <div class="content-l">
-                <section class="content_main content-l_col content-l_col-1">
+                <section class="ask-categories">
                     <h2 class="u-show-on-mobile">Browse questions by category</h2>
                     <ul class="u-show-on-mobile category_list list list__links u-mb0">
                         {% for category in categories %}
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="block block__sub">
-                            {{ tags.render( audiences, '/askcfpb/' ) }}
+                            {{ tags.render( {'links': audiences}, '', is_wagtail=True ) }}
                         </div>
 
                         {% if disclaimer %}
@@ -90,7 +90,9 @@
                     
 
                 </section>
-                
+                <section class="ask-search">
+                    {{ ask_search_bar.render() }}
+                </section>
             </div>
         </div>
     </main>

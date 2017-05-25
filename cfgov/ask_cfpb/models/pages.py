@@ -6,10 +6,12 @@ from django.core.paginator import Paginator
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
+from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 from haystack.query import SearchQuerySet
+
 
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel, ObjectList, StreamFieldPanel, TabbedInterface)
@@ -21,10 +23,12 @@ from wagtail.wagtailsearch import index
 from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
-from v1.feeds import FilterableFeedPageMixin
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
+<<<<<<< HEAD
 from v1.util.filterable_list import FilterableListMixin
 from v1.models.snippets import ReusableText
+=======
+>>>>>>> origin/master
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
@@ -40,6 +44,7 @@ def get_valid_spanish_tags():
     return valid_spanish_tags
 
 
+<<<<<<< HEAD
 def get_disclaimer(language):
     if language == 'en':
         try:
@@ -47,6 +52,19 @@ def get_disclaimer(language):
                 title='Legal disclaimer for educational materials')
         except ReusableText.DoesNotExist:
             pass
+=======
+def get_ask_nav_items(request, current_page):
+    from ask_cfpb.models import Category
+    return [
+        {
+            'title': cat.name,
+            'url': '/ask-cfpb/category-' + cat.slug,
+            'active': False if not hasattr(current_page, 'ask_category')
+            else cat.name == current_page.ask_category.name
+        }
+        for cat in Category.objects.all()
+    ], True
+>>>>>>> origin/master
 
 
 class AnswerLandingPage(LandingPage):
@@ -66,8 +84,16 @@ class AnswerLandingPage(LandingPage):
         from ask_cfpb.models import Category, Audience
         context = super(AnswerLandingPage, self).get_context(request)
         context['categories'] = Category.objects.all()
+<<<<<<< HEAD
         context['audiences'] = Audience.objects.all()
         context['disclaimer'] = get_disclaimer(self.language)
+=======
+        context['audiences'] = [
+            {'text': audience.name,
+             'url': '/ask-cfpb/audience-{}'.format(
+                    slugify(audience.name))}
+            for audience in Audience.objects.all()]
+>>>>>>> origin/master
         return context
 
     def get_template(self, request):
@@ -77,8 +103,7 @@ class AnswerLandingPage(LandingPage):
         return 'ask-cfpb/landing-page.html'
 
 
-class AnswerCategoryPage(
-        FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
+class AnswerCategoryPage(CFGOVPage):
     """
     Page type for Ask CFPB parent-category pages.
     """
@@ -152,14 +177,17 @@ class AnswerCategoryPage(
             'paginator': paginator,
             'questions': paginator.page(page),
             'results_count': answers.count(),
+<<<<<<< HEAD
             'disclaimer': get_disclaimer(self.language)
+=======
+            'get_secondary_nav_items': get_ask_nav_items
+>>>>>>> origin/master
         })
 
         return context
 
 
-class AnswerResultsPage(
-        FilterableFeedPageMixin, FilterableListMixin, CFGOVPage):
+class AnswerResultsPage(CFGOVPage):
 
     objects = CFGOVPageManager()
     answers = []
@@ -192,7 +220,12 @@ class AnswerResultsPage(
         context['paginator'] = paginator
         context['results'] = paginator.page(page)
         context['results_count'] = len(self.answers)
+<<<<<<< HEAD
         context['disclaimer'] = get_disclaimer(self.language)
+=======
+        context['get_secondary_nav_items'] = get_ask_nav_items
+
+>>>>>>> origin/master
         return context
 
     def get_template(self, request):
@@ -200,6 +233,54 @@ class AnswerResultsPage(
             return 'ask-cfpb/answer-search-results.html'
         elif self.language == 'es':
             return 'ask-cfpb/answer-search-spanish-results.html'
+
+
+class AnswerAudiencePage(CFGOVPage):
+    from ask_cfpb.models import Audience
+
+    objects = CFGOVPageManager()
+    content = StreamField([
+    ], null=True)
+    ask_audience = models.ForeignKey(
+        Audience,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        related_name='audience_page')
+    content_panels = CFGOVPage.content_panels + [
+        FieldPanel('ask_audience', Audience),
+        StreamFieldPanel('content'),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
+    ])
+
+    def add_page_js(self, js):
+        if self.language == 'en':
+            super(AnswerAudiencePage, self).add_page_js(js)
+            js['template'] += ['secondary-navigation.js']
+
+    def get_context(self, request, *args, **kwargs):
+        from .django import Answer
+        context = super(AnswerAudiencePage, self).get_context(request)
+        page_audience = self.ask_audience.name
+        answers = Answer.objects.filter(audiences__name__exact=page_audience)
+        page = request.GET.get('page', 1)
+        paginator = Paginator(answers, 20)
+
+        context.update({
+            'answers': paginator.page(page),
+            'current_page': int(page),
+            'paginator': paginator,
+            'results_count': len(answers),
+            'get_secondary_nav_items': get_ask_nav_items
+        })
+
+        return context
+
+    template = 'ask-cfpb/audience-page.html'
 
 
 class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
@@ -231,6 +312,15 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
         ]
         context = self.get_context(request)
         context['tag'] = tag
+
+        page = int(request.GET.get('page', 1))
+        paginator = Paginator(self.answers, 20)
+
+        context['current_page'] = page
+        context['paginator'] = paginator
+        context['results'] = paginator.page(page)
+        context['results_count'] = len(self.answers)
+
         return TemplateResponse(
             request,
             self.get_template(request),
@@ -292,6 +382,11 @@ class AnswerPage(CFGOVPage):
         context['subcategories'] = self.answer_base.subcategory.all()
         context['description'] = self.snippet if self.snippet \
             else Truncator(self.answer).words(40, truncate=' ...')
+        context['audiences'] = [
+            {'text': audience.name,
+             'url': '/ask-cfpb/audience-{}'.format(
+                    slugify(audience.name))}
+            for audience in self.answer_base.audiences.all()]
         if self.language == 'es':
             context['tags_es'] = [tag for tag in self.answer_base.tags_es
                                   if tag in get_valid_spanish_tags()]

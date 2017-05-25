@@ -53,7 +53,7 @@
         {% endif %}
     {%- endfor %}
 
-    {% if flag_enabled(request, 'EMAIL-POPUP') %}
+    {% if flag_enabled('EMAIL-POPUP', request) %}
         {% include 'organisms/email-popup.html' ignore missing %}
     {% endif %}
 {% endblock %}
