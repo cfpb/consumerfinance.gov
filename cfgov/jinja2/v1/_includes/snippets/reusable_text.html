@@ -7,14 +7,25 @@
 
    Description:
 
-   Reusable pieces of content, currently to be placed in either a full width text module, or the sidefoot.
+   Reusable pieces of content, currently to be placed in either a full width
+   text module, or the sidefoot.
 
-   value.title: Title for internal display/search purposes. Never gets displayed on the webpage.
+   value.title:             Title for internal display/search purposes. Never
+                            gets displayed on the webpage.
 
-   value.text: Rich text field that gets displayed on the webpage.
+   value.sidefoot_heading:  Heading text to be used if this snippet is only
+                            for use in sidefoots.
 
+   value.text:              Rich text field that gets displayed on the page.
 
    ========================================================================== #}
 
+{% if value.sidefoot_heading %}
+    <h2 class="header-slug">
+       <span class="header-slug_inner">
+           {{ value.sidefoot_heading }}
+       </span>
+    </h2>
+{% endif %}
 
 {{ value.text|richtext }}
