@@ -63,31 +63,17 @@
     } );
 
     .respond-to-min( @fcm-bp-min, {
-      height: 360px;
+      height: 320px;
       max-width: none;
-
-      .lt-ie9 & {
-        left: -302.5px; // Width at full width
-        margin-left: 50%;
-      }
     } );
   }
-}
 
-.o-featured-content-module {
   // Modifiers
   &__right {
     .o-featured-content-module_img {
       .respond-to-min( @fcm-bp-min, {
-        position: relative;
-        left: 100%;
-        transform: translateX( -100% );
-
-        .lt-ie10 & {
-          position: absolute;
-          right: 0px;
-          left: auto;
-        }
+        position: absolute;
+        right: 0;
       } );
     }
   }
