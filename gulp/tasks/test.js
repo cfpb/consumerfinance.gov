@@ -12,6 +12,7 @@ var isReachable = require( 'is-reachable' );
 var localtunnel = require( 'localtunnel' );
 var minimist = require( 'minimist' );
 var spawn = require( 'child_process' ).spawn;
+var psi = require( 'psi' );
 
 
 /**
@@ -139,7 +140,7 @@ function _getProtractorParams( suite ) {
 function _getWCAGParams() {
   var commandLineParams = minimist( process.argv.slice( 2 ) );
   var host = envvars.TEST_HTTP_HOST;
-  var port = envvars.TEST_HTTP_PORT;
+  var port = envvars.DJANGO_HTTP_PORT;
   var checkerId = envvars.ACHECKER_ID;
   var urlPath = _parsePath( commandLineParams.u );
   var url = host + ':' + port + urlPath;
@@ -161,32 +162,53 @@ function _createPSITunnel() {
   var host = envvars.TEST_HTTP_HOST;
   var port = envvars.TEST_HTTP_PORT;
   var path = _parsePath( commandLineParams.u );
-  var url = host + ':' + port + path;
+  var url = commandLineParams.u || host + ':' + port + path;
   var strategy = commandLineParams.s || 'mobile';
 
-  // Create a promise that the server is reachable and we can create a tunnel.
-  var promise = new Promise( function( resolve, reject ) {
-    // Check if server is reachable.
-    isReachable( url, function( err, reachable ) {
-      if ( err || !reachable ) {
-        reject( url + ' is not reachable. Is your local server running?' );
-      }
-      // Create the local tunnel.
-      localtunnel( port, function( tunErr, tunnel ) {
-        url = tunnel.url + path;
-        if ( tunErr ) {
-          tunnel.close();
-          reject( 'Error creating local tunnel for PSI: ' + tunErr );
-        }
-        resolve( {
-          url:    [ url, '--strategy=' + strategy ],
-          tunnel: tunnel
-        } );
-      } );
-    } );
-  } );
+  /**
+   * Create local tunnel and pass promise params
+   * to callback function.
+   * @param {Boolean} reachable If port is reachable.
+   * @returns {Promise} A promise which calls local tunnel.
+   */
+  function _createLocalTunnel( url, reachable ) {
+    if ( !reachable ) {
+      return Promise.reject( url +
+        ' is not reachable. Is your local server running?'
+      )
+    }
 
-  return promise;
+    return new Promise( ( resolve, reject ) => {
+      localtunnel( port, _localTunnelCallback.bind( null, resolve, reject ) );
+    } );
+  }
+
+   /**
+   * Local tunnel callback function
+   * @param {Function} resolve Promise fulfillment callback.
+   * @param {Function} reject Promise rejection callback.
+   * @param {Error} err Local tunnel error.
+   * @param {object} tunnel Local tunnel object.
+   * @returns {Promise} callback promise.
+   */
+  function _localTunnelCallback( resolve, reject, err, tunnel ) {
+    url = tunnel.url + path;
+
+    if ( err ) {
+      tunnel.close();
+      return reject( 'Error creating local tunnel for PSI: ' + err );
+    }
+
+    return resolve( {
+      options: { strategy: strategy },
+      tunnel:  tunnel,
+      url:     url
+    } );
+  }
+
+  // Check if server is reachable.
+  return isReachable( url )
+         .then( _createLocalTunnel.bind( null, url ) )
 }
 
 /**
@@ -225,20 +247,23 @@ function testA11y() {
  * Run PageSpeed Insight tests.
  */
 function testPerf() {
-  _createPSITunnel().then( function( params ) {
-    gulpUtil.log( 'PSI tests checking URL: http://' + params.url.split( ' ' ) );
-    spawn(
-      fsHelper.getBinary( 'psi', 'psi', '../.bin' ),
-      params.url,
-      { stdio: 'inherit' }
-    ).once( 'close', function() {
+
+  function _runPSI( params ) {
+    gulpUtil.log( 'PSI tests checking URL: http://' + params.url );
+    psi.output( params.url, params.options )
+    .then( () => {
       gulpUtil.log( 'PSI tests done!' );
       params.tunnel.close();
+    } )
+    .catch( err => {
+      gulpUtil.log( err.message );
+      params.tunnel.close();
+      process.exit( 1 );
     } );
-  } ).catch( function( err ) {
-    gulpUtil.log( err );
-    process.exit( 1 );
-  } );
+  }
+
+  _createPSITunnel()
+  .then( _runPSI );
 }
 
 /**

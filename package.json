@@ -70,7 +70,7 @@
     "protractor": "5.1.1",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "protractor-cucumber-framework": "3.1.0",
-    "psi": "2.0.4",
+    "psi": "3.0.0",
     "selenium-webdriver": "2.53.3",
     "sinon": "1.17.7",
     "snyk": "1.25.0",
