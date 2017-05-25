@@ -1,98 +1,70 @@
 from django.conf import settings
 
-cfgov_apps = [
-    'auth',
-    'sessions',
-    'admin',
-    'contenttypes',
-    'v1',
-    'flags',
-    'taggit',
-    'jobmanager',
-    'data_research',
+legacy_apps = [
+    'comparisontool',
+    'paying_for_college',
+    'retirement_api',
+    'knowledgebase',
+    'agreements',
+    'picard'
+    'regcore',
 ]
-optional_apps = [
-    'countylimits',
-    'ratechecker',
-    'ask_cfpb',
-]
-
-
-# add optional apps that use the single DB scheme
-for app_name in optional_apps:
-    if app_name in settings.INSTALLED_APPS:
-        cfgov_apps.append(app_name)
 
 
 class CFGOVRouter(object):
     """
-    A router to control all database operations on models in
-    wagtail and auth application.
+    A router that allows for splitting reads and writes to seperate
+    databases, and sends a set of legacy apps to a distinct 'legacy' DB
     """
 
+    has_legacy = 'legacy' in settings.DATABASES
+    has_replica = 'replica' in settings.DATABASES
+
+    def model_is_legacy(self, model):
+        return (model._meta.app_label in legacy_apps)
+
     def db_for_read(self, model, **hints):
         """
-        Attempts to read cfgov-refresh models go to default.
+        if a 'legacy' DB exists, and this model is in legacy_apps, then
+        all reads should go to 'legacy'
+
+        Otherwise, if a 'replica' DB exists, send reads there. Failing that
+        returns 'default'
         """
-        if (model._meta.app_label in cfgov_apps or
-                model._meta.app_label.find('wagtail') != -1):
-            return 'default'
-        return None
+        if self.has_legacy and self.model_is_legacy(model):
+            return 'legacy'
+        if self.has_replica:
+            return 'replica'
+
+        return 'default'
 
     def db_for_write(self, model, **hints):
         """
-        Attempts to write cfgov-refresh models go to default.
+        if a 'legacy' DB exists, and this model is in legacy_apps, then
+        all writes should go to 'legacy'
+
+        Otherwise, all writes go to 'default'
         """
-        if (model._meta.app_label in cfgov_apps or
-                model._meta.app_label.find('wagtail') != -1):
-            return 'default'
-        return None
+        if self.has_legacy and self.model_is_legacy(model):
+            return 'legacy'
+
+        return "default"
 
     def allow_relation(self, obj1, obj2, **hints):
         """
-        Allow relations if a model in the cfgov-refresh app is involved.
+        Allow relations if both objs are legacy, or both aren't
         """
-        if (obj1._meta.app_label in cfgov_apps or
-                obj2._meta.app_label in cfgov_apps or
-                obj1._meta.app_label.find('wagtail') != -1 or
-                obj2._meta.app_label.find('wagtail') != -1):
-            return True
-        return None
+        if self.has_legacy:
+            return not (self.model_is_legacy(obj1) ^
+                        self.model_is_legacy(obj2))
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         """
-        Make sure the cfgov-refresh app only appears in the 'default'
-        database.
+        allow legacy app migrations in the legacy DB, everything else in
+        default
         """
-        if app_label in cfgov_apps or app_label.find('wagtail') != -1:
+        if self.has_legacy and app_label in legacy_apps:
+            return db == 'legacy'
+
+        else:
             return db == 'default'
-        return None
-
-
-class LegacyRouter(object):
-    def db_for_read(self, model, **hints):
-        """
-        All non cfgov-refresh Reads go to legacy Db.
-        """
-        return 'legacy'
-
-    def db_for_write(self, model, **hints):
-        """
-        All non cfgov-refresh Writes always go to legacy Db.
-        """
-        return 'legacy'
-
-    def allow_relation(self, obj1, obj2, **hints):
-        """
-        Relations between objects are allowed if both objects are
-        in the legacy db.
-        """
-        if obj1._state.db in 'legacy' and obj2._state.db in 'legacy':
-            return True
-        return None
-
-    def allow_migrate(self, db, app_label, model_name=None, **hints):
-        """
-        All non cfgov-refresh models end up in this pool.
-        """
-        return db == 'legacy'
