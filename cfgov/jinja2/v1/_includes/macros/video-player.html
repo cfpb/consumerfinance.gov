@@ -99,9 +99,9 @@
                target="_blank">
                 <span class="u-visually-hidden">Play video</span>
             </a>
-            <img class="o-featured-content-module_img
-                        video-player_image
-                        {{ image_loaded_class | default }}"
+            <img class="video-player_image
+                        {{ image_loaded_class | default }}
+                        {{ o-featured-content-module_img if is_flexible == false else '' }}"
                  alt="Video image"
                  src="{{ image_url }}">
         </div>
