@@ -21,7 +21,7 @@ from ask_cfpb.models.django import (
     Answer, Category, SubCategory, Audience,
     NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
 from ask_cfpb.models.pages import (
-    AnswerPage, AnswerCategoryPage)
+    AnswerPage, AnswerCategoryPage, AnswerAudiencePage)
 
 html_parser = HTMLParser.HTMLParser()
 client = Client()
@@ -52,6 +52,16 @@ class AnswerModelTestCase(TestCase):
         kwargs.setdefault('slug', 'category-mortgages')
         kwargs.setdefault('title', 'Mortgages')
         page = mommy.prepare(AnswerCategoryPage, **kwargs)
+        page.save()
+        return page
+
+    def create_audience_page(self, **kwargs):
+        kwargs.setdefault(
+            'path', get_free_path(apps, self.english_parent_page))
+        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
+        kwargs.setdefault('slug', 'audience-students')
+        kwargs.setdefault('title', 'Students')
+        page = mommy.prepare(AnswerAudiencePage, **kwargs)
         page.save()
         return page
 
@@ -447,6 +457,39 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             test_page.status_string.lower(), "live")
 
+    def test_get_ask_nav_items(self):
+        from ask_cfpb.models import get_ask_nav_items
+        mommy.make(Category, name='test_cat')
+        test_nav_items = get_ask_nav_items({}, {})[0]
+        self.assertEqual(
+            len(test_nav_items),
+            Category.objects.count())
+
+    def test_audience_page_get_english_template(self):
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        audience_page = self.create_audience_page(
+            ask_audience=self.audience, language='en')
+        test_get_template = audience_page.get_template(mock_request)
+        self.assertEqual(
+            test_get_template,
+            'ask-cfpb/audience-page.html')
+
+    def test_audience_page_context(self):
+        from ask_cfpb.models import get_ask_nav_items
+        mock_site = mock.Mock()
+        mock_site.hostname = 'localhost'
+        mock_request = HttpRequest()
+        mock_request.site = mock_site
+        audience_page = self.create_audience_page(
+            ask_audience=self.audience, language='en')
+        test_context = audience_page.get_context(mock_request)
+        self.assertEqual(
+            test_context['get_secondary_nav_items'],
+            get_ask_nav_items)
+
     def test_category_page_context(self):
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
@@ -542,7 +585,7 @@ class AnswerModelTestCase(TestCase):
             test_context['categories'].count(),
             Category.objects.count())
         self.assertEqual(
-            test_context['audiences'].count(),
+            len(test_context['audiences']),
             Audience.objects.count())
 
     def test_landing_page_get_english_template(self):
