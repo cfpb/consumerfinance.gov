@@ -227,6 +227,23 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             Answer.objects.filter(id=ID).count(), 0)
 
+    def test_audience_page_add_js(self):
+        test_page = self.create_audience_page(language='en')
+        test_js = {'template': []}
+        test_page.add_page_js(test_js)
+        self.assertTrue(
+            'secondary-navigation.js'
+            in test_page.media['template'])
+
+    def test_audience_page_add_js_wrong_language(self):
+        """add_page_js should only work on English Audience pages"""
+        test_page = self.create_audience_page(language='es')
+        test_js = {'template': []}
+        test_page.add_page_js(test_js)
+        self.assertFalse(
+            'secondary-navigation.js'
+            in test_page.media['template'])
+
     def test_spanish_template_used(self):
         spanish_answer = self.prepare_answer(
             answer_es='Spanish answer',
