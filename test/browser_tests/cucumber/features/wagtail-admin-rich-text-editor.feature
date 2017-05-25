@@ -5,10 +5,10 @@ Feature: Rich Text Editor
 
   Background:
     Given I am logged into Wagtail as an admin
-  	And I create a Wagtail Sublanding Page
-  	And I open the content menu
-  	And I select the full width text organism
-  	And I select the content element
+    And I create a Wagtail Sublanding Page
+    And I open the content menu
+    And I select the full width text organism
+    And I select the content element
 
   Scenario: Insert Text into the editor
     When I insert "Testing text insertion" into the rich text editor
@@ -81,7 +81,7 @@ Feature: Rich Text Editor
     Then the rich text editor should contain 12345
 
   Scenario: Insert Internal Link
-  	When I click the link button in the rich text editor
-  	And I enter "CFGov" in the page chooser search field
-  	And I select the link titled "CFGov"
-  	Then the inserted link should have the correct format
+    When I click the link button in the rich text editor
+    And I enter "CFGov" in the page chooser search field
+    And I select the link titled "CFGov"
+    Then the inserted link should have the correct format
