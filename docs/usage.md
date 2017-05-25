@@ -137,7 +137,7 @@ gulp watch
 !!! note "Server error"
     If you get this message on the page when running `gulp watch`: 
     "A server error occurred.  Please contact the administrator." 
-    You need to delete files with the `.pyc` extension from the project with the following command:    
+    You likely need to delete files with the `.pyc` extension from the project with the following command:    
     `find . -name \"*.pyc\" -exec rm -rf {} \;`
 
 #### Available Gulp Tasks
