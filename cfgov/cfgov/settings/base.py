@@ -563,6 +563,10 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'api.iperceptions.com')
 
+# Feature flags
+# All feature flags must be listed here with a dict of any hard-coded
+# conditions or an empty dict. If the conditions dict is empty the flag will
+# only be enabled if database conditions are added.
 FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
