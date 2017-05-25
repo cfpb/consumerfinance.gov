@@ -1,6 +1,8 @@
 'use strict';
 
-let BasePage = require( './wagtail-admin-base-page.js' );
+const BasePage = require( './wagtail-admin-base-page.js' );
+const USERS = require( '../util/wagtail-admin-users.js' );
+
 
 class WagtailLoginPage extends BasePage {
 
@@ -12,26 +14,25 @@ class WagtailLoginPage extends BasePage {
     this.URL = '/admin';
   }
 
-  enterLoginCriteria() {
-    this.userName.sendKeys( 'admin' );
+  enterLoginCriteria( USER=USERS.ADMIN ) {
+    this.userName.sendKeys( USER.USERNAME );
 
-    return this.userPassword
-           .sendKeys( 'password' );
+    return this.userPassword.sendKeys( USER.PASSWORD );
   }
 
-  clickloginBtn() {
+  clickLoginBtn() {
 
     return this.loginBtn.click();
   }
 
-  login() {
+  login( USER=USERS.ADMIN ) {
     var _this = this;
 
     function _login( url ) {
       if ( url.indexOf( '/login' ) > -1 ) {
-        _this.enterLoginCriteria();
+        _this.enterLoginCriteria( USER );
 
-        return _this.clickloginBtn();
+        return _this.clickLoginBtn();
       }
 
       return Promise.resolve();
@@ -43,5 +44,7 @@ class WagtailLoginPage extends BasePage {
   }
 
 }
+
+WagtailLoginPage.USERS = USERS;
 
 module.exports = WagtailLoginPage;

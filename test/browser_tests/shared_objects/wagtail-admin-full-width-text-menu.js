@@ -1,13 +1,12 @@
-
 'use strict';
 
-let fullWidthTextSelector = 'input[value=\'full_width_text\']' +
+const fullWidthTextSelector = 'input[value=\'full_width_text\']' +
                             ' + .sequence-controls' +
                             ' + .sequence-member-inner';
 
 function isActive( ) {
 
-  function _getElement( selector ){
+  function _getElement( selector ) {
 
     return document.querySelector( selector ) !== null;
   }
@@ -16,7 +15,7 @@ function isActive( ) {
 }
 
 function getMenuItems() {
-  let _fullWidthText = element
+  const _fullWidthText = element
                      .all( by.css( fullWidthTextSelector ) )
                      .first();
 
@@ -49,7 +48,7 @@ function getMenuItems() {
 
 }
 
-let fullWidthMenu = {
+const fullWidthMenu = {
   isActive:     isActive,
   getMenuItems: getMenuItems
 };

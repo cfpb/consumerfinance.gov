@@ -1,32 +1,35 @@
-
 'use strict';
 
 
 class BasePage {
-  gotoURL ( url ) {
-    let gotoUrl = url || this.URL || '/';
+  gotoURL( url ) {
+    const gotoUrl = url || this.URL || '/';
 
     return browser.get( gotoUrl )
            .then( function() {
              BasePage.dismissAlert( gotoUrl );
-           } )
+           } );
   }
 
-  static dismissAlert( url ) {
-  	function _accepAlert( alert ) {
-			if ( alert ) {
-				return 	alert.accept();
-			}
-		}
+  static dismissAlert( ) {
+    function _accepAlert( alert ) {
+      if ( alert ) {
+        return alert.accept();
+      }
 
-		function _noOp( ) {
-			return
-		}
+      return Promise.resolve();
+    }
 
-		return browser.switchTo()
-		       .alert()
-		       .catch( _noOp )
-		       .then( _accepAlert );
+    function _noOp( ) {
+
+      return;
+    }
+
+    return browser
+           .switchTo()
+           .alert()
+           .then( _accepAlert )
+           .catch( _noOp );
   }
 }
 

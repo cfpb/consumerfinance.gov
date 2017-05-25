@@ -1,73 +1,80 @@
-
 'use strict';
 
-let richTextEditor = require( '../../shared_objects/wagtail-admin-rich-text-editor.js' );
-let linkChooser = require( '../../shared_objects/wagtail-admin-link-chooser.js' );
-
-let {defineSupportCode} = require( 'cucumber' );
-let {expect} = require( 'chai' );
+const richTextEditor = require(
+  '../../shared_objects/wagtail-admin-rich-text-editor.js'
+);
+const linkChooser = require(
+  '../../shared_objects/wagtail-admin-link-chooser.js'
+);
+const { defineSupportCode } = require( 'cucumber' );
+const { expect } = require( 'chai' );
 
 defineSupportCode( function( { Then, When, After } ) {
 
   After( function() {
-    browser.manage().logs().get('browser')
+    browser.manage().logs().get( 'browser' )
     .then( function( browserLog ) {
-      //console.log( browserLog );
+      console.log( browserLog );
     } );
   } );
 
-  When( /I click the (.*) button in the rich text editor/, function ( buttonName ) {
+  When( /I click the (.*) button in the rich text editor/,
+    function( buttonName ) {
 
-    return richTextEditor.clickButton( buttonName );
+      return richTextEditor.clickButton( buttonName );
+    }
+  );
+
+  When( /I insert (.*) into the rich text editor/, function( text ) {
+
+    return richTextEditor.insertText( text );
   } );
 
-  When( /I insert (.*) into the rich text editor/, function ( text ) {
+  When( /I select the text in the rich text editor/, function( ) {
 
-  	return richTextEditor.insertText( text );
+    return richTextEditor.selectText();
   } );
 
-  When( /I select the text in the rich text editor/, function ( ) {
+  When( /I clear the rich text editor/, function( ) {
 
-  	return richTextEditor.selectText();
+    return richTextEditor.clearText();
   } );
 
-  When( /I clear the rich text editor/, function ( ) {
+  Then( /(.*) should be wrapped in a (.*) tag/, function( text, tag ) {
+    let tagText = `<${ tag }>${ text }</${ tag }>`;
 
-  	return richTextEditor.clearText();
-  } );
-
-  Then( /(.*) should be wrapped in a (.*) tag/, function ( text, tag ) {
-    let tagText = `<${tag}>${text}</${tag}>`
-    if( tag === 'ol' || tag === 'ul' ) {
-      tagText = `<${tag}><li>${text}<br></li></${tag}>`;
+    if ( tag === 'ol' || tag === 'ul' ) {
+      tagText = `<${ tag }><li>${ text }<br></li></${ tag }>`;
     }
 
-  	return richTextEditor.getTextAreaValue().then( function( textAreaValue ) {
+    return richTextEditor.getTextAreaValue().then( function( textAreaValue ) {
 
-  		expect( textAreaValue ).to.contain( tagText );
-  	} );
+      expect( textAreaValue ).to.contain( tagText );
+    } );
   } );
 
-  Then( /the rich text editor should contain (?:a\s)?(.*?)(\s?element)?/, function ( content, type ) {
-    if( content === 'hr' ) {
-      content = '<hr>'
+  Then( /the rich text editor should contain (?:a\s)?(.*?)(?:\s?element)?/,
+    function( content ) {
+      if ( content === 'hr' ) {
+        content = '<hr>';
+      }
+
+      return richTextEditor.getTextAreaValue().then( function( textAreaValue ) {
+        expect( textAreaValue ).to.contain( content );
+      } );
     }
+  );
 
-  	return richTextEditor.getTextAreaValue().then( function( textAreaValue ) {
-  		expect( textAreaValue ).to.contain( content );
-  	} );
+  Then( /the rich text editor should only contain (.*)/, function( content ) {
+
+    return richTextEditor.getTextAreaValue().then( function( textAreaValue ) {
+      const tagText = `<p>${ content }</p>`;
+
+      expect( textAreaValue ).to.equal( tagText );
+    } );
   } );
 
-  Then( /the rich text editor should only contain (.*)/, function ( content ) {
-
-  	return richTextEditor.getTextAreaValue().then( function( textAreaValue ) {
-  		let tagText = `<p>${content}</p>`
-
-  		expect( textAreaValue ).to.equal( tagText );
-  	} );
-  } );
-
-    Then( /the inserted link should have the correct format/, function () {
+  Then( /the inserted link should have the correct format/, function( ) {
 
     return richTextEditor.getTextAreaValue().then( function( textAreaValue ) {
 

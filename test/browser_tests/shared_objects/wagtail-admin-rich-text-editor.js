@@ -1,9 +1,8 @@
-
 'use strict';
 
-let EC = protractor.ExpectedConditions;
+const EC = protractor.ExpectedConditions;
 
-let buttons = {
+const buttons = {
   bold:          '.halloformat button[title="bold"]',
   H2:            '.halloheadings button[title="h2"]',
   H3:            '.halloheadings button[title="h3"]',
@@ -22,15 +21,14 @@ let buttons = {
   video:         '.hallowagtailembeds buttom[title="Embed"]'
 };
 
-let containerSelector = '.widget-hallo_rich_text_area';
-let textAreaSelector = containerSelector + ' .richtext';
-let container = element( by.css( containerSelector ) );
-let textArea = element( by.css( textAreaSelector ) );
+const containerSelector = '.widget-hallo_rich_text_area';
+const textAreaSelector = containerSelector + ' .richtext';
+const textArea = element( by.css( textAreaSelector ) );
 
 function clickButton( buttonName ) {
-  let normalizedButtonName = buttonName
+  const normalizedButtonName = buttonName
                              .replace( /\s/g, '' );
-  let btn = element( by.css( buttons[normalizedButtonName] ) );
+  const btn = element( by.css( buttons[normalizedButtonName] ) );
 
   return browser
          .wait( EC.elementToBeClickable( btn ), 500 )
@@ -38,24 +36,24 @@ function clickButton( buttonName ) {
 }
 
 function insertText( text ) {
-  browser.wait( EC.elementToBeClickable( textArea ), 500 )
+  browser.wait( EC.elementToBeClickable( textArea ), 500 );
 
   return textArea.sendKeys( text );
 }
 
-function clearText( text ) {
+function clearText( ) {
 
   return textArea.clear();
 }
 
 function selectText( ) {
   function _selectText( className ) {
-    let range = document.createRange();
-    let element = document.body.querySelector( className ).firstChild;
+    const range = document.createRange();
+    const element = document.body.querySelector( className ).firstChild;
     range.selectNode( element );
-    let windowSelection = window.getSelection();
+    const windowSelection = window.getSelection();
     windowSelection.removeAllRanges();
-    windowSelection.addRange(range);
+    windowSelection.addRange( range );
 
     return windowSelection;
   }
@@ -68,7 +66,7 @@ function getTextAreaValue() {
   return textArea.getAttribute( 'innerHTML' );
 }
 
-let richTextEditor = {
+const richTextEditor = {
   buttons:          buttons,
   clickButton:      clickButton,
   getTextAreaValue: getTextAreaValue,

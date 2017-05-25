@@ -1,10 +1,9 @@
-
 'use strict';
 
 
-let EC = protractor.ExpectedConditions;
+const EC = protractor.ExpectedConditions;
 
-let elements = {
+const elements = {
   linkTypes:        '.modal .link-types',
   searchForm:       '.modal .search-form',
   searchInput:      '.modal .search-form input[name="q"]',
@@ -17,16 +16,16 @@ const LINK_TYPES = {
   EMAIL:     2
 };
 
-let selectedLink = {
+const selectedLink = {
   type: LINK_TYPES.INTERNAL
 };
 
 function enterSearchText( text ) {
-  let searchInput = element( by.css( elements.searchInput ) );
+  const searchInput = element( by.css( elements.searchInput ) );
 
   return browser.wait( EC.visibilityOf( searchInput ), 500 )
          .then( function() {
-            searchInput.sendKeys( text );
+           searchInput.sendKeys( text );
          } );
 }
 
@@ -40,12 +39,12 @@ function getLinkAttributes( linkSelector ) {
       attributes = {
         dataUrl:       linkAttributes['data-title'].value,
         editUrl:       linkAttributes['data-id'].value,
-        href:          linkAttributes['href'].value,
+        href:          linkAttributes.href.value,
         id:            linkAttributes['data-id'].value,
         linkType:      'page',
         title:         linkAttributes['data-title'].value,
         parentId:      linkAttributes['data-parent-id'].value
-      }
+      };
     }
 
     return attributes;
@@ -54,35 +53,29 @@ function getLinkAttributes( linkSelector ) {
   return browser.executeScript( _getLinkAttributes, linkSelector );
 }
 
-function getLinkHTML(linkAttributes, linkType=selectedLink.type ) {
-  let internalLinkHTML = `<a href="${linkAttributes.href}"` +
-                         ` data-id="${linkAttributes.id}"` +
-                         ` data-parent-id="${linkAttributes.parentId}"` +
-                         ` data-linktype="${linkAttributes.linkType}"` +
-                         ` data-original-title="${linkAttributes.title}"`+
-                         ` title="">${linkAttributes.title}</a>`;
+function getLinkHTML( linkAttributes, linkType = selectedLink.type ) {
+  const internalLinkHTML = `<a href="${ linkAttributes.href }"` +
+                         ` data-id="${ linkAttributes.id }"` +
+                         ` data-parent-id="${ linkAttributes.parentId }"` +
+                         ` data-linktype="${ linkAttributes.linkType }"` +
+                         ` data-original-title="${ linkAttributes.title }"` +
+                         ` title="">${ linkAttributes.title }</a>`;
 
-  let mailLinkHTML = `<a href="maiilto:${linkAttributes.url}"` +
-                     ` data-original-title="${linkAttributes.title}"`+
-                     ` title="">${linkAttributes.title}</a>`;
+  const mailLinkHTML = `<a href="maiilto:${ linkAttributes.url }"` +
+                     ` data-original-title="${ linkAttributes.title }"` +
+                     ` title="">${ linkAttributes.title }</a>`;
 
-  let externallLinkHTML = `<a href="${linkAttributes.url}"` +
-                          ` data-original-title="${linkAttributes.title}"`+
-                          ` title="">${linkAttributes.title}</a>`;
+  const externallLinkHTML = `<a href="${ linkAttributes.url }"` +
+                          ` data-original-title="${ linkAttributes.title }"` +
+                          ` title="">${ linkAttributes.title }</a>`;
 
-  let linkTypesHTML = {
+  const linkTypesHTML = {
     0: internalLinkHTML,
     1: externallLinkHTML,
     2: mailLinkHTML
-  }
+  };
 
   return linkTypesHTML[linkType];
-}
-
-function setLinkAttributes( linkAttributes={} ) {
-  selectedLink.attributes = linkAttributes
-
-  return Promise.resolve( linkAttributes );
 }
 
 function setSelectedLink( linkSelector ) {
@@ -100,22 +93,23 @@ function setSelectedLink( linkSelector ) {
 }
 
 function selectPageLink( linkTitle ) {
-  let linkSelector = `.modal a[data-title=${linkTitle}]`;
-  let cfgovLink = element( by.css( linkSelector ) );
+  const linkSelector = `.modal a[data-title=${ linkTitle }]`;
+  const cfgovLink = element( by.css( linkSelector ) );
 
   return cfgovLink.click()
-         .then( function( HTML ) {
+         .then( function( ) {
 
            return setSelectedLink( linkSelector );
          } );
 }
 
 function setSelectedLinkProperty( property, value ) {
+  selectedLink[property] = value;
 
-  return selectedLink[property] = value;
+  return selectedLink[property];
 }
 
-let linkChooser = {
+const linkChooser = {
   enterSearchText:          enterSearchText,
   LINK_TYPES:               LINK_TYPES,
   selectedLink:             selectedLink,

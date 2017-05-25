@@ -1,19 +1,19 @@
-
 'use strict';
 
-var pageChooser = require( '../../shared_objects/wagtail-admin-link-chooser.js' );
+var pageChooser = require(
+  '../../shared_objects/wagtail-admin-link-chooser.js'
+);
 
-var {defineSupportCode} = require( 'cucumber' );
-var {expect} = require( 'chai' );
+var { defineSupportCode } = require( 'cucumber' );
 
-defineSupportCode( function( { Then, When } ) {
+defineSupportCode( function( { When } ) {
 
-  When( /I enter (.*) in the page chooser search field/, function ( text ) {
+  When( /I enter (.*) in the page chooser search field/, function( text ) {
 
     return pageChooser.enterSearchText( text );
   } );
 
-  When( /I select the link titled (.*)/, function ( linkTitle ) {
+  When( /I select the link titled (.*)/, function( linkTitle ) {
 
     return pageChooser.selectPageLink( linkTitle );
   } );

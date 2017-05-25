@@ -1,8 +1,7 @@
-
 'use strict';
 
-let BasePage = require( './wagtail-admin-base-page.js' );
-let contentMenu = require( '../shared_objects/wagtail-admin-content-menu.js' );
+const BasePage = require( './wagtail-admin-base-page.js' );
+const contentMenu = require( '../shared_objects/wagtail-admin-content-menu.js' );
 
 const PAGE_TYPES = {
   ACTIVITY_LOG:           'activitylogpage',
@@ -19,12 +18,12 @@ const PAGE_TYPES = {
   LEGACY_NEWSROOM:        'legacynewsroompage',
   NEWSROOM_LANDING:       'newsroomlandingpage',
   NEWSROOM:               'newsroompage',
-  SUBLANDING_FILTERABLE: 'sublandingfilterablepage',
-  SUBLANDING:            'sublandingpage'
+  SUBLANDING_FILTERABLE:  'sublandingfilterablepage',
+  SUBLANDING:             'sublandingpage'
 };
 
 const MENUS = {
-  'content': contentMenu
+  content: contentMenu
 };
 
 class WagtailAdminPages extends BasePage {
@@ -39,13 +38,13 @@ class WagtailAdminPages extends BasePage {
     this.URL = '/admin/pages/';
   }
 
-  createPage( pageName='landing' ) {
-    let normalizedPageName = pageName
+  createPage( pageName = 'landing' ) {
+    const normalizedPageName = pageName
                              .toUpperCase()
-                             .replace(/\s/g, '_' );
-    let pageType = PAGE_TYPES[normalizedPageName];
-    let page_url = `add/v1/${pageType}/1`;
-    let url = this.URL + page_url;
+                             .replace( /\s/g, '_' );
+    const pageType = PAGE_TYPES[normalizedPageName];
+    const pageUrl = `add/v1/${ pageType }/1`;
+    const url = this.URL + pageUrl;
 
     return this.gotoURL( url );
   }
@@ -55,8 +54,8 @@ class WagtailAdminPages extends BasePage {
       return Promise.resolve();
     }
 
-    let page_url = `admin/pages/${pageId}/1/edit/`;
-    let url = this.URL + page_url;
+    const pageUrl = `admin/pages/${ pageId }/1/edit/`;
+    const url = this.URL + pageUrl;
 
     return this.gotoURL( url );
   }
@@ -67,7 +66,7 @@ class WagtailAdminPages extends BasePage {
     return this.menu && this.menu.open( menuType );
   }
 
-  closeMenu( menuType ) {
+  closeMenu( ) {
 
     return this.menu && this.menu.close();
   }
