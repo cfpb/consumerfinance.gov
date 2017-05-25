@@ -411,3 +411,12 @@ class ContentWithAnchor(blocks.StructBlock):
     class Meta:
         icon = 'edit'
         template = '_includes/molecules/full-width-text-anchor.html'
+
+
+class OrganismIntro(blocks.StructBlock):
+    heading = blocks.CharBlock(required=True)
+    paragraph = blocks.RichTextBlock(required=False)
+
+    class Meta:
+        icon = 'title'
+        template = '_includes/molecules/organism-intro.html'

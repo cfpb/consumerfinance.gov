@@ -3,6 +3,8 @@ import requests
 
 from django import forms
 from django.apps import apps
+from django.core.exceptions import ValidationError
+from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_text
 from django.utils.safestring import mark_safe
@@ -37,12 +39,21 @@ class Well(blocks.StructBlock):
 
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
+    paragraph = blocks.RichTextBlock(
+        required=False,
+        help_text='If this field is not empty, '
+                  'the Heading field must also be set.'
+    )
+
     link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
         help_text=('Check this to link all images and headings to the URL of '
                    'the first link in their unit\'s list, if there is a link.')
     )
+
+    image_texts = blocks.ListBlock(molecules.ImageText5050())
+
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
                                           help_text='If checked, share links '
@@ -55,7 +66,20 @@ class ImageText5050Group(blocks.StructBlock):
                                          required=False)),
     ])
 
-    image_texts = blocks.ListBlock(molecules.ImageText5050())
+    def clean(self, value):
+        cleaned = super(ImageText5050Group, self).clean(value)
+
+        # Intro paragraph may only be specified with a heading.
+        if cleaned.get('paragraph') and not cleaned.get('heading'):
+            raise ValidationError(
+                'Validation error in StructBlock',
+                params={'heading': ErrorList([
+                    'Required if paragraph is not empty. (If it looks empty, '
+                    'click into it and hit the delete key a bunch of times.)'
+                ])}
+            )
+
+        return cleaned
 
     class Meta:
         icon = 'image'

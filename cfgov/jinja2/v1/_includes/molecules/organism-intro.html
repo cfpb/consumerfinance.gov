@@ -1,0 +1,23 @@
+{# =========================================================================
+
+   Organism Intro
+
+   =========================================================================
+
+   Description:
+
+   Create an Organism Intro molecule.
+   See [documentation yet to be published]
+
+   value:               Object defined from a StreamField block.
+
+   value.heading:       String for heading text.
+
+   value.paragraph:     (Optional) String for body text.
+
+   ========================================================================== #}
+
+<h2>{{ value.heading }}</h2>
+{% if value.paragraph %}
+    {{ parse_links(value.pagragraph) | safe }}
+{% endif %}
