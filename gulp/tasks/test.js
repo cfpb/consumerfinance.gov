@@ -44,6 +44,7 @@ function testUnitScripts( cb ) {
 }
 
 /**
+
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {
@@ -58,6 +59,7 @@ function testAcceptanceBrowser() {
 
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
   .once( 'close', function( code ) {
+
     if ( code ) {
       gulpUtil.log( 'Tox tests exited with code ' + code );
       process.exit( 1 );
