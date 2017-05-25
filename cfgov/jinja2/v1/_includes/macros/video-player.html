@@ -101,7 +101,7 @@
             </a>
             <img class="video-player_image
                         {{ image_loaded_class | default }}
-                        {{ o-featured-content-module_img if is_flexible == false else '' }}"
+                        {{ 'o-featured-content-module_img' if is_flexible == false else '' }}"
                  alt="Video image"
                  src="{{ image_url }}">
         </div>
