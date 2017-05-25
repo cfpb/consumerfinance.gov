@@ -606,7 +606,7 @@ FLAGS = {
     # Migration of Ask CFPB to Wagtail
     # When enabled, Ask CFPB is served from Wagtail
     'WAGTAIL_ASK_CFPB': {
-        'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
+        'boolean': DEPLOY_ENVIRONMENT in ['build']
     },
 
     # The next version of the public consumer complaint database
