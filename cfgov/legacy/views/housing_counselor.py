@@ -47,7 +47,7 @@ class HousingCounselorView(TemplateView):
             kwargs={'zipcode': zipcode}
         )
 
-        api_url = request.build_absolute_uri(api_path)
+        api_url = 'http://localhost' + api_path
         response = requests.get(api_url)
         response.raise_for_status()
 
@@ -69,9 +69,7 @@ class HousingCounselorPDFView(View):
 
     def get_render_url(self, zipcode):
         html_path = reverse('housing-counselor')
-        return self.request.build_absolute_uri(
-            html_path + '?zipcode={}&pdf'.format(zipcode)
-        )
+        return 'http://localhost{}?zipcode={}&pdf'.format(html_path, zipcode)
 
     def generate_pdf_from_url(self, url, filename):
         result = self.pdfreactor.renderDocumentFromURL(url)
@@ -94,7 +92,11 @@ class HousingCounselorPDFView(View):
         reactor = PDFreactor()
 
         reactor.setLogLevel(PDFreactor.LOG_LEVEL_FATAL)
-        reactor.setLicenseKey(os.environ['PDFREACTOR_LICENSE'])
+
+        # License key needs to be cast to str here because PDFReactor
+        # doesn't play well with unicode.
+        reactor.setLicenseKey(str(os.environ['PDFREACTOR_LICENSE']))
+
         reactor.setAuthor('CFPB')
         reactor.setAddTags(True)
         reactor.setAddBookmarks(True)
