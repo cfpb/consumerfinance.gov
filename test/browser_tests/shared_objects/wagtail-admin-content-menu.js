@@ -67,6 +67,7 @@ function selectItem( componentName ) {
   function _clickMenuItem( menuItem ) {
 
     function _scrollIntoView() {
+
      return  browser.executeScript(
                'arguments[0].scrollIntoView()',
                menuItem
@@ -74,7 +75,7 @@ function selectItem( componentName ) {
     }
 
     return browser
-            .wait( EC.elementToBeClickable( menuItem ), 500 )
+            .wait( EC.elementToBeClickable( menuItem ) )
             .then( _scrollIntoView  )
             .then( menuItem.click );
   }
