@@ -31,14 +31,16 @@ function clickButton( buttonName ) {
   const btn = element( by.css( buttons[normalizedButtonName] ) );
 
   return browser
-         .wait( EC.elementToBeClickable( btn ), 500 )
+         .wait( EC.elementToBeClickable( btn ) )
          .then( btn.click );
 }
 
 function insertText( text ) {
-  browser.wait( EC.elementToBeClickable( textArea ), 500 );
 
-  return textArea.sendKeys( text );
+  return browser.wait( EC.elementToBeClickable( textArea )  )
+         .then( function() {
+            textArea.sendKeys( text );
+         } );
 }
 
 function clearText( ) {
