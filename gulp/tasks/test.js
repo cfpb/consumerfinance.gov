@@ -44,22 +44,6 @@ function testUnitScripts( cb ) {
 }
 
 /**
- * Run tox unit tests.
- */
-function testUnitServer() {
-  spawn(
-    'tox',
-    { stdio: 'inherit' }
-  ).once( 'close', function( code ) {
-    if ( code ) {
-      gulpUtil.log( 'Tox tests exited with code ' + code );
-      process.exit( 1 );
-    }
-    gulpUtil.log( 'Tox tests done!' );
-  } );
-}
-
-/**
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {
@@ -299,7 +283,3 @@ gulp.task( 'test:coveralls', testCoveralls );
 gulp.task( 'test:perf', testPerf );
 gulp.task( 'test:unit', [ 'test:unit:scripts' ] );
 gulp.task( 'test:unit:scripts', testUnitScripts );
-
-// This task will only run on Travis
-gulp.task( 'test:unit:server', testUnitServer );
-
