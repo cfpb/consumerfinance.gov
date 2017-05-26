@@ -39,7 +39,7 @@ function insertText( text ) {
 
   return browser.wait( EC.elementToBeClickable( textArea )  )
          .then( function() {
-            textArea.sendKeys( text );
+            return textArea.sendKeys( text );
          } );
 }
 

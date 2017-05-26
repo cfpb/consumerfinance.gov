@@ -52,7 +52,8 @@ var defaultSuites = {
       chromeOptions: {
         args: [ '--headless', '--disable-gpu' ],
         binary: envvars.HEADLESS_CHROME_BINARY
-      }
+      },
+      maxDuration: 10800
     }
   ]
 };
