@@ -17,7 +17,7 @@ defineSupportCode( function( { Then, When } ) {
    	wagtailLoginPage.enterLoginCriteria();
   } );
 
-  When( 'I should be able to access the admin section', function ( ) {
+  Then( 'I should be able to access the admin section', function ( ) {
     wagtailLoginPage.loginBtn.click();
 
   	return browser.getCurrentUrl().then( function( url ) {

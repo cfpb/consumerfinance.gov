@@ -12,7 +12,6 @@ class SublandingFilterablePage extends BasePage {
     this.multiselect = element.all( by.css( '.cf-multi-select' ) );
     this.URL = '/sfp';
   }
-
 }
 
 module.exports = SublandingFilterablePage;
