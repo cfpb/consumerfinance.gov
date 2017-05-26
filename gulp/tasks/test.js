@@ -171,11 +171,11 @@ function _createPSITunnel() {
    * @param {Boolean} reachable If port is reachable.
    * @returns {Promise} A promise which calls local tunnel.
    */
-  function _createLocalTunnel( url, reachable ) {
+  function _createLocalTunnel( reachable ) {
     if ( !reachable ) {
       return Promise.reject( url +
         ' is not reachable. Is your local server running?'
-      )
+      );
     }
 
     return new Promise( ( resolve, reject ) => {
@@ -193,10 +193,10 @@ function _createPSITunnel() {
    */
   function _localTunnelCallback( resolve, reject, err, tunnel ) {
     if ( err ) {
-      return reject( 'Error creating local tunnel for PSI: ' + err );
+      return reject( 'Error: ' + err.message );
     }
 
-    url = tunnel.url + path;
+    const url = tunnel.url + path;
 
     return resolve( {
       options: { strategy: strategy },
@@ -207,7 +207,7 @@ function _createPSITunnel() {
 
   // Check if server is reachable.
   return isReachable( url )
-         .then( _createLocalTunnel.bind( null, url ) )
+         .then( _createLocalTunnel );
 }
 
 /**
@@ -262,7 +262,10 @@ function testPerf() {
   }
 
   _createPSITunnel()
-  .then( _runPSI );
+  .then( _runPSI )
+  .catch( err => {
+    console.log( err );
+  } );
 }
 
 /**
