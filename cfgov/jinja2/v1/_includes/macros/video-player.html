@@ -60,7 +60,7 @@
     {% set is_flexible  = ( options.video.width or options.video.height ) is not defined %}
     <div class="video-player
                 video-player__{{ video_player }}
-                {{ 'featured-content-module_visual' if is_flexible == false else '' }}"
+                {{ 'o-featured-content-module_visual' if is_flexible == false else '' }}"
          {{ "data-id=" ~ video_id  if video_id else '' }}
          data-src="{{ video_url }}"
          data-width="{{ options.video.width if options.video.width else '' }}"
@@ -99,7 +99,9 @@
                target="_blank">
                 <span class="u-visually-hidden">Play video</span>
             </a>
-            <img class="video-player_image {{ image_loaded_class | default }}"
+            <img class="video-player_image
+                        {{ image_loaded_class | default }}
+                        {{ 'o-featured-content-module_img' if is_flexible == false else '' }}"
                  alt="Video image"
                  src="{{ image_url }}">
         </div>
