@@ -140,7 +140,7 @@ function _getProtractorParams( suite ) {
 function _getWCAGParams() {
   var commandLineParams = minimist( process.argv.slice( 2 ) );
   var host = envvars.TEST_HTTP_HOST;
-  var port = envvars.DJANGO_HTTP_PORT;
+  var port = envvars.TEST_HTTP_PORT;
   var checkerId = envvars.ACHECKER_ID;
   var urlPath = _parsePath( commandLineParams.u );
   var url = host + ':' + port + urlPath;
@@ -192,12 +192,11 @@ function _createPSITunnel() {
    * @returns {Promise} callback promise.
    */
   function _localTunnelCallback( resolve, reject, err, tunnel ) {
-    url = tunnel.url + path;
-
     if ( err ) {
-      tunnel.close();
       return reject( 'Error creating local tunnel for PSI: ' + err );
     }
+
+    url = tunnel.url + path;
 
     return resolve( {
       options: { strategy: strategy },
