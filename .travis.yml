@@ -5,6 +5,9 @@ dist: trusty
 python:
   - "2.7"
 
+addons:
+  chrome: stable
+
 cache: pip
 
 install:
