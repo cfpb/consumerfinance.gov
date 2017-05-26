@@ -14,7 +14,7 @@ defineSupportCode( function( { Then, When, After } ) {
   After( function() {
     browser.manage().logs().get( 'browser' )
     .then( function( browserLog ) {
-      console.log( browserLog );
+      // console.log( browserLog );
     } );
   } );
 
