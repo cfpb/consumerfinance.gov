@@ -9,7 +9,9 @@ const linkChooser = require(
 const { defineSupportCode } = require( 'cucumber' );
 const { expect } = require( 'chai' );
 
-defineSupportCode( function( { Then, When, After } ) {
+defineSupportCode( function( { Then, When, After, setDefaultTimeout} ) {
+
+  setDefaultTimeout(10800);
 
   After( function() {
     browser.manage().logs().get( 'browser' )

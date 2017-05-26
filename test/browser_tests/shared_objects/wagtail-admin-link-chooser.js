@@ -23,7 +23,7 @@ const selectedLink = {
 function enterSearchText( text ) {
   const searchInput = element( by.css( elements.searchInput ) );
 
-  return browser.wait( EC.visibilityOf( searchInput ), 500 )
+  return browser.wait( EC.visibilityOf( searchInput ) )
          .then( function() {
            searchInput.sendKeys( text );
          } );
