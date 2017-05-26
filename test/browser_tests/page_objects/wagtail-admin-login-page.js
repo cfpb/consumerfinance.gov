@@ -14,7 +14,7 @@ class WagtailLoginPage extends BasePage {
     this.URL = '/admin';
   }
 
-  enterLoginCriteria( USER=USERS.ADMIN ) {
+  enterLoginCriteria( USER = USERS.ADMIN ) {
     this.userName.sendKeys( USER.USERNAME );
 
     return this.userPassword.sendKeys( USER.PASSWORD );
@@ -25,7 +25,7 @@ class WagtailLoginPage extends BasePage {
     return this.loginBtn.click();
   }
 
-  login( USER=USERS.ADMIN ) {
+  login( USER = USERS.ADMIN ) {
     var _this = this;
 
     function _login( url ) {

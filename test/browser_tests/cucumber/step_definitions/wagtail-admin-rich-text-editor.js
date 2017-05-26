@@ -9,11 +9,12 @@ const linkChooser = require(
 const { defineSupportCode } = require( 'cucumber' );
 const { expect } = require( 'chai' );
 
-defineSupportCode( function( { Then, When, After, setDefaultTimeout} ) {
+defineSupportCode( function( { Then, When, After, setDefaultTimeout } ) {
 
-  setDefaultTimeout(10800);
+  setDefaultTimeout( 10800 );
 
   After( function() {
+
     browser.manage().logs().get( 'browser' )
     .then( function( browserLog ) {
       // console.log( browserLog );
@@ -38,6 +39,7 @@ defineSupportCode( function( { Then, When, After, setDefaultTimeout} ) {
   } );
 
   When( /I clear the rich text editor/, function( ) {
+
 
     return richTextEditor.clearText();
   } );

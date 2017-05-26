@@ -79,3 +79,4 @@ Feature: Rich Text Editor
     Then the rich text editor should contain 1
     And I click the redo button in the rich text editor
     Then the rich text editor should contain 12345
+

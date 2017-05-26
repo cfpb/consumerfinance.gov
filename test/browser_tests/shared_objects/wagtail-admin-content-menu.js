@@ -61,28 +61,28 @@ function selectItem( componentName ) {
       }
     }
 
-    return menuComponentItem
+    return menuComponentItem;
   }
 
   function _clickMenuItem( menuItem ) {
 
     function _scrollIntoView() {
 
-     return  browser.executeScript(
+      return browser.executeScript(
                'arguments[0].scrollIntoView()',
-               menuItem
-             )
+                menuItem
+             );
     }
 
     return browser
-            .wait( EC.elementToBeClickable( menuItem ) )
-            .then( _scrollIntoView  )
-            .then( menuItem.click );
+           .wait( EC.elementToBeClickable( menuItem ) )
+           .then( _scrollIntoView )
+           .then( menuItem.click );
   }
 
-  return  fullWidthTextMenu.isActive()
-          .then( _getMenuItem )
-          .then( _clickMenuItem );
+  return fullWidthTextMenu.isActive()
+         .then( _getMenuItem )
+         .then( _clickMenuItem );
 }
 
 function open() {

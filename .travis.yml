@@ -6,7 +6,9 @@ python:
   - "2.7"
 
 addons:
-  chrome: stable
+  apt:
+    packages:
+      - google-chrome-beta
 
 cache: pip
 

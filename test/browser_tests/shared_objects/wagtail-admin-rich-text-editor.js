@@ -37,9 +37,9 @@ function clickButton( buttonName ) {
 
 function insertText( text ) {
 
-  return browser.wait( EC.elementToBeClickable( textArea )  )
+  return browser.wait( EC.elementToBeClickable( textArea ) )
          .then( function() {
-            return textArea.sendKeys( text );
+           return textArea.sendKeys( text );
          } );
 }
 

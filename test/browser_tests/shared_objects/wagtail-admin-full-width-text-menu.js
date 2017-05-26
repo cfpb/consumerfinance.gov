@@ -16,8 +16,8 @@ function isActive( ) {
 
 function getMenuItems() {
   const _fullWidthText = element
-                     .all( by.css( fullWidthTextSelector ) )
-                     .first();
+                         .all( by.css( fullWidthTextSelector ) )
+                         .first();
 
   function _getFullWidthTextElement( selector ) {
 
