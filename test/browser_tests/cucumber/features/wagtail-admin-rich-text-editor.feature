@@ -79,9 +79,3 @@ Feature: Rich Text Editor
     Then the rich text editor should contain 1
     And I click the redo button in the rich text editor
     Then the rich text editor should contain 12345
-
-  Scenario: Insert Internal Link
-    When I click the link button in the rich text editor
-    And I enter "CFGov" in the page chooser search field
-    And I select the link titled "CFGov"
-    Then the inserted link should have the correct format

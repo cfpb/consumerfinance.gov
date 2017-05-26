@@ -61,17 +61,25 @@ function selectItem( componentName ) {
       }
     }
 
-    return menuComponentItem;
+    return menuComponentItem
   }
 
   function _clickMenuItem( menuItem ) {
 
+    function _scrollIntoView() {
+     return  browser.executeScript(
+               'arguments[0].scrollIntoView()',
+               menuItem
+             )
+    }
+
     return browser
             .wait( EC.elementToBeClickable( menuItem ), 500 )
+            .then( _scrollIntoView  )
             .then( menuItem.click );
   }
 
-  return fullWidthTextMenu.isActive()
+  return  fullWidthTextMenu.isActive()
           .then( _getMenuItem )
           .then( _clickMenuItem );
 }
