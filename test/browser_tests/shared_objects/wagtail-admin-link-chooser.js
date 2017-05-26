@@ -39,7 +39,7 @@ function getLinkAttributes( linkSelector ) {
       attributes = {
         dataUrl:       linkAttributes['data-title'].value,
         editUrl:       linkAttributes['data-id'].value,
-        href:          linkAttributes.href.value,
+        href:          linkAttributes['data-url'].value,
         id:            linkAttributes['data-id'].value,
         linkType:      'page',
         title:         linkAttributes['data-title'].value,
@@ -58,8 +58,7 @@ function getLinkHTML( linkAttributes, linkType = selectedLink.type ) {
                          ` data-id="${ linkAttributes.id }"` +
                          ` data-parent-id="${ linkAttributes.parentId }"` +
                          ` data-linktype="${ linkAttributes.linkType }"` +
-                         ` data-original-title="${ linkAttributes.title }"` +
-                         ` title="">${ linkAttributes.title }</a>`;
+                         `>${ linkAttributes.title }</a>`;
 
   const mailLinkHTML = `<a href="maiilto:${ linkAttributes.url }"` +
                      ` data-original-title="${ linkAttributes.title }"` +
