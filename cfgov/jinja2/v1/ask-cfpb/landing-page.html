@@ -81,7 +81,7 @@
                         </div>
 
                         {% if disclaimer %}
-                        <div class="block">
+                        <div class="block block__sub block__flush-bottom">
                             {{ disclaimer.text | safe }}
                         </div>
                         {% endif %}
@@ -93,6 +93,21 @@
                 <section class="ask-search">
                     {{ ask_search_bar.render() }}
                 </section>
+                {% if about_us %}
+                <div class="block 
+                            block__bg
+                            block__flush-top
+                            block__flush-bottom
+                            ask-cfpb-banner">
+                    
+                    {{ parse_links( about_us.text )|safe }}
+                   
+                </div>
+                {% endif %}
+                
+
+                
+
             </div>
         </div>
     </main>

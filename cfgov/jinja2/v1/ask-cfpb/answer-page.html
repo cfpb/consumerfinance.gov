@@ -13,6 +13,16 @@
     {{ description|striptags|safe}}
 {% endblock %}
 
+{% block banner_top %}
+    {% if about_us %}
+        {% set value = {
+            'border_bottom': True,
+            'additional_classes': ' ask-cfpb-banner',
+            'content': about_us.text
+        } %}
+        {% include 'templates/content-banner.html' with context %}
+    {% endif %}
+{% endblock %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom ask-cfpb-page ask-cfpb-page__answer

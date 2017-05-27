@@ -17,7 +17,8 @@ var envvars = {
   SAUCE_SELENIUM_URL:      process.env.SAUCE_SELENIUM_URL,
   SAUCE_USERNAME:          process.env.SAUCE_USERNAME,
   SAUCE_ACCESS_KEY:        process.env.SAUCE_ACCESS_KEY,
-  ACHECKER_ID:             process.env.ACHECKER_ID
+  ACHECKER_ID:             process.env.ACHECKER_ID,
+  HEADLESS_CHROME_BINARY:  process.env.HEADLESS_CHROME_BINARY
 
   /* eslint-enable no-process-env */
 };

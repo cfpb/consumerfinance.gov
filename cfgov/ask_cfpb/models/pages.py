@@ -24,14 +24,13 @@ from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
-<<<<<<< HEAD
-from v1.util.filterable_list import FilterableListMixin
 from v1.models.snippets import ReusableText
-=======
->>>>>>> origin/master
+
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
+ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
+DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for educational materials'
 
 
 def get_valid_spanish_tags():
@@ -44,15 +43,14 @@ def get_valid_spanish_tags():
     return valid_spanish_tags
 
 
-<<<<<<< HEAD
-def get_disclaimer(language):
-    if language == 'en':
-        try:
-            return ReusableText.objects.get(
-                title='Legal disclaimer for educational materials')
-        except ReusableText.DoesNotExist:
-            pass
-=======
+def get_reusable_text_snippet(snippet_title):
+    try:
+        return ReusableText.objects.get(
+            title=snippet_title)
+    except ReusableText.DoesNotExist:
+        pass
+
+
 def get_ask_nav_items(request, current_page):
     from ask_cfpb.models import Category
     return [
@@ -64,7 +62,6 @@ def get_ask_nav_items(request, current_page):
         }
         for cat in Category.objects.all()
     ], True
->>>>>>> origin/master
 
 
 class AnswerLandingPage(LandingPage):
@@ -84,16 +81,16 @@ class AnswerLandingPage(LandingPage):
         from ask_cfpb.models import Category, Audience
         context = super(AnswerLandingPage, self).get_context(request)
         context['categories'] = Category.objects.all()
-<<<<<<< HEAD
-        context['audiences'] = Audience.objects.all()
-        context['disclaimer'] = get_disclaimer(self.language)
-=======
-        context['audiences'] = [
-            {'text': audience.name,
-             'url': '/ask-cfpb/audience-{}'.format(
-                    slugify(audience.name))}
-            for audience in Audience.objects.all()]
->>>>>>> origin/master
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['audiences'] = [
+                {'text': audience.name,
+                 'url': '/ask-cfpb/audience-{}'.format(
+                        slugify(audience.name))}
+                for audience in Audience.objects.all()]
         return context
 
     def get_template(self, request):
@@ -177,13 +174,14 @@ class AnswerCategoryPage(CFGOVPage):
             'paginator': paginator,
             'questions': paginator.page(page),
             'results_count': answers.count(),
-<<<<<<< HEAD
-            'disclaimer': get_disclaimer(self.language)
-=======
             'get_secondary_nav_items': get_ask_nav_items
->>>>>>> origin/master
         })
 
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
         return context
 
 
@@ -220,12 +218,14 @@ class AnswerResultsPage(CFGOVPage):
         context['paginator'] = paginator
         context['results'] = paginator.page(page)
         context['results_count'] = len(self.answers)
-<<<<<<< HEAD
-        context['disclaimer'] = get_disclaimer(self.language)
-=======
         context['get_secondary_nav_items'] = get_ask_nav_items
 
->>>>>>> origin/master
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['about_us'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+
         return context
 
     def get_template(self, request):
@@ -277,6 +277,12 @@ class AnswerAudiencePage(CFGOVPage):
             'results_count': len(answers),
             'get_secondary_nav_items': get_ask_nav_items
         })
+
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
 
         return context
 
@@ -390,8 +396,13 @@ class AnswerPage(CFGOVPage):
         if self.language == 'es':
             context['tags_es'] = [tag for tag in self.answer_base.tags_es
                                   if tag in get_valid_spanish_tags()]
-        context['disclaimer'] = get_disclaimer(self.language)
-        context['last_edited'] = self.answer_base.last_edited
+
+        elif self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['last_edited'] = self.answer_base.last_edited
         return context
 
     def get_template(self, request):

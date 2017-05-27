@@ -63,3 +63,13 @@
 
 {% endblock %}
 
+{% block banner_bottom %}
+    {% if about_us %}
+        {% set value = {
+            'border_top': True,
+            'additional_classes': ' ask-cfpb-banner',
+            'content': about_us.text
+        } %}
+        {% include 'templates/content-banner.html' with context %}
+    {% endif %}
+{% endblock %}
