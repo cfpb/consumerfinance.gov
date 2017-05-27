@@ -286,6 +286,50 @@
     overflow-x: hidden;
 }
 
+/* topdoc
+  name: Banner
+  family: cf-layout
+  patterns:
+    - name: Default example
+      markup: |
+          <div class="content_banner">
+              <div class="wrapper wrapper__match-content">
+              </div>
+          </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .content_banner
+            .wrapper
+            
+  tags:
+    - cf-layout
+*/
+
+@banner_bg: @gray-5;
+@banner_border: @gray-40;
+
+.content_banner {
+    background-color: @banner_bg;
+
+    .wrapper {
+        padding: unit( @grid_gutter-width / @base-font-size-px, em ) 
+                 unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+
+        .respond-to-range(@bp-sm-min, @bp-lg-max {
+            padding: unit( @grid_gutter-width / @base-font-size-px, em );
+        });
+    }
+
+    &__border-bottom {
+        border-bottom: 1px solid @banner_border;
+    }
+
+    &__border-top {
+        border-top: 1px solid @banner_border;
+    }
+}
 
 /* topdoc
   name: EOF
