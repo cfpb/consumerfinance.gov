@@ -220,12 +220,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
 {{ wagtailuserbar() }}
 
+{% block banner_top %}
+{% endblock %}
+
 <!-- PRIMARY CONTENT -->
 {% block content %}
     {# This will be replaced in templates that extend this template
     and override "content". #}
 {% endblock content %}
  <!-- /PRIMARY CONTENT -->
+
+{% block banner_bottom %}
+{% endblock %}
 
 {% block footer %}
     {% import 'organisms/footer.html' as o_footer with context %}

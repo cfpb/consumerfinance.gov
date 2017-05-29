@@ -1,7 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% import 'form_block.html' as form_block with context %}
-{% import 'molecules/featured-content.html' as featured_content %}
+{% import 'organisms/featured-content.html' as featured_content %}
 {% import 'organisms/post-preview.html' as post_preview with context %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
@@ -25,7 +25,8 @@
     {% for block in page.content -%}
         {% if 'featured_content' in block.block_type %}
             <div class="block
-                        block__flush-sides">
+                        block__flush-sides
+                        block__border">
                 {{ featured_content.render(block.value) }}
             </div>
         {% elif block.block_type == 'feedback' %}
