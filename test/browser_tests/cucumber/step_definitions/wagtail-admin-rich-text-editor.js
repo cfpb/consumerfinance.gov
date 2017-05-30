@@ -9,6 +9,8 @@ const linkChooser = require(
 const { defineSupportCode } = require( 'cucumber' );
 const { expect } = require( 'chai' );
 
+const { capture } = require( '../../util/screenshot.js' );
+
 defineSupportCode( function( { Then, When, After, setDefaultTimeout } ) {
 
   setDefaultTimeout( 10800 );
@@ -24,7 +26,9 @@ defineSupportCode( function( { Then, When, After, setDefaultTimeout } ) {
   When( /I click the (.*) button in the rich text editor/,
     function( buttonName ) {
 
-      return richTextEditor.clickButton( buttonName );
+      richTextEditor.clickButton( buttonName );
+
+      return capture( buttonName );
     }
   );
 
