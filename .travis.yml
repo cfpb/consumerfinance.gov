@@ -1,8 +1,14 @@
 language: python
 sudo: false
+dist: trusty
 
 python:
   - "2.7"
+
+addons:
+  apt:
+    packages:
+      - google-chrome-beta
 
 cache: pip
 
@@ -26,6 +32,7 @@ env:
   matrix:
     - RUNTEST=frontend
     - RUNTEST=backend
+    - RUNTEST=acceptance
 
 script:
   - ./run_travis.sh

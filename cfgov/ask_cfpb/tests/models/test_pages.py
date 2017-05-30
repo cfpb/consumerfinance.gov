@@ -632,3 +632,17 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             answer_page.get_template(mock_request),
             'ask-cfpb/answer-page-spanish-printable.html')
+
+    def test_get_reusable_text_snippet(self):
+        from ask_cfpb.models import get_reusable_text_snippet
+        from v1.models.snippets import ReusableText
+        test_snippet = ReusableText.objects.create(title='Test Snippet')
+        self.assertEqual(
+            get_reusable_text_snippet('Test Snippet'),
+            test_snippet)
+
+    def test_get_nonexistent_reusable_text_snippet(self):
+        from ask_cfpb.models import get_reusable_text_snippet
+        self.assertEqual(
+            get_reusable_text_snippet('Nonexistent Snippet'),
+            None)
