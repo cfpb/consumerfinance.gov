@@ -22,18 +22,20 @@ function _writeScreenShot( filename, data ) {
 
 /**
  * Process a screenshot generated from a browser.takeScreenshot() promise.
+ * @param {string} screenShotName - Name of the screenshot.
  * @param {string} png - A base64-encoded string to write to a file.
  */
-function _processScreenshot( screenShotName='screenshot.png', png ) {
-  _writeScreenShot( screenShotName + 'png', png );
+function _processScreenshot( screenShotName = 'screenshot', png ) {
+  _writeScreenShot( screenShotName + '.png', png );
 }
 
 /**
  * Capture a screenshot of the current browser window.
+ * @param {string} screenShotName - Name of the screenshot.
  */
 function capture( screenShotName ) {
   browser.takeScreenshot().then( function( bufferData ) {
-  	_processScreenshot( screenShotName, bufferData )
+    _processScreenshot( screenShotName, bufferData );
   } );
 }
 

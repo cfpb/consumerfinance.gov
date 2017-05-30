@@ -26,9 +26,7 @@ defineSupportCode( function( { Then, When, After, setDefaultTimeout } ) {
   When( /I click the (.*) button in the rich text editor/,
     function( buttonName ) {
 
-      richTextEditor.clickButton( buttonName );
-
-      return capture( buttonName );
+      return richTextEditor.clickButton( buttonName );
     }
   );
 
