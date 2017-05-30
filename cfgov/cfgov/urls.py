@@ -18,6 +18,7 @@ from flags.urls import flagged_url, flagged_urls
 from ask_cfpb.views import (
     ask_search,
     ask_autocomplete,
+    print_answer,
     view_answer
 )
 import ccdb5.views as CCDB5
@@ -432,6 +433,9 @@ if settings.DEPLOY_ENVIRONMENT == 'build':
         url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
             view_answer,
             name='ask-spanish-answer'),
+        url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
+            print_answer,
+            name='ask-spanish-print-answer'),
         url(r'^(?i)ask-cfpb/search/$',
             ask_search,
             name='ask-search-en'),
