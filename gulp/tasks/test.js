@@ -44,20 +44,22 @@ function testUnitScripts( cb ) {
 }
 
 /**
+
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {
   var params = minimist( process.argv.slice( 2 ) );
-  var toxParams = ['-e', 'acceptance'];
+  var toxParams = [ '-e', 'acceptance' ];
   var SPECS_KEY = 'specs';
 
   // Modifying specs format to pass to tox.
   if ( params && params[SPECS_KEY] ) {
-    toxParams.push( SPECS_KEY + '=' + params[ SPECS_KEY ] );
+    toxParams.push( SPECS_KEY + '=' + params[SPECS_KEY] );
   }
 
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
   .once( 'close', function( code ) {
+
     if ( code ) {
       gulpUtil.log( 'Tox tests exited with code ' + code );
       process.exit( 1 );
@@ -246,7 +248,7 @@ function testPerf() {
 function spawnProtractor( suite ) {
   var UNDEFINED;
 
-  if( typeof suite === 'function' ) {
+  if ( typeof suite === 'function' ) {
     suite = UNDEFINED;
   }
 

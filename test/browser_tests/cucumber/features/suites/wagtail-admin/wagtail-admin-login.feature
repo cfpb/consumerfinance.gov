@@ -6,4 +6,5 @@ Feature: Wagtail Login
   Scenario: Logging into the admin
   	Given I goto /login
     When I enter my login criteria
+    And I click the login button
     Then I should be able to access the admin section
