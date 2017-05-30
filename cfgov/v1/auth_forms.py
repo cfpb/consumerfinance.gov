@@ -97,7 +97,7 @@ class LoginForm(AuthenticationForm):
                         'This account is temporarily locked; '
                         'please try later or <a href="/admin/password_reset/" '
                         'style="color:white;font-weight:bold">'
-                        'reset your password</a>'
+                        'reset your password</a>.'
                     )
                 else:
                     fa.save()
@@ -117,11 +117,10 @@ class LoginForm(AuthenticationForm):
 
                     if dt_now > current_password_data.expires_at:
                         raise ValidationError(
-                            'This account is temporarily locked; '
-                            'please try later or '
+                            'Your password has expired. Please '
                             '<a href="/admin/password_reset/" '
                             'style="color:white;font-weight:bold">'
-                            'reset your password</a>'
+                            'reset your password</a>.'
                         )
 
                 except ObjectDoesNotExist:
@@ -140,7 +139,7 @@ class LoginForm(AuthenticationForm):
                 'This account is temporarily locked; '
                 'please try later or <a href="/admin/password_reset/" '
                 'style="color:white;font-weight:bold">'
-                'reset your password</a>'
+                'reset your password</a>.'
             )
 
 
