@@ -31,7 +31,7 @@ function clickButton( buttonName ) {
   const btn = element( by.css( buttons[normalizedButtonName] ) );
 
   return browser
-         .wait( EC.elementToBeClickable( btn ) )
+         .wait( EC.visibilityOf( btn ) )
          .then( btn.click );
 }
 
