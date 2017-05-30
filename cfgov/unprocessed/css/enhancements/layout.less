@@ -161,41 +161,6 @@
     } );
 }
 
-/*
-  name: Adjustments to Featured Content Module
-  notes:
-    - "Adding border to FCM"
-    - "Adjustment to make FCM work with video"
- */
-
-.featured-content-module {
-    border: 1px solid @block__border;
-}
-
-.featured-content-module_img {
-    .respond-to-min(@fcm-bp-min, {
-        max-height: 320px;
-        width: auto;
-        height: auto;
-    });
-}
-
-.featured-content-module_visual {
-    .respond-to-max(@fcm-bp-max, {
-        margin-bottom: @grid_gutter-width;
-    });
-
-    .video-player_image {
-        max-width: none;
-        height: 320px;
-    }
-
-}
-
-.featured-content-module_visual.video-playing {
-    left: 0;
-}
-
 /* topdoc
   name: Adjustments to max line length
   family: cf-layout
@@ -267,7 +232,7 @@
     - No support for equal-height columns below IE10.
       Can be used in conjunction with other content-l
       classes to provide column widths and layout for
-      browsers that do not support flexbox. 
+      browsers that do not support flexbox.
 */
 
 .equal-height_container {
@@ -293,7 +258,7 @@
 .content-l {
     .respond-to-min( @bp-sm-min, {
         &__equal-height {
-            .equal-height_container;    
+            .equal-height_container;
         }
 
         &_col__equal-height {
@@ -306,7 +271,7 @@
 
         &_footer__equal-height {
             .equal-height_footer;
-        }  
+        }
     } );
 }
 
@@ -321,6 +286,50 @@
     overflow-x: hidden;
 }
 
+/* topdoc
+  name: Banner
+  family: cf-layout
+  patterns:
+    - name: Default example
+      markup: |
+          <div class="content_banner">
+              <div class="wrapper wrapper__match-content">
+              </div>
+          </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .content_banner
+            .wrapper
+            
+  tags:
+    - cf-layout
+*/
+
+@banner_bg: @gray-5;
+@banner_border: @gray-40;
+
+.content_banner {
+    background-color: @banner_bg;
+
+    .wrapper {
+        padding: unit( @grid_gutter-width / @base-font-size-px, em ) 
+                 unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+
+        .respond-to-range(@bp-sm-min, @bp-lg-max {
+            padding: unit( @grid_gutter-width / @base-font-size-px, em );
+        });
+    }
+
+    &__border-bottom {
+        border-bottom: 1px solid @banner_border;
+    }
+
+    &__border-top {
+        border-top: 1px solid @banner_border;
+    }
+}
 
 /* topdoc
   name: EOF
