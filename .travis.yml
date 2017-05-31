@@ -11,6 +11,8 @@ addons:
       - google-chrome-beta
 
 cache: pip
+  directories:
+    - node_modules
 
 install:
   - pip install -r requirements/travis.txt
