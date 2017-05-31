@@ -82,7 +82,7 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
     _target.addEventListener( 'click', _handleClick );
 
-    if (!_dom.getAttribute( 'data-read-more' ) ) {
+    if ( !_dom.getAttribute( 'data-read-more' ) ) {
       window.addEventListener( 'resize', _resizeHandler );
     }
 
