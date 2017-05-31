@@ -2,7 +2,7 @@
 
 var notify = require( 'gulp-notify' );
 
-module.exports = function() {
+module.exports = function( err, exitProcess = false ) {
   var args = Array.prototype.slice.call( arguments );
 
   // Send error to notification center with gulp-notify
@@ -13,4 +13,9 @@ module.exports = function() {
 
   // Keep gulp from hanging on this task
   this.emit( 'end' );
+
+  console.log( exitProcess.error, 'err' )
+  if ( exitProcess === true ) {
+    process.exit( 1 );
+  }
 };
