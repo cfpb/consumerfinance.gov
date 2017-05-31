@@ -62,8 +62,8 @@ class AnswerViewTestCase(django.test.TestCase):
         (annotated_answer, links) = annotate_links(mock_answer)
         self.assertEqual(
             annotated_answer,
-            '<p>Answer with a <a href="http://fake.com">'
-            'fake link.</a><sup>1</sup></p>')
+            '<html><body><p>Answer with a <a href="http://fake.com">fake '
+            'link.</a><sup>1</sup></p></body></html>')
         self.assertEqual(links, [(1, str('http://fake.com'))])
 
     def test_annotate_links_no_href(self):

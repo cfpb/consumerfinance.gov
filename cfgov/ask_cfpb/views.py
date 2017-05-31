@@ -43,7 +43,7 @@ def annotate_links(answer_text):
         super_tag.string = str(index)
         parent.insert(link_location + 1, super_tag)
         index += 1
-    return (unicode(soup.body.contents[0]), footnotes)
+    return (unicode(soup), footnotes)
 
 
 def print_answer(request, slug, language, answer_id):
