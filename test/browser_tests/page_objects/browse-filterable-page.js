@@ -1,18 +1,14 @@
 'use strict';
 
-var filterableListControl = require( '../shared_objects/filterable-list-control' );
+const filterableListControl = require( '../shared_objects/filterable-list-control' );
+const BaseFilteablePage = require( './base-filterable-page.js' );
 
-function BrowseFilterablePage() {
+class BrowseFilterablePage extends BaseFilteablePage {
 
-  Object.assign( this, filterableListControl );
-
-  this.gotoURL = function(url='/bfp') {
-    browser.get(url);
-  };
-
-  this.results = element.all(by.css('.o-post-preview_content'));
-  this.first_result = this.results.first();
-  this.last_result = this.results.last();
+  constructor() {
+    super();
+    this.URL = '/bfp';
+  }
 }
 
 module.exports = BrowseFilterablePage;
