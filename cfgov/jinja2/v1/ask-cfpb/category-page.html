@@ -54,6 +54,12 @@
         <div class="block block__sub">
             {{ pagination.render( paginator.num_pages, current_page, '', 0 ) }}
         </div>  
+
+        {% if disclaimer %}
+        <div class="block">
+            {{ disclaimer.text | safe }}
+        </div>
+        {% endif %}
     </section>
     {{ ask_search_bar.render( 'right' ) }}
 

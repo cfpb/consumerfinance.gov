@@ -26,9 +26,11 @@ from v1 import blocks as v1_blocks
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
 from v1.models.snippets import ReusableText
 
+
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
 ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
+DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for educational materials'
 
 
 def get_valid_spanish_tags():
@@ -82,11 +84,13 @@ class AnswerLandingPage(LandingPage):
         if self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
-        context['audiences'] = [
-            {'text': audience.name,
-             'url': '/ask-cfpb/audience-{}'.format(
-                    slugify(audience.name))}
-            for audience in Audience.objects.all()]
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['audiences'] = [
+                {'text': audience.name,
+                 'url': '/ask-cfpb/audience-{}'.format(
+                        slugify(audience.name))}
+                for audience in Audience.objects.all()]
         return context
 
     def get_template(self, request):
@@ -172,9 +176,12 @@ class AnswerCategoryPage(CFGOVPage):
             'results_count': answers.count(),
             'get_secondary_nav_items': get_ask_nav_items
         })
+
         if self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
         return context
 
 
@@ -211,10 +218,13 @@ class AnswerResultsPage(CFGOVPage):
         context['paginator'] = paginator
         context['results'] = paginator.page(page)
         context['results_count'] = len(self.answers)
+        context['get_secondary_nav_items'] = get_ask_nav_items
+
         if self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
-        context['get_secondary_nav_items'] = get_ask_nav_items
+            context['about_us'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
 
         return context
 
@@ -267,6 +277,12 @@ class AnswerAudiencePage(CFGOVPage):
             'results_count': len(answers),
             'get_secondary_nav_items': get_ask_nav_items
         })
+
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
 
         return context
 
@@ -380,9 +396,13 @@ class AnswerPage(CFGOVPage):
         if self.language == 'es':
             context['tags_es'] = [tag for tag in self.answer_base.tags_es
                                   if tag in get_valid_spanish_tags()]
+
         elif self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['last_edited'] = self.answer_base.last_edited
         return context
 
     def get_template(self, request):
