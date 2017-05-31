@@ -143,11 +143,8 @@ class AnswerModelTestCase(TestCase):
     def test_spanish_page_print_blank_answer_404(self):
         test_answer = self.prepare_answer(
             id=999,
-            answer='Mock answer 1',
             answer_es='',
-            slug='mock-answer-en-1234',
-            slug_es='mock-spanish-answer-es-1234',
-            question='Mock question1',
+            slug_es='mock-spanish-answer-es-999',
             question_es='Mock Spanish question1',
             update_spanish_page=True)
         test_answer.save()
