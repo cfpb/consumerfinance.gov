@@ -10,7 +10,8 @@ addons:
     packages:
       - google-chrome-beta
 
-cache: pip
+cache:
+  pip
   directories:
     - node_modules
 
