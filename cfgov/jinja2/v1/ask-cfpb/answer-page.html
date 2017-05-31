@@ -34,22 +34,42 @@
                 {{ page.snippet | safe }}
             </h3>
         {% endif %}
-        <div>
-            {{ page.answer | safe }}
+        <div data-qa-hook="expandable" 
+             data-read-more="true"
+             class="o-expandable
+                    o-expandable__read-more">
+            <div class="o-expandable_content" id="answer-content">
+                <div class="o-expandable_content-animated">
+                    <div class="answer-text">
+                        {{ page.answer | safe }}
+                    </div>
+                    {% if audiences %} 
+                    <div class="u-mt15">
+                        {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
+                    </div>
+                    {% endif %}
 
-        </div>
-
-        {% if audiences %} 
-            <div class="u-mt15">
-                {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
+                    {# This brings in the feedback module #}
+                    {% for block in page.content %}
+                        {{- form_block.render(block, 'content', loop.index0) -}}
+                    {% endfor %}
+                </div>
+                <div class="o-expandable__read-more_gradient"></div>
             </div>
-        {% endif %}
-
-        {# This brings in the feedback module #}
-        {% for block in page.content %}
-            {{- form_block.render(block, 'content', loop.index0) -}}
-        {% endfor %}
-
+            
+            <a class="o-expandable_target jump-link o-expandable_link" title="Expand content">
+                <span class="jump-link_text">
+                    <span class="o-expandable_cue o-expandable_cue-open">
+                        Read full answer
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                   </span>
+                    <span class="o-expandable_cue o-expandable_cue-close">
+                        Hide full answer
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                   </span>
+                </span>
+            </a>
+        </div>
     </div>
     {{ ask_search_bar.render( 'left' ) }}
 
