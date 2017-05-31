@@ -148,29 +148,29 @@ class AnswerViewTestCase(django.test.TestCase):
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.autocomplete')
     def test_autocomplete_en(self, mock_autocomplete):
-        mock_autocomplete.return_value = json.dumps({'url': 'url',
-                                                     'question': 'question'})
+        mock_search_result = mock.Mock()
+        mock_search_result.autocomplete = 'question'
+        mock_search_result.url = 'url'
+        mock_autocomplete.return_value = [mock_search_result]
         result = client.get(reverse(
-            'ask-autocomplete-en'), {'q': 'payday'})
+            'ask-autocomplete-en'))
         self.assertEqual(mock_autocomplete.call_count, 1)
-        self.assertTrue(
-            mock_autocomplete.called_with(language='en', q='payday'))
         output = json.loads(result.content)
         self.assertEqual(
-            sorted(json.loads(output).keys()),
+            sorted(output[0].keys()),
             ['question', 'url'])
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.autocomplete')
     def test_autocomplete_es(self, mock_autocomplete):
-        mock_autocomplete.return_value = json.dumps({'url': 'url',
-                                                     'question': 'question'})
+        mock_search_result = mock.Mock()
+        mock_search_result.autocomplete = 'question'
+        mock_search_result.url = 'url'
+        mock_autocomplete.return_value = [mock_search_result]
         result = client.get(reverse(
             'ask-autocomplete-es',
-            kwargs={'language': 'es'}), {'q': 'payday'})
+            kwargs={'language': 'es'}))
         self.assertEqual(mock_autocomplete.call_count, 1)
-        self.assertTrue(
-            mock_autocomplete.called_with(language='es', q='payday'))
         output = json.loads(result.content)
         self.assertEqual(
-            sorted(json.loads(output).keys()),
+            sorted(output[0].keys()),
             ['question', 'url'])
