@@ -86,9 +86,9 @@ You can optionally install a different version with Homebrew.
 
 #### Elasticsearch
 
-!!! note
-  __These instructions are deprecated since Elasticsearch 1.7
-  is no longer supported by `brew`__
+!!! warning
+    __These instructions are deprecated since Elasticsearch 1.7
+    is no longer supported by `brew`.__
 
 [Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
 however you’d like. We use [Homebrew](http://brew.sh) for developing on OS X):
