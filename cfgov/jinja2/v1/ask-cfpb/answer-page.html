@@ -2,6 +2,7 @@
 {% import 'macros/time.html' as time %}
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
+{% import 'macros/util/format/datetime.html' as dt %}
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block title %}
@@ -31,6 +32,10 @@
     <div class="block
                 block__flush-top
                 block__sub">
+        {% if last_edited %}
+        <time datetime='{{ last_edited }}' pubdate class="answer-edited-date">updated {{ dt.format_date(last_edited) }}</time>
+        {% endif %}
+
         <h2>{{ page.question | striptags }}</h2>
     </div>
 
@@ -56,9 +61,17 @@
         {% endif %}
 
         {# This brings in the feedback module #}
-        {% for block in page.content %}
-            {{- form_block.render(block, 'content', loop.index0) -}}
-        {% endfor %}
+        {% for block in page.content -%}
+            {% if block.block_type == 'feedback' %}
+                {{- form_block.render(block, 'content', loop.index0) -}}
+            {% endif %}
+        {%- endfor %}
+
+        {% if disclaimer %}
+        <div class="block">
+            {{ disclaimer.text | safe }}
+        </div>
+        {% endif %}
 
     </div>
     {{ ask_search_bar.render( 'left' ) }}
