@@ -76,7 +76,7 @@ class AnswerViewTestCase(django.test.TestCase):
         site.save()
         with self.assertRaises(RuntimeError) as context:
             annotate_links('answer')
-        self.assertIn('no default', str(context.exception))
+        self.assertIn('no default wagtail site', str(context.exception))
 
     def test_bad_language_search(self):
         with self.assertRaises(NoReverseMatch):
