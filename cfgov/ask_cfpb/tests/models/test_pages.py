@@ -245,16 +245,10 @@ class AnswerModelTestCase(TestCase):
             'ask-english-answer', args=['mock-answer', 'en', 1234]))
         self.assertEqual(response.status_code, 200)
 
-    def test_view_answer(self):
+    def test_view_answer_302_for_healed_slug(self):
         response = self.client.get(reverse(
-            'ask-english-answer', args=['mock-answer', 'en', 1234]))
+            'ask-english-answer', args=['mock-slug', 'en', 1234]))
         self.assertEqual(response.status_code, 302)
-
-    def test_view_answer_302(self):
-        response_302 = self.client.get(reverse(
-            'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
-        self.assertTrue(isinstance(response_302, HttpResponse))
-        self.assertEqual(response_302.status_code, 302)
 
     def test_view_answer_redirected(self):
         self.page1.redirect_to = self.page2.answer_base
