@@ -433,7 +433,7 @@ if settings.DEPLOY_ENVIRONMENT == 'build':
         url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
             view_answer,
             name='ask-spanish-answer'),
-        url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
+        url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',  # noqa: E501
             print_answer,
             name='ask-spanish-print-answer'),
         url(r'^(?i)ask-cfpb/search/$',
