@@ -41,7 +41,7 @@ class HousingCounselorView(TemplateView):
     def get_counselors(request, zipcode):
         """Return list of housing counselors closest to a given zipcode.
 
-        Queries a locally running django-hud API.
+        Queries a local or remote django-hud API
         """
         api_url = urljoin(settings.DJANGO_HUD_API_ENDPOINT,zipcode)
 
