@@ -9,7 +9,6 @@ from django.apps import apps
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.http import HttpRequest
 import django.test
-from django.test import Client
 from django.utils import timezone
 from wagtail.wagtailcore.models import Site
 
@@ -18,7 +17,6 @@ from ask_cfpb.models import (
 from ask_cfpb.views import annotate_links
 from v1.util.migrations import get_or_create_page, get_free_path
 
-client = Client()
 now = timezone.now()
 
 
@@ -82,13 +80,13 @@ class AnswerViewTestCase(django.test.TestCase):
 
     def test_bad_language_search(self):
         with self.assertRaises(NoReverseMatch):
-            client.get(reverse(
+            self.client.get(reverse(
                 'ask-search-en',
                 kwargs={'language': 'zz'}), {'q': 'payday'})
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_en_search_no_such_page(self, mock_query):
-        response = client.get(reverse(
+        response = self.client.get(reverse(
             'ask-search-en'), {'q': 'payday'})
         self.assertEqual(mock_query.call_count, 1)
         self.assertTrue(mock_query.called_with(language='en', q='payday'))
@@ -110,7 +108,7 @@ class AnswerViewTestCase(django.test.TestCase):
         mock_return.autocomplete = 'A mock question'
         mock_return.text = 'Mock answer text.'
         mock_query.return_value = [mock_return]
-        response = client.get(reverse(
+        response = self.client.get(reverse(
             'ask-search-en'), {'q': 'payday'})
         self.assertEqual(mock_query.call_count, 1)
         self.assertTrue(mock_query.called_with(language='en', q='payday'))
@@ -121,7 +119,7 @@ class AnswerViewTestCase(django.test.TestCase):
 
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_es_search(self, mock_query):
-        client.get(reverse(
+        self.client.get(reverse(
             'ask-search-es', kwargs={'language': 'es'}), {'q': 'payday'})
         self.assertEqual(mock_query.call_count, 1)
         self.assertTrue(mock_query.called_with(language='es', q='payday'))
@@ -133,7 +131,7 @@ class AnswerViewTestCase(django.test.TestCase):
         return_mock.url = 'url'
         return_mock.autocomplete = 'question text'
         page = self.create_answer_results_page(language='en')
-        client.get(reverse(
+        self.client.get(reverse(
             'ask-search-en'))
         self.assertEqual(mock_query.call_count, 1)
         self.assertEqual(page.language, 'en')
@@ -149,7 +147,7 @@ class AnswerViewTestCase(django.test.TestCase):
         return_mock.url = 'url'
         return_mock.autocomplete = 'question text'
         page = self.create_answer_results_page(language='es')
-        client.get(reverse(
+        self.client.get(reverse(
             'ask-search-es',
             kwargs={'language': 'es'}))
         self.assertEqual(mock_query.call_count, 1)
@@ -163,7 +161,7 @@ class AnswerViewTestCase(django.test.TestCase):
     def test_en_search_as_json(self, mock_query):
         mock_query.autocomplete.return_value = ['question text']
         mock_query.url.return_value = ['answer/url']
-        client.get(reverse(
+        self.client.get(reverse(
             'ask-search-en-json',
             kwargs={'as_json': 'json'}))
         self.assertEqual(mock_query.call_count, 1)
@@ -178,7 +176,7 @@ class AnswerViewTestCase(django.test.TestCase):
         mock_search_result.autocomplete = 'question'
         mock_search_result.url = 'url'
         mock_autocomplete.return_value = [mock_search_result]
-        result = client.get(reverse(
+        result = self.client.get(reverse(
             'ask-autocomplete-en'))
         self.assertEqual(mock_autocomplete.call_count, 1)
         output = json.loads(result.content)
@@ -192,7 +190,7 @@ class AnswerViewTestCase(django.test.TestCase):
         mock_search_result.autocomplete = 'question'
         mock_search_result.url = 'url'
         mock_autocomplete.return_value = [mock_search_result]
-        result = client.get(reverse(
+        result = self.client.get(reverse(
             'ask-autocomplete-es',
             kwargs={'language': 'es'}))
         self.assertEqual(mock_autocomplete.call_count, 1)
