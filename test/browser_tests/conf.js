@@ -88,9 +88,9 @@ function _chooseProtractorSpecs( params ) {
     for ( i = 0, len = specPatterns.length; i < len; i++ ) {
       specs = specs.concat( environment.specsBasePath + specPatterns[i] );
     }
-  // If neither a suite or specs are specified, use all specs.
+  // If neither a suite or specs are specified, use the default suite.
   } else {
-    specs = specs.concat( environment.specsBasePath + '.feature' );
+    specs = specs.concat( environment.suites.default );
   }
 
   return specs;
