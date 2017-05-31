@@ -14,7 +14,7 @@ Short description explaining the high-level reason for the pull request
 
 ## Testing
 
--
+1.
 
 ## Screenshots
 
@@ -32,7 +32,7 @@ Short description explaining the high-level reason for the pull request
 * [ ] PR has an informative and human-readable title
 * [ ] Changes are limited to a single goal (no scope creep)
 * [ ] Code can be automatically merged (no conflicts)
-* [ ] Code follows the standards laid out in the [front end playbook](https://github.com/cfpb/front-end)
+* [ ] Code follows the standards laid out in the [development playbook](https://github.com/cfpb/development)
 * [ ] Passes all existing automated tests
 * [ ] New functions include new tests
 * [ ] New functions are documented (with a description, list of inputs, and expected output)
