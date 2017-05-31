@@ -13,7 +13,6 @@ from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponse
 from django.test import TestCase
-from django.test import Client
 from django.utils import html
 
 from v1.util.migrations import get_or_create_page, get_free_path
@@ -24,7 +23,6 @@ from ask_cfpb.models.pages import (
     AnswerPage, AnswerCategoryPage, AnswerAudiencePage)
 
 html_parser = HTMLParser.HTMLParser()
-client = Client()
 now = timezone.now()
 
 
@@ -108,13 +106,17 @@ class AnswerModelTestCase(TestCase):
         self.answer1234 = self.prepare_answer(
             id=1234,
             answer='Mock answer 1',
+            answer_es='Mock Spanish answer',
+            slug='mock-answer-en-1234',
+            slug_es='mock-spanish-answer-es-1234',
             question='Mock question1',
-            search_tags_es='hipotecas')
+            question_es='Mock Spanish question1',
+            search_tags_es='hipotecas',
+            update_english_page=True,
+            update_spanish_page=True)
         self.answer1234.save()
-        self.page1 = self.create_answer_page()
-        self.page1.answer_base = self.answer1234
-        self.page1.parent = self.english_parent_page
-        self.page1.save()
+        self.page1 = self.answer1234.english_page
+        self.page1_es = self.answer1234.spanish_page
         self.answer5678 = self.prepare_answer(
             id=5678,
             answer='Mock answer 2',
@@ -125,6 +127,53 @@ class AnswerModelTestCase(TestCase):
         self.page2.answer_base = self.answer5678
         self.page2.parent = self.english_parent_page
         self.page2.save()
+
+    def test_spanish_print_page(self):
+        response = self.client.get(reverse(
+            'ask-spanish-print-answer',
+            args=['slug', 'es', '1234']))
+        self.assertEqual(response.status_code, 200)
+
+    def test_spanish_print_page_no_answer_404(self):
+        response = self.client.get(reverse(
+            'ask-spanish-print-answer',
+            args=['slug', 'es', '9999']))
+        self.assertEqual(response.status_code, 404)
+
+    def test_spanish_page_print_blank_answer_404(self):
+        test_answer = self.prepare_answer(
+            id=999,
+            answer='Mock answer 1',
+            answer_es='',
+            slug='mock-answer-en-1234',
+            slug_es='mock-spanish-answer-es-1234',
+            question='Mock question1',
+            question_es='Mock Spanish question1',
+            update_spanish_page=True)
+        test_answer.save()
+        response = self.client.get(reverse(
+            'ask-spanish-print-answer',
+            args=['slug', 'es', 999]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_english_page_context(self):
+        from v1.models.snippets import ReusableText
+        from ask_cfpb.models.pages import get_reusable_text_snippet
+        rt = ReusableText(title='About us (For consumers)')
+        rt.save()
+        page = self.page1
+        page.language = 'en'
+        page.save()
+        test_context = page.get_context(HttpRequest())
+        self.assertEqual(
+            test_context['about_us'],
+            get_reusable_text_snippet('About us (For consumers)'))
+
+    def test_english_page_get_template(self):
+        page = self.page1
+        self.assertEqual(
+            page.get_template(HttpRequest()),
+            'ask-cfpb/answer-page.html')
 
     def test_facet_map(self):
         self.answer1234.category.add(self.category)
@@ -162,14 +211,14 @@ class AnswerModelTestCase(TestCase):
             'ask-cfpb/answer-tag-spanish-results.html')
 
     def test_routable_page_base_returns_404(self):
-        response = client.get(
+        response = self.client.get(
             self.tag_results_page.url +
             self.tag_results_page.reverse_subpage('spanish_tag_base'))
         self.assertEqual(response.status_code, 404)
 
     def test_routable_page_subpage_bad_tag_returns_404(self):
         page = self.tag_results_page
-        response = client.get(
+        response = self.client.get(
             page.url + page.reverse_subpage(
                 'buscar_por_etiqueta',
                 kwargs={'tag': 'hippopotamus'}))
@@ -177,7 +226,7 @@ class AnswerModelTestCase(TestCase):
 
     def test_routable_page_subpage_valid_tag_returns_200(self):
         page = self.tag_results_page
-        response = client.get(
+        response = self.client.get(
             page.url + page.reverse_subpage(
                 'buscar_por_etiqueta',
                 kwargs={'tag': 'hipotecas'}))
@@ -188,14 +237,21 @@ class AnswerModelTestCase(TestCase):
             'buscar_por_etiqueta', kwargs={'tag': 'hipotecas'})
         self.assertEqual(response, 'hipotecas/')
 
-    def test_view_answer_200(self):
-        response_200 = client.get(reverse(
-            'ask-english-answer', args=['mock-answer-page', 'en', 1234]))
-        self.assertTrue(isinstance(response_200, HttpResponse))
-        self.assertEqual(response_200.status_code, 200)
+    def test_view_answer_exact_slug(self):
+        page = self.page1
+        page.slug = 'mock-answer-en-1234'
+        page.save()
+        response = self.client.get(reverse(
+            'ask-english-answer', args=['mock-answer', 'en', 1234]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_answer(self):
+        response = self.client.get(reverse(
+            'ask-english-answer', args=['mock-answer', 'en', 1234]))
+        self.assertEqual(response.status_code, 302)
 
     def test_view_answer_302(self):
-        response_302 = client.get(reverse(
+        response_302 = self.client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
         self.assertTrue(isinstance(response_302, HttpResponse))
         self.assertEqual(response_302.status_code, 302)
@@ -203,7 +259,7 @@ class AnswerModelTestCase(TestCase):
     def test_view_answer_redirected(self):
         self.page1.redirect_to = self.page2.answer_base
         self.page1.save()
-        response_302 = client.get(reverse(
+        response_302 = self.client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
         self.assertTrue(isinstance(response_302, HttpResponse))
         self.assertEqual(response_302.status_code, 302)

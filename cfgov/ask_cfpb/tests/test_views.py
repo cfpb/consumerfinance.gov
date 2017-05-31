@@ -11,9 +11,11 @@ from django.http import HttpRequest
 import django.test
 from django.test import Client
 from django.utils import timezone
+from wagtail.wagtailcore.models import Site
 
 from ask_cfpb.models import (
     AnswerResultsPage, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
+from ask_cfpb.views import annotate_links
 from v1.util.migrations import get_or_create_page, get_free_path
 
 client = Client()
@@ -53,6 +55,30 @@ class AnswerViewTestCase(django.test.TestCase):
         page = mommy.prepare(AnswerResultsPage, **kwargs)
         page.save()
         return page
+
+    def test_annotate_links(self):
+        mock_answer = (
+            '<p>Answer with a <a href="http://fake.com">fake link.</a></p>')
+        (annotated_answer, links) = annotate_links(mock_answer)
+        self.assertEqual(
+            annotated_answer,
+            '<p>Answer with a <a href="http://fake.com">'
+            'fake link.</a><sup>1</sup></p>')
+        self.assertEqual(links, [(1, str('http://fake.com'))])
+
+    def test_annotate_links_no_href(self):
+        mock_answer = (
+            '<p>Answer with a <a>fake link.</a></p>')
+        (annotated_answer, links) = annotate_links(mock_answer)
+        self.assertEqual(links, [])
+
+    def test_annotate_links_no_site(self):
+        site = Site.objects.get(is_default_site=True)
+        site.is_default_site = False
+        site.save()
+        with self.assertRaises(RuntimeError) as context:
+            annotate_links('answer')
+        self.assertIn('no default', str(context.exception))
 
     def test_bad_language_search(self):
         with self.assertRaises(NoReverseMatch):
