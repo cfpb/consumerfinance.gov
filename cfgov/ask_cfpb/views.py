@@ -5,7 +5,7 @@ from haystack.query import SearchQuerySet
 from haystack.inputs import Clean
 
 from django.shortcuts import get_object_or_404, redirect  # render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from ask_cfpb.models import (
     AnswerPage,
@@ -61,9 +61,12 @@ def ask_search(request, language='en', as_json=False):
 def ask_autocomplete(request, language='en'):
     term = request.GET.get(
         'term', '').strip().replace('<', '')
-    if language == 'en':
-        sqs = SearchQuerySet().models(EnglishAnswerProxy)
-    elif language == 'es':
+    if language == 'es':
         sqs = SearchQuerySet().models(SpanishAnswerProxy)
+    else:
+        sqs = SearchQuerySet().models(EnglishAnswerProxy)
     sqs = sqs.autocomplete(autocomplete=term)
-    return HttpResponse(json.dumps(sqs), content_type="application/json")
+    results = [{'question': result.autocomplete,
+                'url': result.url}
+               for result in sqs[:20]]
+    return JsonResponse(results, safe=False)
