@@ -43,7 +43,7 @@ class HousingCounselorView(TemplateView):
 
         Queries a local or remote django-hud API
         """
-        api_url = urljoin(settings.DJANGO_HUD_API_ENDPOINT,zipcode)
+        api_url = urljoin(settings.DJANGO_HUD_API_ENDPOINT, zipcode)
 
         response = requests.get(api_url)
         response.raise_for_status()
