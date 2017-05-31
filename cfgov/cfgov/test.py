@@ -110,7 +110,7 @@ class AcceptanceTestRunner(TestDataTestRunner):
     def set_env_test_url(self):
         server_thread = StaticLiveServerTestCase.server_thread
         os.environ['TEST_HTTP_HOST'] = server_thread.host
-        os.environ['TEST_HTTP_PORT'] = str(server_thread.port)
+        os.environ['DJANGO_HTTP_PORT'] = str(server_thread.port)
 
     def setup_databases(self, **kwargs):
         dbs = super(AcceptanceTestRunner, self).setup_databases(**kwargs)
