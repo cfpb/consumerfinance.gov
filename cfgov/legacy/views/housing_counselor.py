@@ -2,6 +2,7 @@ import os
 import re
 import requests
 import sys
+from urlparse import urljoin
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -42,12 +43,8 @@ class HousingCounselorView(TemplateView):
 
         Queries a locally running django-hud API.
         """
-        api_path = reverse(
-            'hud_api_replace:index',
-            kwargs={'zipcode': zipcode}
-        )
+        api_url = urljoin(settings.DJANGO_HUD_API_ENDPOINT,zipcode)
 
-        api_url = 'http://localhost' + api_path
         response = requests.get(api_url)
         response.raise_for_status()
 
