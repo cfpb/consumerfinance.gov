@@ -227,6 +227,23 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             Answer.objects.filter(id=ID).count(), 0)
 
+    def test_audience_page_add_js(self):
+        test_page = self.create_audience_page(language='en')
+        test_js = {'template': []}
+        test_page.add_page_js(test_js)
+        self.assertTrue(
+            'secondary-navigation.js'
+            in test_page.media['template'])
+
+    def test_audience_page_add_js_wrong_language(self):
+        """add_page_js should only work on English Audience pages"""
+        test_page = self.create_audience_page(language='es')
+        test_js = {'template': []}
+        test_page.add_page_js(test_js)
+        self.assertFalse(
+            'secondary-navigation.js'
+            in test_page.media['template'])
+
     def test_spanish_template_used(self):
         spanish_answer = self.prepare_answer(
             answer_es='Spanish answer',
@@ -632,3 +649,17 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             answer_page.get_template(mock_request),
             'ask-cfpb/answer-page-spanish-printable.html')
+
+    def test_get_reusable_text_snippet(self):
+        from ask_cfpb.models import get_reusable_text_snippet
+        from v1.models.snippets import ReusableText
+        test_snippet = ReusableText.objects.create(title='Test Snippet')
+        self.assertEqual(
+            get_reusable_text_snippet('Test Snippet'),
+            test_snippet)
+
+    def test_get_nonexistent_reusable_text_snippet(self):
+        from ask_cfpb.models import get_reusable_text_snippet
+        self.assertEqual(
+            get_reusable_text_snippet('Nonexistent Snippet'),
+            None)

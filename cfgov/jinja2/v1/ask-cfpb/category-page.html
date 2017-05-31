@@ -10,6 +10,17 @@
     {{ super() }} content__hide-horizontal-overflow ask-cfpb-page ask-cfpb-page__category
 {%- endblock %}
 
+{% block banner_top %}
+    {% if about_us %}
+        {% set value = {
+            'border_bottom': True,
+            'additional_classes': ' ask-cfpb-banner',
+            'content': about_us.text
+        } %}
+        {% include 'templates/content-banner.html' with context %}
+    {% endif %}
+{% endblock %}
+
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
 {%- endblock %}
@@ -43,6 +54,12 @@
         <div class="block block__sub">
             {{ pagination.render( paginator.num_pages, current_page, '', 0 ) }}
         </div>  
+
+        {% if disclaimer %}
+        <div class="block">
+            {{ disclaimer.text | safe }}
+        </div>
+        {% endif %}
     </section>
     {{ ask_search_bar.render( 'right' ) }}
 

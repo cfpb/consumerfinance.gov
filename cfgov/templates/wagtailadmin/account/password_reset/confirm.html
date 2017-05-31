@@ -40,7 +40,7 @@
                     </li>
                 {% endfor %}
                 <li class="submit">
-                    <input type="submit" value="{% trans 'Reset password' %}"/>
+                    <button type="submit" class="button button-longrunning" tabindex="3" data-clicked-text="Working..."><span class="icon icon-spinner"></span><em>{% trans 'Reset password' %}</em></button>
                 </li>
             </ul>
         </form>

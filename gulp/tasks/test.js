@@ -12,6 +12,7 @@ var isReachable = require( 'is-reachable' );
 var localtunnel = require( 'localtunnel' );
 var minimist = require( 'minimist' );
 var spawn = require( 'child_process' ).spawn;
+var psi = require( 'psi' );
 
 
 /**
@@ -44,36 +45,22 @@ function testUnitScripts( cb ) {
 }
 
 /**
- * Run tox unit tests.
- */
-function testUnitServer() {
-  spawn(
-    'tox',
-    { stdio: 'inherit' }
-  ).once( 'close', function( code ) {
-    if ( code ) {
-      gulpUtil.log( 'Tox tests exited with code ' + code );
-      process.exit( 1 );
-    }
-    gulpUtil.log( 'Tox tests done!' );
-  } );
-}
 
-/**
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {
   var params = minimist( process.argv.slice( 2 ) );
-  var toxParams = ['-e', 'acceptance'];
+  var toxParams = [ '-e', 'acceptance' ];
   var SPECS_KEY = 'specs';
 
   // Modifying specs format to pass to tox.
   if ( params && params[SPECS_KEY] ) {
-    toxParams.push( SPECS_KEY + '=' + params[ SPECS_KEY ] );
+    toxParams.push( SPECS_KEY + '=' + params[SPECS_KEY] );
   }
 
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
   .once( 'close', function( code ) {
+
     if ( code ) {
       gulpUtil.log( 'Tox tests exited with code ' + code );
       process.exit( 1 );
@@ -175,32 +162,52 @@ function _createPSITunnel() {
   var host = envvars.TEST_HTTP_HOST;
   var port = envvars.TEST_HTTP_PORT;
   var path = _parsePath( commandLineParams.u );
-  var url = host + ':' + port + path;
+  var url = commandLineParams.u || host + ':' + port + path;
   var strategy = commandLineParams.s || 'mobile';
 
-  // Create a promise that the server is reachable and we can create a tunnel.
-  var promise = new Promise( function( resolve, reject ) {
-    // Check if server is reachable.
-    isReachable( url, function( err, reachable ) {
-      if ( err || !reachable ) {
-        reject( url + ' is not reachable. Is your local server running?' );
-      }
-      // Create the local tunnel.
-      localtunnel( port, function( tunErr, tunnel ) {
-        url = tunnel.url + path;
-        if ( tunErr ) {
-          tunnel.close();
-          reject( 'Error creating local tunnel for PSI: ' + tunErr );
-        }
-        resolve( {
-          url:    [ url, '--strategy=' + strategy ],
-          tunnel: tunnel
-        } );
-      } );
-    } );
-  } );
+  /**
+   * Create local tunnel and pass promise params
+   * to callback function.
+   * @param {Boolean} reachable If port is reachable.
+   * @returns {Promise} A promise which calls local tunnel.
+   */
+  function _createLocalTunnel( reachable ) {
+    if ( !reachable ) {
+      return Promise.reject( url +
+        ' is not reachable. Is your local server running?'
+      );
+    }
 
-  return promise;
+    return new Promise( ( resolve, reject ) => {
+      localtunnel( port, _localTunnelCallback.bind( null, resolve, reject ) );
+    } );
+  }
+
+   /**
+   * Local tunnel callback function
+   * @param {Function} resolve Promise fulfillment callback.
+   * @param {Function} reject Promise rejection callback.
+   * @param {Error} err Local tunnel error.
+   * @param {object} tunnel Local tunnel object.
+   * @returns {Promise} callback promise.
+   */
+  function _localTunnelCallback( resolve, reject, err, tunnel ) {
+    if ( err ) {
+      return reject( 'Error: ' + err.message );
+    }
+
+    const url = tunnel.url + path;
+
+    return resolve( {
+      options: { strategy: strategy },
+      tunnel:  tunnel,
+      url:     url
+    } );
+  }
+
+  // Check if server is reachable.
+  return isReachable( url )
+         .then( _createLocalTunnel );
 }
 
 /**
@@ -239,19 +246,25 @@ function testA11y() {
  * Run PageSpeed Insight tests.
  */
 function testPerf() {
-  _createPSITunnel().then( function( params ) {
-    gulpUtil.log( 'PSI tests checking URL: http://' + params.url.split( ' ' ) );
-    spawn(
-      fsHelper.getBinary( 'psi', 'psi', '../.bin' ),
-      params.url,
-      { stdio: 'inherit' }
-    ).once( 'close', function() {
+
+  function _runPSI( params ) {
+    gulpUtil.log( 'PSI tests checking URL: http://' + params.url );
+    psi.output( params.url, params.options )
+    .then( () => {
       gulpUtil.log( 'PSI tests done!' );
       params.tunnel.close();
+    } )
+    .catch( err => {
+      gulpUtil.log( err.message );
+      params.tunnel.close();
+      process.exit( 1 );
     } );
-  } ).catch( function( err ) {
-    gulpUtil.log( err );
-    process.exit( 1 );
+  }
+
+  _createPSITunnel()
+  .then( _runPSI )
+  .catch( err => {
+    console.log( err );
   } );
 }
 
@@ -262,7 +275,7 @@ function testPerf() {
 function spawnProtractor( suite ) {
   var UNDEFINED;
 
-  if( typeof suite === 'function' ) {
+  if ( typeof suite === 'function' ) {
     suite = UNDEFINED;
   }
 
@@ -299,7 +312,3 @@ gulp.task( 'test:coveralls', testCoveralls );
 gulp.task( 'test:perf', testPerf );
 gulp.task( 'test:unit', [ 'test:unit:scripts' ] );
 gulp.task( 'test:unit:scripts', testUnitScripts );
-
-// This task will only run on Travis
-gulp.task( 'test:unit:server', testUnitServer );
-
