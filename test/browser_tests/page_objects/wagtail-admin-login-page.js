@@ -1,6 +1,6 @@
 'use strict';
 
-const BasePage = require( './wagtail-admin-base-page.js' );
+const BasePage = require( './base-page.js' );
 const USERS = require( '../util/wagtail-admin-users.js' );
 
 
