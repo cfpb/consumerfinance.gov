@@ -120,6 +120,8 @@ def ask_search(request, language='en', as_json=False):
 def ask_autocomplete(request, language='en'):
     term = request.GET.get(
         'term', '').strip().replace('<', '')
+    if not term:
+        return JsonResponse([], safe=False)
     if language == 'es':
         sqs = SearchQuerySet().models(SpanishAnswerProxy)
     else:
