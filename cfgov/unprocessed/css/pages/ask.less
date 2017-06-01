@@ -6,6 +6,12 @@
 /* Answer page */
 
 .ask-cfpb-page__answer {
+    .answer-edited-date {
+        .h5();
+        display: block;
+        color: @gray-80;
+    }
+
     .answer-module {
         border-top: 3px solid @green;
         border-bottom: 1px solid @block__border-bottom;
@@ -64,11 +70,12 @@
     }
 
     .ask-categories,
-    .ask-search {
-        padding: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    .ask-search,
+    .ask-cfpb-banner {
+        padding: auto unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
         .respond-to-range( @bp-med-min, @bp-med-max {
-            padding: 0;
+            padding: auto 0;
         } );
     }
 
@@ -262,5 +269,16 @@
 .ask-cfpb-page__category {
     h1 .cf-icon {
         color: @green;
+    }
+}
+
+.ask-cfpb-banner {
+    h3 {
+        display: none;
+    }
+
+    // max width calculated to keep ask 'about us' content on 2 lines
+    p {
+        max-width: 800px !important;
     }
 }
