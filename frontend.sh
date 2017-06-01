@@ -53,7 +53,11 @@ install() {
     # Protractor = JavaScript acceptance testing framework.
     if [ $is_installed_protractor = 0 ]; then
       echo 'Installing Protractor dependencies locally…'
-      ./$NODE_DIR/protractor/bin/webdriver-manager update
+      # We skip Gecko here (--gecko false) because webdriver pulls its release
+      # directly from a GitHub.com URL which enforces rate-limiting. This can
+      # cause installation failures when running automated testing. Currently
+      # we don't rely on Gecko for testing.
+      ./$NODE_DIR/protractor/bin/webdriver-manager update --gecko false
     else
       echo 'Global Protractor installed. Copying global install locally…'
       protractor_symlink=$(command -v protractor)

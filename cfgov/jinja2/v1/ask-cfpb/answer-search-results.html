@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="block block__sub">
-                    {{ pagination.render( paginator.num_pages, current_page | int, '', index ) }}
+                    {{ pagination.render( paginator.num_pages, current_page | int, '', index, 'Previous', 'Next' ) }}
                 </div>
 
             </section>
@@ -54,7 +54,22 @@
         </section>
         {% endif %}
 
+        {% if disclaimer %}
+        <div class="block">
+            {{ disclaimer.text | safe }}
+        </div>
+        {% endif %}
     </div>
 
 {% endblock %}
 
+{% block banner_bottom %}
+    {% if about_us %}
+        {% set value = {
+            'border_top': True,
+            'additional_classes': ' ask-cfpb-banner',
+            'content': about_us.text
+        } %}
+        {% include 'templates/content-banner.html' with context %}
+    {% endif %}
+{% endblock %}

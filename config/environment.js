@@ -13,11 +13,12 @@ var envvars = {
   /* eslint-disable no-process-env */
   DJANGO_STAGING_HOSTNAME: process.env.DJANGO_STAGING_HOSTNAME,
   TEST_HTTP_HOST:          process.env.TEST_HTTP_HOST,
-  TEST_HTTP_PORT:          process.env.TEST_HTTP_PORT,
+  TEST_HTTP_PORT:          process.env.DJANGO_HTTP_PORT,
   SAUCE_SELENIUM_URL:      process.env.SAUCE_SELENIUM_URL,
   SAUCE_USERNAME:          process.env.SAUCE_USERNAME,
   SAUCE_ACCESS_KEY:        process.env.SAUCE_ACCESS_KEY,
-  ACHECKER_ID:             process.env.ACHECKER_ID
+  ACHECKER_ID:             process.env.ACHECKER_ID,
+  HEADLESS_CHROME_BINARY:  process.env.HEADLESS_CHROME_BINARY
 
   /* eslint-enable no-process-env */
 };
