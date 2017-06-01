@@ -55,7 +55,7 @@
     .o-expandable_content-animated {
         height: auto;
         padding: 0;
-        border-width: 0 !important;
+        border-width: 0;
     }
 }
 
@@ -63,14 +63,14 @@
     .respond-to-max( @bp-xs-max, {
         .o-expandable_content {
             // shows approx. 4 lines of content
-            height: 88px; 
+            height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ); 
             overflow: hidden;
         }
 
         .o-expandable_content:after {
             // fades content out over approx. 2 lines
             width: 100%; 
-            height: 44px; 
+            height: unit( @base-line-height-px * 2 / @base-font-size-px, em ); 
             margin: 0;
             position: absolute; 
             bottom: 0; 
