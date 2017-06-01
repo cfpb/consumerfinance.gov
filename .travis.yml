@@ -10,7 +10,10 @@ addons:
     packages:
       - google-chrome-beta
 
-cache: pip
+cache:
+  - pip
+  - directories:
+    - node_modules
 
 install:
   - pip install -r requirements/travis.txt
@@ -18,7 +21,7 @@ install:
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
   - nvm install 6
   - nvm use 6
-  - npm install -g gulp npm@3.10.7
+  - npm install -g gulp
   - chmod +x ./frontend.sh
   - ./frontend.sh test
 
@@ -31,7 +34,6 @@ env:
 
   matrix:
     - RUNTEST=frontend
-    - RUNTEST=backend
     - RUNTEST=acceptance
 
 script:
