@@ -5,7 +5,7 @@ from django.db import connections
 class Command(BaseCommand):
     """
     convert all tables to innodb
-    unchanged from solution proposed at 
+    unchanged from solution proposed at
     https://stackoverflow.com/a/15389961/104365
     """
 
