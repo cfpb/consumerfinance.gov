@@ -2,6 +2,7 @@
 
 const BasePage = require( './base-page.js' );
 const contentMenu = require( '../shared_objects/wagtail-admin-content-menu.js' );
+const EC = protractor.ExpectedConditions;
 
 const PAGE_TYPES = {
   ACTIVITY_LOG:           'activitylogpage',
@@ -26,14 +27,22 @@ const MENUS = {
   content: contentMenu
 };
 
+const titleFieldSelector = '#id_title';
+const titleField = element( by.css( titleFieldSelector ) );
+
+const saveButtonSelector = '.button.action-save';
+const saveButton = element( by.css( saveButtonSelector ) );
+
+const dropdownToggleSelector = '.dropdown-toggle';
+const dropdownToggle = element( by.css( dropdownToggleSelector ) );
+
+const publishButtonSelector = 'button[name="action-publish"]';
+const publishButton = element( by.css( publishButtonSelector ) );
+
 class WagtailAdminPages extends BasePage {
 
   constructor() {
     super();
-
-    this.addChildPageBtn = element(
-      by.css( 'btn[href="/admin/pages/1/add_subpage/"]' )
-    );
 
     this.URL = '/admin/pages/';
   }
@@ -43,7 +52,10 @@ class WagtailAdminPages extends BasePage {
                              .toUpperCase()
                              .replace( /\s/g, '_' );
     const pageType = PAGE_TYPES[normalizedPageName];
-    const pageUrl = `add/v1/${ pageType }/1`;
+
+    // Add the new page as a child of page ID 3 (the site root).
+    const pageUrl = `add/v1/${ pageType }/3`;
+
     const url = this.URL + pageUrl;
 
     return this.gotoURL( url );
@@ -74,6 +86,35 @@ class WagtailAdminPages extends BasePage {
   selectMenuItem( menuItem ) {
 
     return this.menu.selectItem( menuItem );
+  }
+
+  setPageTitle( title ) {
+    return browser.wait( EC.elementToBeClickable( titleField ) ) 
+      .then( function() {
+        return titleField.sendKeys( title );
+      } );
+  }
+
+  save( ) {
+    return browser.wait( EC.elementToBeClickable( saveButton ) ) 
+      .then( function() {
+        return saveButton.click(); 
+      } );
+  }
+
+  publish( ) {
+    return browser.wait( EC.elementToBeClickable( dropdownToggle ) )
+      .then( function() {
+        return dropdownToggle.click().then( function() {
+          return browser.wait( EC.elementToBeClickable( publishButton ) )
+            .then( function() {
+              return publishButton.click(); 
+            } );
+        } );
+      } );
+  }
+
+  unpublish(  ) {
   }
 
 }

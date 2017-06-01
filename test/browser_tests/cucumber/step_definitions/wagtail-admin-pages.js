@@ -14,6 +14,15 @@ defineSupportCode( function( { Then, When } ) {
     return wagtailAdminPagesPage.createPage( pageType );
   } );
 
+  When( /I create a draft (.*) Page with title "(.*)"/, function(
+    pageType, pageTitle
+  ) {
+
+    wagtailAdminPagesPage.createPage( pageType );
+    wagtailAdminPagesPage.setPageTitle( pageTitle );
+    return wagtailAdminPagesPage.save( );
+  } );
+
   Then( /I open the (.*) menu/, function( menuType ) {
 
     return wagtailAdminPagesPage.openMenu( menuType );
@@ -25,5 +34,14 @@ defineSupportCode( function( { Then, When } ) {
       return wagtailAdminPagesPage.selectMenuItem( component );
     }
   );
+
+  When( /I publish the page/, function( ) {
+    return wagtailAdminPagesPage.publish();
+  } );
+
+  When( /I unpublish the page/, function( ) {
+    return wagtailAdminPagesPage.unpublish();
+  } );
+
 
 } );
