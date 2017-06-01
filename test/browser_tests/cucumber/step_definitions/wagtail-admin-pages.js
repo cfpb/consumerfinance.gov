@@ -10,12 +10,8 @@ const { expect } = require( 'chai' );
 defineSupportCode( function( { Then, When } ) {
 
   When( /I create a Wagtail (.*) Page/, function( pageType ) {
-    wagtailAdminPagesPage.createPage( pageType );
 
-    return browser.getCurrentUrl()
-           .then( function( url ) {
-             expect( url ).to.contain( pageType.toLowerCase() );
-           } );
+    return wagtailAdminPagesPage.createPage( pageType );
   } );
 
   Then( /I open the (.*) menu/, function( menuType ) {

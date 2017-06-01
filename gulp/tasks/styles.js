@@ -25,7 +25,7 @@ function stylesModern() {
   return gulp.src( configStyles.cwd + configStyles.src )
     .pipe( gulpSourcemaps.init() )
     .pipe( gulpLess( configStyles.settings ) )
-    .on( 'error', handleErrors )
+    .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulpAutoprefixer( { browsers: [
       'last 2 version',
       'not ie <= 8',

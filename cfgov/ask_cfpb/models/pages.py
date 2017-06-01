@@ -263,10 +263,9 @@ class AnswerAudiencePage(CFGOVPage):
             js['template'] += ['secondary-navigation.js']
 
     def get_context(self, request, *args, **kwargs):
-        from .django import Answer
+        from ask_cfpb.models import Answer
         context = super(AnswerAudiencePage, self).get_context(request)
-        page_audience = self.ask_audience.name
-        answers = Answer.objects.filter(audiences__name__exact=page_audience)
+        answers = Answer.objects.filter(audiences__id=self.ask_audience.id)
         page = request.GET.get('page', 1)
         paginator = Paginator(answers, 20)
 
