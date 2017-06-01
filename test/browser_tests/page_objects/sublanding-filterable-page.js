@@ -1,16 +1,13 @@
 'use strict';
 
-function SublandingFilterablePage() {
+const FilterableBasePage = require( './base-filterable-page.js' );
 
-  this.gotoURL = function(url='/sfp') {
-    browser.get(url);
-  };
+class SublandingFilterablePage extends FilterableBasePage {
 
-  this.results = element.all(by.css('.o-post-preview_content'));
-  this.first_result = this.results.first();
-  this.last_result = this.results.last();
-  this.multiselect = element.all(by.css('.cf-multi-select'));
-
+  constructor() {
+    super();
+    this.URL = '/sfp';
+  }
 }
 
 module.exports = SublandingFilterablePage;

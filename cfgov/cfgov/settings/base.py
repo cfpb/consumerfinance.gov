@@ -269,14 +269,6 @@ SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content
 ELASTICSEARCH_BIGINT = 50000
 
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
-SHEER_PROCESSORS = \
-    {
-        "pages": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=page",
-            "processor": "processors.wordpress_page",
-            "mappings": MAPPINGS.child("pages.json")
-        },
-    }
 
 SHEER_ELASTICSEARCH_SETTINGS = \
     {
@@ -329,9 +321,7 @@ LEGACY_APP_URLS={'comparisontool':True,
                  'noticeandcomment':True}
 
 # DJANGO HUD API
-GOOGLE_MAPS_API_PRIVATE_KEY = os.environ.get('GOOGLE_MAPS_API_PRIVATE_KEY')
-GOOGLE_MAPS_API_CLIENT_ID = os.environ.get('GOOGLE_MAPS_API_CLIENT_ID')
-DJANGO_HUD_NOTIFY_EMAILS = os.environ.get('DJANGO_HUD_NOTIFY_EMAILS')
+DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
 # in seconds, 2592000 == 30 days. Google allows no more than a month of caching
 DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
@@ -339,7 +329,7 @@ MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
         'URL': SHEER_ELASTICSEARCH_SERVER,
         'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX', SHEER_ELASTICSEARCH_INDEX+'_haystack'),
     },
