@@ -1,6 +1,6 @@
 'use strict';
 
-const BasePage = require( './wagtail-admin-base-page.js' );
+const BasePage = require( './base-page.js' );
 const contentMenu = require( '../shared_objects/wagtail-admin-content-menu.js' );
 
 const PAGE_TYPES = {
