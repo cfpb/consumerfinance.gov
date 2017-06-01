@@ -12,6 +12,10 @@ defineSupportCode( function( { Then, When } ) {
     return basePage.gotoURL( url );
   } );
 
+  When( 'I navigate back to the edit page', function( ) {
+    return browser.navigate().back();
+  } );
+
   Then( /I should see page title "(.*)"/, function( pageTitle ) {
     return browser.getTitle().then( function(title) {
       expect( title ).to.equal( pageTitle );

@@ -19,7 +19,7 @@ Feature:
   Scenario: Page published then unpublished
     When I create a draft Browse Page with title "Publish Unpublish 3"
     And I publish the page
-    And I edit the page
+    And I navigate back to the edit page
     And I unpublish the page
     And I visit URL "/publish-unpublish-3"
     Then I should see page title "404 error: not found"

@@ -27,17 +27,13 @@ const MENUS = {
   content: contentMenu
 };
 
-const titleFieldSelector = '#id_title';
-const titleField = element( by.css( titleFieldSelector ) );
 
-const saveButtonSelector = '.button.action-save';
-const saveButton = element( by.css( saveButtonSelector ) );
-
-const dropdownToggleSelector = '.dropdown-toggle';
-const dropdownToggle = element( by.css( dropdownToggleSelector ) );
-
-const publishButtonSelector = 'button[name="action-publish"]';
-const publishButton = element( by.css( publishButtonSelector ) );
+const titleField = element( by.css( '#id_title' ) );
+const saveButton = element( by.css( '.button.action-save' ) );
+const dropdownToggle = element( by.css( '.dropdown-toggle' ) );
+const publishButton = element( by.css( 'button[name="action-publish"]' ) );
+const unpublishButton = element( by.css( 'a[href$="/unpublish/"]' ) );
+const confirmUnpublishButton = element( by.css( 'input[value="Yes, unpublish it"]' ) );
 
 class WagtailAdminPages extends BasePage {
 
@@ -114,7 +110,17 @@ class WagtailAdminPages extends BasePage {
       } );
   }
 
-  unpublish(  ) {
+  unpublish( ) {
+    return browser.wait( EC.elementToBeClickable( dropdownToggle ) )
+      .then( function() {
+        return dropdownToggle.click().then( function() {
+          return browser.wait( EC.elementToBeClickable( unpublishButton ) )
+            .then( function() {
+              unpublishButton.click();
+              return confirmUnpublishButton.click();
+            } );
+        } );
+      } );
   }
 
 }
