@@ -34,6 +34,7 @@ env:
 
   matrix:
     - RUNTEST=frontend
+    - RUNTEST=acceptance
 
 script:
   - ./run_travis.sh
