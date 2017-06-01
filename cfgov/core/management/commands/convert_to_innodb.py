@@ -16,6 +16,6 @@ class Command(BaseCommand):
         cursor.execute("SHOW TABLE STATUS")
 
         for row in cursor.fetchall():
-            if row[1] != "InnoDB":
+            if row[1] == "MyISAM":
                 print "Converting %s" % row[0],
                 print cursor.execute("ALTER TABLE %s ENGINE=INNODB" % row[0])
