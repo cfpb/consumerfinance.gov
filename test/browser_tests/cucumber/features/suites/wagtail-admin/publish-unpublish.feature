@@ -21,5 +21,5 @@ Feature:
     And I publish the page
     And I edit the page
     And I unpublish the page
-    And I visit URL "/publish-unpublish"
+    And I visit URL "/publish-unpublish-3"
     Then I should see page title "404 error: not found"
