@@ -10,14 +10,14 @@ frontend() {
         nvm install 6
     fi
 
-    node_modules="-g gulp"
+    node_modules="gulp"
     npm_version="3.10.7"
 
     if [[ "$(npm -v)" != "$npm_version" ]]; then
         node_modules="$node_modules npm@$npm_version"
     fi
 
-    npm install "$node_modules"
+    npm install -g "$node_modules"
     chmod +x ./frontend.sh
     ./frontend.sh test
 }
