@@ -8,13 +8,8 @@ if [ "$RUNTEST" == "frontend" ]; then
     gulp "test:unit"
     gulp "test:coveralls"
 elif [ "$RUNTEST" == "backend" ]; then
-    # Run flake8 first for more efficient Travis failures.
+    tox
     flake8
-
-    # Run tox in "fast" mode (skipping most Django migrations).
-    tox -e fast
-
-    # Report code coverage to coveralls.io.
     coveralls
 elif [ "$RUNTEST" == "acceptance" ]; then
     export DISPLAY=:99.0
