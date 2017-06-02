@@ -40,9 +40,9 @@
   		{% endfor %}
 	</div>
 
-  <div class="block block__sub">
-      {{ pagination.render( paginator.num_pages, current_page, '', 0 ) }}
-  </div>  
+	<div class="block block__sub">
+    	{{ pagination.render( paginator.num_pages, current_page, '', index, 'Previous', 'Next' ) }}
+	</div>  
 
   {% if disclaimer %}
   <div class="block">

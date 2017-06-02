@@ -30,7 +30,7 @@ from v1.models.snippets import ReusableText
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
 ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
-DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for educational materials'
+DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
 
 
 def get_valid_spanish_tags():
@@ -263,10 +263,9 @@ class AnswerAudiencePage(CFGOVPage):
             js['template'] += ['secondary-navigation.js']
 
     def get_context(self, request, *args, **kwargs):
-        from .django import Answer
+        from ask_cfpb.models import Answer
         context = super(AnswerAudiencePage, self).get_context(request)
-        page_audience = self.ask_audience.name
-        answers = Answer.objects.filter(audiences__name__exact=page_audience)
+        answers = Answer.objects.filter(audiences__id=self.ask_audience.id)
         page = request.GET.get('page', 1)
         paginator = Paginator(answers, 20)
 

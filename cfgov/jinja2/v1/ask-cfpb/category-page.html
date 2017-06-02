@@ -30,7 +30,8 @@
                     block__flush-top
                     block__sub">
         <h1>
-          {{ page.ask_category.name }}
+            {{ category_icon.render(page.ask_category.name, '', 'is_round') }}
+            {{ page.ask_category.name }}
         </h1>
 
         <div class="lead-paragraph">
@@ -52,7 +53,7 @@
         </div>
   
         <div class="block block__sub">
-            {{ pagination.render( paginator.num_pages, current_page, '', 0 ) }}
+            {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
         </div>  
 
         {% if disclaimer %}
