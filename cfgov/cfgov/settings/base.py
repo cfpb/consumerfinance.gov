@@ -510,14 +510,18 @@ CSP_SCRIPT_SRC = ("'self'",
                   '*.youtube.com',
                   '*.ytimg.com',
                   'trk.cetrk.com',
-                  'universal.iperceptions.com')
+                  'universal.iperceptions.com',
+                  'cdnjs.cloudflare.com',
+                  'rawgit.com'
+                  )
 
 # These specify valid sources of CSS code
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'fast.fonts.net',
-    'api.mapbox.com')
+    'api.mapbox.com',
+    'rawgit.com')
 
 # These specify valid image sources
 CSP_IMG_SRC = (
@@ -545,13 +549,14 @@ CSP_FRAME_SRC = (
     'universal.iperceptions.com')
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
+CSP_FONT_SRC = ("'self'", 'fast.fonts.net', 'rawgit.com')
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to.
 CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
-                   'api.iperceptions.com')
+                   'api.iperceptions.com',
+                   'data.consumerfinance.gov')
 
 FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov

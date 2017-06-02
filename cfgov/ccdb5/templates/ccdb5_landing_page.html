@@ -1,17 +1,26 @@
 {% extends 'front/base_nonresponsive.html' %}
 
-{% block app_css %}
+{% block page_css %}
+<link rel="stylesheet" href="https://rawgit.com/cfpb/capital-framework/gh-pages/dist/capital-framework.css">
 {% endblock %}
 
 {% block title %}Search the Consumer Complaint Database{% endblock %}
 
 {% block content %}
-<div>
-  <h1>Hello Complaint Search!</h1>
-</div>
+<div id="root"></div>
 {% endblock %}
 
 {% block page_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.js"></script>
+<script src="https://rawgit.com/cfpb/capital-framework/gh-pages/dist/capital-framework.min.js"></script>
+<script src="https://rawgit.com/cfpb/ccdb5-ui/master/dist/ccdb5.min.js"></script>
+<script type="text/javascript">
+    ReactDOM.render(
+      React.createElement(ccdb5_ui.App, {}, null),
+      document.getElementById('root')
+    );
+</script>
 {% endblock %}
 
 {% block app_js %}
