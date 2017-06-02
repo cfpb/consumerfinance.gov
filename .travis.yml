@@ -10,17 +10,11 @@ addons:
     packages:
       - google-chrome-beta
 
-cache: pip
+cache:
+  - pip
 
 install:
-  - pip install -r requirements/travis.txt
-  - export CXX=clang++
-  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-  - nvm install 6
-  - nvm use 6
-  - npm install -g gulp npm@3.10.7
-  - chmod +x ./frontend.sh
-  - ./frontend.sh test
+  - ./install_travis.sh
 
 env:
   global:
