@@ -15,7 +15,6 @@ var gulpRename = require( 'gulp-rename' );
 var gulpSourcemaps = require( 'gulp-sourcemaps' );
 var handleErrors = require( '../utils/handle-errors' );
 var mqr = require( 'gulp-mq-remove' );
-var gulpBless = require( 'gulp-bless' );
 
 /**
  * Process modern CSS.
