@@ -59,7 +59,7 @@ function stylesIE9() {
     .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( {
       compatibility: 'ie9',
-      inline: ['none']
+      inline: [ 'none' ]
     } ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( browserSync.reload( {
@@ -254,7 +254,7 @@ gulp.task( 'styles:nemo', [
   'styles:nemoProd',
   'styles:nemoIE'
 ] );
-gulp.task( 'styles:ie', ['styles:stylesIE8', 'styles:stylesIE9'] );
+gulp.task( 'styles:ie', [ 'styles:stylesIE8', 'styles:stylesIE9' ] );
 
 gulp.task( 'styles', [
   'styles:modern',
