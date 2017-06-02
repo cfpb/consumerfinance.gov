@@ -162,10 +162,10 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 var config = {
   baseUrl:       environment.baseUrl,
   cucumberOpts: {
-    require:     'cucumber/step_definitions/*.js',
-    tags:        false,
-    format:      'pretty',
-    profile:     false,
+    'require':   'cucumber/step_definitions/*.js',
+    'tags':      false,
+    'format':    'pretty',
+    'profile':   false,
     'no-source': true
   },
   directConnect: true,

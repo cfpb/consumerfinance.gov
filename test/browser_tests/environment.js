@@ -11,7 +11,7 @@ module.exports = {
   specsBasePath: specsRoot + '**/*',
 
   suites: {
-    default: [
+    'default': [
       specsRoot + 'suites/default/*.feature'
     ],
     'wagtail-admin': [
