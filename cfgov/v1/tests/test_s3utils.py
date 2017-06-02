@@ -5,10 +5,8 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import get_storage_class
 from django.test import TestCase, override_settings
 from wagtail.wagtailimages.tests.utils import get_test_image_file
-from wagtail.wagtailimages.models import get_image_model
-from wagtail.wagtailimages.tests.utils import get_test_image_file
+from wagtail.wagtailimages import get_image_model
 
-from moto import mock_s3
 from v1.s3utils import (MediaRootS3BotoStorage, http_s3_url_prefix,
                         https_s3_url_prefix)
 
