@@ -105,7 +105,7 @@
     {% if page.answer_base.next_step %}
         <div class="block block__flush-top">
             <h3 >
-                Next steps 
+                Explore related resources
             </h3>
             {{ parse_links(page.answer_base.next_step.text) | safe }}
         </div>
@@ -121,12 +121,13 @@
                 </h2>
                 <ul class="list list__unstyled list__links">
                     {% for subcat in subcategories %}
+
                         <li class="list_item">
-                            <a href="/askcfpb/search?selected_facets=category_exact:{{subcat.slug}}" class="list_link">{{ subcat.name }}</a>
+                            <a href="/ask-cfpb/category-{{subcat.parent.slug}}" class="list_link">{{ subcat.name }}</a>
                         </li>
                         {% for related_subcat in subcat.related_subcategories.all() %}
                             <li class="list_item">
-                                <a href="/askcfpb/search?selected_facets=category_exact:{{related_subcat.slug}}" class="list_link">{{ related_subcat.name }}</a>
+                                <a href="/ask-cfpb/category-{{related_subcat.parent.slug}}" class="list_link">{{ related_subcat.name }}</a>
                             </li>
                         {% endfor %}
                     {% endfor %}
