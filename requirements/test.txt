@@ -1,7 +1,8 @@
--r local.txt
+-r base.txt
 
 configparser==3.5.0
 coverage==4.2
+django-sslserver==0.19
 enum34==1.1.6
 flake8==3.0.4
 mccabe==0.5.2
