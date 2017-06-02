@@ -30,7 +30,7 @@ from v1.models.snippets import ReusableText
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
 ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
-DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for educational materials'
+DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
 
 
 def get_valid_spanish_tags():
