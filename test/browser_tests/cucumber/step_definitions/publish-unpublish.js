@@ -1,6 +1,6 @@
 'use strict';
 
-const BasePage = require('../../page_objects/base-page.js');
+const BasePage = require( '../../page_objects/base-page.js' );
 const basePage = new BasePage();
 
 const { defineSupportCode } = require( 'cucumber' );
@@ -17,7 +17,7 @@ defineSupportCode( function( { Then, When } ) {
   } );
 
   Then( /I should see page title "(.*)"/, function( pageTitle ) {
-    return browser.getTitle().then( function(title) {
+    return browser.getTitle().then( function( title ) {
       expect( title ).to.equal( pageTitle );
     } );
   } );

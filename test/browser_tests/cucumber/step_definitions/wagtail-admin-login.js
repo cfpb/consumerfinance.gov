@@ -1,6 +1,8 @@
 'use strict';
 
-const WagtailLogin = require( '../../page_objects/wagtail-admin-login-page.js' );
+const WagtailLogin = require(
+  '../../page_objects/wagtail-admin-login-page.js'
+);
 const wagtailLoginPage = new WagtailLogin();
 const { defineSupportCode } = require( 'cucumber' );
 const { expect } = require( 'chai' );

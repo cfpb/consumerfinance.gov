@@ -5,7 +5,6 @@ const WagtailAdminPagesPage = require(
 );
 const wagtailAdminPagesPage = new WagtailAdminPagesPage();
 const { defineSupportCode } = require( 'cucumber' );
-const { expect } = require( 'chai' );
 
 defineSupportCode( function( { Then, When } ) {
 
