@@ -7,7 +7,6 @@ var multiselect = require( '../shared_objects/multi-select' );
 var EC = protractor.ExpectedConditions;
 
 
-
 function _getFilterableElement( selector ) {
   return _oFilterableListControls.element( by.css( selector ) );
 }
