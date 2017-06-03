@@ -53,7 +53,7 @@ function scriptsPolyfill() {
       compress: {
         properties: false
       }
-    }) )
+    } ) )
     .pipe( gulpRename( 'modernizr.min.js' ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + '/js/' ) )
