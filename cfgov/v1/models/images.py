@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 from django.utils.six import string_types
 from wagtail.wagtailimages.image_operations import (DoNothingOperation,
                                                     MinMaxOperation,
@@ -99,3 +101,15 @@ class CFGOVRendition(AbstractRendition):
         unique_together = (
             ('image', 'filter_spec', 'focal_point_key'),
         )
+
+
+# Delete the source image file when an image is deleted
+@receiver(pre_delete, sender=CFGOVImage)
+def image_delete(sender, instance, **kwargs):
+    instance.file.delete(False)
+
+
+# Delete the rendition image file when a rendition is deleted
+@receiver(pre_delete, sender=CFGOVRendition)
+def rendition_delete(sender, instance, **kwargs):
+    instance.file.delete(False)
