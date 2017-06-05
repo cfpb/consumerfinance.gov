@@ -1,56 +1,118 @@
 from haystack import indexes
 
-from ask_cfpb.models.django import Answer
+from ask_cfpb.models import (
+    AnswerTagProxy, Category, EnglishAnswerProxy, SpanishAnswerProxy)
 
 
-class AnswerIndex(indexes.SearchIndex, indexes.Indexable):
+class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(
         document=True,
         use_template=True,
         boost=10.0)
-    text_es = indexes.CharField(
+    autocomplete = indexes.EdgeNgramField(
         use_template=True,
-        boost=10.0)
-    english_autocomplete = indexes.EdgeNgramField(model_attr='question')
-    spanish_autocomplete = indexes.EdgeNgramField(model_attr='question_es')
-    category = indexes.MultiValueField(
+        indexed=True)
+    url = indexes.CharField(
+        use_template=True,
+        indexed=False)
+    tags = indexes.MultiValueField(
         indexed=True,
-        faceted=True,
-        model_attr='category_text',
         boost=10.0)
-    subcategory = indexes.MultiValueField(
-        indexed=True,
-        faceted=True,
-        model_attr='subcat_slugs',
-        boost=10.0)
-    tag = indexes.MultiValueField(
-        indexed=True,
-        model_attr='tags',
-        faceted=True,
-        boost=10.0)
-    audience = indexes.MultiValueField(
-        indexed=True,
-        model_attr='audience_strings',
-        faceted=True)
-    created_at = indexes.DateTimeField(
-        indexed=True, model_attr='created_at')
-    updated_at = indexes.DateTimeField(
-        indexed=True, model_attr='updated_at')
     last_edited = indexes.DateTimeField(
-        indexed=True, null=True, model_attr='last_edited')
-    last_edited_es = indexes.DateTimeField(
-        indexed=True, null=True, model_attr='last_edited_es')
+        indexed=True,
+        null=True,
+        model_attr='last_edited',
+        boost=2.0)
 
-    def prepare(self, obj):
-        data = super(AnswerIndex, self).prepare(obj)
+    def prepare_tags(self, obj):
+        return obj.tags
+
+    def prepare_answer(self, obj):
+        data = super(AnswerBaseIndex, self).prepare(obj)
         if obj.question.lower().startswith('what is'):
             data['boost'] = 2.0
         return data
 
     def get_model(self):
-        return Answer
+        return EnglishAnswerProxy
 
     def index_queryset(self, using=None):
         ids = [record.id for record in self.get_model().objects.all()
-               if record.has_live_page()]
+               if record.english_page and record.english_page.live is True]
         return self.get_model().objects.filter(id__in=ids)
+
+
+class SpanishBaseIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(
+        document=True,
+        use_template=True,
+        boost=10.0)
+    autocomplete = indexes.EdgeNgramField(
+        use_template=True,
+        indexed=True)
+    url = indexes.CharField(
+        use_template=True,
+        indexed=False)
+    tags = indexes.MultiValueField(
+        indexed=True,
+        boost=10.0)
+    last_edited = indexes.DateTimeField(
+        indexed=True,
+        null=True,
+        model_attr='last_edited_es',
+        boost=2.0)
+
+    def prepare_tags(self, obj):
+        return obj.tags_es
+
+    def prepare_spanish_answer_index(self, obj):
+        data = super(SpanishBaseIndex, self).prepare(obj)
+        if obj.question.lower().startswith('what is'):
+            data['boost'] = 2.0
+        return data
+
+    def get_model(self):
+        return SpanishAnswerProxy
+
+    def index_queryset(self, using=None):
+        ids = [record.id for record in self.get_model().objects.all()
+               if record.spanish_page and record.spanish_page.live is True]
+        return self.get_model().objects.filter(id__in=ids)
+
+
+class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(
+        document=True,
+        use_template=True)
+    facet_map = indexes.CharField(
+        indexed=True)
+    slug = indexes.CharField(
+        model_attr='slug')
+    slug_es = indexes.CharField(
+        model_attr='slug_es')
+
+    def prepare_facet_map(self, obj):
+        return obj.facet_map
+
+    def get_model(self):
+        return Category
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.all()
+
+
+class TagIndex(indexes.SearchIndex, indexes.Indexable):
+    text = indexes.CharField(
+        use_template=True,
+        document=True)
+
+    valid_spanish = indexes.MultiValueField()
+
+    def get_model(self):
+        return AnswerTagProxy
+
+    def prepare_valid_spanish(self, obj):
+        return self.get_model().valid_spanish_tags()
+
+    def index_queryset(self, using=None):
+        return self.get_model().objects.filter(id=1)

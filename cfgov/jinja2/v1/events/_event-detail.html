@@ -41,10 +41,7 @@
                       <span class="event-meta_description event-meta_description__block">
                           Video link available:
                       </span>
-                      {{ time.render(
-                          page.live_stream_date,
-                          timezone=page.live_stream_date.tzinfo | string
-                      ) }}
+                      {{ time.render(page.live_stream_date) }}
                   </p>
                 </div>
             </div>
@@ -60,7 +57,8 @@
                         </strong>
                     </p>
                     <p>
-                        Read the <a href="https://support.ustream.tv/hc/en-us/articles/207851767-Viewing-troubleshooting-steps">Ustream video FAQs</a> for help troubleshooting issues if the video isn't playing properly.
+                        Read the <a href="https://support.google.com/youtube/answer/3037019?hl=en&co=GENIE.Platform%3DDesktop&oco=1">YouTube troubleshooting guide</a>
+                        for help resolving issues if the video isn't playing properly.
                     </p>
                 </div>
             </div>

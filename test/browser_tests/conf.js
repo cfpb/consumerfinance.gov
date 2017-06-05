@@ -21,7 +21,6 @@ function _paramIsSet( param ) {
  */
 function _chooseSuite( params ) {
 
-
   var paramsAreNotSet = !_paramIsSet( params.browserName ) &&
                         !_paramIsSet( params.version ) &&
                         !_paramIsSet( params.platform );
@@ -36,7 +35,10 @@ function _chooseSuite( params ) {
   // This will make it so that setting the browser/platform flags
   // won't launch several identical browsers performing the same tests.
   var capabilities = defaultSuites.essential;
-  if ( paramsAreNotSet && useSauceCredentials ) {
+
+  if ( envvars.HEADLESS_CHROME_BINARY ) {
+    capabilities = defaultSuites.headless;
+  } else if ( paramsAreNotSet && useSauceCredentials ) {
     capabilities = defaultSuites.full;
   }
 
@@ -86,9 +88,9 @@ function _chooseProtractorSpecs( params ) {
     for ( i = 0, len = specPatterns.length; i < len; i++ ) {
       specs = specs.concat( environment.specsBasePath + specPatterns[i] );
     }
-  // If neither a suite or specs are specified, use all specs.
+  // If neither a suite or specs are specified, use the default suite.
   } else {
-    specs = specs.concat( environment.specsBasePath + '.js' );
+    specs = specs.concat( environment.suites.default );
   }
 
   return specs;
@@ -131,6 +133,7 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
   var newCapabilities = [];
   var injectParams = _retrieveProtractorParams( params );
   var capability;
+
   for ( var i = 0, len = capabilities.length; i < len; i++ ) {
     capability = capabilities[i];
     for ( var p in injectParams ) {
@@ -157,11 +160,17 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 }
 
 var config = {
-  baseUrl:         environment.baseUrl,
-  framework:       'jasmine2',
-  jasmineNodeOpts: {
-    defaultTimeoutInterval: 60000
+  baseUrl:       environment.baseUrl,
+  cucumberOpts: {
+    'require':   'cucumber/step_definitions/*.js',
+    'tags':      false,
+    'format':    'pretty',
+    'profile':   false,
+    'no-source': true
   },
+  directConnect: true,
+  framework:     'custom',
+  frameworkPath: require.resolve( 'protractor-cucumber-framework' ),
   getMultiCapabilities: function() {
     var params = this.params;
 
@@ -196,20 +205,21 @@ var config = {
       windowHeightPx = Number( windowSizeArray[1] );
     }
 
-    browser.driver.manage().window().setSize(
-      windowWidthPx,
-      windowHeightPx
-    );
+    // Calling setSize with headless chromeDriver doesn't work properly if
+    // the requested size is larger than the available screen size.
+    if ( !envvars.HEADLESS_CHROME_BINARY ) {
+      browser.driver.manage().window().setSize(
+        windowWidthPx,
+        windowHeightPx
+      );
 
-    // Set default windowSize parameter equal to the value in settings.js.
-    browser.params.windowWidth = windowWidthPx;
-    browser.params.windowHeight = windowHeightPx;
-    browser.params.windowSize = String( windowWidthPx ) +
-                                ',' + String( windowHeightPx );
+      // Set default windowSize parameter equal to the value in settings.js.
+      browser.params.windowWidth = windowWidthPx;
+      browser.params.windowHeight = windowHeightPx;
+      browser.params.windowSize = String( windowWidthPx ) +
+                                  ',' + String( windowHeightPx );
+    }
 
-    browser.getProcessedConfig().then( function( cf ) {
-      console.log( 'Executing...', cf.capabilities.name );
-    } );
     return;
   }
 };

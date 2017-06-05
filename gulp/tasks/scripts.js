@@ -53,7 +53,7 @@ function scriptsPolyfill() {
       compress: {
         properties: false
       }
-    }) )
+    } ) )
     .pipe( gulpRename( 'modernizr.min.js' ) )
     .on( 'error', handleErrors )
     .pipe( gulp.dest( paths.processed + '/js/' ) )
@@ -99,6 +99,15 @@ function scriptsExternal() {
 function scriptsOnDemand() {
   return _processScript( webpackConfig.onDemandConf,
                          '/js/routes/on-demand/*.js', '/js/atomic/' );
+}
+
+ /**
+  * Bundle feedback js for Spanish Ask CFPB pages.
+  * @returns {PassThrough} A source stream.
+  */
+function scriptsSpanish() {
+  return _processScript( webpackConfig.spanishConf,
+                          '/js/routes/on-demand/feedback-form.js', '/js/' );
 }
 
 /**
@@ -160,6 +169,7 @@ gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
+gulp.task( 'scripts:spanish', scriptsSpanish );
 gulp.task( 'scripts:ondemand:base', scriptsOnDemand );
 gulp.task( 'scripts:ondemand:nonresponsive', scriptsNonResponsive );
 gulp.task( 'scripts:ondemand', [
@@ -175,5 +185,6 @@ gulp.task( 'scripts', [
   'scripts:ie',
   'scripts:external',
   'scripts:nemo',
-  'scripts:es5-shim'
+  'scripts:es5-shim',
+  'scripts:spanish'
 ] );

@@ -86,6 +86,10 @@ You can optionally install a different version with Homebrew.
 
 #### Elasticsearch
 
+!!! warning
+    __These instructions are deprecated since Elasticsearch 1.7
+    is no longer supported by `brew`.__
+
 [Install Elasticsearch 1.7](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/setup.html)
 however you’d like. We use [Homebrew](http://brew.sh) for developing on OS X):
 
@@ -281,9 +285,12 @@ with a slug of `cfgov`.
 If you're installing this fresh, the initial data you receive will not be
 as extensive as you'd probably like it to be.
 
-You can get a database dump using the `cf.gov-dump-rdbms`
-Jenkins job. Download the `sql.gz` file,
-unzip it, and then run:
+You can get a database dump by:
+
+1. Going to [GHE]/CFGOV/platform/wiki/Database-downloads
+1. Selecting one of the extractions and downloading the `production_django.sql.gz` file
+1. Unzip it
+1. Run:
 
 ```bash
 ./refresh-data.sh /path/to/dump.sql

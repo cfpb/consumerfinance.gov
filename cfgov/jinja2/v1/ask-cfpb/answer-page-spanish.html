@@ -1,0 +1,102 @@
+{% extends 'spanish-ask-base.html' %}
+{% set tweet_text = page.answer.get_twitter_text %}
+{% set utm_campaign = page.answer.utm_campaign %}
+{% import 'form_block.html' as form_block with context %}
+
+{% block babel_title %}
+    {% set page_title=page.question %}
+    {% include 'ask/title-spanish.html' with context %}
+{% endblock %}
+
+{% block page_meta %}
+    <meta property="og:title" content="{{ page.question }}">
+    <meta property="og:description" content="{{ page.get_open_graph_description if page.get_open_graph_description }}">
+    <meta property="og:image" content="{{ page.open_graph_image_url if page.open_graph_image_url else 'http://www.consumerfinance.gov/static/nemo/_/img/cfpb-logo-spanish.png' }}">
+    <meta property="og:url" content="{{ request.url }}">
+{% endblock %}
+
+
+{% block babel_content %}
+    <section class="content row">
+
+        <div class="primary span8">
+
+            <article class="ac-qa">
+                <h1 class="ac-qa-question">{{ page.question | striptags }}</h1>
+                <div class="ac-qa-answer">
+                    {{ page.answer|safe }}
+                </div>
+            </article><!-- .ac-qa -->
+
+            <aside class="s-hide-on-small supplement share split">
+                <span class="split-left"><a class="print" href="{{ request.url }}imprimir/">
+                        <img src="{{ static('nemo/_/img/icon-print-retina.png') }}" alt="" class="icon-20"> <span class="share-label">Imprimir</span></a></span>
+                <span class="split-right"><span class="share-label">Compartir esta página</span>
+                    
+                    {% include "ask/share-links-spanish.html" with context %}
+                    
+                </span>
+            </aside><!-- .supplement -->
+            <div class="supplement">
+                {% for block in page.content %}
+                {{- form_block.render(block, 'content', loop.index0) -}}
+                {% endfor %}
+            </div>
+            {% for a in related_questions %}
+                {% if loop.first %}
+                    <aside class="supplement ac-similar-answers">
+                    <h4 class="supplement-title">Preguntas similares</h4>
+                    <ul class="unstyled spaced">
+                {% endif %}
+                    <li><a href="{{ slugurl(a.slug_es) }}">{{ a.question_es|safe }}</a></li>
+                {% if loop.last %}
+                    </ul>
+                    </aside>
+                {% endif %}
+            {% endfor %}<!-- .supplement -->
+        </div><!-- .primary -->
+        <aside class="secondary span4">
+
+            {% for tag in tags_es %}
+                {% if loop.first %}
+                    <section class="supplement ac-related-topics">
+                        <h3>Temas relacionados</h3>
+                        <ul class="nav-list">
+                {% endif %}
+                            <li><a href="/es/obtener-respuestas/buscar-por-etiqueta/{{ tag.replace(' ', '_') }}/">{{ tag }}</a></li>
+                {% if loop.last %}
+                        </ul>
+                    </section>
+                {% endif %}
+            {% endfor %}
+
+            <section class="supplement supplement-plain js-showtoggle ac-disclaimer">
+                <button class="btn btn-block btn-block-on-small js-showtoggle-trigger">Acerca de estas respuestas</button>
+                <div class="js-showtoggle-content well">
+                    Estas respuestas se proveen solamente para efectos informativos generales. Si bien no le aconsejarán sobre su situación exacta, esperamos que le ayuden a entender mejor los productos y servicios financieros. Estas respuestas no constituyen asesoramiento legal ni interpretación del CFPB.
+                </div>
+            </section>
+
+        </aside><!-- .secondary -->
+        <div class="share s-hide-on-small" data-set="share"></div><!-- .share -->
+
+
+    </section><!-- .row -->
+{% endblock %}
+
+{% block babel_share %}
+    <div class="share s-show-on-small" data-set="share">
+        <span><span class="share-label">Compartir esta página</span>
+            
+            {% include "ask/share-links-spanish.html" %}
+
+        </span>
+    </div><!-- .share -->
+{% endblock %}
+
+
+{% block page_js %}
+    <!--[if gt IE 8]><!-->
+    <script src="{{ static('js/spanish.js') }}"></script>
+    <!--<![endif]-->
+{% endblock %}

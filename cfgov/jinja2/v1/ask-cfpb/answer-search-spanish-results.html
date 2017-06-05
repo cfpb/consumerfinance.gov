@@ -1,0 +1,85 @@
+{% extends 'spanish-ask-base.html' %}
+
+{% block babel_title %}
+    {% set page_title=page.query %}
+    {% set search_page = 1 %}
+    {% include "ask/title-spanish.html" %}
+{% endblock %}
+
+{% block babel_content %}
+
+    <section class="content row">
+            {% if results %}
+                <div class="primary span8">
+                    <header class="header">
+                        <h1>
+                            {{ page.query }}
+                        </h1>
+                    </header><!-- .header -->
+
+                    <nav class="pagination">
+                        <ul class="s-hide-on-small">
+                        {% include "ask/pagination-spanish.html" with context %}
+                        </ul>
+                        <div class="pagination-details"><span class="pagination-count"><strong>{{ results_count }}</strong> respuestas</span> 
+                        {% if page.query and selected_tag %}
+                            <a href=" remove_babel_facet " class="pagination-filter">(filtrado por [x] &ldquo;{{ selected_tag }}&rdquo;)</a>
+                        {% endif %}
+                        </div>                    
+                    </nav><!-- .pagination -->                        
+
+                    {% for question in results %}
+                        <a href=" {{ question[0] }} " class="ac-qa-summary">
+                            <article>
+                                <h3 class="ac-qa-question">{{ question[1]|safe }}</h3>
+                                <div class="ac-qa-answer">
+                                    <p> {{ question[2]|safe|striptags|truncate }} </p>
+                                    
+                                </div>
+                            </article>
+                        </a>
+                    {% endfor %}                
+                    
+                    <nav class="pagination">
+                        <ul>                    
+                        {% include "ask/pagination-spanish.html" with context %}
+                        </ul>
+                    </nav>
+
+                </div><!-- .primary -->
+
+                <aside class="secondary span4">            
+                    <div id="facets" class="supplement js-showtoggle ac-filters"><!-- @todo change #facets to something else -->
+                    </div><!-- .js-showtoggle -->
+
+                </aside><!-- .secondary -->          
+
+                <div class="share s-hide-on-small" data-set="share"></div><!-- .share -->
+
+            {% else %}
+                <div class="primary span8">
+                    <header class="header">
+                        <h2>No pudimos encontrar resultados para<br>"<em>{{ page.query }}</em>"</h2>
+                    </header><!-- .header -->
+
+                    <p>Siempre estamos agregando respuestas, así que regrese pronto o llame al <a href="tel:+18554112372" class="phone">(855) 411-2372</a> para hacer una pregunta por teléfono.</p>
+                    <ul class="unstyled">
+                        <li><a href="/es/presentar-una-queja/">PRESENTAR UNA QUEJA</a></li>
+                        <li><a href="/obtener-respustas">OBTENER RESPUESTAS</a></li>
+                    </ul>
+                </div>
+            {% endif %}  
+
+        </section><!-- .content -->
+
+{% endblock %}
+
+{% block babel_share %}
+        <div class="share s-show-on-small" data-set="share">
+            <span><span class="share-label">Compartir esta página</span>
+                {% include "ask/share-links-spanish.html" %}
+            </span>
+        </div><!-- .share -->
+{% endblock %}
+
+

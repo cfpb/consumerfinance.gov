@@ -37,15 +37,15 @@
 
 {% from 'molecules/info-unit.html' import info_unit with context %}
 
-<div class="o-snippet-list">
+<div class="o-snippet-list"{{ ' id="' ~ value.heading|slugify ~ '"' if value.heading else '' }}>
     {% set img = image(value.image.upload, 'original')
        if value.image.upload
        else '/' %}
     {% set image = {
          'url': img.url,
-         'alt': value.image.alt,
+         'alt': image_alt_value(value.image),
          'is_square': true,
-         'is_decorative': value.image.alt == ''
+         'is_decorative': image_alt_value(value.image) == ''
        }
        if value.image.upload
        else null %}

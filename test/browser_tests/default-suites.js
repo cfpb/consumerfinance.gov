@@ -1,5 +1,7 @@
 'use strict';
 
+var envvars = require( '../../config/environment' ).envvars;
+
 var defaultSuites = {
   // Set default browser suites to test.
   // These values are passed to the `multiCapabilities` property
@@ -39,6 +41,18 @@ var defaultSuites = {
       browserName: 'internet explorer',
       version:     '',
       platform:    'Windows 10',
+      maxDuration: 10800
+    }
+  ],
+
+  // Headless browser to run on Travis.
+  headless: [
+    {
+      browserName: 'chrome',
+      chromeOptions: {
+        args: [ '--headless', '--disable-gpu', '--window-size=1200x900' ],
+        binary: envvars.HEADLESS_CHROME_BINARY
+      },
       maxDuration: 10800
     }
   ]

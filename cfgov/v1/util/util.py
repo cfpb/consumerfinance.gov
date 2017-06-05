@@ -10,6 +10,7 @@ def get_unique_id(prefix='', suffix=''):
     index = hex(int(time() * 10000000))[2:]
     return prefix + str(index) + suffix
 
+
 # These messages are manually mirrored on the
 # Javascript side in error-messages-config.js
 
@@ -25,7 +26,8 @@ ERROR_MESSAGES = {
 
 def instanceOfBrowseOrFilterablePages(page):
     from ..models import BrowsePage, BrowseFilterablePage
-    return isinstance(page, (BrowsePage, BrowseFilterablePage))
+    pages = (BrowsePage, BrowseFilterablePage)
+    return isinstance(page, pages)
 
 
 # For use by Browse type pages to get the secondary navigation items

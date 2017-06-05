@@ -1,7 +1,7 @@
 'use strict';
 
 var envvars = require( '../../config/environment' ).envvars;
-var specsRoot = 'spec_suites/';
+var specsRoot = 'cucumber/features/';
 
 module.exports = {
   // A base URL for your application under test.
@@ -11,11 +11,11 @@ module.exports = {
   specsBasePath: specsRoot + '**/*',
 
   suites: {
-    integration: [
-      specsRoot + 'integration/**/*.js'
+    'default': [
+      specsRoot + 'suites/default/*.feature'
     ],
-    content: [
-      specsRoot + 'content/**/*.js'
+    'wagtail-admin': [
+      'cucumber/features/suites/wagtail-admin/*.feature'
     ]
   },
 

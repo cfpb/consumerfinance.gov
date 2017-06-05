@@ -1,0 +1,108 @@
+// TODO:
+// Duplicated from current implementation in Capital Framework v4.6.0
+// with minor edits (to be released in CFv4.7.0)
+// This can be deleted safely when this project is ported to CFv4
+
+@fcm-bp-max: 700px;
+@fcm-bp-min: 701px;
+@fcm-bg: @block__bg;
+
+.o-featured-content-module {
+  .webfont-regular();
+
+  position: relative;
+
+  min-height: 320px;
+  // Fix the doubled border issue
+  margin-right: -1px;
+  margin-left: -1px;
+
+  background-color: @fcm-bg;
+
+  .respond-to-max( @bp-xs-max, {
+    padding-right: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em);
+    padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em);
+  } );
+
+  .respond-to-range( @bp-sm-min, @fcm-bp-max, {
+    padding-right: unit( @grid_gutter-width / @base-font-size-px, em);
+    padding-left: unit( @grid_gutter-width / @base-font-size-px, em);
+  } );
+
+  &_text {
+    padding-top: unit( @grid_gutter-width / @base-font-size-px, em);
+    padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em);
+
+    .respond-to-min( @fcm-bp-min, {
+      padding-right: unit( @grid_gutter-width / @base-font-size-px, em);
+      padding-left: unit( @grid_gutter-width / @base-font-size-px, em);
+      width: 300px; // width of 5 of 12 cols at lg size
+
+      float: left;
+    } );
+  }
+
+  &_visual {
+    .respond-to-min( @fcm-bp-min, {
+      overflow: hidden;
+
+      .lt-ie10 & {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 360px; // widht of 5 of 12 cols at lg size + grid gutters
+        bottom: 0;
+      }
+
+      // This bit is not in CF becuase the video player code is not a part of CF
+      // Possibly move to the video.less file when this file is removed.
+      &.video-playing {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    } );
+  }
+
+  &_img {
+    display: block;
+
+    .respond-to-max( @bp-sm-max, {
+      margin-left: auto;
+      margin-right: auto;
+    } );
+
+    .respond-to-min( @fcm-bp-min, {
+      height: 320px;
+      max-width: none;
+    } );
+  }
+
+  // Modifiers
+  &__right {
+    .o-featured-content-module_img {
+      .respond-to-min( @fcm-bp-min, {
+        float: right;
+      } );
+    }
+  }
+
+  &__center {
+    .o-featured-content-module_img {
+      .respond-to-min( @fcm-bp-min, {
+        position: relative;
+        left: 50%;
+        transform: translateX( -50% );
+
+        .lt-ie9 & {
+          position: absolute;
+          left: -100%;
+          right: -100%;
+          margin: auto;
+        }
+      } );
+    }
+  }
+}

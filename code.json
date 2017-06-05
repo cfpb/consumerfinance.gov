@@ -1,0 +1,3296 @@
+{
+  "agency": "CFPB",
+  "version": "1.0.1",
+  "projects": [
+    {
+      "name": "django-nudge",
+      "description": "Gently push content from development to production. This is a public domain work of the US Government.",
+      "license": "https://github.com/cfpb/django-nudge/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/django-nudge"
+    },
+    {
+      "name": "transit_subsidy",
+      "description": "Open source version of a simple Transit Subsidy intake form.  This is what is commonly used by United Stated federal government agencies. This is a public domain work of the US Government.",
+      "license": "https://github.com/cfpb/transit_subsidy/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/transit_subsidy"
+    },
+    {
+      "name": "ec2mapper",
+      "description": "EC2mapper is a web application that provides a user-friendly interface to view Amazon AWS network configurations, while allowing changes to be easily tracked over time.",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/ec2mapper"
+    },
+    {
+      "name": "hmda-tools",
+      "description": "Tools to make importing and analyzing mortgage application data easier. This is a public domain work of the US Government.",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-tools"
+    },
+    {
+      "name": "clouseau",
+      "description": "Search your repository's git history for undesirable text patterns such as passwords, ssh keys and othe personal identifiable information",
+      "license": "https://github.com/cfpb/clouseau/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/clouseau"
+    },
+    {
+      "name": "qu",
+      "description": "qu is a data platform created to serve public data sets. This is a public domain work of the US Government. ",
+      "license": "https://github.com/cfpb/qu/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/qu"
+    },
+    {
+      "name": "django-cache-tools",
+      "description": "Tools to make caching easier in Django",
+      "license": "https://github.com/cfpb/django-cache-tools/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/django-cache-tools"
+    },
+    {
+      "name": "idea-box",
+      "description": "An application that lets an organization collect ideas, comment on them, and vote them up. ",
+      "license": "https://github.com/cfpb/idea-box/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/idea-box"
+    },
+    {
+      "name": "regulations-parser",
+      "description": "Parser for U.S. federal regulations and other regulatory information",
+      "license": "https://github.com/cfpb/regulations-parser/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/regulations-parser"
+    },
+    {
+      "name": "regulations-core",
+      "description": "An engine that supplies the API that allows users to read regulations and their various layers. ",
+      "license": "https://github.com/cfpb/regulations-core/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/regulations-core"
+    },
+    {
+      "name": "regulations-site",
+      "description": "Web interface for viewing U.S. federal regulations and other regulatory information",
+      "license": "https://github.com/cfpb/regulations-site/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/regulations-site"
+    },
+    {
+      "name": "sheer",
+      "description": "A tool for loading arbitrary content into Elasticsearch and serving that content on the web.",
+      "license": "https://github.com/cfpb/sheer/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/sheer"
+    },
+    {
+      "name": "django-widgeter",
+      "description": "A simple engine for backend widgets",
+      "license": "https://github.com/cfpb/django-widgeter/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/django-widgeter"
+    },
+    {
+      "name": "api",
+      "description": "Documentation to support upcoming data platform API and data sets",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/api"
+    },
+    {
+      "name": "cfpb.github.io",
+      "description": "A site for the CFPB to share and discuss its technology work with the world.",
+      "license": "https://github.com/cfpb/cfpb.github.io/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cfpb.github.io"
+    },
+    {
+      "name": "source-code-policy",
+      "description": "The CFPB's official Source Code Policy.",
+      "license": "https://github.com/cfpb/source-code-policy/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/source-code-policy"
+    },
+    {
+      "name": "DOCter",
+      "description": "A Jekyll template for project documentation",
+      "license": "https://github.com/cfpb/DOCter/blob/gh-pages/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/DOCter"
+    },
+    {
+      "name": "wp-json-api",
+      "description": "WordPress JSON API",
+      "license": "https://github.com/cfpb/wp-json-api/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/wp-json-api"
+    },
+    {
+      "name": "design-manual",
+      "description": "A set of design principles and standards for the Consumer Financial Protection Bureau.",
+      "license": "https://github.com/cfpb/design-manual/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/design-manual"
+    },
+    {
+      "name": "jmeter-bootstrap",
+      "description": "Downloads JMeter and JMeter plugins and demonstrates usage via examples. Suggested to be used as a git submodule",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/jmeter-bootstrap"
+    },
+    {
+      "name": "collab",
+      "description": "Collab is a Django project with a standard set of configurations to provide services to reusable apps.",
+      "license": "https://github.com/cfpb/collab/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/collab"
+    },
+    {
+      "name": "collab-staff-directory",
+      "description": "collab-staff-directory",
+      "license": "https://github.com/cfpb/collab-staff-directory/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/collab-staff-directory"
+    },
+    {
+      "name": "collab-news",
+      "description": "collab-news",
+      "license": "https://github.com/cfpb/collab-news/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/collab-news"
+    },
+    {
+      "name": "owning-a-home",
+      "description": "Suite of tools and resources for homebuyers.",
+      "license": "https://github.com/cfpb/owning-a-home/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/owning-a-home"
+    },
+    {
+      "name": "grunt-cfpb-internal",
+      "description": "Internal Grunt task for automating project documentation and semantic versioning.",
+      "license": "https://github.com/cfpb/grunt-cfpb-internal/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/grunt-cfpb-internal"
+    },
+    {
+      "name": "cf-colors",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: You can find the color variables in cf-core.",
+      "license": "https://github.com/cfpb/cf-colors/blob/gh-pages/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-colors"
+    },
+    {
+      "name": "django-hud",
+      "description": "django-hud",
+      "license": "https://github.com/cfpb/django-hud/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/django-hud"
+    },
+    {
+      "name": "find-a-housing-counselor",
+      "description": "Tool that allows users to find the 10 closest HUD-approved housing counselors by the centroid of a ZIP code. They can print those based on the results on the web page.",
+      "license": "https://github.com/cfpb/find-a-housing-counselor/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/find-a-housing-counselor"
+    },
+    {
+      "name": "cf-component-demo",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: Contains Jade templates for creating docs and demos for Capital Framework components.",
+      "license": "https://github.com/cfpb/cf-component-demo/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-component-demo"
+    },
+    {
+      "name": "cf-grid",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: A Less-based grid system using parametric mixins. Part of Capital Framework.",
+      "license": "https://github.com/cfpb/cf-grid/blob/gh-pages/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-grid"
+    },
+    {
+      "name": "cf-typography",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: Advanced typographic patterns, including lists, links, and headers for Capital Framework.",
+      "license": "https://github.com/cfpb/cf-typography/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-typography"
+    },
+    {
+      "name": "cf-buttons",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: Button components for Capital Framework.",
+      "license": "https://github.com/cfpb/cf-buttons/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-buttons"
+    },
+    {
+      "name": "cf-forms",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: Enhanced form styles for Capital Framework.",
+      "license": "https://github.com/cfpb/cf-forms/blob/gh-pages/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-forms"
+    },
+    {
+      "name": "click-to-comment",
+      "description": "⚠️ THIS REPO IS DEPRECATED ⚠️  Precision feedback for images and documents.",
+      "license": "https://github.com/cfpb/click-to-comment/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/click-to-comment"
+    },
+    {
+      "name": "github-wiki-search",
+      "description": "github-wiki-search",
+      "license": "https://github.com/cfpb/github-wiki-search/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/github-wiki-search"
+    },
+    {
+      "name": "cf-pagination",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: Standard pagination component for Capital Framework.",
+      "license": "https://github.com/cfpb/cf-pagination/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-pagination"
+    },
+    {
+      "name": "cf-expandables",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: Standard expandable (show/hide) elements for Capital Framework.",
+      "license": "https://github.com/cfpb/cf-expandables/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-expandables"
+    },
+    {
+      "name": "capital-framework",
+      "description": "The Consumer Financial Protection Bureau's user interface framework",
+      "license": "https://github.com/cfpb/capital-framework/blob/canary/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/capital-framework"
+    },
+    {
+      "name": "open-graph-control",
+      "description": "This is a simple plugin to add open graph data to a WordPress action hook.",
+      "license": "https://github.com/cfpb/open-graph-control/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/open-graph-control"
+    },
+    {
+      "name": "cf-tables",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: ",
+      "license": "https://github.com/cfpb/cf-tables/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-tables"
+    },
+    {
+      "name": "cf-tabs",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: ",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-tabs"
+    },
+    {
+      "name": "cf-grunt-config",
+      "description": "A set of common Grunt tasks for Capital Framework components.",
+      "license": "https://github.com/cfpb/cf-grunt-config/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-grunt-config"
+    },
+    {
+      "name": "cf-demo",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning:",
+      "license": "https://github.com/cfpb/cf-demo/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-demo"
+    },
+    {
+      "name": "cf-icons",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: Custom icon font for Capital Framework.",
+      "license": "https://github.com/cfpb/cf-icons/blob/gh-pages/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-icons"
+    },
+    {
+      "name": "normalize-legacy-addon",
+      "description": "An add-on to normalize.css that backfills v1 legacy browser support. It is built to be combined with newer versions of normalize.css.",
+      "license": "https://github.com/cfpb/normalize-legacy-addon/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/normalize-legacy-addon"
+    },
+    {
+      "name": "loan-calc",
+      "description": "A node module to quickly calculate monthly payments and the total amount of interest paid for a fixed rate loan.",
+      "license": "https://github.com/cfpb/loan-calc/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/loan-calc"
+    },
+    {
+      "name": "cfgov-refresh",
+      "description": "Django project protecting American consumers",
+      "license": "https://github.com/cfpb/cfgov-refresh/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cfgov-refresh"
+    },
+    {
+      "name": "cfgov-sheer-templates",
+      "description": "Templates for consumerfinance.gov pages running on Sheer",
+      "license": "https://github.com/cfpb/cfgov-sheer-templates/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cfgov-sheer-templates"
+    },
+    {
+      "name": "fuzzy-state-search",
+      "description": "A node module to get the U.S. state closest to the user's position.",
+      "license": "https://github.com/cfpb/fuzzy-state-search/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/fuzzy-state-search"
+    },
+    {
+      "name": "collab-form-builder",
+      "description": "Form Builder app for Collab",
+      "license": "https://github.com/cfpb/collab-form-builder/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/collab-form-builder"
+    },
+    {
+      "name": "mapusaurus",
+      "description": "Real-time geospatial mapping of HMDA data",
+      "license": "https://github.com/cfpb/mapusaurus/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/mapusaurus"
+    },
+    {
+      "name": "cfpb-wp-cli",
+      "description": "A collection wp-cli commands used at the CFPB.",
+      "license": "https://github.com/cfpb/cfpb-wp-cli/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cfpb-wp-cli"
+    },
+    {
+      "name": "hmda-fan",
+      "description": "hmda-fan",
+      "license": "https://github.com/cfpb/hmda-fan/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-fan"
+    },
+    {
+      "name": "collab-mystery-meet",
+      "description": "Collab app to meet new people",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/collab-mystery-meet"
+    },
+    {
+      "name": "open-source-project-template",
+      "description": "A project template containing default open source files for new projects",
+      "license": "https://github.com/cfpb/open-source-project-template/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/open-source-project-template"
+    },
+    {
+      "name": "cms-toolkit",
+      "description": "cms-toolkit",
+      "license": "https://github.com/cfpb/cms-toolkit/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cms-toolkit"
+    },
+    {
+      "name": "amortize",
+      "description": "A node module to calculate the interest paid, principal paid, remaining balance, and monthly payment of a loan.",
+      "license": "https://github.com/cfpb/amortize/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/amortize"
+    },
+    {
+      "name": "hmda-explorer",
+      "description": "An interactive front-end for exploring the Home Mortgage Disclosure Act data set",
+      "license": "https://github.com/cfpb/hmda-explorer/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-explorer"
+    },
+    {
+      "name": "generator-node-cfpb",
+      "description": "Yeoman generator for CFPB node modules",
+      "license": "https://github.com/cfpb/generator-node-cfpb/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/generator-node-cfpb"
+    },
+    {
+      "name": "format-usd",
+      "description": "Convert a number or string to a USD-formatted string",
+      "license": "https://github.com/cfpb/format-usd/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/format-usd"
+    },
+    {
+      "name": "unformat-usd",
+      "description": "Convert a United States dollar-formatted string into a number.",
+      "license": "https://github.com/cfpb/unformat-usd/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/unformat-usd"
+    },
+    {
+      "name": "is-money-usd",
+      "description": "A node module to test for a USD formatted input.",
+      "license": "https://github.com/cfpb/is-money-usd/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/is-money-usd"
+    },
+    {
+      "name": "owning-a-home-api",
+      "description": "The API that drives the Owning A Home project. ",
+      "license": "https://github.com/cfpb/owning-a-home-api/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/owning-a-home-api"
+    },
+    {
+      "name": "overall-loan-cost",
+      "description": "A node module to calculate the overall cost of a loan.",
+      "license": "https://github.com/cfpb/overall-loan-cost/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/overall-loan-cost"
+    },
+    {
+      "name": "cf-core",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: Core styles for starting a Capital Framework project. It includes Normalize.css, variables, media query and utility mixins, class utilities and standard base styling.",
+      "license": "https://github.com/cfpb/cf-core/blob/gh-pages/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-core"
+    },
+    {
+      "name": "hmdapolis",
+      "description": "Two-player turn-based strategy game utilizing live mortgage data.",
+      "license": null,
+      "openSourceProject": 0,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": null
+    },
+    {
+      "name": "objectified",
+      "description": "One-way DOM-to-model data-binding.",
+      "license": "https://github.com/cfpb/objectified/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/objectified"
+    },
+    {
+      "name": "django-api-test",
+      "description": "django-api-test",
+      "license": "https://github.com/cfpb/django-api-test/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/django-api-test"
+    },
+    {
+      "name": "stay-positive",
+      "description": "Node module to keep a number positive",
+      "license": "https://github.com/cfpb/stay-positive/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/stay-positive"
+    },
+    {
+      "name": "django-rest-framework-selectserializer",
+      "description": "django-rest-framework-selectserializer",
+      "license": "https://github.com/cfpb/django-rest-framework-selectserializer/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/django-rest-framework-selectserializer"
+    },
+    {
+      "name": "pantheon",
+      "description": "pantheon",
+      "license": "https://github.com/cfpb/pantheon/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/pantheon"
+    },
+    {
+      "name": "pilot_pilot",
+      "description": "Testing the amount of time it takes to process an average HMDA .dat file.",
+      "license": "https://github.com/cfpb/pilot_pilot/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/pilot_pilot"
+    },
+    {
+      "name": "proxy-methodology",
+      "description": "proxy-methodology",
+      "license": "https://github.com/cfpb/proxy-methodology/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/proxy-methodology"
+    },
+    {
+      "name": "KEEP-PRIVATE_DO-NOT-DELETE",
+      "description": "Required for verification of two-factor authentication when adding new organization members.",
+      "license": null,
+      "openSourceProject": 0,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": null
+    },
+    {
+      "name": "jumbo-mortgage",
+      "description": "Check if a loan is jumbo or high balance.",
+      "license": "https://github.com/cfpb/jumbo-mortgage/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/jumbo-mortgage"
+    },
+    {
+      "name": "SolvingMicroDSOPs",
+      "description": "SolvingMicroDSOPs",
+      "license": null,
+      "openSourceProject": 0,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": null
+    },
+    {
+      "name": "generator-cf",
+      "description": "Yeoman generator for Capital Framework",
+      "license": "https://github.com/cfpb/generator-cf/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/generator-cf"
+    },
+    {
+      "name": "dotfiles",
+      "description": "Sensible defaults for new CFPB machines",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/dotfiles"
+    },
+    {
+      "name": "cf-layout",
+      "description": ":warning: THIS REPO IS DEPRECATED :warning: Standard layout components for Capital Framework.",
+      "license": "https://github.com/cfpb/cf-layout/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-layout"
+    },
+    {
+      "name": "hmda-pilot",
+      "description": "hmda-pilot",
+      "license": "https://github.com/cfpb/hmda-pilot/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-pilot"
+    },
+    {
+      "name": "hmda-rule-spec",
+      "description": "Language-agnostic rule specification for the HMDA file specification and edit checks.",
+      "license": "https://github.com/cfpb/hmda-rule-spec/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-rule-spec"
+    },
+    {
+      "name": "hmda-rule-engine",
+      "description": "Implementation of the rule engine for the edit checks for the HMDA Pilot project.",
+      "license": "https://github.com/cfpb/hmda-rule-engine/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-rule-engine"
+    },
+    {
+      "name": "hmda-edit-check-api",
+      "description": "Lookup APIs to assist in edit checks for the HMDA Pilot project.",
+      "license": "https://github.com/cfpb/hmda-edit-check-api/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-edit-check-api"
+    },
+    {
+      "name": "shortstack",
+      "description": "An extensible site rendering system",
+      "license": "https://github.com/cfpb/shortstack/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/shortstack"
+    },
+    {
+      "name": "hmda-viz-prototype",
+      "description": "Prototype for HMDA visualization",
+      "license": "https://github.com/cfpb/hmda-viz-prototype/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-viz-prototype"
+    },
+    {
+      "name": "kratos",
+      "description": "pluggable authorization management",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/kratos"
+    },
+    {
+      "name": "sentia",
+      "description": "sentia",
+      "license": "https://github.com/cfpb/sentia/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/sentia"
+    },
+    {
+      "name": "porchlight",
+      "description": "porchlight",
+      "license": "https://github.com/cfpb/porchlight/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/porchlight"
+    },
+    {
+      "name": "email-templates",
+      "description": "Design, research, and front-end implementation of responsive email templates for the CFPB.",
+      "license": "https://github.com/cfpb/email-templates/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/email-templates"
+    },
+    {
+      "name": "grasshopper",
+      "description": "CFPB's streaming batch geocoder",
+      "license": "https://github.com/cfpb/grasshopper/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/grasshopper"
+    },
+    {
+      "name": "decision-stacker",
+      "description": "decision-stacker",
+      "license": "https://github.com/cfpb/decision-stacker/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/decision-stacker"
+    },
+    {
+      "name": "publish_eccu",
+      "description": "Publish ECCU files to Akamai",
+      "license": "https://github.com/cfpb/publish_eccu/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/publish_eccu"
+    },
+    {
+      "name": "development",
+      "description": "A repository for the discussion and publication of the CFPB development team standards.",
+      "license": "https://github.com/cfpb/development/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/development"
+    },
+    {
+      "name": "grasshopper-loader",
+      "description": "Data loader for Grasshopper ",
+      "license": "https://github.com/cfpb/grasshopper-loader/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/grasshopper-loader"
+    },
+    {
+      "name": "grasshopper-ui",
+      "description": "Front-end to Grasshopper, cfpb's nascent geocoder",
+      "license": "https://github.com/cfpb/grasshopper-ui/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/grasshopper-ui"
+    },
+    {
+      "name": "sifu",
+      "description": "sifu",
+      "license": "https://github.com/cfpb/sifu/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/sifu"
+    },
+    {
+      "name": "flask-eventics",
+      "description": "flask-eventics",
+      "license": "https://github.com/cfpb/flask-eventics/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/flask-eventics"
+    },
+    {
+      "name": "ckan-installer",
+      "description": "ckan-installer",
+      "license": "https://github.com/cfpb/ckan-installer/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/ckan-installer"
+    },
+    {
+      "name": "dep-financial-site",
+      "description": "dep-financial-site",
+      "license": "https://github.com/cfpb/dep-financial-site/blob/master/LICENSE",
+      "openSourceProject": 0,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": null
+    },
+    {
+      "name": "dep-financial-api",
+      "description": "dep-financial-api",
+      "license": "https://github.com/cfpb/dep-financial-api/blob/master/LICENSE",
+      "openSourceProject": 0,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": null
+    },
+    {
+      "name": "retirement",
+      "description": "Helping Americans make choices about retirement",
+      "license": "https://github.com/cfpb/retirement/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/retirement"
+    },
+    {
+      "name": "dash",
+      "description": "Permissions management dashboard for organizations with lots of developers",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/dash"
+    },
+    {
+      "name": "macropolo",
+      "description": "macropolo",
+      "license": "https://github.com/cfpb/macropolo/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/macropolo"
+    },
+    {
+      "name": "pantheon-helpers",
+      "description": "pantheon-helpers",
+      "license": "https://github.com/cfpb/pantheon-helpers/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/pantheon-helpers"
+    },
+    {
+      "name": "ckanext-cfpb-extrafields",
+      "description": "ckanext-cfpb-extrafields",
+      "license": "https://github.com/cfpb/ckanext-cfpb-extrafields/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/ckanext-cfpb-extrafields"
+    },
+    {
+      "name": "aurora",
+      "description": "An open source enterprise data warehousing and analysis platform.",
+      "license": "https://github.com/cfpb/aurora/blob/develop/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/aurora"
+    },
+    {
+      "name": "django-college-costs-comparison",
+      "description": "A web app for comparing college financial aid offers",
+      "license": "https://github.com/cfpb/django-college-costs-comparison/blob/master/LICENSE",
+      "openSourceProject": 0,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": null
+    },
+    {
+      "name": "-new-clouseau-",
+      "description": "-new-clouseau-",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/-new-clouseau-"
+    },
+    {
+      "name": "python27-for-el6",
+      "description": "python27-for-el6",
+      "license": "https://github.com/cfpb/python27-for-el6/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/python27-for-el6"
+    },
+    {
+      "name": "fr-notices",
+      "description": "fr-notices",
+      "license": "https://github.com/cfpb/fr-notices/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/fr-notices"
+    },
+    {
+      "name": "regulations-bootstrap",
+      "description": "Work towards a bootstrap for getting a full eRegs dev environment set up.",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/regulations-bootstrap"
+    },
+    {
+      "name": "node-wcag",
+      "description": "WCAG and Section 508 accessibility audits from the command line.",
+      "license": "https://github.com/cfpb/node-wcag/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/node-wcag"
+    },
+    {
+      "name": "grasshopper-parser",
+      "description": "Address Parsing REST API",
+      "license": "https://github.com/cfpb/grasshopper-parser/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/grasshopper-parser"
+    },
+    {
+      "name": "pantheon-2",
+      "description": "pantheon-2",
+      "license": "https://github.com/cfpb/pantheon-2/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/pantheon-2"
+    },
+    {
+      "name": "regulations-stub",
+      "description": "Output from CFPB's regulations-parser",
+      "license": "https://github.com/cfpb/regulations-stub/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/regulations-stub"
+    },
+    {
+      "name": "CFPBot",
+      "description": ":space_invader:",
+      "license": "https://github.com/cfpb/CFPBot/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/CFPBot"
+    },
+    {
+      "name": "grasshopper-retriever",
+      "description": "Fetches public address data for use by the grasshopper-loader",
+      "license": "https://github.com/cfpb/grasshopper-retriever/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/grasshopper-retriever"
+    },
+    {
+      "name": "cf-notifications",
+      "description": "cf-notifications",
+      "license": "https://github.com/cfpb/cf-notifications/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-notifications"
+    },
+    {
+      "name": "xsv-el6-rpm",
+      "description": "RPM build of the XSV toolkit",
+      "license": "https://github.com/cfpb/xsv-el6-rpm/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/xsv-el6-rpm"
+    },
+    {
+      "name": "cf-tooltips",
+      "description": "cf-tooltips",
+      "license": "https://github.com/cfpb/cf-tooltips/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-tooltips"
+    },
+    {
+      "name": "unitybox",
+      "description": "unitybox",
+      "license": "https://github.com/cfpb/unitybox/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/unitybox"
+    },
+    {
+      "name": "agile-playbook",
+      "description": "agile-playbook",
+      "license": "https://github.com/cfpb/agile-playbook/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/agile-playbook"
+    },
+    {
+      "name": "delinkenator",
+      "description": "delinkenator",
+      "license": "https://github.com/cfpb/delinkenator/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/delinkenator"
+    },
+    {
+      "name": "cfgov-django",
+      "description": "cfgov-django",
+      "license": "https://github.com/cfpb/cfgov-django/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cfgov-django"
+    },
+    {
+      "name": "django-sheerlike",
+      "description": "A port of some functionality from https://github.com/cfpb/sheer to Django",
+      "license": "https://github.com/cfpb/django-sheerlike/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/django-sheerlike"
+    },
+    {
+      "name": "regulations-configs",
+      "description": "Configuration files for the eRegulations project",
+      "license": "https://github.com/cfpb/regulations-configs/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/regulations-configs"
+    },
+    {
+      "name": "gnucobol-el6-rpm",
+      "description": "An RPM SPEC for installing GnuCobol on RHEL 6.5+",
+      "license": "https://github.com/cfpb/gnucobol-el6-rpm/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/gnucobol-el6-rpm"
+    },
+    {
+      "name": "jenkins-automation",
+      "description": "Helpers for automating Jenkins via Groovy code—primarily job builders and utilities.",
+      "license": "https://github.com/cfpb/jenkins-automation/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/jenkins-automation"
+    },
+    {
+      "name": "project-open-source",
+      "description": "(Work In Progress) A repository for tools and resources for open source in government.",
+      "license": "https://github.com/cfpb/project-open-source/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/project-open-source"
+    },
+    {
+      "name": "analytics.usa.gov",
+      "description": "The US federal government's web traffic.",
+      "license": "https://github.com/cfpb/analytics.usa.gov/blob/master/LICENSE.md",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/analytics.usa.gov"
+    },
+    {
+      "name": "hmda-tech",
+      "description": "hmda-tech",
+      "license": "https://github.com/cfpb/hmda-tech/blob/master/LICENSE",
+      "openSourceProject": 0,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": null
+    },
+    {
+      "name": "node-wcag-cli",
+      "description": "node-wcag-cli",
+      "license": "https://github.com/cfpb/node-wcag-cli/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/node-wcag-cli"
+    },
+    {
+      "name": "kratos-gh",
+      "description": "kratos-gh",
+      "license": "https://github.com/cfpb/kratos-gh/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/kratos-gh"
+    },
+    {
+      "name": "hmda-geo",
+      "description": "Services that allow the user to query geographic entities by latitude and longitude and extract data.",
+      "license": "https://github.com/cfpb/hmda-geo/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-geo"
+    },
+    {
+      "name": "generator-cf-component",
+      "description": "Yeoman generator for creating Capital Framework components.",
+      "license": "https://github.com/cfpb/generator-cf-component/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/generator-cf-component"
+    },
+    {
+      "name": "back-end",
+      "description": "A repository for the discussion and publication of the CFPB back-end team standards",
+      "license": "https://github.com/cfpb/back-end/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/back-end"
+    },
+    {
+      "name": "python34-for-el6",
+      "description": "Python 3.4 RPM for RHEL 6",
+      "license": "https://github.com/cfpb/python34-for-el6/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/python34-for-el6"
+    },
+    {
+      "name": "rhobot",
+      "description": "Rhobots Don't Ask Why",
+      "license": "https://github.com/cfpb/rhobot/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/rhobot"
+    },
+    {
+      "name": "pg-common",
+      "description": "pg-common",
+      "license": "https://github.com/cfpb/pg-common/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/pg-common"
+    },
+    {
+      "name": "hmda-viz-processing",
+      "description": "hmda-viz-processing",
+      "license": "https://github.com/cfpb/hmda-viz-processing/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-viz-processing"
+    },
+    {
+      "name": "gulp-legacssy",
+      "description": "Fix your mobile-first CSS for legacy browsers",
+      "license": "https://github.com/cfpb/gulp-legacssy/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/gulp-legacssy"
+    },
+    {
+      "name": "hmda-explorer-updater",
+      "description": "hmda-explorer-updater",
+      "license": "https://github.com/cfpb/hmda-explorer-updater/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-explorer-updater"
+    },
+    {
+      "name": "rural-or-underserved-test",
+      "description": "The Rural and Underserved Tool helps creditors comply with the recent amendments to Reg Z (Truth in Lending). A creditor may rely on this tool to provide a safe harbor determination that a property is located in a rural or underserved area.",
+      "license": "https://github.com/cfpb/rural-or-underserved-test/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/rural-or-underserved-test"
+    },
+    {
+      "name": "regulations-schema",
+      "description": "regulations-schema",
+      "license": "https://github.com/cfpb/regulations-schema/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/regulations-schema"
+    },
+    {
+      "name": "college-costs",
+      "description": "A tool to help students weigh the costs and rewards of a college program. ",
+      "license": "https://github.com/cfpb/college-costs/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/college-costs"
+    },
+    {
+      "name": "readme_refresh_day",
+      "description": "readme_refresh_day",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/readme_refresh_day"
+    },
+    {
+      "name": "student-debt-calculator",
+      "description": "Calculate student debt at graduation based on a wide array of possible inputs",
+      "license": "https://github.com/cfpb/student-debt-calculator/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/student-debt-calculator"
+    },
+    {
+      "name": "cf-modals",
+      "description": "cf-modals",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-modals"
+    },
+    {
+      "name": "regulations-xml-parser",
+      "description": "Make web-ready JSON from regulations XML",
+      "license": "https://github.com/cfpb/regulations-xml-parser/blob/master/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/regulations-xml-parser"
+    },
+    {
+      "name": "sentia-softwarediscovery",
+      "description": "sentia-softwarediscovery",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/sentia-softwarediscovery"
+    },
+    {
+      "name": "qm-data-processing",
+      "description": "qm-data-processing",
+      "license": "https://github.com/cfpb/qm-data-processing/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/qm-data-processing"
+    },
+    {
+      "name": "hackathon",
+      "description": "planning a hack day at CFPB.",
+      "license": "https://github.com/cfpb/hackathon/blob/gh-pages/COPYING.txt",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hackathon"
+    },
+    {
+      "name": "cf-type-testing",
+      "description": "A demo page for testing a wide range of typesetting combos in Capital Framework.",
+      "license": "https://github.com/cfpb/cf-type-testing/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-type-testing"
+    },
+    {
+      "name": "django-mysql-ssl",
+      "description": "Backport dbshell support for ssl mysql connections in Django < 1.8",
+      "license": "https://github.com/cfpb/django-mysql-ssl/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/django-mysql-ssl"
+    },
+    {
+      "name": "eRegulations",
+      "description": "Documentation for the eRegulations project. ",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/eRegulations"
+    },
+    {
+      "name": "jenkins-as-code-starter-project",
+      "description": "A neat little project that uses our jenkins utils and helps you  to get started and start testing your scripts",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/jenkins-as-code-starter-project"
+    },
+    {
+      "name": "analytics-reporter",
+      "description": "Lightweight analytics reporting and publishing tool for Google Analytics data. Powers https://analytics.usa.gov, http://analytics.phila.gov, and more.",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/analytics-reporter"
+    },
+    {
+      "name": "new-relic-installer",
+      "description": "Ansible scripts for provisioning PHP or Python New Relic agents, as well as very simple LAMP or WSGI Python applications.",
+      "license": "https://github.com/cfpb/new-relic-installer/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/new-relic-installer"
+    },
+    {
+      "name": "zip-backfill",
+      "description": "Backfilling zip codes in OpenAddress data.",
+      "license": "https://github.com/cfpb/zip-backfill/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/zip-backfill"
+    },
+    {
+      "name": "drake-el6-rpm",
+      "description": "RPM Spec file for the drake tool",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/drake-el6-rpm"
+    },
+    {
+      "name": "salesforce-dataloader-el6-rpm",
+      "description": "RPM Spec file for building the Salesforce Dataloader to run on Linux",
+      "license": "https://github.com/cfpb/salesforce-dataloader-el6-rpm/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/salesforce-dataloader-el6-rpm"
+    },
+    {
+      "name": "imcs-el6-rpm",
+      "description": "RPM Package for the In-Memory Column Store for Postgres",
+      "license": "https://github.com/cfpb/imcs-el6-rpm/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/imcs-el6-rpm"
+    },
+    {
+      "name": "test_hmda_pipeline",
+      "description": "This is a collection of scripts for a GoCD pipeline used for integration testing, which downloads the public HMDA data over the API.",
+      "license": "https://github.com/cfpb/test_hmda_pipeline/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/test_hmda_pipeline"
+    },
+    {
+      "name": "xtdiff",
+      "description": "Python library to compare two XML trees and generate a set of actions that transform one into the other",
+      "license": "https://github.com/cfpb/xtdiff/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/xtdiff"
+    },
+    {
+      "name": "pipeline-ccdb",
+      "description": "A data pipeline that warehouses CCDB in a PostgreSQL database ",
+      "license": "https://github.com/cfpb/pipeline-ccdb/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/pipeline-ccdb"
+    },
+    {
+      "name": "auto-loans",
+      "description": "Resources for shopping for an auto loan.",
+      "license": "https://github.com/cfpb/auto-loans/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/auto-loans"
+    },
+    {
+      "name": "tax-time-saving",
+      "description": ":warning: This repo is deprecated. Visit the live page, now served by our CMS:",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/tax-time-saving"
+    },
+    {
+      "name": "hammerdb-el6-rpm",
+      "description": "RPM Spec for HammerDB",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hammerdb-el6-rpm"
+    },
+    {
+      "name": "hypopg-el6-rpm",
+      "description": "RPM spec file for HypoPG",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hypopg-el6-rpm"
+    },
+    {
+      "name": "pg_jobmon",
+      "description": "RPM Spec file for pg_jobmon",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/pg_jobmon"
+    },
+    {
+      "name": "hmda-platform",
+      "description": "hmda-platform",
+      "license": "https://github.com/cfpb/hmda-platform/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-platform"
+    },
+    {
+      "name": "hmda-platform-ui",
+      "description": "Front-end for https://github.com/cfpb/hmda-platform",
+      "license": "https://github.com/cfpb/hmda-platform-ui/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-platform-ui"
+    },
+    {
+      "name": "regulations-xml",
+      "description": "CFPB Regulations in RegML format for eRegulations",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/regulations-xml"
+    },
+    {
+      "name": "cstore_fdw-el6-rpm",
+      "description": "RPM for the CStore FDW Postgres Extension",
+      "license": "https://github.com/cfpb/cstore_fdw-el6-rpm/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cstore_fdw-el6-rpm"
+    },
+    {
+      "name": "pg_bulkload-el6-rpm",
+      "description": "RPM Spec file for the PG Bulkload extension",
+      "license": "https://github.com/cfpb/pg_bulkload-el6-rpm/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/pg_bulkload-el6-rpm"
+    },
+    {
+      "name": "postgis2-el6-rpm",
+      "description": "RPM spec file for PostGIS 2",
+      "license": "https://github.com/cfpb/postgis2-el6-rpm/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/postgis2-el6-rpm"
+    },
+    {
+      "name": "pg_partman-el6-rpm",
+      "description": "RPM spec file for the PG Partman extension",
+      "license": "https://github.com/cfpb/pg_partman-el6-rpm/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/pg_partman-el6-rpm"
+    },
+    {
+      "name": "drama-free-django",
+      "description": "drama-free-django",
+      "license": "https://github.com/cfpb/drama-free-django/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/drama-free-django"
+    },
+    {
+      "name": "cf-theme-cfpb",
+      "description": "CFPB theme for Capital Framework",
+      "license": "https://github.com/cfpb/cf-theme-cfpb/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cf-theme-cfpb"
+    },
+    {
+      "name": "dev-cop",
+      "description": "development community of practice",
+      "license": null,
+      "openSourceProject": 0,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": null
+    },
+    {
+      "name": "complaint-intake",
+      "description": "Improving the forms used by consumers to submit complaints about the financial marketplace.",
+      "license": "https://github.com/cfpb/complaint-intake/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/complaint-intake"
+    },
+    {
+      "name": "vax",
+      "description": "Check your Node project for npm security best practices.",
+      "license": "https://github.com/cfpb/vax/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/vax"
+    },
+    {
+      "name": "data-viz-workshop",
+      "description": "data-viz-workshop",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/data-viz-workshop"
+    },
+    {
+      "name": "hubot-acrogov",
+      "description": "hubot-acrogov",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hubot-acrogov"
+    },
+    {
+      "name": "dimension",
+      "description": "A simulated market experiment using oTree.",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/dimension"
+    },
+    {
+      "name": "present-value",
+      "description": "Calculates present value based on term, monthly payment, and rate",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/present-value"
+    },
+    {
+      "name": "payment-calculator",
+      "description": "payment-calculator",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/payment-calculator"
+    },
+    {
+      "name": "hubot",
+      "description": "A customizable life embetterment robot.",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hubot"
+    },
+    {
+      "name": "hubot-aws-cfpb",
+      "description": "Manage your AWS EC2 instances from Hubot",
+      "license": "https://github.com/cfpb/hubot-aws-cfpb/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hubot-aws-cfpb"
+    },
+    {
+      "name": "hubot-capital-framework",
+      "description": "A Hubot script to manage CFPB's UI framework, Capital Framework",
+      "license": "https://github.com/cfpb/hubot-capital-framework/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hubot-capital-framework"
+    },
+    {
+      "name": "redis-el6-rpm",
+      "description": "RPM Spec for Redis 3.0.x",
+      "license": "https://github.com/cfpb/redis-el6-rpm/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/redis-el6-rpm"
+    },
+    {
+      "name": "onboarding-scheduler",
+      "description": "Small utility for parsing CFPB onboarding messages",
+      "license": "https://github.com/cfpb/onboarding-scheduler/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/onboarding-scheduler"
+    },
+    {
+      "name": "hubot-onboarding",
+      "description": "A Hubot script for welcoming new hires to your organization by gradually providing them scheduled information.",
+      "license": "https://github.com/cfpb/hubot-onboarding/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hubot-onboarding"
+    },
+    {
+      "name": "complaint",
+      "description": "Submit a complaint and Consumer Complaint Database websites",
+      "license": "https://github.com/cfpb/complaint/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/complaint"
+    },
+    {
+      "name": "time2read",
+      "description": "Get the approximate (and totally unscientific) number of milliseconds it takes for a human to read a sentence.",
+      "license": "https://github.com/cfpb/time2read/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/time2read"
+    },
+    {
+      "name": "open-source-checklist",
+      "description": "check internal repos against open source checklist requirements",
+      "license": "https://github.com/cfpb/open-source-checklist/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/open-source-checklist"
+    },
+    {
+      "name": "read2me",
+      "description": "read2me",
+      "license": "https://github.com/cfpb/read2me/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/read2me"
+    },
+    {
+      "name": "psql-authnz",
+      "description": "A tool for implementing PostgreSQL centralized authorization",
+      "license": "https://github.com/cfpb/psql-authnz/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/psql-authnz"
+    },
+    {
+      "name": "rhobot-for-el6",
+      "description": "Rhobot RPM Spec",
+      "license": "https://github.com/cfpb/rhobot-for-el6/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/rhobot-for-el6"
+    },
+    {
+      "name": "elasticizer",
+      "description": "elasticizer",
+      "license": "https://github.com/cfpb/elasticizer/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/elasticizer"
+    },
+    {
+      "name": "capital-framework-sandbox",
+      "description": "A place to play and edit Capital Framework components.",
+      "license": "https://github.com/cfpb/capital-framework-sandbox/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/capital-framework-sandbox"
+    },
+    {
+      "name": "hubot-new-relic-alerts",
+      "description": "hubot-new-relic-alerts",
+      "license": "https://github.com/cfpb/hubot-new-relic-alerts/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hubot-new-relic-alerts"
+    },
+    {
+      "name": "maven-for-el6",
+      "description": "Maven RPM Spec",
+      "license": "https://github.com/cfpb/maven-for-el6/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/maven-for-el6"
+    },
+    {
+      "name": "hmda-platform-auth",
+      "description": "hmda-platform-auth",
+      "license": "https://github.com/cfpb/hmda-platform-auth/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-platform-auth"
+    },
+    {
+      "name": "ckanext-discourse",
+      "description": "CKAN + Discourse",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/ckanext-discourse"
+    },
+    {
+      "name": "intellij-idea-for-el6",
+      "description": "RPM Spec File for the Intellij IDEA IDE.",
+      "license": "https://github.com/cfpb/intellij-idea-for-el6/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/intellij-idea-for-el6"
+    },
+    {
+      "name": "protractor-accessibility-plugin",
+      "description": "Runs a set of accessibility audits",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/protractor-accessibility-plugin"
+    },
+    {
+      "name": "tds_fdw-for-el6",
+      "description": "RPM Spec for TDS_FDW PostgreSQL plugin",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/tds_fdw-for-el6"
+    },
+    {
+      "name": "salesforce-docs",
+      "description": "Guidance for developing Salesforce applications and solutions for the CFPB",
+      "license": "https://github.com/cfpb/salesforce-docs/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/salesforce-docs"
+    },
+    {
+      "name": "AtomicComponent",
+      "description": "Micro framework for building Atomic Design components",
+      "license": "https://github.com/cfpb/AtomicComponent/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/AtomicComponent"
+    },
+    {
+      "name": "cfgov-django-setup",
+      "description": "common code shared across our django apps that also trigger grunt/gulp builds",
+      "license": "https://github.com/cfpb/cfgov-django-setup/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cfgov-django-setup"
+    },
+    {
+      "name": "dashboard",
+      "description": "Consumerfinance.gov status dashboard",
+      "license": "https://github.com/cfpb/dashboard/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/dashboard"
+    },
+    {
+      "name": "django-assets",
+      "description": "django-assets",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/django-assets"
+    },
+    {
+      "name": "prepaid-disclosure-files",
+      "description": "Native design files and source code for the model and sample disclosure forms in the CFPB's final rule on prepaid accounts.",
+      "license": "https://github.com/cfpb/prepaid-disclosure-files/blob/gh-pages/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/prepaid-disclosure-files"
+    },
+    {
+      "name": "cfpb-chart-builder",
+      "description": "Charts for the Consumer Financial Protection Bureau",
+      "license": "https://github.com/cfpb/cfpb-chart-builder/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cfpb-chart-builder"
+    },
+    {
+      "name": "ansible-role-apache",
+      "description": "Ansible Role - Apache 2.x.",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/ansible-role-apache"
+    },
+    {
+      "name": "ansible-pdf-reactor",
+      "description": "A ansible playbook to install PDF reactor. ",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/ansible-pdf-reactor"
+    },
+    {
+      "name": "ansible-scl-repos",
+      "description": "ansible-scl-repos",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/ansible-scl-repos"
+    },
+    {
+      "name": "ansible-role-java",
+      "description": "Ansible Role - Java.",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/ansible-role-java"
+    },
+    {
+      "name": "ansible-role-firewall",
+      "description": "Ansible Role - iptables Firewall configuration.",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/ansible-role-firewall"
+    },
+    {
+      "name": "consumer-credit-trends",
+      "description": "Explore recent developments in consumer credit markets.",
+      "license": "https://github.com/cfpb/consumer-credit-trends/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/consumer-credit-trends"
+    },
+    {
+      "name": "cfpb-chart-builder-sandbox",
+      "description": "A sandbox for cfpb-chart-builder",
+      "license": "https://github.com/cfpb/cfpb-chart-builder-sandbox/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/cfpb-chart-builder-sandbox"
+    },
+    {
+      "name": "lighthouse-config",
+      "description": "CFPB specific config for the lighthouse-cli",
+      "license": "https://github.com/cfpb/lighthouse-config/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/lighthouse-config"
+    },
+    {
+      "name": "marathon-cli",
+      "description": "Command line tool for deploying applications via Marathon",
+      "license": "https://github.com/cfpb/marathon-cli/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/marathon-cli"
+    },
+    {
+      "name": "wagtail-sharing",
+      "description": "Easier sharing of Wagtail drafts",
+      "license": "https://github.com/cfpb/wagtail-sharing/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/wagtail-sharing"
+    },
+    {
+      "name": "consumer-credit-trends-data",
+      "description": "Data for the CFPB's consumer credit trends visualizations",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/consumer-credit-trends-data"
+    },
+    {
+      "name": "enwheel",
+      "description": "from a list of git repo's, generate Python wheels and PEP-503 compatible python package repository",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/enwheel"
+    },
+    {
+      "name": "govdelivery",
+      "description": "A Python wrapper for the govdelivery API",
+      "license": "https://github.com/cfpb/govdelivery/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/govdelivery"
+    },
+    {
+      "name": "wagtail-flags",
+      "description": "Feature flags for Wagtail sites",
+      "license": "https://github.com/cfpb/wagtail-flags/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/wagtail-flags"
+    },
+    {
+      "name": "hmda-platform-tools",
+      "description": "hmda-platform-tools",
+      "license": "https://github.com/cfpb/hmda-platform-tools/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/hmda-platform-tools"
+    },
+    {
+      "name": "s3-bucket-listing",
+      "description": "Create nice directory listings for s3 buckets with javascript and HTML. ",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/s3-bucket-listing"
+    },
+    {
+      "name": "eregs-2.0",
+      "description": "eregs-2.0",
+      "license": null,
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/eregs-2.0"
+    },
+    {
+      "name": "github-changelog",
+      "description": "Generate a changelog based on GitHub pull request titles",
+      "license": "https://github.com/cfpb/github-changelog/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/github-changelog"
+    },
+    {
+      "name": "python-mesos",
+      "description": "A python library for interacting with the Mesos API",
+      "license": "https://github.com/cfpb/python-mesos/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/python-mesos"
+    },
+    {
+      "name": "wagtail-inventory",
+      "description": "Search Wagtail pages by the blocks they contain",
+      "license": "https://github.com/cfpb/wagtail-inventory/blob/master/LICENSE",
+      "openSourceProject": 1,
+      "governmentWideReuseProject": 1,
+      "tags": [
+        "cfpb"
+      ],
+      "contact": {
+        "email": "tech@consumerfinance.gov"
+      },
+      "repository": "https://github.com/cfpb/wagtail-inventory"
+    }
+  ]
+}

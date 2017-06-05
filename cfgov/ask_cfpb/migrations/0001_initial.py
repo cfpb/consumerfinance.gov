@@ -2,17 +2,21 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import v1.feeds
+import wagtail.wagtailcore.blocks
+import v1.util.filterable_list
 import django.utils.timezone
-import django.db.models.deletion
+import wagtail.contrib.wagtailroutablepage.models
 import wagtail.wagtailcore.fields
+import django.db.models.deletion
 from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('v1', '0066_fix_for_linking_video_stills'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('v1', '0058_adding_clickable_image_to_50_50'),
     ]
 
     operations = [
@@ -21,14 +25,18 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('question', models.TextField(blank=True)),
+                ('statement', models.TextField(help_text='Text to be used on portal pages to refer to this answer', blank=True)),
                 ('snippet', wagtail.wagtailcore.fields.RichTextField(help_text='Optional answer intro', blank=True)),
                 ('answer', wagtail.wagtailcore.fields.RichTextField(blank=True)),
                 ('slug', models.SlugField(max_length=255, blank=True)),
+                ('featured', models.BooleanField(default=False, help_text='Makes the answer available to cards on the landing page')),
+                ('featured_rank', models.IntegerField(null=True, blank=True)),
                 ('question_es', models.TextField(verbose_name='Spanish question', blank=True)),
                 ('snippet_es', wagtail.wagtailcore.fields.RichTextField(help_text='Optional Spanish answer intro', verbose_name='Spanish snippet', blank=True)),
                 ('answer_es', wagtail.wagtailcore.fields.RichTextField(verbose_name='Spanish answer', blank=True)),
                 ('slug_es', models.SlugField(max_length=255, verbose_name='Spanish slug', blank=True)),
-                ('tagging', models.CharField(help_text='Search words or phrases, separated by commas', max_length=1000, blank=True)),
+                ('search_tags', models.CharField(help_text='Search words or phrases, separated by commas', max_length=1000, blank=True)),
+                ('search_tags_es', models.CharField(help_text='Spanish search words or phrases, separated by commas', max_length=1000, blank=True)),
                 ('update_english_page', models.BooleanField(default=False, verbose_name='Send to English page for review')),
                 ('update_spanish_page', models.BooleanField(default=False, verbose_name='Send to Spanish page for review')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -36,6 +44,30 @@ class Migration(migrations.Migration):
                 ('last_edited', models.DateField(help_text='Change the date to today if you edit an English question, snippet or answer.', null=True, verbose_name='Last edited English content', blank=True)),
                 ('last_edited_es', models.DateField(help_text='Change the date to today if you edit a Spanish question, snippet or answer.', null=True, verbose_name='Last edited Spanish content', blank=True)),
             ],
+            options={
+                'ordering': ['-id'],
+            },
+        ),
+        migrations.CreateModel(
+            name='AnswerCategoryPage',
+            fields=[
+                ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
+                ('content', wagtail.wagtailcore.fields.StreamField([], null=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(v1.feeds.FilterableFeedPageMixin, v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
+        ),
+        migrations.CreateModel(
+            name='AnswerLandingPage',
+            fields=[
+                ('landingpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.LandingPage')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('v1.landingpage',),
         ),
         migrations.CreateModel(
             name='AnswerPage',
@@ -47,12 +79,25 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('publish_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('answer_base', models.ForeignKey(related_name='answer_pages', on_delete=django.db.models.deletion.PROTECT, blank=True, to='ask_cfpb.Answer', null=True)),
+                ('content', wagtail.wagtailcore.fields.StreamField([('feedback', wagtail.wagtailcore.blocks.StructBlock([(b'was_it_helpful_text', wagtail.wagtailcore.blocks.CharBlock(help_text=b'Use this field only for feedback forms that use "Was this helpful?" radio buttons.', default=b'Was this page helpful to you?', required=False)), (b'intro_text', wagtail.wagtailcore.blocks.CharBlock(help_text=b'Optional feedback intro', required=False)), (b'question_text', wagtail.wagtailcore.blocks.CharBlock(help_text=b'Optional expansion on intro', required=False)), (b'radio_intro', wagtail.wagtailcore.blocks.CharBlock(help_text=b'Leave blank unless you are building a feedback form with extra radio-button prompts, as in /owning-a-home/help-us-improve/.', required=False)), (b'radio_text', wagtail.wagtailcore.blocks.CharBlock(default=b'This information helps us understand your question better.', required=False)), (b'radio_question_1', wagtail.wagtailcore.blocks.CharBlock(default=b'How soon do you expect to buy a home?', required=False)), (b'radio_question_2', wagtail.wagtailcore.blocks.CharBlock(default=b'Do you currently own a home?', required=False)), (b'button_text', wagtail.wagtailcore.blocks.CharBlock(default=b'Submit')), (b'contact_advisory', wagtail.wagtailcore.blocks.RichTextBlock(help_text=b'Use only for feedback forms that ask for a contact email', required=False))]))], blank=True)),
+                ('answer_base', models.ForeignKey(related_name='answer_pages', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='ask_cfpb.Answer', null=True)),
+                ('redirect_to', models.ForeignKey(related_name='redirected_pages', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='ask_cfpb.Answer', help_text='Choose another Answer to redirect this page to', null=True)),
             ],
             options={
                 'abstract': False,
             },
             bases=('v1.cfgovpage',),
+        ),
+        migrations.CreateModel(
+            name='AnswerResultsPage',
+            fields=[
+                ('cfgovpage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='v1.CFGOVPage')),
+                ('content', wagtail.wagtailcore.fields.StreamField([], null=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(v1.feeds.FilterableFeedPageMixin, v1.util.filterable_list.FilterableListMixin, 'v1.cfgovpage'),
         ),
         migrations.CreateModel(
             name='Audience',
@@ -71,7 +116,6 @@ class Migration(migrations.Migration):
                 ('slug_es', models.SlugField()),
                 ('intro', wagtail.wagtailcore.fields.RichTextField(blank=True)),
                 ('intro_es', wagtail.wagtailcore.fields.RichTextField(blank=True)),
-                ('featured_questions', models.ManyToManyField(related_name='featured_questions', to='ask_cfpb.Answer', blank=True)),
             ],
             options={
                 'ordering': ['name'],
@@ -95,18 +139,32 @@ class Migration(migrations.Migration):
                 ('name_es', models.CharField(max_length=255, null=True, blank=True)),
                 ('slug', models.SlugField()),
                 ('slug_es', models.SlugField(null=True, blank=True)),
-                ('featured', models.BooleanField(default=False)),
                 ('weight', models.IntegerField(default=1)),
                 ('description', wagtail.wagtailcore.fields.RichTextField(blank=True)),
                 ('description_es', wagtail.wagtailcore.fields.RichTextField(blank=True)),
                 ('more_info', models.TextField(blank=True)),
-                ('parent', models.ForeignKey(default=None, blank=True, to='ask_cfpb.Category', null=True)),
+                ('parent', models.ForeignKey(related_name='subcategories', default=None, blank=True, to='ask_cfpb.Category', null=True)),
                 ('related_subcategories', models.ManyToManyField(default=None, related_name='_subcategory_related_subcategories_+', to='ask_cfpb.SubCategory', blank=True)),
             ],
             options={
-                'ordering': ['-weight'],
+                'ordering': ['weight'],
                 'verbose_name_plural': 'Subcategories',
             },
+        ),
+        migrations.CreateModel(
+            name='TagResultsPage',
+            fields=[
+                ('answerresultspage_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='ask_cfpb.AnswerResultsPage')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(wagtail.contrib.wagtailroutablepage.models.RoutablePageMixin, 'ask_cfpb.answerresultspage'),
+        ),
+        migrations.AddField(
+            model_name='answercategorypage',
+            name='ask_category',
+            field=models.ForeignKey(related_name='category_page', on_delete=django.db.models.deletion.PROTECT, blank=True, to='ask_cfpb.Category', null=True),
         ),
         migrations.AddField(
             model_name='answer',
@@ -137,5 +195,32 @@ class Migration(migrations.Migration):
             model_name='answer',
             name='subcategory',
             field=models.ManyToManyField(help_text='Choose any subcategories related to the answer', to='ask_cfpb.SubCategory', blank=True),
+        ),
+        migrations.CreateModel(
+            name='AnswerTagProxy',
+            fields=[
+            ],
+            options={
+                'proxy': True,
+            },
+            bases=('ask_cfpb.answer',),
+        ),
+        migrations.CreateModel(
+            name='EnglishAnswerProxy',
+            fields=[
+            ],
+            options={
+                'proxy': True,
+            },
+            bases=('ask_cfpb.answer',),
+        ),
+        migrations.CreateModel(
+            name='SpanishAnswerProxy',
+            fields=[
+            ],
+            options={
+                'proxy': True,
+            },
+            bases=('ask_cfpb.answer',),
         ),
     ]

@@ -25,9 +25,9 @@
 
     value.text:            String of text that is displayed below the image.
 
-    value.image:           An object containing:
+    value.image:           An ImageBasic atom object containing:
 
-    value.image.upload:    Inset image object.
+    value.image.upload:    A CFGOVImage object.
 
     value.image.alt:       String for alt text for screenreaders.
 
@@ -58,12 +58,12 @@
                                / image_mobile.width }}px;">
         </div>
         {% else %}
-         <img  class="m-inset_image"
-               src="{{ image_inset.url }}"
-               srcset="{{ image_inset.url }} {{ image_inset.width }}w,
-                       {{ image_mobile.url }} {{ image_mobile.width }}w"
-               sizes="(max-width: 600px) {{ image_mobile.width }}px, {{ image_inset.width }}px"
-               alt="{{ value.image.alt if value.image.alt else '' }}" />
+        <img class="m-inset_image"
+             src="{{ image_inset.url }}"
+             srcset="{{ image_inset.url }} {{ image_inset.width }}w,
+                     {{ image_mobile.url }} {{ image_mobile.width }}w"
+             sizes="(max-width: 600px) {{ image_mobile.width }}px, {{ image_inset.width }}px"
+             alt="{{ image_alt_value(value.image) }}">
         {% endif %}
     </div>
     {% if value.text %}

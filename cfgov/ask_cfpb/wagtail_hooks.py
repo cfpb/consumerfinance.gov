@@ -36,10 +36,14 @@ class AnswerModelAdmin(ModelAdmin):
     menu_label = 'Answers'
     menu_icon = 'list-ul'
     list_display = (
-        'id', 'question', 'last_edited', 'question_es', 'last_edited_es')
+        'id',
+        'question',
+        'last_edited',
+        'question_es',
+        'last_edited_es')
     search_fields = (
         'id', 'question', 'question_es', 'answer', 'answer_es')
-    list_filter = ('category',)
+    list_filter = ('category', 'featured')
     edit_view_class = AnswerModelAdminSaveUserEditView
 
 

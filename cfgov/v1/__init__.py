@@ -2,20 +2,26 @@ from __future__ import absolute_import
 import HTMLParser
 import os
 import re
+import unicodedata
 from urlparse import urlparse, parse_qs
 
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.template.defaultfilters import pluralize, slugify, linebreaksbr
-from django.utils.module_loading import import_string
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import (
+    linebreaksbr,
+    pluralize,
+    slugify,
+)
+from django.utils.module_loading import import_string
+from django.utils.timezone import template_localtime
 
 from jinja2 import contextfunction, Markup
 from sheerlike import environment as sheerlike_environment
 from compressor.contrib.jinja2ext import CompressorExtension
 from flags.template_functions import flag_enabled, flag_disabled
-from .util.util import get_unique_id
+from v1.util.util import get_unique_id
 
 from wagtail.wagtailcore.rich_text import expand_db_html, RichText
 from bs4 import BeautifulSoup, NavigableString
@@ -25,6 +31,12 @@ from v1.routing import get_protected_url
 
 
 default_app_config = 'v1.apps.V1AppConfig'
+
+
+def strip_accents(value):
+    nfkd_form = unicodedata.normalize('NFKD', unicode(value))
+    only_ascii = nfkd_form.encode('ASCII', 'ignore')
+    return only_ascii
 
 
 def environment(**options):
@@ -58,10 +70,13 @@ def environment(**options):
         'get_protected_url': get_protected_url,
         'get_latest_activities': get_latest_activities,
         'get_snippets': get_snippets,
+        'localtime': template_localtime,
+        'strip_accents': strip_accents,
     })
 
     env.filters.update({
         'linebreaksbr': linebreaksbr,
+        'localtime': template_localtime,
         'pluralize': pluralize,
         'slugify': slugify,
     })

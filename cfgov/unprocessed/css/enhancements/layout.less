@@ -149,39 +149,16 @@
     } );
 }
 
-/*
-  name: Adjustments to Featured Content Module
-  notes:
-    - "Adding border to FCM"
-    - "Adjustment to make FCM work with video"
- */
+.content-l_col-1-2__on-med {
+    .respond-to-max( @bp-xs-max, {
+        + .content-l_col-1-2__on-med {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        }
+    } );
 
-.featured-content-module {
-    border: 1px solid @block__border;
-}
-
-.featured-content-module_img {
-    .respond-to-min(@fcm-bp-min, {
-        max-height: 320px;
-        width: auto;
-        height: auto;
-    });
-}
-
-.featured-content-module_visual {
-    .respond-to-max(@fcm-bp-max, {
-        margin-bottom: @grid_gutter-width;
-    });
-
-    .video-player_image {
-        max-width: none;
-        height: 320px;
-    }
-
-}
-
-.featured-content-module_visual.video-playing {
-    left: 0;
+    .respond-to-range( @bp-sm-min, @bp-med-max, {
+        .grid_column( 6 );
+    } );
 }
 
 /* topdoc
@@ -218,6 +195,158 @@
         }
     } )
 }
+
+
+/* topdoc
+  name: Equal height columns
+  family: cf-layout
+  patterns:
+    - name: Default example
+      markup: |
+        <div class="content-l__equal-height">
+            <div class="content-l_col__equal-height">
+                <div class="content-l_body__equal-height">
+                    Equal height box contents
+                </div>
+            </div>
+            <div class="content-l_col__equal-height">
+                <div class="content-l_body__equal-height">
+                    Equal height box contents
+                    <div class="content-l_footer__equal-height">
+                        Bottom aligned footer
+                    </div>
+                </div>
+            </div>
+        </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .content-l__equal-height
+            .content-l_col__equal-height
+              .content-l_body__equal-height
+                .content-l_footer__equal-height
+  tags:
+    - cf-layout
+  notes:
+    - No support for equal-height columns below IE10.
+      Can be used in conjunction with other content-l
+      classes to provide column widths and layout for
+      browsers that do not support flexbox.
+*/
+
+.equal-height_container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.equal-height_col {
+    display: flex !important;
+}
+
+.equal-height_body {
+    display: flex !important;
+    flex-direction: column;
+    align-content: stretch;
+    flex: 1;
+}
+
+.equal-height_footer {
+    margin-top: auto;
+}
+
+.content-l {
+    .respond-to-min( @bp-sm-min, {
+        &__equal-height {
+            .equal-height_container;
+        }
+
+        &_col__equal-height {
+            .equal-height_col;
+        }
+
+        &_body__equal-height {
+            .equal-height_body;
+        }
+
+        &_footer__equal-height {
+            .equal-height_footer;
+        }
+    } );
+}
+
+/* topdoc
+  name: Sets overflow-x to hidden on content element
+  family: cf-layout
+  tags:
+    - cf-layout
+*/
+
+.content__hide-horizontal-overflow {
+    overflow-x: hidden;
+}
+
+/* topdoc
+  name: Banner
+  family: cf-layout
+  patterns:
+    - name: Default example
+      markup: |
+          <div class="content_banner">
+              <div class="wrapper wrapper__match-content">
+              </div>
+          </div>
+      codenotes:
+        - |
+          Structural cheat sheet:
+          -----------------------
+          .content_banner
+            .wrapper
+            
+  tags:
+    - cf-layout
+*/
+
+@banner_bg: @gray-5;
+@banner_border: @gray-40;
+
+.content_banner {
+    background-color: @banner_bg;
+
+    .wrapper {
+        padding: unit( @grid_gutter-width / @base-font-size-px, em ) 
+                 unit( (@grid_gutter-width / 2) / @base-font-size-px, em );
+
+        .respond-to-range(@bp-sm-min, @bp-lg-max {
+            padding: unit( @grid_gutter-width / @base-font-size-px, em );
+        });
+    }
+
+    &__border-bottom {
+        border-bottom: 1px solid @banner_border;
+    }
+
+    &__border-top {
+        border-top: 1px solid @banner_border;
+    }
+}
+
+ /* topdoc
+   name: Bulleted list with flush left alignment
+   family: cf-layout
+   notes:
+     - "Add flush left styling for bulleted lists"
+   tags:
+     - cf-layout
+ */
+
+// TODO: Explore setting this padding value as a base style
+// on lists instead of using a modifier
+
+ .list__flush-left {
+     padding-left: unit( 18px / @base-font-size-px, em );
+ }
+
 
 /* topdoc
   name: EOF

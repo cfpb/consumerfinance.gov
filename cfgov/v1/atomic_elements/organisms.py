@@ -1,4 +1,3 @@
-
 import json
 import requests
 
@@ -6,10 +5,14 @@ from django import forms
 from django.apps import apps
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_text
+from django.utils.safestring import mark_safe
 from django.utils.functional import cached_property
+from functools import partial
 from jinja2 import Markup
-from wagtail.contrib.table_block.blocks import TableBlock, TableInput
+from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.utils.widgets import WidgetWithScript
 from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.rich_text import DbWhitelister, expand_db_html
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailimages import blocks as images_blocks
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
@@ -20,6 +23,7 @@ from v1.atomic_elements import atoms, molecules
 from v1.models.snippets import Contact as ContactSnippetClass
 from v1.models.snippets import ReusableText, ReusableTextChooserBlock
 from v1.util import ref
+import ask_cfpb
 
 
 class Well(blocks.StructBlock):
@@ -33,11 +37,11 @@ class Well(blocks.StructBlock):
 
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    should_link_image = blocks.BooleanBlock(
+    link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text=('Check this to link all images to the URL of the first '
-                   'link in their unit\'s list, if there is a link.')
+        help_text=('Check this to link all images and headings to the URL of '
+                   'the first link in their unit\'s list, if there is a link.')
     )
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
@@ -60,11 +64,11 @@ class ImageText5050Group(blocks.StructBlock):
 
 class ImageText2575Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    should_link_image = blocks.BooleanBlock(
+    link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text=('Check this to link all images to the URL of the first '
-                   'link in their unit\'s list, if there is a link.')
+        help_text=('Check this to link all images and headings to the URL of '
+                   'the first link in their unit\'s list, if there is a link.')
     )
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
@@ -152,7 +156,11 @@ class RegComment(blocks.StructBlock):
 
 
 class RelatedPosts(blocks.StructBlock):
-    limit = blocks.CharBlock(default='3', label='Limit')
+    limit = blocks.CharBlock(
+        default='3',
+        help_text=('This limit applies to EACH TYPE of post this module '
+                   'retrieves, not the total number of retrieved posts.')
+    )
     show_heading = blocks.BooleanBlock(
         required=False,
         default=True,
@@ -187,6 +195,15 @@ class RelatedPosts(blocks.StructBlock):
         blocks.ChoiceBlock(choices=ref.related_posts_categories,
                            required=False),
         required=False
+    )
+
+    and_filtering = blocks.BooleanBlock(
+        required=False,
+        default=False,
+        label='Match all topic tags',
+        help_text=('If checked, related posts will only be pulled in if they '
+                   'match ALL topic tags set on this page. Otherwise, related '
+                   'posts can match any one topic tag.')
     )
 
     class Meta:
@@ -268,32 +285,53 @@ class BureauStructure(blocks.StructBlock):
         js = ['bureau-structure.js']
 
 
-class AtomicTableInput(TableInput):
+class RichTextTableInput(WidgetWithScript, forms.HiddenInput):
+    def __init__(self, table_options=None, attrs=None):
+        super(RichTextTableInput, self).__init__(attrs=attrs)
+        self.table_options = table_options
 
     def render(self, name, value, attrs=None):
-        # Calling the grandparents render method and bypassing TableInputs,
-        # in order to control how we render the form.
-        original_field_html = super(TableInput, self).render(
-            name, value, attrs
+        value = self.json_dict_apply(
+            value,
+            partial(expand_db_html, for_editor=True)
         )
 
+        html = super(RichTextTableInput, self).render(name, value, attrs)
         return Markup(render_to_string('wagtailadmin/table_input.html', {
-            'original_field_html': original_field_html,
+            'original_field_html': html,
             'attrs': attrs,
             'value': value,
         }))
 
     def render_js_init(self, id_, name, value):
-        return "initAtomicTable({0}, {1});".format(
+        return "initRichTextTable({0}, {1});".format(
             json.dumps(id_),
             json.dumps(self.table_options)
         )
+
+    def value_from_datadict(self, data, files, name):
+        value = super(RichTextTableInput, self).value_from_datadict(
+            data, files, name
+        )
+
+        return self.json_dict_apply(value, DbWhitelister.clean)
+
+    @staticmethod
+    def json_dict_apply(value, callback):
+        value = json.loads(value)
+
+        for row in (value or {}).get('data') or []:
+            for i, cell in enumerate(row or []):
+                if cell:
+                    row[i] = callback(cell)
+
+        return json.dumps(value)
 
 
 class AtomicTableBlock(TableBlock):
     @cached_property
     def field(self):
-        widget = AtomicTableInput(table_options=self.table_options)
+        widget = RichTextTableInput(table_options=self.table_options)
         return forms.CharField(widget=widget, **self.field_options)
 
     def to_python(self, value):
@@ -620,10 +658,11 @@ class FilterControls(BaseExpandable):
                                      label='Filter Date Range')
     output_5050 = blocks.BooleanBlock(default=False, required=False,
                                       label="Render preview items as 50-50s")
-    should_link_image = blocks.BooleanBlock(
+    link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text='Add links to post preview images in filterable list results'
+        help_text='Add links to post preview images and'
+                  ' headings in filterable list results'
     )
 
     class Meta:
@@ -671,7 +710,7 @@ class HTMLBlock(blocks.StructBlock):
     def render(self, value, context=None):
         resp = requests.get(value['html_url'], timeout=5)
         resp.raise_for_status()
-        return self.render_basic(resp.content, context=context)
+        return mark_safe(resp.content)
 
     class Meta:
         label = 'HTML Block'
@@ -763,3 +802,13 @@ class SnippetList(blocks.StructBlock):
     class Meta:
         icon = 'table'
         template = '_includes/organisms/snippet-list.html'
+
+
+class AskCategoryCard(ModelList):
+
+    def render(self, value, context=None):
+        value['category'] = ask_cfpb.models.Category.objects.first()
+        value.update(context or {})
+
+        template = '_includes/organisms/ask-cfpb-card.html'
+        return render_to_string(template, value)

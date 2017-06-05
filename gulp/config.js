@@ -78,6 +78,10 @@ module.exports = {
     dest: paths.processed + '/img'
   },
   copy: {
+    codejson: {
+      src:  'code.json',
+      dest: paths.processed
+    },
     icons: {
       src:  paths.modules + '/capital-framework/src/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'

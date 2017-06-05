@@ -3,31 +3,291 @@
    Ask CFPB pages at /ask-cfpb/.
    ========================================================================== */
 
+/* Answer page */
 
-.answer-module {
-    border-top: 3px solid @green;
-    border-bottom: 1px solid @block__border-bottom;
-    padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em) 0;
-    margin: unit(@grid_gutter-width / @base-font-size-px, em) 0;
-    color: @gray;
-
-    .respond-to-min(@bp-sm-min, {
-        padding: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
-    });
-
-    .respond-to-min(@bp-med-min, {
-       width: 80%;
-    });
-
-    h1, h2, h3, h4, h6 {
-        .heading-5();
-        margin-top: 0;
-        margin-bottom: unit((@grid_gutter-width / 3) / @base-font-size-px, em);
+.ask-cfpb-page__answer {
+    .answer-edited-date {
+        .h5();
+        display: block;
+        color: @gray-80;
     }
 
-    p:last-child,
-    ul:last-child,
-    ol:last-child {
-        margin-bottom: 0 !important;
-    } 
+    .answer-module {
+        border-top: 3px solid @green;
+        border-bottom: 1px solid @block__border-bottom;
+        padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
+        margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+        color: @gray;
+
+        .respond-to-min(@bp-sm-min, {
+            padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+        });
+
+        .respond-to-min(@bp-med-min, {
+           width: 80%;
+        });
+
+        h1, h2, h3, h4, h6 {
+            .heading-5();
+            margin-top: 0;
+            margin-bottom: unit( ( @grid_gutter-width / 3 ) / @base-font-size-px, em );
+        }
+
+        p:last-child,
+        ul:last-child,
+        ol:last-child {
+            margin-bottom: 0 !important;
+        } 
+    }   
+}
+
+/* Landing page */
+
+.ask-cfpb-page__landing {
+
+    .question-categories {
+        .respond-to-min( @bp-sm-min, {
+            background: @block__bg;
+            padding: unit( 45 / @base-font-size-px, em )
+                     unit( @grid_gutter-width / @base-font-size-px, em );
+        });
+
+        .content-l_col {
+            margin: 0 0 unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+        }
+
+        .m-card {
+            h2 {
+                .respond-to-range( @bp-sm-min, @bp-sm-max, {
+                    .h3();
+                } );
+
+                a {
+                    color: @black;
+                }
+            }
+        }
+    }
+
+    .ask-categories,
+    .ask-search,
+    .ask-cfpb-banner {
+        .respond-to-max( @bp-xs-max {
+            padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        } );
+        
+        .respond-to-range( @bp-med-min, @bp-med-max {
+            padding-left: 0;
+            padding-right: 0;
+        } );
+    }
+
+    .ask-search {
+        .respond-to-max( @bp-xs-max {
+            padding: 0;
+        } );
+    }
+
+    .ask-disclaimer {
+        .respond-to-min( @bp-sm-min {
+            margin-bottom: 0;
+        } );
+    }
+    
+}
+
+.ask-cfpb-page {
+    .search-results {
+        max-width: @bp-xs-max;    
+    }
+
+    .question_summary {
+        border-bottom: 1px solid @block__border-bottom;
+    }
+
+    .o-search-bar {
+        &_label .break {
+            display: block;
+        }
+
+        .respond-to-max(@bp-xs-max, {
+            .o-search-bar_col + .o-search-bar_col {
+                margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+            }
+            
+            form {
+                margin-right: unit((@grid_gutter-width / 2) / @base-font-size-px, em);
+            }
+        });
+
+        .respond-to-min(@bp-sm-min, {
+            .o-search-bar_col {
+                .grid_column( 6 );
+            }
+        });
+
+        &__full {
+            form {
+                max-width: 700px;
+            } 
+        }
+
+        &__with-sidebar {   
+            .search-bar__full-width-content {
+                .search-bar_label .break {
+                    display: inline;
+                }
+                .o-search-bar_col {
+                    width: 100%;
+                }
+                .o-search-bar_col + .o-search-bar_col {
+                    margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+                }
+            }
+
+            .search-bar__variable-cols {
+                form {
+                    display: table;
+                    width: 100%;
+                }
+                .o-search-bar_col {
+                    display: table-cell;
+                }
+                .o-search-bar_label {
+                    width: auto;
+                    vertical-align: top;
+                    padding-right: unit( ( @grid_gutter-width / 2) / @base-font-size-px, em );
+                    white-space: nowrap;
+                    .break {
+                        display: block;
+                    }
+                }
+                .o-search-bar_input {
+                    width: 100%;
+                    margin-top: 0;
+                }
+            }
+
+            .respond-to-range( @bp-xs-max, 700px, {
+                .search-bar__full-width-content;
+            } );
+        
+            .respond-to-range( 700px, @bp-sm-max, {
+                .search-bar__variable-cols;
+            } );
+        
+            .respond-to-range(@bp-med-min, @bp-med-max, {
+                .search-bar__full-width-content;
+            });
+        
+            .respond-to-min(@bp-lg-min, {
+                .search-bar__variable-cols;
+            });
+        }
+    }
+
+    .block {
+        .respond-to-min( @bp-med-min, {
+            &__bg-extend-right,
+            &__bg-extend-left {
+                position: relative;
+              
+              &:after {
+                  content: '';
+                  display: block;
+                  width: 9999px;
+                  height: 100%;
+                  position: absolute;
+                  top: 0;
+                  background: @block__bg;   
+                  z-index: 0;
+              }
+            }
+          
+            &__bg-extend-right {
+              &:after {
+                  left: 100%;
+              }
+            }
+            
+            &__bg-extend-left {
+              &:after {
+                  margin-left: 10px;
+                  left: -9999px;
+              }
+            }
+        } );
+    
+        &__bg-branded {
+            background: @green-20; 
+        }
+    }
+
+    .block__bg-branded.block__bg-extend-right,
+    .block__bg-branded.block__bg-extend-left {
+        &:after {
+            background-color: @green-20;
+        }
+    }
+
+}
+
+.ask-cfpb-page__category,
+.ask-cfpb-page__audience {
+    .lead-paragraph {
+        max-width: @bp-xs-max;
+    }
+
+    .question_summary {
+        padding: unit( (@grid_gutter-width / 2 ) / @base-font-size-px, em ) 
+                 0 
+                 unit( @grid_gutter-width / @base-font-size-px, em ) 
+                 0;
+    
+        .respond-to-min(@bp-med-min, {
+          font-size: @size-iv;
+          margin-bottom: 0;
+          padding:  unit( @grid_gutter-width / @base-font-size-px, em ) 0;
+        });
+    }
+}
+
+.ask-cfpb-page__search {
+    .o-search-bar form {
+        max-width: @bp-xs-max;
+    }
+
+    .question_summary {
+        padding: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
+
+        .respond-to-min(@bp-med-min, {
+            padding:  unit( @grid_gutter-width / @base-font-size-px, em )
+                      0
+                      unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em )
+                      0;
+        });
+
+        .question_title a {
+            font-size: @size-iv;
+            border-width: 0;
+        }
+    }
+}
+
+.ask-cfpb-page__category {
+    h1 .cf-icon {
+        color: @green;
+    }
+}
+
+.ask-cfpb-banner {
+    h3 {
+        display: none;
+    }
+
+    // max width calculated to keep ask 'about us' content on 2 lines
+    p {
+        max-width: 800px !important;
+    }
 }

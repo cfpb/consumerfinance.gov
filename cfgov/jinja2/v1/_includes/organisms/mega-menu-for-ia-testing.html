@@ -1,3 +1,5 @@
+{% set oa_link_ext = '2' if flag_enabled(request, 'IA_USER_TESTING_LINK2') else '1' %}
+{% set sv_link_ext = '-2' if flag_enabled(request, 'IA_USER_TESTING_SV2') else '' %}
 
 <nav aria-label="main navigation" class="o-mega-menu u-hidden o-mega-menu__ia-testing" data-js-hook="behavior_flyout-menu" role="navigation">
     <button aria-pressed="false" class="o-mega-menu_trigger" data-js-hook="behavior_flyout-menu_trigger"><span class=
@@ -26,122 +28,134 @@
                                             <button class="o-mega-menu_content-alt-trigger o-mega-menu_content-2-alt-trigger"
                                             data-js-hook="behavior_flyout-menu_alt-trigger">Back</button>
                                             <div class="o-mega-menu_content-grid o-mega-menu_content-2-grid full-width">
-                                                <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview"><a class=
+                                                <span class="o-mega-menu_content-overview o-mega-menu_content-2-overview consumer-tools-overview"><a class=
                                                 "u-link__disabled o-mega-menu_content-overview-link o-mega-menu_content-2-overview-link">
                                                 Consumer Tools Overview</a></span>
                                                 <div class="o-mega-menu_content-lists o-mega-menu_content-2-lists">
                                                     <div class="o-mega-menu_content-list o-mega-menu_content-2-list">
-                                                        <h3 class="h5">Money Topics</h3>
+                                                        <h3 class="group-title"><span>Money Topics</span></h3>
                                                         <ul class="list list__unstyled">
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/auto-loans-topic/">Auto loans</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/auto-loans-topic/">
+                                                                Auto loans</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/bank-accounts-and-services/">Bank accounts and
-                                                                services</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/bank-accounts-and-services/">
+                                                                Bank accounts and services</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/credit-cards/">Credit cards</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/credit-cards/">
+                                                                Credit cards</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/credit-reports-and-scores/">Credit reports and
-                                                                scores</a>
+                                                                "https://www.consumerfinance.gov/consumer-tools/credit-reports-and-scores/">
+                                                                Credit reports and scores</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/debt-collection/">Debt collection</a>
+                                                                "https://www.consumerfinance.gov/consumer-tools/debt-collection/">
+                                                                Debt collection</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/placeholder/">Fraud, scams, and identity theft</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/fraud-scams/">
+                                                                Fraud, scams, and identity theft</a>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     <div class="o-mega-menu_content-list o-mega-menu_content-2-list">
-                                                        <h3 class="h5 hide-title">Money Topics</h3>
+                                                        <h3 class="hide-title"><span>Money Topics</span></h3>
                                                         <ul class="list list__unstyled">
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/money-basics/">Money and budget basics</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/money-basics/">
+                                                                Money and budget basics</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/placeholder/">Money transfers</a>
+                                                                "/consumer-tools/placeholder/">Money transfers and remittances</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/mortgages/">Mortgages</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/mortgages/">
+                                                                Mortgages</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/payday-loans/">Payday loans</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/payday-loans/">
+                                                                Payday loans</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/placeholder/">Prepaid cards</a>
+                                                                "https://www.consumerfinance.gov/consumer-tools/prepaid-cards/">
+                                                                Prepaid cards</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/student-loans/">Student loans</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/reverse-mortgages/">
+                                                                Reverse mortgages</a>
+                                                            </li>
+                                                            <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
+                                                                <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
+                                                                "http://build.consumerfinance.gov/consumer-tools/student-loans/">
+                                                                Student loans</a>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     <div class="o-mega-menu_content-list o-mega-menu_content-2-list">
-                                                        <h3 class="h5">Planning guides</h3>
+                                                        <h3 class="group-title"><span>Information for...</span></h3>
                                                         <ul class="list list__unstyled">
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/owning-a-home/">Owning a home</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/older-adults-{{oa_link_ext}}/">
+                                                                Older adults and caregivers</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/paying-for-college/">Paying for college</a>
-                                                            </li>
-                                                            <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
-                                                                <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/retirement/before-you-claim/">Planning for retirement</a>
-                                                            </li>
-                                                            <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
-                                                                <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "http://www.consumerfinance.gov/consumer-tools/auto-loans/">Shopping
-                                                                for an auto loan</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/servicemembers{{sv_link_ext}}/">
+                                                                Servicemembers and veterans</a>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     <div class="o-mega-menu_content-list o-mega-menu_content-2-list">
-                                                        <h3 class="h5">Information for...</h3>
+                                                        <h3 class="group-title"><span>Guides</span></h3>
                                                         <ul class="list list__unstyled">
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/families-and-money/">Families and money</a>
+                                                                "https://www.consumerfinance.gov/consumer-tools/auto-loans/">
+                                                                Getting an auto loan</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/low-moderate-income">Low and moderate income</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/guides-managing-someone-elses-money/">
+                                                                Managing someone else's money</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/consumer-tools/older-americans/">Older adults</a>
+                                                                "https://www.consumerfinance.gov/owning-a-home/">
+                                                                Owning a home</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/servicemembers/">Servicemembers and veterans</a>
+                                                                "https://www.consumerfinance.gov/paying-for-college/">Paying for college</a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/students/">Students</a>
+                                                                "http://build.consumerfinance.gov/consumer-tools/planning-for-retirement/">
+                                                                Planning for retirement</a>
+                                                            </li>
+                                                            <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
+                                                                <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
+                                                                "https://www.consumerfinance.gov/educational-resources/money-as-you-grow/">
+                                                                Teaching kids money basics</a>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="nav_footer">
-                                                <span>Have an issue with a financial product? <a class="o-mega-menu_content-link" href=
-                                                "/complaint/">Submit a complaint</a></span>
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +165,7 @@
                             "behavior_flyout-menu">
                                 <a aria-pressed="false" class=
                                 " o-mega-menu_content-link o-mega-menu_content-1-link o-mega-menu_content-link__has-children o-mega-menu_content-1-link__has-children"
-                                data-js-hook="behavior_flyout-menu_trigger" href="#">Resources for Practitioners</a>
+                                data-js-hook="behavior_flyout-menu_trigger" href="#">Practitioner Resources</a>
                                 <div aria-expanded="false" class="o-mega-menu_content o-mega-menu_content-2 u-hidden-overflow"
                                 data-js-hook="behavior_flyout-menu_content">
                                     <div class="o-mega-menu_content-wrapper o-mega-menu_content-2-wrapper">
@@ -203,7 +217,9 @@
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=
-                                                                "/managing-someone-elses-money/">Managing Someone Else’s Money</a>
+                                                                "https://www.consumerfinance.gov/educational-resources/resources-for-older-adults/">
+                                                                Resources for Older Adults and Their Families
+                                                                </a>
                                                             </li>
                                                             <li class="list_item o-mega-menu_content-item o-mega-menu_content-2-item">
                                                                 <a class=" o-mega-menu_content-link o-mega-menu_content-2-link" href=

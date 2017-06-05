@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import re
 import sys
 import time
 import logging
 
 from bs4 import BeautifulSoup as bs
 from django.apps import apps
+from django.core.management import call_command
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
+from django.template.defaultfilters import slugify
 
 from knowledgebase.models import QuestionCategory as QC
 from knowledgebase.models import Question, Audience, UpsellItem, EnglishAnswer
@@ -19,44 +22,78 @@ from ask_cfpb.models import (
 from ask_cfpb.models import Audience as ASK_audience
 from v1.util.migrations import get_or_create_page
 
+
 logging.basicConfig(level=logging.WARNING)
 logging.disable(logging.INFO)
 
-PARENT_MAP = {
-    'english_parent': {'slug': 'ask-cfpb',
-                       'title': 'Ask CFPB',
-                       'parent_slug': 'cfgov',
-                       'language': 'en'},
-    'spanish_parent': {'slug': 'obtener-respuestas',
-                       'title': 'Obtener respuestas',
-                       'parent_slug': 'cfgov',
-                       'language': 'es'},
+FEATURED_ANSWER_IDS = {
+    763: 1,
+    779: 2,
+    1023: 1,
+    1145: 2,
+    44: 1,
+    61: 2,
+    311: 1,
+    316: 2,
+    1397: 1,
+    1695: 2,
+    1641: 1,
+    1679: 2,
+    1161: 1,
+    1507: 2,
+    100: 1,
+    122: 2,
+    1567: 1,
+    1589: 2,
+    503: 1,
+    545: 1,
+    601: 2
+}
+
+utf8_swap_chars = {
+    b'\xC2\x91': b"'",
+    b'\xC2\x92': b"'",
+    b'\xC2\x93': b'"',
+    b'\xC2\x94': b'"',
+    b'\xC2\x96': b'-',
+    b'\xE2\x80\x8B': b'',  # ZERO WIDTH SPACE
+    b'\xE2\x97\xA6': b'- ',  # small hollow circle
+    b'\xEF\x82\xA7': b'- ',  # hollow box
+}
+
+unicode_swap_chars = {
+    '\x91': "'",
+    '\x92': "'",
+    '\x93': '"',
+    '\x94': '"',
+    '\x96': '-',
+    '\u200b': '',  # ZERO WIDTH SPACE
+    '\u25e6': '- ',  # small hollow circle
+    '\u25cb': '- ',  # alternate small hollow circle
+    '\uf0a7': '',  # hollow box
 }
 
 
-def add_feedback_module(page):
-    translation_text = {
-        'helpful': {'es': '¿Fue esta página útil?',
-                    'en': 'Was this page helpful to you?'},
-        'button': {'es': 'Enviar',
-                   'en': 'Submit'}
-    }
-    stream_value = [
-        {'type': 'feedback',
-         'value': {
-             'was_it_helpful_text': translation_text['helpful'][page.language],
-             'button_text': translation_text['button'][page.language],
-             'intro_text': '',
-             'question_text': '',
-             'radio_intro': '',
-             'radio_text': ('This information helps us '
-                            'understand your question better.'),
-             'radio_question_1': 'How soon do you expect to buy a home?',
-             'radio_question_2': 'Do you currently own a home?',
-             'contact_advisory': ''}}]
-    stream_block = page.content.stream_block
-    page.content = StreamValue(stream_block, stream_value, is_lazy=True)
-    page.save_revision()
+def replace_utf8_chars(match):
+    char = match.group(0)
+    return utf8_swap_chars[char]
+
+
+def replace_unicode_chars(match):
+    char = match.group(0)
+    return unicode_swap_chars[char]
+
+
+def clean_utf8(utf8_string):
+    return re.sub(
+        b'(' + b'|'.join(utf8_swap_chars.keys()) +
+        b')', replace_utf8_chars, utf8_string)
+
+
+def clean_unicode(unicode_string):
+    return re.sub(
+        '(' + '|'.join(unicode_swap_chars.keys()) +
+        ')', replace_unicode_chars, unicode_string)
 
 
 def unwrap_soup(soup):
@@ -107,26 +144,158 @@ def fix_tips(answer_text):
     return clean2
 
 
-def get_or_create_parent_pages():
-    from v1.models import CFGOVPage
+def get_or_create_landing_pages():
+    """
+    Create Spanish and English landing pages.
+    """
+
+    from v1.models import CFGOVPage, LandingPage
+    en_root = CFGOVPage.objects.get(slug='cfgov').specific
+    es_root = LandingPage.objects.get(slug='es').specific
+
+    hero_stream_value = [
+        {'type': 'hero',
+         'value': {
+             'heading': 'Ask CFPB',
+             'links': [],
+             'background_color': '#ffffff',
+             'body': ('We offer clear, impartial answers to hundreds '
+                      'of financial questions. Find the information you need '
+                      'to make more informed choices about your money.')}}]
+    landing_map = {
+        'en': {'slug': 'ask-cfpb',
+               'title': 'Ask CFPB',
+               'hero': hero_stream_value,
+               'parent': en_root},
+        'es': {'slug': 'obtener-respuestas',
+               'title': 'Obtener respuestas',
+               'hero': None,
+               'parent': es_root}
+    }
     counter = 0
-    for parent_type in sorted(PARENT_MAP.keys()):
-        _map = PARENT_MAP[parent_type]
-        parent_page = get_or_create_page(
+    for language in sorted(landing_map.keys()):
+        _map = landing_map[language]
+        landing_page = get_or_create_page(
             apps,
-            'v1',
-            'LandingPage',
+            'ask_cfpb',
+            'AnswerLandingPage',
             _map['title'],
             _map['slug'],
-            CFGOVPage.objects.get(slug=_map['parent_slug']).specific,
-            language=_map['language'])
-        parent_page.has_unpublished_changes = True
-        revision = parent_page.save_revision()
-        parent_page.save()
+            _map['parent'],
+            language=language)
+        landing_page.has_unpublished_changes = True
+        if _map['hero']:
+            stream_block = landing_page.header.stream_block
+            landing_page.header = StreamValue(
+                stream_block,
+                _map['hero'],
+                is_lazy=True)
+        revision = landing_page.save_revision()
+        landing_page.save()
         revision.publish()
         time.sleep(1)
         counter += 1
-    print("Created {} parent pages".format(counter))
+
+    print("Created an 'es' parent and {} landing pages".format(counter))
+
+
+def get_or_create_search_results_pages():
+    from v1.models import CFGOVPage
+    parent_en = CFGOVPage.objects.get(slug='ask-cfpb').specific
+    parent_es = CFGOVPage.objects.get(slug='obtener-respuestas').specific
+    language_map = {
+        'en': {'title': 'Ask CFPB search results',
+               'slug': 'ask-cfpb-search-results',
+               'page_type': 'AnswerResultsPage',
+               'language': 'en',
+               'parent': parent_en},
+        'es': {'title': 'Respuestas',
+               'slug': 'respuestas',
+               'page_type': 'AnswerResultsPage',
+               'language': 'es',
+               'parent': parent_es},
+        'tag': {'title': 'Buscar por etiqueta',
+                'slug': 'buscar-por-etiqueta',
+                'page_type': 'TagResultsPage',
+                'language': None,
+                'parent': parent_es}
+    }
+    counter = 0
+    for key in language_map:
+        _map = language_map[key]
+        results_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            _map['page_type'],
+            _map['title'],
+            _map['slug'],
+            _map['parent'])
+        if _map['language']:
+            results_page.language = _map['language']
+        results_page.has_unpublished_changes = True
+        revision = results_page.save_revision()
+        results_page.save()
+        revision.publish()
+        time.sleep(1)
+        counter += 1
+    print("Created {} search results pages".format(counter))
+
+
+def get_or_create_category_pages():
+    from v1.models import CFGOVPage
+    parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
+    counter = 0
+    for cat in Category.objects.all():
+        for language in ['en', 'es']:
+            if language == 'en':
+                title = cat.name
+                page_slug = "category-{}".format(cat.slug)
+                parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
+            else:
+                title = cat.name_es
+                page_slug = "categoria-{}".format(cat.slug_es)
+                parent = CFGOVPage.objects.get(
+                    slug='obtener-respuestas').specific
+
+            cat_page = get_or_create_page(
+                apps,
+                'ask_cfpb',
+                'AnswerCategoryPage',
+                title,
+                page_slug,
+                parent,
+                language=language,
+                ask_category=cat)
+            cat_page.has_unpublished_changes = True
+            revision = cat_page.save_revision()
+            cat_page.save()
+            revision.publish()
+            time.sleep(1)
+            counter += 1
+    print("Created {} category pages".format(counter))
+
+
+def get_or_create_audience_pages():
+    from v1.models import CFGOVPage
+    parent = CFGOVPage.objects.get(slug='ask-cfpb').specific
+    counter = 0
+    for audience in ASK_audience.objects.all():
+        audience_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerAudiencePage',
+            audience.name,
+            "audience-{}".format(slugify(audience.name)),
+            parent,
+            language='en',
+            ask_audience=audience)
+        audience_page.has_unpublished_changes = True
+        revision = audience_page.save_revision()
+        audience_page.save()
+        revision.publish()
+        time.sleep(1)
+        counter += 1
+    print("Created {} audience pages".format(counter))
 
 
 def get_kb_statuses(ask_id):
@@ -154,10 +323,6 @@ def create_answer_pages(queryset):
                         count_es += 1
                         sys.stdout.write('+')
                         sys.stdout.flush()
-                    revision = _page.get_latest_revision()
-                    revision.publish()
-                    _page.refresh_from_db()
-                    add_feedback_module(_page)
                     revision = _page.get_latest_revision()
                     revision.publish()
     else:
@@ -202,7 +367,7 @@ def get_en_answer(question, cats, en_answer):
     for cat in cats:
         answer.category.add(cat)
     answer.last_edited = question.updated_at.date()
-    answer.question = en_answer.title.strip()
+    answer.question = clean_unicode(en_answer.title.strip())
     return answer
 
 
@@ -214,25 +379,27 @@ def get_es_answer(question, cats, es_answer):
         answer.category.add(cat)
     answer.created_at = question.created_at
     answer.last_edited_es = question.updated_at.date()
-    answer.question_es = es_answer.title.strip()
+    answer.question_es = clean_unicode(es_answer.title.strip())
     return answer
 
 
 def fill_out_es_answer(question, answer, es_answer):
     answer.slug_es = es_answer.slug
     answer.question_es = es_answer.title.strip()
-    answer.answer_es = es_answer.answer.strip()
+    answer.answer_es = clean_unicode(es_answer.answer.strip())
     answer.last_edited_es = question.updated_at.date()
     answer.snippet_es = ''
+    answer.search_tags_es = es_answer.tagging
     return answer
 
 
 def build_answer(question, cats, en_answer=None, es_answer=None):
     if en_answer:
         answer_base = get_en_answer(question, cats, en_answer)
-        answer_base.answer = fix_tips(en_answer.answer.strip())
+        answer_base.answer = clean_unicode(fix_tips(en_answer.answer.strip()))
         answer_base.last_edited = question.updated_at.date()
         answer_base.snippet = en_answer.one_sentence_answer.strip()
+        answer_base.search_tags = en_answer.tagging
         for cat in cats:
             answer_base.category.add(cat)
         for qc in question.question_category.exclude(parent=None):
@@ -368,19 +535,6 @@ def add_related_categories():
         update_count)
 
 
-def add_featured_questions():
-    update_count = 0
-    for cat in QC.objects.exclude(parent=None):
-        subcategory = SubCategory.objects.get(id=cat.id)
-        for featured in cat.featured_questions.all():
-            subcategory.featured_questions.add(
-                Answer.objects.get(id=featured.id))
-        subcategory.save()
-        update_count += 1
-    print("Updated featured questions for {} ASK categories.").format(
-        update_count)
-
-
 def add_related_questions():
     update_count = 0
     print("Adding related_question links ...")
@@ -400,16 +554,29 @@ def clean_up_blank_answers():
         start_count - Answer.objects.count()))
 
 
+def set_featured_ids():
+    featured = Answer.objects.filter(id__in=FEATURED_ANSWER_IDS)
+    for answer in featured:
+        answer.featured = True
+        answer.featured_rank = FEATURED_ANSWER_IDS[answer.id]
+        answer.save()
+    print "Marked {} answers as 'featured'".format(featured.count())
+
+
 def run():
     migrate_categories()
     migrate_subcategories()
     add_related_categories()
     migrate_questions()
-    add_featured_questions()
     migrate_audiences()
     migrate_next_steps()
     add_related_questions()
+    set_featured_ids()
     clean_up_blank_answers()
-    get_or_create_parent_pages()
+    get_or_create_landing_pages()
+    get_or_create_category_pages()
+    get_or_create_audience_pages()
+    get_or_create_search_results_pages()
     create_pages()
     logging.disable(logging.NOTSET)
+    call_command('update_index', 'ask_cfpb', r=True)

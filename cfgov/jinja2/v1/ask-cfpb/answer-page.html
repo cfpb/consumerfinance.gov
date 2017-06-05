@@ -1,0 +1,166 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+{% import 'macros/time.html' as time %}
+{% import 'tags.html' as tags with context %}
+{% import 'form_block.html' as form_block with context %}
+{% import 'macros/util/format/datetime.html' as dt %}
+{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
+
+{% block title %}
+    {{ page.question|striptags }}
+{% endblock %}
+
+{% block desc %}
+    {{ description|striptags|safe}}
+{% endblock %}
+
+{% block banner_top %}
+    {% if about_us %}
+        {% set value = {
+            'border_bottom': True,
+            'additional_classes': ' ask-cfpb-banner',
+            'content': about_us.text
+        } %}
+        {% include 'templates/content-banner.html' with context %}
+    {% endif %}
+{% endblock %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom ask-cfpb-page ask-cfpb-page__answer
+{%- endblock %}
+
+{% block content_main %}
+    <div class="block
+                block__flush-top
+                block__sub">
+        {% if last_edited %}
+        <time datetime='{{ last_edited }}' pubdate class="answer-edited-date">updated {{ dt.format_date(last_edited) }}</time>
+        {% endif %}
+
+        <h2>{{ page.question | striptags }}</h2>
+    </div>
+
+    <div class="block
+                block__flush-top">
+        {% if page.snippet %}
+            <h3 class="answer-snippet">
+                <strong>
+                    Answer:
+                </strong>
+                {{ page.snippet | safe }}
+            </h3>
+        {% endif %}
+        <div data-qa-hook="expandable" 
+             data-read-more="true"
+             class="o-expandable
+                    o-expandable__read-more">
+            <div class="o-expandable_content" id="answer-content">
+                <div class="o-expandable_content-animated">
+                    <div class="answer-text">
+                        {{ page.answer | safe }}
+                    </div>
+                    {% if audiences %} 
+                    <div class="u-mt15">
+                        {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
+                    </div>
+                    {% endif %}
+
+                    {# This brings in the feedback module #}
+                    {% for block in page.content %}
+                        {{- form_block.render(block, 'content', loop.index0) -}}
+                    {% endfor %}
+                    {% if disclaimer %}
+                    <div class="block">
+                        {{ disclaimer.text | safe }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>            
+            <a class="o-expandable_target jump-link o-expandable_link" title="Expand content">
+                <span class="jump-link_text">
+                    <span class="o-expandable_cue o-expandable_cue-open">
+                        Read full answer
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                   </span>
+                    <span class="o-expandable_cue o-expandable_cue-close">
+                        Hide full answer
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                   </span>
+                </span>
+            </a>
+        </div>
+        
+
+    </div>
+    {{ ask_search_bar.render( 'left' ) }}
+
+
+{% endblock %}
+
+{% block content_sidebar_modifiers -%}
+    o-sidebar-content
+{%- endblock %}
+
+{% block content_sidebar scoped  %}
+
+    {% if page.answer_base.next_step %}
+        <div class="block block__flush-top">
+            <h3 >
+                Explore related resources
+            </h3>
+            {{ parse_links(page.answer_base.next_step.text) | safe }}
+        </div>
+    {% endif %}
+
+    {% if category and subcategories %}
+        <div class="block {% if not page.answer_base.next_step %}block__flush-top{% endif %}">
+            <div class="m-related-links">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Related {{category.name}} subjects
+                    </span>
+                </h2>
+                <ul class="list list__unstyled list__links">
+                    {% for subcat in subcategories %}
+
+                        <li class="list_item">
+                            <a href="/ask-cfpb/category-{{subcat.parent.slug}}" class="list_link">{{ subcat.name }}</a>
+                        </li>
+                        {% for related_subcat in subcat.related_subcategories.all() %}
+                            <li class="list_item">
+                                <a href="/ask-cfpb/category-{{related_subcat.parent.slug}}" class="list_link">{{ related_subcat.name }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                    <li class="list_item">
+                      <a class="btn category-button" href="{{slugurl('category-' + category.slug)}}"> 
+                        See all {{category.name | lower}} questions
+                      </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if related_questions %}
+        <div class="block">
+            <div class="m-related-links">
+                <h2 class="header-slug">
+                    <span class="header-slug_inner">
+                        Related questions
+                    </span>
+                </h2>
+                 <ul class="list list__unstyled list__links">
+                    {% for question in related_questions %}
+                    <li class="list_item">
+                        <a href="{{ slugurl(question.slug) }}" class="list_link">
+                            {{ question.question | safe }}
+                        </a>
+                        </li>
+                    {% endfor %}  
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+

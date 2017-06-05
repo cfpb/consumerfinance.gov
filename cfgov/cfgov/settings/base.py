@@ -1,3 +1,4 @@
+
 import os
 import sys
 
@@ -47,12 +48,14 @@ INSTALLED_APPS = (
 
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.table_block',
-
+    'wagtail.contrib.wagtailroutablepage',
     'localflavor',
     'modelcluster',
     'compressor',
     'taggit',
     'wagtailsharing',
+    'flags',
+    'haystack',
 
     'overextends',
     'django.contrib.admin',
@@ -63,7 +66,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'storages',
-    'flags',
     'data_research',
     'v1',
     'core',
@@ -73,10 +75,11 @@ INSTALLED_APPS = (
     'reversion',
     'tinymce',
     'jobmanager',
+    'ccdb5'
 )
 
 if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('ask_cfpb', 'haystack')
+    INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
@@ -154,6 +157,7 @@ TEMPLATES = [
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
+                'v1.jinja2tags.images',
                 'wagtail.wagtailcore.jinja2tags.core',
                 'wagtail.wagtailadmin.jinja2tags.userbar',
                 'wagtail.wagtailimages.jinja2tags.images',
@@ -265,14 +269,6 @@ SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content
 ELASTICSEARCH_BIGINT = 50000
 
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
-SHEER_PROCESSORS = \
-    {
-        "pages": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=page",
-            "processor": "processors.wordpress_page",
-            "mappings": MAPPINGS.child("pages.json")
-        },
-    }
 
 SHEER_ELASTICSEARCH_SETTINGS = \
     {
@@ -325,23 +321,19 @@ LEGACY_APP_URLS={'comparisontool':True,
                  'noticeandcomment':True}
 
 # DJANGO HUD API
-GOOGLE_MAPS_API_PRIVATE_KEY = os.environ.get('GOOGLE_MAPS_API_PRIVATE_KEY')
-GOOGLE_MAPS_API_CLIENT_ID = os.environ.get('GOOGLE_MAPS_API_CLIENT_ID')
-DJANGO_HUD_NOTIFY_EMAILS = os.environ.get('DJANGO_HUD_NOTIFY_EMAILS')
+DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
 # in seconds, 2592000 == 30 days. Google allows no more than a month of caching
 DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
+MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
         'URL': SHEER_ELASTICSEARCH_SERVER,
         'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX', SHEER_ELASTICSEARCH_INDEX+'_haystack'),
     },
 }
-
-if DEPLOY_ENVIRONMENT == 'build':
-    HAYSTACK_CONNECTIONS['default']['EXCLUDED_INDEXES'] = ['knowledgebase.search_indexes.AnswerIndex']
 
 # S3 Configuration
 AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
@@ -492,8 +484,7 @@ if ENABLE_AKAMAI_CACHE_PURGE:
             'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
             'CLIENT_TOKEN': os.environ.get('AKAMAI_CLIENT_TOKEN'),
             'CLIENT_SECRET': os.environ.get('AKAMAI_CLIENT_SECRET'),
-            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN'),
-            'FAST_PURGE_URL': os.environ.get('AKAMAI_FAST_PURGE_URL')
+            'ACCESS_TOKEN': os.environ.get('AKAMAI_ACCESS_TOKEN')
         },
     }
 
@@ -561,3 +552,54 @@ CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
                    'api.iperceptions.com')
+
+FLAGS = {
+    # Beta banner, seen on beta.consumerfinance.gov
+    # When enabled, a banner appears across the top of the site proclaiming
+    # "This beta site is a work in progress."
+    'BETA_NOTICE': {},
+
+    # IA changes to mega menu for user testing
+    # When enabled, the mega menu under "Consumer Tools" is arranged by topic
+    'IA_USER_TESTING_MENU': {},
+
+    # Email pop-up "nudgy guy" for Owning a Home
+    # When enabled, an modal email sign-up prompt appears at the bottom of
+    # /owning-a-home when scrolling.
+    'EMAIL-POPUP': {},
+
+    # Fix for margin-top when using the text inset
+    # When enabled, the top margin of full-width text insets is increased
+    'INSET_TEST': {},
+
+    # Footer link for the Office of Administrative Adjudication
+    # When enabled, a link to "Administrative Adjudication" appears in the
+    # footer
+    'OAA_FOOTER_LINK': {},
+
+    # Transition of "About Us" to Wagtail
+    # When enabled, the "About Us" pages are served from Wagtail
+    'WAGTAIL_ABOUT_US': {},
+
+    # Transition of "Doing Business with Us" to Wagtail
+    # When enabled, the "Doing Business With Us" pages are served from Wagtail
+    'WAGTAIL_DOING_BUSINESS_WITH_US': {},
+
+    # Transition of /compltain to Wagtail
+    # When enabled, the "Submit a complaint" page is served from Wagtail
+    'MOSAIC_COMPLAINTS': {},
+
+    # Migration of Ask CFPB to Wagtail
+    # When enabled, Ask CFPB is served from Wagtail
+    'WAGTAIL_ASK_CFPB': {
+        'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
+    },
+
+    # The next version of the public consumer complaint database
+    'CCDB5_RELEASE': {},
+
+    # Google Optimize code snippets for A/B testing
+    # When enabled this flag will add various Google Optimize code snippets.
+    # Intended for use with path conditions.
+    'AB_TESTING': {},
+}

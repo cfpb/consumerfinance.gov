@@ -122,12 +122,52 @@
     If you come across a script that makes a convincing case to be included in
     the head, then file an issue or PR to discuss including it.
 -->
-    {# Google Tag Manager #}
+
+    {# TODO: jQuery is provided in the head to satisfy
+             Google Tag Manager (GTM) & Optimize requirements.
+             Ideally GTM would handle its own dependency management
+             and initializing jQuery could be moved to the footer.
+             (Ideally, also, we will move away from jQuery entirely.) #}
+    <script src="{{ static('js/jquery.min.js') }}"></script>
+
+    {% if flag_enabled('AB_TESTING', request) %}
+    <!-- Google Optimize page-hiding snippet -->
+    <style>
+        .optimize-loading {
+            opacity: 0 !important;
+        }
+    </style>
+    <script>
+        (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+        })(window,document.documentElement,'optimize-loading','dataLayer',5000,
+        {'GTM-KHB8MB':true});
+    </script>
+    <!-- end Google Optimize page-hiding snippet -->
+
+    <!-- Google Analytics/Optimize snippet -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-54439736-1', 'auto');
+        ga('require', 'GTM-KHB8MB'); // Require Optimize
+        // Pageview call removed, because pagviews are sent to Analytics via
+        // the Google Tag Manager tag (code included below).
+    </script>
+    <!-- end Google Analytics/Optimize snippet -->
+    {% endif %}
+
+    <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+    <!-- end Google Tag Manager -->
 
     {# Customized Modernizr build that includes html5shiv.
        Built via gulp-modernizer in `scripts.js` task. #}
@@ -151,13 +191,6 @@
     <![endif]-->
 
     <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
-
-    {# TODO: jQuery CDN is provided in the head to satisfy
-             Google Tag Manager (GTM) requirements.
-             Ideally GTM would handle its own dependency management
-             and initializing jQuery could be moved to the footer. #}
-
-    <script src="{{ static('js/jquery.min.js') }}" ></script>
 </head>
 
 <body>
@@ -187,12 +220,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {# WAGTAILUSERBAR IN-PAGE VIEW CONTROLS #}
 {{ wagtailuserbar() }}
 
+{% block banner_top %}
+{% endblock %}
+
 <!-- PRIMARY CONTENT -->
 {% block content %}
     {# This will be replaced in templates that extend this template
     and override "content". #}
 {% endblock content %}
  <!-- /PRIMARY CONTENT -->
+
+{% block banner_bottom %}
+{% endblock %}
 
 {% block footer %}
     {% import 'organisms/footer.html' as o_footer with context %}

@@ -92,7 +92,7 @@
             </div>
             <div class="o-footer_col">
                 <ul class="o-footer_list">
-                    {% if flag_enabled(request, 'OAA_FOOTER_LINK') %}
+                    {% if flag_enabled('OAA_FOOTER_LINK', request) %}
                     <li class="list_item">
                         <a class="list_link" href="/administrative-adjudication-proceedings/">
                             Administrative Adjudication
