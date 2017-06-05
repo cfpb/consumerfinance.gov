@@ -34,8 +34,8 @@ function _processScreenshot( screenShotName = 'screenshot', png ) {
  * @param {string} screenShotName - Name of the screenshot.
  */
 function capture( screenShotName ) {
-  browser.takeScreenshot().then( function( bufferData ) {
-    _processScreenshot( screenShotName, bufferData );
+  browser.takeScreenshot().then( function( png ) {
+    _processScreenshot( screenShotName, png );
   } );
 }
 
