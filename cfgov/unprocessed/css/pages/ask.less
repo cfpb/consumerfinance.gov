@@ -72,10 +72,14 @@
     .ask-categories,
     .ask-search,
     .ask-cfpb-banner {
-        padding: auto unit( @grid_gutter-width / 2 / @base-font-size-px, em );
-
+        .respond-to-max( @bp-xs-max {
+            padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+            padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        } );
+        
         .respond-to-range( @bp-med-min, @bp-med-max {
-            padding: auto 0;
+            padding-left: 0;
+            padding-right: 0;
         } );
     }
 
@@ -85,6 +89,11 @@
         } );
     }
 
+    .ask-disclaimer {
+        .respond-to-min( @bp-sm-min {
+            margin-bottom: 0;
+        } );
+    }
     
 }
 

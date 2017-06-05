@@ -4,6 +4,9 @@ const BasePage = require( './base-page.js' );
 const contentMenu = require(
   '../shared_objects/wagtail-admin-content-menu.js'
 );
+const clickWhenReady = require(
+  '../util/click-when-ready.js'
+);
 const EC = protractor.ExpectedConditions;
 
 const PAGE_TYPES = {
@@ -89,42 +92,29 @@ class WagtailAdminPages extends BasePage {
   }
 
   setPageTitle( title ) {
-    return browser.wait( EC.elementToBeClickable( titleField ) )
+
+    return browser.wait( EC.visibilityOf( titleField ) )
       .then( function() {
+
         return titleField.sendKeys( title );
       } );
   }
 
   save( ) {
-    return browser.wait( EC.elementToBeClickable( saveButton ) )
-      .then( function() {
-        return saveButton.click();
-      } );
+
+    return clickWhenReady( saveButton );
   }
 
   publish( ) {
-    return browser.wait( EC.elementToBeClickable( dropdownToggle ) )
-      .then( function() {
-        return dropdownToggle.click().then( function() {
-          return browser.wait( EC.elementToBeClickable( publishButton ) )
-            .then( function() {
-              return publishButton.click();
-            } );
-        } );
-      } );
+
+    return clickWhenReady( [ dropdownToggle, publishButton ] );
   }
 
   unpublish( ) {
-    return browser.wait( EC.elementToBeClickable( dropdownToggle ) )
-      .then( function() {
-        return dropdownToggle.click().then( function() {
-          return browser.wait( EC.elementToBeClickable( unpublishButton ) )
-            .then( function() {
-              unpublishButton.click();
-              return confirmUnpublishButton.click();
-            } );
-        } );
-      } );
+
+    return clickWhenReady(
+      [ dropdownToggle, unpublishButton, confirmUnpublishButton ]
+    );
   }
 
 }
