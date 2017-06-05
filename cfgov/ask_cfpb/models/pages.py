@@ -223,7 +223,7 @@ class AnswerResultsPage(CFGOVPage):
         if self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
-            context['about_us'] = get_reusable_text_snippet(
+            context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
 
         return context
