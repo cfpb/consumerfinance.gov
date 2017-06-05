@@ -29,6 +29,7 @@ function Autocomplete( element, opts ) {
   var BASE_CLASS = 'm-autocomplete';
   var HIDDEN_CLASS = 'u-hidden';
   var AUTOCOMPLETE_CLASS = 'm-autocomplete_results';
+  var AUTOCOMPLETE_ITEM_CLASS = 'm-autocomplete_item';
   var SELECTED_CLASS = 'm-autocomplete_selected';
 
   var ENTER = 13;
@@ -38,11 +39,12 @@ function Autocomplete( element, opts ) {
 
   var _source = [];
 
-  var _xhr;
   var _autocomplete;
   var _items;
   var _isVisible;
   var _selection;
+
+  var _xhr;
   var _searchTerm = '';
 
   var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
@@ -52,7 +54,6 @@ function Autocomplete( element, opts ) {
     _fetch();
   }, 400 );
 
-
   function init() {
     if ( !atomicHelpers.setInitFlag( _dom ) ) {
       return standardType.UNDEFINED;
@@ -61,10 +62,9 @@ function Autocomplete( element, opts ) {
     _autocomplete = _addContainer();
     _input.setAttribute('autocomplete', 'off');
     _input.setAttribute('aria-autocomplete', 'list');
-
     _input.addEventListener( 'keydown', _keydownHandler );
     _input.addEventListener( 'input', _inputHandler );
-    _input.addEventListener( 'blur', _hide );
+    _input.addEventListener( 'blur', _blurHandler );
     window.addEventListener( 'resize', _positionContainer );
   }
 
@@ -83,6 +83,44 @@ function Autocomplete( element, opts ) {
     _autocomplete.style.width = Math.round( inputCoords.right - inputCoords.left ) + 'px';
   }
 
+  function _blurHandler() {
+    setTimeout( function() {
+      var active = document.activeElement;
+      if ( active != _autocomplete && !_autocomplete.contains( active ) ) {
+        _hide();
+      }
+    }, 1 );
+  }
+
+  function _keydownHandler(event) {
+    var key = event.keyCode;
+    if ( _isVisible ) {
+      if ( key === UP ) {
+        _prev( event );
+      } else if ( key === DOWN ) {
+        _next( event );
+      } else if ( key === ENTER && _selection > -1 ) {
+        event.preventDefault(); 
+        _submit( event );
+      } else if ( key === ESCAPE ) {
+        event.preventDefault();
+        _hide();
+      }
+    }
+  }
+
+  function _inputHandler(event) {
+    _searchTerm = _input.value;
+
+    if ( _searchTerm.length >= _minChars ) {
+        if ( opts.url ) {
+            _throttleFetch();
+        }
+    } else {
+        _hide();
+    }
+  }
+
   function _update() {
     _reset();
     _source.forEach(function( res, index ) {
@@ -97,23 +135,67 @@ function Autocomplete( element, opts ) {
     }
   }
 
+  function _renderItem( item, index ) {
+    var li = document.createElement( 'li' );
+    li.setAttribute( 'data-val', item.value );
+    li.setAttribute( 'data-id', index );
+    li.className = AUTOCOMPLETE_ITEM_CLASS;
+    var link = document.createElement( 'a' );
+    link.setAttribute( 'href', item.url );
+    link.innerText = item.value;
+    li.appendChild( link );
+    return li;
+  }
+
+  function _next() {
+    var length = _items.length - 1;
+    var index = _selection >= length ? 0 : _selection + 1;
+    _select( index );
+  }
+
+  function _prev() {
+    var index = _selection > 0 ? _selection - 1 : _items.length - 1 ;
+    _select( index );
+  }
+
+  function _select( index ) {
+    if ( _selection > -1 ) {
+        _items[_selection].classList.remove( SELECTED_CLASS );
+    }
+    _selection = index;
+    var item = _items[index];
+
+    _input.value = item.getAttribute( 'data-val' );
+    item.classList.add( SELECTED_CLASS );
+    _scrollIntoView();
+  }
+
+  function _scrollIntoView() {
+    var _target = _items[_selection];
+    _autocomplete.scrollTop = _target.offsetTop - _autocomplete.clientHeight + _target.clientHeight;
+  }
+
+  function _submit(e) {
+    var item = _items[_selection];
+    var link = item.querySelector( 'a' );
+    document.location = link.pathname;
+  }
+
   function _reset() {
     _selection = -1;
     _items = [];
     _autocomplete.innerHTML = '';
   }
 
-  function _renderItem( item, index ) {
-    var li = document.createElement( 'li' );
-    li.setAttribute( 'data-val', item.value );
-    li.setAttribute( 'role', 'option' );
-    li.setAttribute( 'id', 'autocomplete-' + index );
+  function _hide() {
+    _isVisible = false;
+    _autocomplete.classList.add( HIDDEN_CLASS );
+  }
 
-    var link = document.createElement( 'a' );
-    link.setAttribute( 'href', item.url );
-    link.innerText = item.value;
-    li.appendChild( link );
-    return li;
+  function _show() {
+    _isVisible = true;
+    _positionContainer();
+    _autocomplete.classList.remove( HIDDEN_CLASS );
   }
 
   function _fetch() {
@@ -142,88 +224,17 @@ function Autocomplete( element, opts ) {
     _hide();
   }
 
-  function _hide() {
-    _isVisible = false;
-    _autocomplete.classList.add( HIDDEN_CLASS );
-  }
-
-  function _show() {
-    _isVisible = true;
-    _positionContainer();
-    _autocomplete.classList.remove( HIDDEN_CLASS );
-  }
-
-  function _keydownHandler(event) {
-    var key = event.keyCode;
-    if ( _isVisible ) {
-        if ( key === UP ) {
-            _prev( event );
-        } else if ( key === DOWN ) {
-            _next( event );
-        } else if ( key === ENTER && _selection > -1 ) {
-            event.preventDefault(); 
-            _submit( event );
-        } else if ( key === ESCAPE ) {
-            event.preventDefault();
-            _hide();
-        }
-    }
-  }
-  function _inputHandler(event) {
-    _searchTerm = _input.value;
-
-    if ( _searchTerm.length >= _minChars ) {
-        if ( opts.url ) {
-            _throttleFetch();
-        }
-    } else {
-        _hide();
-    }
-  }
-
-  function _next() {
-    var length = _items.length - 1;
-    var index = _selection >= length ? 0 : _selection + 1;
-    _select( index );
-  }
-
-  function _prev() {
-    var index = _selection > 0 ? _selection - 1 : _items.length - 1 ;
-    _select( index );
-  }
-
-  function _select( index ) {
-    if ( _selection > -1 ) {
-        _items[_selection].classList.remove( SELECTED_CLASS );
-    }
-    _selection = index;
-    var item = _items[index];
-
-    _input.value = item.getAttribute( 'data-val' );
-    item.classList.add( SELECTED_CLASS );
-    _scroll();
-  }
-
-  function _scroll() {
-    var _target = _items[_selection];
-    _autocomplete.scrollTop = _target.offsetTop - _autocomplete.clientHeight + _target.clientHeight;
-  }
-
-  function _submit(e) {
-    var item = _items[_selection];
-    var link = item.querySelector( 'a' );
-    document.location = link.pathname;
-  }
-
   function destroy() {
     _inputContainer.removeChild( _autocomplete );
     _input.removeAttribute( 'autocomplete' );
     _input.removeAttribute( 'aria-autocomplete' );
     _input.removeEventListener( 'keydown', _keydownHandler );
     _input.removeEventListener( 'input', _inputHandler );
-    _input.removeEventListener( 'blur', _hide );
+    _input.removeEventListener( 'blur', _blurHandler );
     window.removeEventListener( 'resize', _positionContainer );
   }
+
+  
 
   function _cleanQuery(query) {
     query = query.replace(/[\u0080-\uffff]/g, '');

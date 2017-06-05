@@ -142,5 +142,5 @@ module.exports = {
   recordEmailRegistration: recordEmailRegistration,
   recordEmailPopupClosure: recordEmailPopupClosure,
   showOnScroll: showOnScroll,
-  throttle, throttle
+  throttle: throttle
 };
