@@ -42,7 +42,7 @@ function showEmailPopup() {
   return today > nextDisplayDate;
 }
 
-function _throttle( func, wait, options ) {
+function throttle( func, wait, options ) {
   var context, args, result;
   var timeout = null;
   var previous = 0;
@@ -104,7 +104,7 @@ function showOnScroll( elToShow, opts ) {
     return windowBottom > scrollTargetPosition;
   }
 
-  var handler = _throttle( function( event ) {
+  var handler = throttle( function( event ) {
     if ( _scrollTargetPositionReached() ) {
       window.removeEventListener( 'scroll', handler );
       if ( typeof opts.cb === 'function' ) {
@@ -121,5 +121,6 @@ module.exports = {
   recordEmailPopupView: recordEmailPopupView,
   recordEmailRegistration: recordEmailRegistration,
   recordEmailPopupClosure: recordEmailPopupClosure,
-  showOnScroll: showOnScroll
+  showOnScroll: showOnScroll,
+  throttle, throttle
 };

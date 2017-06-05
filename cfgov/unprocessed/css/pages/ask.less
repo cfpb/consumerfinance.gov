@@ -64,11 +64,14 @@
     }
 
     .ask-categories,
-    .ask-search {
-        padding: 0 unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+    .ask-search,
+    .ask-cfpb-banner {
+        padding-left: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
+        padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
 
         .respond-to-range( @bp-med-min, @bp-med-max {
-            padding: 0;
+            padding-left: 0;
+            padding-right: 0;
         } );
     }
 
