@@ -59,7 +59,6 @@ function Autocomplete( element, opts ) {
     }
 
     _autocomplete = _addContainer();
-    _positionContainer();
     _input.setAttribute('autocomplete', 'off');
     _input.setAttribute('aria-autocomplete', 'list');
 
@@ -150,6 +149,7 @@ function Autocomplete( element, opts ) {
 
   function _show() {
     _isVisible = true;
+    _positionContainer();
     _autocomplete.classList.remove( HIDDEN_CLASS );
   }
 

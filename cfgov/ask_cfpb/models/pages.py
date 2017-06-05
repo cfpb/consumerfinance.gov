@@ -24,9 +24,13 @@ from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
+from v1.models.snippets import ReusableText
+
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
+ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
+DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
 
 
 def get_valid_spanish_tags():
@@ -37,6 +41,14 @@ def get_valid_spanish_tags():
     except (IndexError, AttributeError):  # ES not available; go to plan B
         valid_spanish_tags = AnswerTagProxy.valid_spanish_tags()
     return valid_spanish_tags
+
+
+def get_reusable_text_snippet(snippet_title):
+    try:
+        return ReusableText.objects.get(
+            title=snippet_title)
+    except ReusableText.DoesNotExist:
+        pass
 
 
 def get_ask_nav_items(request, current_page):
@@ -69,11 +81,16 @@ class AnswerLandingPage(LandingPage):
         from ask_cfpb.models import Category, Audience
         context = super(AnswerLandingPage, self).get_context(request)
         context['categories'] = Category.objects.all()
-        context['audiences'] = [
-            {'text': audience.name,
-             'url': '/ask-cfpb/audience-{}'.format(
-                    slugify(audience.name))}
-            for audience in Audience.objects.all()]
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['audiences'] = [
+                {'text': audience.name,
+                 'url': '/ask-cfpb/audience-{}'.format(
+                        slugify(audience.name))}
+                for audience in Audience.objects.all()]
         return context
 
     def get_template(self, request):
@@ -159,6 +176,12 @@ class AnswerCategoryPage(CFGOVPage):
             'results_count': answers.count(),
             'get_secondary_nav_items': get_ask_nav_items
         })
+
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
         return context
 
 
@@ -197,6 +220,12 @@ class AnswerResultsPage(CFGOVPage):
         context['results_count'] = len(self.answers)
         context['get_secondary_nav_items'] = get_ask_nav_items
 
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['about_us'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+
         return context
 
     def get_template(self, request):
@@ -234,10 +263,9 @@ class AnswerAudiencePage(CFGOVPage):
             js['template'] += ['secondary-navigation.js']
 
     def get_context(self, request, *args, **kwargs):
-        from .django import Answer
+        from ask_cfpb.models import Answer
         context = super(AnswerAudiencePage, self).get_context(request)
-        page_audience = self.ask_audience.name
-        answers = Answer.objects.filter(audiences__name__exact=page_audience)
+        answers = Answer.objects.filter(audiences__id=self.ask_audience.id)
         page = request.GET.get('page', 1)
         paginator = Paginator(answers, 20)
 
@@ -248,6 +276,12 @@ class AnswerAudiencePage(CFGOVPage):
             'results_count': len(answers),
             'get_secondary_nav_items': get_ask_nav_items
         })
+
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
 
         return context
 
@@ -361,6 +395,13 @@ class AnswerPage(CFGOVPage):
         if self.language == 'es':
             context['tags_es'] = [tag for tag in self.answer_base.tags_es
                                   if tag in get_valid_spanish_tags()]
+
+        elif self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['last_edited'] = self.answer_base.last_edited
         return context
 
     def get_template(self, request):

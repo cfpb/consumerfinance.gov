@@ -11,31 +11,49 @@ var DISPLAY_DATE_KEY = 'oahPopupShowNext';
 var DISPLAY_COUNT_KEY = 'oahPopupCount';
 var FOREVER = 10000;
 
-function getFutureDate( days ) {
+/**
+ * @param {number} days - The number of days to a future date.
+ * @returns {Date} A future date x amount of days from now.
+ */
+function _getFutureDate( days ) {
   var date = new Date();
   return date.setTime( date.getTime() + ( days * 24 * 60 * 60 * 1000 ) );
 }
 
+/**
+ * Record in local storage that the email popup has been viewed.
+ */
 function recordEmailPopupView() {
   var count = Number( localStorage.getItem( DISPLAY_COUNT_KEY ) ) || 0;
   var max = POPUP_WAIT_PERIOD.length - 1;
   count = count >= max ? max : count;
   var days = POPUP_WAIT_PERIOD[count];
   localStorage.setItem( DISPLAY_COUNT_KEY, count + 1 );
-  localStorage.setItem( DISPLAY_DATE_KEY, getFutureDate( days ) );
+  localStorage.setItem( DISPLAY_DATE_KEY, _getFutureDate( days ) );
 }
 
+/**
+ * Record in local storage that the email popup has been closed.
+ */
 function recordEmailPopupClosure() {
   var count = POPUP_WAIT_PERIOD.length - 1;
   var days = POPUP_WAIT_PERIOD[count];
   localStorage.setItem( DISPLAY_COUNT_KEY, count );
-  localStorage.setItem( DISPLAY_DATE_KEY, getFutureDate( days ) );
+  localStorage.setItem( DISPLAY_DATE_KEY, _getFutureDate( days ) );
 }
 
+/**
+ * Sets email popup key in local storage with a very long expiry date.
+ */
 function recordEmailRegistration() {
-  localStorage.setItem( DISPLAY_DATE_KEY, getFutureDate( FOREVER ) );
+  localStorage.setItem( DISPLAY_DATE_KEY, _getFutureDate( FOREVER ) );
 }
 
+/**
+ * Checks today's date against that in local storage for the purposes of
+ * displaying a popup.
+ * @return {boolean} True if the popup should display, false otherwise.
+ */
 function showEmailPopup() {
   var today = new Date().getTime();
   var nextDisplayDate = Number( localStorage.getItem( DISPLAY_DATE_KEY ) ) || 0;
@@ -43,11 +61,13 @@ function showEmailPopup() {
 }
 
 function throttle( func, wait, options ) {
-  var context, args, result;
+  var context;
+  var args;
+  var result;
   var timeout = null;
   var previous = 0;
   if ( !options ) options = {};
-  var later = function() {
+  function later() {
     previous = options.leading === !1 ? 0 : Date.now();
     timeout = null;
     result = func.apply( context, args );

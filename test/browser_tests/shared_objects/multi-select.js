@@ -19,6 +19,7 @@ var multiSelect = {
   multiSelectFieldset: _getMultiSelectElement( '.cf-multi-select_fieldset' ),
 
   multiSelectOptions: _getMultiSelectElement( '.cf-multi-select_options' )
+
 };
 
 module.exports = multiSelect;
