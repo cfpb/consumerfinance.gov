@@ -5,6 +5,7 @@ from django import forms
 from django.apps import apps
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_text
+from django.utils.safestring import mark_safe
 from django.utils.functional import cached_property
 from functools import partial
 from jinja2 import Markup
@@ -709,7 +710,7 @@ class HTMLBlock(blocks.StructBlock):
     def render(self, value, context=None):
         resp = requests.get(value['html_url'], timeout=5)
         resp.raise_for_status()
-        return self.render_basic(resp.content, context=context)
+        return mark_safe(resp.content)
 
     class Meta:
         label = 'HTML Block'
