@@ -3,6 +3,7 @@ from collections import OrderedDict
 from cStringIO import StringIO
 from itertools import chain
 from urllib import urlencode
+from urlparse import urlsplit
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -335,6 +336,28 @@ class CFGOVPage(Page):
         for key, js_files in js.iteritems():
             js[key] = OrderedDict.fromkeys(js_files).keys()
         return js
+
+    @property
+    def url(self):
+        """Return a relative URL that links to this page.
+
+        By default the Wagtail `Page.url` method returns the "most appropriate"
+        URL for referring to this page from other pages. For Wagtail instances
+        that only include a single `Site`, this is always a relative URL. For
+        instance running multiple `Sites` (e.g. multiple websites from a single
+        host), this will be a full URL including domain.
+
+        Pages using the `CFGOVPage` class instead always return a relative URL
+        because they are intended for use in multi-`Site` Wagtail setups that
+        always share a site root.
+
+        Pages that are not routable (do not live under a `Site` root page)
+        continue to return `None` as in the default behavior.
+        """
+        url = super(CFGOVPage, self).url
+
+        if url:
+            return urlsplit(url).path
 
 
 class CFGOVPageCategory(Orderable):

@@ -3,10 +3,12 @@ import datetime
 import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
-from wagtail.wagtailcore.models import Site
+from wagtail.wagtailcore.rich_text import PageLinkHandler
+from wagtail.wagtailcore.models import Page, Site
+from wagtail.wagtailcore.utils import WAGTAIL_APPEND_SLASH
 
 from v1.models.base import CFGOVPage, Feedback
-from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
+from v1.tests.wagtail_pages.helpers import save_new_page
 
 
 class TestCFGOVPage(TestCase):
@@ -215,6 +217,43 @@ class TestCFGOVPage(TestCase):
         self.assertEqual(result, mock_response())
 
 
+class TestCFGOVPagesAlwaysUseRelativeUrls(TestCase):
+    def setUp(self):
+        self.default_site = Site.objects.get(is_default_site=True)
+
+    def expected_url(self, path):
+        return path + '/' if WAGTAIL_APPEND_SLASH else path
+
+    def test_page_with_single_site_returns_relative_url(self):
+        page = CFGOVPage(title='test', slug='test', live=False)
+        self.default_site.root_page.add_child(instance=page)
+        self.assertEqual(page.url, self.expected_url('/test'))
+
+    def test_page_with_multiple_sites_also_returns_relative_url(self):
+        other_site = Site.objects.create(
+            root_page=self.default_site.root_page,
+            is_default_site=False
+        )
+        page = CFGOVPage(title='test', slug='test', live=False)
+        other_site.root_page.add_child(instance=page)
+        self.assertEqual(page.url, self.expected_url('/test'))
+
+    def test_page_not_under_site_root_returns_none(self):
+        page = CFGOVPage(title='test', slug='test', live=False)
+        root_page = Page.objects.get(slug='root')
+        root_page.add_child(instance=page)
+        self.assertIsNone(page.url)
+
+    def test_page_rendered_as_link_returns_relative_url(self):
+        page = CFGOVPage(title='test', slug='test', live=False)
+        self.default_site.root_page.add_child(instance=page)
+        html = PageLinkHandler.expand_db_attributes({'id': page.pk}, False)
+        self.assertEqual(
+            html,
+            '<a href="{}">'.format(self.expected_url('/test'))
+        )
+
+
 class TestCFGOVPageQuerySet(TestCase):
     def setUp(self):
         default_site = Site.objects.get(is_default_site=True)
@@ -240,6 +279,7 @@ class TestCFGOVPageQuerySet(TestCase):
         save_new_page(page)
         self.check_live_counts(on_live_host=2)
 
+
 class TestFeedbackModel(TestCase):
     def setUp(self):
         self.test_feedback = Feedback(
@@ -248,7 +288,7 @@ class TestFeedbackModel(TestCase):
             is_helpful=True,
             referrer="http://www.consumerfinance.gov/owing-a-home/",
             submitted_on=datetime.datetime.now()
-            )
+        )
         self.test_feedback.save()
 
     def test_assemble_csv(self):
