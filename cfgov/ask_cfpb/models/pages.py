@@ -384,9 +384,14 @@ class AnswerPage(CFGOVPage):
         context = super(AnswerPage, self).get_context(request)
         context['related_questions'] = self.answer_base.related_questions.all()
         context['category'] = self.answer_base.category.first()
-        context['subcategories'] = self.answer_base.subcategory.all()
         context['description'] = self.snippet if self.snippet \
             else Truncator(self.answer).words(40, truncate=' ...')
+        subcategories = []
+        for subcat in self.answer_base.subcategory.all():
+            subcategories.append(subcat.name)
+            for related in subcat.related_subcategories.all():
+                subcategories.append(related.name)
+        context['subcategories'] = set(subcategories)
         context['audiences'] = [
             {'text': audience.name,
              'url': '/ask-cfpb/audience-{}'.format(

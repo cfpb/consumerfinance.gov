@@ -121,15 +121,9 @@
                 </h2>
                 <ul class="list list__unstyled list__links">
                     {% for subcat in subcategories %}
-
                         <li class="list_item">
-                            <a href="/ask-cfpb/category-{{subcat.parent.slug}}" class="list_link">{{ subcat.name }}</a>
+                            <a href="" class="list_link">{{ subcat }}</a>
                         </li>
-                        {% for related_subcat in subcat.related_subcategories.all() %}
-                            <li class="list_item">
-                                <a href="/ask-cfpb/category-{{related_subcat.parent.slug}}" class="list_link">{{ related_subcat.name }}</a>
-                            </li>
-                        {% endfor %}
                     {% endfor %}
                     <li class="list_item">
                       <a class="btn category-button" href="{{slugurl('category-' + category.slug)}}"> 
