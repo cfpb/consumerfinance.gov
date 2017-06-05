@@ -1,19 +1,18 @@
 'use strict';
 
-var configTest = require( '../config' ).test;
-var envvars = require( '../../config/environment' ).envvars;
-var fsHelper = require( '../utils/fs-helper' );
-var gulp = require( 'gulp' );
-var gulpCoveralls = require( 'gulp-coveralls' );
-var gulpIstanbul = require( 'gulp-istanbul' );
-var gulpMocha = require( 'gulp-mocha' );
-var gulpUtil = require( 'gulp-util' );
-var isReachable = require( 'is-reachable' );
-var localtunnel = require( 'localtunnel' );
-var minimist = require( 'minimist' );
-var spawn = require( 'child_process' ).spawn;
-var psi = require( 'psi' );
-
+const configTest = require( '../config' ).test;
+const envvars = require( '../../config/environment' ).envvars;
+const fsHelper = require( '../utils/fs-helper' );
+const gulp = require( 'gulp' );
+const gulpCoveralls = require( 'gulp-coveralls' );
+const gulpIstanbul = require( 'gulp-istanbul' );
+const gulpMocha = require( 'gulp-mocha' );
+const gulpUtil = require( 'gulp-util' );
+const isReachable = require( 'is-reachable' );
+const localtunnel = require( 'localtunnel' );
+const minimist = require( 'minimist' );
+const spawn = require( 'child_process' ).spawn;
+const psi = require( 'psi' );
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -25,7 +24,7 @@ function testUnitScripts( cb ) {
       includeUntested: false
     } ) )
     .pipe( gulpIstanbul.hookRequire() )
-    .on( 'finish', function() {
+    .on( 'finish', () => {
       gulp.src( configTest.tests + '/unit_tests/**/*.js' )
         .pipe( gulpMocha( {
           reporter: configTest.reporter ? 'spec' : 'nyan'
@@ -71,8 +70,8 @@ function testAcceptanceBrowser() {
 
 /**
  * Add a command-line flag to a list of Protractor parameters, if present.
- * @param {object} protractorParams Parameters to pass to Protractor binary.
- * @param {object} commandLineParams Parameters passed
+ * @param {Object} protractorParams Parameters to pass to Protractor binary.
+ * @param {Object} commandLineParams Parameters passed
  *   to the command-line as flags.
  * @param {string} value Command-line flag name to lookup.
  * @returns {Array} List of Protractor binary parameters as strings.
@@ -168,7 +167,7 @@ function _createPSITunnel() {
   /**
    * Create local tunnel and pass promise params
    * to callback function.
-   * @param {Boolean} reachable If port is reachable.
+   * @param {boolean} reachable If port is reachable.
    * @returns {Promise} A promise which calls local tunnel.
    */
   function _createLocalTunnel( reachable ) {
@@ -188,7 +187,7 @@ function _createPSITunnel() {
    * @param {Function} resolve Promise fulfillment callback.
    * @param {Function} reject Promise rejection callback.
    * @param {Error} err Local tunnel error.
-   * @param {object} tunnel Local tunnel object.
+   * @param {Object} tunnel Local tunnel object.
    * @returns {Promise} callback promise.
    */
   function _localTunnelCallback( resolve, reject, err, tunnel ) {
@@ -196,12 +195,12 @@ function _createPSITunnel() {
       return reject( 'Error: ' + err.message );
     }
 
-    const url = tunnel.url + path;
+    const fullTunnelUrl = tunnel.url + path;
 
     return resolve( {
       options: { strategy: strategy },
       tunnel:  tunnel,
-      url:     url
+      url:     fullTunnelUrl
     } );
   }
 
@@ -233,7 +232,7 @@ function testA11y() {
     fsHelper.getBinary( 'wcag', 'wcag', '../.bin' ),
     _getWCAGParams(),
     { stdio: 'inherit' }
-  ).once( 'close', function( code ) {
+  ).once( 'close', code => {
     if ( code ) {
       gulpUtil.log( 'WCAG tests exited with code ' + code );
       process.exit( 1 );
@@ -243,28 +242,31 @@ function testA11y() {
 }
 
 /**
+ * Run PageSpeed Insight (PSI) executable.
+ * @param {Object} params - url, options, and tunnel for running PSI.
+ */
+function _runPSI( params ) {
+  gulpUtil.log( 'PSI tests checking URL: http://' + params.url );
+  psi.output( params.url, params.options )
+  .then( () => {
+    gulpUtil.log( 'PSI tests done!' );
+    params.tunnel.close();
+  } )
+  .catch( err => {
+    gulpUtil.log( err.message );
+    params.tunnel.close();
+    process.exit( 1 );
+  } );
+}
+
+/**
  * Run PageSpeed Insight tests.
  */
 function testPerf() {
-
-  function _runPSI( params ) {
-    gulpUtil.log( 'PSI tests checking URL: http://' + params.url );
-    psi.output( params.url, params.options )
-    .then( () => {
-      gulpUtil.log( 'PSI tests done!' );
-      params.tunnel.close();
-    } )
-    .catch( err => {
-      gulpUtil.log( err.message );
-      params.tunnel.close();
-      process.exit( 1 );
-    } );
-  }
-
   _createPSITunnel()
   .then( _runPSI )
   .catch( err => {
-    console.log( err );
+    gulpUtil.log( err );
   } );
 }
 
@@ -285,7 +287,7 @@ function spawnProtractor( suite ) {
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
     params, {
       stdio: 'inherit'
-    } ).once( 'close', function( code ) {
+    } ).once( 'close', code => {
       if ( code ) {
         gulpUtil.log( 'Protractor tests exited with code ' + code );
         process.exit( 1 );
@@ -302,7 +304,6 @@ function testCoveralls() {
   gulp.src( configTest.tests + '/unit_test_coverage/lcov.info' )
     .pipe( gulpCoveralls() );
 }
-
 
 gulp.task( 'test', [ 'lint', 'test:unit' ] );
 gulp.task( 'test:a11y', testA11y );
