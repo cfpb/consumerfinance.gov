@@ -152,10 +152,11 @@ def fix_tips(answer_text):
 
 # PAGE CREATION
 
-def prep_page(page):
+def prep_page(page, go_live_date=False):
     """Set the go-live date, create a revision, save page, publish revision"""
     page.has_unpublished_changes = True
-    page.go_live_at = GO_LIVE_AT
+    if go_live_date:
+        page.go_live_at = GO_LIVE_AT
     revision = page.save_revision()
     page.save()
     revision.publish()
@@ -469,8 +470,10 @@ def migrate_audiences():
                 ASK_audience.objects.get(id=audience.id))
             audience_relation_count += 1
     print("Migrated {} Audience objects\n"
+          "Found {} already created\n"
           "Created {} Audience links".format(
               audiences_created,
+              Audience.objects.count(),
               audience_relation_count))
 
 

@@ -413,7 +413,7 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-if settings.DEPLOY_ENVIRONMENT != 'build':
+if settings.DEPLOY_ENVIRONMENT not in ['build', 'beta']:
     kb_patterns = [
         url(r'^(?i)askcfpb/',
             include_if_app_enabled(
@@ -425,7 +425,7 @@ if settings.DEPLOY_ENVIRONMENT != 'build':
     urlpatterns += kb_patterns
 
 
-if settings.DEPLOY_ENVIRONMENT == 'build':
+if settings.DEPLOY_ENVIRONMENT in ['build', 'beta']:
     ask_patterns = [
         url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
             view_answer,
