@@ -44,6 +44,26 @@
     - cfgov-organisms
 */
 .o-info-unit-group {
+
+    // This is hacky but we need to target a variable number of
+    // nested info unit headings. h2, h3 and h4 are all optional. We want
+    // 30px between headings and 15px between headings and paragraphs.
+    // See https://[GHE]/CFGOV/platform/issues/860
+    h2 {
+      .u-mb0;
+      + .content-l {
+        h3 {
+          margin-top: unit( @grid_gutter-width / @size-iii, em );
+        }
+        h4 {
+          margin-top: unit( @grid_gutter-width / @size-iv, em );
+        }
+        p {
+          margin-top: unit( @grid_gutter-width / @base-font-size-px / 2, em );
+        }
+      }
+    }
+
     .content-l_col-1 + .content-l_col-1 {
         // Adds margin top to info units that follow another
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em ) !important;
