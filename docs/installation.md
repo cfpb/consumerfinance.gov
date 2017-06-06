@@ -75,8 +75,8 @@ brew info autoenv
 
 !!! note
     If you use Zsh you’ll need to use
-	[zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
-	but we can’t provide support for issues that may arise.
+    [zsh-autoenv](https://github.com/Tarrasch/zsh-autoenv),
+    but we can’t provide support for issues that may arise.
 
 #### MySQL
 
@@ -133,7 +133,7 @@ The cfgov-refresh front end currently uses the following frameworks / tools:
 
 !!! note
     If you’re new to Capital Framework, we encourage you to
-	[start here](https://cfpb.github.io/capital-framework/getting-started).
+    [start here](https://cfpb.github.io/capital-framework/getting-started).
 
 1. Install [Node.js](http://nodejs.org) however you’d like.
    We recommend using [nvm](https://github.com/creationix/nvm), though.
@@ -145,7 +145,7 @@ npm install -g gulp
 ```
 
 !!! note
-	This project requires Node.js v5.5 or higher, and npm v3 or higher.
+    This project requires Node.js v5.5 or higher, and npm v3 or higher.
 
 
 #### Set up your environment
@@ -248,7 +248,7 @@ vagrant up
 ```
 
 !!! note
-	Please be patient the first time you run this step.
+    Please be patient the first time you run this step.
 
 ### 4. Front-end Tools
 
@@ -304,16 +304,6 @@ To apply any unapplied migrations to a database created from a dump, run:
 python cfgov/manage.py migrate
 ```
 
-### Install Protractor locally
-
-Protractor (for the test suites) can be installed globally
-to avoid downloading Chromedriver repeatedly.
-To do so, run:
-
-```bash
-npm install -g protractor && webdriver-manager update
-```
-
 ### Install dependencies for working with the GovDelivery API
 
 Install the following GovDelivery dependencies into your virtual environment:
@@ -326,9 +316,9 @@ pip install git+git://github.com/rosskarchner/govdelivery
 Uncomment and set the GovDelivery environment variables in your `.env` file.
 
 !!! note
-	GovDelivery is a third-party web service that powers our emails.
-	The API is used by subscribe forms on our website.
-	Users may decide to swap this tool out for another third-party service.
+    GovDelivery is a third-party web service that powers our emails.
+    The API is used by subscribe forms on our website.
+    Users may decide to swap this tool out for another third-party service.
 
 
 ## Curious about what the setup scripts are doing?
