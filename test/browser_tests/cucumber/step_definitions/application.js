@@ -8,17 +8,20 @@ const { expect } = require( 'chai' );
 
 defineSupportCode( function( { Then, When } ) {
 
-  When( /I visit URL "(.*)"/, function( url ) {
+  When( /I goto URL "(.*)"/, function( url ) {
     return basePage.gotoURL( url );
   } );
 
-  When( 'I navigate back to the edit page', function( ) {
+  When( /I navigate back*/, function( ) {
+
     return browser.navigate().back();
   } );
 
   Then( /I should see page title "(.*)"/, function( pageTitle ) {
+
     return browser.getTitle().then( function( title ) {
-      expect( title ).to.equal( pageTitle );
+
+      return expect( title ).to.equal( pageTitle );
     } );
   } );
 
