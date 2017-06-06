@@ -123,7 +123,6 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
         related_name='subcategory_page')
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('ask_category', Category),
-        FieldPanel('ask_subcategory', SubCategory),
         StreamFieldPanel('content'),
     ]
 
