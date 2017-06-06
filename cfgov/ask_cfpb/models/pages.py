@@ -102,13 +102,12 @@ class AnswerLandingPage(LandingPage):
 
 class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
     """
-    Page type for Ask CFPB category pages and their subcategories.
+    A routable page type for Ask CFPB category pages and their subcategories.
     """
     from ask_cfpb.models import Answer, Audience, Category, SubCategory
 
     objects = CFGOVPageManager()
     content = StreamField([], null=True)
-    page_type = 'category'
     ask_category = models.ForeignKey(
         Category,
         blank=True,
@@ -204,7 +203,6 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
 
     @route(r'^(?P<subcat>[^/]+)/$')
     def subcategory_page(self, request, **kwargs):
-        self.page_type = 'subcategory'
         self.ask_subcategory = self.SubCategory.objects.get(
             slug=kwargs.get('subcat'))
         # self.slug = self.ask_subcategory.slug
