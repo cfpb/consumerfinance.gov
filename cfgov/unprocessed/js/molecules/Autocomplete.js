@@ -16,7 +16,7 @@ var assign = require( '../modules/util/assign' ).assign;
  * @param {HTMLNode} element
  *   The DOM element within which to search for the molecule.
  * @param {Object} opts optional params, including
- * url for suggestions endpoint, list of suggestions,
+ * url for suggestions endpoint or list of suggestions,
  * minChars, onSubmit, renderItem, and cleanQuery functions.
  * @returns {Autocomplete} An instance.
  */
@@ -44,7 +44,7 @@ function Autocomplete( element, opts ) {
     },
     filterList: function( list ) {
       // TODO: add basic filtering
-      return list;
+      _data = list;
     }
   };
 

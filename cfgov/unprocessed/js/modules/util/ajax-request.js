@@ -6,10 +6,10 @@
 *
 * @param {string} type request type (GET, POST)
 * @param {string} url request url
-* @param {object} opts object containing optional
+* @param {Object} opts object containing optional
 * request parameters, including data, headers,
 * and success, fail, and done callbacks
-* @returns {object} xhr
+* @returns {Object} xhr
 */
 
 function ajaxRequest( type, url, opts ) {
