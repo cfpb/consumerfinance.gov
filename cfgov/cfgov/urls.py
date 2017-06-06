@@ -9,6 +9,10 @@ from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
+from django.views.decorators.csrf import csrf_exempt
+
+from graphene_django.views import GraphQLView
+
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
@@ -301,6 +305,9 @@ urlpatterns = [
         name='cckbyo'),
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
+    url(r'^api/graphql', csrf_exempt(GraphQLView.as_view())),
+    url(r'^api/graphiql', csrf_exempt(GraphQLView.as_view(graphiql=True,
+        pretty=True))),
 ]
 
 with flagged_urls('CCDB5_RELEASE') as _url:
