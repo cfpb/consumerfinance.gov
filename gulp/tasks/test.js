@@ -48,18 +48,17 @@ function testUnitScripts( cb ) {
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {
-  var params = minimist( process.argv.slice( 2 ) );
-  var toxParams = [ '-e', 'acceptance' ];
-  var SPECS_KEY = 'specs';
+  const params = minimist( process.argv.slice( 2 ) );
+  const toxParams = [ '-e', 'acceptance' ];
+  const SPECS_KEY = 'specs';
 
-  // Modifying specs format to pass to tox.
+  // Set `specs=true` for tox if `--specs` is a command-line argument.
   if ( params && params[SPECS_KEY] ) {
     toxParams.push( SPECS_KEY + '=' + params[SPECS_KEY] );
   }
 
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
   .once( 'close', function( code ) {
-
     if ( code ) {
       gulpUtil.log( 'Tox tests exited with code ' + code );
       process.exit( 1 );
@@ -285,9 +284,9 @@ function spawnProtractor( suite ) {
   gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
-    params, {
-      stdio: 'inherit'
-    } ).once( 'close', code => {
+    params,
+    { stdio: 'inherit' }
+  ).once( 'close', code => {
       if ( code ) {
         gulpUtil.log( 'Protractor tests exited with code ' + code );
         process.exit( 1 );
