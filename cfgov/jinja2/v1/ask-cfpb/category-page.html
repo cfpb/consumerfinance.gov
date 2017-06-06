@@ -35,7 +35,11 @@
         </h1>
 
         <div class="lead-paragraph">
+            {% if page.ask_subcategory %}
+            <p>{{ page.ask_subcategory.name }}</p>
+            {% else %}
             <p>{{ page.ask_category.intro|safe }}</p>
+            {% endif %}
         </div>
     </section>
 
