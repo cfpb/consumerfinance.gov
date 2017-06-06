@@ -1,6 +1,5 @@
 'use strict';
 
-
 /**
 * Initiates an ajax request when passed a type, url,
 * and an optional opts object.
@@ -27,18 +26,18 @@ function ajaxRequest( type, url, opts ) {
   var xhr = new XMLHttpRequest();
   xhr.open( type, url );
   if ( opts.headers ) {
-      opts.headers.forEach( function( header ) {
-          xhr.setRequestHeader( header[0], header[1] );
-      } );
+    opts.headers.forEach( function( header ) {
+      xhr.setRequestHeader( header[0], header[1] );
+    } );
   }
   xhr.onreadystatechange = function() {
     if ( xhr.readyState === DONE_CODE ) {
       if ( xhr.status in SUCCESS_CODES ) {
-          typeof opts.success === 'function' && opts.success();
-      } else {
-          typeof opts.fail === 'function' && opts.fail();
+        if ( typeof opts.success === 'function' ) opts.success();
+      } else if ( typeof opts.fail === 'function' ) {
+        opts.fail();
       }
-      typeof opts.done === 'function' && opts.done();
+      if ( typeof opts.done === 'function' ) opts.done();
     }
   };
   xhr.send();

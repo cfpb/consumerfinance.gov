@@ -52,7 +52,7 @@ function recordEmailRegistration() {
 /**
  * Checks today's date against that in local storage for the purposes of
  * displaying a popup.
- * @return {boolean} True if the popup should display, false otherwise.
+ * @returns {boolean} True if the popup should display, false otherwise.
  */
 function showEmailPopup() {
   var today = new Date().getTime();
@@ -72,7 +72,7 @@ function throttle( func, wait, options ) {
     timeout = null;
     result = func.apply( context, args );
     if ( !timeout ) context = args = null;
-  };
+  }
   return function() {
     var now = Date.now();
     if ( !previous && options.leading === !1 ) previous = now;

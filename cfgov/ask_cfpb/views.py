@@ -127,7 +127,7 @@ def ask_autocomplete(request, language='en'):
     else:
         sqs = SearchQuerySet().models(EnglishAnswerProxy)
     sqs = sqs.autocomplete(autocomplete=term)
-    results = [{'value': result.autocomplete,
+    results = [{'question': result.autocomplete,
                 'url': result.url}
                for result in sqs[:20]]
     return JsonResponse(results, safe=False)

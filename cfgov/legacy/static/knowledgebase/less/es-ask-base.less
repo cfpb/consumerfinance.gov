@@ -641,7 +641,7 @@ legend {
     box-sizing: border-box;
     width: 100%;
     max-height: 200px;
-    border: 1px solid #d0d0ce;
+    border: 1px solid #afafb3;
     padding-left:  0;
     overflow-y: scroll;
     position: absolute;
@@ -649,6 +649,10 @@ legend {
     background-color: white;
     list-style-type: none;
     margin-top: 0;
+    font-family: "Avenir Next", Verdana, sans-serif;
+    background: #fff;
+    -webkit-box-shadow: 2px 3px 5px #afafb3;
+            box-shadow: 2px 3px 5px #afafb3;
 
     li {
         border-bottom: 1px solid @gray-20;
@@ -669,7 +673,12 @@ legend {
         padding: 7px;
         border-width: 0;
         color: @black;
+        cursor: pointer;
     }
+}
+
+.u-hidden {
+  display: none;
 }
 
 /* ==========================================================================
