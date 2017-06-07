@@ -130,7 +130,7 @@ class AcceptanceTestRunner(TestDataTestRunner):
         gulp_command = ['gulp', 'test:acceptance:protractor']
         protractor_args = sys.argv[2:]
 
-        if ( protractor_args ):
+        if (protractor_args):
             for arg in protractor_args:
                 gulp_command.append('--' + arg)
         try:
