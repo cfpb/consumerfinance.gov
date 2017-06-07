@@ -3,11 +3,12 @@ import json
 from urlparse import urljoin
 
 from bs4 import BeautifulSoup as bs
-from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponse, Http404, JsonResponse
 from haystack.query import SearchQuerySet
 from haystack.inputs import Clean
 from wagtail.wagtailcore.models import Site
+
+from django.http import HttpResponse, Http404, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 
 from ask_cfpb.models import (
     Answer,

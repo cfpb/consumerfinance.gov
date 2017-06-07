@@ -66,10 +66,21 @@
   ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) )
 ] %}
 
+
+                                    {% if flag_enabled('WAGTAIL_ASK_CFPB', request) %}
+                                    'text': 'Find answers to common questions',
+                                    'url':  '/ask-cfpb/'
+                                    {% else %}
+                                    'text': 'Find answers to common questions',
+                                    'url':  '/askcfpb/'
+                                    {% endif %}
+
+
+
 {% set nav_items = [(
     ('Consumer Tools', '#', [(
         ('Submit a Complaint', '/complaint/', []),
-        ('Ask CFPB', '/askcfpb/', []),
+        ('Ask CFPB', {% if flag_enabled('WAGTAIL_ASK_CFPB', request) %}'/ask-cfpb/'{% else %}/askcfpb/'{% endif %}, []),
         ('Tell Your Story', '/your-story/', []),
         ('Information for Students', '/students/', []),
         ('Information for Servicemembers & Veterans', '/servicemembers/', [])

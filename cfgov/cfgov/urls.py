@@ -301,6 +301,15 @@ urlpatterns = [
         name='cckbyo'),
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
+    flagged_url('WAGTAIL_ASK_CFPB',
+                r'^data-research/consumer-complaints/',
+                include_if_app_enabled(
+                    'complaintdatabase', 'complaintdatabase.urls'
+                ),
+                state=False,
+                fallback=TemplateView.as_view(
+                    template_name='ccdb5_landing_page.html'
+                ))
 ]
 
 with flagged_urls('CCDB5_RELEASE') as _url:
@@ -425,36 +434,51 @@ if settings.DEPLOY_ENVIRONMENT not in ['build', 'beta']:
     urlpatterns += kb_patterns
 
 
-if settings.DEPLOY_ENVIRONMENT in ['build', 'beta']:
+with flagged_urls('WAGTAIL_ASK_CFPB') as _url:
     ask_patterns = [
-        url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+        _url(r'^askcfpb/$',
+             RedirectView.as_view(
+                 url='/ask-cfpb/',
+                 permanent=True)),
+        _url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
+             RedirectView.as_view(
+                 url='/ask-cfpb/slug-en-%(ask_id)s',
+                 permanent=True)),
+        _url(r'^es/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',
+             RedirectView.as_view(
+                 url='/es/obtener-respuestas/slug-es-%(ask_id)s',
+                 permanent=True)),
+        _url(r'^askcfpb/search/\?selected_facets=category_exact:(?P<category>[^&]+)',  # noqa: E501
+             RedirectView.as_view(
+                 url='/ask-cfpb/category-%(category)s',
+                 permanent=True)),
+        _url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
             view_answer,
             name='ask-english-answer'),
-        url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+        _url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
             view_answer,
             name='ask-spanish-answer'),
-        url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',  # noqa: E501
+        _url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',  # noqa: E501
             print_answer,
             name='ask-spanish-print-answer'),
-        url(r'^(?i)ask-cfpb/search/$',
+        _url(r'^(?i)ask-cfpb/search/$',
             ask_search,
             name='ask-search-en'),
-        url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
+        _url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
             ask_search,
             name='ask-search-en-json'),
-        url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
+        _url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
             ask_search,
             name='ask-search-es'),
-        url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
+        _url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',  # noqa: E501
             ask_search,
             name='ask-search-es-json'),
-        url(r'^(?i)ask-cfpb/api/autocomplete/$',
+        _url(r'^(?i)ask-cfpb/api/autocomplete/$',
             ask_autocomplete, name='ask-autocomplete-en'),
-        url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
+        _url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
             ask_autocomplete, name='ask-autocomplete-es'),
     ]
     urlpatterns += ask_patterns
-
 
 # Catch remaining URL patterns that did not match a route thus far.
 

@@ -79,8 +79,13 @@
                             'body': '<p>Financial matters can be complicated. Get the facts you need to make choices about money, credit scores, mortgages, and more.</p>',
                             'links': [
                                 {
+                                    {% if flag_enabled('WAGTAIL_ASK_CFPB', request) %}
+                                    'text': 'Find answers to common questions',
+                                    'url':  '/ask-cfpb/'
+                                    {% else %}
                                     'text': 'Find answers to common questions',
                                     'url':  '/askcfpb/'
+                                    {% endif %}
                                 }
                             ]
                         } ) }}
