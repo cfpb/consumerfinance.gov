@@ -73,7 +73,7 @@
 {% set nav_items = [(
     ('Consumer Tools', '#', [(
         ('Submit a Complaint', '/complaint/', []),
-        ('Ask CFPB', '/ask-cfpb/', []),
+        ('Ask CFPB', '/ask-cfpb/' if flag_enabled('WAGTAIL_ASK_CFPB', request) else '/askcfpb/', []),
         ('Tell Your Story', '/your-story/', []),
         ('Information for Students', '/students/', []),
         ('Information for Servicemembers & Veterans', '/servicemembers/', [])
@@ -177,3 +177,4 @@
         ('Contact Us', '/about-us/contact-us/', [])
     )])
 )] -%}
+
