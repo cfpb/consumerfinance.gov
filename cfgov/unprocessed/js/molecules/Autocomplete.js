@@ -22,6 +22,29 @@ var assign = require( '../modules/util/assign' ).assign;
  */
 function Autocomplete( element, opts ) {
 
+  // Class constants
+  var BASE_CLASS = 'm-autocomplete';
+  var HIDDEN_CLASS = 'u-hidden';
+  var AUTOCOMPLETE_CLASS = 'm-autocomplete_results';
+  var SELECTED_CLASS = 'm-autocomplete_selected';
+
+  // Key constants
+  var ENTER = 13;
+  var UP = 38;
+  var DOWN = 40;
+  var ESCAPE = 27;
+
+  // Internal variables
+  var _autocomplete;
+  var _data = [];
+  var _suggestions;
+  var _isVisible;
+  var _selection;
+
+  // Autocomplete elements
+  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  var _input = _dom.querySelector( 'input' );
+
   // Settings
   var _settings = {
     minChars: 2,
@@ -47,29 +70,6 @@ function Autocomplete( element, opts ) {
       _data = list;
     }
   };
-
-  // Class constants
-  var BASE_CLASS = 'm-autocomplete';
-  var HIDDEN_CLASS = 'u-hidden';
-  var AUTOCOMPLETE_CLASS = 'm-autocomplete_results';
-  var SELECTED_CLASS = 'm-autocomplete_selected';
-
-  // Key constants
-  var ENTER = 13;
-  var UP = 38;
-  var DOWN = 40;
-  var ESCAPE = 27;
-
-  // Internal variables
-  var _autocomplete;
-  var _data = [];
-  var _suggestions;
-  var _isVisible;
-  var _selection;
-
-  // Autocomplete elements
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _input = _dom.querySelector( 'input' );
 
   // Search variables
   var _xhr;
@@ -176,7 +176,7 @@ function Autocomplete( element, opts ) {
 
     bindEvent( _autocomplete, {
       mousedown: function( event ) {
-        event.preventDefault()
+        event.preventDefault();
       }
     } );
   }
