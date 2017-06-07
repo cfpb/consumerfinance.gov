@@ -128,11 +128,11 @@ class TestDataTestRunner(OptionalAppsMixin, PlaceholderJSMixin,
 class AcceptanceTestRunner(TestDataTestRunner):
     def run_suite(self, **kwargs):
         gulp_command = ['gulp', 'test:acceptance:protractor']
-        SPECS_KEY = 'specs'
-        specs = ''.join(sys.argv[2:])
+        protractor_args = sys.argv[2:]
 
-        if (SPECS_KEY in specs):
-            gulp_command.append('--' + ''.join(specs))
+        if ( protractor_args ):
+            for arg in protractor_args:
+                gulp_command.append('--' + arg)
         try:
             subprocess.check_call(gulp_command)
         except subprocess.CalledProcessError:

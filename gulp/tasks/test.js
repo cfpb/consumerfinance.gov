@@ -48,13 +48,15 @@ function testUnitScripts( cb ) {
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {
-  const params = minimist( process.argv.slice( 2 ) );
-  const SPECS_KEY = 'specs';
+  const params = minimist( process.argv.slice( 3 ) );
   let toxParams = [ '-e', 'acceptance' ];
 
-  // Set `specs=true` for tox if `--specs` is a command-line argument.
-  if ( params && params[SPECS_KEY] ) {
-    toxParams.push( SPECS_KEY + '=' + params[SPECS_KEY] );
+  if ( params ) {
+    Object.keys( params ).forEach( ( key, value ) => {
+      if ( key !== '_' ) {
+        toxParams.push( key + '=' + params[key] );
+      }
+    } );
   }
 
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
@@ -269,16 +271,15 @@ function testPerf() {
 
 /**
  * Spawn the appropriate acceptance tests.
- * @param {string} suite Name of specific suite or suites to run, if any.
+ * @param {string} args Selenium arguments.
  */
-function spawnProtractor( suite ) {
+function spawnProtractor( args ) {
   let UNDEFINED;
 
-  if ( typeof suite === 'function' ) {
-    suite = UNDEFINED;
+  if ( typeof args === 'function' ) {
+    args = UNDEFINED;
   }
-
-  const params = _getProtractorParams( suite );
+  const params = _getProtractorParams( args );
 
   gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
