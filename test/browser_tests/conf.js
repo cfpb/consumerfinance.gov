@@ -223,7 +223,7 @@ function _onPrepare() {
 
 const config = {
   baseUrl:              environmentTest.baseUrl,
-  cucumberOpts:         {
+  cucumberOpts: {
     'require':   'cucumber/step_definitions/*.js',
     'tags':      false,
     'format':    'pretty',
