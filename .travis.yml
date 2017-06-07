@@ -6,12 +6,13 @@ python:
   - "2.7"
 
 addons:
-  apt:
-    packages:
-      - google-chrome-beta
+  chrome: beta
 
 cache:
-  - pip
+  pip: true
+  directories:
+    - node_modules
+    - $HOME/.nvm/versions/node/v6.3.0/lib/node_modules/
 
 install:
   - ./install_travis.sh
