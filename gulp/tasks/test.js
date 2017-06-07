@@ -49,8 +49,8 @@ function testUnitScripts( cb ) {
  */
 function testAcceptanceBrowser() {
   const params = minimist( process.argv.slice( 2 ) );
-  const toxParams = [ '-e', 'acceptance' ];
   const SPECS_KEY = 'specs';
+  let toxParams = [ '-e', 'acceptance' ];
 
   // Set `specs=true` for tox if `--specs` is a command-line argument.
   if ( params && params[SPECS_KEY] ) {
@@ -90,15 +90,13 @@ function _addCommandLineFlag( protractorParams, commandLineParams, value ) {
  * @returns {Array} List of Protractor binary parameters as strings.
  */
 function _getProtractorParams( suite ) {
-
-  var commandLineParams = minimist( process.argv.slice( 2 ) );
-
-  var configFile = commandLineParams.a11y ?
-                  'test/browser_tests/a11y_conf.js' :
-                  'test/browser_tests/conf.js';
+  const commandLineParams = minimist( process.argv.slice( 2 ) );
+  const configFile = commandLineParams.a11y ?
+                     'test/browser_tests/a11y_conf.js' :
+                     'test/browser_tests/conf.js';
 
   // Set default configuration command-line parameter.
-  var params = [ configFile ];
+  let params = [ configFile ];
 
   // If --sauce=false flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'sauce' );
@@ -121,7 +119,7 @@ function _getProtractorParams( suite ) {
 
   // If the --suite=suite1,suite2 flag is added on the command-line
   // or, if not, if a suite is passed as part of the gulp task definition.
-  var suiteParam = { suite: commandLineParams.suite || suite };
+  const suiteParam = { suite: commandLineParams.suite || suite };
   params = _addCommandLineFlag( params, suiteParam, 'suite' );
 
   return params;
@@ -136,12 +134,12 @@ function _getProtractorParams( suite ) {
  * @returns {Array} Array of command-line arguments for wcag binary.
  */
 function _getWCAGParams() {
-  var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var host = envvars.TEST_HTTP_HOST;
-  var port = envvars.TEST_HTTP_PORT;
-  var checkerId = envvars.ACHECKER_ID;
-  var urlPath = _parsePath( commandLineParams.u );
-  var url = host + ':' + port + urlPath;
+  const commandLineParams = minimist( process.argv.slice( 2 ) );
+  const host = envvars.TEST_HTTP_HOST;
+  const port = envvars.TEST_HTTP_PORT;
+  const checkerId = envvars.ACHECKER_ID;
+  const urlPath = _parsePath( commandLineParams.u );
+  const url = host + ':' + port + urlPath;
   gulpUtil.log( 'WCAG tests checking URL: http://' + url );
 
   return [ '--u=' + url, '--id=' + checkerId ];
@@ -156,12 +154,12 @@ function _getWCAGParams() {
  *   Promise containing an array of command-line arguments for PSI binary.
  */
 function _createPSITunnel() {
-  var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var host = envvars.TEST_HTTP_HOST;
-  var port = envvars.TEST_HTTP_PORT;
-  var path = _parsePath( commandLineParams.u );
-  var url = commandLineParams.u || host + ':' + port + path;
-  var strategy = commandLineParams.s || 'mobile';
+  const commandLineParams = minimist( process.argv.slice( 2 ) );
+  const host = envvars.TEST_HTTP_HOST;
+  const port = envvars.TEST_HTTP_PORT;
+  const path = _parsePath( commandLineParams.u );
+  const url = commandLineParams.u || host + ':' + port + path;
+  const strategy = commandLineParams.s || 'mobile';
 
   /**
    * Create local tunnel and pass promise params
@@ -274,25 +272,26 @@ function testPerf() {
  * @param {string} suite Name of specific suite or suites to run, if any.
  */
 function spawnProtractor( suite ) {
-  var UNDEFINED;
+  let UNDEFINED;
 
   if ( typeof suite === 'function' ) {
     suite = UNDEFINED;
   }
 
-  var params = _getProtractorParams( suite );
+  const params = _getProtractorParams( suite );
+
   gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(
     fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
     params,
     { stdio: 'inherit' }
   ).once( 'close', code => {
-      if ( code ) {
-        gulpUtil.log( 'Protractor tests exited with code ' + code );
-        process.exit( 1 );
-      }
-      gulpUtil.log( 'Protractor tests done!' );
+    if ( code ) {
+      gulpUtil.log( 'Protractor tests exited with code ' + code );
+      process.exit( 1 );
     }
+    gulpUtil.log( 'Protractor tests done!' );
+  }
   );
 }
 

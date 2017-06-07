@@ -130,7 +130,7 @@ function _retrieveProtractorParams( params ) { // eslint-disable-line complexity
  *   with injected params from the command-line and a test name field.
  */
 function _copyParameters( params, capabilities ) { // eslint-disable-line complexity, no-inline-comments, max-len
-  let newCapabilities = [];
+  const newCapabilities = [];
   const injectParams = _retrieveProtractorParams( params );
   let capability;
 
@@ -162,6 +162,7 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
 /**
  * The getMultiCapabilities method for Protractor's workflow.
  * See https://github.com/angular/protractor/blob/master/lib/config.ts#L336
+ * @returns {Object} Selenium configuration object.
  */
 function _getMultiCapabilities() {
   const params = this.params;
@@ -169,13 +170,14 @@ function _getMultiCapabilities() {
   // If Sauce Labs credentials or --sauce flag is not set or is not true,
   // delete Sauce credentials on the config object.
   if ( !_isSauceCredentialSet() || params.sauce === 'false' ) {
-    delete config.sauceSeleniumAddress;
-    delete config.sauceUser;
-    delete config.sauceKey;
+    delete this.sauceSeleniumAddress;
+    delete this.sauceUser;
+    delete this.sauceKey;
   }
 
   const suite = _chooseSuite( params );
   const capabilities = _copyParameters( params, suite );
+
   return capabilities;
 }
 
@@ -222,12 +224,12 @@ function _onPrepare() {
 const config = {
   baseUrl:              environmentTest.baseUrl,
   cucumberOpts:         {
-                          'require':   'cucumber/step_definitions/*.js',
-                          'tags':      false,
-                          'format':    'pretty',
-                          'profile':   false,
-                          'no-source': true
-                        },
+    'require':   'cucumber/step_definitions/*.js',
+    'tags':      false,
+    'format':    'pretty',
+    'profile':   false,
+    'no-source': true
+  },
   directConnect:        true,
   framework:            'custom',
   frameworkPath:        require.resolve( 'protractor-cucumber-framework' ),
@@ -241,5 +243,6 @@ if ( _isSauceCredentialSet() ) {
   config.sauceUser = envvars.SAUCE_USERNAME;
   config.sauceKey = envvars.SAUCE_ACCESS_KEY;
 }
+
 
 exports.config = config;
