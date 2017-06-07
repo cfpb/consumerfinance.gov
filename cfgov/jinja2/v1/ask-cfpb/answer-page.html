@@ -24,8 +24,13 @@
     {% endif %}
 {% endblock %}
 
+{% block content_modifiers -%}
+    {{ super() }} ask-cfpb-page ask-cfpb-page__answer
+{%- endblock %}
+
+
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom ask-cfpb-page ask-cfpb-page__answer
+    {{ super() }} content__flush-bottom 
 {%- endblock %}
 
 {% block content_main %}
@@ -69,7 +74,7 @@
                         {{- form_block.render(block, 'content', loop.index0) -}}
                     {% endfor %}
                     {% if disclaimer %}
-                    <div class="block">
+                    <div class="block block__flush-bottom">
                         {{ disclaimer.text | safe }}
                     </div>
                     {% endif %}

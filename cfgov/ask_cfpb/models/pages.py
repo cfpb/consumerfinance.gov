@@ -90,7 +90,7 @@ class AnswerLandingPage(LandingPage):
                 {'text': audience.name,
                  'url': '/ask-cfpb/audience-{}'.format(
                         slugify(audience.name))}
-                for audience in Audience.objects.all()]
+                for audience in Audience.objects.all().order_by('name')]
         return context
 
     def get_template(self, request):
@@ -182,6 +182,7 @@ class AnswerCategoryPage(CFGOVPage):
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
+
         return context
 
 
