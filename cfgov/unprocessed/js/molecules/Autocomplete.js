@@ -150,7 +150,7 @@ function Autocomplete( element, opts ) {
           }
         }, 1 );
       },
-      keydown: function() {
+      keydown: function( event ) {
         var key = event.keyCode;
         if ( _isVisible ) {
           if ( key === UP ) {
@@ -171,6 +171,12 @@ function Autocomplete( element, opts ) {
     bindEvent( window, {
       resize: function() {
         _positionContainer();
+      }
+    } );
+
+    bindEvent( _autocomplete, {
+      mousedown: function( event ) {
+        event.preventDefault()
       }
     } );
   }

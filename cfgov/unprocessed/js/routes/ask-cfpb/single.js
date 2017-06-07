@@ -8,6 +8,6 @@ if ( readMoreContainer && getBreakpointState().isBpXS ) {
 	var readMoreExpandable = new Expandable( readMoreContainer ).init();
 	readMoreExpandable.addEventListener( 'expandEnd', function () {
 		readMoreExpandable.destroy();
-		element.querySelector( '.o-expandable_content' ).style.height = '';
+		readMoreContainer.querySelector( '.o-expandable_content' ).style.height = '';
 	} );
 }
