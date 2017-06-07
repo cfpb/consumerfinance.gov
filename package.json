@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "chai": "3.5.0",
+    "chai-as-promised": "6.0.0",
     "cucumber": "2.0.0-rc.9",
     "jasmine-reporters": "2.2.0",
     "jasmine-spec-reporter": "3.2.0",
@@ -74,7 +75,7 @@
     "selenium-webdriver": "2.53.3",
     "sinon": "1.17.7",
     "snyk": "1.25.0",
-    "wcag": "0.2.2"
+    "wcag": "0.3.0"
   },
   "browser": {
     "es5-sham": "./node_modules/es5-shim/es5-sham.min.js",

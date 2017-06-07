@@ -13,13 +13,24 @@ defineSupportCode( function( { Then, When } ) {
     return wagtailAdminPagesPage.createPage( pageType );
   } );
 
-  When( /I create a draft (.*) Page with title "(.*)"/, function(
-    pageType, pageTitle
-  ) {
+  When( /I create a draft (.*) Page with title "(.*)"/,
+    function( pageType, pageTitle ) {
 
-    wagtailAdminPagesPage.createPage( pageType );
-    wagtailAdminPagesPage.setPageTitle( pageTitle );
-    return wagtailAdminPagesPage.save( );
+      wagtailAdminPagesPage.createPage( pageType );
+      wagtailAdminPagesPage.setPageTitle( pageTitle );
+
+      return wagtailAdminPagesPage.save( );
+    }
+  );
+
+  When( /I publish the page/, function( ) {
+
+    return wagtailAdminPagesPage.publish();
+  } );
+
+  When( /I unpublish the page/, function( ) {
+
+    return wagtailAdminPagesPage.unpublish();
   } );
 
   Then( /I open the (.*) menu/, function( menuType ) {
@@ -33,14 +44,5 @@ defineSupportCode( function( { Then, When } ) {
       return wagtailAdminPagesPage.selectMenuItem( component );
     }
   );
-
-  When( /I publish the page/, function( ) {
-    return wagtailAdminPagesPage.publish();
-  } );
-
-  When( /I unpublish the page/, function( ) {
-    return wagtailAdminPagesPage.unpublish();
-  } );
-
 
 } );

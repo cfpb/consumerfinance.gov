@@ -100,9 +100,9 @@ class AnswerLandingPage(LandingPage):
         return 'ask-cfpb/landing-page.html'
 
 
-class AnswerCategoryPage(CFGOVPage):
+class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
     """
-    Page type for Ask CFPB parent-category pages.
+    A routable page type for Ask CFPB category pages and their subcategories.
     """
     from ask_cfpb.models import Answer, Audience, Category, SubCategory
 
@@ -114,6 +114,12 @@ class AnswerCategoryPage(CFGOVPage):
         null=True,
         on_delete=models.PROTECT,
         related_name='category_page')
+    ask_subcategory = models.ForeignKey(
+        SubCategory,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        related_name='subcategory_page')
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('ask_category', Category),
         StreamFieldPanel('content'),
@@ -163,16 +169,11 @@ class AnswerCategoryPage(CFGOVPage):
                 40, truncate=' ...')
         audiences = self.Audience.objects.filter(
             pk__in=audience_ids).values('id', 'name')
-        page = request.GET.get('page', 1)
-        paginator = Paginator(answers, 20)
         context.update({
             'answers': answers,
             'audiences': audiences,
             'facet_map': facet_map,
             'choices': subcats,
-            'current_page': int(page),
-            'paginator': paginator,
-            'questions': paginator.page(page),
             'results_count': answers.count(),
             'get_secondary_nav_items': get_ask_nav_items
         })
@@ -183,6 +184,43 @@ class AnswerCategoryPage(CFGOVPage):
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
         return context
+
+    @route(r'^$')
+    def category_page(self, request):
+        context = self.get_context(request)
+        page = request.GET.get('page', 1)
+        paginator = Paginator(context.get('answers'), 20)
+        context.update({
+            'paginator': paginator,
+            'current_page': int(page),
+            'questions': paginator.page(page),
+        })
+
+        return TemplateResponse(
+            request,
+            self.get_template(request),
+            context)
+
+    @route(r'^(?P<subcat>[^/]+)/$')
+    def subcategory_page(self, request, **kwargs):
+        self.ask_subcategory = self.SubCategory.objects.get(
+            slug=kwargs.get('subcat'))
+        # self.slug = self.ask_subcategory.slug
+        context = self.get_context(request)
+        answers = self.ask_subcategory.answer_set.order_by(
+            '-pk').values(
+            'id', 'question', 'slug')
+        page = request.GET.get('page', 1)
+        paginator = Paginator(answers, 20)
+        context.update({
+            'paginator': paginator,
+            'current_page': int(page),
+            'questions': answers})
+
+        return TemplateResponse(
+            request,
+            self.get_template(request),
+            context)
 
 
 class AnswerResultsPage(CFGOVPage):
