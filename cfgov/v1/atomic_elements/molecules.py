@@ -57,6 +57,7 @@ class TextIntroduction(blocks.StructBlock):
     intro = blocks.RichTextBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
+    link_is_button = blocks.BooleanBlock(required=False)
     has_rule = blocks.BooleanBlock(required=False)
 
     class Meta:
