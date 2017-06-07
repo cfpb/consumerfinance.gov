@@ -131,7 +131,7 @@ The audit will run against
 
 # Django and Python unit tests
 
-To run the the full suite of Python 2.7 unit tests using Tox, cd to the project 
+To run the the full suite of Python 2.7 unit tests using Tox, cd to the project
 root, make sure the `TOXENV` variable is set in your `.env` file and then run
 
 ```
@@ -146,7 +146,7 @@ tox -e fast
 To see Python code coverage information, run
 ```
 ./show_coverage.sh
-``
+```
 
 
 # Accessibility Testing
