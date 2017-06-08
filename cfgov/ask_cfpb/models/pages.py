@@ -63,6 +63,7 @@ def get_ask_nav_items(request, current_page):
         for cat in Category.objects.all()
     ], True
 
+
 def get_ask_breadcrumbs(category=None):
     breadcrumbs = [{'title': 'Ask CFPB', 'href': '/ask-cfpb/'}]
     if category:
