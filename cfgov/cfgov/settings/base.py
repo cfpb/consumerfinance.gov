@@ -67,8 +67,10 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'storages',
     'data_research',
+    'api',
     'v1',
     'core',
+    'graphene_django',
     'sheerlike',
     'legacy',
     'django_extensions',
@@ -553,6 +555,9 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'api.iperceptions.com')
 
+GRAPHENE = {
+            'SCHEMA': 'api.schema.schema',
+            }
 FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
