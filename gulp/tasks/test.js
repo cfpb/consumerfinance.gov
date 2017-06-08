@@ -48,16 +48,20 @@ function testUnitScripts( cb ) {
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {
-  const params = minimist( process.argv.slice( 3 ) );
-  let toxParams = [ '-e', 'acceptance' ];
+  const params = minimist( process.argv.slice( 3 ) ) || {};
+  let toxParams = [ '-e' ];
 
-  if ( params ) {
-    Object.keys( params ).forEach( ( key, value ) => {
-      if ( key !== '_' ) {
-        toxParams.push( key + '=' + params[key] );
-      }
-    } );
+  if( params[ 'fast' ] ) {
+    toxParams.push( 'acceptance-fast' );
+  } else {
+    toxParams.push( 'acceptance' );
   }
+
+  Object.keys( params ).forEach( ( key, value ) => {
+    if ( key !== '_' ) {
+      toxParams.push( key + '=' + params[key] );
+    }
+  } );
 
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
   .once( 'close', function( code ) {
