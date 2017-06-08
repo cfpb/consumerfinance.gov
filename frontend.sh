@@ -14,6 +14,8 @@ init() {
   # Set cli_flag variable.
   source cli-flag.sh 'Front end' $1
 
+  ls node_modules/*
+
   NODE_DIR=node_modules
   if [ -f "npm-shrinkwrap.json" ]; then
     DEP_CHECKSUM=$(cat npm-shrinkwrap.json package.json | shasum -a 256)
