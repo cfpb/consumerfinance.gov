@@ -103,6 +103,19 @@ class Category(models.Model):
             category=self,
             featured=True).order_by('featured_rank')
 
+    @property
+    def top_tags_es(self):
+        import collections
+        cleaned = []
+        for a in self.answer_set.all():
+            if a.search_tags_es.strip():
+                cleaned += [
+                    tag.strip() for tag
+                    in a.search_tags_es.strip().split(',')
+                    if tag.strip()]
+        counter = collections.Counter(cleaned)
+        return counter.most_common()[:10]
+
     @cached_property
     def facet_map(self):
         answers = self.answer_set.order_by('-pk').select_related()

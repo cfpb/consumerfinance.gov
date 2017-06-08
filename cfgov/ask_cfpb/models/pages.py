@@ -182,6 +182,9 @@ class AnswerCategoryPage(CFGOVPage):
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
+        elif self.language == 'es':
+            context['tags'] = self.ask_category.top_tags_es
+            
         return context
 
 
