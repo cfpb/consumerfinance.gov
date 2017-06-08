@@ -54,54 +54,51 @@ defineSupportCode( function( { Then, When, Before } ) {
     browser.executeScript( script );
   } );
 
-  if ( browser.params.windowWidth > breakpointsConfig.bpLG.min ) {
-    Then( /the header organism (should|shouldn't) display the (.*)/,
-      function( shouldDispayElement, element ) {
+  Then( /the header organism (should|shouldn't) display the (.*)/,
+    function( shouldDispayElement, element ) {
 
-        return expect( _dom[toCamelCase( element )].isDisplayed() )
-               .to.eventually
-               .to.equal( shouldShouldnt( shouldDispayElement ) );
-      }
-    );
-
-  } else if ( browser.params.windowWidth < breakpointsConfig.bpSM.max ) {
-    When( /I click on the mega-menu/,
-      function( ) {
-
-        return _dom.megaMenu.click();
-      }
-    );
-
-    When( 'I click on search', function() {
-      _dom.megaMenuTrigger.click();
-
-      return _dom.globalSearchTrigger.click();
-    } );
-
-    Then( 'it should show the search and hide megamenu', function() {
-      expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
-      .to.eventually
-      .to.equal( 'true' );
-
-      return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
+      return expect( _dom[toCamelCase( element )].isDisplayed() )
              .to.eventually
-             .to.equal( 'false' );
-    } );
+             .to.equal( shouldShouldnt( shouldDispayElement ) );
+    }
+  );
 
-    Then( 'it should show the mega menu and hide search', function() {
+  When( /I click on the mega-menu/,
+    function( ) {
 
-      // Since the code doesn't work when .u-move-transition__disabled is
-      // set to 0ms, we still need a quick sleep.
-      browser.sleep( 2 );
+      return _dom.megaMenu.click();
+    }
+  );
 
-      expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
-      .to.eventually
-      .equal( 'true' );
+  When( 'I click on search', function() {
+    _dom.megaMenuTrigger.click();
 
-      return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
-             .to.eventually
-             .equal( 'false' );
-    } );
-  }
+    return _dom.globalSearchTrigger.click();
+  } );
+
+  Then( 'it should show the search and hide megamenu', function() {
+    expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
+    .to.eventually
+    .to.equal( 'true' );
+
+    return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
+           .to.eventually
+           .to.equal( 'false' );
+  } );
+
+  Then( 'it should show the mega menu and hide search', function() {
+
+    // Since the code doesn't work when .u-move-transition__disabled is
+    // set to 0ms, we still need a quick sleep.
+    browser.sleep( 2 );
+
+    expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
+    .to.eventually
+    .equal( 'true' );
+
+    return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
+           .to.eventually
+           .equal( 'false' );
+  } );
 
 } );
