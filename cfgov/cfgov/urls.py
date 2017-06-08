@@ -21,7 +21,6 @@ from ask_cfpb.views import (
     print_answer,
     view_answer
 )
-# import ccdb5.views as CCDB5
 from core.views import ExternalURLNoticeView
 from legacy.views import dbrouter_shortcut, token_provider
 from legacy.views.housing_counselor import (
@@ -306,19 +305,6 @@ urlpatterns = [
     url(r'^data-research/consumer-complaints/api/v1/',
         include_if_app_enabled('complaint_search', 'complaint_search.urls')),
 ]
-
-
-# with flagged_urls('CCDB5_RELEASE') as _url:
-#     apiBase = '^data-research/consumer-complaints/api/v1'
-
-#     include_if_app_enabled('ccdb5_api')
-#     ccdb5_patterns = [
-#         _url(apiBase + '/_suggest', CCDB5.suggest),
-#         _url(apiBase + '/(?P<id>[0-9]+)$', CCDB5.document),
-#         _url(apiBase, CCDB5.search)
-#     ]
-# urlpatterns += ccdb5_patterns
-
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
