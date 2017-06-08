@@ -542,6 +542,20 @@ class AnswerModelTestCase(TestCase):
             len(test_nav_items),
             Category.objects.count())
 
+    def test_get_ask_breadcrumbs(self):
+        from ask_cfpb.models import get_ask_breadcrumbs
+        breadcrumbs = get_ask_breadcrumbs()
+        self.assertEqual(len(breadcrumbs), 1)
+        self.assertEqual(breadcrumbs[0].title, 'Ask CFPB')
+
+    def test_get_ask_breadcrumbs_with_category(self):
+        from ask_cfpb.models import get_ask_breadcrumbs
+        test_category = mommy.make(Category, name='breadcrumb_cat')
+        breadcrumbs = get_ask_breadcrumbs(test_category)
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0].title, 'Ask CFPB')
+        self.assertEqual(breadcrumbs[1].title, test_category.name)
+
     def test_audience_page_get_english_template(self):
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
