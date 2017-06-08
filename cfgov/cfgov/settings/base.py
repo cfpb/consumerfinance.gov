@@ -319,7 +319,8 @@ LEGACY_APP_URLS={'comparisontool':True,
                  'regcore':True,
                  'regulations':True,
                  'countylimits':True,
-                 'noticeandcomment':True}
+                 'noticeandcomment':True,
+                 'complaint_search':True}
 
 # DJANGO HUD API
 DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
