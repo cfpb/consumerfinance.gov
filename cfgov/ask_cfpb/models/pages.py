@@ -427,9 +427,9 @@ class AnswerPage(CFGOVPage):
             else Truncator(self.answer).words(40, truncate=' ...')
         subcategories = []
         for subcat in self.answer_base.subcategory.all():
-            subcategories.append(subcat.name)
+            subcategories.append(subcat)
             for related in subcat.related_subcategories.all():
-                subcategories.append(related.name)
+                subcategories.append(related)
         context['subcategories'] = set(subcategories)
         context['audiences'] = [
             {'text': audience.name,

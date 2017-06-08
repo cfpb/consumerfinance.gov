@@ -127,7 +127,8 @@
                 <ul class="list list__unstyled list__links">
                     {% for subcat in subcategories %}
                         <li class="list_item">
-                            <a href="" class="list_link">{{ subcat }}</a>
+
+                            <a href="{{slugurl('category-' + subcat.parent.slug)}}{{subcat.slug}}" class="list_link">{{ subcat.name }}</a>
                         </li>
                     {% endfor %}
                     <li class="list_item">
