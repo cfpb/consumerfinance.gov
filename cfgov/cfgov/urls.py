@@ -301,16 +301,8 @@ urlpatterns = [
         name='cckbyo'),
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
-    flagged_url('WAGTAIL_ASK_CFPB',
-                r'^data-research/consumer-complaints/',
-                include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
-                ),
-                state=False,
-                fallback=TemplateView.as_view(
-                    template_name='ccdb5_landing_page.html'
-                ))
 ]
+
 
 with flagged_urls('CCDB5_RELEASE') as _url:
     apiBase = '^data-research/consumer-complaints/api/v1'
@@ -394,6 +386,7 @@ if 'selfregistration' in settings.INSTALLED_APPS:
     pattern = url(r'^company-signup/', CompanySignup.as_view())
     urlpatterns.append(pattern)
 
+
 if settings.DEBUG:
     urlpatterns.append(
         url(r'^test-fixture/$',
@@ -421,6 +414,7 @@ if settings.DEBUG:
         urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
     except ImportError:
         pass
+
 
 if settings.DEPLOY_ENVIRONMENT not in ['build', 'beta']:
     kb_patterns = [
@@ -480,10 +474,9 @@ with flagged_urls('WAGTAIL_ASK_CFPB') as _url:
     ]
     urlpatterns += ask_patterns
 
-# Catch remaining URL patterns that did not match a route thus far.
 
+# Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtailsharing_urls)))
-# urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
 
 def handle_error(code, request):
