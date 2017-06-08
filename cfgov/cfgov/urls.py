@@ -255,18 +255,6 @@ urlpatterns = [
                 fallback=lambda req: ServeView.as_view()(req, req.path),
                 state=False),
 
-    # If 'CCDB5_RELEASE' is false, include CCDB4 urls.
-    # Otherwise use CCDB5.
-    flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/',
-                include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
-                ),
-                state=False,
-                fallback=TemplateView.as_view(
-                    template_name='ccdb5_landing_page.html'
-                )),
-
     url(r'^oah-api/rates/',
         include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/',
@@ -305,6 +293,18 @@ urlpatterns = [
     # CCDB5-API
     url(r'^data-research/consumer-complaints/api/v1',
         include_if_app_enabled('complaint_search', 'complaint_search.urls')),
+
+    # If 'CCDB5_RELEASE' is false, include CCDB4 urls.
+    # Otherwise use CCDB5.
+    flagged_url('CCDB5_RELEASE',
+                r'^data-research/consumer-complaints/',
+                include_if_app_enabled(
+                    'complaintdatabase', 'complaintdatabase.urls'
+                ),
+                state=False,
+                fallback=TemplateView.as_view(
+                    template_name='ccdb5_landing_page.html'
+                )),
 ]
 
 
