@@ -225,7 +225,7 @@ const config = {
   baseUrl:              environmentTest.baseUrl,
   cucumberOpts: {
     'require':   'cucumber/step_definitions/*.js',
-    'tags':      false,
+    'tags':      [ '~@mobile', '~@skip' ],
     'format':    'pretty',
     'profile':   false,
     'no-source': true

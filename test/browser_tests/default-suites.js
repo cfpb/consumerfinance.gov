@@ -15,7 +15,7 @@ var defaultSuites = {
       browserName: 'chrome',
       version:     '',
       platform:    'Windows',
-      maxDuration: 10800
+      maxDuration: 20000
     }
   ],
 
@@ -50,8 +50,7 @@ var defaultSuites = {
     {
       browserName: 'chrome',
       chromeOptions: {
-        args: [ '--headless', '--disable-gpu', '--window-size=1200x900' ],
-        binary: envvars.HEADLESS_CHROME_BINARY
+        args: [ '--headless', '--disable-gpu', '--window-size=1200x900' ]
       },
       maxDuration: 10800
     }
