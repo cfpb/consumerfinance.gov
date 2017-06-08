@@ -51,7 +51,7 @@ function testAcceptanceBrowser() {
   const params = minimist( process.argv.slice( 3 ) ) || {};
   let toxParams = [ '-e' ];
 
-  if( params[ 'fast' ] ) {
+  if( params.fast ) {
     toxParams.push( 'acceptance-fast' );
   } else {
     toxParams.push( 'acceptance' );
@@ -85,6 +85,13 @@ function _addCommandLineFlag( protractorParams, commandLineParams, value ) {
   if ( typeof commandLineParams[value] === 'undefined' ) {
     return protractorParams;
   }
+
+  if ( value === 'tags' ) {
+    return protractorParams.concat( [ '--cucumberOpts.tags' +
+                                      '=' +
+                                      commandLineParams[value] ] );
+  }
+
   return protractorParams.concat( [ '--params.' +
                                     value + '=' +
                                     commandLineParams[value] ] );
@@ -122,6 +129,9 @@ function _getProtractorParams( suite ) {
 
   // If --version=number flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'version' );
+
+  // If --tags=@tagName flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'tags' );
 
   // If the --suite=suite1,suite2 flag is added on the command-line
   // or, if not, if a suite is passed as part of the gulp task definition.
