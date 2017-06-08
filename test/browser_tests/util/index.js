@@ -7,7 +7,7 @@ function shouldShouldnt( should ) {
 
 function toCamelCase( string ) {
 
-  return string.replace( /\s(\w)/g, function ( matches, letter ) {
+  return string.replace( /\s(\w)/g, function( matches, letter ) {
 
     return letter.toUpperCase();
   } );
