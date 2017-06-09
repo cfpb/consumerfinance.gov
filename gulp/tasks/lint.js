@@ -21,7 +21,7 @@ function _genericLint( src ) {
     .pipe( gulpEslint.format() )
     .pipe( gulp.dest( './' ) )
     .pipe(through.obj( function( file, enc, cb ) {
-      if( commandLineParams.travis ) {
+      if ( commandLineParams.travis ) {
         return gulpEslint.failAfterError( );
       }
 
