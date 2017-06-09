@@ -16,13 +16,13 @@ to run a particular list of features,
 and/or to run it in "fast" mode:
 
 ```sh
-gulp test:acceptance --suite=wagtail-admin ( runs just the wagtail-admin-suite )
+gulp test:acceptance --suite=wagtail-admin ( runs just the wagtail-admin suite )
 gulp test:acceptance --specs=multi-select.feature ( runs just the multi-select feature )
 gulp test:acceptance --tags=@mobile ( runs all scenarios tagged with @mobile )
-gulp test:acceptance --fast ( runs the test without recreating the virtual environment )
+gulp test:acceptance --fast ( runs the tests without recreating the virtual environment )
 ```
 
-The same options can be passed to tox (--omitted):
+The same options can be used with tox (--omitted):
 
 ```sh
 tox -e acceptance suite=wagtail-admin
