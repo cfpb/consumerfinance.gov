@@ -10,8 +10,9 @@
     'label': label,
     'position': position,
     'action': '/ask-cfpb/search',
-    'additional_classes': additional_classes
-} %}
+    'additional_classes': additional_classes,
+    'autocomplete': 'true'
+  } %}
 {{ search_bar.render( search_opts ) }}
 
 {% endmacro %}

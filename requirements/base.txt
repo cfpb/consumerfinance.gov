@@ -28,7 +28,6 @@ icalendar==3.9.0
 Jinja2==2.7.3
 jsonschema==2.0.0
 lxml==3.6.0
-MySQL-python==1.2.5
 pbr==1.9.1
 pyelasticsearch==0.6
 python-dateutil==2.1
@@ -42,7 +41,7 @@ suds==0.4
 tinys3==0.1.11
 unipath>=1.1,<=2.0
 vobject==0.9.1
-wagtail==1.8.1
+wagtail==1.10.1
 wagtail-flags==2.0.3
 wagtail-sharing==0.5
 Wand==0.4.2

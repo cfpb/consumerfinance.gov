@@ -48,10 +48,10 @@ class TestFilterableListForm(TestCase):
         publish_page(page2)
         publish_page(page3)
         form = self.setUpFilterableForm(data={'topics': ['foo', 'bar']})
-        page_set = form.get_page_set()
-        self.assertEquals(len(page_set), 2)
-        self.assertEquals(page_set[1].specific, page1)
-        self.assertEquals(page_set[0].specific, page2)
+        page_set_pks = form.get_page_set().values_list('pk', flat=True)
+        self.assertEquals(len(page_set_pks), 2)
+        self.assertIn(page1.pk, page_set_pks)
+        self.assertIn(page2.pk, page_set_pks)
 
     def test_filter_doesnt_return_drafts(self):
         page1 = BlogPage(title='test page 1')

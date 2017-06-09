@@ -1,7 +1,13 @@
 'use strict';
 
 const BasePage = require( './base-page.js' );
-const contentMenu = require( '../shared_objects/wagtail-admin-content-menu.js' );
+const contentMenu = require(
+  '../shared_objects/wagtail-admin-content-menu.js'
+);
+const clickWhenReady = require(
+  '../util/click-when-ready.js'
+);
+const EC = protractor.ExpectedConditions;
 
 const PAGE_TYPES = {
   ACTIVITY_LOG:           'activitylogpage',
@@ -14,7 +20,7 @@ const PAGE_TYPES = {
   JOB_LISTING:            'joblistingpage',
   LANDING:                'landingpage',
   LEARN:                  'learnpage',
-  LEGACY_BlOG:            'legacyblogpage',
+  LEGACY_BLOG:            'legacyblogpage',
   LEGACY_NEWSROOM:        'legacynewsroompage',
   NEWSROOM_LANDING:       'newsroomlandingpage',
   NEWSROOM:               'newsroompage',
@@ -26,14 +32,20 @@ const MENUS = {
   content: contentMenu
 };
 
+
+const titleField = element( by.css( '#id_title' ) );
+const saveButton = element( by.css( '.button.action-save' ) );
+const dropdownToggle = element( by.css( '.dropdown-toggle' ) );
+const publishButton = element( by.css( 'button[name="action-publish"]' ) );
+const unpublishButton = element( by.css( 'a[href$="/unpublish/"]' ) );
+const confirmUnpublishButton = element( by.css(
+  'input[value="Yes, unpublish it"]'
+) );
+
 class WagtailAdminPages extends BasePage {
 
   constructor() {
     super();
-
-    this.addChildPageBtn = element(
-      by.css( 'btn[href="/admin/pages/1/add_subpage/"]' )
-    );
 
     this.URL = '/admin/pages/';
   }
@@ -43,7 +55,10 @@ class WagtailAdminPages extends BasePage {
                              .toUpperCase()
                              .replace( /\s/g, '_' );
     const pageType = PAGE_TYPES[normalizedPageName];
-    const pageUrl = `add/v1/${ pageType }/1`;
+
+    // Add the new page as a child of page ID 3 (the site root).
+    const pageUrl = `add/v1/${ pageType }/3`;
+
     const url = this.URL + pageUrl;
 
     return this.gotoURL( url );
@@ -74,6 +89,32 @@ class WagtailAdminPages extends BasePage {
   selectMenuItem( menuItem ) {
 
     return this.menu.selectItem( menuItem );
+  }
+
+  setPageTitle( title ) {
+
+    return browser.wait( EC.visibilityOf( titleField ) )
+      .then( function() {
+
+        return titleField.sendKeys( title );
+      } );
+  }
+
+  save( ) {
+
+    return clickWhenReady( saveButton );
+  }
+
+  publish( ) {
+
+    return clickWhenReady( [ dropdownToggle, publishButton ] );
+  }
+
+  unpublish( ) {
+
+    return clickWhenReady(
+      [ dropdownToggle, unpublishButton, confirmUnpublishButton ]
+    );
   }
 
 }

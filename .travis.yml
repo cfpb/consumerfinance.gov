@@ -6,21 +6,16 @@ python:
   - "2.7"
 
 addons:
-  apt:
-    packages:
-      - google-chrome-beta
+  chrome: beta
 
-cache: pip
+cache:
+  pip: true
+  directories:
+    - node_modules
+    - $HOME/.nvm/versions/node/v6.3.0/lib/node_modules/
 
 install:
-  - pip install -r requirements/travis.txt
-  - export CXX=clang++
-  - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-  - nvm install 6
-  - nvm use 6
-  - npm install -g gulp npm@3.10.7
-  - chmod +x ./frontend.sh
-  - ./frontend.sh test
+  - ./install_travis.sh
 
 env:
   global:
