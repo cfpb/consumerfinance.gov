@@ -102,12 +102,12 @@ function scriptsOnDemand() {
 }
 
  /**
-  * Bundle feedback js for Spanish Ask CFPB pages.
+  * Bundle base js for Spanish Ask CFPB pages.
   * @returns {PassThrough} A source stream.
   */
 function scriptsSpanish() {
   return _processScript( webpackConfig.spanishConf,
-                          '/js/routes/on-demand/feedback-form.js', '/js/' );
+                          '/js/routes/es/obtener-respuestas/single.js', '/js/' );
 }
 
 /**

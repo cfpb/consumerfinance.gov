@@ -100,7 +100,7 @@ var onDemandHeaderRawConf = {
 };
 
 var spanishConf = {
-  entry: paths.unprocessed + JS_ROUTES_PATH + '/on-demand/feedback-form.js',
+  entry: paths.unprocessed + JS_ROUTES_PATH + '/es/obtener-respuestas/single.js',
   output: {
     filename: 'spanish.js'
   },

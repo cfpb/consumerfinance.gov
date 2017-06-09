@@ -48,14 +48,20 @@ function testUnitScripts( cb ) {
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {
-  const params = minimist( process.argv.slice( 2 ) );
-  const SPECS_KEY = 'specs';
-  let toxParams = [ '-e', 'acceptance' ];
+  const params = minimist( process.argv.slice( 3 ) ) || {};
+  let toxParams = [ '-e' ];
 
-  // Set `specs=true` for tox if `--specs` is a command-line argument.
-  if ( params && params[SPECS_KEY] ) {
-    toxParams.push( SPECS_KEY + '=' + params[SPECS_KEY] );
+  if( params.fast ) {
+    toxParams.push( 'acceptance-fast' );
+  } else {
+    toxParams.push( 'acceptance' );
   }
+
+  Object.keys( params ).forEach( ( key, value ) => {
+    if ( key !== '_' ) {
+      toxParams.push( key + '=' + params[key] );
+    }
+  } );
 
   spawn( 'tox', toxParams, { stdio: 'inherit' } )
   .once( 'close', function( code ) {
@@ -79,6 +85,13 @@ function _addCommandLineFlag( protractorParams, commandLineParams, value ) {
   if ( typeof commandLineParams[value] === 'undefined' ) {
     return protractorParams;
   }
+
+  if ( value === 'tags' ) {
+    return protractorParams.concat( [ '--cucumberOpts.tags' +
+                                      '=' +
+                                      commandLineParams[value] ] );
+  }
+
   return protractorParams.concat( [ '--params.' +
                                     value + '=' +
                                     commandLineParams[value] ] );
@@ -116,6 +129,9 @@ function _getProtractorParams( suite ) {
 
   // If --version=number flag is added on the command-line.
   params = _addCommandLineFlag( params, commandLineParams, 'version' );
+
+  // If --tags=@tagName flag is added on the command-line.
+  params = _addCommandLineFlag( params, commandLineParams, 'tags' );
 
   // If the --suite=suite1,suite2 flag is added on the command-line
   // or, if not, if a suite is passed as part of the gulp task definition.
@@ -269,16 +285,15 @@ function testPerf() {
 
 /**
  * Spawn the appropriate acceptance tests.
- * @param {string} suite Name of specific suite or suites to run, if any.
+ * @param {string} args Selenium arguments.
  */
-function spawnProtractor( suite ) {
+function spawnProtractor( args ) {
   let UNDEFINED;
 
-  if ( typeof suite === 'function' ) {
-    suite = UNDEFINED;
+  if ( typeof args === 'function' ) {
+    args = UNDEFINED;
   }
-
-  const params = _getProtractorParams( suite );
+  const params = _getProtractorParams( args );
 
   gulpUtil.log( 'Running Protractor with params: ' + params );
   spawn(

@@ -115,7 +115,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="ac-search full-bleed full-bleed-padded s-show-on-small">
             <div class="s-show-on-small" data-set="ac-search-form">
                 <form method="get" action="/es/obtener-respuestas/buscar" id="ac-search" class="ac-search-form" role="search">
-                    <div class="inf">
+                    <div class="inf m-autocomplete" data-language="es">
                         <label for="q">Ejemplo: ¿Cómo puedo revisar mi informe de crédito?</label>
                         <input type="text" name="q" id="q" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"><button class="btn"><span class="s-show-on-small">Ir</span> <span class="s-hide-on-small">Buscar</span></button>
                     </div>
@@ -140,7 +140,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <nav role="navigation">
             <ul class="main-nav horizontal-separated">
                 <li><a href="/es/">Inicio</a></li>
-                <li><a href="/obtener-respuestas">Obtener respuestas</a></li>
+                <li><a href="/es/obtener-respuestas">Obtener respuestas</a></li>
                 <li><a href="/es/presentar-una-queja/">Presentar una queja</a></li>
                 <li><a href="/es/quienes-somos/">Quiénes somos</a></li>
             </ul>
@@ -185,9 +185,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </footer><!-- .wrapper-footer -->
 
 <script src="{{ static('nemo/_/js/scripts.min.js') }}"></script>
-<script src="{{ static('jquery/jquery-ui-1.8.16.custom.min.js') }}"></script>
 
-{% block page_js %}{% endblock %}
+{% block page_js %}
+<!--[if gt IE 8]><!-->
+<script src="{{ static('js/spanish.js') }}"></script>
+<!--<![endif]-->
+{% endblock %}
+
 
 
 </body>
