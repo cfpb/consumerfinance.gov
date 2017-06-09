@@ -1,11 +1,11 @@
 'use strict';
 
-var configLint = require( '../config' ).lint;
-var gulp = require( 'gulp' );
-var gulpEslint = require( 'gulp-eslint' );
-var handleErrors = require( '../utils/handle-errors' );
-var minimist = require( 'minimist' );
-var through = require( 'through2' );
+const configLint = require( '../config' ).lint;
+const gulp = require( 'gulp' );
+const gulpEslint = require( 'gulp-eslint' );
+const handleErrors = require( '../utils/handle-errors' );
+const minimist = require( 'minimist' );
+const through2 = require( 'through2' );
 
 /**
  * Generic lint a script source.
@@ -16,17 +16,18 @@ function _genericLint( src ) {
   // Grab the --fix flag from the command-line, if available.
   var commandLineParams = minimist( process.argv.slice( 2 ) );
   var willFix = commandLineParams.fix || false;
+
   return gulp.src( src, { base: './' } )
     .pipe( gulpEslint( { fix: willFix } ) )
     .pipe( gulpEslint.format() )
-    .pipe( gulp.dest( './' ) )
-    .pipe(through.obj( function( file, enc, cb ) {
+    .pipe( ( () => {
       if ( commandLineParams.travis ) {
-        return gulpEslint.failAfterError( );
+        return gulpEslint.failAfterError();
       }
 
-      return cb( null, file );
-    } ) )
+      return through2.obj();
+    } )( ) )
+    .pipe( gulp.dest( './' ) )
     .on( 'error', handleErrors );
 }
 
