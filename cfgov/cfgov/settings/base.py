@@ -99,6 +99,7 @@ OPTIONAL_APPS = [
     {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'picard', 'apps': ('picard',)},
+    {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
 ]
 
 MIDDLEWARE_CLASSES = (
