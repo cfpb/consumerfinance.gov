@@ -13,7 +13,7 @@
   },
   "license": "SEE LICENSE IN TERMS.md",
   "engines": {
-    "node": ">=5.5.0"
+    "node": ">=6.0.0"
   },
   "dependencies": {
     "babel-core": "6.22.1",

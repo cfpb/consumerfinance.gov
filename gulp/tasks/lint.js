@@ -5,6 +5,7 @@ var gulp = require( 'gulp' );
 var gulpEslint = require( 'gulp-eslint' );
 var handleErrors = require( '../utils/handle-errors' );
 var minimist = require( 'minimist' );
+var through = require( 'through2' );
 
 /**
  * Generic lint a script source.
@@ -19,6 +20,13 @@ function _genericLint( src ) {
     .pipe( gulpEslint( { fix: willFix } ) )
     .pipe( gulpEslint.format() )
     .pipe( gulp.dest( './' ) )
+    .pipe(through.obj( function( file, enc, cb ) {
+      if( commandLineParams.travis ) {
+        return gulpEslint.failAfterError( );
+      }
+
+      return cb( null, file );
+    } ) )
     .on( 'error', handleErrors );
 }
 
