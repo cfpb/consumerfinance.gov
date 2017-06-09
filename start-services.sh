@@ -8,10 +8,10 @@ if [ $? -eq 0 ]; then
 else
    MACHINE_IP=$(docker-machine ip cfgov)
 
-    # like above--if the "cfgov" machine doesn't exist, create it
     if [ -z "$MACHINE_IP" ]; then
         docker-machine ls | grep cfgov
         if [ $? -gt 0 ]; then
+            # like above--if the "cfgov" machine doesn't exist, create it
             docker-machine create cfgov > /dev/null
             vboxmanage controlvm cfgov natpf1 "mysql,tcp,,3306,,3306"
             vboxmanage controlvm cfgov natpf1 "pdfreactor,tcp,,9423,,9423"
@@ -19,10 +19,10 @@ else
             vboxmanage controlvm cfgov natpf1 "es2,tcp,,9300,,9300"
         fi
     fi
-
+    # harmless if the machine is already up:
     docker-machine start cfgov
+    # inject environment variables needed for docker/compose:
     eval $(docker-machine env cfgov)
 fi
 
 docker-compose up -d
-#$MACHINE_IP
