@@ -64,7 +64,7 @@
         <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
-    {% if page.meta_image %}
+    {% if page and page.meta_image %}
         <meta property="og:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
     {% else %}
@@ -85,7 +85,7 @@
         <meta property="fb:app_id" content="210516218981921">
         {% block og_article_author %}{% endblock %}
         <!-- Twitter -->
-    {% if page.meta_image %}
+    {% if page and page.meta_image %}
         {%- set twitter_image = image(page.meta_image, 'original') %}
         <meta property="twitter:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ twitter_image.url }}">

@@ -357,6 +357,7 @@ class CFGOVPage(Page):
     def meta_image(self):
         return self.social_sharing_image
 
+
 class CFGOVPageCategory(Orderable):
     page = ParentalKey(CFGOVPage, related_name='categories')
     name = models.CharField(max_length=255, choices=ref.categories)
