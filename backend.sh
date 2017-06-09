@@ -52,4 +52,3 @@ is_installed() {
 
 init "$1"
 install
-db_setup
