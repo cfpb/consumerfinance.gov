@@ -19,7 +19,8 @@ from ask_cfpb.views import (
     ask_search,
     ask_autocomplete,
     print_answer,
-    view_answer
+    view_answer,
+    redirect_ask_search
 )
 import ccdb5.views as CCDB5
 from core.views import ExternalURLNoticeView
@@ -462,10 +463,7 @@ ask_cfpb_english_redirects = [
         RedirectView.as_view(
             url='/ask-cfpb/slug-en-%(ask_id)s',
             permanent=True)),
-    url(r'^search/\?selected_facets=category_exact:(?P<category>[^&]+)',  # noqa: E501
-        RedirectView.as_view(
-            url='/ask-cfpb/category-%(category)s',
-            permanent=True)),
+    url(r'^search$', redirect_ask_search),
 ]
 
 # Flagged includes for either old knowledgebase Ask CFPB URLs or new ask_cfpb

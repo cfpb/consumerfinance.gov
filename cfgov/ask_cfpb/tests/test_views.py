@@ -7,14 +7,14 @@ from model_mommy import mommy
 
 from django.apps import apps
 from django.core.urlresolvers import reverse, NoReverseMatch
-from django.http import HttpRequest
+from django.http import HttpRequest, Http404
 import django.test
 from django.utils import timezone
 from wagtail.wagtailcore.models import Site
 
 from ask_cfpb.models import (
     AnswerResultsPage, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
-from ask_cfpb.views import annotate_links
+from ask_cfpb.views import annotate_links, redirect_ask_search
 from v1.util.migrations import get_or_create_page, get_free_path
 
 now = timezone.now()
@@ -211,3 +211,24 @@ class AnswerViewTestCase(django.test.TestCase):
         self.assertEqual(
             sorted(output[0].keys()),
             ['question', 'url'])
+
+
+class RedirectAskSearchTestCase(django.test.TestCase):
+
+    def test_redirect_search_no_facets(self):
+        request = HttpRequest()
+        with self.assertRaises(Http404):
+            redirect_ask_search(request)
+
+    def test_redirect_search_no_category(self):
+        request = HttpRequest()
+        request.GET['selected_facets'] = ''
+        with self.assertRaises(Http404):
+            redirect_ask_search(request)
+
+    def test_redirect_search(self):
+        request = HttpRequest()
+        request.GET['selected_facets'] = 'category_exact:my_category'
+        result = redirect_ask_search(request)
+        self.assertEqual(result.get('location'),
+                         '/ask-cfpb/category-my_category')
