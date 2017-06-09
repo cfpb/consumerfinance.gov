@@ -9,7 +9,7 @@ if [ "$RUNTEST" == "frontend" ]; then
     gulp "test:coveralls"
 elif [ "$RUNTEST" == "backend" ]; then
     flake8
-    tox
+    tox -e fast
     coveralls
 elif [ "$RUNTEST" == "acceptance" ]; then
     export DISPLAY=:99.0
