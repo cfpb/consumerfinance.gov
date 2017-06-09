@@ -8,30 +8,25 @@
 # Set script to exit on any errors.
 set -e
 
-# Functions
-ok() { echo -e $1; }
+eval $(docker-machine env cfgov)
 
-EXPECTED_ARGS=1
-E_BADARGS=65
-MYSQL=`which mysql`
+MYSQL="docker-compose exec mysql mysql v1 -u root -proot"
 
-if [ -z "$1" ]
-then
-  Q1="drop database $MYSQL_NAME;"
-  SQL="${Q1}"
+QUERY=$(cat <<'EOF'
+SET FOREIGN_KEY_CHECKS = 0;
+SET GROUP_CONCAT_MAX_LEN=32768;
+SET @tables = NULL;
+SELECT GROUP_CONCAT('`', table_name, '`') INTO @tables
+  FROM information_schema.tables
+  WHERE table_schema = (SELECT DATABASE());
+SELECT IFNULL(@tables,'dummy') INTO @tables;
 
-  $MYSQL -uroot -e "$SQL"
-  echo "Database $MYSQL_NAME dropped."
-else
-  Q1="drop database $1;"
-  SQL="${Q1}"
+SET @tables = CONCAT('DROP TABLE IF EXISTS ', @tables);
+PREPARE stmt FROM @tables;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+SET FOREIGN_KEY_CHECKS = 1;
+EOF
+)
 
-  if [ $# -ne $EXPECTED_ARGS ]
-  then
-    echo "Usage: $0 dbname"
-    exit $E_BADARGS
-  fi
-
-  $MYSQL -uroot -e "$SQL"
-  ok "Database $1 dropped."
-fi
+$MYSQL -e "$QUERY"
