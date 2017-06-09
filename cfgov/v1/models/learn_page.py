@@ -51,7 +51,7 @@ class AbstractFilterPage(CFGOVPage):
 
     # Configuration tab panels
     settings_panels = [
-        MultiFieldPanel(Page.promote_panels, 'Settings'),
+        MultiFieldPanel(CFGOVPage.promote_panels, 'Settings'),
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         MultiFieldPanel([
@@ -88,6 +88,12 @@ class AbstractFilterPage(CFGOVPage):
             ObjectList(CFGOVPage.sidefoot_panels, heading='Sidebar'),
             ObjectList(self.settings_panels, heading='Configuration'),
         ])
+
+    # Returns an image for the page's meta Open Graph tag
+    @property
+    def meta_image(self):
+        parent_meta = super(AbstractFilterPage, self).meta_image
+        return parent_meta or self.preview_image
 
 
 class LearnPage(AbstractFilterPage):

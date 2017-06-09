@@ -64,10 +64,9 @@
         <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
-    {% if page and page.preview_image %}
-        {%- set preview_image = image(page.preview_image, 'original') %}
+    {% if page.meta_image %}
         <meta property="og:image"
-              content="{{ preview_image.url }}">
+              content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
     {% else %}
         <meta property="og:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
@@ -86,10 +85,16 @@
         <meta property="fb:app_id" content="210516218981921">
         {% block og_article_author %}{% endblock %}
         <!-- Twitter -->
-    {% if page and page.preview_image %}
-        {%- set preview_image = image(page.preview_image, 'original') %}
+    {% if page.meta_image %}
+        {%- set twitter_image = image(page.meta_image, 'original') %}
         <meta property="twitter:image"
-              content="{{ preview_image.url }}">
+              content="{{ request.scheme }}://{{ request.get_host() }}{{ twitter_image.url }}">
+        {#- Display a large twitter card if it's a large image and
+            its height-to-width ratio is approximately 1/2 #}
+        {%- if twitter_image.width >= 1000 and
+            0.4 <= twitter_image.height / twitter_image.width <= 0.6 %}
+        <meta name="twitter:card" content="summary_large_image">
+        {% endif %}
     {% else %}
         <meta property="twitter:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_twitter.png') }}">
