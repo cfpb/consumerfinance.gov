@@ -7,8 +7,7 @@ then tell gulp to start the tests:
 
 ```sh
 gulp build
-gulp test:acceptance
-tox -e acceptance
+gulp test:acceptance ( tox -e acceptance can be run as well )
 ```
 
 There are several options you can pass to run a particular suite of tests,
