@@ -6,7 +6,6 @@
         {% if not breadcrumb_items %}
         {% set breadcrumb_items = page.get_breadcrumbs(request) %}
         {% endif %}
-        
         {% if breadcrumb_items | length > 0 %}
             <div class="content_wrapper">
                 {%- import 'molecules/breadcrumbs.html' as breadcrumbs with context -%}
