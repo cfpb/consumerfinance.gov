@@ -52,3 +52,4 @@ is_installed() {
 
 init "$1"
 install
+sh start-services.sh
