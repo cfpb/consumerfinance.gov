@@ -14,8 +14,8 @@ const through2 = require( 'through2' );
  */
 function _genericLint( src ) {
   // Grab the --fix flag from the command-line, if available.
-  var commandLineParams = minimist( process.argv.slice( 2 ) );
-  var willFix = commandLineParams.fix || false;
+  const commandLineParams = minimist( process.argv.slice( 2 ) );
+  const willFix = commandLineParams.fix || false;
 
   return gulp.src( src, { base: './' } )
     .pipe( gulpEslint( { fix: willFix } ) )
