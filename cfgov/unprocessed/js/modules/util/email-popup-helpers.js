@@ -52,7 +52,7 @@ function recordEmailRegistration() {
 /**
  * Checks today's date against that in local storage for the purposes of
  * displaying a popup.
- * @return {boolean} True if the popup should display, false otherwise.
+ * @returns {boolean} True if the popup should display, false otherwise.
  */
 function showEmailPopup() {
   var today = new Date().getTime();
@@ -60,7 +60,7 @@ function showEmailPopup() {
   return today > nextDisplayDate;
 }
 
-function _throttle( func, wait, options ) {
+function throttle( func, wait, options ) {
   var context;
   var args;
   var result;
@@ -72,7 +72,7 @@ function _throttle( func, wait, options ) {
     timeout = null;
     result = func.apply( context, args );
     if ( !timeout ) context = args = null;
-  };
+  }
   return function() {
     var now = Date.now();
     if ( !previous && options.leading === !1 ) previous = now;
@@ -124,7 +124,7 @@ function showOnScroll( elToShow, opts ) {
     return windowBottom > scrollTargetPosition;
   }
 
-  var handler = _throttle( function( event ) {
+  var handler = throttle( function( event ) {
     if ( _scrollTargetPositionReached() ) {
       window.removeEventListener( 'scroll', handler );
       if ( typeof opts.cb === 'function' ) {
@@ -141,5 +141,6 @@ module.exports = {
   recordEmailPopupView: recordEmailPopupView,
   recordEmailRegistration: recordEmailRegistration,
   recordEmailPopupClosure: recordEmailPopupClosure,
-  showOnScroll: showOnScroll
+  showOnScroll: showOnScroll,
+  throttle: throttle
 };

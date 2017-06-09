@@ -230,6 +230,7 @@ const config = {
     'profile':   false,
     'no-source': true
   },
+  unknownFlags_:        ['cucumberOpts'],
   directConnect:        true,
   framework:            'custom',
   frameworkPath:        require.resolve( 'protractor-cucumber-framework' ),

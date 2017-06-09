@@ -90,7 +90,7 @@ class AnswerLandingPage(LandingPage):
                 {'text': audience.name,
                  'url': '/ask-cfpb/audience-{}'.format(
                         slugify(audience.name))}
-                for audience in Audience.objects.all()]
+                for audience in Audience.objects.all().order_by('name')]
         return context
 
     def get_template(self, request):
@@ -183,6 +183,7 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
+
         return context
 
     @route(r'^$')
@@ -422,9 +423,14 @@ class AnswerPage(CFGOVPage):
         context = super(AnswerPage, self).get_context(request)
         context['related_questions'] = self.answer_base.related_questions.all()
         context['category'] = self.answer_base.category.first()
-        context['subcategories'] = self.answer_base.subcategory.all()
         context['description'] = self.snippet if self.snippet \
             else Truncator(self.answer).words(40, truncate=' ...')
+        subcategories = []
+        for subcat in self.answer_base.subcategory.all():
+            subcategories.append(subcat)
+            for related in subcat.related_subcategories.all():
+                subcategories.append(related)
+        context['subcategories'] = set(subcategories)
         context['audiences'] = [
             {'text': audience.name,
              'url': '/ask-cfpb/audience-{}'.format(

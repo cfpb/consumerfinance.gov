@@ -8,7 +8,7 @@ if [ "$RUNTEST" == "frontend" ]; then
     gulp "test:unit"
     gulp "test:coveralls"
 elif [ "$RUNTEST" == "backend" ]; then
-    tox
+    tox -e fast
     flake8
     coveralls
 elif [ "$RUNTEST" == "acceptance" ]; then
