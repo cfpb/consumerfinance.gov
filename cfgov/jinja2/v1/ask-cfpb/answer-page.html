@@ -24,8 +24,13 @@
     {% endif %}
 {% endblock %}
 
+{% block content_modifiers -%}
+    {{ super() }} ask-cfpb-page ask-cfpb-page__answer
+{%- endblock %}
+
+
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom ask-cfpb-page ask-cfpb-page__answer
+    {{ super() }} content__flush-bottom 
 {%- endblock %}
 
 {% block content_main %}
@@ -69,7 +74,7 @@
                         {{- form_block.render(block, 'content', loop.index0) -}}
                     {% endfor %}
                     {% if disclaimer %}
-                    <div class="block">
+                    <div class="block block__flush-bottom">
                         {{ disclaimer.text | safe }}
                     </div>
                     {% endif %}
@@ -121,15 +126,10 @@
                 </h2>
                 <ul class="list list__unstyled list__links">
                     {% for subcat in subcategories %}
-
                         <li class="list_item">
-                            <a href="/ask-cfpb/category-{{subcat.parent.slug}}" class="list_link">{{ subcat.name }}</a>
+
+                            <a href="{{slugurl('category-' + subcat.parent.slug)}}{{subcat.slug}}" class="list_link">{{ subcat.name }}</a>
                         </li>
-                        {% for related_subcat in subcat.related_subcategories.all() %}
-                            <li class="list_item">
-                                <a href="/ask-cfpb/category-{{related_subcat.parent.slug}}" class="list_link">{{ related_subcat.name }}</a>
-                            </li>
-                        {% endfor %}
                     {% endfor %}
                     <li class="list_item">
                       <a class="btn category-button" href="{{slugurl('category-' + category.slug)}}"> 

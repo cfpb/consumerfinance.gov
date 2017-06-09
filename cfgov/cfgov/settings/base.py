@@ -306,21 +306,6 @@ PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/pyth
 #LEGACY APPS
 
 STATIC_VERSION = ''
-LEGACY_APP_URLS={'comparisontool':True,
-                 'agreements':True,
-                 'knowledgebase':True,
-                 'selfregistration':True,
-                 'hud_api_replace':True,
-                 'retirement_api':True,
-                 'paying_for_college':True,
-                 'complaint':True,
-                 'complaintdatabase':True,
-                 'ratechecker':True,
-                 'regcore':True,
-                 'regulations':True,
-                 'countylimits':True,
-                 'noticeandcomment':True,
-                 'complaint_search':True}
 
 # DJANGO HUD API
 DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
