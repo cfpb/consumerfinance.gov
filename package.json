@@ -59,7 +59,7 @@
   "devDependencies": {
     "chai": "3.5.0",
     "chai-as-promised": "6.0.0",
-    "cucumber": "2.0.0-rc.9",
+    "cucumber": "2.3.0",
     "jasmine-reporters": "2.2.0",
     "jasmine-spec-reporter": "3.2.0",
     "jsdoc": "3.4.3",
@@ -69,10 +69,10 @@
     "mkdirp": "0.5.1",
     "mocha": "3.2.0",
     "mocha-jsdom": "1.1.0",
-    "protractor": "5.1.1",
+    "protractor": "5.1.2",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
-    "protractor-cucumber-framework": "3.1.0",
-    "selenium-webdriver": "2.53.3",
+    "protractor-cucumber-framework": "3.1.2",
+    "selenium-webdriver": "3.4.0",
     "sinon": "1.17.7",
     "snyk": "1.25.0",
     "wcag": "0.3.0"
