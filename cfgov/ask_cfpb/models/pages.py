@@ -456,6 +456,8 @@ class AnswerPage(CFGOVPage):
         if self.language == 'es':
             context['tags_es'] = [tag for tag in self.answer_base.tags_es
                                   if tag in get_valid_spanish_tags()]
+            context['tweet_text'] = Truncator(self.question).chars(
+                100, truncate=' ...')
 
         elif self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(
