@@ -93,6 +93,14 @@
         } );
     }
 
+    .ask-cfpb-banner {
+        .respond-to-range( @bp-med-min, @bp-med-max {
+            padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
+            padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+        
+    }
+
     .ask-search {
         .respond-to-max( @bp-xs-max {
             padding: 0;
@@ -315,5 +323,11 @@
     // max width calculated to keep ask 'about us' content on 2 lines
     p {
         max-width: 800px !important;
+    }
+}
+
+.ask-disclaimer {
+    h5 {
+        display: none;
     }
 }
