@@ -10,10 +10,14 @@ The easiest way to do this is the following steps:
  1. Update the version of the dependency in `package.json`.
  2. Delete the `node_modules` directory.
  3. Delete the `npm-shrinkwrap.json` file.
- 4. Run `npm install`.
- 5. Run `npm shrinkwrap --dev`.
+ 4. Run `./frontend.sh shrinkwrap`.
 
 Congrats! The dependency has been updated.
+
+!!! note
+    Shrinkwrapping will ignore development dependencies,
+    so if one of those was updated you will need to run `npm install`
+    after shrinkwrapping to bring your development environment up to date.
 
 ### TIP: Loading sibling projects
 Some projects fit within the cfgov-refresh architecture,
@@ -277,10 +281,10 @@ may have an impact on local server performance.
 
 ### TIP: Updating the documentation
 
-Our documentation is written as Markdown files and served in GitHub pages 
+Our documentation is written as Markdown files and served in GitHub pages
 by [mkdocs](http://www.mkdocs.org/user-guide/deploying-your-docs/).
 
-To update the docs in GitHub Pages once a pull request has been merged, 
+To update the docs in GitHub Pages once a pull request has been merged,
 mkdocs provides [a helpful command](http://www.mkdocs.org/user-guide/deploying-your-docs/):
 
 ```
