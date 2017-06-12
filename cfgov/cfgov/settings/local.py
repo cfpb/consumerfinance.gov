@@ -14,33 +14,33 @@ if not COLLECTSTATIC:
         DATABASES = {
             'default': {
                 'ENGINE': MYSQL_ENGINE,
-                'NAME': os.environ.get('MYSQL_NAME', ''),
-                'USER': os.environ.get('MYSQL_USER', ''),
-                'PASSWORD': os.environ.get('MYSQL_PW', ''),
-                'HOST': os.environ.get('MYSQL_HOST', ''),
-                'PORT': os.environ.get('MYSQL_PORT', ''),
-                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
+                'NAME': os.environ.get('MYSQL_NAME', 'v1'),
+                'USER': os.environ.get('MYSQL_USER', 'v1'),
+                'PASSWORD': os.environ.get('MYSQL_PW', 'v1'),
+                'HOST': os.environ.get('MYSQL_HOST', 'localhost.'),
+                'PORT': os.environ.get('MYSQL_PORT', '3306'),
+                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET default_storage_engine=MYISAM') },
             },
             'legacy': {
                 'ENGINE': MYSQL_ENGINE,
-                'NAME': os.environ.get('LEGACY_MYSQL_NAME', ''),
-                'USER': os.environ.get('LEGACY_MYSQL_USER', ''),
-                'PASSWORD': os.environ.get('LEGACY_MYSQL_PW', ''),
-                'HOST': os.environ.get('LEGACY_MYSQL_HOST', ''),
-                'PORT': os.environ.get('LEGACY_MYSQL_PORT', ''),
-                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
+                'NAME': os.environ.get('LEGACY_MYSQL_NAME', 'legacy'),
+                'USER': os.environ.get('LEGACY_MYSQL_USER', 'v1'),
+                'PASSWORD': os.environ.get('LEGACY_MYSQL_PW', 'v1'),
+                'HOST': os.environ.get('LEGACY_MYSQL_HOST', 'localhost.'),
+                'PORT': os.environ.get('LEGACY_MYSQL_PORT', '3306'),
+                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET default_storage_engine=MYISAM') },
             },
         }
     else:
         DATABASES = {
             'default': {
                 'ENGINE': MYSQL_ENGINE,
-                'NAME': os.environ.get('MYSQL_NAME', ''),
-                'USER': os.environ.get('MYSQL_USER', ''),
-                'PASSWORD': os.environ.get('MYSQL_PW', ''),
-                'HOST': os.environ.get('MYSQL_HOST', ''),
-                'PORT': os.environ.get('MYSQL_PORT', ''),
-                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
+                'NAME': os.environ.get('MYSQL_NAME', 'v1'),
+                'USER': os.environ.get('MYSQL_USER', 'v1'),
+                'PASSWORD': os.environ.get('MYSQL_PW', 'v1'),
+                'HOST': os.environ.get('MYSQL_HOST', 'localhost.'),
+                'PORT': os.environ.get('MYSQL_PORT', '3306'),
+                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET default_storage_engine=MYISAM') },
                 },
             }
 

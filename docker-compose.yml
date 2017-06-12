@@ -15,3 +15,7 @@ services:
         ports:
             - "9200:9200"
             - "9300:9300"
+    pdfreactor:
+        image: cfgov/pdfreactor
+        ports:
+            - "9423:9423"

@@ -190,10 +190,10 @@ else:
         'default': {
             'ENGINE': MYSQL_ENGINE,
             'NAME': os.environ.get('MYSQL_NAME', 'v1'),
-            'USER': os.environ.get('MYSQL_USER', 'root'),
-            'PASSWORD': os.environ.get('MYSQL_PW', ''),
-            'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
-            'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
+            'USER': os.environ.get('MYSQL_USER', 'v1'),
+            'PASSWORD': os.environ.get('MYSQL_PW', 'v1'),
+            'HOST': os.environ.get('MYSQL_HOST', 'localhost.'),  # empty string == localhost
+            'PORT': os.environ.get('MYSQL_PORT', '3306'),  # empty string == default
         },
     }
 

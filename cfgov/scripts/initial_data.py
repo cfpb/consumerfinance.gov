@@ -19,7 +19,7 @@ def run():
     logger.info('Running script initial_data')
 
     admin_password = os.environ.get('WAGTAIL_ADMIN_PW')
-    staging_hostname = os.environ['DJANGO_STAGING_HOSTNAME']
+    staging_hostname = os.environ.get('DJANGO_STAGING_HOSTNAME','content.localhost')
     http_port = os.environ.get('DJANGO_HTTP_PORT', '80')
 
     # Create admin user if it doesn't exist already.
