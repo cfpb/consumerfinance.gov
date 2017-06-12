@@ -74,8 +74,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'reversion',
     'tinymce',
-    'jobmanager',
-    'ccdb5'
+    'jobmanager'
 )
 
 if DEPLOY_ENVIRONMENT == 'build':
@@ -100,6 +99,7 @@ OPTIONAL_APPS = [
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'picard', 'apps': ('picard',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
+    {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
 ]
 
 MIDDLEWARE_CLASSES = (

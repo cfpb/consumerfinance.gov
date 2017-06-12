@@ -255,15 +255,15 @@ urlpatterns = [
                 state=False),
 
     # If 'CCDB5_RELEASE' is false, include CCDB4 urls.
-    # Otherwise use CCDB5.
+    # Otherwise include CCDB5 urls
     flagged_url('CCDB5_RELEASE',
                 r'^data-research/consumer-complaints/',
                 include_if_app_enabled(
                     'complaintdatabase', 'complaintdatabase.urls'
                 ),
                 state=False,
-                fallback=TemplateView.as_view(
-                    template_name='ccdb5_landing_page.html'
+                fallback=include_if_app_enabled(
+                    'ccdb5_ui', 'ccdb5_ui.config.urls'
                 )),
 
     url(r'^oah-api/rates/',
