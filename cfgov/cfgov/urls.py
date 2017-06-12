@@ -417,7 +417,9 @@ if settings.DEPLOY_ENVIRONMENT not in ['build', 'beta']:
     ]
     urlpatterns += kb_patterns
 
-
+# The redirects in ask_patterns (below) won't be exposed until the
+# knowledgebase URLs in kb_patters (above) are turned off, because the kb URLs
+# will serve the requests before they reach ask_patterns.
 ask_patterns = [
     url(r'^askcfpb/$',
      RedirectView.as_view(
