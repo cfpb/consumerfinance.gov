@@ -3,9 +3,11 @@ import datetime
 import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
+from model_mommy import mommy
 from wagtail.wagtailcore.models import Site
 
 from v1.models.base import CFGOVPage, Feedback
+from v1.models.images import CFGOVImage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
@@ -258,3 +260,21 @@ class TestFeedbackModel(TestCase):
                      "tester@example.com",
                      "{}".format(self.test_feedback.submitted_on.date())]:
             self.assertIn(term, test_csv)
+
+class TestMetaImage(TestCase):
+    def setUp(self):
+        self.social_sharing_image = mommy.prepare(CFGOVImage)
+
+    def test_meta_image_no_images(self):
+        page = mommy.prepare(
+            CFGOVPage,
+            social_sharing_image=None
+        )
+        self.assertIsNone(page.meta_image)
+
+    def test_meta_image(self):
+        page = mommy.prepare(
+            CFGOVPage,
+            social_sharing_image=self.social_sharing_image
+        )
+        self.assertEqual(page.meta_image, page.social_sharing_image)
