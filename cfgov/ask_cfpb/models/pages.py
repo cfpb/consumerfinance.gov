@@ -64,6 +64,16 @@ def get_ask_nav_items(request, current_page):
     ], True
 
 
+def get_ask_breadcrumbs(category=None):
+    breadcrumbs = [{'title': 'Ask CFPB', 'href': '/ask-cfpb/'}]
+    if category:
+        breadcrumbs.append({
+            'title': category.name,
+            'href': '/ask-cfpb/category-{}'.format(category.slug)
+        })
+    return breadcrumbs
+
+
 class AnswerLandingPage(LandingPage):
     """
     Page type for Ask CFPB's landing page.
@@ -183,6 +193,7 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
+            context['breadcrumb_items'] = get_ask_breadcrumbs()
 
         return context
 
@@ -216,7 +227,10 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
         context.update({
             'paginator': paginator,
             'current_page': int(page),
-            'questions': answers})
+            'questions': answers,
+            'breadcrumb_items': get_ask_breadcrumbs(
+                self.ask_category)
+        })
 
         return TemplateResponse(
             request,
@@ -262,8 +276,9 @@ class AnswerResultsPage(CFGOVPage):
         if self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
-            context['about_us'] = get_reusable_text_snippet(
+            context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
+            context['breadcrumb_items'] = get_ask_breadcrumbs()
 
         return context
 
@@ -321,6 +336,7 @@ class AnswerAudiencePage(CFGOVPage):
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
+            context['breadcrumb_items'] = get_ask_breadcrumbs()
 
         return context
 
@@ -446,6 +462,9 @@ class AnswerPage(CFGOVPage):
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
             context['last_edited'] = self.answer_base.last_edited
+            context['breadcrumb_items'] = get_ask_breadcrumbs(
+                self.answer_base.category.first())
+
         return context
 
     def get_template(self, request):
