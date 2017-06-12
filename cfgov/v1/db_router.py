@@ -5,6 +5,7 @@ cfgov_apps = [
     'sessions',
     'admin',
     'contenttypes',
+    'ask_cfpb',
     'v1',
     'flags',
     'taggit',
@@ -14,7 +15,6 @@ cfgov_apps = [
 optional_apps = [
     'countylimits',
     'ratechecker',
-    'ask_cfpb',
 ]
 
 
