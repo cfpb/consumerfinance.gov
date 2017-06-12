@@ -14,6 +14,11 @@ The easiest way to do this is the following steps:
 
 Congrats! The dependency has been updated.
 
+!!! note
+    Shrinkwrapping will ignore development dependencies,
+    so if one of those was updated you will need to run `npm install`
+    after shrinkwrapping to bring your development environment up to date.
+
 ### TIP: Loading sibling projects
 Some projects fit within the cfgov-refresh architecture,
 but are not fully incorporated into the project.
