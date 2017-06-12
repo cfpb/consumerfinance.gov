@@ -67,9 +67,13 @@
     {% if page and page.meta_image %}
         <meta property="og:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
+        <meta property="twitter:image"
+              content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
     {% else %}
         <meta property="og:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
+        <meta property="twitter:image"
+              content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_twitter.png') }}">
     {% endif %}
         <!--  Optional -->
         <meta property="og:description"
@@ -84,21 +88,6 @@
         <!-- Facebook -->
         <meta property="fb:app_id" content="210516218981921">
         {% block og_article_author %}{% endblock %}
-        <!-- Twitter -->
-    {% if page and page.meta_image %}
-        {%- set twitter_image = image(page.meta_image, 'original') %}
-        <meta property="twitter:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ twitter_image.url }}">
-        {#- Display a large twitter card if it's a large image and
-            its height-to-width ratio is approximately 1/2 #}
-        {%- if twitter_image.width >= 1000 and
-            0.4 <= twitter_image.height / twitter_image.width <= 0.6 %}
-        <meta name="twitter:card" content="summary_large_image">
-        {% endif %}
-    {% else %}
-        <meta property="twitter:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_twitter.png') }}">
-    {% endif %}
     <!-- End of Open Graph properties -->
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ static('assets/favicon.ico') }}">
