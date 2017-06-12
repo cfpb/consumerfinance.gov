@@ -260,21 +260,3 @@ class TestFeedbackModel(TestCase):
                      "tester@example.com",
                      "{}".format(self.test_feedback.submitted_on.date())]:
             self.assertIn(term, test_csv)
-
-class TestMetaImage(TestCase):
-    def setUp(self):
-        self.social_sharing_image = mommy.prepare(CFGOVImage)
-
-    def test_meta_image_no_images(self):
-        page = mommy.prepare(
-            CFGOVPage,
-            social_sharing_image=None
-        )
-        self.assertIsNone(page.meta_image)
-
-    def test_meta_image(self):
-        page = mommy.prepare(
-            CFGOVPage,
-            social_sharing_image=self.social_sharing_image
-        )
-        self.assertEqual(page.meta_image, page.social_sharing_image)
