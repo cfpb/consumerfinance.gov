@@ -14,6 +14,7 @@ from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
+from flags.state import flag_state
 
 from ask_cfpb.views import (
     ask_search,
@@ -254,18 +255,6 @@ urlpatterns = [
                 fallback=lambda req: ServeView.as_view()(req, req.path),
                 state=False),
 
-    # If 'CCDB5_RELEASE' is false, include CCDB4 urls.
-    # Otherwise use CCDB5.
-    flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/',
-                include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
-                ),
-                state=False,
-                fallback=TemplateView.as_view(
-                    template_name='ccdb5_landing_page.html'
-                )),
-
     url(r'^oah-api/rates/',
         include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/',
@@ -377,6 +366,16 @@ if 'selfregistration' in settings.INSTALLED_APPS:
     from selfregistration.views import CompanySignup
     pattern = url(r'^company-signup/', CompanySignup.as_view())
     urlpatterns.append(pattern)
+
+# If 'CCDB5_RELEASE' is false, include CCDB4 urls.
+# Otherwise use CCDB5.
+# ccdb_view = include_if_app_enabled(
+#     'complaintdatabase', 'complaintdatabase.urls'
+# )
+# if flag_state('CCDB5_RELEASE'):
+ccdb_view = include_if_app_enabled('ccdb5_ui', 'ccdb5_ui.config.urls')
+urlpatterns.append(url(r'^data-research/consumer-complaints/', ccdb_view))
+
 
 if settings.DEBUG:
     urlpatterns.append(
