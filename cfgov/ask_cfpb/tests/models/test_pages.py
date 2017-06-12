@@ -73,10 +73,8 @@ class AnswerModelTestCase(TestCase):
             SubCategory, name='stub_subcat', parent=self.category, _quantity=3)
         self.category.subcategories.add(self.subcategories[0])
         self.category.save()
-        self.social_image = mommy.prepare(CFGOVImage)
-        self.social_image.save()
-        self.social_image2 = mommy.prepare(CFGOVImage)
-        self.social_image2.save()
+        self.social_image = mommy.make(CFGOVImage)
+        self.social_image2 = mommy.make(CFGOVImage)
         self.next_step = mommy.make(NextStep, title='stub_step')
         page_clean = patch('ask_cfpb.models.pages.CFGOVPage.clean')
         page_clean.start()
@@ -744,24 +742,36 @@ class AnswerModelTestCase(TestCase):
             None)
 
     def test_category_meta_image_empty(self):
+        """ Category page's meta image is undefined if the category has
+        no image
+        """
         category_page = self.create_category_page(ask_category=self.category)
         self.assertIsNone(category_page.meta_image)
 
     def test_category_meta_image(self):
+        """ Category page's meta image is its category's image """
         category = mommy.make(Category, category_image=self.social_image)
         category_page = self.create_category_page(ask_category=category)
         self.assertEqual(category_page.meta_image, self.social_image)
 
     def test_answer_meta_image_empty(self):
-        self.assertIsNone(self.page2.meta_image)
+        """ Answer page's meta image is undefined if social image is
+        not provided
+        """
+        answer = self.prepare_answer()
+        answer.save()
+        page = self.create_answer_page(answer_base=answer)
+        self.assertIsNone(page.meta_image)
 
     def test_answer_meta_image(self):
+        """ Answer page's meta image is its answer's social image """
         answer = self.prepare_answer(social_sharing_image=self.social_image)
         answer.save()
         page = self.create_answer_page(answer_base=answer)
         self.assertEqual(page.meta_image, self.social_image)
 
     def test_answer_meta_image_from_category(self):
+        """ Answer page's meta image is its category's image """
         category = mommy.make(Category, category_image=self.social_image)
         answer = self.prepare_answer()
         answer.save()
@@ -770,6 +780,7 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(page.meta_image, self.social_image)
 
     def test_answer_meta_image_category_override(self):
+        """ Answer page's social image overrides its category's image """
         category = mommy.make(Category, category_image=self.social_image)
         answer = self.prepare_answer(social_sharing_image=self.social_image2)
         answer.save()
