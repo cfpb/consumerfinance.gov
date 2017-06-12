@@ -13,13 +13,14 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
-from flags.urls import flagged_url
+from flags.urls import flagged_url, flagged_urls
 
 from ask_cfpb.views import (
     ask_search,
     ask_autocomplete,
     print_answer,
-    view_answer
+    view_answer,
+    redirect_ask_search
 )
 from core.views import ExternalURLNoticeView
 from legacy.views import dbrouter_shortcut, token_provider
@@ -378,6 +379,7 @@ if 'selfregistration' in settings.INSTALLED_APPS:
     pattern = url(r'^company-signup/', CompanySignup.as_view())
     urlpatterns.append(pattern)
 
+
 if settings.DEBUG:
     urlpatterns.append(
         url(r'^test-fixture/$',
@@ -406,53 +408,95 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-if settings.DEPLOY_ENVIRONMENT != 'build':
-    kb_patterns = [
-        url(r'^(?i)askcfpb/',
-            include_if_app_enabled(
-                'knowledgebase', 'knowledgebase.urls')),
-        url(r'^es/obtener-respuestas/',
-            include_if_app_enabled(
-                'knowledgebase', 'knowledgebase.babel_urls')),
-    ]
-    urlpatterns += kb_patterns
 
+# New Spanish Ask CFPB URLs
+# These are defined here so they can be include()ed by the feature flag below
+ask_cfpb_spanish_patterns = [
+    url(r'^c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',
+        RedirectView.as_view(
+            url='/es/obtener-respuestas/slug-es-%(ask_id)s',
+            permanent=True)),
+    url(r'^([-\w]{1,244})-(es)-(\d{1,6})/?$',
+        view_answer,
+        name='ask-spanish-answer'),
+    url(r'^([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',  # noqa: E501
+        print_answer,
+        name='ask-spanish-print-answer'),
+    url(r'^buscar/$',
+        ask_search,
+        kwargs={'language': 'es'},
+        name='ask-search-es'),
+    url(r'^buscar/(?P<as_json>json)/$',  # noqa: E501
+        ask_search,
+        kwargs={'language': 'es'},
+        name='ask-search-es-json'),
+    url(r'^api/autocomplete/$',
+        ask_autocomplete,
+        kwargs={'language': 'es'},
+        name='ask-autocomplete-es'),
 
-if settings.DEPLOY_ENVIRONMENT == 'build':
-    ask_patterns = [
-        url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
-            view_answer,
-            name='ask-english-answer'),
-        url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
-            view_answer,
-            name='ask-spanish-answer'),
-        url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',  # noqa: E501
-            print_answer,
-            name='ask-spanish-print-answer'),
-        url(r'^(?i)ask-cfpb/search/$',
-            ask_search,
-            name='ask-search-en'),
-        url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
-            ask_search,
-            name='ask-search-en-json'),
-        url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
-            ask_search,
-            name='ask-search-es'),
-        url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-            ask_search,
-            name='ask-search-es-json'),
-        url(r'^(?i)ask-cfpb/api/autocomplete/$',
-            ask_autocomplete, name='ask-autocomplete-en'),
-        url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-            ask_autocomplete, name='ask-autocomplete-es'),
+    # Answer /es/obtener-respuestas landing page with Wagtail.
+    # This is necessary because the pattern is shared with the old
+    # knowledgebase urls and we have to explicitly offer it as an alternative
+    # in the flagged_url() for /es/obtener-respuestas below.
+    # Once the feature flag is removed this will be unnecessary.
+    url(r'^$',
+        lambda req: ServeView.as_view()(req, req.path)),
+]
+
+# New English Ask CFPB URL redirects
+# These are defined here so they can be include()ed by the feature flag below.
+ask_cfpb_english_redirects = [
+    url(r'^$',
+        RedirectView.as_view(
+            url='/ask-cfpb/',
+            permanent=True)),
+    url(r'^(?P<ask_id>\d+)/(.*)$',
+        RedirectView.as_view(
+            url='/ask-cfpb/slug-en-%(ask_id)s',
+            permanent=True)),
+    url(r'^search$', redirect_ask_search),
+]
+
+# Flagged includes for either old knowledgebase Ask CFPB URLs or new ask_cfpb
+# URLs. In this way the shared URLs askcfpb/ and es/obtener-respuestas/ will
+# either serve the new ask_cfpb or will fallback on the old knowledgebase.
+flagged_kb_patterns = [
+    flagged_url('WAGTAIL_ASK_CFPB',
+                r'^(?i)askcfpb/',
+                include(ask_cfpb_english_redirects),
+                fallback=include_if_app_enabled(
+                    'knowledgebase', 'knowledgebase.urls')),
+    flagged_url('WAGTAIL_ASK_CFPB',
+                r'^es/obtener-respuestas/',
+                include(ask_cfpb_spanish_patterns),
+                fallback=include_if_app_enabled(
+                    'knowledgebase', 'knowledgebase.babel_urls')),
+]
+urlpatterns += flagged_kb_patterns
+
+# New English URL patterns unique to the ask_cfpb app and not shared with the
+# knowledgebase app.
+with flagged_urls('WAGTAIL_ASK_CFPB') as _url:
+    # New English Ask CFPB URLs
+    ask_cfpb_patterns = [
+        _url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+             view_answer,
+             name='ask-english-answer'),
+        _url(r'^(?i)ask-cfpb/search/$',
+             ask_search,
+             name='ask-search-en'),
+        _url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
+             ask_search,
+             name='ask-search-en-json'),
+        _url(r'^(?i)ask-cfpb/api/autocomplete/$',
+             ask_autocomplete, name='ask-autocomplete-en'),
     ]
-    urlpatterns += ask_patterns
+    urlpatterns += ask_cfpb_patterns
 
 
 # Catch remaining URL patterns that did not match a route thus far.
-
 urlpatterns.append(url(r'', include(wagtailsharing_urls)))
-# urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
 
 def handle_error(code, request):

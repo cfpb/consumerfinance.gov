@@ -1,13 +1,15 @@
 from __future__ import unicode_literals
 import json
+import re
 from urlparse import urljoin
 
 from bs4 import BeautifulSoup as bs
-from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponse, Http404, JsonResponse
 from haystack.query import SearchQuerySet
 from haystack.inputs import Clean
 from wagtail.wagtailcore.models import Site
+
+from django.http import HttpResponse, Http404, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 
 from ask_cfpb.models import (
     Answer,
@@ -131,3 +133,23 @@ def ask_autocomplete(request, language='en'):
                 'url': result.url}
                for result in sqs[:20]]
     return JsonResponse(results, safe=False)
+
+
+def redirect_ask_search(request):
+    # Get selected facets
+    selected_facets = request.GET.get('selected_facets')
+    if selected_facets is None:
+        raise Http404
+
+    # Get the category
+    category_match = re.match(r'category_exact:(?P<category>[^&]+)',
+                              selected_facets)
+    if category_match is None:
+        raise Http404
+
+    category = category_match.groupdict().get('category')
+    if category is None:
+        raise Http404
+
+    return redirect('/ask-cfpb/category-{category}'.format(
+                    category=category), permanent=True)

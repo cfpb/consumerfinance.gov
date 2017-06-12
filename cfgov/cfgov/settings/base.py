@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'storages',
+    'ask_cfpb',
     'data_research',
     'v1',
     'core',
@@ -77,9 +78,6 @@ INSTALLED_APPS = (
     'jobmanager',
     'ccdb5'
 )
-
-if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
@@ -579,7 +577,7 @@ FLAGS = {
     # Migration of Ask CFPB to Wagtail
     # When enabled, Ask CFPB is served from Wagtail
     'WAGTAIL_ASK_CFPB': {
-        'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
+        'boolean': True if DEPLOY_ENVIRONMENT in ['build', 'beta'] else False
     },
 
     # The next version of the public consumer complaint database
