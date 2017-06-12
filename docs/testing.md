@@ -2,19 +2,36 @@
 
 ## Quick start:
 
-Many of our browser tests have been rewritten as Python unit tests. The remaining rely on data that is not generated during testing, so please note many of these tests might fail if you do not have a production database locally. If you do, open a new Terminal window or tab and change to the project directory,
+To run browser tests, open a new Terminal window or tab and change to the project directory,
 then tell gulp to start the tests:
 
 ```sh
 gulp build
-gulp test:acceptance --suite=integration
-gulp test:acceptance --suite=content
-
+gulp test:acceptance ( tox -e acceptance can be run as well )
 ```
 
-If you want to test a server other than your local instance,
-edit the `HTTP_HOST` and `HTTP_PORT` values in your `.env` file
-and reload the settings with `cd .. && cd cfgov-refresh`. Type `y` if prompted.
+There are several options you can pass to run a particular suite of tests,
+to run a particular list of features,
+and/or to run it in "fast" mode:
+
+```sh
+gulp test:acceptance --suite=wagtail-admin ( runs just the wagtail-admin suite )
+gulp test:acceptance --specs=multi-select.feature ( runs just the multi-select feature )
+gulp test:acceptance --tags=@mobile ( runs all scenarios tagged with @mobile )
+gulp test:acceptance --fast ( runs the tests without recreating the virtual environment )
+```
+
+The same options can be used with tox (--omitted):
+
+```sh
+tox -e acceptance suite=wagtail-admin
+tox -e acceptance specs=multi-select.feature
+tox -e acceptance tags=@mobile
+tox -e acceptance-fast
+```
+
+These tests will run on their own server; you do not need to be running your development server.
+
 
 ## Sauce Connect - send tests to the cloud
 
@@ -88,32 +105,11 @@ A number of command-line arguments can be set to test particular configurations:
 
 ## Tests
 
-Tests are organized into suites under the `test/browser_tests/spec_suites/` directory. Any new tests should be added to an existing suite or placed into a new suite directory. An example test for our the-bureau example page above would be:
-
-```js
-var TheBureauPage = require( '../../page_objects/page_the-bureau.js' );
-
-describe( 'Beta The Bureau Page', function() {
-  var page;
-
-  beforeEach( function() {
-    page = new TheBureauPage();
-    page.get();
-  } );
-
-  it( 'should properly load in a browser', function() {
-    expect( page.pageTitle() ).toBe( 'The Bureau' );
-  } );
-
-  it( 'should include 3 bureau missions titled Educate, Enforce, Empower', function() {
-    expect( page.missions.count() ).toEqual( 3 );
-    expect( page.missions.getText() ).toEqual[ 'Educate', 'Enforce', 'Empower' ];
-  } );
-} );
-```
+Tests are organized into suites under the `test/browser_tests/cucumber/features` directory. Any new tests should be added to an existing suite (e.g. "default"), or placed into a new suite directory. All tests start with writing a `.feature` spec in one of these suites, and then adding corresponding step definitions, found in `test/browser_tests/cucumber/step_definitions`.
 
 ## Further reading
 
+- [Cucumber features](https://github.com/cucumber/cucumber/wiki/Feature-Introduction)
 - [Protractor](http://angular.github.io/protractor/#/)
 - [Select elements on a page](http://www.seleniumhq.org/docs/03_webdriver.jsp#locating-ui-elements-webelements)
 - [Writing Jasmin expectations](http://jasmine.github.io/2.0/introduction.html#section-Expectations).
