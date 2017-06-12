@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import json
+# import re
 from urlparse import urljoin
 
 from bs4 import BeautifulSoup as bs
@@ -86,6 +87,8 @@ def view_answer(request, slug, language, answer_id):
 
 
 def ask_search(request, language='en', as_json=False):
+    if 'selected_facets' in request.GET:
+        return redirect_ask_search(request, language=language)
     language_map = {
         'en': {'slug': 'ask-cfpb-search-results',
                'query': SearchQuerySet().models(EnglishAnswerProxy)},
@@ -131,3 +134,38 @@ def ask_autocomplete(request, language='en'):
                 'url': result.url}
                for result in sqs[:20]]
     return JsonResponse(results, safe=False)
+
+
+def redirect_ask_search(request, language='en'):
+    """
+    Catch old English pages built via query strings and
+    redirect them to category pages if we can. If the query string
+    has a 'q' query, we'll run that search.
+    """
+
+    cat_string = 'category_exact:'  # the facet prefix for categories
+    if request.GET.get('q'):
+        querystring = request.GET.get('q')
+        if not querystring:
+            raise Http404
+        return redirect(
+            '/ask-cfpb/search/?q={query}'.format(
+                query=querystring, permanent=True))
+    else:
+        facets = request.GET.getlist('selected_facets')
+        if not facets:
+            raise Http404
+        # Get the category, if there is one
+        for facet in facets:
+            if cat_string in facet:
+                category = facet.replace(cat_string, '')
+        if not category:
+            raise Http404
+        if language == 'en':
+            return redirect(
+                '/ask-cfpb/category-{category}'.format(
+                    category=category), permanent=True)
+        elif language == 'es':
+            return redirect(
+                '/es/obtener-respuestas/categoria-{category}'.format(
+                    category=category), permanent=True)
