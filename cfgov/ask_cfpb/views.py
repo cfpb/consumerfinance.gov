@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 import json
-# import re
 from urlparse import urljoin
 
 from bs4 import BeautifulSoup as bs
@@ -161,11 +160,11 @@ def redirect_ask_search(request, language='en'):
                 category = facet.replace(cat_string, '')
         if not category:
             raise Http404
-        if language == 'en':
-            return redirect(
-                '/ask-cfpb/category-{category}'.format(
-                    category=category), permanent=True)
-        elif language == 'es':
+        if language == 'es':
             return redirect(
                 '/es/obtener-respuestas/categoria-{category}'.format(
+                    category=category), permanent=True)
+        else:
+            return redirect(
+                '/ask-cfpb/category-{category}'.format(
                     category=category), permanent=True)
