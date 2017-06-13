@@ -117,13 +117,6 @@
     the head, then file an issue or PR to discuss including it.
 -->
 
-    {# TODO: jQuery is provided in the head to satisfy
-             Google Tag Manager (GTM) & Optimize requirements.
-             Ideally GTM would handle its own dependency management
-             and initializing jQuery could be moved to the footer.
-             (Ideally, also, we will move away from jQuery entirely.) #}
-    <script src="{{ static('js/jquery.min.js') }}"></script>
-
     {% if flag_enabled('AB_TESTING', request) %}
     <!-- Google Optimize page-hiding snippet -->
     <style>
