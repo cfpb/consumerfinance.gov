@@ -1,6 +1,6 @@
 {% extends 'layout-side-nav.html' %}
 
-{% import 'molecules/featured-content.html' as featured_content %}
+{% import 'organisms/featured-content.html' as featured_content %}
 {% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
 
 {% block content_main_modifiers -%}
@@ -11,7 +11,8 @@
     {% for block in page.header %}
         {% if 'featured_content' in block.block_type %}
             <div class="block
-                        block__flush-sides">
+                        block__flush-sides
+                        block__border">
                 {{ featured_content.render(block.value) }}
             </div>
         {% elif loop.index == 1 %}

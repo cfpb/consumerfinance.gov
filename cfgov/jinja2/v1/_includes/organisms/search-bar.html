@@ -21,6 +21,8 @@
 
    value.additional_classes   Additional classes for the search bar.
 
+   value.autocomplete         Whether autocomplete will be activated for search.
+
    ========================================================================== #}
 
 {% macro render( value ) %}
@@ -36,33 +38,27 @@
                 block__bg-extend-{{ value.position }}
               {% endif %}
               {{ value.additional_classes }}" >
-    {% if position == 'full' %}
-    <div class="content_wrapper">
-    {% endif %}
-        <form method="get" action="{{ value.action }}" class="content-l">
-            {% if value.label %}
-                <div class="o-search-bar_label o-search-bar_col">
-                    <h4 class="u-mb0">
-                        {{ value.label | safe }}
-                    </h4>
+    <form method="get" action="{{ value.action }}" class="content-l">
+        {% if value.label %}
+        <div class="o-search-bar_label o-search-bar_col">
+            <h4 class="u-mb0">
+                {{ value.label | safe }}
+            </h4>
+        </div>
+        {% endif %}
+        <div class="o-search-bar_input o-search-bar_col">
+            <div class="input-with-btn input-with-btn__bar">
+                <div class="input-with-btn_input {% if value.autocomplete %} m-autocomplete{% endif %}">
+                    <input type="text" name="q" id="q" >
                 </div>
-            {% endif %}
-            <div class="o-search-bar_input o-search-bar_col">
-                <div class="input-with-btn input-with-btn__bar">
-                    <div class="input-with-btn_input">
-                        <input type="text" name="q" id="q" >
-                    </div>
-                    <div class="input-with-btn_btn">
-                        <button class="btn" name="btnSearch" id="btnSearch">
-                            Search
-                        </button>
-                    </div>
+                <div class="input-with-btn_btn">
+                    <button class="btn" name="btnSearch" id="btnSearch" type="submit">
+                        Search
+                    </button>
                 </div>
             </div>
-        </form>
-    {% if value.position == 'full' %}
-    </div><!-- .content_wrapper -->
-    {% endif %}
+        </div>
+    </form>
 </aside>
 
 {% endmacro %}

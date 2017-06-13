@@ -56,7 +56,7 @@ INSTALLED_APPS = (
     'wagtailsharing',
     'flags',
     'haystack',
-
+    'ask_cfpb',
     'overextends',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,9 +78,6 @@ INSTALLED_APPS = (
     'ccdb5'
 )
 
-if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('ask_cfpb',)
-
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
@@ -99,6 +96,7 @@ OPTIONAL_APPS = [
     {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'picard', 'apps': ('picard',)},
+    {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -269,14 +267,6 @@ SHEER_ELASTICSEARCH_INDEX = os.environ.get('SHEER_ELASTICSEARCH_INDEX', 'content
 ELASTICSEARCH_BIGINT = 50000
 
 MAPPINGS = PROJECT_ROOT.child('es_mappings')
-SHEER_PROCESSORS = \
-    {
-        "pages": {
-            "url": "$WORDPRESS/api/get_posts/?post_type=page",
-            "processor": "processors.wordpress_page",
-            "mappings": MAPPINGS.child("pages.json")
-        },
-    }
 
 SHEER_ELASTICSEARCH_SETTINGS = \
     {
@@ -313,25 +303,9 @@ PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/pyth
 #LEGACY APPS
 
 STATIC_VERSION = ''
-LEGACY_APP_URLS={'comparisontool':True,
-                 'agreements':True,
-                 'knowledgebase':True,
-                 'selfregistration':True,
-                 'hud_api_replace':True,
-                 'retirement_api':True,
-                 'paying_for_college':True,
-                 'complaint':True,
-                 'complaintdatabase':True,
-                 'ratechecker':True,
-                 'regcore':True,
-                 'regulations':True,
-                 'countylimits':True,
-                 'noticeandcomment':True}
 
 # DJANGO HUD API
-GOOGLE_MAPS_API_PRIVATE_KEY = os.environ.get('GOOGLE_MAPS_API_PRIVATE_KEY')
-GOOGLE_MAPS_API_CLIENT_ID = os.environ.get('GOOGLE_MAPS_API_CLIENT_ID')
-DJANGO_HUD_NOTIFY_EMAILS = os.environ.get('DJANGO_HUD_NOTIFY_EMAILS')
+DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
 # in seconds, 2592000 == 30 days. Google allows no more than a month of caching
 DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
@@ -339,7 +313,7 @@ MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
 
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'ENGINE': 'haystack.backends.elasticsearch2_backend.Elasticsearch2SearchEngine',
         'URL': SHEER_ELASTICSEARCH_SERVER,
         'INDEX_NAME': os.environ.get('HAYSTACK_ELASTICSEARCH_INDEX', SHEER_ELASTICSEARCH_INDEX+'_haystack'),
     },
@@ -605,9 +579,7 @@ FLAGS = {
 
     # Migration of Ask CFPB to Wagtail
     # When enabled, Ask CFPB is served from Wagtail
-    'WAGTAIL_ASK_CFPB': {
-        'boolean': DEPLOY_ENVIRONMENT in ['build']
-    },
+    'WAGTAIL_ASK_CFPB': {},
 
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},

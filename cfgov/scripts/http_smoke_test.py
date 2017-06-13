@@ -30,7 +30,7 @@ parser.add_argument(
 
 FULL = False
 TIMEOUT = 10
-BASE = 'http://www.consumerfinance.gov'
+BASE = 'https://www.consumerfinance.gov'
 
 FULL_RUN = [
     '/',
@@ -59,10 +59,10 @@ FULL_RUN = [
     '/mortgagehelp/',
     '/fair-lending/',
     '/sending-money/',
-    '/your-money-your-goals/',
+    '/educational-resources/your-money-your-goals/',
     '/adult-financial-education/',
     '/educational-resources/youth-financial-education/',
-    '/library-resources/',
+    '/educational-resources/library-resources/',
     '/educational-resources/resources-for-tax-preparers/',
     '/educational-resources/money-as-you-grow/',
     '/empowerment/',
@@ -102,14 +102,15 @@ FULL_RUN = [
 SHORT_RUN = [
     '/',
     '/es/',
-    '/complaint/',
+    # ('/es/obtener-respuestas/buscar'
+    #  '?selected_facets=category_exact:enviar-dinero'),'/complaint/',
     '/learnmore/',
+    # '/complaint/'
     # '/askcfpb/',
     '/askcfpb/search',
     '/your-story/',
     '/students/',
     '/find-a-housing-counselor/',
-    '/older-americans/',
     # '/servicemembers/',
     '/consumer-tools/auto-loans/',
     '/paying-for-college/',
@@ -118,46 +119,50 @@ SHORT_RUN = [
     '/owning-a-home/',
     '/retirement/before-you-claim/',
     # '/retirement/before-you-claim/es/',
-    '/sending-money/',
+    # '/consumer-tools/credit-reports-and-scores/',
+    # '/consumer-tools/debt-collection/',
+    # '/consumer-tools/prepaid-cards/',
     '/know-before-you-owe/',
     # '/mortgagehelp/',
     '/fair-lending/',
-    # '/your-money-your-goals/',
+    '/sending-money/',
+    # '/educational-resources/your-money-your-goals/',
     '/adult-financial-education/',
-    # '/youth-financial-education/',
-    '/library-resources/',
-    # '/tax-preparer-resources/',
-    '/money-as-you-grow/',
+    # '/educational-resources/youth-financial-education/',
+    '/educational-resources/library-resources/',
+    # '/educational-resources/tax-preparer-resources/',
+    '/educational-resources/money-as-you-grow/',
     # '/empowerment/',
-    # '/managing-someone-elses-money/',
+    '/educational-resources/resources-for-older-adults/',
     # '/data-research/',
     # '/data-research/research-reports/',
     # '/data-research/cfpb-research-conference/',
     '/data-research/consumer-complaints/',
     '/data-research/hmda/',
+    # '/data-research/consumer-credit-trends/',
     # '/data-research/credit-card-data/',
+    # '/data-research/cfpb-researchers/',
     '/policy-compliance/',
     # '/policy-compliance/rulemaking/',
     # '/policy-compliance/guidance/',
+    # '/policy-compliance/guidance/implementation-guidance/',
     # '/policy-compliance/enforcement/',
     # '/policy-compliance/notice-opportunities-comment/',
     # '/policy-compliance/amicus/',
-    # '/policy-compliance/guidance/implementation-guidance/',
     '/about-us/',
-    '/about-us/careers/current-openings/',
     # '/about-us/the-bureau/',
     # '/about-us/budget-strategy/',
     # '/about-us/payments-harmed-consumers/',
     # '/about-us/blog/',
     '/about-us/newsroom/',
     # '/about-us/events/',
+    '/activity-log/',
     # '/about-us/careers/',
+    '/about-us/careers/current-openings/',
     # '/about-us/doing-business-with-us/',
     # '/about-us/advisory-groups/',
     # '/about-us/project-catalyst/',
     # '/about-us/contact-us/',
-    # '/about-us/the-bureau/',
-    '/activity-log/',
 ]
 
 
@@ -224,6 +229,7 @@ def check_urls(base, full=False):
 
     logger.info("\x1B[32mAll URLs return 200. No smoke!\x1B[0m")
     return True
+
 
 if __name__ == '__main__':
     args = parser.parse_args()

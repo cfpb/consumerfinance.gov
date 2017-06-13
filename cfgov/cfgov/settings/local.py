@@ -41,8 +41,8 @@ if not COLLECTSTATIC:
                 'HOST': os.environ.get('MYSQL_HOST', ''),
                 'PORT': os.environ.get('MYSQL_PORT', ''),
                 'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
-            },
-        }
+                },
+            }
 
 STATIC_ROOT = REPOSITORY_ROOT.child('collectstatic')
 

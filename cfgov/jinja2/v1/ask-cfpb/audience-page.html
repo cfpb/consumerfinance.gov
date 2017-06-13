@@ -1,10 +1,22 @@
 {% extends 'layout-side-nav.html' %}
 {% import 'atoms/partially-styled-link.html' as partially_styled_link with context %}
 {% import 'molecules/pagination.html' as pagination with context %}
+{% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block content_modifiers -%}
     {{ super() }} content__hide-horizontal-overflow ask-cfpb-page ask-cfpb-page__audience
 {%- endblock %}
+
+{% block banner_top %}
+    {% if about_us %}
+        {% set value = {
+            'border_bottom': True,
+            'additional_classes': ' ask-cfpb-banner',
+            'content': about_us.text
+        } %}
+        {% include 'templates/content-banner.html' with context %}
+    {% endif %}
+{% endblock %}
 
 {% block content_main_modifiers -%}
     {{ super() }} content__flush-bottom
@@ -29,8 +41,15 @@
 	</div>
 
 	<div class="block block__sub">
-    	{{ pagination.render( paginator.num_pages, current_page, '', index ) }}
-	</div> 
+    	{{ pagination.render( paginator.num_pages, current_page, '', index, 'Previous', 'Next' ) }}
+	</div>  
+
+  {% if disclaimer %}
+  <div class="block ask-disclaimer">
+      {{ disclaimer.text | safe }}
+  </div>
+  {% endif %}
 </section>
+{{ ask_search_bar.render( 'right' ) }}
 
 {% endblock %}

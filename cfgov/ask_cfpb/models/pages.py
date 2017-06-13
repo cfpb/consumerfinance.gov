@@ -24,9 +24,13 @@ from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
+from v1.models.snippets import ReusableText
+
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
+ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
+DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
 
 
 def get_valid_spanish_tags():
@@ -37,6 +41,14 @@ def get_valid_spanish_tags():
     except (IndexError, AttributeError):  # ES not available; go to plan B
         valid_spanish_tags = AnswerTagProxy.valid_spanish_tags()
     return valid_spanish_tags
+
+
+def get_reusable_text_snippet(snippet_title):
+    try:
+        return ReusableText.objects.get(
+            title=snippet_title)
+    except ReusableText.DoesNotExist:
+        pass
 
 
 def get_ask_nav_items(request, current_page):
@@ -50,6 +62,16 @@ def get_ask_nav_items(request, current_page):
         }
         for cat in Category.objects.all()
     ], True
+
+
+def get_ask_breadcrumbs(category=None):
+    breadcrumbs = [{'title': 'Ask CFPB', 'href': '/ask-cfpb/'}]
+    if category:
+        breadcrumbs.append({
+            'title': category.name,
+            'href': '/ask-cfpb/category-{}'.format(category.slug)
+        })
+    return breadcrumbs
 
 
 class AnswerLandingPage(LandingPage):
@@ -69,11 +91,16 @@ class AnswerLandingPage(LandingPage):
         from ask_cfpb.models import Category, Audience
         context = super(AnswerLandingPage, self).get_context(request)
         context['categories'] = Category.objects.all()
-        context['audiences'] = [
-            {'text': audience.name,
-             'url': '/ask-cfpb/audience-{}'.format(
-                    slugify(audience.name))}
-            for audience in Audience.objects.all()]
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['audiences'] = [
+                {'text': audience.name,
+                 'url': '/ask-cfpb/audience-{}'.format(
+                        slugify(audience.name))}
+                for audience in Audience.objects.all().order_by('name')]
         return context
 
     def get_template(self, request):
@@ -83,9 +110,9 @@ class AnswerLandingPage(LandingPage):
         return 'ask-cfpb/landing-page.html'
 
 
-class AnswerCategoryPage(CFGOVPage):
+class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
     """
-    Page type for Ask CFPB parent-category pages.
+    A routable page type for Ask CFPB category pages and their subcategories.
     """
     from ask_cfpb.models import Answer, Audience, Category, SubCategory
 
@@ -97,6 +124,12 @@ class AnswerCategoryPage(CFGOVPage):
         null=True,
         on_delete=models.PROTECT,
         related_name='category_page')
+    ask_subcategory = models.ForeignKey(
+        SubCategory,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        related_name='subcategory_page')
     content_panels = CFGOVPage.content_panels + [
         FieldPanel('ask_category', Category),
         StreamFieldPanel('content'),
@@ -146,20 +179,68 @@ class AnswerCategoryPage(CFGOVPage):
                 40, truncate=' ...')
         audiences = self.Audience.objects.filter(
             pk__in=audience_ids).values('id', 'name')
-        page = request.GET.get('page', 1)
-        paginator = Paginator(answers, 20)
         context.update({
             'answers': answers,
             'audiences': audiences,
             'facet_map': facet_map,
             'choices': subcats,
-            'current_page': int(page),
-            'paginator': paginator,
-            'questions': paginator.page(page),
             'results_count': answers.count(),
             'get_secondary_nav_items': get_ask_nav_items
         })
+
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['breadcrumb_items'] = get_ask_breadcrumbs()
+
         return context
+
+    # Returns an image for the page's meta Open Graph tag
+    @property
+    def meta_image(self):
+        return self.ask_category.category_image
+
+    @route(r'^$')
+    def category_page(self, request):
+        context = self.get_context(request)
+        page = request.GET.get('page', 1)
+        paginator = Paginator(context.get('answers'), 20)
+        context.update({
+            'paginator': paginator,
+            'current_page': int(page),
+            'questions': paginator.page(page),
+        })
+
+        return TemplateResponse(
+            request,
+            self.get_template(request),
+            context)
+
+    @route(r'^(?P<subcat>[^/]+)/$')
+    def subcategory_page(self, request, **kwargs):
+        self.ask_subcategory = self.SubCategory.objects.get(
+            slug=kwargs.get('subcat'))
+        # self.slug = self.ask_subcategory.slug
+        context = self.get_context(request)
+        answers = self.ask_subcategory.answer_set.order_by(
+            '-pk').values(
+            'id', 'question', 'slug')
+        page = request.GET.get('page', 1)
+        paginator = Paginator(answers, 20)
+        context.update({
+            'paginator': paginator,
+            'current_page': int(page),
+            'questions': answers,
+            'breadcrumb_items': get_ask_breadcrumbs(
+                self.ask_category)
+        })
+
+        return TemplateResponse(
+            request,
+            self.get_template(request),
+            context)
 
 
 class AnswerResultsPage(CFGOVPage):
@@ -196,6 +277,13 @@ class AnswerResultsPage(CFGOVPage):
         context['results'] = paginator.page(page)
         context['results_count'] = len(self.answers)
         context['get_secondary_nav_items'] = get_ask_nav_items
+
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['breadcrumb_items'] = get_ask_breadcrumbs()
 
         return context
 
@@ -234,10 +322,9 @@ class AnswerAudiencePage(CFGOVPage):
             js['template'] += ['secondary-navigation.js']
 
     def get_context(self, request, *args, **kwargs):
-        from .django import Answer
+        from ask_cfpb.models import Answer
         context = super(AnswerAudiencePage, self).get_context(request)
-        page_audience = self.ask_audience.name
-        answers = Answer.objects.filter(audiences__name__exact=page_audience)
+        answers = Answer.objects.filter(audiences__id=self.ask_audience.id)
         page = request.GET.get('page', 1)
         paginator = Paginator(answers, 20)
 
@@ -248,6 +335,13 @@ class AnswerAudiencePage(CFGOVPage):
             'results_count': len(answers),
             'get_secondary_nav_items': get_ask_nav_items
         })
+
+        if self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['breadcrumb_items'] = get_ask_breadcrumbs()
 
         return context
 
@@ -350,9 +444,14 @@ class AnswerPage(CFGOVPage):
         context = super(AnswerPage, self).get_context(request)
         context['related_questions'] = self.answer_base.related_questions.all()
         context['category'] = self.answer_base.category.first()
-        context['subcategories'] = self.answer_base.subcategory.all()
         context['description'] = self.snippet if self.snippet \
             else Truncator(self.answer).words(40, truncate=' ...')
+        subcategories = []
+        for subcat in self.answer_base.subcategory.all():
+            subcategories.append(subcat)
+            for related in subcat.related_subcategories.all():
+                subcategories.append(related)
+        context['subcategories'] = set(subcategories)
         context['audiences'] = [
             {'text': audience.name,
              'url': '/ask-cfpb/audience-{}'.format(
@@ -361,6 +460,16 @@ class AnswerPage(CFGOVPage):
         if self.language == 'es':
             context['tags_es'] = [tag for tag in self.answer_base.tags_es
                                   if tag in get_valid_spanish_tags()]
+
+        elif self.language == 'en':
+            context['about_us'] = get_reusable_text_snippet(
+                ABOUT_US_SNIPPET_TITLE)
+            context['disclaimer'] = get_reusable_text_snippet(
+                DISCLAIMER_SNIPPET_TITLE)
+            context['last_edited'] = self.answer_base.last_edited
+            context['breadcrumb_items'] = get_ask_breadcrumbs(
+                self.answer_base.category.first())
+
         return context
 
     def get_template(self, request):
@@ -388,3 +497,14 @@ class AnswerPage(CFGOVPage):
                 return _("redirected")
         else:
             return super(AnswerPage, self).status_string
+
+    # Returns an image for the page's meta Open Graph tag
+    @property
+    def meta_image(self):
+        if self.answer_base.social_sharing_image:
+            return self.answer_base.social_sharing_image
+
+        if not self.answer_base.category.exists():
+            return None
+
+        return self.answer_base.category.first().category_image

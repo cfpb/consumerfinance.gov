@@ -20,7 +20,7 @@
         <div class="wrapper content_wrapper">
             <div class="content-l">
                 <section class="ask-categories">
-                    <h2 class="u-show-on-mobile">Browse questions by category</h2>
+                    <h2 class="u-show-on-mobile u-mt30">Browse questions by category</h2>
                     <ul class="u-show-on-mobile category_list list list__links u-mb0">
                         {% for category in categories %}
                             <li class="list_item">
@@ -51,7 +51,7 @@
                                                 </a>
                                             </h2>
 
-                                            <ul class="list question_list u-mt10 u-mb30">
+                                            <ul class="list question_list list__flush-left u-mt10 u-mb30">
                                                 {% for a in category.featured_answers() %}
                                                 <li class="list_item">
                                                 {{ partially_styled_link.render( {'plain_text': a.question, 'underlined_text': 'Read answer', 'url': slugurl(a.slug)} ) }}
@@ -79,6 +79,12 @@
                         <div class="block block__sub">
                             {{ tags.render( {'links': audiences}, '', is_wagtail=True ) }}
                         </div>
+
+                        {% if disclaimer %}
+                        <div class="block block__sub ask-disclaimer">
+                            {{ disclaimer.text | safe }}
+                        </div>
+                        {% endif %}
                     </div>
 
                     
@@ -87,6 +93,21 @@
                 <section class="ask-search">
                     {{ ask_search_bar.render() }}
                 </section>
+                {% if about_us %}
+                <div class="block 
+                            block__bg
+                            block__flush-top
+                            block__flush-bottom
+                            ask-cfpb-banner">
+                    
+                    {{ parse_links( about_us.text )|safe }}
+                   
+                </div>
+                {% endif %}
+                
+
+                
+
             </div>
         </div>
     </main>

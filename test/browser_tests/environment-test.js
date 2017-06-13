@@ -1,7 +1,7 @@
 'use strict';
 
-var envvars = require( '../../config/environment' ).envvars;
-var specsRoot = 'cucumber/features/';
+const envvars = require( '../../config/environment' ).envvars;
+const specsRoot = 'cucumber/features/';
 
 module.exports = {
   // A base URL for your application under test.
@@ -10,7 +10,14 @@ module.exports = {
   // The base path where the spec suites are located.
   specsBasePath: specsRoot + '**/*',
 
-  suites: {},
+  suites: {
+    'default': [
+      specsRoot + 'suites/default/*.feature'
+    ],
+    'wagtail-admin': [
+      'cucumber/features/suites/wagtail-admin/*.feature'
+    ]
+  },
 
   // The default window width and height.
   // Can be overridden with the --windowSize=w,h command-line flag.
