@@ -39,8 +39,8 @@ FULL_RUN = [
      '?selected_facets=category_exact:enviar-dinero'),
     '/learnmore/',
     '/complaint/',
-    '/askcfpb/',
-    '/askcfpb/search',
+    # '/askcfpb/',  # on hold
+    # '/askcfpb/search',  # on hold
     '/your-story/',
     '/students/',
     '/find-a-housing-counselor/',
