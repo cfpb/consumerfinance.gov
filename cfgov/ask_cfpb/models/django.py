@@ -433,10 +433,11 @@ class Answer(models.Model):
             get_feedback_stream_value(_page),
             is_lazy=True)
         _page.save_revision(user=self.last_user)
-        base_page.refresh_from_db()
-        base_page.has_unpublished_changes = True
-        base_page.save()
-        return base_page
+        # _page.save()
+        # base_page.refresh_from_db()
+        # base_page.has_unpublished_changes = True
+        # base_page.save()
+        return _page
 
     def create_or_update_pages(self):
         counter = 0

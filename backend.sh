@@ -32,7 +32,7 @@ install() {
   elif [ "$cli_flag" = "test" ]; then
     pip install -r ./requirements/test.txt
   elif [ "$cli_flag" = "production" ]; then
-    pip install -r ./requirements/base.txt
+    pip install -r ./requirements/production.txt
   fi
 }
 

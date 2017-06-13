@@ -20,7 +20,7 @@
         <div class="wrapper content_wrapper">
             <div class="content-l">
                 <section class="ask-categories">
-                    <h2 class="u-show-on-mobile">Browse questions by category</h2>
+                    <h2 class="u-show-on-mobile u-mt30">Browse questions by category</h2>
                     <ul class="u-show-on-mobile category_list list list__links u-mb0">
                         {% for category in categories %}
                             <li class="list_item">
@@ -81,7 +81,7 @@
                         </div>
 
                         {% if disclaimer %}
-                        <div class="block block__sub block__flush-bottom">
+                        <div class="block block__sub ask-disclaimer">
                             {{ disclaimer.text | safe }}
                         </div>
                         {% endif %}

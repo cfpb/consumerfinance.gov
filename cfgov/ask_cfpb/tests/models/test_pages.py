@@ -202,18 +202,31 @@ class AnswerModelTestCase(TestCase):
         test_list = get_valid_spanish_tags()
         self.assertIn('hipotecas', test_list)
 
-    def test_routable_page_template(self):
+    def test_routable_category_page_view(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        response = cat_page.category_page(HttpRequest())
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_subcategory_page_view(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        response = cat_page.subcategory_page(
+            HttpRequest(), subcat=self.subcategories[0].slug)
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_tag_page_template(self):
         self.assertEqual(
             self.tag_results_page.get_template(HttpRequest()),
             'ask-cfpb/answer-tag-spanish-results.html')
 
-    def test_routable_page_base_returns_404(self):
+    def test_routable_tag_page_base_returns_404(self):
         response = self.client.get(
             self.tag_results_page.url +
             self.tag_results_page.reverse_subpage('spanish_tag_base'))
         self.assertEqual(response.status_code, 404)
 
-    def test_routable_page_subpage_bad_tag_returns_404(self):
+    def test_routable_tag_page_subpage_bad_tag_returns_404(self):
         page = self.tag_results_page
         response = self.client.get(
             page.url + page.reverse_subpage(
@@ -221,7 +234,7 @@ class AnswerModelTestCase(TestCase):
                 kwargs={'tag': 'hippopotamus'}))
         self.assertEqual(response.status_code, 404)
 
-    def test_routable_page_subpage_valid_tag_returns_200(self):
+    def test_routable_tag_page_subpage_valid_tag_returns_200(self):
         page = self.tag_results_page
         response = self.client.get(
             page.url + page.reverse_subpage(
@@ -229,7 +242,7 @@ class AnswerModelTestCase(TestCase):
                 kwargs={'tag': 'hipotecas'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_routable_page_returns_url_suffix(self):
+    def test_routable_tag_page_returns_url_suffix(self):
         response = self.tag_results_page.reverse_subpage(
             'buscar_por_etiqueta', kwargs={'tag': 'hipotecas'})
         self.assertEqual(response, 'hipotecas/')
@@ -528,6 +541,20 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             len(test_nav_items),
             Category.objects.count())
+
+    def test_get_ask_breadcrumbs(self):
+        from ask_cfpb.models import get_ask_breadcrumbs
+        breadcrumbs = get_ask_breadcrumbs()
+        self.assertEqual(len(breadcrumbs), 1)
+        self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
+
+    def test_get_ask_breadcrumbs_with_category(self):
+        from ask_cfpb.models import get_ask_breadcrumbs
+        test_category = mommy.make(Category, name='breadcrumb_cat')
+        breadcrumbs = get_ask_breadcrumbs(test_category)
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
+        self.assertEqual(breadcrumbs[1]['title'], test_category.name)
 
     def test_audience_page_get_english_template(self):
         mock_site = mock.Mock()

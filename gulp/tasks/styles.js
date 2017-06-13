@@ -56,9 +56,10 @@ function stylesIE9() {
       suffix:  '.ie9',
       extname: '.css'
     } ) )
+    .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
     .pipe( gulpCleanCss( {
       compatibility: 'ie9',
-      inline: ['none']
+      inline: [ 'none' ]
     } ) )
     .pipe( gulp.dest( configStyles.dest ) )
     .pipe( browserSync.reload( {
@@ -67,7 +68,7 @@ function stylesIE9() {
 }
 
 /**
- * Process legacy CSS for IE7 and 8 only.
+ * Process legacy CSS for 8 only.
  * @returns {PassThrough} A source stream.
  */
 function stylesIE8() {
@@ -75,7 +76,7 @@ function stylesIE8() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: [ 'ie 7-8' ]
+      browsers: [ 'ie 8' ]
     } ) )
     .pipe( mqr( {
       width: '75em'
@@ -253,7 +254,7 @@ gulp.task( 'styles:nemo', [
   'styles:nemoProd',
   'styles:nemoIE'
 ] );
-gulp.task( 'styles:ie', ['styles:stylesIE8', 'styles:stylesIE9'] );
+gulp.task( 'styles:ie', [ 'styles:stylesIE8', 'styles:stylesIE9' ] );
 
 gulp.task( 'styles', [
   'styles:modern',
