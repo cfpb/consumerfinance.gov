@@ -3,9 +3,11 @@ import datetime
 import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
+from model_mommy import mommy
 from wagtail.wagtailcore.models import Site
 
 from v1.models.base import CFGOVPage, Feedback
+from v1.models.images import CFGOVImage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
