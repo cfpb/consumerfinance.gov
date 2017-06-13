@@ -194,6 +194,8 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
             context['breadcrumb_items'] = get_ask_breadcrumbs()
+        elif self.language == 'es':
+            context['tags'] = self.ask_category.top_tags_es
 
         return context
 
