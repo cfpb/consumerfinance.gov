@@ -406,7 +406,7 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-if settings.DEPLOY_ENVIRONMENT not in ['build', 'beta']:
+if settings.DEPLOY_ENVIRONMENT not in ['build']:
     kb_patterns = [
         url(r'^(?i)askcfpb/',
             include_if_app_enabled(

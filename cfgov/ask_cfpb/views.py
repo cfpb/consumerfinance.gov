@@ -144,7 +144,7 @@ def redirect_ask_search(request, language='en'):
 
     cat_string = 'category_exact:'  # the facet prefix for categories
     if request.GET.get('q'):
-        querystring = request.GET.get('q')
+        querystring = request.GET.get('q').strip()
         if not querystring:
             raise Http404
         return redirect(
@@ -152,6 +152,7 @@ def redirect_ask_search(request, language='en'):
                 query=querystring, permanent=True))
     else:
         facets = request.GET.getlist('selected_facets')
+        category = ''
         if not facets:
             raise Http404
         # Get the category, if there is one
