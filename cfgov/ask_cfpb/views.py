@@ -164,7 +164,6 @@ def redirect_ask_search(request, language='en'):
             return redirect(
                 '/es/obtener-respuestas/categoria-{category}'.format(
                     category=category), permanent=True)
-        else:
-            return redirect(
-                '/ask-cfpb/category-{category}'.format(
-                    category=category), permanent=True)
+        return redirect(
+            '/ask-cfpb/category-{category}'.format(
+                category=category), permanent=True)
