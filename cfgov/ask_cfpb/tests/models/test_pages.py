@@ -780,7 +780,9 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(page.meta_image, self.test_image)
 
     def test_answer_meta_image_uses_social_image_not_category_image(self):
-        """ Answer page's social image overrides its category's image """
+        """ Answer page's meta image pulls from its social image instead
+        of its category's image
+        """
         category = mommy.make(Category, category_image=self.test_image)
         answer = self.prepare_answer(social_sharing_image=self.test_image2)
         answer.save()
