@@ -58,7 +58,8 @@ def get_ask_nav_items(request, current_page):
             'title': cat.name,
             'url': '/ask-cfpb/category-' + cat.slug,
             'active': False if not hasattr(current_page, 'ask_category')
-            else cat.name == current_page.ask_category.name
+            else cat.name == current_page.ask_category.name,
+            'expanded': True
         }
         for cat in Category.objects.all()
     ], True
@@ -462,6 +463,8 @@ class AnswerPage(CFGOVPage):
         if self.language == 'es':
             context['tags_es'] = [tag for tag in self.answer_base.tags_es
                                   if tag in get_valid_spanish_tags()]
+            context['tweet_text'] = Truncator(self.question).chars(
+                100, truncate=' ...')
 
         elif self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(
