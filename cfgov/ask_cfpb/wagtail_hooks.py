@@ -125,8 +125,7 @@ def whitelister_element_rules():
         'aside': attribute_rule({'class': True}),
     }
 
-if settings.DEPLOY_ENVIRONMENT == 'build':
-    hooks.register('insert_editor_js', editor_js)
-    hooks.register('insert_editor_css', editor_css)
-    hooks.register(
-        'construct_whitelister_element_rules', whitelister_element_rules)
+hooks.register('insert_editor_js', editor_js)
+hooks.register('insert_editor_css', editor_css)
+hooks.register(
+    'construct_whitelister_element_rules', whitelister_element_rules)
