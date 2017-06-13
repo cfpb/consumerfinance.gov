@@ -20,6 +20,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from v1.util.migrations import get_or_create_page
 
@@ -86,6 +87,17 @@ class Category(models.Model):
     slug_es = models.SlugField()
     intro = RichTextField(blank=True)
     intro_es = RichTextField(blank=True)
+    category_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=(
+            'Select a custom image to appear when visitors share pages '
+            'belonging to this category on social media.'
+        )
+    )
     panels = [
         FieldPanel('name', classname="title"),
         FieldPanel('slug'),
@@ -93,6 +105,7 @@ class Category(models.Model):
         FieldPanel('name_es', classname="title"),
         FieldPanel('slug_es'),
         FieldPanel('intro_es'),
+        ImageChooserPanel('category_image')
     ]
 
     def __str__(self):
@@ -242,6 +255,18 @@ class Answer(models.Model):
         blank=True,
         related_name='related_question',
         help_text='Maximum of 3')
+    social_sharing_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=(
+            'Optionally select a custom image to appear when users share this '
+            'page on social media websites. If no image is selected, this '
+            'page\'s category image will be used.'
+        )
+    )
 
     panels = [
         MultiFieldPanel([
@@ -279,7 +304,8 @@ class Answer(models.Model):
                     'subcategory',
                     widget=forms.CheckboxSelectMultiple)]),
             FieldPanel('related_questions', widget=forms.SelectMultiple),
-            FieldPanel('search_tags')],
+            FieldPanel('search_tags'),
+            ImageChooserPanel('social_sharing_image')],
             heading="Metadata",
             classname="collapsible"),
     ]
