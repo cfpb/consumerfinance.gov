@@ -195,8 +195,15 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
             context['breadcrumb_items'] = get_ask_breadcrumbs()
+        elif self.language == 'es':
+            context['tags'] = self.ask_category.top_tags_es
 
         return context
+
+    # Returns an image for the page's meta Open Graph tag
+    @property
+    def meta_image(self):
+        return self.ask_category.category_image
 
     @route(r'^$')
     def category_page(self, request):
@@ -495,3 +502,14 @@ class AnswerPage(CFGOVPage):
                 return _("redirected")
         else:
             return super(AnswerPage, self).status_string
+
+    # Returns an image for the page's meta Open Graph tag
+    @property
+    def meta_image(self):
+        if self.answer_base.social_sharing_image:
+            return self.answer_base.social_sharing_image
+
+        if not self.answer_base.category.exists():
+            return None
+
+        return self.answer_base.category.first().category_image

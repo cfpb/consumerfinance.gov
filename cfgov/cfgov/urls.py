@@ -19,6 +19,7 @@ from ask_cfpb.views import (
     ask_search,
     ask_autocomplete,
     print_answer,
+    redirect_ask_search,
     view_answer
 )
 from core.views import ExternalURLNoticeView
@@ -254,16 +255,15 @@ urlpatterns = [
                 fallback=lambda req: ServeView.as_view()(req, req.path),
                 state=False),
 
-    # If 'CCDB5_RELEASE' is false, include CCDB4 urls.
-    # Otherwise use CCDB5.
+    # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
+    # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',
                 r'^data-research/consumer-complaints/',
                 include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
+                    'ccdb5_ui', 'ccdb5_ui.config.urls'
                 ),
-                state=False,
-                fallback=TemplateView.as_view(
-                    template_name='ccdb5_landing_page.html'
+                fallback=include_if_app_enabled(
+                    'complaintdatabase', 'complaintdatabase.urls'
                 )),
 
     url(r'^oah-api/rates/',
@@ -425,21 +425,22 @@ ask_patterns = [
      RedirectView.as_view(
          url='/ask-cfpb/',
          permanent=True)),
-    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
-         RedirectView.as_view(
-             url='/ask-cfpb/slug-en-%(ask_id)s',
-             permanent=True)),
-    url(r'^askcfpb/search/\?selected_facets=category_exact:(?P<category>[^&]+)',  # noqa: E501
-         RedirectView.as_view(
-             url='/ask-cfpb/category-%(category)s',
-             permanent=True)),
-    url(r'^es/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',
+    url(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
          RedirectView.as_view(
              url='/es/obtener-respuestas/slug-es-%(ask_id)s',
              permanent=True)),
-    url(r'es/obtener-respuestas/buscar\?selected_facets=category_exact:(?P<categoria>[^&]+)',  # noqa: E501
-        RedirectView.as_view(
-            url='/es/obtener-respuestas/categoria-%(categoria)s',
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
+        ask_search,
+        name='ask-search-es'),
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-es-json'),
+    url(r'^askcfpb/search/',
+        redirect_ask_search,
+        name='redirect-ask-search'),
+    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
+         RedirectView.as_view(
+             url='/ask-cfpb/slug-en-%(ask_id)s',
              permanent=True)),
     url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
         view_answer,
@@ -447,7 +448,7 @@ ask_patterns = [
     url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
         view_answer,
         name='ask-spanish-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',  # noqa: E501
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
         print_answer,
         name='ask-spanish-print-answer'),
     url(r'^(?i)ask-cfpb/search/$',
@@ -456,12 +457,6 @@ ask_patterns = [
     url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
         ask_search,
         name='ask-search-en-json'),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
-        ask_search,
-        name='ask-search-es'),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-es-json'),
     url(r'^(?i)ask-cfpb/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-en'),
     url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
