@@ -254,16 +254,15 @@ urlpatterns = [
                 fallback=lambda req: ServeView.as_view()(req, req.path),
                 state=False),
 
-    # If 'CCDB5_RELEASE' is false, include CCDB4 urls.
-    # Otherwise use CCDB5.
+    # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
+    # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',
                 r'^data-research/consumer-complaints/',
                 include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
+                    'ccdb5_ui', 'ccdb5_ui.config.urls'
                 ),
-                state=False,
-                fallback=TemplateView.as_view(
-                    template_name='ccdb5_landing_page.html'
+                fallback=include_if_app_enabled(
+                    'complaintdatabase', 'complaintdatabase.urls'
                 )),
 
     url(r'^oah-api/rates/',
