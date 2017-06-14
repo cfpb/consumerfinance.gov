@@ -13,6 +13,7 @@ const localtunnel = require( 'localtunnel' );
 const minimist = require( 'minimist' );
 const spawn = require( 'child_process' ).spawn;
 const psi = require( 'psi' );
+const SauceTunnel = require('sauce-tunnel');
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -41,6 +42,7 @@ function testUnitScripts( cb ) {
         .on( 'end', cb );
     } );
 }
+
 
 /**
  * Run tox Acceptance tests.
@@ -101,10 +103,15 @@ function _addCommandLineFlag( protractorParams, commandLineParams, value ) {
  * @returns {Array} List of Protractor binary parameters as strings.
  */
 function _getProtractorParams( suite ) {
+  let UNDEFINED;
   const commandLineParams = minimist( process.argv.slice( 2 ) );
   const configFile = commandLineParams.a11y ?
                      'test/browser_tests/a11y_conf.js' :
                      'test/browser_tests/conf.js';
+
+  if ( typeof suite === 'function' ) {
+    suite = UNDEFINED;
+  }
 
   // Set default configuration command-line parameter.
   let params = [ configFile ];
@@ -282,30 +289,85 @@ function testPerf() {
 }
 
 /**
+ * Run Mocha JavaScript unit tests.
+ * @param {Function} cb - Callback function to call on completion.
+ */
+function createSauceTunnel( cb ) {
+  const SAUCE_USERNAME = envvars.SAUCE_USERNAME;
+  const SAUCE_ACCESSKEY = envvars.SAUCE_ACCESS_KEY;
+  const SAUCE_TUNNEL_ID = envvars.SAUCE_TUNNEL;
+  const sauceTunnel = new SauceTunnel( SAUCE_USERNAME,
+                                       SAUCE_ACCESSKEY,
+                                       SAUCE_TUNNEL_ID );
+
+  function _getSauceTunnelPromise() {
+    let resolve;
+    let reject;
+
+    return new Promise( ( resolve, reject ) => {
+      sauceTunnel.on( 'verbose:debug', debugMsg => {
+        gulpUtil.log( debugMsg );
+      } );
+
+      sauceTunnel.start( status => {
+        if ( status === false ) {
+          reject( sauceTunnel );
+        }
+
+        if ( sauceTunnel.proc ) {
+          sauceTunnel.proc.on( 'exit', function( code ) {
+            reject( sauceTunnel );
+          } );
+        }
+
+        setTimeout( resolve.bind( null, sauceTunnel ), 5000 );
+      } );
+    } );
+  }
+
+  function _handleErrors( err ) {
+    if ( sauceTunnel ) {
+      sauceTunnel.killTunnel( () => {
+        process.exit( 1 );
+      } );
+    } else {
+      process.exit( 1 );
+    }
+  }
+
+  return _getSauceTunnelPromise()
+         .then( )
+         .catch( _handleErrors )
+}
+
+/**
  * Spawn the appropriate acceptance tests.
  * @param {string} args Selenium arguments.
  */
 function spawnProtractor( args ) {
-  let UNDEFINED;
-
-  if ( typeof args === 'function' ) {
-    args = UNDEFINED;
-  }
   const params = _getProtractorParams( args );
 
-  gulpUtil.log( 'Running Protractor with params: ' + params );
-  spawn(
-    fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
-    params,
-    { stdio: 'inherit' }
-  ).once( 'close', code => {
-    if ( code ) {
-      gulpUtil.log( 'Protractor tests exited with code ' + code );
-      process.exit( 1 );
-    }
-    gulpUtil.log( 'Protractor tests done!' );
+  function _startProtractor( ) {
+    gulpUtil.log( 'Running Protractor with params: ' + params );
+    spawn(
+      fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
+      params,
+      { stdio: 'inherit' }
+    ).once( 'close', code => {
+      if ( code ) {
+        gulpUtil.log( 'Protractor tests exited with code ' + code );
+        process.exit( 1 );
+      }
+      gulpUtil.log( 'Protractor tests done!' );
+    } );
   }
-  );
+
+  if( params.indexOf( '--params.sauce=true' ) > -1 ) {
+    createSauceTunnel()
+    .then( _startProtractor );
+  } else {
+    _startProtractor();
+  };
 }
 
 /**

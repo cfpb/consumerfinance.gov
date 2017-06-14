@@ -257,9 +257,9 @@ const config = {
 
 // Set Sauce Labs credientials from .env file.
 if ( _isSauceCredentialSet() ) {
-  config.sauceSeleniumAddress = envvars.SAUCE_SELENIUM_URL;
   config.sauceUser = envvars.SAUCE_USERNAME;
   config.sauceKey = envvars.SAUCE_ACCESS_KEY;
+  config.directConnect = false;
 }
 
 

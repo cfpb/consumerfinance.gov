@@ -28,7 +28,8 @@ defineSupportCode( function( { Then, When, After } ) {
 
   When( /I goto a (.*) filterable page/, function( pageType ) {
     selectedFilterablePage = filterablePages[pageType];
-    filterablePages[pageType].gotoURL();
+
+    return filterablePages[pageType].gotoURL();
   } );
 
   When( /I do not select a filter/, function() {
