@@ -23,6 +23,7 @@ from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import (Orderable, Page, PageManager,
                                         PageQuerySet)
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms
@@ -66,6 +67,17 @@ class CFGOVPage(Page):
     language = models.CharField(
         choices=ref.supported_languagues, default='en', max_length=2
     )
+    social_sharing_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=(
+            'Optionally select a custom image to appear when users share this '
+            'page on social media websites.'
+        )
+    )
 
     # This is used solely for subclassing pages we want to make at the CFPB.
     is_creatable = False
@@ -87,12 +99,16 @@ class CFGOVPage(Page):
     ], blank=True)
 
     # Panels
+    promote_panels = Page.promote_panels + [
+        ImageChooserPanel('social_sharing_image'),
+    ]
+
     sidefoot_panels = [
         StreamFieldPanel('sidefoot'),
     ]
 
     settings_panels = [
-        MultiFieldPanel(Page.promote_panels, 'Settings'),
+        MultiFieldPanel(promote_panels, 'Settings'),
         InlinePanel('categories', label="Categories", max_num=2),
         FieldPanel('tags', 'Tags'),
         FieldPanel('authors', 'Authors'),
@@ -335,6 +351,11 @@ class CFGOVPage(Page):
         for key, js_files in js.iteritems():
             js[key] = OrderedDict.fromkeys(js_files).keys()
         return js
+
+    # Returns an image for the page's meta Open Graph tag
+    @property
+    def meta_image(self):
+        return self.social_sharing_image
 
 
 class CFGOVPageCategory(Orderable):
