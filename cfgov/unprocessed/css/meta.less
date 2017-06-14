@@ -203,6 +203,7 @@
 
     &_heading {
         .h4();
+        display: block;
         // Bottom margin is eyeballed to 20px from the baseline.
         margin: 0 0 unit(16px / @font-size, em);
         color: @black;
@@ -228,6 +229,7 @@
     &_tag {
         border-bottom: 1px dotted @gold-80;
         line-height: 1;
+        margin-bottom: 0;
 
         .respond-to-min(@bp-sm-min, {
             .u-inline-block();
@@ -245,7 +247,7 @@
         .h6();
         display: block;
         // Eyeballed to 15px including line-height.
-        padding: 12px 0 8px;
+        padding: 14px 0 10px;
         margin: 0 0 0 unit(@bullet-font-size / @font-size, em);
         // Match the height of the bullet.
         line-height: unit(@bullet-font-size / @font-size, em);
