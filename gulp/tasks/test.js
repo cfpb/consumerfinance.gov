@@ -57,7 +57,7 @@ function testAcceptanceBrowser() {
     toxParams.push( 'acceptance' );
   }
 
-  Object.keys( params ).forEach( ( key ) => {
+  Object.keys( params ).forEach( key => {
     if ( key !== '_' ) {
       toxParams.push( key + '=' + params[key] );
     }
