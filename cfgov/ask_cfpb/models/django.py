@@ -305,6 +305,7 @@ class Answer(models.Model):
                     widget=forms.CheckboxSelectMultiple)]),
             FieldPanel('related_questions', widget=forms.SelectMultiple),
             FieldPanel('search_tags'),
+            FieldPanel('search_tags_es'),
             ImageChooserPanel('social_sharing_image')],
             heading="Metadata",
             classname="collapsible"),
