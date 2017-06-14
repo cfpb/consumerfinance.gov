@@ -52,8 +52,7 @@
             <ul class="content-l_col content-l_col-1-2 facets_list list list__unstyled">
                 {%- for subcategory in column -%}
                 <li class="list_item">
-                    <a  class="m-nav-link {% if page.ask_subcategory.slug == subcategory.slug %} 
-                    m-nav-link__current {% endif %}" href="/ask-cfpb/category-{{ page.ask_category.slug }}/{{ subcategory.slug }}">
+                    <a  class="m-nav-link {{ 'm-nav-link__current' if page.ask_subcategory.slug == subcategory.slug else '' }}" href="/ask-cfpb/category-{{ page.ask_category.slug }}/{{ subcategory.slug }}">
                         {{ subcategory.name }}
                     </a>
                 </li>
