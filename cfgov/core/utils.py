@@ -35,3 +35,15 @@ def extract_answers_from_request(request):
     answers = [(param.split('_')[1], value) for param, value in
                request.POST.items() if param.startswith('questionid')]
     return answers
+
+
+def slice_list(l, n):
+    start = 0
+    for i in xrange(n):
+        stop = start + len(l[i::n])
+        chunk = l[start:stop]
+
+        if chunk:
+            yield chunk
+
+        start = stop
