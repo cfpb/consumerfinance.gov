@@ -29,7 +29,7 @@ function EmailPopup( el ) {
       helpers.recordEmailPopupView();
     }
 
-    return true
+    return true;
   }
 
   function init() {
