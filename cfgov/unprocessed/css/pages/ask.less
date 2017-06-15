@@ -140,6 +140,8 @@
         }
 
         .respond-to-max(@bp-xs-max, {
+            padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
             .o-search-bar_col + .o-search-bar_col {
                 margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
             }
@@ -283,10 +285,6 @@
 
 .ask-cfpb-page__search {
     .o-search-bar {
-        .respond-to-max( @bp-xs-max, {
-            padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-        } );
-
         form {
             max-width: @bp-xs-max;
         }
@@ -311,6 +309,12 @@
         color: @green;
     }
 
+    .ask-categories {
+        .respond-to-max(@bp-sm-max, {
+            padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        });
+    }
+
     .subcategory-nav {
         .list_item {
             .webfont-medium();
@@ -328,6 +332,13 @@
         .content-l_col {
             margin-bottom: 0;
         }
+
+    }
+
+    .question_list {
+        .respond-to-max(@bp-sm-max, {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        });
 
     }
 }
