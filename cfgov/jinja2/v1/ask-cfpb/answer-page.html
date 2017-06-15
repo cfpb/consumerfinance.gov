@@ -164,3 +164,10 @@
 
 {% endblock %}
 
+{% block javascript %}
+<script>
+    var answerID = '{{ answer_id }}';
+    var categorySlug = '{{ category.slug }}';
+</script>  
+{{ super() }}
+{% endblock %}

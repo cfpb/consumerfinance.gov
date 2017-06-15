@@ -93,3 +93,11 @@
         </span>
     </div><!-- .share -->
 {% endblock %}
+
+{% block page_js %}
+<script type="text/javascript">
+    var answerID = '{{ answer_id }}';
+    var categorySlug = '{{ category.slug_es }}';
+</script>
+{{ super() }}
+{% endblock %}
