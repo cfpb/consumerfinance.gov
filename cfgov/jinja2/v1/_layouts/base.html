@@ -66,9 +66,9 @@
         <meta property="og:url" content="{{ request.url }}">
     {% if page and page.meta_image %}
         <meta property="og:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
+              content="{{ image(page.meta_image, 'original').url }}">
         <meta property="twitter:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
+              content="{{ image(page.meta_image, 'original').url }}">
     {% else %}
         <meta property="og:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
