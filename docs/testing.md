@@ -44,7 +44,7 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 1. Log into [http://saucelabs.com/account](http://saucelabs.com/account).
 
-2. [Download Sauce Connect](https://docs.saucelabs.com/reference/sauce-connect/#basic-setup)
+2. [Download Sauce Connect](https://wiki.saucelabs.com/display/DOCS/Basic+Sauce+Connect+Proxy+Setup#BasicSauceConnectProxySetup-SettingUpSauceConnect)
 
 3. Open a new Terminal window or tab and navigate to the downloaded SauceConnect folder.
     If you place the folder in your Application's folder this might look like:
@@ -54,7 +54,7 @@ Sauce Labs can be used to run tests remotely in the cloud.
     ```
 
 4. Copy step 3 from the the SauceLabs
-   [Basic Setup instructions](https://wiki.saucelabs.com/display/DOCS/Basic+Sauce+Connect+Setup#BasicSauceConnectSetup-SettingUpSauceConnect)
+   [Basic Setup instructions](https://wiki.saucelabs.com/display/DOCS/Basic+Sauce+Connect+Proxy+Setup#BasicSauceConnectProxySetup-SettingUpSauceConnect)
    and run that in your Terminal window.
    Once you see `Sauce Connect is up` in the Terminal,
    that means the tunnel has successfully been established

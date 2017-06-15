@@ -1,7 +1,11 @@
-from django.test import TestCase
-from model_mommy import mommy
+import boto
+import moto
 
-from v1.models import AbstractFilterPage, CFGOVImage, CFGOVPage
+from django.test import TestCase, override_settings
+from model_mommy import mommy
+from wagtail.wagtailimages.tests.utils import get_test_image_file
+
+from v1.models import AbstractFilterPage, CFGOVImage, CFGOVPage, LearnPage
 
 
 class TestMetaImage(TestCase):
@@ -46,3 +50,75 @@ class TestMetaImage(TestCase):
             preview_image=self.preview_image
         )
         self.assertEqual(page.meta_image, page.social_sharing_image)
+
+    def test_template_meta_image_no_images(self):
+        """Template meta tags should fallback to standard social networks."""
+        page = mommy.prepare(LearnPage, social_sharing_image=None)
+        response = page.serve(page.dummy_request())
+        response.render()
+
+        self.assertContains(
+            response,
+            (
+                '<meta property="og:image" content='
+                '"http://testserver/static/img/logo_open-graph_facebook.png">'
+            ),
+            html=True
+        )
+
+        self.assertContains(
+            response,
+            (
+                '<meta property="twitter:image" content='
+                '"http://testserver/static/img/logo_open-graph_twitter.png">'
+            ),
+            html=True
+        )
+
+    def check_template_meta_image_url(self, expected_root):
+        """Template meta tags should use an absolute image URL."""
+        image_file = get_test_image_file(filename='foo.png')
+        image = mommy.make(CFGOVImage, file=image_file)
+        page = mommy.prepare(LearnPage, social_sharing_image=image)
+        response = page.serve(page.dummy_request())
+        response.render()
+
+        rendition_url = image.get_rendition('original').url
+
+        self.assertContains(
+            response,
+            (
+                '<meta property="og:image" content='
+                '"{}{}">'.format(expected_root, rendition_url)
+            ),
+            html=True
+        )
+
+    def test_template_meta_image_url(self):
+        """Meta image links should work if using local storage."""
+        self.check_template_meta_image_url(expected_root="http://testserver")
+
+    @override_settings(
+        AWS_QUERYSTRING_AUTH=False,
+        AWS_S3_ACCESS_KEY_ID='test',
+        AWS_S3_CALLING_FORMAT='boto.s3.connection.OrdinaryCallingFormat',
+        AWS_S3_ROOT='root',
+        AWS_S3_SECRET_ACCESS_KEY='test',
+        AWS_S3_SECURE_URLS=True,
+        AWS_STORAGE_BUCKET_NAME='test_s3_bucket',
+        DEFAULT_FILE_STORAGE='v1.s3utils.MediaRootS3BotoStorage'
+    )
+    def test_template_image_image_url_s3(self):
+        """Meta image links should work if using S3 storage."""
+        mock_s3 = moto.mock_s3()
+        mock_s3.start()
+
+        s3 = boto.connect_s3()
+        s3.create_bucket('test_s3_bucket')
+
+        try:
+            # There should be no root required as the image rendition URL
+            # should generate a fully qualified S3 path.
+            self.check_template_meta_image_url(expected_root='')
+        finally:
+            mock_s3.stop()

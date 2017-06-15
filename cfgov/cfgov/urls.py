@@ -406,42 +406,32 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-if settings.DEPLOY_ENVIRONMENT not in ['build', 'beta']:
-    kb_patterns = [
-        url(r'^(?i)askcfpb/',
-            include_if_app_enabled(
-                'knowledgebase', 'knowledgebase.urls')),
-        url(r'^es/obtener-respuestas/',
-            include_if_app_enabled(
-                'knowledgebase', 'knowledgebase.babel_urls')),
-    ]
-    urlpatterns += kb_patterns
-
-# The redirects in ask_patterns (below) won't be exposed until the
-# knowledgebase URLs in kb_patters (above) are turned off, because the kb URLs
-# will serve the requests before they reach ask_patterns.
-ask_patterns = [
+redirect_patterns = [
     url(r'^askcfpb/$',
-     RedirectView.as_view(
-         url='/ask-cfpb/',
-         permanent=True)),
+        RedirectView.as_view(
+            url='/ask-cfpb/',
+            permanent=True)),
     url(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
          RedirectView.as_view(
              url='/es/obtener-respuestas/slug-es-%(ask_id)s',
              permanent=True)),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
+    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
+         RedirectView.as_view(
+             url='/ask-cfpb/slug-en-%(ask_id)s',
+             permanent=True)),
+    url(r'^askcfpb/search/',
+        redirect_ask_search,
+        name='redirect-ask-search'),
+]
+urlpatterns += redirect_patterns
+
+ask_patterns = [
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
         ask_search,
         name='ask-search-es'),
     url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
         ask_search,
         name='ask-search-es-json'),
-    url(r'^askcfpb/search/',
-        redirect_ask_search,
-        name='redirect-ask-search'),
-    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
-         RedirectView.as_view(
-             url='/ask-cfpb/slug-en-%(ask_id)s',
-             permanent=True)),
     url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
         view_answer,
         name='ask-english-answer'),
@@ -466,7 +456,6 @@ urlpatterns += ask_patterns
 
 
 # Catch remaining URL patterns that did not match a route thus far.
-
 urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 # urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 
