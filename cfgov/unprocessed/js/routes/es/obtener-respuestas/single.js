@@ -2,13 +2,17 @@ require( '../../on-demand/feedback-form' );
 require( '../../on-demand/ask-autocomplete' );
 var Analytics = require( '../../../modules/Analytics' );
 
-if ( window.answerID && window.categorySlug ) {
+var analyticsData = document.querySelector( '.analytics-data' );
+if ( analyticsData ) {
+  var answerID = analyticsData.getAttribute( 'data-answer-id' );
+  var categorySlug = analyticsData.getAttribute( 'data-category-slug' );
+
   function sendEvent() {
     var eventData = Analytics.getDataLayerOptions( 
-      '/es/obtener-respuestas/c/'+ window.categorySlug + '/' + window.answerID + '/',
+      '/es/obtener-respuestas/c/'+ categorySlug + '/' + answerID + '/',
       document.title, 
       'Virtual Pageview' );
-    eventData.category = window.categorySlug;
+    eventData.category = categorySlug;
     Analytics.sendEvent( eventData );
   }
   
@@ -17,4 +21,5 @@ if ( window.answerID && window.categorySlug ) {
   } else {
     Analytics.addEventListener( 'gtmLoaded', sendEvent );
   }
+  
 }

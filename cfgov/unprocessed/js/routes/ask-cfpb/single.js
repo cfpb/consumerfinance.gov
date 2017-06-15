@@ -13,11 +13,15 @@ if ( readMoreContainer && getBreakpointState().isBpXS ) {
   } );
 }
 
-if ( window.answerID && window.categorySlug ) {
+var analyticsData = document.querySelector( '.analytics-data' );
+if ( analyticsData ) {
+  var answerID = analyticsData.getAttribute( 'data-answer-id' );
+  var categorySlug = analyticsData.getAttribute( 'data-category-slug' );
+
   function sendEvent() {
-    var eventData = Analytics.getDataLayerOptions( '/askcfpb/' + window.answerID + '/',
+    var eventData = Analytics.getDataLayerOptions( '/askcfpb/' + answerID + '/',
       document.title, 'Virtual Pageview' );
-    eventData.category = window.categorySlug;
+    eventData.category = categorySlug;
     Analytics.sendEvent( eventData );
   }
   

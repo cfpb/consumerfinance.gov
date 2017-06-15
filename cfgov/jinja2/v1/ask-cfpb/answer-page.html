@@ -161,13 +161,9 @@
             </div>
         </div>
     {% endif %}
-
+    <div class="analytics-data" 
+         data-answer-id="{{ answer_id }}"
+         data-category-slug="{{ category.slug }}">
+    </div>
 {% endblock %}
 
-{% block javascript %}
-<script>
-    var answerID = '{{ answer_id }}';
-    var categorySlug = '{{ category.slug }}';
-</script>  
-{{ super() }}
-{% endblock %}
