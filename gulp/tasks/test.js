@@ -13,7 +13,7 @@ const localtunnel = require( 'localtunnel' );
 const minimist = require( 'minimist' );
 const spawn = require( 'child_process' ).spawn;
 const psi = require( 'psi' );
-const SauceTunnel = require('sauce-tunnel');
+const SauceTunnel = require( 'sauce-tunnel' );
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -49,7 +49,7 @@ function testUnitScripts( cb ) {
  */
 function testAcceptanceBrowser() {
   const params = minimist( process.argv.slice( 3 ) ) || {};
-  let toxParams = [ '-e' ];
+  const toxParams = [ '-e' ];
 
   if ( params.fast ) {
     toxParams.push( 'acceptance-fast' );
@@ -289,17 +289,20 @@ function testPerf() {
 }
 
 /**
- * Run Mocha JavaScript unit tests.
- * @param {Function} cb - Callback function to call on completion.
+ * Create Sauce Labs tunnel.
+ * @returns {Promise} Promise which creates Sauce Labs tunnel.
  */
-function createSauceTunnel( cb ) {
+function createSauceTunnel( ) {
   const SAUCE_USERNAME = envvars.SAUCE_USERNAME;
   const SAUCE_ACCESSKEY = envvars.SAUCE_ACCESS_KEY;
   const SAUCE_TUNNEL_ID = envvars.SAUCE_TUNNEL;
   const sauceTunnel = new SauceTunnel( SAUCE_USERNAME,
                                        SAUCE_ACCESSKEY,
                                        SAUCE_TUNNEL_ID );
-
+ /**
+  * Create Sauce Labs tunnel promise.
+  * @returns {Promise} Promise which creates Sauce Labs tunnel.
+  */
   function _getSauceTunnelPromise() {
     const sauceTunnelParam = { sauceTunnel: sauceTunnel };
 
@@ -332,11 +335,16 @@ function createSauceTunnel( cb ) {
 
 /**
  * Spawn the appropriate acceptance tests.
- * @param {string} args Selenium arguments.
+ * @param {string} args Protractor arguments.
  */
 function spawnProtractor( ) {
   const params = _getProtractorParams();
 
+  /**
+   * Spawn the appropriate acceptance tests.
+   * @param {string} args Protractor arguments.
+   * @returns {Promise} Promise which runs Protractor.
+   */
   function _runProtractor( args ) {
     gulpUtil.log( 'Running Protractor with params: ' + params );
 
@@ -350,16 +358,19 @@ function spawnProtractor( ) {
           gulpUtil.log( 'Protractor tests exited with code ' + code );
           reject( args );
         }
-
-        resolve( args );
         gulpUtil.log( 'Protractor tests done!' );
+        resolve( args );
       } );
     } )
     .then( _handleSuccess )
     .catch( _handleErrors );
   }
 
-  function _handleErrors( args={} ) {
+  /**
+   * Acceptance tests error handler.
+   * @param {string} args Failure arguments.
+   */
+  function _handleErrors( args = {} ) {
     if ( args.sauceTunnel ) {
       args.sauceTunnel.stop( () => {
         process.exit( 1 );
@@ -369,7 +380,11 @@ function spawnProtractor( ) {
     }
   }
 
-  function _handleSuccess( args={} ) {
+  /**
+   * Acceptance tests success handler.
+   * @param {string} args Success arguments.
+   */
+  function _handleSuccess( args = {} ) {
     if ( args.sauceTunnel ) {
       args.sauceTunnel.stop( () => {
         process.exit( 0 );
@@ -379,12 +394,12 @@ function spawnProtractor( ) {
     }
   }
 
-  if( params.indexOf( '--params.sauce=true' ) > -1 ) {
+  if ( params.indexOf( '--params.sauce=true' ) > -1 ) {
     createSauceTunnel()
     .then( _runProtractor );
   } else {
     _runProtractor();
-  };
+  }
 }
 
 /**

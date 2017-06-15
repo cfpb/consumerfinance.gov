@@ -1,7 +1,7 @@
 'use strict';
 
 var envvars = require( '../../config/environment' ).envvars;
-var tunnelIdentifier =  envvars.SAUCE_TUNNEL || new Date().getTime();
+var tunnelIdentifier = envvars.SAUCE_TUNNEL || new Date().getTime();
 
 var defaultSuites = {
   // Set default browser suites to test.

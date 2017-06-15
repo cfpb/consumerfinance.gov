@@ -63,6 +63,7 @@
     "is-reachable": "2.3.2",
     "psi": "3.0.0",
     "require-dir": "0.3.2",
+    "sauce-tunnel": "2.5.0",
     "ustream-embedapi": "1.0.0",
     "webpack": "3.2.0",
     "webpack-stream": "3.2.0"
@@ -83,8 +84,6 @@
     "protractor": "5.1.2",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "protractor-cucumber-framework": "3.1.2",
-    "sauce-connect-launcher": "1.2.2",
-    "sauce-tunnel": "2.5.0",
     "selenium-webdriver": "3.4.0",
     "sinon": "2.3.5",
     "snyk": "1.25.0",

@@ -1,13 +1,11 @@
 'use strict';
 
-const EC = protractor.ExpectedConditions;
 
 class BasePage {
   gotoURL( url ) {
     const gotoUrl = url || this.URL || '/';
 
     return browser.get( gotoUrl )
-           .then( browser.wait( EC.urlIs( gotoUrl ), 10800 ) )
            .then( function() {
              BasePage.dismissAlert( gotoUrl );
            } );
