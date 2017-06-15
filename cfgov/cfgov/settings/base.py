@@ -56,7 +56,7 @@ INSTALLED_APPS = (
     'wagtailsharing',
     'flags',
     'haystack',
-
+    'ask_cfpb',
     'overextends',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,12 +74,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'reversion',
     'tinymce',
-    'jobmanager',
-    'ccdb5'
+    'jobmanager'
 )
-
-if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
@@ -99,6 +95,8 @@ OPTIONAL_APPS = [
     {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'picard', 'apps': ('picard',)},
+    {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
+    {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -305,20 +303,6 @@ PDFREACTOR_LIB = os.environ.get('PDFREACTOR_LIB', '/opt/PDFreactor/wrappers/pyth
 #LEGACY APPS
 
 STATIC_VERSION = ''
-LEGACY_APP_URLS={'comparisontool':True,
-                 'agreements':True,
-                 'knowledgebase':True,
-                 'selfregistration':True,
-                 'hud_api_replace':True,
-                 'retirement_api':True,
-                 'paying_for_college':True,
-                 'complaint':True,
-                 'complaintdatabase':True,
-                 'ratechecker':True,
-                 'regcore':True,
-                 'regulations':True,
-                 'countylimits':True,
-                 'noticeandcomment':True}
 
 # DJANGO HUD API
 DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hud-api-replace/')
@@ -591,9 +575,7 @@ FLAGS = {
 
     # Migration of Ask CFPB to Wagtail
     # When enabled, Ask CFPB is served from Wagtail
-    'WAGTAIL_ASK_CFPB': {
-        'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
-    },
+    'WAGTAIL_ASK_CFPB': {'boolean': True},
 
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},

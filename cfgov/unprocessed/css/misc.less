@@ -674,7 +674,7 @@
 }
 
 .u-alpha-transition {
-    transition: opacity 0.25s ease-out;
+    transition: opacity 0.25s linear;
 }
 
 .u-no-animation {
@@ -697,28 +697,28 @@
     - cfgov-misc
 */
 .u-move-to-origin {
-    transform: translateX( 0 );
+    transform: translate3d( 0, 0, 0 );
 }
 
 .u-move-left {
-    transform: translateX( -100% );
+    transform: translate3d( -100%, 0, 0 );
 }
 
 // TODO: Look into adding a mixin for movement multiples.
 .u-move-left-2x {
-    transform: translateX( -200% );
+    transform: translate3d( -200%, 0, 0 );
 }
 
 .u-move-left-3x {
-    transform: translateX( -300% );
+    transform: translate3d( -300%, 0, 0 );
 }
 
 .u-move-right {
-    transform: translateX( 100% );
+    transform: translate3d( 100%, 0, 0 );
 }
 
 .u-move-up {
-    transform: translateY( -100% );
+    transform: translate3d( 0, -100%, 0 );
 }
 
 /* topdoc

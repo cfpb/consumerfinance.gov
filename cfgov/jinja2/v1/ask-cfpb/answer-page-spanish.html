@@ -17,6 +17,7 @@
 
 
 {% block babel_content %}
+    
     <section class="content row">
 
         <div class="primary span8">
@@ -24,7 +25,7 @@
             <article class="ac-qa">
                 <h1 class="ac-qa-question">{{ page.question | striptags }}</h1>
                 <div class="ac-qa-answer">
-                    {{ page.answer|safe }}
+                    {{ page.answer|richtext|safe }}
                 </div>
             </article><!-- .ac-qa -->
 
@@ -82,6 +83,10 @@
 
 
     </section><!-- .row -->
+    <div class="analytics-data" 
+         data-answer-id="{{ answer_id }}"
+         data-category-slug="{{ category.slug_es }}">
+    </div>
 {% endblock %}
 
 {% block babel_share %}
@@ -94,9 +99,3 @@
     </div><!-- .share -->
 {% endblock %}
 
-
-{% block page_js %}
-    <!--[if gt IE 8]><!-->
-    <script src="{{ static('js/spanish.js') }}"></script>
-    <!--<![endif]-->
-{% endblock %}

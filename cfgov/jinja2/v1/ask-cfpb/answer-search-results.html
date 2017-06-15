@@ -12,9 +12,21 @@
     {{ super() }} content_wrapper__full-height-left-sidebar ask-cfpb-page ask-cfpb-page__search
 {%- endblock %}
 
+{% block banner_top %}
+    {% if about_us %}
+        {% set value = {
+            'border_bottom': True,
+            'additional_classes': ' ask-cfpb-banner',
+            'content': about_us.text
+        } %}
+        {% include 'templates/content-banner.html' with context %}
+    {% endif %}
+{% endblock %}
+
 {% block content_main %}
     <div class="block
-                block__flush-top">
+                block__flush-top
+                u-mb15">
         <h1>Ask CFPB</h1>
 
         {{ ask_search_bar.render( 'right', '', 'block__bg-branded u-mt30 u-mb30' ) }}
@@ -55,7 +67,7 @@
         {% endif %}
 
         {% if disclaimer %}
-        <div class="block">
+        <div class="block block__flush-bottom ask-disclaimer">
             {{ disclaimer.text | safe }}
         </div>
         {% endif %}
@@ -63,13 +75,4 @@
 
 {% endblock %}
 
-{% block banner_bottom %}
-    {% if about_us %}
-        {% set value = {
-            'border_top': True,
-            'additional_classes': ' ask-cfpb-banner',
-            'content': about_us.text
-        } %}
-        {% include 'templates/content-banner.html' with context %}
-    {% endif %}
-{% endblock %}
+

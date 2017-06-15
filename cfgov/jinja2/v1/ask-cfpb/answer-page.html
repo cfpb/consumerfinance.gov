@@ -24,8 +24,13 @@
     {% endif %}
 {% endblock %}
 
+{% block content_modifiers -%}
+    {{ super() }} ask-cfpb-page ask-cfpb-page__answer
+{%- endblock %}
+
+
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom ask-cfpb-page ask-cfpb-page__answer
+    {{ super() }} content__flush-bottom 
 {%- endblock %}
 
 {% block content_main %}
@@ -49,29 +54,46 @@
                 {{ page.snippet | safe }}
             </h3>
         {% endif %}
-        <div>
-            {{ page.answer | safe }}
+        <div data-qa-hook="expandable" 
+             data-read-more="true"
+             class="o-expandable
+                    o-expandable__read-more">
+            <div class="o-expandable_content" id="answer-content">
+                <div class="o-expandable_content-animated">
+                    <div class="answer-text">
+                        {{ page.answer | richtext | safe }}
+                    </div>
+                    {% if audiences %} 
+                    <div class="u-mt15">
+                        {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
+                    </div>
+                    {% endif %}
 
+                    {# This brings in the feedback module #}
+                    {% for block in page.content %}
+                        {{- form_block.render(block, 'content', loop.index0) -}}
+                    {% endfor %}
+                    {% if disclaimer %}
+                    <div class="block block__flush-bottom ask-disclaimer">
+                        {{ disclaimer.text | safe }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>            
+            <a class="o-expandable_target jump-link o-expandable_link" title="Expand content">
+                <span class="jump-link_text">
+                    <span class="o-expandable_cue o-expandable_cue-open">
+                        Read full answer
+                        <span class="cf-icon cf-icon-plus-round"></span>
+                   </span>
+                    <span class="o-expandable_cue o-expandable_cue-close">
+                        Hide full answer
+                        <span class="cf-icon cf-icon-minus-round"></span>
+                   </span>
+                </span>
+            </a>
         </div>
-
-        {% if audiences %} 
-            <div class="u-mt15">
-                {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
-            </div>
-        {% endif %}
-
-        {# This brings in the feedback module #}
-        {% for block in page.content -%}
-            {% if block.block_type == 'feedback' %}
-                {{- form_block.render(block, 'content', loop.index0) -}}
-            {% endif %}
-        {%- endfor %}
-
-        {% if disclaimer %}
-        <div class="block">
-            {{ disclaimer.text | safe }}
-        </div>
-        {% endif %}
+        
 
     </div>
     {{ ask_search_bar.render( 'left' ) }}
@@ -88,7 +110,7 @@
     {% if page.answer_base.next_step %}
         <div class="block block__flush-top">
             <h3 >
-                Next steps 
+                Explore related resources
             </h3>
             {{ parse_links(page.answer_base.next_step.text) | safe }}
         </div>
@@ -105,13 +127,9 @@
                 <ul class="list list__unstyled list__links">
                     {% for subcat in subcategories %}
                         <li class="list_item">
-                            <a href="/askcfpb/search?selected_facets=category_exact:{{subcat.slug}}" class="list_link">{{ subcat.name }}</a>
+
+                            <a href="{{slugurl('category-' + subcat.parent.slug)}}{{subcat.slug}}" class="list_link">{{ subcat.name }}</a>
                         </li>
-                        {% for related_subcat in subcat.related_subcategories.all() %}
-                            <li class="list_item">
-                                <a href="/askcfpb/search?selected_facets=category_exact:{{related_subcat.slug}}" class="list_link">{{ related_subcat.name }}</a>
-                            </li>
-                        {% endfor %}
                     {% endfor %}
                     <li class="list_item">
                       <a class="btn category-button" href="{{slugurl('category-' + category.slug)}}"> 
@@ -143,6 +161,9 @@
             </div>
         </div>
     {% endif %}
-
+    <div class="analytics-data" 
+         data-answer-id="{{ answer_id }}"
+         data-category-slug="{{ category.slug }}">
+    </div>
 {% endblock %}
 

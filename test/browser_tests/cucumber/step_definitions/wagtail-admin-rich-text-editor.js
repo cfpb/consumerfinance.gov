@@ -9,18 +9,19 @@ const linkChooser = require(
 const { defineSupportCode } = require( 'cucumber' );
 const { expect } = require( 'chai' );
 
-const { capture } = require( '../../util/screenshot.js' );
-
 defineSupportCode( function( { Then, When, After, setDefaultTimeout } ) {
 
   setDefaultTimeout( 10800 );
 
   After( function() {
 
+    /*
     browser.manage().logs().get( 'browser' )
     .then( function( browserLog ) {
-      // console.log( browserLog );
+      console.log( browserLog );
     } );
+    */
+
   } );
 
   When( /I click the (.*) button in the rich text editor/,

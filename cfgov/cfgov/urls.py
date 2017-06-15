@@ -13,15 +13,15 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
 from wagtailsharing.views import ServeView
 
-from flags.urls import flagged_url, flagged_urls
+from flags.urls import flagged_url
 
 from ask_cfpb.views import (
     ask_search,
     ask_autocomplete,
     print_answer,
+    redirect_ask_search,
     view_answer
 )
-import ccdb5.views as CCDB5
 from core.views import ExternalURLNoticeView
 from legacy.views import dbrouter_shortcut, token_provider
 from legacy.views.housing_counselor import (
@@ -255,16 +255,15 @@ urlpatterns = [
                 fallback=lambda req: ServeView.as_view()(req, req.path),
                 state=False),
 
-    # If 'CCDB5_RELEASE' is false, include CCDB4 urls.
-    # Otherwise use CCDB5.
+    # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
+    # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',
                 r'^data-research/consumer-complaints/',
                 include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
+                    'ccdb5_ui', 'ccdb5_ui.config.urls'
                 ),
-                state=False,
-                fallback=TemplateView.as_view(
-                    template_name='ccdb5_landing_page.html'
+                fallback=include_if_app_enabled(
+                    'complaintdatabase', 'complaintdatabase.urls'
                 )),
 
     url(r'^oah-api/rates/',
@@ -301,17 +300,11 @@ urlpatterns = [
         name='cckbyo'),
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
+
+    # CCDB5-API
+    url(r'^data-research/consumer-complaints/api/v1/',
+        include_if_app_enabled('complaint_search', 'complaint_search.urls')),
 ]
-
-with flagged_urls('CCDB5_RELEASE') as _url:
-    apiBase = '^data-research/consumer-complaints/api/v1'
-    ccdb5_patterns = [
-        _url(apiBase + '/_suggest', CCDB5.suggest),
-        _url(apiBase + '/(?P<id>[0-9]+)$', CCDB5.document),
-        _url(apiBase, CCDB5.search)
-    ]
-urlpatterns += ccdb5_patterns
-
 
 if settings.ALLOW_ADMIN_URL:
     patterns = [
@@ -413,51 +406,56 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-if settings.DEPLOY_ENVIRONMENT != 'build':
-    kb_patterns = [
-        url(r'^(?i)askcfpb/',
-            include_if_app_enabled(
-                'knowledgebase', 'knowledgebase.urls')),
-        url(r'^es/obtener-respuestas/',
-            include_if_app_enabled(
-                'knowledgebase', 'knowledgebase.babel_urls')),
-    ]
-    urlpatterns += kb_patterns
+redirect_patterns = [
+    url(r'^askcfpb/$',
+        RedirectView.as_view(
+            url='/ask-cfpb/',
+            permanent=True)),
+    url(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
+         RedirectView.as_view(
+             url='/es/obtener-respuestas/slug-es-%(ask_id)s',
+             permanent=True)),
+    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
+         RedirectView.as_view(
+             url='/ask-cfpb/slug-en-%(ask_id)s',
+             permanent=True)),
+    url(r'^askcfpb/search/',
+        redirect_ask_search,
+        name='redirect-ask-search'),
+]
+urlpatterns += redirect_patterns
 
-
-if settings.DEPLOY_ENVIRONMENT == 'build':
-    ask_patterns = [
-        url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
-            view_answer,
-            name='ask-english-answer'),
-        url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
-            view_answer,
-            name='ask-spanish-answer'),
-        url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',  # noqa: E501
-            print_answer,
-            name='ask-spanish-print-answer'),
-        url(r'^(?i)ask-cfpb/search/$',
-            ask_search,
-            name='ask-search-en'),
-        url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
-            ask_search,
-            name='ask-search-en-json'),
-        url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
-            ask_search,
-            name='ask-search-es'),
-        url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-            ask_search,
-            name='ask-search-es-json'),
-        url(r'^(?i)ask-cfpb/api/autocomplete/$',
-            ask_autocomplete, name='ask-autocomplete-en'),
-        url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-            ask_autocomplete, name='ask-autocomplete-es'),
-    ]
-    urlpatterns += ask_patterns
+ask_patterns = [
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
+        ask_search,
+        name='ask-search-es'),
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-es-json'),
+    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+        view_answer,
+        name='ask-english-answer'),
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+        view_answer,
+        name='ask-spanish-answer'),
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
+        print_answer,
+        name='ask-spanish-print-answer'),
+    url(r'^(?i)ask-cfpb/search/$',
+        ask_search,
+        name='ask-search-en'),
+    url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-en-json'),
+    url(r'^(?i)ask-cfpb/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-en'),
+    url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-es'),
+]
+urlpatterns += ask_patterns
 
 
 # Catch remaining URL patterns that did not match a route thus far.
-
 urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 # urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 

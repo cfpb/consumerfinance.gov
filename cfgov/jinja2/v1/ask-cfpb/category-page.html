@@ -38,11 +38,33 @@
             <p>{{ page.ask_category.intro|safe }}</p>
         </div>
     </section>
+    {% if choices|length > 0 %}
+    <section class="ask-categories
+                    block 
+                    block__bg 
+                    block__flush-sides 
+                    block__flush-bottom 
+                    block__bg-extend-right">
+        <h3>What is your question about?</h3>
+        <nav class="content-l subcategory-nav">
 
-    <section class="search-results block
-                    block__flush-top">
-        <div class="message">
-        </div>
+            {% for column in choices | slice(2) -%}
+            <ul class="content-l_col content-l_col-1-2 facets_list list list__unstyled">
+                {%- for subcategory in column -%}
+                <li class="list_item">
+                    <a  class="m-nav-link {{ 'm-nav-link__current' if page.ask_subcategory.slug == subcategory.slug else '' }}" href="/ask-cfpb/category-{{ page.ask_category.slug }}/{{ subcategory.slug }}">
+                        {{ subcategory.name }}
+                    </a>
+                </li>
+                {%- endfor -%}
+            </ul>
+            {%- endfor %}
+
+        </nav>
+    </section>
+    {% endif %}
+
+    <section class="search-results block block__flush-top">
         
         <div class="question_list">
             {% for question in questions %}
@@ -57,7 +79,7 @@
         </div>  
 
         {% if disclaimer %}
-        <div class="block">
+        <div class="block block__flush-bottom ask-disclaimer">
             {{ disclaimer.text | safe }}
         </div>
         {% endif %}
@@ -66,11 +88,5 @@
 
 {% endblock %}
 
-{% block javascript %}
-{{ super() }}
-<script>
-    var facetMap = {{ facet_map|safe }};
-</script>    
-{% endblock %}
 
 
