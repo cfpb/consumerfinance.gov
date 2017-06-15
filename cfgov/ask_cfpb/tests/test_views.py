@@ -7,7 +7,7 @@ from model_mommy import mommy
 
 from django.apps import apps
 from django.core.urlresolvers import reverse, NoReverseMatch
-from django.http import HttpRequest, Http404
+from django.http import HttpRequest, Http404, QueryDict
 import django.test
 from django.utils import timezone
 from wagtail.wagtailcore.models import Site
@@ -242,7 +242,7 @@ class RedirectAskSearchTestCase(django.test.TestCase):
         with self.assertRaises(Http404):
             redirect_ask_search(request)
 
-    def test_redirect_search_no_category(self):
+    def test_redirect_search_blank_facets(self):
         request = HttpRequest()
         request.GET['selected_facets'] = ''
         with self.assertRaises(Http404):
@@ -254,9 +254,51 @@ class RedirectAskSearchTestCase(django.test.TestCase):
         with self.assertRaises(Http404):
             redirect_ask_search(request)
 
-    def test_redirect_search(self):
+    def test_redirect_search_with_category(self):
+        category_querystring = (
+            'selected_facets=category_exact:my_category'
+            '&selected_facets=category_exact:my_category2'
+            '&selected_facets=audience_exact:Older+Americans'
+            '&selected_facets=audience_exact:my_audience2'
+            '&selected_facets=tag_exact:mytag1'
+            '&selected_facets=tag_exact:mytag2')
         request = HttpRequest()
-        request.GET['selected_facets'] = 'category_exact:my_category'
+        request.GET = QueryDict(category_querystring)
         result = redirect_ask_search(request)
         self.assertEqual(result.get('location'),
                          '/ask-cfpb/category-my_category')
+
+    def test_redirect_search_with_audience(self):
+        audience_querystring = (
+            'selected_facets=audience_exact:Older+Americans'
+            '&selected_facets=audience_exact:my_audience2')
+        request = HttpRequest()
+        request.GET = QueryDict(audience_querystring)
+        result = redirect_ask_search(request)
+        self.assertEqual(
+            result.get('location'),
+            '/ask-cfpb/audience-older-americans')
+
+    def test_redirect_search_with_tag(self):
+        target_tag = 'mytag1'
+        tag_querystring = (
+            'selected_facets=tag_exact:{}'
+            '&selected_facets=tag_exact:mytag2'.format(target_tag))
+        request = HttpRequest()
+        request.GET = QueryDict(tag_querystring)
+        result = redirect_ask_search(request, language='es')
+        self.assertEqual(
+            result.get('location'),
+            '/es/obtener-respuestas/buscar-por-etiqueta/{}/'.format(
+                target_tag))
+
+    def test_redirect_search_with_english_tag_raises_404(self):
+        """Only Spanish tags are supported"""
+        target_tag = 'mytag1'
+        tag_querystring = (
+            'selected_facets=tag_exact:{}'
+            '&selected_facets=tag_exact:mytag2'.format(target_tag))
+        request = HttpRequest()
+        request.GET = QueryDict(tag_querystring)
+        with self.assertRaises(Http404):
+            redirect_ask_search(request, language='en')
