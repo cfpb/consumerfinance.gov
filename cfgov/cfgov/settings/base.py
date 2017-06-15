@@ -575,7 +575,7 @@ FLAGS = {
 
     # Migration of Ask CFPB to Wagtail
     # When enabled, Ask CFPB is served from Wagtail
-    'WAGTAIL_ASK_CFPB': {},
+    'WAGTAIL_ASK_CFPB': {'boolean': True},
 
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},
