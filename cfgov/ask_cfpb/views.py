@@ -178,10 +178,12 @@ def redirect_ask_search(request, language='en'):
                 '/ask-cfpb/audience-{audience}'.format(
                     audience=audience), permanent=True)
 
-        def redirect_to_tag(tag):
+        def redirect_to_tag(tag, language):
             """We currently only offer tag search to Spanish users"""
+            if language != 'es':
+                    raise Http404
             return redirect(
-                'es/obtener-respuestas/buscar-por-etiqueta/{tag}/'.format(
+                '/es/obtener-respuestas/buscar-por-etiqueta/{tag}/'.format(
                     tag=tag), permanent=True)
 
         # Redirect by facet value, if there is one, starting with category.
@@ -193,8 +195,6 @@ def redirect_ask_search(request, language='en'):
                 category = facet.replace(category_facet, '')
                 if category:
                     return redirect_to_category(category, language)
-                else:
-                    raise Http404
 
         for facet in facets:
             if audience_facet in facet:
@@ -202,13 +202,10 @@ def redirect_ask_search(request, language='en'):
                 if audience_raw:
                     audience = slugify(audience_raw.replace('+', '-'))
                     return redirect_to_audience(audience)
-                else:
-                    raise Http404
 
         for facet in facets:
             if tag_facet in facet:
-                tag = facet.replace(tag_facet, '')
-                if tag:
-                    return redirect_to_tag(tag)
-                else:
-                    raise Http404
+                raw_tag = facet.replace(tag_facet, '')
+                if raw_tag:
+                    tag = raw_tag.replace(' ', '_').replace('%20', '_')
+                    return redirect_to_tag(tag, language)

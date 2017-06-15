@@ -426,7 +426,7 @@ redirect_patterns = [
 urlpatterns += redirect_patterns
 
 ask_patterns = [
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
         ask_search,
         name='ask-search-es'),
     url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
