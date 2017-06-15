@@ -17,6 +17,7 @@
 
 
 {% block babel_content %}
+    
     <section class="content row">
 
         <div class="primary span8">
@@ -82,6 +83,10 @@
 
 
     </section><!-- .row -->
+    <div class="analytics-data" 
+         data-answer-id="{{ answer_id }}"
+         data-category-slug="{{ category.slug_es }}">
+    </div>
 {% endblock %}
 
 {% block babel_share %}
@@ -93,3 +98,4 @@
         </span>
     </div><!-- .share -->
 {% endblock %}
+
