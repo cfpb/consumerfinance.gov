@@ -65,10 +65,9 @@
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
     {% if page and page.meta_image %}
-        <meta property="og:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
-        <meta property="twitter:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
+        {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}
+        <meta property="og:image" content="{{ meta_image_url }}">
+        <meta property="twitter:image" content="{{ meta_image_url }}">
     {% else %}
         <meta property="og:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
