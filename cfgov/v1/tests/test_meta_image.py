@@ -61,7 +61,7 @@ class TestMetaImage(TestCase):
             response,
             (
                 '<meta property="og:image" content='
-                '"http://testserver/static/img/logo_open-graph_facebook.png">'
+                '"http://localhost/static/img/logo_open-graph_facebook.png">'
             ),
             html=True
         )
@@ -70,7 +70,7 @@ class TestMetaImage(TestCase):
             response,
             (
                 '<meta property="twitter:image" content='
-                '"http://testserver/static/img/logo_open-graph_twitter.png">'
+                '"http://localhost/static/img/logo_open-graph_twitter.png">'
             ),
             html=True
         )
@@ -96,7 +96,7 @@ class TestMetaImage(TestCase):
 
     def test_template_meta_image_url(self):
         """Meta image links should work if using local storage."""
-        self.check_template_meta_image_url(expected_root="http://testserver")
+        self.check_template_meta_image_url(expected_root="http://localhost")
 
     @override_settings(
         AWS_QUERYSTRING_AUTH=False,
