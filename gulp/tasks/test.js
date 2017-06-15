@@ -301,8 +301,7 @@ function createSauceTunnel( cb ) {
                                        SAUCE_TUNNEL_ID );
 
   function _getSauceTunnelPromise() {
-    let resolve;
-    let reject;
+    const sauceTunnelParam = { sauceTunnel: sauceTunnel };
 
     return new Promise( ( resolve, reject ) => {
       sauceTunnel.on( 'verbose:debug', debugMsg => {
@@ -311,23 +310,58 @@ function createSauceTunnel( cb ) {
 
       sauceTunnel.start( status => {
         if ( status === false ) {
-          reject( sauceTunnel );
+          reject( sauceTunnelParam );
         }
 
         if ( sauceTunnel.proc ) {
           sauceTunnel.proc.on( 'exit', function( code ) {
-            reject( sauceTunnel );
+            reject( sauceTunnelParam );
           } );
         }
 
-        setTimeout( resolve.bind( null, sauceTunnel ), 5000 );
+        setTimeout( () => {
+          resolve( sauceTunnelParam );
+        }, 5000 );
       } );
+
     } );
   }
 
-  function _handleErrors( err ) {
-    if ( sauceTunnel ) {
-      sauceTunnel.killTunnel( () => {
+  return _getSauceTunnelPromise();
+}
+
+/**
+ * Spawn the appropriate acceptance tests.
+ * @param {string} args Selenium arguments.
+ */
+function spawnProtractor( ) {
+  const params = _getProtractorParams();
+
+  function _runProtractor( args ) {
+    gulpUtil.log( 'Running Protractor with params: ' + params );
+
+    return new Promise( ( resolve, reject ) => {
+      spawn(
+        fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
+        params,
+        { stdio: 'inherit' }
+      ).once( 'close', code => {
+        if ( code ) {
+          gulpUtil.log( 'Protractor tests exited with code ' + code );
+          reject( args );
+        }
+
+        resolve( args );
+        gulpUtil.log( 'Protractor tests done!' );
+      } );
+    } )
+    .then( _handleSuccess )
+    .catch( _handleErrors );
+  }
+
+  function _handleErrors( args={} ) {
+    if ( args.sauceTunnel ) {
+      args.sauceTunnel.stop( () => {
         process.exit( 1 );
       } );
     } else {
@@ -335,38 +369,21 @@ function createSauceTunnel( cb ) {
     }
   }
 
-  return _getSauceTunnelPromise()
-         .then( )
-         .catch( _handleErrors )
-}
-
-/**
- * Spawn the appropriate acceptance tests.
- * @param {string} args Selenium arguments.
- */
-function spawnProtractor( args ) {
-  const params = _getProtractorParams( args );
-
-  function _startProtractor( ) {
-    gulpUtil.log( 'Running Protractor with params: ' + params );
-    spawn(
-      fsHelper.getBinary( 'protractor', 'protractor', '../bin/' ),
-      params,
-      { stdio: 'inherit' }
-    ).once( 'close', code => {
-      if ( code ) {
-        gulpUtil.log( 'Protractor tests exited with code ' + code );
-        process.exit( 1 );
-      }
-      gulpUtil.log( 'Protractor tests done!' );
-    } );
+  function _handleSuccess( args={} ) {
+    if ( args.sauceTunnel ) {
+      args.sauceTunnel.stop( () => {
+        process.exit( 0 );
+      } );
+    } else {
+      process.exit( 0 );
+    }
   }
 
   if( params.indexOf( '--params.sauce=true' ) > -1 ) {
     createSauceTunnel()
-    .then( _startProtractor );
+    .then( _runProtractor );
   } else {
-    _startProtractor();
+    _runProtractor();
   };
 }
 
