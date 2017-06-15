@@ -38,44 +38,33 @@
             <p>{{ page.ask_category.intro|safe }}</p>
         </div>
     </section>
+    {% if choices|length > 0 %}
+    <section class="ask-categories
+                    block 
+                    block__bg 
+                    block__flush-sides 
+                    block__flush-bottom 
+                    block__bg-extend-right">
+        <h3>What is your question about?</h3>
+        <nav class="content-l subcategory-nav">
 
-    <section class="ask-categories">
+            {% for column in choices | slice(2) -%}
+            <ul class="content-l_col content-l_col-1-2 facets_list list list__unstyled">
+                {%- for subcategory in column -%}
+                <li class="list_item">
+                    <a  class="m-nav-link {{ 'm-nav-link__current' if page.ask_subcategory.slug == subcategory.slug else '' }}" href="/ask-cfpb/category-{{ page.ask_category.slug }}/{{ subcategory.slug }}">
+                        {{ subcategory.name }}
+                    </a>
+                </li>
+                {%- endfor -%}
+            </ul>
+            {%- endfor %}
 
-        {% if choices|length > 0 or audiences|length > 0 %}
-        <div class="block block__bg 
-                     block__flush-sides 
-                     block__flush-bottom 
-                     block__bg-extend-right">
-            <h3>What is your question about?</h3>
-            <nav class="content-l subcategory-nav">
-                {% for subcategory in choices %}
-                {% if loop.index == 1 %}
-                <ul class="content-l_col content-l_col-1-2 facets_list list list__unstyled ">
-                {% endif %}
-                {% set count = choices|length %}
-                {% if loop.index == ( count // 2 ) + ( 2 if count % 2 else 1) %}
-                </ul>
-                <ul class="content-l_col content-l_col-1-2 facets_list list__unstyled">
-                {% endif %}
-                    <li class="list_item">
-                        
-                            <a  class="m-nav-link {% if page.ask_subcategory.slug == subcategory.slug %} 
-                            m-nav-link__current {% endif %}" href="/ask-cfpb/category-{{ page.ask_category.slug }}/{{ subcategory.slug }}">
-
-                                {{ subcategory.name }}
-                            </a>
-                    </li>
-                {% if loop.index == count %}
-                </ul>
-                {% endif %}
-                {% endfor %}
-            </nav>
-        </div>
-        {% endif %}
+        </nav>
     </section>
+    {% endif %}
 
-    <section class="search-results block
-                    block__flush-top">
+    <section class="search-results block block__flush-top">
         
         <div class="question_list">
             {% for question in questions %}
