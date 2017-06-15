@@ -3,8 +3,9 @@ import json
 from urlparse import urljoin
 
 from bs4 import BeautifulSoup as bs
-from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, Http404, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template.defaultfilters import slugify
 from haystack.query import SearchQuerySet
 from haystack.inputs import Clean
 from wagtail.wagtailcore.models import Site
@@ -137,12 +138,19 @@ def ask_autocomplete(request, language='en'):
 
 def redirect_ask_search(request, language='en'):
     """
-    Catch old English pages built via query strings and
+    Catch old pages built via query string and
     redirect them to category pages if we can. If the query string
-    has a 'q' query, we'll run that search.
+    has a 'q' query, we'll run that search. Otherwise, we look for faceting.
+
+    We want to catch these search facets, in this order:
+    - selected_facets=category_exact:
+    - selected_facets=audience_exact
+    - selected_facets=tag_exact:
     """
 
-    cat_string = 'category_exact:'  # the facet prefix for categories
+    category_facet = 'category_exact:'
+    audience_facet = 'audience_exact:'
+    tag_facet = 'tag_exact:'
     if request.GET.get('q'):
         querystring = request.GET.get('q').strip()
         if not querystring:
@@ -152,19 +160,55 @@ def redirect_ask_search(request, language='en'):
                 query=querystring, permanent=True))
     else:
         facets = request.GET.getlist('selected_facets')
-        category = ''
-        if not facets:
+        if not facets or not facets[0]:
             raise Http404
-        # Get the category, if there is one
-        for facet in facets:
-            if cat_string in facet:
-                category = facet.replace(cat_string, '')
-        if not category:
-            raise Http404
-        if language == 'es':
+
+        def redirect_to_category(category, language):
+            if language == 'es':
+                return redirect(
+                    '/es/obtener-respuestas/categoria-{category}'.format(
+                        category=category), permanent=True)
             return redirect(
-                '/es/obtener-respuestas/categoria-{category}'.format(
+                '/ask-cfpb/category-{category}'.format(
                     category=category), permanent=True)
-        return redirect(
-            '/ask-cfpb/category-{category}'.format(
-                category=category), permanent=True)
+
+        def redirect_to_audience(audience):
+            """We currently only offer audience pages to English users"""
+            return redirect(
+                '/ask-cfpb/audience-{audience}'.format(
+                    audience=audience), permanent=True)
+
+        def redirect_to_tag(tag):
+            """We currently only offer tag search to Spanish users"""
+            return redirect(
+                'es/obtener-respuestas/buscar-por-etiqueta/{tag}/'.format(
+                    tag=tag), permanent=True)
+
+        # Redirect by facet value, if there is one, starting with category.
+        # We want to exhaust facets each time, so we need three loops.
+        # We act only on the first of any facet type found.
+        # Most search redirects will find a category and return.
+        for facet in facets:
+            if category_facet in facet:
+                category = facet.replace(category_facet, '')
+                if category:
+                    return redirect_to_category(category, language)
+                else:
+                    raise Http404
+
+        for facet in facets:
+            if audience_facet in facet:
+                audience_raw = facet.replace(audience_facet, '')
+                if audience_raw:
+                    audience = slugify(audience_raw.replace('+', '-'))
+                    return redirect_to_audience(audience)
+                else:
+                    raise Http404
+
+        for facet in facets:
+            if tag_facet in facet:
+                tag = facet.replace(tag_facet, '')
+                if tag:
+                    return redirect_to_tag(tag)
+                else:
+                    raise Http404
