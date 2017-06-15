@@ -121,11 +121,7 @@ class Category(models.Model):
         import collections
         cleaned = []
         for a in self.answer_set.all():
-            if a.search_tags_es.strip():
-                cleaned += [
-                    tag.strip() for tag
-                    in a.search_tags_es.strip().split(',')
-                    if tag.strip()]
+            cleaned += a.tags_es
         counter = collections.Counter(cleaned)
         return counter.most_common()[:10]
 
