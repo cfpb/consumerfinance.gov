@@ -62,11 +62,12 @@ function _chooseSuite( params ) {
  *   are set and the sauce param is set to true.
  */
 function _useSauceLabs() {
-  const sauceSeleniumUrl = envvars.SAUCE_SELENIUM_URL;
   const sauceUsername = envvars.SAUCE_USERNAME;
   const sauceAccessKey = envvars.SAUCE_ACCESS_KEY;
-  const isSauceCredentialsSet = typeof sauceSeleniumUrl !== 'undefined' &&
-                                sauceSeleniumUrl !== '' &&
+  const sauceTunnel = envvars.SAUCE_TUNNEL;
+
+  const isSauceCredentialsSet = typeof sauceTunnel !== 'undefined' &&
+                                sauceTunnel !== '' &&
                                 typeof sauceUsername !== 'undefined' &&
                                 sauceUsername !== '' &&
                                 typeof sauceAccessKey !== 'undefined' &&
