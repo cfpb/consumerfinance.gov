@@ -209,3 +209,5 @@ def redirect_ask_search(request, language='en'):
                 if raw_tag:
                     tag = raw_tag.replace(' ', '_').replace('%20', '_')
                     return redirect_to_tag(tag, language)
+                    
+        raise Http404
