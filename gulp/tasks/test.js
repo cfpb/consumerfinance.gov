@@ -293,44 +293,45 @@ function testPerf() {
  * @returns {Promise} Promise which creates Sauce Labs tunnel.
  */
 function createSauceTunnel( ) {
-  const SAUCE_USERNAME = envvars.SAUCE_USERNAME;
-  const SAUCE_ACCESSKEY = envvars.SAUCE_ACCESS_KEY;
+  const SAUCE_USERNAME =  envvars.SAUCE_USERNAME;
+  const SAUCE_ACCESS_KEY = envvars.SAUCE_ACCESS_KEY;
   const SAUCE_TUNNEL_ID = envvars.SAUCE_TUNNEL;
-  const sauceTunnel = new SauceTunnel( SAUCE_USERNAME,
-                                       SAUCE_ACCESSKEY,
-                                       SAUCE_TUNNEL_ID );
- /**
-  * Create Sauce Labs tunnel promise.
-  * @returns {Promise} Promise which creates Sauce Labs tunnel.
-  */
-  function _getSauceTunnelPromise() {
-    const sauceTunnelParam = { sauceTunnel: sauceTunnel };
 
-    return new Promise( ( resolve, reject ) => {
-      sauceTunnel.on( 'verbose:debug', debugMsg => {
-        gulpUtil.log( debugMsg );
-      } );
+  if (! ( SAUCE_USERNAME && SAUCE_ACCESS_KEY && SAUCE_TUNNEL_ID ) ) {
+    const ERROR_MSG = 'Please ensure your SAUCE variables are set.';
+    gulpUtil.colors.enabled = true;
+    gulpUtil.log( gulpUtil.colors.red( ERROR_MSG ) );
 
-      sauceTunnel.start( status => {
-        if ( status === false ) {
-          reject( sauceTunnelParam );
-        }
-
-        if ( sauceTunnel.proc ) {
-          sauceTunnel.proc.on( 'exit', function( code ) {
-            reject( sauceTunnelParam );
-          } );
-        }
-
-        setTimeout( () => {
-          resolve( sauceTunnelParam );
-        }, 5000 );
-      } );
-
-    } );
+    return Promise.reject();
   }
 
-  return _getSauceTunnelPromise();
+  return new Promise( ( resolve, reject ) => {
+    const sauceTunnel = new SauceTunnel( SAUCE_USERNAME,
+                                         SAUCE_ACCESS_KEY,
+                                         SAUCE_TUNNEL_ID );
+    const sauceTunnelParam = { sauceTunnel: sauceTunnel };
+
+    sauceTunnel.on( 'verbose:debug', debugMsg => {
+      gulpUtil.log( debugMsg );
+    } );
+
+    sauceTunnel.start( status => {
+      if ( status === false ) {
+        reject( sauceTunnelParam );
+      }
+
+      if ( sauceTunnel.proc ) {
+        sauceTunnel.proc.on( 'exit', function( code ) {
+          reject( sauceTunnelParam );
+        } );
+      }
+
+      setTimeout( () => {
+        resolve( sauceTunnelParam );
+      }, 5000 );
+    } );
+
+  } );
 }
 
 /**
@@ -362,8 +363,6 @@ function spawnProtractor( ) {
         resolve( args );
       } );
     } )
-    .then( _handleSuccess )
-    .catch( _handleErrors );
   }
 
   /**
@@ -394,11 +393,15 @@ function spawnProtractor( ) {
     }
   }
 
-  if ( params.indexOf( '--params.sauce=true' ) > -1 ) {
+  if ( gulpUtil.env.sauce === 'true' ) {
     createSauceTunnel()
-    .then( _runProtractor );
+    .then( _runProtractor )
+    .then( _handleSuccess )
+    .catch( _handleErrors );
   } else {
-    _runProtractor();
+    _runProtractor()
+    .then( _handleSuccess )
+    .catch( _handleErrors );
   }
 }
 
