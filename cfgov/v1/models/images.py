@@ -87,6 +87,14 @@ class CFGOVImage(AbstractImage):
         # Override Wagtail default of setting alt text to the image title.
         return self.alt
 
+    # If the image is both large and its height-to-width ratio is approximately
+    # 1/2 we instruct the template to render large Twitter cards
+    # See https://dev.twitter.com/cards/types/summary-large-image
+    @property
+    def summary_large_image(self):
+        image_ratio = float(self.height) / self.width
+        return self.width >= 1000 and 0.4 <= image_ratio <= 0.6
+
 
 class CFGOVRendition(AbstractRendition):
     image = models.ForeignKey(CFGOVImage, related_name='renditions')

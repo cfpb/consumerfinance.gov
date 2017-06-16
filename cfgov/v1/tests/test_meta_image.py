@@ -12,9 +12,6 @@ class TestMetaImage(TestCase):
     def setUp(self):
         self.preview_image = mommy.prepare(CFGOVImage)
         self.social_sharing_image = mommy.prepare(CFGOVImage)
-        self.social_sharing_image_small = CFGOVImage(width=100, height=50)
-        self.social_sharing_image_large = CFGOVImage(width=1200, height=600)
-        self.social_sharing_image_large_bad_ratio = CFGOVImage(width=1200, height=100)
 
     def test_meta_image_no_images(self):
         """ Meta image should be undefined if no image provided """
@@ -125,27 +122,3 @@ class TestMetaImage(TestCase):
             self.check_template_meta_image_url(expected_root='')
         finally:
             mock_s3.stop()
-
-    def test_twitter_card_large(self):
-        """ Twitter card property should be true if meta image is large """
-        page = mommy.prepare(
-            CFGOVPage,
-            social_sharing_image=self.social_sharing_image_large
-        )
-        self.assertTrue(page.large_twitter_card)
-
-    def test_twitter_card_small(self):
-        """ Twitter card property should be false if meta image is small """
-        page = mommy.prepare(
-            CFGOVPage,
-            social_sharing_image=self.social_sharing_image_small
-        )
-        self.assertFalse(page.large_twitter_card)
-
-    def test_twitter_card_large_bad_ratio(self):
-        """ Twitter card property should be false if meta image ratio isn't ~ 50% """
-        page = mommy.prepare(
-            CFGOVPage,
-            social_sharing_image=self.social_sharing_image_large_bad_ratio
-        )
-        self.assertFalse(page.large_twitter_card)
