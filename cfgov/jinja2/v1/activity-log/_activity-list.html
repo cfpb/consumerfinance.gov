@@ -23,12 +23,12 @@
                     {% if is_blog(post) %}
                         {{ category_slug.render('blog',
                                 page_url,
-                                'meta-header_left',
+                                'm-meta-header_left',
                                 false, form_id) }}
                     {% elif is_report(post) %}
                         {{ category_slug.render('report',
                                 page_url,
-                                'meta-header_left',
+                                'm-meta-header_left',
                                 false, form_id) }}
                     {% else %}
                         {% for cat in post.categories.all() %}
@@ -37,7 +37,7 @@
                             {% endif %}
                             {{ category_slug.render(cat.name,
                                     page_url,
-                                    'meta-header_left',
+                                    'm-meta-header_left',
                                     false, form_id) }}
                         {% endfor %}
                     {% endif %}

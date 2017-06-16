@@ -1,3 +1,5 @@
+@import (less) '../enhancements/typography.less';
+
 /* ==========================================================================
    cfgov-refresh
    footer
@@ -25,7 +27,7 @@
 
     &_share-icon-list {
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
-        .list__horizontal();
+        .m-list__horizontal();
 
         .respond-to-min( @bp-sm-min, {
             margin-bottom: 0;
@@ -41,9 +43,9 @@
     }
 
     &_nav-list {
-        .list__links();
+        .m-list__links();
 
-        .list_link {
+        .m-list_link {
             font-size: unit( 18px / @base-font-size-px, em );
             .u-link__colors( @black );
 
@@ -59,7 +61,7 @@
             });
         }
 
-        .list_link.list_link__disabled {
+        .m-list_link.m-list_link__disabled {
             border-bottom: 1px dotted;
 
             .respond-to-min( @bp-med-min, {
@@ -69,19 +71,19 @@
     }
 
     &_list {
-        .list__links();
+        .m-list__links();
 
-        .list_link {
+        .m-list_link {
             .u-link__colors( @dark-gray );
         }
     }
 
     &_long-list {
-        .list__unstyled();
+        .m-list__unstyled();
 
         .respond-to-max( @bp-xs-max, {
             margin-bottom: unit( 10px / @base-font-size-px, em );
-            .list__spaced();
+            .m-list__spaced();
 
             &:first-child {
                 margin-bottom: unit( 24px / @base-font-size-px, em );
@@ -89,21 +91,21 @@
         } );
 
         .respond-to-min( @bp-sm-min, {
-            .list__horizontal();
+            .m-list__horizontal();
 
             &:first-child {
                 margin-bottom: 0;
             }
         } );
 
-        .list_item {
+        .m-list_item {
             .respond-to-min( @bp-sm-min, {
                 margin-right: @grid_gutter-width - 4px;
                 margin-bottom: unit( 10px / @base-font-size-px, em );
             } );
         }
 
-        .list_link {
+        .m-list_link {
             .u-link__colors( @black );
             .u-link__hover-border();
         }
@@ -142,9 +144,9 @@
             }
 
             .o-footer_nav-list {
-                .list__horizontal();
+                .m-list__horizontal();
 
-                .list_item {
+                .m-list_item {
                     margin-bottom: 0;
                 }
 
@@ -192,7 +194,7 @@
         } );
 
         .o-footer_official-website {
-            .short-desc();
+            .u-webfont-regular();
             padding-left: 37px; //22px flag + 15px spacing
             background: url( '../img/us-flag_22x13.png' ) no-repeat 0 4px;
 

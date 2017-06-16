@@ -14,8 +14,8 @@
    ========================================================================== #}
 {% macro _branches(categories) -%}
 <ul class="o-bureau-structure_branches
-           list
-           list__unstyled">
+           m-list
+           m-list__unstyled">
     <li class="u-show-on-mobile
                org-chart_branch_name">
         {{ _mobile_nav(categories) }}
@@ -25,13 +25,15 @@
     <li class="o-bureau-structure_branch">
         <h4 class="o-bureau-structure_branch_name u-hide-on-mobile">{{ category.title }}</h4>
         <ul class="o-bureau-structure_nodes
-                   list
-                   list__unstyled">
+                   m-list
+                   m-list__unstyled">
             <li class="o-bureau-structure_branch_name">
                 <button class="o-bureau-structure_nav-item
-                               jump-link
-                               jump-link__before
-                               jump-link__left
+                               a-link
+                               a-link__jump
+                               cf-icon
+                               cf-icon__before
+                               cf-icon-left
                                u-show-on-mobile"
                         data-show-slide-index="0">
                     {{ category.title }}
@@ -67,12 +69,15 @@
    ========================================================================== #}
 {% macro _mobile_nav(categories) -%}
 <div class="o-bureau-structure_nav">
-    <ul class="list__links">
+    <ul class="m-list__links">
         {% for category in categories %}
         <li>
-            <button class="jump-link
-                           jump-link__right
-                           jump-link__bg
+            <button class="a-link
+                           a-link__jump
+                           a-link__bg
+                           cf-icon
+                           cf-icon__after
+                           cf-icon-right
                            o-bureau-structure_nav-item"
                     data-show-slide-index="{{ loop.index }}">
                 {{ category.title }}
@@ -138,8 +143,9 @@
     <div class="o-bureau-structure_nodes
                 o-expandable_content">
         <ul class="o-expandable_content-animated
-                   list list__unstyled
-                   list__spaced">
+                   m-list
+                   m-list__unstyled
+                   m-list__spaced">
             {% for child_org in org.offices %}
             <li class="o-bureau-structure_node">
                 {{ _role(child_org) }}
@@ -210,22 +216,22 @@
 {% macro _legend() -%}
 <section class="o-bureau-structure_legend">
     <h4>Chart Legend</h4>
-    <ul class="list
-               list__unstyled
-               list__spaced">
-        <li class="list_item">
+    <ul class="m-list
+               m-list__unstyled
+               m-list__spaced">
+        <li class="m-list_item">
             <span class="o-bureau-structure_legend_symbol">*</span>
             <span class="o-bureau-structure_legend_definition">
                 Position currently filled on an acting basis
             </span>
         </li>
-        <li class="list_item">
+        <li class="m-list_item">
             <span class="o-bureau-structure_legend_symbol">**</span>
             <span class="o-bureau-structure_legend_definition">
                 Position has direct reporting responsibilities to the director
             </span>
         </li>
-        <li class="list_item">
+        <li class="m-list_item">
             <span class="o-bureau-structure_legend_symbol">***</span>
             <span class="o-bureau-structure_legend_definition">
                 Position is not part of the CFPB director’s office
@@ -261,9 +267,9 @@
                 Download a printable, PDF copy of this organizational chart. This version
                 is expanded to show all offices.
             </p>
-            <a class="btn"
+            <a class="a-btn"
                href="{{ download_image_url }}">
-                <span class="btn_icon__left cf-icon cf-icon-save"></span>
+                <span class="a-btn_icon__on-left cf-icon cf-icon-save"></span>
                 Download PNG
             </a>
         </div>
@@ -273,9 +279,9 @@
                 Ask a CFPB employee to be involved in a forum, publication, discussion, or
                 other event; or to inquire about any CFPB events.
             </p>
-            <span class="cf-icon cf-icon-email list_icon"></span>
-            <span class="list_text">
-                <a class="list_link"
+            <span class="cf-icon cf-icon-email m-list_icon"></span>
+            <span class="m-list_text">
+                <a class="m-list_link"
                    href="mailto:invitations2cfpb@consumerfinance.gov">
                     invitations2cfpb@consumerfinance.gov
                 </a>

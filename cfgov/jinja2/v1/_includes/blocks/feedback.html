@@ -6,15 +6,15 @@
 
     {# JS-disabled result handling #}
 
-<div class="o-feedback 
+<div class="o-feedback
 			block
 	        {% if value.was_it_helpful_text %}
 		        block__bg
 		        block__border
 		        block__padded-top
-	        {% endif %}" 
-	        {% if value.radio_intro %} 
-	        	data-replace="true" 
+	        {% endif %}"
+	        {% if value.radio_intro %}
+	        	data-replace="true"
 	        {% endif %}>
 	<div class="u-mb15">
         {% if get_messages(request) %}
@@ -29,7 +29,7 @@
 	      action="."
 	      class="o-form"
 	      novalidate>
-	      
+
 	<div class="form-l">
 	    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 	    <input type="hidden" name="form_id" value="{{ form_id }}">
@@ -181,7 +181,7 @@
 	                    form-l_col-1">
 	            <label for="email">
 	                <h3>Contact email</h3>
-	                <input id="form_email" type="email" name="email">      
+	                <input id="form_email" type="email" name="email">
 	            </label>
 	    <p>{{ value.contact_advisory }}</p>
 	        </div>
@@ -193,7 +193,7 @@
 	    <fieldset class="o-form-input-group">
 	        <div class="form-l_col
 	                    form-l_col-1">
-	            <button class="btn" type="submit">{{ value.button_text }}</button>
+	            <button class="a-btn" type="submit">{{ value.button_text }}</button>
 	        </div>
 	    </fieldset>
 	  </div>

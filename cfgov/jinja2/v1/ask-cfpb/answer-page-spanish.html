@@ -33,9 +33,9 @@
                 <span class="split-left"><a class="print" href="{{ request.url }}imprimir/">
                         <img src="{{ static('nemo/_/img/icon-print-retina.png') }}" alt="" class="icon-20"> <span class="share-label">Imprimir</span></a></span>
                 <span class="split-right"><span class="share-label">Compartir esta página</span>
-                    
+
                     {% include "ask/share-links-spanish.html" with context %}
-                    
+
                 </span>
             </aside><!-- .supplement -->
             <div class="supplement">
@@ -73,7 +73,7 @@
 
             {% if disclaimer %}
             <section class="supplement supplement-plain js-showtoggle ac-disclaimer">
-                <button class="btn btn-block btn-block-on-small js-showtoggle-trigger">Acerca de estas respuestas</button>
+                <button class="a-btn btn-block btn-block-on-small js-showtoggle-trigger">Acerca de estas respuestas</button>
                 <div class="js-showtoggle-content well">
                     {{ disclaimer.text | safe }}
                 </div>
@@ -94,7 +94,7 @@
 {% block babel_share %}
     <div class="share s-show-on-small" data-set="share">
         <span><span class="share-label">Compartir esta página</span>
-            
+
             {% include "ask/share-links-spanish.html" %}
 
         </span>

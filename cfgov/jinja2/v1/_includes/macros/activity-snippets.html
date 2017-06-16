@@ -78,14 +78,17 @@
       {% set icon = category_icon.render(activity_type) %}
       <div class="activity">
           <h3 class="h4">{{ icon }} {{ header }}</h3>
-          <ul class="list list__unstyled list__spaced list__links">
+          <ul class="m-list
+                     m-list__unstyled
+                     m-list__spaced
+                     m-list__links">
           {% for item in feed %}
-              <li class="list_item">
-                  <a class="list_link"
+              <li class="m-list_item">
+                  <a class="m-list_link"
                      href="{{ get_protected_url(item) }}">
                       {{ item.preview_title | safe if item.preview_title else item.title | safe  }}
                       {%- if include_date_flag and item.specific.date_published -%}
-                          <span class="date">
+                          <span class="a-date">
                               &ndash;
                               {% import 'macros/time.html' as time %}
                               {{ time.render(item.specific.date_published, {'date':true}) }}

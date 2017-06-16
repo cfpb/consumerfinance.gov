@@ -10,11 +10,6 @@
 
         box-sizing: border-box;
         width: 100%;
-
-        .active & {
-            border-color: @pacific;
-            outline: 1px solid @pacific;
-        }
     }
 
     &_fieldset {
@@ -44,8 +39,8 @@
             max-height: 140px;
 
             border-color: @pacific;
-            border-top: 1px solid;
-            outline: 1px solid @pacific;
+            border-width: 2px;
+            border-top: 0;
         }
     }
 
@@ -93,7 +88,12 @@
             margin-right: unit(15px / @base-font-size-px, em);
         }
 
+        li:last-child {
+          margin-bottom: unit(5px / @base-font-size-px, em);
+        }
+
         label {
+            display: block;
             padding: 2px 5px;
 
             background-color: @navy-80;
