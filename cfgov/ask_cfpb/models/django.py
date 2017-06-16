@@ -388,14 +388,24 @@ class Answer(models.Model):
         - Assemble a whitelist of tags that are safe for search.
         - Exclude tags that are attached to only one answer.
         Tags are useless until they can be used to collect at least 2 answers.
+
+        This method returns a dict {'valid_tags': [], tag_map: {}}
+        valid_tags is an alphabetical list of valid tags.
+        tag_map is a dictionary mapping tags to questions.
         """
         cleaned = []
+        tag_map = {}
         for a in cls.objects.all():
-            cleaned += (a.tags_es, a)
+            cleaned += a.tags_es
+            for tag in a.tags_es:
+                if tag not in tag_map:
+                    tag_map[tag] = [a]
+                else:
+                    tag_map[tag].append(a)
         tag_counter = Counter(cleaned)
         valid = sorted(
             tup[0] for tup in tag_counter.most_common() if tup[1] > 1)
-        return valid
+        return {'valid_tags': valid, 'tag_map': tag_map}
 
     def has_live_page(self):
         if not self.answer_pages.all():
@@ -404,6 +414,11 @@ class Answer(models.Model):
             if page.live:
                 return True
         return False
+
+    @classmethod
+    def spanish_tag_map(cls):
+        tags = cls.valid_spanish_tags()
+
 
     def create_or_update_page(self, language=None):
         """Create or update an English or Spanish Answer page"""
