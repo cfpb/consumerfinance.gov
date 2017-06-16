@@ -61,7 +61,7 @@
             <div class="o-expandable_content" id="answer-content">
                 <div class="o-expandable_content-animated">
                     <div class="answer-text">
-                        {{ page.answer | safe }}
+                        {{ page.answer | richtext | safe }}
                     </div>
                     {% if audiences %} 
                     <div class="u-mt15">
@@ -161,6 +161,9 @@
             </div>
         </div>
     {% endif %}
-
+    <div class="analytics-data" 
+         data-answer-id="{{ answer_id }}"
+         data-category-slug="{{ category.slug }}">
+    </div>
 {% endblock %}
 

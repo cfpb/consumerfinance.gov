@@ -406,19 +406,6 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-kb_patterns = [
-    url(r'^(?i)askcfpb/',
-        include_if_app_enabled(
-            'knowledgebase', 'knowledgebase.urls')),
-    url(r'^es/obtener-respuestas/',
-        include_if_app_enabled(
-            'knowledgebase', 'knowledgebase.babel_urls')),
-]
-
-# knowledgebase URLs will be left on until the final deployment step
-if settings.DEPLOY_ENVIRONMENT not in ['build']:
-    urlpatterns += kb_patterns
-
 redirect_patterns = [
     url(r'^askcfpb/$',
         RedirectView.as_view(
@@ -436,14 +423,10 @@ redirect_patterns = [
         redirect_ask_search,
         name='redirect-ask-search'),
 ]
-# redirects will be turned on in the final deploymnt step
-if settings.DEPLOY_ENVIRONMENT in ['build']:
-    urlpatterns += redirect_patterns
+urlpatterns += redirect_patterns
 
-# The base ask patterns will be exposed in the megamenu
-# when the WAGTAIL_ASK_CFPB feature flag is activated.
 ask_patterns = [
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
         ask_search,
         name='ask-search-es'),
     url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
