@@ -34,12 +34,12 @@ DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
 
 
 def get_valid_spanish_tags():
-    from ask_cfpb.models import AnswerTagProxy
+    from ask_cfpb.models import Answer, AnswerTagProxy
     try:
         sqs = SearchQuerySet().models(AnswerTagProxy)
         valid_spanish_tags = sqs.filter(content='tags')[0].valid_spanish
     except (IndexError, AttributeError):  # ES not available; go to plan B
-        valid_spanish_tags = AnswerTagProxy.valid_spanish_tags()
+        valid_spanish_tags = Answer.valid_spanish_tags()['valid_tags']
     return valid_spanish_tags
 
 
@@ -58,7 +58,8 @@ def get_ask_nav_items(request, current_page):
             'title': cat.name,
             'url': '/ask-cfpb/category-' + cat.slug,
             'active': False if not hasattr(current_page, 'ask_category')
-            else cat.name == current_page.ask_category.name
+            else cat.name == current_page.ask_category.name,
+            'expanded': True
         }
         for cat in Category.objects.all()
     ], True
@@ -194,7 +195,8 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
             context['disclaimer'] = get_reusable_text_snippet(
                 DISCLAIMER_SNIPPET_TITLE)
             context['breadcrumb_items'] = get_ask_breadcrumbs()
-
+        elif self.language == 'es':
+            context['tags'] = self.ask_category.top_tags_es
         return context
 
     # Returns an image for the page's meta Open Graph tag
@@ -365,15 +367,15 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     @route(r'^(?P<tag>[^/]+)/$')
     def buscar_por_etiqueta(self, request, **kwargs):
         from ask_cfpb.models import Answer
-        valid_tags = get_valid_spanish_tags()
+        tag_dict = Answer.valid_spanish_tags()
         tag = kwargs.get('tag').replace('_', ' ')
-        if not tag or tag not in valid_tags:
+        if not tag or tag not in tag_dict['valid_tags']:
             raise Http404
         self.answers = [
             (SPANISH_ANSWER_SLUG_BASE.format(a.id),
              a.question_es,
              Truncator(a.answer_es).words(40, truncate=' ...'))
-            for a in Answer.objects.filter(search_tags_es__contains=tag)
+            for a in tag_dict['tag_map'][tag]
         ]
         context = self.get_context(request)
         context['tag'] = tag
@@ -442,6 +444,7 @@ class AnswerPage(CFGOVPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super(AnswerPage, self).get_context(request)
+        context['answer_id'] = self.answer_base.id
         context['related_questions'] = self.answer_base.related_questions.all()
         context['category'] = self.answer_base.category.first()
         context['description'] = self.snippet if self.snippet \
@@ -458,8 +461,11 @@ class AnswerPage(CFGOVPage):
                     slugify(audience.name))}
             for audience in self.answer_base.audiences.all()]
         if self.language == 'es':
+            tag_dict = self.Answer.valid_spanish_tags()
             context['tags_es'] = [tag for tag in self.answer_base.tags_es
-                                  if tag in get_valid_spanish_tags()]
+                                  if tag in tag_dict['valid_tags']]
+            context['tweet_text'] = Truncator(self.question).chars(
+                100, truncate=' ...')
 
         elif self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(

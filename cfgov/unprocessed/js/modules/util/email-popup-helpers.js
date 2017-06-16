@@ -1,7 +1,5 @@
 'use strict';
 
-var $ = window.$;
-
 /**
  * Stores/retrieves email signup data in localStorage
  */
@@ -103,15 +101,16 @@ function showOnScroll( elToShow, opts ) {
     cb: function() { return UNDEFINED; }
   };
 
-  opts = $.extend( defaults, opts || {} );
+  opts = Object.assign( defaults, opts || {} );
+
 
   function _getScrollTargetPosition() {
-    var elHeight = elToShow.height();
+    var elHeight = elToShow.offsetHeight;
     if ( opts.targetElement && opts.targetElement.length ) {
       var top = opts.targetElement.offset().top;
       return top + elHeight;
     }
-    var percentageTarget = $( document ).height() * ( opts.scrollPercent / 100 );
+    var percentageTarget = document.body.offsetHeight * ( opts.scrollPercent / 100 );
     return percentageTarget + elHeight;
 
   }
