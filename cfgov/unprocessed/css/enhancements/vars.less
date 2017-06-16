@@ -1,3 +1,83 @@
+// BEGIN CF4 CORE - TODO: delete when CFV4 is added to package.json
+
+/* ==========================================================================
+   Capital Framework
+   Less variables
+   ========================================================================== */
+
+//
+// Theme variables
+//
+
+// Color variables
+// `$color-` variables referenced in comments are from 18F's U.S. Web Design Standards
+// https://github.com/18F/web-design-standards/blob/staging/src/stylesheets/core/_variables.scss)
+
+// body
+@text:                   #212121; // $color-base
+
+// a
+@link-text:              #0071bc; // $color-primary
+@link-underline:         #0071bc; // $color-primary
+@link-text-visited:      #4c2c92; // $color-visited
+@link-underline-visited: #4c2c92; // $color-visited
+@link-text-hover:        #205493; // $color-primary-darker
+@link-underline-hover:   #205493; // $color-primary-darker
+@link-text-active:       #046b99; // $color-primary-darkest
+@link-underline-active:  #046b99; // $color-primary-darkest
+
+// table
+@table-border:           #5b616b; // $color-gray
+
+// thead
+@thead-text:             @text;
+@thead-bg:               #f1f1f1; // $color-gray-lightest
+
+// code
+@code-text:              @text;
+@code-bg:                #f1f1f1;
+
+
+// Sizing variables
+
+@base-font-size-px:      16px;
+@base-line-height-px:    22px;
+@base-line-height:       unit( @base-line-height-px / @base-font-size-px );
+
+@size-xl:                48px; // Super-size
+
+@size-i:                 34px; // h1-size
+@size-ii:                26px; // h2-size
+@size-iii:               22px; // h3-size
+@size-iv:                18px; // h4-size
+@size-v:                 14px; // h5-site
+@size-vi:                12px; // h6-size
+@size-code:              13px; // Custom size only for Mono code blocks
+
+
+// Breakpoint variables
+
+@bp-xs-max:              600px;
+@bp-sm-min:              @bp-xs-max + 1px;
+@bp-sm-max:              900px;
+@bp-med-min:             @bp-sm-max + 1px;
+@bp-med-max:             1020px;
+@bp-lg-min:              @bp-med-max + 1px;
+@bp-lg-max:              1230px;
+@bp-xl-min:              @bp-lg-max + 1px;
+
+
+// Web fonts
+
+@webfont-regular:        Arial;
+@webfont-italic:         Arial;
+@webfont-medium:         Arial;
+@webfont-demi:           Arial;
+
+// END CF4 CORE
+
+// TODO: Determine if the below utilities can be migrated to CFv4.
+
 /* topdoc
   name: Theme variables
   family: cf-vars

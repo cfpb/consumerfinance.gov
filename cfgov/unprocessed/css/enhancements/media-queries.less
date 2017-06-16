@@ -1,39 +1,45 @@
-/* topdoc
-  name: respond-to-print() (mixin)
-  notes:
-    - "This mixin allows us to easily write styles that target both
-       `@media print` and `.print`."
-  family: media-queries
-  patterns:
-    - name: Usage
-      codenotes:
-        - |
-          // Example Less
-          .example {
-              color: @gray;
+// BEGIN CF4 CORE - TODO: delete when CFV4 is added to package.json
 
-              .respond-to-print({
-                  color: @black;
-              });
-          }
+/* ==========================================================================
+   Capital Framework
+   Media queries
+   ========================================================================== */
 
-          // Exports to
-          .example {
-              color: #75787B;
-          }
-          @media print {
-              .example {
-                  color: #101820;
-              }
-          }
-          .print .example {
-              color: #101820;
-          }
-  tags:
-    - cfgov-cf-enhancements
-*/
+//
+// Media query mixins
+//
 
-.respond-to-print(@rules) {
+.respond-to-min( @bp, @rules ) {
+    @ems: unit( ( @bp / @base-font-size-px ), em );
+    @media only all and ( min-width: @ems ) {
+        @rules();
+    }
+}
+
+.respond-to-max( @bp, @rules ) {
+    @ems: unit( ( @bp / @base-font-size-px ), em);
+    @media only all and ( max-width: @ems ) {
+        @rules();
+    }
+}
+
+.respond-to-range( @bp1, @bp2, @rules ) {
+    @ems1: unit( ( @bp1 / @base-font-size-px ), em );
+    @ems2: unit( ( @bp2 / @base-font-size-px ), em );
+    @media only all and ( min-width: @ems1 ) and ( max-width: @ems2 ) {
+        @rules();
+    }
+}
+
+// TODO: Discuss whether to split this into min and max queries.
+.respond-to-dpi( @ratio, @rules ) {
+    @dpi: ( @ratio * 96dpi );
+    @media ( min-device-pixel-ratio: @ratio ), ( min-resolution: @dpi ) {
+        @rules();
+    }
+}
+
+.respond-to-print( @rules ) {
     @media print {
         @rules();
     }
@@ -41,48 +47,4 @@
         @rules();
     }
 }
-
-/* topdoc
-  name: respond-to-dpi(@ratio) (mixin)
-  notes:
-    - "This mixin allows us to easily write styles
-    that target high-resolution screens,
-    such as Apple retina screens"
-  family: cfgov-cf-enhancements
-  patterns:
-    - name: Usage
-      codenotes:
-        - |
-          // Example Less
-          .example {
-              background: url(regular-resolution-image.png);
-
-              .respond-to-dpi(2, {
-                  background-image: url(retina-image.png);
-              });
-          }
-
-          // Exports to
-          .example {
-              background: url(regular-resolution-image.png);
-          }
-          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-              .example {
-                  background-image: url(retina-image.png);
-              }
-          }
-  tags:
-    - cfgov-cf-enhancements
-*/
-
-.respond-to-dpi(@ratio, @rules) {
-    @dpi: (@ratio * 96dpi);
-    @media (-webkit-min-device-pixel-ratio: @ratio), (min-resolution: @dpi) {
-        @rules();
-    }
-}
-
-/* topdoc
-  name: EOF
-  eof: true
-*/
+// END CF4 CORE
