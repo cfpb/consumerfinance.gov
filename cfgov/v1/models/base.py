@@ -357,6 +357,14 @@ class CFGOVPage(Page):
     def meta_image(self):
         return self.social_sharing_image
 
+    # If the meta image is both large and its height-to-width ratio is
+    # approximately 1/2 we instruct the template to render large Twitter cards
+    # See https://dev.twitter.com/cards/types/summary-large-image
+    @property
+    def large_twitter_card(self):
+        image_ratio = float(self.meta_image.height) / self.meta_image.width
+        return self.meta_image.width >= 1000 and 0.4 <= image_ratio <= 0.6
+
 
 class CFGOVPageCategory(Orderable):
     page = ParentalKey(CFGOVPage, related_name='categories')

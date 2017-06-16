@@ -68,6 +68,9 @@
         {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}
         <meta property="og:image" content="{{ meta_image_url }}">
         <meta property="twitter:image" content="{{ meta_image_url }}">
+        {% if page.large_twitter_card %}
+        <meta name="twitter:card" content="summary_large_image">
+        {% endif %}
     {% else %}
         <meta property="og:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
