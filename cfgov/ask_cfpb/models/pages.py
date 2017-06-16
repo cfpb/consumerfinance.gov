@@ -39,7 +39,7 @@ def get_valid_spanish_tags():
         sqs = SearchQuerySet().models(AnswerTagProxy)
         valid_spanish_tags = sqs.filter(content='tags')[0].valid_spanish
     except (IndexError, AttributeError):  # ES not available; go to plan B
-        valid_spanish_tags = Answer.valid_spanish_tags()
+        valid_spanish_tags = Answer.valid_spanish_tags()['valid_tags']
     return valid_spanish_tags
 
 

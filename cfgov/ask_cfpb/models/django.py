@@ -119,11 +119,12 @@ class Category(models.Model):
     @property
     def top_tags_es(self):
         import collections
-        valid_list = Answer.valid_spanish_tags
+        valid_dict = Answer.valid_spanish_tags()
         cleaned = []
         for a in self.answer_set.all():
             cleaned += a.tags_es
-        valid_clean = [tag for tag in cleaned if tag in valid_list]
+        valid_clean = [tag for tag in cleaned
+                       if tag in valid_dict['valid_tags']]
         counter = collections.Counter(valid_clean)
         return counter.most_common()[:10]
 
@@ -414,11 +415,6 @@ class Answer(models.Model):
             if page.live:
                 return True
         return False
-
-    @classmethod
-    def spanish_tag_map(cls):
-        tags = cls.valid_spanish_tags()
-
 
     def create_or_update_page(self, language=None):
         """Create or update an English or Spanish Answer page"""

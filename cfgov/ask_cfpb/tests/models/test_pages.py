@@ -190,8 +190,8 @@ class AnswerModelTestCase(TestCase):
             json.loads(facet_map)['subcategories']['1'], [])
 
     def test_answer_valid_tags(self):
-        test_list = Answer.valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
+        test_dict = Answer.valid_spanish_tags()
+        self.assertIn('hipotecas', test_dict['valid_tags'])
 
     def test_get_valid_tags(self):
         from ask_cfpb.models import get_valid_spanish_tags
