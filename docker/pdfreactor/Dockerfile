@@ -1,9 +1,9 @@
-FROM centos:6
+# This is a bandwidth-saving hack:
+FROM elasticsearch:2.3
 WORKDIR /opt/
 
 RUN curl http://download.realobjects.de/PDFreactor_6_3_6828_3_unix_installer.tar.gz \
     | tar -xz
-RUN yum -y install java-1.7.0-openjdk  && yum clean all
 
 EXPOSE 9423
 
