@@ -119,10 +119,12 @@ class Category(models.Model):
     @property
     def top_tags_es(self):
         import collections
+        valid_list = Answer.valid_spanish_tags
         cleaned = []
         for a in self.answer_set.all():
             cleaned += a.tags_es
-        counter = collections.Counter(cleaned)
+        valid_clean = [tag for tag in cleaned if tag in valid_list]
+        counter = collections.Counter(valid_clean)
         return counter.most_common()[:10]
 
     @cached_property
@@ -389,7 +391,7 @@ class Answer(models.Model):
         """
         cleaned = []
         for a in cls.objects.all():
-            cleaned += a.tags_es
+            cleaned += (a.tags_es, a)
         tag_counter = Counter(cleaned)
         valid = sorted(
             tup[0] for tup in tag_counter.most_common() if tup[1] > 1)
