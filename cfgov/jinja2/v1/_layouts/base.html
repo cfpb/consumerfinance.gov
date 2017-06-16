@@ -65,10 +65,9 @@
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
     {% if page and page.meta_image %}
-        <meta property="og:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
-        <meta property="twitter:image"
-              content="{{ request.scheme }}://{{ request.get_host() }}{{ image(page.meta_image, 'original').url }}">
+        {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}
+        <meta property="og:image" content="{{ meta_image_url }}">
+        <meta property="twitter:image" content="{{ meta_image_url }}">
     {% else %}
         <meta property="og:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_facebook.png') }}">
@@ -116,13 +115,6 @@
     If you come across a script that makes a convincing case to be included in
     the head, then file an issue or PR to discuss including it.
 -->
-
-    {# TODO: jQuery is provided in the head to satisfy
-             Google Tag Manager (GTM) & Optimize requirements.
-             Ideally GTM would handle its own dependency management
-             and initializing jQuery could be moved to the footer.
-             (Ideally, also, we will move away from jQuery entirely.) #}
-    <script src="{{ static('js/jquery.min.js') }}"></script>
 
     {% if flag_enabled('AB_TESTING', request) %}
     <!-- Google Optimize page-hiding snippet -->

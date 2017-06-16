@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from collections import OrderedDict
+from collections import OrderedDict, Counter
 import HTMLParser
 import json
 
@@ -121,11 +121,7 @@ class Category(models.Model):
         import collections
         cleaned = []
         for a in self.answer_set.all():
-            if a.search_tags_es.strip():
-                cleaned += [
-                    tag.strip() for tag
-                    in a.search_tags_es.strip().split(',')
-                    if tag.strip()]
+            cleaned += a.tags_es
         counter = collections.Counter(cleaned)
         return counter.most_common()[:10]
 
@@ -305,6 +301,7 @@ class Answer(models.Model):
                     widget=forms.CheckboxSelectMultiple)]),
             FieldPanel('related_questions', widget=forms.SelectMultiple),
             FieldPanel('search_tags'),
+            FieldPanel('search_tags_es'),
             ImageChooserPanel('social_sharing_image')],
             heading="Metadata",
             classname="collapsible"),
@@ -391,16 +388,11 @@ class Answer(models.Model):
         Tags are useless until they can be used to collect at least 2 answers.
         """
         cleaned = []
-        valid = []
         for a in cls.objects.all():
-            if a.search_tags_es.strip():
-                cleaned += [
-                    tag.strip() for tag
-                    in a.search_tags_es.strip().split(',')
-                    if tag.strip()]
-        for tag in sorted(set(cleaned)):
-            if cls.objects.filter(search_tags_es__contains=tag).count() > 1:
-                valid.append(tag)
+            cleaned += a.tags_es
+        tag_counter = Counter(cleaned)
+        valid = sorted(
+            tup[0] for tup in tag_counter.most_common() if tup[1] > 1)
         return valid
 
     def has_live_page(self):

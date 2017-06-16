@@ -1,10 +1,14 @@
 'use strict';
 
 var isArray = require( './util/type-checkers' ).isArray;
-
+var EventObserver = require( '../modules/util/EventObserver' );
+var eventObserver = new EventObserver();
 var Analytics = {
 
   tagManagerIsLoaded: false,
+  addEventListener: eventObserver.addEventListener,
+  removeEventListener: eventObserver.removeEventListener,
+  dispatchEvent: eventObserver.dispatchEvent,
 
   EVENT_CATEGORY: 'Page Interaction',
 
@@ -44,7 +48,10 @@ var Analytics = {
         },
         set: function( value ) {
           _tagManager = value;
-          Analytics.tagManagerIsLoaded = true;
+          if ( !Analytics.tagManagerIsLoaded ) {
+            Analytics.tagManagerIsLoaded = true;
+            Analytics.dispatchEvent( 'gtmLoaded' );
+          }
         }
       } );
     }

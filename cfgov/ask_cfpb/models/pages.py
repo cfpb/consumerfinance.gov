@@ -443,6 +443,7 @@ class AnswerPage(CFGOVPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super(AnswerPage, self).get_context(request)
+        context['answer_id'] = self.answer_base.id
         context['related_questions'] = self.answer_base.related_questions.all()
         context['category'] = self.answer_base.category.first()
         context['description'] = self.snippet if self.snippet \

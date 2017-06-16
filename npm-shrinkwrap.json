@@ -3699,16 +3699,6 @@
       "from": "istextorbinary@1.0.2",
       "resolved": "https://registry.npmjs.org/istextorbinary/-/istextorbinary-1.0.2.tgz"
     },
-    "jquery": {
-      "version": "1.11.3",
-      "from": "jquery@1.11.3",
-      "resolved": "https://registry.npmjs.org/jquery/-/jquery-1.11.3.tgz"
-    },
-    "jquery.easing": {
-      "version": "1.3.2",
-      "from": "jquery.easing@>=1.3.0 <1.4.0",
-      "resolved": "https://registry.npmjs.org/jquery.easing/-/jquery.easing-1.3.2.tgz"
-    },
     "js-tokens": {
       "version": "3.0.1",
       "from": "js-tokens@>=3.0.0 <4.0.0",

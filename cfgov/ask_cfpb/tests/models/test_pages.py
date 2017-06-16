@@ -789,3 +789,21 @@ class AnswerModelTestCase(TestCase):
         answer.category.add(category)
         page = self.create_answer_page(answer_base=answer)
         self.assertEqual(page.meta_image, self.test_image2)
+
+    def test_answer_page_context_collects_subcategories(self):
+        """ Answer page's context delivers all related subcategories """
+        answer = self.answer1234
+        related_subcat = mommy.make(
+            SubCategory,
+            name='related_subcat',
+            parent=self.category)
+        subcat1 = self.subcategories[0]
+        subcat1.related_subcategories.add(related_subcat)
+        for each in self.subcategories:
+            answer.subcategory.add(each)
+        answer.update_english_page = True
+        answer.save()
+        page = answer.english_page
+        request = HttpRequest()
+        context = page.get_context(request)
+        self.assertEqual(len(context['subcategories']), 4)
