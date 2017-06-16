@@ -39,8 +39,7 @@ FULL_RUN = [
      '?selected_facets=category_exact:enviar-dinero'),
     '/learnmore/',
     '/complaint/',
-    # '/askcfpb/',  # on hold
-    # '/askcfpb/search',  # on hold
+    '/ask-cfpb/',
     '/your-story/',
     '/students/',
     '/find-a-housing-counselor/',
@@ -106,8 +105,7 @@ SHORT_RUN = [
     #  '?selected_facets=category_exact:enviar-dinero'),'/complaint/',
     '/learnmore/',
     # '/complaint/'
-    # '/askcfpb/',
-    '/askcfpb/search',
+    '/ask-cfpb/',
     '/your-story/',
     '/students/',
     '/find-a-housing-counselor/',
