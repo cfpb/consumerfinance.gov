@@ -1,0 +1,112 @@
+// BEGIN CF4 PAGINATION - TODO: delete when CFV4 is added to package.json
+
+//
+// Theme variables
+//
+
+// Color variables
+// $color- variables are from 18F's U.S. Web Design Standards
+// https://github.com/18F/web-design-standards/blob/18f-pages-staging/src/stylesheets/core/_variables.scss
+
+@pagination-text-color:    #323a45; // $color-gray-dark
+@pagination-bg-color:      #f1f1f1; // $color-gray-lightest
+
+// Sizing variables
+
+@pagination-font-size-px:  @base-font-size-px;
+@pagination-font-size-em:  unit( @pagination-font-size-px / @base-font-size-px, em );
+@pagination-btn-height-px: 42px;
+@pagination-btn-width-px:  130px;
+
+//
+// Pagination
+//
+
+.m-pagination {
+    position: relative;
+
+    &_form {
+        padding: unit( 5px / @base-font-size-px, em );
+
+        border-radius: unit( 4px / @base-font-size-px, em );
+        background: @pagination-bg-color;
+        color: @pagination-text-color;
+        text-align: center;
+    }
+
+    // Currently requires explicit input[type="number"] due to cascade issue
+    // TODO: Fix cascade issue, possibly due to import order
+    input[type="number"],
+    &_current-page {
+        .u-webfont-medium();
+
+        padding-top: unit( 5.5px / @base-font-size-px, em );
+        padding-bottom: unit( 5.5px / @base-font-size-px, em );
+
+        // We need enough room for three digits and the
+        // number spinners for type="number" inputs.
+        width: unit( 42px / @pagination-font-size-px, em );
+        margin: 0 @pagination-font-size-em / 2;
+
+        text-align: right;
+        vertical-align: middle;
+    }
+
+    &_label {
+        display: inline-block;
+
+        margin-bottom: 0;
+        margin-right: @pagination-font-size-em / 2;
+
+        vertical-align: middle;
+    }
+
+    &_btn-submit {
+        margin: 0;
+
+        vertical-align: middle;
+    }
+
+    &_btn-prev,
+    &_btn-next {
+        height: @pagination-btn-height-px;
+        width: @pagination-btn-width-px;
+        padding-top: unit( 12px / @base-font-size-px, em );
+        padding-bottom: unit( 12px / @base-font-size-px, em );
+
+        text-align: center;
+
+        &.btn__disabled {
+            background-color: @pagination-bg-color;
+        }
+    }
+
+    &_btn-next {
+        position: absolute;
+        right: 0;
+    }
+
+    .respond-to-max( @bp-xs-max, {
+        &_btn-prev,
+        &_btn-next {
+            margin-bottom: @pagination-font-size-em / 2;
+        }
+    } );
+
+    .respond-to-min( @bp-sm-min, {
+        &_btn-prev {
+            position: absolute;
+
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &_btn-next {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    } );
+}
+
+
+// END CF4 PAGINATION

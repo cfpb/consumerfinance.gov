@@ -67,7 +67,7 @@
                          cf-icon
                          cf-icon-right"></span>
         </a>
-        <form action="{{ fragment_id }}">
+        <form class="m-pagination_form" action="{{ fragment_id }}">
             <label for="m-pagination_current-page-{{ index | string }}">
                 <span class="m-pagination_label">
                     Page
@@ -97,7 +97,7 @@
             </span>
             <button class="a-btn
                            a-btn__link
-                           m-pagination_submit-btn"
+                           m-pagination_btn-submit"
                     type="submit">
                 Go
             </button>
