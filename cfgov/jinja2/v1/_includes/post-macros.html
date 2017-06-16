@@ -72,22 +72,22 @@
          aria-label="Pagination"
          data-ajax-action="posts-paginated.html">
     {%- if query_obj.current_page > 1 %}
-        <a class="btn btn__super pagination_prev"
+        <a class="a-btn a-btn__super pagination_prev"
            href="{{ query_obj.url_for_page(query_obj.current_page - 1) }}#pagination_content">
     {%- else %}
-        <a class="btn btn__super btn__disabled pagination_prev">
+        <a class="a-btn a-btn__super a-btn__disabled pagination_prev">
     {% endif %}
-            <span class="btn_icon__left cf-icon cf-icon-left"></span>
+            <span class="a-btn_icon__on-left cf-icon cf-icon-left"></span>
             Newer
         </a>
     {%- if query_obj.current_page < query_obj.pages %}
-        <a class="btn btn__super pagination_next"
+        <a class="a-btn a-btn__super pagination_next"
            href="{{ query_obj.url_for_page(query_obj.current_page + 1) }}#pagination_content">
     {%- else %}
-        <a class="btn btn__super btn__disabled pagination_next">
+        <a class="a-btn a-btn__super a-btn__disabled pagination_next">
     {% endif -%}
             Older
-            <span class="btn_icon__right cf-icon cf-icon-right"></span>
+            <span class="a-btn_icon__on-right cf-icon cf-icon-right"></span>
         </a>
         <form class="pagination_form" action="#pagination_content">
             <label class="pagination_label" for="pagination_current-page">
@@ -122,7 +122,7 @@
             <span class="pagination_label" aria-hidden="true">
                 of {{ query_obj.pages }}
             </span>
-            <button class="btn btn__link pagination_submit"
+            <button class="a-btn a-btn__link pagination_submit"
                     id="pagination_submit"
                     type="submit">
                 Go

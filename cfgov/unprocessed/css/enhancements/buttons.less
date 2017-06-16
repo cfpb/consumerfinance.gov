@@ -1,30 +1,376 @@
+// BEGIN CF4 BUTTONS - TODO: delete when CFV4 is added to package.json
 
-/* topdoc
-  name: Full Width Buttons
-  family: cf-enhancements
-  notes:
-    - "Modifier to buttons full width at small screen sizes"
-  patterns:
-    - name: Default example
-      markup: |
-        <btn class="btn btn__full">Button Text</btn>
-  tags:
-    - cf-buttons
-*/
+//
+// Theme variables
+//
 
-.btn__full { // Moved to CF, delete freely when migrating to CF4
+// Color variables
+// $color- variables are from 18F's U.S. Web Design Standards
+// https://github.com/18F/web-design-standards/blob/18f-pages-staging/src/stylesheets/core/_variables.scss
 
-    .respond-to-max(@bp-xs-max, {
-        display: block;
-        width: 100%;
+// .btn
+// .btn
+@btn-text:                      #ffffff; // $color-white
+@btn-bg:                        #0071bc; // $color-primary
+@btn-bg-hover:                  #205493; // $color-primary-darker
+@btn-bg-active:                 #112e51; // $color-primary-darkest
 
-        + .btn__full {
-            margin-left: initial;
-        }
-    });
+// .btn__secondary
+@btn__secondary-text:           #212121; // $color-base
+@btn__secondary-bg:             #9bdaf1; // $color-primary-alt-light
+@btn__secondary-bg-hover:       #02bfe7; // $color-primary-alt
+@btn__secondary-bg-active:      #00a6d2; // $color-primary-alt-dark
+
+// .btn__warning
+@btn__warning-text:             #ffffff; // $color-white
+@btn__warning-bg:               #e31c3d; // $color-secondary
+@btn__warning-bg-hover:         #cd2026; // $color-secondary-dark
+@btn__warning-bg-active:        #981b1e; // $color-secondary-darkest
+
+// .btn__disabled
+@btn__disabled-text:            darken( greyscale( #c7336e ), 10% );
+@btn__disabled-bg:              lighten( greyscale( #c7336e ), 40% );
+@btn__disabled-outline:         greyscale( #c7336e );
+
+// Sizing variables
+
+// .btn
+@btn-font-size:                 @base-font-size-px;
+@btn-border-radius-size:        4px;
+@btn-v-padding:                 8px;
+@btn-h-padding:                 14px;
+@btn-v-padding-modifier-ie:     0.8;
+
+// .btn__super
+@btn__super-font-size:          18px;
+
+//
+// Default button
+//
+
+.a-btn {
+  .u-webfont-medium();
+
+  appearance: none;
+
+  display: inline-block;
+
+  box-sizing: border-box;
+  padding:
+    unit( @btn-v-padding / @btn-font-size, em )
+    unit( @btn-h-padding / @btn-font-size, em );
+  border: 0;
+  margin: 0;
+
+  border-radius: unit( @btn-border-radius-size / @btn-font-size, em );
+  cursor: pointer;
+  font-size: unit( @btn-font-size / @base-font-size-px, em );
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.1s;
+
+  &,
+  &:link,
+  &:visited {
+    background-color: @btn-bg;
+    color: @btn-text;
+  }
+
+  &:hover,
+  &.hover,
+  &:focus,
+  &.focus {
+    background-color: @btn-bg-hover;
+  }
+
+  &:focus,
+  &.focus {
+    outline: 1px dotted @btn-bg;
+    // The outline-offset property is not supported everywhere (e.g. IE)
+    // but it adds a nice touch in browsers where it is.
+    outline-offset: 1px;
+  }
+
+  &:active,
+  &.active {
+    background-color: @btn-bg-active;
+  }
+
+  button&::-moz-focus-inner,
+  input&::-moz-focus-inner {
+    // Fixes inconsistent button.btn height in Firefox.
+    // Helps with inconsistent input.btn height in Firefox but not completely.
+    border: 0;
+  }
+
+  // Fixes button and input sizes in IE7.
+  .lt-ie8 button&,
+  .lt-ie8 input& {
+    overflow: visible;
+    padding-top: unit( @btn-v-padding-modifier-ie * @btn-v-padding / @btn-font-size, em );
+    padding-bottom: unit( @btn-v-padding-modifier-ie * @btn-v-padding / @btn-font-size, em );
+  }
+
+  //
+  // Secondary button
+  //
+
+  &__secondary {
+    &,
+    &:link,
+    &:visited {
+      background-color: @btn__secondary-bg;
+      color: @btn__secondary-text;
+    }
+
+    &:hover,
+    &.hover,
+    &:focus,
+    &.focus {
+      background-color: @btn__secondary-bg-hover;
+    }
+
+    &:focus,
+    &.focus {
+      outline-color: @btn__secondary-bg;
+    }
+
+    &:active,
+    &.active {
+      background-color: @btn__secondary-bg-active;
+    }
+  }
+
+  //
+  // Destructive action button
+  //
+
+  &__warning {
+    &,
+    &:link,
+    &:visited {
+      background-color: @btn__warning-bg;
+      color: @btn__warning-text;
+    }
+
+    &:hover,
+    &.hover,
+    &:focus,
+    &.focus {
+      background-color: @btn__warning-bg-hover;
+    }
+
+    &:focus,
+    &.focus {
+      outline-color: @btn__warning-bg;
+    }
+
+    &:active,
+    &.active {
+      background-color: @btn__warning-bg-active;
+    }
+  }
+
+  //
+  // Disabled button
+  //
+
+  &__disabled,
+  &[disabled] {
+    &,
+    &:link,
+    &:visited,
+    &:hover,
+    &.hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active {
+      background-color: @btn__disabled-bg;
+      color: @btn__disabled-text;
+      cursor: default; // Fallback for IE/Opera
+      cursor: not-allowed;
+    }
+
+    &:focus,
+    &.focus {
+      outline-color: @btn__disabled-outline;
+    }
+  }
+
+  //
+  // Super button
+  //
+
+  &__super {
+    padding:
+      unit( 11px / @btn__super-font-size, em )
+      unit( 29px / @btn__super-font-size, em );
+    font-size: unit( @btn__super-font-size / @base-font-size-px, em );
+
+    // Fixes button and input sizes in IE7.
+    .lt-ie8 button&,
+    .lt-ie8 input& {
+      padding-top: unit( @btn-v-padding-modifier-ie * 15px / @btn__super-font-size, em );
+      padding-bottom: unit( @btn-v-padding-modifier-ie * 15px / @btn__super-font-size, em );
+    }
+  }
+
+  //
+  // Full width button on x-small screens
+  //
+  &__full-on-xs {
+    .respond-to-max( @bp-xs-max, {
+      display: block;
+      width: 100%;
+    } );
+  }
 }
 
-/* topdoc
-  name: EOF
-  eof: true
-*/
+// END CF4 BUTTONS
+
+// BEGIN CF4 BUTTONS-WITH-ICONS - TODO: delete when CFV4 is added to package.json
+
+// Icon locations
+
+.a-btn_icon__on-left {
+    padding-right: unit( 10.5px / @btn-font-size, em );
+    border-right: 1px solid mix( @btn-bg, @btn-text, 50% );
+    margin-right: unit( 7px / @btn-font-size, em );
+}
+
+.a-btn_icon__on-right {
+    padding-left: unit( 10.5px / @btn-font-size, em );
+    border-left: 1px solid mix( @btn-bg, @btn-text, 50% );
+    margin-left: unit( 7px / @btn-font-size, em );
+}
+
+
+.a-btn_icon {
+    .a-btn__secondary & {
+        border-color: mix( @btn__secondary-bg, @btn__secondary-text, 50% );
+    }
+
+    .a-btn__warning & {
+        border-color: mix( @btn__warning-bg, @btn__warning-text, 50% );
+    }
+
+    .a-btn__disabled &,
+    .a-btn[disabled] & {
+        border-color: mix( @btn__disabled-bg, @btn__disabled-text, 50% );
+    }
+}
+
+// END CF4 BUTTONS-WITH-ICONS
+
+// BEGIN CF4 BUTTONS-LINKS - TODO: delete when CFV4 is added to package.json
+
+//
+// Button link
+//
+
+.a-btn__link {
+  padding: 0;
+
+  border-bottom: 1px dotted @link-underline;
+  border-radius: 0;
+
+  &,
+  &:link,
+  &:visited {
+    background-color: transparent;
+    border-bottom-color: @link-underline-visited;
+    color: @link-text-visited;
+  }
+
+  &:hover,
+  &.hover {
+    background-color: transparent;
+    border-bottom: 1px solid @link-underline-hover;
+    color: @link-text-hover;
+  }
+
+  &:focus,
+  &.focus {
+    border-bottom-style: solid;
+    background-color: transparent;
+    outline: 1px dotted @link-underline;
+  }
+
+  &:active,
+  &.active {
+    border-bottom: 1px solid @link-underline-active;
+    background-color: transparent;
+    color: @link-text-active;
+  }
+
+  .lt-ie8 button&,
+  .lt-ie8 input& {
+    padding: 0;
+  }
+
+  //
+  // Secondary button link
+  //
+
+  &.a-btn__secondary {
+    &,
+    &:link,
+    &:visited {
+      border-bottom-color: @btn__secondary-bg;
+      background-color: transparent;
+      color: @btn__secondary-bg;
+    }
+
+    &:hover,
+    &.hover {
+      border-bottom-color: @btn__secondary-bg-hover;
+      color: @btn__secondary-bg-hover;
+    }
+
+    &:focus,
+    &.focus {
+      outline-color: @btn__secondary-bg;
+    }
+
+    &:active,
+    &.active {
+      border-bottom-color: @btn__secondary-bg-active;
+      color: @btn__secondary-bg-active;
+    }
+  }
+
+  //
+  // Destructive action button link
+  //
+
+  &.a-btn__warning {
+    &,
+    &:link,
+    &:visited {
+      border-bottom-color: @btn__warning-bg;
+      background-color: transparent;
+      color: @btn__warning-bg;
+    }
+
+    &:hover,
+    &.hover {
+      border-bottom-color: @btn__warning-bg-hover;
+      color: @btn__warning-bg-hover;
+    }
+
+    &:focus,
+    &.focus {
+      outline-color: @btn__warning-bg;
+    }
+
+    &:active,
+    &.active {
+      border-bottom-color: @btn__warning-bg-active;
+      color: @btn__warning-bg-active;
+    }
+  }
+}
+
+// END CF4 BUTTONS-LINKS

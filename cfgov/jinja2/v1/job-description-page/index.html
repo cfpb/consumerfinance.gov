@@ -34,7 +34,7 @@
         </dl>
         <div class="content-l">
             <div class="content-l_col content-l_col-1-2">
-                <a href="#interested" class="btn">
+                <a href="#interested" class="a-btn">
                     Interested in applying?
                 </a>
             </div>
@@ -109,7 +109,7 @@
     </section>
 
     {% set usajobs_links = page.usajobs_application_links.order_by(
-      'applicant_type' 
+      'applicant_type'
     ) %}
     {% for usajobs_link in usajobs_links %}
     <div class="block
@@ -117,7 +117,7 @@
                 block__border">
         <h4>{{ usajobs_link.applicant_type.applicant_type }}</h4>
         <p>{{ usajobs_link.applicant_type.description }}</p>
-        <p><a class="btn" href="{{ usajobs_link.url }}">Apply now</a></p>
+        <p><a class="a-btn" href="{{ usajobs_link.url }}">Apply now</a></p>
         <p>
             You are about to leave consumerfinance.gov. To submit the
             application, you must go to USAJobs.gov.
@@ -131,7 +131,7 @@
                 block__border">
         <h4>{{ email_link.label }}</h4>
         {% if email_link.description %}<p>{{ email_link.description }}</p>{% endif %}
-        <p><a class="btn" href="{{ email_link.mailto_link | safe }}">Email us</a></p>
+        <p><a class="a-btn" href="{{ email_link.mailto_link | safe }}">Email us</a></p>
     </div>
     {% endfor %}
 

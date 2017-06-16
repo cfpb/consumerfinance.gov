@@ -6,7 +6,7 @@
 .error_action_container {
     margin: unit( @grid_gutter-width / @base-font-size-px, em ) 0;
 
-    .btn {
+    .a-btn {
         margin: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em ) 0;
     }
 
@@ -25,7 +25,7 @@
             }
         }
 
-        .btn {
+        .a-btn {
             margin: unit( ( @grid_gutter-width / 4 ) / @base-font-size-px, em ) 0;
         }
     });
@@ -67,7 +67,7 @@
         color: @white;
         border-color: @white;
         margin-top: unit( ( @grid_gutter-width / 4 ) / @base-font-size-px, em );
-    } 
+    }
 
     &__404 {
         .content_main {
@@ -90,13 +90,13 @@
 
             .respond-to-min(@bp-med-min, {
                 background-size: contain;
-            }); 
-            
+            });
+
         }
     }
 
     &__500 {
-        
+
         .main_wrapper {
 
             background: transparent url('../img/server.png') no-repeat right top;
@@ -115,7 +115,7 @@
             .respond-to-range(@bp-sm-min, @bp-sm-max, {
                 background-size: 40%;
             });
-            
+
         }
     }
 }
