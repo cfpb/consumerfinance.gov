@@ -302,3 +302,11 @@ class RedirectAskSearchTestCase(django.test.TestCase):
         request.GET = QueryDict(tag_querystring)
         with self.assertRaises(Http404):
             redirect_ask_search(request, language='en')
+
+    def test_redirect_search_with_unrecognized_facet_raises_404(self):
+        querystring = \
+            'sort=-updated_at&selected_facets=imtkfidycqszgfdb&page=60'
+        request = HttpRequest()
+        request.GET = QueryDict(querystring)
+        with self.assertRaises(Http404):
+            redirect_ask_search(request)
