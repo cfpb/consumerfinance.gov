@@ -35,7 +35,6 @@ defineSupportCode( function( { Then, When, Before } ) {
 
   When( 'mouse moves from one link to another after a delay',
     function( ) {
-
       browser
       .actions()
       .mouseMove( _dom.triggerPolyCom )
@@ -108,7 +107,7 @@ defineSupportCode( function( { Then, When, Before } ) {
                return expect( _dom.contentAboutUs.isDisplayed() )
                       .to.eventually
                       .equal( true );
-             } );
+           } );
   } );
 
   Then( 'the mega-menu organism should show menu when clicked', function( ) {
@@ -118,7 +117,6 @@ defineSupportCode( function( { Then, When, Before } ) {
            .actions( )
            .click( _dom.triggerBtn )
            .perform()
-
            .then( () => {
              expect( _dom.contentWrapper.isDisplayed() )
              .to.eventually

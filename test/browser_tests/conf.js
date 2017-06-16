@@ -3,6 +3,7 @@
 const environmentTest = require( './environment-test' );
 const envvars = require( '../../config/environment' ).envvars;
 const defaultSuites = require( './default-suites.js' );
+const minimist = require( 'minimist' );
 
 /**
  * Check whether a parameter value is set.
@@ -192,20 +193,25 @@ function _onPrepare() {
   // If --windowSize=w,h flag was passed, set window dimensions.
   // Otherwise, use default values from the test settings.
   const windowSize = browser.params.windowSize;
-  let windowWidthPx;
-  let windowHeightPx;
-  if ( typeof windowSize === 'undefined' ) {
-    windowWidthPx = environmentTest.windowWidthPx;
-    windowHeightPx = environmentTest.windowHeightPx;
-  } else {
+  const WINDOW_SIZES = environmentTest.WINDOW_SIZES;
+  const cucumberOpts = minimist( process.argv.slice( 2 ) ).cucumberOpts || {};
+
+  let windowWidthPx = WINDOW_SIZES.DESKTOP.WIDTH;
+  let windowHeightPx = WINDOW_SIZES.DESKTOP.HEIGHT;
+
+  if ( windowSize ) {
     const windowSizeArray = windowSize.split( ',' );
     windowWidthPx = Number( windowSizeArray[0] );
     windowHeightPx = Number( windowSizeArray[1] );
+  } else if ( cucumberOpts.tags === '@mobile' ) {
+    windowWidthPx = WINDOW_SIZES.MOBILE.WIDTH;
+    windowHeightPx = WINDOW_SIZES.MOBILE.HEIGHT;
   }
 
   // Calling setSize with headless chromeDriver doesn't work properly if
   // the requested size is larger than the available screen size.
   if ( !envvars.HEADLESS_CHROME_BINARY ) {
+    console.log(  browser.driver )
     browser.driver.manage().window().setSize(
       windowWidthPx,
       windowHeightPx
@@ -230,7 +236,7 @@ const config = {
     'profile':   false,
     'no-source': true
   },
-  unknownFlags_:        ['cucumberOpts'],
+  unknownFlags_:        [ 'cucumberOpts' ],
   directConnect:        true,
   framework:            'custom',
   frameworkPath:        require.resolve( 'protractor-cucumber-framework' ),

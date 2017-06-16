@@ -5,12 +5,12 @@ Feature: MultiSelect Tags
 
   Background:
     Given I goto a browse filterable page
-  	And I open the filterable list control
+    And I open the filterable list control
 
   Scenario: State on page load
     Then the multi-select should be rendered
-  	But no tags should be selected
-  	And the multi-select dropdown shouldn't be visible
+    But no tags should be selected
+    And the multi-select dropdown shouldn't be visible
 
   Scenario: Search input click
     When I click on the multi-select search input
@@ -22,9 +22,9 @@ Feature: MultiSelect Tags
 
   Scenario: Search input blur
     When I focus on the multi-select search input
-   	And I click away from the search input
-   	Then the multi-select dropdown shouldn't be visible
-   	And the multi-select dropdown length should be 0
+    And I click away from the search input
+    Then the multi-select dropdown shouldn't be visible
+    And the multi-select dropdown length should be 0
 
   Scenario: Typing in search input, returning matched results
     When I enter "tag0" in the search input
@@ -76,4 +76,3 @@ Feature: MultiSelect Tags
     And I click on the first option in the dropdown
     And I click on the first choices element
     Then the choices length should be 0
-

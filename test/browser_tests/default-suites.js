@@ -15,7 +15,7 @@ var defaultSuites = {
       browserName: 'chrome',
       version:     '',
       platform:    'Windows',
-      maxDuration: 20000
+      maxDuration: 10800
     }
   ],
 

@@ -38,13 +38,11 @@ function testUnitScripts( cb ) {
           thresholds: { global: 90 }
         } ) )
         */
-
         .on( 'end', cb );
     } );
 }
 
 /**
-
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {

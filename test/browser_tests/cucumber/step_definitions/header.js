@@ -25,6 +25,8 @@ const GLOBAL_CTA_LG_SEL = BASE_SEL + ' .m-global-header-cta__horizontal';
 const GLOBAL_CTA_SM_SEL = BASE_SEL + ' .m-global-header-cta__list';
 const GLOBAL_EYEBROW_LG_SEL = BASE_SEL + ' .m-global-eyebrow__horizontal';
 const GLOBAL_EYEBROW_SM_SEL = MEGA_MENU_SEL + ' .m-global-eyebrow__list';
+const EC = protractor.ExpectedConditions;
+
 
 chai.use( chaiAsPromised );
 
@@ -63,10 +65,21 @@ defineSupportCode( function( { Then, When, Before } ) {
     }
   );
 
-  When( /I click on the mega-menu/,
+  When( 'I click on the mega-menu',
     function( ) {
 
-      return _dom.megaMenu.click();
+      return browser
+             .wait( EC.elementToBeClickable( _dom.megaMenu ) )
+             .then( _dom.megaMenu.click );
+    }
+  );
+
+  When( 'I click the the mega-menu trigger',
+    function( ) {
+
+      return  browser
+              .wait( EC.elementToBeClickable( _dom.megaMenuTrigger ) )
+              .then( _dom.megaMenuTrigger.click );
     }
   );
 

@@ -10,6 +10,8 @@ module.exports = function() {
                    && this.tasks.browsersync
                    && this.tasks.browsersync.done === false;
 
+  console.log( 'isWatching', isWatching );
+
   if ( errorParam.exitProcess ) {
     exitProcessParam = errorParam.exitProcess;
     errorParam = args[1];

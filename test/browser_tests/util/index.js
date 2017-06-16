@@ -1,13 +1,13 @@
 'use strict';
 
-function shouldShouldnt( should ) {
+function shouldShouldnt( value ) {
 
-  return should === 'should' ? true : false;
+  return value === 'should' ? true : false;
 }
 
-function toCamelCase( string ) {
+function toCamelCase( value ) {
 
-  return string.replace( /\s(\w)/g, function( matches, letter ) {
+  return value.replace( /\s(\w)/g, function( matches, letter ) {
 
     return letter.toUpperCase();
   } );
