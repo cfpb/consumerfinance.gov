@@ -1,28 +1,592 @@
-/* ==========================================================================
-   cfgov-refresh
-   capital framework enhancements
-   ========================================================================== */
+// BEGIN enhancement for normalize-legacy-addon
 
-/* topdoc
-  name: Body Font
-  family: cf-core
-  notes:
-    - "Set the body to Avenir Regular."
-    - "Hides overflow on mobile sizes."
-  patterns:
-    - name: Body
-      codenotes:
-        - |
-          body
-  tags:
-    - cf-core
-*/
+/*
+ * Corrects list images handled incorrectly in IE 7.
+ */
 
-body {
-    .webfont-regular(); // Moved to CF, delete freely when migrating to CF4
+nav ul,
+nav ol,
+nav ul ul,
+nav ol ol {
+    list-style: none;
+    list-style-image: none;
 }
 
-/* topdoc
-  name: EOF
-  eof: true
-*/
+// END enhancement for normalize-legacy-addon
+
+// BEGIN CF4 CORE - TODO: delete when CFV4 is added to package.json
+
+/* ==========================================================================
+   Capital Framework
+   Base styles
+   ========================================================================== */
+
+//
+// Webfonts
+//
+
+.u-webfont-regular() {
+    font-family: @webfont-regular, Arial, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+
+    & em,
+    & i {
+        .u-webfont-italic();
+    }
+
+    & strong,
+    & b {
+        .u-webfont-demi();
+    }
+}
+
+.u-webfont-italic() {
+    font-family: @webfont-italic, Arial, sans-serif;
+    font-style: italic;
+    font-weight: normal;
+
+    .lt-ie9 & {
+        font-style: normal !important;
+    }
+}
+
+.u-webfont-medium() {
+    font-family: @webfont-medium, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+
+    .lt-ie9 & {
+        font-weight: normal !important;
+    }
+}
+
+.u-webfont-demi() {
+    font-family: @webfont-demi, Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+
+    .lt-ie9 & {
+        font-weight: normal !important;
+    }
+}
+
+//
+// Type hierarchy
+//
+
+body {
+    .u-webfont-regular();
+
+    color: @text;
+    font-size: unit( @base-font-size-px / 16 * 100, % );
+    line-height: @base-line-height;
+}
+
+.heading-1( @fs: @size-i ) {
+    @font-size: @fs;
+    .u-webfont-regular();
+
+    margin-bottom: unit( 15px / @font-size, em );
+    font-size: unit( @font-size / @base-font-size-px, em );
+    line-height: 1.25;
+}
+
+.heading-2( @fs: @size-ii ) {
+    @font-size: @fs;
+    .u-webfont-regular();
+
+    margin-bottom: unit( 15px / @font-size, em );
+    font-size: unit( @font-size / @base-font-size-px, em );
+    line-height: 1.25;
+}
+
+.heading-3( @fs: @size-iii )  {
+    @font-size: @fs;
+    .u-webfont-regular();
+
+    margin-bottom: unit( 15px / @font-size, em );
+    font-size: unit( @font-size / @base-font-size-px, em );
+    line-height: 1.25;
+}
+
+.heading-4( @fs: @size-iv )  {
+    @font-size: @fs;
+    .u-webfont-medium();
+
+    margin-bottom: unit( 15px / @font-size, em );
+    font-size: unit( @font-size / @base-font-size-px, em );
+    line-height: 1.25;
+}
+
+.heading-5( @fs: @size-v )  {
+    @font-size: @fs;
+    .u-webfont-demi();
+
+    margin-bottom: unit( 15px / @font-size, em );
+    font-size: unit( @font-size / @base-font-size-px, em );
+    letter-spacing: 1px;
+    line-height: 1.25;
+    text-transform: uppercase;
+}
+
+.heading-6( @fs: @size-vi )  {
+    @font-size: @fs;
+    .u-webfont-demi();
+
+    margin-bottom: unit( 15px / @font-size, em );
+    font-size: unit( @font-size / @base-font-size-px, em );
+    letter-spacing: 1px;
+    line-height: 1.25;
+    text-transform: uppercase;
+}
+
+// Resetting default browser styling for margin-top on headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+}
+
+h1,
+.h1 {
+    .heading-1();
+
+    p + &,
+    ul + &,
+    ol + &,
+    dl + &,
+    figure + &,
+    img + &,
+    table + &,
+    blockquote + & {
+        margin-top: unit( 60px / @font-size, em );
+    }
+
+    .respond-to-max( @bp-xs-max, {
+        .heading-2();
+
+        p + &,
+        ul + &,
+        ol + &,
+        dl + &,
+        figure + &,
+        img + &,
+        table + &,
+        blockquote + & {
+            margin-top: unit( 45px / @font-size, em );
+        }
+
+        h2 + &,
+        .h2 + &,
+        h3 + &,
+        .h3 + &,
+        h4 + &,
+        .h4 + &,
+        h5 + &,
+        .h5 + &,
+        h6 + &,
+        .h6 + & {
+            margin-top: unit( 30px / @font-size, em );
+        }
+    } );
+}
+
+h2,
+.h2 {
+    .heading-2();
+
+    p + &,
+    ul + &,
+    ol + &,
+    dl + &,
+    figure + &,
+    img + &,
+    table + &,
+    blockquote + & {
+        margin-top: unit( 45px / @font-size, em );
+    }
+
+    h1 + &,
+    .h1 + &,
+    h3 + &,
+    .h3 + &,
+    h4 + &,
+    .h4 + &,
+    h5 + &,
+    .h5 + &,
+    h6 + &,
+    .h6 + & {
+        margin-top: unit( 30px / @font-size, em );
+    }
+
+    .respond-to-max( @bp-xs-max, {
+        .heading-3();
+
+        p + &,
+        ul + &,
+        ol + &,
+        dl + &,
+        figure + &,
+        img + &,
+        table + &,
+        blockquote + & {
+            margin-top: unit( 30px / @font-size, em );
+        }
+    } );
+}
+
+h3,
+.h3 {
+    .heading-3();
+
+    p + &,
+    ul + &,
+    ol + &,
+    dl + &,
+    figure + &,
+    img + &,
+    table + &,
+    blockquote + &,
+    h1 + &,
+    .h1 + &,
+    h2 + &,
+    .h2 + &,
+    h4 + &,
+    .h4 + &,
+    h5 + &,
+    .h5 + &,
+    h6 + &,
+    .h6 + & {
+        margin-top: unit( 30px / @font-size, em );
+    }
+
+    .respond-to-max( @bp-xs-max, {
+        .heading-4();
+    } );
+}
+
+h4,
+.h4 {
+    .heading-4();
+
+    p + &,
+    ul + &,
+    ol + &,
+    dl + &,
+    figure + &,
+    img + &,
+    table + &,
+    blockquote + &,
+    h1 + &,
+    .h1 + &,
+    h2 + &,
+    .h2 + &,
+    h3 + &,
+    .h3 + &,
+    h5 + &,
+    .h5 + &,
+    h6 + &,
+    .h6 + & {
+        margin-top: unit( 30px / @font-size, em );
+    }
+}
+
+h5,
+.h5 {
+    .heading-5();
+
+    p + &,
+    ul + &,
+    ol + &,
+    dl + &,
+    figure + &,
+    img + &,
+    table + &,
+    blockquote + &,
+    h1 + &,
+    .h1 + &,
+    h2 + &,
+    .h2 + &,
+    h3 + &,
+    .h3 + &,
+    h4 + &,
+    .h4 + &,
+    h6 + &,
+    .h6 + & {
+        margin-top: unit( 30px / @font-size, em );
+    }
+}
+
+h6,
+.h6 {
+    .heading-6();
+
+    p + &,
+    ul + &,
+    ol + &,
+    dl + &,
+    figure + &,
+    img + &,
+    table + &,
+    blockquote + &,
+    h1 + &,
+    .h1 + &,
+    h2 + &,
+    .h2 + &,
+    h3 + &,
+    .h3 + &,
+    h4 + &,
+    .h4 + &,
+    h5 + &,
+    .h5 + & {
+        margin-top: unit( 30px / @font-size, em );
+    }
+}
+
+.lead-paragraph {
+    .heading-3();
+
+    margin-top: unit( 30px / @font-size, em );
+    margin-bottom: unit( 15px / 18px, em );
+
+    .respond-to-max(@bp-xs-max, {
+        // Use the same regular weight but reduce the sizes to h4 size
+        margin-top: unit( 30px / 18px, em );
+        font-size: unit( 18px / @base-font-size-px, em );
+    });
+}
+
+.superheading {
+    // For when you want a heading that's bigger than a normal H1
+    @font-size: @size-xl;
+    .u-webfont-regular();
+
+    margin-bottom: unit( 20px / @font-size, em );
+    font-size: unit( @font-size / @base-font-size-px, em );
+    line-height: 1.25;
+}
+
+//
+// Body copy element vertical margins
+//
+
+p,
+ul,
+ol,
+dl,
+figure,
+table,
+blockquote {
+    margin-top: 0;
+    margin-bottom: unit( 15px / @base-font-size-px, em );
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+p + ul,
+p + ol {
+    margin-top: unit( -5px / @base-font-size-px, em );
+}
+
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+    margin-top: unit( 8px / @base-font-size-px, em );
+}
+
+li {
+    margin-bottom: unit( 8px / @base-font-size-px, em );
+
+    &:last-child,
+    nav & {
+        margin-bottom: 0;
+    }
+}
+
+//
+// Default link
+//
+
+a {
+    border-width: 0;
+    border-style: dotted;
+    border-color: @link-underline;
+    color: @link-text;
+    text-decoration: none;
+
+    // Note: The class definitions below are only for use in
+    // demonstrating link states. Do not use in production.
+
+    &:visited,
+    &.visited {
+        border-color: @link-underline-visited;
+        color: @link-text-visited;
+    }
+
+    &:hover,
+    &.hover {
+        border-style: solid;
+        border-color: @link-underline-hover;
+        color: @link-text-hover;
+    }
+
+    &:focus,
+    &.focus {
+        border-style: solid;
+        outline: thin dotted;
+    }
+
+    &:active,
+    &.active {
+        border-style: solid;
+        border-color: @link-underline-active;
+        color: @link-text-active;
+    }
+}
+
+//
+// Underlined links
+//
+
+p,
+li,
+dd {
+    // Restrict bottom borders to inline text links ...
+
+    a {
+        border-bottom-width: 1px;
+    }
+}
+
+nav a {
+    // ... unless they're part of a nav list
+    border-bottom-width: 0;
+}
+
+//
+// Lists
+//
+
+ul, ol {
+    padding-left: unit( 18px / @base-font-size-px, em );
+}
+
+ul {
+    list-style: square;
+}
+
+ul ul {
+    list-style-type: circle;
+}
+
+//
+// Tables
+//
+
+th,
+td {
+    padding: unit( 10px / @base-font-size-px, em );
+
+    thead & {
+        .h5();
+
+        padding: unit( 10px / @font-size, em );
+        background: @thead-bg;
+        color: @thead-text;
+    }
+}
+
+thead,
+tbody tr {
+    border-bottom: 1px solid @table-border;
+}
+
+th {
+    .u-webfont-demi();
+
+    text-align: left;
+}
+
+//
+// Block quote
+//
+
+blockquote {
+    margin-right: unit( 15px / @base-font-size-px, em );
+    margin-left: unit( 15px / @base-font-size-px, em );
+
+    .respond-to-min( @bp-sm-min, {
+        margin-right: unit( 30px / @base-font-size-px, em );
+        margin-left: unit( 30px / @base-font-size-px, em );
+    } );
+}
+
+//
+// Form elements have been moved to the cf-forms component
+//
+
+//
+// Images
+//
+
+img {
+    max-width: 100%;
+}
+
+//
+// Figure
+//
+
+figure {
+    // reset browser default side margins
+    margin-right: 0;
+    margin-left: 0;
+
+    img {
+        // Removes weird vertical spacing below images.
+        // TODO: Discuss whether this could just be universally applied to img
+        vertical-align: middle;
+    }
+}
+
+//
+// Code blocks
+//
+
+pre,
+code {
+    background: @code-bg;
+    border-radius: 4px;
+    color: @code-text;
+    font-family: 'Input Mono', Consolas, Monaco, 'Courier New', monospace;
+}
+
+code {
+    display: inline-block;
+    padding: unit( 3px / @size-code, em )
+             unit( 3px / @size-code, em )
+             0;
+    font-size: unit( @size-code / @base-font-size-px, em );
+}
+
+pre {
+    display: block;
+    padding: unit( 10px / @base-font-size-px, em)
+             unit( 15px / @base-font-size-px, em );
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+
+    code {
+        padding: 0;
+        background-color: transparent;
+    }
+}
+
+// END CF4 CORE
