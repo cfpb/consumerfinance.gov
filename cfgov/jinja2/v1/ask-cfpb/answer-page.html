@@ -30,7 +30,7 @@
 
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom 
+    {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
@@ -54,7 +54,7 @@
                 {{ page.snippet | safe }}
             </h3>
         {% endif %}
-        <div data-qa-hook="expandable" 
+        <div data-qa-hook="expandable"
              data-read-more="true"
              class="o-expandable
                     o-expandable__read-more">
@@ -63,7 +63,7 @@
                     <div class="answer-text">
                         {{ page.answer | richtext | safe }}
                     </div>
-                    {% if audiences %} 
+                    {% if audiences %}
                     <div class="u-mt15">
                         {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
                     </div>
@@ -79,7 +79,7 @@
                     </div>
                     {% endif %}
                 </div>
-            </div>            
+            </div>
             <a class="o-expandable_target jump-link o-expandable_link" title="Expand content">
                 <span class="jump-link_text">
                     <span class="o-expandable_cue o-expandable_cue-open">
@@ -93,7 +93,7 @@
                 </span>
             </a>
         </div>
-        
+
 
     </div>
     {{ ask_search_bar.render( 'left' ) }}
@@ -132,7 +132,7 @@
                         </li>
                     {% endfor %}
                     <li class="list_item">
-                      <a class="btn category-button" href="{{slugurl('category-' + category.slug)}}"> 
+                      <a class="a-btn category-button" href="{{slugurl('category-' + category.slug)}}"> 
                         See all {{category.name | lower}} questions
                       </a>
                     </li>
@@ -156,7 +156,7 @@
                             {{ question.question | safe }}
                         </a>
                         </li>
-                    {% endfor %}  
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -166,4 +166,3 @@
          data-category-slug="{{ category.slug }}">
     </div>
 {% endblock %}
-
