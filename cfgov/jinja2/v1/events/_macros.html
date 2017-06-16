@@ -222,12 +222,12 @@
                 {% for speaker in bound.speakers.value %}
                     {%- if speaker.bound_blocks.url.render() -%}
                     <a href="{{ speaker.bound_blocks.url.render() }}">
-                    {{ speaker.bound_blocks.name.render() }}
+                    {{- speaker.bound_blocks.name.render() -}}
                     </a>
                     {%- else -%}
-                    {{ speaker.bound_blocks.name.render() }}
+                    {{- speaker.bound_blocks.name.render() -}}
                     {%- endif -%}
-                    {{ ';' if loop.index < loop.length else '' }}
+                    {{ '; ' if loop.index < loop.length else '' }}
                 {%- endfor -%}
                 </td>
             </tr>
