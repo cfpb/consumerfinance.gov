@@ -119,10 +119,13 @@ class Category(models.Model):
     @property
     def top_tags_es(self):
         import collections
+        valid_dict = Answer.valid_spanish_tags()
         cleaned = []
         for a in self.answer_set.all():
             cleaned += a.tags_es
-        counter = collections.Counter(cleaned)
+        valid_clean = [tag for tag in cleaned
+                       if tag in valid_dict['valid_tags']]
+        counter = collections.Counter(valid_clean)
         return counter.most_common()[:10]
 
     @cached_property
@@ -386,14 +389,24 @@ class Answer(models.Model):
         - Assemble a whitelist of tags that are safe for search.
         - Exclude tags that are attached to only one answer.
         Tags are useless until they can be used to collect at least 2 answers.
+
+        This method returns a dict {'valid_tags': [], tag_map: {}}
+        valid_tags is an alphabetical list of valid tags.
+        tag_map is a dictionary mapping tags to questions.
         """
         cleaned = []
+        tag_map = {}
         for a in cls.objects.all():
             cleaned += a.tags_es
+            for tag in a.tags_es:
+                if tag not in tag_map:
+                    tag_map[tag] = [a]
+                else:
+                    tag_map[tag].append(a)
         tag_counter = Counter(cleaned)
         valid = sorted(
             tup[0] for tup in tag_counter.most_common() if tup[1] > 1)
-        return valid
+        return {'valid_tags': valid, 'tag_map': tag_map}
 
     def has_live_page(self):
         if not self.answer_pages.all():
