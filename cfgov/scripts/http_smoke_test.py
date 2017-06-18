@@ -29,7 +29,7 @@ parser.add_argument(
 )
 
 FULL = False
-TIMEOUT = 10
+TIMEOUT = 30
 BASE = 'https://www.consumerfinance.gov'
 
 FULL_RUN = [
