@@ -501,12 +501,6 @@ class Answer(models.Model):
         super(Answer, self).delete()
 
 
-class AnswerTagProxy(Answer):
-    """A no-op proxy class to allow index store of expensive queries"""
-    class Meta:
-        proxy = True
-
-
 class EnglishAnswerProxy(Answer):
     """A no-op proxy class to allow separate language indexing in Haystack"""
     class Meta:
@@ -547,7 +541,6 @@ class SubCategory(models.Model):
         FieldPanel('name_es', classname="title"),
         FieldPanel('slug_es'),
         FieldPanel('description_es'),
-        FieldPanel('featured'),
         FieldPanel('weight'),
         FieldPanel('more_info'),
         FieldPanel('parent'),
