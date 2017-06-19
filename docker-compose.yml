@@ -10,6 +10,8 @@ services:
             MYSQL_DATABASE: v1
             MYSQL_USER: v1
             MYSQL_PASSWORD: v1
+        volumes:
+            - "/var/lib/mysql"
     elasticsearch:
         image: elasticsearch:2.3
         ports:
