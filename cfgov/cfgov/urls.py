@@ -304,6 +304,48 @@ urlpatterns = [
     # CCDB5-API
     url(r'^data-research/consumer-complaints/api/v1/',
         include_if_app_enabled('complaint_search', 'complaint_search.urls')),
+
+    # ask-cfpb
+    url(r'^askcfpb/$',
+        RedirectView.as_view(
+            url='/ask-cfpb/',
+            permanent=True)),
+    url(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
+         RedirectView.as_view(
+             url='/es/obtener-respuestas/slug-es-%(ask_id)s',
+             permanent=True)),
+    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
+         RedirectView.as_view(
+             url='/ask-cfpb/slug-en-%(ask_id)s',
+             permanent=True)),
+    url(r'^askcfpb/search/',
+        redirect_ask_search,
+        name='redirect-ask-search'),
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
+        ask_search,
+        name='ask-search-es'),
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-es-json'),
+    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+        view_answer,
+        name='ask-english-answer'),
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+        view_answer,
+        name='ask-spanish-answer'),
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
+        print_answer,
+        name='ask-spanish-print-answer'),
+    url(r'^(?i)ask-cfpb/search/$',
+        ask_search,
+        name='ask-search-en'),
+    url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-en-json'),
+    url(r'^(?i)ask-cfpb/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-en'),
+    url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-es'),
 ]
 
 if settings.ALLOW_ADMIN_URL:
@@ -405,55 +447,6 @@ if settings.DEBUG:
         urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
     except ImportError:
         pass
-
-redirect_patterns = [
-    url(r'^askcfpb/$',
-        RedirectView.as_view(
-            url='/ask-cfpb/',
-            permanent=True)),
-    url(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
-         RedirectView.as_view(
-             url='/es/obtener-respuestas/slug-es-%(ask_id)s',
-             permanent=True)),
-    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
-         RedirectView.as_view(
-             url='/ask-cfpb/slug-en-%(ask_id)s',
-             permanent=True)),
-    url(r'^askcfpb/search/',
-        redirect_ask_search,
-        name='redirect-ask-search'),
-]
-urlpatterns += redirect_patterns
-
-ask_patterns = [
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
-        ask_search,
-        name='ask-search-es'),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-es-json'),
-    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
-        view_answer,
-        name='ask-english-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
-        view_answer,
-        name='ask-spanish-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
-        print_answer,
-        name='ask-spanish-print-answer'),
-    url(r'^(?i)ask-cfpb/search/$',
-        ask_search,
-        name='ask-search-en'),
-    url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-en-json'),
-    url(r'^(?i)ask-cfpb/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-en'),
-    url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-es'),
-]
-urlpatterns += ask_patterns
-
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtailsharing_urls)))

@@ -97,8 +97,11 @@ def ask_search(request, language='en', as_json=False):
     }
     _map = language_map[language]
     sqs = _map['query']
-    query = Clean(request.GET.get('q', ''))
-    sqs = sqs.filter(content=query)
+    clean_query = Clean(request.GET.get('q', ''))
+    qstring = clean_query.query_string.strip()
+    if not qstring:
+        raise Http404
+    sqs = sqs.filter(content=clean_query)
 
     if as_json:
         results = [{'question': result.autocomplete,
@@ -112,7 +115,7 @@ def ask_search(request, language='en', as_json=False):
             AnswerResultsPage,
             language=language,
             slug=_map['slug'])
-        page.query = query
+        page.query = clean_query
         page.answers = []
 
         for result in sqs:
@@ -209,3 +212,5 @@ def redirect_ask_search(request, language='en'):
                 if raw_tag:
                     tag = raw_tag.replace(' ', '_').replace('%20', '_')
                     return redirect_to_tag(tag, language)
+
+        raise Http404

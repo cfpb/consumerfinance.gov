@@ -55,7 +55,7 @@ class AudienceModelAdmin(ModelAdmin):
 
 class NextStepModelAdmin(ModelAdmin):
     model = NextStep
-    menu_label = 'Next steps'
+    menu_label = 'Related resources'
     menu_icon = 'list-ul'
     list_display = (
         'title', 'text')
