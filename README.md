@@ -18,11 +18,7 @@ Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
 and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions
 are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
 
-Ensure that Elasticsearch and MySQL are installed and that MySQL is
-either running or runnable by our
-[backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41)
-and our
-[runserver.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/runserver.sh#L12).
+Ensure that Docker, Docker Machine, and Docker Compose are installed.
 
 ```
 git clone git@github.com:cfpb/cfgov-refresh.git
