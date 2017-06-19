@@ -9,13 +9,13 @@
 # Set script to exit on any errors.
 set -e
 
-mysql(){
-  if ! mysql.server status; then
-    mysql.server start
-  fi
-}
+# make sure backend services are running
+source start-services.sh
 
-# Run tasks to build the project for distribution.
+if [ -z "$DJANGO_HTTP_PORT"]; then
+  DJANGO_HTTP_PORT=8000
+fi
+
 server(){
   if [ "$1" == "ssl" ]; then
     echo '\033[0;32mStarting SSL Django server on port' $DJANGO_HTTP_PORT '...'
@@ -26,7 +26,5 @@ server(){
   fi
 }
 
-mysql
 server "$1"
-
 

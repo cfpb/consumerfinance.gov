@@ -2,5 +2,5 @@
 
 eval $(docker-machine env cfgov)
 
-docker-compose down
+docker-compose stop
 docker-machine stop cfgov
