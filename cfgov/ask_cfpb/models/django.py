@@ -547,7 +547,6 @@ class SubCategory(models.Model):
         FieldPanel('name_es', classname="title"),
         FieldPanel('slug_es'),
         FieldPanel('description_es'),
-        FieldPanel('featured'),
         FieldPanel('weight'),
         FieldPanel('more_info'),
         FieldPanel('parent'),
