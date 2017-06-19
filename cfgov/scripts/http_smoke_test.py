@@ -25,11 +25,16 @@ parser.add_argument(
 parser.add_argument(
     "-v", "--verbose",
     action="store_true",
-    help="set logging level to info to see all message output."
+    help="Set logging level to info to see all message output."
+)
+parser.add_argument(
+    "-t", "--timeout",
+    type=str,
+    help="Set a timeout level, in seconds; the default is 30."
 )
 
-FULL = False
 TIMEOUT = 30
+FULL = False
 BASE = 'https://www.consumerfinance.gov'
 
 FULL_RUN = [
@@ -237,5 +242,7 @@ if __name__ == '__main__':
         BASE = args.base
     if args.full:
         FULL = True
+    if args.timeout:
+        TIMEOUT = int(args.timeout)
     if not check_urls(BASE, full=FULL):
         sys.exit(1)
