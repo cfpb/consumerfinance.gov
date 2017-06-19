@@ -1,15 +1,13 @@
 #!/bin/bash
+source /usr/local/homebrew/bin/virtualenvwrapper.sh
 
 # reset the world
 docker-machine rm cfgov -y
-rm -rf .virtualenv
+deactivate cfgov-refresh
+rmvirtualenv cfgov-refresh
 rm -rf ~/Library/Caches/pip
 rm -rf node_modules
 rm -rf .env
-
-# new virtualenv
-virtualenv .virtualenv
-source .virtualenv/bin/activate
 
 # run our standard setup
 source load-env.sh
