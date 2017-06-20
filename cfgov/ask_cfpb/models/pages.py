@@ -33,14 +33,14 @@ ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
 DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
 
 
-def get_valid_spanish_tags():
-    from ask_cfpb.models import Answer, AnswerTagProxy
-    try:
-        sqs = SearchQuerySet().models(AnswerTagProxy)
-        valid_spanish_tags = sqs.filter(content='tags')[0].valid_spanish
-    except (IndexError, AttributeError):  # ES not available; go to plan B
-        valid_spanish_tags = Answer.valid_spanish_tags()['valid_tags']
-    return valid_spanish_tags
+# def get_valid_spanish_tags():
+#     from ask_cfpb.models import Answer, AnswerTagProxy
+#     try:
+#         sqs = SearchQuerySet().models(AnswerTagProxy)
+#         valid_spanish_tags = sqs.filter(content='tags')[0].valid_spanish
+#     except (IndexError, AttributeError):  # ES not available; go to plan B
+#         valid_spanish_tags = Answer.valid_spanish_tags()['valid_tags']
+#     return valid_spanish_tags
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -234,7 +234,8 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
         context.update({
             'paginator': paginator,
             'current_page': int(page),
-            'questions': answers,
+            'results_count': answers.count(),
+            'questions': paginator.page(page),
             'breadcrumb_items': get_ask_breadcrumbs(
                 self.ask_category)
         })
