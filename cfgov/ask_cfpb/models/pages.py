@@ -30,7 +30,8 @@ from v1.models.snippets import ReusableText
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
 ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
-DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
+ENGLISH_DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
+SPANISH_DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials (in Spanish)'
 
 
 # def get_valid_spanish_tags():
@@ -96,7 +97,7 @@ class AnswerLandingPage(LandingPage):
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
-                DISCLAIMER_SNIPPET_TITLE)
+                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
             context['audiences'] = [
                 {'text': audience.name,
                  'url': '/ask-cfpb/audience-{}'.format(
@@ -193,7 +194,7 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
-                DISCLAIMER_SNIPPET_TITLE)
+                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
             context['breadcrumb_items'] = get_ask_breadcrumbs()
         elif self.language == 'es':
             context['tags'] = self.ask_category.top_tags_es
@@ -285,7 +286,7 @@ class AnswerResultsPage(CFGOVPage):
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
-                DISCLAIMER_SNIPPET_TITLE)
+                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
             context['breadcrumb_items'] = get_ask_breadcrumbs()
 
         return context
@@ -343,7 +344,7 @@ class AnswerAudiencePage(CFGOVPage):
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
-                DISCLAIMER_SNIPPET_TITLE)
+                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
             context['breadcrumb_items'] = get_ask_breadcrumbs()
 
         return context
@@ -467,12 +468,13 @@ class AnswerPage(CFGOVPage):
                                   if tag in tag_dict['valid_tags']]
             context['tweet_text'] = Truncator(self.question).chars(
                 100, truncate=' ...')
-
+            context['disclaimer'] = get_reusable_text_snippet(
+                SPANISH_DISCLAIMER_SNIPPET_TITLE)
         elif self.language == 'en':
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
-                DISCLAIMER_SNIPPET_TITLE)
+                ENGLISH_DISCLAIMER_SNIPPET_TITLE)
             context['last_edited'] = self.answer_base.last_edited
             context['breadcrumb_items'] = get_ask_breadcrumbs(
                 self.answer_base.category.first())
