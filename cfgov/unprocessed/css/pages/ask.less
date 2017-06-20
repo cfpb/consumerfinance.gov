@@ -93,6 +93,14 @@
         } );
     }
 
+    .ask-cfpb-banner {
+        .respond-to-range( @bp-med-min, @bp-med-max {
+            padding-left: unit( @grid_gutter-width / @base-font-size-px, em );
+            padding-right: unit( @grid_gutter-width / @base-font-size-px, em );
+        } );
+        
+    }
+
     .ask-search {
         .respond-to-max( @bp-xs-max {
             padding: 0;
@@ -108,6 +116,10 @@
 }
 
 .ask-cfpb-page {
+    .responsive-object {
+        padding-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em ) !important;
+    }
+
     .m-pagination {
         .respond-to-max(@bp-xs-max, {
             height: auto;
@@ -128,6 +140,8 @@
         }
 
         .respond-to-max(@bp-xs-max, {
+            padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+
             .o-search-bar_col + .o-search-bar_col {
                 margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
             }
@@ -271,10 +285,6 @@
 
 .ask-cfpb-page__search {
     .o-search-bar {
-        .respond-to-max( @bp-xs-max, {
-            padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
-        } );
-
         form {
             max-width: @bp-xs-max;
         }
@@ -299,16 +309,48 @@
         color: @green;
     }
 
+    .ask-categories {
+        .respond-to-max(@bp-sm-max, {
+            padding-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
+        });
+    }
+
     .subcategory-nav {
         .list_item {
             .webfont-medium();
         }
+
+        .m-nav-link:not(.m-nav-link__current) {
+            .u-link__colors(@pacific, @pacific, @black, @black, @black,
+                  transparent, transparent, @green, @green, @green);
+        }
+
+        .content-l_col + .content-l_col {
+            margin-top: 0;
+        }
+
+        .content-l_col {
+            margin-bottom: 0;
+        }
+
     }
-    
+
+    .search-results_notification .m-notification {
+        display: block;
+    }
+
+    .question_list {
+        .respond-to-max(@bp-sm-max, {
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+        });
+
+    }
 }
 
-.ask-cfpb-banner {
-    h3 {
+.ask-cfpb-banner,
+.ask-disclaimer {
+    h3,
+    h5 {
         display: none;
     }
 

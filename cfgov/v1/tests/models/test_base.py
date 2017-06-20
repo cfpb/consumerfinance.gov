@@ -3,9 +3,11 @@ import datetime
 import mock
 from django.test import TestCase
 from django.test.client import RequestFactory
+from model_mommy import mommy
 from wagtail.wagtailcore.models import Site
 
 from v1.models.base import CFGOVPage, Feedback
+from v1.models.images import CFGOVImage
 from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
 
 
@@ -240,6 +242,7 @@ class TestCFGOVPageQuerySet(TestCase):
         save_new_page(page)
         self.check_live_counts(on_live_host=2)
 
+
 class TestFeedbackModel(TestCase):
     def setUp(self):
         self.test_feedback = Feedback(
@@ -248,7 +251,7 @@ class TestFeedbackModel(TestCase):
             is_helpful=True,
             referrer="http://www.consumerfinance.gov/owing-a-home/",
             submitted_on=datetime.datetime.now()
-            )
+        )
         self.test_feedback.save()
 
     def test_assemble_csv(self):

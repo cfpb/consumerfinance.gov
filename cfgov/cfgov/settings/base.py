@@ -56,7 +56,7 @@ INSTALLED_APPS = (
     'wagtailsharing',
     'flags',
     'haystack',
-
+    'ask_cfpb',
     'overextends',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,12 +74,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'reversion',
     'tinymce',
-    'jobmanager',
-    'ccdb5'
+    'jobmanager'
 )
-
-if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('ask_cfpb',)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
@@ -87,7 +83,6 @@ OPTIONAL_APPS = [
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
     {'import': 'agreements', 'apps': ('agreements', 'haystack',)},
-    {'import': 'knowledgebase', 'apps': ('knowledgebase', 'haystack',)},
     {'import': 'selfregistration', 'apps': ('selfregistration',)},
     {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
@@ -99,6 +94,8 @@ OPTIONAL_APPS = [
     {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
     {'import': 'picard', 'apps': ('picard',)},
+    {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
+    {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -574,12 +571,6 @@ FLAGS = {
     # Transition of /compltain to Wagtail
     # When enabled, the "Submit a complaint" page is served from Wagtail
     'MOSAIC_COMPLAINTS': {},
-
-    # Migration of Ask CFPB to Wagtail
-    # When enabled, Ask CFPB is served from Wagtail
-    'WAGTAIL_ASK_CFPB': {
-        'boolean': True if DEPLOY_ENVIRONMENT in ['build'] else False
-    },
 
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},
