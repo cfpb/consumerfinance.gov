@@ -145,36 +145,6 @@ repeating items (e.g., blog posts and press releases),
 and single pages (e.g., the Future Requests page in Doing Business with Us).
 What follows is a deeper dive into both of these content types.
 
-#### Repeating content
-
-For any kind of repeating content, this is the basic process:
-
-1. In the vars file for the section you're in (e.g., `newsroom/_vars-newsroom.html`),
-   we set up a variable that holds the results of the default query we want to run.
-
-   Here's how it looks for the blog:
-
-```jinja
-{% set query = queries.posts %}
-{% set posts = query.search(size=10) %}
-```
-
-
-2. If you want to display the repeating content within a template,
-   simply set up a `for ... in` loop,
-   then output the different properties of the post within.
-   In the case of the blog, a list of posts is built using this method in
-   `cfgov/jinja2/v1/_includes/posts-paginated.html`.
-
-   Here is a simplified example:
-
-```jinja
-{% for post in posts %}
-  <h1>{{ post.title }}</h1>
-  {{ post.content }}
-{% endfor %}
-```
-
 #### Single content
 
 To access a single piece of content,
