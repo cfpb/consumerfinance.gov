@@ -54,11 +54,11 @@ defineSupportCode( function( { Then, When, Before } ) {
   } );
 
   Then( /the header organism (should|shouldn't) display the (.*)/,
-    function( shouldDispayElement, element ) {
+    function( dispayElement, element ) {
 
       return expect( _dom[toCamelCase( element )].isDisplayed() )
              .to.eventually
-             .equal( shouldShouldnt( shouldDispayElement ) );
+             .equal( shouldShouldnt( dispayElement ) );
     }
   );
 
@@ -81,22 +81,22 @@ defineSupportCode( function( { Then, When, Before } ) {
     return _dom.globalSearchTrigger.click();
   } );
 
-  Then(/the mega-menu\s?(shouldn't|should)/, function( shouldDispayElement ) {
+  Then(/the mega-menu\s?(shouldn't|should)/, function( dispayElement ) {
     browser.sleep( 500 );
 
     return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
            .to.eventually
-           .equal( shouldShouldnt( shouldDispayElement ).toString() );
+           .equal( shouldShouldnt( dispayElement ).toString() );
   } );
 
   Then( /the mega-menu search form (shouldn't|should)/,
 
-    function( shouldDispayElement ) {
+    function( displayElement ) {
       browser.sleep( 500 );
 
       return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
              .to.eventually
-             .equal( shouldShouldnt( shouldDispayElement ).toString() );
+             .equal( shouldShouldnt( displayElement ).toString() );
     }
   );
 

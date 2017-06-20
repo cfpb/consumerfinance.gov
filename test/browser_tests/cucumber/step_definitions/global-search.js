@@ -78,11 +78,11 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   Then( /it (should|shouldn't) have a clear button label/,
-    function( shouldHaveLabel ) {
+    function( haveLabel ) {
 
       return expect( _dom.clearBtn.isDisplayed() )
              .to.eventually
-             .equal( shouldShouldnt( shouldHaveLabel ) );
+             .equal( shouldShouldnt( haveLabel ) );
     }
   );
 
@@ -104,10 +104,10 @@ defineSupportCode( function( { Then, When, Before } ) {
   );
 
   Then( /the search molecule (should|shouldn't) have a search trigger/,
-    function( shouldHaveTrigger ) {
+    function( haveTrigger ) {
       let expectedCondition;
 
-      if ( shouldShouldnt( shouldHaveTrigger ) ) {
+      if ( shouldShouldnt( haveTrigger ) ) {
         expectedCondition = EC.elementToBeClickable( _dom.trigger );
       } else {
         expectedCondition = EC.not( EC.elementToBeClickable( _dom.trigger ) );
@@ -117,16 +117,16 @@ defineSupportCode( function( { Then, When, Before } ) {
              .then( () =>
                expect( _dom.trigger.isDisplayed() )
                .to.eventually
-               .equal( shouldShouldnt( shouldHaveTrigger ) )
+               .equal( shouldShouldnt( haveTrigger ) )
              );
     }
   );
 
   Then( /it (should|shouldn't) have search input content/,
-    function( shouldHaveInput ) {
+    function( haveInput ) {
       let expectedCondition;
 
-      if ( shouldShouldnt( shouldHaveInput ) ) {
+      if ( shouldShouldnt( haveInput ) ) {
         expectedCondition = EC.elementToBeClickable( _dom.content );
       } else {
         expectedCondition = EC.not( EC.elementToBeClickable( _dom.content ) );
@@ -136,7 +136,7 @@ defineSupportCode( function( { Then, When, Before } ) {
              .then( () =>
                 expect( _dom.content.isDisplayed() )
                 .to.eventually
-                .equal( shouldShouldnt( shouldHaveInput ) )
+                .equal( shouldShouldnt( haveInput ) )
               );
     }
   );
@@ -161,11 +161,11 @@ defineSupportCode( function( { Then, When, Before } ) {
 
   Then( /it (should|shouldn't) have suggested search terms/,
 
-    function( shouldHaveTerms ) {
+    function( haveTerms ) {
 
       return expect( _dom.suggest.isDisplayed() )
              .to.eventually
-             .equal( shouldShouldnt( shouldHaveTerms ) );
+             .equal( shouldShouldnt( haveTerms ) );
     }
   );
 
