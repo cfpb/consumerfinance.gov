@@ -293,11 +293,11 @@ function testPerf() {
  * @returns {Promise} Promise which creates Sauce Labs tunnel.
  */
 function createSauceTunnel( ) {
-  const SAUCE_USERNAME =  envvars.SAUCE_USERNAME;
+  const SAUCE_USERNAME = envvars.SAUCE_USERNAME;
   const SAUCE_ACCESS_KEY = envvars.SAUCE_ACCESS_KEY;
   const SAUCE_TUNNEL_ID = envvars.SAUCE_TUNNEL;
 
-  if (! ( SAUCE_USERNAME && SAUCE_ACCESS_KEY && SAUCE_TUNNEL_ID ) ) {
+  if ( !( SAUCE_USERNAME && SAUCE_ACCESS_KEY && SAUCE_TUNNEL_ID ) ) {
     const ERROR_MSG = 'Please ensure your SAUCE variables are set.';
     gulpUtil.colors.enabled = true;
     gulpUtil.log( gulpUtil.colors.red( ERROR_MSG ) );
@@ -321,7 +321,7 @@ function createSauceTunnel( ) {
       }
 
       if ( sauceTunnel.proc ) {
-        sauceTunnel.proc.on( 'exit', function( code ) {
+        sauceTunnel.proc.on( 'exit', function( ) {
           reject( sauceTunnelParam );
         } );
       }
@@ -362,7 +362,7 @@ function spawnProtractor( ) {
         gulpUtil.log( 'Protractor tests done!' );
         resolve( args );
       } );
-    } )
+    } );
   }
 
   /**
