@@ -50,8 +50,8 @@
     {% set page_url = url or get_protected_url(page) %}
     {% set post_url = get_protected_url(post) %}
     <article class="o-post-preview">
-        <div class="meta-header">
-            <span class="date meta-header_right">
+        <div class="m-meta-header">
+            <span class="a-date m-meta-header_right">
                 {{ date_desc }}
                 {% if 'EventPage' in post.specific_class.__name__ %}
                     {{ time.render(post.specific.start_dt, {'date':true}) }}
@@ -64,7 +64,7 @@
                 {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
                     {{ category_slug.render('blog',
                             page_url,
-                            'post_slug meta-header_left',
+                            'post_slug m-meta-header_left',
                             false, form_id) }}
                 {% else %}
                     {% for cat in post.categories.all() %}
@@ -73,7 +73,7 @@
                         {% endif %}
                         {{ category_slug.render(cat.name,
                                 page_url,
-                                'post_slug meta-header_left',
+                                'post_slug m-meta-header_left',
                                 false, form_id) }}
                     {% endfor %}
                 {% endif %}

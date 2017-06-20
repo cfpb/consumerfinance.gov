@@ -67,36 +67,36 @@
 {% macro pagination(query_obj, filters) %}
 {#- Pagination is only displayed if there is more than one page. -#}
 {%- if query_obj.pages > 1 %}
-    <nav class="post-pagination pagination"
+    <nav class="post-pagination m-pagination"
          role="navigation"
          aria-label="Pagination"
          data-ajax-action="posts-paginated.html">
     {%- if query_obj.current_page > 1 %}
-        <a class="a-btn a-btn__super pagination_prev"
+        <a class="a-btn a-btn__super m-pagination_btn-prev"
            href="{{ query_obj.url_for_page(query_obj.current_page - 1) }}#pagination_content">
     {%- else %}
-        <a class="a-btn a-btn__super a-btn__disabled pagination_prev">
+        <a class="a-btn a-btn__super a-btn__disabled m-pagination_btn-prev">
     {% endif %}
             <span class="a-btn_icon__on-left cf-icon cf-icon-left"></span>
             Newer
         </a>
     {%- if query_obj.current_page < query_obj.pages %}
-        <a class="a-btn a-btn__super pagination_next"
+        <a class="a-btn a-btn__super m-pagination_btn-next"
            href="{{ query_obj.url_for_page(query_obj.current_page + 1) }}#pagination_content">
     {%- else %}
-        <a class="a-btn a-btn__super a-btn__disabled pagination_next">
+        <a class="a-btn a-btn__super a-btn__disabled m-pagination_btn-next">
     {% endif -%}
             Older
             <span class="a-btn_icon__on-right cf-icon cf-icon-right"></span>
         </a>
-        <form class="pagination_form" action="#pagination_content">
-            <label class="pagination_label" for="pagination_current-page">
+        <form class="m-pagination_form" action="#pagination_content">
+            <label class="m-pagination_label" for="pagination_current-page">
                 Page
                 <span class="u-visually-hidden">
                     number out of {{ query_obj.pages }} total pages
                 </span>
             </label>
-            <input class="pagination_current-page"
+            <input class="m-pagination_current-page"
                    id="pagination_current-page"
                    inputmode="numeric"
                    name="page"
@@ -119,10 +119,10 @@
             {%- endif -%}
         {%- endfor -%}
     {%- endfor -%}
-            <span class="pagination_label" aria-hidden="true">
+            <span class="m-pagination_label" aria-hidden="true">
                 of {{ query_obj.pages }}
             </span>
-            <button class="a-btn a-btn__link pagination_submit"
+            <button class="a-btn a-btn__link m-pagination_btn-submit"
                     id="pagination_submit"
                     type="submit">
                 Go

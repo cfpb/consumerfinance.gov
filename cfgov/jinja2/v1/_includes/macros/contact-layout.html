@@ -8,7 +8,7 @@
         {{ contact.content|safe }}
     {%- if contact.web %}
         {%- if contact.web.url %}
-            <a class="jump-link" href="{{ contact.web.url }}">
+            <a class="a-link__jump" href="{{ contact.web.url }}">
                 {{ contact.web.label if contact.web.label else contact.web.url }}
             </a>
         {%- endif %}
@@ -16,17 +16,17 @@
     </div>
     <div class="content-l_col content-l_col-1-2">
     {%- if contact.email or contact.phone or contact.fax or contact.street %}
-        <ul class="list list__icons">
+        <ul class="m-list m-list__icons">
         {%- if contact.email %}
             {%- for email in contact.email %}
-                <li class="list_item u-break-word">
+                <li class="m-list_item u-break-word">
                     {%- if loop.index == 1 %}
-                        <span class="cf-icon cf-icon-email list_icon"></span>
-                        <span class="h5 list_text">Email</span>
+                        <span class="cf-icon cf-icon-email m-list_icon"></span>
+                        <span class="h5 m-list_text">Email</span>
                     {%- endif %}
                     {%- if email.addr %}
                         <p>
-                            <a class="list_link" href="mailto:{{ email.addr }}">
+                            <a class="m-list_link" href="mailto:{{ email.addr }}">
                                 {{ email.addr }}
                             </a>
                         </p>
@@ -36,17 +36,17 @@
         {%- endif %}
         {%- if contact.phone %}
             {%- for phone in contact.phone %}
-                <li class="list_item">
+                <li class="m-list_item">
                     {%- if loop.index == 1 %}
-                        <span class="cf-icon cf-icon-phone list_icon"></span>
+                        <span class="cf-icon cf-icon-phone m-list_icon"></span>
                         <span class="h5 list_text">Phone</span>
                     {%- endif %}
                     <p>
-                        <a class="list_link list_link__phone" href="tel:{{ phone.num }}">
+                        <a class="m-list_link m-list_link__phone" href="tel:{{ phone.num }}">
                             {{ format_phone(phone.num) }}
                         </a>
                         {%- if phone.desc %}
-                            <span class="micro-copy micro-copy__large">
+                            <span class="a-micro-copy">
                                 {{ phone.desc }}
                             </span>
                         {%- endif %}
@@ -55,8 +55,8 @@
             {%- endfor %}
         {%- endif %}
         {%- if contact.fax %}
-            <li class="list_item">
-                <span class="cf-icon cf-icon-fax list_icon"></span>
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-fax m-list_icon"></span>
                 <span class="h5 list_text">Fax</span>
                 <p>
                     {{ format_phone(contact.fax.num) if contact.fax.num else '' }}
@@ -64,8 +64,8 @@
             </li>
         {%- endif %}
         {%- if contact.street %}
-            <li class="list_item">
-                <span class="cf-icon cf-icon-mail list_icon"></span>
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-mail m-list_icon"></span>
                 <span class="h5 list_text">Mailing Address</span>
                 <p>
                     Consumer Financial Protection Bureau<br>
@@ -76,7 +76,7 @@
                     {{ contact.zip_code if contact.zip_code else '' }}
                 {%- if contact.addr_desc %}
                     <br>
-                    <span class="micro-copy">
+                    <span class="a-micro-copy">
                         {{ contact.addr_desc }}
                     </span>
                 {%- endif %}

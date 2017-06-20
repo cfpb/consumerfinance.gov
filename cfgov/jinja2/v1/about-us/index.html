@@ -18,18 +18,19 @@
             and by empowering consumers to take more control
             over their economic lives.
         </p>
-        <ul class="list list__links">
-            <li class="list_item">
-                <a href="/about-us/the-bureau/" class="list_link">
+        <ul class="m-list m-list__links">
+            <li class="m-list_item">
+                <a href="/about-us/the-bureau/"
+                   class="m-list_link">
                     Learn more about the Bureau
                 </a>
             </li>
-            <li class="list_item">
+            <li class="m-list_item">
                 Find resources and tools for consumers in the Consumer Tools section
             </li>
-            <li class="list_item">
+            <li class="m-list_item">
                 <a href="/about-us/payments-harmed-consumers/"
-                   class="list_link">
+                   class="m-list_link">
                     Find out about our work to protect consumers
                 </a>
             </li>
@@ -54,7 +55,7 @@
                     <div class="media_body">
                         <span class="h6">Director</span>
                         <h3 class="bureau-bio_name">Richard Cordray</h3>
-                        <a class="jump-link jump-link__underline"
+                        <a class="a-link a-link__jump"
                            href="/about-us/the-bureau/about-director/">
                             Biography
                         </a>
@@ -72,13 +73,13 @@
                     <div class="media_body">
                         <span class="h6">Acting Deputy Director</span>
                         <h3 class="bureau-bio_name">David Silberman</h3>
-                        <a class="jump-link jump-link__underline"
+                        <a class="a-link a-link__jump"
                            href="/about-us/the-bureau/about-deputy-director/">
                             Biography
                         </a>
                     </div>
                 </div>
-                <a class="jump-link jump-link__underline"
+                <a class="a-link a-link__jump"
                    href="/about-us/the-bureau/bureau-structure/">
                     See how we’re organized
                 </a>
@@ -96,22 +97,22 @@
                     We publish our strategy and budget
                     so you can understand our priorities.
                 </p>
-                <ul class="list list__links">
-                    <li class="list_item">
+                <ul class="m-list m-list__links">
+                    <li class="m-list_item">
                         <a href="/about-us/budget-strategy/strategic-plan/"
-                           class="list_link">
+                           class="m-list_link">
                             Our strategic plan
                         </a>
                     </li>
-                    <li class="list_item">
+                    <li class="m-list_item">
                         <a href="/about-us/budget-strategy/financial-reports/"
-                           class="list_link">
+                           class="m-list_link">
                             Financial reports and updates
                         </a>
                     </li>
-                    <li class="list_item">
+                    <li class="m-list_item">
                         <a href="/about-us/budget-strategy/"
-                           class="list_link">
+                           class="m-list_link">
                             Learn more about our strategy and budget
                         </a>
                     </li>
@@ -133,14 +134,16 @@
                     stay on top of emerging trends,
                     and build effective programs to support our mission.
                 </p>
-                <ul class="list list__links">
-                    <li class="list_item">
-                        <a href="/about-us/advisory-groups/" class="list_link">
+                <ul class="m-list m-list__links">
+                    <li class="m-list_item">
+                        <a href="/about-us/advisory-groups/"
+                           class="m-list_link">
                             Advisory groups
                         </a>
                     </li>
-                    <li class="list_item">
-                        <a href="/about-us/doing-business-with-us/" class="list_link">
+                    <li class="m-list_item">
+                        <a href="/about-us/doing-business-with-us/"
+                           class="m-list_link">
                             Procurement opportunities
                         </a>
                     </li>
@@ -158,14 +161,16 @@
                     And we strive to create a workplace
                     that supports and develops them.
                 </p>
-                <ul class="list list__links">
-                    <li class="list_item">
-                        <a href="/about-us/careers/working-at-cfpb/" class="list_link">
+                <ul class="m-list m-list__links">
+                    <li class="m-list_item">
+                        <a href="/about-us/careers/working-at-cfpb/"
+                           class="m-list_link">
                             See what it’s like to work at the CFPB
                         </a>
                     </li>
                     <li class="list_item">
-                        <a href="/about-us/careers/current-openings/" class="list_link">
+                        <a href="/about-us/careers/current-openings/"
+                           class="m-list_link">
                             See current job opportunities
                         </a>
                     </li>
@@ -182,7 +187,7 @@
         {% import 'macros/activity-snippets.html' as activity_snippets with context %}
         {% set activities_feed = activity_snippets.render(tags, ['blog', 'newsroom'], include_date_flag=true) %}
         {% include 'templates/activities-feed.html' %}
-        <a class="jump-link jump-link__underline"
+        <a class="a-link a-link__jump"
            href="/activity-log/">
             View all of our activities
         </a>

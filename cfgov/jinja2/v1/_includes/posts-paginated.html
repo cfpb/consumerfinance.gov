@@ -20,8 +20,8 @@
     {%- import 'macros/category-slug.html' as category_slug %}
 
     <article class="post-preview">
-        <div class="meta-header">
-            <span class="date meta-header_right">
+        <div class="m-meta-header">
+            <span class="a-date m-meta-header_right">
                 {% import 'macros/time.html' as time %}
                 {{ time.render(post.date, {'date':true}) }}
             </span>
@@ -34,7 +34,7 @@
                     {% endif %}
                     {% set slug = category_slug.render(cat,
                                                        vars.path,
-                                                       'meta-header_left',
+                                                       'm-meta-header_left',
                                                        use_blog_category, 0, sheer_page) %}
                     {{ slug }}
                 {% endfor %}

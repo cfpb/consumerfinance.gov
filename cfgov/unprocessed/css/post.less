@@ -35,26 +35,26 @@
                         Jan 22, 2014
                     </span>
                 </div>
-                <ul class="post_share list__horizontal">
-                    <li class="list_item">
+                <ul class="post_share m-list m-list__horizontal">
+                    <li class="m-list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-email-social-square"></span>
                             <span class="u-visually-hidden">Share by email</span>
                         </a>
                     </li>
-                    <li class="list_item">
+                    <li class="m-list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-facebook-square"></span>
                             <span class="u-visually-hidden">Share on Facebook</span>
                         </a>
                     </li>
-                    <li class="list_item">
+                    <li class="m-list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-twitter-square"></span>
                             <span class="u-visually-hidden">Share on Twitter</span>
                         </a>
                     </li>
-                    <li class="list_item">
+                    <li class="m-list_item">
                         <a class="share-icon" href="#">
                             <span class="cf-icon cf-icon-linkedin-square"></span>
                             <span class="u-visually-hidden">Share on LinkedIn</span>
@@ -72,19 +72,19 @@
                         <p>
                             View or download the list in any of these formats:
                         </p>
-                        <ul class="list list__unstyled list__horizontal">
-                            <li class="list_item">
-                                <a class="list_link" href="#">
+                        <ul class="m-list m-list__unstyled m-list__horizontal">
+                            <li class="m-list_item">
+                                <a class="m-list_link" href="#">
                                     CSV
                                 </a>
                             </li>
-                            <li class="list_item">
-                                <a class="list_link" href="#">
+                            <li class="m-list_item">
+                                <a class="m-list_link" href="#">
                                     XLS
                                 </a>
                             </li>
-                            <li class="list_item">
-                                <a class="list_link" href="#">
+                            <li class="m-list_item">
+                                <a class="m-list_link" href="#">
                                     PDF <span class="cf-icon cf-icon-pdf"></span>
                                 </a>
                             </li>
@@ -97,19 +97,19 @@
                         <p>
                             View or download the list in any of these formats:
                         </p>
-                        <ul class="list list__unstyled list__horizontal">
-                            <li class="list_item">
-                                <a class="list_link" href="#">
+                        <ul class="m-list m-list__unstyled m-list__horizontal">
+                            <li class="m-list_item">
+                                <a class="m-list_link" href="#">
                                     CSV
                                 </a>
                             </li>
-                            <li class="list_item">
-                                <a class="list_link" href="#">
+                            <li class="m-list_item">
+                                <a class="m-list_link" href="#">
                                     XLS
                                 </a>
                             </li>
-                            <li class="list_item">
-                                <a class="list_link" href="#">
+                            <li class="m-list_item">
+                                <a class="m-list_link" href="#">
                                     PDF <span class="cf-icon cf-icon-pdf"></span>
                                 </a>
                             </li>
@@ -223,19 +223,19 @@
                         </span>
                     </h2>
                     <div class="line-container_body">
-                        <ul class="list list__unstyled">
-                            <li class="list_item list_item__spaced">
-                                <a class="list_link" href="#">
+                        <ul class="m-list m-list__unstyled">
+                            <li class="m-list_item m-list_item__spaced">
+                                <a class="m-list_link" href="#">
                                     Consumer help
                                 </a>
                             </li>
-                            <li class="list_item list_item__spaced">
-                                <a class="list_link" href="#">
+                            <li class="m-list_item m-list_item__spaced">
+                                <a class="m-list_link" href="#">
                                     Know before you owe
                                 </a>
                             </li>
-                            <li class="list_item list_item__spaced">
-                                <a class="list_link" href="#">
+                            <li class="m-list_item m-list_item__spaced">
+                                <a class="m-list_link" href="#">
                                     Submit a complaint
                                 </a>
                             </li>
@@ -361,7 +361,7 @@
               span.post_date
             aside
               ul.post_share
-                li.list_item
+                li.m-list_item
                   a.share-icon
             img.post_featured-img
             div.post_body
@@ -462,31 +462,31 @@
 
 .popular-stories,
 .related-posts {
-    .list {
+    .m-list {
         .respond-to-range(@bp-sm-min, @bp-sm-max, {
             .grid_nested-col-group();
 
-            & .list_item {
+            & .m-list_item {
                 .grid_column(6);
             }
 
-            // Using .list__spaced items within a grid column causes unwanted
+            // Using .m-list__spaced items within a grid column causes unwanted
             // extra margins because grid columns suppress margin collapsing.
             // To counteract that we need to use a negative margin on the list.
             // This means we also need to add a top margin to the first list
-            // item since the default .list__spaced only applies margins to
-            // .list_item + .list_item.
-            &.list__spaced {
+            // item since the default .m-list__spaced only applies margins to
+            // .m-list_item + .m-list_item.
+            &.m-list__spaced {
                 margin-top: unit(-24px / @base-font-size-px, em);
 
-                .list_item {
+                .m-list_item {
                     margin-top: unit(24px / @base-font-size-px, em);
                 }
             }
         });
     }
 
-    .list_link {
+    .m-list_link {
         .h4();
         .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
         border-width: 0;

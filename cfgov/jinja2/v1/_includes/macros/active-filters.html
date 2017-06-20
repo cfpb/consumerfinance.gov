@@ -63,7 +63,10 @@
 {# A helper macro to display the active_filters as a list.
   ========================================================================== #}
 {% macro _active_filters_list(active_filters_total, active_filters, active_date_filters, options) %}
-<ul class="filtered-by filtered-by__align-with-btn list__horizontal">
+<ul class="filtered-by
+           filtered-by__align-with-btn
+           m-list
+           m-list__horizontal">
 {%- if active_filters_total > 0 -%}
     {%- if options.show_filters_label -%}
         <li class="list_item filtered-by_header">

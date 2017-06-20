@@ -81,18 +81,18 @@
    ========================================================================== #}
 
 {% macro _list(list, is_related_topics=false) %}
-<ul class="list
-           list__unstyled
-           list__links
+<ul class="m-list
+           m-list__unstyled
+           m-list__links
            {{ 'm-related-metadata_topics' if is_related_topics else '' }} ">
     {% for link in list.links %}
-    <li class="list_item">
+    <li class="m-list_item">
         {% if link.url %}
-            <a href="{{ link.url }}" class="list_link">
+            <a href="{{ link.url }}" class="m-list_link">
                 {{ link.text }}
             </a>
         {% else %}
-            <span class="list_link">{{ link.text }}</span>
+            <span class="m-list_link">{{ link.text }}</span>
         {% endif %}
     </li>
     {% endfor %}
@@ -115,7 +115,7 @@
 
 {% macro _date(date) %}
 {% import 'macros/time.html' as time %}
-<p class="date u-mb0">
+<p class="a-date u-mb0">
     {{ time.render(date.date, {'date':true}) }}
 </p>
 {% endmacro %}

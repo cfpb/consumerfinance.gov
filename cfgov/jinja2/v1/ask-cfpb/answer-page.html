@@ -80,8 +80,8 @@
                     {% endif %}
                 </div>
             </div>
-            <a class="o-expandable_target jump-link o-expandable_link" title="Expand content">
-                <span class="jump-link_text">
+            <a class="o-expandable_target o-expandable_link a-link" title="Expand content">
+                <span class="a-link_text">
                     <span class="o-expandable_cue o-expandable_cue-open">
                         Read full answer
                         <span class="cf-icon cf-icon-plus-round"></span>
@@ -124,15 +124,16 @@
                         Related {{category.name}} subjects
                     </span>
                 </h2>
-                <ul class="list list__unstyled list__links">
+                <ul class="m-list m-list__unstyled m-list__links">
                     {% for subcat in subcategories %}
-                        <li class="list_item">
-
-                            <a href="{{slugurl('category-' + subcat.parent.slug)}}{{subcat.slug}}" class="list_link">{{ subcat.name }}</a>
+                        <li class="m-list_item">
+                            <a href="{{slugurl('category-' + subcat.parent.slug)}}{{subcat.slug}}" class="m-list_link">
+                              {{ subcat.name }}
+                            </a>
                         </li>
                     {% endfor %}
-                    <li class="list_item">
-                      <a class="a-btn category-button" href="{{slugurl('category-' + category.slug)}}"> 
+                    <li class="m-list_item">
+                      <a class="a-btn category-button" href="{{slugurl('category-' + category.slug)}}">
                         See all {{category.name | lower}} questions
                       </a>
                     </li>
@@ -149,10 +150,10 @@
                         Related questions
                     </span>
                 </h2>
-                 <ul class="list list__unstyled list__links">
+                 <ul class="m-list m-list__unstyled m-list__links">
                     {% for question in related_questions %}
-                    <li class="list_item">
-                        <a href="{{ slugurl(question.slug) }}" class="list_link">
+                    <li class="m-list_item">
+                        <a href="{{ slugurl(question.slug) }}" class="m-list_link">
                             {{ question.question | safe }}
                         </a>
                         </li>
@@ -161,7 +162,7 @@
             </div>
         </div>
     {% endif %}
-    <div class="analytics-data" 
+    <div class="analytics-data"
          data-answer-id="{{ answer_id }}"
          data-category-slug="{{ category.slug }}">
     </div>

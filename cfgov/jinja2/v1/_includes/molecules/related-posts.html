@@ -95,7 +95,7 @@
                     {{ posts[i].text | safe }}
                 </p>
                 {% endif %}
-                <p class="date">
+                <p class="a-date">
                     {% set date = posts[i].start_dt
                                   or posts[i].date_published
                                   or posts[i].latest_revision_created_at
@@ -115,9 +115,9 @@
    ========================================================================== #}
 
 {% macro _view_more() %}
-    <a class="jump-link jump-link__underline"
+    <a class="a-link a-link__underline"
        href="{{ page.generate_view_more_url(request) }}">
-        <span class="jump-link_text">
+        <span class="a-link_text">
             View more
         </span>
     </a>

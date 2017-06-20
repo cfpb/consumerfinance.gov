@@ -26,11 +26,11 @@
     <label for="{{ id }}" class="form-label-header">
         {{ value.label }}
         {%- if value.required == false -%}
-            <span class="micro-copy">&nbsp;(Optional)</span>
+            <span class="a-micro-copy">&nbsp;(Optional)</span>
         {%- endif -%}
     </label>
     {%- if value.helperText -%}
-        <p class="micro-copy" id="{{ ht_id }}">{{ value.helperText | safe }}</p>
+        <p class="a-micro-copy" id="{{ ht_id }}">{{ value.helperText | safe }}</p>
     {%- endif -%}
     <textarea class="input__long"
               id="{{ id }}"

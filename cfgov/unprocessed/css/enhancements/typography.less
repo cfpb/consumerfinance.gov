@@ -9,25 +9,25 @@
   tags:
     - cf-typography
 */
-.list__download() {
+.m-list__download() {
     ul {
-        .list__links();
-        .list__icons();
+        .m-list__links();
+        .m-list__icons();
 
         li {
-            .list__links .list_item();
-            .list__icons .list_item();
+            .m-list__links .m-list_item();
+            .m-list__icons .m-list_item();
         }
 
         a {
-            .list_link();
-            .jump-link();
+            .m-list_link();
+            .a-link__jump();
 
             // Override jump-link optical offset value.
             left: 0;
 
             span {
-                .list__icons .list_text();
+                .m-list__icons .m-list_text();
             }
 
             &:after {
@@ -72,12 +72,12 @@
     - cf-typography
 */
 
-.list__steps {
+.m-list__steps {
     padding-left: 0;
     counter-reset: item;
     list-style: none;
 
-    .list-item {
+    .m-list-item {
         position: relative;
 
         &::before {
@@ -86,112 +86,6 @@
         }
     }
 }
-
-/* topdoc
-  name: Jump link
-  family: cf-typography
-  patterns:
-    - name: .jump-link
-      markup: |
-        <a class="jump-link" href="#">
-            <span class="jump-link_text">Default jump link</span>
-        </a>
-      codenotes:
-        - .jump-link
-    - name: .jump-link__large (modifier)
-      markup: |
-        <a class="jump-link jump-link__large" href="#">
-            <span class="jump-link_text">Large jump link</span>
-        </a>
-      codenotes:
-        - .jump-link__large
-      notes:
-        - "18px font-size, compared to the default of 16px"
-    - name: .jump-link__<icon> (modifier)
-      markup: |
-        <a class="jump-link jump-link__right" href="#">
-            <span class="jump-link_text">Jump link using the right icon from cf-icons</span>
-        </a>
-      codenotes:
-        - .jump-link__<icon>
-      notes:
-        - ".jump-link extends .icon-link, so all that is needed to add an icon
-           to a jump link is to add a modifier with the icon's name."
-    - name: .jump-link__before (modifier)
-      markup: |
-        <a class="jump-link jump-link__left jump-link__before" href="#">
-            <span class="jump-link_text">Jump link with icon on left</span>
-        </a>
-      codenotes:
-        - .jump-link__<icon>.jump-link__before
-      notes:
-        - "Jump links can also have icons before the text, like icon links."
-    - name: .jump-link__bg (modifier)
-      markup: |
-        <a class="jump-link jump-link__bg" href="#">
-            <span class="jump-link_text">Jump link with grey background and
-                solid borders on small screens</span>
-        </a>
-      codenotes:
-        - .jump-link__bg
-  tags:
-    - cf-typography
-*/
-
-.jump-link {
-    .u-webfont-medium();
-    .icon-link();
-    font-size: unit(16px / @base-font-size-px, em);
-
-    &__large {
-        font-size: unit(18px / @base-font-size-px, em);
-    }
-
-    &__underline {
-        border-bottom-width: 1px;
-    }
-
-    .respond-to-max(@bp-xs-max, {
-        .block-link();
-
-        &:after {
-            margin-bottom: -0.625em;
-            position: absolute;
-            right: 0;
-            bottom: 50%;
-            text-align: right;
-        }
-
-        &__before {
-            padding-left: 1.25em;
-
-            &:before {
-                position: absolute;
-                margin-bottom: -0.625em;
-                bottom: 50%;
-                left: 0;
-            }
-        }
-
-        &_text {
-            border-bottom-width: 0;
-        }
-
-        &__bg {
-            background: @jump-link__bg;
-            border: solid @jump-link__bg-border;
-            border-width: 1px 0;
-            padding: unit(10px / @base-font-size-px, em) 1.25em unit(10px / @base-font-size-px, em) 1em;
-            &:after {
-                right: 1em;
-            }
-            &:before {
-                left: unit(10px / @base-font-size-px, em);
-            }
-        }
-    });
-}
-
 
 
 /* topdoc
@@ -241,10 +135,10 @@
     - cf-typography
 */
 
-.list__links {
-    .list__unstyled();
+.m-list__links {
+    .m-list__unstyled();
 
-    .list_item {
+    .m-list_item {
         margin-bottom: unit(10px / @base-font-size-px, em);
 
         .respond-to-max(@bp-xs-max, {
@@ -252,13 +146,13 @@
         });
     }
 
-    &.list__spaced .list_item + .list_item {
+    &.m-list__spaced .m-list_item + .m-list_item {
         margin-top: 0;
     }
 
-    .list_link {
+    .m-list_link {
         .respond-to-max(@bp-xs-max, {
-            .block-link();
+            .a-link__block();
 
             &.icon-link:after {
                 position: absolute;
@@ -274,8 +168,8 @@
         });
     }
 
-    &.list__icons {
-        .list_link {
+    &.m-list__icons {
+        .m-list_link {
             position: relative;
             // Adjust for optical alignment of icons.
             left: -0.125em;
@@ -353,7 +247,7 @@
 */
 dt {
     .h5();
-    .u-inline-block();
+    display: inline-block;
 
     margin-bottom: 0.5em;
 
@@ -385,7 +279,7 @@ dd {
 
 p:last-child,
 ul:last-child,
-.list__links .list_item:last-child {
+.m-list__links .m-list_item:last-child {
     margin-bottom: 0;
 }
 
@@ -404,7 +298,7 @@ ul:last-child,
 }
 
 .meta-header_right {
-    .respond-to-max(@mobile-max, {
+    .respond-to-max(@bp-sm-max, {
         margin-bottom: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
     });
 }
@@ -418,15 +312,8 @@ ul:last-child,
     - cf-typography
 */
 
-.pull-quote_citation:before {
+.m-pull-quote_citation:before {
     content: "\2014 ";
-}
-
-.micro-copy {
-    font-size: 14px;
-    &p {
-        margin-bottom: unit(10px / @base-font-size-px, em);
-    }
 }
 
 /* topdoc
