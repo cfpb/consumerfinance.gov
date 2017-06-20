@@ -1,213 +1,294 @@
-from __future__ import unicode_literals
-
 import json
-import mock
+from urllib import urlencode
 
-from model_mommy import mommy
+import django
+from django.core.urlresolvers import reverse
+from django.http import QueryDict
+from django.test import RequestFactory, TestCase
+from mock import Mock, call, patch
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 
-from django.apps import apps
-from django.core.urlresolvers import reverse, NoReverseMatch
-from django.http import HttpRequest
-import django.test
-from django.utils import timezone
-from wagtail.wagtailcore.models import Site
+from core.views import govdelivery_subscribe, regsgov_comment, submit_comment
 
-from ask_cfpb.models import (
-    AnswerResultsPage, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
-from ask_cfpb.views import annotate_links
-from v1.util.migrations import get_or_create_page, get_free_path
-
-now = timezone.now()
+django.setup()
 
 
-class AnswerViewTestCase(django.test.TestCase):
-
+class GovDeliverySubscribeTest(TestCase):
     def setUp(self):
-        from v1.models import HomePage
-        self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
-        self.english_parent_page = get_or_create_page(
-            apps,
-            'ask_cfpb',
-            'AnswerLandingPage',
-            'Ask CFPB',
-            ENGLISH_PARENT_SLUG,
-            self.ROOT_PAGE,
-            language='en',
-            live=True)
-        self.spanish_parent_page = get_or_create_page(
-            apps,
-            'ask_cfpb',
-            'AnswerLandingPage',
-            'Obtener respuestas',
-            SPANISH_PARENT_SLUG,
-            self.ROOT_PAGE,
-            language='es',
-            live=True)
+        self.factory = RequestFactory()
 
-    def create_answer_results_page(self, **kwargs):
-        kwargs.setdefault(
-            'path', get_free_path(apps, self.english_parent_page))
-        kwargs.setdefault('depth', self.english_parent_page.depth + 1)
-        kwargs.setdefault('slug', 'mock-answer-page-en-1234')
-        kwargs.setdefault('title', 'Mock answer page title')
-        page = mommy.prepare(AnswerResultsPage, **kwargs)
-        page.save()
-        return page
+    def post(self, post, ajax=False):
+        kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'} if ajax else {}
+        request = self.factory.post(reverse('govdelivery'), post, **kwargs)
+        return govdelivery_subscribe(request)
 
-    def test_annotate_links(self):
-        mock_answer = (
-            '<p>Answer with a <a href="http://fake.com">fake link.</a></p>')
-        (annotated_answer, links) = annotate_links(mock_answer)
+    def assertRedirect(self, response, redirect):
         self.assertEqual(
-            annotated_answer,
-            '<html><body><p>Answer with a <a href="http://fake.com">fake '
-            'link.</a><sup>1</sup></p></body></html>')
-        self.assertEqual(links, [(1, str('http://fake.com'))])
+            (response['Location'], response.status_code),
+            (reverse(redirect), 302)
+        )
 
-    def test_annotate_links_no_href(self):
-        mock_answer = (
-            '<p>Answer with a <a>fake link.</a></p>')
-        (annotated_answer, links) = annotate_links(mock_answer)
-        self.assertEqual(links, [])
+    def assertRedirectSuccess(self, response):
+        self.assertRedirect(response, 'govdelivery:success')
 
-    def test_annotate_links_no_site(self):
-        site = Site.objects.get(is_default_site=True)
-        site.is_default_site = False
-        site.save()
-        with self.assertRaises(RuntimeError) as context:
-            annotate_links('answer')
-        self.assertIn('no default wagtail site', str(context.exception))
+    def assertRedirectUserError(self, response):
+        self.assertRedirect(response, 'govdelivery:user_error')
 
-    def test_bad_language_search(self):
-        with self.assertRaises(NoReverseMatch):
-            self.client.get(reverse(
-                'ask-search-en',
-                kwargs={'language': 'zz'}), {'q': 'payday'})
+    def assertRedirectServerError(self, response):
+        self.assertRedirect(response, 'govdelivery:server_error')
 
-    @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
-    def test_en_search_no_such_page(self, mock_query):
-        response = self.client.get(reverse(
-            'ask-search-en'), {'q': 'payday'})
-        self.assertEqual(mock_query.call_count, 1)
-        self.assertTrue(mock_query.called_with(language='en', q='payday'))
-        self.assertEqual(response.status_code, 404)
-
-    @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
-    def test_en_search(self, mock_query):
-        from v1.util.migrations import get_or_create_page
-        mock_page = get_or_create_page(
-            apps,
-            'ask_cfpb',
-            'AnswerResultsPage',
-            'Mock results page',
-            'ask-cfpb-search-results',
-            self.ROOT_PAGE,
-            language='en')
-        mock_return = mock.Mock()
-        mock_return.url = 'mockcfpb.gov'
-        mock_return.autocomplete = 'A mock question'
-        mock_return.text = 'Mock answer text.'
-        mock_query.return_value = [mock_return]
-        response = self.client.get(reverse(
-            'ask-search-en'), {'q': 'payday'})
-        self.assertEqual(mock_query.call_count, 1)
-        self.assertTrue(mock_query.called_with(language='en', q='payday'))
-        self.assertEqual(response.status_code, 200)
+    def assertJSON(self, response, result):
         self.assertEqual(
-            response.context_data['page'],
-            mock_page)
+            response.content.decode('utf-8'),
+            json.dumps({'result': result})
+        )
 
-    @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
-    def test_es_search(self, mock_query):
-        self.client.get(reverse(
-            'ask-search-es', kwargs={'language': 'es'}), {'q': 'payday'})
-        self.assertEqual(mock_query.call_count, 1)
-        self.assertTrue(mock_query.called_with(language='es', q='payday'))
+    def assertJSONSuccess(self, response):
+        return self.assertJSON(response, 'pass')
 
-    @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
-    def test_search_page_en_selection(self, mock_query):
-        return_mock = mock.Mock()
-        mock_query.return_value = [return_mock]
-        return_mock.url = 'url'
-        return_mock.autocomplete = 'question text'
-        page = self.create_answer_results_page(language='en')
-        self.client.get(reverse(
-            'ask-search-en'))
-        self.assertEqual(mock_query.call_count, 1)
-        self.assertEqual(page.language, 'en')
-        self.assertEqual(page.answers, [])
+    def assertJSONError(self, response):
+        return self.assertJSON(response, 'fail')
+
+    def check_post(self, post, response_check, ajax=False):
+        response_check(self.post(post, ajax=ajax))
+
+    def mock_govdelivery(self, status_code=200):
+        gd = Mock(set_subscriber_topics=Mock(
+            return_value=Mock(status_code=status_code)
+        ))
+
+        patcher = patch('core.views.GovDelivery', return_value=gd)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+        return gd
+
+    def check_subscribe(self, response_check, ajax=False, status_code=200,
+                        include_answers=False):
+        post = {
+            'code': 'FAKE_CODE',
+            'email': 'fake@example.com',
+        }
+
+        answers = [
+            ('batman', 'robin'),
+            ('hello', 'goodbye'),
+        ]
+
+        if include_answers:
+            post.update({'questionid_' + q: a for q, a in answers})
+
+        gd = self.mock_govdelivery(status_code=status_code)
+        self.check_post(post, response_check, ajax=ajax)
+        gd.set_subscriber_topics.assert_called_with(
+            post['email'],
+            [post['code']]
+        )
+
+        if include_answers:
+            gd.set_subscriber_answers_to_question.assert_has_calls(
+                [call(post['email'], q, a) for q, a in answers],
+                any_order=True
+            )
+
+    def test_missing_email_address(self):
+        post = {'code': 'FAKE_CODE'}
+        self.check_post(post, self.assertRedirectUserError)
+
+    def test_missing_gd_code(self):
+        post = {'email': 'fake@example.com'}
+        self.check_post(post, self.assertRedirectUserError)
+
+    def test_missing_email_address_ajax(self):
+        post = {'code': 'FAKE_CODE'}
+        self.check_post(post, self.assertJSONError, ajax=True)
+
+    def test_missing_gd_code_ajax(self):
+        post = {'email': 'fake@example.com'}
+        self.check_post(post, self.assertJSONError, ajax=True)
+
+    def test_successful_subscribe(self):
+        self.check_subscribe(self.assertRedirectSuccess)
+
+    def test_successful_subscribe_ajax(self):
+        self.check_subscribe(self.assertJSONSuccess, ajax=True)
+
+    def test_server_error(self):
+        self.check_subscribe(self.assertRedirectServerError, status_code=500)
+
+    def test_server_error_ajax(self):
+        self.check_subscribe(self.assertJSONError, ajax=True, status_code=500)
+
+    def test_setting_subscriber_answers_to_questions(self):
+        self.check_subscribe(self.assertRedirectSuccess, include_answers=True)
+
+
+class RegsgovCommentTest(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.data = {
+            'comment_on': 'FAKE_DOC_NUM',
+            'general_comment': 'FAKE_COMMENT',
+            'first_name': 'FAKE_FIRST',
+            'last_name': 'FAKE_LAST',
+        }
+        self.tracking_number = 'FAKE_TRACKING_NUMBER'
+
+    def post(self, post, ajax=False):
+        kwargs = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'} if ajax else {}
+        request = self.factory.post(reverse('reg_comment'), post, **kwargs)
+        response = regsgov_comment(request)
+        return request, response
+
+    def assertRedirect(self, response, redirect):
         self.assertEqual(
-            page.get_template(HttpRequest()),
-            'ask-cfpb/answer-search-results.html')
+            (response['Location'], response.status_code),
+            (reverse(redirect), 302)
+        )
 
-    @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
-    def test_search_page_es_selection(self, mock_query):
-        return_mock = mock.Mock()
-        mock_query.return_value = [return_mock]
-        return_mock.url = 'url'
-        return_mock.autocomplete = 'question text'
-        page = self.create_answer_results_page(language='es')
-        self.client.get(reverse(
-            'ask-search-es',
-            kwargs={'language': 'es'}))
-        self.assertEqual(mock_query.call_count, 1)
-        self.assertEqual(page.language, 'es')
-        self.assertEqual(page.answers, [])
+    def assertRedirectSuccess(self, response):
+        self.assertRedirect(response, 'reg_comment:success')
+
+    def assertRedirectUserError(self, response):
+        self.assertRedirect(response, 'reg_comment:user_error')
+
+    def assertRedirectServerError(self, response):
+        self.assertRedirect(response, 'reg_comment:server_error')
+
+    def assertJSON(self, response, result, has_tracking_num=False):
+        expected = {'result': result}
+        if has_tracking_num:
+            expected.update({'tracking_number': self.tracking_number})
+
         self.assertEqual(
-            page.get_template(HttpRequest()),
-            'ask-cfpb/answer-search-spanish-results.html')
+            response.content.decode('utf-8'),
+            json.dumps(expected)
+        )
 
-    @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
-    def test_en_search_as_json(self, mock_query):
-        mock_query.autocomplete.return_value = ['question text']
-        mock_query.url.return_value = ['answer/url']
-        self.client.get(reverse(
-            'ask-search-en-json',
-            kwargs={'as_json': 'json'}))
-        self.assertEqual(mock_query.call_count, 1)
-        self.assertTrue(
-            mock_query.called_with(
-                language='en',
-                as_json='json'))
+    def assertJSONSuccess(self, response):
+        return self.assertJSON(response, 'success')
 
-    def test_autocomplete_en_blank_term(self):
-        result = self.client.get(reverse(
-            'ask-autocomplete-en'), {'term': ''})
-        output = json.loads(result.content)
-        self.assertEqual(output, [])
+    def assertJSONSuccessCommented(self, response):
+        return self.assertJSON(response, 'pass', has_tracking_num=True)
 
-    def test_autocomplete_es_blank_term(self):
-        result = self.client.get(reverse(
-            'ask-autocomplete-es',
-            kwargs={'language': 'es'}), {'term': ''})
-        output = json.loads(result.content)
-        self.assertEqual(output, [])
+    def assertJSONError(self, response):
+        return self.assertJSON(response, 'fail')
 
-    @mock.patch('ask_cfpb.views.SearchQuerySet.autocomplete')
-    def test_autocomplete_en(self, mock_autocomplete):
-        mock_search_result = mock.Mock()
-        mock_search_result.autocomplete = 'question'
-        mock_search_result.url = 'url'
-        mock_autocomplete.return_value = [mock_search_result]
-        result = self.client.get(reverse(
-            'ask-autocomplete-en'), {'term': 'question'})
-        self.assertEqual(mock_autocomplete.call_count, 1)
-        output = json.loads(result.content)
-        self.assertEqual(
-            sorted(output[0].keys()),
-            ['question', 'url'])
+    def check_post(self, post, response_check, ajax=False):
+        request, response = self.post(post, ajax=ajax)
+        response_check(response)
+        return request, response
 
-    @mock.patch('ask_cfpb.views.SearchQuerySet.autocomplete')
-    def test_autocomplete_es(self, mock_autocomplete):
-        mock_search_result = mock.Mock()
-        mock_search_result.autocomplete = 'question'
-        mock_search_result.url = 'url'
-        mock_autocomplete.return_value = [mock_search_result]
-        result = self.client.get(reverse(
-            'ask-autocomplete-es',
-            kwargs={'language': 'es'}), {'term': 'question'})
-        self.assertEqual(mock_autocomplete.call_count, 1)
-        output = json.loads(result.content)
-        self.assertEqual(
-            sorted(output[0].keys()),
-            ['question', 'url'])
+    def mock_submit_data(self, status_code=201):
+        submit = Mock(
+            status_code=status_code,
+            text=json.dumps({'trackingNumber': self.tracking_number})
+        )
+
+        patcher = patch('core.views.submit_comment', return_value=submit)
+        patched = patcher.start()
+        self.addCleanup(patcher.stop)
+        return patched
+
+    def mock_messages(self):
+        patcher = patch('core.views.messages.success')
+        patched = patcher.start()
+        self.addCleanup(patcher.stop)
+        return patched
+
+    def check_comment(self, response_check, ajax=False, status_code=201):
+        submit = self.mock_submit_data(status_code=status_code)
+        messages = self.mock_messages()
+
+        request, response = self.check_post(self.data, response_check,
+                                            ajax=ajax)
+
+        submit.assert_called_with(request.POST)
+
+        if 201 == status_code:
+            messages.assert_called_with(request, self.tracking_number)
+
+    def test_missing_comment_on(self):
+        del self.data['comment_on']
+        self.check_post(self.data, self.assertRedirectServerError)
+
+    def test_missing_general_comment(self):
+        del self.data['general_comment']
+        self.check_post(self.data, self.assertRedirectUserError)
+
+    def test_missing_comment_on_ajax(self):
+        del self.data['comment_on']
+        self.check_post(self.data, self.assertJSONError, ajax=True)
+
+    def test_missing_general_comment_ajax(self):
+        del self.data['general_comment']
+        self.check_post(self.data, self.assertJSONError, ajax=True)
+
+    def test_missing_first_name_ajax(self):
+        del self.data['first_name']
+        self.check_post(self.data, self.assertJSONError, ajax=True)
+
+    def test_missing_last_name_ajax(self):
+        del self.data['last_name']
+        self.check_post(self.data, self.assertJSONError, ajax=True)
+
+    def test_successful_comment(self):
+        self.check_comment(self.assertRedirectSuccess)
+
+    def test_successful_comment_ajax(self):
+        self.check_comment(self.assertJSONSuccessCommented, ajax=True)
+
+    def test_server_error(self):
+        self.check_comment(self.assertRedirectServerError, status_code=500)
+
+    @patch('requests.post')
+    @patch('django.conf.settings.REGSGOV_BASE_URL', 'FAKE_URL')
+    @patch('django.conf.settings.REGSGOV_API_KEY', 'FAKE_API_KEY')
+    def test_submit_comment_success_no_email(self, mock_post):
+        mock_post.return_value = {'response': 'fake_response'}
+
+        data = {'comment_on': u'FAKE_DOC_NUM',
+                'general_comment': u'FAKE_COMMENT',
+                'first_name': u'FAKE_FIRST',
+                'last_name': u'FAKE_LAST'}
+        submit_comment(QueryDict(urlencode(data)))
+        act_args, act_kwargs = mock_post.call_args
+
+        self.assertEqual(act_args[0],
+                         'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
+        exp_data_field = data
+        exp_data_field['email'] = u'NA'
+        exp_data_field['organization'] = u'NA'
+        exp_data = MultipartEncoder(fields=exp_data_field)
+        self.assertTrue(act_kwargs.get('data'), exp_data)
+        self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)
+        self.assertIn('Content-Type', act_kwargs.get('headers'))
+
+        self.assertIn('multipart/form-data',
+                      act_kwargs.get('headers').get('Content-Type'))
+
+    @patch('requests.post')
+    @patch('django.conf.settings.REGSGOV_BASE_URL', 'FAKE_URL')
+    @patch('django.conf.settings.REGSGOV_API_KEY', 'FAKE_API_KEY')
+    def test_submit_comment_success_email(self, mock_post):
+        mock_post.return_value = {'response': 'fake_response'}
+
+        data = {'comment_on': u'FAKE_DOC_NUM',
+                'general_comment': u'FAKE_COMMENT',
+                'first_name': u'FAKE_FIRST',
+                'last_name': u'FAKE_LAST',
+                'email': u'FAKE_EMAIL'}
+        submit_comment(QueryDict(urlencode(data)))
+        act_args, act_kwargs = mock_post.call_args
+
+        self.assertEqual(act_args[0],
+                         'FAKE_URL?api_key=FAKE_API_KEY&D=FAKE_DOC_NUM')
+        exp_data_field = data
+        exp_data_field['organization'] = u'NA'
+        exp_data = MultipartEncoder(fields=exp_data_field)
+        self.assertTrue(act_kwargs.get('data'), exp_data)
+        self.assertEqual(act_kwargs.get('data').fields, exp_data.fields)
+        self.assertIn('Content-Type', act_kwargs.get('headers'))
+
+        self.assertIn('multipart/form-data',
+                      act_kwargs.get('headers').get('Content-Type'))

@@ -139,6 +139,14 @@ class AnswerViewTestCase(django.test.TestCase):
         redirect_ask_search(request, language='es')
         self.assertEqual(mock_redirect.call_count, 1)
 
+    def test_ask_search_raises_404_for_empty_query(self):
+        request = HttpRequest()
+        request.GET['q'] = ' '
+        with self.assertRaises(Http404):
+            ask_search(request, language='es')
+        with self.assertRaises(Http404):
+            ask_search(request, language='en')
+
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_es_search(self, mock_query):
         self.client.get(reverse(
@@ -154,7 +162,7 @@ class AnswerViewTestCase(django.test.TestCase):
         return_mock.autocomplete = 'question text'
         page = self.create_answer_results_page(language='en')
         self.client.get(reverse(
-            'ask-search-en'))
+            'ask-search-en'), {'q': 'tuition'})
         self.assertEqual(mock_query.call_count, 1)
         self.assertEqual(page.language, 'en')
         self.assertEqual(page.answers, [])
@@ -171,7 +179,7 @@ class AnswerViewTestCase(django.test.TestCase):
         page = self.create_answer_results_page(language='es')
         self.client.get(reverse(
             'ask-search-es',
-            kwargs={'language': 'es'}))
+            kwargs={'language': 'es'}), {'q': 'hipotecas'})
         self.assertEqual(mock_query.call_count, 1)
         self.assertEqual(page.language, 'es')
         self.assertEqual(page.answers, [])
@@ -185,7 +193,7 @@ class AnswerViewTestCase(django.test.TestCase):
         mock_query.url.return_value = ['answer/url']
         self.client.get(reverse(
             'ask-search-en-json',
-            kwargs={'as_json': 'json'}))
+            kwargs={'as_json': 'json'}), {'q': 'test_en_search_as_json'})
         self.assertEqual(mock_query.call_count, 1)
         self.assertTrue(
             mock_query.called_with(

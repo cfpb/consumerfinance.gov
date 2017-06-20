@@ -234,7 +234,8 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
         context.update({
             'paginator': paginator,
             'current_page': int(page),
-            'questions': answers,
+            'results_count': answers.count(),
+            'questions': paginator.page(page),
             'breadcrumb_items': get_ask_breadcrumbs(
                 self.ask_category)
         })
