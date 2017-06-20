@@ -38,8 +38,7 @@
                     Interested in applying?
                 </a>
             </div>
-            <div class="t-careers_social
-                        content-l_col
+            <div class="content-l_col
                         content-l_col-1-2">
                 {{ social_media.render( {
                     'title':            page.title,
@@ -72,8 +71,7 @@
             <div class="content-l_col content-l_col-1-2">
                 <h2 id="interested">Interested in applying?</h2>
             </div>
-            <div class="t-careers_social
-                        content-l_col
+            <div class="content-l_col
                         content-l_col-1-2">
                 {# TODO: Fix vertical alignment.
                          Social Media icons are slightly high
@@ -109,7 +107,7 @@
     </section>
 
     {% set usajobs_links = page.usajobs_application_links.order_by(
-      'applicant_type' 
+      'applicant_type'
     ) %}
     {% for usajobs_link in usajobs_links %}
     <div class="block
