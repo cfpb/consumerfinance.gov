@@ -34,7 +34,7 @@ def add_filterable_page(slug, cls):
     publish_page(filterable_page)
     add_children(
         parent=filterable_page,
-        num=10,
+        num=11,
         slug=slug,
     )
 

@@ -3,6 +3,7 @@
 const environmentTest = require( './environment-test' );
 const envvars = require( '../../config/environment' ).envvars;
 const defaultSuites = require( './default-suites.js' );
+const minimist = require( 'minimist' );
 
 /**
  * Check whether a parameter value is set.
@@ -34,10 +35,22 @@ function _chooseSuite( params ) {
   // no browser/platform flags are passed, in which case use the full suite.
   // This will make it so that setting the browser/platform flags
   // won't launch several identical browsers performing the same tests.
-  var capabilities = defaultSuites.essential;
+  let capabilities = defaultSuites.essential;
 
   if ( envvars.HEADLESS_CHROME_BINARY ) {
     capabilities = defaultSuites.headless;
+    const cucumberOpts = minimist( process.argv.slice( 2 ) )
+                         .cucumberOpts || {};
+    const WINDOW_SIZES = environmentTest.WINDOW_SIZES;
+    let windowWidthPx = WINDOW_SIZES.DESKTOP.WIDTH;
+    let windowHeightPx = WINDOW_SIZES.DESKTOP.HEIGHT;
+
+    if ( cucumberOpts.tags === '@mobile' ) {
+      windowWidthPx = WINDOW_SIZES.MOBILE.WIDTH;
+      windowHeightPx = WINDOW_SIZES.MOBILE.HEIGHT;
+    }
+    let windowSize = `--window-size=${windowWidthPx}x${windowHeightPx}`;
+    capabilities[0].chromeOptions.args.push( windowSize );
   } else if ( paramsAreNotSet && useSauceCredentials ) {
     capabilities = defaultSuites.full;
   }
@@ -192,15 +205,19 @@ function _onPrepare() {
   // If --windowSize=w,h flag was passed, set window dimensions.
   // Otherwise, use default values from the test settings.
   const windowSize = browser.params.windowSize;
-  let windowWidthPx;
-  let windowHeightPx;
-  if ( typeof windowSize === 'undefined' ) {
-    windowWidthPx = environmentTest.windowWidthPx;
-    windowHeightPx = environmentTest.windowHeightPx;
-  } else {
+  const WINDOW_SIZES = environmentTest.WINDOW_SIZES;
+  const cucumberOpts = minimist( process.argv.slice( 2 ) ).cucumberOpts || {};
+
+  let windowWidthPx = WINDOW_SIZES.DESKTOP.WIDTH;
+  let windowHeightPx = WINDOW_SIZES.DESKTOP.HEIGHT;
+
+  if ( windowSize ) {
     const windowSizeArray = windowSize.split( ',' );
     windowWidthPx = Number( windowSizeArray[0] );
     windowHeightPx = Number( windowSizeArray[1] );
+  } else if ( cucumberOpts.tags === '@mobile' ) {
+    windowWidthPx = WINDOW_SIZES.MOBILE.WIDTH;
+    windowHeightPx = WINDOW_SIZES.MOBILE.HEIGHT;
   }
 
   // Calling setSize with headless chromeDriver doesn't work properly if
@@ -225,12 +242,12 @@ const config = {
   baseUrl:              environmentTest.baseUrl,
   cucumberOpts: {
     'require':   'cucumber/step_definitions/*.js',
-    'tags':      false,
+    'tags':      [ '~@mobile', '~@skip' ],
     'format':    'pretty',
     'profile':   false,
     'no-source': true
   },
-  unknownFlags_:        ['cucumberOpts'],
+  unknownFlags_:        [ 'cucumberOpts' ],
   directConnect:        true,
   framework:            'custom',
   frameworkPath:        require.resolve( 'protractor-cucumber-framework' ),
