@@ -7,7 +7,7 @@
 # ==========================================================================
 
 # Set script to exit on any errors.
-set -e
+#set -e
 
 # make sure backend services are running
 source start-services.sh
