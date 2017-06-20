@@ -26,9 +26,6 @@
 
                         </ul>
                         <div class="pagination-details"><span class="pagination-count"><strong>{{ results_count }}</strong> respuestas</span> 
-                        {% if selected_tag %}
-                            <a href="" class="pagination-filter">(filtrado por [x] &ldquo;{{ selected_tag }}&rdquo;)</a>
-                        {% endif %}
                         </div>                    
                     </nav><!-- .pagination -->                        
 
@@ -39,6 +36,7 @@
 						<article>
 						    <h3 class="ac-qa-question">{{ question.question_es|safe }}</h3>
 						    <div class="ac-qa-answer">
+                                
 						        <p> {{ question.answer_es|safe|striptags|truncate }} </p>
                                 
 						    </div>
@@ -47,8 +45,7 @@
                     {% endif %}
 					{% endfor %}                
 
-                    {% else %}
-                        <p>¡Excelente pregunta! Siempre estamos agregando respuestas; así que regrese pronto o llame al <a href="tel:+18554112372" class="phone">(855) 411-2372</a> para hacer una pregunta por teléfono.</p>
+                    
                     {% endif %}                
                     
                     <nav class="pagination">
@@ -60,9 +57,24 @@
                 </div><!-- .primary -->
 
                 <aside class="secondary span4">            
-
-                    <div id="facets" class="supplement js-showtoggle ac-filters"><!-- @todo change #facets to something else -->
-                    </div><!-- .js-showtoggle -->
+                    {% if tags %}
+                        {% for tag in tags %}
+                            {% if loop.first %}
+                                <section class="supplement ac-related-topics">
+                                    <h3>Temas relacionados</h3>
+                                    <ul class="nav-list">
+                            {% endif %}
+                                {% if tag[1] > 1 %}
+                                <li><a href="/es/obtener-respuestas/buscar-por-etiqueta/{{ tag[0].replace(' ', '_') }}/">{{ tag[0] }}</a>
+                                </li>
+                                {% endif %}
+                            {% if loop.last %}
+                                    </ul>
+                                </section>
+                            {% endif %}
+                        {% endfor %}
+                        
+                    {% endif %}
 
                 </aside><!-- .secondary -->          
 

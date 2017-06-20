@@ -7,14 +7,14 @@ from model_mommy import mommy
 
 from django.apps import apps
 from django.core.urlresolvers import reverse, NoReverseMatch
-from django.http import HttpRequest
+from django.http import HttpRequest, Http404, QueryDict
 import django.test
 from django.utils import timezone
 from wagtail.wagtailcore.models import Site
 
 from ask_cfpb.models import (
     AnswerResultsPage, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
-from ask_cfpb.views import annotate_links
+from ask_cfpb.views import annotate_links, redirect_ask_search, ask_search
 from v1.util.migrations import get_or_create_page, get_free_path
 
 now = timezone.now()
@@ -117,6 +117,36 @@ class AnswerViewTestCase(django.test.TestCase):
             response.context_data['page'],
             mock_page)
 
+    @mock.patch('ask_cfpb.views.redirect_ask_search')
+    def test_ask_search_encounters_facets(self, mock_redirect):
+        request = HttpRequest()
+        request.GET['selected_facets'] = 'category_exact:my_category'
+        ask_search(request)
+        self.assertEqual(mock_redirect.call_count, 1)
+
+    @mock.patch('ask_cfpb.views.redirect')
+    def test_redirect_ask_search_passes_query_string(self, mock_redirect):
+        request = HttpRequest()
+        request.GET['q'] = 'hoodoo'
+        redirect_ask_search(request)
+        self.assertEqual(mock_redirect.call_count, 1)
+
+    @mock.patch('ask_cfpb.views.redirect')
+    def test_spanish_redirect_ask_search_passes_query_string(
+            self, mock_redirect):
+        request = HttpRequest()
+        request.GET['selected_facets'] = 'category_exact:my_categoria'
+        redirect_ask_search(request, language='es')
+        self.assertEqual(mock_redirect.call_count, 1)
+
+    def test_ask_search_raises_404_for_empty_query(self):
+        request = HttpRequest()
+        request.GET['q'] = ' '
+        with self.assertRaises(Http404):
+            ask_search(request, language='es')
+        with self.assertRaises(Http404):
+            ask_search(request, language='en')
+
     @mock.patch('ask_cfpb.views.SearchQuerySet.filter')
     def test_es_search(self, mock_query):
         self.client.get(reverse(
@@ -132,7 +162,7 @@ class AnswerViewTestCase(django.test.TestCase):
         return_mock.autocomplete = 'question text'
         page = self.create_answer_results_page(language='en')
         self.client.get(reverse(
-            'ask-search-en'))
+            'ask-search-en'), {'q': 'tuition'})
         self.assertEqual(mock_query.call_count, 1)
         self.assertEqual(page.language, 'en')
         self.assertEqual(page.answers, [])
@@ -149,7 +179,7 @@ class AnswerViewTestCase(django.test.TestCase):
         page = self.create_answer_results_page(language='es')
         self.client.get(reverse(
             'ask-search-es',
-            kwargs={'language': 'es'}))
+            kwargs={'language': 'es'}), {'q': 'hipotecas'})
         self.assertEqual(mock_query.call_count, 1)
         self.assertEqual(page.language, 'es')
         self.assertEqual(page.answers, [])
@@ -163,7 +193,7 @@ class AnswerViewTestCase(django.test.TestCase):
         mock_query.url.return_value = ['answer/url']
         self.client.get(reverse(
             'ask-search-en-json',
-            kwargs={'as_json': 'json'}))
+            kwargs={'as_json': 'json'}), {'q': 'test_en_search_as_json'})
         self.assertEqual(mock_query.call_count, 1)
         self.assertTrue(
             mock_query.called_with(
@@ -211,3 +241,80 @@ class AnswerViewTestCase(django.test.TestCase):
         self.assertEqual(
             sorted(output[0].keys()),
             ['question', 'url'])
+
+
+class RedirectAskSearchTestCase(django.test.TestCase):
+
+    def test_redirect_search_no_facets(self):
+        request = HttpRequest()
+        with self.assertRaises(Http404):
+            redirect_ask_search(request)
+
+    def test_redirect_search_blank_facets(self):
+        request = HttpRequest()
+        request.GET['selected_facets'] = ''
+        with self.assertRaises(Http404):
+            redirect_ask_search(request)
+
+    def test_redirect_search_no_query(self):
+        request = HttpRequest()
+        request.GET['q'] = ' '
+        with self.assertRaises(Http404):
+            redirect_ask_search(request)
+
+    def test_redirect_search_with_category(self):
+        category_querystring = (
+            'selected_facets=category_exact:my_category'
+            '&selected_facets=category_exact:my_category2'
+            '&selected_facets=audience_exact:Older+Americans'
+            '&selected_facets=audience_exact:my_audience2'
+            '&selected_facets=tag_exact:mytag1'
+            '&selected_facets=tag_exact:mytag2')
+        request = HttpRequest()
+        request.GET = QueryDict(category_querystring)
+        result = redirect_ask_search(request)
+        self.assertEqual(result.get('location'),
+                         '/ask-cfpb/category-my_category')
+
+    def test_redirect_search_with_audience(self):
+        audience_querystring = (
+            'selected_facets=audience_exact:Older+Americans'
+            '&selected_facets=audience_exact:my_audience2')
+        request = HttpRequest()
+        request.GET = QueryDict(audience_querystring)
+        result = redirect_ask_search(request)
+        self.assertEqual(
+            result.get('location'),
+            '/ask-cfpb/audience-older-americans')
+
+    def test_redirect_search_with_tag(self):
+        target_tag = 'mytag1'
+        tag_querystring = (
+            'selected_facets=tag_exact:{}'
+            '&selected_facets=tag_exact:mytag2'.format(target_tag))
+        request = HttpRequest()
+        request.GET = QueryDict(tag_querystring)
+        result = redirect_ask_search(request, language='es')
+        self.assertEqual(
+            result.get('location'),
+            '/es/obtener-respuestas/buscar-por-etiqueta/{}/'.format(
+                target_tag))
+
+    def test_redirect_search_with_english_tag_raises_404(self):
+        """Only Spanish tags are supported"""
+        target_tag = 'mytag1'
+        tag_querystring = (
+            'selected_facets=tag_exact:{}'
+            '&selected_facets=tag_exact:mytag2'.format(target_tag))
+        request = HttpRequest()
+        request.GET = QueryDict(tag_querystring)
+        with self.assertRaises(Http404):
+            redirect_ask_search(request, language='en')
+
+    def test_redirect_search_with_unrecognized_facet_raises_404(self):
+        querystring = \
+            'sort=-updated_at&selected_facets=imtkfidycqszgfdb&page=60'
+        request = HttpRequest()
+        request.GET = QueryDict(querystring)
+        with self.assertRaises(Http404):
+            redirect_ask_search(request)

@@ -61,7 +61,7 @@
             <div class="o-expandable_content" id="answer-content">
                 <div class="o-expandable_content-animated">
                     <div class="answer-text">
-                        {{ page.answer | safe }}
+                        {{ page.answer | richtext | safe }}
                     </div>
                     {% if audiences %} 
                     <div class="u-mt15">
@@ -74,7 +74,7 @@
                         {{- form_block.render(block, 'content', loop.index0) -}}
                     {% endfor %}
                     {% if disclaimer %}
-                    <div class="block block__flush-bottom">
+                    <div class="block block__flush-bottom ask-disclaimer">
                         {{ disclaimer.text | safe }}
                     </div>
                     {% endif %}
@@ -161,6 +161,10 @@
             </div>
         </div>
     {% endif %}
-
+    <div class="analytics-data" 
+         data-answer-id="{{ answer_id }}"
+         data-category-slug="{{ category.slug }}"
+         data-category-name="{{ category.name }}">
+    </div>
 {% endblock %}
 

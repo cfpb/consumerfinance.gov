@@ -1,7 +1,8 @@
 from haystack import indexes
 
 from ask_cfpb.models import (
-    AnswerTagProxy, Category, EnglishAnswerProxy, SpanishAnswerProxy)
+    Category, EnglishAnswerProxy, SpanishAnswerProxy)
+# AnswerTagProxy,
 
 
 class AnswerBaseIndex(indexes.SearchIndex, indexes.Indexable):
@@ -101,18 +102,18 @@ class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
         return self.get_model().objects.all()
 
 
-class TagIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(
-        use_template=True,
-        document=True)
+# class TagIndex(indexes.SearchIndex, indexes.Indexable):
+#     text = indexes.CharField(
+#         use_template=True,
+#         document=True)
 
-    valid_spanish = indexes.MultiValueField()
+#     valid_spanish = indexes.MultiValueField()
 
-    def get_model(self):
-        return AnswerTagProxy
+#     def get_model(self):
+#         return AnswerTagProxy
 
-    def prepare_valid_spanish(self, obj):
-        return self.get_model().valid_spanish_tags()
+#     def prepare_valid_spanish(self, obj):
+#         return self.get_model().valid_spanish_tags()
 
-    def index_queryset(self, using=None):
-        return self.get_model().objects.filter(id=1)
+#     def index_queryset(self, using=None):
+#         return self.get_model().objects.filter(id=1)

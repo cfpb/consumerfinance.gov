@@ -51,10 +51,14 @@ class SheerlikeContext(Context):
             parent,
             name,
             blocks)
-        try:
-            self.vars['request'] = get_request()
-        except:
-            pass
+
+        # Don't overwrite an existing request already coming into the context,
+        # for example one provided during Wagtail rendering.
+        if 'request' not in self.vars and 'request' not in self.keys():
+            try:
+                self.vars['request'] = get_request()
+            except:
+                pass
 
 # Monkey patch not needed in master version of Jinja2
 # https://github.com/mitsuhiko/jinja2/commit/f22fdd5ffe81aab743f78290071b0aa506705533

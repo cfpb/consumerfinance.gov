@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from collections import OrderedDict
+from collections import OrderedDict, Counter
 import HTMLParser
 import json
 
@@ -20,6 +20,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 from wagtail.wagtailcore.blocks.stream_block import StreamValue
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from v1.util.migrations import get_or_create_page
 
@@ -86,6 +87,17 @@ class Category(models.Model):
     slug_es = models.SlugField()
     intro = RichTextField(blank=True)
     intro_es = RichTextField(blank=True)
+    category_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=(
+            'Select a custom image to appear when visitors share pages '
+            'belonging to this category on social media.'
+        )
+    )
     panels = [
         FieldPanel('name', classname="title"),
         FieldPanel('slug'),
@@ -93,6 +105,7 @@ class Category(models.Model):
         FieldPanel('name_es', classname="title"),
         FieldPanel('slug_es'),
         FieldPanel('intro_es'),
+        ImageChooserPanel('category_image')
     ]
 
     def __str__(self):
@@ -102,6 +115,18 @@ class Category(models.Model):
         return Answer.objects.filter(
             category=self,
             featured=True).order_by('featured_rank')
+
+    @property
+    def top_tags_es(self):
+        import collections
+        valid_dict = Answer.valid_spanish_tags()
+        cleaned = []
+        for a in self.answer_set.all():
+            cleaned += a.tags_es
+        valid_clean = [tag for tag in cleaned
+                       if tag in valid_dict['valid_tags']]
+        counter = collections.Counter(valid_clean)
+        return counter.most_common()[:10]
 
     @cached_property
     def facet_map(self):
@@ -229,6 +254,18 @@ class Answer(models.Model):
         blank=True,
         related_name='related_question',
         help_text='Maximum of 3')
+    social_sharing_image = models.ForeignKey(
+        'v1.CFGOVImage',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text=(
+            'Optionally select a custom image to appear when users share this '
+            'page on social media websites. If no image is selected, this '
+            'page\'s category image will be used.'
+        )
+    )
 
     panels = [
         MultiFieldPanel([
@@ -266,7 +303,9 @@ class Answer(models.Model):
                     'subcategory',
                     widget=forms.CheckboxSelectMultiple)]),
             FieldPanel('related_questions', widget=forms.SelectMultiple),
-            FieldPanel('search_tags')],
+            FieldPanel('search_tags'),
+            FieldPanel('search_tags_es'),
+            ImageChooserPanel('social_sharing_image')],
             heading="Metadata",
             classname="collapsible"),
     ]
@@ -350,19 +389,24 @@ class Answer(models.Model):
         - Assemble a whitelist of tags that are safe for search.
         - Exclude tags that are attached to only one answer.
         Tags are useless until they can be used to collect at least 2 answers.
+
+        This method returns a dict {'valid_tags': [], tag_map: {}}
+        valid_tags is an alphabetical list of valid tags.
+        tag_map is a dictionary mapping tags to questions.
         """
         cleaned = []
-        valid = []
+        tag_map = {}
         for a in cls.objects.all():
-            if a.search_tags_es.strip():
-                cleaned += [
-                    tag.strip() for tag
-                    in a.search_tags_es.strip().split(',')
-                    if tag.strip()]
-        for tag in sorted(set(cleaned)):
-            if cls.objects.filter(search_tags_es__contains=tag).count() > 1:
-                valid.append(tag)
-        return valid
+            cleaned += a.tags_es
+            for tag in a.tags_es:
+                if tag not in tag_map:
+                    tag_map[tag] = [a]
+                else:
+                    tag_map[tag].append(a)
+        tag_counter = Counter(cleaned)
+        valid = sorted(
+            tup[0] for tup in tag_counter.most_common() if tup[1] > 1)
+        return {'valid_tags': valid, 'tag_map': tag_map}
 
     def has_live_page(self):
         if not self.answer_pages.all():
@@ -420,10 +464,11 @@ class Answer(models.Model):
             get_feedback_stream_value(_page),
             is_lazy=True)
         _page.save_revision(user=self.last_user)
-        base_page.refresh_from_db()
-        base_page.has_unpublished_changes = True
-        base_page.save()
-        return base_page
+        # _page.save()
+        # base_page.refresh_from_db()
+        # base_page.has_unpublished_changes = True
+        # base_page.save()
+        return _page
 
     def create_or_update_pages(self):
         counter = 0
@@ -454,12 +499,6 @@ class Answer(models.Model):
     def delete(self):
         self.answer_pages.all().delete()
         super(Answer, self).delete()
-
-
-class AnswerTagProxy(Answer):
-    """A no-op proxy class to allow index store of expensive queries"""
-    class Meta:
-        proxy = True
 
 
 class EnglishAnswerProxy(Answer):
@@ -502,7 +541,6 @@ class SubCategory(models.Model):
         FieldPanel('name_es', classname="title"),
         FieldPanel('slug_es'),
         FieldPanel('description_es'),
-        FieldPanel('featured'),
         FieldPanel('weight'),
         FieldPanel('more_info'),
         FieldPanel('parent'),

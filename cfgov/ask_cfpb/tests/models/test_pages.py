@@ -15,6 +15,7 @@ from django.http import HttpRequest, HttpResponse
 from django.test import TestCase
 from django.utils import html
 
+from v1.models import CFGOVImage
 from v1.util.migrations import get_or_create_page, get_free_path
 from ask_cfpb.models.django import (
     Answer, Category, SubCategory, Audience,
@@ -72,6 +73,8 @@ class AnswerModelTestCase(TestCase):
             SubCategory, name='stub_subcat', parent=self.category, _quantity=3)
         self.category.subcategories.add(self.subcategories[0])
         self.category.save()
+        self.test_image = mommy.make(CFGOVImage)
+        self.test_image2 = mommy.make(CFGOVImage)
         self.next_step = mommy.make(NextStep, title='stub_step')
         page_clean = patch('ask_cfpb.models.pages.CFGOVPage.clean')
         page_clean.start()
@@ -187,20 +190,8 @@ class AnswerModelTestCase(TestCase):
             json.loads(facet_map)['subcategories']['1'], [])
 
     def test_answer_valid_tags(self):
-        test_list = Answer.valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
-
-    def test_get_valid_tags(self):
-        from ask_cfpb.models import get_valid_spanish_tags
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
-
-    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
-    def test_get_valid_tags_works_without_elasticsearch(self, mock_sqs):
-        from ask_cfpb.models import get_valid_spanish_tags
-        mock_sqs.return_value = [None]
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
+        test_dict = Answer.valid_spanish_tags()
+        self.assertIn('hipotecas', test_dict['valid_tags'])
 
     def test_routable_category_page_view(self):
         cat_page = self.create_category_page(
@@ -542,6 +533,20 @@ class AnswerModelTestCase(TestCase):
             len(test_nav_items),
             Category.objects.count())
 
+    def test_get_ask_breadcrumbs(self):
+        from ask_cfpb.models import get_ask_breadcrumbs
+        breadcrumbs = get_ask_breadcrumbs()
+        self.assertEqual(len(breadcrumbs), 1)
+        self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
+
+    def test_get_ask_breadcrumbs_with_category(self):
+        from ask_cfpb.models import get_ask_breadcrumbs
+        test_category = mommy.make(Category, name='breadcrumb_cat')
+        breadcrumbs = get_ask_breadcrumbs(test_category)
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
+        self.assertEqual(breadcrumbs[1]['title'], test_category.name)
+
     def test_audience_page_get_english_template(self):
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
@@ -723,3 +728,70 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             get_reusable_text_snippet('Nonexistent Snippet'),
             None)
+
+    def test_category_meta_image_undefined(self):
+        """ Category page's meta image is undefined if the category has
+        no image
+        """
+        category_page = self.create_category_page(ask_category=self.category)
+        self.assertIsNone(category_page.meta_image)
+
+    def test_category_meta_image_uses_category_image(self):
+        """ Category page's meta image is its category's image """
+        category = mommy.make(Category, category_image=self.test_image)
+        category_page = self.create_category_page(ask_category=category)
+        self.assertEqual(category_page.meta_image, self.test_image)
+
+    def test_answer_meta_image_undefined(self):
+        """ Answer page's meta image is undefined if social image is
+        not provided
+        """
+        answer = self.prepare_answer()
+        answer.save()
+        page = self.create_answer_page(answer_base=answer)
+        self.assertIsNone(page.meta_image)
+
+    def test_answer_meta_image_uses_social_image(self):
+        """ Answer page's meta image is its answer's social image """
+        answer = self.prepare_answer(social_sharing_image=self.test_image)
+        answer.save()
+        page = self.create_answer_page(answer_base=answer)
+        self.assertEqual(page.meta_image, self.test_image)
+
+    def test_answer_meta_image_uses_category_image_if_no_social_image(self):
+        """ Answer page's meta image is its category's image """
+        category = mommy.make(Category, category_image=self.test_image)
+        answer = self.prepare_answer()
+        answer.save()
+        answer.category.add(category)
+        page = self.create_answer_page(answer_base=answer)
+        self.assertEqual(page.meta_image, self.test_image)
+
+    def test_answer_meta_image_uses_social_image_not_category_image(self):
+        """ Answer page's meta image pulls from its social image instead
+        of its category's image
+        """
+        category = mommy.make(Category, category_image=self.test_image)
+        answer = self.prepare_answer(social_sharing_image=self.test_image2)
+        answer.save()
+        answer.category.add(category)
+        page = self.create_answer_page(answer_base=answer)
+        self.assertEqual(page.meta_image, self.test_image2)
+
+    def test_answer_page_context_collects_subcategories(self):
+        """ Answer page's context delivers all related subcategories """
+        answer = self.answer1234
+        related_subcat = mommy.make(
+            SubCategory,
+            name='related_subcat',
+            parent=self.category)
+        subcat1 = self.subcategories[0]
+        subcat1.related_subcategories.add(related_subcat)
+        for each in self.subcategories:
+            answer.subcategory.add(each)
+        answer.update_english_page = True
+        answer.save()
+        page = answer.english_page
+        request = HttpRequest()
+        context = page.get_context(request)
+        self.assertEqual(len(context['subcategories']), 4)

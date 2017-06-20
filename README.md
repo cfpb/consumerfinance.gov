@@ -18,7 +18,7 @@ Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
 and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions
 are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
 
-Ensure that Docker, Docker Machine, Docker Compose, and imagemagick are installed. If you are using a mac with homebrew, you can run:
+Ensure that Python, Node, Docker, Docker Machine, Docker Compose, and imagemagick are installed. If you are using a mac with homebrew, you can run:
 
 `sh homebrew-deps.sh`
 
