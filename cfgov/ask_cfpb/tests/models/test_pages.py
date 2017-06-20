@@ -193,18 +193,6 @@ class AnswerModelTestCase(TestCase):
         test_dict = Answer.valid_spanish_tags()
         self.assertIn('hipotecas', test_dict['valid_tags'])
 
-    def test_get_valid_tags(self):
-        from ask_cfpb.models import get_valid_spanish_tags
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
-
-    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
-    def test_get_valid_tags_works_without_elasticsearch(self, mock_sqs):
-        from ask_cfpb.models import get_valid_spanish_tags
-        mock_sqs.return_value = [None]
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
-
     def test_routable_category_page_view(self):
         cat_page = self.create_category_page(
             ask_category=self.category)
