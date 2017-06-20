@@ -27,21 +27,17 @@ Feature: Header
 
   @mobile
   Scenario: Mobile, if you click the mega menu trigger
-    When I click the the mega-menu trigger
+    When I click on the mega-menu trigger
     Then the header organism should display the global header Cta SM
     Then the header organism shouldn't display the global eyebrow LG
     Then the header organism should display the global eyebrow SM
 
   @mobile
-  Scenario: Mobile, if you click mega menu
+  Scenario: Mobile, if you click mega menu, if you click search
     When I click on the mega-menu trigger
     Then the header organism should display the overlay
-    And I click on search
-    Then it should show the search and hide the mega-menu
+    When I click on the mega-menu search trigger
+    Then the mega-menu search form should be displayed
+    And the mega-menu shouldn't be displayed
 
-  @mobile
-  Scenario: Mobile, if you click search, then click mega menu
-    When I click on the mega-menu search
-    And click the mega-menu
-    Then it should show the mega menu and hide search
 

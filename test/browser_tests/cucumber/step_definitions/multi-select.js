@@ -5,6 +5,7 @@ const { defineSupportCode } = require( 'cucumber' );
 const chai = require( 'chai' );
 const expect = chai.expect;
 const chaiAsPromised = require( 'chai-as-promised' );
+const EC = protractor.ExpectedConditions;
 
 let multiSelect;
 
@@ -19,7 +20,10 @@ defineSupportCode( function( { Then, When, Before } ) {
   When( /I (.*) on the multi-select search input/,
     function( searchInputAction ) {
 
-      return multiSelect.elements.search[searchInputAction]();
+      return browser.wait( EC.visibilityOf( multiSelect.elements.search ) )
+             .then( () => {
+               multiSelect.elements.search[searchInputAction]();
+             } );
     }
   );
 

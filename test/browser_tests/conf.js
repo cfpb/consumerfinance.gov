@@ -35,10 +35,22 @@ function _chooseSuite( params ) {
   // no browser/platform flags are passed, in which case use the full suite.
   // This will make it so that setting the browser/platform flags
   // won't launch several identical browsers performing the same tests.
-  var capabilities = defaultSuites.essential;
+  let capabilities = defaultSuites.essential;
 
   if ( envvars.HEADLESS_CHROME_BINARY ) {
     capabilities = defaultSuites.headless;
+    const cucumberOpts = minimist( process.argv.slice( 2 ) )
+                         .cucumberOpts || {};
+    const WINDOW_SIZES = environmentTest.WINDOW_SIZES;
+    let windowWidthPx = WINDOW_SIZES.DESKTOP.WIDTH;
+    let windowHeightPx = WINDOW_SIZES.DESKTOP.HEIGHT;
+
+    if ( cucumberOpts.tags === '@mobile' ) {
+      windowWidthPx = WINDOW_SIZES.MOBILE.WIDTH;
+      windowHeightPx = WINDOW_SIZES.MOBILE.HEIGHT;
+    }
+    let windowSize = `--window-size=${windowWidthPx}x${windowHeightPx}`;
+    capabilities[0].chromeOptions.args.push( windowSize );
   } else if ( paramsAreNotSet && useSauceCredentials ) {
     capabilities = defaultSuites.full;
   }
@@ -211,7 +223,6 @@ function _onPrepare() {
   // Calling setSize with headless chromeDriver doesn't work properly if
   // the requested size is larger than the available screen size.
   if ( !envvars.HEADLESS_CHROME_BINARY ) {
-    console.log(  browser.driver )
     browser.driver.manage().window().setSize(
       windowWidthPx,
       windowHeightPx

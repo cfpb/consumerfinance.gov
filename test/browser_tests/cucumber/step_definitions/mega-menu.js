@@ -107,7 +107,7 @@ defineSupportCode( function( { Then, When, Before } ) {
                return expect( _dom.contentAboutUs.isDisplayed() )
                       .to.eventually
                       .equal( true );
-           } );
+             } );
   } );
 
   Then( 'the mega-menu organism should show menu when clicked', function( ) {
@@ -148,7 +148,7 @@ defineSupportCode( function( { Then, When, Before } ) {
 
   // This test is failing right now, but should pass
   // when we fix keyboard tabbing on mobile
-  Then( 'should not shift menus when tabbing',
+  Then( 'the mega-menu organism should not shift menus when tabbing',
     function() {
       browser.driver.actions().click( _dom.triggerBtn ).perform();
       browser.driver.actions().sendKeys( protractor.Key.TAB ).perform();

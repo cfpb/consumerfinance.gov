@@ -4,7 +4,6 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 const breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
 const { defineSupportCode } = require( 'cucumber' );
 const { shouldShouldnt, toCamelCase } = require( '../../util/index.js' );
-
 const chai = require( 'chai' );
 const expect = chai.expect;
 const chaiAsPromised = require( 'chai-as-promised' );
@@ -25,8 +24,6 @@ const GLOBAL_CTA_LG_SEL = BASE_SEL + ' .m-global-header-cta__horizontal';
 const GLOBAL_CTA_SM_SEL = BASE_SEL + ' .m-global-header-cta__list';
 const GLOBAL_EYEBROW_LG_SEL = BASE_SEL + ' .m-global-eyebrow__horizontal';
 const GLOBAL_EYEBROW_SM_SEL = MEGA_MENU_SEL + ' .m-global-eyebrow__list';
-const EC = protractor.ExpectedConditions;
-
 
 chai.use( chaiAsPromised );
 
@@ -61,57 +58,46 @@ defineSupportCode( function( { Then, When, Before } ) {
 
       return expect( _dom[toCamelCase( element )].isDisplayed() )
              .to.eventually
-             .to.equal( shouldShouldnt( shouldDispayElement ) );
+             .equal( shouldShouldnt( shouldDispayElement ) );
     }
   );
 
   When( 'I click on the mega-menu',
     function( ) {
 
-      return browser
-             .wait( EC.elementToBeClickable( _dom.megaMenu ) )
-             .then( _dom.megaMenu.click );
+      return _dom.megaMenu.click();
     }
   );
 
-  When( 'I click the the mega-menu trigger',
+  When( 'I click on the mega-menu trigger',
     function( ) {
 
-      return  browser
-              .wait( EC.elementToBeClickable( _dom.megaMenuTrigger ) )
-              .then( _dom.megaMenuTrigger.click );
+      return _dom.megaMenuTrigger.click();
     }
   );
 
-  When( 'I click on search', function() {
-    _dom.megaMenuTrigger.click();
+  When( 'I click on the mega-menu search trigger', function() {
 
     return _dom.globalSearchTrigger.click();
   } );
 
-  Then( 'it should show the search and hide megamenu', function() {
-    expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
-    .to.eventually
-    .to.equal( 'true' );
+  Then(/the mega-menu\s?(shouldn't|should)/, function( shouldDispayElement ) {
+    browser.sleep( 500 );
 
     return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
            .to.eventually
-           .to.equal( 'false' );
+           .equal( shouldShouldnt( shouldDispayElement ).toString() );
   } );
 
-  Then( 'it should show the mega menu and hide search', function() {
+  Then( /the mega-menu search form (shouldn't|should)/,
 
-    // Since the code doesn't work when .u-move-transition__disabled is
-    // set to 0ms, we still need a quick sleep.
-    browser.sleep( 2 );
+    function( shouldDispayElement ) {
+      browser.sleep( 500 );
 
-    expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )
-    .to.eventually
-    .equal( 'true' );
-
-    return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
-           .to.eventually
-           .equal( 'false' );
-  } );
+      return expect( _dom.globalSearchContent.getAttribute( 'aria-expanded' ) )
+             .to.eventually
+             .equal( shouldShouldnt( shouldDispayElement ).toString() );
+    }
+  );
 
 } );
