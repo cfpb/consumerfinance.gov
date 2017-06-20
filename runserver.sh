@@ -12,7 +12,7 @@ set -e
 # make sure backend services are running
 source start-services.sh
 
-if [ -z "$DJANGO_HTTP_PORT"]; then
+if [ -z "$DJANGO_HTTP_PORT" ]; then
   DJANGO_HTTP_PORT=8000
 fi
 
