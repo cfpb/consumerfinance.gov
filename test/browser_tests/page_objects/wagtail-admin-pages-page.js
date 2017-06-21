@@ -106,15 +106,16 @@ class WagtailAdminPages extends BasePage {
   }
 
   publish( ) {
+    dropdownToggle.click();
 
-    return clickWhenReady( [ dropdownToggle, publishButton ] );
+    return publishButton.click();
   }
 
   unpublish( ) {
+    dropdownToggle.click();
+    unpublishButton.click();
 
-    return clickWhenReady(
-      [ dropdownToggle, unpublishButton, confirmUnpublishButton ]
-    );
+    return confirmUnpublishButton.click();
   }
 
 }
