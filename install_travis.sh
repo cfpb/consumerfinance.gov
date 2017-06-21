@@ -10,7 +10,7 @@ frontend() {
         nvm install 6
     fi
 
-    npm install -g gulp npm@3.10.7
+    npm install -g gulp npm@3.10.10
     chmod +x ./frontend.sh
     ./frontend.sh test
 }
