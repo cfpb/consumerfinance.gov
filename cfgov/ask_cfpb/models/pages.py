@@ -31,7 +31,8 @@ SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
 ENGLISH_ANSWER_SLUG_BASE = '/ask-cfpb/slug-en-{}/'
 ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
 ENGLISH_DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
-SPANISH_DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials (in Spanish)'
+SPANISH_DISCLAIMER_SNIPPET_TITLE = (
+    'Legal disclaimer for consumer materials (in Spanish)')
 
 
 # def get_valid_spanish_tags():
