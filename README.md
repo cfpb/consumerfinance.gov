@@ -31,6 +31,7 @@ pip install virtualenv virtualenvwrapper
 npm install -g gulp
 source load-env.sh
 source setup.sh
+workon cfgov-refresh
 ./runserver.sh
 ```
 
