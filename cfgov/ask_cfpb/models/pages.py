@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import json
 
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
@@ -206,14 +206,26 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
 
     @route(r'^$')
     def category_page(self, request):
-        context = self.get_context(request)
-        page = request.GET.get('page', 1)
-        paginator = Paginator(context.get('answers'), 20)
-        context.update({
-            'paginator': paginator,
-            'current_page': int(page),
-            'questions': paginator.page(page),
-        })
+        try:
+            context = self.get_context(request)
+            page = int(request.GET.get('page', 1))
+            paginator = Paginator(context.get('answers'), 20)
+            context.update({
+                'paginator': paginator,
+                'current_page': int(page),
+                'questions': paginator.page(page),
+            })
+        except (EmptyPage, PageNotAnInteger):
+            request.GET = request.GET.copy()
+            request.GET['page'] = 1
+            context = self.get_context(request)
+            page = int(request.GET.get('page', 1))
+            paginator = Paginator(context.get('answers'), 20)
+            context.update({
+                'paginator': paginator,
+                'current_page': int(page),
+                'questions': paginator.page(page),
+            })
 
         return TemplateResponse(
             request,
@@ -222,23 +234,41 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
 
     @route(r'^(?P<subcat>[^/]+)/$')
     def subcategory_page(self, request, **kwargs):
-        self.ask_subcategory = self.SubCategory.objects.get(
-            slug=kwargs.get('subcat'))
-        # self.slug = self.ask_subcategory.slug
-        context = self.get_context(request)
+        subcat = self.SubCategory.objects.filter(
+            slug=kwargs.get('subcat')).first()
+        if subcat:
+            self.ask_subcategory = subcat
+        else:
+            raise Http404
         answers = self.ask_subcategory.answer_set.order_by(
             '-pk').values(
             'id', 'question', 'slug')
-        page = request.GET.get('page', 1)
-        paginator = Paginator(answers, 20)
-        context.update({
-            'paginator': paginator,
-            'current_page': int(page),
-            'results_count': answers.count(),
-            'questions': paginator.page(page),
-            'breadcrumb_items': get_ask_breadcrumbs(
-                self.ask_category)
-        })
+        try:
+            context = self.get_context(request)
+            page = request.GET.get('page', 1)
+            paginator = Paginator(answers, 20)
+            context.update({
+                'paginator': paginator,
+                'current_page': int(page),
+                'results_count': answers.count(),
+                'questions': paginator.page(page),
+                'breadcrumb_items': get_ask_breadcrumbs(
+                    self.ask_category)
+            })
+        except (EmptyPage, PageNotAnInteger):
+            request.GET = request.GET.copy()
+            request.GET['page'] = 1
+            context = self.get_context(request)
+            page = request.GET.get('page', 1)
+            paginator = Paginator(answers, 20)
+            context.update({
+                'paginator': paginator,
+                'current_page': int(page),
+                'results_count': answers.count(),
+                'questions': paginator.page(page),
+                'breadcrumb_items': get_ask_breadcrumbs(
+                    self.ask_category)
+            })
 
         return TemplateResponse(
             request,
@@ -269,12 +299,14 @@ class AnswerResultsPage(CFGOVPage):
             js['template'] += ['secondary-navigation.js']
 
     def get_context(self, request, **kwargs):
+
         context = super(
             AnswerResultsPage, self).get_context(request, **kwargs)
+        page = int(request.GET.get('page', 1))
         context.update(**kwargs)
         paginator = Paginator(self.answers, 20)
-        page = int(request.GET.get('page', 1))
-
+        if page > paginator.num_pages:
+            page = 1
         context['current_page'] = page
         context['paginator'] = paginator
         context['results'] = paginator.page(page)
@@ -330,7 +362,8 @@ class AnswerAudiencePage(CFGOVPage):
         answers = Answer.objects.filter(audiences__id=self.ask_audience.id)
         page = request.GET.get('page', 1)
         paginator = Paginator(answers, 20)
-
+        if page > paginator.num_pages:
+            page = 1
         context.update({
             'answers': paginator.page(page),
             'current_page': int(page),
@@ -378,17 +411,22 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
              Truncator(a.answer_es).words(40, truncate=' ...'))
             for a in tag_dict['tag_map'][tag]
         ]
-        context = self.get_context(request)
-        context['tag'] = tag
-
-        page = int(request.GET.get('page', 1))
-        paginator = Paginator(self.answers, 20)
-
-        context['current_page'] = page
-        context['paginator'] = paginator
-        context['results'] = paginator.page(page)
+        try:
+            context = self.get_context(request)
+            page = int(request.GET.get('page', 1))
+            paginator = Paginator(self.answers, 20)
+            context['results'] = paginator.page(page)
+        except (EmptyPage, PageNotAnInteger):
+            request.GET = request.GET.copy()
+            request.GET['page'] = 1
+            context = self.get_context(request)
+            page = int(request.GET.get('page', 1))
+            paginator = Paginator(self.answers, 20)
+            context['results'] = paginator.page(page)
         context['results_count'] = len(self.answers)
-
+        context['tag'] = tag
+        context['paginator'] = paginator
+        context['current_page'] = page
         return TemplateResponse(
             request,
             self.get_template(request),
