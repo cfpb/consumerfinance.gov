@@ -29,6 +29,8 @@ env:
     - RUNTEST=backend
     - RUNTEST=acceptance
 
+group: deprecated-2017Q2
+
 script:
   - ./run_travis.sh
 
