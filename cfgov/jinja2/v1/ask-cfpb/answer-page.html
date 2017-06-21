@@ -30,7 +30,7 @@
 
 
 {% block content_main_modifiers -%}
-    {{ super() }} content__flush-bottom 
+    {{ super() }} content__flush-bottom
 {%- endblock %}
 
 {% block content_main %}
@@ -54,7 +54,7 @@
                 {{ page.snippet | safe }}
             </h3>
         {% endif %}
-        <div data-qa-hook="expandable" 
+        <div data-qa-hook="expandable"
              data-read-more="true"
              class="o-expandable
                     o-expandable__read-more">
@@ -63,7 +63,7 @@
                     <div class="answer-text">
                         {{ page.answer | richtext | safe }}
                     </div>
-                    {% if audiences %} 
+                    {% if audiences %}
                     <div class="u-mt15">
                         {{ tags.render( {'links': audiences}, '', is_wagtail=True) }}
                     </div>
@@ -79,7 +79,7 @@
                     </div>
                     {% endif %}
                 </div>
-            </div>            
+            </div>
             <a class="o-expandable_target jump-link o-expandable_link" title="Expand content">
                 <span class="jump-link_text">
                     <span class="o-expandable_cue o-expandable_cue-open">
@@ -93,7 +93,7 @@
                 </span>
             </a>
         </div>
-        
+
 
     </div>
     {{ ask_search_bar.render( 'left' ) }}
@@ -119,12 +119,12 @@
     {% if category and subcategories %}
         <div class="block {% if not page.answer_base.next_step %}block__flush-top{% endif %}">
             <div class="m-related-links">
-                <h2 class="header-slug">
-                    <span class="header-slug_inner">
+                <header class="m-slug-header">
+                    <h2 class="a-heading">
                         Related {{category.name}} subjects
-                    </span>
-                </h2>
-                <ul class="list list__unstyled list__links">
+                    </h2>
+                </header>
+                <ul class="m-list m-list__unstyled m-list__links">
                     {% for subcat in subcategories %}
                         <li class="list_item">
 
@@ -132,7 +132,7 @@
                         </li>
                     {% endfor %}
                     <li class="list_item">
-                      <a class="btn category-button" href="{{slugurl('category-' + category.slug)}}"> 
+                      <a class="btn category-button" href="{{slugurl('category-' + category.slug)}}">
                         See all {{category.name | lower}} questions
                       </a>
                     </li>
@@ -144,27 +144,26 @@
     {% if related_questions %}
         <div class="block">
             <div class="m-related-links">
-                <h2 class="header-slug">
-                    <span class="header-slug_inner">
+                <header class="m-slug-header">
+                    <h2 class="a-heading">
                         Related questions
-                    </span>
-                </h2>
-                 <ul class="list list__unstyled list__links">
+                    </h2>
+                </header>
+                <ul class="list list__unstyled list__links">
                     {% for question in related_questions %}
                     <li class="list_item">
                         <a href="{{ slugurl(question.slug) }}" class="list_link">
                             {{ question.question | safe }}
                         </a>
                         </li>
-                    {% endfor %}  
+                    {% endfor %}
                 </ul>
             </div>
         </div>
     {% endif %}
-    <div class="analytics-data" 
+    <div class="analytics-data"
          data-answer-id="{{ answer_id }}"
          data-category-slug="{{ category.slug }}"
          data-category-name="{{ category.name }}">
     </div>
 {% endblock %}
-
