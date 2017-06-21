@@ -18,15 +18,12 @@ Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
 and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions
 are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
 
-Ensure that Python, Node, Docker, Docker Machine, Docker Compose, and imagemagick are installed. If you are using a mac with homebrew, you can run:
-
-`sh homebrew-deps.sh`
-
-Then:
+Ensure that Python, Node, Docker, Docker Machine, Docker Compose, and imagemagick are installed. If you are using a mac with homebrew, you can run `homebrew-deps.sh` as described below:
 
 ```
 git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
+sh homebrew-deps.sh
 pip install virtualenv virtualenvwrapper
 npm install -g gulp
 source load-env.sh
