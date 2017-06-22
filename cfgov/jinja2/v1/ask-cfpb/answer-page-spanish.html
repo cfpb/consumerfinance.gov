@@ -47,7 +47,7 @@
                 {% if loop.first %}
                     <aside class="supplement ac-similar-answers">
                     <h4 class="supplement-title">Preguntas similares</h4>
-                    <ul class="unstyled spaced">
+                    <ul class="unstyled spaced nav-list">
                 {% endif %}
                     <li><a href="{{ slugurl(a.slug_es) }}">{{ a.question_es|safe }}</a></li>
                 {% if loop.last %}
@@ -71,13 +71,14 @@
                 {% endif %}
             {% endfor %}
 
+            {% if disclaimer %}
             <section class="supplement supplement-plain js-showtoggle ac-disclaimer">
                 <button class="btn btn-block btn-block-on-small js-showtoggle-trigger">Acerca de estas respuestas</button>
                 <div class="js-showtoggle-content well">
-                    Estas respuestas se proveen solamente para efectos informativos generales. Si bien no le aconsejarán sobre su situación exacta, esperamos que le ayuden a entender mejor los productos y servicios financieros. Estas respuestas no constituyen asesoramiento legal ni interpretación del CFPB.
+                    {{ disclaimer.text | safe }}
                 </div>
             </section>
-
+            {% endif %}
         </aside><!-- .secondary -->
         <div class="share s-hide-on-small" data-set="share"></div><!-- .share -->
 

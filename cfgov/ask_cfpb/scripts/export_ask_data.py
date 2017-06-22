@@ -25,10 +25,7 @@ HEADINGS = [
     'RelatedResources',
 ]
 
-# Note: Spanish snippets are not yet used (June 2017).
 SPANISH_HEADINGS = [
-    'ASK_ID',
-    'SpanishShortAnswer',
     'SpanishAnswer',
 ]
 
@@ -44,8 +41,6 @@ def assemble_output(spanish_only=False):
     if spanish_only:
         for answer in answers:
             output = {
-                'ASK_ID': answer.id,
-                'SpanishShortAnswer': clean_and_strip(answer.snippet_es),
                 'SpanishAnswer': clean_and_strip(answer.answer_es)
             }
             output_rows.append(output)
