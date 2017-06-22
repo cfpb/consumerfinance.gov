@@ -1,7 +1,16 @@
+import sys
+
 from .base import *
 
-# Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
+# log to disk when running in mod_wsgi, otherwise to console
+# This avoids permissions problems when logged in users (or CI jobs)
+# can't write to the log file.
+if sys.argv and sys.argv[0] == 'mod_wsgi':
+    default_loggers = ['disk']
+else:
+    default_loggers = ['console']
 
+# Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -15,6 +24,13 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
+        'disk': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.getenv('CFGOV_DJANGO_LOG'),
+            'maxBytes': 1024*1024*10,  # max 10 MB per file
+            'backupCount': 5,  # keep 5 files around
+        },
     },
     'loggers': {
         'django.request': {
@@ -26,6 +42,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
+        'v1': {
+            'handlers': default_loggers,
+            'level': 'INFO',
+            'propagate': True,
+        }
     }
 }
 
