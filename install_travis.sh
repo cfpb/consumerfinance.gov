@@ -4,6 +4,7 @@
 frontend() {
     export CXX=clang++
 
+    # Temporarily commented out to deal with default Node version issues
     #if [[ "$(node -v)" != 'v6.'* ]]; then
     #    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
     #    source ~/.nvm/nvm.sh
