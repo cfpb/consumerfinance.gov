@@ -11,14 +11,11 @@ from ask_cfpb.models import Answer
 
 html_parser = HTMLParser.HTMLParser()
 
-# If Spanish snippets are implemented, add the commented heading and output
 HEADINGS = [
     'ASK_ID',
     'Question',
     'ShortAnswer',
     'Answer',
-    # 'SpanishShortAnswer',  # add if snippets are implemented for Spanish
-    'SpanishAnswer',
     'URL',
     'SpanishURL',
     'Topic',
@@ -28,15 +25,31 @@ HEADINGS = [
     'RelatedResources',
 ]
 
+# Note: Spanish snippets are not yet used (June 2017).
+SPANISH_HEADINGS = [
+    'ASK_ID',
+    'SpanishShortAnswer',
+    'SpanishAnswer',
+]
+
 
 def clean_and_strip(data):
     unescaped = html_parser.unescape(data)
     return html.strip_tags(unescaped).strip()
 
 
-def assemble_output():
+def assemble_output(spanish_only=False):
     answers = Answer.objects.all()
     output_rows = []
+    if spanish_only:
+        for answer in answers:
+            output = {
+                'ASK_ID': answer.id,
+                'SpanishShortAnswer': clean_and_strip(answer.snippet_es),
+                'SpanishAnswer': clean_and_strip(answer.answer_es)
+            }
+            output_rows.append(output)
+        return output_rows
     for answer in answers:
         output = {heading: '' for heading in HEADINGS}
         output['ASK_ID'] = answer.id
@@ -45,11 +58,8 @@ def assemble_output():
             answer.snippet)
         output['Answer'] = clean_and_strip(
             answer.answer)
-        # add the following output if Spanish snippets are implemented
-        # output['SpanishShortAnswer'] = clean_and_strip(
-        #     answer.snippet_es)
-        output['SpanishAnswer'] = clean_and_strip(
-            answer.answer_es)
+        # output['SpanishAnswer'] = clean_and_strip(
+        #     answer.answer_es)
         output['URL'] = answer.english_page.url_path.replace(
             '/cfgov', '') if answer.english_page else ''
         output['SpanishURL'] = (
@@ -70,27 +80,43 @@ def assemble_output():
     return output_rows
 
 
-def export_questions(excel=True):
+def export_questions(spanish_only=False):
     """
     Script for exporting Ask CFPB Answer content to a CSV spreadsheet.
 
-    Since our CEE staffers use Excel, the default export encodes the CSV
-    in UTF-16le so Excel will open the file with proper diacritical marks.
-    This doubles the file size.
+    CEE staffers use a version of Excel that can't easily import UTF-8
+    non-ascii encodings. Generally the only content that has characters
+    outside the ascii range is Spanish asnwers, so we export the bulk of the
+    data as UTF-8, and Spanish answers as a separate UTF-16le file that our
+    versions of Excel will read with proper diacritical marks.
+    UTF-16le doubles the file size, which causes performance issues for
+    the full data set.
 
-    To get a proper utf-8 CSV, pass `excel=False` to export_quesitons.
+    So passing `--script-args spanish' will output just the Ask IDs
+    and Spanish answers in UTF-16le. The default (no script args)
+    outputs the full data set, minus Spanish answers, in UTF-8.
     """
 
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
-    with open('answers_{}.csv'.format(timestamp), 'w') as f:
-        if excel:
+    if spanish_only:
+        filename = 'spanish_answers_{}.csv'
+    else:
+        filename = 'answers_{}.csv'
+    with open(filename.format(timestamp), 'w') as f:
+        if spanish_only:
             writer = csvkit.UnicodeWriter(f, encoding='UTF-16le')
+            writer.writerow(SPANISH_HEADINGS)
+            for row in assemble_output(spanish_only=True):
+                writer.writerow([row[key] for key in SPANISH_HEADINGS])
         else:
             writer = csvkit.UnicodeWriter(f)
-        writer.writerow(HEADINGS)
-        for row in assemble_output():
-            writer.writerow([row[key] for key in HEADINGS])
+            writer.writerow(HEADINGS)
+            for row in assemble_output():
+                writer.writerow([row[key] for key in HEADINGS])
 
 
-def run():
-    export_questions()
+def run(*args):
+    if 'spanish' in args:
+        export_questions(spanish_only=True)
+    else:
+        export_questions()
