@@ -26,7 +26,9 @@ HEADINGS = [
 ]
 
 SPANISH_HEADINGS = [
-    'SpanishAnswer',
+    'ASK_ID'.encode('UTF16'),
+    'SpanishURL'.encode('UTF16'),
+    'SpanishAnswer'.encode('UTF16'),
 ]
 
 
@@ -35,13 +37,29 @@ def clean_and_strip(data):
     return html.strip_tags(unescaped).strip()
 
 
+def clean_and_strip_spanish(data):
+    unescaped = html_parser.unescape(data)
+    return html.strip_tags(
+        unescaped).strip().replace(
+        '\t', ' ').replace(
+        '\n', ' ').replace(
+        '\r', ' ')
+
+
 def assemble_output(spanish_only=False):
     answers = Answer.objects.all()
     output_rows = []
     if spanish_only:
         for answer in answers:
             output = {
-                'SpanishAnswer': clean_and_strip(answer.answer_es)
+                'ASK_ID'.encode('UTF16'):
+                str(answer.id).encode('UTF16'),
+                'SpanishURL'.encode('UTF16'): (
+                    answer.spanish_page.url_path.replace(
+                        '/cfgov', '').encode('UTF16')
+                    if answer.spanish_page else ''.encode('UTF16')),
+                'SpanishAnswer'.encode('UTF16'): clean_and_strip_spanish(
+                    answer.answer_es).encode('UTF16')
             }
             output_rows.append(output)
         return output_rows
@@ -77,32 +95,39 @@ def assemble_output(spanish_only=False):
 
 def export_questions(spanish_only=False):
     """
-    Script for exporting Ask CFPB Answer content to a CSV spreadsheet.
+    A rather ridiculous script for exporting Ask CFPB Answer content.
+
+    Run from within cfgov-refresh with `python cfgov/manage.py export_ask_data`
 
     CEE staffers use a version of Excel that can't easily import UTF-8
-    non-ascii encodings. Generally the only content that has characters
+    non-ascii encodings. Generally the only Ask content that has characters
     outside the ascii range is Spanish asnwers, so we export the bulk of the
-    data as UTF-8, and Spanish answers as a separate UTF-16le file that our
-    versions of Excel will read with proper diacritical marks.
-    UTF-16le doubles the file size, which causes performance issues for
-    the full data set.
+    data as UTF-8, and Spanish answers as a separate UTF-16 file that our
+    versions of Excel will open with proper diacritical marks.
+    UTF-16 doubles the file size, which can causes Excel performance issues
+    for the full data set. UTF-16 also plays hob with delimiting,
+    pushing text to next cells and making a mess.
 
-    So passing `--script-args spanish' will output just the Ask IDs
-    and Spanish answers in UTF-16le. The default (no script args)
-    outputs the full data set, minus Spanish answers, in UTF-8.
+    So passing `--script-args spanish` will output just the Ask IDs, URLs,
+    and Spanish answers in UTF-16 to a well-behaved tab-separated file.
+    The default (no script args) outputs the full data set to CSV,
+    minus Spanish answers, in UTF-8.
     """
 
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     if spanish_only:
-        filename = 'spanish_answers_{}.csv'
+        filename = 'spanish_answers_{}.tsv'
     else:
         filename = 'answers_{}.csv'
     with open(filename.format(timestamp), 'w') as f:
         if spanish_only:
-            writer = csvkit.UnicodeWriter(f, encoding='UTF-16le')
-            writer.writerow(SPANISH_HEADINGS)
+            f.write(
+                "\t".encode('UTF16').join(
+                    SPANISH_HEADINGS) + '\n'.encode('UTF16'))
             for row in assemble_output(spanish_only=True):
-                writer.writerow([row[key] for key in SPANISH_HEADINGS])
+                f.write("\t".encode('UTF16').join(
+                    [row[key] for key
+                     in SPANISH_HEADINGS]) + '\n'.encode('UTF16'))
         else:
             writer = csvkit.UnicodeWriter(f)
             writer.writerow(HEADINGS)
