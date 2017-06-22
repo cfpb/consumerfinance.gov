@@ -12,6 +12,7 @@
         if (window.location.href.indexOf('ask_cfpb') > -1) {
           var buttonset,
           baseClass = "answer-module",
+          textInputClass = 'richtext',
           _this = this;
           buttonset = jQuery("<span class=\"" + this.widgetName + "\"></span>");
           var buttonElement;
@@ -27,62 +28,91 @@
           buttonset.append(buttonElement);
           
           buttonElement.on('click', function (event) {
+
+
             var sel = window.getSelection();
             var node = sel.baseNode;
-            var parent = node.parentElement;
-            // Walk up the parents of the selected node up to 
-            // the rich text input element. If an element with
-            // the tip class is found, remove the containing
-            // tip element and return.
-            while ( parent ) {
-              if ( parent.classList.contains( baseClass ) ) {
-                var docFrag = document.createDocumentFragment();
-                while (parent.firstChild) {
-                    var child = parent.removeChild(parent.firstChild);
-                    docFrag.appendChild(child);
+            
+            var tip = $(node).closest( '.' + baseClass )[0];
+
+            // If selection is currently styled as a tip,
+            // remove the tip wrapper element.
+            if ( tip ) {
+              var docFrag = document.createDocumentFragment();
+              while ( tip.firstChild ) {
+                var child = tip.removeChild( tip.firstChild );
+                docFrag.appendChild(child);
+              }
+              tip.parentNode.replaceChild(docFrag, tip);
+              _this.options.editable.setModified();
+              return;
+            }
+
+            // Otherwise, get the selected range. If it starts or ends
+            // with a text node or inline element (a, strong, i), 
+            // expand the selection either to that node's 
+            // start or end bound, or the start or end bound of its parent
+            // if it's not a direct child of the text input div.
+            var range = rangy.getSelection().getRangeAt(0);
+            
+            function expandSelection( node, start ) {
+              while ( node.nodeType === 3 || ['A', 'I', 'Strong'].indexOf( node.nodeName ) > -1 ) {
+                var parent = node.parentNode;
+                if ( parent && !parent.classList.contains( textInputClass ) ) {
+                  range[start ? 'setStartBefore' : 'setEndAfter']( parent );
+                  node = parent;
+                } else {
+                  range[start ? 'setStartBefore' : 'setEndAfter']( node );
+                  break;
                 }
-                parent.parentNode.replaceChild(docFrag, parent);
-                return;
-              } else if ( parent.classList.contains('richtext') ) {
-                parent = null;
-              } else {
-                parent = parent.parentNode;
               }
             }
 
-            // Otherwise, check that the selection is not empty.
-            // If it has contents, clone them, insert them in a
-            // new tip element, and replace the selection with
-            // the new element.
-            var range = sel.getRangeAt(0).cloneRange();
+            expandSelection( range.startContainer, true );
+            expandSelection( range.endContainer );
 
-            if (range.endOffset > range.startOffset) {
-              var contents = range.cloneContents();
-              var elem = document.createElement("aside");
-              elem.className = baseClass;
-              elem.appendChild(contents);
-              range.deleteContents();
-              range.insertNode(elem);
 
-              // Update selection's value to encompass
-              // the contents of new element. this makes
-              // it possible to immediately remove the new tip
-              // wrapper by clicking the tip button again.
-              var newRange = document.createRange();
-              newRange.setStart(elem, 0);
-              newRange.setEnd(elem, elem.childNodes.length); 
-              sel.removeAllRanges();
-              sel.addRange(newRange);
-
-              // Clear any empty elements created by this process.
-              $(range.commonAncestorContainer).find('*').each(function() {
-                if ($(this).is(':empty') || $(this).text() === '') {
-                  $(this).remove();
-                }
-              });
+            // Check if range can be surrounded with a wrapper element.
+            // If not, try to find the least common ancestor of the 
+            // start and end containers and expand the start/end of the
+            // range to encompas it so the range can be surrounded.
+            function getDepth( ancestor, node ) {
+              return node === ancestor ? 0 : $( node ).parentsUntil( common ).length + 1;
             }
 
-            return _this.options.editable.element.trigger('change');
+            if ( !range.canSurroundContents() ) {
+              var common = range.commonAncestorContainer;
+              var start_depth = getDepth( common, range.startContainer );
+              var end_depth = getDepth( common, range.endContainer );
+              
+              while ( !range.canSurroundContents() ) {
+                if ( start_depth > end_depth ) {
+                  if ( range.startContainer.classList.contains( textInputClass ) ) {
+                    break;
+                  } else {
+                    range.setStartBefore( range.startContainer );
+                    start_depth = getDepth( common, range.startContainer );
+                  }
+                } else {
+                  if ( range.endContainer.classList.contains( textInputClass ) ) {
+                    break;
+                  } else {
+                    range.setEndAfter( range.endContainer );
+                    end_depth = getDepth( common, range.endContainer );
+                  }
+                }
+              }
+            }
+            
+            // If range can be surrounded, wrap it in an element 
+            // that applies the tip class.
+            if ( range.canSurroundContents() ) {
+              var newNode = document.createElement( 'aside' );
+              newNode.className = baseClass;
+              range.surroundContents(newNode);
+              return _this.options.editable.element.trigger('change');
+            }
+
           });
           
           buttonset.hallobuttonset();
