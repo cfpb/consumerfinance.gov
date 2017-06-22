@@ -12,7 +12,7 @@ cache:
   pip: true
   directories:
     - node_modules
-    - $HOME/.nvm/versions/node/v6.11.0/lib/node_modules/
+    - $HOME/.nvm/versions/node/v7.4.0/lib/node_modules/
 
 install:
   - ./install_travis.sh

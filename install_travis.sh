@@ -4,11 +4,11 @@
 frontend() {
     export CXX=clang++
 
-    if [[ "$(node -v)" != 'v6.'* ]]; then
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-        source ~/.nvm/nvm.sh
-        nvm install 6
-    fi
+    #if [[ "$(node -v)" != 'v6.'* ]]; then
+    #    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+    #    source ~/.nvm/nvm.sh
+    #    nvm install 6
+    #fi
 
     npm install -g gulp npm@3.10.10
     chmod +x ./frontend.sh
