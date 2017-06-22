@@ -56,7 +56,8 @@
             var range = rangy.getSelection().getRangeAt(0);
             
             function expandSelection( node, start ) {
-              while ( node.nodeType === 3 || ['A', 'I', 'Strong'].indexOf( node.nodeName ) > -1 ) {
+              while ( node.nodeType === 3 || 
+                      ['A', 'I', 'Strong'].indexOf( node.nodeName ) > -1 ) {
                 var parent = node.parentNode;
                 if ( parent && !parent.classList.contains( textInputClass ) ) {
                   range[start ? 'setStartBefore' : 'setEndAfter']( parent );
@@ -77,7 +78,9 @@
             // start and end containers and expand the start/end of the
             // range to encompas it so the range can be surrounded.
             function getDepth( ancestor, node ) {
-              return node === ancestor ? 0 : $( node ).parentsUntil( common ).length + 1;
+              return node === ancestor 
+                          ? 0 : 
+                          $( node ).parentsUntil( common ).length + 1;
             }
 
             if ( !range.canSurroundContents() ) {
@@ -109,8 +112,8 @@
             if ( range.canSurroundContents() ) {
               var newNode = document.createElement( 'aside' );
               newNode.className = baseClass;
-              range.surroundContents(newNode);
-              return _this.options.editable.element.trigger('change');
+              range.surroundContents( newNode );
+              return _this.options.editable.element.trigger( 'change' );
             }
 
           });
