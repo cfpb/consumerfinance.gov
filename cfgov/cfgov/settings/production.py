@@ -1,7 +1,14 @@
+import sys
+
 from .base import *
 
-# Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
+# log to disk when running in mod_wsgi, otherwise to console
+if sys.argv and sys.argv[0] == 'mod_wsgi':
+    default_loggers = ['disk']
+else:
+    default_loggers = ['console']
 
+# Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -34,7 +41,7 @@ LOGGING = {
             'propagate': False,
         },
         'v1': {
-            'handlers': ['disk'],
+            'handlers': default_loggers,
             'level': 'INFO',
             'propagate': True,
         }
