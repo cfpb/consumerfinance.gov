@@ -3,6 +3,8 @@ import sys
 from .base import *
 
 # log to disk when running in mod_wsgi, otherwise to console
+# This avoids permissions problems when logged in users (or CI jobs)
+# can't write to the log file.
 if sys.argv and sys.argv[0] == 'mod_wsgi':
     default_loggers = ['disk']
 else:
