@@ -5,207 +5,30 @@
 
 
 /* topdoc
-  name: Slugs
-  family: cfgov-blog-docs
-  patterns:
-    - name: Blog slugs
-      markup: |
-        <a href="#" class="category-slug">
-            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-            <span class="u-visually-hidden">Category:</span>
-            Announcements & updates
-        </a><br>
-        <a href="#" class="category-slug">
-            <span class="category-slug_icon cf-icon cf-icon-information"></span>
-            <span class="u-visually-hidden">Category:</span>
-            Consumer information
-        </a><br>
-        <a href="#" class="category-slug">
-            <span class="category-slug_icon cf-icon cf-icon-dialogue"></span>
-            <span class="u-visually-hidden">Category:</span>
-            Engagement
-        </a><br>
-        <a href="#" class="category-slug">
-            <span class="category-slug_icon cf-icon cf-icon-lightbulb"></span>
-            <span class="u-visually-hidden">Category:</span>
-            Innovation & data
-        </a>
-      notes:
-        - "Official icons are still being developed, hence the ?."
+    name: Press Information
+    markup: |
+      <div class="press-information">
+          <h1 class="header-slug">
+              <span class="header-slug_inner">
+                  Press information
+              </span>
+          </h1>
+          <p>
+              If you want to repbulish the article or have questions about the content,
+              please contact the press office.
+          </p>
+          <p>
+              <a href="/about-us/newsroom/press-resources/">
+                  Go to press resources page
+              </a>
+          </p>
+      </div>
   tags:
     - cfgov-blog-docs
 */
 
-/* topdoc
-  name: Post previews
-  family: cfgov-blog-docs
-  patterns:
-    - name: Featured Topic
-      markup: |
-        <article class="featured-topic summary">
-            <h1 class="summary_header summary_header__large">Featured Topic header</h1>
-            <div class="summary_cols">
-                <div class="summary_col">
-                    <p class="summary_text summary_text__dark">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde hic
-                        praesentium eum eveniet accusamus ad provident neque. Earum numquam
-                        tenetur voluptates adipisci expedita reiciendis libero fuga non quas
-                        voluptatem nihil.
-                    </p>
-                </div>
-                <div class="summary_col">
-                    <ul class="list list__spaced list__unstyled">
-                        <li class="list_item">
-                            <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-                            <a class="list_link"
-                               href="#">
-                               Student Debt Domino Effect?
-                           </a>
-                        </li>
-                        <li class="list_item">
-                            <span class="category-slug_icon cf-icon cf-icon-contract"></span>
-                            <a class="list_link"
-                               href="#">
-                               CFPB Takes Action Against RealtySouth for Mortgage Disclosure Violations
-                           </a>
-                        </li>
-                        <li class="list_item">
-                            <span class="category-slug_icon cf-icon cf-icon-double-quote"></span>
-                            <a class="list_link"
-                               href="#">
-                               Student Debt Domino Effect?
-                           </a>
-                        </li>
-                        <li class="list_item">
-                            <span class="category-slug_icon cf-icon cf-icon-microphone"></span>
-                            <a class="list_link"
-                               href="#">
-                               Student Debt Domino Effect?
-                           </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </article>
-      codenotes:
-        - |
-          .featured-topic.summary
-            .summary__header.summary_header__large
-            .summary_cols
-              .summary_col
-                .summary_text
-              .summary_col
-                .list.list__spaced.list__unstyled
-                  .list_item
-                    .list_link
-    - name: Post preview (no image)
-      codenotes:
-        - |
-          .post-preview
-            .meta-header
-              .meta-header_right.date
-              .meta-header_left.category-slug
-            .summary
-              .summary_header
-              .summary_text
-              .summary_byline
-      markup: |
-        <article class="post-preview">
-            <div class="meta-header">
-                <span class="meta-header_right date">
-                    Nov 4, 2013
-                </span>
-                <a href="#" class="meta-header_left category-slug">
-                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-                    <span class="u-visually-hidden">Category:</span>
-                    Announcements & updates
-                </a>
-            </div>
-            <a class="summary" href="#">
-                <h1 class="summary_header">Preventing illegal discrimination in auto lending</h1>
-                <p class="summary_text">Every year, millions of American families buy a car – and it will be one of the most significant purchases they make. One key priority for us is protecting consumers from the silent pickpocket of discrimination.</p>
-                <p class="summary_byline">By Patrice Ficklin</p>
-            </a>
-        </article>
-    - name: Post preview (with image)
-      codenotes:
-        - |
-          .post-preview
-            .meta-header
-              .meta-header_right.date
-              .meta-header_left.category-slug
-            .media-object
-              .media-object_image-container
-              .media-object_text-container.summary
-                .summary_header
-                .summary_text
-                .summary_byline
-      markup: |
-        <article class="post-preview">
-            <div class="meta-header">
-                <span class="meta-header_right date">
-                    Nov 4, 2013
-                </span>
-                <a href="#" class="meta-header_left category-slug">
-                    <span class="category-slug_icon cf-icon cf-icon-bullhorn"></span>
-                    <span class="u-visually-hidden">Category:</span>
-                    Announcements & updates
-                </a>
-            </div>
-            <a class="media-object" href="#">
-                <div class="media-object_image-container">
-                    <img class="media-object_image" src="http://placekitten.com/290/155" alt="">
-                </div>
-                <div class="media-object_text-container summary">
-                    <h1 class="summary_header">
-                        Live from Phoenix!
-                    </h1>
-                    <p class="summary_text">
-                        This event was a training for housing counselors, legal aid
-                        attorneys, and other advocates on the new mortgage servicing
-                        rules that take effect today.
-                    </p>
-                    <p class="summary_byline">
-                        By Patrice Ficklin
-                    </p>
-                </div>
-            </a>
-        </article>
-    - name: Press Information
-      markup: |
-        <div class="press-information">
-            <h1 class="header-slug">
-                <span class="header-slug_inner">
-                    Press information
-                </span>
-            </h1>
-            <p class="short-desc">
-                If you want to repbulish the article or have questions about the content,
-                please contact the press office.
-            </p>
-            <p>
-                <a class="sans"
-                   href="/about-us/newsroom/press-resources/">Go to press resources page</a>
-            </p>
-        </div>
-  tags:
-    - cfgov-blog-docs
-*/
-
-.featured-topic {
-    margin-bottom: unit(60px / @base-font-size-px, em);
-}
-
-.post-preview + .post-preview {
-    // Eyeballed to 60px
-    margin-top: unit(50px / @base-font-size-px, em);
-}
-
-.post-pagination {
-    // Eyeballed to 60px
-    margin: unit(54px / @base-font-size-px, em) 0 unit(28px / @base-font-size-px, em);
-}
-
+// TODO: Refactor to use existing layout classes in newsroom-page.html,
+//       the only place this class is used.
 .press-information {
     margin-top: unit(60px / @base-font-size-px, em);
     .respond-to-min(@bp-sm-min, {
