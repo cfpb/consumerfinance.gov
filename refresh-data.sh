@@ -21,8 +21,8 @@ download_data() {
 refresh_data(){
     echo 'Dropping tables'
     ./drop-tables.sh
-    CONTAINER=$(docker-compose ps | grep mysql_1 | awk '{print $1}')    
-    echo 'Uploading data into container'
+    CONTAINER=`docker ps | grep mysql_1 | awk '{print $1}'`
+    echo "Uploading data into container $CONTAINER"
     docker cp $refresh_dump_name $CONTAINER:/tmp/tmp.sql
 	echo 'Importing database'
 	docker-compose exec mysql mysql v1 -u root -proot  -e "source /tmp/tmp.sql"
