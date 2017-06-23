@@ -26,11 +26,11 @@
 
 <div class="m-related-links">
     {% if value.heading %}
-        <h2 class="header-slug">
-            <span class="header-slug_inner">
+        <header class="m-slug-header">
+            <h2 class="a-heading">
                 {{ value.heading }}
-            </span>
-        </h2>
+            </h2>
+        </header>
     {% endif %}
 
     {{ parse_links(value.paragraph) | safe }}

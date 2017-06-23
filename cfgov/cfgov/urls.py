@@ -247,14 +247,6 @@ urlpatterns = [
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
-    # If 'MOSAIC_COMPLAINTS' is false, include complaint.urls.
-    # Otherwise fallback to Wagtail if MOSAIC_COMPLAINTS is true.
-    flagged_url('MOSAIC_COMPLAINTS',
-                r'^complaint/',
-                include_if_app_enabled('complaint', 'complaint.urls'),
-                fallback=lambda req: ServeView.as_view()(req, req.path),
-                state=False),
-
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
     # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',

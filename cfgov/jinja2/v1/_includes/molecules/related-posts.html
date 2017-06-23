@@ -36,11 +36,11 @@
                 {{'m-related-posts__half-width'
                   if is_half_width else ''}}">
         {% if not hide_header_slug %}
-            <h2 class="header-slug">
-                <span class="header-slug_inner">
+            <header class="m-slug-header">
+                <h2 class="a-heading">
                     {{ block.value.header_title }}
-                </span>
-            </h2>
+                </h2>
+            </header>
         {% endif %}
         {% for post_type, post_type_list in posts.iteritems() %}
             {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", "cf-icon-speech-bubble") %}
