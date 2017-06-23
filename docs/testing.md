@@ -32,6 +32,88 @@ tox -e acceptance-fast
 
 These tests will run on their own server; you do not need to be running your development server.
 
+The tests are based on the Cucumber framework, is a tool for running automated tests written in plain language.
+
+Below are some suggested standards for Cucumber Feature files:
+
+Table Copied from https://saucelabs.com/blog/write-great-cucumber-tests by Greg Sypolt, with moderate modifications
+<table>
+   <tbody>
+      <tr>
+         <td>Feature Files</td>
+         <td>Every *.feature file consists in a single feature, focused on the business value.</td>
+      </tr>
+      <tr>
+      <td><a href="https://github.com/cucumber/cucumber/wiki/Gherkin">Gherkin</a></td>
+         <td>
+            <pre>Feature:Title (one line describing the story)
+Narrative Description: As a [role], I want [feature], so that I [benefit]<br>
+Scenario: Title (acceptance criteria of user story)
+  Given [context]
+  And [some more context]...
+  When [event]
+  Then [outcome]
+  And [another outcome]...<br>
+Scenario:...
+</pre>
+</td>
+      </tr>
+      <tr>
+         <td>Given, When, and Then Statements</td>
+         <td>
+           There might be some confusion surrounding where to put the verification step in the Given, When, Then sequence. Each statement has a purpose. <br><br>
+
+  - **Given** is the pre-condition to put the system into a known state before the user starts interacting with the application
+  - **When** describes the key action the user performs
+  - **Then** is observing the expected outcome
+
+  Just remember the <em>‘then’</em> step is an acceptance criteria of the story.
+   </td>
+      </tr>
+      <tr>
+         <td><a href="https://github.com/cucumber/cucumber/wiki/Background">Background</a></td>
+         <td>The background needs to be used wisely. If you use the same steps at the beginning of all scenarios of a feature, put them into the feature’s background scenario. The background steps are run before each scenario.
+<pre>
+Background:
+  Given I am logged into Wagtail as an admin
+  And I create a Wagtail Sublanding Page
+  And I open the content menu</pre>
+        </td>
+      </tr>
+      <tr>
+         <td>Scenarios</td>
+         <td>Keep each scenario independent. The scenarios should run independently, without any dependencies on other scenarios.  Scenarios should be between 5 to 6 statements, if possible.</td>
+      </tr>
+      <tr>
+         <td><a href="https://github.com/cucumber/cucumber/wiki/Scenario-Outlines">Scenario Outline</a></td>
+         <td>If you identify the need to use a scenario outline, take a step back and ask the following question: Is it necessary to repeat this scenario ‘x’ amount of times just to exercise the different combination of data? In most cases, one time is enough for UI level testing.</td>
+      </tr>
+      <tr>
+         <td>Declarative Vs Imperative Scenarios</td>
+         <td>
+            The declarative style describes behavior at a higher level, which improves the readability of the feature by abstracting out the implementation details of the application.  The imperative style is more verbose but better describes the expected behavior.  Either style is acceptable.<br><br>
+<u>Example: Imperative</u>
+<pre>
+Scenario: User logs in
+Given I am on the homepage
+When I click on the "Login" button
+And I fill in the "Email" field with "me@example.com"
+And I fill in the "Password" field with "secret"
+And I click on "Submit"
+Then I should see "Welcome to the app, John Doe"
+</pre>
+<u>Example: Declarative</u>
+<pre>
+Scenario:User logs in
+Given I am on the homepage
+When I log in
+Then I should see a login notification
+</pre>
+         </td>
+      </tr>
+   </tbody>
+</table>
+
 
 ## Sauce Connect - send tests to the cloud
 
