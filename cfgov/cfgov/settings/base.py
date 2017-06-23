@@ -568,10 +568,6 @@ FLAGS = {
     # When enabled, the "Doing Business With Us" pages are served from Wagtail
     'WAGTAIL_DOING_BUSINESS_WITH_US': {},
 
-    # Transition of /compltain to Wagtail
-    # When enabled, the "Submit a complaint" page is served from Wagtail
-    'MOSAIC_COMPLAINTS': {},
-
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},
 
