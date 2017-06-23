@@ -12,6 +12,7 @@ else:
     default_loggers = ['console', 'syslog']
 
 
+# This allows the syslog stuff to work on OS X
 syslog_device = next(l for l in ['/dev/log', '/var/run/syslog'] if exists(l))
 
 # Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
