@@ -32,11 +32,11 @@ tox -e acceptance-fast
 
 These tests will run on their own server; you do not need to be running your development server.
 
-The tests are based on the Cucumber framework, is a tool for running automated tests written in plain language.
+## Cucumber - tool for running automated tests written in plain language
 
 Below are some suggested standards for Cucumber Feature files:
 
-Table Copied from https://saucelabs.com/blog/write-great-cucumber-tests by Greg Sypolt, with moderate modifications
+<sup>*Table Copied from https://saucelabs.com/blog/write-great-cucumber-tests by Greg Sypolt, with moderate modifications*</sup>
 <table>
    <tbody>
       <tr>
