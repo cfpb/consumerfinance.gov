@@ -283,6 +283,7 @@ class RelatedLinks(blocks.StructBlock):
 class Quote(blocks.StructBlock):
     body = blocks.TextBlock()
     citation = blocks.TextBlock()
+    is_large = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = 'openquote'
