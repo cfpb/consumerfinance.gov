@@ -1,6 +1,7 @@
 import sys
 
 from .base import *
+from os.path import exists
 
 # log to disk when running in mod_wsgi, otherwise to console
 # This avoids permissions problems when logged in users (or CI jobs)
@@ -9,6 +10,9 @@ if sys.argv and sys.argv[0] == 'mod_wsgi':
     default_loggers = ['disk', 'syslog']
 else:
     default_loggers = ['console', 'syslog']
+
+
+syslog_device = next(l for l in ['/dev/log', '/var/run/syslog'] if exists(l))
 
 # Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
 #
@@ -23,7 +27,7 @@ LOGGING = {
         'tagged': {
             'format': 'django: %(message)s'
                   },
-    }
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
@@ -35,7 +39,7 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
         'syslog': {
-            'address': '/dev/log',
+            'address': syslog_device,
             'class': 'logging.handlers.SysLogHandler',
             'formatter': 'tagged'
         },
