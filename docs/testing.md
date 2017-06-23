@@ -36,7 +36,7 @@ These tests will run on their own server; you do not need to be running your dev
 
 Below are some suggested standards for Cucumber Feature files:
 
-<sup>*Table Copied from https://saucelabs.com/blog/write-great-cucumber-tests by Greg Sypolt, with moderate modifications*</sup>
+*Table copied from https://saucelabs.com/blog/write-great-cucumber-tests by Greg Sypolt, with moderate modifications*
 <table>
    <tbody>
       <tr>
@@ -82,7 +82,7 @@ Background:
       </tr>
       <tr>
          <td>Scenarios</td>
-         <td>Keep each scenario independent. The scenarios should run independently, without any dependencies on other scenarios.  Scenarios should be between 5 to 6 statements, if possible.</td>
+         <td>Keep each scenario independent. The scenarios should run independently, without any dependencies on other scenarios.  Scenarios should be between 3 to 6 statements, if possible.</td>
       </tr>
       <tr>
          <td><a href="https://github.com/cucumber/cucumber/wiki/Scenario-Outlines">Scenario Outline</a></td>
@@ -95,19 +95,19 @@ Background:
 <u>Example: Imperative</u>
 <pre>
 Scenario: User logs in
-Given I am on the homepage
-When I click on the "Login" button
-And I fill in the "Email" field with "me@example.com"
-And I fill in the "Password" field with "secret"
-And I click on "Submit"
-Then I should see "Welcome to the app, John Doe"
+  Given I am on the homepage
+  When I click on the "Login" button
+  And I fill in the "Email" field with "me@example.com"
+  And I fill in the "Password" field with "secret"
+  And I click on "Submit"
+  Then I should see "Welcome to the app, John Doe"
 </pre>
 <u>Example: Declarative</u>
 <pre>
 Scenario:User logs in
-Given I am on the homepage
-When I log in
-Then I should see a login notification
+  Given I am on the homepage
+  When I log in
+  Then I should see a login notification
 </pre>
          </td>
       </tr>
