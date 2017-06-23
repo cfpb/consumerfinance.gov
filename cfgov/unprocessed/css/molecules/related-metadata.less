@@ -5,11 +5,11 @@
     - name: Default example
       markup: |
     <div class="m-related-metadata">
-        <h2 class="header-slug">
-            <span class="header-slug_inner">
+        <header class="m-slug-header">
+            <h2 class="a-heading">
                 Related Metadata
-            </span>
-        </h2>
+            </h2>
+        </header>
         <div class="m-related-metadata_item-container">
             <h4></h4>
             <ul class="list
@@ -35,8 +35,8 @@
         Structural cheat sheet:
         -----------------------
         .m-related-metadata
-          .header-slug
-            .header-slug_inner
+          .m-slug-header
+            .a-heading
         .m-related-metadata_item-container
           h4
           .list
@@ -115,7 +115,7 @@
             .grid_column(6);
         };
 
-        .header-slug {
+        .m-slug-header {
             margin-left: @margin_half__em;
             margin-right: @margin_half__em;
         }
