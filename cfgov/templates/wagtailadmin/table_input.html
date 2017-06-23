@@ -69,8 +69,44 @@
         </div>
     </div>
 </div>
+<div class="field boolean_field widget-checkbox_input">
+    <label for="{{ attrs.id }}-handsontable-sortable">Sortable table</label>
+    <div class="field-content">
+        <div class="input">
+            <input type="checkbox" id="{{ attrs.id }}-handsontable-sortable" name="handsontable-sortable"/>
+            <span class="help">( Enable sortable table functionality )</span>
+        </div>
+    </div>
+</div>
 <br/>
 <div id="{{ attrs.id }}-width_warning" class="table-block-warning">Warning! Your total column width is greater than 100%! Please adjust your column widths to be less than 100% total before continuing.</div>
+
+<table id="{{ attrs.id }}-sortable-input">
+  <tr>
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Default</option>
+        <option value="number">Number</option>
+      </select>
+    </td>
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Default</option>
+        <option value="number">Number</option>
+      </select>
+    </td>
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Default</option>
+        <option value="number">Number</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
 <table id="{{ attrs.id }}-fixed-width-column-input">
   <tr>
     <td>
