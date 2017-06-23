@@ -97,7 +97,8 @@ def export_questions(spanish_only=False):
     """
     A rather ridiculous script for exporting Ask CFPB Answer content.
 
-    Run from within cfgov-refresh with `python cfgov/manage.py export_ask_data`
+    Run from within cfgov-refresh with:
+    `python cfgov/manage.py runscript export_ask_data`
 
     CEE staffers use a version of Excel that can't easily import UTF-8
     non-ascii encodings. Generally the only Ask content that has characters
