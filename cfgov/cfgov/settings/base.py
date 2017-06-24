@@ -83,7 +83,6 @@ OPTIONAL_APPS = [
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
     {'import': 'agreements', 'apps': ('agreements', 'haystack',)},
-    {'import': 'knowledgebase', 'apps': ('knowledgebase', 'haystack',)},
     {'import': 'selfregistration', 'apps': ('selfregistration',)},
     {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
@@ -572,14 +571,6 @@ FLAGS = {
     # Transition of "Doing Business with Us" to Wagtail
     # When enabled, the "Doing Business With Us" pages are served from Wagtail
     'WAGTAIL_DOING_BUSINESS_WITH_US': {},
-
-    # Transition of /compltain to Wagtail
-    # When enabled, the "Submit a complaint" page is served from Wagtail
-    'MOSAIC_COMPLAINTS': {},
-
-    # Migration of Ask CFPB to Wagtail
-    # When enabled, Ask CFPB is served from Wagtail
-    'WAGTAIL_ASK_CFPB': {},
 
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},

@@ -4,13 +4,14 @@
 frontend() {
     export CXX=clang++
 
-    if [[ "$(node -v)" != 'v6.'* ]]; then
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
-        source ~/.nvm/nvm.sh
-        nvm install 6
-    fi
+    # Temporarily commented out to deal with default Node version issues
+    #if [[ "$(node -v)" != 'v6.'* ]]; then
+    #    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+    #    source ~/.nvm/nvm.sh
+    #    nvm install 6
+    #fi
 
-    npm install -g gulp npm@3.10.7
+    npm install -g gulp npm@3.10.10
     chmod +x ./frontend.sh
     ./frontend.sh test
 }

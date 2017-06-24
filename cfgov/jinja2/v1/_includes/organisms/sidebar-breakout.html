@@ -100,11 +100,11 @@
                             {% break %}
                         {% endif %}
                     {% elif 'slug' in block.block_type %}
-                        <h2 class="header-slug">
-                            <span class="header-slug_inner">
+                        <header class="m-slug-header">
+                            <h2 class="a-heading">
                                 {{ block.value }}
-                            </span>
-                        </h2>
+                            </h2>
+                        </header>
                     {% elif 'paragraph' in block.block_type %}
                         <p class="o-sidebar-breakout_text-body">
                             {{ parse_links(block.value) | safe }}

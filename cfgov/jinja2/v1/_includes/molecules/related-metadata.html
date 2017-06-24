@@ -42,11 +42,11 @@
          to make it clear it's a boolean. #}
 <div class="m-related-metadata
             {{ 'm-related-metadata__half-width' if value.half_width else '' }}">
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
             {{ value.slug }}
-        </span>
-    </h2>
+        </h2>
+    </header>
     {# For each of the blocks render them if they're there except for Topics.
        In that case, render only if the value `show_topics` is True. #}
     {% for block in value.content %}

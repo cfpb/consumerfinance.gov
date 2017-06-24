@@ -38,26 +38,24 @@ function testUnitScripts( cb ) {
           thresholds: { global: 90 }
         } ) )
         */
-
         .on( 'end', cb );
     } );
 }
 
 /**
-
  * Run tox Acceptance tests.
  */
 function testAcceptanceBrowser() {
   const params = minimist( process.argv.slice( 3 ) ) || {};
   let toxParams = [ '-e' ];
 
-  if( params.fast ) {
+  if ( params.fast ) {
     toxParams.push( 'acceptance-fast' );
   } else {
     toxParams.push( 'acceptance' );
   }
 
-  Object.keys( params ).forEach( ( key, value ) => {
+  Object.keys( params ).forEach( key => {
     if ( key !== '_' ) {
       toxParams.push( key + '=' + params[key] );
     }

@@ -26,11 +26,11 @@
         {% from 'molecules/info-unit.html' import info_unit with context %}
         <div class="o-well
                     o-well__full">
-            <h2 class="header-slug">
-                <span class="header-slug_inner">
+            <header class="m-slug-header">
+                <h2 class="a-heading">
                     Featured
-                </span>
-            </h2>
+                </h2>
+            </header>
             <div class="content-l">
                 {% for block in page.header %}
                     <section class="content-l_col content-l_col-1-2">
@@ -80,7 +80,7 @@
                             'links': [
                                 {
                                     'text': 'Find answers to common questions',
-                                    'url':  '/ask-cfpb/' if flag_enabled('WAGTAIL_ASK_CFPB', request) else '/askcfpb/'
+                                    'url':  '/ask-cfpb/'
                                 }
                             ]
                         } ) }}

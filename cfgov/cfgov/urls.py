@@ -19,6 +19,7 @@ from ask_cfpb.views import (
     ask_search,
     ask_autocomplete,
     print_answer,
+    redirect_ask_search,
     view_answer
 )
 from core.views import ExternalURLNoticeView
@@ -246,14 +247,6 @@ urlpatterns = [
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
-    # If 'MOSAIC_COMPLAINTS' is false, include complaint.urls.
-    # Otherwise fallback to Wagtail if MOSAIC_COMPLAINTS is true.
-    flagged_url('MOSAIC_COMPLAINTS',
-                r'^complaint/',
-                include_if_app_enabled('complaint', 'complaint.urls'),
-                fallback=lambda req: ServeView.as_view()(req, req.path),
-                state=False),
-
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
     # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',
@@ -303,6 +296,48 @@ urlpatterns = [
     # CCDB5-API
     url(r'^data-research/consumer-complaints/api/v1/',
         include_if_app_enabled('complaint_search', 'complaint_search.urls')),
+
+    # ask-cfpb
+    url(r'^askcfpb/$',
+        RedirectView.as_view(
+            url='/ask-cfpb/',
+            permanent=True)),
+    url(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
+         RedirectView.as_view(
+             url='/es/obtener-respuestas/slug-es-%(ask_id)s',
+             permanent=True)),
+    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
+         RedirectView.as_view(
+             url='/ask-cfpb/slug-en-%(ask_id)s',
+             permanent=True)),
+    url(r'^askcfpb/search/',
+        redirect_ask_search,
+        name='redirect-ask-search'),
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
+        ask_search,
+        name='ask-search-es'),
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-es-json'),
+    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+        view_answer,
+        name='ask-english-answer'),
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+        view_answer,
+        name='ask-spanish-answer'),
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
+        print_answer,
+        name='ask-spanish-print-answer'),
+    url(r'^(?i)ask-cfpb/search/$',
+        ask_search,
+        name='ask-search-en'),
+    url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-en-json'),
+    url(r'^(?i)ask-cfpb/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-en'),
+    url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-es'),
 ]
 
 if settings.ALLOW_ADMIN_URL:
@@ -405,72 +440,7 @@ if settings.DEBUG:
     except ImportError:
         pass
 
-if settings.DEPLOY_ENVIRONMENT not in ['build', 'beta']:
-    kb_patterns = [
-        url(r'^(?i)askcfpb/',
-            include_if_app_enabled(
-                'knowledgebase', 'knowledgebase.urls')),
-        url(r'^es/obtener-respuestas/',
-            include_if_app_enabled(
-                'knowledgebase', 'knowledgebase.babel_urls')),
-    ]
-    urlpatterns += kb_patterns
-
-# The redirects in ask_patterns (below) won't be exposed until the
-# knowledgebase URLs in kb_patters (above) are turned off, because the kb URLs
-# will serve the requests before they reach ask_patterns.
-ask_patterns = [
-    url(r'^askcfpb/$',
-     RedirectView.as_view(
-         url='/ask-cfpb/',
-         permanent=True)),
-    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
-         RedirectView.as_view(
-             url='/ask-cfpb/slug-en-%(ask_id)s',
-             permanent=True)),
-    url(r'^askcfpb/search/\?selected_facets=category_exact:(?P<category>[^&]+)',  # noqa: E501
-         RedirectView.as_view(
-             url='/ask-cfpb/category-%(category)s',
-             permanent=True)),
-    url(r'^es/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',
-         RedirectView.as_view(
-             url='/es/obtener-respuestas/slug-es-%(ask_id)s',
-             permanent=True)),
-    url(r'es/obtener-respuestas/buscar\?selected_facets=category_exact:(?P<categoria>[^&]+)',  # noqa: E501
-        RedirectView.as_view(
-            url='/es/obtener-respuestas/categoria-%(categoria)s',
-             permanent=True)),
-    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
-        view_answer,
-        name='ask-english-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
-        view_answer,
-        name='ask-spanish-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',  # noqa: E501
-        print_answer,
-        name='ask-spanish-print-answer'),
-    url(r'^(?i)ask-cfpb/search/$',
-        ask_search,
-        name='ask-search-en'),
-    url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-en-json'),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
-        ask_search,
-        name='ask-search-es'),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-es-json'),
-    url(r'^(?i)ask-cfpb/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-en'),
-    url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-es'),
-]
-urlpatterns += ask_patterns
-
-
 # Catch remaining URL patterns that did not match a route thus far.
-
 urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 # urlpatterns.append(url(r'', include(wagtailsharing_urls)))
 

@@ -4,351 +4,6 @@
    ========================================================================== */
 
 /* topdoc
-  name: Expandable customizations
-  family: cfgov-misc
-  patterns:
-    - name: Expandable filters
-      markup: |
-        <div class="expandable expandable__filters">
-            <div class="expandable_header expandable_header__spaced">
-                <div class="expandable_header-right u-hide-on-mobile">
-                    <span class="expandable_target">
-                        <button class="btn btn__secondary">
-                            Filter activities
-                            <span class="expandable_cue-open">
-                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
-                            </span>
-                            <span class="expandable_cue-close">
-                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
-                            </span>
-                        </button>
-                    </span>
-                </div>
-                <ul class="filtered-by filtered-by__align-with-btn list__horizontal">
-                    <li class="list_item filtered-by_header">80 filtered results for</li>
-                    <li class="list_item filtered-by_filter">
-                        Blog,
-                    </li>
-                    <li class="list_item filtered-by_filter">
-                        Press Release,
-                    </li>
-                    <li class="list_item filtered-by_filter">
-                        January 2014&ndash;September 2014
-                    </li>
-                </ul>
-                <div class="expandable_header-right u-show-on-mobile">
-                    <span class="expandable_target">
-                        <button class="btn btn__secondary">
-                            Filter activities
-                            <span class="expandable_cue-open">
-                                <span class="btn_icon__right cf-icon cf-icon-down"></span>
-                            </span>
-                            <span class="expandable_cue-close">
-                                <span class="btn_icon__right cf-icon cf-icon-up"></span>
-                            </span>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="expandable_content padded-container">
-                <div class="padded-container_body">
-                    Filters body
-                </div>
-            </div>
-        </div>
-    - name: JavaScript setup
-      markup: |
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="//cfpb.github.io/cf-expandables/docs/static/js/component.min.js"></script>
-  tags:
-    - cfgov-misc
-*/
-
-.expandable__filters {
-    margin-bottom: unit(15px / @base-font-size-px, em);
-
-    &.expandable__expanded {
-        margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
-    }
-
-    .respond-to-max(@bp-xs-max, {
-        .expandable_header-right {
-            float: none;
-            // Eyeballed to 15px
-            margin-top: unit(10px / @base-font-size-px, em);
-
-            .btn {
-                display: block;
-                width: 100%;
-            }
-        }
-    });
-}
-
-
-/* topdoc
-  name: Floating media
-  family: cfgov-misc
-  patterns:
-    - name: .float-media
-      markup: |
-        <p>
-            <img class="float-media"
-                 src="http://placekitten.com/200/230" alt="">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      codenotes:
-        - .float-media
-      notes:
-        - "Float some media left with margins."
-    - name: .float-media__right (modifier)
-      markup: |
-        <p>
-            <img class="float-media float-media__right"
-                 src="http://placekitten.com/200/230" alt="">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      codenotes:
-        - .float-media.float-media__right
-      notes:
-        - "Float some media right with margins."
-  tags:
-    - cfgov-misc
-*/
-
-.float-media {
-    @gutter: @grid_gutter-width;
-
-    display: block;
-    margin: 0 0 @gutter;
-
-    .respond-to-min(@bp-sm-min, {
-        float: left;
-        margin-right: @gutter;
-    });
-
-    &__right {
-        .respond-to-min(@bp-sm-min, {
-            float: right;
-            margin-right: 0;
-            margin-left: @gutter;
-        });
-    }
-}
-
-
-/* topdoc
-  name: Responsive cropping
-  family: cfgov-misc
-  notes:
-    - "A simple cropping pattern. We may need more advanced ones in the future."
-    - "How it works: At smaller screens .rwd-crop is cropped to 75% of its
-       original height and flexibily scales 100% of its parents width. At larger
-       screens it is no longer flexible and uses its default width. For images
-       the default width can be set using the width attribute."
-  patterns:
-    - name: .rwd-crop
-      markup: |
-        <figure class="rwd-crop">
-            <img class="rwd-crop_item" src="http://placekitten.com/480/544" width="155" alt="">
-        </figure>
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .rwd-crop
-            .rwd-crop_item
-      notes:
-        - "The default .rwd-crop pattern only supports square or portrait-style
-           images. We'll need to create a modifier to support landscape images."
-        - "Notice how the image has a default width of 155 which is set using
-           the width attribute."
-    - name: .float-media example
-      markup: |
-        <p>
-            <figure class="float-media rwd-crop">
-                <img class="rwd-crop_item" src="http://placekitten.com/480/480" width="200" alt="">
-            </figure>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      notes:
-        - "An example of using .rwd-crop in combination with .float-media."
-  tags:
-    - cfgov-misc
-*/
-
-.rwd-crop {
-    .respond-to-max(@bp-xs-max, {
-        position: relative;
-        width: 100%;
-        height: 0;
-        padding-bottom: 75%;
-        overflow: hidden;
-
-        &_item {
-            position: absolute;
-            width: 100%;
-            max-width: none;
-        }
-    });
-}
-
-
-/* topdoc
-  name: Video poster
-  family: cfgov-misc
-  patterns:
-    - name: .video-poster
-      markup: |
-        <figure>
-            <a class="video-poster" href="#link-to-video">
-                <img src="http://placekitten.com/600/338" alt="">
-            </a>
-        </figure>
-      codenotes:
-        - .video-poster
-  tags:
-    - cfgov-misc
-*/
-
-.video-poster {
-    @font-size: 26px;
-
-    position: relative;
-    display: inline-block;
-
-    &:after {
-        .cf-icon();
-        // cf-icon-play
-        content: "\e640";
-        position: absolute;
-        right: @grid_gutter-width / 2;
-        bottom: @grid_gutter-width / 2;
-        display: block;
-        width: 1em;
-        height: 1em;
-        padding: unit(10px / @font-size, em)
-                 unit(8px / @font-size, em)
-                 unit(10px / @font-size, em)
-                 unit(12px / @font-size, em);
-        background: @black;
-        background: fade(@black, 75%);
-        color: @white;
-        font-size: unit(@font-size / @base-font-size-px, em);
-        text-align: center;
-        border-radius: 100%;
-        transition: background 200ms;
-    }
-
-    &:hover {
-        &:after {
-            background: @green;
-            background: fade(@green, 75%);
-        }
-    }
-
-    & img {
-        vertical-align: middle;
-    }
-}
-
-/* TOOD: .share-icon is superceded by atomic social-media.less file.
-         Delete this after merging atomic prototype into existing codebase. */
-/* topdoc
-  name: Share icon
-  family: cfgov-misc
-  patterns:
-    - name: .share-icon (base)
-      markup: |
-        <a class="share-icon" href="#">
-            <span class="cf-icon cf-icon-email-social-square"></span>
-            <span class="u-visually-hidden">
-                Share by email
-            </span>
-        </a>
-      notes:
-        - "Text for screenreaders is added with the .u-visually-hidden element."
-      codenotes:
-        - |
-          Structural cheat sheet:
-          -----------------------
-          .share-icon
-            .cf-icon.cf-icon-name
-            .u-visually-hidden
-    - name: .share-icon__large (modifier)
-      markup: |
-        <a class="share-icon share-icon__large" href="#">
-            <span class="cf-icon cf-icon-email-social-square"></span>
-            <span class="u-visually-hidden">
-                Share by email
-            </span>
-        </a>
-      codenotes:
-        - .share-icon__large
-  tags:
-    - cfgov-misc
-*/
-
-.share-icon {
-    color: @dark-gray;
-    font-size: unit(26px / @base-font-size-px, em);
-    line-height: 1;
-    .u-link__colors(@dark-gray, @pacific-80);
-    .u-link__no-border();
-
-    &__large {
-        // 35px creates a 30px square icon.
-        font-size: unit(35px / @base-font-size-px, em);
-    }
-}
-
-
-/* topdoc
   name: Line container
   family: cfgov-misc
   notes:
@@ -378,11 +33,11 @@
       markup: |
         <div class="line-container line-container__no-top">
             <div class="line-container_body">
-                <h2 class="header-slug">
-                    <span class="header-slug_inner">
+                <header class="m-slug-header">
+                    <h2 class="a-heading">
                         Blog summary
-                    </span>
-                </h2>
+                    </h2>
+                </header>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                     Dolorum ex provident dolorem ipsum molestias eius tenetur
@@ -418,6 +73,9 @@
   tags:
     - cfgov-misc
 */
+
+// TODO: `line-container` is only used on events/_event-detail.html.
+//       Refactor to use CF classes.
 
 .line-container {
     margin: 0 0 unit(30px / @base-font-size-px, em);
@@ -471,6 +129,9 @@
     - cfgov-misc
 */
 
+// TODO: `padded-container` is only used on external-site/index.html.
+//       Refactor to use CF classes.
+
 .padded-container {
     margin-bottom: unit(30px / @base-font-size-px, em);
     // Use pixels here, Opera doesn't like 1px represented as an em.
@@ -506,6 +167,8 @@
     - cfgov-misc
 */
 
+// TODO: `char-icon` is only used on doing-business-with-us/index.html.
+//       Refactor to use CF classes.
 
 // Size of cicular background.
 @icon-size: 1.5em;
@@ -618,6 +281,9 @@
     - cfgov-misc
 */
 
+// TODO: `char-icon` is only used on doing-business-with-us/index.html.
+//       Refactor to use CF classes.
+
 .step-slug {
     display: block;
     margin-bottom: unit(15px / 14px, em);
@@ -674,7 +340,7 @@
 }
 
 .u-alpha-transition {
-    transition: opacity 0.25s ease-out;
+    transition: opacity 0.25s linear;
 }
 
 .u-no-animation {
@@ -697,28 +363,28 @@
     - cfgov-misc
 */
 .u-move-to-origin {
-    transform: translateX( 0 );
+    transform: translate3d( 0, 0, 0 );
 }
 
 .u-move-left {
-    transform: translateX( -100% );
+    transform: translate3d( -100%, 0, 0 );
 }
 
 // TODO: Look into adding a mixin for movement multiples.
 .u-move-left-2x {
-    transform: translateX( -200% );
+    transform: translate3d( -200%, 0, 0 );
 }
 
 .u-move-left-3x {
-    transform: translateX( -300% );
+    transform: translate3d( -300%, 0, 0 );
 }
 
 .u-move-right {
-    transform: translateX( 100% );
+    transform: translate3d( 100%, 0, 0 );
 }
 
 .u-move-up {
-    transform: translateY( -100% );
+    transform: translate3d( 0, -100%, 0 );
 }
 
 /* topdoc
@@ -745,6 +411,9 @@
   tags:
     - cfgov-misc
 */
+
+// TODO: `date-range` is only used on macros/filters.html.
+//       Refactor to use CF classes, if possible.
 
 .date-range {
     &_label {

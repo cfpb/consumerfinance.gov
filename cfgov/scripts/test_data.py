@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
+from django.utils.timezone import datetime, timedelta
 
+from jobmanager.models.pages import JobListingPage
+from jobmanager.models.django import JobCategory, JobRegion
 from wagtail.wagtailcore.blocks import StreamValue
 
 from v1.models import SublandingFilterablePage, BrowseFilterablePage, BlogPage
@@ -34,9 +37,37 @@ def add_filterable_page(slug, cls):
     publish_page(filterable_page)
     add_children(
         parent=filterable_page,
-        num=10,
+        num=11,
         slug=slug,
     )
+
+
+def add_jobs_listing_page(slug, cls):
+    job_category = JobCategory(
+        job_category='CFPB Testing job category',
+        blurb='CFPB Testing blurb'
+    )
+    job_category.save()
+
+    job_region = JobRegion(
+        abbreviation='TR',
+        name='Testing Region'
+    )
+    job_region.save()
+
+    jobs_listing_page = cls(
+        close_date=datetime.now() + timedelta(days=30),
+        description='Test Job Description',
+        division=job_category,
+        open_date=datetime.today(),
+        salary_max=120000,
+        salary_min=95000,
+        slug=slug,
+        title=slug,
+        region=job_region
+    )
+
+    publish_page(jobs_listing_page)
 
 
 def run():
@@ -48,7 +79,10 @@ def run():
         slug='bfp',
         cls=BrowseFilterablePage,
     )
-
+    add_jobs_listing_page(
+        slug='jlp',
+        cls=JobListingPage,
+    )
     user = User.objects.filter(username='admin')
     if user:
         user.first().delete()

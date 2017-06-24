@@ -17,6 +17,11 @@ defineSupportCode( function( { Then, When } ) {
     return browser.navigate().back();
   } );
 
+  When( /I click away*/, function( ) {
+
+    return element( by.css( 'body' ) ).click( );
+  } );
+
   Then( /I should see page title "(.*)"/, function( pageTitle ) {
 
     return browser.getTitle().then( function( title ) {

@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup as bs
 from django.utils import timezone
 from django.apps import apps
 from django.core.urlresolvers import reverse
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, Http404
 from django.test import TestCase
 from django.utils import html
 
@@ -190,20 +190,8 @@ class AnswerModelTestCase(TestCase):
             json.loads(facet_map)['subcategories']['1'], [])
 
     def test_answer_valid_tags(self):
-        test_list = Answer.valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
-
-    def test_get_valid_tags(self):
-        from ask_cfpb.models import get_valid_spanish_tags
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
-
-    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
-    def test_get_valid_tags_works_without_elasticsearch(self, mock_sqs):
-        from ask_cfpb.models import get_valid_spanish_tags
-        mock_sqs.return_value = [None]
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
+        test_dict = Answer.valid_spanish_tags()
+        self.assertIn('hipotecas', test_dict['valid_tags'])
 
     def test_routable_category_page_view(self):
         cat_page = self.create_category_page(
@@ -211,11 +199,34 @@ class AnswerModelTestCase(TestCase):
         response = cat_page.category_page(HttpRequest())
         self.assertEqual(response.status_code, 200)
 
+    def test_routable_category_page_bad_pagination(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        request = HttpRequest()
+        request.GET['page'] = 50
+        response = cat_page.category_page(request)
+        self.assertEqual(response.status_code, 200)
+
     def test_routable_subcategory_page_view(self):
         cat_page = self.create_category_page(
             ask_category=self.category)
         response = cat_page.subcategory_page(
             HttpRequest(), subcat=self.subcategories[0].slug)
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_subcategory_page_bad_subcategory(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        with self.assertRaises(Http404):
+            cat_page.subcategory_page(HttpRequest(), subcat=None)
+
+    def test_routable_subcategory_page_bad_pagination(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        request = HttpRequest()
+        request.GET['page'] = 100
+        response = cat_page.subcategory_page(
+            request, subcat=self.subcategories[0].slug)
         self.assertEqual(response.status_code, 200)
 
     def test_routable_tag_page_template(self):
@@ -236,6 +247,14 @@ class AnswerModelTestCase(TestCase):
                 'buscar_por_etiqueta',
                 kwargs={'tag': 'hippopotamus'}))
         self.assertEqual(response.status_code, 404)
+
+    def test_routable_tag_page_subpage_handles_bad_pagination(self):
+        page = self.tag_results_page
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'buscar_por_etiqueta',
+                kwargs={'tag': 'hipotecas'}), {'page': '100'})
+        self.assertEqual(response.status_code, 200)
 
     def test_routable_tag_page_subpage_valid_tag_returns_200(self):
         page = self.tag_results_page
@@ -316,6 +335,21 @@ class AnswerModelTestCase(TestCase):
         spanish_page = spanish_answer.spanish_page
         soup = bs(spanish_page.serve(HttpRequest()).rendered_content)
         self.assertIn('Oficina', soup.title.string)
+
+    def test_spanish_answer_page_handles_referrer_with_unicode_accents(self):
+        referrer_unicode = (
+            'https://www.consumerfinance.gov/es/obtener-respuestas/'
+            'buscar-por-etiqueta/empresas_de_informes_de_cr\xe9dito/')
+        spanish_answer = self.prepare_answer(
+            answer_es='Spanish answer',
+            slug_es='spanish-answer',
+            update_spanish_page=True)
+        spanish_answer.save()
+        spanish_page = spanish_answer.spanish_page
+        request = HttpRequest()
+        request.POST['referrer'] = referrer_unicode
+        response = spanish_page.serve(request)
+        self.assertEqual(response.status_code, 200)
 
     def test_create_or_update_page_unsuppoted_language(self):
         answer = self.prepare_answer()
@@ -584,6 +618,14 @@ class AnswerModelTestCase(TestCase):
             test_context['get_secondary_nav_items'],
             get_ask_nav_items)
 
+    def test_audience_page_handles_bad_pagination(self):
+        audience_page = self.create_audience_page(
+            ask_audience=self.audience, language='en')
+        request = HttpRequest()
+        request.GET['page'] = '100'
+        response = audience_page.serve(request)
+        self.assertEqual(response.status_code, 200)
+
     def test_category_page_context(self):
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
@@ -789,3 +831,21 @@ class AnswerModelTestCase(TestCase):
         answer.category.add(category)
         page = self.create_answer_page(answer_base=answer)
         self.assertEqual(page.meta_image, self.test_image2)
+
+    def test_answer_page_context_collects_subcategories(self):
+        """ Answer page's context delivers all related subcategories """
+        answer = self.answer1234
+        related_subcat = mommy.make(
+            SubCategory,
+            name='related_subcat',
+            parent=self.category)
+        subcat1 = self.subcategories[0]
+        subcat1.related_subcategories.add(related_subcat)
+        for each in self.subcategories:
+            answer.subcategory.add(each)
+        answer.update_english_page = True
+        answer.save()
+        page = answer.english_page
+        request = HttpRequest()
+        context = page.get_context(request)
+        self.assertEqual(len(context['subcategories']), 4)

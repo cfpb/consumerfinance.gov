@@ -242,6 +242,7 @@ class TestCFGOVPageQuerySet(TestCase):
         save_new_page(page)
         self.check_live_counts(on_live_host=2)
 
+
 class TestFeedbackModel(TestCase):
     def setUp(self):
         self.test_feedback = Feedback(
@@ -250,7 +251,7 @@ class TestFeedbackModel(TestCase):
             is_helpful=True,
             referrer="http://www.consumerfinance.gov/owing-a-home/",
             submitted_on=datetime.datetime.now()
-            )
+        )
         self.test_feedback.save()
 
     def test_assemble_csv(self):
