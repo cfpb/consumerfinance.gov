@@ -1,23 +1,19 @@
-<html>
-    <h2>Data Snapshot for {{ value.last_updated_date }}</h2>
-    <!-- Here needs wrapping HTML if handling both columns of 50-50 -->
+<h2>Data Snapshot for {{ value.last_updated_date }}</h2>
+<!-- TODO: needs wrapping HTML if handling both columns of 50-50 -->
+    <!-- Left column -->
+    <h3><b>{{ value.num_originations }}</b>
+    <br/>
+    {{ value.num_originations_text }}</h3>
 
-        <!-- Left column -->
-        <h3><b>{{ value.num_originations }}</b>
-        <br/>
-        {{ value.num_originations_text }}</h3>
+    <br/>
+    <h3><b>{{ value.value_originations }}</b>
+    <br/>
+    {{ value.value_originations_text }}</h3>
 
-        <br/>
-        <h3><b>{{ value.value_originations }}</b>
-        <br/>
-        {{ value.value_originations_text }}</h3>
+    <br/>
+    <h3><b>{{ value.year_over_year_change }}</b>
+    <br/>
+    {{ value.year_over_year_change_text }}</h3>
 
-        <br/>
-        <h3><b>{{ value.year_over_year_change }}</b>
-        <br/>
-        {{ value.year_over_year_change_text }}</h3>
-
-        <!-- Right column is a specified image, needs HTML if can't reuse 50-50 -->
-
-    <!-- # Close 50-50 wrapping HTML -->
-</html>
+    <!-- Right column is a specified image, needs HTML if can't reuse 50-50 -->
+<!-- # Close 50-50 wrapping HTML -->
