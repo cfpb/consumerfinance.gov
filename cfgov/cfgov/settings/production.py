@@ -4,10 +4,8 @@ from .base import *
 from os.path import exists
 
 # log to disk when running in mod_wsgi, otherwise to console
-# This avoids permissions problems when logged in users (or CI jobs)
-# can't write to the log file.
 if sys.argv and sys.argv[0] == 'mod_wsgi':
-    default_loggers = ['disk', 'syslog']
+    default_loggers = ['syslog']
 else:
     default_loggers = ['console', 'syslog']
 
@@ -62,15 +60,6 @@ LOGGING = {
         }
     }
 }
-
-if 'disk' in default_loggers:
-   LOGGING['handlers']['disk'] = {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.getenv('CFGOV_DJANGO_LOG'),
-            'maxBytes': 1024*1024*10,  # max 10 MB per file
-            'backupCount': 5,  # keep 5 files around
-        }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')
