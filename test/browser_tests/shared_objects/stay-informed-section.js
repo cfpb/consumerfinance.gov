@@ -9,7 +9,7 @@ var stayInformedSection = {
   stayInformedSection: _stayInformedSection,
 
   stayInformedSectionTitle:
-  _stayInformedSection.element( by.css( '.header-slug_inner' ) ),
+  _stayInformedSection.element( by.css( '.m-slug-header .a-heading' ) ),
 
   emailSubscribeForm: _emailSubscribeForm,
 

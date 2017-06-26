@@ -536,6 +536,10 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'api.iperceptions.com')
 
+# Feature flags
+# All feature flags must be listed here with a dict of any hard-coded
+# conditions or an empty dict. If the conditions dict is empty the flag will
+# only be enabled if database conditions are added.
 FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -567,10 +571,6 @@ FLAGS = {
     # Transition of "Doing Business with Us" to Wagtail
     # When enabled, the "Doing Business With Us" pages are served from Wagtail
     'WAGTAIL_DOING_BUSINESS_WITH_US': {},
-
-    # Transition of /compltain to Wagtail
-    # When enabled, the "Submit a complaint" page is served from Wagtail
-    'MOSAIC_COMPLAINTS': {},
 
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},
