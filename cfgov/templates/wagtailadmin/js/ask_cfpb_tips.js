@@ -56,8 +56,8 @@
             var range = rangy.getSelection().getRangeAt(0);
             
             function expandSelection( node, start ) {
-              while ( node.nodeType === 3 || 
-                      ['A', 'I', 'Strong'].indexOf( node.nodeName ) > -1 ) {
+              while ( node.nodeType === 3 
+                      || ['A', 'I', 'Strong'].indexOf( node.nodeName ) > -1 ) {
                 var parent = node.parentNode;
                 if ( parent && !parent.classList.contains( textInputClass ) ) {
                   range[start ? 'setStartBefore' : 'setEndAfter']( parent );
