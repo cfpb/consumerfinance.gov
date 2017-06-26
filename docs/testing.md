@@ -92,6 +92,13 @@ Background:
          <td>Declarative Vs Imperative Scenarios</td>
          <td>
             The declarative style describes behavior at a higher level, which improves the readability of the feature by abstracting out the implementation details of the application.  The imperative style is more verbose but better describes the expected behavior.  Either style is acceptable.<br><br>
+<u>Example: Declarative</u>
+<pre>
+Scenario:User logs in
+  Given I am on the homepage
+  When I log in
+  Then I should see a login notification
+</pre>
 <u>Example: Imperative</u>
 <pre>
 Scenario: User logs in
@@ -101,13 +108,6 @@ Scenario: User logs in
   And I fill in the "Password" field with "secret"
   And I click on "Submit"
   Then I should see "Welcome to the app, John Doe"
-</pre>
-<u>Example: Declarative</u>
-<pre>
-Scenario:User logs in
-  Given I am on the homepage
-  When I log in
-  Then I should see a login notification
 </pre>
          </td>
       </tr>
