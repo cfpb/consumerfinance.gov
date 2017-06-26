@@ -95,8 +95,8 @@ class MyModelAdminGroup(ModelAdminGroup):
 
 def editor_js():
     js_files = [
-        'js/admin/html_editor.js',
-        'js/admin/ask_cfpb_tips.js'
+        'js/html_editor.js',
+        'js/ask_cfpb_tips.js'
     ]
     js_includes = format_html_join(
         '\n', '<script src="{0}{1}"></script>',
