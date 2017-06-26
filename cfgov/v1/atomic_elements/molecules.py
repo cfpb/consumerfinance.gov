@@ -282,7 +282,7 @@ class RelatedLinks(blocks.StructBlock):
 
 class Quote(blocks.StructBlock):
     body = blocks.TextBlock()
-    citation = blocks.TextBlock()
+    citation = blocks.TextBlock(required=False)
     is_large = blocks.BooleanBlock(required=False)
 
     class Meta:
