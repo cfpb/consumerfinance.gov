@@ -1,3 +1,132 @@
+// TODO: Remove after Capital Framework v4 is merged in.
+
+.a-label {
+    display: inline-block;
+}
+
+.a-label__heading {
+    .heading-4();
+
+    display: block;
+
+    // Overwrites heading-5 margin.
+    margin-bottom: 10px;
+}
+
+
+@input-border__focused: @pacific;
+@input-bg__disabled: @gray-5;
+
+.m-form-field {
+    .a-text-input {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .a-label + .a-text-input {
+        margin-top: 5px;
+    }
+
+    &__checkbox,
+    &__radio {
+        .a-label {
+            vertical-align: middle;
+            cursor: pointer;
+
+            &:before {
+                display: inline-block;
+
+                border: 1px solid @input-border;
+                height: unit( 18px / @base-font-size-px, em );
+                width: unit( 18px / @base-font-size-px, em );
+                margin-right: 10px;
+
+                background-color: @input-bg;
+                content: '';
+                vertical-align: top;
+
+                .lt-ie9 & {
+                    display: none !important;
+                }
+            }
+
+            &:hover:before {
+                border-color: @input-border__focused;
+            }
+        }
+
+        .a-checkbox,
+        .a-radio {
+            .u-visually-hidden();
+
+            .lt-ie9 & {
+                height: 20px;
+                width: 20px;
+                border: 0;
+                float: left;
+                margin: 1em;
+                position: static;
+                width: auto;
+                clear: both;
+            }
+
+            &:disabled + .a-label {
+                cursor: not-allowed;
+
+                &:before {
+                    border-color: @input-border;
+                    background: @input-bg__disabled;
+                }
+            }
+        }
+    }
+
+    &__checkbox {
+        .a-label {
+            &:before {
+                font-family: 'CFPB Minicons';
+                text-align: center;
+                line-height: unit( 18px / @base-font-size-px, em );
+            }
+        }
+
+        .a-checkbox {
+            &:focus + .a-label:before,
+            &:hover + .a-label:before {
+                border-color: @input-border__focused;
+                outline: 1px solid @input-border__focused;
+            }
+
+            &:checked + .a-label:before {
+                content: @cf-icon-approved;
+            }
+        }
+    }
+}
+
+.o-form {
+    &_group {
+        margin-bottom: 30px;
+    }
+
+    &_fieldset {
+        // Overwrite Normalize.
+        border: none;
+        margin: 0;
+        padding: 0;
+
+        .m-field + .m-field {
+            margin-top: 10px;
+        }
+    }
+}
+
+.o-form_fieldset .a-text-input {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+
 /* topdoc
   name: Set form elements to base webfont
   family: cf-core
@@ -324,14 +453,14 @@ legend {
           .input-with-btn.input-with-btn__bar
             .input-with-btn_input
             .input-with-btn_btn
-  notes: "Displays as single unit, with button attached to end of input. 
+  notes: "Displays as single unit, with button attached to end of input.
           Input fills all space that is not needed for button."
   tags:
     - cf-form
 */
 
 .input-with-btn__bar {
-    display: table; 
+    display: table;
     width: 100%;
 
     @supports( display: flex ) {
@@ -356,11 +485,11 @@ legend {
     .input-with-btn_btn {
         margin: 0;
         border: 0;
-        display: table-cell; 
+        display: table-cell;
         // overrides default .input-with-btn_btn width.
         // setting button to very small width & input to 100%
         // means button will only take up space it needs
-        width: 1%; 
+        width: 1%;
         vertical-align: middle;
 
         @supports( display: flex ) {
