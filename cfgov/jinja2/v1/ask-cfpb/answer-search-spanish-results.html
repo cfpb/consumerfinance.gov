@@ -17,16 +17,15 @@
                         </h1>
                     </header><!-- .header -->
 
+                    {% if paginator.num_pages > 1 %}
                     <nav class="pagination">
                         <ul class="s-hide-on-small">
                         {% include "ask/pagination-spanish.html" with context %}
                         </ul>
                         <div class="pagination-details"><span class="pagination-count"><strong>{{ results_count }}</strong> respuestas</span> 
-                        {% if page.query and selected_tag %}
-                            <a href=" remove_babel_facet " class="pagination-filter">(filtrado por [x] &ldquo;{{ selected_tag }}&rdquo;)</a>
-                        {% endif %}
                         </div>                    
-                    </nav><!-- .pagination -->                        
+                    </nav><!-- .pagination -->    
+                    {% endif %}                    
 
                     {% for question in results %}
                         <a href=" {{ question[0] }} " class="ac-qa-summary">
@@ -40,11 +39,13 @@
                         </a>
                     {% endfor %}                
                     
+                    {% if paginator.num_pages > 1 %}
                     <nav class="pagination">
                         <ul>                    
                         {% include "ask/pagination-spanish.html" with context %}
                         </ul>
                     </nav>
+                    {% endif %}
 
                 </div><!-- .primary -->
 

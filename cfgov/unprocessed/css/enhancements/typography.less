@@ -1,3 +1,23 @@
+// TODO: Remove after Capital Framework v4 is merged in.
+
+// .m-slug-header
+@slug-header_border__thin:  @gray-10; // $color-gray-dark
+@slug-header_border__thick: @green; // $color-primary-alt
+
+.m-slug-header {
+    border-top: 1px solid @slug-header_border__thin;
+
+    .a-heading {
+        .heading-5();
+
+        display: inline-block;
+
+        padding-top: unit( 4px / @font-size, em) ;
+        border-top: 5px solid @slug-header_border__thick;
+        margin-top: -3px;
+    }
+}
+
 /* topdoc
   name: Download links list
   family: cfgov-cf-enhancements
@@ -353,7 +373,7 @@
 */
 dt {
     .h5();
-    .u-inline-block();
+    display: inline-block;
 
     margin-bottom: 0.5em;
 
