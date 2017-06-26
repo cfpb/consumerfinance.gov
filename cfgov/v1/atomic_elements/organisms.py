@@ -22,7 +22,6 @@ from v1 import blocks as v1_blocks
 from v1.atomic_elements import atoms, molecules
 from v1.models.snippets import Contact as ContactSnippetClass
 from v1.models.snippets import ReusableText, ReusableTextChooserBlock
-from v1.models.consumer_credit_trends import Market
 from v1.util import ref
 import ask_cfpb
 
@@ -814,17 +813,20 @@ class AskCategoryCard(ModelList):
         template = '_includes/organisms/ask-cfpb-card.html'
         return render_to_string(template, value)
 
+
 class DataSnapshot(blocks.StructBlock):
-    """ A Data Snapshot object for displaying monthly information for
-    consumer credit trends (CCT) markets """
+    """ A basic Data Snapshot object. """
+    # Market key corresponds to market short name for lookup
+    market_key = blocks.CharBlock(max_length=20)
+    num_originations = blocks.CharBlock(max_length=20)
+    value_originations = blocks.CharBlock(max_length=20)
+    year_over_year_change = blocks.CharBlock(max_length=20)
+    last_updated_date = blocks.CharBlock(max_length=15)
 
-    # Specifies the Market this snapshot corresponds to
-    market = Market()
-    
-    # If doing both columns, also choose an image
-    # snapshot_image = ...
-
-    # return template 
+    # Market-specific descriptor text
+    num_originations_text = blocks.CharBlock(max_length=100)
+    value_originations_text = blocks.CharBlock(max_length=100)
+    year_over_year_change_text = blocks.CharBlock(max_length=100)
 
     class Meta:
         icon = 'image'
