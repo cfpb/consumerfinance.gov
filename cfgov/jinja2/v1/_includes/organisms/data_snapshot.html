@@ -1,0 +1,23 @@
+<html>
+    <h2>Data Snapshot for {{ cct_data_month }}</h2>
+    <!-- Here needs wrapping HTML if handling both columns of 50-50 -->
+
+        <!-- Left column -->
+        <h3><b>{{ market.num_originations }}</b>
+        <br/>
+        {{ market.num_originations_text }}</h3>
+
+        <br/>
+        <h3><b>{{ market.value_originations }}</b>
+        <br/>
+        {{ market.value_originations_text }}</h3>
+
+        <br/>
+        <h3><b>{{ market.year_over_year_change }}</b>
+        <br/>
+        {{ market.year_over_year_change_text }}</h3>
+
+        <!-- Right column is a specified image, needs HTML if can't reuse 50-50 -->
+
+    <!-- # Close 50-50 wrapping HTML -->
+</html>
