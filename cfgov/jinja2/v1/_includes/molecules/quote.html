@@ -6,7 +6,7 @@
 
    Description:
 
-   Creates markup for quote when given. Typically used in insets.:
+   Typically used in insets. Creates markup for quote when given:
 
    value:          Object defined from a StreamField block.
 
@@ -14,13 +14,17 @@
 
    value.citation: String with the author or citation of text.
 
+   value.is_large: Whether to include the large-size quote style.
+
    ========================================================================== #}
 
-<div class="m-quote">
-    <p class="pull-quote_body">
+<aside class="m-pull-quote{{ ' m-pull-quote__large' if value.is_large else '' }}">
+    <p class="m-pull-quote_body">
         {{ value.body }}
     </p>
-    <p class="pull-quote_citation">
+    {% if value.citation %}
+    <p class="m-pull-quote_citation">
         {{ value.citation }}
     </p>
-</div>
+    {% endif %}
+</aside>
