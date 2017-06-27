@@ -812,3 +812,22 @@ class AskCategoryCard(ModelList):
 
         template = '_includes/organisms/ask-cfpb-card.html'
         return render_to_string(template, value)
+
+
+class DataSnapshot(blocks.StructBlock):
+    """ A basic Data Snapshot object. """
+    # Market key corresponds to market short name for lookup
+    market_key = blocks.CharBlock(max_length=20)
+    num_originations = blocks.CharBlock(max_length=20)
+    value_originations = blocks.CharBlock(max_length=20)
+    year_over_year_change = blocks.CharBlock(max_length=20)
+    data_month = blocks.CharBlock(max_length=15)
+
+    # Market-specific descriptor text
+    num_originations_text = blocks.CharBlock(max_length=100)
+    value_originations_text = blocks.CharBlock(max_length=100)
+    year_over_year_change_text = blocks.CharBlock(max_length=100)
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/data_snapshot.html'
