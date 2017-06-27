@@ -364,7 +364,7 @@ data_snapshot = {
         'num_originations': u'2.5 million',
         'value_originations': u'$53.8 billion',
         'year_over_year_change': u'3.4% increase',
-        'last_updated_date': u'March 2017',
+        'data_month': u'March 2017',
         'num_originations_text': u'Auto loans originated',
         'value_originations_text': u'Dollar value of new loans',
         'year_over_year_change_text': u'In year-over-year originations',

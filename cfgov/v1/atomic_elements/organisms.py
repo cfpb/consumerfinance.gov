@@ -821,7 +821,7 @@ class DataSnapshot(blocks.StructBlock):
     num_originations = blocks.CharBlock(max_length=20)
     value_originations = blocks.CharBlock(max_length=20)
     year_over_year_change = blocks.CharBlock(max_length=20)
-    last_updated_date = blocks.CharBlock(max_length=15)
+    data_month = blocks.CharBlock(max_length=15)
 
     # Market-specific descriptor text
     num_originations_text = blocks.CharBlock(max_length=100)
