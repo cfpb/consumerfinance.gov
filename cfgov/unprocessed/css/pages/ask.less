@@ -40,11 +40,14 @@
         } 
     }
     
-    .category-button {
+    .list-item__button {
+        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+
         .respond-to-max(@bp-xs-max, {
-            margin-top: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
-            width: 100%;
-            text-align: center;
+            a {
+                width: 100%;
+                text-align: center;
+            }
         });
 
     }   
