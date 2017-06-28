@@ -38,15 +38,15 @@
     font-size: 1.25em;
 }
 
-table[id $=fixed-width-column-input],
-table[id $=sortable-input] {
+table[id$=fixed-width-column-input],
+table[id$=sortable-input] {
     width: 100%;
     margin-bottom: 10px;
     display: none;
 }
 
-table[id $=fixed-width-column-input] .column-width-input,
-table[id $=sortable-input] .sortable-type-input {
+table[id$=fixed-width-column-input] .column-width-input,
+table[id$=sortable-input] .sortable-type-input {
     border: 1px solid #b4b5b6 !important;
     height: 1.875em;
     width: 100%;
