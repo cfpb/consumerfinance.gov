@@ -96,6 +96,7 @@ OPTIONAL_APPS = [
     {'import': 'picard', 'apps': ('picard',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
+    {'import': 'eregs-2.0', 'apps': ('eregs_core')},
 ]
 
 MIDDLEWARE_CLASSES = (
