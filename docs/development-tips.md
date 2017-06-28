@@ -10,10 +10,14 @@ The easiest way to do this is the following steps:
  1. Update the version of the dependency in `package.json`.
  2. Delete the `node_modules` directory.
  3. Delete the `npm-shrinkwrap.json` file.
- 4. Run `npm install`.
- 5. Run `npm shrinkwrap --dev`.
+ 4. Run `./frontend.sh shrinkwrap`.
 
 Congrats! The dependency has been updated.
+
+!!! note
+    Shrinkwrapping will ignore development dependencies,
+    so if one of those was updated you will need to run `npm install`
+    after shrinkwrapping to bring your development environment up to date.
 
 ### TIP: Loading sibling projects
 Some projects fit within the cfgov-refresh architecture,
@@ -141,36 +145,6 @@ repeating items (e.g., blog posts and press releases),
 and single pages (e.g., the Future Requests page in Doing Business with Us).
 What follows is a deeper dive into both of these content types.
 
-#### Repeating content
-
-For any kind of repeating content, this is the basic process:
-
-1. In the vars file for the section you're in (e.g., `newsroom/_vars-newsroom.html`),
-   we set up a variable that holds the results of the default query we want to run.
-
-   Here's how it looks for the blog:
-
-```jinja
-{% set query = queries.posts %}
-{% set posts = query.search(size=10) %}
-```
-
-
-2. If you want to display the repeating content within a template,
-   simply set up a `for ... in` loop,
-   then output the different properties of the post within.
-   In the case of the blog, a list of posts is built using this method in
-   `cfgov/jinja2/v1/_includes/posts-paginated.html`.
-
-   Here is a simplified example:
-
-```jinja
-{% for post in posts %}
-  <h1>{{ post.title }}</h1>
-  {{ post.content }}
-{% endfor %}
-```
-
 #### Single content
 
 To access a single piece of content,
@@ -277,10 +251,10 @@ may have an impact on local server performance.
 
 ### TIP: Updating the documentation
 
-Our documentation is written as Markdown files and served in GitHub pages 
+Our documentation is written as Markdown files and served in GitHub pages
 by [mkdocs](http://www.mkdocs.org/user-guide/deploying-your-docs/).
 
-To update the docs in GitHub Pages once a pull request has been merged, 
+To update the docs in GitHub Pages once a pull request has been merged,
 mkdocs provides [a helpful command](http://www.mkdocs.org/user-guide/deploying-your-docs/):
 
 ```

@@ -1,0 +1,95 @@
+/* topdoc
+  name: Expandable read more modifier
+  family: cf-organisms
+  notes:
+    - "Styles a one-way Expandable organism that previews content on mobile."
+  patterns:
+  - name: Expandable organism
+    markup: |
+      <div class="o-expandable o-expandable__read-more" data-read-more="true">
+          <div class="o-expandable_content" aria-expanded="false">
+              <div class="o-expandable_content-animated"></div>
+          </div>
+          <a class="o-expandable_target jump-link o-expandable_link" title="Expand content">
+              <span class="jump-link_text">
+                  <span class="o-expandable_cue o-expandable_cue-open">
+                      Read full answer
+                      <span class="cf-icon cf-icon-plus-round"></span>
+                  </span>
+                  <span class="o-expandable_cue o-expandable_cue-close">
+                      Hide full answer
+                      <span class="cf-icon cf-icon-minus-round"></span>
+                  </span>
+              </span>
+          </a>
+      </div>
+    codenotes:
+      - |
+        Pattern structure
+        -----------------
+        .o-expandable
+          .o-expandable_content
+            .o-expandable_content-animated
+          .o-expandable_target.o-expandable_link
+            .o-expandable_cue.o-expandable_cue-open
+            .o-expandable_cue.o-expandable_cue-close
+
+    notes:
+      - "One-way expandable. Displays an approximately 4-line 
+         preview of content on mobile screen sizes only. "
+  - name: .o-expandable__read-more (modifier)
+  tags:
+  - cf-organisms
+*/
+.o-expandable__read-more {
+    .o-expandable_content {
+        border-bottom: 0;
+        position: relative;
+    }
+    
+    .o-expandable_target {
+        display: none;
+    }
+
+    .o-expandable_content,
+    .o-expandable_content-animated {
+        height: auto;
+        padding: 0;
+        border-width: 0;
+    }
+}
+
+.js .o-expandable__read-more[data-js-hook]:not(.o-expandable__expanded) {
+    .respond-to-max( @bp-xs-max, {
+        .o-expandable_content {
+            // shows approx. 4 lines of content
+            height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ); 
+            overflow: hidden;
+        }
+
+        .o-expandable_content:after {
+            // fades content out over approx. 2 lines
+            width: 100%; 
+            height: unit( @base-line-height-px * 2 / @base-font-size-px, em ); 
+            margin: 0;
+            position: absolute; 
+            bottom: 0; 
+            left: 0;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100% );
+            content: '';
+            text-align: center;
+        }
+
+        .o-expandable_target {
+            display: block;
+            width: 100%;
+            border: dotted @link-text;
+            border-width: 1px 0;
+            margin-top: unit( (@grid_gutter-width / 2) / @base-font-size-px, em);
+            margin-bottom: unit(@grid_gutter-width / @base-font-size-px, em);
+            font-size: @base-font-size-px;
+            text-align: center;
+            .u-link__colors();
+        }
+    });
+}

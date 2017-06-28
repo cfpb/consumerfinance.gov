@@ -5,6 +5,7 @@ from django import forms
 from django.apps import apps
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_text
+from django.utils.safestring import mark_safe
 from django.utils.functional import cached_property
 from functools import partial
 from jinja2 import Markup
@@ -709,7 +710,7 @@ class HTMLBlock(blocks.StructBlock):
     def render(self, value, context=None):
         resp = requests.get(value['html_url'], timeout=5)
         resp.raise_for_status()
-        return self.render_basic(resp.content, context=context)
+        return mark_safe(resp.content)
 
     class Meta:
         label = 'HTML Block'
@@ -811,3 +812,22 @@ class AskCategoryCard(ModelList):
 
         template = '_includes/organisms/ask-cfpb-card.html'
         return render_to_string(template, value)
+
+
+class DataSnapshot(blocks.StructBlock):
+    """ A basic Data Snapshot object. """
+    # Market key corresponds to market short name for lookup
+    market_key = blocks.CharBlock(max_length=20)
+    num_originations = blocks.CharBlock(max_length=20)
+    value_originations = blocks.CharBlock(max_length=20)
+    year_over_year_change = blocks.CharBlock(max_length=20)
+    data_month = blocks.CharBlock(max_length=15)
+
+    # Market-specific descriptor text
+    num_originations_text = blocks.CharBlock(max_length=100)
+    value_originations_text = blocks.CharBlock(max_length=100)
+    year_over_year_change_text = blocks.CharBlock(max_length=100)
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/data_snapshot.html'

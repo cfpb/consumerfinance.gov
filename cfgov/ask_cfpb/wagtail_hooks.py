@@ -55,7 +55,7 @@ class AudienceModelAdmin(ModelAdmin):
 
 class NextStepModelAdmin(ModelAdmin):
     model = NextStep
-    menu_label = 'Next steps'
+    menu_label = 'Related resources'
     menu_icon = 'list-ul'
     list_display = (
         'title', 'text')
@@ -95,8 +95,8 @@ class MyModelAdminGroup(ModelAdminGroup):
 
 def editor_js():
     js_files = [
-        'js/admin/html_editor.js',
-        'js/admin/ask_cfpb_tips.js'
+        'js/html_editor.js',
+        'js/ask_cfpb_tips.js'
     ]
     js_includes = format_html_join(
         '\n', '<script src="{0}{1}"></script>',
@@ -125,8 +125,7 @@ def whitelister_element_rules():
         'aside': attribute_rule({'class': True}),
     }
 
-if settings.DEPLOY_ENVIRONMENT == 'build':
-    hooks.register('insert_editor_js', editor_js)
-    hooks.register('insert_editor_css', editor_css)
-    hooks.register(
-        'construct_whitelister_element_rules', whitelister_element_rules)
+hooks.register('insert_editor_js', editor_js)
+hooks.register('insert_editor_css', editor_css)
+hooks.register(
+    'construct_whitelister_element_rules', whitelister_element_rules)

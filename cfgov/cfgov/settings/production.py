@@ -1,10 +1,32 @@
+import sys
+
 from .base import *
+from os.path import exists
+
+# log to disk when running in mod_wsgi, otherwise to console
+if sys.argv and sys.argv[0] == 'mod_wsgi':
+    default_loggers = ['syslog']
+else:
+    default_loggers = ['console', 'syslog']
+
+
+# This allows the syslog stuff to work on OS X
+syslog_device = next(l for l in ['/dev/log', '/var/run/syslog'] if exists(l))
 
 # Sends an email to developers in the ADMIN_EMAILS list if Debug=False for errors
-
+#
+# in the formatter, "django: " is an rsyslog tag. This is equivalent to:
+#     logger -t django "my log message"
+# on the server, the tag will be used to route the message to the desired
+# logfile
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'tagged': {
+            'format': 'django: %(message)s'
+                  },
+    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
@@ -14,6 +36,11 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
+        },
+        'syslog': {
+            'address': syslog_device,
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'tagged'
         },
     },
     'loggers': {
@@ -26,6 +53,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
+        'v1': {
+            'handlers': default_loggers,
+            'level': 'INFO',
+            'propagate': True,
+        }
     }
 }
 

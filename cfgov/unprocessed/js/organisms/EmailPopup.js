@@ -1,8 +1,7 @@
 'use strict';
 
 var helpers = require( '../modules/util/email-popup-helpers' );
-
-var $ = window.$;
+var AlphaTransition = require( '../modules/transition/AlphaTransition' );
 
 /**
  * EmailPopup
@@ -15,23 +14,26 @@ var $ = window.$;
  * @returns {EmailSignup} An instance.
  */
 function EmailPopup( el ) {
-  var _baseElement = $( el );
-  var _closeElement = $( el ).find( '.close' );
+  var _baseElement = document.querySelector( el );
+  var _closeElement = _baseElement.querySelector( '.close' );
+  var transition = new AlphaTransition( _baseElement ).init();
 
   function hidePopup() {
-    _baseElement.fadeOut();
+    transition.fadeOut();
     helpers.recordEmailPopupClosure();
   }
 
   function showPopup() {
     if ( helpers.showEmailPopup() ) {
-      _baseElement.fadeIn();
+      transition.fadeIn();
       helpers.recordEmailPopupView();
     }
+
+    return true;
   }
 
   function init() {
-    _closeElement.on( 'click', hidePopup );
+    _closeElement.addEventListener( 'click', hidePopup );
   }
 
   this.init = init;

@@ -486,7 +486,8 @@ a.ac-qa-summary:focus {
 /* Supplement tweaks
    ========================================================================== */
 
-.supplement.ac-filters {
+.supplement.ac-filters,
+.supplement.ac-related-topics {
     border-top: 0;
 }
 
@@ -625,6 +626,63 @@ legend {
 }
 
 /* ==========================================================================
+   Autocomplete
+   ========================================================================== */
+@pacific:      #0072ce;
+@gray-20:      #d2d3d5;
+@gray-5:       #f7f8f9;
+@black:        #101820; 
+@block__bg:    @gray-5;
+
+.m-autocomplete {
+    position: relative;
+}
+
+.m-autocomplete_results {
+    box-sizing: border-box;
+    width: 100%;
+    max-height: 200px;
+    border: 1px solid #afafb3;
+    padding-left:  0;
+    overflow-y: scroll;
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    list-style-type: none;
+    margin-top: 0;
+    font-family: "Avenir Next", Verdana, sans-serif;
+    background: #fff;
+    -webkit-box-shadow: 2px 3px 5px #afafb3;
+            box-shadow: 2px 3px 5px #afafb3;
+
+    li {
+        border-bottom: 1px solid @gray-20;
+        margin-bottom: 0;
+
+        &:hover,
+        &.m-autocomplete_selected {
+            background-color: @block__bg;
+        }
+
+        &:last-child {
+            border-bottom-width: 0;
+        }
+    }
+
+    a {
+        display: block;
+        padding: 0.5em; /* 8/16 */
+        border-width: 0;
+        color: @black;
+        cursor: pointer;
+    }
+}
+
+.u-hidden {
+  display: none;
+}
+
+/* ==========================================================================
    Transition utility classes.
    ========================================================================== */
 
@@ -655,6 +713,34 @@ legend {
   }
 }
 
+/* ==========================================================================
+   Wagtail Ask CFPB styles
+   ========================================================================== */
+.ask-cfpb-page__es {
+  .responsive-object {
+     position: relative;
+     margin-bottom: 15px;
+
+     iframe,
+     object,
+     embed {
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+     }
+  }
+}
+
+/* ==========================================================================
+   Disclaimer snippet
+   ========================================================================== */
+
+.ac-disclaimer h5 {
+  display: none;
+}
+
 
 /* ==========================================================================
    Print stylesheet
@@ -667,7 +753,8 @@ legend {
     .ac-similar-answers,
     .ac-related-topics,
     .ac-filters,
-    .ac-disclaimer .js-showtoggle-trigger{
+    .ac-disclaimer .js-showtoggle-trigger,
+    .o-feedback {
         /* Hide stuff */
         display: none !important;
     }

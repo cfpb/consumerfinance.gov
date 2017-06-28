@@ -50,7 +50,7 @@ var defaultSuites = {
     {
       browserName: 'chrome',
       chromeOptions: {
-        args: [ '--headless', '--disable-gpu', '--window-size=1200x900'],
+        args: [ '--headless', '--disable-gpu' ],
         binary: envvars.HEADLESS_CHROME_BINARY
       },
       maxDuration: 10800

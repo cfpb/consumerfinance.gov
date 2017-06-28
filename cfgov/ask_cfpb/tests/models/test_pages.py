@@ -11,11 +11,11 @@ from bs4 import BeautifulSoup as bs
 from django.utils import timezone
 from django.apps import apps
 from django.core.urlresolvers import reverse
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, Http404
 from django.test import TestCase
-from django.test import Client
 from django.utils import html
 
+from v1.models import CFGOVImage
 from v1.util.migrations import get_or_create_page, get_free_path
 from ask_cfpb.models.django import (
     Answer, Category, SubCategory, Audience,
@@ -24,7 +24,6 @@ from ask_cfpb.models.pages import (
     AnswerPage, AnswerCategoryPage, AnswerAudiencePage)
 
 html_parser = HTMLParser.HTMLParser()
-client = Client()
 now = timezone.now()
 
 
@@ -74,6 +73,8 @@ class AnswerModelTestCase(TestCase):
             SubCategory, name='stub_subcat', parent=self.category, _quantity=3)
         self.category.subcategories.add(self.subcategories[0])
         self.category.save()
+        self.test_image = mommy.make(CFGOVImage)
+        self.test_image2 = mommy.make(CFGOVImage)
         self.next_step = mommy.make(NextStep, title='stub_step')
         page_clean = patch('ask_cfpb.models.pages.CFGOVPage.clean')
         page_clean.start()
@@ -108,13 +109,17 @@ class AnswerModelTestCase(TestCase):
         self.answer1234 = self.prepare_answer(
             id=1234,
             answer='Mock answer 1',
+            answer_es='Mock Spanish answer',
+            slug='mock-answer-en-1234',
+            slug_es='mock-spanish-answer-es-1234',
             question='Mock question1',
-            search_tags_es='hipotecas')
+            question_es='Mock Spanish question1',
+            search_tags_es='hipotecas',
+            update_english_page=True,
+            update_spanish_page=True)
         self.answer1234.save()
-        self.page1 = self.create_answer_page()
-        self.page1.answer_base = self.answer1234
-        self.page1.parent = self.english_parent_page
-        self.page1.save()
+        self.page1 = self.answer1234.english_page
+        self.page1_es = self.answer1234.spanish_page
         self.answer5678 = self.prepare_answer(
             id=5678,
             answer='Mock answer 2',
@@ -125,6 +130,50 @@ class AnswerModelTestCase(TestCase):
         self.page2.answer_base = self.answer5678
         self.page2.parent = self.english_parent_page
         self.page2.save()
+
+    def test_spanish_print_page(self):
+        response = self.client.get(reverse(
+            'ask-spanish-print-answer',
+            args=['slug', 'es', '1234']))
+        self.assertEqual(response.status_code, 200)
+
+    def test_spanish_print_page_no_answer_404(self):
+        response = self.client.get(reverse(
+            'ask-spanish-print-answer',
+            args=['slug', 'es', '9999']))
+        self.assertEqual(response.status_code, 404)
+
+    def test_spanish_page_print_blank_answer_404(self):
+        test_answer = self.prepare_answer(
+            id=999,
+            answer_es='',
+            slug_es='mock-spanish-answer-es-999',
+            question_es='Mock Spanish question1',
+            update_spanish_page=True)
+        test_answer.save()
+        response = self.client.get(reverse(
+            'ask-spanish-print-answer',
+            args=['slug', 'es', 999]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_english_page_context(self):
+        from v1.models.snippets import ReusableText
+        from ask_cfpb.models.pages import get_reusable_text_snippet
+        rt = ReusableText(title='About us (For consumers)')
+        rt.save()
+        page = self.page1
+        page.language = 'en'
+        page.save()
+        test_context = page.get_context(HttpRequest())
+        self.assertEqual(
+            test_context['about_us'],
+            get_reusable_text_snippet('About us (For consumers)'))
+
+    def test_english_page_get_template(self):
+        page = self.page1
+        self.assertEqual(
+            page.get_template(HttpRequest()),
+            'ask-cfpb/answer-page.html')
 
     def test_facet_map(self):
         self.answer1234.category.add(self.category)
@@ -141,69 +190,102 @@ class AnswerModelTestCase(TestCase):
             json.loads(facet_map)['subcategories']['1'], [])
 
     def test_answer_valid_tags(self):
-        test_list = Answer.valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
+        test_dict = Answer.valid_spanish_tags()
+        self.assertIn('hipotecas', test_dict['valid_tags'])
 
-    def test_get_valid_tags(self):
-        from ask_cfpb.models import get_valid_spanish_tags
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
+    def test_routable_category_page_view(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        response = cat_page.category_page(HttpRequest())
+        self.assertEqual(response.status_code, 200)
 
-    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
-    def test_get_valid_tags_works_without_elasticsearch(self, mock_sqs):
-        from ask_cfpb.models import get_valid_spanish_tags
-        mock_sqs.return_value = [None]
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
+    def test_routable_category_page_bad_pagination(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        request = HttpRequest()
+        request.GET['page'] = 50
+        response = cat_page.category_page(request)
+        self.assertEqual(response.status_code, 200)
 
-    def test_routable_page_template(self):
+    def test_routable_subcategory_page_view(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        response = cat_page.subcategory_page(
+            HttpRequest(), subcat=self.subcategories[0].slug)
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_subcategory_page_bad_subcategory(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        with self.assertRaises(Http404):
+            cat_page.subcategory_page(HttpRequest(), subcat=None)
+
+    def test_routable_subcategory_page_bad_pagination(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        request = HttpRequest()
+        request.GET['page'] = 100
+        response = cat_page.subcategory_page(
+            request, subcat=self.subcategories[0].slug)
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_tag_page_template(self):
         self.assertEqual(
             self.tag_results_page.get_template(HttpRequest()),
             'ask-cfpb/answer-tag-spanish-results.html')
 
-    def test_routable_page_base_returns_404(self):
-        response = client.get(
+    def test_routable_tag_page_base_returns_404(self):
+        response = self.client.get(
             self.tag_results_page.url +
             self.tag_results_page.reverse_subpage('spanish_tag_base'))
         self.assertEqual(response.status_code, 404)
 
-    def test_routable_page_subpage_bad_tag_returns_404(self):
+    def test_routable_tag_page_subpage_bad_tag_returns_404(self):
         page = self.tag_results_page
-        response = client.get(
+        response = self.client.get(
             page.url + page.reverse_subpage(
                 'buscar_por_etiqueta',
                 kwargs={'tag': 'hippopotamus'}))
         self.assertEqual(response.status_code, 404)
 
-    def test_routable_page_subpage_valid_tag_returns_200(self):
+    def test_routable_tag_page_subpage_handles_bad_pagination(self):
         page = self.tag_results_page
-        response = client.get(
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'buscar_por_etiqueta',
+                kwargs={'tag': 'hipotecas'}), {'page': '100'})
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_tag_page_subpage_valid_tag_returns_200(self):
+        page = self.tag_results_page
+        response = self.client.get(
             page.url + page.reverse_subpage(
                 'buscar_por_etiqueta',
                 kwargs={'tag': 'hipotecas'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_routable_page_returns_url_suffix(self):
+    def test_routable_tag_page_returns_url_suffix(self):
         response = self.tag_results_page.reverse_subpage(
             'buscar_por_etiqueta', kwargs={'tag': 'hipotecas'})
         self.assertEqual(response, 'hipotecas/')
 
-    def test_view_answer_200(self):
-        response_200 = client.get(reverse(
-            'ask-english-answer', args=['mock-answer-page', 'en', 1234]))
-        self.assertTrue(isinstance(response_200, HttpResponse))
-        self.assertEqual(response_200.status_code, 200)
+    def test_view_answer_exact_slug(self):
+        page = self.page1
+        page.slug = 'mock-answer-en-1234'
+        page.save()
+        response = self.client.get(reverse(
+            'ask-english-answer', args=['mock-answer', 'en', 1234]))
+        self.assertEqual(response.status_code, 200)
 
-    def test_view_answer_302(self):
-        response_302 = client.get(reverse(
-            'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
-        self.assertTrue(isinstance(response_302, HttpResponse))
-        self.assertEqual(response_302.status_code, 302)
+    def test_view_answer_302_for_healed_slug(self):
+        response = self.client.get(reverse(
+            'ask-english-answer', args=['mock-slug', 'en', 1234]))
+        self.assertEqual(response.status_code, 302)
 
     def test_view_answer_redirected(self):
         self.page1.redirect_to = self.page2.answer_base
         self.page1.save()
-        response_302 = client.get(reverse(
+        response_302 = self.client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
         self.assertTrue(isinstance(response_302, HttpResponse))
         self.assertEqual(response_302.status_code, 302)
@@ -253,6 +335,21 @@ class AnswerModelTestCase(TestCase):
         spanish_page = spanish_answer.spanish_page
         soup = bs(spanish_page.serve(HttpRequest()).rendered_content)
         self.assertIn('Oficina', soup.title.string)
+
+    def test_spanish_answer_page_handles_referrer_with_unicode_accents(self):
+        referrer_unicode = (
+            'https://www.consumerfinance.gov/es/obtener-respuestas/'
+            'buscar-por-etiqueta/empresas_de_informes_de_cr\xe9dito/')
+        spanish_answer = self.prepare_answer(
+            answer_es='Spanish answer',
+            slug_es='spanish-answer',
+            update_spanish_page=True)
+        spanish_answer.save()
+        spanish_page = spanish_answer.spanish_page
+        request = HttpRequest()
+        request.POST['referrer'] = referrer_unicode
+        response = spanish_page.serve(request)
+        self.assertEqual(response.status_code, 200)
 
     def test_create_or_update_page_unsuppoted_language(self):
         answer = self.prepare_answer()
@@ -482,6 +579,20 @@ class AnswerModelTestCase(TestCase):
             len(test_nav_items),
             Category.objects.count())
 
+    def test_get_ask_breadcrumbs(self):
+        from ask_cfpb.models import get_ask_breadcrumbs
+        breadcrumbs = get_ask_breadcrumbs()
+        self.assertEqual(len(breadcrumbs), 1)
+        self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
+
+    def test_get_ask_breadcrumbs_with_category(self):
+        from ask_cfpb.models import get_ask_breadcrumbs
+        test_category = mommy.make(Category, name='breadcrumb_cat')
+        breadcrumbs = get_ask_breadcrumbs(test_category)
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[0]['title'], 'Ask CFPB')
+        self.assertEqual(breadcrumbs[1]['title'], test_category.name)
+
     def test_audience_page_get_english_template(self):
         mock_site = mock.Mock()
         mock_site.hostname = 'localhost'
@@ -506,6 +617,14 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             test_context['get_secondary_nav_items'],
             get_ask_nav_items)
+
+    def test_audience_page_handles_bad_pagination(self):
+        audience_page = self.create_audience_page(
+            ask_audience=self.audience, language='en')
+        request = HttpRequest()
+        request.GET['page'] = '100'
+        response = audience_page.serve(request)
+        self.assertEqual(response.status_code, 200)
 
     def test_category_page_context(self):
         mock_site = mock.Mock()
@@ -663,3 +782,70 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             get_reusable_text_snippet('Nonexistent Snippet'),
             None)
+
+    def test_category_meta_image_undefined(self):
+        """ Category page's meta image is undefined if the category has
+        no image
+        """
+        category_page = self.create_category_page(ask_category=self.category)
+        self.assertIsNone(category_page.meta_image)
+
+    def test_category_meta_image_uses_category_image(self):
+        """ Category page's meta image is its category's image """
+        category = mommy.make(Category, category_image=self.test_image)
+        category_page = self.create_category_page(ask_category=category)
+        self.assertEqual(category_page.meta_image, self.test_image)
+
+    def test_answer_meta_image_undefined(self):
+        """ Answer page's meta image is undefined if social image is
+        not provided
+        """
+        answer = self.prepare_answer()
+        answer.save()
+        page = self.create_answer_page(answer_base=answer)
+        self.assertIsNone(page.meta_image)
+
+    def test_answer_meta_image_uses_social_image(self):
+        """ Answer page's meta image is its answer's social image """
+        answer = self.prepare_answer(social_sharing_image=self.test_image)
+        answer.save()
+        page = self.create_answer_page(answer_base=answer)
+        self.assertEqual(page.meta_image, self.test_image)
+
+    def test_answer_meta_image_uses_category_image_if_no_social_image(self):
+        """ Answer page's meta image is its category's image """
+        category = mommy.make(Category, category_image=self.test_image)
+        answer = self.prepare_answer()
+        answer.save()
+        answer.category.add(category)
+        page = self.create_answer_page(answer_base=answer)
+        self.assertEqual(page.meta_image, self.test_image)
+
+    def test_answer_meta_image_uses_social_image_not_category_image(self):
+        """ Answer page's meta image pulls from its social image instead
+        of its category's image
+        """
+        category = mommy.make(Category, category_image=self.test_image)
+        answer = self.prepare_answer(social_sharing_image=self.test_image2)
+        answer.save()
+        answer.category.add(category)
+        page = self.create_answer_page(answer_base=answer)
+        self.assertEqual(page.meta_image, self.test_image2)
+
+    def test_answer_page_context_collects_subcategories(self):
+        """ Answer page's context delivers all related subcategories """
+        answer = self.answer1234
+        related_subcat = mommy.make(
+            SubCategory,
+            name='related_subcat',
+            parent=self.category)
+        subcat1 = self.subcategories[0]
+        subcat1.related_subcategories.add(related_subcat)
+        for each in self.subcategories:
+            answer.subcategory.add(each)
+        answer.update_english_page = True
+        answer.save()
+        page = answer.english_page
+        request = HttpRequest()
+        context = page.get_context(request)
+        self.assertEqual(len(context['subcategories']), 4)

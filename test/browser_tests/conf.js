@@ -1,13 +1,14 @@
 'use strict';
 
-var environment = require( './environment.js' );
-var envvars = require( '../../config/environment' ).envvars;
-var defaultSuites = require( './default-suites.js' );
+const environmentTest = require( './environment-test' );
+const envvars = require( '../../config/environment' ).envvars;
+const defaultSuites = require( './default-suites.js' );
+const minimist = require( 'minimist' );
 
 /**
  * Check whether a parameter value is set.
  * @param {string} param The value of a parameter.
- * @returns {Boolean} Whether a parameter value is undefined or not,
+ * @returns {boolean} Whether a parameter value is undefined or not,
  *   meaining whether it has been set on the command-line or not.
  */
 function _paramIsSet( param ) {
@@ -16,28 +17,40 @@ function _paramIsSet( param ) {
 
 /**
  * Choose the suite based on what command-line flags are passed.
- * @param {object} params Set of parameters from the command-line.
+ * @param {Object} params Set of parameters from the command-line.
  * @returns {Array} List of multiCapabilities objects.
  */
 function _chooseSuite( params ) {
 
-  var paramsAreNotSet = !_paramIsSet( params.browserName ) &&
-                        !_paramIsSet( params.version ) &&
-                        !_paramIsSet( params.platform );
+  const paramsAreNotSet = !_paramIsSet( params.browserName ) &&
+                          !_paramIsSet( params.version ) &&
+                          !_paramIsSet( params.platform );
 
-  var useSauceCredentials = ( !_paramIsSet( params.sauce ) ||
-                              params.sauce === 'true' ) &&
-                            _isSauceCredentialSet();
+  const useSauceCredentials = ( !_paramIsSet( params.sauce ) ||
+                                params.sauce === 'true' ) &&
+                                _isSauceCredentialSet();
 
   // Set the capabilities to use the essential suite,
   // unless Sauce Labs credentials are set and
   // no browser/platform flags are passed, in which case use the full suite.
   // This will make it so that setting the browser/platform flags
   // won't launch several identical browsers performing the same tests.
-  var capabilities = defaultSuites.essential;
+  let capabilities = defaultSuites.essential;
 
   if ( envvars.HEADLESS_CHROME_BINARY ) {
     capabilities = defaultSuites.headless;
+    const cucumberOpts = minimist( process.argv.slice( 2 ) )
+                         .cucumberOpts || {};
+    const WINDOW_SIZES = environmentTest.WINDOW_SIZES;
+    let windowWidthPx = WINDOW_SIZES.DESKTOP.WIDTH;
+    let windowHeightPx = WINDOW_SIZES.DESKTOP.HEIGHT;
+
+    if ( cucumberOpts.tags === '@mobile' ) {
+      windowWidthPx = WINDOW_SIZES.MOBILE.WIDTH;
+      windowHeightPx = WINDOW_SIZES.MOBILE.HEIGHT;
+    }
+    let windowSize = `--window-size=${windowWidthPx}x${windowHeightPx}`;
+    capabilities[0].chromeOptions.args.push( windowSize );
   } else if ( paramsAreNotSet && useSauceCredentials ) {
     capabilities = defaultSuites.full;
   }
@@ -47,13 +60,13 @@ function _chooseSuite( params ) {
 
 /**
  * Check that Sauce Labs credentials are set in the .env file.
- * @returns {Boolean} True if all the Sauce credentials
+ * @returns {boolean} True if all the Sauce credentials
  *   are not undefined or an empty string, false otherwise.
  */
 function _isSauceCredentialSet() {
-  var sauceSeleniumUrl = envvars.SAUCE_SELENIUM_URL;
-  var sauceUsername = envvars.SAUCE_USERNAME;
-  var sauceAccessKey = envvars.SAUCE_ACCESS_KEY;
+  const sauceSeleniumUrl = envvars.SAUCE_SELENIUM_URL;
+  const sauceUsername = envvars.SAUCE_USERNAME;
+  const sauceAccessKey = envvars.SAUCE_ACCESS_KEY;
 
   return typeof sauceSeleniumUrl !== 'undefined' &&
          sauceSeleniumUrl !== '' &&
@@ -65,32 +78,32 @@ function _isSauceCredentialSet() {
 
 /**
  * Choose test specs based on passed parameters.
- * @param {object} params Set of parameters from the command-line.
+ * @param {Object} params Set of parameters from the command-line.
  * @returns {Array} List of specs or spec patterns to execute.
  */
 function _chooseProtractorSpecs( params ) {
-  var i;
-  var len;
-  var specs = [];
+  let i;
+  let len;
+  let specs = [];
 
   // If one or more suites are specified, use their specs.
   if ( _paramIsSet( params.suite ) ) {
-    var suiteNames = params.suite.split( ',' );
+    const suiteNames = params.suite.split( ',' );
     for ( i = 0, len = suiteNames.length; i < len; i++ ) {
-      var suiteSpecs = environment.suites[suiteNames[i]];
+      const suiteSpecs = environmentTest.suites[suiteNames[i]];
       if ( suiteSpecs ) {
         specs = specs.concat( suiteSpecs );
       }
     }
   // Otherwise if specs are specified, use them.
   } else if ( _paramIsSet( params.specs ) ) {
-    var specPatterns = params.specs.split( ',' );
+    const specPatterns = params.specs.split( ',' );
     for ( i = 0, len = specPatterns.length; i < len; i++ ) {
-      specs = specs.concat( environment.specsBasePath + specPatterns[i] );
+      specs = specs.concat( environmentTest.specsBasePath + specPatterns[i] );
     }
   // If neither a suite or specs are specified, use the default suite.
   } else {
-    specs = specs.concat( environment.suites.default );
+    specs = specs.concat( environmentTest.suites.default );
   }
 
   return specs;
@@ -98,12 +111,12 @@ function _chooseProtractorSpecs( params ) {
 
 /**
  * Params that need to be passed to protractor config.
- * @param {object} params Set of parameters from the command-line.
- * @returns {object} Parsed parameters from the command-line,
+ * @param {Object} params Set of parameters from the command-line.
+ * @returns {Object} Parsed parameters from the command-line,
  *   which are only applicable to protractor.
  */
 function _retrieveProtractorParams( params ) { // eslint-disable-line complexity, no-inline-comments, max-len
-  var parsedParams = {};
+  const parsedParams = {};
 
   parsedParams.specs = _chooseProtractorSpecs( params );
 
@@ -124,24 +137,24 @@ function _retrieveProtractorParams( params ) { // eslint-disable-line complexity
 
 /**
  * Copy parameters into multiCapabilities array.
- * @param {object} params Set of parameters from the command-line.
+ * @param {Object} params Set of parameters from the command-line.
  * @param {Array} capabilities List of multiCapabilities objects.
  * @returns {Array} List of multiCapabilities objects
  *   with injected params from the command-line and a test name field.
  */
 function _copyParameters( params, capabilities ) { // eslint-disable-line complexity, no-inline-comments, max-len
-  var newCapabilities = [];
-  var injectParams = _retrieveProtractorParams( params );
-  var capability;
+  const newCapabilities = [];
+  const injectParams = _retrieveProtractorParams( params );
+  let capability;
 
-  for ( var i = 0, len = capabilities.length; i < len; i++ ) {
+  for ( let i = 0, len = capabilities.length; i < len; i++ ) {
     capability = capabilities[i];
     for ( var p in injectParams ) {
       if ( injectParams.hasOwnProperty( p ) ) {
         capability[p] = injectParams[p];
       }
     }
-    capability.name = environment.testName +
+    capability.name = environmentTest.testName +
                       ' ' + capability.specs +
                       ', running ' +
                       capability.browserName +
@@ -151,77 +164,95 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
                       ' at ' +
                       ( params.windowSize ?
                         params.windowSize :
-                        environment.windowWidthPx + ',' +
-                        environment.windowHeightPx ) + 'px';
+                        environmentTest.windowWidthPx + ',' +
+                        environmentTest.windowHeightPx ) + 'px';
     newCapabilities.push( capability );
   }
 
   return newCapabilities;
 }
 
-var config = {
-  baseUrl:       environment.baseUrl,
+/**
+ * The getMultiCapabilities method for Protractor's workflow.
+ * See https://github.com/angular/protractor/blob/master/lib/config.ts#L336
+ * @returns {Object} Selenium configuration object.
+ */
+function _getMultiCapabilities() {
+  const params = this.params;
+
+  // If Sauce Labs credentials or --sauce flag is not set or is not true,
+  // delete Sauce credentials on the config object.
+  if ( !_isSauceCredentialSet() || params.sauce === 'false' ) {
+    delete this.sauceSeleniumAddress;
+    delete this.sauceUser;
+    delete this.sauceKey;
+  }
+
+  const suite = _chooseSuite( params );
+  const capabilities = _copyParameters( params, suite );
+
+  return capabilities;
+}
+
+/**
+ * The onPrepare method for Protractor's workflow.
+ * See https://github.com/angular/protractor/blob/master/docs/system-setup.md
+ */
+function _onPrepare() {
+  // Ignore Selenium allowances for non-angular sites.
+  browser.ignoreSynchronization = true;
+
+  // If --windowSize=w,h flag was passed, set window dimensions.
+  // Otherwise, use default values from the test settings.
+  const windowSize = browser.params.windowSize;
+  const WINDOW_SIZES = environmentTest.WINDOW_SIZES;
+  const cucumberOpts = minimist( process.argv.slice( 2 ) ).cucumberOpts || {};
+
+  let windowWidthPx = WINDOW_SIZES.DESKTOP.WIDTH;
+  let windowHeightPx = WINDOW_SIZES.DESKTOP.HEIGHT;
+
+  if ( windowSize ) {
+    const windowSizeArray = windowSize.split( ',' );
+    windowWidthPx = Number( windowSizeArray[0] );
+    windowHeightPx = Number( windowSizeArray[1] );
+  } else if ( cucumberOpts.tags === '@mobile' ) {
+    windowWidthPx = WINDOW_SIZES.MOBILE.WIDTH;
+    windowHeightPx = WINDOW_SIZES.MOBILE.HEIGHT;
+  }
+
+  // Calling setSize with headless chromeDriver doesn't work properly if
+  // the requested size is larger than the available screen size.
+  if ( !envvars.HEADLESS_CHROME_BINARY ) {
+    browser.driver.manage().window().setSize(
+      windowWidthPx,
+      windowHeightPx
+    );
+
+    // Set default windowSize parameter equal to the value in settings.js.
+    browser.params.windowWidth = windowWidthPx;
+    browser.params.windowHeight = windowHeightPx;
+    browser.params.windowSize = String( windowWidthPx ) +
+                                ',' + String( windowHeightPx );
+  }
+
+  return;
+}
+
+const config = {
+  baseUrl:              environmentTest.baseUrl,
   cucumberOpts: {
-    require:     'cucumber/step_definitions/*.js',
-    tags:        false,
-    format:      'pretty',
-    profile:     false,
+    'require':   'cucumber/step_definitions/*.js',
+    'tags':      [ '~@mobile', '~@skip' ],
+    'format':    'pretty',
+    'profile':   false,
     'no-source': true
   },
-  directConnect: true,
-  framework:     'custom',
-  frameworkPath: require.resolve( 'protractor-cucumber-framework' ),
-  getMultiCapabilities: function() {
-    var params = this.params;
-
-    // If Sauce Labs credentials or --sauce flag is not set or is not true,
-    // delete Sauce credentials on the config object.
-    if ( !_isSauceCredentialSet() || params.sauce === 'false' ) {
-      delete config.sauceSeleniumAddress;
-      delete config.sauceUser;
-      delete config.sauceKey;
-    }
-
-    var suite = _chooseSuite( params );
-    var capabilities = _copyParameters( params, suite );
-    return capabilities;
-  },
-
-  onPrepare: function() {
-    // Ignore Selenium allowances for non-angular sites.
-    browser.ignoreSynchronization = true;
-
-    // If --windowSize=w,h flag was passed, set window dimensions.
-    // Otherwise, use default values from the test settings.
-    var windowSize = browser.params.windowSize;
-    var windowWidthPx;
-    var windowHeightPx;
-    if ( typeof windowSize === 'undefined' ) {
-      windowWidthPx = environment.windowWidthPx;
-      windowHeightPx = environment.windowHeightPx;
-    } else {
-      var windowSizeArray = windowSize.split( ',' );
-      windowWidthPx = Number( windowSizeArray[0] );
-      windowHeightPx = Number( windowSizeArray[1] );
-    }
-
-    // Calling setSize with headless chromeDriver doesn't work properly if
-    // the requested size is larger than the available screen size.
-    if ( !envvars.HEADLESS_CHROME_BINARY ) {
-      browser.driver.manage().window().setSize(
-        windowWidthPx,
-        windowHeightPx
-      );
-
-      // Set default windowSize parameter equal to the value in settings.js.
-      browser.params.windowWidth = windowWidthPx;
-      browser.params.windowHeight = windowHeightPx;
-      browser.params.windowSize = String( windowWidthPx ) +
-                                  ',' + String( windowHeightPx );
-    }
-
-    return;
-  }
+  unknownFlags_:        [ 'cucumberOpts' ],
+  directConnect:        true,
+  framework:            'custom',
+  frameworkPath:        require.resolve( 'protractor-cucumber-framework' ),
+  getMultiCapabilities: _getMultiCapabilities,
+  onPrepare:            _onPrepare
 };
 
 // Set Sauce Labs credientials from .env file.
@@ -230,5 +261,6 @@ if ( _isSauceCredentialSet() ) {
   config.sauceUser = envvars.SAUCE_USERNAME;
   config.sauceKey = envvars.SAUCE_ACCESS_KEY;
 }
+
 
 exports.config = config;
