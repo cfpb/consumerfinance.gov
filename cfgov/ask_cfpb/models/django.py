@@ -183,6 +183,70 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
 
+class SubCategory(models.Model):
+    name = models.CharField(max_length=255)
+    name_es = models.CharField(max_length=255, null=True, blank=True)
+    slug = models.SlugField()
+    slug_es = models.SlugField(
+        null=True,
+        blank=True,
+        help_text="This field is not currently used on the front end.")
+    weight = models.IntegerField(default=1)
+    description = RichTextField(
+        blank=True,
+        help_text="This field is not currently displayed on the front end.")
+    description_es = RichTextField(
+        blank=True,
+        help_text="This field is not currently displayed on the front end.")
+    more_info = models.TextField(
+        blank=True,
+        help_text="This field is not currently displayed on the front end.")
+    parent = models.ForeignKey(
+        Category,
+        null=True,
+        blank=True,
+        default=None,
+        related_name='subcategories')
+    related_subcategories = models.ManyToManyField(
+        'self',
+        blank=True,
+        default=None,
+        help_text="Maximum 3 related subcategories"
+    )
+
+    panels = [
+        FieldPanel('name', classname="title"),
+        FieldPanel('slug'),
+        FieldPanel('description'),
+        FieldPanel('name_es', classname="title"),
+        FieldPanel('slug_es'),
+        FieldPanel('description_es'),
+        FieldPanel('weight'),
+        FieldPanel('more_info'),
+        FieldPanel('parent'),
+        FieldPanel('related_subcategories',
+                   widget=forms.CheckboxSelectMultiple),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['weight']
+        verbose_name_plural = "Subcategories"
+
+
+class SubcategorySelectionWidget(forms.CheckboxSelectMultiple):
+
+    def __init__(self, attrs=None, answer=None):
+        super(SubcategorySelectionWidget, self).__init__(attrs, choices=())
+        # choices can be any iterable, but we may need to render this widget
+        # multiple times. Thus, collapse it into a list so it can be consumed
+        # more than once.
+        if answer:
+            self.choices = list(answer.available_subcategory_qs)
+
+
 class Answer(models.Model):
     last_user = models.ForeignKey(User, blank=True, null=True)
     category = models.ManyToManyField(
@@ -307,6 +371,13 @@ class Answer(models.Model):
         )
     )
 
+    @property
+    def available_subcategory_qs(self):
+        return SubCategory.objects.filter(parent__in=self.category.all())
+
+    def subcategory_widget(self):
+        return SubcategorySelectionWidget(answer=self)
+
     panels = [
         MultiFieldPanel([
             FieldRowPanel([
@@ -379,10 +450,6 @@ class Answer(models.Model):
             html_parser.unescape(self.snippet_es),
             html_parser.unescape(self.answer_es)))
         return html.strip_tags(unescaped).strip()
-
-    @property
-    def available_subcategory_qs(self):
-        return SubCategory.objects.filter(parent__in=self.category.all())
 
     def cleaned_questions(self):
         cleaned_terms = html_parser.unescape(self.question)
@@ -560,56 +627,3 @@ class SpanishAnswerProxy(Answer):
     """A no-op proxy class to allow separate language indexing in Haystack"""
     class Meta:
         proxy = True
-
-
-class SubCategory(models.Model):
-    name = models.CharField(max_length=255)
-    name_es = models.CharField(max_length=255, null=True, blank=True)
-    slug = models.SlugField()
-    slug_es = models.SlugField(
-        null=True,
-        blank=True,
-        help_text="This field is not currently used on the front end.")
-    weight = models.IntegerField(default=1)
-    description = RichTextField(
-        blank=True,
-        help_text="This field is not currently displayed on the front end.")
-    description_es = RichTextField(
-        blank=True,
-        help_text="This field is not currently displayed on the front end.")
-    more_info = models.TextField(
-        blank=True,
-        help_text="This field is not currently displayed on the front end.")
-    parent = models.ForeignKey(
-        Category,
-        null=True,
-        blank=True,
-        default=None,
-        related_name='subcategories')
-    related_subcategories = models.ManyToManyField(
-        'self',
-        blank=True,
-        default=None,
-        help_text="Maximum 3 related subcategories"
-    )
-
-    panels = [
-        FieldPanel('name', classname="title"),
-        FieldPanel('slug'),
-        FieldPanel('description'),
-        FieldPanel('name_es', classname="title"),
-        FieldPanel('slug_es'),
-        FieldPanel('description_es'),
-        FieldPanel('weight'),
-        FieldPanel('more_info'),
-        FieldPanel('parent'),
-        FieldPanel('related_subcategories',
-                   widget=forms.CheckboxSelectMultiple),
-    ]
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['weight']
-        verbose_name_plural = "Subcategories"
