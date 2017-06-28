@@ -52,7 +52,29 @@ select,
 
 
 /* Visually separate repeating items */
+
 .sequence-member {
+    padding-top: 1em;
     /* Color matches other Wagtail borders */
     border-top: 1px solid #ccf1f1 !important;
+}
+
+.sequence-member .sequence-member:first-child {
+    padding-top: 0;
+    border-top: none !important;
+}
+
+li.sequence-member .sequence-member-inner .sequence-type-list .sequence-member-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.sequence-member-inner > .struct-block > .fields > li,
+.sequence-member-inner > .field > .field-content {
+    padding-top: 0;
+    padding-bottom: 1em;
+}
+
+.sequence-member:first-child > .sequence-member-inner > .field > .field-content {
+    padding-top: 1em;
 }
