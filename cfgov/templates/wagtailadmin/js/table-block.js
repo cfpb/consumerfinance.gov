@@ -238,9 +238,9 @@
                 $isTableStripedCheckbox:    id + '-handsontable-striped-rows',
                 $fixedWidthColsCheckbox:    id + '-handsontable-col-fixed',
                 $fixedWidthColInput:        id + '-fixed-width-column-input',
+                $widthWarning:              id + '-width_warning',
                 $isSortableCheckbox:        id + '-handsontable-sortable',
                 $sortableInput:             id + '-sortable-input',
-                $widthWarning:              id + '-width_warning',
                 $resizeTargets:             '.input > .handsontable, .wtHider, .wtHolder'
             },
 
@@ -274,6 +274,7 @@
                   fixedWidthRow.append( '<td>' + utilities.$colWidthSelect + '</td>' );
                 }
 
+                // update sortable input to match table
                 var sortableRow = this.ui.$sortableInput.find( 'tr' );
                 sortableRow.empty();
                 for ( var x = 0; x < count; x++ ) {
@@ -282,17 +283,17 @@
 
                 if ( ui.$fixedWidthColsCheckbox.is( ':checked' ) ) {
                   this.toggleInputTable( this.ui.$fixedWidthColInput, true );
-                  ui.$fixedWidthColInput.find( 'td' ).each( function( index, value) {
+                  ui.$fixedWidthColInput.find( 'td' ).each( function( index, value ) {
                     $( this ).find( 'select' ).val( hiddenFieldData.column_widths[index] );
-                  } )
+                  } );
                   this.getColumnWidths();
                 }
 
                 if ( ui.$isSortableCheckbox.is( ':checked' ) ) {
                   this.toggleInputTable( this.ui.$sortableInput, true );
-                  ui.$sortableInput.find( 'td' ).each( function( index, value) {
+                  ui.$sortableInput.find( 'td' ).each( function( index, value ) {
                     $( this ).find( 'select' ).val( hiddenFieldData.sortable_types[index] );
-                  } )
+                  } );
                 }
             },
 
@@ -313,7 +314,7 @@
               for ( var x = 0; x < colCount; x++ ) {
                 var i = x + 1;
                 var widthClass = this.ui.$fixedWidthColInput
-                                     .find( 'tr td:nth-child( ' + i + ') select option:selected' )
+                                     .find( 'tr td:nth-child( ' + i + ' ) select option:selected' )
                                      .val();
                 if ( widthClass !== '' ) {
                   totalWidth += Number( widthClass.substring( 3, 5 ) );
@@ -341,7 +342,7 @@
                        ( tableParent.find( '.input' ).height() * 2 );
             },
 
-            getSortableTypes: function getColumnWidths() {
+            getSortableTypes: function getSortableTypes() {
               var colCount = this.ui.$sortableInput.find( 'tr td' ).length,
                   array = [];
 
@@ -349,7 +350,7 @@
                 var i = x + 1;
 
                 array[x] = this.ui.$sortableInput
-                               .find( 'tr td:nth-child( ' + i + ') select option:selected' )
+                               .find( 'tr td:nth-child( ' + i + ' ) select option:selected' )
                                .val();
               }
 

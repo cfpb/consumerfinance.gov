@@ -18,7 +18,9 @@
     <label for="{{ attrs.id }}-handsontable-striped-rows">Striped rows</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-striped-rows" name="handsontable-striped-rows"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-striped-rows"
+                   name="handsontable-striped-rows">
             <span class="help">( Display the Table with striped rows )</span>
         </div>
 
@@ -28,7 +30,9 @@
     <label for="{{ attrs.id }}-handsontable-striped-rows">Stacked on mobile</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-stack-on-mobile" name="handsontable-stack-on-mobile"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-stack-on-mobile"
+                   name="handsontable-stack-on-mobile">
             <span class="help">( Stack the table columns on mobile )</span>
         </div>
     </div>
@@ -37,7 +41,9 @@
     <label for="{{ attrs.id }}-handsontable-full-width">Full-width</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-full-width" name="handsontable-full-width"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-full-width"
+                   name="handsontable-full-width">
             <span class="help">( Display the table at full-width )</span>
         </div>
     </div>
@@ -46,7 +52,9 @@
     <label for="{{ attrs.id }}-handsontable-header">Row header</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-header" name="handsontable-header"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-header"
+                   name="handsontable-header">
             <span class="help">( Display the first row as a header )</span>
         </div>
     </div>
@@ -55,7 +63,9 @@
     <label for="{{ attrs.id }}-handsontable-col-header">Column header</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-col-header" name="handsontable-col-header"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-col-header"
+                   name="handsontable-col-header">
             <span class="help">( Display the first column as a header )</span>
         </div>
     </div>
@@ -64,7 +74,9 @@
     <label for="{{ attrs.id }}-handsontable-col-fixed">Fixed-width columns</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-col-fixed" name="handsontable-col-fixed"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-col-fixed"
+                   name="handsontable-col-fixed">
             <span class="help">( Enable fixed width columns )</span>
         </div>
     </div>
@@ -73,40 +85,19 @@
     <label for="{{ attrs.id }}-handsontable-sortable">Sortable table</label>
     <div class="field-content">
         <div class="input">
-            <input type="checkbox" id="{{ attrs.id }}-handsontable-sortable" name="handsontable-sortable"/>
+            <input type="checkbox"
+                   id="{{ attrs.id }}-handsontable-sortable"
+                   name="handsontable-sortable">
             <span class="help">( Enable sortable table functionality )</span>
         </div>
     </div>
 </div>
-<br/>
-<div id="{{ attrs.id }}-width_warning" class="table-block-warning">Warning! Your total column width is greater than 100%! Please adjust your column widths to be less than 100% total before continuing.</div>
-
-<table id="{{ attrs.id }}-sortable-input">
-  <thead>Sortable Table Options</thead>
-  <tr>
-    <td>
-      <select class="sortable-type-input">
-        <option value="">None</option>
-        <option value="string">Default</option>
-        <option value="number">Number</option>
-      </select>
-    </td>
-    <td>
-      <select class="sortable-type-input">
-        <option value="">None</option>
-        <option value="string">Default</option>
-        <option value="number">Number</option>
-      </select>
-    </td>
-    <td>
-      <select class="sortable-type-input">
-        <option value="">None</option>
-        <option value="string">Default</option>
-        <option value="number">Number</option>
-      </select>
-    </td>
-  </tr>
-</table>
+<br>
+<div id="{{ attrs.id }}-width_warning"
+     class="table-block-warning">
+    Warning! Your total column width is greater than 100%!
+    Please adjust your column widths to be less than 100% total before continuing.
+</div>
 
 <table id="{{ attrs.id }}-fixed-width-column-input">
   <thead>Fixed Width Column Options</thead>
@@ -173,6 +164,34 @@
     </td>
   </tr>
 </table>
+
+<table id="{{ attrs.id }}-sortable-input">
+  <thead>Sortable Table Options</thead>
+  <tr>
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Alphabetical</option>
+        <option value="number">Number</option>
+      </select>
+    </td>
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Alphabetical</option>
+        <option value="number">Number</option>
+      </select>
+    </td>
+    <td>
+      <select class="sortable-type-input">
+        <option value="">None</option>
+        <option value="string">Alphabetical</option>
+        <option value="number">Number</option>
+      </select>
+    </td>
+  </tr>
+</table>
+
 <div id="{{ attrs.id }}-handsontable-container"></div>
 
 {{ original_field_html }}
