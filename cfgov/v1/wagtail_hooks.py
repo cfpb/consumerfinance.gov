@@ -62,8 +62,8 @@ def editor_js():
 @hooks.register('insert_editor_css')
 def editor_css():
     css_files = [
+        'css/general-enhancements.css',
         'css/table-block.css',
-        'css/richtext.css',
         'css/bureau-structure.css'
     ]
     css_includes = format_html_join(
