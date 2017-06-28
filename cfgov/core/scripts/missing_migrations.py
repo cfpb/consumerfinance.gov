@@ -12,7 +12,7 @@ from django.core.management import call_command
 
 
 # Django 1.10+ includes makemigrations --check, making this unnecessary
-is_django_110_plus = (1 == VERSION[0]) and (10 <= VERSION[1])
+is_django_110_plus = (1 <= VERSION[0]) and (10 <= VERSION[1])
 
 
 def check_missing_migrations(out=sys.stdout):
