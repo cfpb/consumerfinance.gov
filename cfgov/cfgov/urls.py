@@ -262,6 +262,11 @@ urlpatterns = [
         include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/',
         include_if_app_enabled('countylimits', 'countylimits.urls')),
+
+    flagged_url('EREGS20',
+                r'^eregs2/',
+                include_if_app_enabled('eregs', 'eregs.urls')
+                ),
     url(r'^eregs-api/',
         include_if_app_enabled('regcore', 'regcore.urls')),
     url(r'^eregulations/',
