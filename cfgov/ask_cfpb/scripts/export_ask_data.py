@@ -1,13 +1,19 @@
 from __future__ import unicode_literals
 
 import datetime
+import sys
 
 import HTMLParser
 from django.utils import html
 
-from paying_for_college.csvkit import csvkit
-
 from ask_cfpb.models import Answer
+
+try:
+    from paying_for_college.csvkit import csvkit
+except ImportError:
+    print("Import error: Try installing college-costs")
+    sys.exit(1)
+
 
 html_parser = HTMLParser.HTMLParser()
 
@@ -105,7 +111,7 @@ def export_questions(spanish_only=False):
     outside the ascii range is Spanish asnwers, so we export the bulk of the
     data as UTF-8, and Spanish answers as a separate UTF-16 file that our
     versions of Excel will open with proper diacritical marks.
-    UTF-16 doubles the file size, which can causes Excel performance issues
+    UTF-16 doubles the file size, which can cause Excel performance issues
     for the full data set. UTF-16 also plays hob with delimiting,
     pushing text to next cells and making a mess.
 
