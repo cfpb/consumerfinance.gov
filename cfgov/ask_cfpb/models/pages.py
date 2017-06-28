@@ -35,16 +35,6 @@ SPANISH_DISCLAIMER_SNIPPET_TITLE = (
     'Legal disclaimer for consumer materials (in Spanish)')
 
 
-# def get_valid_spanish_tags():
-#     from ask_cfpb.models import Answer, AnswerTagProxy
-#     try:
-#         sqs = SearchQuerySet().models(AnswerTagProxy)
-#         valid_spanish_tags = sqs.filter(content='tags')[0].valid_spanish
-#     except (IndexError, AttributeError):  # ES not available; go to plan B
-#         valid_spanish_tags = Answer.valid_spanish_tags()['valid_tags']
-#     return valid_spanish_tags
-
-
 def get_reusable_text_snippet(snippet_title):
     try:
         return ReusableText.objects.get(
@@ -390,39 +380,45 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
     """A routable page for serving Answers by tag"""
 
     objects = CFGOVPageManager()
-    language = 'es'
 
     def get_template(self, request):
-        """We only offer tag search on Spanish pages"""
-        return 'ask-cfpb/answer-tag-spanish-results.html'
+        if self.language == 'es':
+            return 'ask-cfpb/answer-tag-spanish-results.html'
+        else:
+            return 'ask-cfpb/answer-search-results.html'
 
     @route(r'^$')
-    def spanish_tag_base(self, request):
+    def tag_base(self, request):
         raise Http404
 
     @route(r'^(?P<tag>[^/]+)/$')
-    def buscar_por_etiqueta(self, request, **kwargs):
+    def tag_search(self, request, **kwargs):
         from ask_cfpb.models import Answer
-        tag_dict = Answer.valid_spanish_tags()
+        tag_dict = Answer.valid_tags(language=self.language)
         tag = kwargs.get('tag').replace('_', ' ')
         if not tag or tag not in tag_dict['valid_tags']:
             raise Http404
-        self.answers = [
-            (SPANISH_ANSWER_SLUG_BASE.format(a.id),
-             a.question_es,
-             Truncator(a.answer_es).words(40, truncate=' ...'))
-            for a in tag_dict['tag_map'][tag]
-        ]
+        if self.language == 'es':
+            self.answers = [
+                (SPANISH_ANSWER_SLUG_BASE.format(a.id),
+                 a.question_es,
+                 Truncator(a.answer_es).words(40, truncate=' ...'))
+                for a in tag_dict['tag_map'][tag]
+            ]
+        else:
+            self.answers = [
+                (ENGLISH_ANSWER_SLUG_BASE.format(a.id),
+                 a.question,
+                 Truncator(a.answer).words(40, truncate=' ...'))
+                for a in tag_dict['tag_map'][tag]
+            ]
         try:
             context = self.get_context(request)
             page = int(request.GET.get('page', 1))
             paginator = Paginator(self.answers, 20)
             context['results'] = paginator.page(page)
         except (EmptyPage, PageNotAnInteger):
-            request.GET = request.GET.copy()
-            request.GET['page'] = 1
-            context = self.get_context(request)
-            page = int(request.GET.get('page', 1))
+            page = 1
             paginator = Paginator(self.answers, 20)
             context['results'] = paginator.page(page)
         context['results_count'] = len(self.answers)
@@ -502,7 +498,7 @@ class AnswerPage(CFGOVPage):
                     slugify(audience.name))}
             for audience in self.answer_base.audiences.all()]
         if self.language == 'es':
-            tag_dict = self.Answer.valid_spanish_tags()
+            tag_dict = self.Answer.valid_tags(language='es')
             context['tags_es'] = [tag for tag in self.answer_base.tags_es
                                   if tag in tag_dict['valid_tags']]
             context['tweet_text'] = Truncator(self.question).chars(
@@ -510,6 +506,10 @@ class AnswerPage(CFGOVPage):
             context['disclaimer'] = get_reusable_text_snippet(
                 SPANISH_DISCLAIMER_SNIPPET_TITLE)
         elif self.language == 'en':
+            # we're not using tags on English pages yet, so cut the overhead
+            # tag_dict = self.Answer.valid_tags()
+            # context['tags'] = [tag for tag in self.answer_base.tags
+            #                    if tag in tag_dict['valid_tags']]
             context['about_us'] = get_reusable_text_snippet(
                 ABOUT_US_SNIPPET_TITLE)
             context['disclaimer'] = get_reusable_text_snippet(
