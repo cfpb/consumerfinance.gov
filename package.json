@@ -56,11 +56,11 @@
     "webpack-stream": "3.2.0"
   },
   "devDependencies": {
-    "chai": "3.5.0",
-    "chai-as-promised": "6.0.0",
-    "cucumber": "2.3.0",
-    "jasmine-reporters": "2.2.0",
-    "jasmine-spec-reporter": "3.2.0",
+    "chai": "4.0.2",
+    "chai-as-promised": "7.0.0",
+    "cucumber": "2.3.1",
+    "jasmine-reporters": "2.2.1",
+    "jasmine-spec-reporter": "4.1.1",
     "jsdoc": "3.4.3",
     "jsdom": "9.10.0",
     "localtunnel": "1.8.2",
@@ -72,7 +72,7 @@
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "protractor-cucumber-framework": "3.1.2",
     "selenium-webdriver": "3.4.0",
-    "sinon": "1.17.7",
+    "sinon": "2.3.5",
     "snyk": "1.25.0",
     "wcag": "0.3.0"
   },
