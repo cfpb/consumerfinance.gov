@@ -127,7 +127,7 @@ class Category(models.Model):
     @property
     def top_tags_es(self):
         import collections
-        valid_dict = Answer.valid_spanish_tags()
+        valid_dict = Answer.valid_tags(language='es')
         cleaned = []
         for a in self.answer_set.all():
             cleaned += a.tags_es
@@ -423,7 +423,7 @@ class Answer(models.Model):
         return self.clean_tag_list(self.search_tags_es)
 
     @classmethod
-    def valid_spanish_tags(cls):
+    def valid_tags(cls, language='en'):
         """
         Search tags are arbitrary and messy. This function serves 2 purposes:
         - Assemble a whitelist of tags that are safe for search.
@@ -436,13 +436,22 @@ class Answer(models.Model):
         """
         cleaned = []
         tag_map = {}
-        for a in cls.objects.all():
-            cleaned += a.tags_es
-            for tag in a.tags_es:
-                if tag not in tag_map:
-                    tag_map[tag] = [a]
-                else:
-                    tag_map[tag].append(a)
+        if language == 'es':
+            for a in cls.objects.all():
+                cleaned += a.tags_es
+                for tag in a.tags_es:
+                    if tag not in tag_map:
+                        tag_map[tag] = [a]
+                    else:
+                        tag_map[tag].append(a)
+        else:
+            for a in cls.objects.all():
+                cleaned += a.tags
+                for tag in a.tags:
+                    if tag not in tag_map:
+                        tag_map[tag] = [a]
+                    else:
+                        tag_map[tag].append(a)
         tag_counter = Counter(cleaned)
         valid = sorted(
             tup[0] for tup in tag_counter.most_common() if tup[1] > 1)
