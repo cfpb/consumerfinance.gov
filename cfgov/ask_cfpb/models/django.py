@@ -229,22 +229,11 @@ class SubCategory(models.Model):
     ]
 
     def __str__(self):
-        return self.name
+        return "{}: {}".format(self.parent.name, self.name)
 
     class Meta:
         ordering = ['weight']
         verbose_name_plural = "Subcategories"
-
-
-class SubcategorySelectionWidget(forms.CheckboxSelectMultiple):
-
-    def __init__(self, attrs=None, answer=None):
-        super(SubcategorySelectionWidget, self).__init__(attrs, choices=())
-        # choices can be any iterable, but we may need to render this widget
-        # multiple times. Thus, collapse it into a list so it can be consumed
-        # more than once.
-        if answer:
-            self.choices = list(answer.available_subcategory_qs)
 
 
 class Answer(models.Model):
@@ -315,13 +304,14 @@ class Answer(models.Model):
         default=False,
         verbose_name="Send to English page for review",
         help_text=(
-            "Check the box(es) above after you’ve finished making edits "
-            "to the English or Spanish answer record below. "
-            "Make sure to check before saving in order to publish your edits "
-            "or share as a draft."))
+            "Check this box to push your English edits "
+            "to the page for review. This does not publish your edits."))
     update_spanish_page = models.BooleanField(
         default=False,
-        verbose_name="Send to Spanish page for review")
+        verbose_name="Send to Spanish page for review",
+        help_text=(
+            "Check this box to push your Spanish edits "
+            "to the page for review. This does not publish your edits."))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     last_edited = models.DateField(
@@ -336,10 +326,13 @@ class Answer(models.Model):
         help_text="Change the date to today "
                   "if you edit a Spanish question, snippet or answer.",
         verbose_name="Last edited Spanish content")
+
     subcategory = models.ManyToManyField(
         'SubCategory',
         blank=True,
-        help_text="Choose any subcategories related to the answer.")
+        help_text=(
+            "Choose only subcategories that belong "
+            "to one of the categories checked above."))
     audiences = models.ManyToManyField(
         'Audience',
         blank=True,
@@ -371,13 +364,6 @@ class Answer(models.Model):
         )
     )
 
-    @property
-    def available_subcategory_qs(self):
-        return SubCategory.objects.filter(parent__in=self.category.all())
-
-    def subcategory_widget(self):
-        return SubcategorySelectionWidget(answer=self)
-
     panels = [
         MultiFieldPanel([
             FieldRowPanel([
@@ -407,13 +393,15 @@ class Answer(models.Model):
                 FieldPanel('featured_rank')]),
             FieldPanel('audiences', widget=forms.CheckboxSelectMultiple),
             FieldPanel('next_step'),
-            FieldRowPanel([
-                FieldPanel(
-                    'category', widget=forms.CheckboxSelectMultiple),
-                FieldPanel(
-                    'subcategory',
-                    widget=forms.CheckboxSelectMultiple)]),
-            FieldPanel('related_questions', widget=forms.SelectMultiple),
+            FieldPanel(
+                'category', widget=forms.CheckboxSelectMultiple),
+            FieldPanel(
+                'subcategory',
+                widget=forms.CheckboxSelectMultiple),
+            FieldPanel(
+                'related_questions',
+                widget=forms.SelectMultiple,
+                classname="full"),
             FieldPanel('search_tags'),
             FieldPanel('search_tags_es'),
             ImageChooserPanel('social_sharing_image')],
@@ -426,6 +414,10 @@ class Answer(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.id, self.slug)
+
+    @property
+    def available_subcategory_qs(self):
+        return SubCategory.objects.filter(parent__in=self.category.all())
 
     @property
     def english_page(self):
@@ -580,10 +572,6 @@ class Answer(models.Model):
             get_feedback_stream_value(_page),
             is_lazy=True)
         _page.save_revision(user=self.last_user)
-        # _page.save()
-        # base_page.refresh_from_db()
-        # base_page.has_unpublished_changes = True
-        # base_page.save()
         return _page
 
     def create_or_update_pages(self):

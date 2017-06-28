@@ -8,6 +8,7 @@ from wagtail.contrib.modeladmin.views import EditView
 
 from django.conf import settings
 from django.utils.html import format_html, format_html_join
+# from haystack.query import SearchQuerySet
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.whitelist import attribute_rule
 
@@ -20,6 +21,10 @@ from ask_cfpb.models import (
 
 
 class AnswerModelAdminSaveUserEditView(EditView):
+    """
+    An edit_handler that saves the current user as the 'last user'
+    on an Answer object so that it can be passed to a created or updated page.
+    """
 
     def save_instance_user(self):
         self.instance.last_user = self.request.user
@@ -42,8 +47,8 @@ class AnswerModelAdmin(ModelAdmin):
         'question_es',
         'last_edited_es')
     search_fields = (
-        'id', 'question', 'question_es', 'answer', 'answer_es')
-    list_filter = ('category', 'featured')
+        'id', 'question', 'question_es', 'answer', 'answer_es', 'search_tags')
+    list_filter = ('category', 'featured', 'audiences')
     edit_view_class = AnswerModelAdminSaveUserEditView
 
 

@@ -601,7 +601,9 @@ class AnswerModelTestCase(TestCase):
 
     def test_subcategory_str(self):
         subcategory = self.subcategories[0]
-        self.assertEqual(subcategory.__str__(), subcategory.name)
+        self.assertEqual(
+            subcategory.__str__(),
+            "{}: {}".format(self.category.name, subcategory.name))
 
     def test_nextstep_str(self):
         next_step = self.next_step
