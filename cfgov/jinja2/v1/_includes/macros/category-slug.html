@@ -43,7 +43,7 @@
 
     {% call _category_link(href, classes) %}
         {% set cat = category_label(category) or category %}
-        {{ category_icon.render(cat, 'category-slug_icon') | safe }}
+        {{ category_icon.render(cat, '') | safe }}
         <span class="u-visually-hidden">Category:</span>
         {{ cat | safe }}
     {% endcall %}
@@ -52,7 +52,7 @@
 {% macro _category_link(href, classes) %}
     {% if href %}
         <a href="{{ href }}"
-           class="category-slug {{ classes if classes else '' }}">
+           class="a-heading a-heading__icon {{ classes if classes else '' }}">
     {% endif %}
        {{ caller() }}
     {% if href %}
