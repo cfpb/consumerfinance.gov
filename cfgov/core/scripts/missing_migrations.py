@@ -11,17 +11,11 @@ from django import VERSION
 from django.core.management import call_command
 
 
-def run():
-    major, minor = VERSION[0:2]
-    if 1 == major and 10 <= minor:
-        print(
-            'makemigrations --exit deprecated in Django 1.10: '
-            'https://docs.djangoproject.com/en/1.10/ref/django-admin/'
-            '#cmdoption-makemigrations--exit'
-        )
-        sys.exit(1)
+# Django 1.10+ includes makemigrations --check, making this unnecessary
+is_django_110_plus = (1 == VERSION[0]) and (10 <= VERSION[1])
 
-    out = StringIO()
+
+def check_missing_migrations(out=sys.stdout):
     try:
         call_command(
             'makemigrations',
@@ -33,8 +27,21 @@ def run():
         # makemigrations calls sys.exit if there are no migrations to be
         # made. We want to detect the inverse, and fail if there are any
         # migrations that need to be generated.
-        pass
+        return False
     else:
+        return True
+
+
+def run():
+    if is_django_110_plus:
+        print(
+            'makemigrations --exit deprecated in Django 1.10: '
+            'https://docs.djangoproject.com/en/1.10/ref/django-admin/'
+            '#cmdoption-makemigrations--exit'
+        )
+
+    out = StringIO()
+    if check_missing_migrations(out):
         print("Missing migrations found:")
         print(out.getvalue())
         sys.exit(1)
