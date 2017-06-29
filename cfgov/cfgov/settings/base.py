@@ -77,8 +77,8 @@ INSTALLED_APPS = (
     'jobmanager'
 )
 
-if DEPLOY_ENVIRONMENT == 'build':                                                 
-    INSTALLED_APPS += ('eregs_core') 
+if DEPLOY_ENVIRONMENT == 'build':
+    INSTALLED_APPS += ('eregs_core',)
 
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
