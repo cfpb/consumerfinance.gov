@@ -64,7 +64,7 @@
                 {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
                     {{ category_slug.render('blog',
                             page_url,
-                            'post_slug meta-header_left',
+                            'meta-header_left',
                             false, form_id) }}
                 {% else %}
                     {% for cat in post.categories.all() %}
@@ -73,7 +73,7 @@
                         {% endif %}
                         {{ category_slug.render(cat.name,
                                 page_url,
-                                'post_slug meta-header_left',
+                                'meta-header_left',
                                 false, form_id) }}
                     {% endfor %}
                 {% endif %}

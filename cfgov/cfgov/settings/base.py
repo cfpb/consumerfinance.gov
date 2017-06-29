@@ -580,4 +580,10 @@ FLAGS = {
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     'AB_TESTING': {},
+
+    # Add sortable tables to Wagtail
+    # When enabled, the sortable tables option will be added to the Wagtail Admin
+    # The template will render for the front-end, but the sortable code is missing
+    # and the table will not be sortable until cf-tables from CF 4.x is implemented
+    'SORTABLE_TABLES': {}
 }

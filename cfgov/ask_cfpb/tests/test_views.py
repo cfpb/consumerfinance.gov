@@ -287,11 +287,11 @@ class RedirectAskSearchTestCase(django.test.TestCase):
             result.get('location'),
             '/ask-cfpb/audience-older-americans')
 
-    def test_redirect_search_with_tag(self):
-        target_tag = 'mytag1'
+    def test_spanish_redirect_search_with_tag(self):
+        target_tag = 'spanishtag1'
         tag_querystring = (
             'selected_facets=tag_exact:{}'
-            '&selected_facets=tag_exact:mytag2'.format(target_tag))
+            '&selected_facets=tag_exact:spanishtag2'.format(target_tag))
         request = HttpRequest()
         request.GET = QueryDict(tag_querystring)
         result = redirect_ask_search(request, language='es')
@@ -300,16 +300,18 @@ class RedirectAskSearchTestCase(django.test.TestCase):
             '/es/obtener-respuestas/buscar-por-etiqueta/{}/'.format(
                 target_tag))
 
-    def test_redirect_search_with_english_tag_raises_404(self):
-        """Only Spanish tags are supported"""
-        target_tag = 'mytag1'
+    def test_english_redirect_search_with_tag(self):
+        target_tag = 'englishtag1'
         tag_querystring = (
             'selected_facets=tag_exact:{}'
-            '&selected_facets=tag_exact:mytag2'.format(target_tag))
+            '&selected_facets=tag_exact:englishtag2'.format(target_tag))
         request = HttpRequest()
         request.GET = QueryDict(tag_querystring)
-        with self.assertRaises(Http404):
-            redirect_ask_search(request, language='en')
+        result = redirect_ask_search(request, language='en')
+        self.assertEqual(
+            result.get('location'),
+            '/ask-cfpb/search-by-tag/{}/'.format(
+                target_tag))
 
     def test_redirect_search_with_unrecognized_facet_raises_404(self):
         querystring = \

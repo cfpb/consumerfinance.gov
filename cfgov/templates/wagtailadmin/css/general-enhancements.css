@@ -1,0 +1,80 @@
+/* Context: Wagtail's editing interface is generally comprised of a nested set
+   of two-column interfaces, where the narrower left column holds a label,
+   and the wider right column holds either a single field corresponding to
+   that label or a new two-column group of child fields. */
+
+/* Increase the width for things that wrap both a label col and a field col */
+li.sequence-member .sequence-member-inner .sequence-type-list .sequence-container-inner,
+li.sequence-member .struct-block .fields,
+li.sequence-member .struct-block .fields .sequence-container .fields {
+    width: 100%;
+}
+
+/* Standardize field column widths and rnsure that they stay to the right of
+   their label columns */
+li.sequence-member .struct-block .fields .fields,
+li.sequence-member .struct-block .sequence-container {
+    width: 83.333333333%;
+}
+
+/* Prevent fields from intersecting with struct block list controls */
+.list-controls + .sequence-member-inner li > .field .field-content {
+    width: 72%;
+}
+
+/* Restrict inputs to a max-width that isn't overwhelming */
+input,
+textarea,
+select,
+.richtext,
+.tagit,
+.choice_field .input,
+.model_choice_field .input,
+.typed_choice_field .input {
+    max-width: 50em;
+}
+
+/* Reduce size of date inputs */
+.date_time_field input {
+    width: 14em;
+}
+
+
+/* Vertically align checkboxes and choosers with their label */
+
+.widget-checkbox_input .field-content {
+    padding-top: 1.2em;
+}
+
+.chooser {
+    padding-top: 0.75em;
+}
+
+
+/* Visually separate repeating items */
+
+.sequence-member {
+    padding-top: 1em;
+    /* Color matches other Wagtail borders */
+    border-top: 1px solid #ccf1f1 !important;
+}
+
+.sequence-member .sequence-member:first-child {
+    padding-top: 0;
+    border-top: none !important;
+}
+
+li.sequence-member .sequence-member-inner .sequence-type-list .sequence-member-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.sequence-member-inner > .struct-block > .fields > li,
+.sequence-member-inner > .field > .field-content {
+    padding-top: 0;
+    padding-bottom: 1em;
+}
+
+.sequence-member:first-child > .sequence-member-inner > .field > .field-content {
+    padding-top: 1em;
+}

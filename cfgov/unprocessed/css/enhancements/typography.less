@@ -1,5 +1,21 @@
 // TODO: Remove after Capital Framework v4 is merged in.
 
+.a-heading__icon {
+    .heading-4();
+
+    color: @heading__icon;
+
+    a& {
+        .u-link__colors( @heading__icon, @heading__icon__hover );
+
+        border-width: 0;
+    }
+
+    .cf-icon {
+        margin-right: unit( 2px / @font-size, em );
+    }
+}
+
 // .m-slug-header
 @slug-header_border__thin:  @gray-10; // $color-gray-dark
 @slug-header_border__thick: @green; // $color-primary-alt
@@ -469,13 +485,6 @@ ul:last-child,
 
 .m-pull-quote_citation:before {
     content: "\2014 ";
-}
-
-.micro-copy {
-    font-size: 14px;
-    &p {
-        margin-bottom: unit(10px / @base-font-size-px, em);
-    }
 }
 
 /* topdoc

@@ -97,7 +97,16 @@ class AnswerModelTestCase(TestCase):
             ROOT_PAGE,
             language='es',
             live=True)
-        self.tag_results_page = get_or_create_page(
+        self.tag_results_page_en = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'TagResultsPage',
+            'Tag results page',
+            'search-by-tag',
+            ROOT_PAGE,
+            language='en',
+            live=True)
+        self.tag_results_page_es = get_or_create_page(
             apps,
             'ask_cfpb',
             'TagResultsPage',
@@ -114,6 +123,7 @@ class AnswerModelTestCase(TestCase):
             slug_es='mock-spanish-answer-es-1234',
             question='Mock question1',
             question_es='Mock Spanish question1',
+            search_tags='hippodrome',
             search_tags_es='hipotecas',
             update_english_page=True,
             update_spanish_page=True)
@@ -124,6 +134,7 @@ class AnswerModelTestCase(TestCase):
             id=5678,
             answer='Mock answer 2',
             question='Mock question2',
+            search_tags='hippodrome',
             search_tags_es='hipotecas')
         self.answer5678.save()
         self.page2 = self.create_answer_page(slug='mock-answer-page-en-5678')
@@ -190,8 +201,16 @@ class AnswerModelTestCase(TestCase):
             json.loads(facet_map)['subcategories']['1'], [])
 
     def test_answer_valid_tags(self):
-        test_dict = Answer.valid_spanish_tags()
+        test_dict = Answer.valid_tags()
+        self.assertIn('hippodrome', test_dict['valid_tags'])
+
+    def test_answer_valid_es_tags(self):
+        test_dict = Answer.valid_tags(language='es')
         self.assertIn('hipotecas', test_dict['valid_tags'])
+
+    def test_answer_invalid_tag(self):
+        test_dict = Answer.valid_tags(language='es')
+        self.assertNotIn('hippopotamus', test_dict['valid_tags'])
 
     def test_routable_category_page_view(self):
         cat_page = self.create_category_page(
@@ -229,45 +248,84 @@ class AnswerModelTestCase(TestCase):
             request, subcat=self.subcategories[0].slug)
         self.assertEqual(response.status_code, 200)
 
-    def test_routable_tag_page_template(self):
+    def test_routable_tag_page_en_template(self):
+        page = self.tag_results_page_en
         self.assertEqual(
-            self.tag_results_page.get_template(HttpRequest()),
+            page.get_template(HttpRequest()),
+            'ask-cfpb/answer-search-results.html')
+
+    def test_routable_tag_page_es_template(self):
+        page = self.tag_results_page_es
+        self.assertEqual(
+            page.get_template(HttpRequest()),
             'ask-cfpb/answer-tag-spanish-results.html')
 
     def test_routable_tag_page_base_returns_404(self):
-        response = self.client.get(
-            self.tag_results_page.url +
-            self.tag_results_page.reverse_subpage('spanish_tag_base'))
-        self.assertEqual(response.status_code, 404)
-
-    def test_routable_tag_page_subpage_bad_tag_returns_404(self):
-        page = self.tag_results_page
+        page = self.tag_results_page_en
         response = self.client.get(
             page.url + page.reverse_subpage(
-                'buscar_por_etiqueta',
+                'tag_base'))
+        self.assertEqual(response.status_code, 404)
+
+    def test_routable_tag_page_es_bad_tag_returns_404(self):
+        page = self.tag_results_page_es
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'tag_search',
                 kwargs={'tag': 'hippopotamus'}))
         self.assertEqual(response.status_code, 404)
 
-    def test_routable_tag_page_subpage_handles_bad_pagination(self):
-        page = self.tag_results_page
+    def test_routable_tag_page_en_bad_tag_returns_404(self):
+        page = self.tag_results_page_en
         response = self.client.get(
             page.url + page.reverse_subpage(
-                'buscar_por_etiqueta',
+                'tag_search',
+                kwargs={'tag': 'hippopotamus'}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_routable_tag_page_es_handles_bad_pagination(self):
+        page = self.tag_results_page_es
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'tag_search',
                 kwargs={'tag': 'hipotecas'}), {'page': '100'})
         self.assertEqual(response.status_code, 200)
 
-    def test_routable_tag_page_subpage_valid_tag_returns_200(self):
-        page = self.tag_results_page
+    def test_routable_tag_page_en_handles_bad_pagination(self):
+        page = self.tag_results_page_en
         response = self.client.get(
             page.url + page.reverse_subpage(
-                'buscar_por_etiqueta',
+                'tag_search',
+                kwargs={'tag': 'hippodrome'}), {'page': '100'})
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_tag_page_es_valid_tag_returns_200(self):
+        page = self.tag_results_page_es
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'tag_search',
                 kwargs={'tag': 'hipotecas'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_routable_tag_page_returns_url_suffix(self):
-        response = self.tag_results_page.reverse_subpage(
-            'buscar_por_etiqueta', kwargs={'tag': 'hipotecas'})
+    def test_routable_tag_page_en_valid_tag_returns_200(self):
+        page = self.tag_results_page_en
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'tag_search',
+                kwargs={'tag': 'hippodrome'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_tag_page_es_returns_url_suffix(self):
+        page = self.tag_results_page_es
+        response = page.reverse_subpage(
+            'tag_search', kwargs={'tag': 'hipotecas'})
         self.assertEqual(response, 'hipotecas/')
+
+    def test_routable_tag_page_en_returns_url_suffix(self):
+        page = self.tag_results_page_en
+        response = page.reverse_subpage(
+            'tag_search', kwargs={'tag': 'hippodrome'})
+        self.assertEqual(response, 'hippodrome/')
 
     def test_view_answer_exact_slug(self):
         page = self.page1
