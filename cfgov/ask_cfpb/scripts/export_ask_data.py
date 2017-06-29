@@ -108,7 +108,7 @@ def export_questions(spanish_only=False):
 
     CEE staffers use a version of Excel that can't easily import UTF-8
     non-ascii encodings. Generally the only Ask content that has characters
-    outside the ascii range is Spanish asnwers, so we export the bulk of the
+    outside the ascii range is Spanish answers, so we export the bulk of the
     data as UTF-8, and Spanish answers as a separate UTF-16 file that our
     versions of Excel will open with proper diacritical marks.
     UTF-16 doubles the file size, which can cause Excel performance issues
