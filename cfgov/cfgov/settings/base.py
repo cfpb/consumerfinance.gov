@@ -583,6 +583,13 @@ FLAGS = {
     # Intended for use with path conditions.
     'AB_TESTING': {},
 
+
     # The next version of eRegulations
     'EREGS20': {},
+
+    # Add sortable tables to Wagtail
+    # When enabled, the sortable tables option will be added to the Wagtail Admin
+    # The template will render for the front-end, but the sortable code is missing
+    # and the table will not be sortable until cf-tables from CF 4.x is implemented
+    'SORTABLE_TABLES': {}
 }
