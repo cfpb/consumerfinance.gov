@@ -7,8 +7,8 @@ Feature: Rich Text Editor
     Given I am logged into Wagtail as an admin
     And I create a Wagtail Browse Page
     And I open the content menu
-    And I select the Row header option
     And I select the table block option
+    And I select the Row header option
     And I enter "Example 1" in the first column of the first row
     And I enter "Example 2" in the second column of the first row
     And I enter "Example 3" in the third column of the first row
