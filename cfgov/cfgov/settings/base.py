@@ -77,6 +77,9 @@ INSTALLED_APPS = (
     'jobmanager'
 )
 
+if DEPLOY_ENVIRONMENT == 'build':                                                 
+    INSTALLED_APPS += ('eregs_core') 
+
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
@@ -96,7 +99,6 @@ OPTIONAL_APPS = [
     {'import': 'picard', 'apps': ('picard',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
-    {'import': 'eregs-2.0', 'apps': ('eregs_core')},
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -580,6 +582,10 @@ FLAGS = {
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     'AB_TESTING': {},
+
+
+    # The next version of eRegulations
+    'EREGS20': {},
 
     # Add sortable tables to Wagtail
     # When enabled, the sortable tables option will be added to the Wagtail Admin
