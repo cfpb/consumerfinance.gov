@@ -1,22 +1,31 @@
 import json
+import logging
+import os
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_changes
+
+logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
     help = 'Monthly updates to data snapshot values'
 
+    def expand_path(self, path):
+        """Expands a relative path into an absolute path"""
+        rootpath = os.path.abspath(os.path.expanduser(path))
+
+        return rootpath
+
     def add_arguments(self, parser):
         """Adds all arguments to be processed."""
         parser.add_argument(
             '--snapshot_file',
-            nargs='?',
-            help='Filename of a JSON file containing all markets\' data snapshot updates'
+            required=True,
+            help='JSON file containing all markets\' data snapshot values'
         )
-
 
     def get_data_snapshots(self):
         """ Gets all data snapshots from browse pages
@@ -48,13 +57,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Read markets from file into update dicts
-        with open(options['snapshot_file']) as json_data:
+        with open(self.expand_path(options['snapshot_file'])) as json_data:
             markets = json.load(json_data)
 
         snapshots = self.get_data_snapshots()
         for market in markets:
             snapshot = self.find_data_snapshot(market['market_key'], snapshots)
             if not snapshot:  # Market may not have been added to Wagtail yet
+                logger.warn('Market key {} not found'.format(market['market_key']))
                 continue
 
             # Update snapshot fields with the provided values
