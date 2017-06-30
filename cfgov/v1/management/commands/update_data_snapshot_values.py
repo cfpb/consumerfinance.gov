@@ -1,4 +1,4 @@
-import ast
+import json
 
 from django.core.management.base import BaseCommand
 
@@ -12,10 +12,11 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         """Adds all arguments to be processed."""
         parser.add_argument(
-            '--markets',
+            '--snapshot_file',
             nargs='?',
-            help='String representation of a list of markets'
+            help='Filename of a JSON file containing all markets\' data snapshot updates'
         )
+
 
     def get_data_snapshots(self):
         """ Gets all data snapshots from browse pages
@@ -46,9 +47,9 @@ class Command(BaseCommand):
         return None
 
     def handle(self, *args, **options):
-        # Convert market data represented by a string,
-        # to its python representation (a list of dicts)
-        markets = ast.literal_eval(options['markets'])
+        # Read markets from file into update dicts
+        with open(options['snapshot_file']) as json_data:
+            markets = json.load(json_data)
 
         snapshots = self.get_data_snapshots()
         for market in markets:
