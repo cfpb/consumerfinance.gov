@@ -60,8 +60,8 @@
             .u-visually-hidden();
 
             .lt-ie9 & {
-                height: 20px;
-                width: 20px;
+                height: unit( 20px / @base-font-size-px, em );
+                width: unit( 20px / @base-font-size-px, em );
                 border: 0;
                 float: left;
                 margin: 1em;
@@ -106,7 +106,7 @@
 
 .o-form {
     &_group {
-        margin-bottom: 30px;
+        margin-bottom: unit( 30px / @base-font-size-px, em );
     }
 
     &_fieldset {
@@ -116,7 +116,7 @@
         padding: 0;
 
         .m-field + .m-field {
-            margin-top: 10px;
+            margin-top: unit( 10px / @base-font-size-px, em );
         }
     }
 }
