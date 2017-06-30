@@ -2,7 +2,7 @@ import json
 import logging
 import os
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_changes
@@ -62,9 +62,10 @@ class Command(BaseCommand):
 
         snapshots = self.get_data_snapshots()
         for market in markets:
-            snapshot = self.find_data_snapshot(market['market_key'], snapshots)
+            key = market['market_key']
+            snapshot = self.find_data_snapshot(key, snapshots)
             if not snapshot:  # Market may not have been added to Wagtail yet
-                logger.warn('Market key {} not found'.format(market['market_key']))
+                logger.warn('Market key {} not found'.format(key))
                 continue
 
             # Update snapshot fields with the provided values
