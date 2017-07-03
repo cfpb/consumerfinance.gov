@@ -101,6 +101,18 @@ OPTIONAL_APPS = [
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
 ]
 
+# These apps use "legacy" database routing
+# See: cfgov/v1/db_router.py
+LEGACY_APPS = [
+    'comparisontool',
+    'paying_for_college',
+    'retirement_api',
+    'knowledgebase',
+    'agreements',
+    'picard'
+    'regcore',
+]
+
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

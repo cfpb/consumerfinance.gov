@@ -6,8 +6,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt
-
-from v1.db_router import cfgov_apps
+from django.conf import settings
 
 
 def dbrouter_shortcut(request, content_type_id, object_id):
@@ -23,11 +22,11 @@ def dbrouter_shortcut(request, content_type_id, object_id):
                 {'ct_id': content_type_id}
             )
 
-        if content_type.app_label in cfgov_apps:
-            obj = content_type.get_object_for_this_type(pk=object_id)
-        else:
+        if content_type.app_label in settings.LEGACY_APPS:
             obj = content_type.model_class().objects.db_manager(
                 'legacy').get(pk=object_id)
+        else:
+            obj = content_type.get_object_for_this_type(pk=object_id)
 
     except (ObjectDoesNotExist, ValueError):
         raise http.Http404(
