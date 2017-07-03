@@ -8,7 +8,6 @@ from wagtail.contrib.modeladmin.views import EditView
 
 from django.conf import settings
 from django.utils.html import format_html, format_html_join
-# from haystack.query import SearchQuerySet
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailcore.whitelist import attribute_rule
 

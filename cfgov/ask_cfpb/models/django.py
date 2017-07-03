@@ -233,7 +233,7 @@ class SubCategory(models.Model):
 
     class Meta:
         ordering = ['weight']
-        verbose_name_plural = "Subcategories"
+        verbose_name_plural = "subcategories"
 
 
 class Answer(models.Model):
