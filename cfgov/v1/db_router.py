@@ -19,12 +19,13 @@ class CFGOVRouter(object):
         if a 'legacy' DB exists, and this model is in settings.LEGACY_APPS,
         then all reads should go to 'legacy'
 
-        Otherwise, if a 'replica' DB exists, send reads there. Failing that
-        returns 'default'
+        Exceptions for authentication and user sessions
         """
-        if self.has_legacy and self.model_is_legacy(model):
+        if self.model_is_legacy(model):
             return 'legacy'
-        if self.has_replica and model._meta.app_label not in ('auth', 'sessions'):
+
+        if self.has_replica and model._meta.app_label not in ('auth',
+                                                              'sessions'):
             return 'replica'
 
         return 'default'
@@ -55,6 +56,7 @@ class CFGOVRouter(object):
         allow legacy app migrations in the legacy DB, everything else in
         default
         """
+
         if self.has_legacy and app_label in settings.LEGACY_APPS:
             return db == 'legacy'
 
