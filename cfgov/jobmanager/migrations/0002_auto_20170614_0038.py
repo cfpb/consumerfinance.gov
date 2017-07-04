@@ -1,33 +1,20 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.db import migrations, models
+import django.db.models.deletion
 import modelcluster.fields
 import wagtail.wagtailcore.fields
-from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0004_auto_20160712_1531'),
-        ('jobmanager', '0002_auto_20160809_1619'),
+        ('jobmanager', '0001_initial'),
+        ('v1', '0001_initial'),
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='EmailApplicationLink',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('sort_order', models.IntegerField(null=True, editable=False, blank=True)),
-                ('address', models.EmailField(max_length=254)),
-                ('label', models.CharField(max_length=255)),
-                ('description', models.TextField(null=True, blank=True)),
-            ],
-            options={
-                'ordering': ['sort_order'],
-                'abstract': False,
-            },
-        ),
         migrations.CreateModel(
             name='JobListingPage',
             fields=[
@@ -37,11 +24,22 @@ class Migration(migrations.Migration):
                 ('close_date', models.DateField(verbose_name=b'Close date')),
                 ('salary_min', models.DecimalField(verbose_name=b'Minimum salary', max_digits=11, decimal_places=2)),
                 ('salary_max', models.DecimalField(verbose_name=b'Maximum salary', max_digits=11, decimal_places=2)),
+                ('division', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='jobmanager.JobCategory', null=True)),
             ],
             options={
                 'abstract': False,
             },
             bases=('v1.cfgovpage',),
+        ),
+        migrations.CreateModel(
+            name='JobRegion',
+            fields=[
+                ('abbreviation', models.CharField(max_length=2, serialize=False, primary_key=True)),
+                ('name', models.CharField(max_length=255)),
+            ],
+            options={
+                'ordering': ('abbreviation',),
+            },
         ),
         migrations.CreateModel(
             name='USAJobsApplicationLink',
@@ -57,6 +55,21 @@ class Migration(migrations.Migration):
                 'ordering': ['sort_order'],
                 'abstract': False,
             },
+        ),
+        migrations.AddField(
+            model_name='joblistingpage',
+            name='region',
+            field=models.ForeignKey(related_name='job_listings', on_delete=django.db.models.deletion.PROTECT, to='jobmanager.JobRegion'),
+        ),
+        migrations.AddField(
+            model_name='gradepanel',
+            name='grade',
+            field=models.ForeignKey(related_name='grade_panels', to='jobmanager.Grade'),
+        ),
+        migrations.AddField(
+            model_name='gradepanel',
+            name='job_listing',
+            field=modelcluster.fields.ParentalKey(related_name='grades', to='jobmanager.JobListingPage'),
         ),
         migrations.AddField(
             model_name='emailapplicationlink',
