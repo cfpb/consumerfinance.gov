@@ -57,6 +57,8 @@
 
     .respond-to-min(@bp-sm-min, {
         .m-list_link {
+            // TODO: Detemine why this is needed and delete if possible!
+            //       It's used by the items in the sidebar on /about-us/.
             &:after {
                 content: '';
             }
