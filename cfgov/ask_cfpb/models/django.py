@@ -54,6 +54,18 @@ def get_feedback_stream_value(page):
     return stream_value
 
 
+def generate_short_slug(slug_string):
+    """Limits a slug to around 100 characters, using full words"""
+    if len(slug_string) < 100:
+        return slugify(slug_string)
+    slug_100 = slugify(slug_string)[:100]
+    if slug_100.endswith('-'):
+        slug_base = slug_100.rstrip('-')
+    else:
+        slug_base = "-".join(slug_100.split('-')[:-1])
+    return slug_base
+
+
 class Audience(models.Model):
     name = models.CharField(max_length=255)
 
@@ -585,20 +597,26 @@ class Answer(models.Model):
         return counter
 
     def save(self, skip_page_update=False, *args, **kwargs):
-        if self.answer:
-            self.slug = "{}-en-{}".format(
-                slugify(self.question[:244]), self.id)
+        if not self.id:
+            super(Answer, self).save(*args, **kwargs)
+            self.save(skip_page_update=skip_page_update)
         else:
-            self.slug = "slug-en-{}".format(self.id)
-        if self.answer_es:
-            self.slug_es = "{}-es-{}".format(
-                slugify(self.question_es[:244]), self.id)
-        super(Answer, self).save(*args, **kwargs)
-        if skip_page_update is False:
-            if self.update_english_page:
-                self.create_or_update_page(language='en')
-            if self.update_spanish_page:
-                self.create_or_update_page(language='es')
+            if self.answer:
+                self.slug = "{}-en-{}".format(
+                    generate_short_slug(self.question), self.id)
+            else:
+                self.slug = "slug-en-{}".format(self.id)
+            if self.answer_es:
+                self.slug_es = "{}-es-{}".format(
+                    generate_short_slug(self.question_es), self.id)
+            else:
+                self.slug_es = "slug-es-{}".format(self.id)
+            super(Answer, self).save(*args, **kwargs)
+            if skip_page_update is False:
+                if self.update_english_page:
+                    self.create_or_update_page(language='en')
+                if self.update_spanish_page:
+                    self.create_or_update_page(language='es')
 
     def delete(self):
         self.answer_pages.all().delete()

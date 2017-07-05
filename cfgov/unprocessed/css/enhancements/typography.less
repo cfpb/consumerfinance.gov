@@ -1,18 +1,15 @@
 // TODO: Remove after Capital Framework v4 is merged in.
 
-.a-heading__icon {
-    .heading-4();
+.m-list__unstyled,
+.m-list__horizontal,
+.m-list__links {
+    padding-left: 0;
 
-    color: @heading__icon;
+    list-style-type: none;
 
-    a& {
-        .u-link__colors( @heading__icon, @heading__icon__hover );
-
-        border-width: 0;
-    }
-
-    .cf-icon {
-        margin-right: unit( 2px / @font-size, em );
+    // This is needed for dd elements.
+    .m-list_item {
+        margin-left: 0;
     }
 }
 
