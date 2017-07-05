@@ -78,7 +78,9 @@
                         {{ snippet.desc if snippet.desc else '' }}
                     </div>
                     <div data-display-table="cell">
-                        <ul class="o-snippet-list_list-action-list m-list">
+                        <ul class="o-snippet-list_list-action-list
+                                   m-list
+                                   m-list__horizontal">
                     {% for action in value.actions %}
                         {% if snippet[action.snippet_field] %}
                             {%- set href = snippet[action.snippet_field].url
