@@ -47,13 +47,9 @@ class Command(BaseCommand):
         """ Look up data snapshot by the provided market key
         Assumes there is one data snapshot per key
         """
-        snapshot = filter(
-            lambda item: item['market_key'] == market_key,
-            snapshots
-        )
-        if snapshot:
-            return snapshot[0]
-        return None
+        for snapshot in snapshots:
+            if snapshot['market_key'] == market_key:
+                return snapshot
 
     def handle(self, *args, **options):
         # Read markets from file into update dicts

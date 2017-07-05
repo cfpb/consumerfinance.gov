@@ -7,8 +7,6 @@ from scripts import _atomic_helpers as atomic
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_page
 
-django_client = Client()
-
 class UpdateDataSnapshotValuesTestCase(TestCase):
         def test_data_snapshot(self):
             """ Data Snapshot correctly renders fields on a Browse Page"""
