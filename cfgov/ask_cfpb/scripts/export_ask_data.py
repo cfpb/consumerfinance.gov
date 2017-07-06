@@ -107,6 +107,6 @@ def export_questions(path=None):
 
 def run(*args):
     if args:
-        export_questions(file_path=args[0])
+        export_questions(path=args[0])
     else:
         export_questions()
