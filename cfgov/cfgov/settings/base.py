@@ -311,6 +311,9 @@ DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hu
 # in seconds, 2592000 == 30 days. Google allows no more than a month of caching
 DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
+HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
+    'a/assets/hud/{format}s/{zipcode}.{format}'
+)
 
 
 HAYSTACK_CONNECTIONS = {
@@ -322,17 +325,16 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # S3 Configuration
+AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
+AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
+AWS_S3_SECURE_URLS = True  # True = use https; False = use http
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
-    AWS_S3_SECURE_URLS = True  # True = use https; False = use http
-    AWS_QUERYSTRING_AUTH = False  # False = do not use authentication-related query parameters for requests
     AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
-    AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
-
     MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery
@@ -591,5 +593,11 @@ FLAGS = {
     # When enabled, the sortable tables option will be added to the Wagtail Admin
     # The template will render for the front-end, but the sortable code is missing
     # and the table will not be sortable until cf-tables from CF 4.x is implemented
-    'SORTABLE_TABLES': {}
+    'SORTABLE_TABLES': {},
+
+    # Serve housing counselor JSON and PDFs from S3.
+    # Access e.g. /find-a-housing-counselor/?zipcode=20001&s3=True
+    'HOUSING_COUNSELOR_S3': {
+        'parameter': 's3',
+    },
 }
