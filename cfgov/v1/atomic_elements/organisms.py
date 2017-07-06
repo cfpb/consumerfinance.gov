@@ -858,4 +858,5 @@ class DataSnapshot(blocks.StructBlock):
 
     class Meta:
         icon = 'image'
+        label = 'CCT Data Snapshot'
         template = '_includes/organisms/data_snapshot.html'
