@@ -311,6 +311,9 @@ select[multiple] {
 
     // Example of icon + label.
     // Add "x Clear" button to input field.
+    // TODO: Reconcile this with the clear button in m-btn-inside-input in
+    //       cf-forms. Clear button may need to be a label in CF to support
+    //       accessibility of focusing input when clear is clicked and hides.
     &_after__clear {
         &:before {
             .cf-icon();
