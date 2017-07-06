@@ -1,11 +1,15 @@
+import os
+
+from django.conf import settings
 from django.core.management import call_command
-from django.test import Client, TestCase
+from django.test import TestCase
 
 from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
 from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_page
+
 
 class UpdateDataSnapshotValuesTestCase(TestCase):
         def test_data_snapshot(self):
@@ -24,7 +28,14 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
             publish_page(child=browse_page)
 
             # Call management command to update values
-            call_command('update_data_snapshot_values', '--snapshot_file=v1/tests/fixtures/data_snapshots.json')
+            filename = os.path.join(
+                settings.PROJECT_ROOT,
+                'v1/tests/fixtures/data_snapshots.json'
+            )
+            call_command(
+                'update_data_snapshot_values',
+                '--snapshot_file={}'.format(filename)
+            )
             response = self.client.get('/browse/')
             self.assertContains(response, '2.1 million')
             self.assertContains(response, '$46.4 billion')
