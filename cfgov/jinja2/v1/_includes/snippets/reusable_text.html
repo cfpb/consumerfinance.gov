@@ -20,6 +20,8 @@
 
    ========================================================================== #}
 
+<div class="m-reusable-text-snippet">
+
 {% if value.sidefoot_heading %}
     <h2 class="header-slug">
        <span class="header-slug_inner">
@@ -28,4 +30,6 @@
     </h2>
 {% endif %}
 
-{{ value.text|richtext }}
+    {{ value.text|richtext }}
+
+</div>
