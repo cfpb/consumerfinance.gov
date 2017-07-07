@@ -38,8 +38,7 @@
                     Interested in applying?
                 </a>
             </div>
-            <div class="t-careers_social
-                        content-l_col
+            <div class="content-l_col
                         content-l_col-1-2">
                 {{ social_media.render( {
                     'title':            page.title,
@@ -72,8 +71,7 @@
             <div class="content-l_col content-l_col-1-2">
                 <h2 id="interested">Interested in applying?</h2>
             </div>
-            <div class="t-careers_social
-                        content-l_col
+            <div class="content-l_col
                         content-l_col-1-2">
                 {# TODO: Fix vertical alignment.
                          Social Media icons are slightly high
@@ -85,7 +83,7 @@
             </div>
         </div>
 
-        <h3>Before you apply</h3>
+        <h3 class="u-mt15">Before you apply</h3>
         <ul class="list list__links">
             <li class="list_item">
                 <a class="jump-link"
@@ -109,7 +107,7 @@
     </section>
 
     {% set usajobs_links = page.usajobs_application_links.order_by(
-      'applicant_type' 
+      'applicant_type'
     ) %}
     {% for usajobs_link in usajobs_links %}
     <div class="block
@@ -143,11 +141,11 @@
 
 {% block content_sidebar scoped  %}
 <div class="block block__flush-top">
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
             Before you apply
-        </span>
-    </h2>
+        </h2>
+    </header>
     <p>
         Consider exploring our information about working at the CFPB
         and our application process.
@@ -178,11 +176,11 @@
     ]) -}}
 </div>
 
-<h2 class="header-slug">
-    <span class="header-slug_inner">
+<header class="m-slug-header">
+    <h2 class="a-heading">
         Follow us on LinkedIn
-    </span>
-</h2>
+    </h2>
+</header>
 <p data-qa-hook="info-section-desc">
     The CFPB is one of the most searched for agencies
     in the federal government.

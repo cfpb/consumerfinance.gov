@@ -31,11 +31,11 @@
     <label class="form-label-header" for="{{ id }}">
         {{ value.label }}
         {%- if value.required == false -%}
-            <span class="micro-copy">&nbsp;(Optional)</span>
+            <small>&nbsp;(Optional)</small>
         {%- endif -%}
     </label>
     {%- if value.helperText -%}
-        <p class="micro-copy" id="{{ ht_id }}">{{ value.helperText | safe }}</p>
+        <p id="{{ ht_id }}"><small>{{ value.helperText | safe }}</small></p>
     {%- endif -%}
     <input id="{{ id }}"
            name="{{ id }}"

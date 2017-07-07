@@ -43,10 +43,11 @@
 {% endmacro %}
 
 <table class="o-table
-              {{ 'o-table__row-links' if value.row_links else '' }}
-              {{ 'o-table__stack-on-small' if value.is_stacked else '' }}
-              {{ 'table__striped' if value.is_striped else '' }}
-              {{ 'u-w100pct' if value.is_full_width else '' }}">
+              {{- ' o-table__row-links' if value.row_links else '' -}}
+              {{- ' o-table__stack-on-small' if value.is_stacked else '' -}}
+              {{- ' table__striped' if value.is_striped else '' -}}
+              {{- ' u-w100pct' if value.is_full_width else '' -}}
+              {{- ' o-table__sortable' if value.is_sortable else '' -}}">
     {% set row_index = 0 %}
     {% set first_row = value.data[row_index] %}
     {% if value.first_row_is_table_header and value.data | list | length > 0 %}
@@ -57,11 +58,18 @@
         {% if first_row | reject('none') | list | length %}
         <tr>
             {% for cell in value.data[0] %}
-                {% if value.fixed_col_widths %}
-                    {% set width_class = 'class="' + value.column_widths[loop.index0] + '"' %}
+                {% if value.fixed_col_widths and value.column_widths[loop.index0] != '' %}
+                    {% set width_class = ' class="' + value.column_widths[loop.index0] + '"' %}
                 {% endif %}
             <th scope="col"{{ width_class | default }}>
-                {{ _render_cell(cell) }}
+                {% if flag_enabled('SORTABLE_TABLES', true) and value.is_sortable and value.sortable_types[loop.index0] != '' %}
+                    {% set data_sort = ' data-sort_type="' + value.sortable_types[loop.index0] + '"' %}
+                    <button class="sortable"{{ data_sort }}>
+                        {{ _render_cell(cell) }}
+                    </button>
+                {% else %}
+                    {{ _render_cell(cell) }}
+                {% endif %}
             </th>
             {% endfor %}
         </tr>

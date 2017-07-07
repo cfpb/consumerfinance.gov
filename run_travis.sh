@@ -10,6 +10,7 @@ if [ "$RUNTEST" == "frontend" ]; then
 elif [ "$RUNTEST" == "backend" ]; then
     flake8
     tox -e fast
+    tox -e missing-migrations
     coveralls
 elif [ "$RUNTEST" == "acceptance" ]; then
     export DISPLAY=:99.0

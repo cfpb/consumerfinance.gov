@@ -1,3 +1,65 @@
+// TODO: Remove after Capital Framework v4 is merged in.
+
+.m-list__unstyled,
+.m-list__horizontal,
+.m-list__links {
+    padding-left: 0;
+
+    list-style-type: none;
+
+    // This is needed for dd elements.
+    .m-list_item {
+        margin-left: 0;
+    }
+}
+
+// .m-slug-header
+@slug-header_border__thin:  @gray-10; // $color-gray-dark
+@slug-header_border__thick: @green; // $color-primary-alt
+
+.m-slug-header {
+    border-top: 1px solid @slug-header_border__thin;
+
+    .a-heading {
+        .heading-5();
+
+        display: inline-block;
+
+        padding-top: unit( 4px / @font-size, em) ;
+        border-top: 5px solid @slug-header_border__thick;
+        margin-top: -3px;
+    }
+}
+
+// TODO: Remove after Capital Framework v4 is merged in.
+
+.m-pull-quote {
+
+    &_body {
+        .heading-3();
+
+        color: @pull-quote_body;
+
+        .respond-to-max( @bp-xs-max, {
+            .heading-4();
+        } );
+    }
+
+    &_citation {
+        .heading-5();
+
+        color: @pull-quote_citation;
+    }
+
+    &__large .m-pull-quote_body {
+        .heading-2();
+
+        .respond-to-max( @bp-xs-max, {
+            .heading-3();
+        } );
+    }
+}
+
 /* topdoc
   name: Download links list
   family: cfgov-cf-enhancements
@@ -353,7 +415,7 @@
 */
 dt {
     .h5();
-    .u-inline-block();
+    display: inline-block;
 
     margin-bottom: 0.5em;
 
@@ -418,15 +480,8 @@ ul:last-child,
     - cf-typography
 */
 
-.pull-quote_citation:before {
+.m-pull-quote_citation:before {
     content: "\2014 ";
-}
-
-.micro-copy {
-    font-size: 14px;
-    &p {
-        margin-bottom: unit(10px / @base-font-size-px, em);
-    }
 }
 
 /* topdoc

@@ -23,6 +23,9 @@ var EventObserver = require( '../modules/util/EventObserver' );
 function Multiselect( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
   var BASE_CLASS = 'cf-multi-select';
+  var LIST_CLASS = 'm-list';
+  var CHECKBOX_INPUT_CLASS = 'cf-input';
+  var TEXT_INPUT_CLASS = 'a-text-input';
 
   // TODO: As the multiselect is developed further
   //       explore whether it should use an updated
@@ -170,7 +173,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
 
     // Create all our markup but wait to manipulate the DOM just once
     _selectionsDom = domCreate( 'ul', {
-      className: 'list__unstyled ' + BASE_CLASS + '_choices',
+      className: LIST_CLASS + ' ' +
+                 LIST_CLASS + '__unstyled ' +
+                 BASE_CLASS + '_choices',
       inside:    _containerDom
     } );
 
@@ -179,7 +184,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     } );
 
     _searchDom = domCreate( 'input', {
-      className:   BASE_CLASS + '_search',
+      className:   BASE_CLASS + '_search ' + TEXT_INPUT_CLASS,
       type:        'text',
       placeholder: _placeholder || 'Choose up to five',
       inside:      _headerDom,
@@ -192,7 +197,9 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
     } );
 
     _optionsDom = domCreate( 'ul', {
-      className: 'list__unstyled ' + BASE_CLASS + '_options',
+      className: LIST_CLASS + ' ' +
+                 LIST_CLASS + '__unstyled ' +
+                 BASE_CLASS + '_options',
       inside:    _fieldsetDom
     } );
 
@@ -207,7 +214,7 @@ function Multiselect( element ) { // eslint-disable-line max-statements, inline-
         'type':    'checkbox',
         'value':   option.value,
         'name':    _name,
-        'class':   'cf-input ' + BASE_CLASS + '_checkbox',
+        'class':   CHECKBOX_INPUT_CLASS + ' ' + BASE_CLASS + '_checkbox',
         'inside':  _optionsItemDom,
         'checked': option.checked
       } );

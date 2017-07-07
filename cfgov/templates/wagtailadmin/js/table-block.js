@@ -33,7 +33,8 @@
                 HEIGHT: 1
             },
 
-            $colWidthSelect: {}
+            $colWidthSelect: {},
+            $sortableSelect: {}
         };
 
         var HandsonTable = {
@@ -121,6 +122,10 @@
                 .find( 'td' ).eq( index - 1 )
                 .after( '<td>' + utilities.$colWidthSelect + '</td>' );
 
+              HandsonTableWagtailBridge.ui.$sortableInput
+                .find( 'td' ).eq( index - 1 )
+                .after( '<td>' + utilities.$sortableSelect + '</td>' );
+
               this.$element.trigger( 'table:change', [this.instance.getData()] );
 
               return this;
@@ -144,6 +149,7 @@
                 var hiddenFieldData;
 
                 utilities.$colWidthSelect = $( this.ui.$inputContainer + ' .column-width-input' ).prop( 'outerHTML' );
+                utilities.$sortableSelect = $( this.ui.$inputContainer + ' .sortable-type-input' ).prop( 'outerHTML' );
 
                 this.options = utilities.assign( {} , options );
                 this.element = document.querySelector( this.ui.$inputContainer );
@@ -195,17 +201,30 @@
                 // On click, toggle visibility of fixed width inputs
                 $( id + '-handsontable-col-fixed' ).click( function() {
                   if ( $( this ).is( ':checked' ) ) {
-                    _this.toggleInputTable( true );
+                    _this.toggleInputTable( _this.ui.$fixedWidthColInput, true );
                   } else {
-                    _this.toggleInputTable( false );
+                    _this.toggleInputTable( _this.ui.$fixedWidthColInput, false );
+                  }
+                } );
+
+                // On click, toggle visibility of sortable inputs
+                $( id + '-handsontable-sortable' ).click( function() {
+                  if ( $( this ).is( ':checked' ) ) {
+                    _this.toggleInputTable( _this.ui.$sortableInput, true );
+                  } else {
+                    _this.toggleInputTable( _this.ui.$sortableInput, false );
                   }
                 } );
 
                 // On change of fixed width values, save data
                 $( id + '-fixed-width-column-input' ).on( 'change', '.column-width-input', function() {
                   _this.saveDataToHiddenField( 'no data' );
-                } )
+                } );
 
+                // On change of sortable values, save data
+                $( id + '-sortable-input' ).on( 'change', '.sortable-type-input', function() {
+                  _this.saveDataToHiddenField( 'no data' );
+                } );
             },
 
             ui: {
@@ -219,7 +238,9 @@
                 $isTableStripedCheckbox:    id + '-handsontable-striped-rows',
                 $fixedWidthColsCheckbox:    id + '-handsontable-col-fixed',
                 $fixedWidthColInput:        id + '-fixed-width-column-input',
-                $widthWarning:             id + '-width_warning',
+                $widthWarning:              id + '-width_warning',
+                $isSortableCheckbox:        id + '-handsontable-sortable',
+                $sortableInput:             id + '-sortable-input',
                 $resizeTargets:             '.input > .handsontable, .wtHider, .wtHolder'
             },
 
@@ -234,7 +255,8 @@
                               is_full_width:               ui.$isFullWidthCheckbox,
                               is_striped:                  ui.$isTableStripedCheckbox,
                               is_stacked:                  ui.$isStackedOnMobileCheckbox,
-                              fixed_col_widths:            ui.$fixedWidthColsCheckbox
+                              fixed_col_widths:            ui.$fixedWidthColsCheckbox,
+                              is_sortable:                 ui.$isSortableCheckbox
                           };
 
                     Object.keys( uiMap ).forEach( function( key ) {
@@ -246,18 +268,32 @@
 
                 // update fixed width input to match table
                 var count = this.handsonTable.instance.countCols();
-                var row = this.ui.$fixedWidthColInput.find( 'tr' );
-                row.empty();
+                var fixedWidthRow = this.ui.$fixedWidthColInput.find( 'tr' );
+                fixedWidthRow.empty();
                 for ( var x = 0; x < count; x++ ) {
-                  row.append( '<td>' + utilities.$colWidthSelect + '</td>' );
+                  fixedWidthRow.append( '<td>' + utilities.$colWidthSelect + '</td>' );
+                }
+
+                // update sortable input to match table
+                var sortableRow = this.ui.$sortableInput.find( 'tr' );
+                sortableRow.empty();
+                for ( var x = 0; x < count; x++ ) {
+                  sortableRow.append( '<td>' + utilities.$sortableSelect + '</td>' );
                 }
 
                 if ( ui.$fixedWidthColsCheckbox.is( ':checked' ) ) {
-                  this.toggleInputTable( true );
-                  ui.$fixedWidthColInput.find( 'td' ).each( function( index, value) {
+                  this.toggleInputTable( this.ui.$fixedWidthColInput, true );
+                  ui.$fixedWidthColInput.find( 'td' ).each( function( index, value ) {
                     $( this ).find( 'select' ).val( hiddenFieldData.column_widths[index] );
-                  } )
+                  } );
                   this.getColumnWidths();
+                }
+
+                if ( ui.$isSortableCheckbox.is( ':checked' ) ) {
+                  this.toggleInputTable( this.ui.$sortableInput, true );
+                  ui.$sortableInput.find( 'td' ).each( function( index, value ) {
+                    $( this ).find( 'select' ).val( hiddenFieldData.sortable_types[index] );
+                  } );
                 }
             },
 
@@ -275,11 +311,13 @@
                   array = [],
                   totalWidth = 0;
 
-              for ( var x = 0; x <  colCount; x++ ) {
+              for ( var x = 0; x < colCount; x++ ) {
                 var i = x + 1;
-                var widthClass = this.ui.$fixedWidthColInput.find( 'tr td:nth-child( ' + i + ') select option:selected' ).val()
+                var widthClass = this.ui.$fixedWidthColInput
+                                     .find( 'tr td:nth-child( ' + i + ' ) select option:selected' )
+                                     .val();
                 if ( widthClass !== '' ) {
-                  totalWidth += Number( widthClass.substring(3, 5) );
+                  totalWidth += Number( widthClass.substring( 3, 5 ) );
                 } else {
                   totalWidth += 1;
                 }
@@ -302,6 +340,21 @@
 
                 return tableParent.find( '.htCore' ).height() +
                        ( tableParent.find( '.input' ).height() * 2 );
+            },
+
+            getSortableTypes: function getSortableTypes() {
+              var colCount = this.ui.$sortableInput.find( 'tr td' ).length,
+                  array = [];
+
+              for ( var x = 0; x < colCount; x++ ) {
+                var i = x + 1;
+
+                array[x] = this.ui.$sortableInput
+                               .find( 'tr td:nth-child( ' + i + ' ) select option:selected' )
+                               .val();
+              }
+
+              return array;
             },
 
             getHiddenFieldData: function getHiddenFieldData() {
@@ -344,12 +397,14 @@
                 ui.$hiddenField.val( JSON.stringify( {
                     data:                      this.handsonTable.instance.getData(),
                     column_widths:             this.getColumnWidths(),
+                    sortable_types:            this.getSortableTypes(),
                     first_row_is_table_header: ui.$hasRowHeaderCheckbox.prop( 'checked' ),
                     first_col_is_header:       ui.$hasColHeaderCheckbox.prop( 'checked' ),
                     is_full_width:             ui.$isFullWidthCheckbox.prop( 'checked' ),
                     is_striped:                ui.$isTableStripedCheckbox.prop( 'checked' ),
                     is_stacked:                ui.$isStackedOnMobileCheckbox.prop( 'checked' ),
-                    fixed_col_widths:          ui.$fixedWidthColsCheckbox.prop( 'checked' )
+                    fixed_col_widths:          ui.$fixedWidthColsCheckbox.prop( 'checked' ),
+                    is_sortable:               ui.$isSortableCheckbox.prop( 'checked' )
                 } ) );
             },
 
@@ -375,11 +430,11 @@
                 this.saveDataToHiddenField();
             },
 
-            toggleInputTable: function toggleInputTable( visible ) {
-              if ( visible === true ) {
-                this.ui.$fixedWidthColInput.show();
+            toggleInputTable: function toggleInputTable( inputTable, state = true  ) {
+              if ( state === true ) {
+                inputTable.show();
               } else {
-                this.ui.$fixedWidthColInput.hide();
+                inputTable.hide();
               }
             }
         };

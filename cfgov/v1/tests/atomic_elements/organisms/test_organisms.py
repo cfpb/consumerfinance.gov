@@ -244,3 +244,27 @@ class OrganismsTestCase(TestCase):
         publish_page(child=browse_page)
         response = self.client.get('/browse/')
         self.assertContains(response, 'Age 30 to 44')
+
+    def test_data_snapshot(self):
+        """ Data Snapshot correctly renders fields on a Browse Page"""
+        browse_page = BrowsePage(
+            title='Browse Page',
+            slug='browse',
+        )
+
+        # Adds a AUT market to a browse page
+        browse_page.content = StreamValue(
+            browse_page.content.stream_block,
+            [atomic.data_snapshot],
+            True
+        )
+        publish_page(child=browse_page)
+
+        response = self.client.get('/browse/')
+        self.assertContains(response, '5 million')
+        self.assertContains(response, '$64 billion')
+        self.assertContains(response, '5% increase')
+        self.assertContains(response, 'January 2015')
+        self.assertContains(response, 'Auto loans originated')
+        self.assertContains(response, 'Dollar value of new loans')
+        self.assertContains(response, 'In year-over-year originations')

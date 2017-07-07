@@ -77,6 +77,9 @@ INSTALLED_APPS = (
     'jobmanager'
 )
 
+if DEPLOY_ENVIRONMENT == 'build':
+    INSTALLED_APPS += ('eregs_core',)
+
 OPTIONAL_APPS = [
     {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
@@ -536,6 +539,10 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'api.iperceptions.com')
 
+# Feature flags
+# All feature flags must be listed here with a dict of any hard-coded
+# conditions or an empty dict. If the conditions dict is empty the flag will
+# only be enabled if database conditions are added.
 FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -568,10 +575,6 @@ FLAGS = {
     # When enabled, the "Doing Business With Us" pages are served from Wagtail
     'WAGTAIL_DOING_BUSINESS_WITH_US': {},
 
-    # Transition of /compltain to Wagtail
-    # When enabled, the "Submit a complaint" page is served from Wagtail
-    'MOSAIC_COMPLAINTS': {},
-
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},
 
@@ -579,4 +582,14 @@ FLAGS = {
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     'AB_TESTING': {},
+
+
+    # The next version of eRegulations
+    'EREGS20': {},
+
+    # Add sortable tables to Wagtail
+    # When enabled, the sortable tables option will be added to the Wagtail Admin
+    # The template will render for the front-end, but the sortable code is missing
+    # and the table will not be sortable until cf-tables from CF 4.x is implemented
+    'SORTABLE_TABLES': {}
 }
