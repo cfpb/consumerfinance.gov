@@ -77,9 +77,6 @@ INSTALLED_APPS = (
     'jobmanager'
 )
 
-if DEPLOY_ENVIRONMENT == 'build':
-    INSTALLED_APPS += ('eregs_core',)
-
 OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
@@ -98,6 +95,11 @@ OPTIONAL_APPS = [
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
 ]
+
+if DEPLOY_ENVIRONMENT == 'build':
+    OPTIONAL_APPS += [
+        {'import': 'eregs', 'apps': ('eregs_core',)},
+    ]
 
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
