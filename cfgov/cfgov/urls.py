@@ -304,6 +304,10 @@ urlpatterns = [
                                        'complaint_search.urls')
                 ),
 
+    # data-research-api
+    url(r'^data-research/mortgages/api/v1/',
+        include_if_app_enabled('data_research', 'data_research.urls')),
+
     # ask-cfpb
     url(r'^askcfpb/$',
         RedirectView.as_view(
