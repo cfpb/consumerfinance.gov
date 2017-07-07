@@ -5,6 +5,7 @@ import json
 import mock
 from mock import patch
 from model_mommy import mommy
+import unittest
 
 from bs4 import BeautifulSoup as bs
 
@@ -12,19 +13,50 @@ from django.utils import timezone
 from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponse, Http404
+from django.template.defaultfilters import slugify
 from django.test import TestCase
 from django.utils import html
 
 from v1.models import CFGOVImage
 from v1.util.migrations import get_or_create_page, get_free_path
 from ask_cfpb.models.django import (
-    Answer, Category, SubCategory, Audience,
-    NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
+    Answer, Audience, Category, generate_short_slug, NextStep,
+    SubCategory, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
 from ask_cfpb.models.pages import (
     AnswerPage, AnswerCategoryPage, AnswerAudiencePage)
 
 html_parser = HTMLParser.HTMLParser()
 now = timezone.now()
+
+
+class AnswerSlugCreationTest(unittest.TestCase):
+
+    def test_long_slug_string(self):
+        long_string = (
+            "This string is more than 100 characters long, I assure you. "
+            "No, really, more than 100 characters loooong.")
+        self.assertEqual(
+            generate_short_slug(long_string),
+            ('this-string-is-more-than-100-characters-long-'
+             'i-assure-you-no-really-more-than-100-characters'))
+
+    def test_short_slug_string(self):
+        short_string = "This string is less than 100 characters long."
+        self.assertEqual(
+            generate_short_slug(short_string), slugify(short_string))
+
+    def test_slug_string_that_will_end_with_a_hyphen(self):
+        """
+        It's possible for slug truncation to result in a slug that ends
+        on a hypthen. In that case the function should strip the ending hyphen.
+        """
+        will_end_with_hyphen = (
+            "This string is more than 100 characters long, I assure you. "
+            "No, really, more than 100 characters looong and end on a hyphen.")
+        self.assertEqual(
+            generate_short_slug(will_end_with_hyphen),
+            'this-string-is-more-than-100-characters-long-i-assure-you-'
+            'no-really-more-than-100-characters-looong')
 
 
 class AnswerModelTestCase(TestCase):
