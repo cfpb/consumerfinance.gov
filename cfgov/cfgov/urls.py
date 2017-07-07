@@ -366,7 +366,11 @@ if settings.ALLOW_ADMIN_URL:
             RedirectView.as_view(url='/django-admin/%(path)s',
                                  permanent=True)),
         url(r'^picard/(?P<path>.*)$',
-            RedirectView.as_view(url='/tasks/%(path)s', permanent=True)),
+            RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
+
+        url(r'^tasks/(?P<path>.*)$',
+            RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
+
         url(r'^django-admin/password_change',
             change_password,
             name='django_admin_account_change_password'),
@@ -397,9 +401,6 @@ if settings.ALLOW_ADMIN_URL:
             url(r'^django-admin/r/(?P<content_type_id>\d*)/(?P<object_id>\d*)/$',  # noqa: E501
                 dbrouter_shortcut)
         ] + patterns
-
-    if 'picard' in settings.INSTALLED_APPS:
-        patterns.append(url(r'^tasks/', include('picard.urls')))
 
     if 'selfregistration' in settings.INSTALLED_APPS:
         patterns.append(url(r'^selfregs/', include('selfregistration.urls')))

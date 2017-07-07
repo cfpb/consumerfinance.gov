@@ -2,6 +2,7 @@ import logging
 
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
+from django.conf.urls import url
 from django.core.urlresolvers import reverse
 from django.utils.html import escape, format_html_join
 
@@ -176,3 +177,15 @@ class RelativePageLinkHandler(PageLinkHandler):
 @hooks.register('register_rich_text_link_handler')
 def register_cfgov_link_handler():
     return ('page', RelativePageLinkHandler)
+
+
+@hooks.register('register_admin_menu_item')
+def register_frank_menu_item():
+    return MenuItem('CDN Tools', reverse('manage-cdn'), classnames='icon icon-cogs', order=10000)
+
+
+@hooks.register('register_admin_urls')
+def register_flag_admin_urls():
+    return [
+        url(r'^cdn/$', 'v1.admin_views.manage_cdn', name='manage-cdn'),
+    ]

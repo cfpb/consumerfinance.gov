@@ -18,7 +18,6 @@ ADMIN_URL_WHITELIST = [
     '^login',
     '^logout',
     '^password/',
-    '^picard/',
     '^tasks/',
 ]
 
