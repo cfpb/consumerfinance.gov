@@ -181,7 +181,10 @@ def register_cfgov_link_handler():
 
 @hooks.register('register_admin_menu_item')
 def register_frank_menu_item():
-    return MenuItem('CDN Tools', reverse('manage-cdn'), classnames='icon icon-cogs', order=10000)
+    return MenuItem('CDN Tools',
+                    reverse('manage-cdn'),
+                    classnames='icon icon-cogs',
+                    order=10000)
 
 
 @hooks.register('register_admin_urls')

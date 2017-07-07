@@ -13,13 +13,14 @@ def purge(request, url=None):
     if url:
         purge_url_from_cache(url)
         messages.success(request,
-                      "flushing %s" % url)
+                         "flushing %s" % url)
     else:
         config = settings.WAGTAILFRONTENDCACHE['akamai']
         backend = AkamaiBackend(config)
         backend.purge_all()
         messages.success(request,
                          "flushed entire site")
+
 
 def manage_cdn(request):
     if request.method == 'GET':
