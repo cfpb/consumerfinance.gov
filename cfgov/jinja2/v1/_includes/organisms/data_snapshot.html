@@ -24,8 +24,10 @@
    ========================================================================== #}
 
 <h2>Data snapshot for {{ value.last_updated_projected_data.strftime('%B %Y') }}</h2>
-<div class="content-l">
-    <div class="content-l_col content-l_col-1-2">
+<div class="o-info-unit-group"
+    data-qa-hook="half-width-link-blob">
+    <div class="content-l_col
+                content-l_col-1-2">
         <h3><b>{{ value.num_originations }}</b>
         <br/>
         {{ value.num_originations_text }}</h3>
@@ -41,8 +43,8 @@
         {{ value.year_over_year_change_text }}</h3>
     </div>
 
-    {% if value.image %}
-    <div class="content-l_col content-l_col-2-2">
+    <div class="content-l_col
+                content-l_col-1-2">
         <div class="m-full-width-media">
             {% set media = image(value.image, 'original') %}
             <img class="richtext-image full-width"
@@ -50,5 +52,4 @@
                  alt="{{ image_alt_value(media) }}">
         </div>
     </div>
-    {% endif %}
 </div>
