@@ -59,6 +59,5 @@ class CFGOVRouter(object):
 
         if self.has_legacy and app_label in settings.LEGACY_APPS:
             return db == 'legacy'
-
         else:
             return db == 'default'
