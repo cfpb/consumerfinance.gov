@@ -109,7 +109,6 @@ LEGACY_APPS = [
     'comparisontool',
     'paying_for_college',
     'retirement_api',
-    'knowledgebase',
     'agreements',
     'picard',
     'regcore',
