@@ -3,7 +3,7 @@ from django.conf import settings
 
 class CFGOVRouter(object):
     """
-    A router that allows for splitting reads and writes to seperate
+    A router that allows for splitting reads and writes to separate
     databases, and sends a set of legacy apps to a distinct 'legacy' DB
     """
 
