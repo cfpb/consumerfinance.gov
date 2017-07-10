@@ -372,7 +372,7 @@ class Answer(models.Model):
         help_text=(
             'Optionally select a custom image to appear when users share this '
             'page on social media websites. If no image is selected, this '
-            'page\'s category image will be used.'
+            'page\'s category image will be used. Minimum size: 1200w x 630h.'
         )
     )
 
