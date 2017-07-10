@@ -1,0 +1,34 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% load gravatar %}
+{% block titletag %}{% trans "CDN Manager" %}{% endblock %}
+
+{% block content %}
+
+    {% include "wagtailadmin/shared/header.html" with title="CDN Manager" icon="tag" %}
+
+    <div class="nice-padding">
+        <h2>Flush Akamai</h2>
+
+        <div class="help-block help-info">
+            <p>Enter a URL to flush it from the cache, or leave it blank to
+            flush the entire site cache</p>
+        </div>
+        <form method="post" id="flush_site">
+            {% csrf_token %}
+            <ul class="fields">
+                <li>
+            <div class="field url_field url_input">
+            <div class="input">
+            {{ form.url }}
+            </div>
+            </div>
+            </li>
+        </ul>
+        <button type="submit" name="flush" class="button" form="flush_site" />
+        Flush cache 
+        </button>
+        </form>
+    </div>
+
+{% endblock %}
