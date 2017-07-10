@@ -23,6 +23,7 @@ from ask_cfpb.views import (
     view_answer
 )
 from core.views import ExternalURLNoticeView
+from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorView, HousingCounselorPDFView
 )
