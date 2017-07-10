@@ -298,8 +298,11 @@ urlpatterns = [
     url(r'^token-provider/', token_provider),
 
     # CCDB5-API
-    url(r'^data-research/consumer-complaints/api/v1/',
-        include_if_app_enabled('complaint_search', 'complaint_search.urls')),
+    flagged_url('CCDB5_RELEASE',
+                r'^data-research/consumer-complaints/api/v1/',
+                include_if_app_enabled('complaint_search',
+                                       'complaint_search.urls')
+                ),
 
     # ask-cfpb
     url(r'^askcfpb/$',
