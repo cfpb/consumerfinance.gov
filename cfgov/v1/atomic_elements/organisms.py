@@ -817,17 +817,46 @@ class AskCategoryCard(ModelList):
 class DataSnapshot(blocks.StructBlock):
     """ A basic Data Snapshot object. """
     # Market key corresponds to market short name for lookup
-    market_key = blocks.CharBlock(max_length=20)
-    num_originations = blocks.CharBlock(max_length=20)
-    value_originations = blocks.CharBlock(max_length=20)
-    year_over_year_change = blocks.CharBlock(max_length=20)
-    data_month = blocks.CharBlock(max_length=15)
+    market_key = blocks.CharBlock(
+        max_length=20,
+        required=True,
+        help_text="Market identifier, e.g. AUT"
+    )
+    num_originations = blocks.CharBlock(
+        max_length=20,
+        help_text="Number of originations, e.g. '1.2 million'"
+    )
+    value_originations = blocks.CharBlock(
+        max_length=20,
+        help_text="Total dollar value of originations, e.g. '$3.4 billion'"
+    )
+    year_over_year_change = blocks.CharBlock(
+        max_length=20,
+        help_text="Percentage change, e.g. '5.6% increase' or '7.8% decrease'"
+    )
+    data_month = blocks.CharBlock(
+        max_length=15,
+        help_text="Month of latest entry in dataset in 'Month YYYY' format"
+    )
 
     # Market-specific descriptor text
-    num_originations_text = blocks.CharBlock(max_length=100)
-    value_originations_text = blocks.CharBlock(max_length=100)
-    year_over_year_change_text = blocks.CharBlock(max_length=100)
+    num_originations_text = blocks.CharBlock(
+        max_length=100,
+        help_text="Descriptive sentence, e.g. '<Market> loans originated'"
+    )
+    value_originations_text = blocks.CharBlock(
+        max_length=100,
+        help_text="Descriptive sentence, e.g. 'Dollar volume of new loans'"
+    )
+    year_over_year_change_text = blocks.CharBlock(
+        max_length=100,
+        help_text="Descriptive sentence, e.g. 'In year-over-year originations'"
+    )
+
+    # Select an image
+    image = images_blocks.ImageChooserBlock(icon='image')
 
     class Meta:
         icon = 'image'
+        label = 'CCT Data Snapshot'
         template = '_includes/organisms/data_snapshot.html'
