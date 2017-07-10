@@ -109,7 +109,7 @@ LEGACY_APPS = [
     'retirement_api',
     'knowledgebase',
     'agreements',
-    'picard'
+    'picard',
     'regcore',
 ]
 
@@ -182,6 +182,8 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
+
+DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
 
 if 'collectstatic' in sys.argv:
     COLLECTSTATIC = True
