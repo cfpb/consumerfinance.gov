@@ -107,11 +107,8 @@ if DEPLOY_ENVIRONMENT == 'build':
 # See: cfgov/v1/db_router.py
 LEGACY_APPS = [
     'comparisontool',
-    'paying_for_college',
-    'retirement_api',
     'agreements',
     'picard',
-    'regcore',
 ]
 
 MIDDLEWARE_CLASSES = (
