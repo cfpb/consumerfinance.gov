@@ -1,4 +1,5 @@
-from django.conf import settings
+from __future__ import unicode_literals
+
 from django.test import TestCase, override_settings
 
 from core.forms import ExternalURLForm
@@ -49,3 +50,12 @@ class TestExternalURLForm(TestCase):
         data = {'ext_url': 'https://not.whitelisted.gov'}
         form = ExternalURLForm(data)
         self.assertFalse(form.is_valid())
+
+    def test_unicode_url(self):
+        url = 'https://cfpb.gov/protecci\xf3n'
+        _, signature = sign_url(url)
+        data = {'ext_url': url, 'signature': signature}
+
+        with override_settings(EXTERNAL_URL_WHITELIST=(url,)):
+            form = ExternalURLForm(data)
+            self.assertTrue(form.is_valid())
