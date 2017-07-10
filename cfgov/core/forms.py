@@ -30,7 +30,7 @@ class ExternalURLForm(forms.Form):
         if matched_whitelist:
             cleaned_data['validated_url'] = url
 
-        elif 'signature' in cleaned_data:
+        elif cleaned_data.get('signature'):
             signed_url = "{ext_url}:{signature}".format(**cleaned_data)
             try:
                 cleaned_data['validated_url'] = signer.unsign(signed_url)

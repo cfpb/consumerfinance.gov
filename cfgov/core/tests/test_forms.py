@@ -1,16 +1,14 @@
 from django.conf import settings
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from core.forms import ExternalURLForm
 from core.utils import sign_url
 
 
+@override_settings(
+    EXTERNAL_URL_WHITELIST=(r'^https:\/\/facebook\.com\/cfpb$',)
+)
 class TestExternalURLForm(TestCase):
-    def setUp(self):
-        # insulate the test from future whitelist changes
-        self.preserved_whitelist = settings.EXTERNAL_URL_WHITELIST
-        settings.EXTERNAL_URL_WHITELIST = (r'^https:\/\/facebook\.com\/cfpb$',)
-
     def test_valid_signature(self):
         url = 'https://https.cio.gov/'
         _, signature = sign_url(url)
@@ -23,7 +21,6 @@ class TestExternalURLForm(TestCase):
         self.assertTrue(form.is_valid())
 
     def test_invalid_signature(self):
-
         data = {'ext_url': 'https://https.cio.gov',
                 'signature': 'obviouslywrong'}
 
@@ -43,5 +40,12 @@ class TestExternalURLForm(TestCase):
 
         self.assertFalse(form.is_valid())
 
-    def tearDown(self):
-        settings.EXTERNAL_URL_WHITELIST = self.preserved_whitelist
+    def test_invalid_url_fails_validation(self):
+        data = {'ext_url': 'foo'}
+        form = ExternalURLForm(data)
+        self.assertFalse(form.is_valid())
+
+    def test_no_signature_fails_validation(self):
+        data = {'ext_url': 'https://not.whitelisted.gov'}
+        form = ExternalURLForm(data)
+        self.assertFalse(form.is_valid())
