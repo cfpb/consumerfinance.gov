@@ -9,6 +9,11 @@ from v1.admin_forms import AkamaiFlushForm
 from v1.models.akamai_backend import AkamaiBackend
 
 
+def cdn_is_configured():
+    return (hasattr(settings, 'WAGTAILFRONTENDCACHE') and
+            settings.WAGTAILFRONTENDCACHE)
+
+
 def purge(request, url=None):
     if url:
         purge_url_from_cache(url)
@@ -23,6 +28,9 @@ def purge(request, url=None):
 
 
 def manage_cdn(request):
+    if not cdn_is_configured():
+        return render(request, 'cdnadmin/disabled.html')
+
     if request.method == 'GET':
         form = AkamaiFlushForm()
     elif request.method == 'POST':
@@ -37,5 +45,8 @@ def manage_cdn(request):
                 else:
                     error_message = repr(e)
                 messages.error(request, error_message)
-
+        else:
+            for field, error_list in form.errors.iteritems():
+                for error in error_list:
+                    messages.error(request, "Error in %s: %s" % (field, error))
     return render(request, 'cdnadmin/index.html', context={'form': form})

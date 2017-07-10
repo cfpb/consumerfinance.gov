@@ -189,6 +189,5 @@ def register_frank_menu_item():
 
 @hooks.register('register_admin_urls')
 def register_flag_admin_urls():
-    return [
-        url(r'^cdn/$', 'v1.admin_views.manage_cdn', name='manage-cdn'),
-    ]
+    handler = 'v1.admin_views.manage_cdn'
+    return [url(r'^cdn/$', handler, name='manage-cdn'), ]

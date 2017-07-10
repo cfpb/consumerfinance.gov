@@ -11,6 +11,7 @@ cache_config = {'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
                 'ACCESS_TOKEN': 'fake'}
 
 
+@override_settings(WAGTAILFRONTENDCACHE=dict(akamai=cache_config))
 class TestCDNManagementView(TestCase):
     def setUp(self):
 
@@ -31,7 +32,6 @@ class TestCDNManagementView(TestCase):
         self.assertEqual(response.status_code, 200)
 
     @mock.patch('v1.models.akamai_backend.AkamaiBackend.purge')
-    @override_settings(WAGTAILFRONTENDCACHE=dict(akamai=cache_config))
     def test_submission_with_url(self, mock_purge):
         self.client.login(username='superuser', password='password')
         self.client.post(reverse('manage-cdn'),
@@ -39,9 +39,26 @@ class TestCDNManagementView(TestCase):
         mock_purge.assert_called_with('http://fake.gov')
 
     @mock.patch('v1.models.akamai_backend.AkamaiBackend.purge_all')
-    @override_settings(WAGTAILFRONTENDCACHE=dict(akamai=cache_config))
     def test_submission_without_url(self, mock_purge_all):
-
         self.client.login(username='superuser', password='password')
         self.client.post(reverse('manage-cdn'))
         mock_purge_all.assert_any_call()
+
+    def test_bad_submission(self):
+        self.client.login(username='superuser', password='password')
+        response = self.client.post(reverse('manage-cdn'),
+                                    {'url': 'not a URL'})
+        self.assertContains(response, "url: Enter a valid URL.")
+
+
+class TestCDNManagerNotEnabled(TestCase):
+    def setUp(self):
+        self.superuser = User.objects.create_superuser(username='superuser',
+                                                       email='',
+                                                       password='password')
+
+    def test_cdnmanager_not_enabled(self):
+        self.client.login(username='superuser', password='password')
+        response = self.client.get(reverse('manage-cdn'))
+        expected_message = "CDN management is not currently enabled"
+        self.assertContains(response, expected_message)
