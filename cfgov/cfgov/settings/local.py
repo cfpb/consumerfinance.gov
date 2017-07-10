@@ -9,7 +9,6 @@ INSTALLED_APPS += (
 
 if not COLLECTSTATIC:
     if os.environ.get('DATABASE_ROUTING', False):
-        DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
 
         DATABASES = {
             'default': {
