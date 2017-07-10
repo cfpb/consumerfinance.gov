@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import json
 import logging
 import os
@@ -65,7 +67,14 @@ class Command(BaseCommand):
                 continue
 
             # Update snapshot fields with the provided values
-            snapshot['data_month'] = market['data_month']
+            last_updated = datetime.strptime(
+                market['data_month'],
+                '%B %Y'
+            )
+            snapshot['last_updated_projected_data'] = datetime.strftime(
+                last_updated,
+                '%Y-%m-%d'
+            )
             snapshot['num_originations'] = market['num_originations']
             snapshot['value_originations'] = market['value_originations']
             snapshot['year_over_year_change'] = market['year_over_year_change']

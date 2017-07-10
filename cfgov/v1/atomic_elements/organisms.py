@@ -743,6 +743,11 @@ class ChartBlock(blocks.StructBlock):
     description = blocks.CharBlock(
         required=True,
         help_text='Briefly summarize the chart for visually impaired users.')
+
+    last_updated_projected_data = blocks.DateBlock(
+        help_text="Month of latest entry in dataset"
+    )
+
     metadata = blocks.CharBlock(
         required=False,
         help_text='Optional metadata for the chart to use. '
@@ -834,11 +839,10 @@ class DataSnapshot(blocks.StructBlock):
         max_length=20,
         help_text="Percentage change, e.g. '5.6% increase' or '7.8% decrease'"
     )
-    data_month = blocks.CharBlock(
-        max_length=15,
-        help_text="Month of latest entry in dataset in 'Month YYYY' format"
-    )
 
+    last_updated_projected_data = blocks.DateBlock(
+        help_text="Month of latest entry in dataset"
+    )
     # Market-specific descriptor text
     num_originations_text = blocks.CharBlock(
         max_length=100,
