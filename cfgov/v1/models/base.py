@@ -75,7 +75,7 @@ class CFGOVPage(Page):
         related_name='+',
         help_text=(
             'Optionally select a custom image to appear when users share this '
-            'page on social media websites.'
+            'page on social media websites. Minimum size: 1200w x 630h.'
         )
     )
 
