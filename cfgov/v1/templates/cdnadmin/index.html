@@ -1,6 +1,7 @@
 {% extends "wagtailadmin/base.html" %}
 {% load i18n %}
 {% load gravatar %}
+{% load humanize %}
 {% block titletag %}{% trans "CDN Manager" %}{% endblock %}
 
 {% block content %}
@@ -10,6 +11,7 @@
     <div class="nice-padding">
         <h2>Flush Akamai</h2>
 
+        {% if user_can_purge %}
         <div class="help-block help-info">
             <p>Enter a URL to flush it from the cache, or leave it blank to
             flush the entire site cache</p>
@@ -29,6 +31,31 @@
         Flush cache 
         </button>
         </form>
+        {% else %}
+        <div class="help-block help-info">
+            <p>You do not have permission to submit purge requests, but you
+            are welcome to view the history</p>
+        </div>
+        {% endif %}
+        <h2> History </h2>
+
+        <table class="listing">
+            <thead>
+            <tr>
+                <td> When </td>
+                <td> Who </td>
+                <td> Result </td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for history_item in history %}
+            <tr>
+                <td> {{ history_item.created | naturaltime }} </td>
+                <td> {{ history_item.user }} </td>
+                <td> {{ history_item.message }} </td>
+            </tr>
+            {% endfor %}
+            </tbody>
     </div>
 
 {% endblock %}
