@@ -47,14 +47,29 @@ class TestZipCodeBasedGeocoder(TestCase):
         self.assertEqual(geocoded[0]['agc_ADDR_LATITUDE'], 99.9)
         self.assertEqual(geocoded[0]['agc_ADDR_LONGITUDE'], 88.8)
 
-    def test_uses_zipcodes_if_lat_lng_not_present(self):
-        counselor = {
-            'zipcd': '20001',
-        }
-
+    def check_uses_zipcodes(self, counselor):
         geocoded = self.geocoder.geocode([counselor])
         self.assertEqual(geocoded[0]['agc_ADDR_LATITUDE'], 123.45)
         self.assertEqual(geocoded[0]['agc_ADDR_LONGITUDE'], -78.9)
+
+    def test_uses_zipcodes_if_lat_lng_not_present(self):
+        self.check_uses_zipcodes({
+            'zipcd': '20001',
+        })
+
+    def test_uses_zipcodes_if_lat_lng_is_zero_integer(self):
+        self.check_uses_zipcodes({
+            'agc_ADDR_LATITUDE': 0,
+            'agc_ADDR_LONGITUDE': 0,
+            'zipcd': '20001',
+        })
+
+    def test_uses_zipcodes_if_lat_lng_is_zero_float(self):
+        self.check_uses_zipcodes({
+            'agc_ADDR_LATITUDE': 0.0,
+            'agc_ADDR_LONGITUDE': 0.0,
+            'zipcd': '20001',
+        })
 
     def test_uses_first_five_digits_of_zipcode(self):
         counselor = {

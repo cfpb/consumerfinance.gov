@@ -7,6 +7,7 @@ from six import print_
 
 from legacy.housing_counselor.cleaner import clean_counselors
 from legacy.housing_counselor.fetcher import fetch_counselors
+from legacy.housing_counselor.geocoder import geocode_counselors
 from legacy.housing_counselor.generator import generate_counselor_json
 
 
@@ -44,13 +45,11 @@ class Command(BaseCommand):
         # Retrieve counselors from the HUD website.
         counselors = fetch_counselors()
 
-        # Add in any missing latitude/longitude information for counselors.
-        # This is not required due to the way that counselors are fetched
-        # by location, but can be reenabled should fetching change in future.
-        # counselors = geocode_counselors(counselors, zipcodes=zipcodes)
-
         # Standardize formatting of counselor data.
         counselors = clean_counselors(counselors)
+
+        # Add in any missing latitude/longitude information for counselors.
+        counselors = geocode_counselors(counselors, zipcodes=zipcodes)
 
         # Generate JSON files for each zipcode.
         generate_counselor_json(counselors, zipcodes, options['target'])

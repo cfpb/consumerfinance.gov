@@ -27,7 +27,7 @@ class ZipCodeBasedGeocoder(object):
         counselor = dict(counselor)
 
         lat_lng_keys = ('agc_ADDR_LATITUDE', 'agc_ADDR_LONGITUDE')
-        if all(counselor.get(k) is not None for k in lat_lng_keys):
+        if all(counselor.get(k) for k in lat_lng_keys):
             return counselor
 
         print_('need to geocode this counselor: ', counselor, flush=True)
