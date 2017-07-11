@@ -23,9 +23,3 @@ var formSubmit = new FormSubmit(
 );
 
 formSubmit.init();
-
-formSubmit.addEventListener( 'success', function onEmailSignupSuccess( event ) {
-  var form = event.form;
-  var input = form.querySelector( 'input[name="code"]' );
-  var code = input.value;
-} );
