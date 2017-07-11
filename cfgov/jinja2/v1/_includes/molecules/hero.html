@@ -68,7 +68,7 @@
             <div class="m-hero_subhead">{{ parse_links(value.body) | safe }}</div>
             {% for link in value.links %}
                 <a class="m-hero_cta
-                          {{ 'btn' if value.is_button else '' }}"
+                          {{ 'a-btn' if value.is_button else '' }}"
                    href="{{ link.url }}"
                 {% if value.cta_link_color %}
                     style="color: {{ value.cta_link_color }};"
