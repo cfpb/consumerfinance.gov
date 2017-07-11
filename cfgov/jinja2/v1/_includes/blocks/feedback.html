@@ -6,15 +6,21 @@
 
 {# JS-disabled result handling #}
 
-
-<div class="o-feedback
-            block
-            {% if value.was_it_helpful_text %}
-                block__bg
-                block__border
-                block__padded-top
-            {% endif %}">
-    <div class="u-mb15">
+<div class="o-feedback block" 
+	        {% if value.radio_intro %} 
+	        	data-replace="true" 
+	        {% endif %}>
+	<form method="post"
+	      action="."
+	      class="o-form
+	      		 {% if value.was_it_helpful_text %}
+	      		 block
+		         block__bg
+		       	 block__border
+		       	 block__padded-top
+	       		 {% endif %}"
+	      novalidate>
+	<div class="u-mb15">
         {% if get_messages(request) %}
         {% for message in get_messages(request) %}
             {{ notification.render(message.tags.split(' ')[0], true, message.message) }}
@@ -23,10 +29,6 @@
             {{ notification.render('default', false, '') }}
         {% endif %}
     </div>
-    <form class="o-form"
-          method="post"
-          action="."
-          novalidate>
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <input type="hidden" name="form_id" value="{{ form_id }}">
         <input type="hidden" name="referrer" value="{{ settings.referrer }}">

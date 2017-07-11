@@ -123,16 +123,13 @@ function FormSubmit( element, baseClass, opts ) {
             const response = JSON.parse( xhr.responseText );
             result = response.result;
             message = response.message || '';
-            heading = response.header || '';
+            heading = response.heading || '';
           } catch ( err ) {
             // ignore lack of response
           }
           state = result === 'fail' ? 'ERROR' : 'SUCCESS';
         }
         if ( state === 'SUCCESS' && opts.replaceForm ) {
-          if ( !heading && opts.language !== 'es' ) {
-            heading = 'Thank you!';
-          }
           _replaceFormWithNotification( heading + ' ' + message );
         } else {
           const key = opts.language === 'es' ? state + '_ES' : state;
@@ -161,12 +158,9 @@ function FormSubmit( element, baseClass, opts ) {
     }
 
     function fadeInMessage() {
-      if ( opts.minReplacementHeight ) {
-        _baseElement.style.marginBottom = Math.min( _formElement.offsetHeight, 100 ) + 'px';
-      }
-      _formElement.style.display = 'none';
       _notification.setTypeAndContent( _notification.SUCCESS, message );
       _notification.show();
+      _baseElement.replaceChild( _notification.getElement(), _formElement );
       transition.removeEventListener( BaseTransition.END_EVENT, fadeInMessage );
       transition.fadeIn();
     }
