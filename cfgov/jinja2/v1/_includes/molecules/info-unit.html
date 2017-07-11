@@ -100,7 +100,7 @@
                         {% include 'contact-email.html' with context %}
                     {% else %}
                         {% set link_class = 'a-btn m-info-unit_btn' if
-                            value.is_button else 'list_link' %}
+                            value.is_button else 'm-list_link' %}
                         {% set link_text = link.text if link.text
                             else 'Learn More' %}
                         {% set link = '<a class="' ~ link_class ~ '" href="' ~
