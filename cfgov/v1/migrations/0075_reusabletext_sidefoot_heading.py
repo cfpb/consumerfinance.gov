@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0069_add_social_sharing_image'),
+        ('v1', '0074_akamaihistory'),
     ]
 
     operations = [
