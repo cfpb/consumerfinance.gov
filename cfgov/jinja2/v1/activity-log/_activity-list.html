@@ -20,18 +20,15 @@
             {% set post_url = get_protected_url(post) %}
             <tr>
                 <td class="u-w20pct">
-                    {# TODO: Determine why m-meta-header_left is needed for
-                             float. Either add the m-meta-header class or
-                             create a new class for the float rule #}
                     {% if is_blog(post) %}
                         {{ category_slug.render('blog',
                                 page_url,
-                                'm-meta-header_left',
+                                '',
                                 false, form_id) }}
                     {% elif is_report(post) %}
                         {{ category_slug.render('report',
                                 page_url,
-                                'm-meta-header_left',
+                                '',
                                 false, form_id) }}
                     {% else %}
                         {% for cat in post.categories.all() %}
@@ -40,7 +37,7 @@
                             {% endif %}
                             {{ category_slug.render(cat.name,
                                     page_url,
-                                    'm-meta-header_left',
+                                    '',
                                     false, form_id) }}
                         {% endfor %}
                     {% endif %}
