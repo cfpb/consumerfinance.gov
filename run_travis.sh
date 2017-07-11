@@ -4,15 +4,15 @@
 set -e
 
 echo "running $RUNTEST tests"
-
 if [ "$RUNTEST" == "frontend" ]; then
     source $HOME/.nvm/nvm.sh
     nvm use 8.0.0
-    gulp "test:unit"
+    gulp "test" --travis
     gulp "test:coveralls"
 elif [ "$RUNTEST" == "backend" ]; then
-    tox
     flake8
+    tox -e fast
+    tox -e missing-migrations
     coveralls
 elif [ "$RUNTEST" == "acceptance" ]; then
     source $HOME/.nvm/nvm.sh
