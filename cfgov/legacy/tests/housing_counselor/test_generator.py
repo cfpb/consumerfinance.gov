@@ -9,8 +9,19 @@ from mock import patch
 from unittest import TestCase
 
 from legacy.housing_counselor.generator import (
-    generate_counselor_json, get_counselor_json_files
+    distance_in_miles, generate_counselor_json, get_counselor_json_files
 )
+
+
+class TestDistanceInMiles(TestCase):
+    def test_zero_distance(self):
+        latitude = 0.5
+        longitude = 0.3
+
+        self.assertEqual(
+            distance_in_miles(latitude, longitude, latitude, longitude),
+            0
+        )
 
 
 class TestGeneratorCounselorJson(TestCase):

@@ -30,8 +30,8 @@ class ZipCodeBasedGeocoder(object):
         if all(counselor.get(k) for k in lat_lng_keys):
             return counselor
 
-        print_('need to geocode this counselor: ', counselor, flush=True)
         zipcode = counselor['zipcd'][:5]
+        print_('need to geocode counselor with zipcode', zipcode, flush=True)
 
         if zipcode not in self.zipcodes:
             raise KeyError('{} not in zipcodes'.format(zipcode))

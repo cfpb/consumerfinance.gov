@@ -17,6 +17,9 @@ def distance_in_miles(lat1_radians, lng1_radians, lat2_radians, lng2_radians):
     Uses simplified algorithm to determine proximity based on latitude and
     longitude, described at https://stackoverflow.com/q/1916953.
     """
+    if lat1_radians == lat2_radians and lng1_radians == lng2_radians:
+        return 0
+
     earth_radius_in_miles = 3959
 
     return earth_radius_in_miles * acos(
