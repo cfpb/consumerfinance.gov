@@ -32,7 +32,6 @@ function validateFeedback( fields ) {
 }
 
 if ( element ) {
-  var replaceForm = element.getAttribute( 'data-replace' );
   var languageField = element.querySelector( 'input[name="language"]' );
   var language = languageField && languageField.value === 'es' ? 'es' : 'en';
   if ( language === 'es' ) {
@@ -41,8 +40,7 @@ if ( element ) {
 
   var opts = {
     validator: validateFeedback,
-    replaceForm:  replaceForm || language === 'es',
-    minReplacementHeight: replaceForm,
+    replaceForm:  true,
     language: language
   };
 
