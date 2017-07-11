@@ -12324,10 +12324,10 @@ input[type="number"].pagination_current-page {
           appropriate fonts."
     - name: Webfont mixins
       codenotes:
-        - ".webfont-regular()"
-        - ".webfont-italic()"
-        - ".webfont-medium()"
-        - ".webfont-demi()"
+        - ".u-webfont-regular()"
+        - ".u-webfont-italic()"
+        - ".u-webfont-medium()"
+        - ".u-webfont-demi()"
       notes:
         - "Use these mixins to easily add the Avenir Next font family to your
           elements."

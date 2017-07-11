@@ -10,7 +10,7 @@
 
    value:                     An object used to customize the markup.
 
-   value.position:            The location of the bar on the page: 
+   value.position:            The location of the bar on the page:
                                 left: in a main section with a right sidebar
                                 right: in a main section with a left nav sidebar
                                 full: in a full-width page.
@@ -28,13 +28,13 @@
 {% macro render( value ) %}
 
 <aside class="o-search-bar
-              block 
-              block__bg 
+              block
+              block__bg
               {% if value.position == 'full' %}
                 o-search-bar__full
               {% else %}
                 o-search-bar__with-sidebar
-                block__flush-sides 
+                block__flush-sides
                 block__bg-extend-{{ value.position }}
               {% endif %}
               {{ value.additional_classes }}" >
@@ -52,7 +52,7 @@
                     <input type="text" name="q" id="q" >
                 </div>
                 <div class="input-with-btn_btn">
-                    <button class="btn" name="btnSearch" id="btnSearch" type="submit">
+                    <button class="a-btn" name="btnSearch" id="btnSearch" type="submit">
                         Search
                     </button>
                 </div>
