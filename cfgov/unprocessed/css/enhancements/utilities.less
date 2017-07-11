@@ -1,3 +1,15 @@
+// This is in CFv4 but is necessary because the video-player
+// calls this as a mixin.
+.u-flexible-container_inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+// TODO: Determine if the below utilities can be migrated to CFv4.
+
 /* topdoc
   name: Width utilities
   family: cf-utilities
