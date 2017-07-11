@@ -44,11 +44,11 @@
 
 {% macro _nav_list( nav_depth, nav_items ) %}
 {%- for nav_group in nav_items %}
-<ul class="list
-           list__unstyled
+<ul class="m-list
+           m-list__unstyled
            {{ _classes( nav_depth, '-list' ) }}">
     {% if nav_depth == 1 -%}
-    <li class="list_item
+    <li class="m-list_item
                {{ _classes( nav_depth, '-item' ) }}">
         {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
         {{ global_header_cta.render() }}
@@ -57,7 +57,7 @@
     {%- for nav_caption,
             nav_url,
             nav_children in nav_group %}
-    <li class="list_item
+    <li class="m-list_item
                {{ _classes( nav_depth, '-item' ) }}"
         {{ 'data-js-hook=behavior_flyout-menu' if nav_children | count > 0 else '' }}>
         {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}

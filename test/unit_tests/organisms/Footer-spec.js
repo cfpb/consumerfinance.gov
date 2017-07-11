@@ -14,7 +14,7 @@ var sandbox;
 var lastTime = 0;
 
 var HTML_SNIPPET =
-    '<a class="btn btn__secondary o-footer_top-button" ' +
+    '<a class="a-btn a-btn__secondary o-footer_top-button" ' +
         'data-gtm_ignore="true" data-js-hook="behavior_return-to-top" ' +
         'href="#">' +
         'Back to top <span class="cf-icon cf-icon-arrow-up"></span>' +
