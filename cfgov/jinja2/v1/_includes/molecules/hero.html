@@ -17,42 +17,27 @@
    value.body:             A string containing the content to display below
                            the heading (typically a paragraph).
 
-   value.links:            A tuple of items to create a list of links,
-                           containing:
-
-   value.links[i].url:     A string for the URL of the link.
-
-   value.links[i].text:    A string for the text of the link.
-
-   value.is_button:        A boolean to change the CTA link(s) to a button.
-
    value.image:            An image object containing the image to be
                            placed adjacent to the text.
 
-   value.is_overlay:       A boolean to change the hero to an overlay hero.
+   value.small_image:      An image object containing the alternate image
+                           for smaller screens when bleeding or overlaying
+                           at larger screen sizes.
 
    value.background_color: A string containing the color code (in any format)
                            to set as the hero background color.
 
    value.is_white_text:    A boolean to change the text color to white.
 
-   value.cta_link_color:   A string containing the color code (in any format)
-                           to set as the CTA link color. Should only be used
-                           in the event that the background_color value does
-                           not have sufficient contrast with the default
-                           link color.
-
    value.is_bleeding:      A boolean that indicates that the image bleeds
                            vertically.
 
-   value.small_image:      An image object containing the alternate image
-                           for smaller screens when bleeding or overlaying
-                           at larger screen sizes.
+   value.is_overlay:       A boolean to change the hero to an overlay hero.
 
    ========================================================================== #}
 
 
-{# TODO: Programatically set the images and padding via Django #}
+{# TODO: This is simple now, but in the future we'll hopefully be able to provide 1x and 2x values as well. We should update this to be an image array delivered by Django in the future. #}
 {% set img=image(value.image, 'original') %}
 
 {% if value.small_image %}
@@ -61,6 +46,7 @@
     {% set sm_img = image(value.image, 'original') %}
 {% endif %}
 
+{# TODO: Magic numbers are set by dividing the height by the width of the existing images. These could change, we should update this to reading the image dimensions with Django and passing the calculation to the template. #}
 {% set bp_sm_padding = "41.4893617%" %}
 
 {% if value.is_bleeding %}
@@ -86,6 +72,7 @@
             <div class="m-hero_image"></div>
         </div>
     </div>
+    {# Due to the nature of setting backgrounds and padding dynamically, these styles are set in an element to both contain them and make it clear where to change them in the future. #}
     <style>
         .m-hero {
             {%- if value.background_color %}
