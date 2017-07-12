@@ -13,5 +13,6 @@ from .sublanding_filterable_page import *
 from .blog_page import *
 from .newsroom_page import *
 from .images import *
+from .akamai_backend import AkamaiHistory
 
 from django.conf import settings
