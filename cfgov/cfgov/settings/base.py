@@ -78,7 +78,6 @@ INSTALLED_APPS = (
 )
 
 OPTIONAL_APPS = [
-    {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
@@ -93,7 +92,6 @@ OPTIONAL_APPS = [
     {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
     {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
-    {'import': 'picard', 'apps': ('picard',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
 ]
@@ -102,6 +100,13 @@ if DEPLOY_ENVIRONMENT == 'build':
     OPTIONAL_APPS += [
         {'import': 'eregs', 'apps': ('eregs_core',)},
     ]
+
+# These apps use "legacy" database routing
+# See: cfgov/v1/db_router.py
+LEGACY_APPS = [
+    'comparisontool',
+    'agreements',
+]
 
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
@@ -172,6 +177,8 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
+
+DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
 
 if 'collectstatic' in sys.argv:
     COLLECTSTATIC = True
@@ -447,15 +454,6 @@ CACHES = {
     }
 }
 
-PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
-PICARD_TASK_RUNNER = os.environ.get('PICARD_TASK_RUNNER', 'shell')
-PICARD_JENKINS_HOST = os.environ.get('PICARD_JENKINS_HOST', None)
-PICARD_JENKINS_USER = os.environ.get('PICARD_JENKINS_USER', None)
-PICARD_JENKINS_PASSWORD = os.environ.get('PICARD_JENKINS_PASSWORD', None)
-PICARD_JENKINS_AKAMAI_FLUSH = os.environ.get('PICARD_JENKINS_AKAMAI_FLUSH', None)
-PICARD_JENKINS_DATA_EXPORT = os.environ.get('PICARD_JENKINS_DATA_EXPORT', None)
-PICARD_JENKINS_DATA_EXPORT_FROM_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_FROM_ENV', 'CONTENT')
-PICARD_JENKINS_DATA_EXPORT_TO_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_TO_ENV', 'PRODUCTION')
 
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')

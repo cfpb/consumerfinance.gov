@@ -66,7 +66,6 @@ EMAIL_HOST = os.getenv('EMAIL_HOST')
 
 if not COLLECTSTATIC:
     if os.environ.get('DATABASE_ROUTING', False):
-        DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter', 'v1.db_router.LegacyRouter']
 
         DATABASES = {
             'default': {
