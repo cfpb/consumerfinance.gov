@@ -5,7 +5,6 @@ import os
 import shutil
 import tempfile
 
-from mock import patch
 from unittest import TestCase
 
 from legacy.housing_counselor.generator import (
@@ -27,10 +26,6 @@ class TestDistanceInMiles(TestCase):
 class TestGeneratorCounselorJson(TestCase):
     def setUp(self):
         self.tempdir = tempfile.mkdtemp()
-
-        patched = patch('legacy.housing_counselor.generator.print_')
-        patched.start()
-        self.addCleanup(patched.stop)
 
         self.counselors = [
             {'agc_ADDR_LATITUDE': 120, 'agc_ADDR_LONGITUDE': 98},
@@ -89,10 +84,6 @@ class TestGeneratorCounselorJson(TestCase):
 class TestGetCounselorJsonFiles(TestCase):
     def setUp(self):
         self.tempdir = tempfile.mkdtemp()
-
-        patched = patch('legacy.housing_counselor.generator.print_')
-        patched.start()
-        self.addCleanup(patched.stop)
 
     def tearDown(self):
         shutil.rmtree(self.tempdir)

@@ -1,6 +1,9 @@
 from __future__ import absolute_import, unicode_literals
 
-from six import print_
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def geocode_counselors(counselors, **kwargs):
@@ -31,7 +34,7 @@ class ZipCodeBasedGeocoder(object):
             return counselor
 
         zipcode = counselor['zipcd'][:5]
-        print_('need to geocode counselor with zipcode', zipcode, flush=True)
+        logger.info('need to geocode counselor with zipcode %s', zipcode)
 
         if zipcode not in self.zipcodes:
             raise KeyError('{} not in zipcodes'.format(zipcode))

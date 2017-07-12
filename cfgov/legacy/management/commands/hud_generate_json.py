@@ -1,14 +1,17 @@
 from __future__ import absolute_import, unicode_literals
 
 import csv
+import logging
 
 from django.core.management.base import BaseCommand
-from six import print_
 
 from legacy.housing_counselor.cleaner import clean_counselors
 from legacy.housing_counselor.fetcher import fetch_counselors
 from legacy.housing_counselor.geocoder import geocode_counselors
 from legacy.housing_counselor.generator import generate_counselor_json
+
+
+logger = logging.getLogger(__name__)
 
 
 def load_zipcodes(filename):
@@ -18,7 +21,7 @@ def load_zipcodes(filename):
 
     Returns a tuple: (zipcode, latitude_degreees, longitude_degrees)
     """
-    print_('Reading zipcodes from', filename, flush=True)
+    logger.info('Reading zipcodes from %s', filename)
     with open(filename, 'r') as f:
         reader = csv.reader(f, delimiter=str('\t'))
         next(reader)
@@ -28,7 +31,7 @@ def load_zipcodes(filename):
             for row in reader
         )
 
-    print_('Loaded', len(zipcodes), 'zipcodes', flush=True)
+    logger.info('Loaded %d zipcodes', len(zipcodes))
     return zipcodes
 
 

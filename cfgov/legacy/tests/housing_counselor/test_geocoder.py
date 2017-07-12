@@ -17,10 +17,6 @@ class TestGeocodeCounselors(TestCase):
 
 class TestZipCodeBasedGeocoder(TestCase):
     def setUp(self):
-        patched = patch('legacy.housing_counselor.geocoder.print_')
-        patched.start()
-        self.addCleanup(patched.stop)
-
         self.zipcodes = {
             '20001': (123.45, -78.9),
         }

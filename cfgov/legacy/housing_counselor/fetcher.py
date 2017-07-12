@@ -1,8 +1,10 @@
 from __future__ import absolute_import, unicode_literals
 
+import logging
 import requests
 
-from six import print_
+
+logger = logging.getLogger(__name__)
 
 
 HUD_COUNSELORS_URL = (
@@ -34,19 +36,19 @@ def fetch_counselors():
 
 def download_housing_counselors(url):
     """Download HUD counselors from a given URL."""
-    print_('Downloading HUD counselors from', url, flush=True)
+    logger.info('Downloading HUD counselors from %s', url)
     counselors = get_json_from_url(url)
 
     if not counselors:
         raise RuntimeError('Could not download HUD counselors')
 
-    print_('Retrieved', len(counselors), 'counselors', flush=True)
+    logger.info('Retrieved %d counselors', len(counselors))
     return counselors
 
 
 def replace_abbreviations(counselors, attribute, url):
     """Replace attribute abbreviations with names from a given URL."""
-    print_('Downloading counselor', attribute, 'from', url, flush=True)
+    logger.info('Downloading counselor %s from %s', attribute, url)
     values = get_json_from_url(url)
     values_dict = dict((lang['key'], lang['value']) for lang in values)
 

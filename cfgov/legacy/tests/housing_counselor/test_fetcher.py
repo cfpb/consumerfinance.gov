@@ -2,7 +2,6 @@ from __future__ import absolute_import, unicode_literals
 
 import responses
 
-from mock import patch
 from requests.exceptions import HTTPError
 from unittest import TestCase
 
@@ -14,11 +13,6 @@ from legacy.housing_counselor.fetcher import (
 
 
 class TestHousingCounselorFetcher(TestCase):
-    def setUp(self):
-        patched = patch('legacy.housing_counselor.fetcher.print_')
-        patched.start()
-        self.addCleanup(patched.stop)
-
     @responses.activate
     def test_get_json_from_url_calls_requests_get(self):
         responses.add(responses.GET, 'http://test.url', json={'foo': 'bar'})

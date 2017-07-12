@@ -2,13 +2,16 @@ from __future__ import absolute_import, unicode_literals
 
 import glob
 import json
+import logging
 import os
 import re
 import sqlite3
 
 from django.template import loader
 from math import acos, cos, radians, sin
-from six import print_
+
+
+logger = logging.getLogger(__name__)
 
 
 def distance_in_miles(lat1_radians, lng1_radians, lat2_radians, lng2_radians):
@@ -91,7 +94,7 @@ def generate_counselor_json(counselors, zipcodes, target):
     connection = get_db_connection()
     fill_db(connection, counselors)
 
-    print_('generating JSON into', target, flush=True)
+    logger.info('generating JSON into %s', target)
 
     for zipcode, (latitude_degrees, longitude_degrees) in zipcodes.items():
         counselors = query_db(
@@ -149,7 +152,7 @@ def get_counselor_json_files(directory):
     if not filenames:
         raise RuntimeError('no input files found in {}'.format(directory))
 
-    print_('Found', len(filenames), 'input files', flush=True)
+    logger.info('Found %d input files', len(filenames))
 
     for filename in filenames:
         match = re.search(r'/(\d{5}).json$', filename)
