@@ -1,0 +1,19 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n %}
+{% load gravatar %}
+{% block titletag %}{% trans "CDN Manager" %}{% endblock %}
+
+{% block content %}
+
+    {% include "wagtailadmin/shared/header.html" with title="CDN Manager" icon="tag" %}
+
+    <div class="nice-padding">
+        <h2>Flush Akamai</h2>
+
+        <div class="help-block help-info">
+            <p>CDN management is not currently enabled on this server. Please
+            see your administrator if you have any questions.</p>
+        </div>
+    </div>
+
+{% endblock %}
