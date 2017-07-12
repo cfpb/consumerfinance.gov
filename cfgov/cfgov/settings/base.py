@@ -106,7 +106,6 @@ if DEPLOY_ENVIRONMENT == 'build':
 LEGACY_APPS = [
     'comparisontool',
     'agreements',
-    'picard',
 ]
 
 MIDDLEWARE_CLASSES = (
