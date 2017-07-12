@@ -101,6 +101,13 @@ if DEPLOY_ENVIRONMENT == 'build':
         {'import': 'eregs', 'apps': ('eregs_core',)},
     ]
 
+# These apps use "legacy" database routing
+# See: cfgov/v1/db_router.py
+LEGACY_APPS = [
+    'comparisontool',
+    'agreements',
+]
+
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -170,6 +177,8 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
+
+DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
 
 if 'collectstatic' in sys.argv:
     COLLECTSTATIC = True
@@ -545,11 +554,6 @@ FLAGS = {
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
-
-    # Email pop-up "nudgy guy" for Owning a Home
-    # When enabled, an modal email sign-up prompt appears at the bottom of
-    # /owning-a-home when scrolling.
-    'EMAIL-POPUP': {},
 
     # Fix for margin-top when using the text inset
     # When enabled, the top margin of full-width text insets is increased
