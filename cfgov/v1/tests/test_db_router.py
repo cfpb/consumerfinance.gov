@@ -62,6 +62,6 @@ class CFGOVRouterNoLegacyTestCase(TestCase):
         result = check_app_router('ask_cfpb', 'db_for_read')
         self.assertEqual(result, 'default')
 
-    def test_legacy_app_writes_routed_to_legacy(self):
+    def test_legacy_app_writes_routed_to_default(self):
         result = check_app_router('ask_cfpb', 'db_for_write')
         self.assertEqual(result, 'default')
