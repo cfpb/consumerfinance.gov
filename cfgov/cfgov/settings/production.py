@@ -1,4 +1,5 @@
 import sys
+import os
 
 from .base import *
 from os.path import exists
@@ -87,3 +88,9 @@ if not COLLECTSTATIC:
         }
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+# allow us to configure the default MySQL storage engine, via the environment
+if 'STORAGE_ENGINE' in os.environ:
+    db_options = {'init_command': os.environ['STORAGE_ENGINE']}
+    for db_label in DATABASES.keys():
+        DATABASES[db_label]['OPTIONS'] = db_options 
