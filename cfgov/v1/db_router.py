@@ -21,7 +21,7 @@ class CFGOVRouter(object):
 
         Exceptions for authentication and user sessions
         """
-        if self.model_is_legacy(model):
+        if self.has_legacy and self.model_is_legacy(model):
             return 'legacy'
 
         if self.has_replica and model._meta.app_label not in ('auth',
