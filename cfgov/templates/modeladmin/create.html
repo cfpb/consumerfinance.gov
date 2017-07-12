@@ -1,0 +1,20 @@
+{% overextends "modeladmin/create.html" %}
+
+  {% block header %}
+  {{ block.super }}
+  {% if instance.english_page or instance.spanish_page %}
+  <div class="row nice-padding" style="margin-top: 30px;">
+    <ul class="page-explorer listing">
+      {% if instance.english_page %}
+      <li style="display: inline; margin-right: 10px;">
+        <a href="/admin/pages/{{ instance.english_page.id }}/edit/" class="button button-secondary button-large">EDIT ENGLISH PAGE</a>
+      </li>
+      {% endif %}
+      {% if instance.spanish_page %}
+      <li style="display: inline;">
+        <a href="/admin/pages/{{ instance.spanish_page.id }}/edit/" class="button button-secondary button-large">EDIT SPANISH PAGE</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  {% endif %}
+  {% endblock %}
