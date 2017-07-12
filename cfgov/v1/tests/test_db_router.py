@@ -53,3 +53,15 @@ class CFGOVRouterReplicaTestCase(TestCase):
     def test_legacy_app_writes_routed_to_legacy(self):
         result = check_app_router('ask_cfpb', 'db_for_write')
         self.assertEqual(result, 'legacy')
+
+
+@override_settings(LEGACY_APPS=['ask_cfpb'],
+                   DATABASES={'default': {}})
+class CFGOVRouterNoLegacyTestCase(TestCase):
+    def test_legacy_app_reads_routed_to_default(self):
+        result = check_app_router('ask_cfpb', 'db_for_read')
+        self.assertEqual(result, 'default')
+
+    def test_legacy_app_writes_routed_to_legacy(self):
+        result = check_app_router('ask_cfpb', 'db_for_write')
+        self.assertEqual(result, 'default')
