@@ -1,3 +1,4 @@
+from cStringIO import StringIO
 from django.test import TestCase
 
 from core.scripts.missing_migrations import (
@@ -15,5 +16,5 @@ class MissingMigrationsTestCase(TestCase):
                 '#cmdoption-makemigrations--exit'
             )
 
-        if check_missing_migrations():
+        if check_missing_migrations(out=StringIO()):
             self.fail('missing migrations, run manage.py makemigrations')
