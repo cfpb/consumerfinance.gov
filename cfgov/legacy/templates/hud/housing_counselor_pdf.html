@@ -82,7 +82,7 @@
 															<span class="show-hide-name">View</span>
 															languages offered at this location														</a>
 													<div class="show-hide-content hud_hca_api_print_show">
-														<span class="hud_hca_api_results_listing_title">Languages:</span> <span class="hud_hca_api_lang">{{ counselor.languages }}</span>
+														<span class="hud_hca_api_results_listing_title">Languages:</span> <span class="hud_hca_api_lang">{{ counselor.languages|join:', ' }}</span>
 													</div>
 												</div>
 											</div>
@@ -92,7 +92,7 @@
 											<div class="hud_hca_api_services">
 												<span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span>
 												<span class="hud_hca_api_serv">
-													<span class="hud_hca_api_serv_item">{{ counselor.services }}</span><span class="hud_hca_api_serv_item">Resolving/Preventing Mortgage Delinquency Workshop</span>												</span>
+													<span class="hud_hca_api_serv_item">{{ counselor.services|join:', ' }}</span><span class="hud_hca_api_serv_item">Resolving/Preventing Mortgage Delinquency Workshop</span>												</span>
 											</div>
 										</div>
 										<div class="col last">

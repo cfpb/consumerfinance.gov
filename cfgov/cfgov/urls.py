@@ -274,7 +274,10 @@ urlpatterns = [
     url(r'^find-a-housing-counselor/$',
         HousingCounselorView.as_view(),
         name='housing-counselor'),
-    url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
+    url(r'^save-hud-counselors-list/$',
+        HousingCounselorPDFView.as_view(),
+        name='housing-counselor-pdf'),
+
     # Report redirects
     url(r'^reports/(?P<path>.*)$',
         RedirectView.as_view(
