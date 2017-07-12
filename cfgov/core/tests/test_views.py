@@ -1,16 +1,17 @@
 import json
-from urllib import urlencode
+import re
 
-import django
 from django.core.urlresolvers import reverse
-from django.http import QueryDict
+from django.http import Http404, QueryDict
 from django.test import RequestFactory, TestCase
 from mock import Mock, call, patch
 from requests_toolbelt.multipart.encoder import MultipartEncoder
+from urllib import urlencode
 
-from core.views import govdelivery_subscribe, regsgov_comment, submit_comment
-
-django.setup()
+from core.views import (
+    ExternalURLNoticeView, govdelivery_subscribe, regsgov_comment,
+    submit_comment
+)
 
 
 class GovDeliverySubscribeTest(TestCase):
@@ -292,3 +293,42 @@ class RegsgovCommentTest(TestCase):
 
         self.assertIn('multipart/form-data',
                       act_kwargs.get('headers').get('Content-Type'))
+
+
+class TestExternalURLNoticeView(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+
+        patched_whitelist = patch(
+            'core.forms.EXTERNAL_URL_WHITELIST',
+            (re.compile(r'^https:\/\/foo\.com$'),)
+        )
+        patched_whitelist.start()
+        self.addCleanup(patched_whitelist.stop)
+
+    def test_valid_get_returns_redirect(self):
+        view = ExternalURLNoticeView.as_view()
+        request = self.factory.get('/?ext_url=https://foo.com')
+        response = view(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_invalid_get_returns_404(self):
+        view = ExternalURLNoticeView.as_view()
+        request = self.factory.get('/?ext_url=https://bar.com')
+        with self.assertRaises(Http404):
+            view(request)
+
+    def test_valid_post_returns_redirect(self):
+        view = ExternalURLNoticeView.as_view()
+        request = self.factory.post('/', {'ext_url': 'https://foo.com'})
+        response = view(request)
+        self.assertEqual(
+            (response.status_code, response['Location']),
+            (302, 'https://foo.com')
+        )
+
+    def test_invalid_post_returns_404(self):
+        view = ExternalURLNoticeView.as_view()
+        request = self.factory.post('/')
+        with self.assertRaises(Http404):
+            view(request)
