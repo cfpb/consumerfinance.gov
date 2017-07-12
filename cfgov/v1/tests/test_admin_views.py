@@ -12,11 +12,13 @@ cache_config = {'BACKEND': 'v1.models.akamai_backend.AkamaiBackend',
                 'ACCESS_TOKEN': 'fake'}
 
 
-# This is so that certain tests will function when migrations are not run
-# Adapted from function of the same name in
-# https://github.com/wagtail/wagtail/blob/master/wagtail/wagtailadmin/migrations/0001_create_admin_access_permissions.py
 def create_admin_access_permissions():
-
+    """
+    This is to ensure that Wagtail's non-model permissions are set-up
+    (needed for some of the tests below)
+    Adapted from function of the same name in
+    https://github.com/wagtail/wagtail/blob/master/wagtail/wagtailadmin/migrations/0001_create_admin_access_permissions.py
+    """
     # Add a fake content type to hang the 'can access Wagtail admin'
     # permission off.
     wagtailadmin_content_type, created = ContentType.objects.get_or_create(
