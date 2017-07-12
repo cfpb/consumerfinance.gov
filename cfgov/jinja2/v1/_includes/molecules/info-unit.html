@@ -90,17 +90,17 @@
         {{ value.body | safe }}
 
         {% if value.links %}
-            <ul class="list list__links">
+            <ul class="m-list m-list__links">
             {% for link in value.links %}
-                <li class="list_item">
+                <li class="m-list_item">
                     {% if link.text is defined and link.text.find('@') > -1 %}
                         {% if not value.emails is defined %}
                             {% do value.update({'emails':[{'url':link.text}]}) %}
                         {% endif %}
                         {% include 'contact-email.html' with context %}
                     {% else %}
-                        {% set link_class = 'btn m-info-unit_btn' if
-                            value.is_button else 'list_link' %}
+                        {% set link_class = 'a-btn m-info-unit_btn' if
+                            value.is_button else 'm-list_link' %}
                         {% set link_text = link.text if link.text
                             else 'Learn More' %}
                         {% set link = '<a class="' ~ link_class ~ '" href="' ~

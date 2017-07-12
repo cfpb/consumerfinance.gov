@@ -38,7 +38,9 @@
     }
 
     .o-expandable_target {
-        .btn__secondary();
+        // Taken from .a-btn__secondary.
+        background-color: @btn__secondary-bg;
+        color: @btn__secondary-text;
         width: 100%;
         // Restore standard btn padding, which is removed by .expandable_target.
         padding:
@@ -48,7 +50,7 @@
         margin-top: @grid_gutter-width / 2;
 
         .respond-to-min(@bp-sm-min, {
-            .btn__link();
+            .a-btn__link();
             width: auto;
             padding: @grid_gutter-width / 2;
             margin: 0;

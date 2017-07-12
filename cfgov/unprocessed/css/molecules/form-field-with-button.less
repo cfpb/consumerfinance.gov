@@ -10,11 +10,11 @@
                     <b>label text</b>(required)
                 </label>
                 <input id="" type="" name="" placeholder=""
-                class="m-form-field-with-button_field">
+                class="m-form-field-with-button_field a-text-input">
             </div>
             <p class="short-desc">
             </p>
-            <input class="btn btn__full" type="" value="">
+            <input class="a-btn a-btn__full-on-xs" type="" value="">
         </div>
       codenotes:
         - |
@@ -24,7 +24,7 @@
             .form-group
               label
                 b
-              .m-form-field-with-button_field
+              .m-form-field-with-button_field.a-text-input
             .short-desc
             .btn btn__full
   tags:
@@ -46,6 +46,7 @@
     }
 
     label {
+        display: block;
         margin-bottom: @margin__em / 2;
     }
 
