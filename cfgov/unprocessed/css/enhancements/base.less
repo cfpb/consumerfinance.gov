@@ -1,28 +1,15 @@
-/* ==========================================================================
-   cfgov-refresh
-   capital framework enhancements
-   ========================================================================== */
+// BEGIN enhancement for normalize-legacy-addon
 
-/* topdoc
-  name: Body Font
-  family: cf-core
-  notes:
-    - "Set the body to Avenir Regular."
-    - "Hides overflow on mobile sizes."
-  patterns:
-    - name: Body
-      codenotes:
-        - |
-          body
-  tags:
-    - cf-core
-*/
+/*
+ * Corrects list images handled incorrectly in IE 7.
+ */
 
-body {
-    .webfont-regular(); // Moved to CF, delete freely when migrating to CF4
+nav ul,
+nav ol,
+nav ul ul,
+nav ol ol {
+    list-style: none;
+    list-style-image: none;
 }
 
-/* topdoc
-  name: EOF
-  eof: true
-*/
+// END enhancement for normalize-legacy-addon

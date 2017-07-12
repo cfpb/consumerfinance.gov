@@ -26,22 +26,21 @@
         {{ heading or 'Career Openings' }}
     </h3>
     {% import 'macros/time.html' as time %}
-    <ul class="list list__unstyled">
+    <ul class="m-list m-list__unstyled">
         {% for job in careers %}
-        <li class="list_item">
-            <a class="list_link"
+        <li class="m-list_item">
+            <a class="m-list_link"
                href="{{ get_protected_url(job) }}">{{ job.title }}</a>
-            <p class="date">
+            <p class="a-date">
                 CLOSING
                 {{ time.render(job.close_date, {'date': true}) }}
             </p>
         </li>
         {% endfor %}
     </ul>
-    <a class="jump-link
-              jump-link__underline"
+    <a class="a-link a-link__jump"
        href="{{ get_protected_url(more_jobs_page) }}">
-        <span class="jump-link_text">
+        <span class="a-link_text">
           {{ more_jobs_text or 'View all job openings' }}
         </span>
     </a>

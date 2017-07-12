@@ -92,7 +92,7 @@
     }
 
     &_subhead,
-    &_cta:not( .btn ) {
+    &_cta:not( .a-btn ) {
         // Not using the `.intro-pagraph()` mixin here because we want the
         // size to change at a different breakpoint.
         font-size: @size-iv;
@@ -116,11 +116,11 @@
 
         margin-top: unit( @grid_gutter-width / 2 / @size-iv, em );
 
-        &.btn {
+        &.a-btn {
             margin-top: unit( @grid_gutter-width / 2 / @btn-font-size, em );
         }
 
-        &:not( .btn ) {
+        &:not( .a-btn ) {
             border-bottom-width: 1px;
         }
 
@@ -260,7 +260,7 @@
             color: @hero-overlay-cta;
         }
 
-        .m-hero_cta.btn {
+        .m-hero_cta.a-btn {
             // Prevent inline style from CMS from overriding button text color.
             color: @btn-text !important;
         }

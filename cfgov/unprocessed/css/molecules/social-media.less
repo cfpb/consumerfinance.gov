@@ -6,8 +6,8 @@
       markup: |
         <div class="m-social-media m-social-media__share">
             <h5 class="m-social-media_heading">Share this</h5>
-            <ul class="list">
-                <li class="list_item">
+            <ul class="m-list">
+                <li class="m-list_item">
                     <a class="m-social-media_icon" href="#">
                         <span class="cf-icon cf-icon-email-social-square"></span>
                         <span class="u-visually-hidden">
@@ -23,8 +23,8 @@
           -----------------------
           .m-social-media.m-social-media__share
             .m-social-media_heading
-            ul.list
-              li.list_item
+            ul.m-list
+              li.m-list_item
                 .m-social-media_icon
                   span.cf-icon
                   span.u-visually-hidden
@@ -61,17 +61,17 @@
         }
     }
 
-    .list {
+    .m-list {
         display: inline-block;
         vertical-align: middle;
 
-        .list_item {
+        .m-list_item {
             // 0.25em subtracted to compensate for inline spacing
             margin-right: unit( (@grid_gutter-width / 2) / @base-font-size-px - 0.25em, em );
             margin-bottom: 0;
         }
 
-        .list_item:last-child {
+        .m-list_item:last-child {
             margin-right: 0;
         }
     }

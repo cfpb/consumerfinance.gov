@@ -10,13 +10,13 @@
                 Related Posts
             </h2>
         </header>
-        <ul class="m-related-posts_list">
-            <li class="list_item">
+        <ul class="m-related-posts_list m-list">
+            <li class="m-list_item">
                 <h3 class="h4 u-mb5">
-                    <a class="list_link" >
+                    <a class="m-list_link" >
                     </a>
                 </h3>
-                <p class="date">
+                <p class="a-date">
                     <span class="datetime">
                         <time class="datetime_date" datetime="">
                         </time>
@@ -32,10 +32,10 @@
         .m-related-posts
           .m-slug-header
             .a-heading
-        .m-related-posts_list
-          .list-item
+        .m-related-posts_list.m-list
+          .m-list-item
             h3
-              .list-link
+              .m-list-link
             .date
               .datetime
                 .time.datetime_date
@@ -49,20 +49,20 @@
 
     .grid_nested-col-group();
 
-    .list_item {
+    .m-list_item {
         .grid_column(6);
     }
 
-    // Using .list__spaced items within a grid column causes unwanted
+    // Using .m-list__spaced items within a grid column causes unwanted
     // extra margins because grid columns suppress margin collapsing.
     // To counteract that we need to use a negative margin on the list.
     // This means we also need to add a top margin to the first list
-    // item since the default .list__spaced only applies margins to
-    // .list_item + .list_item.
-    &.list__spaced {
+    // item since the default .m-list__spaced only applies margins to
+    // .m-list_item + .m-list_item.
+    &.m-list__spaced {
         margin-top: @margin_half__em * -1;
 
-        .list_item {
+        .m-list_item {
             margin-top: @margin_half__em;
         }
     }
@@ -77,7 +77,7 @@
 }
 
 .m-related-posts_list {
-    .list_link {
+    .m-list_link {
         .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
         .u-link__no-border();
 
@@ -86,7 +86,7 @@
         }
     }
 
-    .list_item .date {
+    .m-list_item .a-date {
         margin-bottom:0;
         margin-top: unit(10px / @base-font-size-px, em);
     }

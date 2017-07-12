@@ -26,21 +26,19 @@
 // The Capital Framework (CF) brand color palette.
 @import (less) "brand-palette.less";
 
+// Vars enhancements that is on migration path to CF Core.
+@import (less) "enhancements/vars.less";
+
 // Override the CF theme variables with colors from the brand color palette.
 @import (less) "cf-theme-overrides.less";
 
 // Enhancements that are on a migration path to being added to CF.
 // CF Core
-@import (less) "enhancements/vars.less";
-@import (less) "enhancements/media-queries.less";
 @import (less) "enhancements/utilities.less";
 @import (less) "enhancements/base.less";
 
-// Typography
+// CF Typography
 @import (less) "enhancements/typography.less";
-
-// CF Buttons
-@import (less) "enhancements/buttons.less";
 
 // CF Icons
 @import (less) "enhancements/icons.less";
@@ -61,6 +59,7 @@
 // CF ???
 @import (less) "enhancements/code.less";
 @import (less) "enhancements/print.less";
+
 
 
 /* Base patterns
@@ -114,7 +113,6 @@
 @import (less) "molecules/multi-select.less";
 @import (less) "molecules/nav-link.less";
 @import (less) "molecules/notification.less";
-@import (less) "molecules/pagination.less";
 @import (less) "molecules/related-metadata.less";
 @import (less) "molecules/related-posts.less";
 @import (less) "molecules/social-media.less";
