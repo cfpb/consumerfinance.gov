@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 from .base import *
 from os.path import exists
@@ -93,4 +93,5 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 if 'STORAGE_ENGINE' in os.environ:
     db_options = {'init_command': os.environ['STORAGE_ENGINE']}
     for db_label in DATABASES.keys():
-        DATABASES[db_label]['OPTIONS'] = db_options 
+        if 'mysql' in DATABASES[db_label]['engine']:
+            DATABASES[db_label]['OPTIONS'] = db_options 
