@@ -53,9 +53,19 @@ module.exports = {
     dest:     paths.processed + '/css',
     settings: {
       paths:  globAll.sync( [
-        paths.modules + '/capital-framework/**',
-        paths.modules + '/cfpb-chart-builder/**',
-        paths.lib
+        paths.lib,
+        paths.modules + '/cf-buttons/src',
+        paths.modules + '/cf-core/src',
+        paths.modules + '/cf-expandables/src',
+        paths.modules + '/cf-expandables/src',
+        paths.modules + '/cf-forms/src',
+        paths.modules + '/cf-grid/src',
+        paths.modules + '/cf-icons/src',
+        paths.modules + '/cf-layout/src',
+        paths.modules + '/cf-pagination/src',
+        paths.modules + '/cf-tables/src',
+        paths.modules + '/cf-typography/',
+        paths.modules + '/cfpb-chart-builder/'
       ] ),
       compress: true
     }
