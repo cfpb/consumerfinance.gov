@@ -1,4 +1,3 @@
-import os
 from functools import partial
 
 from django.conf import settings
@@ -23,7 +22,7 @@ from ask_cfpb.views import (
     view_answer
 )
 from core.views import ExternalURLNoticeView
-from legacy.views import dbrouter_shortcut, token_provider
+from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorView, HousingCounselorPDFView
 )
@@ -275,7 +274,10 @@ urlpatterns = [
     url(r'^find-a-housing-counselor/$',
         HousingCounselorView.as_view(),
         name='housing-counselor'),
-    url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
+    url(r'^save-hud-counselors-list/$',
+        HousingCounselorPDFView.as_view(),
+        name='housing-counselor-pdf'),
+
     # Report redirects
     url(r'^reports/(?P<path>.*)$',
         RedirectView.as_view(
@@ -398,12 +400,6 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^admin/', include(wagtailadmin_urls)),
 
     ]
-
-    if os.environ.get('DATABASE_ROUTING', False):
-        patterns = [
-            url(r'^django-admin/r/(?P<content_type_id>\d*)/(?P<object_id>\d*)/$',  # noqa: E501
-                dbrouter_shortcut)
-        ] + patterns
 
     if 'selfregistration' in settings.INSTALLED_APPS:
         patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
