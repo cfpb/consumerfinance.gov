@@ -858,7 +858,7 @@ class DataSnapshot(blocks.StructBlock):
     )
 
     # Select an image
-    image = images_blocks.ImageChooserBlock(icon='image')
+    image = images_blocks.ImageChooserBlock(required=False, icon='image')
 
     class Meta:
         icon = 'image'

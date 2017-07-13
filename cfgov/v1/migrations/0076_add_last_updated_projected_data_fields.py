@@ -15,7 +15,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0073_update_social_image_help_text'),
+        ('v1', '0075_reusabletext_sidefoot_heading'),
     ]
 
     operations = [
