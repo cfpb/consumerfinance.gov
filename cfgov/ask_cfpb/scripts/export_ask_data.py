@@ -60,7 +60,8 @@ def assemble_output():
         output['SpanishURL'] = (
             answer.spanish_page.url_path.replace(
                 '/cfgov', '') if answer.spanish_page else '')
-        output['Topic'] = answer.category.first().name
+        output['Topic'] = (answer.category.first().name
+                           if answer.category.all() else '')
         output['SubCategories'] = " | ".join(
             [subcat.name for subcat in answer.subcategory.all()])
         output['Audiences'] = " | ".join(
@@ -75,7 +76,7 @@ def assemble_output():
     return output_rows
 
 
-def export_questions(path=None):
+def export_questions(path='/tmp'):
     """
     A script for exporting Ask CFPB Answer content
     to a CSV that can be opened easily in Excel.
@@ -94,15 +95,14 @@ def export_questions(path=None):
 
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
     slug = 'ask-cfpb-{}.csv'.format(timestamp)
-    if path is None:
-        path = '/tmp'
     file_path = '{}/{}'.format(path, slug).replace('//', '/')
     with open(file_path, 'w') as f:
         writer = csvkit.UnicodeWriter(f, encoding='windows-1252')
         writer.writerow(HEADINGS)
         for row in assemble_output():
             writer.writerow(
-                [row[key] for key in HEADINGS])
+                [row.get(key) for key in HEADINGS])
+    print("Ask data dumped to {}".format(file_path))
 
 
 def run(*args):
