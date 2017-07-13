@@ -1,19 +1,12 @@
 from __future__ import unicode_literals
 
 import datetime
-import sys
-
 import HTMLParser
+
 from django.utils import html
+import unicodecsv
 
 from ask_cfpb.models import Answer
-
-try:
-    from paying_for_college.csvkit import csvkit
-except ImportError:
-    print("Import error: Try installing college-costs")
-    sys.exit(1)
-
 
 html_parser = HTMLParser.HTMLParser()
 
@@ -97,12 +90,11 @@ def export_questions(path='/tmp'):
     slug = 'ask-cfpb-{}.csv'.format(timestamp)
     file_path = '{}/{}'.format(path, slug).replace('//', '/')
     with open(file_path, 'w') as f:
-        writer = csvkit.UnicodeWriter(f, encoding='windows-1252')
+        writer = unicodecsv.writer(f, encoding='windows-1252')
         writer.writerow(HEADINGS)
         for row in assemble_output():
             writer.writerow(
                 [row.get(key) for key in HEADINGS])
-    print("Ask data dumped to {}".format(file_path))
 
 
 def run(*args):
