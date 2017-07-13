@@ -935,9 +935,9 @@
       }
     },
     "caniuse-lite": {
-      "version": "1.0.30000700",
+      "version": "1.0.30000701",
       "from": "caniuse-lite@>=1.0.30000697 <2.0.0",
-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000700.tgz"
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000701.tgz"
     },
     "capture-stack-trace": {
       "version": "1.0.0",
