@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0067_auto_20170517_1344'),
+        ('v1', '0067_add_expandables_to_blog_pages'),
         ('ask_cfpb', '0001_initial'),
     ]
 
