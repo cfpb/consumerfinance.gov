@@ -131,12 +131,12 @@ gulp watch
 ```
 
 !!! note
-	The watch task only runs for the tasks for files that have changed.
-	Also, you must run `gulp build` at least once before watching.
+    The watch task will only re-run the tasks that have changed files.
+    Also, you must run `gulp build` at least once before watching.
 
-!!! note "Server error"
-    If you get this message on the page when running `gulp watch`: 
-    "A server error occurred.  Please contact the administrator." 
+!!! warning "Server error"
+    If you get this message on the page when running `gulp watch`:
+    "A server error occurred.  Please contact the administrator."
     You likely need to delete files with the `.pyc` extension from the project with the following command:    
     `find . -name \"*.pyc\" -exec rm -rf {} \;`
 
