@@ -50,6 +50,7 @@ def check_permissions(parent, user, is_publishing, is_sharing):
 def editor_js():
     js_files = [
         'js/table-block.js',
+        'js/hallo-hero-text-count.js',
     ]
     js_includes = format_html_join(
         '\n',

@@ -68,11 +68,13 @@ class TextIntroduction(blocks.StructBlock):
 class Hero(blocks.StructBlock):
     heading = blocks.CharBlock(
         required=False,
-        help_text='Maximum character count: 25 (including spaces)'
+        help_text='Maximum character count: 25 (including spaces)',
+        classname='hero_heading'
     )
     body = blocks.RichTextBlock(
         required=False,
-        help_text='Maximum character count: 185 (including spaces)'
+        help_text='Maximum character count: 185 (including spaces)',
+        classname='hero_body'
     )
 
     links = blocks.ListBlock(
