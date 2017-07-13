@@ -3,15 +3,10 @@
 {{ block.super }}
 {% if page.answer_base %}
 <div class="row nice-padding">
-  <ul class="page-explorer listing">
-    <li>
-      <a href="/admin/ask_cfpb/answer/edit/{{ page.answer_base.id }}/" class="button
-                                                                              button-secondary
-                                                                              button-large">
+      <a href="/admin/ask_cfpb/answer/edit/{{ page.answer_base.id }}/" 
+         class="button button-secondary button-large">
           EDIT ANSWER CONTENT
       </a>
-    </li>
-  </ul>
 </div>
 {% endif %}
 {% endblock %}
