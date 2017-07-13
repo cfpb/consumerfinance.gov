@@ -22,17 +22,17 @@
 
    ========================================================================== #}
 <div class="m-related-topics">
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
             {{ value.heading or 'Related Topics' }}
-        </span>
-    </h2>
-    <ul class="list
-               list__unstyled
-               list__links">
+        </h2>
+    </header>
+    <ul class="m-list
+               m-list__unstyled
+               m-list__links">
     {% for topic in value.topics %}
-    <li class="list_item">
-        <a href="{{ topic.url }}" class="list_link">
+    <li class="m-list_item">
+        <a href="{{ topic.url }}" class="m-list_link">
             {{ topic.text }}
         </a>
     </li>

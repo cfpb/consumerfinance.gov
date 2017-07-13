@@ -1,4 +1,3 @@
-import os
 from functools import partial
 
 from django.conf import settings
@@ -23,7 +22,7 @@ from ask_cfpb.views import (
     view_answer
 )
 from core.views import ExternalURLNoticeView
-from legacy.views import dbrouter_shortcut, token_provider
+from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorView, HousingCounselorPDFView
 )
@@ -247,14 +246,6 @@ urlpatterns = [
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
-    # If 'MOSAIC_COMPLAINTS' is false, include complaint.urls.
-    # Otherwise fallback to Wagtail if MOSAIC_COMPLAINTS is true.
-    flagged_url('MOSAIC_COMPLAINTS',
-                r'^complaint/',
-                include_if_app_enabled('complaint', 'complaint.urls'),
-                fallback=lambda req: ServeView.as_view()(req, req.path),
-                state=False),
-
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
     # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',
@@ -270,6 +261,11 @@ urlpatterns = [
         include_if_app_enabled('ratechecker', 'ratechecker.urls')),
     url(r'^oah-api/county/',
         include_if_app_enabled('countylimits', 'countylimits.urls')),
+
+    flagged_url('EREGS20',
+                r'^eregs2/',
+                include_if_app_enabled('eregs_core', 'eregs.urls')
+                ),
     url(r'^eregs-api/',
         include_if_app_enabled('regcore', 'regcore.urls')),
     url(r'^eregulations/',
@@ -278,7 +274,10 @@ urlpatterns = [
     url(r'^find-a-housing-counselor/$',
         HousingCounselorView.as_view(),
         name='housing-counselor'),
-    url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
+    url(r'^save-hud-counselors-list/$',
+        HousingCounselorPDFView.as_view(),
+        name='housing-counselor-pdf'),
+
     # Report redirects
     url(r'^reports/(?P<path>.*)$',
         RedirectView.as_view(
@@ -302,8 +301,53 @@ urlpatterns = [
     url(r'^token-provider/', token_provider),
 
     # CCDB5-API
-    url(r'^data-research/consumer-complaints/api/v1/',
-        include_if_app_enabled('complaint_search', 'complaint_search.urls')),
+    flagged_url('CCDB5_RELEASE',
+                r'^data-research/consumer-complaints/api/v1/',
+                include_if_app_enabled('complaint_search',
+                                       'complaint_search.urls')
+                ),
+
+    # ask-cfpb
+    url(r'^askcfpb/$',
+        RedirectView.as_view(
+            url='/ask-cfpb/',
+            permanent=True)),
+    url(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
+         RedirectView.as_view(
+             url='/es/obtener-respuestas/slug-es-%(ask_id)s',
+             permanent=True)),
+    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
+         RedirectView.as_view(
+             url='/ask-cfpb/slug-en-%(ask_id)s',
+             permanent=True)),
+    url(r'^askcfpb/search/',
+        redirect_ask_search,
+        name='redirect-ask-search'),
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
+        ask_search,
+        name='ask-search-es'),
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-es-json'),
+    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+        view_answer,
+        name='ask-english-answer'),
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+        view_answer,
+        name='ask-spanish-answer'),
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
+        print_answer,
+        name='ask-spanish-print-answer'),
+    url(r'^(?i)ask-cfpb/search/$',
+        ask_search,
+        name='ask-search-en'),
+    url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
+        ask_search,
+        name='ask-search-en-json'),
+    url(r'^(?i)ask-cfpb/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-en'),
+    url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
+        ask_autocomplete, name='ask-autocomplete-es'),
 ]
 
 if settings.ALLOW_ADMIN_URL:
@@ -327,7 +371,11 @@ if settings.ALLOW_ADMIN_URL:
             RedirectView.as_view(url='/django-admin/%(path)s',
                                  permanent=True)),
         url(r'^picard/(?P<path>.*)$',
-            RedirectView.as_view(url='/tasks/%(path)s', permanent=True)),
+            RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
+
+        url(r'^tasks/(?P<path>.*)$',
+            RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
+
         url(r'^django-admin/password_change',
             change_password,
             name='django_admin_account_change_password'),
@@ -352,15 +400,6 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^admin/', include(wagtailadmin_urls)),
 
     ]
-
-    if os.environ.get('DATABASE_ROUTING', False):
-        patterns = [
-            url(r'^django-admin/r/(?P<content_type_id>\d*)/(?P<object_id>\d*)/$',  # noqa: E501
-                dbrouter_shortcut)
-        ] + patterns
-
-    if 'picard' in settings.INSTALLED_APPS:
-        patterns.append(url(r'^tasks/', include('picard.urls')))
 
     if 'selfregistration' in settings.INSTALLED_APPS:
         patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
@@ -405,55 +444,6 @@ if settings.DEBUG:
         urlpatterns.append(url(r'^__debug__/', include(debug_toolbar.urls)))
     except ImportError:
         pass
-
-redirect_patterns = [
-    url(r'^askcfpb/$',
-        RedirectView.as_view(
-            url='/ask-cfpb/',
-            permanent=True)),
-    url(r'^(?P<language>es)/obtener-respuestas/c/(.+)/(?P<ask_id>\d+)/(.+)\.html$',  # noqa: E501
-         RedirectView.as_view(
-             url='/es/obtener-respuestas/slug-es-%(ask_id)s',
-             permanent=True)),
-    url(r'^askcfpb/(?P<ask_id>\d+)/(.*)$',
-         RedirectView.as_view(
-             url='/ask-cfpb/slug-en-%(ask_id)s',
-             permanent=True)),
-    url(r'^askcfpb/search/',
-        redirect_ask_search,
-        name='redirect-ask-search'),
-]
-urlpatterns += redirect_patterns
-
-ask_patterns = [
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
-        ask_search,
-        name='ask-search-es'),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-es-json'),
-    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
-        view_answer,
-        name='ask-english-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
-        view_answer,
-        name='ask-spanish-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
-        print_answer,
-        name='ask-spanish-print-answer'),
-    url(r'^(?i)ask-cfpb/search/$',
-        ask_search,
-        name='ask-search-en'),
-    url(r'^(?i)ask-cfpb/search/(?P<as_json>json)/$',
-        ask_search,
-        name='ask-search-en-json'),
-    url(r'^(?i)ask-cfpb/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-en'),
-    url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
-        ask_autocomplete, name='ask-autocomplete-es'),
-]
-urlpatterns += ask_patterns
-
 
 # Catch remaining URL patterns that did not match a route thus far.
 urlpatterns.append(url(r'', include(wagtailsharing_urls)))

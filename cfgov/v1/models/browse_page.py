@@ -42,6 +42,7 @@ class BrowsePage(CFGOVPage):
         ('html_block', organisms.HTMLBlock()),
         ('chart_block', organisms.ChartBlock()),
         ('snippet_list', organisms.SnippetList()),
+        ('data_snapshot', organisms.DataSnapshot()),
     ], blank=True)
 
     secondary_nav_exclude_sibling_pages = models.BooleanField(default=False)

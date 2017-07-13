@@ -18,7 +18,7 @@
 
 {% block babel_content %}
     
-    <section class="content row">
+    <section class="content row ask-cfpb-page__es">
 
         <div class="primary span8">
 
@@ -33,9 +33,9 @@
                 <span class="split-left"><a class="print" href="{{ request.url }}imprimir/">
                         <img src="{{ static('nemo/_/img/icon-print-retina.png') }}" alt="" class="icon-20"> <span class="share-label">Imprimir</span></a></span>
                 <span class="split-right"><span class="share-label">Compartir esta página</span>
-                    
+
                     {% include "ask/share-links-spanish.html" with context %}
-                    
+
                 </span>
             </aside><!-- .supplement -->
             <div class="supplement">
@@ -47,7 +47,7 @@
                 {% if loop.first %}
                     <aside class="supplement ac-similar-answers">
                     <h4 class="supplement-title">Preguntas similares</h4>
-                    <ul class="unstyled spaced">
+                    <ul class="unstyled spaced nav-list">
                 {% endif %}
                     <li><a href="{{ slugurl(a.slug_es) }}">{{ a.question_es|safe }}</a></li>
                 {% if loop.last %}
@@ -71,13 +71,14 @@
                 {% endif %}
             {% endfor %}
 
+            {% if disclaimer %}
             <section class="supplement supplement-plain js-showtoggle ac-disclaimer">
-                <button class="btn btn-block btn-block-on-small js-showtoggle-trigger">Acerca de estas respuestas</button>
+                <button class="a-btn btn-block btn-block-on-small js-showtoggle-trigger">Acerca de estas respuestas</button>
                 <div class="js-showtoggle-content well">
-                    Estas respuestas se proveen solamente para efectos informativos generales. Si bien no le aconsejarán sobre su situación exacta, esperamos que le ayuden a entender mejor los productos y servicios financieros. Estas respuestas no constituyen asesoramiento legal ni interpretación del CFPB.
+                    {{ disclaimer.text | safe }}
                 </div>
             </section>
-
+            {% endif %}
         </aside><!-- .secondary -->
         <div class="share s-hide-on-small" data-set="share"></div><!-- .share -->
 
@@ -85,14 +86,15 @@
     </section><!-- .row -->
     <div class="analytics-data" 
          data-answer-id="{{ answer_id }}"
-         data-category-slug="{{ category.slug_es }}">
+         data-category-slug="{{ category.slug_es }}"
+         data-category-name="{{ category.name_es }}">
     </div>
 {% endblock %}
 
 {% block babel_share %}
     <div class="share s-show-on-small" data-set="share">
         <span><span class="share-label">Compartir esta página</span>
-            
+
             {% include "ask/share-links-spanish.html" %}
 
         </span>

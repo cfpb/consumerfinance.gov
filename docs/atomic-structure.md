@@ -51,16 +51,16 @@ Prefixed with “m-” in CSS, JavaScript, and HTML files.
 #### JavaScript
 
 ```javascript
-function Notification( element ) { 
+function Notification( element ) {
    // eslint-disable-line max-statements, inline-comments, max-len
    var BASE_CLASS = 'm-notification';
 
    // Constants for the state of this Notification.
    var SUCCESS = 'success';
    var WARNING = 'warning';
-   var ERROR = 'error'; 
+   var ERROR = 'error';
    // Constants for the Notification modifiers.
-   var MODIFIER_VISIBLE = BASE_CLASS + '__visible'; 
+   var MODIFIER_VISIBLE = BASE_CLASS + '__visible';
    var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
    var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
 ```
@@ -79,10 +79,10 @@ Prefixed with “o-” in CSS, JavaScript, and HTML.
 #### HTML
 
 ```html
-<div data-qa-hook="expandable" class="o-expandable 
-                                      o-expandable__borders 
-                                      o-expandable__midtone 
-                                      o-expandable__expanded" 
+<div data-qa-hook="expandable" class="o-expandable
+                                      o-expandable__borders
+                                      o-expandable__midtone
+                                      o-expandable__expanded"
                                data-js-hook="state_atomic_init">
     <button class="o-expandable_target" aria-pressed="true">
         <div class="o-expandable_header">
@@ -91,7 +91,7 @@ Prefixed with “o-” in CSS, JavaScript, and HTML.
 JavaScript:
 
 ```javascript
- function Expandable( element ) { 
+ function Expandable( element ) {
   var BASE_CLASS = 'o-expandable';
 
   // Bitwise flags for the state of this Expandable.
@@ -106,7 +106,7 @@ JavaScript:
   var _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
   var _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
 ```
-  
+
 The Expandable organism can be instantiated with the following code:
 
 ```javascript
@@ -132,13 +132,7 @@ Prefixed with “t-” in CSS, JavaScript, and HTML.
     &_social .m-social-media {
         float: right;
     }
-
-    // TODO: Consolidate site-wide media_image responsive sizes into one class.
-    &_students-and-graduates .media_image {
-        width: 130px;
-        .respond-to-min( @bp-med-min, {
-            width: 150px;
-        } );
+    …
 ```
 
 ### Folder Structure
@@ -196,7 +190,7 @@ There was considerable discussion on how we should create JS components. The com
 
 ```javascript
 function AtomicComponent( domElement ) {
-    // Ensure the passed in Element is in the DOM. 
+    // Ensure the passed in Element is in the DOM.
     // Query and store references to sub-elements.
     // Instantiate child atomic components.
     // Bind necessary events for referenced DOM elements.

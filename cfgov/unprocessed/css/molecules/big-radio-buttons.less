@@ -99,13 +99,13 @@
         }
 
         &[type="radio"]:disabled + label {
-            color: @input-disabled;
+            color: @input-bg__disabled;
             cursor: not-allowed;
         }
 
         &[type="radio"]:disabled + label::before {
-            background: @input-big-target-bg__disabled;
-            box-shadow: 0 0 0 1px @input-bg, 0 0 0 2px @input-disabled;
+            background: @input-lg-target__disabled;
+            box-shadow: 0 0 0 1px @input-bg, 0 0 0 2px @input-bg__disabled;
             cursor: not-allowed;
         }
     }

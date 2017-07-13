@@ -87,8 +87,7 @@
         <div class="event-venue_details">
             <header class="event-venue_header">
                 {% if ( event_state == 'present' ) %}
-                <button class="btn
-                          event-venue_live-btn">
+                <button class="a-btn event-venue_live-btn">
                     <span class="cf-icon cf-icon-livestream"></span>
                     <span class="event-venue_live-btn_text">Live</span>
                 </button>
@@ -222,12 +221,12 @@
                 {% for speaker in bound.speakers.value %}
                     {%- if speaker.bound_blocks.url.render() -%}
                     <a href="{{ speaker.bound_blocks.url.render() }}">
-                    {{ speaker.bound_blocks.name.render() }}
+                    {{- speaker.bound_blocks.name.render() -}}
                     </a>
                     {%- else -%}
-                    {{ speaker.bound_blocks.name.render() }}
+                    {{- speaker.bound_blocks.name.render() -}}
                     {%- endif -%}
-                    {{ ';' if loop.index < loop.length else '' }}
+                    {{ '; ' if loop.index < loop.length else '' }}
                 {%- endfor -%}
                 </td>
             </tr>
@@ -298,9 +297,9 @@
                      src='{{ event.flickr_url }}' >
             </p>
             <p class="speech_link-container">
-                <a class="jump-link
-                          jump-link__external-link
-                          jump-link__underline"
+                <a class="a-link
+                          a-link__jump
+                          a-link__external-link"
                     href="{{ event.flickr_url }}">
                     See the album for the Event
                 </a>
@@ -313,8 +312,8 @@
                 <h4>Speech text</h4>
                 <p>
                     <a href="{{ event.speech_transcript.url }}"
-                       class="jump-link
-                              jump-link__underline">
+                       class="a-link
+                              a-link__jump">
                        Download speech
                     </a>
                 </p>
@@ -325,8 +324,8 @@
                 <h4>Video transcript</h4>
                 <p>
                     <a href="{{ event.video_transcript.url }}"
-                       class="jump-link
-                              jump-link__underline">
+                       class="a-link
+                              a-link__jump">
                        Download transcript
                     </a>
                 </p>

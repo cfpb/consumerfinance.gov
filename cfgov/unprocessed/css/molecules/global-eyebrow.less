@@ -53,10 +53,10 @@
 
     &_tagline {
         padding-left: 32px; //22px flag + 10px spacing
-        background: url('../img/us-flag_22x13.png') no-repeat 0 0;
+        background: url('/static/img/us-flag_22x13.png') no-repeat 0 0;
 
         .respond-to-dpi(2, {
-            background-image: url('../img/us-flag_44x26.png');
+            background-image: url('/static/img/us-flag_44x26.png');
             background-size: 22px;
         });
 
@@ -72,7 +72,7 @@
     &_languages {
         display: inline;
 
-        .list_item:not(:last-child) {
+        .m-list_item:not(:last-child) {
             margin-right: unit( 7px / 12px, em );
             margin-bottom: 0;
 

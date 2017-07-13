@@ -28,7 +28,7 @@
     },
     'image': {
         'src': 'img/fmc-about-us-540x300.jpg',
-        'alt': 'Still from about the CFPB video.',
+        'alt': '',
     },
     'body': 'This short video covers what the CFPB is ' +
             'and how we are working for American consumers.',
@@ -40,7 +40,7 @@
     },
     'image': {
         'src': 'img/fmc-poly-com-540x300.jpg',
-        'alt': 'Still from Know Before You Owe video.',
+        'alt': '',
     },
     'body': 'The TILA-RESPA integrated disclosure rule ' +
             'replaces four disclosure forms with two new ones. ' +
@@ -49,15 +49,15 @@
 
 {% set consumer_tools_content = {
     'link': {
-        'text': 'Stories about debt collection',
-        'url':  '/consumer-tools/everyone-has-a-story/debt-collection/',
+        'text': 'Take action together',
+        'url':  '/arbitration-rule/',
     },
     'image': {
         'src': 'img/fmc-consumer-tools-540x300.png',
-        'alt': 'Illustration of US Map represented as consumer stories',
+        'alt': '',
     },
-    'body': 'Consumers across the country shared their ' +
-            'experiences with debt collection. View their stories.'
+    'body': 'Learn how our new arbitration rule will make sure that groups ' +
+            'of people can take companies to court.'
 } %}
 
 {% set media_items = [
@@ -69,7 +69,7 @@
 {% set nav_items = [(
     ('Consumer Tools', '#', [(
         ('Submit a Complaint', '/complaint/', []),
-        ('Ask CFPB', '/ask-cfpb/' if flag_enabled('WAGTAIL_ASK_CFPB', request) else '/askcfpb/', []),
+        ('Ask CFPB', '/ask-cfpb/', []),
         ('Tell Your Story', '/your-story/', []),
         ('Information for Students', '/students/', []),
         ('Information for Servicemembers & Veterans', '/servicemembers/', [])
@@ -173,4 +173,3 @@
         ('Contact Us', '/about-us/contact-us/', [])
     )])
 )] -%}
-

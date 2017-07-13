@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import urllib
+
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 
@@ -59,6 +61,8 @@ class FeedbackHandler(Handler):
                 )
             except (ValueError, TypeError):
                 pass
+            feedback.referrer = urllib.unquote(
+                self.request.POST.get('referrer', '').encode('utf8'))
             feedback.page = self.page
             feedback.save()
             return self.success()

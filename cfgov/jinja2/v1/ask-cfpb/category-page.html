@@ -40,18 +40,22 @@
     </section>
     {% if choices|length > 0 %}
     <section class="ask-categories
-                    block 
-                    block__bg 
-                    block__flush-sides 
-                    block__flush-bottom 
+                    block
+                    block__bg
+                    block__flush-sides
+                    block__flush-bottom
                     block__bg-extend-right">
         <h3>What is your question about?</h3>
         <nav class="content-l subcategory-nav">
 
             {% for column in choices | slice(2) -%}
-            <ul class="content-l_col content-l_col-1-2 facets_list list list__unstyled">
+            <ul class="content-l_col
+                       content-l_col-1-2
+                       facets_list
+                       m-list
+                       m-list__unstyled">
                 {%- for subcategory in column -%}
-                <li class="list_item">
+                <li class="m-list_item">
                     <a  class="m-nav-link {{ 'm-nav-link__current' if page.ask_subcategory.slug == subcategory.slug else '' }}" href="/ask-cfpb/category-{{ page.ask_category.slug }}/{{ subcategory.slug }}">
                         {{ subcategory.name }}
                     </a>
@@ -65,18 +69,22 @@
     {% endif %}
 
     <section class="search-results block block__flush-top">
-        
+        <div class="search-results_notification u-mt30">
+            {% from 'molecules/notification.html' import render as notification with context %}
+            {{ notification('success', false, results_count ~ ' results') }}
+        </div>
+
         <div class="question_list">
             {% for question in questions %}
             <article class="question_summary question_summary__basic">
-                {{ partially_styled_link.render( {'plain_text': question.question, 'underlined_text': 'Read answer', 'url': slugurl( question.slug )} ) }}  
+                {{ partially_styled_link.render( {'plain_text': question.question, 'underlined_text': 'Read answer', 'url': slugurl( question.slug )} ) }}
             </article>
             {% endfor %}
         </div>
-  
+
         <div class="block block__sub">
             {{ pagination.render( paginator.num_pages, current_page, '', 0, 'Previous', 'Next' ) }}
-        </div>  
+        </div>
 
         {% if disclaimer %}
         <div class="block block__flush-bottom ask-disclaimer">
@@ -87,6 +95,3 @@
     {{ ask_search_bar.render( 'right' ) }}
 
 {% endblock %}
-
-
-

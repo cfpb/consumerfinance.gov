@@ -23,14 +23,14 @@
 {%- set ht_id = get_unique_id('textarea_ht_', '_') ~ slugify( value.label ) -%}
 
 <div class="form-l_col form-l_col-1">
-    <label for="{{ id }}" class="form-label-header">
+    <label for="{{ id }}" class="a-label a-label__heading">
         {{ value.label }}
         {%- if value.required == false -%}
-            <span class="micro-copy">&nbsp;(Optional)</span>
+            <small>&nbsp;(Optional)</small>
         {%- endif -%}
     </label>
     {%- if value.helperText -%}
-        <p class="micro-copy" id="{{ ht_id }}">{{ value.helperText | safe }}</p>
+        <p id="{{ ht_id }}"><small>{{ value.helperText | safe }}</small></p>
     {%- endif -%}
     <textarea class="input__long"
               id="{{ id }}"

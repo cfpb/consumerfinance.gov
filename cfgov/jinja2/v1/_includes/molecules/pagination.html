@@ -32,42 +32,38 @@
          role="navigation"
          aria-label="Pagination">
         {%- if current_page > 1 %}
-        <a class="btn
-                  btn__super
+        <a class="a-btn
                   m-pagination_btn-prev"
            href="?page={{ (current_page - 1) ~
                           url_parameters(request.GET) ~
                           fragment_id }}">
         {%- else %}
-        <a class="btn
-                  btn__super
-                  btn__disabled
+        <a class="a-btn
+                  a-btn__disabled
                   m-pagination_btn-prev">
         {% endif %}
-            <span class="btn_icon__left
+            <span class="a-btn_icon__on-left
                          cf-icon
                          cf-icon-left"></span>
             {{ prev_text }}
         </a>
         {%- if current_page < total_pages %}
-        <a class="btn
-                  btn__super
+        <a class="a-btn
                   m-pagination_btn-next"
            href="?page={{ (current_page + 1) ~
                           url_parameters(request.GET) ~
                           fragment_id }}">
         {%- else %}
-        <a class="btn
-                  btn__super
-                  btn__disabled
+        <a class="a-btn
+                  a-btn__disabled
                   m-pagination_btn-next">
         {% endif -%}
             {{ next_text }}
-            <span class="btn_icon__right
+            <span class="a-btn_icon__on-right
                          cf-icon
                          cf-icon-right"></span>
         </a>
-        <form action="{{ fragment_id }}">
+        <form class="m-pagination_form" action="{{ fragment_id }}">
             <label for="m-pagination_current-page-{{ index | string }}">
                 <span class="m-pagination_label">
                     Page
@@ -95,9 +91,9 @@
             <span class="m-pagination_label">
                 of {{ total_pages }}
             </span>
-            <button class="btn
-                           btn__link
-                           m-pagination_submit-btn"
+            <button class="a-btn
+                           a-btn__link
+                           m-pagination_btn-submit"
                     type="submit">
                 Go
             </button>

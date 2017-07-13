@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0067_auto_20170517_1344'),
+        ('v1', '0067_add_expandables_to_blog_pages'),
     ]
 
     operations = [

@@ -26,21 +26,19 @@
 // The Capital Framework (CF) brand color palette.
 @import (less) "brand-palette.less";
 
+// Vars enhancements that is on migration path to CF Core.
+@import (less) "enhancements/vars.less";
+
 // Override the CF theme variables with colors from the brand color palette.
 @import (less) "cf-theme-overrides.less";
 
 // Enhancements that are on a migration path to being added to CF.
 // CF Core
-@import (less) "enhancements/vars.less";
-@import (less) "enhancements/media-queries.less";
 @import (less) "enhancements/utilities.less";
 @import (less) "enhancements/base.less";
 
-// Typography
+// CF Typography
 @import (less) "enhancements/typography.less";
-
-// CF Buttons
-@import (less) "enhancements/buttons.less";
 
 // CF Icons
 @import (less) "enhancements/icons.less";
@@ -63,15 +61,14 @@
 @import (less) "enhancements/print.less";
 
 
+
 /* Base patterns
    ========================================================================== */
 
 @import (less) "forms.less";
-@import (less) "lists.less";
 @import (less) "media.less";
 @import (less) "meta.less";
 @import (less) "misc.less";
-@import (less) "summary.less";
 @import (less) "video-player.less";
 
 
@@ -109,14 +106,12 @@
 @import (less) "molecules/global-eyebrow.less";
 @import (less) "molecules/global-header-cta.less";
 @import (less) "molecules/global-search.less";
-@import (less) "molecules/hero.less";
 @import (less) "molecules/home-hero.less";
 @import (less) "molecules/info-unit.less";
 @import (less) "molecules/inset.less";
 @import (less) "molecules/multi-select.less";
 @import (less) "molecules/nav-link.less";
 @import (less) "molecules/notification.less";
-@import (less) "molecules/pagination.less";
 @import (less) "molecules/related-metadata.less";
 @import (less) "molecules/related-posts.less";
 @import (less) "molecules/social-media.less";
@@ -149,14 +144,12 @@
 @import (less) "organisms/sidebar-content.less";
 @import (less) "organisms/snippet-list.less";
 @import (less) "organisms/well.less";
-@import (less) "organisms/email-popup.less";
 
 /* Template pieces
    ========================================================================== */
 
 @import (less) "skip-nav.less";
 @import (less) "breadcrumbs.less";
-@import (less) "share.less";
 
 
 /* Page-specific styles

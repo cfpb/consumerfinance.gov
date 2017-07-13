@@ -1,30 +1,100 @@
 from __future__ import unicode_literals
+import datetime
 import HTMLParser
 
 import json
 import mock
-from mock import patch
+from mock import mock_open, patch
 from model_mommy import mommy
+import unittest
 
 from bs4 import BeautifulSoup as bs
 
 from django.utils import timezone
 from django.apps import apps
 from django.core.urlresolvers import reverse
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, Http404
+from django.template.defaultfilters import slugify
 from django.test import TestCase
 from django.utils import html
 
 from v1.models import CFGOVImage
 from v1.util.migrations import get_or_create_page, get_free_path
 from ask_cfpb.models.django import (
-    Answer, Category, SubCategory, Audience,
-    NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
+    Answer, Audience, Category, generate_short_slug, NextStep,
+    SubCategory, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
 from ask_cfpb.models.pages import (
     AnswerPage, AnswerCategoryPage, AnswerAudiencePage)
+from ask_cfpb.scripts.export_ask_data import (
+    assemble_output, clean_and_strip, export_questions)
 
 html_parser = HTMLParser.HTMLParser()
 now = timezone.now()
+
+
+class AnswerSlugCreationTest(unittest.TestCase):
+
+    def test_long_slug_string(self):
+        long_string = (
+            "This string is more than 100 characters long, I assure you. "
+            "No, really, more than 100 characters loooong.")
+        self.assertEqual(
+            generate_short_slug(long_string),
+            ('this-string-is-more-than-100-characters-long-'
+             'i-assure-you-no-really-more-than-100-characters'))
+
+    def test_short_slug_string(self):
+        short_string = "This string is less than 100 characters long."
+        self.assertEqual(
+            generate_short_slug(short_string), slugify(short_string))
+
+    def test_slug_string_that_will_end_with_a_hyphen(self):
+        """
+        It's possible for slug truncation to result in a slug that ends
+        on a hypthen. In that case the function should strip the ending hyphen.
+        """
+        will_end_with_hyphen = (
+            "This string is more than 100 characters long, I assure you. "
+            "No, really, more than 100 characters looong and end on a hyphen.")
+        self.assertEqual(
+            generate_short_slug(will_end_with_hyphen),
+            'this-string-is-more-than-100-characters-long-i-assure-you-'
+            'no-really-more-than-100-characters-looong')
+
+
+class OutputScriptFunctionTests(unittest.TestCase):
+
+    def setUp(self):
+        self.mock_assemble_output_value = [{
+            'ASK_ID': 123456,
+            'Question': "Question",
+            'ShortAnswer': "Short answer.",
+            'Answer': "Long answer.",
+            'URL': "fakeurl.com",
+            'SpanishQuestion': "Spanish question.",
+            'SpanishAnswer': "Spanish answer",
+            'SpanishURL': "fakespanishurl.com",
+            'Topic': "Category 5 Hurricane",
+            'SubCategories': "Subcat1 | Subcat2",
+            'Audiences': "Audience1 | Audience2",
+            'RelatedQuestions': "1 | 2 | 3",
+            'RelatedResources': "Owning a Home"}]
+
+    def test_clean_and_strip(self):
+        raw_data = "<p>If you have been scammed, file a complaint.</p>"
+        clean_data = "If you have been scammed, file a complaint."
+        self.assertEqual(clean_and_strip(raw_data), clean_data)
+
+    @mock.patch('ask_cfpb.scripts.export_ask_data.assemble_output')
+    def test_export_questions(self, mock_output):
+        mock_output.return_value = self.mock_assemble_output_value
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
+        slug = 'ask-cfpb-{}.csv'.format(timestamp)
+        m = mock_open()
+        with patch('__builtin__.open', m, create=True):
+            export_questions()
+        self.assertEqual(mock_output.call_count, 1)
+        m.assert_called_once_with("/tmp/{}".format(slug), 'w')
 
 
 class AnswerModelTestCase(TestCase):
@@ -97,7 +167,16 @@ class AnswerModelTestCase(TestCase):
             ROOT_PAGE,
             language='es',
             live=True)
-        self.tag_results_page = get_or_create_page(
+        self.tag_results_page_en = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'TagResultsPage',
+            'Tag results page',
+            'search-by-tag',
+            ROOT_PAGE,
+            language='en',
+            live=True)
+        self.tag_results_page_es = get_or_create_page(
             apps,
             'ask_cfpb',
             'TagResultsPage',
@@ -114,6 +193,7 @@ class AnswerModelTestCase(TestCase):
             slug_es='mock-spanish-answer-es-1234',
             question='Mock question1',
             question_es='Mock Spanish question1',
+            search_tags='hippodrome',
             search_tags_es='hipotecas',
             update_english_page=True,
             update_spanish_page=True)
@@ -124,12 +204,23 @@ class AnswerModelTestCase(TestCase):
             id=5678,
             answer='Mock answer 2',
             question='Mock question2',
+            search_tags='hippodrome',
             search_tags_es='hipotecas')
         self.answer5678.save()
         self.page2 = self.create_answer_page(slug='mock-answer-page-en-5678')
         self.page2.answer_base = self.answer5678
         self.page2.parent = self.english_parent_page
         self.page2.save()
+
+    def test_export_script_assemble_output(self):
+        expected_urls = ['/ask-cfpb/mock-question1-en-1234/',
+                         '/ask-cfpb/mock-answer-page-en-5678/']
+        expected_questions = ['Mock question1', 'Mock question2']
+        test_output = assemble_output()
+        for obj in test_output:
+            self.assertIn(obj.get('ASK_ID'), [1234, 5678])
+            self.assertIn(obj.get('URL'), expected_urls)
+            self.assertIn(obj.get('Question'), expected_questions)
 
     def test_spanish_print_page(self):
         response = self.client.get(reverse(
@@ -190,25 +281,29 @@ class AnswerModelTestCase(TestCase):
             json.loads(facet_map)['subcategories']['1'], [])
 
     def test_answer_valid_tags(self):
-        test_list = Answer.valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
+        test_dict = Answer.valid_tags()
+        self.assertIn('hippodrome', test_dict['valid_tags'])
 
-    def test_get_valid_tags(self):
-        from ask_cfpb.models import get_valid_spanish_tags
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
+    def test_answer_valid_es_tags(self):
+        test_dict = Answer.valid_tags(language='es')
+        self.assertIn('hipotecas', test_dict['valid_tags'])
 
-    @mock.patch('ask_cfpb.models.pages.SearchQuerySet.filter')
-    def test_get_valid_tags_works_without_elasticsearch(self, mock_sqs):
-        from ask_cfpb.models import get_valid_spanish_tags
-        mock_sqs.return_value = [None]
-        test_list = get_valid_spanish_tags()
-        self.assertIn('hipotecas', test_list)
+    def test_answer_invalid_tag(self):
+        test_dict = Answer.valid_tags(language='es')
+        self.assertNotIn('hippopotamus', test_dict['valid_tags'])
 
     def test_routable_category_page_view(self):
         cat_page = self.create_category_page(
             ask_category=self.category)
         response = cat_page.category_page(HttpRequest())
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_category_page_bad_pagination(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        request = HttpRequest()
+        request.GET['page'] = 50
+        response = cat_page.category_page(request)
         self.assertEqual(response.status_code, 200)
 
     def test_routable_subcategory_page_view(self):
@@ -218,37 +313,99 @@ class AnswerModelTestCase(TestCase):
             HttpRequest(), subcat=self.subcategories[0].slug)
         self.assertEqual(response.status_code, 200)
 
-    def test_routable_tag_page_template(self):
+    def test_routable_subcategory_page_bad_subcategory(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        with self.assertRaises(Http404):
+            cat_page.subcategory_page(HttpRequest(), subcat=None)
+
+    def test_routable_subcategory_page_bad_pagination(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        request = HttpRequest()
+        request.GET['page'] = 100
+        response = cat_page.subcategory_page(
+            request, subcat=self.subcategories[0].slug)
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_tag_page_en_template(self):
+        page = self.tag_results_page_en
         self.assertEqual(
-            self.tag_results_page.get_template(HttpRequest()),
+            page.get_template(HttpRequest()),
+            'ask-cfpb/answer-search-results.html')
+
+    def test_routable_tag_page_es_template(self):
+        page = self.tag_results_page_es
+        self.assertEqual(
+            page.get_template(HttpRequest()),
             'ask-cfpb/answer-tag-spanish-results.html')
 
     def test_routable_tag_page_base_returns_404(self):
-        response = self.client.get(
-            self.tag_results_page.url +
-            self.tag_results_page.reverse_subpage('spanish_tag_base'))
-        self.assertEqual(response.status_code, 404)
-
-    def test_routable_tag_page_subpage_bad_tag_returns_404(self):
-        page = self.tag_results_page
+        page = self.tag_results_page_en
         response = self.client.get(
             page.url + page.reverse_subpage(
-                'buscar_por_etiqueta',
+                'tag_base'))
+        self.assertEqual(response.status_code, 404)
+
+    def test_routable_tag_page_es_bad_tag_returns_404(self):
+        page = self.tag_results_page_es
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'tag_search',
                 kwargs={'tag': 'hippopotamus'}))
         self.assertEqual(response.status_code, 404)
 
-    def test_routable_tag_page_subpage_valid_tag_returns_200(self):
-        page = self.tag_results_page
+    def test_routable_tag_page_en_bad_tag_returns_404(self):
+        page = self.tag_results_page_en
         response = self.client.get(
             page.url + page.reverse_subpage(
-                'buscar_por_etiqueta',
+                'tag_search',
+                kwargs={'tag': 'hippopotamus'}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_routable_tag_page_es_handles_bad_pagination(self):
+        page = self.tag_results_page_es
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'tag_search',
+                kwargs={'tag': 'hipotecas'}), {'page': '100'})
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_tag_page_en_handles_bad_pagination(self):
+        page = self.tag_results_page_en
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'tag_search',
+                kwargs={'tag': 'hippodrome'}), {'page': '100'})
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_tag_page_es_valid_tag_returns_200(self):
+        page = self.tag_results_page_es
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'tag_search',
                 kwargs={'tag': 'hipotecas'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_routable_tag_page_returns_url_suffix(self):
-        response = self.tag_results_page.reverse_subpage(
-            'buscar_por_etiqueta', kwargs={'tag': 'hipotecas'})
+    def test_routable_tag_page_en_valid_tag_returns_200(self):
+        page = self.tag_results_page_en
+        response = self.client.get(
+            page.url + page.reverse_subpage(
+                'tag_search',
+                kwargs={'tag': 'hippodrome'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_tag_page_es_returns_url_suffix(self):
+        page = self.tag_results_page_es
+        response = page.reverse_subpage(
+            'tag_search', kwargs={'tag': 'hipotecas'})
         self.assertEqual(response, 'hipotecas/')
+
+    def test_routable_tag_page_en_returns_url_suffix(self):
+        page = self.tag_results_page_en
+        response = page.reverse_subpage(
+            'tag_search', kwargs={'tag': 'hippodrome'})
+        self.assertEqual(response, 'hippodrome/')
 
     def test_view_answer_exact_slug(self):
         page = self.page1
@@ -316,6 +473,21 @@ class AnswerModelTestCase(TestCase):
         spanish_page = spanish_answer.spanish_page
         soup = bs(spanish_page.serve(HttpRequest()).rendered_content)
         self.assertIn('Oficina', soup.title.string)
+
+    def test_spanish_answer_page_handles_referrer_with_unicode_accents(self):
+        referrer_unicode = (
+            'https://www.consumerfinance.gov/es/obtener-respuestas/'
+            'buscar-por-etiqueta/empresas_de_informes_de_cr\xe9dito/')
+        spanish_answer = self.prepare_answer(
+            answer_es='Spanish answer',
+            slug_es='spanish-answer',
+            update_spanish_page=True)
+        spanish_answer.save()
+        spanish_page = spanish_answer.spanish_page
+        request = HttpRequest()
+        request.POST['referrer'] = referrer_unicode
+        response = spanish_page.serve(request)
+        self.assertEqual(response.status_code, 200)
 
     def test_create_or_update_page_unsuppoted_language(self):
         answer = self.prepare_answer()
@@ -509,7 +681,9 @@ class AnswerModelTestCase(TestCase):
 
     def test_subcategory_str(self):
         subcategory = self.subcategories[0]
-        self.assertEqual(subcategory.__str__(), subcategory.name)
+        self.assertEqual(
+            subcategory.__str__(),
+            "{}: {}".format(self.category.name, subcategory.name))
 
     def test_nextstep_str(self):
         next_step = self.next_step
@@ -583,6 +757,14 @@ class AnswerModelTestCase(TestCase):
         self.assertEqual(
             test_context['get_secondary_nav_items'],
             get_ask_nav_items)
+
+    def test_audience_page_handles_bad_pagination(self):
+        audience_page = self.create_audience_page(
+            ask_audience=self.audience, language='en')
+        request = HttpRequest()
+        request.GET['page'] = '100'
+        response = audience_page.serve(request)
+        self.assertEqual(response.status_code, 200)
 
     def test_category_page_context(self):
         mock_site = mock.Mock()

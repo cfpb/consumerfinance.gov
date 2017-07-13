@@ -64,9 +64,9 @@
         <div class="h5 m-social-media_heading m-social-media_heading__es">Compartir</div>
     {% endif %}
 
-    <ul class="list
-               list__unstyled
-               list__horizontal
+    <ul class="m-list
+               m-list__unstyled
+               m-list__horizontal
                m-social-media_icons">
 
         {% set facebook_info = {
@@ -128,15 +128,16 @@
 
         {% for link in links %}
             {% if is_share_view %}
-                <li class="list_item">
+                <li class="m-list_item">
                     <a class="m-social-media_icon"
                        href="{{ link.share_url if link.name != 'email' else link.share_url | trim }}"
-                       {{ 'target=_blank' if link.name != 'email' else '' }}> <span class="cf-icon {{ link.class }}"></span>
+                       {{ 'target=_blank' if link.name != 'email' else '' }}>
+                        <span class="cf-icon {{ link.class }}"></span>
                         <span class="u-visually-hidden">Share on {{ link.name }}</span>
                     </a>
                 </li>
             {% else %}
-                <li class="list_item">
+                <li class="m-list_item">
                     <a class="m-social-media_icon"
                        href="{{ link.homepage | trim }}">
                         <span class="cf-icon {{ link.class }}"></span>

@@ -78,12 +78,10 @@ INSTALLED_APPS = (
 )
 
 OPTIONAL_APPS = [
-    {'import': 'noticeandcomment', 'apps': ('noticeandcomment',)},
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
     {'import': 'agreements', 'apps': ('agreements', 'haystack',)},
-    {'import': 'knowledgebase', 'apps': ('knowledgebase', 'haystack',)},
     {'import': 'selfregistration', 'apps': ('selfregistration',)},
     {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
@@ -94,9 +92,20 @@ OPTIONAL_APPS = [
     {'import': 'regcore', 'apps': ('regcore', 'regcore_read', 'regcore_write')},
     {'import': 'eregsip', 'apps': ('eregsip',)},
     {'import': 'regulations', 'apps': ('regulations',)},
-    {'import': 'picard', 'apps': ('picard',)},
     {'import': 'complaint_search', 'apps': ('complaint_search', 'rest_framework')},
     {'import': 'ccdb5_ui', 'apps': ('ccdb5_ui', )},
+]
+
+if DEPLOY_ENVIRONMENT == 'build':
+    OPTIONAL_APPS += [
+        {'import': 'eregs', 'apps': ('eregs_core',)},
+    ]
+
+# These apps use "legacy" database routing
+# See: cfgov/v1/db_router.py
+LEGACY_APPS = [
+    'comparisontool',
+    'agreements',
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -168,6 +177,8 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 
 # Admin Url Access
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
+
+DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
 
 if 'collectstatic' in sys.argv:
     COLLECTSTATIC = True
@@ -309,6 +320,9 @@ DJANGO_HUD_API_ENDPOINT= os.environ.get('HUD_API_ENDPOINT', 'http://localhost/hu
 # in seconds, 2592000 == 30 days. Google allows no more than a month of caching
 DJANGO_HUD_GEODATA_EXPIRATION_INTERVAL = 2592000
 MAPBOX_ACCESS_TOKEN = os.environ.get('MAPBOX_ACCESS_TOKEN')
+HOUSING_COUNSELOR_S3_PATH_TEMPLATE = (
+    'a/assets/hud/{format}s/{zipcode}.{format}'
+)
 
 
 HAYSTACK_CONNECTIONS = {
@@ -320,17 +334,16 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # S3 Configuration
+AWS_QUERYSTRING_AUTH = False  # do not add auth-related query params to URL
+AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
 AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
+AWS_S3_SECURE_URLS = True  # True = use https; False = use http
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
-    AWS_S3_SECURE_URLS = True  # True = use https; False = use http
-    AWS_QUERYSTRING_AUTH = False  # False = do not use authentication-related query parameters for requests
     AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
-    AWS_S3_CALLING_FORMAT = 'boto.s3.connection.OrdinaryCallingFormat'
-
     MEDIA_URL = os.path.join(os.environ.get('AWS_S3_URL'), AWS_S3_ROOT, '')
 
 # Govdelivery
@@ -443,15 +456,6 @@ CACHES = {
     }
 }
 
-PICARD_SCRIPTS_DIRECTORY = os.environ.get('PICARD_SCRIPTS_DIRECTORY',REPOSITORY_ROOT.child('picard_scripts'))
-PICARD_TASK_RUNNER = os.environ.get('PICARD_TASK_RUNNER', 'shell')
-PICARD_JENKINS_HOST = os.environ.get('PICARD_JENKINS_HOST', None)
-PICARD_JENKINS_USER = os.environ.get('PICARD_JENKINS_USER', None)
-PICARD_JENKINS_PASSWORD = os.environ.get('PICARD_JENKINS_PASSWORD', None)
-PICARD_JENKINS_AKAMAI_FLUSH = os.environ.get('PICARD_JENKINS_AKAMAI_FLUSH', None)
-PICARD_JENKINS_DATA_EXPORT = os.environ.get('PICARD_JENKINS_DATA_EXPORT', None)
-PICARD_JENKINS_DATA_EXPORT_FROM_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_FROM_ENV', 'CONTENT')
-PICARD_JENKINS_DATA_EXPORT_TO_ENV = os.environ.get('PICARD_JENKINS_DATA_EXPORT_TO_ENV', 'PRODUCTION')
 
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
@@ -537,6 +541,10 @@ CSP_CONNECT_SRC = ("'self'",
                    'bam.nr-data.net',
                    'api.iperceptions.com')
 
+# Feature flags
+# All feature flags must be listed here with a dict of any hard-coded
+# conditions or an empty dict. If the conditions dict is empty the flag will
+# only be enabled if database conditions are added.
 FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
@@ -546,11 +554,6 @@ FLAGS = {
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
-
-    # Email pop-up "nudgy guy" for Owning a Home
-    # When enabled, an modal email sign-up prompt appears at the bottom of
-    # /owning-a-home when scrolling.
-    'EMAIL-POPUP': {},
 
     # Fix for margin-top when using the text inset
     # When enabled, the top margin of full-width text insets is increased
@@ -569,14 +572,6 @@ FLAGS = {
     # When enabled, the "Doing Business With Us" pages are served from Wagtail
     'WAGTAIL_DOING_BUSINESS_WITH_US': {},
 
-    # Transition of /compltain to Wagtail
-    # When enabled, the "Submit a complaint" page is served from Wagtail
-    'MOSAIC_COMPLAINTS': {},
-
-    # Migration of Ask CFPB to Wagtail
-    # When enabled, Ask CFPB is served from Wagtail
-    'WAGTAIL_ASK_CFPB': {'boolean': True},
-
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},
 
@@ -584,4 +579,20 @@ FLAGS = {
     # When enabled this flag will add various Google Optimize code snippets.
     # Intended for use with path conditions.
     'AB_TESTING': {},
+
+
+    # The next version of eRegulations
+    'EREGS20': {},
+
+    # Add sortable tables to Wagtail
+    # When enabled, the sortable tables option will be added to the Wagtail Admin
+    # The template will render for the front-end, but the sortable code is missing
+    # and the table will not be sortable until cf-tables from CF 4.x is implemented
+    'SORTABLE_TABLES': {},
+
+    # Serve housing counselor JSON and PDFs from S3.
+    # Access e.g. /find-a-housing-counselor/?zipcode=20001&s3=True
+    'HOUSING_COUNSELOR_S3': {
+        'parameter': 's3',
+    },
 }

@@ -24,11 +24,11 @@
 
 <div class="m-call-to-action">
     {% if value.slug_text %}
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
             {{ value.slug_text }}
-        </span>
-    </h2>
+        </h2>
+    </header>
     {% endif %}
 
     {% if value.paragraph_text %}
@@ -38,8 +38,8 @@
     {% endif %}
 
     {% if value.button %}
-    <a class="btn btn__full
-             {{ 'btn__super' if value.button.size == 'large' else '' }}"
+    <a class="a-btn a-btn__full-on-xs
+             {{ 'a-btn__super' if value.button.size == 'large' else '' }}"
        href="{{ value.button.url or '/' }}">
         {{ value.button.text }}
     </a>

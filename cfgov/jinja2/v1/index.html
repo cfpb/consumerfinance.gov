@@ -26,11 +26,11 @@
         {% from 'molecules/info-unit.html' import info_unit with context %}
         <div class="o-well
                     o-well__full">
-            <h2 class="header-slug">
-                <span class="header-slug_inner">
+            <header class="m-slug-header">
+                <h2 class="a-heading">
                     Featured
-                </span>
-            </h2>
+                </h2>
+            </header>
             <div class="content-l">
                 {% for block in page.header %}
                     <section class="content-l_col content-l_col-1-2">
@@ -80,7 +80,7 @@
                             'links': [
                                 {
                                     'text': 'Find answers to common questions',
-                                    'url':  '/ask-cfpb/' if flag_enabled('WAGTAIL_ASK_CFPB', request) else '/askcfpb/'
+                                    'url':  '/ask-cfpb/'
                                 }
                             ]
                         } ) }}
@@ -174,15 +174,18 @@
                         <section class="content-l_col
                                         content-l_col-1-3">
                             {% for block in sections.value %}
-                                <div class="m-related-posts_list-container">
+                                {# TODO: Refactor to not use m-list.
+                                         It's only used to make the links bold.
+                                         It should either be a list or not. #}
+                                <div class="m-related-posts_list-container m-list">
                                     <h3 class="h4">
                                          <span class="cf-icon cf-icon-{{ block.categories }}"></span>
                                         {{ page.get_category_name(block.categories) }}
                                     </h3>
-                                    <a class="list_link" href="{{ block.link.url }}">
+                                    <a class="m-list_link" href="{{ block.link.url }}">
                                         {{ block.link.text }}
                                     </a>
-                                    <p class="date">
+                                    <p class="a-date">
                                         <span class="datetime">
                                             {% import 'macros/time.html' as time %}
                                             <time class="datetime_date">
@@ -194,8 +197,8 @@
                             {% endfor %}
                         {% if loop.last %}
                             <div class="m-related-posts_list-container">
-                                <a class="jump-link
-                                          jump-link__underline"
+                                <a class="a-link
+                                          a-link__jump"
                                    href="/activity-log/">
                                     See all activities
                                 </a>

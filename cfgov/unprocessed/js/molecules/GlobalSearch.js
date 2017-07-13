@@ -57,7 +57,7 @@ function GlobalSearch( element ) { // eslint-disable-line max-statements, no-inl
     var clearBtnSel = '.' + BASE_CLASS + ' .input-contains-label_after__clear';
     var inputContainsLabelSel =
       '.' + BASE_CLASS + '_content-form .input-contains-label';
-    var searchBtnSel = '.' + BASE_CLASS + ' .input-with-btn_btn button';
+    var searchBtnSel = '.' + BASE_CLASS + ' .o-form__input-w-btn_btn-container button';
 
     _clearBtnDom = _contentDom.querySelector( clearBtnSel );
     var inputContainsLabel = _contentDom.querySelector( inputContainsLabelSel );

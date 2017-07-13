@@ -486,7 +486,8 @@ a.ac-qa-summary:focus {
 /* Supplement tweaks
    ========================================================================== */
 
-.supplement.ac-filters {
+.supplement.ac-filters,
+.supplement.ac-related-topics {
     border-top: 0;
 }
 
@@ -710,6 +711,34 @@ legend {
   .u-move-transition {
     transition: transform 1ms ease;
   }
+}
+
+/* ==========================================================================
+   Wagtail Ask CFPB styles
+   ========================================================================== */
+.ask-cfpb-page__es {
+  .responsive-object {
+     position: relative;
+     margin-bottom: 15px;
+
+     iframe,
+     object,
+     embed {
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+     }
+  }
+}
+
+/* ==========================================================================
+   Disclaimer snippet
+   ========================================================================== */
+
+.ac-disclaimer h5 {
+  display: none;
 }
 
 

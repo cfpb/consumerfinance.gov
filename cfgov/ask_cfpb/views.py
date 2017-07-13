@@ -97,8 +97,11 @@ def ask_search(request, language='en', as_json=False):
     }
     _map = language_map[language]
     sqs = _map['query']
-    query = Clean(request.GET.get('q', ''))
-    sqs = sqs.filter(content=query)
+    clean_query = Clean(request.GET.get('q', ''))
+    qstring = clean_query.query_string.strip()
+    if not qstring:
+        raise Http404
+    sqs = sqs.filter(content=clean_query)
 
     if as_json:
         results = [{'question': result.autocomplete,
@@ -112,7 +115,7 @@ def ask_search(request, language='en', as_json=False):
             AnswerResultsPage,
             language=language,
             slug=_map['slug'])
-        page.query = query
+        page.query = clean_query
         page.answers = []
 
         for result in sqs:
@@ -179,12 +182,15 @@ def redirect_ask_search(request, language='en'):
                     audience=audience), permanent=True)
 
         def redirect_to_tag(tag, language):
-            """We currently only offer tag search to Spanish users"""
-            if language != 'es':
-                    raise Http404
-            return redirect(
-                '/es/obtener-respuestas/buscar-por-etiqueta/{tag}/'.format(
-                    tag=tag), permanent=True)
+            """for URLs, tags are passed with words separated by underscores"""
+            if language == 'es':
+                return redirect(
+                    '/es/obtener-respuestas/buscar-por-etiqueta/{tag}/'.format(
+                        tag=tag), permanent=True)
+            else:
+                return redirect(
+                    '/ask-cfpb/search-by-tag/{tag}/'.format(
+                        tag=tag), permanent=True)
 
         # Redirect by facet value, if there is one, starting with category.
         # We want to exhaust facets each time, so we need three loops.
@@ -207,5 +213,10 @@ def redirect_ask_search(request, language='en'):
             if tag_facet in facet:
                 raw_tag = facet.replace(tag_facet, '')
                 if raw_tag:
-                    tag = raw_tag.replace(' ', '_').replace('%20', '_')
+                    tag = raw_tag.replace(
+                        ' ', '_').replace(
+                        '%20', '_').replace(
+                        '+', '_')
                     return redirect_to_tag(tag, language)
+
+        raise Http404

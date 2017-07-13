@@ -22,18 +22,18 @@
 
     <div class="error_action_container">
         <div class="error_action_col">
-            <a href="/" class="btn btn__full btn__error-home u-inline-block">Visit homepage</a>
+            <a href="/" class="a-btn a-btn__full-on-xs">Visit homepage</a>
         </div>
         <div class="error_action_col">
-            <a class="btn btn__full btn__error-home u-inline-block" href="/about-us/contact-us/">
+            <a class="a-btn a-btn__full-on-xs" href="/about-us/contact-us/">
                 Contact us
             </a>
         </div>
     </div>
-    
-    <p>Are you sure this is the right web address? 
-        <a class="jump-link" href={{"mailto:CFPB_website@consumerfinance.gov?subject=404%20Error%20at%20%22" + request.build_absolute_uri() + "%22"}}>
-            <span class="jump-link_text">Let us know</span>
+
+    <p>Are you sure this is the right web address?
+        <a class="a-link a-link__jump" href={{"mailto:CFPB_website@consumerfinance.gov?subject=404%20Error%20at%20%22" + request.build_absolute_uri() + "%22"}}>
+            <span class="a-link_text">Let us know</span>
         </a>
     </p>
 

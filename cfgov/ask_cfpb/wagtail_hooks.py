@@ -20,6 +20,10 @@ from ask_cfpb.models import (
 
 
 class AnswerModelAdminSaveUserEditView(EditView):
+    """
+    An edit_handler that saves the current user as the 'last user'
+    on an Answer object so that it can be passed to a created or updated page.
+    """
 
     def save_instance_user(self):
         self.instance.last_user = self.request.user
@@ -42,8 +46,8 @@ class AnswerModelAdmin(ModelAdmin):
         'question_es',
         'last_edited_es')
     search_fields = (
-        'id', 'question', 'question_es', 'answer', 'answer_es')
-    list_filter = ('category', 'featured')
+        'id', 'question', 'question_es', 'answer', 'answer_es', 'search_tags')
+    list_filter = ('category', 'featured', 'audiences')
     edit_view_class = AnswerModelAdminSaveUserEditView
 
 
@@ -55,7 +59,7 @@ class AudienceModelAdmin(ModelAdmin):
 
 class NextStepModelAdmin(ModelAdmin):
     model = NextStep
-    menu_label = 'Next steps'
+    menu_label = 'Related resources'
     menu_icon = 'list-ul'
     list_display = (
         'title', 'text')
@@ -95,8 +99,8 @@ class MyModelAdminGroup(ModelAdminGroup):
 
 def editor_js():
     js_files = [
-        'js/admin/html_editor.js',
-        'js/admin/ask_cfpb_tips.js'
+        'js/html_editor.js',
+        'js/ask_cfpb_tips.js'
     ]
     js_includes = format_html_join(
         '\n', '<script src="{0}{1}"></script>',
