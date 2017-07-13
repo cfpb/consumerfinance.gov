@@ -745,7 +745,7 @@ class ChartBlock(blocks.StructBlock):
         help_text='Briefly summarize the chart for visually impaired users.')
 
     last_updated_projected_data = blocks.DateBlock(
-        help_text="Month of latest entry in dataset"
+        help_text='Month of latest entry in dataset'
     )
 
     metadata = blocks.CharBlock(
@@ -825,36 +825,36 @@ class DataSnapshot(blocks.StructBlock):
     market_key = blocks.CharBlock(
         max_length=20,
         required=True,
-        help_text="Market identifier, e.g. AUT"
+        help_text='Market identifier, e.g. AUT'
     )
     num_originations = blocks.CharBlock(
         max_length=20,
-        help_text="Number of originations, e.g. '1.2 million'"
+        help_text='Number of originations, e.g. 1.2 million'
     )
     value_originations = blocks.CharBlock(
         max_length=20,
-        help_text="Total dollar value of originations, e.g. '$3.4 billion'"
+        help_text='Total dollar value of originations, e.g. $3.4 billion'
     )
     year_over_year_change = blocks.CharBlock(
         max_length=20,
-        help_text="Percentage change, e.g. '5.6% increase' or '7.8% decrease'"
+        help_text='Percentage change, e.g. 5.6% increase'
     )
 
     last_updated_projected_data = blocks.DateBlock(
-        help_text="Month of latest entry in dataset"
+        help_text='Month of latest entry in dataset'
     )
     # Market-specific descriptor text
     num_originations_text = blocks.CharBlock(
         max_length=100,
-        help_text="Descriptive sentence, e.g. '<Market> loans originated'"
+        help_text='Descriptive sentence, e.g. Auto loans originated'
     )
     value_originations_text = blocks.CharBlock(
         max_length=100,
-        help_text="Descriptive sentence, e.g. 'Dollar volume of new loans'"
+        help_text='Descriptive sentence, e.g. Dollar volume of new loans'
     )
     year_over_year_change_text = blocks.CharBlock(
         max_length=100,
-        help_text="Descriptive sentence, e.g. 'In year-over-year originations'"
+        help_text='Descriptive sentence, e.g. In year-over-year originations'
     )
 
     # Select an image
