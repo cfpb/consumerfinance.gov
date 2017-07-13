@@ -1,7 +1,7 @@
 'use strict';
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var throttle = require( '../modules/util/email-popup-helpers' ).throttle;
+var throttle = require( '../modules/util/throttle' ).throttle;
 var ajaxRequest = require( '../modules/util/ajax-request' ).ajaxRequest;
 var bindEvent = require( '../modules/util/dom-events' ).bindEvent;
 var standardType = require( '../modules/util/standard-type' );

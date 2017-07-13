@@ -12,19 +12,19 @@
         </header>
         <div class="m-related-metadata_item-container">
             <h4></h4>
-            <ul class="list
-                       list__unstyled
-                       list__links">
-                <li class="list_item">
-                    <a class="list_link">
+            <ul class="m-list
+                       m-list__unstyled
+                       m-list__links">
+                <li class="m-list_item">
+                    <a class="m-list_link">
                     </a>
                 </li>
             </ul>
-            <p class="date u-mb0"></p>
+            <p class="a-date u-mb0"></p>
             <p class="short-desc u-mb0"></p>
-            <ul class="list list__unstyled list__links m-related-metadata_topics">
-                <li class="list_item">
-                    <a href="" class="list_link">
+            <ul class="m-list m-list__unstyled m-list__links m-related-metadata_topics">
+                <li class="m-list_item">
+                    <a href="" class="m-list_link">
                     </a>
                 </li>
             </ul>
@@ -39,15 +39,15 @@
             .a-heading
         .m-related-metadata_item-container
           h4
-          .list
-            .list_item
-              .list_link
+          .m-list
+            .m-list_item
+              .m-list_link
           .date .u-mb0
           .short-desc .u-mb0
           .m-related-metadata_topics
-            .list.list__unstyled.list__links
-              .list-item
-                a.list-link
+            .m-list.m-list__unstyled.m-list__links
+              .m-list-item
+                a.m-list-link
   tags:
     - cfgov-molecules
 */
@@ -57,7 +57,7 @@
 @bullet-font-size__em: unit(15px / @base-font-size-px, em);
 
 .m-related-metadata {
-    .list_link {
+    .m-list_link {
         .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
     }
 
@@ -76,7 +76,7 @@
 .m-related-metadata_topics {
     line-height: 1em;
 
-    .list_link {
+    .m-list_link {
         .h6();
         position: relative;
         margin: 0 0 0 @bullet-font-size__em;
@@ -97,7 +97,7 @@
     }
 
     .respond-to-max(@bp-sm-min, {
-        .list_link {
+        .m-list_link {
             margin-left: 0;
 
             &:before {

@@ -12,16 +12,22 @@ var clearBtnDom;
 var inputDom;
 
 var HTML_SNIPPET =
-  '<div class="input-with-btn_input input-contains-label">' +
-    '<label for="query" class="input-contains-label_before ' +
-            'input-contains-label_before__search">' +
-    '</label>' +
-    '<label for="query" class="input-contains-label_after ' +
-            'input-contains-label_after__clear">' +
-    '</label>' +
-    '<input type="text" id="query" name="query" value=""' +
-    'placeholder="Search the CFPB">' +
-  '</div>';
+  `<div class="o-form__input-w-btn_input-container">
+       <div class="m-btn-inside-input
+                   input-contains-label">
+           <label for="query" class="input-contains-label_before
+                                     input-contains-label_before__search">
+           </label>
+           <label for="query" class="input-contains-label_after
+                                     input-contains-label_after__clear">
+           </label>
+           <input type="text"
+                  title="Search the CFPB"
+                  class="a-text-input"
+                  value=""
+                  placeholder="Search the CFPB">
+       </div>
+   </div>`;
 
 function triggerEvent( target, eventType, eventOption ) {
   var event = document.createEvent( 'Event' );
@@ -39,7 +45,7 @@ describe( 'ClearableInput', function() {
   beforeEach( function() {
     sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
-    baseDom = document.querySelector( '.input-with-btn_input' );
+    baseDom = document.querySelector( '.o-form__input-w-btn_input-container' );
     inputDom = baseDom.querySelector( 'input' );
     clearBtnDom = baseDom.querySelector( '.input-contains-label_after__clear' );
   } );

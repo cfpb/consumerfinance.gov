@@ -6,35 +6,35 @@
   patterns:
     - name: Default example
       markup: |
-        <ul class="list list__icons">
-            <li class="list_item">
-                <span class="cf-icon cf-icon-email list_icon"></span>
-                <span class="list_text">List item 1</span>
+        <ul class="m-list m-list__icons">
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-email m-list_icon"></span>
+                <span class="m-list_text">List item 1</span>
             </li>
-            <li class="list_item">
-                <span class="cf-icon cf-icon-phone list_icon"></span>
-                <span class="list_text">List item 2</span>
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-phone m-list_icon"></span>
+                <span class="m-list_text">List item 2</span>
             </li>
-            <li class="list_item">
-                <span class="cf-icon cf-icon-fax list_icon"></span>
-                <span class="list_text">List item 3</span>
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-fax m-list_icon"></span>
+                <span class="m-list_text">List item 3</span>
             </li>
         </ul>
   tags:
     - cf-typography
 */
 
-.list__icons {
-    .list__unstyled();
+.m-list__icons {
+    .m-list__unstyled();
 
-    .list_icon,
-    .list_text {
+    .m-list_icon,
+    .m-list_text {
         display: table-cell;
     }
 
-    .list_icon {
+    .m-list_icon {
         width: 1.5em;
-        .list__icons .list_icon__left();
+        .m-list__icons .m-list_icon__left();
     }
 }
 
@@ -46,26 +46,26 @@
   patterns:
     - name: Default example
       markup: |
-        <ul class="list list__icons">
-            <li class="list_item">
-                <span class="cf-icon cf-icon-technology list_icon list_icon__left"></span>
-                <span class="list_text">List item 1</span>
+        <ul class="m-list m-list__icons">
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-technology m-list_icon m-list_icon__left"></span>
+                <span class="m-list_text">List item 1</span>
             </li>
-            <li class="list_item">
-                <span class="cf-icon cf-icon-phone list_icon list_icon__left"></span>
-                <span class="list_text">List item 2</span>
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-phone m-list_icon m-list_icon__left"></span>
+                <span class="m-list_text">List item 2</span>
             </li>
-            <li class="list_item">
-                <span class="cf-icon cf-icon-money list_icon list_icon__left"></span>
-                <span class="list_text">List item 3</span>
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-money m-list_icon m-list_icon__left"></span>
+                <span class="m-list_text">List item 3</span>
             </li>
         </ul>
   tags:
     - cf-typography
 */
 
-.list__icons {
-    .list_icon__left {
+.m-list__icons {
+    .m-list_icon__left {
         // TODO: Remove the !important once this lands in cf-typography.
         text-align: left !important;
     }
@@ -79,26 +79,26 @@
   patterns:
     - name: Default example
       markup: |
-        <ul class="list list__icons">
-            <li class="list_item">
-                <span class="cf-icon cf-icon-technology list_icon list_icon__center"></span>
-                <span class="list_text">List item 1</span>
+        <ul class="m-list m-list__icons">
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-technology m-list_icon m-list_icon__center"></span>
+                <span class="m-list_text">List item 1</span>
             </li>
-            <li class="list_item">
-                <span class="cf-icon cf-icon-phone list_icon list_icon__center"></span>
-                <span class="list_text">List item 2</span>
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-phone m-list_icon m-list_icon__center"></span>
+                <span class="m-list_text">List item 2</span>
             </li>
-            <li class="list_item">
-                <span class="cf-icon cf-icon-money list_icon list_icon__center"></span>
-                <span class="list_text">List item 3</span>
+            <li class="m-list_item">
+                <span class="cf-icon cf-icon-money m-list_icon m-list_icon__center"></span>
+                <span class="m-list_text">List item 3</span>
             </li>
         </ul>
   tags:
     - cf-typography
 */
 
-.list__icons {
-    .list_icon__center {
+.m-list__icons {
+    .m-list_icon__center {
         text-align: center;
     }
 }
@@ -111,26 +111,26 @@
   patterns:
     - name: Default example
       markup: |
-        <ul class="list list__icons">
-            <li class="list_item list_icon__right">
-                <span class="cf-icon cf-icon-technology list_icon"></span>
-                <span class="list_text">List item 1</span>
+        <ul class="m-list m-list__icons">
+            <li class="m-list_item m-list_icon__right">
+                <span class="cf-icon cf-icon-technology m-list_icon"></span>
+                <span class="m-list_text">List item 1</span>
             </li>
-            <li class="list_item list_icon__right">
-                <span class="cf-icon cf-icon-phone list_icon"></span>
-                <span class="list_text">List item 2</span>
+            <li class="m-list_item m-list_icon__right">
+                <span class="cf-icon cf-icon-phone m-list_icon"></span>
+                <span class="m-list_text">List item 2</span>
             </li>
-            <li class="list_item list_icon__right">
-                <span class="cf-icon cf-icon-money list_icon"></span>
-                <span class="list_text">List item 3</span>
+            <li class="m-list_item m-list_icon__right">
+                <span class="cf-icon cf-icon-money m-list_icon"></span>
+                <span class="m-list_text">List item 3</span>
             </li>
         </ul>
   tags:
     - cf-typography
 */
 
-.list__icons {
-    .list_icon__right {
+.m-list__icons {
+    .m-list_icon__right {
         padding-right: .5em;
         text-align: right;
     }

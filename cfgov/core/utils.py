@@ -35,3 +35,11 @@ def extract_answers_from_request(request):
     answers = [(param.split('_')[1], value) for param, value in
                request.POST.items() if param.startswith('questionid')]
     return answers
+
+
+class NoMigrations(object):
+    def __contains__(self, item):
+        return True
+
+    def __getitem__(self, item):
+        return 'nomigrations'
