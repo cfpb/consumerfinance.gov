@@ -7,19 +7,19 @@
    from different sources, and to use watch when run from the default task.
 */
 
-var browserSync = require( 'browser-sync' );
-var gulp = require( 'gulp' );
-var gulpConcat = require( 'gulp-concat' );
-var gulpModernizr = require( 'gulp-modernizr' );
-var gulpRename = require( 'gulp-rename' );
-var gulpReplace = require( 'gulp-replace' );
-var gulpUglify = require( 'gulp-uglify' );
-var handleErrors = require( '../utils/handle-errors' );
-var paths = require( '../../config/environment' ).paths;
-var webpack = require( 'webpack' );
-var webpackConfig = require( '../../config/webpack-config.js' );
-var webpackStream = require( 'webpack-stream' );
-var configLegacy = require( '../config.js' ).legacy;
+const browserSync = require( 'browser-sync' );
+const gulp = require( 'gulp' );
+const gulpConcat = require( 'gulp-concat' );
+const gulpModernizr = require( 'gulp-modernizr' );
+const gulpRename = require( 'gulp-rename' );
+const gulpReplace = require( 'gulp-replace' );
+const gulpUglify = require( 'gulp-uglify' );
+const handleErrors = require( '../utils/handle-errors' );
+const paths = require( '../../config/environment' ).paths;
+const webpack = require( 'webpack' );
+const webpackConfig = require( '../../config/webpack-config.js' );
+const webpackStream = require( 'webpack-stream' );
+const configLegacy = require( '../config.js' ).legacy;
 
 /**
  * Standardize webpack workflow for handling script
