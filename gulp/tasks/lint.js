@@ -34,23 +34,17 @@ function _genericLint( src ) {
 /**
  * Lints the gulpfile for errors.
  */
-gulp.task( 'lint:build', function() {
-  return _genericLint( configLint.build );
-} );
+gulp.task( 'lint:build', () => _genericLint( configLint.build ) );
 
 /**
  * Lints the test js files for errors.
  */
-gulp.task( 'lint:tests', function() {
-  return _genericLint( configLint.test );
-} );
+gulp.task( 'lint:tests', () => _genericLint( configLint.test ) );
 
 /**
  * Lints the source js files for errors.
  */
-gulp.task( 'lint:scripts', function() {
-  return _genericLint( configLint.src );
-} );
+gulp.task( 'lint:scripts', () => _genericLint( configLint.src ) );
 
 /**
  * Lints all the js files for errors
