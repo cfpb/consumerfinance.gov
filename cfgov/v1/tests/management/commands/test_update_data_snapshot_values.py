@@ -13,7 +13,7 @@ from v1.tests.wagtail_pages.helpers import publish_page
 
 class UpdateDataSnapshotValuesTestCase(TestCase):
         def test_data_snapshot(self):
-            """ Data Snapshot correctly renders fields on a Browse Page"""
+            """ Management command correctly updates data snapshot values"""
             browse_page = BrowsePage(
                 title='Browse Page',
                 slug='browse',
@@ -40,7 +40,7 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
             self.assertContains(response, '2.1 million')
             self.assertContains(response, '$46.4 billion')
             self.assertContains(response, '5.8% increase')
-            self.assertContains(response, 'April 2017')
+            self.assertContains(response, 'March 2017')
             self.assertContains(response, 'Auto loans originated')
             self.assertContains(response, 'Dollar value of new loans')
             self.assertContains(response, 'In year-over-year originations')
