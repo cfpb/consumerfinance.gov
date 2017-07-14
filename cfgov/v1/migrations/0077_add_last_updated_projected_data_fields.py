@@ -15,7 +15,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0075_reusabletext_sidefoot_heading'),
+        ('v1', '0076_add_snippet_list_to_sublanding'),
     ]
 
     operations = [

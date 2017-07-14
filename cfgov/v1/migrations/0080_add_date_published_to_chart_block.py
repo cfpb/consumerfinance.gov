@@ -15,7 +15,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0078_simplify_help_text'),
+        ('v1', '0079_simplify_help_text'),
     ]
 
     operations = [

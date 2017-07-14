@@ -15,7 +15,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0077_make_data_snapshot_image_optional'),
+        ('v1', '0078_make_data_snapshot_image_optional'),
     ]
 
     operations = [

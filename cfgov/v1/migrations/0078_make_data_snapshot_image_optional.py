@@ -15,7 +15,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0076_add_last_updated_projected_data_fields'),
+        ('v1', '0077_add_last_updated_projected_data_fields'),
     ]
 
     operations = [
