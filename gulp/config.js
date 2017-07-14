@@ -53,9 +53,9 @@ module.exports = {
     dest:     paths.processed + '/css',
     settings: {
       paths:  globAll.sync( [
-        paths.modules + '/capital-framework/**',
-        paths.modules + '/cfpb-chart-builder/**',
-        paths.lib
+        paths.lib,
+        paths.modules,
+        paths.modules + '/cfpb-chart-builder/src/static/css'
       ] ),
       compress: true
     }
