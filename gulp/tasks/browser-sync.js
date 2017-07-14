@@ -1,12 +1,12 @@
 'use strict';
 
-var browserSync = require( 'browser-sync' );
-var envvars = require( '../../config/environment' ).envvars;
-var gulp = require( 'gulp' );
+const browserSync = require( 'browser-sync' );
+const envvars = require( '../../config/environment' ).envvars;
+const gulp = require( 'gulp' );
 
-gulp.task( 'browsersync', function() {
-  var host = envvars.TEST_HTTP_HOST;
-  var port = envvars.TEST_HTTP_PORT;
+gulp.task( 'browsersync', () => {
+  const host = envvars.TEST_HTTP_HOST;
+  const port = envvars.TEST_HTTP_PORT;
   browserSync.init( {
     proxy: host + ':' + port
   } );
