@@ -12,7 +12,7 @@ const imageminOptipng = require( 'imagemin-optipng' );
 const imageminSvgo = require( 'imagemin-svgo' );
 
 gulp.task( 'images', () => {
-  return gulp.src( configImages.src )
+  gulp.src( configImages.src )
     .pipe( gulpChanged( configImages.dest ) )
     .pipe( gulpImagemin( [
       imageminGifsicle(),
