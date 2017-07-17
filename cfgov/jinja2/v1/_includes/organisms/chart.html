@@ -33,10 +33,10 @@
       <strong>Source:</strong> <a class="icon-link icon-link__download" href="https://s3.amazonaws.com/files.consumerfinance.gov/data/{{ value.data_source }}"> <span class="icon-link_text">Download CSV file</span> </a><br>
       {% endif %}
 
-      <strong>Date published:</strong> May 2017<br>
+      <strong>Date published:</strong> {{ value.date_published.strftime('%B %Y') }}<br>
 
       {% if value.note %}
-      <strong>Note:</strong> {{ value.note }} The most recent data available in each visualization is for March 2017.
+      <strong>Note:</strong> {{ value.note }} The most recent data available in each visualization is for {{ value.last_updated_projected_data.strftime('%B %Y') }}.
       {% endif %}
     </p>
 </div>

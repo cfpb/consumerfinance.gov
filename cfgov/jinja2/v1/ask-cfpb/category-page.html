@@ -77,7 +77,7 @@
         <div class="question_list">
             {% for question in questions %}
             <article class="question_summary question_summary__basic">
-                {{ partially_styled_link.render( {'plain_text': question.question, 'underlined_text': 'Read answer', 'url': slugurl( question.slug )} ) }}
+                {{ partially_styled_link.render( {'plain_text': question.question, 'underlined_text': 'Read answer', 'url': '/ask-cfpb/' + question.slug} ) }}
             </article>
             {% endfor %}
         </div>

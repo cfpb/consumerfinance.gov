@@ -1,9 +1,9 @@
 'use strict';
 
-var gulp = require( 'gulp' );
-var gulpUtil = require( 'gulp-util' );
-var paths = require( '../../config/environment' ).paths;
-var spawn = require( 'child_process' ).spawn;
+const gulp = require( 'gulp' );
+const gulpUtil = require( 'gulp-util' );
+const paths = require( '../../config/environment' ).paths;
+const spawn = require( 'child_process' ).spawn;
 
 /**
  * Generate JS scripts documentation.

@@ -3,9 +3,9 @@
 const configLint = require( '../config' ).lint;
 const gulp = require( 'gulp' );
 const gulpEslint = require( 'gulp-eslint' );
+const gulpUtil = require( 'gulp-util' );
 const handleErrors = require( '../utils/handle-errors' );
 const minimist = require( 'minimist' );
-const through2 = require( 'through2' );
 
 /**
  * Generic lint a script source.
@@ -25,7 +25,7 @@ function _genericLint( src ) {
         return gulpEslint.failAfterError();
       }
 
-      return through2.obj();
+      return gulpUtil.noop();
     } )( ) )
     .pipe( gulp.dest( './' ) )
     .on( 'error', handleErrors );
@@ -34,23 +34,17 @@ function _genericLint( src ) {
 /**
  * Lints the gulpfile for errors.
  */
-gulp.task( 'lint:build', function() {
-  return _genericLint( configLint.build );
-} );
+gulp.task( 'lint:build', () => _genericLint( configLint.build ) );
 
 /**
  * Lints the test js files for errors.
  */
-gulp.task( 'lint:tests', function() {
-  return _genericLint( configLint.test );
-} );
+gulp.task( 'lint:tests', () => _genericLint( configLint.test ) );
 
 /**
  * Lints the source js files for errors.
  */
-gulp.task( 'lint:scripts', function() {
-  return _genericLint( configLint.src );
-} );
+gulp.task( 'lint:scripts', () => _genericLint( configLint.src ) );
 
 /**
  * Lints all the js files for errors
