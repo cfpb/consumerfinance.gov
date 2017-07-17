@@ -40,7 +40,7 @@ class ZipCodeBasedCounselorGeocoder(object):
             return counselor
 
         zipcode = counselor['zipcd'][:5]
-        logger.info('need to geocode counselor with zipcode %s', zipcode)
+        logger.warning('need to geocode counselor with zipcode %s', zipcode)
 
         if zipcode not in self.zipcodes:
             raise KeyError('{} not in zipcodes'.format(zipcode))
@@ -112,7 +112,7 @@ class BulkZipCodeGeocoder(object):
         (latitude, longitude) in degrees.
         """
         url = self.mapbox_geocode_url(*zipcodes)
-        logger.info('making request to %s', url)
+        logger.debug('making request to %s', url)
 
         request_start_time = time.time()
         rate_limit_timeout = 10 * 60
@@ -128,7 +128,11 @@ class BulkZipCodeGeocoder(object):
 
             # Handle rate limiting
             if 429 == response.status_code:
-                logger.info('rate limited, headers: %s', response.headers)
+                logger.info(
+                    'rate limited, url %s, headers: %s',
+                    url,
+                    response.headers
+                )
 
                 sleep_for = 10
                 logger.info('sleeping for %s seconds', sleep_for)
@@ -148,7 +152,7 @@ class BulkZipCodeGeocoder(object):
             zipcode = item['query'][0]
 
             if not item['features']:
-                logger.warn('could not geocode %s', zipcode)
+                logger.debug('could not geocode %s', zipcode)
                 continue
 
             feature = item['features'][0]
@@ -162,7 +166,7 @@ class BulkZipCodeGeocoder(object):
                 continue
 
             latitude, longitude = geometry['coordinates']
-            logger.info('geocoded %s to %s, %s', zipcode, latitude, longitude)
+            logger.debug('geocoded %s to %s, %s', zipcode, latitude, longitude)
 
             yield zipcode, (latitude, longitude)
 
