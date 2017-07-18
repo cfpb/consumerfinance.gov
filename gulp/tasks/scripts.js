@@ -107,7 +107,7 @@ function scriptsOnDemand() {
   */
 function scriptsSpanish() {
   return _processScript( webpackConfig.spanishConf,
-                          '/js/routes/es/obtener-respuestas/single.js', '/js/' );
+                         '/js/routes/es/obtener-respuestas/single.js', '/js/' );
 }
 
 /**

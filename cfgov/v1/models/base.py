@@ -257,41 +257,69 @@ class CFGOVPage(Page):
 
         return super(CFGOVPage, self).serve(request, *args, **kwargs)
 
+    def _return_bad_post_response(self, request):
+        if request.is_ajax():
+            return JsonResponse({'result': 'error'}, status=400)
+
+        return HttpResponseBadRequest(self.url)
+
     def serve_post(self, request, *args, **kwargs):
-        """
-        Attempts to retreive form_id from the POST request and returns a JSON
-        response.
+        """Handle a POST to a specific form on the page.
+
+        Attempts to retrieve form_id from the POST request, which must be
+        formatted like "form-name-index" where the "name" part is the name of a
+        StreamField on the page and the "index" part refers to the index of the
+        form element in the StreamField.
 
         If form_id is found, it returns the response from the block method
         retrieval.
 
         If form_id is not found, it returns an error response.
         """
+        form_module = None
         form_id = request.POST.get('form_id', None)
-        if not form_id:
-            if request.is_ajax():
-                return JsonResponse({'result': 'error'}, status=400)
 
-            return HttpResponseBadRequest(self.url)
+        if form_id:
+            form_id_parts = form_id.split('-')
 
-        sfname, index = form_id.split('-')[1:]
+            if len(form_id_parts) == 3:
+                streamfield_name = form_id_parts[1]
+                streamfield = getattr(self, streamfield_name, None)
 
-        streamfield = getattr(self, sfname)
-        module = streamfield[int(index)]
+                if streamfield is not None:
+                    try:
+                        streamfield_index = int(form_id_parts[2])
+                    except ValueError:
+                        streamfield_index = None
 
-        result = module.block.get_result(self, request, module.value, True)
+                    try:
+                        form_module = streamfield[streamfield_index]
+                    except IndexError:
+                        form_module = None
+
+        if form_module is None:
+            return self._return_bad_post_response(request)
+
+        result = form_module.block.get_result(
+            self,
+            request,
+            form_module.value,
+            True
+        )
 
         if isinstance(result, HttpResponse):
             return result
-        else:
-            context = self.get_context(request, *args, **kwargs)
-            context['form_modules'][sfname].update({int(index): result})
 
-            return TemplateResponse(
-                request,
-                self.get_template(request, *args, **kwargs),
-                context
-            )
+        context = self.get_context(request, *args, **kwargs)
+        context['form_modules'][streamfield_name].update({
+            streamfield_index: result
+        })
+
+        return TemplateResponse(
+            request,
+            self.get_template(request, *args, **kwargs),
+            context
+        )
 
     class Meta:
         app_label = 'v1'

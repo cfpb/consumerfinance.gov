@@ -4,17 +4,18 @@
 
 'use strict';
 
-var BannerFooterPlugin = require( 'banner-footer-webpack-plugin' );
-var path = require( 'path' );
-var paths = require( '../config/environment' ).paths;
-var scriptsManifest = require( '../gulp/utils/scripts-manifest' );
-var webpack = require( 'webpack' );
+const BannerFooterPlugin = require( 'banner-footer-webpack-plugin' );
+const path = require( 'path' );
+const environment = require( '../config/environment' );
+const paths = environment.paths;
+const scriptsManifest = require( '../gulp/utils/scripts-manifest' );
+const webpack = require( 'webpack' );
 
 // Constants.
-var JS_ROUTES_PATH = '/js/routes';
-var COMMON_BUNDLE_NAME = 'common.js';
+const JS_ROUTES_PATH = '/js/routes';
+const COMMON_BUNDLE_NAME = 'common.js';
 
-var modernConf = {
+const modernConf = {
   cache: true,
   context: path.join( __dirname, '/../', paths.unprocessed, JS_ROUTES_PATH ),
   entry: scriptsManifest.getDirectoryMap( paths.unprocessed + JS_ROUTES_PATH ),
@@ -22,7 +23,15 @@ var modernConf = {
     rules: [ {
       test: /\.js$/,
       use: [ {
-        loader: 'babel-loader?cacheDirectory=true'
+        loader: 'babel-loader?cacheDirectory=true',
+        options: {
+          presets: [ [ 'env', {
+            targets: {
+              browsers: environment.getSupportedBrowserList()
+            },
+            debug: true
+          } ] ]
+        }
       } ],
       exclude: /node_modules/
     } ]
@@ -44,7 +53,7 @@ var modernConf = {
   ]
 };
 
-var ieConf = {
+const ieConf = {
   entry: paths.unprocessed + '/js/ie/common.ie.js',
   output: {
     filename: 'common.ie.js'
@@ -56,7 +65,7 @@ var ieConf = {
   ]
 };
 
-var externalConf = {
+const externalConf = {
   entry: paths.unprocessed + JS_ROUTES_PATH + '/external-site/index.js',
   output: {
     filename: 'external-site.js'
@@ -68,7 +77,7 @@ var externalConf = {
   ]
 };
 
-var onDemandConf = {
+const onDemandConf = {
   context: path.join( __dirname, '/../', paths.unprocessed,
                       JS_ROUTES_PATH + '/on-demand' ),
   entry:   scriptsManifest.getDirectoryMap( paths.unprocessed +
@@ -85,7 +94,7 @@ var onDemandConf = {
   ]
 };
 
-var onDemandHeaderRawConf = {
+const onDemandHeaderRawConf = {
   context: path.join( __dirname, '/../', paths.unprocessed,
                       JS_ROUTES_PATH + '/on-demand' ),
   entry:   './header.js',
@@ -95,7 +104,7 @@ var onDemandHeaderRawConf = {
   }
 };
 
-var spanishConf = {
+const spanishConf = {
   entry: paths.unprocessed + JS_ROUTES_PATH + '/es/obtener-respuestas/single.js',
   output: {
     filename: 'spanish.js'
