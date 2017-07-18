@@ -165,7 +165,7 @@ class BulkZipCodeGeocoder(object):
                 logger.warn('zipcode %s geocoded to non-point', zipcode)
                 continue
 
-            latitude, longitude = geometry['coordinates']
+            longitude, latitude = geometry['coordinates']
             logger.debug('geocoded %s to %s, %s', zipcode, latitude, longitude)
 
             yield zipcode, (latitude, longitude)
