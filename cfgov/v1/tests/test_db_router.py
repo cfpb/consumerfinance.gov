@@ -4,64 +4,45 @@ from django.test import TestCase, override_settings
 from v1.db_router import CFGOVRouter
 
 
-def check_app_router(app, method_name):
-    router = CFGOVRouter()
-    method = getattr(router, method_name)
+class CFGOVRouterTestCase(TestCase):
 
-    models = apps.get_app_config(app).get_models()
-    for model in models:
-        return method(model)
+    def setUp(self):
+        self.router = CFGOVRouter()
+        self.models = apps.get_app_config('v1').get_models()
 
 
-@override_settings(LEGACY_APPS=['ask_cfpb'],
-                   DATABASES={'default': {}, 'legacy': {}})
-class CFGOVRouterNoReplicaTestCase(TestCase):
+@override_settings(DATABASES={'default': {}})
+class CFGOVRouterNoReplicaTestCase(CFGOVRouterTestCase):
 
     def test_cfgov_apps_read_from_default_db(self):
-        result = check_app_router('v1', 'db_for_read')
-        self.assertEqual(result, 'default')
+        results = [self.router.db_for_read(m) == 'default'
+                   for m in self.models]
+        self.assertTrue(all(results))
 
     def test_cfgov_apps_write_to_default_db(self):
-        result = check_app_router('v1', 'db_for_write')
-        self.assertEqual(result, 'default')
+        results = [self.router.db_for_write(m) == 'default'
+                   for m in self.models]
+        self.assertTrue(all(results))
 
-    def test_legacy_app_reads_routed_to_legacy(self):
-        result = check_app_router('ask_cfpb', 'db_for_read')
-        self.assertEqual(result, 'legacy')
-
-    def test_legacy_app_writes_routed_to_legacy(self):
-        result = check_app_router('ask_cfpb', 'db_for_write')
-        self.assertEqual(result, 'legacy')
+    def test_cfgov_apps_allow_migrate_default_db(self):
+        self.assertTrue(self.router.allow_migrate('default', 'v1'))
 
 
-@override_settings(LEGACY_APPS=['ask_cfpb'],
-                   DATABASES={'default': {}, 'legacy': {}, 'replica': {}})
-class CFGOVRouterReplicaTestCase(TestCase):
+@override_settings(DATABASES={'default': {}, 'replica': {}})
+class CFGOVRouterReplicaTestCase(CFGOVRouterTestCase):
 
     def test_cfgov_apps_read_from_replica_db(self):
-        result = check_app_router('v1', 'db_for_read')
-        self.assertEqual(result, 'replica')
+        results = [self.router.db_for_read(m) == 'replica'
+                   for m in self.models]
+        self.assertTrue(all(results))
 
     def test_cfgov_apps_write_to_default_db(self):
-        result = check_app_router('v1', 'db_for_write')
-        self.assertEqual(result, 'default')
+        results = [self.router.db_for_write(m) == 'default'
+                   for m in self.models]
+        self.assertTrue(all(results))
 
-    def test_legacy_app_reads_routed_to_legacy(self):
-        result = check_app_router('ask_cfpb', 'db_for_read')
-        self.assertEqual(result, 'legacy')
+    def test_cfgov_apps_allow_migrate_default_db(self):
+        self.assertTrue(self.router.allow_migrate('default', 'v1'))
 
-    def test_legacy_app_writes_routed_to_legacy(self):
-        result = check_app_router('ask_cfpb', 'db_for_write')
-        self.assertEqual(result, 'legacy')
-
-
-@override_settings(LEGACY_APPS=['ask_cfpb'],
-                   DATABASES={'default': {}})
-class CFGOVRouterNoLegacyTestCase(TestCase):
-    def test_legacy_app_reads_routed_to_default(self):
-        result = check_app_router('ask_cfpb', 'db_for_read')
-        self.assertEqual(result, 'default')
-
-    def test_legacy_app_writes_routed_to_default(self):
-        result = check_app_router('ask_cfpb', 'db_for_write')
-        self.assertEqual(result, 'default')
+    def test_cfgov_apps_disallow_migrate_replica_db(self):
+        self.assertFalse(self.router.allow_migrate('replica', 'v1'))
