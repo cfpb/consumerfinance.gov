@@ -6,16 +6,15 @@
 
 {# JS-disabled result handling #}
 
-<form class="o-form
+
+<div class="o-feedback
             block
             {% if value.was_it_helpful_text %}
                 block__bg
                 block__border
                 block__padded-top
-            {% endif %}"
-            {% if value.radio_intro %}
-                data-replace="true"
-            {% endif %}
+            {% endif %}">
+  <form class="o-form"
       method="post"
       action="."
       novalidate>
@@ -183,5 +182,6 @@
     {% endif %}
 
     <button class="a-btn" type="submit">{{ value.button_text }}</button>
-</form>
+  </form>
+</div>
 {% endmacro %}
