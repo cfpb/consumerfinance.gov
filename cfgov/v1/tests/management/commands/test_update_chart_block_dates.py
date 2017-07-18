@@ -11,18 +11,18 @@ from v1.models.browse_page import BrowsePage
 from v1.tests.wagtail_pages.helpers import publish_page
 
 
-class UpdateDataSnapshotValuesTestCase(TestCase):
-        def test_data_snapshot(self):
-            """ Management command correctly updates data snapshot values"""
+class UpdateChartBlockDatesTestCase(TestCase):
+        def test_chart_block(self):
+            """ Management command correctly updates chart block dates"""
             browse_page = BrowsePage(
                 title='Browse Page',
                 slug='browse',
             )
 
-            # Adds a AUT market to a browse page
+            # Adds a Chart Block to a browse page
             browse_page.content = StreamValue(
                 browse_page.content.stream_block,
-                [atomic.data_snapshot],
+                [atomic.chart_block],
                 True
             )
             publish_page(child=browse_page)
@@ -33,14 +33,15 @@ class UpdateDataSnapshotValuesTestCase(TestCase):
                 'v1/tests/fixtures/data_snapshots.json'
             )
             call_command(
-                'update_data_snapshot_values',
+                'update_chart_block_dates',
                 '--snapshot_file={}'.format(filename)
             )
             response = self.client.get('/browse/')
-            self.assertContains(response, '2.1 million')
-            self.assertContains(response, '$46.4 billion')
-            self.assertContains(response, '5.8% increase')
-            self.assertContains(response, 'March 2017')
-            self.assertContains(response, 'Auto loans originated')
-            self.assertContains(response, 'Dollar value of new loans')
-            self.assertContains(response, 'In year-over-year originations')
+
+            # Tests last_updated_projected_data is correct
+            self.assertContains(
+                response,
+                'The most recent data available in each visualization is for June 2017'
+            )
+            # Tests date_published is correct
+            self.assertContains(response, 'August 2017')

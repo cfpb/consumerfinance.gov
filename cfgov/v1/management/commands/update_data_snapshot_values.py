@@ -54,8 +54,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Read markets from file into update dicts
         with open(self.expand_path(options['snapshot_file'])) as json_data:
-            markets = json.load(json_data)
+            data = json.load(json_data)
 
+        markets = data['markets']
         snapshots = self.get_data_snapshots()
         for market in markets:
             key = market['market_key']
@@ -65,7 +66,7 @@ class Command(BaseCommand):
                 continue
 
             # Update snapshot fields with the provided values
-            snapshot['data_month'] = market['data_month']
+            snapshot['last_updated_projected_data'] = market['data_month']
             snapshot['num_originations'] = market['num_originations']
             snapshot['value_originations'] = market['value_originations']
             snapshot['year_over_year_change'] = market['year_over_year_change']
