@@ -101,13 +101,6 @@ if DEPLOY_ENVIRONMENT == 'build':
         {'import': 'eregs', 'apps': ('eregs_core',)},
     ]
 
-# These apps use "legacy" database routing
-# See: cfgov/v1/db_router.py
-LEGACY_APPS = [
-    'comparisontool',
-    'agreements',
-]
-
 MIDDLEWARE_CLASSES = (
     'sheerlike.middleware.GlobalRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
