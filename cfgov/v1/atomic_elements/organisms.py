@@ -740,9 +740,17 @@ class ChartBlock(blocks.StructBlock):
         help_text='Location of the chart\'s data source relative to '
                   '"http://files.consumerfinance.gov/data/". For example,'
                   '"consumer-credit-trends/volume_data_Score_Level_AUT.csv".')
+    date_published = blocks.DateBlock(
+        help_text='Automatically generated when CCT cron job runs'
+    )
     description = blocks.CharBlock(
         required=True,
         help_text='Briefly summarize the chart for visually impaired users.')
+
+    last_updated_projected_data = blocks.DateBlock(
+        help_text='Month of latest entry in dataset'
+    )
+
     metadata = blocks.CharBlock(
         required=False,
         help_text='Optional metadata for the chart to use. '
@@ -820,41 +828,40 @@ class DataSnapshot(blocks.StructBlock):
     market_key = blocks.CharBlock(
         max_length=20,
         required=True,
-        help_text="Market identifier, e.g. AUT"
+        help_text='Market identifier, e.g. AUT'
     )
     num_originations = blocks.CharBlock(
         max_length=20,
-        help_text="Number of originations, e.g. '1.2 million'"
+        help_text='Number of originations, e.g. 1.2 million'
     )
     value_originations = blocks.CharBlock(
         max_length=20,
-        help_text="Total dollar value of originations, e.g. '$3.4 billion'"
+        help_text='Total dollar value of originations, e.g. $3.4 billion'
     )
     year_over_year_change = blocks.CharBlock(
         max_length=20,
-        help_text="Percentage change, e.g. '5.6% increase' or '7.8% decrease'"
-    )
-    data_month = blocks.CharBlock(
-        max_length=15,
-        help_text="Month of latest entry in dataset in 'Month YYYY' format"
+        help_text='Percentage change, e.g. 5.6% increase'
     )
 
+    last_updated_projected_data = blocks.DateBlock(
+        help_text='Month of latest entry in dataset'
+    )
     # Market-specific descriptor text
     num_originations_text = blocks.CharBlock(
         max_length=100,
-        help_text="Descriptive sentence, e.g. '<Market> loans originated'"
+        help_text='Descriptive sentence, e.g. Auto loans originated'
     )
     value_originations_text = blocks.CharBlock(
         max_length=100,
-        help_text="Descriptive sentence, e.g. 'Dollar volume of new loans'"
+        help_text='Descriptive sentence, e.g. Dollar volume of new loans'
     )
     year_over_year_change_text = blocks.CharBlock(
         max_length=100,
-        help_text="Descriptive sentence, e.g. 'In year-over-year originations'"
+        help_text='Descriptive sentence, e.g. In year-over-year originations'
     )
 
     # Select an image
-    image = images_blocks.ImageChooserBlock(icon='image')
+    image = images_blocks.ImageChooserBlock(required=False, icon='image')
 
     class Meta:
         icon = 'image'

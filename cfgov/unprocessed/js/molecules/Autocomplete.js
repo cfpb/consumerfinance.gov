@@ -54,7 +54,7 @@ function Autocomplete( element, opts ) {
     onSubmit: function( event, selected ) {
       return selected;
     },
-    renderItem: function ( item ) {
+    renderItem: function( item ) {
       var li = document.createElement( 'li' );
       li.setAttribute( 'data-val', item );
       li.innerText = item;

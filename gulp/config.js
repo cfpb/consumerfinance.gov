@@ -1,8 +1,8 @@
 'use strict';
 
-var fs = require( 'fs' );
-var paths = require( '../config/environment' ).paths;
-var globAll = require( 'glob-all' );
+const fs = require( 'fs' );
+const paths = require( '../config/environment' ).paths;
+const globAll = require( 'glob-all' );
 
 module.exports = {
   pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
@@ -54,7 +54,17 @@ module.exports = {
     settings: {
       paths:  globAll.sync( [
         paths.lib,
-        paths.modules,
+        paths.modules + '/cf-buttons/src',
+        paths.modules + '/cf-core/src',
+        paths.modules + '/cf-expandables/src',
+        paths.modules + '/cf-expandables/src',
+        paths.modules + '/cf-forms/src',
+        paths.modules + '/cf-grid/src',
+        paths.modules + '/cf-icons/src',
+        paths.modules + '/cf-layout/src',
+        paths.modules + '/cf-pagination/src',
+        paths.modules + '/cf-tables/src',
+        paths.modules + '/cf-typography/src',
         paths.modules + '/cfpb-chart-builder/src/static/css'
       ] ),
       compress: true
