@@ -1,14 +1,16 @@
 import datetime
-
 import mock
+
+from django.contrib.messages.middleware import MessageMiddleware
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.http import HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
-from model_mommy import mommy
+from wagtail.wagtailcore.blocks import StreamValue
 from wagtail.wagtailcore.models import Site
 
-from v1.models.base import CFGOVPage, Feedback
-from v1.models.images import CFGOVImage
-from v1.tests.wagtail_pages.helpers import publish_page, save_new_page
+from v1.models import BrowsePage, CFGOVPage, Feedback
+from v1.tests.wagtail_pages.helpers import save_new_page
 
 
 class TestCFGOVPage(TestCase):
@@ -60,27 +62,61 @@ class TestCFGOVPage(TestCase):
         self.page.serve(self.request)
         mock_serve_post.assert_called_with(self.request)
 
-    def test_serve_post_returns_failed_JSON_response_for_no_form_id(self):
-        self.request = self.factory.post(
-            '/', HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+    def test_serve_post_returns_400_for_no_form_id(self):
+        request = self.factory.post('/')
+        response = self.page.serve_post(request)
+        self.assertIsInstance(response, HttpResponseBadRequest)
+        self.assertEqual(response.content, str(self.page.url))
+
+    def test_serve_post_returns_json_400_for_no_form_id(self):
+        request = self.factory.post(
+            '/',
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
-        response = self.page.serve_post(self.request)
+        response = self.page.serve_post(request)
         self.assertEqual(response.content, '{"result": "error"}')
         self.assertEqual(response.status_code, 400)
 
-    @mock.patch('v1.models.base.HttpResponseBadRequest')
-    def test_serve_post_calls_messages_and_bad_request_for_no_form_id(
-            self, mock_bad_request):
-        self.request = self.factory.post('/')
-        self.page.serve_post(self.request)
-        mock_bad_request.assert_called_with(self.page.url)
+    def test_serve_post_returns_400_for_invalid_form_id_wrong_parts(self):
+        request = self.factory.post('/', {'form_id': 'foo'})
+        response = self.page.serve_post(request)
+        self.assertIsInstance(response, HttpResponseBadRequest)
 
-    @mock.patch('v1.models.base.HttpResponseBadRequest')
-    def test_serve_post_returns_bad_request_for_no_form_id(
-            self, mock_bad_request):
-        self.request = self.factory.post('/')
-        self.page.serve_post(self.request)
-        self.assertTrue(mock_bad_request.called)
+    def test_serve_post_returns_400_for_invalid_form_id_invalid_field(self):
+        request = self.factory.post('/', {'form_id': 'form-foo-2'})
+        response = self.page.serve_post(request)
+        self.assertIsInstance(response, HttpResponseBadRequest)
+
+    def test_serve_post_returns_400_for_invalid_form_id_invalid_index(self):
+        page = BrowsePage(title='test', slug='test')
+        request = self.factory.post('/', {'form_id': 'form-content-99'})
+        response = page.serve_post(request)
+        self.assertIsInstance(response, HttpResponseBadRequest)
+
+    def test_serve_post_valid_calls_feedback_block_handler(self):
+        """A valid post should call the feedback block handler.
+
+        This returns a redirect to the calling page and also uses the
+        Django messages framework to set a message.
+        """
+        page = BrowsePage(title='test', slug='test')
+        page.content = StreamValue(
+            page.content.stream_block,
+            [{'type': 'feedback', 'value': 'something'}],
+            True
+        )
+        save_new_page(page)
+
+        request = self.factory.post('/', {'form_id': 'form-content-0'})
+        SessionMiddleware().process_request(request)
+        MessageMiddleware().process_request(request)
+
+        response = page.serve_post(request)
+
+        self.assertEqual(
+            (response.status_code, response['Location']),
+            (302, request.path)
+        )
 
     @mock.patch('v1.models.base.TemplateResponse')
     @mock.patch('v1.models.base.CFGOVPage.get_template')
@@ -100,7 +136,7 @@ class TestCFGOVPage(TestCase):
             HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.page.serve_post(self.request)
-        mock_getattr.assert_called_with(self.page, 'content')
+        mock_getattr.assert_called_with(self.page, 'content', None)
 
     @mock.patch('v1.models.base.TemplateResponse')
     @mock.patch('v1.models.base.CFGOVPage.get_template')
