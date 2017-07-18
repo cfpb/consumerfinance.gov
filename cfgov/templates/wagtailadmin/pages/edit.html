@@ -1,0 +1,12 @@
+{% overextends "wagtailadmin/pages/edit.html" %}
+{% block content %}
+{{ block.super }}
+{% if page.answer_base %}
+<div class="row nice-padding">
+      <a href="/admin/ask_cfpb/answer/edit/{{ page.answer_base.id }}/" 
+         class="button button-secondary button-large">
+          EDIT ANSWER CONTENT
+      </a>
+</div>
+{% endif %}
+{% endblock %}

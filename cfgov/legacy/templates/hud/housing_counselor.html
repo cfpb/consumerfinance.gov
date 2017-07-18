@@ -1,7 +1,7 @@
 {% extends "front/base_nonresponsive.html" %}
+{% load feature_flags %}
 {% load jsonify %}
 {% load signed_redirect %}
-{% load split_services from housing_counselor %}
 {% load static from staticfiles %}
 
 {% block title %}
@@ -48,6 +48,8 @@ Find a housing counselor
     <div id="hud_hca_api_form" class="hud_hca_api_form">
       <form action="." method="get">
          <label for="hud_hca_api_query">Search by ZIP code:</label>
+         {% flag_enabled 'HOUSING_COUNSELOR_S3' as s3_flag %}
+         {% if s3_flag %}<input type="hidden" name="s3" value="True">{% endif %}
          <input type="text" name="zipcode" id="hud_hca_api_query" value="{{ zipcode|default:'' }}" placeholder="Please enter a 5-digit ZIP code">
          <button class="hud_hca_api_form_button">Find a counselor</button>
       </form>
@@ -83,7 +85,9 @@ Find a housing counselor
                     <span class="icon-print"></span>
                     <span class="hud_hca_api_results_print"></span>
                     <span class="icon-save"></span>
-                    <span class="hud_hca_api_results_save"><a id="generate-pdf-link" href="/save-hud-counselors-list/?zip={{ zipcode|escape }}" target="_blank">Save list as PDF</a></span>
+                    <span class="hud_hca_api_results_save"><a id="generate-pdf-link" href="{{ pdf_url }}" target="_blank" class="icon-link icon-link__download">
+                        <span class="icon-link_text">Save list as PDF</span>
+                      </a></span>
                 </p>
             </div><!-- end .hud_hca_api_results_actions -->
         </div><!-- end .hud_hca_api_results_info -->
@@ -124,7 +128,7 @@ Find a housing counselor
                     </span>
                     <span class="hud_hca_api_results_listing_title">Phone: <span class="hud_hca_api_tel">{{ counselor.phone1 }}</span></span>
                     <span class="hud_hca_api_results_listing_title">Email Address: <span class="hud_hca_api_email">{{ counselor.email }}</span></span>
-                    <span class="hud_hca_api_results_listing_title">Languages: <span class="hud_hca_api_lang">{{ counselor.languages }}</span></span>
+                    <span class="hud_hca_api_results_listing_title">Languages: <span class="hud_hca_api_lang">{{ counselor.languages|join:', ' }}</span></span>
                   </div>
                 </div>
               </td>
@@ -132,7 +136,7 @@ Find a housing counselor
                 <div class="hud_hca_api_services">
                   <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span>
                   <span class="hud_hca_api_serv">
-                    {% for service in counselor.services|split_services %}
+                    {% for service in counselor.services %}
                       <span class="hud_hca_api_serv_item">{{ service }}</span>
                     {% endfor %}
                   </span>
@@ -141,7 +145,7 @@ Find a housing counselor
               <td class="hud_hca_api_result hud_hca_api_distances_td">
                 <div class="hud_hca_api_distance">
                   <span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Distance</span>
-                  <span class="hud_hca_api_the_distance"><span class="hud_hca_api_miles">{{ counselor.distance }}</span> miles</span>
+                  <span class="hud_hca_api_the_distance"><span class="hud_hca_api_miles">{{ counselor.distance|floatformat }}</span> miles</span>
                 </div>
               </td>
             </tr>

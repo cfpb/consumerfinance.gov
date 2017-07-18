@@ -54,6 +54,18 @@ def get_feedback_stream_value(page):
     return stream_value
 
 
+def generate_short_slug(slug_string):
+    """Limits a slug to around 100 characters, using full words"""
+    if len(slug_string) < 100:
+        return slugify(slug_string)
+    slug_100 = slugify(slug_string)[:100]
+    if slug_100.endswith('-'):
+        slug_base = slug_100.rstrip('-')
+    else:
+        slug_base = "-".join(slug_100.split('-')[:-1])
+    return slug_base
+
+
 class Audience(models.Model):
     name = models.CharField(max_length=255)
 
@@ -183,6 +195,59 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
 
+class SubCategory(models.Model):
+    name = models.CharField(max_length=255)
+    name_es = models.CharField(max_length=255, null=True, blank=True)
+    slug = models.SlugField()
+    slug_es = models.SlugField(
+        null=True,
+        blank=True,
+        help_text="This field is not currently used on the front end.")
+    weight = models.IntegerField(default=1)
+    description = RichTextField(
+        blank=True,
+        help_text="This field is not currently displayed on the front end.")
+    description_es = RichTextField(
+        blank=True,
+        help_text="This field is not currently displayed on the front end.")
+    more_info = models.TextField(
+        blank=True,
+        help_text="This field is not currently displayed on the front end.")
+    parent = models.ForeignKey(
+        Category,
+        null=True,
+        blank=True,
+        default=None,
+        related_name='subcategories')
+    related_subcategories = models.ManyToManyField(
+        'self',
+        blank=True,
+        default=None,
+        help_text="Maximum 3 related subcategories"
+    )
+
+    panels = [
+        FieldPanel('name', classname="title"),
+        FieldPanel('slug'),
+        FieldPanel('description'),
+        FieldPanel('name_es', classname="title"),
+        FieldPanel('slug_es'),
+        FieldPanel('description_es'),
+        FieldPanel('weight'),
+        FieldPanel('more_info'),
+        FieldPanel('parent'),
+        FieldPanel('related_subcategories',
+                   widget=forms.CheckboxSelectMultiple),
+    ]
+
+    def __str__(self):
+        return "{}: {}".format(self.parent.name, self.name)
+
+    class Meta:
+        ordering = ['weight']
+        verbose_name_plural = "subcategories"
+
+
 class Answer(models.Model):
     last_user = models.ForeignKey(User, blank=True, null=True)
     category = models.ManyToManyField(
@@ -251,13 +316,14 @@ class Answer(models.Model):
         default=False,
         verbose_name="Send to English page for review",
         help_text=(
-            "Check the box(es) above after you’ve finished making edits "
-            "to the English or Spanish answer record below. "
-            "Make sure to check before saving in order to publish your edits "
-            "or share as a draft."))
+            "Check this box to push your English edits "
+            "to the page for review. This does not publish your edits."))
     update_spanish_page = models.BooleanField(
         default=False,
-        verbose_name="Send to Spanish page for review")
+        verbose_name="Send to Spanish page for review",
+        help_text=(
+            "Check this box to push your Spanish edits "
+            "to the page for review. This does not publish your edits."))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     last_edited = models.DateField(
@@ -272,10 +338,13 @@ class Answer(models.Model):
         help_text="Change the date to today "
                   "if you edit a Spanish question, snippet or answer.",
         verbose_name="Last edited Spanish content")
+
     subcategory = models.ManyToManyField(
         'SubCategory',
         blank=True,
-        help_text="Choose any subcategories related to the answer.")
+        help_text=(
+            "Choose only subcategories that belong "
+            "to one of the categories checked above."))
     audiences = models.ManyToManyField(
         'Audience',
         blank=True,
@@ -303,7 +372,7 @@ class Answer(models.Model):
         help_text=(
             'Optionally select a custom image to appear when users share this '
             'page on social media websites. If no image is selected, this '
-            'page\'s category image will be used.'
+            'page\'s category image will be used. Minimum size: 1200w x 630h.'
         )
     )
 
@@ -336,13 +405,15 @@ class Answer(models.Model):
                 FieldPanel('featured_rank')]),
             FieldPanel('audiences', widget=forms.CheckboxSelectMultiple),
             FieldPanel('next_step'),
-            FieldRowPanel([
-                FieldPanel(
-                    'category', widget=forms.CheckboxSelectMultiple),
-                FieldPanel(
-                    'subcategory',
-                    widget=forms.CheckboxSelectMultiple)]),
-            FieldPanel('related_questions', widget=forms.SelectMultiple),
+            FieldPanel(
+                'category', widget=forms.CheckboxSelectMultiple),
+            FieldPanel(
+                'subcategory',
+                widget=forms.CheckboxSelectMultiple),
+            FieldPanel(
+                'related_questions',
+                widget=forms.SelectMultiple,
+                classname="full"),
             FieldPanel('search_tags'),
             FieldPanel('search_tags_es'),
             ImageChooserPanel('social_sharing_image')],
@@ -355,6 +426,10 @@ class Answer(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.id, self.slug)
+
+    @property
+    def available_subcategory_qs(self):
+        return SubCategory.objects.filter(parent__in=self.category.all())
 
     @property
     def english_page(self):
@@ -379,10 +454,6 @@ class Answer(models.Model):
             html_parser.unescape(self.snippet_es),
             html_parser.unescape(self.answer_es)))
         return html.strip_tags(unescaped).strip()
-
-    @property
-    def available_subcategory_qs(self):
-        return SubCategory.objects.filter(parent__in=self.category.all())
 
     def cleaned_questions(self):
         cleaned_terms = html_parser.unescape(self.question)
@@ -513,10 +584,6 @@ class Answer(models.Model):
             get_feedback_stream_value(_page),
             is_lazy=True)
         _page.save_revision(user=self.last_user)
-        # _page.save()
-        # base_page.refresh_from_db()
-        # base_page.has_unpublished_changes = True
-        # base_page.save()
         return _page
 
     def create_or_update_pages(self):
@@ -530,20 +597,26 @@ class Answer(models.Model):
         return counter
 
     def save(self, skip_page_update=False, *args, **kwargs):
-        if self.answer:
-            self.slug = "{}-en-{}".format(
-                slugify(self.question[:244]), self.id)
+        if not self.id:
+            super(Answer, self).save(*args, **kwargs)
+            self.save(skip_page_update=skip_page_update)
         else:
-            self.slug = "slug-en-{}".format(self.id)
-        if self.answer_es:
-            self.slug_es = "{}-es-{}".format(
-                slugify(self.question_es[:244]), self.id)
-        super(Answer, self).save(*args, **kwargs)
-        if skip_page_update is False:
-            if self.update_english_page:
-                self.create_or_update_page(language='en')
-            if self.update_spanish_page:
-                self.create_or_update_page(language='es')
+            if self.answer:
+                self.slug = "{}-en-{}".format(
+                    generate_short_slug(self.question), self.id)
+            else:
+                self.slug = "slug-en-{}".format(self.id)
+            if self.answer_es:
+                self.slug_es = "{}-es-{}".format(
+                    generate_short_slug(self.question_es), self.id)
+            else:
+                self.slug_es = "slug-es-{}".format(self.id)
+            super(Answer, self).save(*args, **kwargs)
+            if skip_page_update is False:
+                if self.update_english_page:
+                    self.create_or_update_page(language='en')
+                if self.update_spanish_page:
+                    self.create_or_update_page(language='es')
 
     def delete(self):
         self.answer_pages.all().delete()
@@ -560,56 +633,3 @@ class SpanishAnswerProxy(Answer):
     """A no-op proxy class to allow separate language indexing in Haystack"""
     class Meta:
         proxy = True
-
-
-class SubCategory(models.Model):
-    name = models.CharField(max_length=255)
-    name_es = models.CharField(max_length=255, null=True, blank=True)
-    slug = models.SlugField()
-    slug_es = models.SlugField(
-        null=True,
-        blank=True,
-        help_text="This field is not currently used on the front end.")
-    weight = models.IntegerField(default=1)
-    description = RichTextField(
-        blank=True,
-        help_text="This field is not currently displayed on the front end.")
-    description_es = RichTextField(
-        blank=True,
-        help_text="This field is not currently displayed on the front end.")
-    more_info = models.TextField(
-        blank=True,
-        help_text="This field is not currently displayed on the front end.")
-    parent = models.ForeignKey(
-        Category,
-        null=True,
-        blank=True,
-        default=None,
-        related_name='subcategories')
-    related_subcategories = models.ManyToManyField(
-        'self',
-        blank=True,
-        default=None,
-        help_text="Maximum 3 related subcategories"
-    )
-
-    panels = [
-        FieldPanel('name', classname="title"),
-        FieldPanel('slug'),
-        FieldPanel('description'),
-        FieldPanel('name_es', classname="title"),
-        FieldPanel('slug_es'),
-        FieldPanel('description_es'),
-        FieldPanel('weight'),
-        FieldPanel('more_info'),
-        FieldPanel('parent'),
-        FieldPanel('related_subcategories',
-                   widget=forms.CheckboxSelectMultiple),
-    ]
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['weight']
-        verbose_name_plural = "Subcategories"

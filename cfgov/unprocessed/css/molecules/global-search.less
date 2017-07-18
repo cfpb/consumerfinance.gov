@@ -59,11 +59,11 @@
 
                       <div class="m-global-search_content-suggestions">
                           <p class="h5">Suggested search terms:</p>
-                          <ul class="list list__horizontal">
-                              <li class="list_item"><a class="list_link" href="#">Regulations</a></li>
-                              <li class="list_item"><a class="list_link" href="#">Compliance guides</a></li>
-                              <li class="list_item"><a class="list_link" href="#">Mortgage</a></li>
-                              <li class="list_item"><a class="list_link" href="#">College loans</a></li>
+                          <ul class="m-list m-list__horizontal">
+                              <li class="m-list_item"><a class="m-list_link" href="#">Regulations</a></li>
+                              <li class="m-list_item"><a class="m-list_link" href="#">Compliance guides</a></li>
+                              <li class="m-list_item"><a class="m-list_link" href="#">Mortgage</a></li>
+                              <li class="m-list_item"><a class="m-list_link" href="#">College loans</a></li>
                           </ul>
                       </div>
                   </form>
@@ -210,7 +210,7 @@
     .respond-to-min( @bp-sm-min, {
         // Add "Search" text in trigger.
         &_trigger-label:before {
-            .webfont-medium();
+            .u-webfont-medium();
 
             content: 'Search';
         }
@@ -280,10 +280,10 @@
     .respond-to-min( 480px, {
         &_content-form {
             // Attach button to input.
-            .input-with-btn_input {
+            .o-form__input-w-btn_input-container {
                 width: 70%;
             }
-            .input-with-btn_btn {
+            .o-form__input-w-btn_btn-container {
                 width: 30%;
                 border-left: 0;
 

@@ -3,10 +3,20 @@ import logging
 import os
 import requests
 
+from django.db import models
+from django.contrib.auth.models import User
+
 from akamai.edgegrid import EdgeGridAuth
 from wagtail.contrib.wagtailfrontendcache.backends import BaseBackend
 
 logger = logging.getLogger(__name__)
+
+
+class AkamaiHistory(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    subject = models.CharField(max_length=2083)
+    message = models.CharField(max_length=255)
+    user = models.ForeignKey(User)
 
 
 class AkamaiBackend(BaseBackend):

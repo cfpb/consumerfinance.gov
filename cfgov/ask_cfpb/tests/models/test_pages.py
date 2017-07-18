@@ -1,10 +1,12 @@
 from __future__ import unicode_literals
+import datetime
 import HTMLParser
 
 import json
 import mock
-from mock import patch
+from mock import mock_open, patch
 from model_mommy import mommy
+import unittest
 
 from bs4 import BeautifulSoup as bs
 
@@ -12,19 +14,87 @@ from django.utils import timezone
 from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponse, Http404
+from django.template.defaultfilters import slugify
 from django.test import TestCase
 from django.utils import html
 
 from v1.models import CFGOVImage
 from v1.util.migrations import get_or_create_page, get_free_path
 from ask_cfpb.models.django import (
-    Answer, Category, SubCategory, Audience,
-    NextStep, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
+    Answer, Audience, Category, generate_short_slug, NextStep,
+    SubCategory, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
 from ask_cfpb.models.pages import (
     AnswerPage, AnswerCategoryPage, AnswerAudiencePage)
+from ask_cfpb.scripts.export_ask_data import (
+    assemble_output, clean_and_strip, export_questions)
 
 html_parser = HTMLParser.HTMLParser()
 now = timezone.now()
+
+
+class AnswerSlugCreationTest(unittest.TestCase):
+
+    def test_long_slug_string(self):
+        long_string = (
+            "This string is more than 100 characters long, I assure you. "
+            "No, really, more than 100 characters loooong.")
+        self.assertEqual(
+            generate_short_slug(long_string),
+            ('this-string-is-more-than-100-characters-long-'
+             'i-assure-you-no-really-more-than-100-characters'))
+
+    def test_short_slug_string(self):
+        short_string = "This string is less than 100 characters long."
+        self.assertEqual(
+            generate_short_slug(short_string), slugify(short_string))
+
+    def test_slug_string_that_will_end_with_a_hyphen(self):
+        """
+        It's possible for slug truncation to result in a slug that ends
+        on a hypthen. In that case the function should strip the ending hyphen.
+        """
+        will_end_with_hyphen = (
+            "This string is more than 100 characters long, I assure you. "
+            "No, really, more than 100 characters looong and end on a hyphen.")
+        self.assertEqual(
+            generate_short_slug(will_end_with_hyphen),
+            'this-string-is-more-than-100-characters-long-i-assure-you-'
+            'no-really-more-than-100-characters-looong')
+
+
+class OutputScriptFunctionTests(unittest.TestCase):
+
+    def setUp(self):
+        self.mock_assemble_output_value = [{
+            'ASK_ID': 123456,
+            'Question': "Question",
+            'ShortAnswer': "Short answer.",
+            'Answer': "Long answer.",
+            'URL': "fakeurl.com",
+            'SpanishQuestion': "Spanish question.",
+            'SpanishAnswer': "Spanish answer",
+            'SpanishURL': "fakespanishurl.com",
+            'Topic': "Category 5 Hurricane",
+            'SubCategories': "Subcat1 | Subcat2",
+            'Audiences': "Audience1 | Audience2",
+            'RelatedQuestions': "1 | 2 | 3",
+            'RelatedResources': "Owning a Home"}]
+
+    def test_clean_and_strip(self):
+        raw_data = "<p>If you have been scammed, file a complaint.</p>"
+        clean_data = "If you have been scammed, file a complaint."
+        self.assertEqual(clean_and_strip(raw_data), clean_data)
+
+    @mock.patch('ask_cfpb.scripts.export_ask_data.assemble_output')
+    def test_export_questions(self, mock_output):
+        mock_output.return_value = self.mock_assemble_output_value
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
+        slug = 'ask-cfpb-{}.csv'.format(timestamp)
+        m = mock_open()
+        with patch('__builtin__.open', m, create=True):
+            export_questions()
+        self.assertEqual(mock_output.call_count, 1)
+        m.assert_called_once_with("/tmp/{}".format(slug), 'w')
 
 
 class AnswerModelTestCase(TestCase):
@@ -141,6 +211,16 @@ class AnswerModelTestCase(TestCase):
         self.page2.answer_base = self.answer5678
         self.page2.parent = self.english_parent_page
         self.page2.save()
+
+    def test_export_script_assemble_output(self):
+        expected_urls = ['/ask-cfpb/mock-question1-en-1234/',
+                         '/ask-cfpb/mock-answer-page-en-5678/']
+        expected_questions = ['Mock question1', 'Mock question2']
+        test_output = assemble_output()
+        for obj in test_output:
+            self.assertIn(obj.get('ASK_ID'), [1234, 5678])
+            self.assertIn(obj.get('URL'), expected_urls)
+            self.assertIn(obj.get('Question'), expected_questions)
 
     def test_spanish_print_page(self):
         response = self.client.get(reverse(
@@ -601,7 +681,9 @@ class AnswerModelTestCase(TestCase):
 
     def test_subcategory_str(self):
         subcategory = self.subcategories[0]
-        self.assertEqual(subcategory.__str__(), subcategory.name)
+        self.assertEqual(
+            subcategory.__str__(),
+            "{}: {}".format(self.category.name, subcategory.name))
 
     def test_nextstep_str(self):
         next_step = self.next_step

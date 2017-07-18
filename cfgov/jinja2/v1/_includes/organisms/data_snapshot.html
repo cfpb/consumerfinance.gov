@@ -9,30 +9,25 @@
 
    Create a data-snapshot organism when given:
 
-   value:                           Object defined from a StreamField block.
+   value:                              Data Snapshot object defined from a StructBlock.
+   value.last_updated_projected_data:  A DateBlock of the most recent month we have data for this snapshot.
+   value.num_originations:             A string containing number of market originations.
+   value.num_originations_text:        A string containing market origination number description.
+   value.value_originations:           A string containing value of market originations.
+   value.value_originations_text:      A string containing market origination value description.
+   value.year_over_year_change:        A string containing year-over-year percent change.
+   value.year_over_year_change_text:   A string containing year-over-year market desciption.
 
-   value.data_month:                A string containing month and year.
-
-   value.num_originations:          A string containing number of market originations.
-
-   value.num_originations_text:     A string containing market origination number description.
-
-   value.value_originations:        A string containing value of market originations.
-
-   value.value_originations_text:   A string containing market origination value description.
-
-   value.year_over_year_change:     A string containing year-over-year percent change.
-
-   value.year_over_year_change_text:A string containing year-over-year market desciption.
-
-   value.image:  (Optional)         An image for the second column.
+   value.image: (Optional)             An image for the second column.
 
 
    ========================================================================== #}
 
-<h2>Data Snapshot for {{ value.data_month }}</h2>
-<div class="content-l">
-    <div class="content-l_col content-l_col-1-2">
+<h2>Data snapshot for {{ value.last_updated_projected_data.strftime('%B %Y') }}</h2>
+<div class="o-info-unit-group"
+    data-qa-hook="half-width-link-blob">
+    <div class="content-l_col
+                content-l_col-1-2">
         <h3><b>{{ value.num_originations }}</b>
         <br/>
         {{ value.num_originations_text }}</h3>
@@ -49,8 +44,14 @@
     </div>
 
     {% if value.image %}
-    <div class="content-l_col content-l_col-2-2">
-        {{ value.image }}
+    <div class="content-l_col
+                content-l_col-1-2">
+        <div class="m-full-width-media">
+            {% set media = image(value.image, 'original') %}
+            <img class="richtext-image full-width"
+                 src="{{ media.url }}"
+                 alt="{{ image_alt_value(media) }}">
+        </div>
     </div>
     {% endif %}
 </div>

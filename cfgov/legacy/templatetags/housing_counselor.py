@@ -9,9 +9,10 @@ register = template.Library()
 
 @register.filter
 @stringfilter
-def split_services(s):
-    """Prepares the list of services returned by the django-hud API.
+def split_string_list(s):
+    """Split a comma-separated string as returned by the django-hud API.
 
-    See hud_api_replace.management.commands.Command.translate_services.
+    See how services and languages are returned by the Command class in
+    hud_api_replace.management.commands.load_hud_data.
     """
-    return [service.strip().replace('&#44;', ',') for service in s.split(',')]
+    return [x.strip().replace('&#44;', ',') for x in s.split(',')]

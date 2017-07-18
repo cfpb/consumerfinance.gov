@@ -251,17 +251,45 @@ class OrganismsTestCase(TestCase):
             title='Browse Page',
             slug='browse',
         )
+
+        # Adds a AUT market to a browse page
         browse_page.content = StreamValue(
             browse_page.content.stream_block,
             [atomic.data_snapshot],
             True
         )
         publish_page(child=browse_page)
+
         response = self.client.get('/browse/')
-        self.assertContains(response, '2.5 million')
-        self.assertContains(response, '$53.8 billion')
-        self.assertContains(response, '3.4% increase')
-        self.assertContains(response, 'March 2017')
+        self.assertContains(response, '5 million')
+        self.assertContains(response, '$64 billion')
+        self.assertContains(response, '5% increase')
+        self.assertContains(response, 'January 2015')
         self.assertContains(response, 'Auto loans originated')
         self.assertContains(response, 'Dollar value of new loans')
         self.assertContains(response, 'In year-over-year originations')
+
+    def test_chart_block(self):
+        """ Chart Block correctly renders fields on a Browse Page"""
+        browse_page = BrowsePage(
+            title='Browse Page',
+            slug='browse',
+        )
+
+        # Adds a AUT market to a browse page
+        browse_page.content = StreamValue(
+            browse_page.content.stream_block,
+            [atomic.chart_block],
+            True
+        )
+        publish_page(child=browse_page)
+
+        response = self.client.get('/browse/')
+        self.assertContains(response, 'Volume of credit cards originated')
+        self.assertContains(response, 'foo/bar.csv')
+        self.assertContains(response, 'Data not final')
+        self.assertContains(
+            response,
+            'The most recent data available in each visualization is for April 2016'
+        )
+        self.assertContains(response, 'January 2018')

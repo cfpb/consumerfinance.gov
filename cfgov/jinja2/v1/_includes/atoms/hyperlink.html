@@ -15,4 +15,8 @@
    value.text:    A string for the text of the link.
 
    ========================================================================== #}
-<a class="jump-link" href="{{ value.url }}">{{ value.text }}</a>
+<a class="a-link a-link__jump" href="{{ value.url }}">
+    <span class="a-link_text">
+        {{ value.text }}
+    </span>
+</a>

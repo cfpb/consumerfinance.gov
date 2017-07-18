@@ -10,8 +10,8 @@
           <div class="o-expandable_content" aria-expanded="false">
               <div class="o-expandable_content-animated"></div>
           </div>
-          <a class="o-expandable_target jump-link o-expandable_link" title="Expand content">
-              <span class="jump-link_text">
+          <a class="o-expandable_target a-link a-link__jump o-expandable_link" title="Expand content">
+              <span class="a-link_text">
                   <span class="o-expandable_cue o-expandable_cue-open">
                       Read full answer
                       <span class="cf-icon cf-icon-plus-round"></span>
@@ -35,7 +35,7 @@
             .o-expandable_cue.o-expandable_cue-close
 
     notes:
-      - "One-way expandable. Displays an approximately 4-line 
+      - "One-way expandable. Displays an approximately 4-line
          preview of content on mobile screen sizes only. "
   - name: .o-expandable__read-more (modifier)
   tags:
@@ -46,7 +46,7 @@
         border-bottom: 0;
         position: relative;
     }
-    
+
     .o-expandable_target {
         display: none;
     }
@@ -63,17 +63,17 @@
     .respond-to-max( @bp-xs-max, {
         .o-expandable_content {
             // shows approx. 4 lines of content
-            height:  unit( @base-line-height-px * 4 / @base-font-size-px, em ); 
+            height:  unit( @base-line-height-px * 4 / @base-font-size-px, em );
             overflow: hidden;
         }
 
         .o-expandable_content:after {
             // fades content out over approx. 2 lines
-            width: 100%; 
-            height: unit( @base-line-height-px * 2 / @base-font-size-px, em ); 
+            width: 100%;
+            height: unit( @base-line-height-px * 2 / @base-font-size-px, em );
             margin: 0;
-            position: absolute; 
-            bottom: 0; 
+            position: absolute;
+            bottom: 0;
             left: 0;
             background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100% );
             content: '';

@@ -1,5 +1,10 @@
 /* Begin HUD HCA API Landing Page additions */
 
+/* Normalize link highlighting */
+a:hover, a:focus {
+    background-color: transparent;
+}
+
 /* Form */
 .hud_hca_api_interactions {
 	margin-bottom: 2em;
@@ -258,4 +263,11 @@
 .bread {
   margin: 0;
 }
+
+/* Override to remove default Nemo PDF download icon */
+.pdf {
+    background: none;
+    padding-right: 0;
+}
+
 /* End HUD HCA API Landing Page additions */
