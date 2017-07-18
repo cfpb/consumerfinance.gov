@@ -38,15 +38,20 @@
 
    nav_depth: Level of menu nesting. 1 equals the root menu.
 
-   nav_items: An array of tuples containing menu link info.
+   nav_groups: An array of objects containing menu link info.
 
    ========================================================================== #}
 
-{% macro _nav_list( nav_depth, nav_items ) %}
-{%- for nav_group in nav_items %}
-<ul class="m-list
-           m-list__unstyled
-           {{ _classes( nav_depth, '-list' ) }}">
+{% macro _nav_list( nav_depth, nav_groups ) %}
+{%- for group in nav_groups %}
+<div class="{{ _classes( nav_depth, '-list' ) }}">
+  {% if group.title %} 
+  <h3 class="h5 {{' hide-title' if group.hide_title else ''}}">
+      {{group.title | safe}}
+  </h3>
+  {% endif %}
+  <ul class="m-list
+             m-list__unstyled">
     {% if nav_depth == 1 -%}
     <li class="m-list_item
                {{ _classes( nav_depth, '-item' ) }}">
@@ -54,28 +59,28 @@
         {{ global_header_cta.render() }}
     </li>
     {%- endif %}
-    {%- for nav_caption,
-            nav_url,
-            nav_children in nav_group %}
+
+    {%- for item in group.nav_items %}
     <li class="m-list_item
                {{ _classes( nav_depth, '-item' ) }}"
-        {{ 'data-js-hook=behavior_flyout-menu' if nav_children | count > 0 else '' }}>
+        {{ 'data-js-hook=behavior_flyout-menu' if item.nav_groups | count > 0 else '' }}>
         {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
-        <a class="{{ 'u-link__disabled' if nav_url == '' else '' }}
+        <a class="{{ 'u-link__disabled' if item.url == '' else '' }}
                   {{ _classes( nav_depth, '-link' ) }}
-                  {{ _classes( nav_depth, '-link__has-children' ) if nav_children | count > 0 else '' }}
-                  {{ _classes( nav_depth, '-link__current' ) if nav_url == request.path else '' }}"
-           {{ '' if nav_url == '' else 'href=' + nav_url | e }}
-           {{ 'data-js-hook=behavior_flyout-menu_trigger' if nav_children | count > 0 else '' }}
-           {{ 'aria-pressed=false' if nav_children | count > 0 else '' }}>
-            {{ nav_caption }}
+                  {{ _classes( nav_depth, '-link__has-children' ) if item.nav_groups | count > 0 else '' }}
+                  {{ _classes( nav_depth, '-link__current' ) if item.url == request.path else '' }}"
+           {{ '' if item.url == '' else 'href=' + item.url | e }}
+           {{ 'data-js-hook=behavior_flyout-menu_trigger' if item.nav_groups | count > 0 else '' }}
+           {{ 'aria-pressed=false' if item.nav_groups | count > 0 else '' }}>
+            {{ item.caption }}
         </a>
-        {% if nav_children | count > 0 %}
-            {{ _nav( nav_depth | int + 1, nav_children, nav_caption ~ ' Overview', nav_url, vars.media_items ) }}
+          {% if item.nav_groups | count > 0 %}
+            {{ _nav( nav_depth | int + 1, item.nav_groups, item.caption ~ ' Overview', item.url, vars.media_items, item.footer if item.footer else '' ) }}
         {% endif %}
     </li>
     {%- endfor %}
-</ul>
+    </ul>
+</div>
 {%- endfor %}
 {% endmacro %}
 
@@ -91,7 +96,7 @@
 
    nav_depth:        Level of menu nesting. 1 equals the root menu.
 
-   nav_items:        An array of tuples containing menu link info.
+   nav_groups:       An array of objects containing menu link info.
 
    nav_overview:     A string used for a sub nav overview title.
 
@@ -101,7 +106,7 @@
 
    ========================================================================== #}
 
-{% macro _nav( nav_depth, nav_items, nav_overview, nav_overview_url, media_items ) %}
+{% macro _nav( nav_depth, nav_groups, nav_overview, nav_overview_url, media_items, footer ) %}
 <div class="{{ _classes( nav_depth ) }}
             u-hidden-overflow"
      aria-expanded="false"
@@ -133,14 +138,22 @@
                 </span>
                 {% endif %}
                 <div class="{{ _classes( nav_depth, '-lists' ) }}">
-                    {{ _nav_list( nav_depth, nav_items ) }}
+                    {{ _nav_list( nav_depth, nav_groups ) }}
                 </div>
+               {% if footer %}
+          <div class="nav_footer">
+            {% for item in footer %}
+            <p>{{ item | safe }}</p>
+            {% endfor %}
+          </div>
+         {% endif %}
             </div>
             {% for parent_name, fmc in media_items %}
                 {% if parent_name + ' Overview' == nav_overview %}
                 {{ fmc }}
                 {% endif %}
             {% endfor %}
+         
         {# Close Wrapper if needed #}
         {{ '</div>' | safe if nav_depth > 1 else '' }}
     </div>
@@ -176,6 +189,6 @@
     </button>
     {# Create a root menu at depth one.
        This is the 1st level of a 3-level menu. #}
-    {{ _nav( 1, vars.nav_items ) }}
+    {{ _nav( 1, vars.nav_groups ) }}
     <button class="{{ base_class ~ '_tab-trigger' }}" aria-hidden="true"></button>
 </nav>

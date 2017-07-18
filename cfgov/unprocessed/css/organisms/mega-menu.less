@@ -194,6 +194,11 @@ body {
         }
     }
 
+    .nav_footer {
+        border-top: 1px solid @gray-40;
+        padding: @grid_gutter-width / 2 0;
+    }
+
     // Mobile sizes.
     .respond-to-max( @bp-xs-max, {
         &_trigger {
@@ -252,6 +257,7 @@ body {
                     content: @cf-icon-delete;
                 }
             }
+
         }
 
         // Menu flyout.
@@ -409,6 +415,14 @@ body {
                     border-bottom: none;
                 }
             }
+
+            h3 {
+                margin-top: @grid_gutter-width / 2;
+
+                &.hide-title {
+                    .u-visually-hidden;
+                }
+            }
         }
 
         // 3rd-level menu - Tablet/Mobile.
@@ -444,6 +458,11 @@ body {
 
         &_trigger {
             display: none;
+        }
+
+        .nav_footer {
+            margin-top: @grid_gutter-width;
+            font-size: unit( 18px / @base-font-size-px, em );
         }
 
         // 1st-level menu - Desktop.
@@ -556,8 +575,7 @@ body {
 
             &-overview {
                 padding-bottom: @grid_gutter-width / 2;
-                margin-bottom: unit( @grid_gutter-width / 2 / 18px, em );
-
+                margin-bottom: @grid_gutter-width * 2 / 3 ;
                 font-size: 1em;
 
                 // ------------------------------------------------------------
@@ -597,6 +615,10 @@ body {
                     border-left-color: @green;
                 }
             }
+        }
+
+        .hide-title {
+            visibility: hidden;
         }
 
         // 3rd-level menu - Desktop.
@@ -665,98 +687,6 @@ body {
     }
 } );
 
-// for IA_USER_TESTING_MENU feature flag
-.o-mega-menu__ia-testing {
-     .o-mega-menu_content-2 {
-        .o-mega-menu_content-grid.full-width {
-            .respond-to-min( @bp-lg-min, {
-                .grid_column( 12 );
-                .o-mega-menu_content-list {
-                    .grid_column( 3 );
-                }
-            });
-        }
-        .o-mega-menu-list {
-            .respond-to-max( @bp-sm-max, {
-
-                h3 {
-                    margin-top: 15px;
-                }
-            });
-        }
-    }
-    .respond-to-min( @bp-med-min, {
-        .consumer-tools-overview {
-            display: none;
-        }
-    });
-
-    .respond-to-min( @bp-lg-min, {
-        .o-mega-menu_content-2-overview {
-            margin-bottom: 20px;
-        }
-    });
-
-    .hide-title span {
-        .respond-to-max( @bp-sm-max, {
-            .u-visually-hidden;
-        });
-        .respond-to-min( @bp-lg-min, {
-            visibility: hidden;
-        });
-    }
-
-    .group-title,
-    .hide-title {
-        font-size: unit( 18px / @base-font-size-px, em );
-
-        .respond-to-min( @bp-med-min, {
-            span {
-                padding-left: unit( ( @grid_gutter-width *  2 / 3 ) / @base-font-size-px, em);
-            }
-        });
-    }
-
-    .group-title {
-        margin-top: unit(@grid_gutter-width / 2 / @base-font-size-px, em);
-        margin-bottom: 0;
-
-        &:after {
-            content: "";
-            display: block;
-            height: 1px;
-            background-color: @grid_column__top-divider;
-            position: static;
-            width: 100%;
-            margin-top: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
-            margin-bottom: 0;
-            margin-left: auto !important;
-        }
-
-        .respond-to-min( @bp-med-min, {
-            margin-top: 0;
-            margin-bottom: auto;
-            &:after {
-                margin-bottom: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
-            }
-        });
-    }
-
-    .respond-to-min( @bp-med-min, {
-        .hide-title:after {
-            content: "";
-            display: block;
-            height: 1px;
-            margin-bottom: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
-            background-color: @grid_column__top-divider;
-            position: static;
-            width: 100%;
-            margin-top: unit(@grid_gutter-width / 3 / @base-font-size-px, em);
-            margin-left: -30px;
-        }
-    });
-}
-// end feature flag section
 
 
 /* topdoc
