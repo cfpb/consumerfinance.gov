@@ -88,6 +88,7 @@
 
         .m-hero_image {
             background-image: url('{{ sm_img.url }}');
+            background-size: cover;
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                 src='{{ sm_img.url }}',
                 sizingMethod='scale');
@@ -97,6 +98,7 @@
         @media screen and (min-width: 37.5625em) {
             .m-hero_image {
                 background-image: url('{{ img.url }}');
+                background-size: cover;
                 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='{{ img.url }}',
                     sizingMethod='scale');
@@ -105,6 +107,7 @@
 
             .m-hero__overlay .m-hero_wrapper {
                 background-image: url('{{ img.url }}');
+                background-size: cover;
                 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='{{ img.url }}',
                     sizingMethod='scale');
