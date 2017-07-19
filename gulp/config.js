@@ -1,8 +1,8 @@
 'use strict';
 
-var fs = require( 'fs' );
-var paths = require( '../config/environment' ).paths;
-var globAll = require( 'glob-all' );
+const fs = require( 'fs' );
+const paths = require( '../config/environment' ).paths;
+const globAll = require( 'glob-all' );
 
 module.exports = {
   pkg:    JSON.parse( fs.readFileSync( 'package.json' ) ), // eslint-disable-line no-sync, no-inline-comments, max-len
