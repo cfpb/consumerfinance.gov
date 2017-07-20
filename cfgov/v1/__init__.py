@@ -128,10 +128,16 @@ NONCFPB_LINK_PATTERN = re.compile(settings.NONCFPB_LINK_PATTERN)
 FILES_LINK_PATTERN = re.compile(settings.FILES_LINK_PATTERN)
 DOWNLOAD_LINK_PATTERN = re.compile(settings.DOWNLOAD_LINK_PATTERN)
 EXTERNAL_A_CSS = os.environ.get('EXTERNAL_A_CSS',
-                                'icon-link icon-link__external-link')
+                                'a-link '
+                                'a-link__icon '
+                                'cf-icon cf-icon__after '
+                                'cf-icon-external-link')
 DOWNLOAD_A_CSS = os.environ.get('DOWNLOAD_A_CSS',
-                                'icon-link icon-link__download')
-EXTERNAL_SPAN_CSS = os.environ.get('EXTERNAL_SPAN_CSS', 'icon-link_text')
+                                'a-link '
+                                'a-link__icon '
+                                'cf-icon cf-icon__after '
+                                'cf-icon-download')
+EXTERNAL_SPAN_CSS = os.environ.get('EXTERNAL_SPAN_CSS', 'a-link_text')
 
 
 def add_link_markup(tags):
