@@ -37,7 +37,7 @@ npm install -g grunt-cli gulp
 
 It's good practice to specify specific versions in any dependency management system such as maven, pip, ivy, npm, etc. Yes, it incurs a bit of management overhead in that you have to manually change version numbers when you want to upgrade a dependency. This extra work pays off in absence of time spent tracking down unexpected changes or errors due to a version upgrade of which you were unaware.
 
-When working with npm, we recommend using [npm shrinkwrap](https://docs.npmjs.com/cli/shrinkwrap).
+When working with npm, we recommend using [npm lockfiles](https://docs.npmjs.com/files/package-locks).
 
 ## Building JavaScript and Less
 
