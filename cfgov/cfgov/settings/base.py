@@ -152,7 +152,8 @@ TEMPLATES = [
             V1_TEMPLATE_ROOT,
             V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
-            PROJECT_ROOT.child('static_built')
+            PROJECT_ROOT.child('static_built'),
+            PROJECT_ROOT.child('wellbeing').child('templates'),
         ],
         'APP_DIRS': False,
         'OPTIONS': {
@@ -593,6 +594,15 @@ FLAGS = {
     # The template will render for the front-end, but the sortable code is missing
     # and the table will not be sortable until cf-tables from CF 4.x is implemented
     'SORTABLE_TABLES': {},
+
+    # Serve housing counselor JSON and PDFs from S3.
+    # Access e.g. /find-a-housing-counselor/?zipcode=20001&s3=True
+    'HOUSING_COUNSELOR_S3': {
+        'parameter': 's3',
+    },
+
+    # The release of the consumer Financial Well Being Scale app
+    'FWB_RELEASE': {},
 }
 
 
