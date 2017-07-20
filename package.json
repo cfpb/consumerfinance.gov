@@ -62,7 +62,7 @@
     "imagemin-svgo": "5.2.2",
     "is-reachable": "2.3.2",
     "psi": "3.0.0",
-    "require-dir": "0.3.1",
+    "require-dir": "0.3.2",
     "ustream-embedapi": "1.0.0",
     "webpack": "3.2.0",
     "webpack-stream": "3.2.0"
