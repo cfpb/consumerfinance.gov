@@ -246,56 +246,6 @@ class OrganismsTestCase(TestCase):
         response = self.client.get('/browse/')
         self.assertContains(response, 'Age 30 to 44')
 
-<<<<<<< b7176ba5b9224e0bcb516a15162fb08ddb1b9607
-    def test_data_snapshot(self):
-        """ Data Snapshot correctly renders fields on a Browse Page"""
-        browse_page = BrowsePage(
-            title='Browse Page',
-            slug='browse',
-        )
-
-        # Adds a AUT market to a browse page
-        browse_page.content = StreamValue(
-            browse_page.content.stream_block,
-            [atomic.data_snapshot],
-            True
-        )
-        publish_page(child=browse_page)
-
-        response = self.client.get('/browse/')
-        self.assertContains(response, '5 million')
-        self.assertContains(response, '$64 billion')
-        self.assertContains(response, '5% increase')
-        self.assertContains(response, 'January 2015')
-        self.assertContains(response, 'Auto loans originated')
-        self.assertContains(response, 'Dollar value of new loans')
-        self.assertContains(response, 'In year-over-year originations')
-
-    def test_chart_block(self):
-        """ Chart Block correctly renders fields on a Browse Page"""
-        browse_page = BrowsePage(
-            title='Browse Page',
-            slug='browse',
-        )
-
-        # Adds a AUT market to a browse page
-        browse_page.content = StreamValue(
-            browse_page.content.stream_block,
-            [atomic.chart_block],
-            True
-        )
-        publish_page(child=browse_page)
-
-        response = self.client.get('/browse/')
-        self.assertContains(response, 'Volume of credit cards originated')
-        self.assertContains(response, 'foo/bar.csv')
-        self.assertContains(response, 'Data not final')
-        self.assertContains(
-            response,
-            'The most recent data available in each visualization is for April 2016'
-        )
-        self.assertContains(response, 'January 2018')
-=======
 
 class TestImageText5050Group(TestCase):
     def test_no_heading_or_paragraph_ok(self):
@@ -334,4 +284,3 @@ class TestImageText5050Group(TestCase):
             block.clean(value)
         except ValidationError:
             self.fail('heading with paragraph should not fail validation')
->>>>>>> WIP on org intro and info units

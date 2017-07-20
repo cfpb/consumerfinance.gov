@@ -121,6 +121,23 @@ class Feedback(AbstractFormBlock):
         js = ['feedback-form.js']
 
 
+class HeadingIconBlock(blocks.CharBlock):
+    classname = 'heading-icon-block'
+
+
+class HeadingLevelBlock(blocks.ChoiceBlock):
+    choices = [
+        ('h2', 'H2'),
+        ('h3', 'H3'),
+        ('h4', 'H4'),
+    ]
+    classname = 'heading-level-block'
+
+
+class HeadingTextBlock(blocks.CharBlock):
+    classname = 'heading-text-block'
+
+
 class PlaceholderFieldBlock(blocks.FieldBlock):
     def __init__(self, *args, **kwargs):
         super(PlaceholderFieldBlock, self).__init__(*args, **kwargs)

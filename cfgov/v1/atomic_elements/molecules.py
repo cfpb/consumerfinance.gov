@@ -1,9 +1,10 @@
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-from . import atoms
-from ..blocks import AnchorLink
-from ..util import ref
+from v1.atomic_elements import atoms
+from v1.blocks import (AnchorLink, HeadingIconBlock, HeadingLevelBlock,
+                       HeadingTextBlock)
+from v1.util import ref
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
@@ -24,6 +25,39 @@ class HalfWidthLinkBlob(blocks.StructBlock):
     class Meta:
         icon = 'link'
         template = '_includes/molecules/link-blob.html'
+
+
+class InfoUnit(blocks.StructBlock):
+    image = atoms.ImageBasic(
+        required=False,
+        # help_text='If the image is decrative (i.e., if a screenreader '
+        #           'shouldn\'t say anything about it), leave the Alt field '
+        #           'blank.'
+    )
+    is_widescreen = blocks.BooleanBlock(required=False, label='Use 16:9 image')
+
+    heading_level = HeadingLevelBlock(default='h2')
+    heading = HeadingTextBlock(required=False)
+    heading_icon = HeadingIconBlock(
+        required=False,
+        help_text=(
+            'Input icon name as seen at: '
+            'https://cfpb.github.io/capital-framework/components/cf-icons/, '
+            'e.g.: approved, help-round, etc.'
+        ),
+    )
+
+    body = blocks.RichTextBlock(blank=True, required=False)
+    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
+    is_button = blocks.BooleanBlock(required=False,
+                                    label='Show links as button')
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/molecules/info-unit.html'
+        form_template = (
+            'admin/form_templates/struct-with-block-wrapper-classes.html'
+        )
 
 
 class ImageText5050(blocks.StructBlock):

@@ -37,9 +37,9 @@ class Well(blocks.StructBlock):
         classname = 'block__flush'
 
 
-class ImageText5050Group(blocks.StructBlock):
+class InfoUnitGroup(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    paragraph = blocks.RichTextBlock(
+    intro = blocks.RichTextBlock(
         required=False,
         help_text='If this field is not empty, '
                   'the Heading field must also be set.'
@@ -52,7 +52,18 @@ class ImageText5050Group(blocks.StructBlock):
                    'the first link in their unit\'s list, if there is a link.')
     )
 
-    image_texts = blocks.ListBlock(molecules.ImageText5050())
+    format = blocks.ChoiceBlock(
+        choices=[
+            ('50-50', '50/50'),
+            ('33-33-33', '33/33/33'),
+            ('25-75', '25/75'),
+        ],
+        default='50-50',
+        label='Format',
+        help_text='Choose the number and width of info unit columns.',
+    )
+
+    info_units = blocks.ListBlock(molecules.InfoUnit())
 
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
@@ -67,10 +78,10 @@ class ImageText5050Group(blocks.StructBlock):
     ])
 
     def clean(self, value):
-        cleaned = super(ImageText5050Group, self).clean(value)
+        cleaned = super(InfoUnitGroup, self).clean(value)
 
         # Intro paragraph may only be specified with a heading.
-        if cleaned.get('paragraph') and not cleaned.get('heading'):
+        if cleaned.get('intro') and not cleaned.get('heading'):
             raise ValidationError(
                 'Validation error in StructBlock',
                 params={'heading': ErrorList([
@@ -79,7 +90,39 @@ class ImageText5050Group(blocks.StructBlock):
                 ])}
             )
 
+        # If 25/75, info units must have images.
+        # @TODO: Write validation function!
+
         return cleaned
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/info-unit-group.html'
+
+
+class ImageText5050Group(blocks.StructBlock):
+    heading = blocks.CharBlock(icon='title', required=False)
+
+    link_image_and_heading = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=('Check this to link all images and headings to the URL of '
+                   'the first link in their unit\'s list, if there is a link.')
+    )
+
+    sharing = blocks.StructBlock([
+        ('shareable', blocks.BooleanBlock(label='Include sharing links?',
+                                          help_text='If checked, share links '
+                                                    'will be included below '
+                                                    'the items.',
+                                          required=False)),
+        ('share_blurb', blocks.CharBlock(help_text='Sets the tweet text, '
+                                                   'email subject line, and '
+                                                   'LinkedIn post text.',
+                                         required=False)),
+    ])
+
+    image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
         icon = 'image'

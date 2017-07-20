@@ -1,4 +1,3 @@
-
 {# ==========================================================================
 
    Info Unit Group
@@ -9,33 +8,43 @@
 
    Create an info unit group organism when given:
 
-   blocks:  A list composed of Wagtail Streamfield blocks.
+   value:                         Object defined from a StreamField block.
 
-   columns: (Optional) Number of columns in the info unit group.
+   value.heading:                 The heading for the info unit group.
 
-   heading: A string containing title of the info unit group.
+   value.intro:                   An introduction for the info unit group.
 
+   value.link_image_and_heading:  Boolean for whether the image and heading
+                                  should be linked to the value.links[0].url.
+
+   value.format:                  The number and width of columns to output.
+
+   value.info_units:              List of Info Unit molecules. See Info Unit
+                                  molecule template for details.
+
+   value.sharing.shareable:       Boolean for whether or not to output share
+                                  links at the bottom of this module.
 
    ========================================================================== #}
 
-{% macro info_unit_group(blocks=[], columns=2, heading) %}
-{% set column_ratio_lookup = {
-    2: 'half',
-    3: 'third'
-} %}
+{% from 'molecules/info-unit.html' import info_unit with context %}
+
 <div class="o-info-unit-group"
-     data-qa-hook="{{ column_ratio_lookup[columns] }}-width-link-blob">
-    {% if heading %}
-    <h2>{{ heading | safe }}</h2>
-    {% endif %}
+     data-qa-hook="@TODO: Find out if I need this!">
+{% if value.heading %}
+    <h2>{{ value.heading | safe }}</h2>
+{% endif %}
+
+{% if value.intro %}
+    {{ value.intro | safe }}
+{% endif %}
 
     <div class="content-l">
-        {% for block in blocks %}
+        {% for iu in value.info_units %}
         <div class="content-l_col
-                    content-l_col-1-{{ columns }}">
-            {{ block }}
+                    content-l_col-1-2">
+            {{ info_unit(iu) }}
         </div>
         {% endfor %}
     </div>
 </div>
-{% endmacro %}
