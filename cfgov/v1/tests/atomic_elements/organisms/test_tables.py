@@ -64,3 +64,13 @@ class TestAtomicTableBlock(TestCase):
         block = AtomicTableBlock()
         result = block.render(value)
         self.assertIn('href="/slug/"', result)
+
+    def test_render_header_with_unicode_characters(self):
+        value = {
+            'data': [[u'H\xebader 1', 'Header 2'], ['1', '2']],
+            'first_row_is_table_header': True,
+            'is_stacked': True,
+        }
+        block = AtomicTableBlock()
+        result = block.render(value)
+        self.assertIn(u'H\xebader', result)
