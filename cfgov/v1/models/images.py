@@ -104,7 +104,7 @@ class CFGOVRendition(AbstractRendition):
         return self.image.alt
 
     def get_orientation(self):
-        orientation='square'
+        orientation = 'square'
         if self.is_portrait:
             orientation = 'portrait'
         elif self.is_landscape:
