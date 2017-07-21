@@ -103,6 +103,27 @@ class CFGOVRendition(AbstractRendition):
     def alt(self):
         return self.image.alt
 
+    def get_orientation(self):
+        orientation='square'
+        if self.is_portrait:
+            orientation = 'portrait'
+        elif self.is_landscape:
+            orientation = 'landscape'
+
+        return orientation
+
+    @property
+    def is_square(self):
+        return self.height == self.width
+
+    @property
+    def is_portrait(self):
+        return self.height > self.width
+
+    @property
+    def is_landscape(self):
+        return self.height < self.width
+
     class Meta:
         unique_together = (
             ('image', 'filter_spec', 'focal_point_key'),
