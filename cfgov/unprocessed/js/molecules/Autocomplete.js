@@ -1,7 +1,7 @@
 'use strict';
 // Required modules.
 var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var throttle = require( '../modules/util/email-popup-helpers' ).throttle;
+var throttle = require( '../modules/util/throttle' ).throttle;
 var ajaxRequest = require( '../modules/util/ajax-request' ).ajaxRequest;
 var bindEvent = require( '../modules/util/dom-events' ).bindEvent;
 var standardType = require( '../modules/util/standard-type' );
@@ -54,7 +54,7 @@ function Autocomplete( element, opts ) {
     onSubmit: function( event, selected ) {
       return selected;
     },
-    renderItem: function ( item ) {
+    renderItem: function( item ) {
       var li = document.createElement( 'li' );
       li.setAttribute( 'data-val', item );
       li.innerText = item;

@@ -20,11 +20,11 @@
 
 <div class="o-email-signup">
 {% if value.heading %}
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
             {{ value.heading }}
-        </span>
-    </h2>
+        </h2>
+    </header>
 {% endif %}
 
 <form id="{{ value.id or ('o-email-signup_' ~ range(1, 100) | random) }}"
@@ -52,4 +52,3 @@
     </div>
 </form>
 </div>
-

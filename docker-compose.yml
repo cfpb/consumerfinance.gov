@@ -17,6 +17,9 @@ services:
         ports:
             - "9200:9200"
             - "9300:9300"
+        volumes:
+            - ./docker:/apps
+        entrypoint: /apps/docker-entrypoint-es-plugins.sh
     pdfreactor:
         image: cfgov/pdfreactor
         ports:

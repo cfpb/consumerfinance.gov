@@ -66,7 +66,7 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         )
 
         self.assertHtmlRegexpMatches(html, (
-            '<ul class="list list__unstyled">.*</ul>'
+            '<ul class="m-list m-list__unstyled">.*</ul>'
         ))
 
     def test_html_formatting(self):
@@ -88,14 +88,14 @@ class JobListingListTestCase(HtmlMixin, TestCase):
         )
 
         self.assertHtmlRegexpMatches(html, (
-            '<li class="list_item">'
-            '<a class="list_link" href=".*">Assistant</a>'
-            '<p class="date">CLOSING<span class="datetime">'
+            '<li class="m-list_item">'
+            '<a class="m-list_link" href=".*">Assistant</a>'
+            '<p class="a-date">CLOSING<span class="datetime">'
             '.*APR 21, 2099.*</span></p>'
             '</li>'
-            '<li class="list_item">'
-            '<a class="list_link" href=".*">Manager</a>'
-            '<p class="date">CLOSING<span class="datetime">.'
+            '<li class="m-list_item">'
+            '<a class="m-list_link" href=".*">Manager</a>'
+            '<p class="a-date">CLOSING<span class="datetime">.'
             '*AUG 05, 2099.*</span></p>'
             '</li>'
         ))

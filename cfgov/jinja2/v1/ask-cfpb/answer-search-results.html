@@ -33,7 +33,11 @@
 
       
         {% if results %}
+            {% if tag %}
+            <h3 class="results-header">Results for ‘{{ tag }}’</h3>
+            {% else %}
             <h3 class="results-header">Results for ‘{{ page.query }}’</h3>
+            {% endif %}
             <section class="search-results block
                         block__flush-top">
 

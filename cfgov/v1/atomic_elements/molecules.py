@@ -282,7 +282,8 @@ class RelatedLinks(blocks.StructBlock):
 
 class Quote(blocks.StructBlock):
     body = blocks.TextBlock()
-    citation = blocks.TextBlock()
+    citation = blocks.TextBlock(required=False)
+    is_large = blocks.BooleanBlock(required=False)
 
     class Meta:
         icon = 'openquote'
@@ -302,7 +303,7 @@ class RelatedMetadata(blocks.StructBlock):
         ], icon='list-ul')),
         ('date', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100)),
-            ('date', blocks.DateBlock(required=False))
+            ('date', blocks.DateBlock())
         ], icon='date')),
         ('topics', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100, default='Topics')),

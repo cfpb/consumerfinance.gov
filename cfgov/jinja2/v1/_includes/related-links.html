@@ -22,26 +22,26 @@
 
 {%- macro render(related_links, related_links_2) -%}
 <div class="related-links">
-    <h2 class="header-slug">
-        <span class="header-slug_inner">
+    <header class="m-slug-header">
+        <h2 class="a-heading">
             Related links
-        </span>
-    </h2>
+        </h2>
+    </header>
 {%- if related_links_2 %}
     <div class="content-l content-l__main content-l__large-gutters">
         <div class="content-l_col content-l_col-1-2">
-            <ul class="list list__links u-mb0">
+            <ul class="m-list m-list__links u-mb0">
             {%- for link in related_links %}
-                <li class="list_item">
+                <li class="m-list_item">
                     {{- link_template(link) -}}
                 </li>
             {%- endfor %}
             </ul>
         </div>
         <div class="content-l_col content-l_col-1-2">
-            <ul class="list list__links u-mb0">
+            <ul class="m-list m-list__links u-mb0">
             {%- for link in related_links_2 %}
-                <li class="list_item">
+                <li class="m-list_item">
                     {{- link_template(link) -}}
                 </li>
             {%- endfor %}
@@ -49,9 +49,9 @@
         </div>
     </div><!-- END .content-l -->
 {%- else %}
-    <ul class="list list__links">
+    <ul class="m-list m-list__links">
     {%- for link in related_links %}
-        <li class="list_item">
+        <li class="m-list_item">
             {{- link_template(link) -}}
         </li>
     {%- endfor %}
@@ -65,9 +65,9 @@
 
 {%- macro link_template(link) %}
 {% if link[0] == '' %}
-<a class="list_link u-link__disabled">
+<a class="m-list_link u-link__disabled">
 {% else %}
-<a class="list_link"
+<a class="m-list_link"
    href="{{ link[0] }}">
 {% endif %}
     {{ link[1] }}

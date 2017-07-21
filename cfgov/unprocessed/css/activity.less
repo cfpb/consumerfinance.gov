@@ -16,15 +16,15 @@
                 <span class="cf-icon cf-icon-speech-bubble"></span>
                 Blog
             </h1>
-            <ul class="list list__unstyled list__spaced">
-                <li class="list_item">
-                    <a class="list_link" href="#">
+            <ul class="m-list m-list__unstyled m-list__spaced">
+                <li class="m-list_item">
+                    <a class="m-list_link" href="#">
                         Consumer advisory: Co-signers can cause surprise defaults
                         on your private student loans
                     </a>
                 </li>
-                <li class="list_item">
-                    <a class="list_link" href="#">
+                <li class="m-list_item">
+                    <a class="m-list_link" href="#">
                         Explainer: Federal student loan interest rates to jump
                     </a>
                 </li>
@@ -37,9 +37,9 @@
           aside.activity
             h1.h4
               .cf-icon
-            ul.list.list__unstyled.list__spaced
-              li.list_item
-                a.list_link
+            ul.m-list.m-list__unstyled.m-list__spaced
+              li.m-list_item
+                a.m-list_link
   tags:
     - cfgov-activity
 */
@@ -47,21 +47,23 @@
 .activity {
     margin-bottom: unit(30px / @base-font-size-px, em);
 
-    .list_link {
+    .m-list_link {
         .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
     }
 
-    .date {
+    .a-date {
         white-space: nowrap;
     }
 
     .respond-to-min(@bp-sm-min, {
-        .list_link {
+        .m-list_link {
+            // TODO: Detemine why this is needed and delete if possible!
+            //       It's used by the items in the sidebar on /about-us/.
             &:after {
                 content: '';
             }
         }
-        .list_link {
+        .m-list_link {
             .u-link__colors(@pacific, @pacific, @pacific-60, @pacific, @navy);
             .u-link__no-border();
         }

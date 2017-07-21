@@ -36,11 +36,11 @@
                 {{'m-related-posts__half-width'
                   if is_half_width else ''}}">
         {% if not hide_header_slug %}
-            <h2 class="header-slug">
-                <span class="header-slug_inner">
+            <header class="m-slug-header">
+                <h2 class="a-heading">
                     {{ block.value.header_title }}
-                </span>
-            </h2>
+                </h2>
+            </header>
         {% endif %}
         {% for post_type, post_type_list in posts.iteritems() %}
             {% set title, icon = (post_type, category_icon.render(post_type)) or ("Blog", "cf-icon-speech-bubble") %}
@@ -78,14 +78,14 @@
     {% import 'macros/time.html' as time %}
     {% set limit = limit | int if posts | length >= limit | int else posts | length %}
     <ul class="m-related-posts_list
-               list
-               list__unstyled
-               list__spaced">
+               m-list
+               m-list__unstyled
+               m-list__spaced">
         {% for i in range(limit) %}
             {% set post_url = slugurl(posts[i].slug) or '' %}
-            <li class="list_item">
+            <li class="m-list_item">
                 <h3 class="h4 u-mb5">
-                    <a class="list_link"
+                    <a class="m-list_link"
                        href="{{ post_url or posts[i].permalink }}">
                         {{ posts[i].title | safe }}
                     </a>
@@ -95,7 +95,7 @@
                     {{ posts[i].text | safe }}
                 </p>
                 {% endif %}
-                <p class="date">
+                <p class="a-date">
                     {% set date = posts[i].start_dt
                                   or posts[i].date_published
                                   or posts[i].latest_revision_created_at
@@ -115,9 +115,9 @@
    ========================================================================== #}
 
 {% macro _view_more() %}
-    <a class="jump-link jump-link__underline"
+    <a class="a-link a-link__jump"
        href="{{ page.generate_view_more_url(request) }}">
-        <span class="jump-link_text">
+        <span class="a-link_text">
             View more
         </span>
     </a>

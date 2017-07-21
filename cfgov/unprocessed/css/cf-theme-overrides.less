@@ -13,7 +13,7 @@
 @base-line-height:              unit(@base-line-height-px / @base-font-size-px);
 
 // Font variables
-@import (less) '/cf-typography/src/licensed-fonts.css';
+@import (less) 'licensed-fonts.css';
 
 @webfont-regular: 'AvenirNextLTW01-Regular';
 @webfont-italic: 'AvenirNextLTW01-Italic';
@@ -222,40 +222,37 @@
 
 // Color variables
 
+// Running text elements
+
 // .pull-quote
 @pull-quote_body:               @black;
 @pull-quote_citation:           @gray;
 
-// .micro-copy
-@micro-copy-text:               @gray;
+// .a-date
+@date:                          @gray;
 
-// .date
-@date-text:                     @gray;
+// Headings
 
-// .category-slug
-@category-slug-text:            @black;
-@category-slug-hover:           @link-text-hover;
+// .a-heading__icon
+@heading__icon:                 @black;
+@heading__icon__hover:          @link-text-hover;
 
-// .header-slug
-@header-slug-thin-border:       @gray-40;
-@header-slug-thick-border:      @green;
+// .a-heading__padded
+@heading__padded:               @dark-gray;
+@heading__padded_bg:            @gray-10;
+@heading__padded_border:        @gray-40;
 
-// .padded-header
-@padded-header-text:            @dark-gray;
-@padded-header-bg:              @gray-10;
-@padded-header-border:          @gray-40;
+// Headers
 
-// .fancy-slug
-@fancy-slug-text:               @black;
-@fancy-slug-bg:                 @white;
-@fancy-slug-border:             @gray-40;
+// .m-slug-header
+@slug-header_border__thin:      @gray-10;
+@slug-header_border__thick:     @green;
 
-// .meta-header
-@meta-header-border:            @gray-40;
+// .m-meta-header
+@meta-header_border:            @gray-40;
 
-// .jump-link
-@jump-link__bg:                 @gray-10;
-@jump-link__bg-border:          @gray-20;
+// Links
 
-// .list__branded
-@list__branded-bullet:          @green;
+// .a-link__jump
+@jump-link_bg:                  @gray-10;
+@jump-link_border:              @gray-40;
