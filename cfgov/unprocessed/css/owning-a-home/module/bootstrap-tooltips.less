@@ -1,0 +1,22 @@
+// Opacity
+.opacity(@opacity) {
+  opacity: @opacity;
+  // IE8 filter
+  @opacity-ie: (@opacity * 100);
+  filter: ~"alpha(opacity=@{opacity-ie})";
+}
+
+@font-size-base:          14px;
+@font-size-small:         ceil(@font-size-base * 0.85); // ~12px
+@border-radius-base:      0px;
+
+
+// Tooltips
+// -------------------------
+@tooltip-max-width:        200px;
+@tooltip-color:            #fff;
+@tooltip-bg:               #000;
+
+@tooltip-arrow-width:      5px;
+@tooltip-arrow-color:      @tooltip-bg;
+@zindex-tooltip:           1030;

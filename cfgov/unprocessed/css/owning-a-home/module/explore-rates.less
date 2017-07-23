@@ -1,0 +1,710 @@
+/* ==========================================================================
+   "Rate checker" custom styles
+   ========================================================================== */
+
+.beta {
+  color: @gray-80;
+}
+
+.rate-checker {
+
+    .page-intro {
+      border-bottom: 1px solid @gray-10;
+    }
+
+    .respond-to-min( 900px, {
+
+      .page-intro_cols {
+        display: table;
+
+        .page-intro_col-left,
+        .page-intro_col-right {
+          display: table-cell;
+
+        }
+
+        .page-intro_col-right {
+          padding-left: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
+          white-space: nowrap;
+        }
+
+      }
+    } );
+}
+
+@media (max-width: 720px) {
+  .rc-home-illu {
+    display: none;
+  }
+  .rc-illu-inner {
+    padding: 0;
+  }
+}
+
+@media print {
+  .rc-illu-inner {
+    display: none;
+  }
+}
+
+.rc-illu-inner {
+  padding: 1em 4.5em 0 4.5em;
+}
+
+/*
+    layout
+    --------------------------- */
+
+.calculator {
+  .grid_column( 4 );
+  .grid_push( 8 );
+}
+
+.rc-results {
+  .grid_column( 8 );
+  .grid_pull( 4 );
+}
+
+@media (max-width: 720px) {
+  .calculator,
+  .rc-results {
+    .grid_column( 12 );
+    .grid_push( 0 );
+  }
+}
+
+@media print {
+  .calculator,
+  .rc-results {
+    .grid_column( 12 );
+    .grid_push( 0 );
+  }
+}
+/*
+    Sidebar with all the user input
+    --------------------------- */
+
+.calculator {
+   background: @gray-5;
+   .u-webfont-regular();
+
+    p:last-child,
+    section p:last-child {
+      margin: 0;
+    }
+
+    label {
+      .u-webfont-medium();
+      display: block;
+      margin-bottom: 4px;
+      text-transform: none;
+    }
+
+    .help {
+        font-size: .9em;
+    }
+
+    section {
+      margin: 0 15px;
+      padding: 30px 0;
+      border-top: 1px solid @gray-10;
+    }
+
+    section:first-child,
+    section:nth-child(2) {
+      border-top: none;
+    }
+
+    section:first-child {
+      padding: 30px 0 0 0;
+    }
+
+    .calc-footer {
+      padding: 15px 0; // the bottom <section> has less padding
+    }
+
+    input[type='number'] {
+        -moz-appearance:textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .calc-subsection {
+      border-top: none;
+      padding: 0 0 30px 0;
+    }
+
+    .form-sub {
+      font-size: 0.714285714em;
+      .u-webfont-regular();
+      color: @dark-gray;
+    }
+
+    #arm-warning {
+      border-top: 0;
+      padding-top: 0;
+      margin-top: -10px;
+    }
+}
+
+.calc-loan-details {
+  .upper {
+    margin-bottom: 15px;
+  }
+}
+
+
+.loan-amt-total {
+  padding-top: 10px;
+
+  span {
+    display: block;
+    .u-webfont-medium();
+    margin-top: 10px;
+  }
+}
+
+.loan-amt-total,
+.state-col {
+  border-width: 0 !important;
+
+  .wrapper {
+    padding: 0;
+  }
+}
+
+.county {
+
+  padding-top: 10px;
+
+}
+
+.downpayment-warning {
+  font-size: 0.875em;
+  padding-top: 10px;
+}
+
+.timestamp-message {
+  font-size: 0.875em;
+  text-align: right;
+  margin-right: 1.25em; //align it nicely with the chart
+}
+
+@media print {
+  .calculator section {
+    width: 100%;
+    display: inline-block;
+  }
+}
+
+/*
+    Range slider for credit score
+    --------------------------- */
+
+.credit-score {
+  position: relative;
+
+  .labels {
+    line-height: 0;
+    margin: 15px 0 8px;
+    font-size: .625em;
+  }
+
+  .max {
+    float: right;
+  }
+}
+
+.range {
+  margin-bottom: 1.5em;
+}
+
+.range-text {
+  position: absolute;
+  display: block;
+  margin-left: -10px;
+  white-space: nowrap;
+  font-size: .875em;
+}
+
+.rangeslider {
+  background: transparent url("@{image_path}/slider-bg.png") scroll no-repeat center center;
+  background-size: 100%;
+  display: block;
+  height: 20px;
+  width: 100%;
+  position: relative;
+}
+
+.rangeslider__fill {
+  background: #00ff00;
+  position: absolute;
+  top: 0;
+}
+
+.rangeslider__handle {
+  display: inline-block;
+  width: 22px;
+  height: 21px;
+  position: absolute;
+  background: transparent url("@{image_path}/slider-handle.png") no-repeat 0 0;
+  background-size: 100%;
+  border: 0;
+
+  &.warning {
+    background: transparent url("@{image_path}/slider-handle.png") no-repeat 0 100%;
+    width: 22px;
+    height: 21px;
+    background-size: 100%;
+  }
+
+}
+
+#credit-score:focus + .rangeslider .rangeslider__handle {
+  border: 1px solid #0072ce;
+  outline: 1px solid #0072ce;
+  outline-offset: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+@media
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .rangeslider__handle {
+    width: 22px;
+    height: 21px;
+    background: transparent url("@{image_path}/slider-handle@2x.png") no-repeat 0 0;
+    background-size: 100%;
+    border: 0;
+
+    &.warning {
+      background: transparent url("@{image_path}/slider-handle@2x.png") no-repeat 0 100%;
+      width: 22px;
+      height: 21px;
+      background-size: 100%;
+    }
+  }
+}
+
+#slider-range {
+  text-align: center;
+}
+
+@media print {
+  .rangeslider,
+  .credit-score .labels {
+    display: none;
+  }
+}
+
+/*
+    Main section with output
+    --------------------------- */
+
+.rate-checker-heading {
+  font-size: 1.375em;
+  margin-top: 40px;
+}
+
+@media (min-width: 1000px) {
+  // line break in the summary on large screens
+ .rate-checker-heading {
+    width: 75%;
+  }
+}
+
+
+/*
+    Middle section with chart
+    --------------------------- */
+
+// this is shameful, but this is needed to force highcharts to display overflowing tooltips
+.highcharts-container {
+  overflow: visible !important;
+}
+
+.chart {
+
+  margin: 20px 20px 20px 0;
+  padding-top: 40px;
+  border-top: 1px solid @gray-10;
+  border-bottom: 1px solid @gray-10;
+
+  &.geolocating {
+    background: transparent url("@{image_path}icon_spinner.gif") scroll no-repeat center center;
+    #chart {
+      opacity: 0;
+    }
+  }
+
+  figure {
+    .reset;
+  }
+
+}
+
+.data-label {
+  text-align: center;
+}
+
+.data-label_number {
+  background-color: #fff;
+  .respond-to-max(@bp-xs-max, {
+    display: block;
+    transform: rotate(-90deg);
+  });
+}
+
+.chart-caption {
+  font-size: 1em;
+  padding-bottom: 1em;
+  padding-right: 1em;
+  // Magic number to line up caption with chart
+  margin-left: 60px;
+}
+
+.caption-title {
+  .u-webfont-regular();
+  color: @black;
+}
+
+.rc-data-link {
+  text-align: right;
+  .u-webfont-medium();
+
+  a {
+    border-bottom-width: 1px;
+  }
+}
+
+@media (max-width: 720px) {
+  .rc-data-link {
+    display: none;
+  }
+}
+
+.highcharts-tooltip > span {
+  z-index: 9999;
+  background-color: #fff;
+  color: @dark-gray;
+  border: 2px solid @green-60;
+  padding: 4px 10px 4px 8px;
+  margin: 0 2px;
+}
+
+.chart-tooltip {
+  z-index: 9999;
+  .lenders {
+    .u-webfont-demi();
+    display: inline-block;
+    font-size: 3em;
+    max-width: 30%;
+    text-align: right;
+
+  }
+  .text {
+    display: inline-block;
+    min-width: 70%;
+  }
+}
+
+@keyframes fadein {
+    from { opacity: .3; }
+    to { opacity: 1; }
+}
+
+/*
+    "Compare interest rate costs"
+    --------------------------- */
+
+.compare {
+
+  .u-webfont-regular();
+
+  margin-top: 30px;
+
+    label {
+       .u-visually-hidden;
+    }
+}
+
+//layout
+
+.rc-comp-1 {
+  .grid_column( 1 );
+}
+
+.rc-comp-3 {
+  .grid_column( 3 );
+}
+
+.rc-comp-3-push {
+  .grid_column( @columns: 3; @prefix: 1; @suffix: 0 )
+}
+
+.rc-comp-5 {
+  .grid_column( 5 );
+}
+
+.vs {
+  text-align: center;
+  font-size: 1.375em;
+}
+
+.rc-comparison-subhead {
+  font-size: 1em;
+}
+
+.rc-comparison-subsection {
+  border-top: 1px solid @gray-10;
+  padding: 1em 0;
+}
+
+.interest-cost {
+  font-size: 1.625em;
+  text-align: right;
+}
+
+.rate-compare-container {
+  .grid_column( 6 );
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.dollar-input,
+.percent-input {
+  position: relative;
+
+  input {
+    width: 100%;
+    padding-left: 15px;
+    border: solid 1px #d0d0ce;
+  }
+
+  .unit {
+    position: absolute;
+    display: block;
+    left: 5px;
+    top: 0.45em;
+    z-index: 9;
+    color: @gray-80;
+  }
+}
+
+.percent-input {
+    input {
+        padding-left: 10px;
+    }
+
+    .unit {
+        left: auto;
+        right: 20%;
+    }
+}
+
+.down-payment {
+  border-width: 0;
+  .dollar-input {
+    width: 65%;
+    display: inline-block;
+  }
+  .percent-input {
+    width: 32%;
+    display: inline-block;
+  }
+
+  input {
+    border: solid 1px #d0d0ce;
+  }
+}
+
+@media (max-width: 1000px) {
+  .down-payment {
+    margin-top: 20px;
+  }
+}
+
+.arm-info-comparison {
+  .u-webfont-regular();
+  padding: 1em 0;
+  font-size: 0.75em;
+  display: block;
+  position: absolute;
+  width: 200%;
+}
+
+@media (max-width: 1000px) {
+  .flex-input {
+    .grid_column(12);
+  }
+}
+
+@media (max-width: 800px) {
+
+  .rc-comparison-section {
+    margin-top: 1.5em;
+  }
+
+  .rc-comparison-subsection {
+    padding: 1em 0 0 0;
+  }
+
+  .rc-comp-1 {
+  .grid_column( 2 );
+}
+
+  .rc-comp-3 {
+    .grid_column( 5 );
+  }
+
+  .rc-comp-3-push {
+  .grid_column( @columns: 5; @prefix: 1; @suffix: 0 )
+}
+
+  .rc-comp-5 {
+    .grid_column( 12 );
+  }
+
+  .interest-cost {
+    margin-bottom: .5em;
+    .u-webfont-demi();
+    color: @gray-60;
+  }
+}
+
+/*
+    "Next steps"
+    --------------------------- */
+
+.next-steps {
+  margin-top: 5em;
+  margin-bottom: 3.625em;
+
+  .tabs {
+    margin-top: 2em;
+  }
+
+  > p {
+    margin-bottom: 55px;
+  }
+}
+
+.next-steps-list {
+  .reset;
+}
+
+.next-steps-heading {
+  font-size: 1.125em;
+  .u-webfont-regular();
+  margin-bottom: 1em;
+}
+
+
+.next-steps-list {
+  padding-left: 30px; // match the negative outdent of the numbering
+  margin: 0;
+  counter-reset: li;
+  list-style: none;
+  position: relative;
+
+  li {
+    display: inline-block;
+    position: relative;
+  }
+
+}
+
+.next-steps-list > li:before {
+  content: counter(li);
+  counter-increment: li;
+  background: @green-60;
+  color: @black;
+  font-size: 12px;
+  .u-webfont-demi();
+  position: absolute;
+  text-align: center;
+  left: -30px;
+  top: 1px;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  border-radius: 20px;
+}
+
+/*
+    about
+    --------------------------- */
+
+    .about {
+      border-top: 1px solid @gray-10;
+      margin-top: 3.75em;
+    }
+
+/*
+    Alerts and warnings
+    --------------------------- */
+
+.chart {
+  .warning {
+    position: relative;;
+
+    .highcharts-container {
+      opacity: .3;
+    }
+  }
+}
+
+.result-alert {
+  border: 1px solid @red-60;
+  background: #fff;
+}
+
+.chart-alert {
+  position: absolute;
+  top: 30%;
+  background: #fff;
+  padding: 1em 2em 1em 3em;
+  .u-webfont-regular();
+
+  .point-right {
+    font-size: 1.5em;
+  }
+}
+
+.credit-alert {
+  font-size: 0.75em;
+  padding: .714em .714em .714em 2.142em;
+  background: @gray-5;
+  color: @dark-gray;
+  margin: 2.5em 0 1em 0;
+}
+
+.form-sub.warning {
+  margin-top: -20px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.warning-text {
+  padding-left: 1.2em;
+}
+
+.warning-text:before {
+  .cf-icon;
+  content: "\e103";
+  color:  @gold;
+  text-indent: -1.2em;
+  margin-right: .2em;
+}
+
+.about-data {
+  border-left-width: 0;
+}
+
+.related-links {
+  margin-top: @grid_gutter-width;
+}

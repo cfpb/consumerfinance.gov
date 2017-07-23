@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+{% set active_page = "home" %}
+
+{% block title %}Owning a Home{% endblock title %}
+
+{% block content %}
+<main class="index content content__2-1 content__bleedbar" id="main" role="main">
+
+    <section class="content_hero">
+
+       <!-- HERO -->
+      <div class="content-l content_wrapper content_no-sidebar">
+
+      <div class="content-l_col content-l_col-2-3">
+          <h1 class="page-title">Owning a Home</h1>
+          <h2>We're here to help you with buying and financing your home. Learn what to expect and what questions to ask, and get tools and resources to help you make decisions.</h2>
+
+        </div>
+        <div class="content-l_col content-l_col-1-3 hero-illu-inner">
+            <img class="hero-illu" src="{{url_for('static', filename='owning-a-home/img/hero-housekey.png')}}" alt="Illustration of house keys">
+        </div> <!-- /.col-4 -->
+      </div>
+
+    </section>
+
+    <div class="content_wrapper">
+        <section class="content_main">
+
+          <section class="section__intro content-l">
+            <div class="content-l_col content-l_col-1">
+              <h2>Know the process</h2>
+              <p class="u-mb0">Buying a home is exciting, but the process can feel overwhelming at times. Our guide lets you know what to expect and what to do next. Our tools and resources will help you every step of the way.</p>
+            </div>
+          </section>
+
+          <section class="section__phase block__border-top block__padded-top block__sub">
+
+            <div class="content-l">
+              <figure class="phase_illu content-l_col content-l_col-1-4">
+                <img src="{{ }}" alt="Illustration of the home-buying process">
+              </figure>
+
+              <div class="phase_intro content-l_col content-l_col-1-2">
+                <div class="content-l_col content-l_col-1 content-l__large-gutters">
+                <h3 class="u-mb15"><a href="{{ base_url }}process/prepare" class="heading_link" id="prepare-header-link">Prepare to shop</a></h3>
+                <p>Not sure how to get started, how much you can afford, or what to expect when buying and financing a home? Set yourself up for success with a little bit of preparation.</p>
+                <p>
+                  <a class="jump-link jump-link__right" href="{{ base_url }}process/prepare" id="prepare-learn-link">
+                    <span class="jump-link_text">Learn more</span>
+                  </a>
+                </p>
+                </div>
+              </div>
+
+               <div class="phase_tools content-l_col content-l_col-1-4 block__sub grid_column__left-divider">
+                <h6 class="block__sub block__flush-top">Key tools</h6>
+                <ul class="list__links m-list__unstyled list__spaced">
+                  <li class="list_item"><a class="list_link jump-link" href="{{ base_url }}explore-rates"><span class="jump-link_text">Explore interest rates</span></a></li>
+                  <li class="list_item"><a class="list_link jump-link" href="{{ base_url }}monthly-payment-worksheet"><span class="jump-link_text">Monthly payment worksheet</span>&nbsp;</a></li>
+                </ul>
+              </div>
+
+            </div><!-- .content-l -->
+
+          </section>
+
+          <section class="section__phase block__border-top block__padded-top block__sub">
+
+            <div class="content-l">
+
+              <figure class="phase_illu content-l_col content-l_col-1-4">
+                <img src="{{url_for('static', filename='owning-a-home/img/process_explore-small.png')}}" alt="Illustration of the home-buying process">
+              </figure>
+
+              <div class="phase_intro content-l_col content-l_col-1-2">
+                <div class="content-l_col content-l_col-1 content-l__large-gutters">
+                <h3 class="u-mb15"><a href="{{ base_url }}process/explore" class="heading_link" id="explore-header-link">Explore loan choices</a></h3>
+                <p>You've got a pretty good idea of your priorities and budget, and you're ready to start home shopping in earnest. Now is the time to start exploring loan choices and meeting with lenders.</p>
+                <p>
+                  <a class="jump-link jump-link__right" href="{{ base_url }}process/explore" id="explore-learn-link">
+                    <span class="jump-link_text">Learn more</span>
+                  </a>
+                </p>
+                </div>
+              </div>
+
+              <div class="phase_tools content-l_col content-l_col-1-4 block__sub grid_column__left-divider">
+                <h6 class="block__sub block__flush-top">Key tools</h6>
+                <ul class="list__links m-list__unstyled list__spaced">
+                  <li class="list_item"><a class="list_link jump-link" href="{{ base_url }}loan-options"><span class="jump-link_text">Understand loan options</span></a></li>
+                  <li class="list_item"><a class="list_link jump-link" href="{{ base_url }}explore-rates"><span class="jump-link_text">Explore interest rates</span></a></li>
+                </ul>
+              </div>
+
+            </div><!-- .content-l -->
+
+          </section>
+
+            <section class="section__phase block__border-top block__padded-top block__sub">
+
+            <div class="content-l">
+
+              <figure class="phase_illu content-l_col content-l_col-1-4">
+                <img src="{{url_for('static', filename='owning-a-home/img/process_compare-small.png')}}" alt="Illustration of the home-buying process">
+              </figure>
+
+              <div class="phase_intro content-l_col content-l_col-1-2">
+                <div class="content-l_col content-l_col-1 content-l__large-gutters">
+                <h3 class="u-mb15"><a href="{{ base_url }}process/compare" class="heading_link" id="compare-header-link">Compare loan offers</a></h3>
+                <p>You've made an offer on a home. Congratulations! Now is the time to get official loan offers from lenders, compare your options, and choose the loan offer that's right for you.</p>
+                <p>
+                  <a class="jump-link jump-link__right" href="{{ base_url }}process/compare" id="compare-learn-link">
+                    <span class="jump-link_text">Learn more</span>
+                  </a>
+                </p>
+                </div>
+              </div>
+
+               <div class="phase_tools content-l_col content-l_col-1-4 block__sub grid_column__left-divider">
+                <h6 class="block__sub block__flush-top">Key tools</h6>
+                <ul class="list__links m-list__unstyled list__spaced">
+                  <li class="list_item"><a class="list_link jump-link" href="{{ base_url }}explore-rates"><span class="jump-link_text">Explore interest rates</span></a></li>
+                  <li class="list_item"><a class="list_link jump-link" href="{{ base_url }}loan-estimate"><span class="jump-link_text">Loan Estimate explainer</span></a></li>
+                </ul>
+              </div>
+
+            </div><!-- .content-l -->
+          </section>
+
+          <section class="section__phase block__border-top block__padded-top block__sub">
+
+              <div class="content-l">
+
+                <figure class="phase_illu content-l_col content-l_col-1-4">
+                  <img src="{{url_for('static', filename='owning-a-home/img/process_close-small.png')}}" alt="Illustration of the home-buying process">
+                </figure>
+
+                <div class="phase_intro content-l_col content-l_col-1-2">
+                  <div class="content-l_col content-l_col-1 content-l__large-gutters">
+                  <h3 class="u-mb15"><a href="{{ base_url }}process/close" class="heading_link" id="close-header-link">Get ready to close</a></h3>
+                  <p>You've chosen a loan offer and are ready to move forwards to closing. There will be lots of paperwork to submit and things to keep track of. We lay it out for you step by step.</p>
+                  <p>
+                    <a class="jump-link jump-link__right" href="{{ base_url }}process/close" id="close-learn-link">
+                      <span class="jump-link_text">Learn more</span>
+                    </a>
+                  </p>
+                  </div>
+                </div>
+
+                <div class="phase_tools content-l_col content-l_col-1-4 block__sub grid_column__left-divider">
+                  <h6 class="block__sub block__flush-top">Key tools</h6>
+                  <ul class="list__links m-list__unstyled list__spaced">
+                    <li class="list_item"><a class="list_link jump-link jump-link__download" href="{{ base_url }}resources/checklist_mortgage_closing.pdf"><span class="jump-link_text">Closing checklist</span>&nbsp;</a></li>
+                    <li class="list_item"><a class="list_link jump-link" href="{{ base_url }}closing-disclosure"><span class="jump-link_text">Closing Disclosure explainer</span></a></li>
+                    <li class="list_item"><a class="list_link jump-link jump-link__download" href="{{ base_url }}resources/mortgage_closing_forms.pdf"><span class="jump-link_text">Guide to closing forms</span>&nbsp;</a></li>
+                  </ul>
+                </div>
+
+            </div><!-- .content-l -->
+          </section>
+
+        </section><!-- .content_main -->
+
+        <aside class="content_sidebar">
+            <!-- STAY TUNED -->
+          <section class="block">
+            <div class="o-email-signup">
+              <h2 class="header-slug">
+                <span class="header-slug_inner">
+                  Stay tuned
+                </span>
+              </h2>
+
+              <form id="{{ ('o-email-signup_' ~ range(1, 100) | random) }}"
+                    action="/subscriptions/new/"
+                    method="POST"
+                    enctype="application/x-www-form-urlencoded">
+                <p>
+                  Sign up for our email list, and we’ll let you know when we add more tools and resources.
+                </p>
+
+                <div class="m-form-field-with-button">
+
+                  <div class="form-group">
+                    <label for="o-email-signup_address">
+                        <b>Email address</b>
+                        (required)
+                    </label>
+
+                    <input id="o-email-signup_address" type="email" placeholder="example@mail.com" name="email" class="m-form-field-with-button_field" required>
+                  </div>
+                  <input class="u-mt10 btn btn__full" type="submit" value="Sign up">
+                </div>
+
+                <div class="form-group">
+                    <input type="hidden" name="code" value="USCFPB_46">
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <!-- RELATED LINKS -->
+          <section class="block">
+          <header class="tabbed-header tabbed-pad-top">
+            <h3 class="subhead tabbed-heading">Resources</h3>
+          </header>
+
+          <ul class="m-list__unstyled list__spaced">
+            <li class="list_item">
+              <span class="jump-link_intro">Have a mortgage question?</span><br>
+              <a class="list_link jump-link" href="/askcfpb/search/?selected_facets=category_exact:mortgages" target=\"_blank\">
+                <span class="jump-link_text">Get answers from AskCFPB</span>
+              </a>
+            </li>
+            <li class="list_item">
+              <span class="jump-link_intro">Have a complaint?</span><br>
+              <a class="list_link jump-link" href="/complaint/#mortgage" target=\"_blank\">
+                <span class="jump-link_text">Submit it to the CFPB</span>
+              </a>
+            </li>
+            <li class="list_item">
+              <span class="jump-link_intro">Want an advisor in this process?</span><br>
+              <a class="list_link jump-link" href="/find-a-housing-counselor" target=\"_blank\">
+                <span class="jump-link_text">Find a HUD-certified housing counselor</span>
+              </a>
+            </li>
+            <li class="list_item">
+              <span class="jump-link_intro">Want to see if a loan officer or broker is authorized in your state?</span><br>
+              <a class="list_link jump-link jump-link__external-link" href="http://www.nmlsconsumeraccess.org/" target=\"_blank\">
+                <span class="jump-link_text">Most are listed in this loan originator database</span>
+              </a>
+            </li>
+            <li class="list_item">
+              <span class="jump-link_intro">Wondering about our other mortgage work?</span><br>
+              <a class="list_link jump-link" href="/knowbeforeyouowe/" target=\"_blank\">
+                <span class="jump-link_text">Learn how the CFPB is protecting mortgage borrowers</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+          <section class="block">
+          <header class="tabbed-header tabbed-pad-top">
+            <h3 class="subhead tabbed-heading">Trouble paying your mortgage?</h3>
+          </header>
+
+          <ul class="m-list__unstyled list__spaced">
+            <li class="list_item">
+              <a class="list_link jump-link" href="/mortgagehelp/" target=\"_blank\">
+                <span class="jump-link_text">We can help</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+          <section class="block">
+          <header class="tabbed-header tabbed-pad-top">
+            <h3 class="subhead tabbed-heading">For industry professionals</h3>
+          </header>
+
+          <ul class="m-list__unstyled list__spaced">
+            <li class="list_item">
+              <span class="jump-link_intro">Mortgage professionals</span><br>
+              <a class="list_link jump-link" href="/regulatory-implementation/" target=\"_blank\">
+                <span class="jump-link_text">Get videos, compliance guides, and other resources</span>
+              </a>
+            </li>
+
+            <li class="list_item">
+              <span class="jump-link_intro">Real estate professionals</span><br>
+              <a class="list_link jump-link" href="/know-before-you-owe/real-estate-professionals/" target=\"_blank\">
+                <span class="jump-link_text">Learn how the new disclosure forms help you and your clients</span>
+              </a>
+            </li>
+
+          </ul>
+        </section>
+
+          <section class="block">
+          <header class="tabbed-header tabbed-pad-top">
+            <h3 class="subhead tabbed-heading">Downloadable resources</h3>
+          </header>
+
+          <ul class="m-list__unstyled list__spaced">
+            <li class="list_item">
+                <a class="jump-link jump-link__download" href="http://www.consumerfinance.gov/f/201503_cfpb_your-home-loan-toolkit-web.pdf" target=\"_blank\">
+                  <span class="jump-link_text">Your home loan toolkit: a step-by-step guide</span>
+                </a>
+            </li>
+            <li class="list_item">
+                <a class="jump-link jump-link__download" href="http://www.consumerfinance.gov/f/201508_cfpb_your-home-loan-toolkit-web-spanish.pdf" target=\"_blank\">
+                  <span class="jump-link_text">Su conjunto de herramientas para préstamos hipotecarios: guía paso a paso</span>
+                </a>
+            </li>
+          </ul>
+        </section>
+
+        </aside><!-- .content_sidebar -->
+    </div>
+
+</main>
+
+{% endblock %}

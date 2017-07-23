@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% set active_page = "prepare-worksheets" %}
+{% set page_js = "prepare-worksheets" %}
+
+{% block title %}Owning a Home: Preparation worksheets{% endblock title %}
+
+{% block content %}
+
+<main class="prepare-worksheet content content__1-3" id="main" role="main">
+  <div class="wrap content_wrapper">
+    <aside class="content_sidebar">
+      {% with active_page = "prepare-worksheets" %}
+        {% include "sidebar_nav.html" %}
+      {% endwith %}
+    </aside>
+    <section class="content_main">
+      <section class="page-contents">
+      </section>
+      <section class="type-details">
+       
+        <nav class="block block__padded-top block__border-top">
+          <button class="btn btn__disabled btn__super btn-worksheet-prev">
+            <span class="btn_icon__left cf-icon cf-icon-left"></span>
+            Back
+          </button>
+          <button class="btn btn__disabled btn__super btn-worksheet-next">
+            Next
+            <span class="btn_icon__right cf-icon cf-icon-right"></span>
+          </button>
+        </nav>
+
+      </section> <!-- /.type-details -->
+
+      {% include "no_js.html" %}
+      
+    </section> <!-- /.content_main -->
+  </div>
+</main>
+
+{% endblock %}

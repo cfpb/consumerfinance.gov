@@ -85,7 +85,7 @@ module.exports = {
     ]
   },
   images: {
-    src:  paths.unprocessed + '/img/**',
+    src:  paths.unprocessed + '/img/**/*',
     dest: paths.processed + '/img'
   },
   copy: {
@@ -96,6 +96,10 @@ module.exports = {
     icons: {
       src:  paths.modules + '/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
+    },
+    oahPDFs: {
+      src:  paths.unprocessed + '/pdfs/owning-a-home/*',
+      dest: paths.processed + '/pdfs/owning-a-home'
     },
     vendorFonts: {
       src:  paths.unprocessed + '/fonts/pdfreactor/*',
@@ -113,7 +117,8 @@ module.exports = {
     },
     vendorJs: {
       src: [
-        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js'
+        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js',
+        paths.modules + '/jquery/dist/jquery.min.js'
       ],
       dest: paths.processed + '/js/'
     }

@@ -1,0 +1,572 @@
+/* ==========================================================================
+   Helper Classes & Styles
+   ========================================================================== */
+
+img,
+object {
+  max-width: 100%;
+}
+
+.loaded {
+  animation: fadein .5s;
+}
+
+.loading {
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  /* IE 7 */
+  filter: alpha(opacity=30);
+  opacity: .3;
+}
+
+.clear {
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  /* IE 7 */
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+/* lead paragrapgs are typically the first paragraph in a content area */
+.lead {
+  .u-webfont-regular();
+  font-size: 1.125em;
+  margin-bottom: 30px;
+}
+
+/* mid-leads use a medium font weight over size */
+.mid-lead {
+  .u-webfont-medium();
+}
+
+.up-lead {
+  .u-webfont-regular();
+  text-transform: uppercase;
+  color: @dark-gray;
+  font-size: 0.875em;
+}
+
+/* decrease the font size for sub text */
+.sub {
+    font-size: 0.875em;
+}
+
+.subhead {
+  font-size: 0.875em;
+  text-transform: uppercase;
+  font-family: "AvenirNextLTW01-Demi", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  margin: 24px 0 16px 0;
+}
+
+.light {
+  color: @gray-60;
+
+    h4,
+    h5,
+    h6 {
+        margin-bottom: .5em;
+        font-size: 1em;
+        .u-webfont-regular();
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+}
+
+.sub-light {
+    .u-webfont-regular();
+    color: @gray-60;
+
+    strong {
+        .u-webfont-demi();
+        color: @gray-80;
+    }
+
+    p {
+        font-size: 0.75em;
+    }
+
+    h5,
+    h6 {
+        margin-bottom: 0;
+        .u-webfont-regular();
+    }
+}
+
+.sub-demi {
+  font-size: 0.875em;
+  .u-webfont-demi();
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* notes are subtle call out boxes with top and bottom borders */
+.note {
+  .u-webfont-regular();
+  color: @black;
+  padding: 20px 10px;
+  margin: 1em 0;
+  border-top: 1px solid @gray-10;
+  border-bottom: 1px solid @gray-10;
+
+  p:last-child {
+    .reset;
+  }
+
+  h4:first-child,
+  h5:first-child {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 620px) {
+  .note {
+    padding: 20px 12%;
+  }
+}
+
+
+/* highlight the text */
+.highlight {
+  background-color: @green-20;
+}
+
+.highlight-container {
+  background-color: @gold-20;
+  padding: 10px;
+}
+
+/* use sans-serif typeface */
+.sans {
+  .u-webfont-regular();
+
+  strong {
+    .u-webfont-demi();
+  }
+}
+
+/* helper class for demi bold version of web font */
+.demi {
+  .u-webfont-demi();
+}
+
+.serif {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* capitalize text */
+.caps {
+  text-transform: uppercase;
+}
+
+/* minimal bottom margin */
+.tight {
+  margin-bottom: 12px;
+}
+
+/* add a margin above an element */
+.bump {
+  margin-top: 1em;
+}
+
+.l-bump {
+  margin-top: 2em;
+}
+
+.list-heading {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 800px) {
+  .mobi-no {
+    display: none;
+  }
+}
+
+@media (min-width: 800px) {
+  .mobi-yes {
+    display: none;
+  }
+}
+
+/* style alert (!) symbols */
+.alert-positive {
+  color: @green;
+}
+
+.alert-warning {
+  color: @red;
+}
+
+.alert-neutral {
+  color:  @gray-40;
+}
+
+// tag styles
+.tags {
+  .reset
+}
+
+.tag {
+  display: inline-block;
+  margin: 0 1em 1em 0;
+  list-style: none;
+}
+
+.tag-link:link,
+.tag-link:visited {
+  display: block;
+  background: @gray-10;
+  color: @black;
+  border-bottom: none;
+  padding: 6px 10px;
+  .u-webfont-demi();
+}
+
+.tag-link:hover,
+.tag-link:active,
+.tag-link:focus {
+  background: @pacific-20;
+}
+
+// callout container
+.callout,
+.mega-callout {
+  .u-webfont-regular();
+  border-top: 1px solid @gray-10;
+  border-bottom: 1px solid @gray-10;
+  background-color: @gray-5;
+  padding: 20px;
+
+  p {
+    font-size: 0.875em;
+  }
+}
+
+// pad mega-callouts on large screens
+@media (min-width: 720px) {
+  .mega-callout {
+    padding: 20px 80px;
+  }
+}
+
+.icon-outdent {
+  margin-left: -1.2em;
+}
+
+.checked {
+  position: relative;
+
+  &:before,
+  li&:before {
+    .cf-icon();
+    content: "\e100";
+    font-size: 17px;
+    color: @green;
+    left: -21px;
+  }
+  li&.list_item__spaced:before {
+    top: 3px;
+  }
+  p&:before {
+    text-indent: -1.4em;
+  }
+  li& {
+    list-style: none;
+  }
+}
+
+.alert {
+  &:before,
+  li&:before {
+    .cf-icon;
+    content: "\e103";
+    color:  @red;
+    font-size: 17px;
+    left: -21px;
+  }
+  li&.list_item__spaced:before {
+    top: 3px;
+  }
+  p&:before {
+    text-indent: -1.4em;
+  }
+  li& {
+    position: relative;
+    list-style: none;
+  }
+}
+
+.alert-alt:before {
+  .cf-icon;
+  content: "\e103";
+  color:  @gold;
+  text-indent: -1.4em;
+}
+
+.point-right:after {
+  .cf-icon;
+  content: "\e011";
+  margin-left: 10px;
+}
+
+// info containers have a thin border around them
+.info-container {
+    border: 1px solid @gray-10;
+    padding: 10px;
+}
+
+// alert containers have a background color but no border
+.alert-container {
+  background: @gray-5;
+  padding: 20px;
+  .u-webfont-regular();
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.placeholder {
+    background: @gray-10;
+    min-height: 200px;
+    line-height: 200px;
+    text-align: center;
+}
+
+.highlight-dropdown {
+  border-color: @gold;
+  border-width: 2px;
+}
+
+/* use group to contain floats */
+.group:before,
+.group:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.group {
+    *zoom: 1;
+}
+
+.u-pb0 {
+  padding-bottom: 0 !important;
+}
+
+.block__bg {
+    background-color: @block__bg;
+}
+
+.u-no-bg {
+   background-color: transparent;
+}
+
+.u-right-on-desktop {
+  .respond-to-min( 801px, {
+    text-align: right;
+  } );
+}
+
+a[href$='.PDF']:after,
+a[href$='.pdf']:after,
+a[href$='.doc']:after,
+a[href$='.docx']:after,
+a[href$='.xls']:after,
+a[href$='.xlsx']:after,
+a[href$='.csv']:after,
+a[href$='.zip']:after {
+    .cf-icon();
+    display: inline-block;
+    content: @cf-icon-download;
+    width: 1em;
+    text-align: right;
+}
+
+.custom-bullet(@text, @color, @offset, @size, @font:inherit) {
+    list-style-type: none;
+    position: relative;
+
+  &:before {
+    content: @text;
+    font-family: @font;
+    font-size: @size;
+    color: @color;
+    line-height: 1;
+    position: absolute;
+    left: -@offset;
+  }
+}
+
+/* ==========================================================================
+   "Home Page" custom styles
+   ========================================================================== */
+
+/*
+  WRAPPERS & CONTAINERS
+  ---------------------------- */
+
+.index {
+  .u-webfont-regular();
+  .content_main {
+    .respond-to-min(@tablet-min, {
+      padding-top: @grid_gutter-width;
+      padding-bottom: @grid_gutter-width;
+    });
+  }
+}
+
+.content__bleedbar.content__2-1 .content_no-sidebar {
+  &:after {
+    display: none;
+  }
+}
+
+
+/*
+  HERO
+  ---------------------------- */
+
+.content_hero {
+  padding: 30px 15px 0px;
+  .respond-to-min(600px, {
+    padding: 30px 30px 0px;
+  });
+  .respond-to-min(800px, {
+    padding: 30px 0px 0px;
+  });
+
+  background-color: @teal-20;
+  background-image: none;
+}
+
+.hero-illu-inner {
+  padding: 0em 1.75em 0em 1.75em;
+  .content-l_col + & {
+    margin-top: 0em;
+  }
+}
+
+.hero-illu {
+    margin-bottom: 30px;
+}
+
+/*
+  MAIN COLUMN CONTENT
+  ---------------------------- */
+
+.section__intro {
+  padding-bottom: @grid_gutter-width/3; // 10px
+  .respond-to-min(800px, {
+    padding-top: @grid_gutter-width/3; // 10px
+    padding-bottom: @grid_gutter-width;
+  });
+}
+
+.heading_link {
+  color: @black;
+  &:hover,
+  &:active,
+  &:focus {
+    color: @pacific;
+  }
+}
+
+.oah-illu {
+  text-align: center;
+}
+
+// Phases for Journey
+.section__phase {
+  .content-l_col {
+    margin-top: 0;
+  }
+}
+
+.content-l_col {
+  &.content-l_col-1-4  {
+    .respond-to-min(@tablet-min, {
+      .grid_column(1, 4);
+    });
+  }
+  &.content-l_col-3-4  {
+    .respond-to-min(@tablet-min, {
+      .grid_column(3, 4);
+    });
+  }
+}
+
+.content-l__main {
+  .content-l_col-1-4 + .content-l_col-3-4  {
+    .respond-to-min(@tablet-min, {
+      margin-top: 0;
+    });
+  }
+}
+
+.phase_intro {
+  .respond-to-min(@tablet-min, {
+    border-right: 0;
+  });
+}
+
+.phase_tools {
+  position: relative;
+}
+
+.respond-to-max(@mobile-max, {
+  .phase_illu {
+    text-align: center;
+  }
+} );
+
+
+fieldset.submit_btn,
+fieldset.submit_btn > p {
+  display:inline;
+  margin:0px;
+  padding:0px;
+}
+
+.tabbed-pad-top {
+  margin-top: @grid_gutter-width;
+}
+
+
+/*
+  Feedback form message
+  ---------------------------- */
+
+.rating-message {
+    position: relative;
+    padding-top: 5px;
+    display: none;
+
+    &_text {
+      display: block;
+      padding-left: 1.25em;
+      .u-webfont-regular();
+    }
+
+    &_icon {
+      position:absolute;
+      top: 8px;
+      color: @green;
+    }
+}

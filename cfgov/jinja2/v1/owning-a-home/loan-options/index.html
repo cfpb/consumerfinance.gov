@@ -1,0 +1,464 @@
+{% extends "_layouts/oah-base.html" %}
+{% import "molecules/social-media.html" as social_media with context %}
+{% set active_page = "loan-options" %}
+{% set page_js = "loan-options" %}
+
+{% block title %}Understand loan options{% endblock title %}
+
+{% block metadescription %}Not all home loans are the same. Use the CFPB's guide to understand how different variables affect your monthly payment, your overall costs, and your level of risk.{% endblock metadescription %}
+
+{% block content %}
+<main class="content" id="main">
+  <div class="content_wrapper">
+      <nav class="breadcrumbs" aria-label="Breadcrumbs">
+        <a href="/owning-a-home/" class="breadcrumbs_link">Owning a Home</a>
+      </nav>
+  </div>
+
+  <div class="content_wrapper content__2-1">
+    <div class="content_main">
+      <section class="content__loan-options">
+        <h1>Understand loan options</h1>
+
+        <p class="lead">Not all home loans are the same. Three key choices are the loan term, or length of the loan, the interest rate type, and the loan type. Use our guide to understand how these choices affect your monthly payment, your overall costs both upfront and over time, and your level of risk. Knowing what kind of loan is most appropriate for your situation prepares you for talking to lenders and getting the best deal.</p>
+
+        <div class="block
+                    block__flush-top
+                    block__flush-bottom
+                    block__padded-bottom
+                    u-right-on-desktop">
+          {{ social_media.render( {
+                "twitter_text": "@CFPB’s guide helps you understand the different kinds of mortgage loans & choose what’s right for you.",
+                "email_title": "Know your mortgage loan options with the CFPB.",
+                "email_text": "The CFPB’s guide helps you understand your options and choose the kind of loan that’s right for you.",
+                "email_signature": "-- From the CFPB",
+                "linkedin_title": "Know your mortgage loan options with the @CFPB.",
+                "linkedin_text": "The @CFPB’s guide helps you understand your options and choose the kind of loan that’s right for you. Via @CFPB"
+          } ) }}
+        </div>
+
+            <div class="subsection-hero">
+              <div class="subsection-hero-wrap">
+                <p>A loan &ldquo;option&rdquo; is always made up of three different things:</p>
+                <ol class="loan-type-list">
+                  <li><span class="lt-icon lt-icon-term"></span>Loan term</li>
+                  <li><span class="lt-icon lt-icon-structure"></span>Interest rate type</li>
+                  <li><span class="lt-icon lt-icon-program"></span>Loan type</li>
+                </ol>
+              </div>
+            </div>
+              <section class="type-details u-inline-block">
+                  <div class="o-expandable" id="expandable__loan-term">
+                      <button class="o-expandable_header o-expandable_target" id="loan-term-expand-header">
+                          <span class="o-expandable_header-left o-expandable_label">
+                              <h2 class="o-expandable-heading">
+                                  <span class="lt-icon lt-icon-term"></span>Loan term
+                              </h2>
+                          </span>
+                          <span class="o-expandable_header-right o-expandable_link u-mt5">
+                              <span class="o-expandable_cue-open">
+                                  <span class="o-expandable_cue-label">Learn more</span>
+                                  <span class="cf-icon cf-icon-plus-round"></span>
+                              </span>
+                              <span class="o-expandable_cue-close">
+                                  <span class="o-expandable_cue-label">Collapse</span>
+                                  <span class="cf-icon cf-icon-minus-round"></span>
+                              </span>
+                          </span>
+                      </button>
+                      <div class="o-expandable_subhead">
+                          <div class="col-4">
+                            <p class="sub-demi">30 years, 15 years, or other</p>
+                          </div>
+                          <div class="col-8">
+                            <p>The term of your loan is how long you have to repay the loan.</p>
+                            <h4 class="list-heading">This choice affects:</h4>
+                              <ul class="unindent-ul">
+                                <li>Your monthly <a href="/askcfpb/1941/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment.html" target="_blank">principal and interest</a> payment</li>
+                                <li>Your interest rate</li>
+                                <li>How much interest you will pay over the life of the loan</li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="o-expandable_content">
+                          <div class="o-expandable_content-animated">
+                          <h3 class="tight-heading block__sub">Compare your loan term options</h3>
+                            <div class="comparison">
+                              <h4 class="subheading">Shorter term</h4>
+                              <ul>
+                                <li><span class="cf-icon cf-icon-arrow-up"></span> Higher monthly payments</li>
+                                <li><span class="cf-icon cf-icon-arrow-down"></span> Typically lower interest rates</li>
+                                <li><span class="cf-icon cf-icon-arrow-down"></span> Lower total cost</li>
+                              </ul>
+                            </div>
+
+                            <div class="comparison">
+                              <h4 class="subheading">Longer term</h4>
+                              <ul>
+                                <li><span class="cf-icon cf-icon-arrow-down"></span> Lower monthly payments</li>
+                                <li><span class="cf-icon cf-icon-arrow-up"></span> Typically higher interest rates</li>
+                                <li><span class="cf-icon cf-icon-arrow-up"></span> Higher total cost</li>
+                              </ul>
+                            </div>
+
+                          <div>
+                              <p>In general, the longer your loan term, the more interest you will pay. Loans with shorter terms usually have lower interest costs but higher monthly payments than loans with longer terms. But a lot depends on the specifics – exactly how much lower the interest costs and how much higher the monthly payments could be depends on which loan terms you're looking at as well as the interest rate.</p>
+                          </div>
+
+                          <div id="loan-term-calculator" class="loan-calc sans">
+                            <p class="loan-details">
+                              For a loan amount of
+                              <input id="loan-amount-value" class="value" placeholder="$200,000"></input>
+                              an interest rate of
+                              <input id="loan-interest-value" class="value" placeholder="5%"></input>
+                              and a loan term of:</p>
+
+                            <ul class="timeline term-timeline">
+                              <li><a href="#" data-term="15">
+                                  <span class="loan-length">15</span>
+                                  <span class="year">years</span>
+                              </a></li>
+                              <li><a href="#" data-term="20">
+                                  <span class="loan-length">20</span>
+                                  <span class="year">years</span>
+                              </a></li>
+                              <li><a href="#" data-term="25">
+                                  <span class="loan-length">25</span>
+                                  <span class="year">years</span>
+                              </a></li>
+                              <li><a href="#" data-term="30" class="current">
+                                  <span class="loan-length">30</span>
+                                  <span class="year">years</span>
+                              </a></li>
+                            </ul>
+                          </div> <!-- /.loan-calc -->
+                            <ul class="term-output">
+                                <li>
+                                  <span class="col-7">
+                                    The <strong>monthly principal and interest payment</strong> would be:
+                                  </span>
+                                  <span id="monthly-payment" class="col-5 loan-value">$1,073.64</span>
+                                </li>
+                                <li>
+                                  <span class="col-7">
+                                    The <strong>total interest cost</strong> would be:
+                                  </span>
+                                  <span id="total-interest" class="col-5 loan-value">$186,511.57</span>
+                                </li>
+                            </ul> <!-- /.term-output -->
+
+                        <div class="note">
+                          <p>Note: This tool calculates principal and interest payments to show the impact of different loan terms. The total monthly payment will typically be several hundred dollars higher due to taxes and insurance. <a href="/askcfpb/1941/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment.html" target="_blank">Learn why</a>.</p>
+
+                          <p>This tool assumes that the interest rate is fixed and that the borrower will pay off the loan completely during the loan term. <a href="/askcfpb/1965/how-do-mortgage-lenders-calculate-monthly-payments.html" target="_blank">Learn more</a>.</p>
+                        </div>
+
+                        <h3 class="section-heading">What to know</h3>
+
+                        <p>Shorter terms will generally save you money overall, but have higher monthly payments. There are two reasons shorter terms can save you money:  </p>
+
+                        <ol>
+                          <li>You are borrowing money and paying interest for a shorter amount of <strong>time</strong>.</li>
+                          <li>The <strong>interest rate</strong> is usually lower&mdash;by as much as a full percentage point.</li>
+                        </ol>
+
+                        <p>Rates vary among lenders, especially for shorter terms.
+                          <a href="/owning-a-home/explore-rates" target="_blank">Explore rates for different loan terms
+                          </a> so you can tell if you're getting a good deal.
+                           Always compare official loan offers, called
+                          <a href="/askcfpb/1995/what-is-a-loan-estimate.html" target="_blank">Loan Estimates</a>, before making your decision.
+                        </p>
+
+                        <div class="note">
+                          <p class="alert"><strong>Some lenders may offer balloon loans</strong>. Balloon loan monthly payments are low, but you will have to pay a large lump sum when the loan is due. <a href="/askcfpb/104/what-is-a-balloon-loan.html" target="_blank">Learn more about balloon loans</a>.</p>
+                        </div>
+                        <span class="o-expand-close">
+                          <a href="#" id="collapse-loan-terms"
+                             class="o-expand-close-link o-expandable_target__secondary">Collapse loan terms</a>
+                        </span>
+                        </div>
+                      </div> <!-- /.expandable_content -->
+                  </div><!-- /.expandable -->
+
+                  <div class="o-expandable" id="expandable__interest-rate">
+                      <button class="o-expandable_header o-expandable_target" id="interest-rate-expand-header">
+                          <span class="o-expandable_header-left o-expandable_label">
+                              <h2 class="o-expandable-heading">
+                                  <span class="lt-icon-structure"></span>
+                                  Interest rate type
+                              </h2>
+                          </span>
+                          <span class="o-expandable_header-right o-expandable_link u-mt5">
+                              <span class="o-expandable_cue-open">
+                                  <span class="o-expandable_cue-label">Learn more</span>
+                                  <span class="cf-icon cf-icon-plus-round"></span>
+                              </span>
+                              <span class="o-expandable_cue-close">
+                                  <span class="o-expandable_cue-label">Collapse</span>
+                                  <span class="cf-icon cf-icon-minus-round"></span>
+                              </span>
+                          </span>
+                      </button>
+                      <div class="o-expandable_subhead">
+                          <div class="col-4">
+                            <p class="sub-demi">Fixed rate or adjustable rate</p>
+                          </div>
+
+                          <div class="col-8">
+                            <p>Interest rates come in two basic types: fixed and adjustable.</p>
+
+                            <h4 class="list-heading">This choice affects:</h4>
+
+                              <ul class="unindent-ul">
+                                <li>Whether your interest rate can change</li>
+                                <li>Whether your monthly <a href="/askcfpb/1941/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment.html" target="_blank">principal and interest payment</a> can change and its amount</li>
+                                <li>How much interest you will pay over the life of the loan</li>
+                              </ul>
+                          </div>
+                      </div><!-- o-expandable_subhead -->
+                      <div class="o-expandable_content">
+                          <div class="o-expandable_content-animated">
+                          <h3 class="tight-heading block__sub">Compare your interest rate options</h3>
+
+                          <div class="o-expandable-main-content">
+                              <div class="comparison">
+                              <h4 class="subheading">Fixed rate</h4>
+                                <ul class="comparison-main rate-comparison">
+                                  <li><span class="cf-icon cf-icon-arrow-down"></span> Lower risk, no surprises</li>
+                                  <li><span class="cf-icon cf-icon-arrow-up"></span> Higher interest rate</li>
+                                  <li><span class="cf-icon cf-icon-error-round alert-neutral"></span> Rate does not change</li>
+                                  <li><span class="cf-icon cf-icon-error-round alert-neutral"></span> Monthly principal and interest payments stay the same</li>
+                                </ul>
+                                <br />
+                                <div class="callout">
+                                  <h6 class="date-heading">2008–2014:</h6>
+                                  <p>Chosen by <strong>85-90%</strong> of buyers</p>
+
+                                  <h6 class="date-heading">Historically:</h6>
+                                  <p>Chosen by <strong>70-75%</strong> of buyers</p>
+                                </div>
+
+                              </div> <!-- /.comparison -->
+
+                              <div class="comparison">
+                              <h4 class="subheading">Adjustable rate</h4>
+                                <ul class="comparison-main rate-comparison">
+                                  <li><span class="cf-icon cf-icon-arrow-up"></span> Higher risk, uncertainty</li>
+                                  <li><span class="cf-icon cf-icon-arrow-down"></span> Lower interest rate to start</li>
+                                  <li><span class="cf-icon cf-icon-error-round alert-neutral"></span> After initial fixed period, rate can <a href="/askcfpb/1949/for-an-adjustable-rate-mortgage-arm-what-are-the-index-and-margin-and-how-do-they-work.html" target="_blank">increase or decrease based on the market</a> </li>
+                                  <li><span class="cf-icon cf-icon-error-round alert-neutral"></span> Monthly principal and interest <a href="/askcfpb/1947/if-i-am-considering-an-adjustable-rate-mortgage-arm-what-should-i-look-out-for-in-the-fine-print.html" target="_blank">payments can increase or decrease over time</a> </li>
+                                </ul>
+
+                                <div class="callout">
+                                  <h6 class="date-heading">2008–2014:</h6>
+                                  <p>Chosen by <strong>10-15%</strong> of buyers</p>
+
+                                  <h6 class="date-heading">Historically:</h6>
+                                  <p>Chosen by <strong>25-30%</strong> of buyers</p>
+                                </div>
+
+                              </div> <!-- /.comparison -->
+
+                              </div> <!-- /.expandable-main-content -->
+
+                              <h3 class="section-heading">What to know</h3>
+
+                                <p>Your monthly payments are more likely to be stable with a fixed-rate loan, so you might prefer this option if you value certainty about your loan costs over the long term. With a fixed-rate loan, your interest rate and monthly <a href="/askcfpb/1941/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment.html" target="_blank">principal and interest payment</a> will stay the same. Your <a href="/askcfpb/1941/on-a-mortgage-whats-the-difference-between-my-principal-and-interest-payment-and-my-total-monthly-payment.html" target="_blank">total monthly payment</a> can still change—for example, if your property taxes, homeowner’s insurance, or mortgage insurance might go up or down.</p>
+
+                                <p>Adjustable-rate mortgages (ARMs) offer less predictability but may be cheaper in the short term. You may want to consider this option if, for example, you plan to move again within the initial fixed period of an ARM. In this case, future rate adjustments may not affect you. However, if you end up staying in your house longer than expected, you may end up paying a lot more. In the later years of an ARM, your interest rate <a href="/askcfpb/1949/for-an-adjustable-rate-mortgage-arm-what-are-the-index-and-margin-and-how-do-they-work.html" target="_blank">changes based on the market</a>, and your monthly principal and interest payment <a href="/askcfpb/1965/how-do-mortgage-lenders-calculate-monthly-payments.html" target="_blank">could go up a lot</a>, even double. <a href="/askcfpb/1947/if-i-am-considering-an-adjustable-rate-mortgage-arm-what-should-i-look-out-for-in-the-fine-print.html" target="_blank">Learn more</a>.</p>
+                                <p><a href="/owning-a-home/explore-rates" target="_blank">Explore rates for different interest rate types</a> and see for yourself how the initial interest rate on an ARM compares to the rate on a fixed-rate mortgage.</p>
+                              <h3 id="understanding-arms" class="section-heading">Understanding adjustable-rate mortgages (ARMs)</h3>
+
+                              <p>Most ARMs have two periods. During the first period, your interest rate is fixed and won’t change. During the second period, your rate goes up and down regularly based on market changes. <a href="/askcfpb/1949/for-an-adjustable-rate-mortgage-arm-what-are-the-index-and-margin-and-how-do-they-work.html" target="_blank">Learn more about how adjustable rates change</a>. Most ARMs have a 30-year <a href="#loan-term-expand-header">loan term</a>.</p>
+                              <p>Here's how an example ARM would work:</p>
+
+                              <div class="arm-content">
+                                  <img src="{{ static('owning-a-home/static/img/arm-graphic.png')}}" alt="fixed rate transitions to adjustable rate">
+
+                              <h4 class="arm-heading"><span class="fixed-arm">5</span> / <span class="adjustable-arm">1</span> Adjustable rate mortgage (ARM)</h4>
+
+                              <div class="wrapper">
+                                <div class="col-6">
+                                  <h5 class="fixed-arm">Fixed period</h5>
+                                  <p>This “5” is the number of years your initial interest rate will stay fixed.</p>
+                                  <p>Common fixed periods are 3, 5, 7, and 10 years.</p>
+                                </div>
+                                <div class="col-6">
+                                  <h5 class="adjustable-arm">Adjustable period</h5>
+                                  <p>This “1” is the how often your rate will adjust after the fixed period ends.</p>
+                                  <p>The most common adjustment period is “1,” meaning you will get a new rate and new payment amount every year once the fixed period ends. Other, less common adjustment periods include "3" (once every 3 years) and "5" (once every 5 years). You will be <a href="/askcfpb/1843/i-received-notice-of-an-upcoming-rate-change-on-my-adjustable-rate-mortgage-ARM-why-did-i-receive-this-and-what-should-i-do-now.html" target="_blank">notified in advance of the change</a>.</p>
+                                </div>
+
+                                </div>
+
+
+                              </div> <!-- /.arm-content -->
+
+                              <div class="note">
+
+                              <p class ="alert"><strong>ARMs can have other structures.</strong> Some ARMs may adjust more frequently, and there’s not a standard way that these types of loans are described. If you’re considering a nonstandard structure, make sure to carefully read the rules and ask questions about when and how your rate and payment can adjust. </p>
+
+                              <p><strong>Understand the fine print.</strong> ARMs include <a href="/askcfpb/1947/if-i-am-considering-an-adjustable-rate-mortgage-arm-what-should-i-look-out-for-in-the-fine-print.html" target="_blank">specific rules that dictate how your mortgage works</a>. These rules control <a href="/askcfpb/1949/for-an-adjustable-rate-mortgage-arm-what-are-the-index-and-margin-and-how-do-they-work.html" target="_blank">how your rate is calculated</a> and <a href="/askcfpb/1951/with-an-adjustable-rate-mortgage-arm-what-are-rate-caps-and-how-do-they-work.html" target="_blank">how much your rate and payment can adjust</a>. Not all lenders follow the same rules, so ask questions to make sure you understand how these rules work.</p>
+
+                              <p><strong>ARMs marketed to people with lower credit scores tend to be riskier for the borrower.</strong> If you have a credit score in the mid-600s or below, you might be offered ARMs that contain risky features like higher rates, rates that adjust more frequently, <a href="/askcfpb/1957/what-is-a-prepayment-penalty.html" target="_blank">pre-payment penalties</a>, and <a href="/askcfpb/103/what-is-negative-amortization.html" target="_blank">loan balances that can increase</a>. Consult with multiple lenders and get a quote for an <a href="./FHA-loans/" target="_blank">FHA loan</a> as well. Then, you can compare all your options.</p>
+
+                              </div> <!-- /.mega-callout -->
+                              <span class="o-expand-close">
+                                  <a href="#" id="collapse-interest-rate"
+                                     class="o-expand-close-link
+                                            o-expandable_target__secondary">
+                                      Collapse interest rate type
+                                  </a>
+                              </span>
+                          </div>
+                      </div> <!-- /.expandable_content -->
+                  </div><!-- /.expandable -->
+
+                  <div class="o-expandable" id="expandable__loan-type">
+                      <button class="o-expandable_header o-expandable_target" id="loan-programs-expand-header">
+                          <span class="o-expandable_header-left o-expandable_label">
+                              <h2 class="o-expandable-heading">
+                                  <span class="lt-icon lt-icon-program"></span>
+                                  Loan type
+                              </h2>
+                          </span>
+                          <span class="o-expandable_header-right o-expandable_link u-mt5">
+                              <span class="o-expandable_cue-open">
+                                  <span class="o-expandable_cue-label">Learn more</span>
+                                  <span class="cf-icon cf-icon-plus-round"></span>
+                              </span>
+                              <span class="o-expandable_cue-close">
+                                  <span class="o-expandable_cue-label">Collapse</span>
+                                  <span class="cf-icon cf-icon-minus-round"></span>
+                              </span>
+                          </span>
+                      </button>
+                      <div class="o-expandable_subhead">
+                          <div class="col-4">
+                            <p class="sub-demi">Conventional, FHA, or Special programs</p>
+                          </div>
+
+                          <div class="col-8">
+                            <p>Mortgage loans are organized into categories based on the size of the loan and whether they are part of a government program.</p>
+
+                            <h4 class="list-heading">This choice affects:</h4>
+
+                              <ul class="unindent-ul">
+                                <li>How much you will need for a down payment</li>
+                                <li>The total cost of your loan, including interest and mortgage insurance</li>
+                                <li>How much you can borrow, and the house price range you can consider</li>
+                              </ul>
+                          </div>
+                      </div><!-- o-expandable_subhead -->
+                      <div class="o-expandable_content">
+                          <div class="o-expandable_content-animated">
+                          <h3 class="tight-heading block__sub">Choosing the right loan type</h3>
+
+                          <p class="bump">Each loan type is designed for different
+                          situations. Sometimes, only one loan type will fit your situation.
+                          If multiple options fit your situation, <a href="/owning-a-home/explore-rates" target="_blank">try out scenarios</a> and ask lenders to provide several quotes so you can see which type offers the best deal overall.</p>
+
+                          <div class="wrapper">
+                            <section class="col-4 sans">
+                              <h4>Conventional</h4>
+                              <p class="bump">Majority of loans</p>
+                              <p>Typically cost less than FHA loans but can be harder to get</p>
+                              <p><a href="./conventional-loans"
+                                    class="a-link
+                                           a-link__jump
+                                           cf-icon
+                                           cf-icon__after
+                                           cf-icon-right">
+                                     <span class="a-link_text">Get all the details</span>
+                                 </a>
+                                </p>
+                            </section>
+
+                            <section class="col-4 sans">
+                              <h4>FHA</h4>
+                              <p class="bump">Low down payment</p>
+                              <p>Available to those with lower credit scores</p>
+                              <p><a href="./FHA-loans"
+                                    class="a-link
+                                           a-link__jump
+                                           cf-icon
+                                           cf-icon__after
+                                           cf-icon-right">
+                                      <span class="a-link_text">Get all the details</span></a>
+                                  </a>
+                              </p>
+                            </section>
+
+                            <section class="col-4 sans">
+                              <h4>Special programs</h4>
+                              <ul class="m-list__unstyled list__spaced">
+                                <li class="list_item"><strong>VA:</strong> For veterans, servicemembers, or surviving spouses</li>
+                                <li class="list_item"><strong>USDA:</strong> For low- to middle-income borrowers in rural areas</li>
+                                <li class="list_item"><strong>Local:</strong> For low- to middle-income borrowers, first-time homebuyers, or public service employees</li>
+                              </ul>
+                              <p><a href="./special-loan-programs"
+                                    class="a-link
+                                           a-link__jump
+                                           cf-icon
+                                           cf-icon__after
+                                           cf-icon-right">
+                                           <span class="a-link_text">Get all the details</span></a>
+                              </p>
+                            </section>
+                          </div> <!-- /.wrapper -->
+
+                          <div class="note l-bump">
+                            <p><strong>Loans are subject to basic government regulation.</strong> Generally, your lender must document and verify your income, employment, assets, debts, and credit history to determine whether you can afford to repay the loan. <a href="http://files.consumerfinance.gov/f/201401_cfpb_mortgages_consumer-summary-new-mortgage.pdf" target="_blank">Learn more about the CFPB's mortgage rules</a>.</p>
+
+                            <p><strong>Ask lenders if the loan they are offering you meets the government’s</strong> <a href="/askcfpb/1789/what-qualified-mortgage.html" target="_blank">Qualified Mortgage</a> standard. Qualified Mortgages are those that are safest for you, the borrower.</p>
+
+                          </div> <!-- /.note -->
+
+                          <span class="o-expand-close">
+                            <a href="#" id="collapse-loan-type"
+                               class="o-expand-close-link o-expandable_target__secondary">
+                                  Collapse loan types
+                            </a>
+                          </span>
+                      </div>
+                      </div> <!-- /.expandable_content -->
+                  </div><!-- /.expandable -->
+                  </div>
+
+            </section> <!-- /.type-details -->
+        </section>
+        {% include "_layouts/ratings-form.html" %}
+
+      </div>
+    </div>
+    <aside>
+    {% import "_layouts/brand-footer.html" as brand_footer %}
+    {% set footer_links = [
+      {
+        'img': static("img/owning-a-home/footer_house.png"),
+        'text': 'Ready to look for a mortgage?',
+        'label': 'Explore loan choices',
+        'url': '/owning-a-home/process/explore/'
+      },
+      {
+        'img': static("img/owning-a-home/footer_chart.png"),
+        'text': 'What interest rate can you expect?',
+        'label': 'Explore interest rates',
+        'url': '/owning-a-home/explore-rates/'
+      },
+      {
+        'img': static("img/owning-a-home/footer_offers.png"),
+        'text': 'Ready to request Loan Estimates? ',
+        'label': 'Learn what comes next',
+        'url': '/owning-a-home/process/compare/'
+      }
+    ]%}
+    {{ brand_footer.render(footer_links) }}
+  </aside>
+
+
+</main>
+
+
+
+{% endblock %}

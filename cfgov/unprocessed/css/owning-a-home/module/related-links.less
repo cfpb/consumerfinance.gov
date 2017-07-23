@@ -1,0 +1,63 @@
+.related-links {
+
+   margin-right: -@grid_gutter-width / 2;
+   margin-left: -@grid_gutter-width / 2;
+
+   .respond-to-min(800px, {
+      margin-left: -30px;
+      margin-right: -30px;
+
+      & .content-l_col {
+        border-left-width: 30px;
+        border-right-width: 30px;
+      }
+    });
+
+   .form-explainer &,
+   .rate-checker_links & {
+       .respond-to-max(@mobile-max, {
+         margin-right: -24px !important;
+         margin-left: -24px !important;
+         padding-left: 24px;
+         padding-right: 24px;
+       });
+   }
+    .respond-to-min(600px, {
+      margin-right: 0;
+      margin-left: 0;
+    });
+
+    ul.related-links_list {
+      .m-list__unstyled;
+
+      li {
+        margin-bottom: unit(28px / @base-font-size-px, em);
+      }
+
+      .short-desc {
+        margin-bottom: unit(8px / @base-font-size-px, em);
+      }
+
+      br {
+        display: none;
+      }
+
+      .respond-to-min(800px, {
+        br {
+          display: block;
+        }
+      });
+    }
+
+    .content-l + .content-l {
+      margin-top: @grid_gutter-width * 2;
+    }
+
+    .content-l_col + .content-l_col {
+      margin-top: @grid_gutter-width * 2;
+
+      .respond-to-min(@mobile-max, {
+        margin-top: 0;
+      });
+    }
+}

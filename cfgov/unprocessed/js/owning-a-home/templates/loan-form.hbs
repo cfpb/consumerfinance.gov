@@ -1,0 +1,180 @@
+<form id="lc-input-{{form_id}}" class="lc-input comparison-input-column comparison-input-column-{{form_id}} no-labels">
+  <a href="#lc-input-{{form_id}}" class="lc-save-link lc-toggle first-save"><span class="cf-icon cf-icon-save"></span> Save inputs</a>
+  <h3 class="u-visually-hidden">Loan {{form_id}}</h3>
+
+  <div class="input-subsection pricing">
+    <div class="calc-content">
+      <div class="label-float">
+        <h4 class="h6">Loan amount</h4>
+        <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+        <span class="help-text">This is some helpful information</span>
+      </div>            
+      
+      <div class="input-wrap"> <!-- use with columns with floated labels -->
+        <span class="loan-amount-display-{{form_id}}">$180,000</span>
+      </div> <!-- /.input-wrap -->
+    </div> <!-- ./calc-content-->
+
+    <div class="input-content">
+      <label for="house-price-input-{{form_id}}" class="label-float ">
+        <span class="label-text">House price</span>
+        <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+        <span class="help-text">This is some helpful information about house prices</span>
+      </label>
+      <div class="input-wrap"> <!-- use with columns with floated labels -->
+        <input type="text" placeholder="$200,000" name="house-price-input" id="house-price-input-{{form_id}}" class="recalc">
+      </div> <!-- /.input-wrap -->
+    </div> <!-- ./input-content-->
+
+    <div class="input-content">
+      <label for="percent-down-input-{{form_id}}" class="label-float ">
+        <span class="label-text">Down payment <span class="u-visually-hidden">Percentage</span></span>
+        <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+        <span class="help-text">This is some helpful information about downpayments</span>
+      </label>
+      <div class="input-wrap"> <!-- use with columns with floated labels -->
+        <div class="percent-input small-input">
+          <span class="unit">%</span>
+          <input type="text" placeholder="10" maxlength="2" name="percent-dp-input" id="percent-dp-input-{{form_id}}" class="recalc">
+        </div>
+        <label for="down-payment-input-{{form_id}}" class="u-visually-hidden">Down payment amount</label>
+        <div class="mid-input">
+          <input type="text" placeholder="$20,000" name="down-payment-input" id="down-payment-input-{{form_id}}" class="recalc">
+        </div>
+      </div><!-- /.input-wrap -->
+    </div> <!-- ./input-content-->
+  </div> <!-- /.input-subsection -->
+
+  <div class="input-subsection">
+    <div class="calc-content">
+      <div class="label-float">
+        <h4 class="h6">Loan option</h4>
+        <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+        <span class="help-text">This is some helpful information</span>
+      </label>
+      </div>
+      
+      <div class="input-wrap"> <!-- use with columns with floated labels -->
+        <span class="lc-summary-year-{{form_id}}">30</span>-year <span class="lc-summary-structure-{{form_id}}">fixed</span> <span class="lc-summary-type-{{form_id}}">conventional</span>
+      </div> <!-- /.input-wrap -->
+    </div> <!-- ./calc-content-->
+
+    <label for="rate-structure-select-{{form_id}}" class="label-float ">
+      <span class="label-text">Rate structure</span>
+      <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+      <span class="help-text">This is some helpful information</span>
+    </label>
+    </label>
+    <div class="input-wrap"> <!-- use with columns with floated labels -->
+      <div class="select-content">
+        <select name="rate-structure-select" class="recalc" id="rate-structure-select-{{form_id}}">
+          <option value="fixed">Fixed</option>
+          <option value="arm">Adjustable</option>
+        </select>
+      </div> <!-- /.select-content -->
+    </div><!-- /.input-wrap -->
+    
+    <label for="arm-type-select-{{form_id}}" class="label-float ">
+      <span class="label-text">ARM type</span>
+      <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+      <span class="help-text">This is some helpful information</span>
+    </label>
+    <div class="input-wrap"> <!-- use with columns with floated labels -->
+      <div class="select-content">
+        <select name="arm-type-select" class="recalc" id="arm-type-select-{{form_id}}">
+          <option value="3-1">3/1</option>
+          <option value="5-1">5/1</option>
+          <option value="7-1">7/1</option>
+          <option value="10-1">10/1</option>
+        </select>
+      </div> <!-- /.select-content -->
+    </div><!-- /.input-wrap -->
+    
+    <label for="loan-term-select-{{form_id}}" class="label-float ">
+      <span class="label-text">Loan term</span>
+      <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+      <span class="help-text">This is some helpful information</span>
+    </label>
+    <div class="input-wrap"> <!-- use with columns with floated labels -->
+      <div class="select-content">
+        <select name="loan-term-select" class="recalc" id="loan-term-select-{{form_id}}">
+          <option value="30">30 years</option>
+          <option value="15">15 years</option>
+        </select>
+      </div> <!-- /.select-content -->
+    </div><!-- /.input-wrap -->
+
+    <label for="loan-type-select-{{form_id}}" class="label-float ">
+      <span class="label-text">Loan type</span>
+      <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+      <span class="help-text">This is some helpful information</span>
+    </label>
+    <div class="input-wrap"> <!-- use with columns with floated labels -->
+      <div class="select-content">
+        <select name="loan-type-select" class="recalc" id="loan-type-select-{{form_id}}">
+          <option value="conf">Conventional</option>
+          <option value="fha">FHA</option>
+          <option value="va">VA</option>
+        </select>
+      </div> <!-- /.select-content -->
+    </div><!-- /.input-wrap -->
+  </div> <!-- /.input-subsection -->
+
+  <div class="input-subsection">
+    <fieldset id="points-{{form_id}}" class="radio-fieldset input-content">
+      <label class="label-float ">
+        <span class="label-text">Discount point <br/>and credits</span>
+        <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+        <span class="help-text">This is some helpful information</span>
+      </label>
+      <div class="input-wrap"> <!-- use with columns with floated labels -->
+        <div class="inline-radio lc-radio">
+          <input type="radio" name="discount" id="discount-negative-two-{{form_id}}" value="-2" />
+          <label for="discount-negative-two">-2</label>
+        </div>
+        <div class="inline-radio lc-radio">
+          <input type="radio" name="discount" id="discount-negative-one-{{form_id}}" value="-1" />
+          <label for="discount-negative-one">-1</label>
+        </div>
+        <div class="inline-radio lc-radio">
+          <input type="radio" name="discount" id="discount-zero-{{form_id}}" value="0" checked="checked" />
+          <label for="discount-zero">0</label>
+        </div>
+        <div class="inline-radio lc-radio">
+          <input type="radio" name="discount" id="discount-one-{{form_id}}" value="1" />
+          <label for="discount-one">1</label>
+        </div>
+        <div class="inline-radio lc-radio">
+          <input type="radio" name="discount" id="discount-two-{{form_id}}" value="2" />
+          <label for="discount-two">2</label>
+        </div>
+        <div class="inline-radio lc-radio">
+          <input type="radio" name="discount" id="discount-three-{{form_id}}" value="3" />
+          <label for="discount-three">3</label>
+        </div>
+      </div> <!-- /.input-wrap -->
+    </fieldset>
+  </div> <!-- /.input-subsection -->
+
+  <div class="input-subsection">
+    <label for="interest-rate-select-{{form_id}}" class="label-float">
+      <span class="label-text">Interest rate</span>
+      <span class="lc-tooltip" data-toggle="tooltip" role="tooltip" data-original-title="" title=""><span class="cf-icon cf-icon-help-round"></span></span>
+      <span class="help-text">This is some helpful information</span>
+    </label>
+    <div class="input-wrap"> <!-- use with columns with floated labels -->
+      <div class="select-content interest-rate-content" id="interest-rate-content-{{form_id}}">
+        <select name="interest-rate-select" class="recalc" id="interest-rate-select-{{form_id}}">
+          
+        </select>
+      </div> <!-- /.select-content -->
+      <button class="btn btn__primary interest-rate-update" id="interest-rate-update-{{form_id}}">
+        Update rates and costs
+      </button>
+      <div class="btn btn__disabled interest-rate-loading">
+      </div>
+        
+    </div><!-- /.input-wrap -->
+  </div> <!-- /.input-subsection -->
+  <a href="#lc-input-{{form_id}}" class="lc-save-link lc-toggle second-save"><span class="cf-icon cf-icon-save"></span> Save inputs</a>
+</form> <!-- /.comparison-input-column -->

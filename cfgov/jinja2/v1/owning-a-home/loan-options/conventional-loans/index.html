@@ -1,0 +1,179 @@
+{% extends "_layouts/oah-base.html" %}
+{% import "molecules/social-media.html" as social_media with context %}
+{% set active_page = "loan-options-subpage" %}
+
+{% block title %}Conventional loans{% endblock title %}
+
+{% block metadescription %}Mortgage shopping? Conventional loans are a common choice. Learn more about what they are and how they work from the Consumer Financial Protection Bureau.{% endblock metadescription %}
+
+{% block content %}
+
+<main class="content content__2-1 content__bleedbar" id="main" role="main">
+  {% include "_layouts/loan_types_subpage_heading.html" %}
+
+  <div class="content_wrapper">
+    <section class="content_main">
+      <h2>Conventional loan</h2>
+
+      <div class="content-l">
+        <section id="conventional-overview" class="col-9">
+          <p>“Conventional” just means that the loan is not part of a specific government program. Conventional loans typically cost less than <a href="../FHA-loans/" target="_blank">FHA loans</a> but can be more difficult to get.</p>
+          <p>There are two main categories of conventional loans:</p>
+          <p><strong>Conforming loans</strong> have maximum loan amounts that are set by the government. Other rules for conforming loans are set by <a href="/askcfpb/1959/what-are-fannie-mae-and-freddie-mac.html" target="_blank">Fannie Mae or Freddie Mac</a>, companies that provide backing for conforming loans.</p>
+          <p><strong>Non-conforming loans</strong> are less standardized. Eligibility, pricing, and features can vary widely by lender, so it’s particularly important to shop around and compare several offers. </p>
+        </section>
+
+        <div class="col-3">
+          <h4 class="small-heading">Mortgage insurance</h4>
+          <p class="sans">Required for <strong>some</strong> conventional loans. <br><a href="#mortgage-insurance">More on mortgage insurance</a>.</p>
+        </div>
+      </div>
+
+      <div class="content-l sans l-bump">
+        <div class="col-4">
+          <h3 class="subheading">Conventional (conforming)</h3>
+          <p class="bump"><strong>$424,100 or less</strong></p>
+          <ul class="standard-list loan-list">
+            <li>Most common loan type.</li>
+            <li>Loan amount must be $424,100 or less, <a href="/askcfpb/1961/how-can-i-find-the-loan-limit-for-a-conforming-loan-in-my-county.html" target="_blank">unless you’re buying a home with multiple units</a>.</li>
+            <li>If your down payment is less than 20%, you’ll typically need mortgage insurance.</li>
+          </ul>
+        </div>
+
+        <div class="col-4">
+          <h3 class="subheading">Conforming <br>Jumbo</h3>
+          <p class="bump"><strong>$424,100 to county limit</strong></p>
+          <ul class="standard-list loan-list">
+            <li>Conforming loan for amounts higher than $424,100.</li>
+            <li>Only available in certain counties.</li>
+            <li><a href="/askcfpb/1961/how-can-i-find-the-loan-limit-for-a-conforming-loan-in-my-county.html" target="_blank">Maximum loan amount varies by county</a>.</li>
+          </ul>
+        </div>
+
+        <div class="col-4">
+          <h3 class="subheading">Jumbo (non-conforming)</h3>
+          <p class="bump"><strong>up to $1-2 million</strong></p>
+          <ul class="standard-list loan-list">
+            <li>Jumbo loan for amounts greater than the Conforming Jumbo limit in your county, up to $1-2 million.</li>
+            <li>Rules vary by lender, but usually need good credit and a high down payment to qualify.</li>
+          </ul>
+        </div>
+      </div> <!-- /.content-l -->
+
+      <h3 class="subheading">Non-conforming (other)</h3>
+      <ul class="standard-list loan-list">
+        <li>Loans of any size that do not fall into another category.</li>
+        <li>Some loans in this category are intended for borrowers with poor credit. These loans tend to have high rates and may contain risky features. These can include:</li>
+         <ul>
+            <li>Loans that allow for minimal documentation of your income.</li>
+            <li>Loans that allow you to pay only the interest or allow your loan balance to increase.</li>
+         </ul>
+        <li>Some lenders also offer niche programs for mainstream borrowers with unusual circumstances. These can include:</li>
+          <ul>
+            <li>Loans for properties with non-standard features (such as more than 10 acres of land, properties with agricultural income, or properties that are difficult to appraise).</li>
+           <li>Loans for affluent customers with tricky finances, such as self-employed borrowers, or newly graduated doctors.</li>
+        </ul>
+      </ul>
+
+
+      <div class="note">
+        <h4 class="callout-mid-heading"><span class="cf-icon cf-icon-error-round alert-warning icon-outdent"></span> Many of the loans that got people in trouble during the crisis fell in the “non-conforming (other)” category.</h4>
+        <p>If you are considering a non-conforming loan, consult with multiple lenders. Ask if you could qualify for a conforming or FHA loan instead. Never make a final decision about which loan to take before getting your official <a href="/askcfpb/1995/what-is-a-loan-estimate.html" target="_blank">Loan Estimates</a>.</p>
+      </div> <!-- /.note -->
+
+        <section id="mortgage-insurance" class="l-bump sans">
+          <h3>Mortgage insurance: what you need to know</h3>
+
+          <p><strong>Mortgage insurance helps you get a loan you wouldn’t otherwise be able to.</strong> If you can’t afford a 20 percent down payment, you will likely have to pay for mortgage insurance. You may choose to get a conventional loan with private mortgage insurance (PMI), or an FHA, VA, or USDA loan.</p>
+          <p><strong>Mortgage insurance usually adds to your costs.</strong> Depending on the loan type, you will pay monthly mortgage insurance premiums, an upfront mortgage insurance fee, or both. </p>
+          <p><strong>Mortgage insurance protects the lender if you fall behind on your payments. It does not protect you.</strong> Your credit score will suffer and you may face foreclosure if you don’t pay your mortgage on time. </p>
+          <p><a href="/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html" target="_blank">Learn more about mortgage insurance</a>.</p>
+        </section>
+        {% include "_layouts/ratings-form.html" %}
+    </section> <!-- /content_main -->
+
+    <aside class="content_sidebar sans">
+      <div class="block
+                  block__flush-top">
+        {{ social_media.render( {
+              "twitter_text": "Is a conventional mortgage loan right for you? The @CFPB helps you decide.",
+              "email_title": "Is a conventional mortgage loan right for you?",
+              "email_text": "The CFPB helps you understand what a conventional loan is – and what it’s not – so you can decide what’s right for you.",
+              "email_signature": "-- From the CFPB",
+              "linkedin_title": "Is a conventional mortgage loan right for you?",
+              "linkedin_text": "The @CFPB helps you understand all the details and decide what’s right for you. Via @CFPB"
+        } ) }}
+      </div>
+
+      {% include "_layouts/oah-email-signup.html" %}
+
+
+      <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">
+                Other loan types
+            </h2>
+        </header>
+        <ul class="m-list
+                   m-list__spaced
+                   m-list__unstyled">
+          <li class="m-list_item">
+            <a class="a-link
+                      a-link__jump
+                      cf-icon
+                      cf-icon__after
+                      cf-icon-right" href="../FHA-loans/">
+              <span class="a-link_text">FHA loans</span>
+            </a>
+          </li>
+          <li class="m-list_item">
+            <a class="a-link
+                      a-link__jump
+                      cf-icon
+                      cf-icon__after
+                      cf-icon-right" href="../special-loan-programs/">
+              <span class="a-link_text">Special loan programs</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">
+                Ask CFPB
+            </h2>
+        </header>
+        <ul class="m-list
+                   m-list__spaced
+                   m-list__unstyled">
+          <li class="m-list_item">
+            <a class="a-link
+                      a-link__jump"
+               href="/askcfpb/1959/what-are-fannie-mae-and-freddie-mac.html" target="_blank">
+              <span class="a-link_text">What are Fannie Mae and Freddie Mac?</span>
+            </a>
+          </li>
+          <li class="m-list_item">
+            <a class="a-link
+                      a-link__jump"
+               href="/askcfpb/1961/how-can-i-find-the-loan-limit-for-a-conforming-loan-in-my-county.html"
+               target="_blank">
+              <span class="a-link_text">How can I find the loan limit for a conforming loan in my county?</span>
+            </a>
+          </li>
+          <li class="m-list_item">
+            <a class="a-link
+                      a-link__jump"
+               href="/askcfpb/1995/what-is-a-loan-estimate.html"
+               target="_blank">
+              <span class="a-link_text">What is a Loan Estimate?</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </aside>
+    </div>
+</main>
+
+{% endblock %}

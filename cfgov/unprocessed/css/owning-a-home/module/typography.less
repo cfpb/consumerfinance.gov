@@ -1,0 +1,70 @@
+/* Headings
+--------------------------- */
+.tight-heading {
+  margin-bottom: 0;
+}
+
+.section-heading {
+  margin-top: 25px;
+}
+
+// subheads are small headings in all caps
+.subhead {
+  font-size: 0.875em;
+  text-transform: uppercase;
+  .u-webfont-demi();
+   margin: 24px 0 16px 0;
+}
+
+// subheadings have green borders and are larger
+.subheading {
+  .u-webfont-demi();
+  font-size: .875em;
+  text-transform: uppercase;
+  margin-top: 32px;
+  padding-bottom: 6px;
+  border-bottom: 4px solid #AED690;
+  letter-spacing: 1px;
+}
+
+.small-heading {
+  .u-webfont-demi();
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.callout-heading {
+  .u-webfont-demi();
+  color: @black;
+  font-size: 0.875em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.callout-mid-heading {
+  .u-webfont-medium();
+  color: @black;
+  text-transform: none;
+  font-size: 1.125em;
+  margin-bottom: 10px;
+  margin-top: 32px;
+  letter-spacing: 0;
+}
+
+// wrap tabbed headings in a tabbed header
+.tabbed-header {
+  border-top: 1px solid @gray-40;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+// a tabbed heading has a green highlight above it
+.tabbed-heading {
+  position: absolute;
+  top: -2px;
+  margin-top: 0;
+  padding-top: 6px;
+  display: inline-block;
+  border-top: 4px solid @green;
+}

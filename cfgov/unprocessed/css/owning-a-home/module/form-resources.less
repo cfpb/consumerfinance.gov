@@ -1,0 +1,150 @@
+.form-resources {
+
+    .u-webfont-regular();
+
+    .content_main {
+        .respond-to-min(@tablet-min, {
+            padding-top: unit(@grid_gutter-width * 1.5, px);
+            padding-bottom: @grid_gutter-width;
+        });
+    }
+
+    /*  This code for the hero was copied from and then modified:
+        https://github.com/cfpb/cfgov-refresh/blob/04de1f7b99999c73f412346a272664f24ed1e9c5/src/static/css/misc.less
+    */
+
+    .hero {
+        background: #ccdfdf;
+        padding: 0;
+
+        // over-ride OaH hero
+        p {
+            text-transform: none;
+            text-align: left;
+            color: @dark-gray;
+        }
+
+        &_wrapper {
+            .wrapper();
+            padding: 0;
+        }
+
+        &_card {
+            //.grid_column(12);
+        }
+
+        &_preview {
+            background: @white;
+            background: fade(@white, 90%);
+            padding: 15px;
+
+            h1 {
+              .h2();
+            }
+
+            footer {
+                p {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .respond-to-max(660px, {
+
+            .hero_img {
+                height: 180px;
+                background-repeat: no-repeat;
+                background-position: center center; //wrapper has 15px left padding
+            }
+
+        });
+
+        .respond-to-min(661px, {
+            //padding: 40px 0 0 0;
+            padding-top: unit(15px / @base-font-size-px, em);
+
+            &_wrapper {
+                background-repeat: no-repeat;
+                background-position: 15px 0; //wrapper has 15px left padding, so move the image right to compensate
+            }
+
+            &_card {
+                .grid_push(6);
+                .grid_column(6);
+                a& {
+                    border-color: transparent;
+                }
+            }
+
+            &_preview {
+                padding: @grid_gutter-width;
+                margin-top: unit(15px / @base-font-size-px, em);
+            }
+
+        });
+
+        .respond-to-min(992px, {
+            &_card {
+                .grid_push(8);
+                .grid_column(4);
+            }
+        });
+    }
+
+
+    .hero__mortage-closing {
+
+        .respond-to-max(660px, {
+            .hero_img {
+                background-image:url('../../img/owning-a-home/form-resources_mortgage-closing-hero-small.png');
+                background-size: 320px 170px;
+            }
+        });
+
+        .respond-to-min(661px, {
+            .hero_wrapper {
+                background-image:url('../../img/form-resources_mortgage-closing-hero-medium.png');
+                background-size: 400px 260px;
+            }
+        });
+
+        .respond-to-min(992px, {
+            .hero_wrapper {
+                background-image:url('../../img/owning-a-home/form-resources_mortgage-closing-hero-large.png');
+                background-size: 730px 372px;
+              }
+        });
+
+    }
+
+    .hero__mortage-estimate {
+
+        .respond-to-max(660px, {
+            .hero_img {
+                background-image:url('../../img/owning-a-home/form-resources_mortgage-estimate-hero-small.png');
+                background-size: 320px 170px;
+            }
+        });
+
+        .respond-to-min(661px, {
+            .hero_wrapper {
+                background-image:url('../../img/owning-a-home/form-resources_mortgage-estimate-hero-medium.png');
+                background-size: 400px 310px;
+            }
+        });
+
+        .respond-to-min(992px, {
+            .hero_wrapper {
+                background-image:url('../../img/owning-a-home/form-resources_mortgage-estimate-hero-large.png');
+                background-size: 730px 425px;
+              }
+        });
+
+    }
+
+    @media print {
+        .hero_img-container {
+            display: none
+        }
+    }
+} //.form-resources

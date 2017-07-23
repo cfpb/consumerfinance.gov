@@ -1,0 +1,164 @@
+
+.reset {
+  margin: 0;
+  padding: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* typography mixins */
+
+.allcaps-demi {
+  .u-webfont-demi();
+  font-size: 0.75em;
+  text-transform: uppercase;
+}
+
+/* topdoc
+  name: respond-to-print() (mixin)
+  notes:
+    - "This mixin allows us to easily write styles that target both
+       `@media print` and `.print`."
+  family: cfgov-cf-enhancements
+  patterns:
+    - name: Usage
+      codenotes:
+        - |
+          // Example Less
+          .example {
+              color: @gray-80;
+
+              .respond-to-print({
+                  color: @black;
+              });
+          }
+
+          // Exports to
+          .example {
+              color: #75787B;
+          }
+          @media print {
+              .example {
+                  color: #101820;
+              }
+          }
+          .print .example {
+              color: #101820;
+          }
+  tags:
+    - cfgov-cf-enhancements
+*/
+
+.respond-to-print(@rules) {
+    @media print {
+        @rules();
+    }
+    .print & {
+        @rules();
+    }
+}
+
+/*
+ * link color mixins
+ * ==================
+ * based on https://github.com/cfpb/cf-core/blob/gh-pages/src/cf-utilities.less
+ * todo: move to cf-core
+*/
+
+.u-link__colors() {
+    .u-link__colors-base();
+}
+
+.u-link__colors(@c) {
+    .u-link__colors-base(@c, @c, @c, @c, @c,
+                         @c, @c, @c, @c, @c);
+}
+
+.u-link__colors(@c, @h) {
+    .u-link__colors-base(@c, @c, @h, @h, @c,
+                         @c, @c, @h, @h, @c);
+}
+
+.u-link__colors(@c, @v, @h, @f, @a) {
+    .u-link__colors-base(@c, @v, @h, @f, @a,
+                         @c, @v, @h, @f, @a);
+}
+
+.u-link__colors(@c, @v, @h, @f, @a,
+                @bc, @bv, @bh, @bf, @ba) {
+    .u-link__colors-base(@c, @v, @h, @f, @a,
+                         @bc, @bv, @bh, @bf, @ba);
+}
+
+.u-link__colors-base(@c:@pacific, @v:@dark-teal, @h:@pacific-60, @f:@pacific, @a:@dark-navy,
+                     @bc:@pacific, @bv:@dark-teal, @bh:@pacific-60, @bf:@pacific, @ba:@dark-navy) {
+    color: @c;
+    border-color: @bc;
+
+    &:visited,
+    &.visited {
+        border-color: @bv;
+        color: @v;
+    }
+
+    &:hover,
+    &.hover {
+        border-color: @bh;
+        color: @h;
+    }
+
+    &:focus,
+    &.focus {
+        border-color: @bf;
+        color: @f;
+    }
+
+    &:active,
+    &.active {
+        border-color: @ba;
+        color: @a;
+    }
+}
+
+.u-link-child__hover(@c: @pacific-60) {
+    a:hover &,
+    a.hover &,
+    a:focus &,
+    a.focus & {
+        color: @c;
+    }
+}
+
+.u-link__border() {
+    border-bottom-width: 1px;
+
+    &:hover,
+    &.hover {
+        border-bottom-width: 1px;
+    }
+}
+
+.u-link__no-border() {
+    border-bottom-width: 0 !important;
+}
+
+.u-link__hover-border() {
+    border-bottom-width: 0 !important;
+
+    &:hover,
+    &.hover,
+    &:focus,
+    &.focus {
+        border-bottom-width: 1px !important;
+    }
+}
+
+.u-stick {
+  position: relative;
+
+  &_bottom {
+    bottom: 0;
+  }
+}

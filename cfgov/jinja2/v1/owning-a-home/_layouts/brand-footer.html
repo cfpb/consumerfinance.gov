@@ -1,0 +1,75 @@
+
+
+
+{# ==========================================================================
+
+   render(links)
+
+   ==========================================================================
+
+   Description:
+
+   Renders all the brand footer content: 3 link sections and email section.
+
+   links:              An array of three link objects, each containing:
+                      - text (req): text of link section
+                      - img: img for link section
+                      - label: link label
+                      - url: link url
+
+                      Macro will display max of three link sections. If there are
+                      more than three link objects, only the first three will
+                      be shown. If no links are passed in, only the email signup
+                      will be shown.
+   ========================================================================== #}
+
+{% macro render(links=[]) %}
+  <footer aria-label="Owning a Home footer" class="brand-footer content">
+    <div class="content_wrapper">
+      <h3 class="brand-footer_headline u-mb0">
+        <span class="cf-icon cf-icon-owning-home" aria-hidden></span>
+        Check out other tools and resources from <a href="/owning-a-home" class="title-link">Owning a Home</a>
+      </h3>
+      {% for link in links %}
+        {% if loop.index < 4 %}
+          <div class="brand-footer_container brand-footer_container-{{loop.index}}">
+            {{render_link(link)}}
+          </div>
+        {% endif %}
+      {% endfor %}
+      <div class="brand-footer_container brand-footer_container-{{links|length + 1}}">
+        {% include "oah-email-signup.html" %}
+      </div>
+    </div>
+  </footer>
+{% endmacro %}
+
+
+{# ==========================================================================
+
+   render_link(data)
+
+   ==========================================================================
+
+   Description:
+
+   Render a link.
+
+   data:              An object, containing:
+                      - text (req): text of link section
+                      - img: img for link section
+                      - label: link label
+                      - url: link url
+
+
+   ========================================================================== #}
+
+{% macro render_link(data) %}
+  <div class="brand-footer_img">
+    <a href="{{data.url}}"><img src="{{data.img}}"/></a>
+  </div>
+  <p>{{data.text|safe}}</p>
+  <a class="a-link a-link__jump" href="{{data.url}}">
+    <span class="a-link_text">{{data.label|safe}}</span>
+  </a>
+{% endmacro %}

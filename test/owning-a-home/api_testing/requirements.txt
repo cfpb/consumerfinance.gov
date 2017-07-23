@@ -1,0 +1,4 @@
+selenium==2.40.0
+nose
+pyhamcrest==1.8.0
+behave==1.2.4

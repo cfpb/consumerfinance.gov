@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% set active_page = "monthly-payment-worksheet" %}
+{% set page_js = "monthly-payment-worksheet" %}
+{% set subnav = false %}
+
+{% block title %}Owning a Home: Monthly Payment Worksheet{% endblock title %}
+
+{% block content %}
+<main class="content">
+  <div class="content_wrapper">
+      <nav class="breadcrumbs" aria-label="Breadcrumbs">
+        <a href="/owning-a-home/" class="breadcrumbs_link">Owning a Home</a>
+      </nav>
+  </div>
+
+  <div id="monthly-payment" class="monthly-payment content_main" role="main">
+    <section class="content_wrapper">
+      <div class="content_main u-pb0">
+        <div class="block block__flush-top monthly-payment_intro">
+          <div class="content-l content-l__large-gutters">
+            <div class="content-l_col content-l_col-2-3">
+              <h1>Define what is affordable for you.</h1>
+              <h2 class="h3">Only you can decide how much you feel comfortable spending on a home. This worksheet will help you plan for the future and calculate a monthly payment that is affordable to you.</h2>
+              <p class="monthly-payment_pdf-link">
+                <span class="mid-lead">Rather fill this out by hand?</span> <a class="jump-link jump-link__download" href="{{ base_url }}resources/monthly_payment_worksheet.pdf"><span class="jump-link_text">Download our PDF version</span></a></p>
+              </p>
+            </div>
+            <div class="content-l_col content-l_col-1-3 buyers-note">
+              <p class="block block__bg block__bg-highlight block__small-padding block__flush-top block__flush-bottom mid-lead">
+                This worksheet is designed for first-time home buyers.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="app-container">
+
+        </div>
+        <div class="u-mt30">
+          {% import "related-links.html" as related_links %}
+          {% set process_links = [
+              {
+                  'desc': 'Once you\'ve determined your affordable monthly payment, decide what your down payment should be and how much you can afford to spend on a home.',
+                  'urls': [
+                    {
+                      'label': 'Determine your down payment',
+                      'url': '/owning-a-home/process/prepare/#down-payment'
+                    },
+                    {
+                      'label': 'Estimate your affordable home price',
+                      'url': '/owning-a-home/process/prepare/#price'
+                    }
+                  ]
+                }
+          ] %}
+          {% set tools_links = [
+               {
+                  'desc': 'Wondering what kind of loan is right for you?',
+                  'urls': [
+                    {
+                      'label': 'Understand loan options',
+                      'url': '/owning-a-home/loan-options/'
+                    }
+                  ]
+                },
+                {
+                  'desc': 'Interest rates can differ based on the kind of loan you choose.',
+                  'urls': [
+                    {
+                      'label': 'Explore interest rates',
+                      'url': '/owning-a-home/explore-rates/'
+                    }
+                  ]
+                }
+            ] %}
+          {{ related_links.render(process_links, tools_links) }}
+        </div>
+      </div> <!-- /.content-main -->
+
+    </section>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% import "_vars-process.html" as vars with context %}
+
+{% macro render(position, active_phase_slug) -%}
+  <ul class="process-nav process-nav__{{position}} m-list m-list__unstyled">
+    {% if position == "top" %}
+      <li class="process-nav_header">
+        <span class="process-nav_step-contents">
+        Know <br/>the process
+        </span>
+      </li>
+    {% endif %}
+      {% for item in vars.process_steps %}
+          {% if item.slug == active_phase_slug %}
+              <li class="current-step step-{{loop.index}}">
+                <span class="process-nav_step-contents a-link a-link__jump">
+                  <span class="a-link_text process-nav_step-number">
+                    {{loop.index}}</span>{{item.title|safe}}
+                </span>
+              </li>
+          {% else %}
+              <li class="step-{{loop.index}}">
+                  <a href="/owning-a-home/process/{{item.url}}"
+                     class="a-link a-link__jump process-nav_step-contents">
+                      <span class="process-nav_step-number
+                                   phase_ordinal
+                                   a-link_text">
+                        {{loop.index}}
+                      </span>
+                      {{item.title|safe}}
+                  </a>
+              </li>
+          {% endif %}
+      {% endfor %}
+  </ul>
+{%- endmacro %}

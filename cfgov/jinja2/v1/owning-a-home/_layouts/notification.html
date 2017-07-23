@@ -1,0 +1,50 @@
+{# ==========================================================================
+
+   notification.render()
+
+   ==========================================================================
+
+   Description:
+
+   Builds notification markup when given:
+
+   type:        The type of notification to display.
+                Values may be: 'success', 'error', or 'warning'.
+
+   is_visible:  Whether the notification is initially shown or not.
+                Default is false.
+
+   message:     Text to display within the notification markup.
+                Default is 'Success.', 'Warning!', or 'Error!',
+                depending on notification type.
+
+   explanation: Text to display as an explanation
+                within the notification markup.
+
+   ========================================================================== #}
+
+{% macro render(type, is_visible, message, explanation=none) %}
+
+  {% set type_lookup  = {
+        'success' : 'approved',
+        'warning' : 'error',
+        'error'   : 'delete',
+      }
+  %}
+  {% set icon = type_lookup[type]  %}
+  {% set type = ('m-notification__' + type | string) if type else '' %}
+
+  <div class="m-notification
+              {{ type }}
+              {{ 'm-notification__visible' if is_visible else '' }}">
+      <span class="m-notification_icon
+                   cf-icon"></span>
+      <div class="m-notification_content">
+          <p class="h4 m-notification_message">{{ message }}</p>
+          {% if explanation %}
+              <p class="h4 m-notification_explanation">{{ explanation }}</p>
+          {% endif %}
+      </div>
+  </div>
+
+{% endmacro %}
