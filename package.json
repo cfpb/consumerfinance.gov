@@ -63,6 +63,7 @@
     "is-reachable": "2.3.2",
     "psi": "3.0.0",
     "require-dir": "0.3.2",
+    "sauce-connect-tunnel": "0.2.1",
     "ustream-embedapi": "1.0.0",
     "webpack": "3.2.0",
     "webpack-stream": "3.2.0"
