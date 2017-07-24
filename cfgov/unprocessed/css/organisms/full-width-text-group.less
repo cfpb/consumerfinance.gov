@@ -44,6 +44,11 @@
               // when the image is floated right:
               // calc(~"100% - 41.875rem");
               margin-left: unit( @grid_gutter-width / @base-font-size-px, em );
+
+              & + .m-full-width-text ul,
+              & + .m-full-width-text ol {
+                  overflow: hidden;
+              }
           }
 
           .m-inset__left {
