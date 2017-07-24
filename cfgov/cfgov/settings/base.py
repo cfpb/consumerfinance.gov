@@ -7,6 +7,12 @@ from unipath import Path
 
 from ..util import admin_emails
 
+try:
+    import MySQLdb
+except ImportError:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 

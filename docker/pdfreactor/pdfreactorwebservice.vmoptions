@@ -1,3 +1,0 @@
--Xmx1024m
--Djava.awt.headless=true
--Djetty.host=0.0.0.0
