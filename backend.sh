@@ -28,7 +28,6 @@ install() {
 
   # Install requirements for Django Server or tox.
   if [ "$cli_flag" = "development" ]; then
-    pip install mysql-python==1.2.4 --find-links=wheels
     pip install -r ./requirements/local.txt
   elif [ "$cli_flag" = "test" ]; then
     pip install -r ./requirements/test.txt

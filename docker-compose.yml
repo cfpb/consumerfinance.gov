@@ -20,7 +20,3 @@ services:
         volumes:
             - ./docker:/apps
         entrypoint: /apps/docker-entrypoint-es-plugins.sh
-    pdfreactor:
-        image: cfgov/pdfreactor
-        ports:
-            - "9423:9423"
