@@ -244,15 +244,14 @@ urlpatterns = [
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
+    url(r'^data-research/consumer-complaints/',
+        include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
-    # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/search',
+                r'^data-research/consumer-complaints/search/',
                 include_if_app_enabled(
                     'ccdb5_ui', 'ccdb5_ui.config.urls'
-                ),
-                fallback=include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
                 )),
 
     url(r'^oah-api/rates/',
