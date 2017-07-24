@@ -247,7 +247,7 @@ urlpatterns = [
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
     # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/',
+                r'^data-research/consumer-complaints/search',
                 include_if_app_enabled(
                     'ccdb5_ui', 'ccdb5_ui.config.urls'
                 ),
@@ -300,7 +300,7 @@ urlpatterns = [
 
     # CCDB5-API
     flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/api/v1/',
+                r'^data-research/consumer-complaints/search/api/v1/',
                 include_if_app_enabled('complaint_search',
                                        'complaint_search.urls')
                 ),
