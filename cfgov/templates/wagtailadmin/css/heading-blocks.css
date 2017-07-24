@@ -9,7 +9,7 @@
 .heading-text-block { width: 50%; }
 .heading-icon-block { width: 26%; }
 
-.heading-text-block,
+.heading-level-block,
 .heading-icon-block {
     margin-left: 2%;
 }
@@ -28,4 +28,10 @@
     /* Using !important to override default styling without needing
        excessively long selectors here. */
     width: 100% !important;
+}
+
+.heading-level-block.required > label::after {
+    /* Using !important to override default styling without needing
+       excessively long selectors here. */
+    display: none !important;
 }

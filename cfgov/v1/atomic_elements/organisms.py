@@ -38,20 +38,6 @@ class Well(blocks.StructBlock):
 
 
 class InfoUnitGroup(blocks.StructBlock):
-    heading = blocks.CharBlock(icon='title', required=False)
-    intro = blocks.RichTextBlock(
-        required=False,
-        help_text='If this field is not empty, '
-                  'the Heading field must also be set.'
-    )
-
-    link_image_and_heading = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text=('Check this to link all images and headings to the URL of '
-                   'the first link in their unit\'s list, if there is a link.')
-    )
-
     format = blocks.ChoiceBlock(
         choices=[
             ('50-50', '50/50'),
@@ -61,6 +47,29 @@ class InfoUnitGroup(blocks.StructBlock):
         default='50-50',
         label='Format',
         help_text='Choose the number and width of info unit columns.',
+    )
+
+    heading = v1_blocks.HeadingTextBlock(required=False)
+    heading_level = v1_blocks.HeadingLevelBlock(default='h2')
+    heading_icon = v1_blocks.HeadingIconBlock(
+        required=False,
+        help_text=(
+            'Input icon name, e.g., approved, help-round, etc. See names at: '
+            'https://cfpb.github.io/capital-framework/components/cf-icons/'
+        ),
+    )
+
+    intro = blocks.RichTextBlock(
+        required=False,
+        help_text='If this field is not empty, '
+                  'the Heading field must also be set.'
+    )
+
+    link_image_and_heading = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text=('Check this to link all images and headings to the URL of '
+                   'the first link in their unit\'s list, if there is a link.')
     )
 
     info_units = blocks.ListBlock(molecules.InfoUnit())
@@ -97,7 +106,10 @@ class InfoUnitGroup(blocks.StructBlock):
 
     class Meta:
         icon = 'image'
-        template = '_includes/organisms/info-unit-group.html'
+        template = '_includes/organisms/info-unit-group-2.html'
+        form_template = (
+            'admin/form_templates/struct-with-block-wrapper-classes.html'
+        )
 
 
 class ImageText5050Group(blocks.StructBlock):

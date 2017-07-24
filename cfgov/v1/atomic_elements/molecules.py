@@ -34,16 +34,19 @@ class InfoUnit(blocks.StructBlock):
         #           'shouldn\'t say anything about it), leave the Alt field '
         #           'blank.'
     )
-    is_widescreen = blocks.BooleanBlock(required=False, label='Use 16:9 image')
+    is_widescreen = blocks.BooleanBlock(
+        required=False,
+        label='Use 16:9 image',
+        help_text='Not applicable to 25/75 format.'
+    )
 
-    heading_level = HeadingLevelBlock(default='h2')
     heading = HeadingTextBlock(required=False)
+    heading_level = HeadingLevelBlock(default='h3')
     heading_icon = HeadingIconBlock(
         required=False,
         help_text=(
-            'Input icon name as seen at: '
-            'https://cfpb.github.io/capital-framework/components/cf-icons/, '
-            'e.g.: approved, help-round, etc.'
+            'Input icon name, e.g., approved, help-round, etc. See names at: '
+            'https://cfpb.github.io/capital-framework/components/cf-icons/'
         ),
     )
 
