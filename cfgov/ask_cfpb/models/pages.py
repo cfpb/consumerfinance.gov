@@ -67,19 +67,22 @@ def get_ask_breadcrumbs(category=None):
     return breadcrumbs
 
 
-def set_page(request, paginator):
+def validate_page_number(request, paginator):
     """
     A utility for parsing a request for a page number,
     handling errant or invalid page numbers
     and returning a valid page number and pagination page object.
     """
-    page_number = request.GET.get('page', 1)
+    raw_page = request.GET.get('page', 1)
     try:
-        page = paginator.page(page_number)
+        page_number = int(raw_page)
+    except ValueError:
+        page_number = 1
+    try:
+        paginator.page(page_number)
     except InvalidPage:
         page_number = 1
-        page = paginator.page(page_number)
-    return (page_number, page)
+    return page_number
 
 
 class AnswerLandingPage(LandingPage):
@@ -215,7 +218,8 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
     def category_page(self, request):
         context = self.get_context(request)
         paginator = Paginator(context.get('answers'), 20)
-        page_number, page = set_page(request, paginator)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
         context.update({
             'paginator': paginator,
             'current_page': page_number,
@@ -240,7 +244,8 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
             'id', 'question', 'slug')
         context = self.get_context(request)
         paginator = Paginator(answers, 20)
-        page_number, page = set_page(request, paginator)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
         context.update({
             'paginator': paginator,
             'current_page': page_number,
@@ -280,10 +285,10 @@ class AnswerResultsPage(CFGOVPage):
 
         context = super(
             AnswerResultsPage, self).get_context(request, **kwargs)
-        page = int(request.GET.get('page', 1))
         context.update(**kwargs)
         paginator = Paginator(self.answers, 20)
-        page_number, page = set_page(request, paginator)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
         context['current_page'] = page_number
         context['paginator'] = paginator
         context['results'] = page
@@ -338,7 +343,8 @@ class AnswerAudiencePage(CFGOVPage):
         context = super(AnswerAudiencePage, self).get_context(request)
         answers = Answer.objects.filter(audiences__id=self.ask_audience.id)
         paginator = Paginator(answers, 20)
-        page_number, page = set_page(request, paginator)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
         context.update({
             'answers': page,
             'current_page': page_number,
@@ -396,7 +402,8 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
                 for a in tag_dict['tag_map'][tag]
             ]
         paginator = Paginator(self.answers, 20)
-        page_number, page = set_page(request, paginator)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
         context = self.get_context(request)
         context['current_page'] = page_number
         context['results'] = page
