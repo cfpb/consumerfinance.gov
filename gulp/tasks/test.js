@@ -13,7 +13,7 @@ const localtunnel = require( 'localtunnel' );
 const minimist = require( 'minimist' );
 const spawn = require( 'child_process' ).spawn;
 const psi = require( 'psi' );
-const SauceTunnel = require( 'sauce-tunnel' );
+const SauceConnectTunnel = require( 'sauce-connect-tunnel' );
 
 /**
  * Run Mocha JavaScript unit tests.
@@ -306,9 +306,9 @@ function createSauceTunnel( ) {
   }
 
   return new Promise( ( resolve, reject ) => {
-    const sauceTunnel = new SauceTunnel( SAUCE_USERNAME,
-                                         SAUCE_ACCESS_KEY,
-                                         SAUCE_TUNNEL_ID );
+    const sauceTunnel = new SauceConnectTunnel( SAUCE_USERNAME,
+                                                SAUCE_ACCESS_KEY,
+                                                SAUCE_TUNNEL_ID );
     const sauceTunnelParam = { sauceTunnel: sauceTunnel };
 
     sauceTunnel.on( 'verbose:debug', debugMsg => {
