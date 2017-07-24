@@ -93,7 +93,7 @@ module.exports = {
       dest: paths.processed
     },
     icons: {
-      src:  paths.modules + '/capital-framework/src/cf-icons/src/fonts/*',
+      src:  paths.modules + '/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
     },
     vendorFonts: {
