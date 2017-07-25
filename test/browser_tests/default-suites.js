@@ -1,6 +1,7 @@
 'use strict';
 
 var envvars = require( '../../config/environment' ).envvars;
+var tunnelIdentifier = envvars.SAUCE_TUNNEL;
 
 var defaultSuites = {
   // Set default browser suites to test.
@@ -12,43 +13,54 @@ var defaultSuites = {
   // Essential browsers for running locally.
   essential: [
     {
-      browserName: 'chrome',
-      version:     '',
-      platform:    'Windows',
-      maxDuration: 10800
+      browserName:      'chrome',
+      version:          '',
+      platform:         'Windows',
+      maxDuration:      10800,
+      tunnelIdentifier: tunnelIdentifier
     }
   ],
 
   // Legacy browsers to run in the cloud.
   legacy: [
     {
-      browserName: 'internet explorer',
-      version:     '8.0',
-      platform:    'Windows XP',
-      maxDuration: 10800
+      browserName:      'internet explorer',
+      version:          '9.0',
+      platform:         'Windows 7',
+      maxDuration:      10800,
+      tunnelIdentifier: tunnelIdentifier
+    },
+    {
+      browserName:      'internet explorer',
+      version:          '10.0',
+      platform:         'Windows 7',
+      maxDuration:      10800,
+      tunnelIdentifier: tunnelIdentifier
     }
   ],
 
   // Modern browsers to run in the cloud.
   modern: [
     {
-      browserName: 'firefox',
-      version:     '',
-      platform:    'Windows 10',
-      maxDuration: 10800
+      browserName:      'firefox',
+      version:          '',
+      platform:         'Windows 10',
+      maxDuration:      10800,
+      tunnelIdentifier: tunnelIdentifier
     },
     {
-      browserName: 'internet explorer',
-      version:     '',
-      platform:    'Windows 10',
-      maxDuration: 10800
+      browserName:      'internet explorer',
+      version:          '',
+      platform:         'Windows 10',
+      maxDuration:      10800,
+      tunnelIdentifier: tunnelIdentifier
     }
   ],
 
   // Headless browser to run on Travis.
   headless: [
     {
-      browserName: 'chrome',
+      browserName:   'chrome',
       chromeOptions: {
         args: [ '--headless', '--disable-gpu' ],
         binary: envvars.HEADLESS_CHROME_BINARY
@@ -57,6 +69,7 @@ var defaultSuites = {
     }
   ]
 };
+
 
 // Run all browsers together.
 defaultSuites.full = defaultSuites.essential.concat(
