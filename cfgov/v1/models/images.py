@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.six import string_types
 from wagtail.wagtailimages.image_operations import (DoNothingOperation,
                                                     MinMaxOperation,
@@ -102,6 +103,28 @@ class CFGOVRendition(AbstractRendition):
     @property
     def alt(self):
         return self.image.alt
+
+    @cached_property
+    def orientation(self):
+        orientation = 'square'
+        if self.is_portrait:
+            orientation = 'portrait'
+        elif self.is_landscape:
+            orientation = 'landscape'
+
+        return orientation
+
+    @cached_property
+    def is_square(self):
+        return self.height == self.width
+
+    @cached_property
+    def is_portrait(self):
+        return self.height > self.width
+
+    @cached_property
+    def is_landscape(self):
+        return self.height < self.width
 
     class Meta:
         unique_together = (
