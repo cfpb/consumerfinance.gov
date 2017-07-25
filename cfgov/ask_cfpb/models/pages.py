@@ -69,9 +69,9 @@ def get_ask_breadcrumbs(category=None):
 
 def validate_page_number(request, paginator):
     """
-    A utility for parsing a request for a page number,
-    handling errant or invalid page numbers
-    and returning a valid page number and pagination page object.
+    A utility for parsing a pagination request,
+    catching invalid page numbers and always returning
+    a valid page number, defaulting to 1.
     """
     raw_page = request.GET.get('page', 1)
     try:
