@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.six import string_types
 from wagtail.wagtailimages.image_operations import (DoNothingOperation,
                                                     MinMaxOperation,
@@ -103,7 +104,8 @@ class CFGOVRendition(AbstractRendition):
     def alt(self):
         return self.image.alt
 
-    def get_orientation(self):
+    @cached_property
+    def orientation(self):
         orientation = 'square'
         if self.is_portrait:
             orientation = 'portrait'
@@ -112,15 +114,15 @@ class CFGOVRendition(AbstractRendition):
 
         return orientation
 
-    @property
+    @cached_property
     def is_square(self):
         return self.height == self.width
 
-    @property
+    @cached_property
     def is_portrait(self):
         return self.height > self.width
 
-    @property
+    @cached_property
     def is_landscape(self):
         return self.height < self.width
 

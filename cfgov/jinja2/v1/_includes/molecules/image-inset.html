@@ -46,7 +46,7 @@
             {{ 'm-inset__left' if value.image_position == 'left' else '' }}
             {{ 'm-inset__' ~ ( value.image_width
                if value.image_width else 270 ) }}
-            {{ 'm-inset__' + image_inset.get_orientation() }}
+            {{ 'm-inset__' + image_inset.orientation }}
             {{ 'm-inset__bottom-rule'
                if value.is_bottom_rule else '' }}">
     <div class="m-inset_image-container">
