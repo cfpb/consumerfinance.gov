@@ -18,21 +18,25 @@
     {% include 'article.html' %}
 
     <aside class="content-l block">
-        <div class="content-l_col content-l_col-1-2">
+        <div class="content-l_col content-l_col-1">
             <header class="m-slug-header">
                 <h2 class="a-heading">
                     Press information
                 </h2>
             </header>
-            <p>
-                If you want to republish the article
-                or have questions about the content,
-                please contact the press office.
-            </p>
-            <a class="a-link a-link__jump"
-               href="/about-us/newsroom/press-resources/">
-               Go to press resources page
-            </a>
+            <div class="content-l">
+              <p class="content-l_col content-l_col-2-3">
+                  If you want to republish the article
+                  or have questions about the content,
+                  please contact the press office.
+              </p>
+              <p class="content-l_col content-l_col-1">
+                <a class="a-link a-link__jump"
+                   href="/about-us/newsroom/press-resources/">
+                   Go to press resources page
+                </a>
+              </p>
+            </div>
         </div>
     </aside>
 {% endblock %}
