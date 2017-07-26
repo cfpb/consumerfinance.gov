@@ -27,7 +27,7 @@ defineSupportCode( function( { When, Then } ) {
         rts = element.all( by.css( '.m-reusable-text-snippet' ) ).last();
       }
 
-      return expect( rts.element( by.css( '.header-slug' ) ).isPresent() )
+      return expect( rts.element( by.css( '.m-slug-header' ) ).isPresent() )
              .to.eventually.equal( shouldShouldnt( includeHeader ) );
     }
   );

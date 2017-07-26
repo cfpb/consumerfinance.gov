@@ -14,7 +14,7 @@
                             gets displayed on the webpage.
 
    value.sidefoot_heading:  Heading text to be used if this snippet is only
-                            for use in sidefoots.
+                            for use in sidebars and prefooters (the "sidefoot").
 
    value.text:              Rich text field that gets displayed on the page.
 
@@ -23,11 +23,11 @@
 <div class="m-reusable-text-snippet">
 
 {% if value.sidefoot_heading %}
-    <h2 class="header-slug">
-       <span class="header-slug_inner">
+    <header class="m-slug-header">
+       <h2 class="a-heading">
            {{ value.sidefoot_heading }}
-       </span>
-    </h2>
+       </h2>
+    </header>
 {% endif %}
 
     {{ value.text|richtext }}
