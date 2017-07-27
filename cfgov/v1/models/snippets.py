@@ -34,10 +34,10 @@ class ReusableText(index.Indexed, models.Model):
     sidefoot_heading = models.CharField(
         blank=True,
         max_length=255,
-        help_text='If this snippet is only for use in sidebars and prefooters '
-                  '(aka the "sidefoot"), you can use this field to give it '
-                  'a heading with "slug" styling. See '
-                  'https://[GHE]/flapjack/Modules-V1/wiki/Atoms#slugs'
+        help_text='Applies "slug" style heading. '
+                  'Only for use in sidebars and prefooters '
+                  '(the "sidefoot"). See '
+                  '[GHE]/flapjack/Modules-V1/wiki/Atoms#slugs'
     )
     text = RichTextField()
 
