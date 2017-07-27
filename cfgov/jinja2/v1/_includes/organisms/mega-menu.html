@@ -45,13 +45,14 @@
 {% macro _nav_list( nav_depth, nav_groups ) %}
 {%- for group in nav_groups %}
 <div class="{{ _classes( nav_depth, '-list' ) }}">
-  {% if group.title %} 
-  <h3 class="h5 {{' hide-title' if group.hide_title else ''}}">
-      {{group.title | safe}}
-  </h3>
-  {% endif %}
-  <ul class="m-list
-             m-list__unstyled">
+    {% if group.title %} 
+    <h3 class="h5 {{' hide-title' if group.hide_title else ''}}"
+        {% if group.hide_title %} aria-hidden="true"{% endif %}>
+        {{group.title | safe}}
+    </h3>
+    {% endif %}
+    <ul class="m-list
+               m-list__unstyled">
     {% if nav_depth == 1 -%}
     <li class="m-list_item
                {{ _classes( nav_depth, '-item' ) }}">
@@ -72,10 +73,10 @@
            {{ '' if item.url == '' else 'href=' + item.url | e }}
            {{ 'data-js-hook=behavior_flyout-menu_trigger' if item.nav_groups | count > 0 else '' }}
            {{ 'aria-pressed=false' if item.nav_groups | count > 0 else '' }}>
-            {{ item.caption }}
+            {{ item.text }}
         </a>
-          {% if item.nav_groups | count > 0 %}
-            {{ _nav( nav_depth | int + 1, item.nav_groups, item.caption ~ ' Overview', item.url, vars.media_items, item.footer if item.footer else '' ) }}
+        {% if item.nav_groups | count > 0 %}
+            {{ _nav( nav_depth | int + 1, item.nav_groups, item.text ~ ' Overview', item.url, vars.media_items, item.footer if item.footer else '' ) }}
         {% endif %}
     </li>
     {%- endfor %}
@@ -131,7 +132,7 @@
                     <a class="{{ 'u-link__disabled' if nav_overview_url == '#' else '' }}
                               {{ _classes( nav_depth, '-overview-link' ) }}
                               {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
-                       {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
+                        {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
                         {{ nav_overview }}
                     </a>
                     {% endif %}

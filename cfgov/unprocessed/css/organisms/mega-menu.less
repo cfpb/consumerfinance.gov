@@ -162,6 +162,12 @@ body {
 */
 
 .o-mega-menu {
+
+    ul ul {
+        // Override margin added by CF between lists.
+        margin-top: 0;
+    }
+
     &_content-item {
         // Override margin added by CF to list items.
         margin-bottom: 0;
@@ -417,10 +423,15 @@ body {
             }
 
             h3 {
-                margin-top: @grid_gutter-width / 2;
+                margin-top: @grid_gutter-width;
 
                 &.hide-title {
                     .u-visually-hidden;
+                }
+
+                // add border between title and following list
+                &:not(.hide-title) + ul {
+                    border-top: 1px solid @gray-40;
                 }
             }
         }
