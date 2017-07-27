@@ -303,7 +303,7 @@ class RelatedMetadata(blocks.StructBlock):
         ], icon='list-ul')),
         ('date', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100)),
-            ('date', blocks.DateBlock(required=False))
+            ('date', blocks.DateBlock())
         ], icon='date')),
         ('topics', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100, default='Topics')),

@@ -106,8 +106,6 @@ urlpatterns = [
 
     url(r'^adult-financial-education/',
         include(fin_ed.urls_for_prefix('adult-financial-education'))),
-    url(r'^library-resources/',
-        include(fin_ed.urls_for_prefix('library-resources'))),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
@@ -246,15 +244,14 @@ urlpatterns = [
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
+    url(r'^data-research/consumer-complaints/',
+        include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
-    # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/',
+                r'^data-research/consumer-complaints/search/',
                 include_if_app_enabled(
                     'ccdb5_ui', 'ccdb5_ui.config.urls'
-                ),
-                fallback=include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
                 )),
 
     url(r'^oah-api/rates/',
@@ -302,7 +299,7 @@ urlpatterns = [
 
     # CCDB5-API
     flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/api/v1/',
+                r'^data-research/consumer-complaints/search/api/v1/',
                 include_if_app_enabled('complaint_search',
                                        'complaint_search.urls')
                 ),

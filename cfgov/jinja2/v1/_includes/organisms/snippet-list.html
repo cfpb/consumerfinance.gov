@@ -86,8 +86,9 @@
                             {%- set href = snippet[action.snippet_field].url
                                if snippet[action.snippet_field].url is defined
                                else snippet[action.snippet_field] -%}
+                            {% set link = '<a href="' ~ href ~ '">' ~ action.link_label ~ '</a>' %}
                             <li class="m-list_item">
-                                <a href="{{ href }}">{{ action.link_label }}</a>
+                               {{ parse_links(link) | safe }}
                             </li>
                         {% endif %}
                     {% endfor %}

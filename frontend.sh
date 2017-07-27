@@ -15,10 +15,14 @@ init() {
   source cli-flag.sh 'Front end' $1
 
   NODE_DIR=node_modules
-  if [ -f "npm-shrinkwrap.json" ]; then
-    DEP_CHECKSUM=$(cat npm-shrinkwrap.json package.json | shasum -a 256)
+  if [ -f "package-lock.json" ]; then
+    DEP_CHECKSUM=$(cat package-lock.json package.json | shasum -a 256)
   else
     DEP_CHECKSUM=$(cat package.json | shasum -a 256)
+  fi
+
+  if [[ "$(node -v)" != 'v8.'* ]]; then
+    printf "\033[1;31mPlease install Node 8.x: 'nvm install 8'\033[0m\n"
   fi
 
   echo "npm components directory: $NODE_DIR"
@@ -89,26 +93,10 @@ build() {
   fi
 }
 
-shrinkwrap() {
-  if [ -f "npm-shrinkwrap.json" ]; then
-    echo 'Removing npm-shrinkwrap.json…'
-    rm npm-shrinkwrap.json
-  fi
-  clean
-  install
-  npm prune
-  echo 'Shrinkwrapping…'
-  npm shrinkwrap
-  checksum
-}
-
 # Execute requested (or all) functions.
 if [ "$1" == "init" ]; then
   init ""
   clean_and_install
-elif [ "$1" == "shrinkwrap" ]; then
-  init "production"
-  shrinkwrap
 elif [ "$1" == "build" ]; then
   build
 else
