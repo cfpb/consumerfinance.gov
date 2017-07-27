@@ -2,7 +2,12 @@ Feature: related posts
 	As a user of Wagtail
 	I expect to add related posts to the sidebar or sidefoot of a page that are populated automatically based on topic tags and post category
 
-# These tests assume that some posts exist in order to populate the related posts based on category and tags. The tests require at least 3 blog posts, 3 newsroom posts, and 3 event posts tagged with "mortgages." At least 2 of the blog posts should be in the "Info for consumers" category and 1 in a different blog category. At least 2 of the newsroom posts should be in the "press release" category and 1 should be in a different category. At least 1 post of each type should be tagged only with "complaints," and 1 post of each type should be tagged with both "mortgages" and "complaints."
+# These tests assume that some posts exist in order to populate the related posts based on category and tags. 
+# The tests require at least 3 blog posts, 3 newsroom posts, and 3 event posts tagged with "mortgages." 
+# At least 2 of the blog posts should be in the "Info for consumers" category and 1 in a different blog category. 
+# At least 2 of the newsroom posts should be in the "press release" category and 1 should be in a different category. 
+# At least 1 post of each type should be tagged only with "complaints," and 1 post of each type 
+# should be tagged with both "mortgages" and "complaints."
 	 
 Background:
 	Given that I am logged into Wagtail as an admin
