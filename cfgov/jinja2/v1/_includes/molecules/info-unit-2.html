@@ -51,82 +51,85 @@
 
    ========================================================================== #}
 
-{% macro info_unit(value, format, link_image_and_heading) %}
+{%- macro info_unit(value, format, link_image_and_heading) -%}
 
 {# Confirm that not only is link_image_and_heading set, but that this
    particular info unit has a link in its list. #}
-{% set link_image_and_heading = link_image_and_heading
-                                and value.links
-                                and value.links[0]
-                                and value.links[0].url %}
+{%- set link_image_and_heading = link_image_and_heading
+                                 and value.links
+                                 and value.links[0]
+                                 and value.links[0].url %}
 
 <div class="m-info-unit
             {{- ' m-info-unit__inline' if format == '25-75' else '' }}">
 
-{% if value.image.upload %}
-    {% set img = image(value.image.upload, 'original') %}
+{%- if value.image.upload %}
+    {%- set img = image(value.image.upload, 'original') %}
     {% if link_image_and_heading %}
         <a href="{{ value.links[0].url }}">
     {% endif %}
-    {% if value.image.alt %}
-            <img src="{{ img.url }}"
-                 alt="{{ value.image.alt if value.image.alt else '' }}"
-                 class="m-info-unit_image
-                        {{- ' m-info-unit_image__square' if value.image.is_widescreen == False else '' }}">
-    {% else %}
+        {%- if value.image.alt %}
+            <img class="m-info-unit_image
+                        {{- ' m-info-unit_image__square' if img.is_square else '' }}"
+                 src="{{ img.url }}"
+                 alt="{{ value.image.alt }}">
+        {%- else %}
             <div class="m-info-unit_image
-                        {{- ' m-info-unit_image__square' if value.image.is_widescreen == False else '' }}"
-                 style="background-image: url( {{ img.url }} );">
+                        {{- ' m-info-unit_image__square' if img.is_square else '' }}"
+                 style="background-image: url( '{{ img.url }}' );
+                        {{- ' padding-bottom: ' ~ ( img.height / img.width * 100 ) ~ '%;'
+                            if not img.is_square else '' }}">
             </div>
-    {% endif %}
-    {% if link_image_and_heading %}
+        {% endif %}
+    {%- if link_image_and_heading %}
         </a>
-    {% endif %}
-{% endif %}
+    {%- endif -%}
+{%- endif %}
 
-    <div class="m-info-unit_content">
-{% if value.heading %}
-    {% if link_image_and_heading %}
-        <a class="m-info-unit_heading-link" href="{{ value.links[0].url }}">
-    {% endif %}
-            <{{ value.heading_level -}}
-                {%- if value.heading_icon -%}
-                    {{- ' class="cf-icon cf-icon-' ~ value.heading_icon ~ '"' -}}
-                {%- endif -%}
-            >
-                {{ value.heading | safe }}
-            </{{ value.heading_level }}>
-    {% if link_image_and_heading %}
-        </a>
-    {% endif %}
-{% endif %}
+        <div class="m-info-unit_content">
 
-        {{ parse_links( value.body ) | safe }}
+    {%- if value.heading %}
+        {% if link_image_and_heading %}
+            <a class="m-info-unit_heading-link" href="{{ value.links[0].url }}">
+        {%- endif %}
+                <{{ value.heading_level -}}
+                    {%- if value.heading_icon -%}
+                        {{- ' class="cf-icon cf-icon-' ~ value.heading_icon ~ '"' -}}
+                    {%- endif -%}
+                >
+                    {{ value.heading | safe }}
+                </{{ value.heading_level }}>
+        {%- if link_image_and_heading %}
+            </a>
+        {%- endif -%}
+    {%- endif %}
 
-{% if value.links %}
-        <ul class="m-list m-list__links u-mt15">
-    {% for link in value.links %}
-            <li class="m-list_item">
-            {% if link.text is defined and link.text.find('@') > -1 %}
-                {% if not value.emails is defined %}
-                    {% do value.update({'emails':[{'url':link.text}]}) %}
-                {% endif %}
-                {% include 'contact-email.html' with context %}
-            {% else %}
-                {% set link_class = 'a-btn m-info-unit_btn' if
-                    value.is_button else 'm-list_link' %}
-                {% set link_text = link.text if link.text
-                    else 'Learn More' %}
-                {% set link = '<a class="' ~ link_class ~ '" href="' ~
-                    link.url ~ '">' ~ link_text ~ '</a>' %}
-                {{ parse_links( link ) | safe }}
-            {% endif %}
-            </li>
-    {% endfor %}
-        </ul>
-{% endif %}
+            {{ parse_links( value.body ) | safe }}
 
-    </div>
+        {% if value.links %}
+            <ul class="m-list m-list__links u-mt15">
+            {%- for link in value.links %}
+                <li class="m-list_item">
+                {%- if link.text is defined and link.text.find('@') > -1 -%}
+                    {%- if not value.emails is defined -%}
+                        {%- do value.update({'emails':[{'url':link.text}]}) -%}
+                    {%- endif -%}
+                    {% include 'contact-email.html' with context %}
+                {%- else -%}
+                    {%- set link_class = 'a-btn m-info-unit_btn' if
+                        value.is_button else 'm-list_link' -%}
+                    {%- set link_text = link.text if link.text
+                        else 'Learn More' -%}
+                    {%- set link = '<a class="' ~ link_class ~ '" href="' ~
+                        link.url ~ '">' ~ link_text ~ '</a>' %}
+                    {{ parse_links( link ) | safe }}
+                {%- endif %}
+                </li>
+            {%- endfor %}
+            </ul>
+        {%- endif %}
+
+        </div>
 
 </div>
 

@@ -33,12 +33,10 @@
 
    ========================================================================== #}
 
-{% from 'molecules/info-unit-2.html' import info_unit with context %}
-
-
+{%- from 'molecules/info-unit-2.html' import info_unit with context %}
 
 <div class="o-info-unit-group"
-     {{ 'id="' ~ value.heading|slugify ~ '"' if value.heading else '' }}
+     {{- ' id="' ~ value.heading|slugify ~ '" ' if value.heading else ' ' -}}
      data-qa-hook="@TODO: Find out if I need this!">
 
 {% if value.heading %}
@@ -49,21 +47,22 @@
     >
         {{ value.heading | safe }}
     </{{ value.heading_level }}>
-{% endif %}
+{% endif -%}
 
-{% if value.intro %}
+{%- if value.intro %}
     {{ value.intro | safe }}
-{% endif %}
+{%- endif %}
 
     <div class="content-l u-mt15">
-        {% for iu in value.info_units %}
+    {% for iu in value.info_units %}
         <div class="content-l_col
                     {{- ' content-l_col-1-2' if value.format == '50-50' else '' -}}
                     {{- ' content-l_col-1-3' if value.format == '33-33-33' else '' -}}
                     {{- ' content-l_col-1' if value.format == '25-75' else '' -}}
                    ">
-            {{ info_unit(iu, value.format, value.link_image_and_heading) }}
+            {{- info_unit(iu, value.format, value.link_image_and_heading) }}
         </div>
-        {% endfor %}
+    {% endfor %}
     </div>
+
 </div>
