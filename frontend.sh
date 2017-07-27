@@ -23,7 +23,6 @@ init() {
 
   if [[ "$(node -v)" != 'v8.'* ]]; then
     printf "\033[1;31mPlease install Node 8.x: 'nvm install 8'\033[0m\n"
-    exit 1
   fi
 
   echo "npm components directory: $NODE_DIR"
