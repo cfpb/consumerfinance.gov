@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import json
 
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, InvalidPage
 from django.db import models
 from django.http import Http404
 from django.template.response import TemplateResponse
@@ -65,6 +65,24 @@ def get_ask_breadcrumbs(category=None):
             'href': '/ask-cfpb/category-{}'.format(category.slug)
         })
     return breadcrumbs
+
+
+def validate_page_number(request, paginator):
+    """
+    A utility for parsing a pagination request,
+    catching invalid page numbers and always returning
+    a valid page number, defaulting to 1.
+    """
+    raw_page = request.GET.get('page', 1)
+    try:
+        page_number = int(raw_page)
+    except ValueError:
+        page_number = 1
+    try:
+        paginator.page(page_number)
+    except InvalidPage:
+        page_number = 1
+    return page_number
 
 
 class AnswerLandingPage(LandingPage):
@@ -198,26 +216,15 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
 
     @route(r'^$')
     def category_page(self, request):
-        try:
-            context = self.get_context(request)
-            page = int(request.GET.get('page', 1))
-            paginator = Paginator(context.get('answers'), 20)
-            context.update({
-                'paginator': paginator,
-                'current_page': int(page),
-                'questions': paginator.page(page),
-            })
-        except (EmptyPage, PageNotAnInteger):
-            request.GET = request.GET.copy()
-            request.GET['page'] = 1
-            context = self.get_context(request)
-            page = int(request.GET.get('page', 1))
-            paginator = Paginator(context.get('answers'), 20)
-            context.update({
-                'paginator': paginator,
-                'current_page': int(page),
-                'questions': paginator.page(page),
-            })
+        context = self.get_context(request)
+        paginator = Paginator(context.get('answers'), 20)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
+        context.update({
+            'paginator': paginator,
+            'current_page': page_number,
+            'questions': page,
+        })
 
         return TemplateResponse(
             request,
@@ -235,37 +242,21 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
         answers = self.ask_subcategory.answer_set.order_by(
             '-pk').values(
             'id', 'question', 'slug')
-        try:
-            context = self.get_context(request)
-            page = request.GET.get('page', 1)
-            paginator = Paginator(answers, 20)
-            context.update({
-                'paginator': paginator,
-                'current_page': int(page),
-                'results_count': answers.count(),
-                'questions': paginator.page(page),
-                'breadcrumb_items': get_ask_breadcrumbs(
-                    self.ask_category)
-            })
-        except (EmptyPage, PageNotAnInteger):
-            request.GET = request.GET.copy()
-            request.GET['page'] = 1
-            context = self.get_context(request)
-            page = request.GET.get('page', 1)
-            paginator = Paginator(answers, 20)
-            context.update({
-                'paginator': paginator,
-                'current_page': int(page),
-                'results_count': answers.count(),
-                'questions': paginator.page(page),
-                'breadcrumb_items': get_ask_breadcrumbs(
-                    self.ask_category)
-            })
+        context = self.get_context(request)
+        paginator = Paginator(answers, 20)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
+        context.update({
+            'paginator': paginator,
+            'current_page': page_number,
+            'results_count': answers.count(),
+            'questions': page,
+            'breadcrumb_items': get_ask_breadcrumbs(
+                self.ask_category)
+        })
 
         return TemplateResponse(
-            request,
-            self.get_template(request),
-            context)
+            request, self.get_template(request), context)
 
 
 class AnswerResultsPage(CFGOVPage):
@@ -294,14 +285,13 @@ class AnswerResultsPage(CFGOVPage):
 
         context = super(
             AnswerResultsPage, self).get_context(request, **kwargs)
-        page = int(request.GET.get('page', 1))
         context.update(**kwargs)
         paginator = Paginator(self.answers, 20)
-        if page > paginator.num_pages:
-            page = 1
-        context['current_page'] = page
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
+        context['current_page'] = page_number
         context['paginator'] = paginator
-        context['results'] = paginator.page(page)
+        context['results'] = page
         context['results_count'] = len(self.answers)
         context['get_secondary_nav_items'] = get_ask_nav_items
 
@@ -352,13 +342,12 @@ class AnswerAudiencePage(CFGOVPage):
         from ask_cfpb.models import Answer
         context = super(AnswerAudiencePage, self).get_context(request)
         answers = Answer.objects.filter(audiences__id=self.ask_audience.id)
-        page = request.GET.get('page', 1)
         paginator = Paginator(answers, 20)
-        if page > paginator.num_pages:
-            page = 1
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
         context.update({
-            'answers': paginator.page(page),
-            'current_page': int(page),
+            'answers': page,
+            'current_page': page_number,
             'paginator': paginator,
             'results_count': len(answers),
             'get_secondary_nav_items': get_ask_nav_items
@@ -412,19 +401,15 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
                  Truncator(a.answer).words(40, truncate=' ...'))
                 for a in tag_dict['tag_map'][tag]
             ]
-        try:
-            context = self.get_context(request)
-            page = int(request.GET.get('page', 1))
-            paginator = Paginator(self.answers, 20)
-            context['results'] = paginator.page(page)
-        except (EmptyPage, PageNotAnInteger):
-            page = 1
-            paginator = Paginator(self.answers, 20)
-            context['results'] = paginator.page(page)
+        paginator = Paginator(self.answers, 20)
+        page_number = validate_page_number(request, paginator)
+        page = paginator.page(page_number)
+        context = self.get_context(request)
+        context['current_page'] = page_number
+        context['results'] = page
         context['results_count'] = len(self.answers)
         context['tag'] = tag
         context['paginator'] = paginator
-        context['current_page'] = page
         return TemplateResponse(
             request,
             self.get_template(request),

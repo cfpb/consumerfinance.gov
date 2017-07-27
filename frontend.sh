@@ -21,6 +21,10 @@ init() {
     DEP_CHECKSUM=$(cat package.json | shasum -a 256)
   fi
 
+  if [[ "$(node -v)" != 'v8.'* ]]; then
+    printf "\033[1;31mPlease install Node 8.x: 'nvm install 8'\033[0m\n"
+  fi
+
   echo "npm components directory: $NODE_DIR"
 }
 
