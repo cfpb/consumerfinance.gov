@@ -40,9 +40,10 @@ simplejson==3.8.2
 six==1.10.0
 suds==0.4
 tinys3==0.1.11
+unicodecsv==0.14.1
 unipath>=1.1,<=2.0
 vobject==0.9.1
 wagtail==1.10.1
-wagtail-flags==2.0.4
+wagtail-flags==2.0.5
 wagtail-sharing==0.5
 Wand==0.4.2

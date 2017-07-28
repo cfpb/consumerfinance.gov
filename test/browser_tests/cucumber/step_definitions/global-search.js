@@ -12,7 +12,7 @@ const BASE_SEL = '.m-global-search';
 const TRIGGER_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_trigger"]';
 const CONTENT_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_content"]';
 const INPUT_SEL = BASE_SEL + ' input#query';
-const SEARCH_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_content"] .btn';
+const SEARCH_SEL = BASE_SEL + ' [data-js-hook="behavior_flyout-menu_content"] .a-btn';
 const CLEAR_SEL = BASE_SEL + ' .input-contains-label_after';
 const SUGGEST_SEL = BASE_SEL + ' .m-global-search_content-suggestions';
 const EC = protractor.ExpectedConditions;

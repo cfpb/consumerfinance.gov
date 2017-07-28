@@ -1,4 +1,3 @@
-import os
 from functools import partial
 
 from django.conf import settings
@@ -23,7 +22,7 @@ from ask_cfpb.views import (
     view_answer
 )
 from core.views import ExternalURLNoticeView
-from legacy.views import dbrouter_shortcut, token_provider
+from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorView, HousingCounselorPDFView
 )
@@ -107,8 +106,6 @@ urlpatterns = [
 
     url(r'^adult-financial-education/',
         include(fin_ed.urls_for_prefix('adult-financial-education'))),
-    url(r'^library-resources/',
-        include(fin_ed.urls_for_prefix('library-resources'))),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
@@ -247,15 +244,14 @@ urlpatterns = [
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
+    url(r'^data-research/consumer-complaints/',
+        include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
-    # Otherwise include CCDB4 urls
     flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/',
+                r'^data-research/consumer-complaints/search/',
                 include_if_app_enabled(
                     'ccdb5_ui', 'ccdb5_ui.config.urls'
-                ),
-                fallback=include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
                 )),
 
     url(r'^oah-api/rates/',
@@ -275,7 +271,10 @@ urlpatterns = [
     url(r'^find-a-housing-counselor/$',
         HousingCounselorView.as_view(),
         name='housing-counselor'),
-    url(r'^save-hud-counselors-list/$', HousingCounselorPDFView.as_view()),
+    url(r'^save-hud-counselors-list/$',
+        HousingCounselorPDFView.as_view(),
+        name='housing-counselor-pdf'),
+
     # Report redirects
     url(r'^reports/(?P<path>.*)$',
         RedirectView.as_view(
@@ -300,7 +299,7 @@ urlpatterns = [
 
     # CCDB5-API
     flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/api/v1/',
+                r'^data-research/consumer-complaints/search/api/v1/',
                 include_if_app_enabled('complaint_search',
                                        'complaint_search.urls')
                 ),
@@ -369,7 +368,11 @@ if settings.ALLOW_ADMIN_URL:
             RedirectView.as_view(url='/django-admin/%(path)s',
                                  permanent=True)),
         url(r'^picard/(?P<path>.*)$',
-            RedirectView.as_view(url='/tasks/%(path)s', permanent=True)),
+            RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
+
+        url(r'^tasks/(?P<path>.*)$',
+            RedirectView.as_view(url='/admin/cdn/%(path)s', permanent=True)),
+
         url(r'^django-admin/password_change',
             change_password,
             name='django_admin_account_change_password'),
@@ -394,15 +397,6 @@ if settings.ALLOW_ADMIN_URL:
         url(r'^admin/', include(wagtailadmin_urls)),
 
     ]
-
-    if os.environ.get('DATABASE_ROUTING', False):
-        patterns = [
-            url(r'^django-admin/r/(?P<content_type_id>\d*)/(?P<object_id>\d*)/$',  # noqa: E501
-                dbrouter_shortcut)
-        ] + patterns
-
-    if 'picard' in settings.INSTALLED_APPS:
-        patterns.append(url(r'^tasks/', include('picard.urls')))
 
     if 'selfregistration' in settings.INSTALLED_APPS:
         patterns.append(url(r'^selfregs/', include('selfregistration.urls')))

@@ -31,10 +31,19 @@ class ReusableText(index.Indexed, models.Model):
         verbose_name='Snippet title (internal only)',
         max_length=255
     )
+    sidefoot_heading = models.CharField(
+        blank=True,
+        max_length=255,
+        help_text='Applies "slug" style heading. '
+                  'Only for use in sidebars and prefooters '
+                  '(the "sidefoot"). See '
+                  '[GHE]/flapjack/Modules-V1/wiki/Atoms#slugs'
+    )
     text = RichTextField()
 
     search_fields = [
         index.SearchField('title', partial_match=True),
+        index.SearchField('sidefoot_heading', partial_match=True),
         index.SearchField('text', partial_match=True),
     ]
 

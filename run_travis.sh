@@ -5,6 +5,8 @@ set -e
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
+    source $HOME/.nvm/nvm.sh
+    nvm use 8.0.0
     gulp "test" --travis
     gulp "test:coveralls"
 elif [ "$RUNTEST" == "backend" ]; then
@@ -13,6 +15,8 @@ elif [ "$RUNTEST" == "backend" ]; then
     tox -e missing-migrations
     coveralls
 elif [ "$RUNTEST" == "acceptance" ]; then
+    source $HOME/.nvm/nvm.sh
+    nvm use 8.0.0
     export DISPLAY=:99.0
     sh -e /etc/init.d/xvfb start &
     sleep 3

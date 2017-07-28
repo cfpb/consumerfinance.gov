@@ -43,9 +43,9 @@
 {% endif %}
 {% for link in value.links %}
     {% if link.text %}
-        {% if loop.first %}<ul class="list list__links">{% endif %}
-            <li class="list_item">
-                <a class="list_link" href="{{ link.url }}">
+        {% if loop.first %}<ul class="m-list m-list__links">{% endif %}
+            <li class="m-list_item">
+                <a class="m-list_link" href="{{ link.url }}">
                     {{ link.text }}
                 </a>
             </li>

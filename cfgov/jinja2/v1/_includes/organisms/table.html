@@ -100,10 +100,7 @@
                       first_row[loop.index0] is not none and
                       value.is_stacked
                 %}
-                    {% set attributes = attributes + ' data-label="{0}"'.format(first_row[loop.index0]
-                                        | striptags
-                                        | trim)
-                    %}
+                    {% set attributes = attributes + ' data-label="' + first_row[loop.index0]|striptags|trim + '"' %}
                 {% endif %}
                 <{{ tag | safe }}{{ attributes | safe }}>
                     {{ _render_cell(cell) }}

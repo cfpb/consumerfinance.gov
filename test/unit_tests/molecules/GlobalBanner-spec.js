@@ -51,7 +51,7 @@ describe( 'Global Banner State', function() {
                     'www.consumerfinance.gov</a>.' +
             '</p>' +
         '</div>' +
-        '<button class="btn ' +
+        '<button class="a-btn ' +
                        'm-global-banner_btn ' +
                        'o-expandable_target ' +
                        'o-expandable_link" id="m-global-banner_btn" ' +

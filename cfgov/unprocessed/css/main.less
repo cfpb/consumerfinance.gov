@@ -11,36 +11,34 @@
 // Import required CF components.
 // Combined CF components.
 
-@import (less) 'cf-core/src/cf-core.less';
-@import (less) 'cf-icons/src/cf-icons.less';
-@import (less) 'cf-buttons/src/cf-buttons.less';
-@import (less) 'cf-forms/src/cf-forms.less';
-@import (less) 'cf-grid/src/cf-grid.less';
-@import (less) 'cf-layout/src/cf-layout.less';
-@import (less) 'cf-typography/src/cf-typography.less';
-@import (less) 'cf-pagination/src/cf-pagination.less';
-@import (less) 'cf-expandables/src/cf-expandables.less';
-@import (less) 'cf-tables/src/cf-tables.less';
+@import (less) 'cf-core.less';
+@import (less) 'cf-icons.less';
+@import (less) 'cf-buttons.less';
+@import (less) 'cf-forms.less';
+@import (less) 'cf-grid.less';
+@import (less) 'cf-layout.less';
+@import (less) 'cf-typography.less';
+@import (less) 'cf-pagination.less';
+@import (less) 'cf-expandables.less';
+@import (less) 'cf-tables.less';
 
 
 // The Capital Framework (CF) brand color palette.
 @import (less) "brand-palette.less";
+
+// Vars enhancements that is on migration path to CF Core.
+@import (less) "enhancements/vars.less";
 
 // Override the CF theme variables with colors from the brand color palette.
 @import (less) "cf-theme-overrides.less";
 
 // Enhancements that are on a migration path to being added to CF.
 // CF Core
-@import (less) "enhancements/vars.less";
-@import (less) "enhancements/media-queries.less";
 @import (less) "enhancements/utilities.less";
 @import (less) "enhancements/base.less";
 
-// Typography
+// CF Typography
 @import (less) "enhancements/typography.less";
-
-// CF Buttons
-@import (less) "enhancements/buttons.less";
 
 // CF Icons
 @import (less) "enhancements/icons.less";
@@ -63,6 +61,7 @@
 @import (less) "enhancements/print.less";
 
 
+
 /* Base patterns
    ========================================================================== */
 
@@ -77,7 +76,6 @@
    ========================================================================== */
 
 @import (less) "activity.less";
-@import (less) "blog-docs.less";
 @import (less) "post.less";
 @import (less) "calendar-icon.less";
 @import (less) "modification-date.less";
@@ -107,14 +105,12 @@
 @import (less) "molecules/global-eyebrow.less";
 @import (less) "molecules/global-header-cta.less";
 @import (less) "molecules/global-search.less";
-@import (less) "molecules/hero.less";
 @import (less) "molecules/home-hero.less";
 @import (less) "molecules/info-unit.less";
 @import (less) "molecules/inset.less";
 @import (less) "molecules/multi-select.less";
 @import (less) "molecules/nav-link.less";
 @import (less) "molecules/notification.less";
-@import (less) "molecules/pagination.less";
 @import (less) "molecules/related-metadata.less";
 @import (less) "molecules/related-posts.less";
 @import (less) "molecules/social-media.less";
@@ -147,7 +143,6 @@
 @import (less) "organisms/sidebar-content.less";
 @import (less) "organisms/snippet-list.less";
 @import (less) "organisms/well.less";
-@import (less) "organisms/email-popup.less";
 
 /* Template pieces
    ========================================================================== */

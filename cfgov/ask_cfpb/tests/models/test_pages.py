@@ -1,9 +1,10 @@
 from __future__ import unicode_literals
+import datetime
 import HTMLParser
 
 import json
 import mock
-from mock import patch
+from mock import mock_open, patch
 from model_mommy import mommy
 import unittest
 
@@ -24,6 +25,8 @@ from ask_cfpb.models.django import (
     SubCategory, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
 from ask_cfpb.models.pages import (
     AnswerPage, AnswerCategoryPage, AnswerAudiencePage)
+from ask_cfpb.scripts.export_ask_data import (
+    assemble_output, clean_and_strip, export_questions)
 
 html_parser = HTMLParser.HTMLParser()
 now = timezone.now()
@@ -57,6 +60,41 @@ class AnswerSlugCreationTest(unittest.TestCase):
             generate_short_slug(will_end_with_hyphen),
             'this-string-is-more-than-100-characters-long-i-assure-you-'
             'no-really-more-than-100-characters-looong')
+
+
+class OutputScriptFunctionTests(unittest.TestCase):
+
+    def setUp(self):
+        self.mock_assemble_output_value = [{
+            'ASK_ID': 123456,
+            'Question': "Question",
+            'ShortAnswer': "Short answer.",
+            'Answer': "Long answer.",
+            'URL': "fakeurl.com",
+            'SpanishQuestion': "Spanish question.",
+            'SpanishAnswer': "Spanish answer",
+            'SpanishURL': "fakespanishurl.com",
+            'Topic': "Category 5 Hurricane",
+            'SubCategories': "Subcat1 | Subcat2",
+            'Audiences': "Audience1 | Audience2",
+            'RelatedQuestions': "1 | 2 | 3",
+            'RelatedResources': "Owning a Home"}]
+
+    def test_clean_and_strip(self):
+        raw_data = "<p>If you have been scammed, file a complaint.</p>"
+        clean_data = "If you have been scammed, file a complaint."
+        self.assertEqual(clean_and_strip(raw_data), clean_data)
+
+    @mock.patch('ask_cfpb.scripts.export_ask_data.assemble_output')
+    def test_export_questions(self, mock_output):
+        mock_output.return_value = self.mock_assemble_output_value
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d")
+        slug = 'ask-cfpb-{}.csv'.format(timestamp)
+        m = mock_open()
+        with patch('__builtin__.open', m, create=True):
+            export_questions()
+        self.assertEqual(mock_output.call_count, 1)
+        m.assert_called_once_with("/tmp/{}".format(slug), 'w')
 
 
 class AnswerModelTestCase(TestCase):
@@ -174,6 +212,16 @@ class AnswerModelTestCase(TestCase):
         self.page2.parent = self.english_parent_page
         self.page2.save()
 
+    def test_export_script_assemble_output(self):
+        expected_urls = ['/ask-cfpb/mock-question1-en-1234/',
+                         '/ask-cfpb/mock-answer-page-en-5678/']
+        expected_questions = ['Mock question1', 'Mock question2']
+        test_output = assemble_output()
+        for obj in test_output:
+            self.assertIn(obj.get('ASK_ID'), [1234, 5678])
+            self.assertIn(obj.get('URL'), expected_urls)
+            self.assertIn(obj.get('Question'), expected_questions)
+
     def test_spanish_print_page(self):
         response = self.client.get(reverse(
             'ask-spanish-print-answer',
@@ -255,6 +303,14 @@ class AnswerModelTestCase(TestCase):
             ask_category=self.category)
         request = HttpRequest()
         request.GET['page'] = 50
+        response = cat_page.category_page(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_routable_category_page_invalid_pagination(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        request = HttpRequest()
+        request.GET['page'] = 'A50'
         response = cat_page.category_page(request)
         self.assertEqual(response.status_code, 200)
 

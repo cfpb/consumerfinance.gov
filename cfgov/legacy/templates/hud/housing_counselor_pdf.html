@@ -78,11 +78,12 @@
 													<a href="mailto:{{counselor.email}}">{{counselor.email}}</a>												</span></span>
 												<div class="show-hide-mod default-hidden">
 													<span class="show-hide-icon hud_hca_api_print_hide"></span>
-														<a href="javascript:void(0)" class="show-hide-link hud_hca_api_print_hide" data-texthide="Hide" data-textshow="View">
+														<button class="a-btn a-btn__link show-hide-link hud_hca_api_print_hide" data-texthide="Hide" data-textshow="View">
 															<span class="show-hide-name">View</span>
-															languages offered at this location														</a>
+															languages offered at this location
+                            </button>
 													<div class="show-hide-content hud_hca_api_print_show">
-														<span class="hud_hca_api_results_listing_title">Languages:</span> <span class="hud_hca_api_lang">{{ counselor.languages }}</span>
+														<span class="hud_hca_api_results_listing_title">Languages:</span> <span class="hud_hca_api_lang">{{ counselor.languages|join:', ' }}</span>
 													</div>
 												</div>
 											</div>
@@ -92,7 +93,7 @@
 											<div class="hud_hca_api_services">
 												<span class="hud_hca_api_results_listing_title cfpb_hide hud_hca_api_print_show">Services: </span>
 												<span class="hud_hca_api_serv">
-													<span class="hud_hca_api_serv_item">{{ counselor.services }}</span><span class="hud_hca_api_serv_item">Resolving/Preventing Mortgage Delinquency Workshop</span>												</span>
+													<span class="hud_hca_api_serv_item">{{ counselor.services|join:', ' }}</span><span class="hud_hca_api_serv_item">Resolving/Preventing Mortgage Delinquency Workshop</span>												</span>
 											</div>
 										</div>
 										<div class="col last">
