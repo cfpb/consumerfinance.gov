@@ -7,6 +7,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
+from wagtail.wagtailcore import blocks
 
 from data_research.blocks import ConferenceRegistrationForm
 from jobmanager.models import JobListingTable
@@ -39,6 +40,8 @@ class BrowsePage(CFGOVPage):
         ('job_listing_table', JobListingTable()),
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
+        ('raw_html_block', blocks.RawHTMLBlock(
+            label='Raw HTML block')),
         ('html_block', organisms.HTMLBlock()),
         ('chart_block', organisms.ChartBlock()),
         ('snippet_list', organisms.SnippetList()),
