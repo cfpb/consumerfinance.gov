@@ -16,7 +16,7 @@
   nav_group.hide_title:            Hides title of group of nav_items
                                    Use if group shares title with prev group
   nav_group.nav_items:             Array of nav_items.
-                        
+
   nav_item:                        Properties of a nav_item.
   nav_item.text:                   Nav item link text.
   nav_item.url:                    Nav item link URL.
@@ -27,7 +27,9 @@
 
 {% import 'molecules/featured-menu-content.html' as featured_menu_content %}
 
-{# Featured Menu Content. #}
+
+{# Featured Menu Content #}
+
 {% set about_us_content = {
     'link': {
         'text': 'The CFPB: Working for you',
@@ -40,6 +42,7 @@
     'body': 'This short video covers what the CFPB is ' +
             'and how we are working for American consumers.',
 } %}
+
 {% set poly_com_content = {
     'link': {
         'text': 'Resources to help you comply',
@@ -51,7 +54,7 @@
     },
     'body': 'The TILA-RESPA integrated disclosure rule ' +
             'replaces four disclosure forms with two new ones. ' +
-            'We have resources to help you comply.'
+            'We have resources to help you comply.',
 } %}
 
 {% set consumer_tools_content = {
@@ -64,26 +67,28 @@
         'alt': '',
     },
     'body': 'Learn how our new arbitration rule will make sure that groups ' +
-            'of people can take companies to court.'
+            'of people can take companies to court.',
 } %}
 
 {% set media_items = [
   ( 'About Us', featured_menu_content.render( about_us_content ) ),
   ( 'Policy & Compliance', featured_menu_content.render( poly_com_content ) ),
-  ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) )
+  ( 'Consumer Tools', featured_menu_content.render( consumer_tools_content ) ),
 ] %}
 
 
+{# Consumer Tools menu items #}
+
 {% set consumer_tools_group_one =  {
-    'title': 'Money Topics', 
+    'title': 'Money Topics',
     'nav_items': [
-        {'text': 'Auto Loans','url': '/consumer-tools/auto-loans-topic/'} ,
+        {'text': 'Auto Loans', 'url': '/consumer-tools/auto-loans-topic/'},
         {'text': 'Bank Accounts and Services', 'url': '/consumer-tools/bank-accounts-and-services/'},
-        {'text': 'Credit Cards', 'url': '/ask-cfpb/category-credit-cards/'} ,
-        {'text': 'Credit Reports and Scores', 'url': '/consumer-tools/credit-reports-and-scores/'} ,
-        {'text': 'Debt Collection', 'url': '/consumer-tools/debt-collection/'} ,
+        {'text': 'Credit Cards', 'url': '/ask-cfpb/category-credit-cards/'},
+        {'text': 'Credit Reports and Scores', 'url': '/consumer-tools/credit-reports-and-scores/'},
+        {'text': 'Debt Collection', 'url': '/consumer-tools/debt-collection/'},
     ]
-}%}
+} %}
 
 {% set consumer_tools_group_two = {
     'title': 'Money Topics',
@@ -92,9 +97,9 @@
         {'text': 'Money Transfers', 'url': '/sending-money/'},
         {'text': 'Mortgages', 'url': '/ask-cfpb/category-mortgages/'},
         {'text': 'Prepaid Cards', 'url': '/consumer-tools/prepaid-cards/'},
-        {'text': 'Student Loans', 'url': '/ask-cfpb/category-student-loans/'} 
+        {'text': 'Student Loans', 'url': '/ask-cfpb/category-student-loans/'},
     ]
-}%}
+} %}
 
 {% set consumer_tools_group_three = {
     'title': 'Guides',
@@ -103,63 +108,69 @@
         {'text': 'Managing Someone Else’s Money', 'url': '/managing-someone-elses-money/'},
         {'text': 'Owning a Home', 'url': '/owning-a-home/'},
         {'text': 'Paying for College', 'url': '/paying-for-college/'},
-        {'text': 'Planning for Retirement', 'url': '/retirement/before-you-claim/'}
+        {'text': 'Planning for Retirement', 'url': '/retirement/before-you-claim/'},
     ]
-}%}
+} %}
 
 {% set consumer_tools = {
-    'text':'Consumer Tools', 
+    'text': 'Consumer Tools',
     'url': '#',
     'footer': [
-        'Browse answers to hundreds of financial questions <a href="/ask-cfpb/" class="o-mega-menu_content-link">Ask CFPB</a>', 
-        'Have an issue with a financial product? <a href="/complaint/" class="o-mega-menu_content-link">Submit a complaint</a>'
+        'Browse answers to hundreds of financial questions <a href="/ask-cfpb/" class="o-mega-menu_content-link">Ask CFPB</a>',
+        'Have an issue with a financial product? <a href="/complaint/" class="o-mega-menu_content-link">Submit a complaint</a>',
     ],
     'nav_groups': [
         consumer_tools_group_one,
         consumer_tools_group_two,
-        consumer_tools_group_three
-    ]
-}%}
+        consumer_tools_group_three,
+    ],
+} %}
 
-{% set educational_resources_group_one = {
+
+{# Practitioner Resources menu items #}
+
+{% set practitioner_resources_group_one = {
     'title': 'Populations Served',
     'nav_items': [
         {'text': 'Adult Financial Education', 'url': '/adult-financial-education/'},
         {'text': 'Economically Vulnerable Consumers', 'url': '/empowerment/'},
         {'text': 'Mortgage Borrowers', 'url': '/'},
-        {'text': 'Older Adults and Their Families', 'url': '/'}
+        {'text': 'Older Adults and Their Families', 'url': '/'},
     ]
-}%}
-{% set educational_resources_group_two = {
+} %}
+{% set practitioner_resources_group_two = {
     'title': 'Populations Served',
     'hide_title': 'true',
     'nav_items': [
         {'text': 'Servicemembers and Veterans', 'url': '/servicemembers/'},
         {'text': 'Students', 'url': '/consumer-tools/student-loans/'},
-        {'text': 'Youth Financial Education', 'url': '/youth-financial-education/'}
+        {'text': 'Youth Financial Education', 'url': '/youth-financial-education/'},
     ]
-}%}
-{% set educational_resources_group_three = {
+} %}
+{% set practitioner_resources_group_three = {
     'title': 'Programs',
     'nav_items': [
         {'text': 'Resources for Librarians', 'url': '/library-resources/'},
         {'text': 'Resources for Tax Preparers', 'url': '/tax-preparer-resources/'},
         {'text': 'Your Money, Your Goals', 'url': '/your-money-your-goals/'},
     ]
-}%}
+} %}
 
-{% set educational_resources = {
+{% set practitioner_resources = {
     'text': 'Practitioner Resources',
     'url': '#',
     'footer': [
-        '<a href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php" class="o-mega-menu_content-link">Free Brochures</a>'
+        '<a href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php" class="o-mega-menu_content-link">Free Brochures</a>',
     ],
     'nav_groups': [
-        educational_resources_group_one, 
-        educational_resources_group_two, 
-        educational_resources_group_three
-    ]
+        practitioner_resources_group_one,
+        practitioner_resources_group_two,
+        practitioner_resources_group_three,
+    ],
 } %}
+
+
+{# Data & Research menu items #}
 
 {% set data_research_group_one = {
     'nav_items': [
@@ -170,14 +181,14 @@
 {% set data_research_group_two = {
     'nav_items': [
         {'text': 'Consumer Complaint Database', 'url': '/data-research/consumer-complaints/'},
-        {'text': 'Mortgage Database (HMDA)', 'url': '/data-research/mortgage-data-hmda/'}
+        {'text': 'Mortgage Database (HMDA)', 'url': '/data-research/mortgage-data-hmda/'},
     ]
 } %}
 {% set data_research_group_three = {
     'nav_items': [
         {'text': 'Consumer Credit Trends', 'url': '/data-research/consumer-credit-trends/'},
         {'text': 'Credit Card Surveys & Agreements', 'url': '/data-research/credit-card-data/'},
-        {'text': 'CFPB Researchers', 'url': '/data-research/cfpb-researchers/'}
+        {'text': 'CFPB Researchers', 'url': '/data-research/cfpb-researchers/'},
     ]
 } %}
 
@@ -187,37 +198,40 @@
     'nav_groups': [
         data_research_group_one,
         data_research_group_two,
-        data_research_group_three
-    ]
+        data_research_group_three,
+    ],
 } %}
 
+
+{# Policy & Compliance menu items #}
+
 {% set policy_compliance_group_one = {
-    'nav_items': [{
-        'text': 'Rulemaking', 
-        'url': '/policy-compliance/rulemaking/',
-        'nav_groups': [
-            {
+    'nav_items': [
+        {
+            'text': 'Rulemaking',
+            'url': '/policy-compliance/rulemaking/',
+            'nav_groups': [{
                 'nav_items': [
-                     {'text': 'Final Rules', 'url': '/policy-compliance/rulemaking/final-rules/'},
+                    {'text': 'Final Rules', 'url': '/policy-compliance/rulemaking/final-rules/'},
                     {'text': 'Rules Under Development', 'url': '/policy-compliance/rulemaking/rules-under-development/'},
                     {'text': 'Regulatory Agenda', 'url': '/policy-compliance/rulemaking/regulatory-agenda/'},
-                    {'text': 'Small Business Review Panels', 'url': '/policy-compliance/rulemaking/small-business-review-panels/'}
+                    {'text': 'Small Business Review Panels', 'url': '/policy-compliance/rulemaking/small-business-review-panels/'},
                 ]
-            }
-        ]
-    }] 
+            }]
+        },
+    ]
 } %}
 
 {% set policy_compliance_group_two = {
     'nav_items': [
         {
-            'text': 'Compliance & Guidance', 
-            'url': '/policy-compliance/guidance/', 
+            'text': 'Compliance & Guidance',
+            'url': '/policy-compliance/guidance/',
             'nav_groups': [{
                 'nav_items': [
                     {'text': 'Implementation & Guidance', 'url': '/policy-compliance/guidance/implementation-guidance/'},
                     {'text': 'Supervision & Examinations', 'url': '/policy-compliance/guidance/supervision-examinations/'},
-                    {'text': 'Supervisory Highlights', 'url': '/policy-compliance/guidance/supervisory-highlights/'}
+                    {'text': 'Supervisory Highlights', 'url': '/policy-compliance/guidance/supervisory-highlights/'},
                 ]
             }]
         },
@@ -225,38 +239,38 @@
             'text': 'Enforcement',
             'url': '/policy-compliance/enforcement/',
             'nav_groups': [{
-                    'nav_items': [
-                        {'text': 'Enforcement Actions', 'url': '/policy-compliance/enforcement/actions/'},
-                        {'text': 'Petitions to Modify or Set Aside', 'url': '/policy-compliance/enforcement/petitions/'},
-                        {'text': 'Warning Letters', 'url': '/policy-compliance/enforcement/warning-letters/'}
-                    ]
+                'nav_items': [
+                    {'text': 'Enforcement Actions', 'url': '/policy-compliance/enforcement/actions/'},
+                    {'text': 'Petitions to Modify or Set Aside', 'url': '/policy-compliance/enforcement/petitions/'},
+                    {'text': 'Warning Letters', 'url': '/policy-compliance/enforcement/warning-letters/'},
+                ]
             }]
-        }
+        },
     ]
 } %}
 
 {% set policy_compliance_group_three = {
     'nav_items': [
         {
-            'text': 'Notices & Opportunities to Comment', 
-            'url': '/policy-compliance/notice-opportunities-comment/', 
+            'text': 'Notices & Opportunities to Comment',
+            'url': '/policy-compliance/notice-opportunities-comment/',
             'nav_groups': [{
                 'nav_items': [
                     {'text': 'Open Notices', 'url': '/policy-compliance/notice-opportunities-comment/open-notices/'},
-                    {'text': 'Archive of Closed Notices', 'url': '/policy-compliance/notice-opportunities-comment/archive-closed/'}
+                    {'text': 'Archive of Closed Notices', 'url': '/policy-compliance/notice-opportunities-comment/archive-closed/'},
                 ]
             }]
         },
         {
-            'text': 'Amicus Program', 
-            'url': '/policy-compliance/amicus/', 
+            'text': 'Amicus Program',
+            'url': '/policy-compliance/amicus/',
             'nav_groups': [{
                 'nav_items': [
                     {'text': 'Filed Briefs', 'url': '/policy-compliance/amicus/briefs/'},
-                    {'text': 'Suggest a Case', 'url': '/policy-compliance/amicus/suggest/'}
+                    {'text': 'Suggest a Case', 'url': '/policy-compliance/amicus/suggest/'},
                 ]
             }]
-        }
+        },
     ]
 } %}
 
@@ -266,44 +280,48 @@
     'nav_groups': [
         policy_compliance_group_one,
         policy_compliance_group_two,
-        policy_compliance_group_three
-    ]
+        policy_compliance_group_three,
+    ],
 } %}
 
+
+{# About Us menu items #}
 
 {% set about_us_group_one = {
     'nav_items': [
         {'text': 'The Bureau', 'url': '/about-us/the-bureau/'},
         {'text': 'Budget & Strategy', 'url': '/about-us/budget-strategy/'},
-        {'text': 'Payments to Harmed Consumers', 'url':'/about-us/payments-harmed-consumers/'}
+        {'text': 'Payments to Harmed Consumers', 'url': '/about-us/payments-harmed-consumers/'},
     ]
 } %}
 
 {% set about_us_group_two = {
     'nav_items': [
-        {'text': 'Blog','url':'/about-us/blog/'},
+        {'text': 'Blog', 'url': '/about-us/blog/'},
         {'text': 'Newsroom', 'url': '/about-us/newsroom/'},
         {'text': 'Events', 'url': '/about-us/events/'},
-        {'text': 'Recent Postings', 'url': '/activity-log/'}
+        {'text': 'Recent Postings', 'url': '/activity-log/'},
     ]
 } %}
 
 {% set about_us_group_three = {
     'nav_items': [
-        {'text': 'Careers', 'url': '/about-us/careers/', 
+        {
+            'text': 'Careers',
+            'url': '/about-us/careers/',
             'nav_groups': [{
                 'nav_items': [
                     {'text': 'Working @ CFPB', 'url': '/about-us/careers/working-at-cfpb/'},
                     {'text': 'Job Application Process', 'url': '/about-us/careers/application-process/'},
                     {'text': 'Students & Recent Graduates', 'url': '/about-us/careers/students-and-graduates/'},
-                    {'text': 'All Current Openings', 'url': '/about-us/careers/current-openings/'}
+                    {'text': 'All Current Openings', 'url': '/about-us/careers/current-openings/'},
                 ]
             }]
         },
         {'text': 'Doing Business With Us', 'url': '/about-us/doing-business-with-us/'},
         {'text': 'Advisory Groups', 'url': '/about-us/advisory-groups/'},
         {'text': 'Project Catalyst', 'url': '/about-us/project-catalyst/'},
-        {'text': 'Contact Us', 'url': '/about-us/contact-us/'}
+        {'text': 'Contact Us', 'url': '/about-us/contact-us/'},
     ]
 } %}
 
@@ -313,16 +331,19 @@
     'nav_groups': [
         about_us_group_one,
         about_us_group_two,
-        about_us_group_three
-    ]
+        about_us_group_three,
+    ],
 } %}
 
+
+{# Top level group configuration #}
+
 {% set nav_groups = [{
-    'nav_items': [ 
-        consumer_tools, 
-        educational_resources,
+    'nav_items': [
+        consumer_tools,
+        practitioner_resources,
         data_research,
         policy_compliance,
-        about_us    
+        about_us,
     ]
-}] -%}
+}] %}
