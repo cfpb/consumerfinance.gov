@@ -6,22 +6,20 @@ import unittest
 # import mock
 # from mock import mock_open, patch
 from model_mommy import mommy
-# import unittest
 
 import django.test
 
-from data_research.models import CountyMortgageData, MSAMortgageData
-from data_research.views import FIPS, load_fips_meta
+from data_research.models import (
+    CountyMortgageData,
+    MortgageDataConstant,
+    MSAMortgageData,
+    NationalMortgageData,
+    StateMortgageData
+)
+from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
 
 class ModelStringTest(unittest.TestCase):
-
-    def setUp(self):
-        print_patch = mock.patch(
-            'data_research.scripts.load_aggregates.print'
-        )
-        print_patch.start()
-        self.addCleanup(print_patch.stop)
 
     def test_county_string_max_length(self):
         """
@@ -38,18 +36,20 @@ class ModelStringTest(unittest.TestCase):
         self.assertTrue(county_string_lengths[-1] <= 255)
 
 
-class ResearchModelTests(django.test.TestCase):
+class MortgageModelTests(django.test.TestCase):
+
+    fixtures = ['mortgage_constants.json']
 
     def setUp(self):
 
         self.base_data = mommy.make(
             CountyMortgageData,
-            fips='01001',
+            fips='12081',
             date=datetime.date(2016, 9, 1),
-            total=270,
+            total=1270,
             current=262,
-            thirty=4,
-            sixty=1,
+            thirty=40,
+            sixty=20,
             ninety=0,
             other=3)
 
@@ -58,20 +58,42 @@ class ResearchModelTests(django.test.TestCase):
             total=0,
             fips='45300',
             date=datetime.date(2016, 9, 1),
-            counties='01001')
+            counties='12081')
+
+        self.state_obj = mommy.make(
+            StateMortgageData,
+            total=0,
+            fips='12',
+            date=datetime.date(2016, 9, 1))
+
+        self.nation_obj = mommy.make(
+            NationalMortgageData,
+            current=2500819,
+            date=datetime.date(2016, 9, 1),
+            fips=00000,
+            id=1,
+            ninety=40692,
+            other=36196,
+            sixty=27586,
+            thirty=67668,
+            total=2674899)
 
         print_patch = mock.patch(
-            'data_research.scripts.load_aggregates.print'
+            'data_research.scripts.load_mortgage_aggregates.print'
         )
         print_patch.start()
         self.addCleanup(print_patch.stop)
 
+    def test_constant_string(self):
+        constant = MortgageDataConstant.objects.first()
+        self.assertEqual(constant.__str__(), "{}".format(constant))
+
     def test_base_data_properties(self):
         """Test basic calculation functions"""
         data_record = self.base_data
-        self.assertEqual(data_record.percent_30_60, 2.0)
+        self.assertEqual(data_record.percent_30_60, 0.047244094488188976)
         self.assertEqual(data_record.percent_90, 0.0)
-        self.assertEqual(data_record.epoch, 1472702400)
+        self.assertEqual(data_record.epoch, 1472702400000)
 
     def test_base_data_properties_total_zero(self):
         """No divide-by-zeroes up in here."""
@@ -87,7 +109,7 @@ class ResearchModelTests(django.test.TestCase):
             ['date', 'pct30', 'pct90'])
         self.assertEqual(
             sorted(data_record.time_series.values()),
-            [0.0, 2.0, 1472702400])
+            [0.0, 0.047244094488188976, 1472702400000])
 
     def test_msa_data_properties(self):
         msa_record = self.msa_data
@@ -96,4 +118,4 @@ class ResearchModelTests(django.test.TestCase):
         self.assertEqual(
             msa_record.percent_90, county_record.percent_90)
         self.assertEqual(
-            msa_record.percent_30_60, county_record.percent_30_60)
+            msa_record.percent_30_60, 0.047244094488188976)

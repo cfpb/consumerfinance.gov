@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+
 
 # Used for registering users for a conference
 class ConferenceRegistration(models.Model):
@@ -32,7 +34,7 @@ class MortgageBase(models.Model):
 
     @property
     def time_series(self):
-        # return [self.epoch, self.percent_30_60]
+        # return [self.epoch, self.percent_30_60, self.percent_90]
         return {'date': self.epoch,
                 'pct30': self.percent_30_60,
                 'pct90': self.percent_90}
@@ -78,13 +80,21 @@ class MSAMortgageData(MortgageBase):
         help_text="A comma-separated list of FIPS for included counties.")
     states = models.CharField(
         max_length=255, blank=True, null=True,
-        help_text="A comma-separated list of state abbreviations  touched by FIPS for included counties.")
+        help_text=("A comma-separated list of state abbreviations "
+                   "touched by FIPS for included counties."))
 
     def save(self, **kwargs):
-        self.aggregate_county_data()
+        load_fips_meta()
+        self.aggregate_data()
+        if self.counties:
+            self.states = ", ".join(
+                sorted(set(
+                    [FIPS.county_fips.get(fips.strip())['state']
+                     for fips in self.counties.split(',')
+                     if FIPS.county_fips.get(fips.strip())])))
         super(MSAMortgageData, self).save(**kwargs)
 
-    def aggregate_county_data(self):
+    def aggregate_data(self):
         if not self.counties:
             return
         count_fields = {
@@ -98,3 +108,69 @@ class MSAMortgageData(MortgageBase):
                 count_fields[field] += getattr(county, field)
         for field in count_fields:
             setattr(self, field, count_fields[field])
+
+
+class StateMortgageData(MortgageBase):
+    """
+    A model to store aggregate state mortgage performance for a given date,
+    updated quarterly.
+    """
+
+    def save(self, **kwargs):
+        self.aggregate_data()
+        super(StateMortgageData, self).save(**kwargs)
+
+    def aggregate_data(self):
+        load_fips_meta()
+        state_fips_list = [fips for fips in FIPS.county_fips
+                           if fips[:2] == self.fips]
+        count_fields = {
+            'total': 0, 'current': 0, 'thirty': 0,
+            'sixty': 0, 'ninety': 0, 'other': 0}
+        county_records = CountyMortgageData.objects.filter(
+            date=self.date, fips__in=state_fips_list)
+        for county in county_records:
+            for field in count_fields:
+                count_fields[field] += getattr(county, field)
+        for field in count_fields:
+            setattr(self, field, count_fields[field])
+
+
+class NationalMortgageData(MortgageBase):
+    """
+    A model to store aggregate national mortgage performance for a given date,
+    updated quarterly.
+    """
+
+    def save(self, **kwargs):
+        self.aggregate_data()
+        super(NationalMortgageData, self).save(**kwargs)
+
+    def aggregate_data(self):
+        count_fields = {
+            'total': 0, 'current': 0, 'thirty': 0,
+            'sixty': 0, 'ninety': 0, 'other': 0}
+        state_records = StateMortgageData.objects.filter(
+            date=self.date)
+        for state in state_records:
+            for field in count_fields:
+                count_fields[field] += getattr(state, field)
+        for field in count_fields:
+            setattr(self, field, count_fields[field])
+
+
+class MortgageDataConstant(models.Model):
+    """Constant values that Research may need to change."""
+    name = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255,
+                            blank=True,
+                            help_text="CAMELCASE VARIABLE NAME FOR JS")
+    value = models.IntegerField(null=True)
+    note = models.TextField(blank=True)
+    updated = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return "{} ({}), updated {}".format(self.name, self.slug, self.updated)
+
+    class Meta:
+        ordering = ['name']

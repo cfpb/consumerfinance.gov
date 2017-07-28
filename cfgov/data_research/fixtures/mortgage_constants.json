@@ -1,0 +1,35 @@
+[
+{
+    "fields": {
+        "note": "The year used to determine count thresholds for counties and metro areas.",
+        "updated": "2017-07-30",
+        "name": "threshold_year",
+        "value": 2016,
+        "slug": "thresholdYear"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 1
+},
+{
+    "fields": {
+        "note": "The average number of mortgages reported per month during our threshold year.  Jurisdictions that fall below this count are not displayed in visualizations.",
+        "updated": "2017-07-30",
+        "name": "threshold_count",
+        "value": 1000,
+        "slug": "thresholdCount"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 2
+},
+{
+    "fields": {
+        "note": "The first year of data that will be displayed in our visualizations.",
+        "updated": "2017-07-30",
+        "name": "starting_year",
+        "value": 2008,
+        "slug": "startingYear"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 3
+}
+]

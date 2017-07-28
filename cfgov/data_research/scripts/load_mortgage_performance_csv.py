@@ -1,15 +1,11 @@
 from __future__ import unicode_literals
 
 from dateutil import parser
-import StringIO
 import sys
-
-import requests
-import unicodecsv
 
 from django.conf import settings
 from data_research.models import CountyMortgageData
-
+from data_research.mortgage_utilities.s3_utils import read_in_s3_csv
 
 OUTDATED_FIPS = {
     # These outdated FIPS codes show up in the mortgage data
@@ -55,30 +51,10 @@ def validate_fips(raw_fips):
         return new_fips
 
 
-def read_in_s3(url):
-    response = requests.get(url)
-    f = StringIO.StringIO(response.content)
-    reader = unicodecsv.DictReader(f)
-    return reader
-
-# CSV_HEADINGS = [
-#     'month',
-#     'date',
-#     'fipstop',
-#     'open',
-#     'current',
-#     'thirty',
-#     'sixty',
-#     'ninety',
-#     'other']
-
-
 def load_values():
     counter = 0
-    print("Reading in data from s3 ...")
-    raw_data = read_in_s3(BASE_DATA_URL)
+    raw_data = read_in_s3_csv(BASE_DATA_URL)
     # raw_data is a generator delivering data dicts, each representing a row
-    print("Data read; now creating database entries ...")
     for row in raw_data:
         valid_fips = validate_fips(row.get('fipstop'))
         if valid_fips:
@@ -98,7 +74,6 @@ def load_values():
                 sys.stdout.flush()
             if counter % 100000 == 0:  # pragma: no cover
                 print("\n{}".format(counter))
-    print("Created {} mortgage data rows".format(counter))
 
 
 def run():
