@@ -67,13 +67,28 @@ class AnswerPagePreviewCase(django.test.TestCase):
     @mock.patch('ask_cfpb.views.ServeView.serve_latest_revision')
     def test_preview_page(self, mock_serve):
         from ask_cfpb.views import view_answer
-        # page = self.test_answer.english_page
+        page = self.test_answer.english_page
+        revision = page.save_revision()
+        revision.publish()
         test_request = HttpRequest()
         test_request.META['SERVER_NAME'] = 'preview.localhost'
         test_request.META['SERVER_PORT'] = 8000
         view_answer(
             test_request, 'test-question', 'en', self.test_answer.pk)
         self.assertEqual(mock_serve.call_count, 1)
+
+    def test_answer_page_not_live(self):
+        from ask_cfpb.views import view_answer
+        page = self.test_answer.english_page
+        page.live = False
+        page.save()
+        test_request = HttpRequest()
+        with self.assertRaises(Http404):
+            view_answer(
+                test_request,
+                'test-question',
+                'en',
+                self.test_answer.pk)
 
 
 class AnswerViewTestCase(django.test.TestCase):
