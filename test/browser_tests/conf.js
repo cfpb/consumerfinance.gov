@@ -26,10 +26,6 @@ function _chooseSuite( params ) {
                           !_paramIsSet( params.version ) &&
                           !_paramIsSet( params.platform );
 
-  const useSauceCredentials = ( !_paramIsSet( params.sauce ) ||
-                                params.sauce === 'true' ) &&
-                                _isSauceCredentialSet();
-
   // Set the capabilities to use the essential suite,
   // unless Sauce Labs credentials are set and
   // no browser/platform flags are passed, in which case use the full suite.
@@ -51,7 +47,7 @@ function _chooseSuite( params ) {
     }
     let windowSize = `--window-size=${windowWidthPx}x${windowHeightPx}`;
     capabilities[0].chromeOptions.args.push( windowSize );
-  } else if ( paramsAreNotSet && useSauceCredentials ) {
+  } else if ( paramsAreNotSet && _useSauceLabs() ) {
     capabilities = defaultSuites.full;
   }
 
@@ -59,21 +55,27 @@ function _chooseSuite( params ) {
 }
 
 /**
- * Check that Sauce Labs credentials are set in the .env file.
+ * Check that Sauce Labs credentials are set in the .env file
+ * and the sauce param is set to true.
+ *
  * @returns {boolean} True if all the Sauce credentials
- *   are not undefined or an empty string, false otherwise.
+ *   are set and the sauce param is set to true.
  */
-function _isSauceCredentialSet() {
-  const sauceSeleniumUrl = envvars.SAUCE_SELENIUM_URL;
+function _useSauceLabs() {
   const sauceUsername = envvars.SAUCE_USERNAME;
   const sauceAccessKey = envvars.SAUCE_ACCESS_KEY;
+  const sauceTunnel = envvars.SAUCE_TUNNEL;
 
-  return typeof sauceSeleniumUrl !== 'undefined' &&
-         sauceSeleniumUrl !== '' &&
-         typeof sauceUsername !== 'undefined' &&
-         sauceUsername !== '' &&
-         typeof sauceAccessKey !== 'undefined' &&
-         sauceAccessKey !== '';
+  const isSauceCredentialsSet = typeof sauceTunnel !== 'undefined' &&
+                                sauceTunnel !== '' &&
+                                typeof sauceUsername !== 'undefined' &&
+                                sauceUsername !== '' &&
+                                typeof sauceAccessKey !== 'undefined' &&
+                                sauceAccessKey !== '';
+  const sauceParam = ( minimist( process.argv ).params || {} ).sauce;
+  const isSauceParamSet = sauceParam && sauceParam === 'true';
+
+  return isSauceCredentialsSet && isSauceParamSet;
 }
 
 /**
@@ -179,15 +181,6 @@ function _copyParameters( params, capabilities ) { // eslint-disable-line comple
  */
 function _getMultiCapabilities() {
   const params = this.params;
-
-  // If Sauce Labs credentials or --sauce flag is not set or is not true,
-  // delete Sauce credentials on the config object.
-  if ( !_isSauceCredentialSet() || params.sauce === 'false' ) {
-    delete this.sauceSeleniumAddress;
-    delete this.sauceUser;
-    delete this.sauceKey;
-  }
-
   const suite = _chooseSuite( params );
   const capabilities = _copyParameters( params, suite );
 
@@ -256,11 +249,10 @@ const config = {
 };
 
 // Set Sauce Labs credientials from .env file.
-if ( _isSauceCredentialSet() ) {
-  config.sauceSeleniumAddress = envvars.SAUCE_SELENIUM_URL;
+if ( _useSauceLabs() ) {
   config.sauceUser = envvars.SAUCE_USERNAME;
   config.sauceKey = envvars.SAUCE_ACCESS_KEY;
+  config.directConnect = false;
 }
-
 
 exports.config = config;

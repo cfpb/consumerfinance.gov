@@ -306,6 +306,14 @@ class AnswerModelTestCase(TestCase):
         response = cat_page.category_page(request)
         self.assertEqual(response.status_code, 200)
 
+    def test_routable_category_page_invalid_pagination(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        request = HttpRequest()
+        request.GET['page'] = 'A50'
+        response = cat_page.category_page(request)
+        self.assertEqual(response.status_code, 200)
+
     def test_routable_subcategory_page_view(self):
         cat_page = self.create_category_page(
             ask_category=self.category)
