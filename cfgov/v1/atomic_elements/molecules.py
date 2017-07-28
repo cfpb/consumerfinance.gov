@@ -1,3 +1,4 @@
+from django.utils.safestring import mark_safe
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
@@ -44,9 +45,11 @@ class InfoUnit(blocks.StructBlock):
     heading_level = HeadingLevelBlock(default='h3')
     heading_icon = HeadingIconBlock(
         required=False,
-        help_text=(
-            'Input icon name, e.g., approved, help-round, etc. See names at: '
-            'https://cfpb.github.io/capital-framework/components/cf-icons/'
+        help_text=mark_safe(
+            'Input the name of an icon to appear to the left of the heading. '
+            'E.g., approved, help-round, etc. '
+            '<a href="https://cfpb.github.io/capital-framework/'
+            'components/cf-icons/#icons">See full list of icons</a>'
         ),
     )
 
