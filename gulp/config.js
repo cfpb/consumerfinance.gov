@@ -65,7 +65,8 @@ module.exports = {
         paths.modules + '/cf-pagination/src',
         paths.modules + '/cf-tables/src',
         paths.modules + '/cf-typography/src',
-        paths.modules + '/cfpb-chart-builder/src/static/css'
+        paths.modules + '/cfpb-chart-builder/src/static/css',
+        paths.modules + '/highcharts/css'
       ] ),
       compress: true
     }
