@@ -10,18 +10,9 @@
 
    value:                        Object defined from a StreamField block.
 
-   value.modifier:               A modifier CSS class used to alternate
-                                 the info unit from stacked to inline layouts.
-
    value.image:                  (Optional) An object containing:
 
-   value.image.is_decorative:    Whether the image is a bg image or not.
-                                 Default is false.
-
-   value.image.is_square:        Whether the image is square or not.
-                                 Default is false.
-
-   value.image.url:              String for the image URL.
+   value.image.upload:           A CFGovRendition object.
 
    value.image.alt:              String for image alt text.
 
@@ -43,10 +34,11 @@
 
    value.links[i].text:          A string for the text of the link.
 
-   value.is_button:              Boolean for whether the link should be
-                                 rendered as a button. Default is false.
+   format:                       Code for the layout of the parent Info Unit
+                                 Group, used to determine whether to add the
+                                 `__inline` modifier to the main div.
 
-   value.link_image_and_heading: Boolean for whether the image and heading
+   link_image_and_heading:       Boolean for whether the image and heading
                                  should be linked to the value.links[0].url.
 
    ========================================================================== #}
@@ -116,11 +108,9 @@
                     {%- endif -%}
                     {% include 'contact-email.html' with context %}
                 {%- else -%}
-                    {%- set link_class = 'a-btn m-info-unit_btn' if
-                        value.is_button else 'm-list_link' -%}
                     {%- set link_text = link.text if link.text
                         else 'Learn More' -%}
-                    {%- set link = '<a class="' ~ link_class ~ '" href="' ~
+                    {%- set link = '<a class="m-list_link" href="' ~
                         link.url ~ '">' ~ link_text ~ '</a>' %}
                     {{ parse_links( link ) | safe }}
                 {%- endif %}

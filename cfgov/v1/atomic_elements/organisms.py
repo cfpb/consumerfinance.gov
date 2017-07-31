@@ -74,6 +74,14 @@ class InfoUnitGroup(blocks.StructBlock):
                    'the first link in their unit\'s list, if there is a link.')
     )
 
+    lines_between_items = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        label='Show lines between 25/75 items',
+        help_text=('Check this to show horizontal rule lines between info '
+                   'units in a 25/75 layout. Does not apply to other formats.')
+    )
+
     info_units = blocks.ListBlock(molecules.InfoUnit())
 
     sharing = blocks.StructBlock([
@@ -102,7 +110,17 @@ class InfoUnitGroup(blocks.StructBlock):
             )
 
         # If 25/75, info units must have images.
-        # @TODO: Write validation function!
+        if cleaned.get('format') == '25-75':
+            for unit in cleaned.get('info_units'):
+                if not unit['image']['upload']:
+                    raise ValidationError(
+                        'Validation error in StructBlock',
+                        params={'format': ErrorList([
+                            'Info units must include images when using the '
+                            '25/75 format. Search for an "FPO" image if you '
+                            'need a temporary placeholder.'
+                        ])}
+                    )
 
         return cleaned
 

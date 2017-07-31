@@ -31,14 +31,6 @@ class HalfWidthLinkBlob(blocks.StructBlock):
 class InfoUnit(blocks.StructBlock):
     image = atoms.ImageBasic(
         required=False,
-        # help_text='If the image is decrative (i.e., if a screenreader '
-        #           'shouldn\'t say anything about it), leave the Alt field '
-        #           'blank.'
-    )
-    is_widescreen = blocks.BooleanBlock(
-        required=False,
-        label='Use 16:9 image',
-        help_text='Not applicable to 25/75 format.'
     )
 
     heading = HeadingTextBlock(required=False)
@@ -55,8 +47,6 @@ class InfoUnit(blocks.StructBlock):
 
     body = blocks.RichTextBlock(blank=True, required=False)
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-    is_button = blocks.BooleanBlock(required=False,
-                                    label='Show links as button')
 
     class Meta:
         icon = 'image'
