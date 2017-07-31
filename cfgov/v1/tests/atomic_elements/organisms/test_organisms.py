@@ -3,7 +3,7 @@ from django.test import Client, TestCase
 from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
-from v1.atomic_elements.organisms import ImageText5050Group, TableBlock
+from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock
 from v1.models.browse_page import BrowsePage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import LearnPage
@@ -246,19 +246,68 @@ class OrganismsTestCase(TestCase):
         response = self.client.get('/browse/')
         self.assertContains(response, 'Age 30 to 44')
 
+    def test_data_snapshot(self):
+        """ Data Snapshot correctly renders fields on a Browse Page"""
+        browse_page = BrowsePage(
+            title='Browse Page',
+            slug='browse',
+        )
 
-class TestImageText5050Group(TestCase):
-    def test_no_heading_or_paragraph_ok(self):
-        block = ImageText5050Group()
+        # Adds a AUT market to a browse page
+        browse_page.content = StreamValue(
+            browse_page.content.stream_block,
+            [atomic.data_snapshot],
+            True
+        )
+        publish_page(child=browse_page)
+
+        response = self.client.get('/browse/')
+        self.assertContains(response, '5 million')
+        self.assertContains(response, '$64 billion')
+        self.assertContains(response, '5% increase')
+        self.assertContains(response, 'January 2015')
+        self.assertContains(response, 'Auto loans originated')
+        self.assertContains(response, 'Dollar value of new loans')
+        self.assertContains(response, 'In year-over-year originations')
+
+    def test_chart_block(self):
+        """ Chart Block correctly renders fields on a Browse Page"""
+        browse_page = BrowsePage(
+            title='Browse Page',
+            slug='browse',
+        )
+
+        # Adds a AUT market to a browse page
+        browse_page.content = StreamValue(
+            browse_page.content.stream_block,
+            [atomic.chart_block],
+            True
+        )
+        publish_page(child=browse_page)
+
+        response = self.client.get('/browse/')
+        self.assertContains(response, 'Volume of credit cards originated')
+        self.assertContains(response, 'foo/bar.csv')
+        self.assertContains(response, 'Data not final')
+        self.assertContains(
+            response,
+            'The most recent data available in each visualization is for April 2016'
+        )
+        self.assertContains(response, 'January 2018')
+
+
+class TestInfoUnitGroup(TestCase):
+    def test_no_heading_or_intro_ok(self):
+        block = InfoUnitGroup()
         value = block.to_python({})
 
         try:
             block.clean(value)
         except ValidationError:
-            self.fail('no heading and no paragraph should not fail validation')
+            self.fail('no heading and no intro should not fail validation')
 
     def test_heading_only_ok(self):
-        block = ImageText5050Group()
+        block = InfoUnitGroup()
         value = block.to_python({'heading': 'Heading'})
 
         try:
@@ -266,21 +315,21 @@ class TestImageText5050Group(TestCase):
         except ValidationError:
             self.fail('heading alone should not fail validation')
 
-    def test_paragraph_only_fails_validation(self):
-        block = ImageText5050Group()
-        value = block.to_python({'paragraph': '<p>Only a paragraph</p>'})
+    def test_intro_only_fails_validation(self):
+        block = InfoUnitGroup()
+        value = block.to_python({'intro': '<p>Only an intro</p>'})
 
         with self.assertRaises(ValidationError):
             block.clean(value)
 
-    def test_heading_and_paragraph_ok(self):
-        block = ImageText5050Group()
+    def test_heading_and_intro_ok(self):
+        block = InfoUnitGroup()
         value = block.to_python({
             'heading': 'Heading',
-            'paragraph': '<p>Rich txt</p>'
+            'intro': '<p>Rich txt</p>'
         })
 
         try:
             block.clean(value)
         except ValidationError:
-            self.fail('heading with paragraph should not fail validation')
+            self.fail('heading with intro should not fail validation')
