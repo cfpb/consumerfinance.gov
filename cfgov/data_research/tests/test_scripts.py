@@ -124,7 +124,7 @@ class DataLoadTest(django.test.TestCase):
         mock_read_in.return_value = [{
             'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
             'ninety': '0', 'date': '01/01/98', 'open': '270', 'other': '3',
-            'fipstop': '01001'}]
+            'fips': '01001'}]
         load_values()
         self.assertEqual(mock_read_in.call_count, 1)
         self.assertEqual(CountyMortgageData.objects.count(), 1)

@@ -8,6 +8,10 @@ import unicodecsv
 LOCAL_ROOT = settings.PROJECT_ROOT
 FIPS_DATA_PATH = (
     "{}/data_research/data".format(LOCAL_ROOT))
+SOURCE_CSV_URL = (
+    'http://files.consumerfinance.gov.s3.amazonaws.com/'
+    'data/mortgage-performance/source/delinquency_county_0916.csv'
+)
 
 # We have minimal data for territories, so we exclude them.
 #  Puerto Rico (72) is the exception.
@@ -19,7 +23,7 @@ OUTDATED_FIPS = {
     # and should be changed or ignored:
     '02201': '',  # Prince of Wales-Outer Ketchikan, AK
     '02270': '',  # Wade Hampton Census Area, AK
-    '12025': '12086',  # Dade, which became Miami-Dade (12086) in 1990s
+    '12025': '',  # Dade, which became Miami-Dade (12086) in 1990s
     '12151': '',  # FL (??) only shows up thru 2011
     '46113': '46102',  # Shannon County SD, renamed Oglala Lakota 2015-05-01
     '51560': '',  # Clifton Forge County, VA, DELETED 2001-07-01
@@ -30,16 +34,28 @@ OUTDATED_FIPS = {
     '02280': '',  # Wrangell-Petersburg Census Area, AK, DELETED 2008-06-01
 }
 
-ORIGINAL_HEADINGS = [
-    'month',
+# ORIGINAL_HEADINGS = [
+#     'month',
+#     'date',
+#     'fipstop',
+#     'open',
+#     'current',
+#     'thirty',
+#     'sixty',
+#     'ninety',
+#     'other'
+# ]
+
+SOURCE_HEADINGS = [
     'date',
-    'fipstop',
+    'fips',
     'open',
     'current',
     'thirty',
     'sixty',
     'ninety',
-    'other']
+    'other'
+]
 
 OUTPUT_HEADINGS = [  # This is a proposed form
     'date',
@@ -293,19 +309,22 @@ def parse_raw_fips(raw_fips):
 
 
 # def convert_row(original_row):
-#     """Convert a dict-based row of original data to reader-friendly row"""
-#     fips_dict = parse_raw_fips(original_row['fipstop'])
+#     """
+#     Convert a dict-based row of original data to our reader-friendly version.
+#     """
+#     fips_dict = parse_raw_fips(original_row['fips'])
 #     new_row = {
 #         'date': original_row['date'],
 #         'fips': fips_dict['county_fips'],
 #         'state': fips_dict['state'],
 #         'county': fips_dict['county'],
 #         'msa': '',
-#         'open_num': original_row['open'],
-#         'current_num': original_row['current'],
-#         '30_days_delinquent_num': delinquedict['30_days'],
-#         '90_days_delinquent_num': delinquedict['90_days'],
-#         'other_num': original_row['other']
+#         'total_count': original_row['open'],
+#         'current_count': original_row['current'],
+#         '30_days_delinquent_count': original_row['thirty'],
+#         '60_days_delinquent_count': original_row['sixty'],
+#         '90_days_delinquent_count': original_row['ninety'],
+#         'other_count': original_row['other']
 #     }
 #     return new_row
 
@@ -316,7 +335,8 @@ def parse_raw_fips(raw_fips):
 #     and skip outdated FIPS codes (ones that no longer exist),
 #     and output a CSV with reader-friendly column headings.
 #     """
-#     raw_data = read_in_s3(BASE_DATA_URL)
+#     from data_research.mortgage_utilities.s3_utils import read_in_s3_csv
+#     raw_data = read_in_s3_csv(BASE_DATA_URL)
 #     # outfile = StringIO.StringIO()
 #     with open('converted_mortgage_data.csv', 'wb') as f:
 #         writer = unicodecsv.writer(f)

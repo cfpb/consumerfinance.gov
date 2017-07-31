@@ -3,39 +3,18 @@ from __future__ import unicode_literals
 from dateutil import parser
 import sys
 
-from django.conf import settings
 from data_research.models import CountyMortgageData
 from data_research.mortgage_utilities.s3_utils import read_in_s3_csv
-
-OUTDATED_FIPS = {
-    # These outdated FIPS codes show up in the mortgage data
-    # and should be changed or ignored:
-    '02201': '',  # Prince of Wales-Outer Ketchikan, AK
-    '02270': '',  # Wade Hampton Census Area, AK
-    '12025': '12086',  # Dade, which became Miami-Dade (12086) in 1990s
-    '12151': '',  # FL (??) only shows up thru 2011
-    '46113': '46102',  # Shannon County SD, renamed Oglala Lakota 2015-05-01
-    '51560': '',  # Clifton Forge County, VA, DELETED 2001-07-01
-    '51780': '',  # South Boston City, VA, DELETED 1995-06-30
-    # These older codes should also be ignored if they are ever encountered:
-    '02231': '',  # Skagway-Yakutat-Angoon Census Area, AK, DELETED 1992-09-22
-    '02232': '',  # Skagway-Hoonah-Angoon Census Area, AK, DELETED 2007-06-20
-    '02280': '',  # Wrangell-Petersburg Census Area, AK, DELETED 2008-06-01
-}
-
-LOCAL_ROOT = settings.PROJECT_ROOT
-S3_BASE = (
-    'http://files.consumerfinance.gov.s3.amazonaws.com/mortgage-performance')
-BASE_DATA_URL = '{}/delinquency_county_long.csv'.format(S3_BASE)
-FIPS_DATA_PATH = (
-    "{}/data_research/data".format(LOCAL_ROOT))
+from data_research.mortgage_utilities.fips_meta import (
+    SOURCE_CSV_URL, OUTDATED_FIPS
+)
 
 
 def validate_fips(raw_fips):
     """
     Fix county FIPS code anomalies, handling illegal lengths, truncated codes
-    that have lost their initial zeroes and a county that changed its name
-    and FIPS code in May 2015.
+    that have lost their initial zeroes and a South Dakota county that changed
+    its name and FIPS code in May 2015.
     """
     if len(raw_fips) not in [4, 5]:
         return None
@@ -52,11 +31,12 @@ def validate_fips(raw_fips):
 
 
 def load_values():
+    """Load source mortgage data into an empty CountyMortgageData table."""
     counter = 0
-    raw_data = read_in_s3_csv(BASE_DATA_URL)
+    raw_data = read_in_s3_csv(SOURCE_CSV_URL)
     # raw_data is a generator delivering data dicts, each representing a row
     for row in raw_data:
-        valid_fips = validate_fips(row.get('fipstop'))
+        valid_fips = validate_fips(row.get('fips'))
         if valid_fips:
             obj = CountyMortgageData(
                 fips=valid_fips,
