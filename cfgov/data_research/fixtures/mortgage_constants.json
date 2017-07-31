@@ -23,7 +23,7 @@
 },
 {
     "fields": {
-        "note": "The first year of data that will be displayed in our visualizations.",
+        "note": "The first year of data we want to be displayed in our visualizations. The earliest year available is 1998.",
         "updated": "2017-07-30",
         "name": "starting_year",
         "value": 2008,

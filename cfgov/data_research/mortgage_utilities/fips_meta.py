@@ -139,7 +139,7 @@ def load_thresholds():
 
 def load_fips_meta():
     """
-    Load FIPS mappings from CSV files.
+    Load FIPS mappings, starting with base CSV files.
 
     County CSV headings are:
         1: state

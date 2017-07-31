@@ -8,11 +8,10 @@ from data_research.models import MortgageDataConstant
 
 class MortgageDataConstantModelAdmin(ModelAdmin):
     model = MortgageDataConstant
-    menu_label = 'Mortgage constants'
+    menu_label = 'Mortgage performance constants'
     menu_icon = 'list-ul'
     list_display = (
         'name',
-        'slug',
         'value',
         'note',
         'updated')

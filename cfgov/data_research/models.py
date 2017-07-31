@@ -18,7 +18,7 @@ class ConferenceRegistration(models.Model):
 
 
 class MortgageBase(models.Model):
-    """An abstract model base for County and MSA mortgage records."""
+    """An abstract model base for mortgage data records."""
     fips = models.CharField(max_length=6, blank=True, db_index=True)
     date = models.DateField(blank=True, db_index=True)
     total = models.IntegerField(null=True)
