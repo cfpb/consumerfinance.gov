@@ -582,10 +582,4 @@ FLAGS = {
     # The template will render for the front-end, but the sortable code is missing
     # and the table will not be sortable until cf-tables from CF 4.x is implemented
     'SORTABLE_TABLES': {},
-
-    # Serve housing counselor JSON and PDFs from S3.
-    # Access e.g. /find-a-housing-counselor/?zipcode=20001&s3=True
-    'HOUSING_COUNSELOR_S3': {
-        'parameter': 's3',
-    },
 }
