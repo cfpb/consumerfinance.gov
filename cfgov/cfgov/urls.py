@@ -247,6 +247,12 @@ urlpatterns = [
     url(r'^data-research/consumer-complaints/',
         include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
 
+    # CCDB5-API
+    flagged_url('CCDB5_RELEASE',
+                r'^data-research/consumer-complaints/search/api/v1/',
+                include_if_app_enabled('complaint_search',
+                                       'complaint_search.urls')
+                ),
     # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
     flagged_url('CCDB5_RELEASE',
                 r'^data-research/consumer-complaints/search/',
@@ -296,13 +302,6 @@ urlpatterns = [
         name='cckbyo'),
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
-
-    # CCDB5-API
-    flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/search/api/v1/',
-                include_if_app_enabled('complaint_search',
-                                       'complaint_search.urls')
-                ),
 
     # data-research-api
     url(r'^data-research/mortgages/api/v1/',

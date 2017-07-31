@@ -1,5 +1,4 @@
 {% extends "front/base_nonresponsive.html" %}
-{% load feature_flags %}
 {% load jsonify %}
 {% load signed_redirect %}
 {% load static from staticfiles %}
@@ -50,8 +49,6 @@ Find a housing counselor
     <div id="hud_hca_api_form" class="hud_hca_api_form">
       <form action="." method="get">
          <label for="hud_hca_api_query">Search by ZIP code:</label>
-         {% flag_enabled 'HOUSING_COUNSELOR_S3' as s3_flag %}
-         {% if s3_flag %}<input type="hidden" name="s3" value="True">{% endif %}
          <input type="text" name="zipcode" id="hud_hca_api_query" value="{{ zipcode|default:'' }}" placeholder="Please enter a 5-digit ZIP code">
          <button class="hud_hca_api_form_button">Find a counselor</button>
       </form>
