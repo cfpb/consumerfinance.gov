@@ -19,56 +19,51 @@
    ========================================================================== #}
 
 {% macro render(value) %}
-	<div class="o-email-signup">
-	{% if value.heading %}
-	    <header class="m-slug-header">
-	        <h2 class="a-heading">
-	            {{ value.heading }}
-	        </h2>
-	    </header>
-	{% endif %}
+    {% set form_id = get_unique_id() %}
+    <div class="o-email-signup">
+    {% if value.heading %}
+        <header class="m-slug-header">
+            <h2 class="a-heading">
+                {{ value.heading }}
+            </h2>
+        </header>
+    {% endif %}
 
-	<form id="o-form {{ value.id or ('o-form__email-signup_' ~ range(1, 100) | random) }}"
-	      class="o-form o-form__email-signup "
-	      action="/subscriptions/new/"
-	      method="POST"
-	      enctype="application/x-www-form-urlencoded">
-	   	<div class="u-mb15">
-	    {% import 'notification.html' as notification with context %}
-	    {{ notification.render('success', false, '') }}
-	    </div>
-	    {% if value.text %}
-	        <p>
-	            {{ value.text }}
-	        </p>
-	    {% endif %}
-		<div class="m-form-field-with-button" data-qa-hook="formfield-with-button">
+    <form id="o-form {{ value.id or 'o-form__email-signup_' ~ form_id }}"
+          class="o-form o-form__email-signup"
+          action="/subscriptions/new/"
+          method="POST"
+          enctype="application/x-www-form-urlencoded">
+        <div class="u-mb15">
+        {% import 'notification.html' as notification with context %}
+        {{ notification.render('success', false, '') }}
+        </div>
+        {% if value.text %}
+        <p>
+            {{ value.text }}
+        </p>
+        {% endif %}
+        <div class="m-form-field-with-button" data-qa-hook="formfield-with-button">
+            <div class="form-group">
+                <label for="{{ 'form_' ~ form_id }}">
+                    <b>Email address</b> (required)
+                </label>
 
-		    <div class="form-group">
-		        <label for="form_18">
-		           	<b>Email address</b> (required)
-		        </label>
-
-		        <input id="form_18"
-		               type="email"
-		               placeholder="example@mail.com"
-		               name="email"
-		               class="m-form-field-with-button_field a-text-input"
-		               required>
-		    </div>
-
-		    <p><a class="a-link__jump" href="/owning-a-home/privacy-act-statement/">
-		    	<span class="a-link_text">Privacy Act Statement</span>
-		    	</a>
-		    <br/>
-		    </p>
-
-		    <input class="a-btn a-btn__full-on-xs" type="submit" value="Sign up">
-		</div>
-
-	    <div class="form-group">
-	        <input type="hidden" name="code" value="{{ value.gd_code }}">
-	    </div>
-	</form>
-	</div>
+                <input id="{{ 'form_' ~ form_id }}"
+                       type="email"
+                       placeholder="mail@example.com"
+                       name="email"
+                       class="m-form-field-with-button_field a-text-input"
+                       required>
+            </div>
+            <p>
+                <a class="a-link a-link__jump" href="/owning-a-home/privacy-act-statement/">
+                    <span class="a-link_text">Privacy Act Statement</span>
+                </a>
+            </p>
+            <input class="a-btn a-btn__full-on-xs" type="submit" value="Sign up">
+        </div>
+        <input type="hidden" name="code" value="{{ value.gd_code }}">
+    </form>
+    </div>
 {% endmacro %}

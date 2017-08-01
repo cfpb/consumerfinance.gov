@@ -54,7 +54,12 @@
 
 
       {% if active_phase.milestones %}
-        <div class="block block__border-top block__padded-top block__padded-bottom block__flush-bottom milestones">
+        <div class="block
+                    block__border-top
+                    block__padded-top
+                    block__padded-bottom
+                    block__flush-bottom
+                    milestones">
           <h3 class="milestones_header char-icon char-icon__checked">Goals for this phase</h3>
           <ul class="content-l">
             {% for milestone in active_phase.milestones %}
@@ -73,7 +78,7 @@
               <section class="email-block block block__bg u-mt30 u-mb15">
                   {% include "_layouts/oah-email-signup.html" %}
               </section>
-              <section class="tools block block__bg block__padded-top u-mt0">
+              <section class="tools block block__bg block__padded-top block__flush-top">
                 <h3 class="h6 u-mb15">Tools for this Phase</h3>
                 {% for tool in active_phase.tools %}
                   <div class="tool">
@@ -106,7 +111,7 @@
                   </div>
                 {% endif %}
               </section>
-              <div class="block block__bg u-no-bg u-mt0">
+              <div class="block block__bg u-no-bg block__flush-top">
                 {% set step_data = vars.process_steps[phase_index - 1] %}
                 {% set social_options = step_data.social or {} %}
                 {{ social_media.render( social_options  ) }}

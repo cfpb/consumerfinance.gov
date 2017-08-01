@@ -22,13 +22,17 @@
   <div class="explain" aria-controls="form-explainer">
     <ul class="tabs explain_tabs">
       <li class="tab-list active-tab">
-        <button class="tab-link tab-link__checklist" data-target="checklist" tabindex="0">
+        <button class="tab-link tab-link__checklist"
+                data-target="checklist"
+                tabindex="0">
           <span class="cf-icon cf-icon-approved-round"></span>
           <span class="tab-label">Check details</span>
         </button>
       </li>
       <li class="tab-list">
-        <button class="tab-link tab-link__definitions" data-target="definitions" tabindex="0">
+        <button class="tab-link tab-link__definitions"
+                data-target="definitions"
+                tabindex="0">
           <span class="cf-icon cf-icon-help-round"></span>
           <span class="tab-label">Get definitions</span>
         </button>
@@ -36,7 +40,10 @@
     </ul>
     {{ render_pagination( data ) }}
     {% for page in data %}
-    <figure class="explain_page" id="explain_page-{{ loop.index }}" role="tablist" multiselectable="true">
+    <figure class="explain_page"
+            id="explain_page-{{ loop.index }}"
+            role="tablist"
+            aria-multiselectable="true">
       <div class="image-map explain_image-map">
 
         <div class="image-map_wrapper">
@@ -59,8 +66,7 @@
       <figcaption class="terms explain_terms">
           <div class="o-expandable-group
                       o-expandable-group__form-explainer
-                      o-expandable-group__accordion"
-               data-accordion="true">
+                      o-expandable-group__accordion">
               {{ render_terms( page.terms, loop.index ) }}
           </div>
       </figcaption>
