@@ -243,7 +243,7 @@ def update_valid_geos():
     with open('{}/fips_whitelist.json'.format(FIPS_DATA_PATH), 'wb') as f:
         f.write(json.dumps(final_list))
 
-    msg_dict = {
+    pct_values = {
         'counties': round(len(county_list) * 100 / len(FIPS.county_fips)),
         'msas': round(len(msa_list) * 100 / len(FIPS.msa_fips))}
 
@@ -251,7 +251,7 @@ def update_valid_geos():
         "In {}, {} percent of counties and {} percent of MSAs met our "
         "mortgage-count threshold for visualizations.".format(
             FIPS.threshold_year,
-            msg_dict['counties'],
-            msg_dict['msas']))
+            pct_values['counties'],
+            pct_values['msas']))
 
     return message
