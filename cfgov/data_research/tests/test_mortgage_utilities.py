@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-import unittest
 import datetime
 
 import django
@@ -87,12 +86,6 @@ class MortgageMetaTests(django.test.TestCase):
             sixty=275,
             thirty=676,
             total=2674)
-
-        # print_patch = mock.patch(
-        #     'data_research.mortgage_utilities.fips_meta.print'
-        # )
-        # print_patch.start()
-        # self.addCleanup(print_patch.stop)
 
     def test_validate_county_threshold(self):
         """Validator should OK counties and metros that meet our thresholds."""
