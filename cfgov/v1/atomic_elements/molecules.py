@@ -1,4 +1,3 @@
-from django.utils.safestring import mark_safe
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
