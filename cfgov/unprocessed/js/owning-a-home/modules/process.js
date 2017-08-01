@@ -4,6 +4,7 @@
 const $ = require( 'jquery' );
 const Expandable = require( '../../organisms/Expandable' );
 const secondaryExpandableTarget = require( './secondary-expandable-target' );
+require( 'jquery.scrollto' );
 
 /**
  * @param {string} selector - Selector to search for in the document.
