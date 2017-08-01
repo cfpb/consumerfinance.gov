@@ -3,8 +3,6 @@ import datetime
 import mock
 import unittest
 
-# import mock
-# from mock import mock_open, patch
 from model_mommy import mommy
 
 import django.test

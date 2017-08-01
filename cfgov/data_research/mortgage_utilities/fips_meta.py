@@ -126,21 +126,18 @@ def load_states():
 def load_thresholds():
     """Get data thresholds from database, or fall back to starting defaults."""
     from data_research.models import MortgageDataConstant
-    threshold_year = 2016
-    threshold_count = 1000
-    starting_year = 2008
-    if MortgageDataConstant.objects.filter(name='threshold_year').exists():
-        threshold_year = MortgageDataConstant.objects.get(
-            name='threshold_year').value
-    if MortgageDataConstant.objects.filter(name='threshold_count').exists():
-        threshold_count = MortgageDataConstant.objects.get(
-            name='threshold_count').value
-    if MortgageDataConstant.objects.filter(name='starting_year').exists():
-        starting_year = MortgageDataConstant.objects.get(
-            name='starting_year').value
-    FIPS.starting_year = starting_year
-    FIPS.threshold_count = threshold_count
-    FIPS.threshold_year = threshold_year
+    threshold_defaults = {
+        'starting_year': 2008,
+        'threshold_count': 1000,
+        'threshold_year': 2016,
+    }
+    for name in threshold_defaults:
+        try:
+            value = MortgageDataConstant.objects.get(
+                name=name).value
+        except MortgageDataConstant.DoesNotExist:
+            value = threshold_defaults[name]
+        setattr(FIPS, name, value)
 
 
 def load_fips_meta():

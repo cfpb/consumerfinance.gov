@@ -34,7 +34,6 @@ class MortgageBase(models.Model):
 
     @property
     def time_series(self):
-        # return [self.epoch, self.percent_30_60, self.percent_90]
         return {'date': self.epoch,
                 'pct30': self.percent_30_60,
                 'pct90': self.percent_90}
@@ -46,7 +45,6 @@ class MortgageBase(models.Model):
             return 0
         else:
             return (self.thirty + self.sixty) * 1.0 / self.total
-            # return round(((self.thirty + self.sixty) * 100.0) / self.total)
 
     @property
     def percent_90(self):
@@ -54,7 +52,6 @@ class MortgageBase(models.Model):
             return 0
         else:
             return self.ninety * 1.0 / self.total
-            # return round((self.ninety * 100.0) / self.total)
 
     @property
     def epoch(self):
@@ -87,7 +84,7 @@ class MSAMortgageData(MortgageBase):
         load_fips_meta()
         self.aggregate_data()
         if self.counties:
-            self.states = ", ".join(
+            self.states = ",".join(
                 sorted(set(
                     [FIPS.county_fips.get(fips.strip())['state']
                      for fips in self.counties.split(',')
