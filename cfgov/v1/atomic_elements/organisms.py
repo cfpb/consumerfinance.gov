@@ -49,17 +49,7 @@ class InfoUnitGroup(blocks.StructBlock):
         help_text='Choose the number and width of info unit columns.',
     )
 
-    heading = v1_blocks.HeadingTextBlock(required=False)
-    heading_level = v1_blocks.HeadingLevelBlock(default='h2')
-    heading_icon = v1_blocks.HeadingIconBlock(
-        required=False,
-        help_text=mark_safe(
-            'Input the name of an icon to appear to the left of the heading. '
-            'E.g., approved, help-round, etc. '
-            '<a href="https://cfpb.github.io/capital-framework/'
-            'components/cf-icons/#icons">See full list of icons</a>'
-        ),
-    )
+    heading = v1_blocks.HeadingBlock(required=False)
 
     intro = blocks.RichTextBlock(
         required=False,
@@ -127,9 +117,6 @@ class InfoUnitGroup(blocks.StructBlock):
     class Meta:
         icon = 'image'
         template = '_includes/organisms/info-unit-group-2.html'
-        form_template = (
-            'admin/form_templates/struct-with-block-wrapper-classes.html'
-        )
 
 
 class ImageText5050Group(blocks.StructBlock):

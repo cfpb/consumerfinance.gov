@@ -1,10 +1,13 @@
+from scripts import _atomic_helpers as atomic
+
 from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 from wagtail.wagtailcore.blocks import StreamValue
+from wagtail.wagtailimages.tests.utils import get_test_image_file
 
-from scripts import _atomic_helpers as atomic
 from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock
 from v1.models.browse_page import BrowsePage
+from v1.models.images import CFGOVImage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import LearnPage
 from v1.models.snippets import Contact
@@ -308,7 +311,11 @@ class TestInfoUnitGroup(TestCase):
 
     def test_heading_only_ok(self):
         block = InfoUnitGroup()
-        value = block.to_python({'heading': 'Heading'})
+        value = block.to_python({
+            'heading': {
+                'text': 'Heading'
+            }
+        })
 
         try:
             block.clean(value)
@@ -325,7 +332,9 @@ class TestInfoUnitGroup(TestCase):
     def test_heading_and_intro_ok(self):
         block = InfoUnitGroup()
         value = block.to_python({
-            'heading': 'Heading',
+            'heading': {
+                'text': 'Heading'
+            },
             'intro': '<p>Rich txt</p>'
         })
 
@@ -333,3 +342,46 @@ class TestInfoUnitGroup(TestCase):
             block.clean(value)
         except ValidationError:
             self.fail('heading with intro should not fail validation')
+
+    # @TODO: Get these tests working!
+
+    # def test_2575_with_images_ok(self):
+    #     # image = CFGOVImage.objects.create(
+    #     #     title='test',
+    #     #     file=get_test_image_file()
+    #     # )
+    #     block = InfoUnitGroup()
+    #     value = block.to_python({
+    #         'format': '25-75',
+    #         'info_units': [
+    #             {
+    #                 # 'image': {
+    #                 #     'upload': 84
+    #                 # },
+    #                 'links': [],  # must remove default empty link
+    #             }
+    #         ]
+    #     })
+    #
+    #     try:
+    #         block.clean(value)
+    #     except ValidationError:
+    #         self.fail('25-75 group with info unit that has an image validates')
+
+    # def test_2575_with_no_images_fails_validation(self):
+    #     block = InfoUnitGroup()
+    #     value = block.to_python({
+    #         'format': '25-75',
+    #         'info_units': [
+    #             {
+    #                 'body': '<p>Info unit with no image</p>',
+    #                 'links': [],  # must remove default empty link
+    #             }
+    #         ]
+    #     })
+    #
+    #     try:
+    #         block.clean(value)
+    #     except ValidationError:
+    #         self.fail('a 25-75 group with an info unit that has no image '
+    #                   'should fail validation')

@@ -16,19 +16,22 @@
 
    value.image.alt:              String for image alt text.
 
-   value.heading:                The heading for the info unit.
+   value.heading:                (Optional) An object containing:
 
-   value.heading_level:          The heading level (H2, H3, or H4).
+   value.heading.text            The text of a heading.
 
-   value.heading_icon:           An optional cf-icons icon code that
+   value.heading.level:          The heading level (H2, H3, H4). Default: H3
+
+   value.heading.icon:           An optional cf-icons icon code that
                                  triggers the insertion of an icon before
                                  the heading.
 
-   value.body:                   A string containing the content to display
-                                 below the heading (typically a paragraph).
+   value.body:                   (Optional) A string containing the content
+                                 to display below the heading (typically a
+                                 paragraph).
 
-   value.links:                  A tuple of items to create a list of links,
-                                 containing:
+   value.links:                  (Optional) A tuple of items to create a list
+                                 of links, containing:
 
    value.links[i].url:           A string for the URL of the link.
 
@@ -84,13 +87,13 @@
         {% if link_image_and_heading %}
             <a class="m-info-unit_heading-link" href="{{ value.links[0].url }}">
         {%- endif %}
-                <{{ value.heading_level -}}
-                    {%- if value.heading_icon -%}
-                        {{- ' class="cf-icon cf-icon-' ~ value.heading_icon ~ '"' -}}
+                <{{ value.heading.level -}}
+                    {%- if value.heading.icon -%}
+                        {{- ' class="cf-icon cf-icon-' ~ value.heading.icon ~ '"' -}}
                     {%- endif -%}
                 >
-                    {{ value.heading | safe }}
-                </{{ value.heading_level }}>
+                    {{ value.heading.text | safe }}
+                </{{ value.heading.level }}>
         {%- if link_image_and_heading %}
             </a>
         {%- endif -%}

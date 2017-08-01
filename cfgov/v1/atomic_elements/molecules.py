@@ -3,8 +3,7 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 from v1.atomic_elements import atoms
-from v1.blocks import (AnchorLink, HeadingIconBlock, HeadingLevelBlock,
-                       HeadingTextBlock)
+from v1.blocks import AnchorLink, HeadingBlock
 from v1.util import ref
 
 
@@ -33,16 +32,9 @@ class InfoUnit(blocks.StructBlock):
         required=False,
     )
 
-    heading = HeadingTextBlock(required=False)
-    heading_level = HeadingLevelBlock(default='h3')
-    heading_icon = HeadingIconBlock(
+    heading = HeadingBlock(
         required=False,
-        help_text=mark_safe(
-            'Input the name of an icon to appear to the left of the heading. '
-            'E.g., approved, help-round, etc. '
-            '<a href="https://cfpb.github.io/capital-framework/'
-            'components/cf-icons/#icons">See full list of icons</a>'
-        ),
+        default={'level': 'h3'}
     )
 
     body = blocks.RichTextBlock(blank=True, required=False)
@@ -51,9 +43,6 @@ class InfoUnit(blocks.StructBlock):
     class Meta:
         icon = 'image'
         template = '_includes/molecules/info-unit.html'
-        form_template = (
-            'admin/form_templates/struct-with-block-wrapper-classes.html'
-        )
 
 
 class ImageText5050(blocks.StructBlock):
