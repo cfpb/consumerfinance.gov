@@ -5,9 +5,9 @@ import json
 from django.conf import settings
 import unicodecsv
 
-LOCAL_ROOT = settings.PROJECT_ROOT
+PROJECT_ROOT = settings.PROJECT_ROOT
 FIPS_DATA_PATH = (
-    "{}/data_research/data".format(LOCAL_ROOT))
+    "{}/data_research/data".format(PROJECT_ROOT))
 SOURCE_CSV_URL = (
     'http://files.consumerfinance.gov.s3.amazonaws.com/'
     'data/mortgage-performance/source/delinquency_county_0916.csv'
@@ -33,7 +33,7 @@ OUTDATED_FIPS = {
     '02280': '',  # Wrangell-Petersburg Census Area, AK, DELETED 2008-06-01
 }
 
-SOURCE_HEADINGS = [
+SOURCE_HEADINGS = [  # last changed 2017-07-31
     'date',
     'fips',
     'open',
@@ -80,7 +80,7 @@ FIPS = FipsMeta()
 def assemble_msa_mapping(msa_data):
     """
     Builds a dictionary of MSA IDs that are mapped to a list of county FIPS
-    codes that belong to the MSA and to the MSA's name and state.
+    codes that belong to the MSA and to the MSA's name and included states.
 
     MSA IDs are not strictly FIPS codes, but we call them FIPS to keep the keys
     consistent when handling counties, MSAs and states.
