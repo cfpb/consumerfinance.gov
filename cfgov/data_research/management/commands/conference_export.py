@@ -133,7 +133,7 @@ class ConferenceExporter(object):
 class Command(BaseCommand):
     help = 'Exports conference registration attendees via CSV or email'
 
-    def add_arguments(self, parser):  # pragma: no cover
+    def add_arguments(self, parser):
         parser.add_argument(
             'page_id',
             help='Wagtail page primary key containing registration form'
