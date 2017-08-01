@@ -114,8 +114,8 @@
    ========================================================================== #}
 
 {% macro _date(date) %}
-{% import 'macros/time.html' as time %}
 <p class="a-date u-mb0">
+    {% import 'macros/time.html' as time %}
     {{ time.render(date.date, {'date':true}) }}
 </p>
 {% endmacro %}
