@@ -100,7 +100,7 @@ class MSAMortgageData(MortgageBase):
         count_fields = {
             'total': 0, 'current': 0, 'thirty': 0,
             'sixty': 0, 'ninety': 0, 'other': 0}
-        county_fips = self.counties.split(',')
+        county_fips = [fips.strip() for fips in self.counties.split(',')]
         county_records = CountyMortgageData.objects.filter(
             fips__in=county_fips, date=self.date)
         for county in county_records:
