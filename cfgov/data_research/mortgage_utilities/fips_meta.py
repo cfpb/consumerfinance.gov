@@ -231,23 +231,27 @@ def update_valid_geos():
         if validate_geo(
                 'county', fips, FIPS.threshold_year, FIPS.threshold_count):
             county_list.append(fips)
-    # pct = round((len(county_list) * 100.0) / len(FIPS.county_fips))
-    # print("{}%  of counties qualified in {}".format(
-    #     pct, FIPS.threshold_year))
     for fips in FIPS.msa_fips:
         if validate_geo(
                 'msa', fips, FIPS.threshold_year, FIPS.threshold_count):
             msa_list.append(fips)
-    # pct = round((len(msa_list) * 100.0) / len(FIPS.msa_fips))
-    # print("{}%  of metro areas qualified in {}".format(
-    #     pct, FIPS.threshold_year))
     for fips in FIPS.state_fips:
         if validate_geo(
                 'state', fips, FIPS.threshold_year, FIPS.threshold_count):
             state_list.append(fips)
-    # pct = round((len(state_list) * 100.0) / len(FIPS.state_fips))
-    # print("{}%  of states qualified in {}".format(
-    #     pct, FIPS.threshold_year))
     final_list = sorted(state_list) + sorted(msa_list) + sorted(county_list)
     with open('{}/fips_whitelist.json'.format(FIPS_DATA_PATH), 'wb') as f:
         f.write(json.dumps(final_list))
+
+    msg_dict = {
+        'counties': round(len(county_list) * 100 / len(FIPS.county_fips)),
+        'msas': round(len(msa_list) * 100 / len(FIPS.msa_fips))}
+
+    message = (
+        "In {}, {} percent of counties and {} percent of MSAs met our "
+        "mortgage-count threshold for visualizations.".format(
+            FIPS.threshold_year,
+            msg_dict['counties'],
+            msg_dict['msas']))
+
+    return message

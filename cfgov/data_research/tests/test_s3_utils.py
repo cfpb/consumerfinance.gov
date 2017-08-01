@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-# import copy
 import json
 import mock
 import unittest
@@ -12,24 +11,6 @@ from data_research.mortgage_utilities.s3_utils import (
 )
 
 
-# class MockKey(object):
-
-#     def __init__(self, bucket=None, name=None):
-#         self.bucket = bucket
-#         self.name = 'data/mortgage-performance/fips.json'
-#         self.data = None
-
-#     def get_contents_as_string(self):
-#         return self.data
-
-#     def set_contents_from_string(self, s):
-#         self.data = copy.copy(s)
-
-#     def set_acl(self, acl_or_str, key_name='', headers=None,
-#                 version_id=None):
-#         pass
-
-
 class S3UtilsTests(unittest.TestCase):
 
     def setUp(self):
@@ -38,13 +19,6 @@ class S3UtilsTests(unittest.TestCase):
         self.bucket = mock.Mock(
             name='files.consumerfinance.gov',
             acls={'files.consumerfinance.gov': 'mock_acl_name'})
-
-    # def test_prep_key_function(self):
-    #     mock_bucket = mock.Mock(name='files.consumerfinance.gov', keys={})
-    #     mock_key = MockKey(
-    #         mock_bucket, name='data/mortgage-performance/fips.json')
-    #     test_key = prep_key(mock_key, self.sample_entry)
-    #     self.assertEqual(test_key.get_contents_as_string(), self.sample_entry)
 
     @mock.patch('data_research.mortgage_utilities.s3_utils.requests.get')
     def test_read_in_s3_csv(self, mock_requests):
