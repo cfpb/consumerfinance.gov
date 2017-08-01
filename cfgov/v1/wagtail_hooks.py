@@ -65,7 +65,8 @@ def editor_css():
     css_files = [
         'css/general-enhancements.css',
         'css/table-block.css',
-        'css/bureau-structure.css'
+        'css/bureau-structure.css',
+        'css/heading-blocks.css',
     ]
     css_includes = format_html_join(
         '\n',
