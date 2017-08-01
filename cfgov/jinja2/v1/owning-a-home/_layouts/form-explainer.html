@@ -142,9 +142,13 @@
    Render an o-expandable term with a definition.
 
    item:               A term object. Term objects have the following structure:
-                       { 'term': 'Term name',
-                         'id': 'a-unique-html-id',
-                         'definition': 'This definition can contain HTML.' }
+                        {
+                         'category':   'String containing the name of the category.'
+                         'definition': 'This definition can contain HTML.',
+                         'highlight':  'String containing a url to an image.'
+                         'id': 'a-unique-html-id.',
+                         'term': 'Term name.'
+                        }
 
    index:              The term's position within the array.
 
@@ -225,7 +229,10 @@
     <ul class="form-explainer_page-links">
         {% for page in pages %}
             <li>
-                <a class="form-explainer_page-link {{' current-page' if loop.index == 1 else '' }}" data-page="{{loop.index}}">{{loop.index}}</a>
+                <a class="form-explainer_page-link {{' current-page' if loop.index == 1 else '' }}"
+                   data-page="{{loop.index}}">
+                   {{loop.index}}
+                </a>
             </li>
         {% endfor %}
     </ul>
