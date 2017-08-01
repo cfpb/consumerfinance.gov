@@ -28,9 +28,9 @@ class OahServeView(View):
             return as_view(template_name=template_name)(self.request)
 
     def getResponse(self, path):
-        if self.request.path.endswith( '/process/' ) :
+        if self.request.path.endswith('/process/'):
             return RedirectView.as_view(url='/owning-a-home/process/prepare/',
-                permanent=True)(self.request)
+                                        permanent=True)(self.request)
 
         template_name = path + ('' if 'index.html' in path else '/index.html')
         resource_url = '/static/owning-a-home/' + path
