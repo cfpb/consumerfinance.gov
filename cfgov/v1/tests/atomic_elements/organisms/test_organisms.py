@@ -148,6 +148,21 @@ class OrganismsTestCase(TestCase):
         response = django_client.get('/landing/')
         self.assertContains(response, 'Half Width Link Blob Group')
 
+    def test_info_unit_group(self):
+        """Info Unit Group correctly displays on a Landing Page"""
+        landing_page = LandingPage(
+            title='Landing Page',
+            slug='landing',
+        )
+        landing_page.content = StreamValue(
+            landing_page.content.stream_block,
+            [atomic.info_unit_group],
+            True
+        )
+        publish_page(child=landing_page)
+        response = django_client.get('/landing/')
+        self.assertContains(response, 'Info Unit Group')
+
     # TODO: More comprehensive test for this organism
     def test_reg_comment(self):
         """RegComment correctly displays on a Sublanding Page"""
@@ -300,6 +315,12 @@ class OrganismsTestCase(TestCase):
 
 
 class TestInfoUnitGroup(TestCase):
+    def setUp(self):
+        self.image = CFGOVImage.objects.create(
+            title='test',
+            file=get_test_image_file()
+        )
+
     def test_no_heading_or_intro_ok(self):
         block = InfoUnitGroup()
         value = block.to_python({})
@@ -343,45 +364,59 @@ class TestInfoUnitGroup(TestCase):
         except ValidationError:
             self.fail('heading with intro should not fail validation')
 
-    # @TODO: Get these tests working!
+    def test_2575_with_image_ok(self):
+        block = InfoUnitGroup()
+        value = block.to_python({
+            'format': '25-75',
+            'info_units': [
+                {
+                    'image': {
+                        'upload': self.image.pk
+                    },
+                    'links': [],  # must remove default empty link
+                }
+            ]
+        })
 
-    # def test_2575_with_images_ok(self):
-    #     # image = CFGOVImage.objects.create(
-    #     #     title='test',
-    #     #     file=get_test_image_file()
-    #     # )
-    #     block = InfoUnitGroup()
-    #     value = block.to_python({
-    #         'format': '25-75',
-    #         'info_units': [
-    #             {
-    #                 # 'image': {
-    #                 #     'upload': 84
-    #                 # },
-    #                 'links': [],  # must remove default empty link
-    #             }
-    #         ]
-    #     })
-    #
-    #     try:
-    #         block.clean(value)
-    #     except ValidationError:
-    #         self.fail('25-75 group with info unit that has an image validates')
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('25-75 group with info unit that has an image validates')
 
-    # def test_2575_with_no_images_fails_validation(self):
-    #     block = InfoUnitGroup()
-    #     value = block.to_python({
-    #         'format': '25-75',
-    #         'info_units': [
-    #             {
-    #                 'body': '<p>Info unit with no image</p>',
-    #                 'links': [],  # must remove default empty link
-    #             }
-    #         ]
-    #     })
-    #
-    #     try:
-    #         block.clean(value)
-    #     except ValidationError:
-    #         self.fail('a 25-75 group with an info unit that has no image '
-    #                   'should fail validation')
+    def test_2575_with_no_images_fails_validation(self):
+        block = InfoUnitGroup()
+        value = block.to_python({
+            'format': '25-75',
+            'info_units': [
+                {
+                    'image': {},
+                    'body': '<p>Info unit with no image</p>',
+                    'links': [],  # must remove default empty link
+                }
+            ]
+        })
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_2575_with_some_images_fails(self):
+        block = InfoUnitGroup()
+        value = block.to_python({
+            'format': '25-75',
+            'info_units': [
+                {
+                    'image': {
+                        'upload': self.image.pk
+                    },
+                    'links': [],  # must remove default empty link
+                },
+                {
+                    'image': {},
+                    'body': '<p>Info unit with no image</p>',
+                    'links': [],  # must remove default empty link
+                }
+            ]
+        })
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)

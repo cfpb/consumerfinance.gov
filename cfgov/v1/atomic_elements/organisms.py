@@ -92,7 +92,7 @@ class InfoUnitGroup(blocks.StructBlock):
         # Intro paragraph may only be specified with a heading.
         if cleaned.get('intro') and not cleaned.get('heading'):
             raise ValidationError(
-                'Validation error in StructBlock',
+                'Validation error in InfoUnitGroup: intro with no heading',
                 params={'heading': ErrorList([
                     'Required if paragraph is not empty. (If it looks empty, '
                     'click into it and hit the delete key a bunch of times.)'
@@ -104,7 +104,8 @@ class InfoUnitGroup(blocks.StructBlock):
             for unit in cleaned.get('info_units'):
                 if not unit['image']['upload']:
                     raise ValidationError(
-                        'Validation error in StructBlock',
+                        ('Validation error in InfoUnitGroup: '
+                         '25-75 with no image'),
                         params={'format': ErrorList([
                             'Info units must include images when using the '
                             '25/75 format. Search for an "FPO" image if you '
