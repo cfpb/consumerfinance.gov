@@ -8,7 +8,6 @@ from mock import mock_open, patch
 from model_mommy import mommy
 
 from data_research.mortgage_utilities.fips_meta import (
-    parse_raw_fips,
     update_valid_geos,
     validate_geo,
 )
@@ -18,75 +17,6 @@ from data_research.models import (
     NationalMortgageData,
     StateMortgageData
 )
-
-
-class ParseFIPSTests(unittest.TestCase):
-    """
-    Test that the raw-fips parser returns a dict of valid FIPS values.
-
-    parse_raw_fips returns a dict in this form:
-
-    fips_dict = {'national': '',
-                 'msa': '',
-                 'msa_fips': '',
-                 'state': '',
-                 'state_fips': '',
-                 'county': '',
-                 'county_fips': ''}
-    """
-
-    def setUp(self):
-        self.good_msa_fips = '35840'
-        self.good_county_fips = '12081'
-        self.good_msa_fips = '35840'
-        self.oglala_bad_fips = '46113'
-        self.oglala_good_fips = '46102'
-        self.unknown_fips = '99999'
-        self.unhealable_fips = '999'
-        self.fips_too_long = '9999999'
-
-    def test_parser_catches_sd_edge_case(self):
-        """
-        Oglala Lakota, SD, is a special case. The county changed names
-        and FIPS codes in 2015, but many data sets (including the NMDB)
-        have not been updated. So the parser fixes that.
-        """
-        self.assertEqual(
-            parse_raw_fips(self.oglala_bad_fips)['county_fips'],
-            self.oglala_good_fips)
-
-    def test_parse_good_county_fips(self):
-        self.assertEqual(
-            parse_raw_fips(self.good_county_fips)['county_fips'],
-            self.good_county_fips)
-
-    def test_parse_good_msa_fips(self):
-        self.assertEqual(
-            parse_raw_fips(self.good_msa_fips)['msa_fips'],
-            self.good_msa_fips)
-
-    def test_county_fips_healing(self):
-        self.assertEqual(
-            parse_raw_fips('6115')['county_fips'], '06115')
-
-    def test_parse_good_state_fips(self):
-        self.assertEqual(parse_raw_fips('12')['state_fips'], '12')
-
-    def test_parse_bad_state_fips(self):
-        self.assertIs(parse_raw_fips('99'), None)
-
-    def test_state_fips_healing(self):
-        self.assertEqual(
-            parse_raw_fips('1')['state_fips'], '01')
-
-    def test_unhealable_fips(self):
-        self.assertIs(parse_raw_fips(self.unhealable_fips), None)
-
-    def test_unknown_fips(self):
-        self.assertIs(parse_raw_fips(self.unknown_fips), None)
-
-    def test_fips_too_long(self):
-        self.assertIs(parse_raw_fips(self.fips_too_long), None)
 
 
 class MortgageMetaTests(django.test.TestCase):

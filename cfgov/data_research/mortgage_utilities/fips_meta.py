@@ -13,14 +13,13 @@ SOURCE_CSV_URL = (
     'data/mortgage-performance/source/delinquency_county_0916.csv'
 )
 
-# We have minimal data for territories, so we exclude them.
-#  Puerto Rico (72) is the exception.
+# We have minimal data for territories, so we exclude all but Puerto Rico (72)
 NON_STATES = {'MP': '69', 'AS': '60', 'VI': '78', 'GU': '66'}  # , 'PR': '72'}
 
 
 OUTDATED_FIPS = {
-    # These outdated FIPS codes can show up in the mortgage data
-    # and should be changed or ignored:
+    # These outdated FIPS codes can show up in the mortgage data and should be
+    # ignored, except for Shannon County, SD, which should be changed.
     '02201': '',  # Prince of Wales-Outer Ketchikan, AK
     '02270': '',  # Wade Hampton Census Area, AK
     '12025': '',  # Dade, which became Miami-Dade (12086) in 1990s
@@ -34,18 +33,6 @@ OUTDATED_FIPS = {
     '02280': '',  # Wrangell-Petersburg Census Area, AK, DELETED 2008-06-01
 }
 
-# ORIGINAL_HEADINGS = [
-#     'month',
-#     'date',
-#     'fipstop',
-#     'open',
-#     'current',
-#     'thirty',
-#     'sixty',
-#     'ninety',
-#     'other'
-# ]
-
 SOURCE_HEADINGS = [
     'date',
     'fips',
@@ -57,7 +44,7 @@ SOURCE_HEADINGS = [
     'other'
 ]
 
-OUTPUT_HEADINGS = [  # This is a proposed form
+OUTPUT_HEADINGS = [  # These have not been finalized
     'date',
     'fips',
     'state',
@@ -65,15 +52,15 @@ OUTPUT_HEADINGS = [  # This is a proposed form
     'msa',
     'open_num',
     'current_num',
-    '30_days_delinquent_num',
-    '30_days_delinquent_percent',
+    '30_60_days_delinquent_num',
+    '30_60_days_delinquent_percent',
     '90_days_delinquent_num',
     '90_days_delinquent_percent',
     'other_num']
 
 
 class FipsMeta(object):
-    """A metadata reference store for juggling mortgage records"""
+    """A metadata reference for juggling mortgage records"""
     def __init__(self):
         self.county_fips = {}  # 3 mappings of FIPS to metadata
         self.state_fips = {}
@@ -92,8 +79,11 @@ FIPS = FipsMeta()
 
 def assemble_msa_mapping(msa_data):
     """
-    Builds a dictionary of MSA IDs that are mapped to a list
-    of county FIPS codes that belong to the MSA and the MSA's name and state.
+    Builds a dictionary of MSA IDs that are mapped to a list of county FIPS
+    codes that belong to the MSA and to the MSA's name and state.
+
+    MSA IDs are not strictly FIPS codes, but we call them FIPS to keep the keys
+    consistent when handling counties, MSAs and states.
     """
     def clean_name(data_row):
         raw_msa = data_row.get('msa_name')
@@ -226,7 +216,7 @@ def update_valid_geos():
     in visualizations only if they meet our threshold.
 
     The threshold (initially 1K mortgages a month) is applied to the area's
-    average for the previous year.
+    average for the threshold year, which is generally the previous year.
 
     This should be run once a year to rebuild the list of valid FIPS codes
     for visualizations. The list will be saved in the cfgov-refresh repo
@@ -261,87 +251,3 @@ def update_valid_geos():
     final_list = sorted(state_list) + sorted(msa_list) + sorted(county_list)
     with open('{}/fips_whitelist.json'.format(FIPS_DATA_PATH), 'wb') as f:
         f.write(json.dumps(final_list))
-
-
-def parse_raw_fips(raw_fips):
-    """
-    Return a dict of valid state, county and combined FIPS combinations.
-
-    This is for use in parsing the base data CSV, which has some FIPS codes
-    that lost their leading zeroes because they got interpreted as integers
-    at some point between FHFA and us.
-    """
-    load_fips_meta()
-    fips_dict = {'msa': '',
-                 'msa_fips': '',
-                 'state': '',
-                 'state_fips': '',
-                 'county': '',
-                 'county_fips': ''}
-    if raw_fips in FIPS.msa_fips:
-        msa_data = FIPS.msa_fips.get(raw_fips)
-        fips_dict['msa'] = msa_data.get('')
-        fips_dict['msa_fips'] = raw_fips
-        return fips_dict
-    if raw_fips == '46113':
-        raw_fips = '46102'  # Fixes Oglala Lakota County, SD
-    if len(raw_fips) in [1, 2]:
-        if len(raw_fips) == 1:
-            state_fips = "0{}".format(raw_fips)
-        else:
-            state_fips = raw_fips
-        if state_fips not in FIPS.state_fips:
-            return None
-        fips_dict['state'] = FIPS.state_fips.get(state_fips)
-        fips_dict['state_fips'] = state_fips
-        return fips_dict
-    if len(raw_fips) == 4:
-        raw_fips = "0{}".format(raw_fips)
-    if raw_fips not in FIPS.all_fips:
-        return None
-    else:  # FIPS is neither state nor msa, but is recognized; must be county
-        state_fips = raw_fips[:2]
-        fips_dict['state_fips'] = state_fips
-        fips_dict['county_fips'] = raw_fips
-        fips_dict['state'] = FIPS.state_fips[state_fips]
-        fips_dict['county'] = FIPS.county_fips.get(raw_fips)
-        return fips_dict
-
-
-# def convert_row(original_row):
-#     """
-#     Convert a dict-based row of original data to our reader-friendly version.
-#     """
-#     fips_dict = parse_raw_fips(original_row['fips'])
-#     new_row = {
-#         'date': original_row['date'],
-#         'fips': fips_dict['county_fips'],
-#         'state': fips_dict['state'],
-#         'county': fips_dict['county'],
-#         'msa': '',
-#         'total_count': original_row['open'],
-#         'current_count': original_row['current'],
-#         '30_days_delinquent_count': original_row['thirty'],
-#         '60_days_delinquent_count': original_row['sixty'],
-#         '90_days_delinquent_count': original_row['ninety'],
-#         'other_count': original_row['other']
-#     }
-#     return new_row
-
-
-# def convert_csv():
-#     """
-#     Read in the base CSV file, fix FIPS codes to restore leading zeroes
-#     and skip outdated FIPS codes (ones that no longer exist),
-#     and output a CSV with reader-friendly column headings.
-#     """
-#     from data_research.mortgage_utilities.s3_utils import read_in_s3_csv
-#     raw_data = read_in_s3_csv(BASE_DATA_URL)
-#     # outfile = StringIO.StringIO()
-#     with open('converted_mortgage_data.csv', 'wb') as f:
-#         writer = unicodecsv.writer(f)
-#         writer.writerow(OUTPUT_HEADINGS)
-#         for raw in raw_data:
-#             row = convert_row(raw)
-#             if row['fips'] not in OUTDATED_FIPS:
-#                 writer.writerow([row[headng] for headng in OUTPUT_HEADINGS])
