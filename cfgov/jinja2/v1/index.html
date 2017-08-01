@@ -186,12 +186,8 @@
                                         {{ block.link.text }}
                                     </a>
                                     <p class="a-date">
-                                        <span class="datetime">
-                                            {% import 'macros/time.html' as time %}
-                                            <time class="datetime_date">
-                                                {{ time.render(block.date, {'date':true}) }}
-                                            </time>
-                                        </span>
+                                        {% import 'macros/time.html' as time %}
+                                        {{ time.render(block.date, {'date':true}) }}
                                     </p>
                                 </div>
                             {% endfor %}
