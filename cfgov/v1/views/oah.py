@@ -28,7 +28,7 @@ class OahServeView(View):
             return as_view(template_name=template_name)(self.request)
 
     def getResponse(self, path):
-        template_name = path + ( '' if 'index.html' in path else '/index.html' )
+        template_name = path + ('' if 'index.html' in path else '/index.html')
         print template_name
         resource_url = '/static/owning-a-home/' + path
         as_view = SheerTemplateView.as_view
