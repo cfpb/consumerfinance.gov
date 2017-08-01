@@ -32,10 +32,10 @@ class S3UtilsTests(unittest.TestCase):
     def test_bake_json_to_s3(self, mock_connect):
         mock_get_bucket = mock.Mock()
         mock_connect.get_bucket.return_value = mock_get_bucket
-        mock_connect
         json_string = json.dumps({'test_json': 'test_payload'})
         slug = 'test.json'
         bake_json_to_s3(slug, json_string)
+        self.assertEqual(mock_connect.call_count, 1)
 
     @mock.patch('data_research.mortgage_utilities.s3_utils.requests.get')
     def test_read_in_s3_json(self, mock_requests):
