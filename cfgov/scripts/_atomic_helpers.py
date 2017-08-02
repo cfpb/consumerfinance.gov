@@ -231,6 +231,26 @@ half_width_link_blob_group = {
     }
 }
 
+info_unit_group = {
+    "type": "info_unit_group",
+    "value": {
+        "heading": {
+            "text": "Info Unit Group",
+        },
+        "info_units": [
+            {
+                "body": "this is an info unit",
+                "links": [
+                    {
+                        "url": "/",
+                        "text": "test"
+                    }
+                ],
+            }
+        ]
+    }
+}
+
 html_block = {
     "type": "html_block",
     "value": {

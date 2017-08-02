@@ -98,16 +98,15 @@
  */
 .u-info-unit-base() {
     &_image {
+        display: block;
         margin-right: auto;
         margin-bottom: unit( ( @grid_gutter-width / 2 ) / @base-font-size-px, em );
         margin-left: auto;
-        display: block;
+        background-size: cover;
 
         &__square {
             width: unit( @m-info-unit_img__sm / @base-font-size-px, em );
             height: unit( @m-info-unit_img__sm / @base-font-size-px, em );
-
-            background-size: cover;
 
             .respond-to-min( @bp-med-min, {
                 width: unit( @m-info-unit_img__lg / @base-font-size-px, em );
