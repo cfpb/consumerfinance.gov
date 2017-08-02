@@ -10,38 +10,43 @@
 
    value:                              Object defined from a StreamField block.
 
-   value.half_width:                   A Boolean indicating whether the
+   value.is_half_width:                A boolean indicating whether the
                                        list items should be at half width.
                                        Defaults to False.
 
-   value.slug:                         TODO: Add data type and description.
+   value.slug:                         A string of text to use as a header
+                                       for the entire module.
 
-   value.content:
+   value.content:                      A list of metadata blocks.
 
    value.content[i].block_type:        String for a block type,
                                        it should be date, list, text,
                                        or topics.
 
-   value.content[i].value:             TODO: Add data type and description.
+   value.content[i].value:             A date, list, text, or topics markup.
 
-   value.content[i].value.show_topics: Boolean for whether to
+   value.content[i].value.show_topics: A boolean for whether the
                                        topic should be rendered.
 
-   value.content[i].value.heading:     TODO: Add data type and description.
+   value.content[i].value.heading:     A string for the heading on the related
+                                       metadata block
+                                       (date, list, text, or topic).
 
    ========================================================================== #}
 
 {% macro render(value) %}
+
+{# This references each of the private macros,
+   so _date(), _list(), _text(), and topics()
+   are called via type_lookup() while looping over this array. #}
 {% set types_lookup = {
     'date':   _date,
     'list':   _list,
     'text':   _text,
     'topics': _topics,
 } %}
-{# TODO: Update `half_width` param to `is_half_width`
-         to make it clear it's a boolean. #}
 <div class="m-related-metadata
-            {{ 'm-related-metadata__half-width' if value.half_width else '' }}">
+            {{ 'm-related-metadata__half-width' if value.is_half_width else '' }}">
     <header class="m-slug-header">
         <h2 class="a-heading">
             {{ value.slug }}
@@ -115,7 +120,7 @@
 
 {% macro _date(date) %}
 {% import 'macros/time.html' as time %}
-<p class="a-date u-mb0">
+<p class="a-date">
     {{ time.render(date.date, {'date':true}) }}
 </p>
 {% endmacro %}
@@ -135,13 +140,9 @@
    ========================================================================== #}
 
 {% macro _text(text) %}
-
-<p class="u-mb0">
     {{ parse_links(text.blob) | safe }}
-</p>
 {% endmacro %}
 
-{# TODO: This function is not used and can be removed. #}
 {# ==========================================================================
 
    _topics()
