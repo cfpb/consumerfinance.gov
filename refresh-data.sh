@@ -9,6 +9,7 @@
 # Set script to exit on any errors.
 set -e
 refresh_dump_name=$1
+eval $(docker-machine env cfgov)
 
 download_data() {
 	echo 'Downloading fresh production Django database dump...'
@@ -18,12 +19,13 @@ download_data() {
 }
 
 refresh_data(){
-	echo 'Dropping db'
-	./drop-db.sh
-	echo 'Creating db'
-	./create-mysql-db.sh
-	echo 'Importing refresh db'
-	mysql v1 --user='root' --password='' < $refresh_dump_name
+    echo 'Dropping tables'
+    ./drop-tables.sh
+    CONTAINER=`docker ps | grep mysql_1 | awk '{print $1}'`
+    echo "Uploading data into container $CONTAINER"
+    docker cp $refresh_dump_name $CONTAINER:/tmp/tmp.sql
+	echo 'Importing database'
+	docker-compose exec mysql mysql v1 -u root -proot  -e "source /tmp/tmp.sql"
 	echo 'Setting up initial data'
 	./cfgov/manage.py runscript initial_data
 }

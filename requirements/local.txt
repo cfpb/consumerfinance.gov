@@ -1,5 +1,4 @@
 -r base.txt
--r mysql.txt
 
 django-debug-toolbar==1.7
 django-livereload==1.2

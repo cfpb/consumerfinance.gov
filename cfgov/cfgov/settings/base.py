@@ -7,6 +7,12 @@ from unipath import Path
 
 from ..util import admin_emails
 
+try:
+    import MySQLdb
+except ImportError:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+
 # Repository root is 4 levels above this file
 REPOSITORY_ROOT = Path(__file__).ancestor(4)
 
@@ -192,10 +198,10 @@ else:
         'default': {
             'ENGINE': MYSQL_ENGINE,
             'NAME': os.environ.get('MYSQL_NAME', 'v1'),
-            'USER': os.environ.get('MYSQL_USER', 'root'),
-            'PASSWORD': os.environ.get('MYSQL_PW', ''),
-            'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
-            'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
+            'USER': os.environ.get('MYSQL_USER', 'v1'),
+            'PASSWORD': os.environ.get('MYSQL_PW', 'v1'),
+            'HOST': os.environ.get('MYSQL_HOST', 'localhost.'),  # empty string == localhost
+            'PORT': os.environ.get('MYSQL_PORT', '3306'),  # empty string == default
         },
     }
 
@@ -543,6 +549,9 @@ FLAGS = {
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
     'BETA_NOTICE': {},
+
+    # When enabled, Display a "techical issues" banner on /complaintdatabase
+    'CCDB_TECHNICAL_ISSUES': {},
 
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic

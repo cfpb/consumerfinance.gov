@@ -18,19 +18,17 @@ Full [installation](https://cfpb.github.io/cfgov-refresh/installation/)
 and [usage](https://cfpb.github.io/cfgov-refresh/usage/) instructions
 are available in [our documentation](https://cfpb.github.io/cfgov-refresh).
 
-Ensure that Elasticsearch and MySQL are installed and that MySQL is
-either running or runnable by our
-[backend.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/backend.sh#L41)
-and our
-[runserver.sh script](https://github.com/cfpb/cfgov-refresh/blob/master/runserver.sh#L12).
+Ensure that Python, Node, Docker, Docker Machine, Docker Compose, and imagemagick are installed. If you are using a mac with homebrew, you can run `homebrew-deps.sh` as described below:
 
 ```
 git clone git@github.com:cfpb/cfgov-refresh.git
 cd cfgov-refresh
+sh homebrew-deps.sh
 pip install virtualenv virtualenvwrapper
 npm install -g gulp
 source load-env.sh
 source setup.sh
+workon cfgov-refresh
 ./runserver.sh
 ```
 

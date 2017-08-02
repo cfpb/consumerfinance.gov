@@ -36,26 +36,6 @@ install() {
   fi
 }
 
-# Setup MySQL server.
-db_setup() {
-  echo 'Setting up MySQL database...'
-  if [ $(is_installed mysql.server) = 1 ]; then
-    if mysql.server status; then
-      ./create-mysql-db.sh
-    else
-      mysql.server start
-      ./create-mysql-db.sh
-    fi
-
-    if [ "$cli_flag" = "development" ]; then
-      ./initial-data.sh
-    fi
-  else
-    echo 'Error: MySQL not found. Please install MySQL.'
-    echo 'The easiest way to do this is probably by running'
-    echo '$ brew install mysql'
-  fi
-}
 
 # Returns 1 if a global command-line program installed, else 0.
 # For example, echo "node: $(is_installed node)".
@@ -71,4 +51,4 @@ is_installed() {
 
 init "$1"
 install
-db_setup
+sh start-services.sh
