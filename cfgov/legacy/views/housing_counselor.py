@@ -2,7 +2,6 @@ import os
 import re
 import requests
 import sys
-from urlparse import urljoin
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -10,9 +9,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils.functional import cached_property
 from django.views.generic import TemplateView, View
 
-from flags.state import flag_enabled
 from legacy.forms import HousingCounselorForm
-from legacy.templatetags.housing_counselor import split_string_list
 from v1.s3utils import https_s3_url_prefix
 
 
@@ -39,34 +36,11 @@ class HousingCounselorView(TemplateView):
                 except requests.HTTPError:
                     pass
                 else:
-                    context['zipcode_valid'] = True
-
-                    # The django-hud API returns JSON data that includes lists
-                    # as comma-separated strings. Convert these to lists so
-                    # that they can be included in the template in a more
-                    # conventional way.
-                    if not flag_enabled(
-                        'HOUSING_COUNSELOR_S3',
-                        request=self.request
-                    ):
-                        for agency in api_json['counseling_agencies']:
-                            for l in ('languages', 'services'):
-                                agency[l] = split_string_list(agency[l])
-
-                    context['api_json'] = api_json
-
-                    if flag_enabled(
-                        'HOUSING_COUNSELOR_S3',
-                        request=self.request
-                    ):
-                        pdf_url = self.s3_pdf_url(zipcode)
-                    else:
-                        pdf_url = '{path}?zip={zipcode}'.format(
-                            path=reverse('housing-counselor-pdf'),
-                            zipcode=zipcode
-                        )
-
-                    context['pdf_url'] = pdf_url
+                    context.update({
+                        'zipcode_valid': True,
+                        'api_json': api_json,
+                        'pdf_url': self.s3_pdf_url(zipcode),
+                    })
 
         return context
 
@@ -76,10 +50,7 @@ class HousingCounselorView(TemplateView):
 
         Raises requests.HTTPError on failure.
         """
-        if flag_enabled('HOUSING_COUNSELOR_S3', request=request):
-            api_url = cls.s3_json_url(zipcode)
-        else:
-            api_url = urljoin(settings.DJANGO_HUD_API_ENDPOINT, zipcode)
+        api_url = cls.s3_json_url(zipcode)
 
         response = requests.get(api_url)
         response.raise_for_status()

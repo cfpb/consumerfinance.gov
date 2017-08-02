@@ -244,15 +244,20 @@ urlpatterns = [
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
-    # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
-    # Otherwise include CCDB4 urls
+    url(r'^data-research/consumer-complaints/',
+        include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+
+    # CCDB5-API
     flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/',
+                r'^data-research/consumer-complaints/search/api/v1/',
+                include_if_app_enabled('complaint_search',
+                                       'complaint_search.urls')
+                ),
+    # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
+    flagged_url('CCDB5_RELEASE',
+                r'^data-research/consumer-complaints/search/',
                 include_if_app_enabled(
                     'ccdb5_ui', 'ccdb5_ui.config.urls'
-                ),
-                fallback=include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
                 )),
 
     url(r'^oah-api/rates/',
@@ -297,13 +302,6 @@ urlpatterns = [
         name='cckbyo'),
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
-
-    # CCDB5-API
-    flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/api/v1/',
-                include_if_app_enabled('complaint_search',
-                                       'complaint_search.urls')
-                ),
 
     # ask-cfpb
     url(r'^askcfpb/$',

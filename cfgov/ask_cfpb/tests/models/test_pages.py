@@ -306,6 +306,14 @@ class AnswerModelTestCase(TestCase):
         response = cat_page.category_page(request)
         self.assertEqual(response.status_code, 200)
 
+    def test_routable_category_page_invalid_pagination(self):
+        cat_page = self.create_category_page(
+            ask_category=self.category)
+        request = HttpRequest()
+        request.GET['page'] = 'A50'
+        response = cat_page.category_page(request)
+        self.assertEqual(response.status_code, 200)
+
     def test_routable_subcategory_page_view(self):
         cat_page = self.create_category_page(
             ask_category=self.category)
@@ -411,18 +419,26 @@ class AnswerModelTestCase(TestCase):
         page = self.page1
         page.slug = 'mock-answer-en-1234'
         page.save()
+        revision = page.save_revision()
+        revision.publish()
         response = self.client.get(reverse(
             'ask-english-answer', args=['mock-answer', 'en', 1234]))
         self.assertEqual(response.status_code, 200)
 
     def test_view_answer_302_for_healed_slug(self):
+        page = self.page1
+        revision = page.save_revision()
+        revision.publish()
         response = self.client.get(reverse(
             'ask-english-answer', args=['mock-slug', 'en', 1234]))
         self.assertEqual(response.status_code, 302)
 
     def test_view_answer_redirected(self):
-        self.page1.redirect_to = self.page2.answer_base
-        self.page1.save()
+        page = self.page1
+        page.redirect_to = self.page2.answer_base
+        page.save()
+        revision = page.save_revision()
+        revision.publish()
         response_302 = self.client.get(reverse(
             'ask-english-answer', args=['mocking-answer-page', 'en', 1234]))
         self.assertTrue(isinstance(response_302, HttpResponse))

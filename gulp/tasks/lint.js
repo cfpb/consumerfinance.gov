@@ -13,15 +13,14 @@ const minimist = require( 'minimist' );
  * @returns {Object} An output stream from gulp.
  */
 function _genericLint( src ) {
-  // Grab the --fix flag from the command-line, if available.
-  const commandLineParams = minimist( process.argv.slice( 2 ) );
-  const willFix = commandLineParams.fix || false;
+  // Pass all command line flags to EsLint.
+  const options = minimist( process.argv.slice( 2 ) );
 
   return gulp.src( src, { base: './' } )
-    .pipe( gulpEslint( { fix: willFix } ) )
+    .pipe( gulpEslint( options ) )
     .pipe( gulpEslint.format() )
     .pipe( ( () => {
-      if ( commandLineParams.travis ) {
+      if ( options.travis ) {
         return gulpEslint.failAfterError();
       }
 

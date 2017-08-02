@@ -1,9 +1,9 @@
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
-from . import atoms
-from ..blocks import AnchorLink
-from ..util import ref
+from v1.atomic_elements import atoms
+from v1.blocks import AnchorLink, HeadingBlock
+from v1.util import ref
 
 
 class HalfWidthLinkBlob(blocks.StructBlock):
@@ -24,6 +24,24 @@ class HalfWidthLinkBlob(blocks.StructBlock):
     class Meta:
         icon = 'link'
         template = '_includes/molecules/link-blob.html'
+
+
+class InfoUnit(blocks.StructBlock):
+    image = atoms.ImageBasic(
+        required=False,
+    )
+
+    heading = HeadingBlock(
+        required=False,
+        default={'level': 'h3'}
+    )
+
+    body = blocks.RichTextBlock(blank=True, required=False)
+    links = blocks.ListBlock(atoms.Hyperlink(), required=False)
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/molecules/info-unit.html'
 
 
 class ImageText5050(blocks.StructBlock):
@@ -303,7 +321,7 @@ class RelatedMetadata(blocks.StructBlock):
         ], icon='list-ul')),
         ('date', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100)),
-            ('date', blocks.DateBlock(required=False))
+            ('date', blocks.DateBlock())
         ], icon='date')),
         ('topics', blocks.StructBlock([
             ('heading', blocks.CharBlock(max_length=100, default='Topics')),
