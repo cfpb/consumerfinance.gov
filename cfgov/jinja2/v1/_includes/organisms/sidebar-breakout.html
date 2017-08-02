@@ -52,7 +52,7 @@
                           block
                           block__flush-top
                           block__flush-bottom">
-                {% for block in page.sidebar_breakout %}
+                {% for block in page.sidebar_breakout recursive %}
                     {% if 'heading' in block.block_type %}
                         <h3 class="o-sidebar-breakout_heading">
                             {{ render_stream_child(block) }}
