@@ -82,10 +82,10 @@
 {% set consumer_tools_group_one =  {
     'title': 'Money Topics',
     'nav_items': [
-        {'text': 'Auto Loans', 'url': '/consumer-tools/auto-loans-topic/'},
-        {'text': 'Bank Accounts and Services', 'url': '/consumer-tools/bank-accounts-and-services/'},
+        {'text': 'Auto Loans', 'url': '/consumer-tools/auto-loans/'},
+        {'text': 'Bank Accounts and Services', 'url': '/consumer-tools/bank-accounts/'},
         {'text': 'Credit Cards', 'url': '/ask-cfpb/category-credit-cards/'},
-        {'text': 'Credit Reports and Scores', 'url': '/consumer-tools/credit-reports-and-scores/'},
+        {'text': 'Credit Reports & Scores', 'url': '/consumer-tools/credit-reports-and-scores/'},
         {'text': 'Debt Collection', 'url': '/consumer-tools/debt-collection/'},
     ]
 } %}
@@ -95,7 +95,7 @@
     'hide_title': 'true',
     'nav_items': [
         {'text': 'Money Transfers', 'url': '/sending-money/'},
-        {'text': 'Mortgages', 'url': '/ask-cfpb/category-mortgages/'},
+        {'text': 'Mortgages', 'url': '/mortgagehelp/'},
         {'text': 'Prepaid Cards', 'url': '/consumer-tools/prepaid-cards/'},
         {'text': 'Student Loans', 'url': '/ask-cfpb/category-student-loans/'},
     ]
@@ -104,8 +104,10 @@
 {% set consumer_tools_group_three = {
     'title': 'Guides',
     'nav_items': [
-        {'text': 'Getting an Auto Loan', 'url': '/consumer-tools/auto-loans/'},
-        {'text': 'Managing Someone Else’s Money', 'url': '/managing-someone-elses-money/'},
+        {'text': 'Getting an Auto Loan', 'url': '/consumer-tools/getting-an-auto-loan/'},
+        {'text': 'Managing Someone Else’s Money', 'url': '/consumer-tools/managing-someone-elses-money/'},
+        {'text': 'Money as You Grow', 'url': '/consumer-tools/money-as-you-grow/'},
+        {'text': 'Navigating the Military Financial Lifecycle', 'url': '/consumer-tools/military-financial-lifecycle/'},
         {'text': 'Owning a Home', 'url': '/owning-a-home/'},
         {'text': 'Paying for College', 'url': '/paying-for-college/'},
         {'text': 'Planning for Retirement', 'url': '/retirement/before-you-claim/'},
@@ -116,7 +118,7 @@
     'text': 'Consumer Tools',
     'url': '#',
     'footer': [
-        'Browse answers to hundreds of financial questions <a href="/ask-cfpb/" class="o-mega-menu_content-link">Ask CFPB</a>',
+        'Browse answers to hundreds of financial questions. <a href="/ask-cfpb/" class="o-mega-menu_content-link">Ask CFPB</a>',
         'Have an issue with a financial product? <a href="/complaint/" class="o-mega-menu_content-link">Submit a complaint</a>',
     ],
     'nav_groups': [
@@ -132,27 +134,26 @@
 {% set practitioner_resources_group_one = {
     'title': 'Populations Served',
     'nav_items': [
-        {'text': 'Adult Financial Education', 'url': '/adult-financial-education/'},
-        {'text': 'Economically Vulnerable Consumers', 'url': '/empowerment/'},
-        {'text': 'Mortgage Borrowers', 'url': '/'},
-        {'text': 'Older Adults and Their Families', 'url': '/'},
+        {'text': 'Financial Education for Adults', 'url': '/practitioner-resources/adult-financial-education/'},
+        {'text': 'Financial Education for Youth', 'url': '/practitioner-resources/youth-financial-education/'},
+        {'text': 'Low-to-Moderate Income', 'url': '/practitioner-resources/empowerment/'}
     ]
 } %}
 {% set practitioner_resources_group_two = {
     'title': 'Populations Served',
     'hide_title': 'true',
     'nav_items': [
-        {'text': 'Servicemembers and Veterans', 'url': '/servicemembers/'},
-        {'text': 'Students', 'url': '/consumer-tools/student-loans/'},
-        {'text': 'Youth Financial Education', 'url': '/youth-financial-education/'},
+        {'text': 'Older Adults and Their Families', 'url': '/practitioner-resources/resources-for-older-adults/'},
+        {'text': 'Servicemembers & Veterans', 'url': '/practitioner-resources/servicemembers/'},
+        {'text': 'Students', 'url': '/practitioner-resources/students'},
     ]
 } %}
 {% set practitioner_resources_group_three = {
     'title': 'Programs',
     'nav_items': [
-        {'text': 'Resources for Librarians', 'url': '/library-resources/'},
-        {'text': 'Resources for Tax Preparers', 'url': '/tax-preparer-resources/'},
-        {'text': 'Your Money, Your Goals', 'url': '/your-money-your-goals/'},
+        {'text': 'Resources for Libraries', 'url': '/practitioner-resources/library-resources/'},
+        {'text': 'Resources for Tax Preparers', 'url': '/practitioner-resources/resources-for-tax-preparers/'},
+        {'text': 'Your Money, Your Goals', 'url': '/practitioner-resources/your-money-your-goals/'},
     ]
 } %}
 
@@ -160,7 +161,7 @@
     'text': 'Practitioner Resources',
     'url': '#',
     'footer': [
-        '<a href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php" class="o-mega-menu_content-link">Free Brochures</a>',
+        '<a href="https://pueblo.gpo.gov/CFPBPubs/CFPBPubs.php" class="o-mega-menu_content-link">Order free brochures</a>',
     ],
     'nav_groups': [
         practitioner_resources_group_one,
