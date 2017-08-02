@@ -42,7 +42,7 @@ CONSUMER_TOOLS_PORTAL_PAGES = {
     '/consumer-tools/bank-accounts/': (
         'Bank Accounts and Services',
         'bank-accounts-and-services'),
-    '/consumer-tools/credit-cards': (
+    '/consumer-tools/credit-cards/': (
         'Credit Cards',
         'credit-cards'),
     '/consumer-tools/credit-reports-and-scores/': (
