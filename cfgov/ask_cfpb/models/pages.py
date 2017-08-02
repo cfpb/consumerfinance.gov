@@ -37,21 +37,29 @@ SPANISH_DISCLAIMER_SNIPPET_TITLE = (
     'Legal disclaimer for consumer materials (in Spanish)')
 CONSUMER_TOOLS_PORTAL_PAGES = {
     '/consumer-tools/auto-loans/': (
-        'Auto Loans', 'auto-loans'),
+        'Auto Loans',
+        'auto-loans'),
     '/consumer-tools/bank-accounts/': (
-        'Bank Accounts and Services', 'bank-accounts-and-services'),
+        'Bank Accounts and Services',
+        'bank-accounts-and-services'),
     '/consumer-tools/credit-cards': (
-        'Credit Cards', 'credit-cards'),
+        'Credit Cards',
+        'credit-cards'),
     '/consumer-tools/credit-reports-and-scores/': (
-        'Credit Reports and Scores', 'credit-reporting'),
+        'Credit Reports and Scores',
+        'credit-reporting'),
     '/consumer-tools/debt-collection/': (
-        'Debt Collection', 'debt-collection'),
+        'Debt Collection',
+        'debt-collection'),
     '/consumer-tools/prepaid-cards/': (
-        'Prepaid Cards', 'prepaid-cards'),
+        'Prepaid Cards',
+        'prepaid-cards'),
     '/consumer-tools/sending-money/': (
-        'Sending Money', 'money-transfers'),
+        'Sending Money',
+        'money-transfers'),
     '/consumer-tools/student-loans/': (
-        'Student Loans', 'student-loans')
+        'Student Loans',
+        'student-loans')
 }
 
 
@@ -88,35 +96,30 @@ def get_ask_breadcrumbs(category=None):
 
 
 def get_question_referrer_data(request, categories):
-    category = None
-    breadcrumbs = None
+    """
+    Determines whether a question page's referrer is a
+    portal or Ask category page, and if so returns the
+    appropriate category and breadcrumbs. Otherwise,
+    returns question's first category and its breadcrumbs.
+    """
     try:
         referrer = request.META.get('HTTP_REFERER', '')
         path = urlparse(referrer).path
-        data = CONSUMER_TOOLS_PORTAL_PAGES.get(path)
-        if data:
-            # if the referrer is a portal page,
-            # generate portal breadcrumbs and get 
-            # Ask category associated with the portal
-            breadcrumbs = [{'title': data[0], 'href': path}]
-            category = categories.filter(slug=data[1]).first()
+        portal_data = CONSUMER_TOOLS_PORTAL_PAGES.get(path)
+        if portal_data:
+            category = categories.filter(slug=portal_data[1]).first()
+            breadcrumbs = [{'title': portal_data[0], 'href': path}]
+            return (category, breadcrumbs)
         else:
             match = re.search(r'ask-cfpb/category-([A-Za-z0-9-_]*)/', path)
             if match.group(1):
-                # if the referrer is an ask category page,
-                # get the category from the question's categories
-                # for use in generating breadcrumbs & related subcategories
                 category = categories.filter(slug=match.group(1)).first()
+                return (category, get_ask_breadcrumbs(category))
     except Exception:
         pass
 
-    # breadcrumbs means it's a portal page and category can be empty.
-    # otherwise, check for category and then generate breadcrumbs.
-    if not breadcrumbs:
-        if not category:
-            category = categories.first()
-        breadcrumbs = get_ask_breadcrumbs(category)
-
+    category = categories.first()
+    breadcrumbs = get_ask_breadcrumbs(category)
     return (category, breadcrumbs)
 
 
