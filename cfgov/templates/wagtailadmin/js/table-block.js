@@ -193,7 +193,7 @@
 
                 if ( 'resize' in $window ) {
                     this.resize( utilities.DIMENSIONS.HEIGHT, this.getHeight() );
-                    $window.load( function() {
+                    $window.on('load', function() {
                         $window.resize();
                     } );
                 }
