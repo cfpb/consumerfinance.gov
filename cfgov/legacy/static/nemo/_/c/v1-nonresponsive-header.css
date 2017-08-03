@@ -1057,25 +1057,6 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
     padding: 15px 0
 }
 
-.o-mega-menu_content-2 h3 {
-    margin-top: 30px;
-}
-.o-mega-menu_content-2 h3.hide-title {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    border: 0;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-}
-.o-mega-menu_content-2 h3:not(.hide-title)+ul {
-    border-top: 1px solid #b4b5b6;
-}
-.o-mega-menu_content-3-list:last-child .o-mega-menu_content-3-item:last-child {
-    border-bottom: none;
-}
 .o-mega-menu .nav_footer {
     margin-top: 30px;
     font-size: 1.125em;
