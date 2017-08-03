@@ -544,6 +544,9 @@ FLAGS = {
     # "This beta site is a work in progress."
     'BETA_NOTICE': {},
 
+    # When enabled, Display a "techical issues" banner on /complaintdatabase
+    'CCDB_TECHNICAL_ISSUES': {},
+
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
