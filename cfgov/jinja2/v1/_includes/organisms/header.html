@@ -92,11 +92,7 @@
             </a>
 
             {% block primary_nav %}
-                {% if flag_enabled('IA_USER_TESTING_MENU', request) %}
-                    {% include 'organisms/mega-menu-for-ia-testing.html' %}
-                {% else %}
-                    {% include 'organisms/mega-menu.html' with context %}
-                {% endif %}
+                {% include 'organisms/mega-menu.html' with context %}
             {% endblock primary_nav %}
         </div>
 
