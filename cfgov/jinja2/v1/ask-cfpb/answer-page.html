@@ -5,11 +5,11 @@
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block title %}
-    {{ page.question|striptags }}
+    {{ page.question | striptags }}
 {% endblock %}
 
 {% block desc %}
-    {{ description|striptags|safe}}
+    {{ description | striptags | safe}}
 {% endblock %}
 
 {% block banner_top %}
