@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from django.utils.module_loading import import_string
-from django.utils.safestring import SafeText
+from django.utils.safestring import mark_safe, SafeText
 from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
 
@@ -119,6 +119,42 @@ class Feedback(AbstractFormBlock):
 
     class Media:
         js = ['feedback-form.js']
+
+
+class HeadingIconBlock(blocks.CharBlock):
+    classname = 'heading-icon-block'
+
+
+class HeadingLevelBlock(blocks.ChoiceBlock):
+    choices = [
+        ('h2', 'H2'),
+        ('h3', 'H3'),
+        ('h4', 'H4'),
+    ]
+    classname = 'heading-level-block'
+
+
+class HeadingTextBlock(blocks.CharBlock):
+    classname = 'heading-text-block'
+
+
+class HeadingBlock(blocks.StructBlock):
+    text = HeadingTextBlock(required=False)
+    level = HeadingLevelBlock(default='h2')
+    icon = HeadingIconBlock(
+        required=False,
+        help_text=mark_safe(
+            'Input the name of an icon to appear to the left of the heading. '
+            'E.g., approved, help-round, etc. '
+            '<a href="https://cfpb.github.io/capital-framework/'
+            'components/cf-icons/#icons">See full list of icons</a>'
+        ),
+    )
+
+    class Meta:
+        form_template = (
+            'admin/form_templates/struct-with-block-wrapper-classes.html'
+        )
 
 
 class PlaceholderFieldBlock(blocks.FieldBlock):
