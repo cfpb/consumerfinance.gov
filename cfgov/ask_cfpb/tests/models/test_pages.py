@@ -991,6 +991,7 @@ class AnswerModelTestCase(TestCase):
     def test_answer_page_context_collects_subcategories(self):
         """ Answer page's context delivers all related subcategories """
         answer = self.answer1234
+        answer.category.add(self.category)
         related_subcat = mommy.make(
             SubCategory,
             name='related_subcat',
@@ -1005,3 +1006,121 @@ class AnswerModelTestCase(TestCase):
         request = HttpRequest()
         context = page.get_context(request)
         self.assertEqual(len(context['subcategories']), 4)
+
+    def test_answer_page_context_collects_subcategories_with_same_parent(self):
+        """ Answer page's context delivers only subcategories that
+            share the selected parent category """
+        answer = self.answer1234
+        test_category = mommy.make(
+            Category, name='Test cat', slug='test-cat')
+        test_subcategory = mommy.make(
+            SubCategory, name='test_subcat', parent=test_category)
+        test_category.subcategories.add(test_subcategory)
+        answer.category.add(test_category)
+        answer.subcategory.add(test_subcategory)
+        answer.category.add(self.category)
+        for each in self.subcategories:
+            answer.subcategory.add(each)
+        answer.update_english_page = True
+        answer.save()
+        page = answer.english_page
+        request = HttpRequest()
+        context = page.get_context(request)
+        first_category = answer.category.first()
+        self.assertEqual(context['category'], first_category)
+        self.assertEqual(len(context['subcategories']),
+                         first_category.subcategories.count())
+
+    def test_answer_page_breadcrumbs_and_subcategories_with_no_referrer(self):
+        """ If there is no referrer, category/breadcrumbs should reflect
+        first category on answer."""
+        answer = self.answer1234
+        test_category = mommy.make(
+            Category, name='Test cat', slug='test-cat')
+        answer.category.add(self.category)
+        answer.category.add(test_category)
+        page = answer.english_page
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = ''
+        context = page.get_context(request)
+        default_category = answer.category.first()
+        self.assertEqual(context['category'], default_category)
+        self.assertEqual(len(context['breadcrumb_items']), 2)
+        self.assertEqual(context['breadcrumb_items'][1]['title'],
+                         default_category.name)
+
+    def test_answer_page_context_with_category_referrer(self):
+        """ If the referrer is a category page and category is on answer,
+        breadcrumbs should lead back to category page,
+        context['category'] should be referring category, and subcategories
+        should be any on answer from referring category."""
+        answer = self.answer1234
+        test_category = mommy.make(
+            Category, name='Test cat', slug='test-cat')
+        test_subcategory = mommy.make(
+            SubCategory, name='test_subcat', parent=test_category)
+        test_category.subcategories.add(test_subcategory)
+        answer.category.add(test_category)
+        answer.subcategory.add(test_subcategory)
+        answer.category.add(self.category)
+        for each in self.subcategories:
+            answer.subcategory.add(each)
+        page = answer.english_page
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = 'https://www.consumerfinance.gov/' \
+            + 'ask-cfpb/category-' + test_category.slug + '/subcategory/'
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 2)
+        self.assertEqual(breadcrumbs[1]['title'], test_category.name)
+        self.assertEqual(context['category'], test_category)
+        self.assertEqual(len(context['subcategories']), 1)
+
+    def test_answer_page_context_with_portal_referrer_and_category(self):
+        """ If the referrer is a portal page and portal's related category
+        appears on answer page, breadcrumbs should lead back to portal,
+        category should be portal's related category, and subcategories
+        should be any on answer from portal related category."""
+        from ask_cfpb.models import CONSUMER_TOOLS_PORTAL_PAGES as portals
+        portal_path = list(portals.keys())[0]
+        data = portals[portal_path]
+        portal_title = data[0]
+        category_slug = data[1]
+        test_category = mommy.make(
+            Category, name="test", slug=category_slug)
+        answer = self.answer1234
+        answer.category.add(self.category)
+        answer.category.add(test_category)
+        page = answer.english_page
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov' + portal_path
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 1)
+        self.assertEqual(breadcrumbs[0]['title'], portal_title)
+        self.assertEqual(breadcrumbs[0]['href'], portal_path)
+        self.assertEqual(context['category'].slug, category_slug)
+
+    def test_answer_context_with_portal_referrer_and_no_category(self):
+        """ If the referrer is a portal page but portal's related category
+        does not appear on answer page, breadcrumbs should lead back to portal
+        but there should be no category or subcategories on context."""
+        from ask_cfpb.models import CONSUMER_TOOLS_PORTAL_PAGES as portals
+        portal_path = list(portals.keys())[0]
+        portal_title = portals[portal_path][0]
+        answer = self.answer1234
+        answer.category.add(self.category)
+        for each in self.subcategories:
+            answer.subcategory.add(each)
+        page = answer.english_page
+        request = HttpRequest()
+        request.META['HTTP_REFERER'] = \
+            'https://www.consumerfinance.gov' + portal_path
+        context = page.get_context(request)
+        breadcrumbs = context['breadcrumb_items']
+        self.assertEqual(len(breadcrumbs), 1)
+        self.assertEqual(breadcrumbs[0]['title'], portal_title)
+        self.assertEqual(breadcrumbs[0]['href'], portal_path)
+        self.assertEqual(context['category'], None)
+        self.assertEqual(context['subcategories'], set())
