@@ -22,23 +22,17 @@
                 <td class="u-w20pct">
                     {% if is_blog(post) %}
                         {{ category_slug.render('blog',
-                                page_url,
-                                '',
-                                false, form_id) }}
+                                page_url, '', false, form_id) }}
                     {% elif is_report(post) %}
                         {{ category_slug.render('report',
-                                page_url,
-                                '',
-                                false, form_id) }}
+                                page_url, '', false, form_id) }}
                     {% else %}
                         {% for cat in post.categories.all() %}
                             {% if loop.index > 1 %}
                                 |
                             {% endif %}
                             {{ category_slug.render(cat.name,
-                                    page_url,
-                                    '',
-                                    false, form_id) }}
+                                    page_url, '', false, form_id) }}
                         {% endfor %}
                     {% endif %}
                 </td>
