@@ -1,0 +1,129 @@
+{# ==========================================================================
+
+   Info Unit
+
+   ==========================================================================
+
+   Description:
+
+   Create an info-unit molecule when given:
+
+   value:                        Object defined from a StreamField block.
+
+   value.image:                  (Optional) An object containing:
+
+   value.image.upload:           A CFGovRendition object.
+
+   value.image.alt:              String for image alt text.
+
+   value.heading:                (Optional) An object containing:
+
+   value.heading.text            The text of a heading.
+
+   value.heading.level:          The heading level (H2, H3, H4). Default: H3
+
+   value.heading.icon:           An optional cf-icons icon code that
+                                 triggers the insertion of an icon before
+                                 the heading.
+
+   value.body:                   (Optional) A string containing the content
+                                 to display below the heading (typically a
+                                 paragraph).
+
+   value.links:                  (Optional) A tuple of items to create a list
+                                 of links, containing:
+
+   value.links[i].url:           A string for the URL of the link.
+
+   value.links[i].text:          A string for the text of the link.
+
+   format:                       Code for the layout of the parent Info Unit
+                                 Group, used to determine whether to add the
+                                 `__inline` modifier to the main div.
+
+   link_image_and_heading:       Boolean for whether the image and heading
+                                 should be linked to the value.links[0].url.
+
+   ========================================================================== #}
+
+{%- macro info_unit(value, format, link_image_and_heading) -%}
+
+{# Confirm that not only is link_image_and_heading set, but that this
+   particular info unit has a link in its list. #}
+{%- set link_image_and_heading = link_image_and_heading
+                                 and value.links
+                                 and value.links[0]
+                                 and value.links[0].url %}
+
+<div class="m-info-unit
+            {{- ' m-info-unit__inline' if format == '25-75' else '' }}">
+
+{%- if value.image.upload %}
+    {%- set img = image(value.image.upload, 'original') %}
+    {% if link_image_and_heading %}
+        <a href="{{ value.links[0].url }}">
+    {% endif %}
+        {%- if value.image.alt %}
+            <img class="m-info-unit_image
+                        {{- ' m-info-unit_image__square' if img.is_square else '' }}"
+                 src="{{ img.url }}"
+                 alt="{{ value.image.alt }}">
+        {%- else %}
+            <div class="m-info-unit_image
+                        {{- ' m-info-unit_image__square' if img.is_square else '' }}"
+                 style="background-image: url( '{{ img.url }}' );
+                        {{- ' padding-bottom: ' ~ ( img.height / img.width * 100 ) ~ '%;'
+                            if not img.is_square else '' }}">
+            </div>
+        {% endif %}
+    {%- if link_image_and_heading %}
+        </a>
+    {%- endif -%}
+{%- endif %}
+
+        <div class="m-info-unit_content">
+
+    {%- if value.heading %}
+        {% if link_image_and_heading %}
+            <a class="m-info-unit_heading-link" href="{{ value.links[0].url }}">
+        {%- endif %}
+                <{{ value.heading.level -}}
+                    {%- if value.heading.icon -%}
+                        {{- ' class="cf-icon cf-icon-' ~ value.heading.icon ~ '"' -}}
+                    {%- endif -%}
+                >
+                    {{ value.heading.text | safe }}
+                </{{ value.heading.level }}>
+        {%- if link_image_and_heading %}
+            </a>
+        {%- endif -%}
+    {%- endif %}
+
+            {{ parse_links( value.body ) | safe }}
+
+        {% if value.links %}
+            <ul class="m-list m-list__links u-mt15">
+            {%- for link in value.links %}
+                <li class="m-list_item">
+                {%- if link.text is defined and link.text.find('@') > -1 -%}
+                    {%- if not value.emails is defined -%}
+                        {%- do value.update({'emails':[{'url':link.text}]}) -%}
+                    {%- endif -%}
+                    {% include 'contact-email.html' with context %}
+                {%- else -%}
+                    {%- set link_text = link.text if link.text
+                        else 'Learn More' -%}
+                    {%- set link = '<a class="m-list_link" href="' ~
+                        link.url ~ '">' ~ link_text ~ '</a>' %}
+                    {{ parse_links( link ) | safe }}
+                {%- endif %}
+                </li>
+            {%- endfor %}
+            </ul>
+        {%- endif %}
+
+        </div>
+
+</div>
+
+{% endmacro %}

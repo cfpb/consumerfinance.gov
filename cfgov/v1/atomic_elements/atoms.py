@@ -113,7 +113,12 @@ class Button(Hyperlink):
 
 class ImageBasic(blocks.StructBlock):
     upload = ImageChooserBlock(required=False)
-    alt = blocks.CharBlock(required=False)
+    alt = blocks.CharBlock(
+        required=False,
+        help_text='If the image is decorative (i.e., if a screenreader '
+                  'wouldn\'t have anything useful to say about it), leave the '
+                  'Alt field blank.'
+    )
 
     def __init__(self, required=True):
         self.is_required = required

@@ -278,6 +278,10 @@ button {
 	transition: all 700ms ease;
 }
 
+.a-btn {
+  letter-spacing: normal;
+}
+
 button:disabled {
 	background-color: #a9dc93;
 }

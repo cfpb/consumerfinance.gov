@@ -1,6 +1,8 @@
 from __future__ import absolute_import, unicode_literals
 
 import json
+import re
+from urlparse import urlparse
 
 from django.core.paginator import Paginator, InvalidPage
 from django.db import models
@@ -33,6 +35,32 @@ ABOUT_US_SNIPPET_TITLE = 'About us (For consumers)'
 ENGLISH_DISCLAIMER_SNIPPET_TITLE = 'Legal disclaimer for consumer materials'
 SPANISH_DISCLAIMER_SNIPPET_TITLE = (
     'Legal disclaimer for consumer materials (in Spanish)')
+CONSUMER_TOOLS_PORTAL_PAGES = {
+    '/consumer-tools/auto-loans/': (
+        'Auto Loans',
+        'auto-loans'),
+    '/consumer-tools/bank-accounts/': (
+        'Bank Accounts and Services',
+        'bank-accounts-and-services'),
+    '/consumer-tools/credit-cards/': (
+        'Credit Cards',
+        'credit-cards'),
+    '/consumer-tools/credit-reports-and-scores/': (
+        'Credit Reports and Scores',
+        'credit-reporting'),
+    '/consumer-tools/debt-collection/': (
+        'Debt Collection',
+        'debt-collection'),
+    '/consumer-tools/prepaid-cards/': (
+        'Prepaid Cards',
+        'prepaid-cards'),
+    '/consumer-tools/sending-money/': (
+        'Sending Money',
+        'money-transfers'),
+    '/consumer-tools/student-loans/': (
+        'Student Loans',
+        'student-loans')
+}
 
 
 def get_reusable_text_snippet(snippet_title):
@@ -65,6 +93,34 @@ def get_ask_breadcrumbs(category=None):
             'href': '/ask-cfpb/category-{}'.format(category.slug)
         })
     return breadcrumbs
+
+
+def get_question_referrer_data(request, categories):
+    """
+    Determines whether a question page's referrer is a
+    portal or Ask category page, and if so returns the
+    appropriate category and breadcrumbs. Otherwise,
+    returns question's first category and its breadcrumbs.
+    """
+    try:
+        referrer = request.META.get('HTTP_REFERER', '')
+        path = urlparse(referrer).path
+        portal_data = CONSUMER_TOOLS_PORTAL_PAGES.get(path)
+        if portal_data:
+            category = categories.filter(slug=portal_data[1]).first()
+            breadcrumbs = [{'title': portal_data[0], 'href': path}]
+            return (category, breadcrumbs)
+        else:
+            match = re.search(r'ask-cfpb/category-([A-Za-z0-9-_]*)/', path)
+            if match.group(1):
+                category = categories.filter(slug=match.group(1)).first()
+                return (category, get_ask_breadcrumbs(category))
+    except Exception:
+        pass
+
+    category = categories.first()
+    breadcrumbs = get_ask_breadcrumbs(category)
+    return (category, breadcrumbs)
 
 
 def validate_page_number(request, paginator):
@@ -468,15 +524,8 @@ class AnswerPage(CFGOVPage):
         context = super(AnswerPage, self).get_context(request)
         context['answer_id'] = self.answer_base.id
         context['related_questions'] = self.answer_base.related_questions.all()
-        context['category'] = self.answer_base.category.first()
         context['description'] = self.snippet if self.snippet \
             else Truncator(self.answer).words(40, truncate=' ...')
-        subcategories = []
-        for subcat in self.answer_base.subcategory.all():
-            subcategories.append(subcat)
-            for related in subcat.related_subcategories.all():
-                subcategories.append(related)
-        context['subcategories'] = set(subcategories)
         context['audiences'] = [
             {'text': audience.name,
              'url': '/ask-cfpb/audience-{}'.format(
@@ -490,6 +539,7 @@ class AnswerPage(CFGOVPage):
                 100, truncate=' ...')
             context['disclaimer'] = get_reusable_text_snippet(
                 SPANISH_DISCLAIMER_SNIPPET_TITLE)
+            context['category'] = self.answer_base.category.first()
         elif self.language == 'en':
             # we're not using tags on English pages yet, so cut the overhead
             # tag_dict = self.Answer.valid_tags()
@@ -500,8 +550,20 @@ class AnswerPage(CFGOVPage):
             context['disclaimer'] = get_reusable_text_snippet(
                 ENGLISH_DISCLAIMER_SNIPPET_TITLE)
             context['last_edited'] = self.answer_base.last_edited
-            context['breadcrumb_items'] = get_ask_breadcrumbs(
-                self.answer_base.category.first())
+            # breadcrumbs and/or category should reflect
+            # the referrer if it is a consumer tools portal or
+            # ask category page
+            context['category'], context['breadcrumb_items'] = \
+                get_question_referrer_data(
+                    request, self.answer_base.category.all())
+            subcategories = []
+            for subcat in self.answer_base.subcategory.all():
+                if subcat.parent == context['category']:
+                    subcategories.append(subcat)
+                for related in subcat.related_subcategories.all():
+                    if related.parent == context['category']:
+                        subcategories.append(related)
+            context['subcategories'] = set(subcategories)
 
         return context
 
