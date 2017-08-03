@@ -105,6 +105,12 @@
     &_title a {
         .u-link__colors( @black, @pacific-80 );
     }
+
+    &_byline,
+    &_meta .tags {
+      display: block;
+      margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+    }
 }
 
 .o-post-preview_image-container + .o-post-preview_content {

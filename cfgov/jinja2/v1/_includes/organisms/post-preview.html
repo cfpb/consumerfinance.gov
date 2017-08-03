@@ -142,7 +142,7 @@
                     {{ parse_links(post.preview_description) | safe }}
                 </div>
             {% endif %}
-            <p>
+            <div class="o-post-preview_meta">
                 {% for author in post.get_authors() %}
                     <span class="o-post-preview_byline">
                         {% if loop.index == 1  %}
@@ -165,7 +165,7 @@
                     {%- import 'tags.html' as tags %}
                     {{ tags.render(related_metadata_tags(post), page_url, true, false, form_id, is_wagtail=True) }}
                 {% endif %}
-            </p>
+            </div>
             {% if post.secondary_link_url and post.secondary_link_text %}
                 <a href="{{ post.secondary_link_url }}" class="a-link a-link__jump">
                     {{ post.secondary_link_text }}
