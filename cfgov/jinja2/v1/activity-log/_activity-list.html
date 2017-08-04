@@ -1,5 +1,4 @@
 {% import 'macros/category-slug.html' as category_slug %}
-{% import 'macros/time.html' as time %}
 
 {% macro render(posts, form_id=0) %}
     {% set page_url = get_protected_url(page) %}
@@ -50,6 +49,7 @@
                     </a>
                 </td>
                 <td class="u-w15pct">
+                    {% import 'macros/time.html' as time %}
                     {{ time.render(post.date_published, {'date':true}) }}
                 </td>
             </tr>
