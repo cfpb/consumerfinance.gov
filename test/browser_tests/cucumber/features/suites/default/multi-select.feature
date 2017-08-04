@@ -20,6 +20,7 @@ Feature: MultiSelect Tags
     When I focus on the multi-select search input
     Then the multi-select dropdown should be visible
 
+  @skip
   Scenario: Search input blur
     When I focus on the multi-select search input
     And I click away from the search input
