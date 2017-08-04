@@ -10,6 +10,31 @@ from data_research.mortgage_utilities.fips_meta import (
 )
 
 
+def merge_the_dades():
+    """
+    Since the historical Dade County FIPS (12025) was redefined as
+    Miami-Dade (12086) in the 1990s, we need to combine values for these two
+    codes when mortgages assigned to the old FIPS show up in our base data.
+
+    This routine adds values from a 12025 record to the current Miami-Dade
+    record and deletes the outdated record so that the operation can't repeat.
+    """
+    fields = ['total', 'current', 'thirty', 'sixty', 'ninety', 'other']
+    dade = CountyMortgageData.objects.filter(fips='12025')
+    miami_dade = CountyMortgageData.objects.filter(fips='12086')
+    for old_dade in dade:
+        try:
+            new_dade = miami_dade.get(date=old_dade.date)
+        except CountyMortgageData.DoesNotExist:
+            old_dade.delete()
+        else:
+            for field in fields:
+                setattr(new_dade, field, (getattr(old_dade, field) +
+                                          getattr(new_dade, field)))
+            new_dade.save()  # this will recalculate the record's percentages
+            old_dade.delete()
+
+
 def validate_fips(raw_fips, keep_outdated=False):
     """
     Fix county FIPS code anomalies, handling illegal lengths, truncated codes
@@ -61,6 +86,7 @@ def load_values(return_fips=False):
                 sys.stdout.flush()
             if counter % 100000 == 0:  # pragma: no cover
                 print("\n{}".format(counter))
+    merge_the_dades()
 
 
 def run():

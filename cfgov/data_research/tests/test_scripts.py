@@ -10,8 +10,9 @@ from model_mommy import mommy
 from data_research.models import StateMortgageData, MSAMortgageData
 from data_research.scripts.load_mortgage_performance_csv import (
     CountyMortgageData,
-    validate_fips,
     load_values,
+    merge_the_dades,
+    validate_fips,
 )
 from data_research.scripts.load_mortgage_aggregates import (
     load_msa_values,
@@ -43,6 +44,64 @@ class AggregateLoadTest(django.test.TestCase):
         date = "2016-09-01"
         load_msa_values(date)
         self.assertEqual(MSAMortgageData.objects.count(), 1)
+
+
+class MergeTheDadesTest(django.test.TestCase):
+
+    def setUp(self):
+
+        print_patch = mock.patch(
+            'data_research.scripts.load_mortgage_performance_csv.print'
+        )
+        print_patch.start()
+        self.addCleanup(print_patch.stop)
+
+        self.old_dade_fips = '12025'
+        self.new_dade_fips = '12086'
+
+        mommy.make(
+            CountyMortgageData,
+            current=100,
+            date=datetime.date(2008, 1, 1),
+            fips=self.old_dade_fips,
+            ninety=100,
+            other=100,
+            sixty=100,
+            thirty=100,
+            total=500)
+
+        mommy.make(
+            CountyMortgageData,
+            current=100,
+            date=datetime.date(2008, 1, 1),
+            fips=self.new_dade_fips,
+            ninety=100,
+            other=100,
+            sixty=100,
+            thirty=100,
+            total=500)
+
+    def test_merge_the_dades(self):
+        merge_the_dades()
+        new_dade = CountyMortgageData.objects.get(fips=self.new_dade_fips)
+        for field in ['current', 'thirty', 'sixty', 'ninety', 'other']:
+            self.assertEqual(getattr(new_dade, field), 200)
+        self.assertEqual(new_dade.total, 1000)
+        with self.assertRaises(CountyMortgageData.DoesNotExist):
+            CountyMortgageData.objects.get(fips=self.old_dade_fips)
+        # make sure a second run is idempotent
+        merge_the_dades()
+        for field in ['current', 'thirty', 'sixty', 'ninety', 'other']:
+            self.assertEqual(getattr(new_dade, field), 200)
+        self.assertEqual(new_dade.total, 1000)
+
+    def test_merge_the_dades_no_new_dade_record(self):
+        CountyMortgageData.objects.get(fips=self.new_dade_fips).delete()
+        with self.assertRaises(CountyMortgageData.DoesNotExist):
+            CountyMortgageData.objects.get(fips=self.new_dade_fips)
+        merge_the_dades()
+        with self.assertRaises(CountyMortgageData.DoesNotExist):
+            CountyMortgageData.objects.get(fips=self.old_dade_fips)
 
 
 class DataLoadTest(django.test.TestCase):
