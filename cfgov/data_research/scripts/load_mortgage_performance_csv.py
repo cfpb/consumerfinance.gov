@@ -10,7 +10,7 @@ from data_research.mortgage_utilities.fips_meta import (
 )
 
 
-def validate_fips(raw_fips):
+def validate_fips(raw_fips, keep_outdated=False):
     """
     Fix county FIPS code anomalies, handling illegal lengths, truncated codes
     that have lost their initial zeroes and a South Dakota county that changed
@@ -24,17 +24,24 @@ def validate_fips(raw_fips):
         new_fips = "0{}".format(raw_fips)
     else:
         new_fips = raw_fips
-    if new_fips in OUTDATED_FIPS:
-        return None
-    else:
-        return new_fips
+    if keep_outdated is False:
+        if new_fips in OUTDATED_FIPS:
+            return None
+        else:
+            return new_fips
+    return new_fips
 
 
-def load_values():
+def load_values(return_fips=False):
     """Load source mortgage data into an empty CountyMortgageData table."""
     counter = 0
     raw_data = read_in_s3_csv(SOURCE_CSV_URL)
     # raw_data is a generator delivering data dicts, each representing a row
+    if return_fips is True:
+        fips_list = []
+        for row in raw_data:
+            fips_list.append(validate_fips(row.get('fips')))
+        return sorted(set(fips_list))
     for row in raw_data:
         valid_fips = validate_fips(row.get('fips'))
         if valid_fips:
