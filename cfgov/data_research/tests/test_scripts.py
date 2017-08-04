@@ -129,6 +129,17 @@ class DataLoadTest(django.test.TestCase):
         self.assertEqual(mock_read_in.call_count, 1)
         self.assertEqual(CountyMortgageData.objects.count(), 1)
 
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_performance_csv.read_in_s3_csv')
+    def test_load_values_return_fips(self, mock_read_in):
+        mock_read_in.return_value = [{
+            'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
+            'ninety': '0', 'date': '01/01/98', 'open': '270', 'other': '3',
+            'fips': '01001'}]
+        fips_list = load_values(return_fips=True)
+        self.assertEqual(mock_read_in.call_count, 1)
+        self.assertEqual(fips_list, ['01001'])
+
 
 class DataScriptTest(unittest.TestCase):
     """Tests for data pipeline automations"""
@@ -169,6 +180,15 @@ class DataScriptTest(unittest.TestCase):
     def test_validate_fips_valid_5_digit(self):
         fips_input = '34041'
         self.assertEqual(validate_fips(fips_input), '34041')
+
+    def test_validate_fips_outdated_fips(self):
+        fips_input = '02201'  # a normally excluded outdated FIPS code
+        self.assertIs(validate_fips(fips_input), None)
+
+    def test_validate_fips_keep_outdated(self):
+        fips_input = '02201'  # a normally excluded outdated FIPS code
+        self.assertEqual(validate_fips(
+            fips_input, keep_outdated=True), '02201')
 
     @mock.patch('data_research.scripts.'
                 'load_mortgage_aggregates.load_fips_meta')
