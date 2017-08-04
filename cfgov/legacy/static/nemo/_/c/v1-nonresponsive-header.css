@@ -1038,7 +1038,6 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
     *behavior: url('/static/js/boxsizing.htc');;
 }
 @media only all and (min-width:76.9375em) {
-
     .o-mega-menu_content-1-item {
         margin-right: 60px;
     }
@@ -1051,18 +1050,15 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
 .no-js .o-mega-menu.u-hidden {
     display: block;
 }
-
 .o-mega-menu .nav_footer {
     border-top: 1px solid #b4b5b6;
-    padding: 15px 0
+    padding: 15px 0;
     margin-top: 30px;
     font-size: 1.125em;
 }
 .o-mega-menu_content-2-overview{
-  margin-bottom:20px;
+    margin-bottom: 20px;
 }
-
-
 #skip-nav {
     position: absolute;
     top: -1.875em;
@@ -1123,11 +1119,6 @@ button#skip-nav:focus::-moz-focus-inner,input#skip-nav:focus::-moz-focus-inner {
 #skip-nav:focus+#skip-nav:focus {
     margin-left: .33333333em;
 }
-
-.o-mega-menu {
-        color: red !important;
-}
-
 /* Fix for terrible Mapbox z-index code */
 .leaflet-bottom,
 .leaflet-top {
