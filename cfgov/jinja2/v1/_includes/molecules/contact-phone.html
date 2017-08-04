@@ -11,7 +11,7 @@
 
    value:                  Object defined from a StreamField block.
 
-   value.fax:              (Optional) A fax number.
+   value.is_fax:           (Optional) Whether phones[i].number is a fax number.
 
    value.phones:           An array containing objects with phone number details.
 
@@ -25,8 +25,7 @@
 
 {% from 'macros/util/format/contact.html' import format_phone as format_phone %}
 <div class="m-contact m-contact-phone" data-qa-hook="contact-phone">
-    {# TODO: Update fax param name to is_fax to make clear it's a boolean. #}
-    {% if value.fax == true %}
+    {% if value.is_fax == true %}
         {% set icon = 'cf-icon-fax' %}
         {% set label = 'Fax' %}
     {% else %}

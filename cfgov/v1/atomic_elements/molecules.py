@@ -249,8 +249,8 @@ class ContactEmail(blocks.StructBlock):
 
 
 class ContactPhone(blocks.StructBlock):
-    fax = blocks.BooleanBlock(default=False, required=False,
-                              label='Is this number a fax?')
+    is_fax = blocks.BooleanBlock(default=False, required=False,
+                                 label='Is this number a fax?')
     phones = blocks.ListBlock(
         blocks.StructBlock([
             ('number', blocks.CharBlock(max_length=15)),
