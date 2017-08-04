@@ -560,6 +560,10 @@ FLAGS = {
     # footer
     'OAA_FOOTER_LINK': {},
 
+    # When enabled, serves `/es/` pages from this
+    # repo ( excluding /obtener-respuestas/ pages ).
+    'ES_CONV_FLAG': {},
+
     # Transition of "About Us" to Wagtail
     # When enabled, the "About Us" pages are served from Wagtail
     'WAGTAIL_ABOUT_US': {},
