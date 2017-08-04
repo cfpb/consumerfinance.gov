@@ -30,7 +30,7 @@
    ========================================================================== #}
 
 {% macro render(tags, path, hide_heading=false, display_block=false, index=0, is_sheer=False, is_wagtail=False) %}
-<div class="tags {{'tags__hide-heading' if hide_heading else ''}} {{'tags__block-list' if display_block else '' }}">
+<div class="tags{{' tags__hide-heading' if hide_heading else ''}}{{' tags__block-list' if display_block else '' }}">
     <span class="{{'u-visually-hidden' if hide_heading else 'tags_heading' }}">Topics:</span>
     <ul class="tags_list">
         {% if is_wagtail %}

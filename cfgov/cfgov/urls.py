@@ -304,6 +304,19 @@ urlpatterns = [
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
 
+    # educational resources
+    url(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
+        url='/practitioner-resources/%(path)s', permanent=True)),
+
+    url(r'^practitioner-resources/resources-for-older-adults' +
+         '/managing-someone-elses-money/',
+            RedirectView.as_view(
+                url='/consumer-tools/managing-someone-elses-money/',
+                permanent=True)),
+    url(r'^practitioner-resources/money-as-you-grow/',
+            RedirectView.as_view(
+                url='/consumer-tools/money-as-you-grow/', permanent=True)),
+
     # ask-cfpb
     url(r'^askcfpb/$',
         RedirectView.as_view(

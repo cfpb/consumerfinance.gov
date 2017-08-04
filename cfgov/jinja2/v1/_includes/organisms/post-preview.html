@@ -144,7 +144,7 @@
                     {{ parse_links(post.preview_description) | safe }}
                 </div>
             {% endif %}
-            <div class="post_meta">
+            <div class="o-post-preview_meta">
                 {% for author in post.get_authors() %}
                     <span class="o-post-preview_byline">
                         {% if loop.index == 1  %}
