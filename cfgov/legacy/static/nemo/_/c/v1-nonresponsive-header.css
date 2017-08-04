@@ -1052,12 +1052,26 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
 }
 .o-mega-menu .nav_footer {
     border-top: 1px solid #b4b5b6;
-    padding: 15px 0;
     margin-top: 30px;
     font-size: 1.125em;
 }
 .o-mega-menu_content-2-overview{
     margin-bottom: 20px;
+}
+.o-mega-menu .hide-title{
+    visibility: hidden;
+}
+.o-mega-menu .h5 {
+    font-family: 'Avenir Next', 'AvenirNextLTW01-Demi', Arial, sans-serif;
+    font-style: normal;
+    margin-bottom: 1.07142857em;
+    font-size: .875em;
+    letter-spacing: 1px;
+    line-height: 1.25;
+    text-transform: uppercase;
+}
+.lt-ie9 .o-mega-menu .h5 {
+    font-weight: normal !important;
 }
 #skip-nav {
     position: absolute;
