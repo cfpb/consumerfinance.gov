@@ -307,15 +307,15 @@ urlpatterns = [
     # educational resources
     url(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
         url='/practitioner-resources/%(path)s', permanent=True)),
-
     url(r'^practitioner-resources/resources-for-older-adults' +
-         '/managing-someone-elses-money/',
+         '/managing-someone-elses-money/(?P<path>.*)$',
             RedirectView.as_view(
-                url='/consumer-tools/managing-someone-elses-money/',
+                url='/consumer-tools/managing-someone-elses-money/%(path)s',
                 permanent=True)),
-    url(r'^practitioner-resources/money-as-you-grow/',
+    url(r'^practitioner-resources/money-as-you-grow/(?P<path>.*)$',
             RedirectView.as_view(
-                url='/consumer-tools/money-as-you-grow/', permanent=True)),
+                url='/consumer-tools/money-as-you-grow/%(path)s',
+                permanent=True)),
 
     # ask-cfpb
     url(r'^askcfpb/$',
