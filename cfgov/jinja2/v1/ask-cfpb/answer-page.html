@@ -1,16 +1,15 @@
 {% extends 'layout-2-1-bleedbar.html' %}
-{% import 'macros/time.html' as time %}
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
 {% import 'macros/util/format/datetime.html' as dt %}
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block title %}
-    {{ page.question|striptags }}
+    {{ page.question | striptags }}
 {% endblock %}
 
 {% block desc %}
-    {{ description|striptags|safe}}
+    {{ description | striptags | safe}}
 {% endblock %}
 
 {% block banner_top %}
