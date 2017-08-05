@@ -27,6 +27,7 @@ Feature: Global Search
     When I enter "test" in the search molecule
     Then I should navigate to search portal
 
+  @skip
   Scenario: Large Size, after clicking off search
     And I click off the search molecule
     Then it shouldn't have search input content
