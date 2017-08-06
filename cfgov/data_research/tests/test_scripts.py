@@ -1,15 +1,22 @@
 from __future__ import unicode_literals
 
 import datetime
+from dateutil import parser
 import mock
+import StringIO
 import unittest
 
 import django.test
 from model_mommy import mommy
+import unicodecsv
 
-from data_research.models import StateMortgageData, MSAMortgageData
-from data_research.scripts.load_mortgage_performance_csv import (
+from data_research.models import (
     CountyMortgageData,
+    MSAMortgageData,
+    NationalMortgageData,
+    StateMortgageData
+)
+from data_research.scripts.load_mortgage_performance_csv import (
     load_values,
     merge_the_dades,
     validate_fips,
@@ -19,6 +26,65 @@ from data_research.scripts.load_mortgage_aggregates import (
     load_national_values,
     load_state_values,
     run as run_aggregates)
+
+
+class DataLoadIntegrityTest(django.test.TestCase):
+
+    def setUp(self):
+
+        print_patch = mock.patch(
+            'data_research.scripts.load_mortgage_performance_csv.print'
+        )
+        print_patch.start()
+        self.addCleanup(print_patch.stop)
+        # real values from a base CSV row
+        self.data_header = 'date,fips,open,current,thirty,sixty,ninety,other\n'
+        self.data_row = '09/01/16,12081,1952,1905,21,5,10,11\n'
+        self.data_row_dict = {'date': '09/01/16',
+                              'fips': '12081',
+                              'open': '1952',
+                              'current': '1905',
+                              'thirty': '21',
+                              'sixty': '5',
+                              'ninety': '10',
+                              'other': '11'}
+
+    @mock.patch(
+        'data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv')
+    def test_data_creation_from_base_row(self, mock_read_csv):
+        """
+        Confirm that loading a single row of real base data creates
+        a CountyMortgageData object with the base row's values,
+        and that the object's calculated API values are correct.
+        """
+
+        f = StringIO.StringIO(self.data_header + self.data_row)
+        reader = unicodecsv.DictReader(f)
+        mock_read_csv.return_value = reader
+        load_values()
+        self.assertEqual(CountyMortgageData.objects.count(), 1)
+        county = CountyMortgageData.objects.first()
+        fields = reader.fieldnames
+        fields.pop(fields.index('fips'))  # test string separately
+        fields.pop(fields.index('open'))  # 'open' is stored as 'total'
+        fields.pop(fields.index('date'))  # date must be parsed before testing
+        self.assertEqual(county.fips, self.data_row_dict.get('fips'))
+        self.assertEqual(county.total, int(self.data_row_dict.get('open')))
+        target_date = parser.parse(self.data_row_dict['date']).date()
+        self.assertEqual(county.date, target_date)
+        for field in fields:  # remaining fields can be tested in a loop
+            self.assertEqual(
+                getattr(county, field), int(self.data_row_dict.get(field)))
+        # test computed values
+        self.assertEqual(
+            county.epoch,
+            int(county.date.strftime('%s')) * 1000)
+        self.assertEqual(
+            county.percent_90,
+            county.ninety * 1.0 / county.total)
+        self.assertEqual(
+            county.percent_30_60,
+            (county.thirty + county.sixty) * 1.0 / county.total)
 
 
 class AggregateLoadTest(django.test.TestCase):
@@ -171,7 +237,6 @@ class DataLoadTest(django.test.TestCase):
         self.assertEqual(mock_get_or_create.call_count, 2)
 
     def test_load_national_values(self):
-        from data_research.models import NationalMortgageData
         load_national_values('2016-09-01')
         self.assertEqual(NationalMortgageData.objects.count(), 1)
         load_national_values('2016-09-01')
