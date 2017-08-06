@@ -69,7 +69,8 @@ class DataLoadIntegrityTest(django.test.TestCase):
         fields.pop(fields.index('open'))  # 'open' is stored as 'total'
         fields.pop(fields.index('date'))  # date must be parsed before testing
         self.assertEqual(county.fips, self.data_row_dict.get('fips'))
-        self.assertEqual(county.total, int(self.data_row_dict.get('open')))
+        open_value = int(self.data_row_dict.get('open'))
+        self.assertEqual(county.total, open_value)
         target_date = parser.parse(self.data_row_dict['date']).date()
         self.assertEqual(county.date, target_date)
         for field in fields:  # remaining fields can be tested in a loop
@@ -78,13 +79,14 @@ class DataLoadIntegrityTest(django.test.TestCase):
         # test computed values
         self.assertEqual(
             county.epoch,
-            int(county.date.strftime('%s')) * 1000)
+            int(target_date.strftime('%s')) * 1000)
         self.assertEqual(
             county.percent_90,
-            county.ninety * 1.0 / county.total)
+            int(self.data_row_dict.get('ninety')) * 1.0 / open_value)
         self.assertEqual(
             county.percent_30_60,
-            (county.thirty + county.sixty) * 1.0 / county.total)
+            (int(self.data_row_dict.get('thirty')) +
+             int(self.data_row_dict.get('sixty'))) * 1.0 / open_value)
 
 
 class AggregateLoadTest(django.test.TestCase):
