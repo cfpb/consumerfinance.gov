@@ -544,6 +544,9 @@ FLAGS = {
     # "This beta site is a work in progress."
     'BETA_NOTICE': {},
 
+    # When enabled, Display a "techical issues" banner on /complaintdatabase
+    'CCDB_TECHNICAL_ISSUES': {},
+
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
@@ -556,6 +559,10 @@ FLAGS = {
     # When enabled, a link to "Administrative Adjudication" appears in the
     # footer
     'OAA_FOOTER_LINK': {},
+
+    # When enabled, serves `/es/` pages from this
+    # repo ( excluding /obtener-respuestas/ pages ).
+    'ES_CONV_FLAG': {},
 
     # Transition of "About Us" to Wagtail
     # When enabled, the "About Us" pages are served from Wagtail

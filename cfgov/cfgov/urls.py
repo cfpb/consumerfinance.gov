@@ -41,6 +41,7 @@ from v1.views.documents import DocumentServeView
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
+es_conv_flag = partial(flagged_url, 'ES_CONV_FLAG')
 
 urlpatterns = [
 
@@ -303,6 +304,19 @@ urlpatterns = [
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
 
+    # educational resources
+    url(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
+        url='/practitioner-resources/%(path)s', permanent=True)),
+    url(r'^practitioner-resources/resources-for-older-adults' +
+         '/managing-someone-elses-money/(?P<path>.*)$',
+            RedirectView.as_view(
+                url='/consumer-tools/managing-someone-elses-money/%(path)s',
+                permanent=True)),
+    url(r'^practitioner-resources/money-as-you-grow/(?P<path>.*)$',
+            RedirectView.as_view(
+                url='/consumer-tools/money-as-you-grow/%(path)s',
+                permanent=True)),
+
     # ask-cfpb
     url(r'^askcfpb/$',
         RedirectView.as_view(
@@ -344,6 +358,18 @@ urlpatterns = [
         ask_autocomplete, name='ask-autocomplete-en'),
     url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
+
+    es_conv_flag(r'^es/$', TemplateView.as_view(
+                 template_name='/es/index.html')),
+
+    es_conv_flag(r'^es/hogar/$', TemplateView.as_view(
+                 template_name='es/hogar/index.html')),
+
+    es_conv_flag(r'^es/presentar-una-queja/$', TemplateView.as_view(
+                 template_name='es/presentar-una-queja/index.html')),
+
+    es_conv_flag(r'^es/quienes-somos/$', TemplateView.as_view(
+                 template_name='es/quienes-somos/index.html')),
 ]
 
 if settings.ALLOW_ADMIN_URL:
