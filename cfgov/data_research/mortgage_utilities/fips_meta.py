@@ -65,9 +65,11 @@ class FipsMeta(object):
         self.county_fips = {}  # 3 mappings of FIPS to metadata
         self.state_fips = {}
         self.msa_fips = {}
+        self.nation_row = {}  # storage placeholder for CSV downloads
         self.whitelist = []  # FIPS that meet our threshold for display
         self.all_fips = []  # All valid county, MSA and state FIPS
         self.dates = []  # All the sampling dates we're displaying; will grow
+        self.short_dates = []  # Shortened date versions for output labels
         self.starting_date = None  # next 3 values will reflect db constants
         self.threshold_date = None
         self.threshold_count = None
@@ -90,7 +92,9 @@ def assemble_msa_mapping(msa_data):
         return raw_msa.replace('(Metropolitan Statistical Area)', '').strip()
 
     mapping = {row.get('msa_id').strip():
-               {'county_list': [], 'msa': clean_name(row)}
+               {'county_list': [],
+                'msa': clean_name(row),
+                'name': clean_name(row)}
                for row in msa_data
                if row.get('msa_id').strip()}
     for msa_id in mapping:
@@ -116,6 +120,7 @@ def load_all_fips():
 def load_dates():
     with open("{}/sampling_dates.json".format(FIPS_DATA_PATH), 'rb') as f:
         FIPS.dates = json.loads(f.read())
+        FIPS.short_dates = [date[:-3] for date in FIPS.dates]
 
 
 def load_states():
@@ -164,7 +169,10 @@ def load_fips_meta():
             if 'state' in filename:
                 FIPS.county_fips = {row['complete_fips']:
                                     {'county': row['county_name'],
-                                    'state': row['state']}
+                                     'fips': row['complete_fips'],
+                                     'state': row['state'],
+                                     'name': row['county_name'],
+                                     }
                                     for row in fips_data
                                     if row['state'] not in NON_STATES}
             else:
