@@ -11,6 +11,7 @@ from django.http import HttpRequest, Http404, QueryDict
 import django.test
 from django.utils import timezone
 from wagtail.wagtailcore.models import Site
+from wagtailsharing.models import SharingSite
 
 from ask_cfpb.models import (
     AnswerResultsPage, ENGLISH_PARENT_SLUG, SPANISH_PARENT_SLUG)
@@ -18,6 +19,76 @@ from ask_cfpb.views import annotate_links, redirect_ask_search, ask_search
 from v1.util.migrations import get_or_create_page, get_free_path
 
 now = timezone.now()
+
+
+class AnswerPagePreviewCase(django.test.TestCase):
+
+    def setUp(self):
+        from v1.models import HomePage
+        from ask_cfpb.models import Answer
+        self.ROOT_PAGE = HomePage.objects.get(slug='cfgov')
+        self.english_parent_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerLandingPage',
+            'Ask CFPB',
+            ENGLISH_PARENT_SLUG,
+            self.ROOT_PAGE,
+            language='en',
+            live=True)
+        self.spanish_parent_page = get_or_create_page(
+            apps,
+            'ask_cfpb',
+            'AnswerLandingPage',
+            'Obtener respuestas',
+            SPANISH_PARENT_SLUG,
+            self.ROOT_PAGE,
+            language='es',
+            live=True)
+        self.test_answer = mommy.make(
+            Answer,
+            answer="Test answer.",
+            question="Test question.",
+            slug='test-question',
+            update_english_page=True,
+            update_spanish_page=False)
+        self.site = mommy.make(
+            Site,
+            root_page=self.ROOT_PAGE,
+            hostname='localhost',
+            port=8000,
+            is_default_site=True)
+        self.sharing_site = mommy.make(
+            SharingSite,
+            site=self.site,
+            hostname='preview.localhost',
+            port=8000)
+
+    @mock.patch('ask_cfpb.views.ServeView.serve_latest_revision')
+    def test_preview_page(self, mock_serve):
+        from ask_cfpb.views import view_answer
+        page = self.test_answer.english_page
+        revision = page.save_revision()
+        revision.publish()
+        test_request = HttpRequest()
+        test_request.META['SERVER_NAME'] = 'preview.localhost'
+        test_request.META['SERVER_PORT'] = 8000
+        view_answer(
+            test_request, 'test-question', 'en', self.test_answer.pk)
+        self.assertEqual(mock_serve.call_count, 1)
+
+    def test_answer_page_not_live(self):
+        from ask_cfpb.views import view_answer
+        page = self.test_answer.english_page
+        page.live = False
+        page.save()
+        test_request = HttpRequest()
+        with self.assertRaises(Http404):
+            view_answer(
+                test_request,
+                'test-question',
+                'en',
+                self.test_answer.pk)
 
 
 class AnswerViewTestCase(django.test.TestCase):
