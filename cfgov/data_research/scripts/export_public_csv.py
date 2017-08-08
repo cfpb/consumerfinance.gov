@@ -70,7 +70,9 @@ def export_downloadable_csv(geo_type, late_value):
     to FIPS codes so that Excel doesn't strip leading zeros.
 
     geo_types are County, MetroArea or State.
-    late_values are percent_30_60 or percent_09.
+    late_values are percent_30_60 or percent_90.
+
+    Each CSV is to start with a National row for comparison.
 
     CSVs are posted at
     http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/  # noqa: E501

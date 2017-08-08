@@ -94,7 +94,7 @@ def assemble_msa_mapping(msa_data):
     mapping = {row.get('msa_id').strip():
                {'county_list': [],
                 'msa': clean_name(row),
-                'name': clean_name(row)}
+                'name': clean_name(row)}  # dupe is for backward-compatibility
                for row in msa_data
                if row.get('msa_id').strip()}
     for msa_id in mapping:
