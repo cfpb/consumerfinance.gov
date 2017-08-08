@@ -1,12 +1,12 @@
 # Wagtail and Django data migrations
 
-Django data migrations with Wagtail can be interesting and challenging because programmatic editing of Wagtail pages [is difficult](https://github.com/torchbox/wagtail/issues/1101), and pages have both revisions and StreamFields. This document is intended to describe ways we try to address these challenges in cfgov-refresh.
+Django data migrations with Wagtail can be challenging because programmatic editing of Wagtail pages [is difficult](https://github.com/torchbox/wagtail/issues/1101), and pages have both revisions and StreamFields. This document is intended to describe ways we try to address these challenges in cfgov-refresh.
 
 ## Migrating StreamFields
 
-StreamFields do not follow a fixed structure, rather they're a freeform sequences of blocks. Making a change to a StreamField involves both creating a [Django schema migration](https://docs.djangoproject.com/en/1.8/topics/migrations/#workflow) and a custom [Django data migration](https://docs.djangoproject.com/en/1.8/topics/migrations/#data-migrations). The data migration needs to modify both the existing Wagtail pages that correspond to the changed model and all revisions of that page. It also needs to be able to manipulate the StreamField contents. 
+StreamFields do not follow a fixed structure, rather they're a freeform sequences of blocks. Making a change to a StreamField involves both creating a [Django schema migration](https://docs.djangoproject.com/en/1.8/topics/migrations/#workflow) and a custom [Django data migration](https://docs.djangoproject.com/en/1.8/topics/migrations/#data-migrations). The data migration needs to modify both the existing Wagtail pages that correspond to the changed model and all revisions of that page. It also needs to be able to manipulate the StreamField contents.
 
-To this end, there are some utility functions in cfgov-refresh that make this easier. Using these utilities, a Django data migration that modifies a StreamField would follow the following format:
+To this end, there are some utility functions in cfgov-refresh that make this easier. Using these utilities, a Django data migration that modifies a StreamField would use the following format:
 
 ```python
 from django.db import migrations
@@ -30,7 +30,7 @@ def forwards(apps, schema_editor):
     page_types_and_fields = [
         ('myapp', 'MyPage', 'streamfield_name', 'streamblock_type'),
     ]
-    migrate_page_types_and_fields(apps, 
+    migrate_page_types_and_fields(apps,
                                   page_types_and_fields,
                                   forward_mapper)
 
@@ -39,7 +39,7 @@ def backwards(apps, schema_editor):
     page_types_and_fields = [
         ('myapp', 'MyPage', 'streamfield_name', 'streamblock_type'),
     ]
-    migrate_page_types_and_fields(apps, 
+    migrate_page_types_and_fields(apps,
                                   page_types_and_fields,
                                   backward_mapper)
 
@@ -75,7 +75,6 @@ This function will return a list of `dict`-like objects containing the blocks wi
 
 ##### `set_stream_data(page_or_revision, field_name, stream_data, commit=True)`
 
-Set the stream field data for a given field name on a page or a revision. If commit is True (default) `save()` is called on the `page_or_revision` object. 
+Set the stream field data for a given field name on a page or a revision. If commit is True (default) `save()` is called on the `page_or_revision` object.
 
 `stream_data` must be a list of `dict`-like objects containing the blocks within the given StreamField.
-
