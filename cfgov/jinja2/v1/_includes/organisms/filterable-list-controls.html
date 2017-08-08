@@ -279,8 +279,10 @@
                 {{ post_preview(post, controls, form_id=index) }}
             {% endfor %}
         {% endif %}
-        {% import 'molecules/pagination.html' as pagination with context %}
-        {% set fragment_id = 'o-filterable-list-controls-' + index | string %}
-        {{ pagination.render( posts.paginator.num_pages, posts.number, fragment_id, index ) }}
+        <div class="block block__flush-top block__flush-bottom block__padded-top">
+            {% import 'molecules/pagination.html' as pagination with context %}
+            {% set fragment_id = 'o-filterable-list-controls-' + index | string %}
+            {{ pagination.render( posts.paginator.num_pages, posts.number, fragment_id, index ) }}
+        </div>
     </div>
 {% endmacro %}
