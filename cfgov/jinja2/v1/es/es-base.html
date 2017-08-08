@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="es" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="es" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="es" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="es" class="no-js"> <!--<![endif]-->
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>
+        {% block babel_title %}
+        {% endblock %}
+    </title>
+
+    {% block page_meta %}
+    <meta property="og:url" content="{{ request.url }}">
+    {% endblock %}
+
+    <meta property="og:type" content="government">
+    <meta property="og:site_name" content="Oficina para la Protección Financiera del Consumidor">
+    <meta property="fb:page_id" content="141576752553390">
+    <meta property="fb:app_id" content="210516218981921">
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width initial-scale=1">
+    <meta name="Copyright" content="Public domain">
+    <link rel="apple-touch-icon" href="{{ static('nemo/_/img/apple-touch-icon-precomposed.png') }}">
+    <link rel="apple-touch-icon" size="72x72" href="{{ static('nemo/_/img/apple-touch-icon-72x72-precomposed.png') }}">
+    <link rel="apple-touch-icon" size="114x114" href="{{ static('nemo/_/img/apple-touch-icon-114x114-precomposed.png') }}">
+    <link rel="apple-touch-icon" size="144x144" href="{{ static('nemo/_/img/apple-touch-icon-144x144-precomposed.png') }}">
+
+
+    <!-- Custom modernizr for touch detection and svg support only, see the .js file for the build link -->
+    <script src="{{ static('nemo/_/js/modernizr.custom.js') }}"></script>
+
+    <!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles-ie.min.css') }}"> <![endif]-->
+    <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('nemo/_/c/es-styles.min.css') }}"> <!--<![endif]-->
+
+    <!--[if lt IE 9]>      <link rel="stylesheet" href="{{ static('knowledgebase/es-ask-styles-ie.min.css') }}"> <![endif]-->
+    <!--[if gt IE 8]><!--> <link rel="stylesheet" href="{{ static('knowledgebase/es-ask-styles.min.css') }}"> <!--<![endif]-->
+
+    <!--[if lt IE 9]> <script src="{{ static('nemo/_/js/html5shim.js') }}"></script> <![endif]-->
+    <!--[if IE 9]><script src="{{ static('js/ie/common.ie.js') }}"></script><![endif]-->
+</head>
+<body class="page {% block body_class %} page-parent {% endblock %}
+page-template
+page-template-page-babel
+page-template-page-babel-php">
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KMMLRS"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KMMLRS');</script>
+<!-- End Google Tag Manager -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=210516218981921";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="wrapper-banner s-hide-on-small">
+    <div class="wrapper-container">
+        <small class="split">
+            Un sitio web oficial del gobierno federal de <span class="usa">los Estados Unidos <img src="{{ static('nemo/_/img/us_flag_small.png') }}" alt=""></span> <a href="/" hreflang="en-US" class="split-right english-link">English</a>
+        </small>
+    </div>
+</div><!-- .wrapper-banner -->
+
+<header role="banner" class="wrapper-header">
+
+    <div class="wrapper-container">
+
+        <div class="split brand">
+
+            <h1><a class="brand-logo" href="/es/"><img src="{{ static('nemo/_/img/cfpb-logo-spanish.png') }}" alt="Oficina para la Protección Financiera del Consumidor"></a></h1>
+            <p class="s-hide-on-small split-right brand-tagline">Contáctenos <a href="tel:+18554112372" class="phone">(855) 411-2372</a></p>
+
+        </div><!-- .brand -->
+
+        <nav role="navigation" class="main-nav js-showtoggle">
+            <button class="a-btn js-showtoggle-trigger s-show-on-small">
+              <img src="{{ static('nemo/_/img/icon-menu-retina.png') }}" alt="Main Menu">
+          </button>
+          <ul class="js-showtoggle-content">
+            <li class="{% block nav_item_inicio %}{% endblock %}">
+                <a href="/es/">Inicio</a>
+            </li>
+            <li>
+                <a href="/es/obtener-respuestas/">Obtener respuestas</a>
+            </li>
+            <li class="{% block nav_item_presentar %}{% endblock %}">
+                <a href="/es/presentar-una-queja/">Presentar una queja</a>
+            </li>
+            <li class="{% block nav_item_quienes %}{% endblock %}">
+                <a href="/es/quienes-somos">Quienes somos</a>
+            </li>
+            <li class="{% block nav_item_hogar %}{% endblock %}">
+                <a href="/es/hogar">Hogar</a>
+            </li>
+        </ul>
+    </nav><!-- .main-nav -->
+
+</div><!-- .wrapper-container -->
+
+</header><!-- .wrapper-header -->
+
+<div role="main" class="wrapper-body">
+
+    <div class="wrapper-container">
+
+<!-- =============
+ BEGIN CONTENT
+ ============= -->
+
+ {% block babel_content %}{% endblock %}
+
+ <div class="ac-search full-bleed full-bleed-padded s-show-on-small">
+    <div class="s-show-on-small" data-set="ac-search-form">
+        <form method="get" action="/es/obtener-respuestas/buscar" id="ac-search" class="ac-search-form" role="search">
+            <div class="inf m-autocomplete" data-language="es">
+                <label for="q">Ejemplo: ¿Cómo puedo revisar mi informe de crédito?</label>
+                <input type="text" name="q" id="q" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"><button class="btn"><span class="s-show-on-small">Ir</span> <span class="s-hide-on-small">Buscar</span></button>
+            </div>
+        </form>
+    </div><!-- .s-show-on-small -->
+</div><!-- .ac-search -->
+
+{% block babel_share %}{% endblock %}
+
+<!-- =============
+ / END CONTENT
+ ============= -->
+
+</div><!-- .wrapper-container -->
+
+</div><!-- .wrapper-body -->
+
+<footer role="contentinfo" class="wrapper-footer">
+
+    <div class="wrapper-container">
+
+        <nav role="navigation">
+            <ul class="main-nav horizontal-separated">
+                <li><a href="/es/">Inicio</a></li>
+                <li><a href="/es/obtener-respuestas/">Obtener respuestas</a></li>
+                <li><a href="/es/presentar-una-queja/">Presentar una queja</a></li>
+                <li><a href="/es/quienes-somos/">Quiénes somos</a></li>
+            </ul>
+            <ul class="social-nav horizontal">
+                <li><a href="http://twitter.com/cfpb" hreflang="en-US"><img src="{{ static("nemo/_/img/icon-twitter-retina.png") }}" alt="Twitter" class="icon-25"></a></li>
+                <li><a href="http://facebook.com/cfpb" hreflang="en-US"><img src="{{ static("nemo/_/img/icon-facebook-retina.png") }}" alt="Facebook" class="icon-25"></a></li>
+                <li><a href="http://flickr.com/cfpbphotos" hreflang="en-US"><img src="{{ static("nemo/_/img/icon-flickr-retina.png") }}" alt="Flickr" class="icon-25"></a></li>
+                <li><a href="http://youtube.com/CFPB" hreflang="en-US"><img src="{{ static("nemo/_/img/icon-youtube-retina.png") }}" alt="Youtube" class="icon-25"></a></li>
+            </ul>
+            <p class="s-show-on-small"><small>Un sitio web oficial del gobierno federal de <span class="usa">los Estados Unidos <img src="{{ static('nemo/_/img/us_flag_small.png') }}" alt=""></span></small></p>
+            <p><a class="btn btn-block-on-small english-link" href="/" hreflang="en-US">English</a></p>
+        </nav>
+        <div class="js-showtoggle policy">
+            <button class="btn btn-block-on-small js-showtoggle-trigger">Política de información</button>
+            <div class="js-showtoggle-content">
+                <div class="row">
+                    <div class="span4">
+                        <p>En este momento, la política de información sólo está disponible en inglés.</p>
+                    </div>
+                    <div class="span4">
+                        <ul class="unstyled">
+                            <li><a href="/privacy-policy/" hreflang="en-US">Privacy policy and legal notices</a></li>
+                            <li><a href="/accessibility/" hreflang="en-US">Accessibility</a></li>
+                            <li><a href="/plain-writing/" hreflang="en-US">Plain writing</a></li>
+                            <li><a href="/no-fear-act/" hreflang="en-US">No FEAR Act</a></li>
+                        </ul>
+                    </div>
+                    <div class="span4">
+                        <ul class="unstyled">
+                            <li><a href="/foia/" hreflang="en-US">FOIA</a></li>
+                            <li><a href="http://gobiernousa.gov/" hreflang="es">GobiernoUSA.gov</a></li>
+                            <li><a href="http://www.federalreserve.gov/oig/default.htm" hreflang="en-US">Office of Inspector General</a></li>
+                            <li><a href="/ombudsman/" hreflang="en-US">Ombudsman</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- .js-showtoggle-content -->
+        </div><!-- .policy -->
+
+    </div><!-- .wrapper-container -->
+
+</footer><!-- .wrapper-footer -->
+
+<script src="{{ static('nemo/_/js/scripts.min.js') }}"></script>
+
+{% block page_js %}
+<!--[if gt IE 8]><!-->
+<script src="{{ static('js/spanish.js') }}"></script>
+<!--<![endif]-->
+{% endblock %}
+
+</body>
+</html>

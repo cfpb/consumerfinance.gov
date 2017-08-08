@@ -304,18 +304,22 @@ urlpatterns = [
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
 
+    # data-research-api
+    url(r'^data-research/mortgages/api/v1/',
+        include_if_app_enabled('data_research', 'data_research.urls')),
+
     # educational resources
     url(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
         url='/practitioner-resources/%(path)s', permanent=True)),
-
     url(r'^practitioner-resources/resources-for-older-adults' +
-         '/managing-someone-elses-money/',
+         '/managing-someone-elses-money/(?P<path>.*)$',
             RedirectView.as_view(
-                url='/consumer-tools/managing-someone-elses-money/',
+                url='/consumer-tools/managing-someone-elses-money/%(path)s',
                 permanent=True)),
-    url(r'^practitioner-resources/money-as-you-grow/',
+    url(r'^practitioner-resources/money-as-you-grow/(?P<path>.*)$',
             RedirectView.as_view(
-                url='/consumer-tools/money-as-you-grow/', permanent=True)),
+                url='/consumer-tools/money-as-you-grow/%(path)s',
+                permanent=True)),
 
     # ask-cfpb
     url(r'^askcfpb/$',
@@ -364,6 +368,9 @@ urlpatterns = [
 
     es_conv_flag(r'^es/hogar/$', TemplateView.as_view(
                  template_name='es/hogar/index.html')),
+
+    es_conv_flag(r'^es/nuestra-historia/$', TemplateView.as_view(
+                 template_name='es/nuestra-historia/index.html')),
 
     es_conv_flag(r'^es/presentar-una-queja/$', TemplateView.as_view(
                  template_name='es/presentar-una-queja/index.html')),
