@@ -126,21 +126,21 @@ class MapData(APIView):
                 {record.fips: {'name': "{}, {}".format(
                     FIPS.county_fips[record.fips]['county'],
                     FIPS.county_fips[record.fips]['state']),
-                    '30': record.time_series['pct30'],
-                    '90': record.time_series['pct90']}
+                    'pct30': record.time_series['pct30'],
+                    'pct90': record.time_series['pct90']}
                  for record in records})
         elif geo == 'metros':
             data['data'].update(
                 {record.fips:
                     {'name': FIPS.msa_fips[record.fips]['msa'],
-                     '30': record.time_series['pct30'],
-                     '90': record.time_series['pct90']}
+                     'pct30': record.time_series['pct30'],
+                     'pct90': record.time_series['pct90']}
                  for record in records})
         elif geo == 'states':
             data['data'].update(
                 {record.fips:
                     {'name': FIPS.state_fips[record.fips]['name'],
-                     '30': record.time_series['pct30'],
-                     '90': record.time_series['pct90']}
+                     'pct30': record.time_series['pct30'],
+                     'pct90': record.time_series['pct90']}
                  for record in records})
         return Response(data)
