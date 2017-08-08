@@ -369,6 +369,9 @@ urlpatterns = [
     es_conv_flag(r'^es/hogar/$', TemplateView.as_view(
                  template_name='es/hogar/index.html')),
 
+    es_conv_flag(r'^es/nuestra-historia/$', TemplateView.as_view(
+                 template_name='es/nuestra-historia/index.html')),
+
     es_conv_flag(r'^es/presentar-una-queja/$', TemplateView.as_view(
                  template_name='es/presentar-una-queja/index.html')),
 
