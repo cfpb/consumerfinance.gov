@@ -425,13 +425,6 @@ class DataScriptTest(unittest.TestCase):
 class ExportRoundingTests(unittest.TestCase):
     """Tests for rounding export values"""
 
-    def setUp(self):
-        print_patch = mock.patch(
-            'data_research.scripts.export_public_csv.print'
-        )
-        print_patch.start()
-        self.addCleanup(print_patch.stop)
-
     def test_round_pct_lessthan_1(self):
         value = 0.00781409295352325
         self.assertEqual(round_pct(value), 0.8)
