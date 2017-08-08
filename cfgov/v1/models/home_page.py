@@ -14,6 +14,7 @@ from .base import CFGOVPage
 
 class HomePage(CFGOVPage):
     header = StreamField([
+        ('info_unit', molecules.InfoUnit()),
         ('half_width_link_blob', molecules.HalfWidthLinkBlob()),
     ], blank=True)
 

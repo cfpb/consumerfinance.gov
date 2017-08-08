@@ -544,6 +544,9 @@ FLAGS = {
     # "This beta site is a work in progress."
     'BETA_NOTICE': {},
 
+    # When enabled, Display a "techical issues" banner on /complaintdatabase
+    'CCDB_TECHNICAL_ISSUES': {},
+
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
@@ -556,6 +559,10 @@ FLAGS = {
     # When enabled, a link to "Administrative Adjudication" appears in the
     # footer
     'OAA_FOOTER_LINK': {},
+
+    # When enabled, serves `/es/` pages from this
+    # repo ( excluding /obtener-respuestas/ pages ).
+    'ES_CONV_FLAG': {},
 
     # Transition of "About Us" to Wagtail
     # When enabled, the "About Us" pages are served from Wagtail
@@ -582,10 +589,4 @@ FLAGS = {
     # The template will render for the front-end, but the sortable code is missing
     # and the table will not be sortable until cf-tables from CF 4.x is implemented
     'SORTABLE_TABLES': {},
-
-    # Serve housing counselor JSON and PDFs from S3.
-    # Access e.g. /find-a-housing-counselor/?zipcode=20001&s3=True
-    'HOUSING_COUNSELOR_S3': {
-        'parameter': 's3',
-    },
 }

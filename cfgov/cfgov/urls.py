@@ -41,6 +41,7 @@ from v1.views.documents import DocumentServeView
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
+es_conv_flag = partial(flagged_url, 'ES_CONV_FLAG')
 
 urlpatterns = [
 
@@ -244,15 +245,20 @@ urlpatterns = [
     url(r'^retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
-    # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
-    # Otherwise include CCDB4 urls
+    url(r'^data-research/consumer-complaints/',
+        include_if_app_enabled('complaintdatabase', 'complaintdatabase.urls')),
+
+    # CCDB5-API
     flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/',
+                r'^data-research/consumer-complaints/search/api/v1/',
+                include_if_app_enabled('complaint_search',
+                                       'complaint_search.urls')
+                ),
+    # If 'CCDB5_RELEASE' is True, include CCDB5 urls.
+    flagged_url('CCDB5_RELEASE',
+                r'^data-research/consumer-complaints/search/',
                 include_if_app_enabled(
                     'ccdb5_ui', 'ccdb5_ui.config.urls'
-                ),
-                fallback=include_if_app_enabled(
-                    'complaintdatabase', 'complaintdatabase.urls'
                 )),
 
     url(r'^oah-api/rates/',
@@ -298,12 +304,22 @@ urlpatterns = [
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
 
-    # CCDB5-API
-    flagged_url('CCDB5_RELEASE',
-                r'^data-research/consumer-complaints/api/v1/',
-                include_if_app_enabled('complaint_search',
-                                       'complaint_search.urls')
-                ),
+    # data-research-api
+    url(r'^data-research/mortgages/api/v1/',
+        include_if_app_enabled('data_research', 'data_research.urls')),
+
+    # educational resources
+    url(r'^educational-resources/(?P<path>.*)$', RedirectView.as_view(
+        url='/practitioner-resources/%(path)s', permanent=True)),
+    url(r'^practitioner-resources/resources-for-older-adults' +
+         '/managing-someone-elses-money/(?P<path>.*)$',
+            RedirectView.as_view(
+                url='/consumer-tools/managing-someone-elses-money/%(path)s',
+                permanent=True)),
+    url(r'^practitioner-resources/money-as-you-grow/(?P<path>.*)$',
+            RedirectView.as_view(
+                url='/consumer-tools/money-as-you-grow/%(path)s',
+                permanent=True)),
 
     # ask-cfpb
     url(r'^askcfpb/$',
@@ -346,6 +362,21 @@ urlpatterns = [
         ask_autocomplete, name='ask-autocomplete-en'),
     url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
+
+    es_conv_flag(r'^es/$', TemplateView.as_view(
+                 template_name='/es/index.html')),
+
+    es_conv_flag(r'^es/hogar/$', TemplateView.as_view(
+                 template_name='es/hogar/index.html')),
+
+    es_conv_flag(r'^es/nuestra-historia/$', TemplateView.as_view(
+                 template_name='es/nuestra-historia/index.html')),
+
+    es_conv_flag(r'^es/presentar-una-queja/$', TemplateView.as_view(
+                 template_name='es/presentar-una-queja/index.html')),
+
+    es_conv_flag(r'^es/quienes-somos/$', TemplateView.as_view(
+                 template_name='es/quienes-somos/index.html')),
 ]
 
 if settings.ALLOW_ADMIN_URL:

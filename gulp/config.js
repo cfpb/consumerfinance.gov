@@ -65,7 +65,8 @@ module.exports = {
         paths.modules + '/cf-pagination/src',
         paths.modules + '/cf-tables/src',
         paths.modules + '/cf-typography/src',
-        paths.modules + '/cfpb-chart-builder/src/static/css'
+        paths.modules + '/cfpb-chart-builder/src/static/css',
+        paths.modules + '/highcharts/css'
       ] ),
       compress: true
     }
@@ -93,7 +94,7 @@ module.exports = {
       dest: paths.processed
     },
     icons: {
-      src:  paths.modules + '/capital-framework/src/cf-icons/src/fonts/*',
+      src:  paths.modules + '/cf-icons/src/fonts/*',
       dest: paths.processed + '/fonts/'
     },
     vendorFonts: {

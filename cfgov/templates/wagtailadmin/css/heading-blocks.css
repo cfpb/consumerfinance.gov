@@ -1,0 +1,37 @@
+.heading-level-block,
+.heading-text-block,
+.heading-icon-block {
+    display: inline-block;
+    margin-right: -0.25em;
+}
+
+.heading-level-block { width: 20%; }
+.heading-text-block { width: 50%; }
+.heading-icon-block { width: 26%; }
+
+.heading-level-block,
+.heading-icon-block {
+    margin-left: 2%;
+}
+
+.heading-level-block label,
+.heading-text-block label,
+.heading-icon-block label {
+    display: block;
+    width: auto;
+    float: none;
+}
+
+.heading-level-block .field-content,
+.heading-text-block .field-content,
+.heading-icon-block .field-content {
+    /* Using !important to override default styling without needing
+       excessively long selectors here. */
+    width: 100% !important;
+}
+
+.heading-level-block.required > label::after {
+    /* Using !important to override default styling without needing
+       excessively long selectors here. */
+    display: none !important;
+}
