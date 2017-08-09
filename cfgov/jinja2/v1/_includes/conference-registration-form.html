@@ -46,14 +46,11 @@
             {%- endfor -%}
 
             <section class="o-form-section">
-                <div class="form-l_col form-l_col-1">
-                    <p><strong class="a-label a-label__heading">*</strong> Indicates a required field</p>
-                </div>
 
                 {# Name #}
                 {{- input.render({
                     'id':       'name',
-                    'label':    'Name *',
+                    'label':    'Name',
                     'type':     'text',
                     'value':    form.name.value() | default('', true),
                     'size':     '1',
@@ -75,7 +72,7 @@
                 {# Email #}
                 {{- input.render({
                     'id': 'email',
-                    'label':   'Email *',
+                    'label':   'Email',
                     'type':    'email',
                     'value':    form.email.value() | default('', true),
                     'size':    '1',
