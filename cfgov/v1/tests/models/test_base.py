@@ -3,12 +3,10 @@ import mock
 
 from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
-from django.db import models
 from django.http import HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
 from wagtail.wagtailcore import blocks
-from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import Site
 
 from v1.models import BrowsePage, CFGOVPage, Feedback
@@ -301,18 +299,6 @@ class TestFeedbackModel(TestCase):
             self.assertIn(term, test_csv)
 
 
-class BlockWithMedia(blocks.TextBlock):
-    class Media:
-        js = ['block-with-media.js']
-
-
-class StreamBlockWithMedia(blocks.StreamBlock):
-    block_with_media = BlockWithMedia()
-
-    class Media:
-        js = ['stream-block-with-media.js']
-
-
 class TestCFGOVPageMediaProperty(TestCase):
     """Tests how the page.media property pulls in child block JS."""
     def setUp(self):
@@ -321,51 +307,23 @@ class TestCFGOVPageMediaProperty(TestCase):
         )
         self.empty_dict = {k: [] for k in self.expected_keys}
 
-    def test_base_class_has_no_media(self):
+    def test_empty_page_has_no_media(self):
         return self.assertEqual(CFGOVPage().media, self.empty_dict)
 
-    def test_page_with_no_blocks_with_media_has_no_media(self):
-        class ChildPageWithNoExtraMedia(CFGOVPage):
-            integer = models.TextField('integer')
-
-        return self.assertEqual(
-            ChildPageWithNoExtraMedia().media,
-            self.empty_dict
-        )
-
-    def test_page_with_custom_blocks_returns_their_media(self):
-        # This has to be defined in the test to avoid Django migrations
-        # complaining about a model that doesn't have a migration history.
-        class ChildPageWithLotsOfMedia(CFGOVPage):
-            stream_field = StreamField([
-                ('block_with_media', BlockWithMedia()),
-                ('list_block_with_media', blocks.ListBlock(BlockWithMedia)),
-                ('stream_block_with_media', StreamBlockWithMedia()),
-            ])
-
-        block_with_media_value = {
-            'type': 'block_with_media',
-            'value': 'foo',
-        }
-
-        page = ChildPageWithLotsOfMedia()
-        page.stream_field = blocks.StreamValue(
-            page.stream_field.stream_block,
+    def test_page_pulls_in_child_block_media(self):
+        page = CFGOVPage()
+        page.sidefoot = blocks.StreamValue(
+            page.sidefoot.stream_block,
             [
-                block_with_media_value,
                 {
-                    'type': 'list_block_with_media',
-                    'value': [block_with_media_value],
-                },
-                {
-                    'type': 'stream_block_with_media',
-                    'value': [block_with_media_value],
+                    'type': 'email_signup',
+                    'value': {'heading': 'Heading'}
                 },
             ],
             True
         )
 
         self.assertEqual(
-            page.media['other'],
-            ['block-with-media.js', 'stream-block-with-media.js']
+            page.media['organisms'],
+            ['email-signup.js']
         )
