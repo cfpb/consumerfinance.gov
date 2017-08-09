@@ -17,11 +17,6 @@ from data_research.mortgage_utilities.s3_utils import (
     bake_csv_to_s3, MORTGAGE_SUB_BUCKET)
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
-
-logger = logging.getLogger(__name__)
-# logger.setLevel(logging.INFO)
-
-
 TIMESTAMP = "{}".format(datetime.date.today())
 BASE_DATE = datetime.date(2008, 1, 1)
 BASE_QUERYSET = CountyMortgageData.objects.filter(date__gte=BASE_DATE)
@@ -40,6 +35,9 @@ LATE_VALUE_TITLE = {
     'percent_30_60': 'Percent-30-89',
     'percent_90': 'Percent-90+',
 }
+
+
+logger = logging.getLogger(__name__)
 
 
 def round_pct(value):
