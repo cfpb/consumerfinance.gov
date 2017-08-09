@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import datetime
 from dateutil import parser
 from cStringIO import StringIO
+import logging
 
 import unicodecsv
 
@@ -16,14 +17,15 @@ from data_research.mortgage_utilities.s3_utils import (
     bake_csv_to_s3, MORTGAGE_SUB_BUCKET)
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
+
+logger = logging.getLogger(__name__)
+# logger.setLevel(logging.INFO)
+
+
 TIMESTAMP = "{}".format(datetime.date.today())
 BASE_DATE = datetime.date(2008, 1, 1)
 BASE_QUERYSET = CountyMortgageData.objects.filter(date__gte=BASE_DATE)
 NATION_QUERYSET = NationalMortgageData.objects.filter(date__gte=BASE_DATE)
-
-
-def round_pct(value):
-    return round((value * 100), 1)
 
 
 NATION_STARTER = {
@@ -38,6 +40,10 @@ LATE_VALUE_TITLE = {
     'percent_30_60': 'Percent-30-89',
     'percent_90': 'Percent-90+',
 }
+
+
+def round_pct(value):
+    return round((value * 100), 1)
 
 
 def row_starter(geo_type, meta):
@@ -126,6 +132,9 @@ def run(prep_only=False):
     fill_nation_row_date_values(date_set)
 
     if prep_only is False:
+        logger.info('Exporting public CSVs to S3 ...')
         for geo in ['County', 'MetroArea', 'State']:
             export_downloadable_csv(geo, 'percent_30_60')
+            logger.info('Exported 30-89-day {} CSV'.format(geo))
             export_downloadable_csv(geo, 'percent_90')
+            logger.info('Exported 90-day {} CSV'.format(geo))
