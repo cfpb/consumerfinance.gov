@@ -22,20 +22,21 @@
 
    classes (optional): Space separated list of class names.
 
-   use_blog_category:  Whether to use the blog category filter or not.
-                       Defaults to false.
+   use_blog_category (optional): Whether to use the blog category filter or not.
+                                 Defaults to false.
+
+   index (optional):             A unique ID for a form filter URL.
+                                 Defaults to 0.
 
    ========================================================================== #}
 
-{% macro render(category, href, classes, use_blog_category=false, index=0, sheerpage=false) %}
+{% macro render(category, href, classes, use_blog_category=false, index=0) %}
     {% import 'macros/category-icon.html' as category_icon %}
 
     {% if href %}
         {# TODO: Remove use_blog_category parameter when this element becomes atomic. #}
         {% if use_blog_category %}
             {% set href = href + '?filter_blog_category=' + category | urlencode | replace('%20', '+') %}
-        {% elif sheerpage %}
-            {% set href = href + '?filter_category=' + category | urlencode | replace('%20', '+') %}
         {% else %}
             {% set href = href + '?filter' + index | string + '_categories=' + category | urlencode | replace('%20', '+') %}
         {% endif %}
