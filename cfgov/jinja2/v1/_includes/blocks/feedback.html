@@ -90,7 +90,7 @@
             {% elif value.question_text %}
                 {{ value.question_text }}
             {% elif value.was_it_helpful_text %}
-                {% if page.language == 'es' %}Comentario adicional{% else %}Additional comment{% endif %} ({% if page.language == 'es' %}Opcional{% else %}Optional{% endif %})
+                {% if page.language == 'es' %}Comentario adicional{% else %}Additional comment{% endif %} <small class="a-label_helper">({% if page.language == 'es' %}opcional{% else %}optional{% endif %})</small>
             {% endif %}
         </label>
         <p class="u-mb15"><small><em>{% if page.language == 'es' %}Nota: No incluya información confidencial, como su nombre, información de contacto, número de cuenta o número de seguro social en este campo.{% else %}Note: Do not include sensitive information like your name, contact information, account number, or social security number in this field.{% endif %}
