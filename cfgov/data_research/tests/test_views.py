@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
-import unittest
+
 import datetime
+import json
+import unittest
 
 import django
 from django.core.urlresolvers import reverse
@@ -141,6 +143,10 @@ class TimeseriesViewTests(django.test.TestCase):
                 'data_research_api_mortgage_county_mapdata',
                 kwargs={'geo': 'counties', 'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.content)
+        self.assertEqual(
+            sorted(response_data.get('data').get('12081').keys()),
+            ['name', 'pct30', 'pct90'])
 
     def test_msa_map_data(self):
         response = self.client.get(
