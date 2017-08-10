@@ -26,6 +26,10 @@ from data_research.scripts.load_mortgage_aggregates import (
     load_national_values,
     load_state_values,
     run as run_aggregates)
+from data_research.scripts.export_public_csv import (
+    export_downloadable_csv,
+    round_pct,
+    run as run_export)
 
 
 class DataLoadIntegrityTest(django.test.TestCase):
@@ -172,8 +176,84 @@ class MergeTheDadesTest(django.test.TestCase):
             CountyMortgageData.objects.get(fips=self.old_dade_fips)
 
 
+class DataExportTest(django.test.TestCase):
+    """Tests exporting functions"""
+
+    fixtures = ['mortgage_constants.json']
+
+    def setUp(self):
+
+        mommy.make(
+            CountyMortgageData,
+            current=1250,
+            date=datetime.date(2008, 1, 1),
+            fips='12081',
+            id=1,
+            ninety=100,
+            other=100,
+            sixty=100,
+            thirty=100,
+            total=1650)
+
+        mommy.make(
+            MSAMortgageData,
+            current=5250,
+            date=datetime.date(2008, 1, 1),
+            fips='35840',
+            id=1,
+            ninety=1406,
+            other=361,
+            sixty=1275,
+            thirty=3676,
+            total=22674)
+
+        mommy.make(
+            StateMortgageData,
+            current=250081,
+            date=datetime.date(2008, 1, 1),
+            fips='12',
+            id=1,
+            ninety=4069,
+            other=3619,
+            sixty=2758,
+            thirty=6766,
+            total=26748)
+
+        mommy.make(
+            NationalMortgageData,
+            current=2500000,
+            date=datetime.date(2008, 1, 1),
+            fips='12',
+            id=1,
+            ninety=10000,
+            other=10000,
+            sixty=10000,
+            thirty=10000,
+            total=2540000)
+
+    @mock.patch('data_research.scripts.export_public_csv.bake_csv_to_s3')
+    def test_export_downloadable_csv(self, mock_bake):
+        run_export(prep_only=True)
+        export_downloadable_csv('County', 'percent_30_60')
+        self.assertEqual(mock_bake.call_count, 1)
+        export_downloadable_csv('MetroArea', 'percent_30_60')
+        self.assertEqual(mock_bake.call_count, 2)
+        export_downloadable_csv('State', 'percent_90')
+        self.assertEqual(mock_bake.call_count, 3)
+
+
+class RunExportTest(unittest.TestCase):
+    """Tests the export runner."""
+
+    @mock.patch(
+        'data_research.scripts.export_public_csv.export_downloadable_csv')
+    def test_run_export(self, mock_export):
+        run_export()
+        self.assertEqual(mock_export.call_count, 6)
+
+
 class DataLoadTest(django.test.TestCase):
-    """Tests loading functions"""
+    """Tests loading functions."""
 
     fixtures = ['mortgage_constants.json']
 
@@ -340,3 +420,19 @@ class DataScriptTest(unittest.TestCase):
         from data_research.scripts import load_mortgage_performance_csv
         load_mortgage_performance_csv.run()
         self.assertEqual(mock_load.call_count, 1)
+
+
+class ExportRoundingTests(unittest.TestCase):
+    """Tests for rounding export values"""
+
+    def test_round_pct_lessthan_1(self):
+        value = 0.00781409295352325
+        self.assertEqual(round_pct(value), 0.8)
+
+    def test_round_pct_99(self):
+        value = 0.98991409295352325
+        self.assertEqual(round_pct(value), 99.0)
+
+    def test_round_pct_greater_than_100(self):
+        value = 1.00498991409295352325
+        self.assertEqual(round_pct(value), 100.5)
