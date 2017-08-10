@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import json
+import logging 
 
 from django.conf import settings
 import unicodecsv
@@ -53,6 +54,8 @@ OUTPUT_HEADINGS = [  # These have not been finalized
     '90_days_delinquent_num',
     '90_days_delinquent_percent',
     'other_num']
+
+logger = logging.getLogger(__name__)
 
 
 class FipsMeta(object):
@@ -255,4 +258,4 @@ def update_valid_geos():
             pct_values['counties'],
             pct_values['msas']))
 
-    return message
+    logger.info(message)
