@@ -8,10 +8,6 @@ import unicodecsv
 PROJECT_ROOT = settings.PROJECT_ROOT
 FIPS_DATA_PATH = (
     "{}/data_research/data".format(PROJECT_ROOT))
-SOURCE_CSV_URL = (
-    'http://files.consumerfinance.gov.s3.amazonaws.com/'
-    'data/mortgage-performance/source/delinquency_county_0916.csv'
-)
 
 # We have minimal data for territories, so we exclude all but Puerto Rico (72)
 NON_STATES = {'MP': '69', 'AS': '60', 'VI': '78', 'GU': '66'}  # , 'PR': '72'}
