@@ -1,13 +1,23 @@
 from __future__ import unicode_literals
 
+import datetime
 from dateutil import parser
+import json
+import logging
 import sys
 
-from data_research.models import CountyMortgageData
+from data_research.models import MortgageDataConstant, CountyMortgageData
 from data_research.mortgage_utilities.s3_utils import read_in_s3_csv
 from data_research.mortgage_utilities.fips_meta import (
-    SOURCE_CSV_URL, OUTDATED_FIPS
+    FIPS_DATA_PATH, OUTDATED_FIPS)
+
+S3_SOURCE_BUCKET = (
+    'http://files.consumerfinance.gov.s3.amazonaws.com/'
+    'data/mortgage-performance/source'
 )
+ORIGINAL_FILENAME = 'delinquency_county_0317.csv'
+
+logger = logging.getLogger(__name__)
 
 
 def merge_the_dades():
@@ -33,6 +43,23 @@ def merge_the_dades():
                                           getattr(new_dade, field)))
             new_dade.save()  # this will recalculate the record's percentages
             old_dade.delete()
+    logger.info("\nDade and Miami-Dade values merged.")
+
+
+def update_sampling_dates():
+    """
+    Update our metadata list of sampling dates.
+    """
+    starting_year = MortgageDataConstant.objects.get(
+        name='starting_year').value
+    dates = sorted(set(obj.date for obj in CountyMortgageData.objects.filter(
+        date__gte=datetime.date(starting_year, 1, 1))))
+    date_list = ["{}".format(date) for date in dates]
+    with open('{}/sampling_dates.json'.format(FIPS_DATA_PATH), 'w') as f:
+        f.write(json.dumps(date_list))
+    logger.info(
+        "Sampling dates updated; the {} dates now range from {} to {}".format(
+            len(date_list), date_list[0], date_list[-1]))
 
 
 def validate_fips(raw_fips, keep_outdated=False):
@@ -57,10 +84,16 @@ def validate_fips(raw_fips, keep_outdated=False):
     return new_fips
 
 
-def load_values(return_fips=False):
-    """Load source mortgage data into an empty CountyMortgageData table."""
+def load_values(s3_filename, return_fips=False):
+    """Drop and reload the CountyMortgageData table."""
+
     counter = 0
-    raw_data = read_in_s3_csv(SOURCE_CSV_URL)
+    source_url = "{}/{}".format(S3_SOURCE_BUCKET, s3_filename)
+    logger.info("Deleting CountyMortgageData objects.")
+    CountyMortgageData.objects.all().delete()
+    logger.info("CountyMorgtgageData count is now {}".format(
+        CountyMortgageData.objects.count()))
+    raw_data = read_in_s3_csv(source_url)
     # raw_data is a generator delivering data dicts, each representing a row
     if return_fips is True:
         fips_list = []
@@ -85,9 +118,15 @@ def load_values(return_fips=False):
                 sys.stdout.write('.')
                 sys.stdout.flush()
             if counter % 100000 == 0:  # pragma: no cover
-                print("\n{}".format(counter))
+                logger.info("\n{}".format(counter))
     merge_the_dades()
+    update_sampling_dates()
+    logger.info("Created {} CountyMortgageData objects".format(
+        CountyMortgageData.objects.count()))
 
 
-def run():
-    load_values()
+def run(*args):  # pragma: no cover
+    if args:
+        load_values(s3_filename=args[0])
+    else:
+        load_values()

@@ -19,6 +19,7 @@ from data_research.models import (
 from data_research.scripts.load_mortgage_performance_csv import (
     load_values,
     merge_the_dades,
+    update_sampling_dates,
     validate_fips,
 )
 from data_research.scripts.load_mortgage_aggregates import (
@@ -34,13 +35,10 @@ from data_research.scripts.export_public_csv import (
 
 class DataLoadIntegrityTest(django.test.TestCase):
 
+    fixtures = ['mortgage_constants.json']
+
     def setUp(self):
 
-        print_patch = mock.patch(
-            'data_research.scripts.load_mortgage_performance_csv.print'
-        )
-        print_patch.start()
-        self.addCleanup(print_patch.stop)
         # real values from a base CSV row
         self.data_header = 'date,fips,open,current,thirty,sixty,ninety,other\n'
         self.data_row = '09/01/16,12081,1952,1905,21,5,10,11\n'
@@ -55,7 +53,11 @@ class DataLoadIntegrityTest(django.test.TestCase):
 
     @mock.patch(
         'data_research.scripts.load_mortgage_performance_csv.read_in_s3_csv')
-    def test_data_creation_from_base_row(self, mock_read_csv):
+    @mock.patch(
+        'data_research.scripts.'
+        'load_mortgage_performance_csv.update_sampling_dates')
+    def test_data_creation_from_base_row(
+            self, mock_update_dates, mock_read_csv):
         """
         Confirm that loading a single row of real base data creates
         a CountyMortgageData object with the base row's values,
@@ -65,7 +67,7 @@ class DataLoadIntegrityTest(django.test.TestCase):
         f = StringIO.StringIO(self.data_header + self.data_row)
         reader = unicodecsv.DictReader(f)
         mock_read_csv.return_value = reader
-        load_values()
+        load_values('mock_s3_url')
         self.assertEqual(CountyMortgageData.objects.count(), 1)
         county = CountyMortgageData.objects.first()
         fields = reader.fieldnames
@@ -92,17 +94,26 @@ class DataLoadIntegrityTest(django.test.TestCase):
             (int(self.data_row_dict.get('thirty')) +
              int(self.data_row_dict.get('sixty'))) * 1.0 / open_value)
 
+    def test_update_sampling_dates(self):
+
+        mommy.make(
+            CountyMortgageData,
+            current=100,
+            date=datetime.date(2008, 1, 1),
+            fips='12081',
+            ninety=100,
+            other=100,
+            sixty=100,
+            thirty=100,
+            total=500)
+        m = mock.mock_open()
+        with mock.patch('__builtin__.open', m, create=True):
+            update_sampling_dates()
+        self.assertEqual(m.call_count, 1)
+
 
 class AggregateLoadTest(django.test.TestCase):
     """Tests aggregate loading function"""
-
-    def setUp(self):
-
-        print_patch = mock.patch(
-            'data_research.scripts.load_mortgage_aggregates.print'
-        )
-        print_patch.start()
-        self.addCleanup(print_patch.stop)
 
     @mock.patch('data_research.scripts.'
                 'load_mortgage_aggregates.load_fips_meta')
@@ -121,12 +132,6 @@ class AggregateLoadTest(django.test.TestCase):
 class MergeTheDadesTest(django.test.TestCase):
 
     def setUp(self):
-
-        print_patch = mock.patch(
-            'data_research.scripts.load_mortgage_performance_csv.print'
-        )
-        print_patch.start()
-        self.addCleanup(print_patch.stop)
 
         self.old_dade_fips = '12025'
         self.new_dade_fips = '12086'
@@ -283,18 +288,6 @@ class DataLoadTest(django.test.TestCase):
             thirty=6766,
             total=26748)
 
-        print_patch = mock.patch(
-            'data_research.scripts.load_mortgage_performance_csv.print'
-        )
-        print_patch.start()
-        self.addCleanup(print_patch.stop)
-
-        print_patch2 = mock.patch(
-            'data_research.scripts.load_mortgage_aggregates.print'
-        )
-        print_patch2.start()
-        self.addCleanup(print_patch2.stop)
-
     @mock.patch('data_research.scripts.load_mortgage_aggregates.'
                 'MSAMortgageData.objects.get_or_create')
     @mock.patch('data_research.scripts.load_mortgage_aggregates.FIPS')
@@ -326,13 +319,19 @@ class DataLoadTest(django.test.TestCase):
 
     @mock.patch('data_research.scripts.'
                 'load_mortgage_performance_csv.read_in_s3_csv')
-    def test_load_values(self, mock_read_in):
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_performance_csv.update_sampling_dates')
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_performance_csv.merge_the_dades')
+    def test_load_values(self, mock_dades, mock_update, mock_read_in):
         mock_read_in.return_value = [{
             'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
             'ninety': '0', 'date': '01/01/98', 'open': '270', 'other': '3',
             'fips': '01001'}]
-        load_values()
+        load_values('mock_s3_url')
         self.assertEqual(mock_read_in.call_count, 1)
+        self.assertEqual(mock_update.call_count, 1)
+        self.assertEqual(mock_dades.call_count, 1)
         self.assertEqual(CountyMortgageData.objects.count(), 1)
 
     @mock.patch('data_research.scripts.'
@@ -342,26 +341,13 @@ class DataLoadTest(django.test.TestCase):
             'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
             'ninety': '0', 'date': '01/01/98', 'open': '270', 'other': '3',
             'fips': '01001'}]
-        fips_list = load_values(return_fips=True)
+        fips_list = load_values('mock_s3_url', return_fips=True)
         self.assertEqual(mock_read_in.call_count, 1)
         self.assertEqual(fips_list, ['01001'])
 
 
 class DataScriptTest(unittest.TestCase):
     """Tests for data pipeline automations"""
-
-    def setUp(self):
-        print_patch = mock.patch(
-            'data_research.scripts.load_mortgage_performance_csv.print'
-        )
-        print_patch.start()
-        self.addCleanup(print_patch.stop)
-
-        print_patch2 = mock.patch(
-            'data_research.scripts.load_mortgage_aggregates.print'
-        )
-        print_patch2.start()
-        self.addCleanup(print_patch2.stop)
 
     def test_validate_fips_too_short(self):
         fips_input = '12'

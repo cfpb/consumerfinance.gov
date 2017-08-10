@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from dateutil import parser
+import logging
 
 from data_research.models import (
     MSAMortgageData,
@@ -8,6 +9,8 @@ from data_research.models import (
     StateMortgageData,
 )
 from data_research.views import FIPS, load_fips_meta
+
+logger = logging.getLogger(__name__)
 
 
 def load_msa_values(date):
@@ -68,10 +71,10 @@ def run():
     """
     load_fips_meta()
     for date in FIPS.dates:
-        # print(
-        #     "aggregating metro, state and national data for {}".format(date))
+        logger.info(
+            "aggregating data for {}".format(date))
         load_msa_values(date)
         load_state_values(date)
         load_national_values(date)
-    # print("Created {} records and updated {}".format(
-    #     FIPS.created, FIPS.updated))
+    logger.info("Created {} records and updated {}".format(
+        FIPS.created, FIPS.updated))
