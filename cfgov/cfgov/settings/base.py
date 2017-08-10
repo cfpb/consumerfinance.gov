@@ -542,7 +542,9 @@ FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
-    'BETA_NOTICE': {},
+    'BETA_NOTICE': {
+        'site': 'beta.consumerfinance.gov',
+    },
 
     # When enabled, Display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
