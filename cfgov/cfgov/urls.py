@@ -383,7 +383,7 @@ urlpatterns = [
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
 
     flagged_url('FWB_RELEASE',
-                r'^(?i)consumer-tools/financial-well-being/$',
+                r'^(?i)consumer-tools/financial-well-being/',
                 include('wellbeing.urls')
     ),
 ]
