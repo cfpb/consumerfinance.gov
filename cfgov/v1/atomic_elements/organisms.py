@@ -325,6 +325,9 @@ class Table(blocks.StructBlock):
         template = '_includes/organisms/table.html'
         label = ' '
 
+    class Media:
+        js = ['table.js']
+
 
 class BureauStructurePosition(blocks.StructBlock):
     office_name = blocks.CharBlock()
