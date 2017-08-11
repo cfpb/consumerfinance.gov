@@ -20,9 +20,10 @@
 {% macro render(datetime,
                 show_value_for={'date':true, 'time':true, 'timezone':true}) %}
 <span class="datetime">
-    {% if show_value_for.date == true  %}
+    {% if show_value_for.date == true %}
     <time class="datetime_date" datetime="{{ dt.format_datetime(datetime) }}">
-      {{ dt.format_date(datetime) }}
+      {# Displays the date in the format: MMM. DD, YYYY #}
+      {{'{dt:%b}. {dt.day}, {dt.year}'.format(dt = datetime)}}
     </time>
     {% endif %}
 

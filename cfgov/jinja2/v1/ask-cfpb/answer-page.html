@@ -37,7 +37,10 @@
                 block__flush-top
                 block__sub">
         {% if last_edited %}
-        <time datetime='{{ last_edited }}' pubdate class="answer-edited-date">updated {{ dt.format_date(last_edited) }}</time>
+        <time datetime='{{ last_edited }}' pubdate class="answer-edited-date">
+          {# Displays the date in the format: MMM. DD, YYYY #}
+          updated {{'{dt:%b}. {dt.day}, {dt.year}'.format(dt = last_edited)}}
+        </time>
         {% endif %}
 
         <h2>{{ page.question | striptags }}</h2>
@@ -96,7 +99,6 @@
 
     </div>
     {{ ask_search_bar.render( 'left' ) }}
-
 
 {% endblock %}
 
