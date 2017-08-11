@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content scoped %}
-    <main class="content {% block content_modifiers -%}{%- endblock %}" id="main" role="main">
+    {%- import 'macros/accessible-languages.html' as accessible_languages with context-%}
+    <main class="content {% block content_modifiers -%}{%- endblock %}"
+          id="main"
+          role="main"
+          {{- accessible_languages.render() }}>
         {% block hero -%}{%- endblock %}
         {% block pre_content scoped -%}
             {% if breadcrumb_items | length > 0 %}
