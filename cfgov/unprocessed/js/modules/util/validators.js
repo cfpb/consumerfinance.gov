@@ -10,6 +10,9 @@
 var ERROR_MESSAGES = require( '../../config/error-messages-config' );
 var typeCheckers = require( '../../modules/util/type-checkers' );
 
+// TODO: Update all the validators to return both passed and failed states
+// instead of returning an empty object if the value passed
+
 /**
  * date Determines if a field contains a valid date.
  *
@@ -38,16 +41,34 @@ function date( field, currentStatus ) {
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
-function email( field, currentStatus ) {
+function email( field, currentStatus, opts ) {
   var status = currentStatus || {};
+  var opts = opts || {};
   var regex =
     '^[a-z0-9\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+(?:\\.[a-z0-9' +
     '\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]' +
     '(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$';
   var emailRegex = new RegExp( regex, 'i' );
-  if ( field.value && emailRegex.test( field.value ) === false ) {
+  var emptyValidation = empty( field );
+  var isFilled = emptyValidation.required === undefined ?
+                 'true' : emptyValidation.required;
+  var state;
+  var key;
+
+  if ( !isFilled ) {
+    // TODO: Create a language checker instead of doing this inline like this
+    state = 'REQUIRED';
+    key = opts.language === 'es' ? state + '_ES' : state;
+
     status.msg = status.msg || '';
-    status.msg += ERROR_MESSAGES.EMAIL.INVALID;
+    status.msg += ERROR_MESSAGES.EMAIL[key];
+    status.email = false;
+  } else if ( emailRegex.test( field.value ) === false ) {
+    state = 'INVALID';
+    key = opts.language === 'es' ? state + '_ES' : state;
+
+    status.msg = status.msg || '';
+    status.msg += ERROR_MESSAGES.EMAIL[key];
     status.email = false;
   }
   return status;
@@ -61,6 +82,7 @@ function email( field, currentStatus ) {
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
+ // TODO: Rename this so it's clearer it's checking a required attribute
 function empty( field, currentStatus ) {
   var status = currentStatus || {};
   var isRequired = field.getAttribute( 'required' ) !== null;
