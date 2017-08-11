@@ -77,4 +77,4 @@ class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
         return ', '.join(sorted(g.grade.grade for g in value.all()))
 
     def make_close_date_value(self, instance, value):
-        return value.strftime('%b %d, %Y').upper()
+        return value.strftime('%b. %d, %Y')
