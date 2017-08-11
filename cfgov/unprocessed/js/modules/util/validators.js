@@ -51,7 +51,7 @@ function email( field, currentStatus, opts ) {
   var emailRegex = new RegExp( regex, 'i' );
   var emptyValidation = empty( field );
   var isFilled = emptyValidation.required === undefined ?
-                 'true' : emptyValidation.required;
+                 true : emptyValidation.required;
   var state;
   var key;
 
