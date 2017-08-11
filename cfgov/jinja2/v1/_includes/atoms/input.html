@@ -31,7 +31,7 @@
     <label class="a-label a-label__heading" for="{{ id }}">
         {{ value.label }}
         {%- if value.required == false -%}
-            <small>&nbsp;(Optional)</small>
+            &nbsp;<small class="a-label_helper">(optional)</small>
         {%- endif -%}
     </label>
     {%- if value.helperText -%}

@@ -191,7 +191,7 @@
 
 {% from 'molecules/info-unit.html' import info_unit with context %}
 {% from 'molecules/notification.html' import render as notification with context %}
-{% from 'organisms/post-preview.html' import render as post_preview with context %}
+{% import 'organisms/post-preview.html' as post_preview with context %}
 
 {% macro render(controls, index) %}
     <div class="o-filterable-list-controls"
@@ -276,11 +276,13 @@
             </div>
         {% else %}
             {% for post in posts %}
-                {{ post_preview(post, controls, form_id=index) }}
+                {{ post_preview.render(post, controls, form_id=index) }}
             {% endfor %}
         {% endif %}
-        {% import 'molecules/pagination.html' as pagination with context %}
-        {% set fragment_id = 'o-filterable-list-controls-' + index | string %}
-        {{ pagination.render( posts.paginator.num_pages, posts.number, fragment_id, index ) }}
+        <div class="block block__flush-top block__flush-bottom block__padded-top">
+            {% import 'molecules/pagination.html' as pagination with context %}
+            {% set fragment_id = 'o-filterable-list-controls-' + index | string %}
+            {{ pagination.render( posts.paginator.num_pages, posts.number, fragment_id, index ) }}
+        </div>
     </div>
 {% endmacro %}
