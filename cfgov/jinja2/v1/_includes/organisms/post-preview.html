@@ -104,7 +104,7 @@
                           data-day="{{ event.start_dt | date('%-d') }}"
                           datetime="{{ event.start_dt | date('%c') }}">
                         <span class="u-visually-hidden">
-                          {{'{dt:%b}. {dt.day}, {dt.year}'.format(dt = event.start_dt)}}
+                          {{ time.render_date_no_markup(event.start_dt) }}
                         </span>
                     </time>
                     {% if event.live_stream_link %}

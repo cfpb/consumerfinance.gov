@@ -77,4 +77,9 @@ class JobListingTable(OpenJobListingsMixin, organisms.ModelTable):
         return ', '.join(sorted(g.grade.grade for g in value.all()))
 
     def make_close_date_value(self, instance, value):
-        return value.strftime('%b. %d, %Y')
+        formatted_month = value.strftime('%b')
+        if formatted_month != 'May' or formatted_month != 'Sep':
+            formatted_month = formatted_month + '.'
+        elif formatted_month == 'Sep':
+            formatted_month = 'Sept.'
+        return formatted_month + value.strftime(' %d, %Y')

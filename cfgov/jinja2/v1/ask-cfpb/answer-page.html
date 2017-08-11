@@ -2,6 +2,7 @@
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
 {% import 'macros/util/format/datetime.html' as dt %}
+{% import 'macros/time.html' as time %}
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block title %}
@@ -39,7 +40,7 @@
         {% if last_edited %}
         <time datetime='{{ last_edited }}' pubdate class="answer-edited-date">
           {# Displays the date in the format: MMM. DD, YYYY #}
-          updated {{'{dt:%b}. {dt.day}, {dt.year}'.format(dt = last_edited)}}
+          updated {{ time.render_date_no_markup(last_edited) }}
         </time>
         {% endif %}
 

@@ -22,8 +22,7 @@
 <span class="datetime">
     {% if show_value_for.date == true %}
     <time class="datetime_date" datetime="{{ dt.format_datetime(datetime) }}">
-      {# Displays the date in the format: MMM. DD, YYYY #}
-      {{'{dt:%b}. {dt.day}, {dt.year}'.format(dt = datetime)}}
+        {{ render_date_no_markup(datetime, show_value_for) }}
     </time>
     {% endif %}
 
@@ -41,4 +40,21 @@
     </time>
     {% endif %}
 </span>
+{% endmacro %}
+
+{% macro render_date_no_markup(datetime,
+                show_value_for={'date':true, 'time':true, 'timezone':true}) %}
+    {# TODO: Replace this with a custom Jinja method that uses
+             https://dateutil.readthedocs.io/ #}
+    {# Displays the date in the format: MMM. DD, YYYY #}
+    {% set format_month = '{dt:%b}'.format(dt = datetime) %}
+    {% if format_month == 'May' %}
+        {# May doesn't have a period. #}
+        {{ '{dt:%b} {dt.day}, {dt.year}'.format(dt = datetime) }}
+    {% elif format_month == 'Sep' %}
+        {# September is four letters. #}
+        {{ 'Sept. {dt.day}, {dt.year}'.format(dt = datetime) }}
+    {% else %}
+        {{ '{dt:%b}. {dt.day}, {dt.year}'.format(dt = datetime) }}
+    {% endif %}
 {% endmacro %}
