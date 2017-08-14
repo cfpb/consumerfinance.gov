@@ -28,10 +28,7 @@
         {% block content_sidebar scoped -%}{%- endblock %}
     </aside>
     <div class="content_main {% block content_main_modifiers -%}{%- endblock %}">
-        {%- import 'macros/accessible-languages.html' as accessible_languages with context-%}
-        <section {{ accessible_languages.render() }}>
-            {% block content_main scoped -%}{%- endblock %}
-        </section>
+        {% block content_main scoped -%}{%- endblock %}
     </div>
 </div>
 {% endblock %}
