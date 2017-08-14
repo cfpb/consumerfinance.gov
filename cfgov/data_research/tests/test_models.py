@@ -19,6 +19,8 @@ from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
 class ModelStringTest(unittest.TestCase):
 
+    fixtures = ['mortgage_constants.json']
+
     def test_county_string_max_length(self):
         """
         Test that no MSA county-list string (a string of FIPS codes)

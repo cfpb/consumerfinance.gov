@@ -46,6 +46,8 @@ class YearMonthValidatorTests(unittest.TestCase):
 
 class TimeseriesViewTests(django.test.TestCase):
 
+    fixtures = ['mortgage_constants.json']
+
     def setUp(self):
         mommy.make(
             NationalMortgageData,
@@ -64,6 +66,7 @@ class TimeseriesViewTests(django.test.TestCase):
             current=250081,
             date=datetime.date(2008, 1, 1),
             fips='12',
+            valid=True,
             id=1,
             ninety=4069,
             other=3619,
@@ -76,6 +79,7 @@ class TimeseriesViewTests(django.test.TestCase):
             current=5250,
             date=datetime.date(2008, 1, 1),
             fips='35840',
+            valid=True,
             id=1,
             ninety=1406,
             other=361,
@@ -87,6 +91,7 @@ class TimeseriesViewTests(django.test.TestCase):
             CountyMortgageData,
             current=250,
             date=datetime.date(2008, 1, 1),
+            valid=True,
             fips='12081',
             id=1,
             ninety=406,
@@ -127,7 +132,8 @@ class TimeseriesViewTests(django.test.TestCase):
                 'data_research_api_mortgage_timeseries',
                 kwargs={'fips': '99999'}))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual('"FIPS code not found"', response.content)
+        self.assertEqual(
+            '"FIPS code not found."', response.content)
 
     def test_map_data_bad_date(self):
         response = self.client.get(
@@ -161,3 +167,29 @@ class TimeseriesViewTests(django.test.TestCase):
                 'data_research_api_mortgage_state_mapdata',
                 kwargs={'geo': 'states', 'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
+
+    def test_county_timeseries_data_invalid(self):
+        for county in CountyMortgageData.objects.all():
+            county.valid = False
+            county.save()
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_timeseries',
+                kwargs={'fips': '12081'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.content,
+            '"County is below display threshold."')
+
+    def test_msa_timeseries_data_invalid(self):
+        for msa in MSAMortgageData.objects.all():
+            msa.valid = False
+            msa.save(aggregate=False)
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_timeseries',
+                kwargs={'fips': '35840'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.content,
+            '"Metro area is below display threshold."')

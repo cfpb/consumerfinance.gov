@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import json
-import logging 
+import logging
 
 from django.conf import settings
 import unicodecsv
@@ -17,9 +17,11 @@ NON_STATES = {'MP': '69', 'AS': '60', 'VI': '78', 'GU': '66'}  # , 'PR': '72'}
 OUTDATED_FIPS = {
     # These outdated FIPS codes can show up in the mortgage data and should be
     # ignored, except for Shannon County, SD, which should be changed.
+    # The deprecated Dade FIPs gets a pass, because we want to add its values
+    # to Miami-Dade county
     '02201': '',  # Prince of Wales-Outer Ketchikan, AK
     '02270': '',  # Wade Hampton Census Area, AK
-    '12025': '',  # Dade, which became Miami-Dade (12086) in 1990s
+    # '12025': '',  # Dade, which became Miami-Dade (12086) in 1990s
     '12151': '',  # FL (??) only shows up thru 2011
     '46113': '46102',  # Shannon County SD, renamed Oglala Lakota 2015-05-01
     '51560': '',  # Clifton Forge County, VA, DELETED 2001-07-01
@@ -69,7 +71,7 @@ class FipsMeta(object):
         self.all_fips = []  # All valid county, MSA and state FIPS
         self.dates = []  # All the sampling dates we're displaying; will grow
         self.short_dates = []  # Shortened date versions for output labels
-        self.starting_date = None  # next 3 values will reflect db constants
+        self.starting_year = None  # next 3 values will reflect db constants
         self.threshold_date = None
         self.threshold_count = None
         self.created = 0  # final 2 can serve as a global counters
@@ -116,18 +118,12 @@ def load_all_fips():
         FIPS.all_fips.append('00000')
 
 
-def load_dates():
-    with open("{}/sampling_dates.json".format(FIPS_DATA_PATH), 'rb') as f:
-        FIPS.dates = json.loads(f.read())
-        FIPS.short_dates = [date[:-3] for date in FIPS.dates]
-
-
 def load_states():
     with open("{}/state_meta.json".format(FIPS_DATA_PATH), 'rb') as f:
         FIPS.state_fips = json.loads(f.read())
 
 
-def load_thresholds():
+def load_constants():
     """Get data thresholds from database, or fall back to starting defaults."""
     from data_research.models import MortgageDataConstant
     threshold_defaults = {
@@ -142,6 +138,14 @@ def load_thresholds():
         except MortgageDataConstant.DoesNotExist:
             value = threshold_defaults[name]
         setattr(FIPS, name, value)
+    try:
+        dates_obj = MortgageDataConstant.objects.get(name='sampling_dates')
+        dates = json.loads(dates_obj.string_value)
+    except MortgageDataConstant.DoesNotExist:
+        with open("{}/sampling_dates.json".format(FIPS_DATA_PATH), 'rb') as f:
+            dates = json.loads(f.read())
+    FIPS.dates = ['{}'.format(date) for date in dates]
+    FIPS.short_dates = [date[:-3] for date in FIPS.dates]
 
 
 def load_fips_meta():
@@ -176,86 +180,7 @@ def load_fips_meta():
                                     if row['state'] not in NON_STATES}
             else:
                 FIPS.msa_fips = assemble_msa_mapping(fips_data)
-    load_dates()
     load_states()
     load_all_fips()
     load_whitelist()
-    load_thresholds()
-
-
-# Pipeline scripts
-
-
-def validate_geo(geo, fips, year, count):
-    """
-    A utility to check whether a county, MSA or state had an average
-    monthly mortgage count in our reference year to qualify for being
-    included in visualizations.
-    """
-    from data_research.models import (
-        CountyMortgageData, MSAMortgageData, StateMortgageData)
-    qsets = {
-        'county': CountyMortgageData.objects.filter(
-            date__year=year, fips=fips),
-        'msa': MSAMortgageData.objects.filter(
-            date__year=year, fips=fips),
-        'state': StateMortgageData.objects.filter(
-            date__year=year, fips=fips)
-    }
-    records = qsets[geo]
-    msum = sum([record.total for record in records if record.total])
-    if records.count() != 0:
-        avg = round((msum * 1.0) / records.count())
-    else:
-        avg = 0
-    if avg > count:
-        return True
-    else:
-        return False
-
-
-def update_valid_geos():
-    """
-    For counties, metro areas and states, we need to include them
-    in visualizations only if they meet our threshold.
-
-    The threshold (initially 1K mortgages a month) is applied to the area's
-    average for the threshold year, which is generally the previous year.
-
-    This should be run once a year to rebuild the list of valid FIPS codes
-    for visualizations. The list will be saved in the cfgov-refresh repo
-    at `data_research/data/fips_whitelist.json` and can be consulted at
-    runtime at FIPS.whitelist`
-    """
-    load_fips_meta()  # this loads the FIPS metadata object
-    county_list = []
-    msa_list = []
-    state_list = []
-    for fips in FIPS.county_fips:
-        if validate_geo(
-                'county', fips, FIPS.threshold_year, FIPS.threshold_count):
-            county_list.append(fips)
-    for fips in FIPS.msa_fips:
-        if validate_geo(
-                'msa', fips, FIPS.threshold_year, FIPS.threshold_count):
-            msa_list.append(fips)
-    for fips in FIPS.state_fips:
-        if validate_geo(
-                'state', fips, FIPS.threshold_year, FIPS.threshold_count):
-            state_list.append(fips)
-    final_list = sorted(state_list) + sorted(msa_list) + sorted(county_list)
-    with open('{}/fips_whitelist.json'.format(FIPS_DATA_PATH), 'wb') as f:
-        f.write(json.dumps(final_list))
-
-    pct_values = {
-        'counties': round(len(county_list) * 100 / len(FIPS.county_fips)),
-        'msas': round(len(msa_list) * 100 / len(FIPS.msa_fips))}
-
-    message = (
-        "In {}, {} percent of counties and {} percent of MSAs met our "
-        "mortgage-count threshold for visualizations.".format(
-            FIPS.threshold_year,
-            pct_values['counties'],
-            pct_values['msas']))
-
-    logger.info(message)
+    load_constants()
