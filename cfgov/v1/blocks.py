@@ -42,8 +42,9 @@ class AnchorLink(blocks.StructBlock):
         required=False,
         label='ID for this content block',
         help_text="""
-            Auto-generated on save; or enter some human-friendly text,
-            which will be incorporated to make it easier to read.
+            ID will be auto-generated on save.
+            However, you may enter some human-friendly text that
+            will be incorporated to make it easier to read.
         """
     )
 
