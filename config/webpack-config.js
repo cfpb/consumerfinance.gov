@@ -14,27 +14,30 @@ const webpack = require( 'webpack' );
 // Constants.
 const JS_ROUTES_PATH = '/js/routes';
 const COMMON_BUNDLE_NAME = 'common.js';
+const OAH_COMMON_BUNDLE_ROUTE = '/js/owning-a-home/routes';
+
+
+const babelConf = {
+  test: /\.js$/,
+  use: [ {
+    loader: 'babel-loader?cacheDirectory=true',
+    options: {
+      presets: [ [ 'env', {
+        targets: {
+          browsers: environment.getSupportedBrowserList()
+        }
+      } ] ]
+    }
+  } ],
+  exclude: /node_modules/
+};
 
 const modernConf = {
   cache: true,
   context: path.join( __dirname, '/../', paths.unprocessed, JS_ROUTES_PATH ),
   entry: scriptsManifest.getDirectoryMap( paths.unprocessed + JS_ROUTES_PATH ),
   module: {
-    rules: [ {
-      test: /\.js$/,
-      use: [ {
-        loader: 'babel-loader?cacheDirectory=true',
-        options: {
-          presets: [ [ 'env', {
-            targets: {
-              browsers: environment.getSupportedBrowserList()
-            },
-            debug: true
-          } ] ]
-        }
-      } ],
-      exclude: /node_modules/
-    } ]
+    rules: [ babelConf ]
   },
   output: {
     path: path.join( __dirname, 'js' ),
@@ -44,7 +47,6 @@ const modernConf = {
     new webpack.optimize.CommonsChunkPlugin( {
       name: COMMON_BUNDLE_NAME
     } ),
-    // Change `warnings` flag to true to view linter-style warnings at runtime.
     new webpack.optimize.UglifyJsPlugin( {
       compress: { warnings: false }
     } ),
@@ -116,8 +118,33 @@ const spanishConf = {
   ]
 };
 
+var owningAHomeConf = {
+  cache: true,
+  context: path.join( __dirname, '/../', paths.unprocessed, OAH_COMMON_BUNDLE_ROUTE ),
+  entry: scriptsManifest.getDirectoryMap( paths.unprocessed + OAH_COMMON_BUNDLE_ROUTE ),
+  module: {
+    rules: [ babelConf,
+             { test: /\.(hbs|handlebars)$/, loader: 'handlebars-loader' }
+    ]
+  },
+  output: {
+    path: path.join( __dirname, 'js' ),
+    filename: '[name]',
+    jsonpFunction: 'OAH'
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin( {
+      name: COMMON_BUNDLE_NAME
+    } ),
+    new webpack.optimize.UglifyJsPlugin( {
+      compress: { warnings: false }
+    } )
+  ]
+};
+
 module.exports = {
   onDemandHeaderRawConf: onDemandHeaderRawConf,
+  owningAHomeConf:       owningAHomeConf,
   onDemandConf:          onDemandConf,
   ieConf:                ieConf,
   modernConf:            modernConf,

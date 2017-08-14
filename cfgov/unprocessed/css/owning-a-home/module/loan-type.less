@@ -1,0 +1,443 @@
+/* ==========================================================================
+   "Understanding loan types" custom styles
+   ========================================================================== */
+
+
+/*
+    Loan type equation
+    --------------------------- */
+.loan-type-list {
+  padding-left: 30px; // match the negative outdent of the numbering
+  margin: 0;
+  list-style: none;
+  position: relative;
+
+  li {
+    display: inline;
+    position: relative;
+    margin-right: 46px;
+    .u-webfont-demi();
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.875em;
+  }
+
+}
+
+.lt-icon:before {
+  .cf-icon;
+  color: @green;
+  display: inline-block;
+  padding-right: .25em;
+  width: 1.2em;
+  font-size: 1.2em;
+}
+
+.lt-icon-term:before {
+  content: "\e637";
+}
+
+.lt-icon-program:before {
+  content: "\e505";
+}
+
+// currently we lack a % sign minicon in the font
+.lt-icon-structure {
+  color: white;
+  background-color: @green;
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  margin-right: .25em;
+  border-radius: 50%;
+  width: 1.2em;
+  height: 1.2em;
+  text-align: center;
+}
+
+.lt-icon-structure:before {
+  content: "%";
+  font-size: 0.875em;
+  position: absolute;
+  top: 5%;
+  left: 20%;
+  .u-webfont-regular();
+}
+
+@media (max-width: 840px) {
+  .loan-type-list {
+    li {
+      display: block;
+      margin-right: 0;
+      margin-bottom: 1em;
+      font-size: 0.875em;
+    }
+  }
+}
+
+
+/*
+    Payment/Interest Display
+    --------------------------- */
+
+.timeline {
+  .reset;
+
+
+  li {
+    display: inline-block;
+    text-align: center;
+    margin-right: -4px; // remove space between inline block elements
+    .u-webfont-regular();
+
+      strong {
+        .u-webfont-demi();
+      }
+
+      a {
+        display: inline-block;
+        width: 100%;
+        background: @gray-10;
+        padding: 10px 0;
+      }
+
+      a,
+      a:link,
+      a:visited {
+        color: @black;
+      }
+
+  }
+}
+
+
+/* loan term length selecters at large screen sizes */
+@media (min-width: 620px) {
+
+  .timeline{
+    li {
+      font-size: 1.125em;
+      border-right: 1px solid @gray-10;
+      width: 25%;
+      text-align: center;
+      margin-right: -4px; // remove space between inline block elements
+      .u-webfont-regular();
+
+      a {
+        background: @gray-10;
+      }
+
+      a,
+      a:link,
+      a:visited {
+        border-bottom: 4px solid @green-60;
+      }
+
+      a:hover,
+      a:focus,
+      .current:link,
+      .current:visited {
+        color: @black;
+        background-color: @green-20;
+        border-bottom: 4px solid @green;
+      }
+    }
+  }
+}
+
+/* loan term length selecters at small screen sizes */
+@media (max-width: 620px) {
+
+  .timeline{
+
+    li {
+      box-sizing: border-box;
+      border: solid transparent;
+      border-width: 0 15px;
+      margin-right: -0.25em;
+      vertical-align: top;
+      width: 50%;
+      margin-bottom: 1em;
+
+      a,
+      a:link,
+      a:visited {
+        background: #F7F7F7;
+        border: 1px solid @gray-80;
+        border-radius: 2px;
+      }
+
+      a:hover,
+      a:focus,
+      .current:link,
+      .current:visited {
+        color: @black;
+        border: 1px solid @gray-80;
+        background: @green-20;
+      }
+
+      .year {
+        display: none;
+      }
+
+    }
+  }
+}
+
+.loan-calc {
+  margin-top: 2em;
+  background: @gray-10;
+  border-top: 1px solid @gray-10;
+
+
+  .loan-details {
+    .reset;
+    padding: 1em .5em;
+  }
+
+  // style text inputs
+  .value {
+    display: inline-block;
+    max-width: 92px;
+    border: solid 1px @gray-40;
+    font-size: 14px;
+    padding: .4em .1em;
+    margin: 0 .5em;
+    .u-webfont-demi();
+  }
+
+}
+
+.term-output {
+  margin: 1.5em 0;
+  padding: 0;
+  .u-webfont-regular();
+
+  li {
+    list-style: none;
+  }
+
+  strong {
+    .u-webfont-demi();
+  }
+  .col-7 {
+    border-right-width: 0;
+  }
+}
+
+@media (min-width: 1100px) {
+  .term-output {
+    line-height: 2.5em;
+  }
+}
+
+@media (min-width: 620px) {
+  .loan-details {
+    border-bottom: 1px solid @gray-10;
+  }
+}
+
+@media (max-width: 620px) {
+  .loan-details {
+    .value {
+      display: block;
+      margin: .5em 0;
+    }
+  }
+
+  .term-output {
+    line-height: 1.5;
+  }
+
+  .loan-value {
+    margin: 0 0 .5em 0;
+  }
+}
+
+
+.loan-value {
+  font-size: 2.125em;
+  text-align: right;
+}
+
+/*
+    Custom content styles
+    --------------------------- */
+
+.why {
+  margin-top: 2em;
+
+  h5 {
+    margin-bottom: .5em;
+  }
+
+  ul {
+    padding-left: 20px;
+  }
+}
+
+// comparisons are often used to compare two list items side by side
+.comparison,
+.multi-comparison {
+  margin: 0;
+  padding: 0;
+}
+
+.comparison {
+  .u-webfont-regular();
+  margin-bottom: 2.75em;
+
+  ul {
+    .reset;
+    margin-top: .75em;
+  }
+
+  li {
+    list-style: none;
+    margin-bottom: 1em;
+  }
+
+  strong {
+    .u-webfont-demi();
+  }
+
+  .cf-icon-arrow-up {
+    color: @red;
+  }
+
+  .cf-icon-arrow-down {
+    color: @green;
+  }
+
+  .comparison-main {
+    margin-bottom: 40px;
+  }
+
+  .rate-comparison {
+    min-height: 160px;
+  }
+
+  .sub-comparison-header {
+    color: @gray-80;
+    border-top: 2px solid @gray-10;
+    border-bottom: 1px solid @gray-10;
+    padding: 10px 12px;
+    height: 38px; // provide an explicit height for when right column headers are hidden
+  }
+
+  .sub-comparison-heading {
+    .reset;
+    color: @dark-gray;
+    font-size: 0.75em;
+  }
+
+  .sub-comparison-content {
+    padding: 20px 12px;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .callout {
+    p {
+      font-size: 0.875em;
+    }
+  }
+
+}
+
+/* loan-types comparisons require some special styles at larger screen sizes */
+@media (min-width: 720px) {
+
+  .comparison {
+    .grid_column(6);
+  }
+
+  // make sub comparisons line up nicely
+  .sub-comparison {
+    min-height: 260px;
+  }
+
+  // right column headings should be hidden on large screens
+  .secondary-sub-heading {
+    .u-visually-hidden;
+  }
+}
+
+.date-heading {
+  .reset;
+  .u-webfont-regular();
+  font-size: .875em;
+}
+
+/*
+  ARM details
+  --------------------------- */
+
+.arm-heading {
+  .u-webfont-regular();
+  text-transform: none;
+  margin: 30px 0;
+  font-size: 1.375em;
+}
+
+@media (min-width: 620px) {
+  .arm-content {
+    padding: 20px 12%;
+  }
+}
+
+.arm-content {
+  .u-webfont-regular();
+
+  h5 {
+    .u-webfont-demi();
+    font-size: 1em;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+}
+
+.fixed-arm {
+  color: @green;
+}
+
+.adjustable-arm {
+  color: @gold;
+}
+
+/*
+  loan programs
+  --------------------------- */
+.loan-program {
+  margin-top: 40px;
+}
+
+.special-programs {
+  margin-top: 80px;
+}
+
+.loan-list {
+  li {
+    margin-bottom: 1em;
+  }
+}
+
+.l-back-link {
+  .u-webfont-regular();
+  font-size: 1.375em;
+}
+
+
+/*
+  loan types subpage styles
+  ----------------------------*/
+
+.lt-subpage-header {
+  margin-bottom: 1em;
+}
+
+.aside-chunk {
+  margin-bottom: 2.875em;
+}

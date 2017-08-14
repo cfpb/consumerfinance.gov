@@ -113,3 +113,16 @@ coverage.xml
 # IDE Specifc
 ############
 *.idea
+
+# Built assets - Copied from OAH #
+################
+test/compiled_tests.js
+test/coverage/
+test-results/
+environment.cfg
+
+# IP - Copied from OAH #
+######
+ip
+config.json
+test/browser_testing/features/environment.cfg

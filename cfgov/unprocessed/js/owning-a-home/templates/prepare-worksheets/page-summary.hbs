@@ -1,0 +1,113 @@
+<div class="summary">
+    <h1>Your summary</h1>
+    <p class="lead">Buying a home is more complicated than simply trading a rent payment for a mortgage payment.  Owning a home is a long-term financial commitment that carries costs, risks, and benefits.  Examine your summary below to decide whether or not you are ready to continue working towards buying a home.</p>
+    <hr>
+    <div class="content-l content-l__main">
+      <section class="summary-chart">
+          <div class="box1 first">
+            <div class="box-goals "></div>
+            <div class="box-goals"></div>
+            <div class="box-goals"></div>
+            <div class="box-goals"></div>
+            <div class="box-goals"></div>
+            <div class="box-goals"></div>
+            <div class="box-goals"></div>
+            <div class="box-goals goals-low"></div>
+            <div class="box-goals goals-high"></div>
+            <div class="box-goals goals-high"></div>
+          </div>
+          <div class="box1 ">
+            <div class="box-goals flags-medium"></div>
+            <div class="box-goals flags-medium"></div>
+            <div class="box-goals flags-high"></div>
+            <div class="box-goals flags-high"></div>
+          </div>
+          <div class="box1 ">
+            <div class="box-goals risks-medium"></div>
+            <div class="box-goals risks-medium"></div>
+            <div class="box-goals risks-high"></div>
+            <div class="box-goals risks-high"></div>
+          </div>
+          <br>
+          <div class="box2">
+             <h5>Goals</h5>
+          </div>
+          <div class="box2">
+              <h5>Red Flags</h5>
+          </div>
+          <div class="box2">
+              <h5>Risks</h5>
+          </div>
+
+      </section>
+    </div>
+    <hr>
+    <br>
+    <div class="content-l content-l__main">
+        <div class="content-l_col content-l_col-1-2">
+            
+            <section class="worksheet worksheet-summary worksheet-goals-summary">
+              <header class="worksheet-summary_header">
+                  <h2 class="h3"><span class="cf-icon cf-icon-approved-round"></span> Goals</h2>
+              </header>
+                  {{#if goalsError }}
+                    {{> summaryError this.goalsError}}
+                  {{else}}
+                  {{> summarySection this.goals.[0]}}
+                  {{> summarySection this.goals.[1]}}
+                  {{> summarySection this.goals.[2]}}
+                  {{/if}}
+            </section>
+            
+        </div>
+        <div class="content-l_col content-l_col-1-2 worksheet worksheet-summary worksheet-flags-summary">
+            
+            <section class="worksheet worksheet-summary worksheet-flags-summary">
+              <header class="worksheet-summary_header">
+                  <h2 class="h3"><span class="cf-icon cf-icon-complaint-round"></span> Red Flags</h2>
+              </header>
+                  {{#if flagsError }}
+                  {{> summaryError this.flagsError}}
+                  {{else}}
+                  {{> summarySection this.flags.[0]}}
+                  {{> summarySection this.flags.[1]}}
+                  {{/if}}
+            </section>
+            
+            <section class="worksheet worksheet-summary worksheet-risks-summary block__padded-top">
+              <header class="worksheet-summary_header">
+                  <h2 class="h3"><span class="cf-icon cf-icon-error-round"></span> Risks</h2>
+              </header>
+                  {{#if risksError }}
+                    {{> summaryError this.risksError}}
+                  {{else}}
+                    {{> summarySection this.risks.[2]}}
+                    {{> summarySection this.risks.[1]}}
+                  {{/if}}
+            </section>
+            
+        </div>
+    </div>
+</div>
+
+<div class="block__border-top block__padded-top">
+    <div class="summary content-l content-l__main">
+        <div class="content-l_col content-l_col-1-2">
+            <section class="summary-callout">
+              <h4>Ready to continue?</h4>
+              <p class="short-desc">
+              The next step is to explore how much it will cost to buy a home that meets your goals, and whether buying makes sense financially.  For most people, owning a home will end up being more expensive than their current rental.  Before you start house shopping in earnest, it’s a good idea to get a clear sense for how much buying will cost, so you can decide for yourself if the benefits are worth the cost.
+              </p>
+            </section>
+        </div>
+        <div class="content-l_col content-l_col-1-2 content-l_col__before-divider">
+            <section class="summary-callout">
+              <h4>Not ready to buy?</h4>
+              <p class="short-desc">
+              Are there red flags in your situation, or risks you’re not ready to accept?   That’s ok.  Sometimes, the smartest home buying decision is deciding not to buy – at least not right now.  Consider pursuing the alternatives you identified, so that you can meet some of your goals right away.  Or, consider working to build a larger financial cushion so you will be better able to accept the risks of homeownership when the time is right for you.
+              </p>
+            </section>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,474 @@
+{% extends "_layouts/oah-base.html" %}
+{% import "molecules/social-media.html" as social_media with context %}
+{% set active_page = "explore-rates" %}
+{% set page_js = "explore-rates" %}
+{% block title %}Explore interest rates{% endblock title %}
+{% block metadescription %}Use the CFPB's tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.{% endblock metadescription %}
+
+{% block content %}
+<main class="content oah-sheerlike">
+    <div class="content_wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+            <a href="/owning-a-home/" class="breadcrumbs_link">Owning a Home</a>
+        </nav>
+    </div>
+    <div class="content_wrapper">
+        <div class="content_main u-pb0">
+            <div class="rate-checker result">
+                <section class="page-intro content-l">
+                    <div class="content-l_col content-l_col-2-3">
+                        <h1 class="page-title">Explore interest rates<sup class="beta">BETA</sup></h1>
+                        <p class="lead">Use this tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.  See how your credit score, loan type, home price, and down payment amount can affect your rate.   Knowing your options and what to expect helps ensure that you get a mortgage that is right for you.  Check back often -- the rates in the tool are updated daily.</p>
+                        <div class="page-intro_cols">
+                            <p class="page-intro_col-left u-mb30">
+                                Keep in mind that the interest rate is important, but not the only cost of a mortgage.  Fees, <a href="http://www.consumerfinance.gov/askcfpb/136/what-are-discount-points-and-lender-credits-and-how-do-they-work.html">points</a>, <a href="http://www.consumerfinance.gov/askcfpb/1953/what-is-mortgage-insurance-and-how-does-it-work.html">mortgage insurance</a>, and <a href="http://www.consumerfinance.gov/askcfpb/1845/what-fees-or-charges-are-paid-closing-and-who-pays-them.html">closing costs</a> all add up.  Compare <a href="http://www.consumerfinance.gov/askcfpb/1995/what-is-a-loan-estimate.html">Loan Estimates</a> to get the best deal.
+                            </p>
+                            <div class="page-intro_col-right u-right-on-desktop">
+                                {{ social_media.render( {
+                                'twitter_text': 'Use the @CFPB\'s interest rates tool to explore the range of mortgage interest rates you can expect.',
+                                'email_title': 'Wondering what interest rate you can expect on a mortgage?',
+                                'email_text': 'Use the CFPB\'s tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive.',
+                                'email_signature': '-- From the CFPB',
+                                'linkedin_title': 'Wondering what interest rate you can expect on a mortgage?',
+                                'linkedin_text': 'Use the @CFPB\'s tool throughout your homebuying process to explore the range of mortgage interest rates you can expect to receive. Via @CFPB'
+                                } ) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-l_col content-l_col-1-3">
+                        <div class="rc-illu-inner">
+                            <img class ="rc-home-illu" src="{{ static('img/owning-a-home/ill-chart.png') }}" alt="Illustration of interest rate chart">
+                        </div>
+                    </div>
+                    <!-- /.content-l_col-1-3 -->
+                </section>
+                <div class="calculator" aria-controls="rate-results">
+                    <section class="form-intro">
+                        <h4>Explore rate options</h4>
+                    </section>
+                    <section class="credit-score">
+                        <div class="range recalc">
+                            <label for="credit-score">Credit score range</label>
+                            <div class="labels">
+                                <span>600</span>
+                                <span class="max">850</span>
+                            </div>
+                            <input id="credit-score" type="range" min="600" max="840" step="20" value="700">
+                            <div id="slider-range" class="range-text"></div>
+                        </div>
+                        <p class="form-sub">Credit score has a big impact on the rate you’ll receive. <a href="/askcfpb/319/how-does-my-credit-score-affect-my-ability-to-get-a-mortgage-loan.html" id="ask-cfpb-credit" target="_blank">Learn more</a></p>
+                    </section>
+                    <section class="demographics">
+                        <div>
+                            <div>
+                                <label for="location">State</label>
+                                <div class="select-content a-select">
+                                    <select name="location" class="recalc" id="location">
+                                        <option value="AL">Alabama</option>
+                                        <option value="AK">Alaska</option>
+                                        <option value="AZ">Arizona</option>
+                                        <option value="AR">Arkansas</option>
+                                        <option value="CA">California</option>
+                                        <option value="CO">Colorado</option>
+                                        <option value="CT">Connecticut</option>
+                                        <option value="DE">Delaware</option>
+                                        <option value="DC">District of Columbia</option>
+                                        <option value="FL">Florida</option>
+                                        <option value="GA">Georgia</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="ID">Idaho</option>
+                                        <option value="IL">Illinois</option>
+                                        <option value="IN">Indiana</option>
+                                        <option value="IA">Iowa</option>
+                                        <option value="KS">Kansas</option>
+                                        <option value="KY">Kentucky</option>
+                                        <option value="LA">Louisiana</option>
+                                        <option value="ME">Maine</option>
+                                        <option value="MD">Maryland</option>
+                                        <option value="MA">Massachusetts</option>
+                                        <option value="MI">Michigan</option>
+                                        <option value="MN">Minnesota</option>
+                                        <option value="MS">Mississippi</option>
+                                        <option value="MO">Missouri</option>
+                                        <option value="MT">Montana</option>
+                                        <option value="NE">Nebraska</option>
+                                        <option value="NV">Nevada</option>
+                                        <option value="NH">New Hampshire</option>
+                                        <option value="NJ">New Jersey</option>
+                                        <option value="NM">New Mexico</option>
+                                        <option value="NY">New York</option>
+                                        <option value="NC">North Carolina</option>
+                                        <option value="ND">North Dakota</option>
+                                        <option value="OH">Ohio</option>
+                                        <option value="OK">Oklahoma</option>
+                                        <option value="OR">Oregon</option>
+                                        <option value="PA">Pennsylvania</option>
+                                        <option value="RI">Rhode Island</option>
+                                        <option value="SC">South Carolina</option>
+                                        <option value="SD">South Dakota</option>
+                                        <option value="TN">Tennessee</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="UT">Utah</option>
+                                        <option value="VT">Vermont</option>
+                                        <option value="VA">Virginia</option>
+                                        <option value="WA">Washington</option>
+                                        <option value="WV">West Virginia</option>
+                                        <option value="WI">Wisconsin</option>
+                                        <option value="WY">Wyoming</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="calc-loan-amt" id="loan-amt-inputs">
+                        <div class="col-5 flex-input">
+                            <div class="wrapper-first">
+                                <label for="house-price">House price</label>
+                                <div class="dollar-input">
+                                    <span class="unit">$</span>
+                                    <input type="text"
+                                        placeholder="200,000"
+                                        name="house-price"
+                                        class="m-form-field-with-button_field a-text-input recalc"
+                                        id="house-price"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7 flex-input down-payment">
+                            <div class="wrapper-last">
+                                <label for="down-payment">Down payment</label>
+                                <div class="percent-input">
+                                    <span class="unit">%</span>
+                                    <input type="text"
+                                        placeholder="10"
+                                        name="percent-down"
+                                        maxlength="2"
+                                        class="m-form-field-with-button_field a-text-input recalc"
+                                        id="percent-down"
+                                        autocomplete="off">
+                                </div>
+                                <div class="dollar-input">
+                                    <span class="unit">$</span>
+                                    <input type="text"
+                                        placeholder="20,000"
+                                        name="down-payment"
+                                        class="m-form-field-with-button_field a-text-input recalc""
+                                        id="down-payment"
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5 loan-amt-total">
+                            <label class="inline">Loan amount</label>
+                            <span id="loan-amount-result">$380,000</span>
+                        </div>
+                        <div class="col-7 county hidden">
+                            <div class="wrapper-first">
+                                <label for="county">County</label>
+                                <div class="select-content a-select">
+                                    <select name="county" class="recalc" id="county">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="form-sub hidden warning" id="county-warning">
+                        <p class="warning-text"></p>
+                    </section>
+                    <section class="calc-loan-details wrapper">
+                        <div class="col-6 flex-input upper rate-structure">
+                            <div class="wrapper-first">
+                                <label for="rate-structure">Rate type</label>
+                                <div class="select-content a-select">
+                                    <select name="rate-structure" class="recalc" id="rate-structure">
+                                        <option value="fixed">Fixed</option>
+                                        <option value="arm">Adjustable</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 flex-input upperloan-term">
+                            <div class="wrapper-last">
+                                <label for="loan-term">Loan term</label>
+                                <div class="select-content a-select">
+                                    <select name="loan-term" class="recalc" id="loan-term">
+                                        <option value="30">30 Years</option>
+                                        <option value="15">15 Years</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 flex-input loan-type">
+                            <div class="wrapper-first">
+                                <label for="loan-type">Loan type</label>
+                                <div class="select-content a-select">
+                                    <select name="loan-type" class="recalc" id="loan-type">
+                                        <option value="conf">Conventional</option>
+                                        <option value="fha">FHA</option>
+                                        <option value="va">VA</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 flex-input hidden arm-type">
+                            <div class="wrapper-last">
+                                <label for="arm-type">ARM type</label>
+                                <div class="select-content a-select">
+                                    <select name="arm-type" class="recalc" id="arm-type">
+                                        <option value="3-1">3/1</option>
+                                        <option value="5-1">5/1</option>
+                                        <option value="7-1">7/1</option>
+                                        <option value="10-1">10/1</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="form-sub hidden warning" id="arm-warning">
+                        <p class="warning-text">While some lenders may offer FHA, VA, or 15-year adjustable-rate mortgages, they are rare. We don’t have enough data to display results for these combinations. Choose a fixed rate if you’d like to try these options.</p>
+                    </section>
+                    <section class="form-sub hidden warning" id="hb-warning">
+                        <p class="warning-text"></p>
+                    </section>
+                    <section class="form-sub calc-subsection">
+                        <p><a href="../loan-options/" target="_blank">Learn about loan term, rate type, and loan type</a></p>
+                    </section>
+                    <section class="calc-footer form-sub">
+                        <p>This tool assumes you want to purchase a single family house to be your primary residence. The rates quoted assume -0.5 to 0.5 <a id="ask-discount-points" href="/askcfpb/136/what-are-discount-points-or-points.html" target="_blank">discount points</a> and a 60-day <a id="ask-rate-lock" href="/askcfpb/143/whats-a-lock-in-or-a-rate-lock.html" target="_blank">rate lock</a>.</p>
+                    </section>
+                </div>
+                <!-- END .calculator -->
+                <div class="rc-results" id="rate-results" aria-live="polite">
+                    <h2 id="rc-summary" class="rate-checker-heading data-enabled clear">In <strong class="location">Alabama</strong>, most lenders in our data are offering rates at or below <strong class="rate" id="median-rate"></strong>.</h2>
+                    <div id="accessible-data-results" class="u-visually-hidden">
+                        <h3>Data table</h3>
+                        <p>The following table will populate with our data results</p>
+                        <table id="accessible-data">
+                            <tr class="table-head">
+                                <th>Loan Rates</th>
+                            </tr>
+                            <tr class="table-body">
+                                <td>number of corresponding rates</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <section id="chart-section" class="chart">
+                        <figure class="data-enabled loading">
+                            <div id="chart" class="chart-area"></div>
+                            <figcaption class="chart-caption">
+                                <div class="caption-title col-8">
+                                    Interest rates for your situation
+                                </div>
+                                <div class="rc-data-link col-4">
+                                    <a href="#about">About our data source</a>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </section>
+                    <p id="timestamp-p" class="data-enabled timestamp-message clear">These rates are current as of <strong id="timestamp"></strong>.</p>
+                    <section class="compare wrapper data-enabled loading">
+                        <h3>
+                        Explore what a lower interest rate means for your wallet</h2>
+                        <div class="rate-selects">
+                            <label for="rate-compare-1">Rate 1</label>
+                            <div class="rc-comp-3">
+                                <div class="a-select">
+                                    <select name="rate-compare-1" id="rate-compare-1" class="rate-compare">
+                                        <option value="1">1%</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- /.select-content-->
+                            <div class="rc-comp-1 vs">
+                                vs.
+                            </div>
+                            <label for="rate-compare-2">Rate 2</label>
+                            <div class="rc-comp-3">
+                                <div class="a-select">
+                                    <select name="rate-compare-2" id="rate-compare-2" class="rate-compare">
+                                        <option value="1">1%</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- /.select-content-->
+                            <div class="rc-comp-5 mobi-no">
+                                <p>Interest is only one of many costs associated with getting a mortgage. <a href="/askcfpb/153/what-costs-will-i-have-to-pay-as-part-of-taking-out-a-mortgage-loan.html" class="go-link" target="_blank">Learn more</a></p>
+                            </div>
+                        </div>
+                        <!-- /.rate-selects -->
+                        <div class="rc-comparison-section rc-comparison-short">
+                            <h4 class="rc-comparison-subhead">Interest costs over the first <span class="loan-years">5</span> years</h4>
+                            <div class="rc-comparison-subsection">
+                                <div class="wrapper">
+                                    <div class="interest-cost interest-cost-primary rc-comp-3">
+                                        <span class="new-cost">$150,000</span>
+                                    </div>
+                                    <div class="interest-cost interest-cost-secondary rc-comp-3-push">
+                                        <span class="new-cost">$150,000</span>
+                                    </div>
+                                    <div class="interest-summary rc-comp-5" id="rc-comparison-summary-short">
+                                        <p>Over the first <span class="comparison-term">5</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
+                                    </div>
+                                </div>
+                                <!-- /.wrapper -->
+                            </div>
+                            <!-- /.rc-comparison-subsection -->
+                        </div>
+                        <!-- /.rc-comparison-section -->
+                        <div class="rc-comparison-section rc-comparison-long">
+                            <h4 class="rc-comparison-subhead">
+                            Interest costs over <span class="loan-years">30</span> years</h5>
+                            <div class="rc-comparison-subsection">
+                                <div class="wrapper">
+                                    <div class="interest-cost interest-cost-primary rc-comp-3">
+                                        <span class="new-cost no-arm">$150,000</span>
+                                        <span class="arm-info hidden">Can change</span>
+                                    </div>
+                                    <div class="interest-cost interest-cost-secondary rc-comp-3-push">
+                                        <span class="new-cost no-arm">$150,000</span>
+                                        <span class="arm-info hidden">Can change</span>
+                                    </div>
+                                    <div class="interest-summary rc-comp-5" id="rc-comparison-summary-long">
+                                        <p class="no-arm">Over <span class="comparison-term">30</span> years, an interest rate of <span class="higher-rate">1%</span> costs <strong class="rate-diff">$0</strong> more than an interest rate of <span class="lower-rate">1%</span>.</p>
+                                        <p class="arm-info hidden">With the <strong>adjustable-rate mortgage</strong> you've chosen, the rate is only fixed for the <strong>first <span class="arm-comparison-term">5</span> years.</strong> Your interest costs in the future can change.</p>
+                                    </div>
+                                </div>
+                                <!-- /.wrapper -->
+                            </div>
+                            <!-- /.rc-comparison-subsection -->
+                            <p class="mobi-yes l-bump">Interest is only one of many costs associated with getting a mortgage. <a href="/askcfpb/153/what-costs-will-i-have-to-pay-as-part-of-taking-out-a-mortgage-loan.html" class="go-link" target="_blank">Learn more</a></p>
+                        </div>
+                        <!-- /.rc-comparison-section -->
+                    </section>
+                </div>
+                <!-- END .result -->
+                <section class="next-steps">
+                    <h2><strong>Next steps:</strong> How to get the best interest rate on your mortgage</h2>
+                    <!-- put into a container to prevent long line length -->
+                    <div class="wrapper">
+                        <div class="col-9">
+                            <p class="sans">When you’re ready to get serious about buying, the best thing you can do to get a better interest rate on your mortgage is <strong>shop around</strong>. But if you don’t plan to buy for a few months, there are more things you can do to ensure you get a great rate on your mortgage.</p>
+                        </div>
+                    </div>
+                    <ul class="tabs">
+                        <li class="tab-list active-tab">
+                            <a id="plan-to-buy-tab" class="tab-link" href="#tab1" data-gtm_ignore="true">I plan to buy in the next couple of months</a>
+                        </li>
+                        <li class="tab-list">
+                            <a id="wont-buy-tab" class="tab-link" href="#tab2" data-gtm_ignore="true">I won’t buy for several months</a>
+                        </li>
+                    </ul>
+                    <div id="tab1" class="tab-content default">
+                        <ol class="next-steps-list">
+                            <li class="col-4">
+                                <h4 class="next-steps-heading">Shop around.</h4>
+                                <p>Get quotes from three or more lenders so you can see how they compare. Rates often change from when you first talk to a lender and when you submit your mortgage application, so don’t make a final decision before comparing official <a id="ask-gfe" href="/askcfpb/1995/what-is-a-loan-estimate.html" target="_blank">Loan Estimates</a>.</p>
+                            </li>
+                            <li class="col-4">
+                                <h4 class="next-steps-heading">Consider all your options.</h4>
+                                <p>Make sure you’re getting the <a href="../loan-options/" target="_blank">kind of loan</a> that makes the most sense for you. If more than one kind of loan might make sense, ask lenders to give you quotes for each kind so you can compare. Once you’ve chosen a kind of loan, compare prices by getting quotes for the same kind of loan.</p>
+                            </li>
+                            <li class="col-4">
+                                <h4 class="next-steps-heading">Negotiate.</h4>
+                                <p>Getting quotes from multiple lenders puts you in a better bargaining position. If you prefer one lender, but another lender offers you a better rate, show the first lender the lower quote and ask them if they can match it.</p>
+                            </li>
+                        </ol>
+                    </div>
+                    <div id="tab2" class="tab-content">
+                        <ol class="next-steps-list">
+                            <li class="col-4">
+                                <h4 class="next-steps-heading">Watch your spending.</h4>
+                                <p>Don’t take out a car loan, make large purchases on your credit cards, or apply for new credit cards in the months before you plan to buy a house. Doing so can lower your credit score, and increase the interest rate lenders are likely to charge you on your mortgage.</p>
+                                <p>
+                                    <a id="go-ask-credit-score" class="a-link
+                                        a-link__jump
+                                        cf-icon
+                                        cf-icon__after
+                                        cf-icon-right" href="/askcfpb/315/what-is-my-credit-score.html" target="_blank">
+                                    <span class="a-link_text">Learn more about credit scores</span>
+                                    </a>
+                                </p>
+                            </li>
+                            <li class="col-4">
+                                <h4 class="next-steps-heading">Improve your credit scores.</h4>
+                                <p>If you don’t plan to buy for at least six months, you may be able to improve your credit scores and get a better interest rate. Pay your bills on time, every time. If you have credit card debt, pay it down. But don’t close unused cards unless they carry an annual fee.</p>
+                                <p>
+                                    <a id="go-ask-good-credit" class="a-link
+                                        a-link__jump
+                                        cf-icon
+                                        cf-icon__after
+                                        cf-icon-right" href="/askcfpb/318/how-do-i-get-and-keep-a-good-credit-score.html" target="_blank">
+                                    <span class="a-link_text">Learn about improving your credit scores</span>
+                                    </a>
+                                </p>
+                            </li>
+                            <li class="col-4">
+                                <h4 class="next-steps-heading">Save for a larger down payment.</h4>
+                                <p>If your down payment is less than 20 percent, you’ll typically get a higher interest rate and have to pay for mortgage insurance. Save enough for a 20 percent down payment and you’ll usually pay less. Even going from a five percent down payment to a 10 percent down payment can save you money.</p>
+                                <p>
+                                    <a id="go-ask-down-payment-affect" class="a-link
+                                        a-link__jump
+                                        cf-icon
+                                        cf-icon__after
+                                        cf-icon-right"
+                                        href="/askcfpb/120/what-kind-of-down-payment-do-i-need-how-does-the-amount-of-down-payment-i-make-affect-the-terms-of-my-mortgage-loan.html" target="_blank">
+                                    <span class="a-link_text">Learn more about down payments</span>
+                                    </a>
+                                </p>
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+                <!-- /.next-steps -->
+                <div class="note">
+                    <p class="alert"><strong>Check your credit report.</strong> If you haven’t <a id="annualcreditreport" class="external-link" href="http://annualcreditreport.com" target="_blank">checked your credit report recently</a>, do so now. If you find errors, <a id="ask-dispute-credit-report" href="/askcfpb/314/how-do-i-dispute-an-error-on-my-credit-report.html" target="_blank">get them corrected</a> <strong>before</strong> you apply for a mortgage.</p>
+                </div>
+                <!-- /.note -->
+                <section id="about" class="about wrapper">
+                    <div class="content-l">
+                        <div class="about-data content-l_col content-l_col-2-3">
+                            {% include "_layouts/ratings-form.html" %}
+                        </div>
+                        <div class="content-l_col content-l_col-1-3">
+                            <h3 class="subhead">About this tool</h3>
+                            <p>Our data is provided by real lenders and is updated every business day in the evening. The lenders in our data include a mix of large banks, regional banks, and credit unions.</p>
+                            <p>The data is provided by Informa Research Services, Inc., Calabasas, CA. <a id="informars" href="http://www.informars.com" target="_blank">www.informars.com</a>. Informa collects the data directly from lenders and every effort is made to collect the most accurate data possible, but they cannot guarantee the data’s accuracy.</p>
+                        </div>
+                    </div>
+                    <!-- /.wrapper -->
+                </section>
+                <!-- /.about -->
+            </div>
+            <!-- END .rate-checker -->
+            {% include "_layouts/no_js.html" %}
+        </div>
+        <!-- /.content_main -->
+    </div>
+    <!-- /.content_wrapper -->
+    <div class="u-mt30 rate-checker_links">
+        {% import "_layouts/brand-footer.html" as brand_footer %}
+        {% set footer_links = [
+        {
+        'img': static("img/owning-a-home/footer_calculator.png"),
+        'text': 'Ready to begin the homebuying process?',
+        'label': 'Get started now',
+        'url': '/owning-a-home/process/prepare/'
+        },
+        {
+        'img': static("img/owning-a-home/footer_house.png"),
+        'text': 'Ready to look for a mortgage?',
+        'label': 'Explore loan choices',
+        'url': '/owning-a-home/process/explore/'
+        },
+        {
+        'img': static("img/owning-a-home/footer_loan-estimate.png"),
+        'text': 'Have a Loan Estimate?',
+        'label': 'Review it with our tool',
+        'url': '/owning-a-home/loan-estimate/'
+        }
+        ]%}
+        {{ brand_footer.render(footer_links) }}
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,20 @@
+<article>
+    <h4 class="subheading" aria-hidden="true">{{title}}</h4>
+
+    <div class="worksheet-input-group">
+        {{#each items}}
+            <div class="input-notes block__border-bottom u-mb20">
+              <div class="u-mt15 u-mb15">
+                <div>
+                  <h4>{{text}}</h4>
+                
+                {{#if altText}}
+                    <p class="short-desc block__sub block__flush-bottom"><strong>Your alternative: </strong>{{altText}}</p>
+                {{/if}}
+
+                </div>
+              </div>
+            </div>
+        {{/each}}
+    </div>
+</article>

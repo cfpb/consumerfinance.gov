@@ -1,0 +1,204 @@
+/* ==========================================================================
+   cfgov-refresh
+   Print
+   ========================================================================== */
+
+
+/* topdoc
+  name: Print pages
+  family: cfgov-print
+  notes:
+    - "Print pages are barebones printer friendly pages which are also sometimes
+       used as the source to generate PDF's through PDF creation software."
+    - "The `.print` class acts a styling hook. When using the
+       `.respond-to-print()` mixin, all stlyes will be nested under both
+       `@media print` and `.print`."
+  patterns:
+    - name: Usage
+      markup: |
+        <div class="print">
+            <h1 class="superheader">
+                I am a green superheader
+            </h1>
+        </div>
+      notes:
+        - "To trigger a print page simply add the `.print` class to a containing
+           element."
+  tags:
+    - cfgov-print
+*/
+
+// print styles using .respond-to-print mixin
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster:
+                               http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+    border-bottom: 0;
+  }
+
+  #main a[href]:after {
+    content: " (" attr(href) ")";
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    right: 0;
+    width: auto;
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: inherit;
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+
+  #main a[href^="#"]:after,
+  #main a[href^="javascript:"]:after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+
+  #skip-nav {
+    display: none;
+  }
+
+  .content-l_col {
+    width: 100%
+  }
+
+  .process-nav .jump-link,
+  .jump-link.jump-link__block {
+    border: 0;
+    padding: 0;
+  }
+
+  /* topdoc
+    name: Hero image print styles
+    family: cfgov-cf-enhancements
+    patterns:
+      - name: #hero-bg-image
+        markup: |
+          <div class="wrapper hero-wrapper">
+            <div class="col-7">
+              <h1>Owning a Home</h1>
+              <h2>We’re here to help you with your home buying process. Just starting out? Learn what to expect and how to get a great deal. About to close? A checklist makes it less stressful.</h2>
+            </div>
+          </div>
+    tags:
+      - cfgov-cf-enhancements
+  */
+
+  #hero-bg-image {
+    background-image: none;
+    background-color: transparent;
+    border-bottom: 1px solid @gray-40;
+  }
+
+  /* topdoc
+    name: PDF Link print styles
+    family: cfgov-cf-enhancements
+    patterns:
+      - name: .superheader
+        markup: |
+          <a class="pdf-link pdf" href="/owning-a-home/resources/checklist_mortgage_closing.pdf">Get the closing checklist</a>
+    tags:
+      - cfgov-cf-enhancements
+  */
+
+  .pdf-link {
+    display: inline;
+  }
+
+  /* topdoc
+    name: Header slug print styles
+    family: cfgov-cf-enhancements
+    patterns:
+      - name: .tabbed-heading
+        markup: |
+          <header class="tabbed-header tabbed-pad-top">
+          <h3 class="subhead tabbed-heading">Stay tuned</h3>
+        </header>
+    tags:
+      - cfgov-cf-enhancements
+  */
+
+  .tabbed-heading {
+    border-top-color: @gray-40;
+  }
+
+  .o-footer {
+    .list_link {
+      border: 0;
+      padding: 0;
+    }
+
+    .o-footer_pre {
+      margin-bottom: 0;
+    }
+
+    .o-footer_official-website {
+      background: none;
+      padding-left: 0;
+    }
+  }
+}

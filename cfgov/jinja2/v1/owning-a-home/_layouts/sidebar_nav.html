@@ -1,0 +1,57 @@
+<!-- NAVIGATION -->
+{% set navigation_bar = [
+    ('../', 'index', 'Owning a Home'),
+    ('../explore-rates/', 'explore-rates', 'Explore interest rates'),
+    ('../loan-options/', 'loan-options', 'Understand loan options'),
+    ('../process/', 'process', 'Know the process'),
+    ('../prepare-worksheets/', 'prepare-worksheets', 'Preparation worksheets'),
+    ('../resources/checklist_mortgage_closing.pdf', 'closing-checklist', 'Closing checklist'),
+    ('../resources/mortgage_closing_forms.pdf', 'closing-forms', 'Closing forms explainer')
+] -%}
+{% set active_page = active_page|default('index') -%}
+
+<nav class="nav-secondary o-expandable">
+    <h1 class="u-visually-hidden">
+{%- for href, id, caption in navigation_bar %}
+    {% if id == 'index' %}
+        {{ caption|e }} navigation
+    {% endif %}
+{%- endfor %}
+    </h1>
+    <button class="o-expandable_header o-expandable-mainhead o-expandable_target nav-secondary_link nav-secondary_link__button">
+        <span class="o-expandable_header-left">
+    {%- for href, id, caption in navigation_bar %}
+        {% if id == active_page %}
+            {{ caption|e }}
+        {% endif %}
+    {%- endfor %}
+        </span>
+        <span class="o-expandable_header-right">
+            <span class="o-expandable_cue-open">
+                <span class="cf-icon cf-icon-down cf-icon__green"></span>
+            </span>
+            <span class="o-expandable_cue-close">
+                <span class="cf-icon cf-icon-up cf-icon__green"></span>
+            </span>
+        </span>
+    </button>
+    <div class="o-expandable_content">
+        <ul class="nav-secondary_list">
+        {%- for href, id, caption in navigation_bar %}
+            <li class="nav-secondary_item">
+                {% if id == 'explore-rates' %}
+                    <a class="nav-secondary_link{{ ' nav-secondary_link__current' if id == active_page }}"
+                       href="{{ href|e }}">
+                       {{ caption|e }}<sup>BETA</sup>
+                   </a>
+                {% else %}
+                    <a class="nav-secondary_link{{ ' nav-secondary_link__current' if id == active_page }}"
+                       href="{{ href|e }}">
+                       {{ caption|e }}
+                   </a>
+               {% endif %}
+            </li>
+        {%- endfor %}
+        </ul>
+    </div>
+</nav>

@@ -175,8 +175,9 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
     _setStateTo( EXPANDING );
     this.dispatchEvent( 'expandBegin', { target: _that } );
-    _setMaxHeight();
+
     _transitionHeight( _expandComplete, duration );
+    _setMaxHeight();
     return this;
   }
 
@@ -194,8 +195,8 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
 
     _setStateTo( COLLAPSING );
     this.dispatchEvent( 'collapseBegin', { target: _that } );
-    _setMinHeight();
     _transitionHeight( _collapseComplete, duration );
+    _setMinHeight();
     return this;
   }
 
@@ -218,7 +219,10 @@ function Expandable( element ) { // eslint-disable-line max-statements, inline-c
    *   The duration of the sliding animation in milliseconds.
    */
   function _transitionHeight( callback, duration ) {
-    if ( _transitionEndEvent ) {
+    const is_visible = window.getComputedStyle( _dom, null )
+                        .getPropertyValue( 'display' ) !== 'none';
+
+    if ( _transitionEndEvent && is_visible) {
       _content.addEventListener( _transitionEndEvent, callback );
       _content.style[_transitionPrefix] = 'height ' + duration + 's ease-out';
     } else {

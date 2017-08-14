@@ -1,0 +1,10 @@
+language: python
+python:
+  - "2.7"
+before_script:
+  - chmod +x bin/JMeterInstaller.py
+script:
+  - nosetests -s
+  - rm -rf results && mkdir results
+  - apache-jmeter-2.11/bin/jmeter.sh -j results/jmeter.log -p tests/jmeter.properties -t tests/my_test_with_parameters.jmx -n -l results/my_test_with_parameters.jtl -Jserver=google.com
+  - bin/generate_files_from_jtl.sh my_test_with_parameters

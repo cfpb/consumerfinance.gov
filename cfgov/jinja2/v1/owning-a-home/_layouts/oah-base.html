@@ -1,0 +1,34 @@
+
+{% extends "base.html" %}
+{% set base_url = "/owning-a-home/" %}
+
+{% block title %}
+  Owning a Home | Consumer Financial Protection Bureau
+{% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owning-a-home/main.css') }}">
+{% endblock css %}
+
+{% block banner_top %}
+  {% include "brand-header.html" %}
+{% endblock %}
+
+{% block content %}
+  This will be replaced in templates that extend this, and override "content".
+{% endblock %}
+
+{% block javascript %}
+<!-- Common js -->
+<script>
+    {% include '/js/routes/common.js' %}
+</script>
+<script src="{{ url_for('static', filename='js/owning-a-home/common.js') }}"></script>
+
+<!-- Page-specific js -->
+{% if page_js %}
+<script src="{{ url_for('static', filename='js/owning-a-home') }}/{{page_js}}.js"></script>
+{% endif %}
+{% endblock %}
+
+</html>

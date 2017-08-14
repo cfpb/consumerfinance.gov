@@ -63,10 +63,16 @@ gulp.task( 'copy:vendorjs', () => {
   return _genericCopy( vendorJs.src, vendorJs.dest );
 } );
 
+gulp.task( 'copy:oah:pdfs', function() {
+  var oahPDFs = configCopy.oahPDFs;
+  return _genericCopy( oahPDFs.src, oahPDFs.dest );
+} );
+
 gulp.task( 'copy',
   [
     'copy:icons',
     'copy:codeJson',
+    'copy:oah:pdfs',
     'copy:vendorfonts',
     'copy:vendorcss',
     'copy:vendorimg',

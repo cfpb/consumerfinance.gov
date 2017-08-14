@@ -37,11 +37,11 @@ from v1.views import (
     password_reset_confirm,
     welcome)
 from v1.views.documents import DocumentServeView
-
+from v1.views.oah import OahServeView
 
 fin_ed = SheerSite('fin-ed-resources')
-oah = SheerSite('owning-a-home')
 es_conv_flag = partial(flagged_url, 'ES_CONV_FLAG')
+
 
 urlpatterns = [
 
@@ -55,49 +55,8 @@ urlpatterns = [
     url(r'^home/(?P<path>.*)$',
         RedirectView.as_view(url='/%(path)s', permanent=True)),
 
-    url(r'^owning-a-home/static/(?P<path>.*)$',
-        RedirectView.as_view(
-            url='/static/owning-a-home/static/%(path)s', permanent=True)),
-    url(r'^owning-a-home/resources/(?P<path>.*)$',
-        RedirectView.as_view(
-            url='/static/owning-a-home/resources/%(path)s', permanent=True)),
+    url(r'^owning-a-home/(?P<path>.*)/$', OahServeView.as_view()),
 
-    url(r'^owning-a-home/closing-disclosure/',
-        include(oah.urls_for_prefix('closing-disclosure'))),
-    url(r'^owning-a-home/explore-rates/',
-        include(oah.urls_for_prefix('explore-rates'))),
-    url(r'^owning-a-home/loan-estimate/',
-        include(oah.urls_for_prefix('loan-estimate'))),
-
-    url(r'^owning-a-home/loan-options/',
-        include(oah.urls_for_prefix('loan-options'))),
-    url(r'^owning-a-home/loan-options/FHA-loans/',
-        include(oah.urls_for_prefix('loan-options/FHA-loans/'))),
-    url(r'^owning-a-home/loan-options/conventional-loans/',
-        include(oah.urls_for_prefix('loan-options/conventional-loans/'))),
-    url(r'^owning-a-home/loan-options/special-loan-programs/',
-        include(oah.urls_for_prefix('loan-options/special-loan-programs/'))),
-
-    url(r'^owning-a-home/mortgage-closing/',
-        include(oah.urls_for_prefix('mortgage-closing'))),
-    url(r'^owning-a-home/mortgage-estimate/',
-        include(oah.urls_for_prefix('mortgage-estimate'))),
-
-    url(r'^owning-a-home/process/',
-        include(oah.urls_for_prefix('process/prepare/'))),
-    url(r'^owning-a-home/process/prepare/',
-        include(oah.urls_for_prefix('process/prepare/'))),
-    url(r'^owning-a-home/process/explore/',
-        include(oah.urls_for_prefix('process/explore/'))),
-    url(r'^owning-a-home/process/compare/',
-        include(oah.urls_for_prefix('process/compare/'))),
-    url(r'^owning-a-home/process/close/',
-        include(oah.urls_for_prefix('process/close/'))),
-    url(r'^owning-a-home/process/sources/',
-        include(oah.urls_for_prefix('process/sources/'))),
-
-    # the redirect is an unfortunate workaround, could be resolved by
-    # using static('path/to/asset') in the source template
     url(r'^know-before-you-owe/static/(?P<path>.*)$',
         RedirectView.as_view(
             url='/static/know-before-you-owe/static/%(path)s',

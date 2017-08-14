@@ -333,6 +333,7 @@ AWS_S3_ROOT = os.environ.get('AWS_S3_ROOT', 'f')
 AWS_S3_SECURE_URLS = True  # True = use https; False = use http
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
+
 if os.environ.get('S3_ENABLED', 'False') == 'True':
     DEFAULT_FILE_STORAGE = 'v1.s3utils.MediaRootS3BotoStorage'
     AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
@@ -566,6 +567,9 @@ FLAGS = {
     # repo ( excluding /obtener-respuestas/ pages ).
     'ES_CONV_FLAG': {},
 
+    # When enabled, the /owning-a-home/ pages are served from cfgov-refresh
+    'OAH_DESHEERING': {},
+
     # Transition of "About Us" to Wagtail
     # When enabled, the "About Us" pages are served from Wagtail
     'WAGTAIL_ABOUT_US': {},
@@ -592,3 +596,4 @@ FLAGS = {
     # and the table will not be sortable until cf-tables from CF 4.x is implemented
     'SORTABLE_TABLES': {},
 }
+

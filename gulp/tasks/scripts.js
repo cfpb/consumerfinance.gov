@@ -165,8 +165,21 @@ function scriptsEs5Shim() {
     } ) );
 }
 
+
+/**
+ * Bundle scripts in unprocessed/js/routes/
+ * and factor out common modules into common.js.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsOAH() {
+  return _processScript( webpackConfig.owningAHomeConf,
+                         '/js/owning-a-home/routes/common.js',
+                         '/js/owning-a-home/' );
+}
+
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
+gulp.task( 'scripts:oah', scriptsOAH );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
@@ -181,6 +194,7 @@ gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
+  'scripts:oah',
   'scripts:modern',
   'scripts:ie',
   'scripts:external',
