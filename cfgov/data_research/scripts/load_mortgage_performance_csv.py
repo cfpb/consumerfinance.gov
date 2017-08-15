@@ -52,10 +52,14 @@ def update_sampling_dates():
     """
     starting_year = MortgageDataConstant.objects.get(
         name='starting_year').value
-    dates = sorted(set(obj.date for obj in CountyMortgageData.objects.filter(
-        date__gte=datetime.date(starting_year, 1, 1))))
+    dates = sorted(set([obj.date for obj in CountyMortgageData.objects.filter(
+        date__gte=datetime.date(starting_year, 1, 1))]))
     date_list = ["{}".format(date) for date in dates]
-    with open('{}/sampling_dates.json'.format(FIPS_DATA_PATH), 'w') as f:
+    date_list_obj, cr = MortgageDataConstant.objects.get_or_create(
+        name='sampling_dates')
+    date_list_obj.string_value = json.dumps(date_list)
+    date_list_obj.save()
+    with open('{}/sampling_dates.json'.format(FIPS_DATA_PATH), 'wb') as f:
         f.write(json.dumps(date_list))
     logger.info(
         "Sampling dates updated; the {} dates now range from {} to {}".format(
@@ -129,4 +133,4 @@ def run(*args):  # pragma: no cover
     if args:
         load_values(s3_filename=args[0])
     else:
-        load_values()
+        logger.info('You must provide an S3 filename to load.')
