@@ -6,5 +6,5 @@ git+https://github.com/cfpb/regulations-core.git@1.2.5#egg=regcore
 git+https://github.com/cfpb/regulations-site.git@2.1.8#egg=regulations
 git+https://github.com/cfpb/retirement.git@0.5.6#egg=retirement
 git+https://github.com/cfpb/ccdb5-api.git@v0.5.0#egg=ccdb5-api
-git+https://github.com/cfpb/ccdb5-ui.git@v0.5.173#egg=ccdb5_ui
+git+https://github.com/cfpb/ccdb5-ui.git@v0.6.0#egg=ccdb5_ui
 git+https://github.com/cfpb/eregs-2.0.git@0.0.2#egg=eregs
