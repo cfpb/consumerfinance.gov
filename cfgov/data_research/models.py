@@ -27,6 +27,7 @@ class MortgageBase(models.Model):
     sixty = models.IntegerField(null=True)
     ninety = models.IntegerField(null=True)
     other = models.IntegerField(null=True)
+    valid = models.BooleanField(default=False)
 
     class Meta:
         abstract = True
@@ -80,15 +81,16 @@ class MSAMortgageData(MortgageBase):
         help_text=("A comma-separated list of state abbreviations "
                    "touched by FIPS for included counties."))
 
-    def save(self, **kwargs):
-        load_fips_meta()
-        self.aggregate_data()
-        if self.counties:
-            self.states = ",".join(
-                sorted(set(
-                    [FIPS.county_fips.get(fips.strip())['state']
-                     for fips in self.counties.split(',')
-                     if FIPS.county_fips.get(fips.strip())])))
+    def save(self, aggregate=True, **kwargs):
+        if aggregate is True:
+            load_fips_meta()
+            self.aggregate_data()
+            if self.counties:
+                self.states = ",".join(
+                    sorted(set(
+                        [FIPS.county_fips.get(fips)['state']
+                         for fips in self.counties.split(',')
+                         if FIPS.county_fips.get(fips)])))
         super(MSAMortgageData, self).save(**kwargs)
 
     def aggregate_data(self):
@@ -113,8 +115,9 @@ class StateMortgageData(MortgageBase):
     updated quarterly.
     """
 
-    def save(self, **kwargs):
-        self.aggregate_data()
+    def save(self, aggregate=True, **kwargs):
+        if aggregate is True:
+            self.aggregate_data()
         super(StateMortgageData, self).save(**kwargs)
 
     def aggregate_data(self):
@@ -139,8 +142,9 @@ class NationalMortgageData(MortgageBase):
     updated quarterly.
     """
 
-    def save(self, **kwargs):
-        self.aggregate_data()
+    def save(self, aggregate=True, **kwargs):
+        if aggregate is True:
+            self.aggregate_data()
         super(NationalMortgageData, self).save(**kwargs)
 
     def aggregate_data(self):
@@ -162,7 +166,8 @@ class MortgageDataConstant(models.Model):
     slug = models.CharField(max_length=255,
                             blank=True,
                             help_text="CAMELCASE VARIABLE NAME FOR JS")
-    value = models.IntegerField(null=True)
+    value = models.IntegerField(null=True, blank=True)
+    string_value = models.TextField(blank=True)
     note = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
 
