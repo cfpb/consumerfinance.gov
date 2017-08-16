@@ -38,19 +38,20 @@ function date( field, currentStatus ) {
  *
  * @param {Object} field         Field to test.
  * @param {Object} currentStatus A previous tested status for the field.
+ * @param {Object} options       Options object.
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
-function email( field, currentStatus, opts ) {
+function email( field, currentStatus, options ) {
   var status = currentStatus || {};
-  var opts = opts || {};
+  var opts = options || {};
   var regex =
     '^[a-z0-9\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+(?:\\.[a-z0-9' +
     '\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]' +
     '(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$';
   var emailRegex = new RegExp( regex, 'i' );
   var emptyValidation = empty( field );
-  var isFilled = emptyValidation.required === undefined ?
+  var isFilled = typeof emptyValidation.required === 'undefined' ?
                  true : emptyValidation.required;
   var state;
   var key;
