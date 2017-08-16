@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 
 from data_research.models import (
     CountyMortgageData,
+    # MortgageDataConstant,
     MSAMortgageData,
     NationalMortgageData,
     StateMortgageData)
@@ -41,38 +42,41 @@ class TimeSeriesData(APIView):
         Return a FIPS-based slice of base data as a json timeseries.
         """
         load_fips_meta()
+        if fips not in FIPS.all_fips:
+            return Response("FIPS code not found.")
         DATE_STARTER = datetime.date(FIPS.starting_year, 1, 1)
-        if fips in FIPS.all_fips:
-            if fips in FIPS.state_fips:
-                records = StateMortgageData.objects.filter(
-                    fips=fips, date__gte=DATE_STARTER)
-                data = {'meta': {'fips': fips,
-                                 'name': FIPS.state_fips[fips]['name'],
-                                 'fips_type': 'state'},
-                        'data': [record.time_series for record in records]}
-                return Response(data)
-
-            if fips in FIPS.msa_fips:
-                records = MSAMortgageData.objects.filter(
-                    fips=fips, date__gte=DATE_STARTER)
-                name = FIPS.msa_fips[fips]['msa']
-                data = {'meta': {'fips': fips,
-                                 'name': name,
-                                 'fips_type': 'msa'},
-                        'data': [record.time_series for record in records]}
-            else:
-                records = CountyMortgageData.objects.filter(
-                    fips=fips, date__gte=DATE_STARTER)
-                name = "{}, {}".format(
-                    FIPS.county_fips[fips]['county'],
-                    FIPS.county_fips[fips]['state'])
-                data = {'meta': {'fips': fips,
-                                 'name': name,
-                                 'fips_type': 'county'},
-                        'data': [record.time_series for record in records]}
+        if fips in FIPS.state_fips:
+            records = StateMortgageData.objects.filter(
+                fips=fips, date__gte=DATE_STARTER, valid=True)
+            data = {'meta': {'fips': fips,
+                             'name': FIPS.state_fips[fips]['name'],
+                             'fips_type': 'state'},
+                    'data': [record.time_series for record in records]}
             return Response(data)
+
+        if fips in FIPS.msa_fips:
+            records = MSAMortgageData.objects.filter(
+                fips=fips, date__gte=DATE_STARTER, valid=True)
+            if not records:
+                return Response("Metro area is below display threshold.")
+            name = FIPS.msa_fips[fips]['msa']
+            data = {'meta': {'fips': fips,
+                             'name': name,
+                             'fips_type': 'msa'},
+                    'data': [record.time_series for record in records]}
         else:
-            return Response("FIPS code not found")
+            records = CountyMortgageData.objects.filter(
+                fips=fips, date__gte=DATE_STARTER, valid=True)
+            if not records:
+                return Response("County is below display threshold.")
+            name = "{}, {}".format(
+                FIPS.county_fips[fips]['county'],
+                FIPS.county_fips[fips]['state'])
+            data = {'meta': {'fips': fips,
+                             'name': name,
+                             'fips_type': 'county'},
+                    'data': [record.time_series for record in records]}
+        return Response(data)
 
 
 def validate_year_month(year_month):
@@ -108,13 +112,13 @@ class MapData(APIView):
             return Response("Invalid year-month pair")
         geo_dict = {
             'counties': {'queryset': CountyMortgageData.objects.filter(
-                         date=date, fips__in=FIPS.whitelist),
+                         date=date, valid=True),
                          'fips_type': 'county'},
             'metros': {'queryset': MSAMortgageData.objects.filter(
-                       date=date, fips__in=FIPS.whitelist),
+                       date=date, valid=True),
                        'fips_type': 'metro'},
             'states': {'queryset': StateMortgageData.objects.filter(
-                       date=date, fips__in=FIPS.whitelist),
+                       date=date, valid=True),
                        'fips_type': 'state'}
         }
         records = geo_dict[geo]['queryset']

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import datetime
 from dateutil import parser
 import mock
+from mock import mock_open, patch
 import StringIO
 import unittest
 
@@ -12,6 +13,7 @@ import unicodecsv
 
 from data_research.models import (
     CountyMortgageData,
+    MortgageDataConstant,
     MSAMortgageData,
     NationalMortgageData,
     StateMortgageData
@@ -31,6 +33,14 @@ from data_research.scripts.export_public_csv import (
     export_downloadable_csv,
     round_pct,
     run as run_export)
+from data_research.scripts.validate_geos import validate_geo
+
+
+class ValidateGeoTest(django.test.TestCase):
+
+    def test_validate_geo_no_records(self):
+        test_value = validate_geo('county', '12081', 2016, 1000)
+        self.assertIs(test_value, False)
 
 
 class DataLoadIntegrityTest(django.test.TestCase):
@@ -94,26 +104,11 @@ class DataLoadIntegrityTest(django.test.TestCase):
             (int(self.data_row_dict.get('thirty')) +
              int(self.data_row_dict.get('sixty'))) * 1.0 / open_value)
 
-    def test_update_sampling_dates(self):
-
-        mommy.make(
-            CountyMortgageData,
-            current=100,
-            date=datetime.date(2008, 1, 1),
-            fips='12081',
-            ninety=100,
-            other=100,
-            sixty=100,
-            thirty=100,
-            total=500)
-        m = mock.mock_open()
-        with mock.patch('__builtin__.open', m, create=True):
-            update_sampling_dates()
-        self.assertEqual(m.call_count, 1)
-
 
 class AggregateLoadTest(django.test.TestCase):
     """Tests aggregate loading function"""
+
+    fixtures = ['mortgage_constants.json']
 
     @mock.patch('data_research.scripts.'
                 'load_mortgage_aggregates.load_fips_meta')
@@ -130,6 +125,8 @@ class AggregateLoadTest(django.test.TestCase):
 
 
 class MergeTheDadesTest(django.test.TestCase):
+
+    fixtures = ['mortgage_constants.json']
 
     def setUp(self):
 
@@ -247,8 +244,10 @@ class DataExportTest(django.test.TestCase):
         self.assertEqual(mock_bake.call_count, 3)
 
 
-class RunExportTest(unittest.TestCase):
+class RunExportTest(django.test.TestCase):
     """Tests the export runner."""
+
+    fixtures = ['mortgage_constants.json']
 
     @mock.patch(
         'data_research.scripts.export_public_csv.export_downloadable_csv')
@@ -346,6 +345,35 @@ class DataLoadTest(django.test.TestCase):
         self.assertEqual(fips_list, ['01001'])
 
 
+class UpdateSamplingDatesTest(django.test.TestCase):
+
+    fixtures = ['mortgage_constants.json']
+
+    def setUp(self):
+
+        mommy.make(
+            CountyMortgageData,
+            current=1250,
+            date=datetime.date(2008, 1, 1),
+            fips='12081',
+            id=1,
+            ninety=100,
+            other=100,
+            sixty=100,
+            thirty=100,
+            total=1650)
+
+    def test_update_sampling_dates(self):
+        m = mock_open()
+        with patch('__builtin__.open', m, create=True):
+            update_sampling_dates()
+        self.assertEqual(m.call_count, 1)
+        self.assertEqual(
+            MortgageDataConstant.objects.get(
+                name='sampling_dates').string_value,
+            '["2008-01-01"]')
+
+
 class DataScriptTest(unittest.TestCase):
     """Tests for data pipeline automations"""
 
@@ -404,7 +432,7 @@ class DataScriptTest(unittest.TestCase):
                 'load_mortgage_performance_csv.load_values')
     def test_run_csv_load(self, mock_load):
         from data_research.scripts import load_mortgage_performance_csv
-        load_mortgage_performance_csv.run()
+        load_mortgage_performance_csv.run('fake_slug')
         self.assertEqual(mock_load.call_count, 1)
 
 
