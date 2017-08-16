@@ -125,8 +125,17 @@ def editor_css():
 
 
 def whitelister_element_rules():
+    allow_html_class =  attribute_rule({'class': True})
     return {
-        'aside': attribute_rule({'class': True}),
+        'aside': allow_html_class,
+        'table': allow_html_class,
+        'tr': allow_html_class,
+        'td': allow_html_class,
+        'tbody': allow_html_class,
+        'thead': allow_html_class,
+        'tfoot': allow_html_class,
+        'col': allow_html_class,
+        'colgroup': allow_html_class,
     }
 
 hooks.register('insert_editor_js', editor_js)
