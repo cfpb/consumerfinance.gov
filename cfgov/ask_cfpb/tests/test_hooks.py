@@ -36,7 +36,8 @@ class TestAskHooks(TestCase):
     def test_js_functions(self):
         self.assertIn("registerHalloPlugin('editHtmlButton')", editor_js())
         self.assertIn("css/question_tips.css", editor_css())
-        self.assertEqual(whitelister_element_rules().keys(), ['aside'])
+        self.assertIn('aside', whitelister_element_rules().keys())
+        self.assertIn('table', whitelister_element_rules().keys())
 
     def test_AnswerModelAdminSaveUserEditView(self):
         mock_admin = mock.Mock()
