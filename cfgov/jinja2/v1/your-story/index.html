@@ -1,22 +1,10 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
-{% block hero %}
-<section class="m-hero">
-    <div class="m-hero_wrapper wrapper">
-        <div class="m-hero_text">
-            <h1 class="m-hero_heading">Your Money. Your Story.</h1>
-            <div class="m-hero_subhead">
-                <p>Mortgages. Credit cards. Student loans. Credit scores. Fine print. We want to hear about your experiences with money and financial services, good and bad. The CFPB is listening.</p>
-            </div>
-            <a class="a-btn a-btn__super a-btn__full-on-xs u-mt15"
-               href="/story.consumerfinance.gov/tell-your-story/s/tell-your-story">
-                <span class="a-link_text">Tell your story</span>
-            </a>
-        </div>
-        <div class="m-hero_image-wrapper">
-            <div class="m-hero_image"></div>
-        </div>
-    </div>
+{% block title %}
+    Your financial stories &gt; Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block css %}
     <style>
         .consumer-stories_image-container,
         .consumer-stories_image-container:hover {
@@ -68,6 +56,27 @@
             max-width: calc( 41.875rem - 150px );
         }
     </style>
+
+    {{ super() }}
+{% endblock %}
+
+{% block hero %}
+<section class="m-hero">
+    <div class="m-hero_wrapper wrapper">
+        <div class="m-hero_text">
+            <h1 class="m-hero_heading">Your Money. Your Story.</h1>
+            <div class="m-hero_subhead">
+                <p>Mortgages. Credit cards. Student loans. Credit scores. Fine print. We want to hear about your experiences with money and financial services, good and bad. The CFPB is listening.</p>
+            </div>
+            <a class="a-btn a-btn__super a-btn__full-on-xs u-mt15"
+               href="/story.consumerfinance.gov/tell-your-story/s/tell-your-story">
+                <span class="a-link_text">Tell your story</span>
+            </a>
+        </div>
+        <div class="m-hero_image-wrapper">
+            <div class="m-hero_image"></div>
+        </div>
+    </div>
 </section>
 <div class="wrapper wrapper__match-content">
     <div class="block
@@ -296,7 +305,7 @@
                   cf-icon
                   cf-icon__after
                   cf-icon-right"
-            href="/complaint">
+            href="/everyone-has-a-story">
             <span class="a-link_text">View all stories</span>
         </a>
     </div>
