@@ -100,6 +100,25 @@ class TimeseriesViewTests(django.test.TestCase):
             thirty=676,
             total=2674)
 
+    def test_metadata_request(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_metadata',
+                kwargs={'meta_name': 'sampling_dates'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            '2008-01-01',
+            json.loads(response.content)
+        )
+
+    def test_metadata_request_bad_meta_name(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_metadata',
+                kwargs={'meta_name': 'xxx'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('No metadata object found.', response.content)
+
     def test_national_timesereis(self):
         response = self.client.get(
             reverse('data_research_api_mortgage_timeseries_national'))

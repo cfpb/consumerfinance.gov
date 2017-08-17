@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
-from data_research.views import TimeSeriesData, TimeSeriesNational, MapData
+from data_research.views import (
+    TimeSeriesData, TimeSeriesNational, MapData, MetaData)
 
 urlpatterns = [
 
@@ -19,4 +20,7 @@ urlpatterns = [
     url(r'^map-data/(?P<geo>states)/(?P<year_month>\d{4}-\d{2})/?$',
         MapData.as_view(),
         name='data_research_api_mortgage_state_mapdata'),
+    url(r'^metadata/(?P<meta_name>[a-z_]*)/?$',
+        MetaData.as_view(),
+        name='data_research_api_metadata'),
 ]

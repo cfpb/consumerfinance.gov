@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 import datetime
 
+import json
+
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,9 +12,25 @@ from data_research.models import (
     CountyMortgageData,
     # MortgageDataConstant,
     MSAMortgageData,
+    MortgageMetaData,
     NationalMortgageData,
     StateMortgageData)
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+
+
+class MetaData(APIView):
+    """
+    View for delivering mortgage metadata based on latest data update.
+    """
+    renderer_classes = (JSONRenderer,)
+
+    def get(self, request, meta_name):
+        try:
+            record = MortgageMetaData.objects.get(name=meta_name)
+        except MortgageMetaData.DoesNotExist:
+            return Response("No metadata object found.")
+        meta_json = json.loads(record.json_value)
+        return Response(meta_json)
 
 
 class TimeSeriesNational(APIView):

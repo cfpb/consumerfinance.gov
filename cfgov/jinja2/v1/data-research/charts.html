@@ -1,0 +1,38 @@
+{% extends 'layout-side-nav.html' %}
+
+{% import 'form_block.html' as form_block with context %}
+{% import 'organisms/featured-content.html' as featured_content %}
+{% import 'templates/render_block.html' as render_block with context %}
+{% import 'templates/streamfield-sidefoot.html' as streamfield_sidefoot with context %}
+
+{% block content_main_modifiers -%}
+    {{ super() }} content__flush-bottom
+{%- endblock %}
+
+{% block content_main %}
+    {% for block in page.header -%}
+        {% if 'featured_content' in block.block_type %}
+            <div class="block
+                        block__flush-sides
+                        block__border">
+                {{ featured_content.render(block.value) }}
+            </div>
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+
+    {% for block in page.content -%}
+        {% if block.block_type in ['feedback', 'conference_registration_form'] %}
+            {{- form_block.render(block, 'content', loop.index0) -}}
+        {% else %}
+            {{ render_block.render(block, loop.index) }}
+        {% endif %}
+    {%- endfor %}
+
+    {% if page.sidefoot %}
+        <aside class="o-prefooter">
+            {{ streamfield_sidefoot.render(page.sidefoot, half_width=true) }}
+        </aside>
+    {% endif %}
+{% endblock %}

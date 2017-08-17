@@ -1,8 +1,11 @@
 from __future__ import unicode_literals
 
+import json
+
 from django.db import models
 
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+from v1.models import BrowsePage, PageManager
 
 
 # Used for registering users for a conference
@@ -176,3 +179,45 @@ class MortgageDataConstant(models.Model):
 
     class Meta:
         ordering = ['name']
+
+
+class MortgageMetaData(models.Model):
+    """
+    Metadata values, stored as json, to supplement display of mortgage charts.
+    """
+    name = models.CharField(max_length=255)
+    json_value = models.TextField(blank=True)
+    note = models.TextField(blank=True)
+    updated = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return "{}, updated {}".format(self.name, self.updated)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = "Mortage metadata"
+
+
+class MortgageChartPage(BrowsePage):
+    """
+    An extended browse page for displaying interactive visualizations
+    of mortgage-performance data.
+    """
+    objects = PageManager()
+    template = 'data-research/charts.html'
+
+    def get_meta(self):
+        meta_set = MortgageMetaData.objects.all()
+        meta = {obj.name: json.loads(obj.json_value) for obj in meta_set}
+        return meta
+
+    def add_page_js(self, js):
+        super(BrowsePage, self).add_page_js(js)
+        js['template'] += ['secondary-navigation.js']
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(BrowsePage, self).get_context(request, *args, **kwargs)
+        context.update(
+            {'mortgage_meta': self.get_meta()}
+        )
+        return context

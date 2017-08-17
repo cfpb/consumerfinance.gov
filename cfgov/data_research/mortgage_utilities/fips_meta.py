@@ -125,7 +125,7 @@ def load_states():
 
 def load_constants():
     """Get data thresholds from database, or fall back to starting defaults."""
-    from data_research.models import MortgageDataConstant
+    from data_research.models import MortgageDataConstant, MortgageMetaData
     threshold_defaults = {
         'starting_year': 2008,
         'threshold_count': 1000,
@@ -139,9 +139,9 @@ def load_constants():
             value = threshold_defaults[name]
         setattr(FIPS, name, value)
     try:
-        dates_obj = MortgageDataConstant.objects.get(name='sampling_dates')
-        dates = json.loads(dates_obj.string_value)
-    except MortgageDataConstant.DoesNotExist:
+        dates_obj = MortgageMetaData.objects.get(name='sampling_dates')
+        dates = json.loads(dates_obj.json_value)
+    except MortgageMetaData.DoesNotExist:
         with open("{}/sampling_dates.json".format(FIPS_DATA_PATH), 'rb') as f:
             dates = json.loads(f.read())
     FIPS.dates = ['{}'.format(date) for date in dates]

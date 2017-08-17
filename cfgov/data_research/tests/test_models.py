@@ -1,15 +1,17 @@
 from __future__ import unicode_literals
 import datetime
-import mock
 import unittest
 
 from model_mommy import mommy
 
 import django.test
+from django.http import HttpRequest
 
 from data_research.models import (
     CountyMortgageData,
     MortgageDataConstant,
+    MortgageMetaData,
+    MortgageChartPage,
     MSAMortgageData,
     NationalMortgageData,
     StateMortgageData
@@ -34,6 +36,38 @@ class ModelStringTest(unittest.TestCase):
             ]
         ]))
         self.assertTrue(county_string_lengths[-1] <= 255)
+
+
+class MortgageChartPageTests(django.test.TestCase):
+
+    fixtures = ['mortgage_constants.json']
+
+    def setUp(self):
+        from v1.tests.wagtail_pages.helpers import save_new_page
+        page_stub = MortgageChartPage(
+            slug='mortgage-chart-page',
+            title='Mortgage Charts')
+        self.chart_page = save_new_page(page_stub).as_page_object()
+
+    def test_chart_page_get_meta(self):
+        page = self.chart_page
+        self.assertIn(
+            'sampling_dates',
+            page.get_meta()
+        )
+
+    def test_chart_page_add_js(self):
+        test_page = self.chart_page
+        test_js = {'template': []}
+        test_page.add_page_js(test_js)
+        self.assertTrue(
+            'secondary-navigation.js'
+            in test_page.media['template'])
+
+    def test_chart_page_context(self):
+        test_page = self.chart_page
+        request = HttpRequest()
+        self.assertIn('mortgage_meta', test_page.get_context(request))
 
 
 class MortgageModelTests(django.test.TestCase):
@@ -78,15 +112,13 @@ class MortgageModelTests(django.test.TestCase):
             thirty=67668,
             total=2674899)
 
-        print_patch = mock.patch(
-            'data_research.scripts.load_mortgage_aggregates.print'
-        )
-        print_patch.start()
-        self.addCleanup(print_patch.stop)
-
     def test_constant_string(self):
         constant = MortgageDataConstant.objects.first()
         self.assertEqual(constant.__str__(), "{}".format(constant))
+
+    def test_meta_string(self):
+        meta = MortgageMetaData.objects.first()
+        self.assertEqual(meta.__str__(), "{}".format(meta))
 
     def test_base_data_properties(self):
         """Test basic calculation functions"""

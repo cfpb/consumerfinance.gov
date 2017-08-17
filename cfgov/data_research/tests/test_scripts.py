@@ -13,7 +13,8 @@ import unicodecsv
 
 from data_research.models import (
     CountyMortgageData,
-    MortgageDataConstant,
+    # MortgageDataConstant,
+    MortgageMetaData,
     MSAMortgageData,
     NationalMortgageData,
     StateMortgageData
@@ -369,8 +370,8 @@ class UpdateSamplingDatesTest(django.test.TestCase):
             update_sampling_dates()
         self.assertEqual(m.call_count, 1)
         self.assertEqual(
-            MortgageDataConstant.objects.get(
-                name='sampling_dates').string_value,
+            MortgageMetaData.objects.get(
+                name='sampling_dates').json_value,
             '["2008-01-01"]')
 
 
