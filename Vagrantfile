@@ -26,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
   config.vm.synced_folder '.', '/vagrant', sshfs: true
-  config.vm.hostname = "cfbp.devel"
+  config.vm.hostname = "cfpb.devel"
   config.vm.box = "CFPBCentOS64"
   config.vm.box_url = "https://s3.amazonaws.com/virtual-boxes/package.box"
 
