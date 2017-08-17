@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'taggit',
     'wagtailsharing',
     'flags',
+    'watchman',
     'haystack',
     'ask_cfpb',
     'overextends',
@@ -587,3 +588,14 @@ FLAGS = {
     # and the table will not be sortable until cf-tables from CF 4.x is implemented
     'SORTABLE_TABLES': {},
 }
+
+# Watchman tokens, used to authenticate global status endpoint
+WATCHMAN_TOKENS = os.environ.get('WATCHMAN_TOKENS', os.urandom(32))
+
+# This specifies what checks Watchman should run and include in its output
+# https://github.com/mwarkentin/django-watchman#custom-checks
+WATCHMAN_CHECKS = (
+    'watchman.checks.databases',
+    'watchman.checks.storage',
+    'watchman.checks.caches',
+)

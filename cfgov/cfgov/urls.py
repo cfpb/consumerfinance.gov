@@ -379,6 +379,8 @@ urlpatterns = [
 
     es_conv_flag(r'^es/quienes-somos/$', TemplateView.as_view(
                  template_name='es/quienes-somos/index.html')),
+
+    url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
 ]
 
 if settings.ALLOW_ADMIN_URL:
