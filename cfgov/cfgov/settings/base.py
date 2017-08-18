@@ -589,6 +589,7 @@ FLAGS = {
     'SORTABLE_TABLES': {},
 }
 
+
 # Watchman tokens, used to authenticate global status endpoint
 WATCHMAN_TOKENS = os.environ.get('WATCHMAN_TOKENS', os.urandom(32))
 
@@ -598,4 +599,14 @@ WATCHMAN_CHECKS = (
     'watchman.checks.databases',
     'watchman.checks.storage',
     'watchman.checks.caches',
+    'alerts.checks.check_clock_drift',
 )
+
+# Used to check server's time against in check_clock_drift
+NTP_TIME_SERVER = 'north-america.pool.ntp.org'
+
+# If server's clock drifts from NTP by more than specified offset
+# (in seconds), check_clock_drift will fail
+MAX_ALLOWED_TIME_OFFSET = 5
+
+
