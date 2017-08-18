@@ -557,11 +557,6 @@ FLAGS = {
     # When enabled, the top margin of full-width text insets is increased
     'INSET_TEST': {},
 
-    # Footer link for the Office of Administrative Adjudication
-    # When enabled, a link to "Administrative Adjudication" appears in the
-    # footer
-    'OAA_FOOTER_LINK': {},
-
     # When enabled, serves `/es/` pages from this
     # repo ( excluding /obtener-respuestas/ pages ).
     'ES_CONV_FLAG': {},
