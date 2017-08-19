@@ -46,7 +46,7 @@ class YearMonthValidatorTests(unittest.TestCase):
 
 class TimeseriesViewTests(django.test.TestCase):
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
         mommy.make(

@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 from dateutil import parser
+import json
 import mock
 from mock import mock_open, patch
 import StringIO
@@ -32,8 +33,10 @@ from data_research.scripts.load_mortgage_aggregates import (
     run as run_aggregates)
 from data_research.scripts.export_public_csv import (
     export_downloadable_csv,
+    format_size,
     round_pct,
-    run as run_export)
+    run as run_export,
+    save_metadata)
 from data_research.scripts.validate_geos import validate_geo
 
 
@@ -378,6 +381,21 @@ class UpdateSamplingDatesTest(django.test.TestCase):
 class DataScriptTest(unittest.TestCase):
     """Tests for data pipeline automations"""
 
+    def test_format_size_bytes(self):
+        self.assertEqual(format_size(999), '999.0B')
+
+    def test_format_size_kilobytes(self):
+        self.assertEqual(format_size(9999), '9.8KB')
+
+    def test_format_size_megabytes(self):
+        self.assertEqual(format_size(9999999), '9.5MB')
+
+    def test_format_size_gigabytes(self):
+        self.assertEqual(format_size(9999999999), '9.3GB')
+
+    def test_format_size_terabytes(self):
+        self.assertEqual(format_size(9999999999999), '9.1TB')
+
     def test_validate_fips_too_short(self):
         fips_input = '12'
         self.assertEqual(validate_fips(fips_input), None)
@@ -451,3 +469,15 @@ class ExportRoundingTests(unittest.TestCase):
     def test_round_pct_greater_than_100(self):
         value = 1.00498991409295352325
         self.assertEqual(round_pct(value), 100.5)
+
+
+class SaveMetadataTests(django.test.TestCase):
+
+    def test_save_metadata(self):
+        save_metadata(999, 'slug1', '2017-01-01')
+        self.assertEqual(
+            MortgageMetaData.objects.filter(name='download_files').count(), 1)
+        save_metadata(9999, 'slug2', '2017-02-01')
+        updated_meta = MortgageMetaData.objects.get(name='download_files')
+        data = json.loads(updated_meta.json_value)
+        self.assertEqual(len(data), 2)

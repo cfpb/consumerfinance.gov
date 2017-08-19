@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel,
@@ -73,6 +75,12 @@ class BrowsePage(CFGOVPage):
 
     objects = PageManager()
 
+    def get_mortgage_meta(self):
+        from data_research.models import MortgageMetaData
+        meta_set = MortgageMetaData.objects.all()
+        meta = {obj.name: json.loads(obj.json_value) for obj in meta_set}
+        return meta
+
     def add_page_js(self, js):
         super(BrowsePage, self).add_page_js(js)
         js['template'] += ['secondary-navigation.js']
@@ -80,4 +88,6 @@ class BrowsePage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)
         context.update({'get_secondary_nav_items': get_secondary_nav_items})
+        if 'data-research/mortgage' in request.url:
+            context.update(self.get_mortgage_meta())
         return context
