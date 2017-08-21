@@ -112,6 +112,12 @@ urlpatterns = [
     url(r'^students/$', TemplateView.as_view(
         template_name='students/index.html'),
         name='students'),
+    url(r'^students/knowbeforeyouowe/$', TemplateView.as_view(
+        template_name='students/knowbeforeyouowe/index.html'),
+        name='students-knowbeforeyouowe'),
+    url(r'^students/helping-borrowers-find-ways-to-stay-afloat/$', TemplateView.as_view(
+        template_name='students/helping-borrowers-find-ways-to-stay-afloat/index.html'),
+        name='students-helping-borrowers'),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
