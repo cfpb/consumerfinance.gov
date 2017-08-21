@@ -14,7 +14,6 @@ import unicodecsv
 
 from data_research.models import (
     CountyMortgageData,
-    # MortgageDataConstant,
     MortgageMetaData,
     MSAMortgageData,
     NationalMortgageData,
@@ -37,6 +36,9 @@ from data_research.scripts.export_public_csv import (
     round_pct,
     run as run_export,
     save_metadata)
+from data_research.scripts.build_state_msa_dropdown import (
+    run as run_update,
+    update_state_msa_dropdown)
 from data_research.scripts.validate_geos import validate_geo
 
 
@@ -481,3 +483,24 @@ class SaveMetadataTests(django.test.TestCase):
         updated_meta = MortgageMetaData.objects.get(name='download_files')
         data = json.loads(updated_meta.json_value)
         self.assertEqual(len(data), 2)
+
+
+class BuildStateMsaDropdownTests(django.test.TestCase):
+
+    fixtures = ['mortgage_constants.json']
+
+    @mock.patch('data_research.scripts.'
+                'build_state_msa_dropdown.bake_json_to_s3')
+    def test_rebuild_msa_dropdown(self, mock_bake_s3):
+        self.assertEqual(MortgageMetaData.objects.count(), 0)
+        update_state_msa_dropdown()
+        self.assertEqual(mock_bake_s3.call_count, 1)
+        self.assertEqual(MortgageMetaData.objects.count(), 1)
+        test_json = json.loads(MortgageMetaData.objects.first().json_value)
+        self.assertEqual(len(test_json), 52)
+
+    @mock.patch('data_research.scripts.'
+                'build_state_msa_dropdown.update_state_msa_dropdown')
+    def test_run_rebuild(self, mock_build):
+        run_update()
+        self.assertEqual(mock_build.call_count, 1)

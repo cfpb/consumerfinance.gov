@@ -24,7 +24,7 @@ class ModelStringTest(unittest.TestCase):
     def test_county_string_max_length(self):
         """
         Test that no MSA county-list string (a string of FIPS codes)
-        will exceed the 255-char limit for MSAMortgageData.county.
+        will exceed the 255-char limit for `MSAMortgageData.county`
         """
         load_fips_meta()
         county_string_lengths = sorted(set([
@@ -38,7 +38,7 @@ class ModelStringTest(unittest.TestCase):
 
 class MortgageModelTests(django.test.TestCase):
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
 
