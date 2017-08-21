@@ -4,5 +4,6 @@ Disallow: /about-us/the-bureau/leadership-calendar/pdf
 Disallow: /es/obtener-respuestas/*.imprimir.html
 Disallow: /external-site
 Disallow: /*?success
+Disallow: *form-id=*
 
 sitemap: http://www.consumerfinance.gov/activity-log/feed/
