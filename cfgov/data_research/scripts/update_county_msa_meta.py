@@ -14,8 +14,7 @@ logger = logging.getLogger(__name__)
 
 # FIPS.county_fips
 {'25003':
-   {'name':
-    'Berkshire County',
+   {'name': 'Berkshire County',
     'state': 'MA'}
 }
 
@@ -35,70 +34,128 @@ logger = logging.getLogger(__name__)
     """
 
 
-def update_state_msa_dropdown():
+def update_state_to_geo_meta(geo):
     """
-    Assemble a dictionary that maps state abbreviations to all the metro areas
-    in the given state, for use in building MSA drop-downs by state.
+    Assemble a dictionaries that map state abbreviations to all counties or
+    metro areas in a given state, for use in building chart drop-downs.
 
-    MSAs are marked `valid: true` or `valid: false` based on whether they meet
+    Areas are marked `valid: true` or `valid: false` based on whether they meet
     our display threshold of reporting at least 1,000 open mortgages.
 
-    A state entry will look like this:
+    An MSA meta entry, showing all MSAs in a state, will look like this:
+    ```json
     {
-        HI: {
-            msas: {
-                27980: {
-                    valid: false,
-                    fips: "27980",
-                    name: "Kahului-Wailuku-Lahaina, HI"
+        "HI": {
+            "msas": [
+                {
+                    "fips": "27980",
+                    "name": "Kahului-Wailuku-Lahaina, HI"
+                    "valid": false,
                 },
-                46520: {
-                    valid: true,
-                    fips: "46520",
-                    name: "Urban Honolulu, HI"
+                {
+                    "fips": "46520",
+                    "name": "Urban Honolulu, HI"
+                    "valid": true,
                 }
-            },
-            state_fips: "15",
-            state_name: "Hawaii"
+            ],
+            "state_fips": "15",
+            "state_name": "Hawaii"
         },
     ...
     }
+    ```
+
+
+    A county meta entry, showing all counties in a state, will look like this:
+    ```json
+    {
+        "DE": {
+            "counties": [
+                {
+                    "fips": "10001",
+                    "name": "Kent County"
+                    "valid": true,
+                },
+                {
+                    "fips": "10003",
+                    "name": "New Castle County"
+                    "valid": true,
+                },
+                {
+                    "fips": "10005",
+                    "name": "Sussex County"
+                    "valid": true,
+                }
+            ],
+            "state_fips": "10",
+            "state_name": "Delaware"
+        },
+    ...
+    }
+    ```
     """
-    load_fips_meta()
-    state_msa_breakdown = {
+    geo_dict = {
+        'county': {'label': 'counties',
+                   'output_slug': 'state_county_meta',
+                   'fips_dict': FIPS.county_fips,
+                   'query': MortgageMetaData.objects.get_or_create(
+                       name='state_county_meta')},
+        'msa': {'label': 'metros',
+                'output_slug': 'state_msa_meta',
+                'fips_dict': FIPS.msa_fips,
+                'query': MortgageMetaData.objects.get_or_create(
+                    name='state_msa_meta')},
+    }
+    fips_dict = geo_dict[geo]['fips_dict']
+    label = geo_dict[geo]['label']
+    setup = {
         FIPS.state_fips[fips]['abbr']: {
-            'msas': {},
+            label: [],
             'state_fips': fips,
             'state_name': FIPS.state_fips[fips]['name']}
         for fips in FIPS.state_fips
     }
-    for msa_fips in FIPS.msa_fips:
-        _dict = FIPS.msa_fips[msa_fips]
-        msa_name = _dict['name']
-        msa_valid = msa_fips in FIPS.whitelist
-        state_list = []
-        for county_fips in _dict['county_list']:
-            state = FIPS.county_fips[county_fips]['state']
-            if state not in state_list:
-                state_list.append(state)
-        for state_abbr in state_list:
-            state_msa_breakdown[state_abbr]['msas'].update(
-                {msa_fips: {'name': msa_name,
-                            'fips': msa_fips,
-                            'valid': msa_valid}})
-    json_out = json.dumps(state_msa_breakdown)
+    for fips in fips_dict:
+        _dict = fips_dict[fips]
+        geo_name = _dict['name']
+        geo_valid = fips in FIPS.whitelist
+        if geo == 'msa':
+            msa_state_list = []
+            for county_fips in _dict['county_list']:
+                state = FIPS.county_fips[county_fips]['state']
+                if state not in msa_state_list:
+                    msa_state_list.append(state)
+            for state_abbr in msa_state_list:
+                setup[state_abbr]['metros'].append(
+                    {'name': geo_name,
+                     'fips': fips,
+                     'valid': geo_valid})
+        else:
+            this_state = FIPS.county_fips[fips]['state']
+            setup[this_state]['counties'].append(
+                {'name': geo_name,
+                 'fips': fips,
+                 'valid': geo_valid})
+        for state_abbr in setup:
+            setup[state_abbr][label].sort(
+                key=lambda entry: entry['fips'])
+
+    json_out = json.dumps(setup)
     # dump to s3 and save to database
+    slug = geo_dict[geo]['output_slug']
     bake_json_to_s3(
-        'state_msa_dropdown',
+        slug,
         json_out,
         sub_bucket='data/mortgage-performance/meta')
-    logger.info("Saved 'state_msa_dropdown.json' to S3")
+    logger.info("Saved '{}.json' to S3".format(slug))
     meta_obj, cr = MortgageMetaData.objects.get_or_create(
-        name='state_msa_dropdown')
+        name=slug)
     meta_obj.json_value = json_out
     meta_obj.save()
-    logger.info("Saved metadata object 'state_msa_dropdown.'")
+    logger.info("Saved metadata object '{}.'".format(slug))
 
 
 def run():
-    update_state_msa_dropdown()
+    load_fips_meta()
+    for geo in ['msa', 'county']:
+        update_state_to_geo_meta(geo)
