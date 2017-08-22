@@ -5,7 +5,7 @@ import json
 import unittest
 
 import django
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, NoReverseMatch
 from model_mommy import mommy
 
 from data_research.views import validate_year_month
@@ -119,72 +119,206 @@ class TimeseriesViewTests(django.test.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn('No metadata object found.', response.content)
 
-    def test_national_timesereis(self):
+    def test_national_timeseries_30_89(self):
         response = self.client.get(
-            reverse('data_research_api_mortgage_timeseries_national'))
+            reverse(
+                'data_research_api_mortgage_timeseries_national',
+                kwargs={'days_late': '30-89'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_state_timesereis(self):
+    def test_national_timeseries_90(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_timeseries_national',
+                kwargs={'days_late': '90'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_state_timeseries_30_89(self):
         response = self.client.get(
             reverse(
                 'data_research_api_mortgage_timeseries',
-                kwargs={'fips': '12'}))
+                kwargs={'fips': '12',
+                        'days_late': '30-89'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_msa_timesereis(self):
+    def test_state_timeseries_90(self):
         response = self.client.get(
             reverse(
                 'data_research_api_mortgage_timeseries',
-                kwargs={'fips': '35840'}))
+                kwargs={'fips': '12',
+                        'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_county_timesereis(self):
+    def test_msa_timeseries_30_89(self):
         response = self.client.get(
             reverse(
                 'data_research_api_mortgage_timeseries',
-                kwargs={'fips': '12081'}))
+                kwargs={'fips': '35840',
+                        'days_late': '30-89'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_timesereis_bad_fips(self):
+    def test_msa_timeseries_90(self):
         response = self.client.get(
             reverse(
                 'data_research_api_mortgage_timeseries',
-                kwargs={'fips': '99999'}))
+                kwargs={'fips': '35840',
+                        'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            '"FIPS code not found."', response.content)
+
+    def test_county_timeseries_30_89(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_timeseries',
+                kwargs={'fips': '12081',
+                        'days_late': '30-89'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_county_timeseries_90(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_timeseries',
+                kwargs={'fips': '12081',
+                        'days_late': '90'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_timeseries_bad_fips(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_timeseries',
+                kwargs={'fips': '99999',
+                        'days_late': '90'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('FIPS code not found.', response.content)
 
     def test_map_data_bad_date(self):
         response = self.client.get(
             reverse(
-                'data_research_api_mortgage_county_mapdata',
-                kwargs={'geo': 'counties', 'year_month': '0000-01'}))
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'counties',
+                        'days_late': '90',
+                        'year_month': '0000-01'}))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual('"Invalid year-month pair"', response.content)
+        self.assertIn('Invalid year-month pair', response.content)
 
-    def test_county_map_data(self):
+    def test_map_data_disallowed_delinquency_digit(self):
+        with self.assertRaises(NoReverseMatch):
+            self.client.get(reverse(
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'counties',
+                        'days_late': '100',
+                        'year_month': '2008-01'}))
+
+    def test_map_data_disallowed_delinquency_range(self):
+        response = self.client.get(reverse(
+            'data_research_api_mortgage_mapdata',
+            kwargs={'geo': 'counties',
+                    'days_late': '38-89',
+                    'year_month': '2008-01'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Unknown delinquency range', response.content)
+
+    def test_timeseries_disallowed_delinquency_range(self):
+        response = self.client.get(reverse(
+            'data_research_api_mortgage_timeseries',
+            kwargs={'fips': '12081', 'days_late': '38-89'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Unknown delinquency range', response.content)
+
+    def test_national_timeseries_disallowed_delinquency_range(self):
+        response = self.client.get(reverse(
+            'data_research_api_mortgage_timeseries_national',
+            kwargs={'days_late': '38-89'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Unknown delinquency range', response.content)
+
+    def test_map_data_unknown_geo(self):
         response = self.client.get(
             reverse(
-                'data_research_api_mortgage_county_mapdata',
-                kwargs={'geo': 'counties', 'year_month': '2008-01'}))
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'parish',
+                        'days_late': '90',
+                        'year_month': '2008-01'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Unkown geographic unit', response.content)
+
+    def test_county_map_data_30_89(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'counties',
+                        'days_late': '30-89',
+                        'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
         response_data = json.loads(response.content)
         self.assertEqual(
             sorted(response_data.get('data').get('12081').keys()),
-            ['name', 'pct30', 'pct90'])
+            ['date', 'name', 'value'])
 
-    def test_msa_map_data(self):
+    def test_county_map_data_90(self):
         response = self.client.get(
             reverse(
-                'data_research_api_mortgage_metro_mapdata',
-                kwargs={'geo': 'metros', 'year_month': '2008-01'}))
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'counties',
+                        'days_late': '90',
+                        'year_month': '2008-01'}))
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.content)
+        self.assertEqual(
+            sorted(response_data.get('data').get('12081').keys()),
+            ['date', 'name', 'value'])
+
+    def test_msa_map_data_30_89(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'metros',
+                        'days_late': '30-89',
+                        'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_state_map_data(self):
+    def test_msa_map_data_90(self):
         response = self.client.get(
             reverse(
-                'data_research_api_mortgage_state_mapdata',
-                kwargs={'geo': 'states', 'year_month': '2008-01'}))
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'metros',
+                        'days_late': '90',
+                        'year_month': '2008-01'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_state_map_data_30_89(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'states',
+                        'days_late': '30-89',
+                        'year_month': '2008-01'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_state_map_data_90(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'states',
+                        'days_late': '90',
+                        'year_month': '2008-01'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_national_map_data_30_89(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'national',
+                        'days_late': '30-89',
+                        'year_month': '2008-01'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_national_map_data_90(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'national',
+                        'days_late': '90',
+                        'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
 
     def test_county_timeseries_data_invalid(self):
@@ -194,11 +328,9 @@ class TimeseriesViewTests(django.test.TestCase):
         response = self.client.get(
             reverse(
                 'data_research_api_mortgage_timeseries',
-                kwargs={'fips': '12081'}))
+                kwargs={'fips': '12081', 'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.content,
-            '"County is below display threshold."')
+        self.assertIn('County is below display threshold', response.content)
 
     def test_msa_timeseries_data_invalid(self):
         for msa in MSAMortgageData.objects.all():
@@ -207,8 +339,7 @@ class TimeseriesViewTests(django.test.TestCase):
         response = self.client.get(
             reverse(
                 'data_research_api_mortgage_timeseries',
-                kwargs={'fips': '35840'}))
+                kwargs={'fips': '35840', 'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.content,
-            '"Metro area is below display threshold."')
+        self.assertIn(
+            'Metro area is below display threshold', response.content)

@@ -5,21 +5,15 @@ from data_research.views import (
 
 urlpatterns = [
 
-    url(r'^time-series/(?P<fips>\d{2,5})/?$',
+    url(r'^time-series/(?P<days_late>[3890-]*)/(?P<fips>\d{2,5})/?$',
         TimeSeriesData.as_view(),
         name='data_research_api_mortgage_timeseries'),
-    url(r'^time-series/national/?$',
+    url(r'^time-series/national/(?P<days_late>[3890-]*)/?$',
         TimeSeriesNational.as_view(),
         name='data_research_api_mortgage_timeseries_national'),
-    url(r'^map-data/(?P<geo>counties)/(?P<year_month>\d{4}-\d{2})/?$',
+    url(r'^map-data/(?P<geo>[a-z]*)/(?P<days_late>[3890-]*)/(?P<year_month>\d{4}-\d{2})/?$',  # noqa: E501
         MapData.as_view(),
-        name='data_research_api_mortgage_county_mapdata'),
-    url(r'^map-data/(?P<geo>metros)/(?P<year_month>\d{4}-\d{2})/?$',
-        MapData.as_view(),
-        name='data_research_api_mortgage_metro_mapdata'),
-    url(r'^map-data/(?P<geo>states)/(?P<year_month>\d{4}-\d{2})/?$',
-        MapData.as_view(),
-        name='data_research_api_mortgage_state_mapdata'),
+        name='data_research_api_mortgage_mapdata'),
     url(r'^metadata/(?P<meta_name>[a-z_]*)/?$',
         MetaData.as_view(),
         name='data_research_api_metadata'),

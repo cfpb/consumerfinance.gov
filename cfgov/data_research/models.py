@@ -18,7 +18,7 @@ class ConferenceRegistration(models.Model):
 
 
 class MortgageBase(models.Model):
-    """An abstract model base for mortgage data records."""
+    """An abstract model base for mortgage data records and calculations."""
     fips = models.CharField(max_length=6, blank=True, db_index=True)
     date = models.DateField(blank=True, db_index=True)
     total = models.IntegerField(null=True)
@@ -33,15 +33,17 @@ class MortgageBase(models.Model):
         abstract = True
         ordering = ['date']
 
-    @property
-    def time_series(self):
-        return {'date': self.epoch,
-                'pct30': self.percent_30_60,
-                'pct90': self.percent_90}
+    def time_series(self, days_late):
+        if days_late == '30-89':
+            return {'date': self.epoch,
+                    'value': self.percent_30_60}
+        else:
+            return {'date': self.epoch,
+                    'value': self.percent_90}
 
     @property
     def percent_30_60(self):
-        """Returns percentage of loans between 30 and 90 days delinquent."""
+        """Return percentage of loans between 30 and 90 days delinquent."""
         if self.total == 0:
             return 0
         else:
@@ -49,6 +51,7 @@ class MortgageBase(models.Model):
 
     @property
     def percent_90(self):
+        """Return percentage of loans 90-plus days delinquent."""
         if self.total == 0:
             return 0
         else:

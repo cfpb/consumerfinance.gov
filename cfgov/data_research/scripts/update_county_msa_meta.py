@@ -49,13 +49,13 @@ def update_state_to_geo_meta(geo):
             "msas": [
                 {
                     "fips": "27980",
-                    "name": "Kahului-Wailuku-Lahaina, HI"
-                    "valid": false,
+                    "name": "Kahului-Wailuku-Lahaina, HI",
+                    "valid": false
                 },
                 {
                     "fips": "46520",
-                    "name": "Urban Honolulu, HI"
-                    "valid": true,
+                    "name": "Urban Honolulu, HI",
+                    "valid": true
                 }
             ],
             "state_fips": "15",

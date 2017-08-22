@@ -103,11 +103,11 @@ class MortgageModelTests(django.test.TestCase):
     def test_base_data_properties_time_series(self):
         data_record = self.base_data
         self.assertEqual(
-            sorted(data_record.time_series.keys()),
-            ['date', 'pct30', 'pct90'])
+            sorted(data_record.time_series('90').keys()),
+            ['date', 'value'])
         self.assertEqual(
-            sorted(data_record.time_series.values()),
-            [0.0, 0.047244094488188976, 1472702400000])
+            sorted(data_record.time_series('90').values()),
+            [0.0, 1472702400000])
 
     def test_msa_data_properties(self):
         msa_record = self.msa_data
