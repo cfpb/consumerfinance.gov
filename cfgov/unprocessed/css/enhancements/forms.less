@@ -480,12 +480,11 @@ legend {
 
 .o-scale {
     .u-clearfix();
-    padding-bottom: unit(30px / @base-font-size-px, em);
+    padding-bottom: unit( 30px / @base-font-size-px, em );
     position: relative;
 
     &:before {
-
-        .respond-to-min(@bp-sm-min, {
+        .respond-to-min( @bp-sm-min, {
             border-top: 1px solid @gray-40;
             position: absolute;
             right: -@grid_gutter-width;
@@ -493,7 +492,7 @@ legend {
             left: -@grid_gutter-width;
             content: '';
             z-index: 0;
-        });
+        } );
     }
 
     &:last-of-type {
@@ -505,26 +504,25 @@ legend {
     }
 
     .m-form-field__radio {
-
-        .respond-to-min(@bp-sm-min, {
-            width: percentage(1 / @scale-point-count);
+        .respond-to-min( @bp-sm-min, {
+            width: percentage( 1 / @scale-point-count );
             padding: 0;
             margin-bottom: 0;
             float: left;
             position: relative;
-        });
+        } );
 
         &:before {
-            .respond-to-min(@bp-sm-min, {
+            .respond-to-min( @bp-sm-min, {
               border-top: 1px solid @gray-80;
               border-left: none;
               position: absolute;
-              top: ( @radio-button-diameter / 2);
+              top: ( @radio-button-diameter / 2 );
               right: 0;
               left: 0;
               content: '';
               z-index: 0;
-            });
+            } );
         }
 
         &:last-of-type:before {
@@ -534,29 +532,28 @@ legend {
 
     .a-label:before,
     .a-label {
-
-        .respond-to-min(@bp-sm-min, {
+        .respond-to-min( @bp-sm-min, {
             display: block;
-        });
+        } );
     }
 
     .a-label:before {
-
-        .respond-to-min(@bp-sm-min, {
-            margin-bottom: unit(3px / @base-font-size-px, em);
-        });
+        .respond-to-min( @bp-sm-min, {
+            margin-bottom: unit( 3px / @base-font-size-px, em );
+        } );
     }
 
     .a-label {
-
-        .respond-to-min(@bp-sm-min, {
+        .respond-to-min( @bp-sm-min, {
             position: relative;
             z-index: 10;
-        });
+        } );
     }
 
-    & + &_header {
-        margin-top: 30px;
+    &_header {
+        .h4();
+
+        margin-top: unit( 30px / @base-font-size-px, em );
     }
 }
 

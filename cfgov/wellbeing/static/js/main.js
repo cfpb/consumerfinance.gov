@@ -1,8 +1,5 @@
-/* global $ */
 /* eslint no-global-assign: "off" */
 'use strict';
-
-// global.$ = require( 'jquery' );
 
 ( function() {
 
@@ -41,16 +38,13 @@
   var quizComplete = false;
   var questionValues = {};
 
-
   function allQuestionsCompleted() {
     return Object.keys( questionValues ).length === totalQuestions;
   }
 
-
   function enableSubmit() {
     var submitInput = document.querySelector( '#submit-quiz' );
     submitInput.title = 'Get your score';
-    // submitInput.removeClass( 'a-btn__disabled' );
     var className = 'a-btn__disabled';
     if ( submitInput.classList ) {
       submitInput.classList.remove( className );
@@ -62,17 +56,10 @@
     }
   }
 
-
-  // function handleClick( event ) {
-  //   handleInput( event.target );
-  // }
-
-
   // thanks jQuery
   function checkOnBack( el ) {
     handleInput( el );
   }
-
 
   function handleInput( input ) {
     if ( input.name && input.checked ) {
@@ -96,7 +83,6 @@
   } );
 // } );
 
-  // $( document ).on( 'submit', function( event ) {
   var quizForm = document.querySelector( '#quiz-form' );
   quizForm.addEventListener( 'submit', function( event ) {
     event.preventDefault();
@@ -110,7 +96,6 @@
       resultsPagePath = pathname + 'results/?';
     }
 
-    // $( '#quiz-form' ).serialize().split( '&' ).forEach( function( v ) {
     var serializedForm = serialize( quizForm );
     serializedForm.split( '&' ).forEach( function( v ) {
       var keyval = v.split( '=' );
@@ -127,7 +112,6 @@
       ];
   } );
 
-  // $( '.content_main input' ).on( 'click', function( event ) {
   var inputs = document.querySelectorAll( '.content_main input' );
   [].forEach.call( inputs, function( el ) {
     el.addEventListener( 'click', function( event ) {
@@ -142,7 +126,6 @@
       if ( quizComplete ) {
         enableSubmit();
       }
-    // } ).each( checkOnBack );
     } );
   } );
   inputs.forEach( function( input ) {

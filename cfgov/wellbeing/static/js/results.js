@@ -1,4 +1,3 @@
-/* global $ */
 /* eslint no-extra-semi: "off" */
 'use strict';
 
@@ -9,6 +8,8 @@
   }
 
   var score = Number( location.search.slice( 1 ) );
+  var min = 14;
+  var max = 95;
   var average = 39;
   var high = 64;
 
@@ -37,13 +38,24 @@
   }
 
   function loadResources( resources ) {
-    var scoreDisplay = document.querySelector( '#score-value' );
-    var blurb = document.querySelector( '#well-being-blurb' );
-    var graph = document.querySelector( '#score-graph' );
+    var scoreBox = document.querySelector( '#score-box' );
+    var scoreValue = document.querySelector( '#score-value' );
+    var scorePercentage = ( score - min ) / ( max - min ) * 100;
+    var compareLink = document.querySelector( '#compare-link' );
+    // var blurb = document.querySelector( '#well-being-blurb' );
+    // var graph = document.querySelector( '#score-graph' );
 
-    scoreDisplay.textContent = scoreDisplay.textContent + ' ' + score;
-    blurb.textContent = blurb.textContent + ' ' + resources.wellBeing;
-    graph.setAttribute( 'src', imgPath + resources.graph );
+    if ( scorePercentage > 50 ) {
+      scorePercentage = 100 - scorePercentage;
+      scoreBox.style.right = scorePercentage.toString() + '%';
+      scoreBox.className = 'score-box__right';
+    } else {
+      scoreBox.style.left = scorePercentage.toString() + '%';
+    }
+    scoreValue.textContent = score;
+    compareLink.setAttribute( 'href', '../compare/?' + score );
+    // blurb.textContent = blurb.textContent + ' ' + resources.wellBeing;
+    // graph.setAttribute( 'src', imgPath + resources.graph );
   }
 
   // $( document ).ready( function() {

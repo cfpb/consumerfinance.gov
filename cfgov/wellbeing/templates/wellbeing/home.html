@@ -8,34 +8,12 @@
     Answer ten questions to measure your own current financial well-being and see steps you can take to improve it.
 {%- endblock %}
 
-{% block hero -%}
-
-<section class="m-hero
-                block
-                block__flush-top
-                block__flush-bottom">
-    <div class="m-hero_wrapper wrapper">
-        <div class="m-hero_text">
-            <h1 class="m-hero_heading">Questionnaire: Find out your financial well-being</h1>
-            <div class="m-hero_subhead">
-                <p>
-                    We have taken a survey to assess the current state of
-                    financial well-being in U.S. adults. Answer ten
-                    questions to measure your own current financial
-                    well-being and see steps you can take to improve it.
-                </p>
-            </div>
-        </div>
-        <div class="m-hero_image-wrapper">
-            <div class="m-hero_image"></div>
-        </div>
-    </div>
-
+{% block css -%}
+    {{ super() }}
     <style>
         .m-hero {
             background-color: #cce3f5;
         }
-
         .m-hero_image {
             background-image: url('/f/images/parents_hero_760x364.original.png');
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
@@ -43,7 +21,6 @@
                 sizingMethod='scale');
             padding-bottom: 41.4893617%;
         }
-
         @media screen and (min-width: 37.5625em) {
             .m-hero_image {
                 background-image: url('/f/images/parents_hero_760x364.original.png');
@@ -61,7 +38,54 @@
                     sizingMethod='scale');
             }
         }
+        .question-group {
+            padding: 0 30px 30px 30px;
+            border: solid #b4b5b6;
+            border-width: 1px 0 1px 1px;
+            margin-right: -30px;
+            margin-left: -30px;
+            background: #f7f8f9;
+        }
+        .o-scale {
+            padding-top: 0;
+            padding-right: 0;
+            padding-left: 0;
+            border: none;
+        }
+        @media only all and ( min-width: 76.9375em ) {
+            .answer-prefix {
+                width: 110px;
+                margin-bottom: 15px;
+                margin-right: 15px;
+                float: left;
+            }
+            .o-scale .m-form-field__radio {
+                width: 16.6666666667%;
+            }
+        }
     </style>
+{%- endblock %}
+
+{% block hero -%}
+
+<section class="m-hero
+                block
+                block__flush-top
+                block__flush-bottom">
+    <div class="m-hero_wrapper wrapper">
+        <div class="m-hero_text">
+            <h1 class="m-hero_heading">Questionnaire: Find out your financial well-being</h1>
+            <div class="m-hero_subhead">
+                <p>
+                    Answer ten questions to measure your current financial
+                    well-being and see steps you can take to improve it.
+                </p>
+            </div>
+        </div>
+        <div class="m-hero_image-wrapper">
+            <div class="m-hero_image"></div>
+        </div>
+    </div>
 </section>
 
 {%- endblock %}
@@ -77,19 +101,39 @@
     making a difference.
 </p>
 
+<p>
+    The financial well-being questionnaire can help. Here’s how to get started:
+</p>
+
+<ul>
+    <li>
+        Answer the questions and get your score
+    </li>
+    <li>
+        See how your score compares to other U.S. adults from our national survey
+    </li>
+    <li>
+        Review steps you can take if you want to be able to
+        answer the questions differently next time
+    </li>
+</ul>
+
+<p>
+    We never collect or store the answers you provide.
+    <a href="/privacy/website-privacy-policy/">
+        See how your privacy is protected
+    </a>
+</p>
+
 <form id="quiz-form" action="results.html">
     <div class="block">
         <h2>Part 1: How well does this statement describe your situation?</h2>
-        <div class="block
-                    block__bg
-                    block__border-top
-                    block__border-bottom
-                    u-mt0
-                    u-mb0">
-            <p class="h4 o-scale_header">
-                I could handle a major unexpected expense
-            </p>
-            <div class="o-scale" id="question-1">
+        <div class="question-group">
+            <fieldset class="o-scale" id="question-1">
+                <legend class="o-scale_header">
+                    I could handle a major unexpected expense
+                </legend>
+                <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-1-completely" name="question-1" value="4">
                     <label class="a-label" for="question-1-completely">
@@ -120,11 +164,12 @@
                         Not at all
                     </label>
                 </div>
-            </div>
-            <p class="h4 o-scale_header">
-                I am securing my financial future
-            </p>
-            <div class="o-scale" id="question-2">
+            </fieldset>
+            <fieldset class="o-scale" id="question-2">
+                <legend class="o-scale_header">
+                    I am securing my financial future
+                </legend>
+                <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-2-completely" name="question-2" value="4">
                     <label class="a-label" for="question-2-completely">
@@ -155,11 +200,12 @@
                         Not at all
                     </label>
                 </div>
-            </div>
-            <p class="h4 o-scale_header">
-                Because of my money situation, I feel like I will never have the things I want in life
-            </p>
-            <div class="o-scale" id="question-3">
+            </fieldset>
+            <fieldset class="o-scale" id="question-3">
+                <legend class="o-scale_header">
+                    Because of my money situation, I feel like I will never have the things I want in life
+                </legend>
+                <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-3-completely" name="question-3" value="0">
                     <label class="a-label" for="question-3-completely">
@@ -190,11 +236,12 @@
                         Not at all
                     </label>
                 </div>
-            </div>
-            <p class="h4 o-scale_header">
-                I can enjoy life because of the way I’m managing my money
-            </p>
-            <div class="o-scale" id="question-4">
+            </fieldset>
+            <fieldset class="o-scale" id="question-4">
+                <legend class="o-scale_header">
+                    I can enjoy life because of the way I’m managing my money
+                </legend>
+                <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-4-completely" name="question-4" value="4">
                     <label class="a-label" for="question-4-completely">
@@ -225,11 +272,12 @@
                         Not at all
                     </label>
                 </div>
-            </div>
-            <p class="h4 o-scale_header">
-                I am just getting by financially
-            </p>
-            <div class="o-scale" id="question-5">
+            </fieldset>
+            <fieldset class="o-scale" id="question-5">
+                <legend class="o-scale_header">
+                    I am just getting by financially
+                </legend>
+                <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-5-completely" name="question-5" value="0">
                     <label class="a-label" for="question-5-completely">
@@ -260,11 +308,12 @@
                         Not at all
                     </label>
                 </div>
-            </div>
-            <p class="h4 o-scale_header">
-                I am concerned that the money I have or will save won’t last
-            </p>
-            <div class="o-scale" id="question-6">
+            </fieldset>
+            <fieldset class="o-scale" id="question-6">
+                <legend class="o-scale_header">
+                    I am concerned that the money I have or will save won’t last
+                </legend>
+                <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-6-completely" name="question-6" value="0">
                     <label class="a-label" for="question-6-completely">
@@ -295,21 +344,17 @@
                         Not at all
                     </label>
                 </div>
-            </div>
+            </fieldset>
         </div>
     </div>
     <div class="block">
         <h2>Part 2: How often does this statement apply to you?</h2>
-        <div class="block
-                    block__bg
-                    block__border-top
-                    block__border-bottom
-                    u-mt0
-                    u-mb0">
-            <p class="h4 o-scale_header">
-                Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month
-            </p>
-            <div class="o-scale" id="question-7">
+        <div class="question-group">
+            <fieldset class="o-scale" id="question-7">
+                <legend class="o-scale_header">
+                  Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month
+                </legend>
+                <div class="answer-prefix">This statement applies to me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-7-always" name="question-7" value="0">
                     <label class="a-label" for="question-7-always">
@@ -340,11 +385,12 @@
                         Never
                     </label>
                 </div>
-            </div>
-            <p class="h4 o-scale_header">
-                I have money left over at the end of the month
-            </p>
-            <div class="o-scale" id="question-8">
+            </fieldset>
+            <fieldset class="o-scale" id="question-8">
+                <legend class="o-scale_header">
+                  I have money left over at the end of the month
+                </legend>
+                <div class="answer-prefix">This statement applies to me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-8-always" name="question-8" value="4">
                     <label class="a-label" for="question-8-always">
@@ -375,11 +421,12 @@
                         Never
                     </label>
                 </div>
-            </div>
-            <p class="h4 o-scale_header">
-                I am behind with my finances
-            </p>
-            <div class="o-scale" id="question-9">
+            </fieldset>
+            <fieldset class="o-scale" id="question-9">
+                <legend class="o-scale_header">
+                  I am behind with my finances
+                </legend>
+                <div class="answer-prefix">This statement applies to me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-9-always" name="question-9" value="0">
                     <label class="a-label" for="question-9-always">
@@ -410,11 +457,12 @@
                         Never
                     </label>
                 </div>
-            </div>
-            <p class="h4 o-scale_header">
-                My finances control my life
-            </p>
-            <div class="o-scale" id="question-10">
+            </fieldset>
+            <fieldset class="o-scale" id="question-10">
+                <legend class="o-scale_header">
+                  My finances control my life
+                </legend>
+                <div class="answer-prefix">This statement applies to me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-10-always" name="question-10" value="0">
                     <label class="a-label" for="question-10-always">
@@ -445,20 +493,15 @@
                         Never
                     </label>
                 </div>
-            </div>
+            </fieldset>
         </div>
     </div>
     <div class="block u-mb30">
-        <h2>Part 3: Tell us about yourself.</h2>
-        <div class="block
-                    block__bg
-                    block__border-top
-                    block__border-bottom
-                    u-mt0
-                    u-mb0">
+        <h2>About you</h2>
+        <div class="question-group">
             <fieldset class="o-form_fieldset">
-                <legend class="a-label h4">
-                    How old are you?
+                <legend class="o-scale_header">
+                    Select your age group. This changes the scoring calculation.
                 </legend>
                 <ul class="m-list m-list__unstyled content-l">
                     <li class="content-l_col content-l_col-1-2">
@@ -480,15 +523,15 @@
                 </ul>
             </fieldset>
             <fieldset class="o-form_fieldset">
-                <legend class="a-label h4">
-                    How did you take the questionnaire?
+                <legend class="o-scale_header">
+                    Select how you completed the questionnaire. This changes the scoring calculation.
                 </legend>
                 <ul class="m-list m-list__unstyled content-l">
                     <li class="content-l_col content-l_col-1-2">
                         <div class="m-form-field m-form-field__radio m-form-field__lg-target">
-                            <input class="a-radio" type="radio" name="method" id="read-self" value="read-self">
+                            <input class="a-radio" type="radio" name="method" id="read-self" value="read-self" checked>
                             <label class="a-label" for="read-self">
-                                I read the questions
+                                I read and answered the questions myself
                             </label>
                         </div>
                     </li>
@@ -496,7 +539,7 @@
                         <div class="m-form-field m-form-field__radio m-form-field__lg-target">
                             <input class="a-radio" type="radio" name="method" id="read-to-me" value="read-to-me">
                             <label class="a-label" for="read-to-me">
-                                Someone read the questions to me
+                                I read the questions to someone else and recorded their answers
                             </label>
                         </div>
                     </li>
@@ -505,25 +548,93 @@
         </div>
     </div>
     <div class="o-form_group">
-        <input id="submit-quiz" class="a-btn a-btn__disabled" type="submit" title="Please answer all questions to get your score" value="Get your score">
+        <input id="submit-quiz" class="a-btn a-btn__disabled" type="submit" title="Please answer all questions to get your score" value="Get my score">
     </div>
 </form>
 
 {%- endblock %}
 
 {% block content_sidebar -%}
-    content_sidebar
+
+<div class="block block__flush-top">
+    <h3>About us</h3>
+    <p>
+        We're the Consumer Financial Protection Bureau (CFPB),
+        a U.S. government agency that makes sure banks, lenders,
+        and other financial companies treat you fairly.
+    </p>
+    <a class="a-link a-link__jump" href="/about-us/the-bureau/">
+        <span class="a-link_text">Learn how the CFPB can help you</span>
+    </a>
+</div>
+
+<div class="block">
+    <header class="m-slug-header">
+        <h2 class="a-heading">Latest blog posts</h2>
+    </header>
+    <div class="m-related-posts_list-container">
+        <ul class="m-related-posts_list
+               m-list
+               m-list__unstyled
+               m-list__spaced">
+            <li class="m-list_item">
+                <h3 class="h4 u-mb5">
+                    <a class="m-list_link"
+                       href="/about-us/blog/weve-issued-new-rule-arbitration-help-groups-people-take-companies-court/">
+                        We’ve issued a new rule on arbitration to help
+                        groups of people take companies to court
+                    </a>
+                </h3>
+                <p class="a-date">
+                    <span class="datetime">
+                        <time class="datetime_date" datetime="2017-07-10T00:00:00.000000">
+                            JUL 10, 2017
+                        </time>
+                    </span>
+                </p>
+            </li>
+            <li class="m-list_item">
+                <h3 class="h4 u-mb5">
+                    <a class="m-list_link"
+                       href="/about-us/blog/cfpb-proposes-prohibiting-mandatory-arbitration-clauses-deny-groups-consumers-their-day-court/">
+                        CFPB proposes prohibiting mandatory arbitration clauses
+                        that deny groups of consumers their day in court
+                    </a>
+                </h3>
+                <p class="a-date">
+                    <span class="datetime">
+                        <time class="datetime_date" datetime="2016-05-05T00:00:00.000000">
+                            MAY 05, 2016
+                        </time>
+                    </span>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="block">
+    <header class="m-slug-header">
+        <h2 class="a-heading">About this questionnaire</h2>
+    </header>
+    <p>
+        CFPB researchers developed the questionnaire and a way to score it,
+        to measure how well your current money situation is providing you
+        with security and freedom of choice, today and for the future.
+    </p>
+    <a class="a-link a-link__jump" href="about/">
+        <span class="a-link_text">See more background</span>
+    </a>
+</div>
+
 {%- endblock %}
 
 {% block javascript %}
     {{ super() }}
 
     <script>
-    /* global $ */
     /* eslint no-global-assign: "off" */
     'use strict';
-
-    // global.$ = require( 'jquery' );
 
     ( function() {
 
@@ -562,16 +673,13 @@
       var quizComplete = false;
       var questionValues = {};
 
-
       function allQuestionsCompleted() {
         return Object.keys( questionValues ).length === totalQuestions;
       }
 
-
       function enableSubmit() {
         var submitInput = document.querySelector( '#submit-quiz' );
         submitInput.title = 'Get your score';
-        // submitInput.removeClass( 'a-btn__disabled' );
         var className = 'a-btn__disabled';
         if ( submitInput.classList ) {
           submitInput.classList.remove( className );
@@ -583,17 +691,10 @@
         }
       }
 
-
-      // function handleClick( event ) {
-      //   handleInput( event.target );
-      // }
-
-
       // thanks jQuery
       function checkOnBack( el ) {
         handleInput( el );
       }
-
 
       function handleInput( input ) {
         if ( input.name && input.checked ) {
@@ -617,7 +718,6 @@
       } );
     // } );
 
-      // $( document ).on( 'submit', function( event ) {
       var quizForm = document.querySelector( '#quiz-form' );
       quizForm.addEventListener( 'submit', function( event ) {
         event.preventDefault();
@@ -631,7 +731,6 @@
           resultsPagePath = pathname + 'results/?';
         }
 
-        // $( '#quiz-form' ).serialize().split( '&' ).forEach( function( v ) {
         var serializedForm = serialize( quizForm );
         serializedForm.split( '&' ).forEach( function( v ) {
           var keyval = v.split( '=' );
@@ -648,7 +747,6 @@
           ];
       } );
 
-      // $( '.content_main input' ).on( 'click', function( event ) {
       var inputs = document.querySelectorAll( '.content_main input' );
       [].forEach.call( inputs, function( el ) {
         el.addEventListener( 'click', function( event ) {
@@ -663,7 +761,6 @@
           if ( quizComplete ) {
             enableSubmit();
           }
-        // } ).each( checkOnBack );
         } );
       } );
       inputs.forEach( function( input ) {

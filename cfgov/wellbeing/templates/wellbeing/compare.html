@@ -1,5 +1,348 @@
-{% extends 'wellbeing/base.html' %}
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    See how your score compares
+{%- endblock %}
+
+{% block desc -%}
+    Compare your financial well-being to people like you from across the country.
+{%- endblock %}
+
+{% block css %}
+    {{ super() }}
+    <style>
+        .histogram_toggle {
+            padding: 0;
+            border: none;
+            margin: 0;
+        }
+        .histogram_chart {
+            padding-top: 70px;
+            margin-top: 30px;
+            position: relative;
+        }
+        .score-box {
+            height: 283px; /* .chart's padding-top + height of spectrum image -2px bottom border */
+            border-color: #101820;
+            border-style: dotted;
+            position: absolute;
+            top: 0;
+        }
+        .score-box__left {
+            padding-left: 15px;
+            border-width: 0 0 0 2px;
+        }
+        .score-box__right {
+            padding-right: 15px;
+            border-width: 0 2px 0 0;
+            text-align: right;
+        }
+        .score-box a {
+            border-bottom-width: 1px;
+        }
+        .histogram_x-labels {
+            padding-top: 0.375em;
+            padding-left: 1.9375%; /* roughly 32px / 1470px */
+            text-align: center;
+        }
+        .histogram_x-labels li {
+            width: 5.46875%; /* roughly 92px / 1740px */
+            margin-right: 0.4375%; /* roughly 9px / 1740px */
+            margin-left: 0;
+            float: left;
+            font-size: 0.875em;
+            /*text-align: center;*/
+        }
+        .histogram_x-labels li:last-child {
+            margin-right: 0;
+        }
+
+        /* CF Enhancements */
+        .u-left {
+            float: left;
+        }
+    </style>
+{% endblock %}
 
 {% block content_main %}
     <h1>See how your score compares</h1>
+
+    <p class="lead-paragraph">
+        We surveyed thousands of people in the United States
+        to get a picture of financial well-being, nationwide.
+        See how your financial well-being compares to people like you.
+    </p>
+
+    <a class="a-link a-link__jump" href="../about/">
+        <span class="a-link_text">See background on the financial well-being survey</span>
+    </a>
+
+    <div class="block">
+        <h2>See how your score compares by age</h2>
+
+        <figure class="histogram" id="age-histogram">
+            <fieldset class="histogram_toggle">
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="age_all-adults" name="age-histogram" type="radio" checked>
+                    <label class="a-label" for="age_all-adults">All adults</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="age_18-30" name="age-histogram" type="radio">
+                    <label class="a-label" for="age_18-30">18–30</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="age_31-45" name="age-histogram" type="radio">
+                    <label class="a-label" for="age_31-45">31–45</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="age_46-61" name="age-histogram" type="radio">
+                    <label class="a-label" for="age_46-61">46–61</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="age_62+" name="age-histogram" type="radio">
+                    <label class="a-label" for="age_62+">62+</label>
+                </div>
+            </fieldset>
+
+            <h3 class="histogram_title u-mt15" id="age-histogram_title">
+                Distribution of scores for all adults
+            </h3>
+
+            <div class="histogram_chart">
+                <div class="score-box">
+                    Your score as of today: <b class="score-value"></b>
+                </div>
+
+                <img id="histogram_image__age"
+                     src="{{ static('img/histogram_all-adults_1740x430.png') }}"
+                     alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
+                          Higher scores represent a higher financial well-being.">
+
+                <figcaption class="histogram_x-labels">
+                    <ol class="m-list m-list__unstyled">
+                        <li class="m-list_item">11–15</li>
+                        <li class="m-list_item">16–20</li>
+                        <li class="m-list_item">21–25</li>
+                        <li class="m-list_item">26–30</li>
+                        <li class="m-list_item">31–35</li>
+                        <li class="m-list_item">36–40</li>
+                        <li class="m-list_item">41–45</li>
+                        <li class="m-list_item">46–50</li>
+                        <li class="m-list_item">51–55</li>
+                        <li class="m-list_item">56–60</li>
+                        <li class="m-list_item">61–65</li>
+                        <li class="m-list_item">66–70</li>
+                        <li class="m-list_item">71–75</li>
+                        <li class="m-list_item">76–80</li>
+                        <li class="m-list_item">81–85</li>
+                        <li class="m-list_item">86–90</li>
+                        <li class="m-list_item">91–95</li>
+                    </ol>
+                    <b>Financial well-being score range</b>
+                </figcaption>
+            </div>
+        </figure>
+    </div>
+
+    <div class="block">
+        <h2>See how your score compares by sex</h2>
+
+        <figure class="histogram" id="sex-histogram">
+            <fieldset class="histogram_toggle">
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="sex_all-adults" name="sex-histogram" type="radio" checked>
+                    <label class="a-label" for="sex_all-adults">All adults</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="sex_men" name="sex-histogram" type="radio">
+                    <label class="a-label" for="sex_men">Men</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="sex_women" name="sex-histogram" type="radio">
+                    <label class="a-label" for="sex_women">Women</label>
+                </div>
+            </fieldset>
+
+            <h3 class="histogram_title u-mt15" id="sex-histogram_title">
+                Distribution of scores for all adults
+            </h3>
+
+            <div class="histogram_chart">
+                <div class="score-box">
+                    Your score as of today: <b class="score-value"></b>
+                </div>
+
+                <img id="histogram_image__sex"
+                     src="{{ static('img/histogram_all-adults_1740x430.png') }}"
+                     alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
+                          Higher scores represent a higher financial well-being.">
+
+                <figcaption class="histogram_x-labels">
+                    <ol class="m-list m-list__unstyled">
+                        <li class="m-list_item">11–15</li>
+                        <li class="m-list_item">16–20</li>
+                        <li class="m-list_item">21–25</li>
+                        <li class="m-list_item">26–30</li>
+                        <li class="m-list_item">31–35</li>
+                        <li class="m-list_item">36–40</li>
+                        <li class="m-list_item">41–45</li>
+                        <li class="m-list_item">46–50</li>
+                        <li class="m-list_item">51–55</li>
+                        <li class="m-list_item">56–60</li>
+                        <li class="m-list_item">61–65</li>
+                        <li class="m-list_item">66–70</li>
+                        <li class="m-list_item">71–75</li>
+                        <li class="m-list_item">76–80</li>
+                        <li class="m-list_item">81–85</li>
+                        <li class="m-list_item">86–90</li>
+                        <li class="m-list_item">91–95</li>
+                    </ol>
+                    <b>Financial well-being score range</b>
+                </figcaption>
+            </div>
+        </figure>
+    </div>
+
+    <div class="block">
+        <h2>See how your score compares by household income</h2>
+
+        <figure class="histogram" id="income-histogram">
+            <fieldset class="histogram_toggle">
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="income_all-adults" name="income-histogram" type="radio" checked>
+                    <label class="a-label" for="income_all-adults">All adults</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="income_level-1" name="income-histogram" type="radio">
+                    <label class="a-label" for="income_level-1">$34,999 and lower</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="income_level-2" name="income-histogram" type="radio">
+                    <label class="a-label" for="income_level-2">$35,000–$59,000</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="income_level-3" name="income-histogram" type="radio">
+                    <label class="a-label" for="income_level-3">$60,000–$99,999</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="income_level-4" name="income-histogram" type="radio">
+                    <label class="a-label" for="income_level-4">$100,000–$174,999</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="income_level-5" name="income-histogram" type="radio">
+                    <label class="a-label" for="income_level-5">$175,000 and higher</label>
+                </div>
+            </fieldset>
+
+            <h3 class="histogram_title u-mt15" id="income-histogram_title">
+                Distribution of scores for all adults
+            </h3>
+
+            <div class="histogram_chart">
+                <div class="score-box">
+                    Your score as of today: <b class="score-value"></b>
+                </div>
+
+                <img id="histogram_image__age"
+                     src="{{ static('img/histogram_all-adults_1740x430.png') }}"
+                     alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
+                          Higher scores represent a higher financial well-being.">
+
+                <figcaption class="histogram_x-labels">
+                    <ol class="m-list m-list__unstyled">
+                        <li class="m-list_item">11–15</li>
+                        <li class="m-list_item">16–20</li>
+                        <li class="m-list_item">21–25</li>
+                        <li class="m-list_item">26–30</li>
+                        <li class="m-list_item">31–35</li>
+                        <li class="m-list_item">36–40</li>
+                        <li class="m-list_item">41–45</li>
+                        <li class="m-list_item">46–50</li>
+                        <li class="m-list_item">51–55</li>
+                        <li class="m-list_item">56–60</li>
+                        <li class="m-list_item">61–65</li>
+                        <li class="m-list_item">66–70</li>
+                        <li class="m-list_item">71–75</li>
+                        <li class="m-list_item">76–80</li>
+                        <li class="m-list_item">81–85</li>
+                        <li class="m-list_item">86–90</li>
+                        <li class="m-list_item">91–95</li>
+                    </ol>
+                    <b>Financial well-being score range</b>
+                </figcaption>
+            </div>
+        </figure>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+
+    <script>
+    /* eslint no-extra-semi: "off" */
+    'use strict';
+
+    ( function() {
+
+      if ( !location.pathname.match( '/compare' ) ) {
+        return;
+      }
+
+      var score = Number( location.search.slice( 1 ) );
+      var min = 14;
+      var max = 95;
+
+      function loadResources() {
+        var scoreBoxes = document.querySelectorAll( '.score-box' );
+        var scoreBoxLR = 'left';
+        var scoreValues = document.querySelectorAll( '.score-value' );
+        var scorePercentage = ( score - min ) / ( max - min ) * 100 + 1.875;
+        // var resultsLink = document.querySelector( '#results-link' );
+
+        if ( scorePercentage > 50 ) {
+          scorePercentage = 100 - scorePercentage;
+          scoreBoxLR = 'right'
+          // scoreBox.style.right = scorePercentage.toString() + '%';
+          // scoreBoxClass = 'score-box' + '__right';
+        } // else {
+        //   scoreBox.style.left = scorePercentage.toString() + '%';
+        // }
+
+        [].forEach.call( scoreBoxes, function( el ) {
+          if ( el.classList ) {
+            el.classList.add( 'score-box__' + scoreBoxLR );
+          } else {
+            el.className += ' ' + 'score-box__' + scoreBoxLR;
+          }
+          el.setAttribute( 'style', scoreBoxLR + ': ' + scorePercentage.toString() + '%' )
+        } );
+
+        [].forEach.call( scoreValues, function( el ) {
+          el.textContent = score;
+        } );
+
+        // resultsLink.setAttribute( 'href', '../results/?' + score );
+      }
+
+      var radioButtons = document.querySelectorAll( '.histogram_toggle input' );
+      [].forEach.call( radioButtons, function( el ) {
+        el.addEventListener( 'click', function( event ) {
+          var input = event.target;
+
+          if ( input.name && input.checked ) {
+            var bits = input.id.split( '_' );
+            var category = bits[0];
+            var grouping = bits[1];
+            var image = document.querySelector( '#histogram_image__' + category );
+            var filename = '/static/img/histogram_' + grouping + '_1740x430.png';
+            image.setAttribute( 'src', filename );
+          }
+        } );
+      } );
+
+      loadResources();
+
+    } )();
+
+    </script>
 {% endblock %}
