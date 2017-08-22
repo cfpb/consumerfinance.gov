@@ -58,7 +58,7 @@
                                             <ul class="m-list question_list m-list__flush-left u-mt10 u-mb30">
                                                 {% for a in category.featured_answers() %}
                                                 <li class="m-list_item">
-                                                {{ partially_styled_link.render( {'plain_text': a.question, 'underlined_text': 'Read answer', 'url': slugurl(a.slug)} ) }}
+                                                {{ partially_styled_link.render( {'plain_text': a.question, 'underlined_text': 'Read answer', 'url': a.english_page.url} ) }}
                                                 </li>
                                                 {% endfor %}
                                             </ul>
