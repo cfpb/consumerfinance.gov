@@ -16,7 +16,7 @@ from data_research.models import (
     StateMortgageData,
 )
 from data_research.mortgage_utilities.s3_utils import (
-    bake_csv_to_s3, MORTGAGE_SUB_BUCKET)
+    bake_csv_to_s3, MORTGAGE_SUB_BUCKET, S3_DOWNLOADS_BASE_URL)
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
 BASE_DATE = datetime.date(2008, 1, 1)
@@ -52,12 +52,14 @@ def format_size(bytecount, suffix='B'):
 
 
 def save_metadata(csv_size, slug, thru_date, date_value, geo_type):
-    """Save the slug, thru_date and file size of a new CSV download file."""
+    """Save slug, URL, thru_date and file size of a new CSV download file."""
     pub_date = "{}".format(datetime.date.today())
+    csv_url = "{}/{}.csv".format(S3_DOWNLOADS_BASE_URL, slug)
     download_meta_file, cr = MortgageMetaData.objects.get_or_create(
         name='download_files')
     new_posting = {geo_type:
                    {'slug': slug,
+                    'url': csv_url,
                     'size': csv_size,
                     'thru_date': thru_date,
                     'pub_date': pub_date}}

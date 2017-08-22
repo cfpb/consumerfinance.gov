@@ -30,7 +30,7 @@ from data_research.scripts.load_mortgage_aggregates import (
     load_national_values,
     load_state_values,
     run as run_aggregates)
-from data_research.scripts.export_public_csv import (
+from data_research.scripts.export_public_csvs import (
     export_downloadable_csv,
     format_size,
     round_pct,
@@ -239,7 +239,7 @@ class DataExportTest(django.test.TestCase):
             thirty=10000,
             total=2540000)
 
-    @mock.patch('data_research.scripts.export_public_csv.bake_csv_to_s3')
+    @mock.patch('data_research.scripts.export_public_csvs.bake_csv_to_s3')
     def test_export_downloadable_csv(self, mock_bake):
         run_export(prep_only=True)
         export_downloadable_csv('County', 'percent_30_60')
@@ -256,7 +256,7 @@ class RunExportTest(django.test.TestCase):
     fixtures = ['mortgage_constants.json']
 
     @mock.patch(
-        'data_research.scripts.export_public_csv.export_downloadable_csv')
+        'data_research.scripts.export_public_csvs.export_downloadable_csv')
     def test_run_export(self, mock_export):
         run_export()
         self.assertEqual(mock_export.call_count, 6)

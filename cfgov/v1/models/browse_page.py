@@ -1,3 +1,4 @@
+from dateutil import parser
 import json
 
 from django.db import models
@@ -12,7 +13,6 @@ from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailcore import blocks
 
 from data_research.blocks import ConferenceRegistrationForm
-from data_research.mortgage_utilities.s3_utils import S3_DOWNLOADS_BASE_URL
 from jobmanager.models import JobListingTable
 
 from .. import blocks as v1_blocks
@@ -80,6 +80,14 @@ class BrowsePage(CFGOVPage):
         from data_research.models import MortgageMetaData
         meta_set = MortgageMetaData.objects.all()
         meta = {obj.name: json.loads(obj.json_value) for obj in meta_set}
+        meta['thru_date'] = meta['sampling_dates'][-1]
+        meta['thru_date_formatted'] = parser.parse(
+            meta['thru_date']).strftime("%B %-d, %Y")
+        meta_sample = meta.get(
+            'download_files')[meta['thru_date']]['percent_90']['County']
+        meta['pub_date'] = meta_sample['pub_date']
+        meta['pub_date_formatted'] = parser.parse(
+            meta['pub_date']).strftime("%B %-d, %Y")
         return meta
 
     def add_page_js(self, js):
@@ -91,9 +99,13 @@ class BrowsePage(CFGOVPage):
         context.update({'get_secondary_nav_items': get_secondary_nav_items})
         if 'data-research/mortgage' in request.url:
             context.update(self.get_mortgage_meta())
-            context.update({'s3_url_base': S3_DOWNLOADS_BASE_URL})
         if '30-89' in request.url:
-            context.update({'delinquent': 'percent_30_60'})
+            context.update({'delinquency': 'percent_30_60'})
         elif '90' in request.url:
-            context.update({'delinquent': 'percent_90'})
+            context.update({'delinquency': 'percent_90'})
+        context.update(
+            {'csvs':
+             context.get(
+                 'download_files').get(
+                     context['thru_date'])[context['delinquency']]})
         return context

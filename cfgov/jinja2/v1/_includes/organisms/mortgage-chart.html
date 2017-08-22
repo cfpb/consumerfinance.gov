@@ -11,10 +11,10 @@
    See [GHE]/flapjack/Modules-V1/wiki/Mortgage-Chart
 
    ========================================================================== #}
+{% set county_meta = download_files[thru_date][delinquency]['County'] %}   
+{% set metro_meta = download_files[thru_date][delinquency]['MetroArea'] %}   
+{% set state_meta = download_files[thru_date][delinquency]['State'] %}   
 
-{% set thru_date = sampling_dates[-1] %}
-{% set csvs = download_files[thru_date][days_delinquent] %}
-{% set s3_url = "http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/" %}
 <div style="margin-bottom:0 !important;" id="mp-line-chart-container">
   <form class="content-l" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
     <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
@@ -331,7 +331,7 @@
   <div class="cfpb-chart" data-chart-ignore="true" data-chart-color="blue" data-chart-type="line-comparison" id="mp-line-chart">
     This is the chart description.
   </div>
-  <p class="m-chart-footnote block__sub block__border-top block short-desc" style="font-size:14px !important"><strong>Source:</strong> Download CSV files with <a class="icon-link icon-link__download" href="{{ s3_url }}{{ download_files[thru_date][delinquent]['State']['slug'] }}.csv" <span class="icon-link_text">state</span></a> ({{ download_files[thru_date][delinquent]['State']['size'] }}), <a class="icon-link icon-link__download" href="{{ s3_url }}{{ download_files[thru_date][delinquent]['MetroArea']['slug'] }}.csv" <span class="icon-link_text">metro area</span></a> ({{ download_files[thru_date][delinquent]['MetroArea']['size'] }}), or <a class="icon-link icon-link__download" href="{{ s3_url }}{{ download_files[thru_date][delinquent]['County']['slug'] }}.csv " <span class="icon-link_text">county</span></a> data ({{ download_files[thru_date][delinquent]['County']['size'] }})<br>
-  <strong>Date published:</strong> {{ download_files[thru_date][delinquent]['MetroArea']['pub_date'] }}<br>
-  <strong>Note:</strong> Data from the last six months are not final. The most recent data available in each visualization is for {{ thru_date }}.</p>
+  <p class="m-chart-footnote block__sub block__border-top block short-desc" style="font-size:14px !important"><strong>Source:</strong> Download CSV files with <a class="icon-link icon-link__download" href="{{ state_meta['url'] }}" <span class="icon-link_text">state</span></a> ({{ state_meta['size'] }}), <a class="icon-link icon-link__download" href="{{ metro_meta['url'] }}" <span class="icon-link_text">metro area</span></a> ({{ metro_meta['size'] }}), or <a class="icon-link icon-link__download" href="{{ county_meta['url'] }}" <span class="icon-link_text">county</span></a> ({{ county_meta['size'] }})  data.<br>
+  <strong>Date published:</strong> {{ pub_date_formatted }}<br>
+  <strong>Note:</strong> Data from the last six months are not final. The most recent data available in each visualization is for {{ thru_date_formatted }}.</p>
 </div>
