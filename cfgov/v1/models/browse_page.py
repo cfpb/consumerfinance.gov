@@ -12,6 +12,7 @@ from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailcore import blocks
 
 from data_research.blocks import ConferenceRegistrationForm
+from data_research.mortgage_utilities.s3_utils import S3_DOWNLOADS_BASE_URL
 from jobmanager.models import JobListingTable
 
 from .. import blocks as v1_blocks
@@ -90,4 +91,9 @@ class BrowsePage(CFGOVPage):
         context.update({'get_secondary_nav_items': get_secondary_nav_items})
         if 'data-research/mortgage' in request.url:
             context.update(self.get_mortgage_meta())
+            context.update({'s3_url_base': S3_DOWNLOADS_BASE_URL})
+        if '30-89' in request.url:
+            context.update({'delinquent': 'percent_30_60'})
+        elif '90' in request.url:
+            context.update({'delinquent': 'percent_90'})
         return context

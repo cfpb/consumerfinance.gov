@@ -859,37 +859,14 @@ class ChartBlock(blocks.StructBlock):
         js = ['chart.js']
 
 
-class MortgageChartBlock(ChartBlock):
+class MortgageChartBlock(blocks.StructBlock):
     chart_type = blocks.ChoiceBlock(choices=[
         ('line', 'Line'),
         ('map', 'Map'),
     ], required=True)
-    # color_scheme = blocks.ChoiceBlock(
-    #     choices=[
-    #         ('green', 'Green'),
-    #         ('blue', 'Blue'),
-    #         ('teal', 'Teal'),
-    #         ('navy', 'Navy'),
-    #     ],
-    #     required=False,
-    #     help_text="Chart's color scheme.")
-    date_published = blocks.DateBlock(
-        help_text='Date when this data set went live.'
-    )
     description = blocks.CharBlock(
-        required=True,
+        required=False,
         help_text='Chart summary for visually impaired users.')
-
-    latest_sample_date = blocks.DateBlock(
-        help_text='Date of latest entry in dataset'
-    )
-    downloads = blocks.CharBlock(
-        required=False,
-        help_text='Text to display for downloads info.')
-
-    note = blocks.CharBlock(
-        required=False,
-        help_text='Text to display as a footnote.')
 
     class Meta:
         label = 'Mortgage Chart Block'

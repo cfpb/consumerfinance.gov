@@ -51,23 +51,28 @@ def format_size(bytecount, suffix='B'):
     return "%.1f%s%s" % (bytecount, 'T', suffix)
 
 
-def save_metadata(csv_size, slug, thru_date):
+def save_metadata(csv_size, slug, thru_date, date_value, geo_type):
     """Save the slug, thru_date and file size of a new CSV download file."""
     pub_date = "{}".format(datetime.date.today())
     download_meta_file, cr = MortgageMetaData.objects.get_or_create(
         name='download_files')
-    new_value = {'slug': slug,
-                 'size': csv_size,
-                 'thru_date': thru_date,
-                 'pub_date': pub_date}
+    new_posting = {geo_type:
+                   {'slug': slug,
+                    'size': csv_size,
+                    'thru_date': thru_date,
+                    'pub_date': pub_date}}
     if not download_meta_file.json_value:
-        download_meta_file.json_value = json.dumps({thru_date: [new_value]})
+        download_meta_file.json_value = json.dumps(
+            {thru_date: {date_value: new_posting}})
     else:
         current = json.loads(download_meta_file.json_value)
         if thru_date in current:
-            current[thru_date].append(new_value)
+            if date_value in current[thru_date]:
+                current[thru_date][date_value].update(new_posting)
+            else:
+                current[thru_date].update({date_value: new_posting})
         else:
-            current[thru_date] = [new_value]
+            current.update({thru_date: {date_value: new_posting}})
         download_meta_file.json_value = json.dumps(current)
     download_meta_file.save()
     logger.info("Saved metadata for {}".format(slug))
@@ -159,7 +164,7 @@ def export_downloadable_csv(geo_type, late_value):
     csvfile.seek(0, 2)
     bytecount = csvfile.tell()
     csv_size = format_size(bytecount)
-    save_metadata(csv_size, slug, thru_date)
+    save_metadata(csv_size, slug, thru_date, late_value, geo_type)
 
 
 def run(prep_only=False):

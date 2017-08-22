@@ -14,9 +14,9 @@ S3_KEY = os.getenv('AWS_S3_ACCESS_KEY_ID')
 S3_SECRET = os.getenv('AWS_S3_SECRET_ACCESS_KEY')
 BASE_BUCKET = 'files.consumerfinance.gov'
 MORTGAGE_SUB_BUCKET = "data/mortgage-performance"
-# s3_base is "http://files.consumerfinance.gov"
-# files live at
-# http://s3.amazonaws.com/files.consumerfinance.gov/data/mortgage-performance/
+S3_DOWNLOADS_BASE_URL = (
+    'http://{}.s3.amazonaws.com/data/mortgage-performance/downloads'.format(
+        BASE_BUCKET))
 
 
 def read_in_s3_csv(url):

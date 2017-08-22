@@ -476,10 +476,10 @@ class ExportRoundingTests(unittest.TestCase):
 class SaveMetadataTests(django.test.TestCase):
 
     def test_save_metadata(self):
-        save_metadata(999, 'slug1', '2017-01-01')
+        save_metadata(999, 'slug1', '2017-01-01', 'percent_90', 'County')
         self.assertEqual(
             MortgageMetaData.objects.filter(name='download_files').count(), 1)
-        save_metadata(9999, 'slug2', '2017-02-01')
+        save_metadata(9999, 'slug2', '2017-02-01', 'percent_90', 'County')
         updated_meta = MortgageMetaData.objects.get(name='download_files')
         data = json.loads(updated_meta.json_value)
         self.assertEqual(len(data), 2)
