@@ -103,9 +103,4 @@ class BrowsePage(CFGOVPage):
             context.update({'delinquency': 'percent_30_60'})
         elif '90' in request.url:
             context.update({'delinquency': 'percent_90'})
-        context.update(
-            {'csvs':
-             context.get(
-                 'download_files').get(
-                     context['thru_date'])[context['delinquency']]})
         return context

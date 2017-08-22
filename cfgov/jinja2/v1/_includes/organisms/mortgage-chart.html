@@ -11,9 +11,10 @@
    See [GHE]/flapjack/Modules-V1/wiki/Mortgage-Chart
 
    ========================================================================== #}
-{% set county_meta = download_files[thru_date][delinquency]['County'] %}   
-{% set metro_meta = download_files[thru_date][delinquency]['MetroArea'] %}   
-{% set state_meta = download_files[thru_date][delinquency]['State'] %}   
+{% set csv_meta = download_files[thru_date][delinquency] %}
+{% set county_meta = csv_meta['County'] %}   
+{% set metro_meta = csv_meta['MetroArea'] %}   
+{% set state_meta = csv_meta['State'] %} 
 
 <div style="margin-bottom:0 !important;" id="mp-line-chart-container">
   <form class="content-l" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
@@ -327,9 +328,9 @@
       </div>
     </fieldset>
   </form>
-  <h2 id="mp-line-chart-title" style="margin-top:20px">Percentage of mortgages 30-89 days delinquent<span id="mp-line-chart-title-status" style="display:none">: <strong><span id="mp-line-chart-title-status-geo"></span></strong> versus <strong>the national average</strong></span></h2>
+  <h2 id="mp-line-chart-title" style="margin-top:20px">{{ value.title }}<span id="mp-line-chart-title-status" style="display:none">: <strong><span id="mp-line-chart-title-status-geo"></span></strong> versus <strong>the national average</strong></span></h2>
   <div class="cfpb-chart" data-chart-ignore="true" data-chart-color="blue" data-chart-type="line-comparison" id="mp-line-chart">
-    This is the chart description.
+    {{ value.description }}
   </div>
   <p class="m-chart-footnote block__sub block__border-top block short-desc" style="font-size:14px !important"><strong>Source:</strong> Download CSV files with <a class="icon-link icon-link__download" href="{{ state_meta['url'] }}" <span class="icon-link_text">state</span></a> ({{ state_meta['size'] }}), <a class="icon-link icon-link__download" href="{{ metro_meta['url'] }}" <span class="icon-link_text">metro area</span></a> ({{ metro_meta['size'] }}), or <a class="icon-link icon-link__download" href="{{ county_meta['url'] }}" <span class="icon-link_text">county</span></a> ({{ county_meta['size'] }})  data.<br>
   <strong>Date published:</strong> {{ pub_date_formatted }}<br>

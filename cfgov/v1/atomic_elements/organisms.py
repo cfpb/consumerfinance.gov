@@ -860,6 +860,7 @@ class ChartBlock(blocks.StructBlock):
 
 
 class MortgageChartBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=True)
     chart_type = blocks.ChoiceBlock(choices=[
         ('line', 'Line'),
         ('map', 'Map'),
@@ -874,7 +875,7 @@ class MortgageChartBlock(blocks.StructBlock):
         template = '_includes/organisms/mortgage-chart.html'
 
     class Media:
-        js = ['mortgage-performance.js']
+        js = ['mortgage-performance-trends.js']
 
 
 class SnippetList(blocks.StructBlock):
