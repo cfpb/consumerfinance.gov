@@ -11,16 +11,6 @@
 },
 {
     "fields": {
-        "note": "Archival metadata to keep archive page in sync with updates.",
-        "updated": "2017-08-19",
-        "name": "download_files",
-        "json_value": "{\"2017-03-01\": [{\"size\": \"1.5MB\", \"pub_date\": \"2017-08-19\", \"slug\": \"CountyMortgagesPercent-30-89DaysLate-thru-2017-03-01\", \"thru_date\": \"2017-03-01\"}, {\"thru_date\": \"2017-03-01\", \"pub_date\": \"2017-08-19\", \"slug\": \"CountyMortgagesPercent-90+DaysLate-thru-2017-03-01\", \"size\": \"1.5MB\"}, {\"size\": \"182.3KB\", \"pub_date\": \"2017-08-19\", \"slug\": \"MetroAreaMortgagesPercent-30-89DaysLate-thru-2017-03-01\", \"thru_date\": \"2017-03-01\"}, {\"thru_date\": \"2017-03-01\", \"pub_date\": \"2017-08-19\", \"slug\": \"MetroAreaMortgagesPercent-90+DaysLate-thru-2017-03-01\", \"size\": \"182.2KB\"}, {\"size\": \"25.0KB\", \"pub_date\": \"2017-08-19\", \"slug\": \"StateMortgagesPercent-30-89DaysLate-thru-2017-03-01\", \"thru_date\": \"2017-03-01\"}, {\"thru_date\": \"2017-03-01\", \"pub_date\": \"2017-08-19\", \"slug\": \"StateMortgagesPercent-90+DaysLate-thru-2017-03-01\", \"size\": \"25.0KB\"}]}"
-    },
-    "model": "data_research.mortgagemetadata",
-    "pk": 2
-},
-{
-    "fields": {
         "note": "",
         "updated": "2017-08-21",
         "name": "state_msa_meta",
@@ -38,5 +28,15 @@
     },
     "model": "data_research.mortgagemetadata",
     "pk": 4
+},
+{
+    "fields": {
+        "note": "",
+        "updated": "2017-08-22",
+        "name": "download_files",
+        "json_value": "{\"2017-03-01\": {\"percent_30_60\": {\"County\": {\"url\": \"http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/CountyMortgagesPercent-30-89DaysLate-thru-2017-03-01.csv\", \"size\": \"1.5MB\", \"pub_date\": \"2017-08-22\", \"slug\": \"CountyMortgagesPercent-30-89DaysLate-thru-2017-03-01\", \"thru_date\": \"2017-03-01\"}, \"MetroArea\": {\"url\": \"http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/MetroAreaMortgagesPercent-30-89DaysLate-thru-2017-03-01.csv\", \"size\": \"182.3KB\", \"pub_date\": \"2017-08-22\", \"slug\": \"MetroAreaMortgagesPercent-30-89DaysLate-thru-2017-03-01\", \"thru_date\": \"2017-03-01\"}, \"State\": {\"url\": \"http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/StateMortgagesPercent-30-89DaysLate-thru-2017-03-01.csv\", \"size\": \"25.0KB\", \"pub_date\": \"2017-08-22\", \"slug\": \"StateMortgagesPercent-30-89DaysLate-thru-2017-03-01\", \"thru_date\": \"2017-03-01\"}}, \"percent_90\": {\"County\": {\"url\": \"http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/CountyMortgagesPercent-90+DaysLate-thru-2017-03-01.csv\", \"thru_date\": \"2017-03-01\", \"pub_date\": \"2017-08-22\", \"slug\": \"CountyMortgagesPercent-90+DaysLate-thru-2017-03-01\", \"size\": \"1.5MB\"}, \"MetroArea\": {\"url\": \"http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/MetroAreaMortgagesPercent-90+DaysLate-thru-2017-03-01.csv\", \"thru_date\": \"2017-03-01\", \"pub_date\": \"2017-08-22\", \"slug\": \"MetroAreaMortgagesPercent-90+DaysLate-thru-2017-03-01\", \"size\": \"182.2KB\"}, \"State\": {\"url\": \"http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/StateMortgagesPercent-90+DaysLate-thru-2017-03-01.csv\", \"thru_date\": \"2017-03-01\", \"pub_date\": \"2017-08-22\", \"slug\": \"StateMortgagesPercent-90+DaysLate-thru-2017-03-01\", \"size\": \"25.0KB\"}}}}"
+    },
+    "model": "data_research.mortgagemetadata",
+    "pk": 7
 }
 ]
