@@ -492,7 +492,10 @@ CSP_SCRIPT_SRC = ("'self'",
                   '*.youtube.com',
                   '*.ytimg.com',
                   'trk.cetrk.com',
-                  'universal.iperceptions.com')
+                  'universal.iperceptions.com',
+                  'sample.crazyegg.com',
+                  'about:'
+                  )
 
 # These specify valid sources of CSS code
 CSP_STYLE_SRC = (
@@ -515,6 +518,7 @@ CSP_IMG_SRC = (
     '*.googletagmanager.com',
     'api.mapbox.com',
     '*.tiles.mapbox.com',
+    'stats.search.usa.gov',
     'data:')
 
 # These specify what URL's we allow to appear in frames/iframes
@@ -533,6 +537,8 @@ CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
 CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
+                   'files.consumerfinance.gov',
+                   's3.amazonaws.com',
                    'api.iperceptions.com')
 
 # Feature flags

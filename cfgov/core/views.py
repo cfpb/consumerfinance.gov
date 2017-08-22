@@ -146,7 +146,7 @@ def csp_violation_report(request):
         message_template = ('{blocked-uri} blocked on {document-uri}, '
                             'violated {violated-directive}')
         message = message_template.format(**csp_dict)
-        logger.warn(message)
+        logger.error(message)
         return HttpResponse()
     return HttpResponseForbidden()
 
