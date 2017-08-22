@@ -58,6 +58,11 @@ LOGGING = {
             'handlers': default_loggers,
             'level': 'INFO',
             'propagate': True,
+        },
+        'core.views': {
+            'handlers': default_loggers,
+            'level': 'INFO',
+            'propagate': True,
         }
     }
 }
