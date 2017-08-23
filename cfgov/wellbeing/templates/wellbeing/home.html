@@ -15,28 +15,35 @@
             background-color: #cce3f5;
         }
         .m-hero_image {
-            background-image: url('/f/images/parents_hero_760x364.original.png');
+            background-image: url( '/f/images/parents_hero_760x364.original.png' );
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                 src='/f/images/parents_hero_760x364.original.png',
-                sizingMethod='scale');
+                sizingMethod='scale'
+            );
             padding-bottom: 41.4893617%;
         }
-        @media screen and (min-width: 37.5625em) {
+        @media screen and ( min-width: 37.5625em ) {
             .m-hero_image {
-                background-image: url('/f/images/parents_hero_760x364.original.png');
+                background-image: url( '/f/images/parents_hero_760x364.original.png' );
                 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='/f/images/parents_hero_760x364.original.png',
-                    sizingMethod='scale');
+                    sizingMethod='scale'
+                );
                 padding-bottom: 41.4893617%
             }
 
             .m-hero__overlay .m-hero_wrapper {
-                background-image: url('/f/images/parents_hero_760x364.original.png');
+                background-image: url( '/f/images/parents_hero_760x364.original.png' );
                 background-size: cover;
                 filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
                     src='/f/images/parents_hero_760x364.original.png',
-                    sizingMethod='scale');
+                    sizingMethod='scale'
+                );
             }
+        }
+        .privacy-notice {
+            padding: 15px;
+            background: #fff0dd;
         }
         .question-group {
             padding: 0 30px 30px 30px;
@@ -102,8 +109,11 @@
 </p>
 
 <p>
-    The financial well-being questionnaire can help. Here’s how to get started:
+    The financial well-being questionnaire can help.
+    <a href="about/">See how and why we developed it</a>
 </p>
+
+<p>Here’s how to get started:</p>
 
 <ul>
     <li>
@@ -118,7 +128,7 @@
     </li>
 </ul>
 
-<p>
+<p class="privacy-notice cf-icon cf-icon-error-round cf-icon__before">
     We never collect or store the answers you provide.
     <a href="/privacy/website-privacy-policy/">
         See how your privacy is protected
@@ -727,6 +737,9 @@
 
         if ( pathname.match( 'index.html' ) ) {
           resultsPagePath = pathname.replace( 'index.html', 'results/?' );
+        } else if ( pathname.match( 'alt' ) ) {
+          /* temporary condition for testing */
+          resultsPagePath = pathname + 'results-alt/?';
         } else {
           resultsPagePath = pathname + 'results/?';
         }

@@ -11,13 +11,19 @@
 {% block css %}
     {{ super() }}
     <style>
+        .save-links {
+            padding-bottom: 15px;
+            border-bottom: 1px solid #b4b5b6;
+            margin: 30px 0;
+            text-align: right;
+        }
         .spectrum {
             padding-top: 70px;
             margin-top: 30px;
             position: relative;
         }
         #score-box {
-            height: 120px; /* .chart's padding-top + height of spectrum image */
+            height: 120px; /* .spectrum's padding-top + height of spectrum image */
             border-color: #101820;
             border-style: dotted;
             position: absolute;
@@ -37,6 +43,7 @@
         }
         .spectrum_label {
             width: 45%;
+            margin-top: 5px;
         }
         .spectrum_label.u-right {
             text-align: right;
@@ -76,6 +83,31 @@
         you are able to answer the questions differently next time.
     </p>
 
+    <ul class="save-links m-list m-list__horizontal">
+        <li class="m-list_item">
+            <a href="#" class="m-list_link
+                               a-link
+                               a-link__icon
+                               cf-icon
+                               cf-icon-print
+                               cf-icon__before">
+                <span class="a-link_text">Print</span>
+            </a>
+        </li>
+        <li class="m-list_item">
+            <a href="#" class="m-list_link
+                               a-link
+                               a-link__icon
+                               cf-icon
+                               cf-icon-download
+                               cf-icon__before">
+                <span class="a-link_text">Save as PDF</span>
+            </a>
+        </li>
+    </ul>
+
+    <h2>Your result</h2>
+
     <figure class="spectrum u-clearfix">
         <img src="{{ static('img/spectrum_1740x100.png') }}"
              alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
@@ -106,7 +138,7 @@
             next time, see the recommendations.
         </p>
 
-        <h3>Stay on track</h3>
+        <h3>Where to stay on track</h3>
         <table>
             <thead>
                 <tr>
@@ -126,7 +158,7 @@
             </tbody>
         </table>
 
-        <h3>Consider action</h3>
+        <h3>Where to consider action</h3>
         <table>
             <thead>
                 <tr>
@@ -154,7 +186,7 @@
             </tbody>
         </table>
 
-        <h3>Take action</h3>
+        <h3>Where to take action</h3>
         <table>
             <thead>
                 <tr>
@@ -195,12 +227,12 @@
                         Locate a financial coach or housing counselor near you.
                     </li>
                     <li>
-                        Get a grip on debt.
+                        <b>Get a grip on debt.</b>
                         Find out how to locate a trustworthy debt counselor,
                         and stay on top of what you owe with our debt log.
                     </li>
                     <li>
-                        Track where your money goes.
+                        <b>Track where your money goes.</b>
                         Fill out the bill calendar and the spending tracker
                         to see your everyday expenses.
                     </li>
@@ -211,16 +243,16 @@
                 <h3>Next steps to get on track for your financial future</h3>
                 <ul>
                     <li>
-                        Look toward home ownership.
+                        <b>Look toward home ownership.</b>
                         Find a housing counselor near you,
                         and consult our Owning a Home tools and resources.
                     </li>
                     <li>
-                        Create an action plan to meet your goals.
+                        <b>Create an action plan to meet your goals.</b>
                         Use our worksheet or goal setting tool.
                     </li>
                     <li>
-                        Consider the right age for claiming Social Security.
+                        <b>Consider the right age for claiming Social Security.</b>
                         Use our Planning for Retirement tool
                         before you make your decision.
                     </li>
@@ -229,6 +261,19 @@
         </div>
 
         <h3>Looking for more help?</h3>
+        <p>
+            You can further explore the tips, tools, answers, and resources
+            in our Consumer Tools section.
+            Or, visit your local library for help finding resources in your area.
+        </p>
+    </div>
+{% endblock %}
+
+{% block content_sidebar %}
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">Looking for more help?</h2>
+        </header>
         <p>
             You can further explore the tips, tools, answers, and resources
             in our Consumer Tools section.

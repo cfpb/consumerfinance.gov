@@ -92,6 +92,9 @@
 
     if ( pathname.match( 'index.html' ) ) {
       resultsPagePath = pathname.replace( 'index.html', 'results/?' );
+    } else if ( pathname.match( 'alt' ) ) {
+      /* temporary condition for testing */
+      resultsPagePath = pathname + 'results-alt/?';
     } else {
       resultsPagePath = pathname + 'results/?';
     }
