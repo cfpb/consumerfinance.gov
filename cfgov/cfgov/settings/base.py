@@ -595,12 +595,6 @@ FLAGS = {
     # and the table will not be sortable until cf-tables from CF 4.x is implemented
     'SORTABLE_TABLES': {},
 
-    # Serve housing counselor JSON and PDFs from S3.
-    # Access e.g. /find-a-housing-counselor/?zipcode=20001&s3=True
-    'HOUSING_COUNSELOR_S3': {
-        'parameter': 's3',
-    },
-
     # The release of the consumer Financial Well Being Scale app
     'FWB_RELEASE': {},
 }
@@ -624,5 +618,3 @@ NTP_TIME_SERVER = 'north-america.pool.ntp.org'
 # If server's clock drifts from NTP by more than specified offset
 # (in seconds), check_clock_drift will fail
 MAX_ALLOWED_TIME_OFFSET = 5
-
-
