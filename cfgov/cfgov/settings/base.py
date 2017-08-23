@@ -153,9 +153,8 @@ TEMPLATES = [
             V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
             PROJECT_ROOT.child('static_built'),
-            PROJECT_ROOT.child('wellbeing').child('templates'),
         ],
-        'APP_DIRS': False,
+        'APP_DIRS': True,
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [

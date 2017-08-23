@@ -33,7 +33,8 @@
             padding-left: 15px;
             border-width: 0 0 0 2px;
         }
-        .score-box__right {
+        .score-box__right,
+        .score-box__avg {
             padding-right: 15px;
             border-width: 0 2px 0 0;
             text-align: right;
@@ -78,6 +79,9 @@
             /* position it below the user's score-box */
             height: 248px;
             top: 30px;
+            /* Default for all adults. Includes -1.875% adjustment to compensate
+               for space between bars. */
+            right: 48.4336%;
         }
         .histogram_bar-labels {
             padding-top: 0.375em;
@@ -109,6 +113,9 @@
         /* CF Enhancements */
         .u-left {
             float: left;
+        }
+        select {
+            line-height: 22px;
         }
     </style>
 {% endblock %}
@@ -164,7 +171,7 @@
              alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
                   Higher scores represent a higher financial well-being."
              height="50">
-        <div class="score-box score-box__left">
+        <div class="score-box score-box__user score-box__left">
             Your score as of today: <b class="score-value"></b>
             <div>
                 <a id="compare-link" href="#compare">
@@ -260,16 +267,27 @@
                 <ul>
                     <li>
                         <b>Get free or low-cost one-on-one help.</b>
-                        Locate a <a href="">financial coach</a> or <a href="">housing counselor</a> near you.
+                        Locate a
+                        <a href="https://www.consumerfinance.gov/f/documents/201708_cfpb_financial-coaching-delivery-sites-list.pdf"
+                           class="a-link
+                                  a-link__icon
+                                  cf-icon
+                                  cf-icon-print
+                                  cf-icon__before">
+                            <span class="a-link_text">financial coach</span>
+                        </a>
+                        or
+                        <a href="https://www.consumerfinance.gov/find-a-housing-counselor/">housing counselor</a>
+                        near you.
                     </li>
                     <li>
                         <b>Get a grip on debt.</b>
-                        Find out how to locate a <a href="">trustworthy debt counselor</a>,
-                        and stay on top of what you owe with our <a href="">debt log</a>.
+                        Find out how to locate a <a href="TKTKTK">trustworthy debt counselor</a>,
+                        and stay on top of what you owe with our <a href="TKTKTK">debt log</a>.
                     </li>
                     <li>
                         <b>Track where your money goes.</b>
-                        Fill out the <a href="">bill calendar</a> and the <a href="">spending tracker</a>
+                        Fill out the <a href="TKTKTK">bill calendar</a> and the <a href="TKTKTK">spending tracker</a>
                         to see your everyday expenses.
                     </li>
                 </ul>
@@ -280,17 +298,40 @@
                 <ul>
                     <li>
                         <b>Look toward home ownership.</b>
-                        Find a <a href="">housing counselor</a> near you,
-                        and consult our <a href="">Owning a Home</a> tools and resources.
+                        Find a
+                        <a href="https://www.consumerfinance.gov/find-a-housing-counselor/">housing counselor</a>
+                        near you, and consult our
+                        <a href="/owning-a-home/">Owning a Home</a>
+                        tools and resources.
                     </li>
                     <li>
                         <b>Create an action plan to meet your goals.</b>
-                        Use our <a href="">worksheet</a> or <a href="">goal setting tool</a>.
+                        Use our
+                        <a href="TKTKTK"
+                           class="a-link
+                                  a-link__icon
+                                  cf-icon
+                                  cf-icon-print
+                                  cf-icon__before">
+                            <span class="a-link_text">worksheet</span>
+                        </a>
+                        or
+                        <a href="https://www.consumerfinance.gov/f/documents/201705_cfpb_MAYG_My-New-Money-Goal.pdf"
+                           class="a-link
+                                  a-link__icon
+                                  cf-icon
+                                  cf-icon-print
+                                  cf-icon__before">
+                            <span class="a-link_text">goal setting tool</span>
+                        </a>.
                     </li>
                     <li>
                         <b>Consider the right age for claiming Social Security.</b>
-                        Use our <a href="">Planning for Retirement</a> tool
-                        before you make your decision.
+                        Use our
+                        <a href="/retirement/before-you-claim/">
+                            Planning for Retirement
+                        </a>
+                        tool before you make your decision.
                     </li>
                 </ul>
             </div>
@@ -327,14 +368,60 @@
 
                 <fieldset class="histogram_select-demographic u-right">
                     <div class="m-form-field m-form-field__select">
-                        <label class="a-label" for="select-demographic">Show scores for</label>
+                        <label class="a-label">Show scores for</label>
                         <div class="a-select">
-                            <select id="select-demographic">
-                                <option value="all-adults">All adults</option>
-                                <option value="18-30">18–30</option>
-                                <option value="31-45">31–45</option>
-                                <option value="46-61">46–61</option>
-                                <option value="62+">62+</option>
+                            <select id="select-age" name="select-age">
+                                <option value="all-adults" data-nicename="all adults">
+                                    All ages
+                                </option>
+                                <option value="18-30" data-nicename="ages 18–30">
+                                    18–30
+                                </option>
+                                <option value="31-45" data-nicename="ages 31–45">
+                                    31–45
+                                </option>
+                                <option value="46-61" data-nicename="ages 46–61">
+                                    46–61
+                                </option>
+                                <option value="62+" data-nicename="ages 62+">
+                                    62+
+                                </option>
+                            </select>
+                            <select id="select-sex" name="select-sex" style="display: none;">
+                                <option value="all-adults" data-nicename="all adults">
+                                    All adults
+                                </option>
+                                <option value="men" data-nicename="men">
+                                    men
+                                </option>
+                                <option value="women" data-nicename="women">
+                                    women
+                                </option>
+                            </select>
+                            <select id="select-income" name="select-income" style="display: none;">
+                                <option value="all-adults" data-nicename="all adults">
+                                    All income levels
+                                </option>
+                                <option value="income-level-1"
+                                        data-nicename="household income $34,999 and lower">
+                                    $34,999 and lower
+                                </option>
+                                <option value="income-level-2"
+                                        data-nicename="household income $35,000–$59,999">
+                                    $35,000–$59,999
+                                </option>
+                                <option value="income-level-3"
+                                        data-nicename="household income $60,000–$99,999">
+                                    $60,000–$99,999
+                                </option>
+                                <option value="income-level-4"
+                                        data-nicename="household income $100,000–$174,999">
+                                    $100,000–$174,999
+                                </option>
+                                <option value="income-level-5"
+                                        data-nicename="household income $175,000 and higher">
+                                    $175,000 and higher
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -346,15 +433,15 @@
             </h3>
 
             <div class="histogram_chart">
-                <div class="score-box">
+                <div class="score-box score-box__user">
                     Your score: <b class="score-value"></b>
                 </div>
 
-                <div class="score-box score-box__avg">
-                    Average score: <b id="score-value__avg"></b>
+                <div class="score-box score-box__avg" id="score-box__avg">
+                    Average score: <b id="score-value__avg">54.25</b>
                 </div>
 
-                <img id="histogram_image__age"
+                <img id="histogram_image"
                      src="{{ static('img/histogram_all-adults_1540x560.png') }}"
                      alt="TKTKTK">
 
@@ -434,10 +521,26 @@
       var min = 14;
       var max = 95;
 
+      var means = {
+        'all-adults': 54,
+        '18-30': 51,
+        '31-45': 52,
+        '46-61': 54,
+        '62+': 60,
+        'men': 54,
+        'women': 54,
+        'income-level-1': 48,
+        'income-level-2': 52,
+        'income-level-3': 56,
+        'income-level-4': 59,
+        'income-level-5': 63
+      };
+
       function populateScores() {
-        var scoreBoxes = document.querySelectorAll( '.score-box' );
+        var scoreBoxes = document.querySelectorAll( '.score-box__user' );
         var scoreBoxLR = 'left';
         var scoreValues = document.querySelectorAll( '.score-value' );
+        // +1.875 is a manual adjustment to compensate for space between bars
         var scorePercentage = ( score - min ) / ( max - min ) * 100 + 1.875;
 
         if ( scorePercentage > 50 ) {
@@ -459,6 +562,67 @@
           el.textContent = score;
         } );
       }
+
+      var radioButtons = document.querySelectorAll( '.histogram_toggle input' );
+      var selectBoxes = document.querySelectorAll(
+        '.histogram_select-demographic select'
+      );
+
+      function switchDemographicSelector( category ) {
+        [].forEach.call( selectBoxes, function( el ) {
+          el.style.display = 'none';
+        } );
+
+        var demographicSelector = document.querySelector( '#select-' + category );
+        demographicSelector.style.display = 'inline-block';
+      }
+
+      function switchHistogram( select ) {
+        if ( select.name ) {
+          // var category = select.id.split( '-' )[1];
+          var grouping = select.value;
+          var nicename = select.options[select.selectedIndex].dataset.nicename;
+          var image = document.querySelector( '#histogram_image' );
+          var filename = '/static/img/histogram_' + grouping + '_1540x560.png';
+          var groupingText = document.querySelector(
+            '#histogram_title_grouping'
+          );
+          var groupingMeanBox = document.querySelector(
+            '#score-box__avg'
+          );
+          var groupingMeanValue = document.querySelector(
+            '#score-value__avg'
+          );
+          // +1.875 is a manual adjustment to compensate for space between bars
+          var groupingMeanPercentage = 100 - ( ( means[grouping] - min ) /
+                                       ( max - min ) * 100 + 1.875 );
+          image.setAttribute( 'src', filename );
+          groupingText.textContent = nicename;
+          groupingMeanValue.textContent = means[grouping];
+          // average score boxes will always be right-aligned
+          groupingMeanBox.style.right = groupingMeanPercentage.toString() + '%';
+        }
+      }
+
+      [].forEach.call( radioButtons, function( el ) {
+        el.addEventListener( 'click', function( event ) {
+          var input = event.target;
+
+          if ( input.name && input.checked ) {
+            var category = input.id.split( '_' )[1];
+            var select = document.querySelector( '#select-' + category );
+            switchDemographicSelector( category );
+            switchHistogram( select );
+          }
+        } );
+      } );
+
+      [].forEach.call( selectBoxes, function( el ) {
+        el.addEventListener( 'change', function( event ) {
+          var select = event.target;
+          switchHistogram( select );
+        } );
+      } );
 
       populateScores();
 
