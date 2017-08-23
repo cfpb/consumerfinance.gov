@@ -37,6 +37,11 @@ class MortgagePerformancePageTests(django.test.TestCase):
             page.get_mortgage_meta()
         )
 
+    def test_page_template(self):
+        self.assertEqual(
+            self.chart_page.template,
+            'browse-basic/index.html')
+
     def test_chart_page_add_js(self):
         test_page = self.chart_page
         test_js = {'template': []}

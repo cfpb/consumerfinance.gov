@@ -208,7 +208,7 @@ class MortgagePerformancePage(BrowsePage):
     and related data visualizations.
     """
     objects = PageManager()
-    template = 'data-research/charts.html'
+    template = 'browse-basic/index.html'
 
     def get_mortgage_meta(self):
         meta_set = MortgageMetaData.objects.all()
