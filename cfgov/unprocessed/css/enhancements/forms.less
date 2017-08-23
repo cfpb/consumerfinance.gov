@@ -470,6 +470,94 @@ legend {
     }
 }
 
+
+/* ==========================================================================
+   Scale questions
+   ========================================================================== */
+
+@scale-point-count: 5;
+@radio-button-diameter: 18px;
+
+.o-scale {
+    .u-clearfix();
+    padding-bottom: unit( 30px / @base-font-size-px, em );
+    position: relative;
+
+    &:before {
+        .respond-to-min( @bp-sm-min, {
+            border-top: 1px solid @gray-40;
+            position: absolute;
+            right: -@grid_gutter-width;
+            bottom: 0;
+            left: -@grid_gutter-width;
+            content: '';
+            z-index: 0;
+        } );
+    }
+
+    &:last-of-type {
+        padding-bottom: 0;
+
+        &:before {
+            border-top: none;
+        }
+    }
+
+    .m-form-field__radio {
+        .respond-to-min( @bp-sm-min, {
+            width: percentage( 1 / @scale-point-count );
+            padding: 0;
+            margin-bottom: 0;
+            float: left;
+            position: relative;
+        } );
+
+        &:before {
+            .respond-to-min( @bp-sm-min, {
+              border-top: 1px solid @gray-80;
+              border-left: none;
+              position: absolute;
+              top: ( @radio-button-diameter / 2 );
+              right: 0;
+              left: 0;
+              content: '';
+              z-index: 0;
+            } );
+        }
+
+        &:last-of-type:before {
+            border-top: none;
+        }
+    }
+
+    .a-label:before,
+    .a-label {
+        .respond-to-min( @bp-sm-min, {
+            display: block;
+        } );
+    }
+
+    .a-label:before {
+        .respond-to-min( @bp-sm-min, {
+            margin-bottom: unit( 3px / @base-font-size-px, em );
+        } );
+    }
+
+    .a-label {
+        .respond-to-min( @bp-sm-min, {
+            position: relative;
+            z-index: 10;
+        } );
+    }
+
+    &_header {
+        .h4();
+
+        margin-top: unit( 30px / @base-font-size-px, em );
+    }
+}
+
+
 /* topdoc
   name: EOF
   eof: true
