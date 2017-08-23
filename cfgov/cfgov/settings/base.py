@@ -75,7 +75,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'reversion',
     'tinymce',
-    'jobmanager'
+    'jobmanager',
+    'wellbeing',
 )
 
 OPTIONAL_APPS = [
