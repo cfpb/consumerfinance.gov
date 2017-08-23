@@ -30,13 +30,12 @@ logger = logging.getLogger(__name__)
     'fips': '09',
     'name': 'Connecticut',
     'abbr': 'CT'}
-
-    """
+"""
 
 
 def update_state_to_geo_meta(geo):
     """
-    Assemble a dictionaries that map state abbreviations to all counties or
+    Assemble dictionaries that map state abbreviations to all counties or
     metro areas in a given state, for use in building chart drop-downs.
 
     Areas are marked `valid: true` or `valid: false` based on whether they meet
