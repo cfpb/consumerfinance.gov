@@ -42,16 +42,19 @@ class TestNoMigrations(TestCase):
 class FormatFileSizeTests(unittest.TestCase):
 
     def test_format_file_size_bytes(self):
-        self.assertEqual(format_file_size(999), '999.0B')
+        self.assertEqual(format_file_size(124), '124.0B')
+
+    def test_format_file_size_one_kilobyte(self):
+        self.assertEqual(format_file_size(1024), '1.0KB')
 
     def test_format_file_size_kilobytes(self):
-        self.assertEqual(format_file_size(9999), '9.8KB')
+        self.assertEqual(format_file_size(1024 * 900.5), '900.5KB')
 
     def test_format_file_size_megabytes(self):
-        self.assertEqual(format_file_size(9999999), '9.5MB')
+        self.assertEqual(format_file_size(1024 * 9000), '8.8MB')
 
     def test_format_file_size_gigabytes(self):
-        self.assertEqual(format_file_size(9999999999), '9.3GB')
+        self.assertEqual(format_file_size(1024 * 9000000), '8.6GB')
 
     def test_format_file_size_terabytes(self):
-        self.assertEqual(format_file_size(9999999999999), '9.1TB')
+        self.assertEqual(format_file_size(1024 * 9000000000), '8.4TB')
