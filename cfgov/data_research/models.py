@@ -195,4 +195,4 @@ class MortgageMetaData(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name_plural = "Mortage metadata"
+        verbose_name_plural = "Mortgage metadata"
