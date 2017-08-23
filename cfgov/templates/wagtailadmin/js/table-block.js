@@ -430,7 +430,9 @@
                 this.saveDataToHiddenField();
             },
 
-            toggleInputTable: function toggleInputTable( inputTable, state = true  ) {
+            toggleInputTable: function toggleInputTable( inputTable, state ) {
+              state = state || true;
+
               if ( state === true ) {
                 inputTable.show();
               } else {
