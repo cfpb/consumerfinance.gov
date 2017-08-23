@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': ['name'],
-                'verbose_name_plural': 'Mortage metadata',
+                'verbose_name_plural': 'Mortgage metadata',
             },
         ),
     ]

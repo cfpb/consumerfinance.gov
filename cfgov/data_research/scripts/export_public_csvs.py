@@ -42,6 +42,7 @@ logger = logging.getLogger(__name__)
 
 
 def format_size(bytecount, suffix='B'):
+    """Convert a byte count into a human-readable file size."""
     for unit in ['', 'K', 'M', 'G']:
         if abs(bytecount) < 1024.0:
             return "%3.1f%s%s" % (bytecount, unit, suffix)
