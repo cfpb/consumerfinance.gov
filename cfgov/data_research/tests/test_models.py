@@ -5,16 +5,57 @@ import unittest
 from model_mommy import mommy
 
 import django.test
+from django.http import HttpRequest
 
 from data_research.models import (
     CountyMortgageData,
     MortgageDataConstant,
     MortgageMetaData,
+    MortgagePerformancePage,
     MSAMortgageData,
     NationalMortgageData,
     StateMortgageData
 )
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+
+
+class MortgagePerformancePageTests(django.test.TestCase):
+
+    fixtures = ['mortgage_metadata.json']
+
+    def setUp(self):
+        from v1.tests.wagtail_pages.helpers import save_new_page
+        page_stub = MortgagePerformancePage(
+            slug='mortgage-chart-page',
+            title='Mortgage Charts')
+        self.chart_page = save_new_page(page_stub).as_page_object()
+
+    def test_chart_page_get_mortgage_meta(self):
+        page = self.chart_page
+        self.assertIn(
+            'sampling_dates',
+            page.get_mortgage_meta()
+        )
+
+    def test_chart_page_add_js(self):
+        test_page = self.chart_page
+        test_js = {'template': []}
+        test_page.add_page_js(test_js)
+        self.assertTrue(
+            'mortgage-performance-trends.js'
+            in test_page.media['template'])
+
+    def test_chart_page_context_30_89(self):
+        test_page = self.chart_page
+        request = HttpRequest()
+        request.url = '/data-research/mortgages-30-89-days-delinquent'
+        self.assertIn('delinquency', test_page.get_context(request))
+
+    def test_chart_page_context_90(self):
+        test_page = self.chart_page
+        request = HttpRequest()
+        request.url = '/data-research/mortgages-90-days-delinquent'
+        self.assertIn('delinquency', test_page.get_context(request))
 
 
 class ModelStringTest(unittest.TestCase):

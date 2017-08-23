@@ -42,8 +42,8 @@ LATE_VALUE_TITLE = {
 logger = logging.getLogger(__name__)
 
 
-def save_metadata(csv_size, slug, thru_date, date_value, geo_type):
-    """Save slug, URL, thru_date and file size of a new CSV download file."""
+def save_metadata(csv_size, slug, thru_month, date_value, geo_type):
+    """Save slug, URL, thru_month and file size of a new CSV download file."""
     pub_date = "{}".format(datetime.date.today())
     csv_url = "{}/{}.csv".format(S3_MORTGAGE_DOWNLOADS_BASE, slug)
     download_meta_file, cr = MortgageMetaData.objects.get_or_create(
@@ -52,20 +52,20 @@ def save_metadata(csv_size, slug, thru_date, date_value, geo_type):
                    {'slug': slug,
                     'url': csv_url,
                     'size': csv_size,
-                    'thru_date': thru_date,
+                    'thru_month': thru_month,
                     'pub_date': pub_date}}
     if not download_meta_file.json_value:
         download_meta_file.json_value = json.dumps(
-            {thru_date: {date_value: new_posting}})
+            {thru_month: {date_value: new_posting}})
     else:
         current = json.loads(download_meta_file.json_value)
-        if thru_date in current:
-            if date_value in current[thru_date]:
-                current[thru_date][date_value].update(new_posting)
+        if thru_month in current:
+            if date_value in current[thru_month]:
+                current[thru_month][date_value].update(new_posting)
             else:
-                current[thru_date].update({date_value: new_posting})
+                current[thru_month].update({date_value: new_posting})
         else:
-            current.update({thru_date: {date_value: new_posting}})
+            current.update({thru_month: {date_value: new_posting}})
         download_meta_file.json_value = json.dumps(current)
     download_meta_file.save()
     logger.info("Saved metadata for {}".format(slug))
@@ -116,6 +116,7 @@ def export_downloadable_csv(geo_type, late_value):
     """
     date_list = FIPS.short_dates
     thru_date = FIPS.dates[-1]
+    thru_month = thru_date[:-3]
     geo_dict = {
         'County': {
             'queryset': BASE_QUERYSET,
@@ -134,7 +135,7 @@ def export_downloadable_csv(geo_type, late_value):
         },
     }
     slug = "{}Mortgages{}DaysLate-thru-{}".format(
-        geo_type, LATE_VALUE_TITLE[late_value], thru_date[:-3])
+        geo_type, LATE_VALUE_TITLE[late_value], thru_month)
     _map = geo_dict.get(geo_type)
     meta = _map['meta']
     csvfile = StringIO()
@@ -157,7 +158,7 @@ def export_downloadable_csv(geo_type, late_value):
     csvfile.seek(0, 2)
     bytecount = csvfile.tell()
     csv_size = format_file_size(bytecount)
-    save_metadata(csv_size, slug, thru_date, late_value, geo_type)
+    save_metadata(csv_size, slug, thru_month, late_value, geo_type)
 
 
 def run(prep_only=False):

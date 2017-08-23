@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 
+from dateutil import parser
+import json
+
 from django.db import models
 
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+from v1.models import BrowsePage, PageManager
 
 
 # Used for registering users for a conference
@@ -196,3 +200,40 @@ class MortgageMetaData(models.Model):
     class Meta:
         ordering = ['name']
         verbose_name_plural = "Mortgage metadata"
+
+
+class MortgagePerformancePage(BrowsePage):
+    """
+    A model for data_research pages about mortgage delinquency
+    and related data visualizations.
+    """
+    objects = PageManager()
+    template = 'data-research/charts.html'
+
+    def get_mortgage_meta(self):
+        meta_set = MortgageMetaData.objects.all()
+        meta = {obj.name: json.loads(obj.json_value) for obj in meta_set}
+        thru_date_string = meta['sampling_dates'][-1]
+        thru_date = parser.parse(thru_date_string)
+        meta['thru_date'] = thru_date.strftime("%Y-%m")
+        meta['thru_date_formatted'] = thru_date.strftime("%B %Y")
+        meta_sample = meta.get(
+            'download_files')[meta['thru_date']]['percent_90']['County']
+        meta['pub_date'] = meta_sample['pub_date']
+        meta['pub_date_formatted'] = parser.parse(
+            meta['pub_date']).strftime("%B %-d, %Y")
+        return meta
+
+    def add_page_js(self, js):
+        super(MortgagePerformancePage, self).add_page_js(js)
+        js['template'] += ['mortgage-performance-trends.js']
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(MortgagePerformancePage, self).get_context(
+            request, *args, **kwargs)
+        context.update(self.get_mortgage_meta())
+        if '30-89' in request.url:
+            context.update({'delinquency': 'percent_30_60'})
+        elif '90' in request.url:
+            context.update({'delinquency': 'percent_90'})
+        return context

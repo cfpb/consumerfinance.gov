@@ -76,20 +76,6 @@ class BrowsePage(CFGOVPage):
 
     objects = PageManager()
 
-    def get_mortgage_meta(self):
-        from data_research.models import MortgageMetaData
-        meta_set = MortgageMetaData.objects.all()
-        meta = {obj.name: json.loads(obj.json_value) for obj in meta_set}
-        meta['thru_date'] = meta['sampling_dates'][-1]
-        meta['thru_date_formatted'] = parser.parse(
-            meta['thru_date']).strftime("%B %-d, %Y")
-        meta_sample = meta.get(
-            'download_files')[meta['thru_date']]['percent_90']['County']
-        meta['pub_date'] = meta_sample['pub_date']
-        meta['pub_date_formatted'] = parser.parse(
-            meta['pub_date']).strftime("%B %-d, %Y")
-        return meta
-
     def add_page_js(self, js):
         super(BrowsePage, self).add_page_js(js)
         js['template'] += ['secondary-navigation.js']
@@ -97,10 +83,4 @@ class BrowsePage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)
         context.update({'get_secondary_nav_items': get_secondary_nav_items})
-        if self.get_parent().slug == 'mortgage-performance-trends':
-            context.update(self.get_mortgage_meta())
-            if '30-89' in request.url:
-                context.update({'delinquency': 'percent_30_60'})
-            elif '90' in request.url:
-                context.update({'delinquency': 'percent_90'})
         return context
