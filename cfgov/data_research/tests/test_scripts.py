@@ -32,7 +32,6 @@ from data_research.scripts.load_mortgage_aggregates import (
     run as run_aggregates)
 from data_research.scripts.export_public_csvs import (
     export_downloadable_csv,
-    format_size,
     round_pct,
     run as run_export,
     save_metadata)
@@ -382,21 +381,6 @@ class UpdateSamplingDatesTest(django.test.TestCase):
 
 class DataScriptTest(unittest.TestCase):
     """Tests for data pipeline automations"""
-
-    def test_format_size_bytes(self):
-        self.assertEqual(format_size(999), '999.0B')
-
-    def test_format_size_kilobytes(self):
-        self.assertEqual(format_size(9999), '9.8KB')
-
-    def test_format_size_megabytes(self):
-        self.assertEqual(format_size(9999999), '9.5MB')
-
-    def test_format_size_gigabytes(self):
-        self.assertEqual(format_size(9999999999), '9.3GB')
-
-    def test_format_size_terabytes(self):
-        self.assertEqual(format_size(9999999999999), '9.1TB')
 
     def test_validate_fips_too_short(self):
         fips_input = '12'

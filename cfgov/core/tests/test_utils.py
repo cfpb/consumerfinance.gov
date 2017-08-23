@@ -1,6 +1,9 @@
+import unittest
+
 from django.test import TestCase
 
-from core.utils import NoMigrations, extract_answers_from_request
+from core.utils import (
+    NoMigrations, extract_answers_from_request, format_file_size)
 
 
 class FakeRequest(object):
@@ -34,3 +37,21 @@ class TestNoMigrations(TestCase):
 
     def test_getitem(self):
         self.assertEqual(self.nomigrations['random-string'], 'nomigrations')
+
+
+class FormatFileSizeTests(unittest.TestCase):
+
+    def test_format_file_size_bytes(self):
+        self.assertEqual(format_file_size(999), '999.0B')
+
+    def test_format_file_size_kilobytes(self):
+        self.assertEqual(format_file_size(9999), '9.8KB')
+
+    def test_format_file_size_megabytes(self):
+        self.assertEqual(format_file_size(9999999), '9.5MB')
+
+    def test_format_file_size_gigabytes(self):
+        self.assertEqual(format_file_size(9999999999), '9.3GB')
+
+    def test_format_file_size_terabytes(self):
+        self.assertEqual(format_file_size(9999999999999), '9.1TB')

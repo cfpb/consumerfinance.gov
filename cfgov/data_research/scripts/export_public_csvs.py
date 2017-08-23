@@ -8,6 +8,7 @@ import logging
 
 import unicodecsv
 
+from core.utils import format_file_size
 from data_research.models import (
     CountyMortgageData,
     MSAMortgageData,
@@ -39,15 +40,6 @@ LATE_VALUE_TITLE = {
 
 
 logger = logging.getLogger(__name__)
-
-
-def format_size(bytecount, suffix='B'):
-    """Convert a byte count into a human-readable file size."""
-    for unit in ['', 'K', 'M', 'G']:
-        if abs(bytecount) < 1024.0:
-            return "%3.1f%s%s" % (bytecount, unit, suffix)
-        bytecount /= 1024.0
-    return "%.1f%s%s" % (bytecount, 'T', suffix)
 
 
 def save_metadata(csv_size, slug, thru_date, date_value, geo_type):
@@ -164,7 +156,7 @@ def export_downloadable_csv(geo_type, late_value):
     logger.info("Baked {} to S3".format(slug))
     csvfile.seek(0, 2)
     bytecount = csvfile.tell()
-    csv_size = format_size(bytecount)
+    csv_size = format_file_size(bytecount)
     save_metadata(csv_size, slug, thru_date, late_value, geo_type)
 
 
