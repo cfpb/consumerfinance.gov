@@ -142,7 +142,7 @@ def export_downloadable_csv(geo_type, late_value):
         },
     }
     slug = "{}Mortgages{}DaysLate-thru-{}".format(
-        geo_type, LATE_VALUE_TITLE[late_value], thru_date)
+        geo_type, LATE_VALUE_TITLE[late_value], thru_date[:-3])
     _map = geo_dict.get(geo_type)
     meta = _map['meta']
     csvfile = StringIO()

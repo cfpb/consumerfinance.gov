@@ -97,10 +97,10 @@ class BrowsePage(CFGOVPage):
     def get_context(self, request, *args, **kwargs):
         context = super(BrowsePage, self).get_context(request, *args, **kwargs)
         context.update({'get_secondary_nav_items': get_secondary_nav_items})
-        if 'data-research/mortgage' in request.url:
+        if self.get_parent().slug == 'mortgage-performance-trends':
             context.update(self.get_mortgage_meta())
-        if '30-89' in request.url:
-            context.update({'delinquency': 'percent_30_60'})
-        elif '90' in request.url:
-            context.update({'delinquency': 'percent_90'})
+            if '30-89' in request.url:
+                context.update({'delinquency': 'percent_30_60'})
+            elif '90' in request.url:
+                context.update({'delinquency': 'percent_90'})
         return context
