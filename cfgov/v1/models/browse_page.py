@@ -1,6 +1,3 @@
-from dateutil import parser
-import json
-
 from django.db import models
 from wagtail.wagtailadmin.edit_handlers import (
     FieldPanel,
