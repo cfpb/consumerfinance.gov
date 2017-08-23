@@ -1,6 +1,5 @@
 git+https://github.com/cfpb/college-costs.git@2.3.7#egg=college-costs
 git+https://github.com/cfpb/complaint.git@1.4.1#egg=complaintdatabase
-git+https://github.com/cfpb/django-hud.git@1.4#egg=django-hud
 git+https://github.com/cfpb/owning-a-home-api.git@0.9.96#egg=owning-a-home-api
 git+https://github.com/cfpb/regulations-core.git@1.2.5#egg=regcore
 git+https://github.com/cfpb/regulations-site.git@2.1.8#egg=regulations
@@ -8,3 +7,4 @@ git+https://github.com/cfpb/retirement.git@0.5.7#egg=retirement
 git+https://github.com/cfpb/ccdb5-api.git@v0.6.0#egg=ccdb5-api
 git+https://github.com/cfpb/ccdb5-ui.git@v0.6.3#egg=ccdb5_ui
 git+https://github.com/cfpb/eregs-2.0.git@0.0.2#egg=eregs
+https://github.com/cfpb/django-hud/releases/download/1.4.3/django_hud-1.4.3-py2-none-any.whl
