@@ -1,7 +1,7 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
 {% block title -%}
-    Find our your financial well-being
+    Find out your financial well-being
 {%- endblock %}
 
 {% block desc -%}
@@ -12,34 +12,15 @@
     {{ super() }}
     <style>
         .m-hero {
-            background-color: #cce3f5;
+            background-color: #b4d2d1;
         }
         .m-hero_image {
-            background-image: url( '/f/images/parents_hero_760x364.original.png' );
+            background-image: url( '{{ static("img/fwb_hero_760x300.png") }}' );
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-                src='/f/images/parents_hero_760x364.original.png',
-                sizingMethod='scale'
+                    src='{{ static("img/fwb_hero_760x300.png") }}',
+                    sizingMethod='scale'
             );
             padding-bottom: 41.4893617%;
-        }
-        @media screen and ( min-width: 37.5625em ) {
-            .m-hero_image {
-                background-image: url( '/f/images/parents_hero_760x364.original.png' );
-                filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-                    src='/f/images/parents_hero_760x364.original.png',
-                    sizingMethod='scale'
-                );
-                padding-bottom: 41.4893617%
-            }
-
-            .m-hero__overlay .m-hero_wrapper {
-                background-image: url( '/f/images/parents_hero_760x364.original.png' );
-                background-size: cover;
-                filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-                    src='/f/images/parents_hero_760x364.original.png',
-                    sizingMethod='scale'
-                );
-            }
         }
         .privacy-notice {
             padding: 15px;
