@@ -18,7 +18,7 @@ if not COLLECTSTATIC:
                 'PASSWORD': os.environ.get('MYSQL_PW', ''),
                 'HOST': os.environ.get('MYSQL_HOST', ''),
                 'PORT': os.environ.get('MYSQL_PORT', ''),
-                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
+                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET default_storage_engine=INNODB') },
             },
             'legacy': {
                 'ENGINE': MYSQL_ENGINE,
@@ -27,7 +27,7 @@ if not COLLECTSTATIC:
                 'PASSWORD': os.environ.get('LEGACY_MYSQL_PW', ''),
                 'HOST': os.environ.get('LEGACY_MYSQL_HOST', ''),
                 'PORT': os.environ.get('LEGACY_MYSQL_PORT', ''),
-                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
+                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET default_storage_engine=INNODB') },
             },
         }
     else:
@@ -39,7 +39,7 @@ if not COLLECTSTATIC:
                 'PASSWORD': os.environ.get('MYSQL_PW', ''),
                 'HOST': os.environ.get('MYSQL_HOST', ''),
                 'PORT': os.environ.get('MYSQL_PORT', ''),
-                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
+                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET default_storage_engine=INNODB') },
                 },
             }
 
