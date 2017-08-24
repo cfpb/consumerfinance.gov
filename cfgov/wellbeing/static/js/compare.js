@@ -12,18 +12,18 @@
   var max = 95;
 
   var means = {
-    'all-adults': 54.25,
-    '18-30': 50.89,
-    '31-45': 51.95,
-    '46-61': 54.13,
-    '62+': 59.86,
-    'men': 54.41,
-    'women': 54.10,
-    'income-level-1': 47.71,
-    'income-level-2': 52.15,
-    'income-level-3': 55.74,
-    'income-level-4': 59.05,
-    'income-level-5': 62.57
+    'all-adults': 54,
+    '18-30': 51,
+    '31-45': 52,
+    '46-61': 54,
+    '62+': 60,
+    'men': 54,
+    'women': 54,
+    'income-level-1': 48,
+    'income-level-2': 52,
+    'income-level-3': 56,
+    'income-level-4': 59,
+    'income-level-5': 63
   };
 
   function populateScores() {

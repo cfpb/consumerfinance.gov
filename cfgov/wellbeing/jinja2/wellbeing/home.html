@@ -54,10 +54,17 @@
             background: #f7f8f9;
         }
         .o-scale {
-            padding-top: 0;
+            padding-top: 30px;
             padding-right: 0;
             padding-left: 0;
             border: none;
+            /*display: block;*/
+        }
+        .o-scale_header {
+            margin-top: 0;
+        }
+        .o-form_fieldset {
+            padding-top: 30px;
         }
         @media only all and ( min-width: 76.9375em ) {
             .answer-prefix {
@@ -140,9 +147,9 @@
         <h2>Part 1: How well does this statement describe your situation?</h2>
         <div class="question-group">
             <fieldset class="o-scale" id="question-1">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                     I could handle a major unexpected expense
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-1-completely" name="question-1" value="4">
@@ -176,9 +183,9 @@
                 </div>
             </fieldset>
             <fieldset class="o-scale" id="question-2">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                     I am securing my financial future
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-2-completely" name="question-2" value="4">
@@ -212,9 +219,9 @@
                 </div>
             </fieldset>
             <fieldset class="o-scale" id="question-3">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                     Because of my money situation, I feel like I will never have the things I want in life
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-3-completely" name="question-3" value="0">
@@ -248,9 +255,9 @@
                 </div>
             </fieldset>
             <fieldset class="o-scale" id="question-4">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                     I can enjoy life because of the way I’m managing my money
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-4-completely" name="question-4" value="4">
@@ -284,9 +291,9 @@
                 </div>
             </fieldset>
             <fieldset class="o-scale" id="question-5">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                     I am just getting by financially
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-5-completely" name="question-5" value="0">
@@ -320,9 +327,9 @@
                 </div>
             </fieldset>
             <fieldset class="o-scale" id="question-6">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                     I am concerned that the money I have or will save won’t last
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement describes me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-6-completely" name="question-6" value="0">
@@ -361,9 +368,9 @@
         <h2>Part 2: How often does this statement apply to you?</h2>
         <div class="question-group">
             <fieldset class="o-scale" id="question-7">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                   Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement applies to me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-7-always" name="question-7" value="0">
@@ -397,9 +404,9 @@
                 </div>
             </fieldset>
             <fieldset class="o-scale" id="question-8">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                   I have money left over at the end of the month
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement applies to me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-8-always" name="question-8" value="4">
@@ -433,9 +440,9 @@
                 </div>
             </fieldset>
             <fieldset class="o-scale" id="question-9">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                   I am behind with my finances
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement applies to me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-9-always" name="question-9" value="0">
@@ -469,9 +476,9 @@
                 </div>
             </fieldset>
             <fieldset class="o-scale" id="question-10">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                   My finances control my life
-                </legend>
+                </h3>
                 <div class="answer-prefix">This statement applies to me</div>
                 <div class="m-form-field m-form-field__radio">
                     <input class="a-radio" type="radio" id="question-10-always" name="question-10" value="0">
@@ -510,9 +517,9 @@
         <h2>About you</h2>
         <div class="question-group">
             <fieldset class="o-form_fieldset">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                     Select your age group. This changes the scoring calculation.
-                </legend>
+                </h3>
                 <ul class="m-list m-list__unstyled content-l">
                     <li class="content-l_col content-l_col-1-2">
                         <div class="m-form-field m-form-field__radio m-form-field__lg-target">
@@ -533,9 +540,9 @@
                 </ul>
             </fieldset>
             <fieldset class="o-form_fieldset">
-                <legend class="o-scale_header">
+                <h3 class="o-scale_header">
                     Select how you completed the questionnaire. This changes the scoring calculation.
-                </legend>
+                </h3>
                 <ul class="m-list m-list__unstyled content-l">
                     <li class="content-l_col content-l_col-1-2">
                         <div class="m-form-field m-form-field__radio m-form-field__lg-target">
@@ -737,7 +744,7 @@
 
         if ( pathname.match( 'index.html' ) ) {
           resultsPagePath = pathname.replace( 'index.html', 'results/?' );
-        } else if ( pathname.match( 'alt' ) ) {
+        } else if ( location.search.slice( 1 ) === 'alt' ) {
           /* temporary condition for testing */
           resultsPagePath = pathname + 'results-alt/?';
         } else {
