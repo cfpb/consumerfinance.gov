@@ -860,7 +860,7 @@ class ChartBlock(blocks.StructBlock):
 
 
 class MortgageChartBlock(blocks.StructBlock):
-    title = blocks.CharBlock(required=True)
+    title = blocks.CharBlock(required=True, classname="title")
     chart_type = blocks.ChoiceBlock(choices=[
         ('line', 'Line'),
         ('map', 'Map'),
