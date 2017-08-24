@@ -8,10 +8,10 @@ urlpatterns = [
     url(r'^time-series/(?P<days_late>[3890-]*)/(?P<fips>\d{2,5})/?$',
         TimeSeriesData.as_view(),
         name='data_research_api_mortgage_timeseries'),
-    url(r'^time-series/national/(?P<days_late>[3890-]*)/?$',
+    url(r'^time-series/(?P<days_late>[3890-]*)/national/?$',
         TimeSeriesNational.as_view(),
         name='data_research_api_mortgage_timeseries_national'),
-    url(r'^map-data/(?P<geo>[a-z]*)/(?P<days_late>[3890-]*)/(?P<year_month>\d{4}-\d{2})/?$',  # noqa: E501
+    url(r'^map-data/(?P<days_late>[3890-]*)/(?P<geo>[a-z]*)/(?P<year_month>\d{4}-\d{2})/?$',  # noqa: E501
         MapData.as_view(),
         name='data_research_api_mortgage_mapdata'),
     url(r'^metadata/(?P<meta_name>[a-z_]*)/?$',
