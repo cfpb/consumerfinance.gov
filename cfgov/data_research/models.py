@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 
+from dateutil import parser
+import json
+
 from django.db import models
 
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+from v1.models import BrowsePage, PageManager
 
 
 # Used for registering users for a conference
@@ -18,7 +22,7 @@ class ConferenceRegistration(models.Model):
 
 
 class MortgageBase(models.Model):
-    """An abstract model base for mortgage data records."""
+    """An abstract model base for mortgage data records and calculations."""
     fips = models.CharField(max_length=6, blank=True, db_index=True)
     date = models.DateField(blank=True, db_index=True)
     total = models.IntegerField(null=True)
@@ -33,15 +37,17 @@ class MortgageBase(models.Model):
         abstract = True
         ordering = ['date']
 
-    @property
-    def time_series(self):
-        return {'date': self.epoch,
-                'pct30': self.percent_30_60,
-                'pct90': self.percent_90}
+    def time_series(self, days_late):
+        if days_late == '30-89':
+            return {'date': self.epoch,
+                    'value': self.percent_30_60}
+        else:
+            return {'date': self.epoch,
+                    'value': self.percent_90}
 
     @property
     def percent_30_60(self):
-        """Returns percentage of loans between 30 and 90 days delinquent."""
+        """Return percentage of loans between 30 and 90 days delinquent."""
         if self.total == 0:
             return 0
         else:
@@ -49,6 +55,7 @@ class MortgageBase(models.Model):
 
     @property
     def percent_90(self):
+        """Return percentage of loans 90-plus days delinquent."""
         if self.total == 0:
             return 0
         else:
@@ -176,3 +183,59 @@ class MortgageDataConstant(models.Model):
 
     class Meta:
         ordering = ['name']
+
+
+class MortgageMetaData(models.Model):
+    """
+    Metadata values, stored as json, to supplement display of mortgage charts.
+    """
+    name = models.CharField(max_length=255)
+    json_value = models.TextField(blank=True)
+    note = models.TextField(blank=True)
+    updated = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return "{}, updated {}".format(self.name, self.updated)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = "Mortgage metadata"
+
+
+class MortgagePerformancePage(BrowsePage):
+    """
+    A model for data_research pages about mortgage delinquency
+    and related data visualizations.
+    """
+    objects = PageManager()
+    template = 'browse-basic/index.html'
+
+    def get_mortgage_meta(self):
+        meta_set = MortgageMetaData.objects.all()
+        meta = {obj.name: json.loads(obj.json_value) for obj in meta_set}
+        thru_date_string = meta['sampling_dates'][-1]
+        thru_date = parser.parse(thru_date_string)
+        meta['thru_month'] = thru_date.strftime("%Y-%m")
+        meta['thru_month_formatted'] = thru_date.strftime("%B %Y")
+        meta_sample = meta.get(
+            'download_files')[meta['thru_month']]['percent_90']['County']
+        meta['pub_date'] = meta_sample['pub_date']
+        meta['pub_date_formatted'] = parser.parse(
+            meta['pub_date']).strftime("%B %-d, %Y")
+        return meta
+
+    def add_page_js(self, js):
+        super(MortgagePerformancePage, self).add_page_js(js)
+        js['template'] += ['mortgage-performance-trends.js']
+
+    def get_context(self, request, *args, **kwargs):
+        context = super(MortgagePerformancePage, self).get_context(
+            request, *args, **kwargs)
+        context.update(self.get_mortgage_meta())
+        if '30-89' in request.url:
+            context.update({'delinquency': 'percent_30_60',
+                            'time_frame': '30'})
+        elif '90' in request.url:
+            context.update({'delinquency': 'percent_90',
+                            'time_frame': '90'})
+        return context

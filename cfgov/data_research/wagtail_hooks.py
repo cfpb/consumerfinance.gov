@@ -3,7 +3,18 @@ from __future__ import unicode_literals
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register)
 
-from data_research.models import MortgageDataConstant
+from data_research.models import MortgageDataConstant, MortgageMetaData
+
+
+class MortgageMetaDataModelAdmin(ModelAdmin):
+    model = MortgageMetaData
+    menu_label = 'Mortgage metadata'
+    menu_icon = 'list-ul'
+    list_display = (
+        'name',
+        'json_value',
+        'note',
+        'updated')
 
 
 class MortgageDataConstantModelAdmin(ModelAdmin):
@@ -21,4 +32,4 @@ class MortgageDataConstantModelAdmin(ModelAdmin):
 class ResearchModelAdminGroup(ModelAdminGroup):
     menu_label = 'Data Research'
     menu_icon = 'list-ul'
-    items = (MortgageDataConstantModelAdmin,)
+    items = (MortgageDataConstantModelAdmin, MortgageMetaDataModelAdmin)
