@@ -877,6 +877,11 @@ class MortgageChartBlock(blocks.StructBlock):
     class Media:
         js = ['mortgage-performance-trends.js']
 
+    def render(self, value, context=None):
+        if self.chart_type == 'map':
+            self.meta.template = '_includes/organisms/mortgage-map.html'
+        super(MortgageChartBlock, self).render(value, context)
+
 
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)

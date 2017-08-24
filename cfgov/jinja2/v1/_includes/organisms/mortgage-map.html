@@ -1,22 +1,20 @@
-
 {# ==========================================================================
 
-   Mortgage Chart
+   Mortgage Map
 
    ==========================================================================
 
    Description:
 
-   Create a mortgage chart organism with data.
-   See [GHE]/flapjack/Modules-V1/wiki/Mortgage-Chart
+   Create a mortgage chart organism using map markup.
+   See [GHE]/flapjack/Modules-V1/wiki/Mortgage-Map
 
    ========================================================================== #}
 {% set csv_meta = download_files[thru_month][delinquency] %}
 {% set county_meta = csv_meta['County'] %}   
 {% set metro_meta = csv_meta['MetroArea'] %}   
 {% set state_meta = csv_meta['State'] %} 
-
-<h1>Chart template: {{ time_frame }} {{ value.chart_type }}</h1>
+<h1>Map template: {{ time_frame }} {{ value.chart_type }}</h1>
 <div style="margin-bottom:0 !important;" id="mp-line-chart-container" data-chart-time-frame="{{ time_frame }}" data-chart-type="{{ value.chart_type }}">
   <form class="content-l" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
     <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">

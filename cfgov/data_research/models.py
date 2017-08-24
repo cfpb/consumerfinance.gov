@@ -215,10 +215,10 @@ class MortgagePerformancePage(BrowsePage):
         meta = {obj.name: json.loads(obj.json_value) for obj in meta_set}
         thru_date_string = meta['sampling_dates'][-1]
         thru_date = parser.parse(thru_date_string)
-        meta['thru_date'] = thru_date.strftime("%Y-%m")
-        meta['thru_date_formatted'] = thru_date.strftime("%B %Y")
+        meta['thru_month'] = thru_date.strftime("%Y-%m")
+        meta['thru_month_formatted'] = thru_date.strftime("%B %Y")
         meta_sample = meta.get(
-            'download_files')[meta['thru_date']]['percent_90']['County']
+            'download_files')[meta['thru_month']]['percent_90']['County']
         meta['pub_date'] = meta_sample['pub_date']
         meta['pub_date_formatted'] = parser.parse(
             meta['pub_date']).strftime("%B %-d, %Y")
@@ -234,8 +234,8 @@ class MortgagePerformancePage(BrowsePage):
         context.update(self.get_mortgage_meta())
         if '30-89' in request.url:
             context.update({'delinquency': 'percent_30_60',
-                            'delinquency_range': '30-89'})
+                            'time_frame': '30'})
         elif '90' in request.url:
             context.update({'delinquency': 'percent_90',
-                            'delinquency_range': '90-plus'})
+                            'time_frame': '90'})
         return context
