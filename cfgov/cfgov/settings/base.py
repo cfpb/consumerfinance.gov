@@ -100,7 +100,7 @@ OPTIONAL_APPS = [
 
 if DEPLOY_ENVIRONMENT == 'build':
     OPTIONAL_APPS += [
-        {'import': 'eregs', 'apps': ('eregs_core',)},
+        {'import': 'eregs_core', 'apps': ('eregs_core',)},
     ]
 
 MIDDLEWARE_CLASSES = (
@@ -561,7 +561,9 @@ FLAGS = {
 
 
     # The next version of eRegulations
-    'EREGS20': {},
+    'EREGS20': {
+        'boolean': DEPLOY_ENVIRONMENT == 'build',
+    },
 
     # Add sortable tables to Wagtail
     # When enabled, the sortable tables option will be added to the Wagtail Admin
