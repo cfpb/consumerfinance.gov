@@ -175,32 +175,6 @@ ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
 DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
 
-if 'collectstatic' in sys.argv:
-    COLLECTSTATIC = True
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'v1',
-        }
-    }
-else:
-    COLLECTSTATIC = False
-    MYSQL_ENGINE = 'django.db.backends.mysql'
-
-    # Database
-    # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-    DATABASES = {
-        'default': {
-            'ENGINE': MYSQL_ENGINE,
-            'NAME': os.environ.get('MYSQL_NAME', 'v1'),
-            'USER': os.environ.get('MYSQL_USER', 'root'),
-            'PASSWORD': os.environ.get('MYSQL_PW', ''),
-            'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
-            'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
-        },
-    }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
