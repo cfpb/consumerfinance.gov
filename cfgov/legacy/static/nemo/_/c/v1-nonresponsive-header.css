@@ -1069,6 +1069,7 @@ p+.m-global-banner_head,ul+.m-global-banner_head,ol+.m-global-banner_head,dl+.m-
     letter-spacing: 1px;
     line-height: 1.25;
     text-transform: uppercase;
+    padding-left: 1.42857143em;
 }
 .lt-ie9 .o-mega-menu .h5 {
     font-weight: normal !important;
