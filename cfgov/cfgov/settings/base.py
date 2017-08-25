@@ -75,7 +75,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'reversion',
     'tinymce',
-    'jobmanager'
+    'jobmanager',
+    'wellbeing',
 )
 
 OPTIONAL_APPS = [
@@ -152,9 +153,9 @@ TEMPLATES = [
             V1_TEMPLATE_ROOT,
             V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
-            PROJECT_ROOT.child('static_built')
+            PROJECT_ROOT.child('static_built'),
         ],
-        'APP_DIRS': False,
+        'APP_DIRS': True,
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
@@ -173,32 +174,6 @@ WSGI_APPLICATION = 'cfgov.wsgi.application'
 ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
 DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
-
-if 'collectstatic' in sys.argv:
-    COLLECTSTATIC = True
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'v1',
-        }
-    }
-else:
-    COLLECTSTATIC = False
-    MYSQL_ENGINE = 'django.db.backends.mysql'
-
-    # Database
-    # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-    DATABASES = {
-        'default': {
-            'ENGINE': MYSQL_ENGINE,
-            'NAME': os.environ.get('MYSQL_NAME', 'v1'),
-            'USER': os.environ.get('MYSQL_USER', 'root'),
-            'PASSWORD': os.environ.get('MYSQL_PW', ''),
-            'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
-            'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
-        },
-    }
 
 
 # Internationalization
@@ -593,6 +568,9 @@ FLAGS = {
     # The template will render for the front-end, but the sortable code is missing
     # and the table will not be sortable until cf-tables from CF 4.x is implemented
     'SORTABLE_TABLES': {},
+
+    # The release of the consumer Financial Well Being Scale app
+    'FWB_RELEASE': {},
 }
 
 
@@ -614,5 +592,3 @@ NTP_TIME_SERVER = 'north-america.pool.ntp.org'
 # If server's clock drifts from NTP by more than specified offset
 # (in seconds), check_clock_drift will fail
 MAX_ALLOWED_TIME_OFFSET = 5
-
-

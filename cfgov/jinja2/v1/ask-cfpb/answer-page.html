@@ -152,7 +152,7 @@
                 <ul class="m-list m-list__unstyled m-list__links">
                     {% for question in related_questions %}
                     <li class="m-list_item">
-                        <a href="{{ slugurl(question.slug) }}" class="m-list_link">
+                        <a href="{{ question.english_page.url }}" class="m-list_link">
                             {{ question.question | safe }}
                         </a>
                     </li>

@@ -85,7 +85,7 @@ module.exports = {
     ]
   },
   images: {
-    src:  paths.unprocessed + '/img/**',
+    src:  [ paths.unprocessed + '/img/**', './cfgov/wellbeing/static/img/**' ],
     dest: paths.processed + '/img'
   },
   copy: {

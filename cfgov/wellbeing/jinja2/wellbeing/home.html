@@ -1,0 +1,774 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    Find out your financial well-being
+{%- endblock %}
+
+{% block desc -%}
+    Answer ten questions to measure your own current financial well-being and see steps you can take to improve it.
+{%- endblock %}
+
+{% block css -%}
+    {{ super() }}
+    <style>
+        .m-hero {
+            background-color: #b4d2d1;
+        }
+        .m-hero_image {
+            background-image: url( '{{ static("img/fwb_hero_760x300.png") }}' );
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+                    src='{{ static("img/fwb_hero_760x300.png") }}',
+                    sizingMethod='scale'
+            );
+            padding-bottom: 31.915%;
+        }
+        .privacy-notice {
+            padding: 15px;
+            background: #fff0dd;
+        }
+        .question-group {
+            padding: 0 30px 30px 30px;
+            border: solid #b4b5b6;
+            border-width: 1px 0 1px 1px;
+            margin-right: -30px;
+            margin-left: -30px;
+            background: #f7f8f9;
+        }
+        .o-scale {
+            padding-top: 30px;
+            padding-right: 0;
+            padding-left: 0;
+            border: none;
+            /*display: block;*/
+        }
+        .o-scale_header {
+            margin-top: 0;
+        }
+        .o-form_fieldset {
+            padding-top: 30px;
+        }
+        @media only all and ( min-width: 76.9375em ) {
+            .answer-prefix {
+                width: 110px;
+                margin-bottom: 15px;
+                margin-right: 15px;
+                float: left;
+            }
+            .o-scale .m-form-field__radio {
+                width: 16.6666666667%;
+            }
+        }
+    </style>
+{%- endblock %}
+
+{% block hero -%}
+
+<section class="m-hero
+                block
+                block__flush-top
+                block__flush-bottom">
+    <div class="m-hero_wrapper wrapper">
+        <div class="m-hero_text">
+            <h1 class="m-hero_heading">Questionnaire: Find out your financial well-being</h1>
+            <div class="m-hero_subhead">
+                <p>
+                    Answer ten questions to measure your current financial
+                    well-being and see steps you can take to improve it.
+                </p>
+            </div>
+        </div>
+        <div class="m-hero_image-wrapper">
+            <div class="m-hero_image"></div>
+        </div>
+    </div>
+</section>
+
+{%- endblock %}
+
+{% block content_main -%}
+
+<h2>Using the financial well-being questionnaire</h2>
+
+<p>
+    If you’re like most people, you want to take better control of your
+    financial life. But it can be challenging to know where to start, and
+    even more difficult to see whether the actions you take are really
+    making a difference.
+</p>
+
+<p>
+    The financial well-being questionnaire can help.
+    <a href="about/">See how and why we developed it</a>
+</p>
+
+<p>Here’s how to get started:</p>
+
+<ul>
+    <li>
+        Answer the questions and get your score
+    </li>
+    <li>
+        See how your score compares to other U.S. adults from our national survey
+    </li>
+    <li>
+        Review steps you can take if you want to be able to
+        answer the questions differently next time
+    </li>
+</ul>
+
+<p class="privacy-notice cf-icon cf-icon-error-round cf-icon__before">
+    We never collect or store the answers you provide.
+    <a href="/privacy/website-privacy-policy/">
+        See how your privacy is protected
+    </a>
+</p>
+
+<form id="quiz-form" action="results.html">
+    <div class="block">
+        <h2>Part 1: How well does this statement describe your situation?</h2>
+        <div class="question-group">
+            <fieldset class="o-scale" id="question-1">
+                <h3 class="o-scale_header">
+                    I could handle a major unexpected expense
+                </h3>
+                <div class="answer-prefix">This statement describes me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-1-completely" name="question-1" value="4">
+                    <label class="a-label" for="question-1-completely">
+                        Completely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-1-very-well" name="question-1" value="3">
+                    <label class="a-label" for="question-1-very-well">
+                        Very well
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-1-somewhat" name="question-1" value="2">
+                    <label class="a-label" for="question-1-somewhat">
+                        Somewhat
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-1-very-little" name="question-1" value="1">
+                    <label class="a-label" for="question-1-very-little">
+                        Very little
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-1-not-at-all" name="question-1" value="0">
+                    <label class="a-label" for="question-1-not-at-all">
+                        Not at all
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="o-scale" id="question-2">
+                <h3 class="o-scale_header">
+                    I am securing my financial future
+                </h3>
+                <div class="answer-prefix">This statement describes me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-2-completely" name="question-2" value="4">
+                    <label class="a-label" for="question-2-completely">
+                        Completely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-2-very-well" name="question-2" value="3">
+                    <label class="a-label" for="question-2-very-well">
+                        Very well
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-2-somewhat" name="question-2" value="2">
+                    <label class="a-label" for="question-2-somewhat">
+                        Somewhat
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-2-very-little" name="question-2" value="1">
+                    <label class="a-label" for="question-2-very-little">
+                        Very little
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-2-not-at-all" name="question-2" value="0">
+                    <label class="a-label" for="question-2-not-at-all">
+                        Not at all
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="o-scale" id="question-3">
+                <h3 class="o-scale_header">
+                    Because of my money situation, I feel like I will never have the things I want in life
+                </h3>
+                <div class="answer-prefix">This statement describes me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-3-completely" name="question-3" value="0">
+                    <label class="a-label" for="question-3-completely">
+                        Completely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-3-very-well" name="question-3" value="1">
+                    <label class="a-label" for="question-3-very-well">
+                        Very well
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-3-somewhat" name="question-3" value="2">
+                    <label class="a-label" for="question-3-somewhat">
+                        Somewhat
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-3-very-little" name="question-3" value="3">
+                    <label class="a-label" for="question-3-very-little">
+                        Very little
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-3-not-at-all" name="question-3" value="4">
+                    <label class="a-label" for="question-3-not-at-all">
+                        Not at all
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="o-scale" id="question-4">
+                <h3 class="o-scale_header">
+                    I can enjoy life because of the way I’m managing my money
+                </h3>
+                <div class="answer-prefix">This statement describes me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-4-completely" name="question-4" value="4">
+                    <label class="a-label" for="question-4-completely">
+                        Completely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-4-very-well" name="question-4" value="3">
+                    <label class="a-label" for="question-4-very-well">
+                        Very well
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-4-somewhat" name="question-4" value="2">
+                    <label class="a-label" for="question-4-somewhat">
+                        Somewhat
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-4-very-little" name="question-4" value="1">
+                    <label class="a-label" for="question-4-very-little">
+                        Very little
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-4-not-at-all" name="question-4" value="0">
+                    <label class="a-label" for="question-4-not-at-all">
+                        Not at all
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="o-scale" id="question-5">
+                <h3 class="o-scale_header">
+                    I am just getting by financially
+                </h3>
+                <div class="answer-prefix">This statement describes me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-5-completely" name="question-5" value="0">
+                    <label class="a-label" for="question-5-completely">
+                        Completely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-5-very-well" name="question-5" value="1">
+                    <label class="a-label" for="question-5-very-well">
+                        Very well
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-5-somewhat" name="question-5" value="2">
+                    <label class="a-label" for="question-5-somewhat">
+                        Somewhat
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-5-very-little" name="question-5" value="3">
+                    <label class="a-label" for="question-5-very-little">
+                        Very little
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-5-not-at-all" name="question-5" value="4">
+                    <label class="a-label" for="question-5-not-at-all">
+                        Not at all
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="o-scale" id="question-6">
+                <h3 class="o-scale_header">
+                    I am concerned that the money I have or will save won’t last
+                </h3>
+                <div class="answer-prefix">This statement describes me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-6-completely" name="question-6" value="0">
+                    <label class="a-label" for="question-6-completely">
+                        Completely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-6-very-well" name="question-6" value="1">
+                    <label class="a-label" for="question-6-very-well">
+                        Very well
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-6-somewhat" name="question-6" value="2">
+                    <label class="a-label" for="question-6-somewhat">
+                        Somewhat
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-6-very-little" name="question-6" value="3">
+                    <label class="a-label" for="question-6-very-little">
+                        Very little
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-6-not-at-all" name="question-6" value="4">
+                    <label class="a-label" for="question-6-not-at-all">
+                        Not at all
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="block">
+        <h2>Part 2: How often does this statement apply to you?</h2>
+        <div class="question-group">
+            <fieldset class="o-scale" id="question-7">
+                <h3 class="o-scale_header">
+                  Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month
+                </h3>
+                <div class="answer-prefix">This statement applies to me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-7-always" name="question-7" value="0">
+                    <label class="a-label" for="question-7-always">
+                        Always
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-7-often" name="question-7" value="1">
+                    <label class="a-label" for="question-7-often">
+                        Often
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-7-sometimes" name="question-7" value="2">
+                    <label class="a-label" for="question-7-sometimes">
+                        Sometimes
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-7-rarely" name="question-7" value="3">
+                    <label class="a-label" for="question-7-rarely">
+                        Rarely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-7-never" name="question-7" value="4">
+                    <label class="a-label" for="question-7-never">
+                        Never
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="o-scale" id="question-8">
+                <h3 class="o-scale_header">
+                  I have money left over at the end of the month
+                </h3>
+                <div class="answer-prefix">This statement applies to me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-8-always" name="question-8" value="4">
+                    <label class="a-label" for="question-8-always">
+                        Always
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-8-often" name="question-8" value="3">
+                    <label class="a-label" for="question-8-often">
+                        Often
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-8-sometimes" name="question-8" value="2">
+                    <label class="a-label" for="question-8-sometimes">
+                        Sometimes
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-8-rarely" name="question-8" value="1">
+                    <label class="a-label" for="question-8-rarely">
+                        Rarely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-8-never" name="question-8" value="0">
+                    <label class="a-label" for="question-8-never">
+                        Never
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="o-scale" id="question-9">
+                <h3 class="o-scale_header">
+                  I am behind with my finances
+                </h3>
+                <div class="answer-prefix">This statement applies to me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-9-always" name="question-9" value="0">
+                    <label class="a-label" for="question-9-always">
+                        Always
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-9-often" name="question-9" value="1">
+                    <label class="a-label" for="question-9-often">
+                        Often
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-9-sometimes" name="question-9" value="2">
+                    <label class="a-label" for="question-9-sometimes">
+                        Sometimes
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-9-rarely" name="question-9" value="3">
+                    <label class="a-label" for="question-9-rarely">
+                        Rarely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-9-never" name="question-9" value="4">
+                    <label class="a-label" for="question-9-never">
+                        Never
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="o-scale" id="question-10">
+                <h3 class="o-scale_header">
+                  My finances control my life
+                </h3>
+                <div class="answer-prefix">This statement applies to me</div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-10-always" name="question-10" value="0">
+                    <label class="a-label" for="question-10-always">
+                        Always
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-10-often" name="question-10" value="1">
+                    <label class="a-label" for="question-10-often">
+                        Often
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-10-sometimes" name="question-10" value="2">
+                    <label class="a-label" for="question-10-sometimes">
+                        Sometimes
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-10-rarely" name="question-10" value="3">
+                    <label class="a-label" for="question-10-rarely">
+                        Rarely
+                    </label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" type="radio" id="question-10-never" name="question-10" value="4">
+                    <label class="a-label" for="question-10-never">
+                        Never
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="block u-mb30">
+        <h2>About you</h2>
+        <div class="question-group">
+            <fieldset class="o-form_fieldset">
+                <h3 class="o-scale_header">
+                    Select your age group. This changes the scoring calculation.
+                </h3>
+                <ul class="m-list m-list__unstyled content-l">
+                    <li class="content-l_col content-l_col-1-2">
+                        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                            <input class="a-radio" type="radio" name="age" id="age-18-61" value="18-61">
+                            <label class="a-label" for="age-18-61">
+                                18–61
+                            </label>
+                        </div>
+                    </li>
+                    <li class="content-l_col content-l_col-1-2">
+                        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                            <input class="a-radio" type="radio" name="age" id="age-62-plus" value="62-plus">
+                            <label class="a-label" for="age-62-plus">
+                                62+
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset class="o-form_fieldset">
+                <h3 class="o-scale_header">
+                    Select how you completed the questionnaire. This changes the scoring calculation.
+                </h3>
+                <ul class="m-list m-list__unstyled content-l">
+                    <li class="content-l_col content-l_col-1-2">
+                        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                            <input class="a-radio" type="radio" name="method" id="read-self" value="read-self" checked>
+                            <label class="a-label" for="read-self">
+                                I read and answered the questions myself
+                            </label>
+                        </div>
+                    </li>
+                    <li class="content-l_col content-l_col-1-2">
+                        <div class="m-form-field m-form-field__radio m-form-field__lg-target">
+                            <input class="a-radio" type="radio" name="method" id="read-to-me" value="read-to-me">
+                            <label class="a-label" for="read-to-me">
+                                I read the questions to someone else and recorded their answers
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+        </div>
+    </div>
+    <div class="o-form_group">
+        <input id="submit-quiz" class="a-btn a-btn__disabled" type="submit" title="Please answer all questions to get your score" value="Get my score">
+    </div>
+</form>
+
+{%- endblock %}
+
+{% block content_sidebar -%}
+
+<div class="block block__flush-top">
+    <h3>About us</h3>
+    <p>
+        We're the Consumer Financial Protection Bureau (CFPB),
+        a U.S. government agency that makes sure banks, lenders,
+        and other financial companies treat you fairly.
+    </p>
+    <a class="a-link a-link__jump" href="/about-us/the-bureau/">
+        <span class="a-link_text">Learn how the CFPB can help you</span>
+    </a>
+</div>
+
+<div class="block">
+    <header class="m-slug-header">
+        <h2 class="a-heading">Latest blog posts</h2>
+    </header>
+    <div class="m-related-posts_list-container">
+        <ul class="m-related-posts_list
+               m-list
+               m-list__unstyled
+               m-list__spaced">
+            <li class="m-list_item">
+                <h3 class="h4 u-mb5">
+                    <a class="m-list_link"
+                       href="/about-us/blog/weve-issued-new-rule-arbitration-help-groups-people-take-companies-court/">
+                        We’ve issued a new rule on arbitration to help
+                        groups of people take companies to court
+                    </a>
+                </h3>
+                <p class="a-date">
+                    <span class="datetime">
+                        <time class="datetime_date" datetime="2017-07-10T00:00:00.000000">
+                            JUL 10, 2017
+                        </time>
+                    </span>
+                </p>
+            </li>
+            <li class="m-list_item">
+                <h3 class="h4 u-mb5">
+                    <a class="m-list_link"
+                       href="/about-us/blog/cfpb-proposes-prohibiting-mandatory-arbitration-clauses-deny-groups-consumers-their-day-court/">
+                        CFPB proposes prohibiting mandatory arbitration clauses
+                        that deny groups of consumers their day in court
+                    </a>
+                </h3>
+                <p class="a-date">
+                    <span class="datetime">
+                        <time class="datetime_date" datetime="2016-05-05T00:00:00.000000">
+                            MAY 05, 2016
+                        </time>
+                    </span>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="block">
+    <header class="m-slug-header">
+        <h2 class="a-heading">About this questionnaire</h2>
+    </header>
+    <p>
+        CFPB researchers developed the questionnaire and a way to score it,
+        to measure how well your current money situation is providing you
+        with security and freedom of choice, today and for the future.
+    </p>
+    <a class="a-link a-link__jump" href="about/">
+        <span class="a-link_text">See more background</span>
+    </a>
+</div>
+
+{%- endblock %}
+
+{% block javascript %}
+    {{ super() }}
+
+    <script>
+    /* eslint no-global-assign: "off" */
+    'use strict';
+
+    ( function() {
+
+      function serialize(form){if(!form||form.nodeName!=="FORM"){return }var i,j,q=[];for(i=form.elements.length-1;i>=0;i=i-1){if(form.elements[i].name===""){continue}switch(form.elements[i].nodeName){case"INPUT":switch(form.elements[i].type){case"text":case"hidden":case"password":case"button":case"reset":case"submit":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"checkbox":case"radio":if(form.elements[i].checked){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value))}break;case"file":break}break;case"TEXTAREA":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"SELECT":switch(form.elements[i].type){case"select-one":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break;case"select-multiple":for(j=form.elements[i].options.length-1;j>=0;j=j-1){if(form.elements[i].options[j].selected){q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].options[j].value))}}break}break;case"BUTTON":switch(form.elements[i].type){case"reset":case"submit":case"button":q.push(form.elements[i].name+"="+encodeURIComponent(form.elements[i].value));break}break}}return q.join("&")};
+
+      if ( !document.querySelector( '#submit-quiz' ) ) return;
+
+      var scoring = {
+        'read-self': {
+          '18-61': [
+            14, 19, 22, 25, 27, 29, 31, 32, 34, 35, 37, 38, 40, 41, 42, 44, 45, 46,
+            47, 49, 50, 51, 52, 54, 55, 56, 58, 59, 60, 62, 63, 65, 66, 68, 69, 71,
+            73, 75, 78, 81, 86
+          ],
+          '62-plus': [
+            14, 20, 24, 26, 29, 31, 33, 35, 36, 38, 39, 41, 42, 44, 45, 46, 48, 49,
+            50, 52, 53, 54, 56, 57, 58, 60, 61, 63, 64, 66, 67, 69, 71, 73, 75, 77,
+            79, 82, 84, 88, 95
+          ]
+        },
+        'read-to-me': {
+          '18-61': [
+            16, 21, 24, 27, 29, 31, 33, 34, 36, 38, 39, 40, 42, 43, 44, 45, 47, 48,
+            49, 50, 52, 53, 54, 55, 57, 58, 59, 60, 62, 63, 65, 66, 68, 70, 71, 73,
+            76, 78, 81, 85, 91
+          ],
+          '62-plus': [
+            18, 23, 26, 28, 30, 32, 33, 35, 36, 38, 39, 40, 41, 43, 44, 45, 46, 47,
+            48, 49, 50, 52, 53, 54, 55, 56, 57, 58, 60, 61, 62, 64, 65, 67, 68, 70,
+            72, 75, 77, 81, 87
+          ]
+        }
+      };
+
+      var totalQuestions = 12;
+      var quizComplete = false;
+      var questionValues = {};
+
+      function allQuestionsCompleted() {
+        return Object.keys( questionValues ).length === totalQuestions;
+      }
+
+      function enableSubmit() {
+        var submitInput = document.querySelector( '#submit-quiz' );
+        submitInput.title = 'Get your score';
+        var className = 'a-btn__disabled';
+        if ( submitInput.classList ) {
+          submitInput.classList.remove( className );
+        } else {
+          submitInput.className = submitInput.className
+                                             .replace( new RegExp( '(^|\\b)' +
+                                className.split( ' ' )
+                                         .join( '|' ) + '(\\b|$)', 'gi' ), ' ' );
+        }
+      }
+
+      // thanks jQuery
+      function checkOnBack( el ) {
+        handleInput( el );
+      }
+
+      function handleInput( input ) {
+        if ( input.name && input.checked ) {
+          questionValues[input.name] = input.value;
+        }
+
+        quizComplete = allQuestionsCompleted();
+
+        if ( quizComplete ) {
+          enableSubmit();
+        }
+      }
+
+    // $( document ).ready( function() {
+      var submitInput = document.querySelector( '#submit-quiz' );
+      submitInput.addEventListener( 'click', function( event ) {
+        if ( !quizComplete ) {
+          return event.preventDefault();
+        }
+        return null;
+      } );
+    // } );
+
+      var quizForm = document.querySelector( '#quiz-form' );
+      quizForm.addEventListener( 'submit', function( event ) {
+        event.preventDefault();
+        var formValues = {};
+        var pathname = window.location.pathname;
+        var resultsPagePath = '';
+
+        if ( pathname.match( 'index.html' ) ) {
+          resultsPagePath = pathname.replace( 'index.html', 'results/?' );
+        } else if ( location.search.slice( 1 ) === 'alt' ) {
+          /* temporary condition for testing */
+          resultsPagePath = pathname + 'results-alt/?';
+        } else {
+          resultsPagePath = pathname + 'results/?';
+        }
+
+        var serializedForm = serialize( quizForm );
+        serializedForm.split( '&' ).forEach( function( v ) {
+          var keyval = v.split( '=' );
+          formValues[keyval[0]] = keyval[1];
+        } );
+
+        window.location = resultsPagePath +
+          scoring[formValues.method][formValues.age][
+            Object.keys( formValues ).filter( function( key ) {
+              return key.indexOf( 'quest' ) === 0;
+            } ).reduce( function( a, b ) {
+              return a + Number( formValues[b] );
+            }, 0 )
+          ];
+      } );
+
+      var inputs = document.querySelectorAll( '.content_main input' );
+      [].forEach.call( inputs, function( el ) {
+        el.addEventListener( 'click', function( event ) {
+          var input = event.target;
+
+          if ( input.name && input.checked ) {
+            questionValues[input.name] = input.value;
+          }
+
+          quizComplete = allQuestionsCompleted();
+
+          if ( quizComplete ) {
+            enableSubmit();
+          }
+        } );
+      } );
+      inputs.forEach( function( input ) {
+        checkOnBack( input );
+      } );
+
+    } )();
+
+    </script>
+{% endblock %}
