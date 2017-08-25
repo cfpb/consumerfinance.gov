@@ -345,7 +345,7 @@ class RedirectAskSearchTestCase(django.test.TestCase):
         request.GET = QueryDict(category_querystring)
         result = redirect_ask_search(request)
         self.assertEqual(result.get('location'),
-                         '/ask-cfpb/category-my_category')
+                         '/ask-cfpb/category-my_category/')
 
     def test_redirect_search_with_audience(self):
         audience_querystring = (
@@ -356,7 +356,7 @@ class RedirectAskSearchTestCase(django.test.TestCase):
         result = redirect_ask_search(request)
         self.assertEqual(
             result.get('location'),
-            '/ask-cfpb/audience-older-americans')
+            '/ask-cfpb/audience-older-americans/')
 
     def test_spanish_redirect_search_with_tag(self):
         target_tag = 'spanishtag1'
