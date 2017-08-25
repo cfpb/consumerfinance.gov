@@ -207,6 +207,7 @@ class MortgagePerformancePage(BrowsePage):
     A model for data_research pages about mortgage delinquency
     and related data visualizations.
     """
+
     objects = PageManager()
     template = 'browse-basic/index.html'
 
@@ -223,10 +224,6 @@ class MortgagePerformancePage(BrowsePage):
         meta['pub_date_formatted'] = parser.parse(
             meta['pub_date']).strftime("%B %-d, %Y")
         return meta
-
-    def add_page_js(self, js):
-        super(MortgagePerformancePage, self).add_page_js(js)
-        js['template'] += ['mortgage-performance-trends.js']
 
     def get_context(self, request, *args, **kwargs):
         context = super(MortgagePerformancePage, self).get_context(
