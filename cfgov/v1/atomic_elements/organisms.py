@@ -899,6 +899,11 @@ class SnippetList(blocks.StructBlock):
         ],
         required=True
     )
+    show_thumbnails = blocks.BooleanBlock(
+        required=False,
+        help_text='If selected, each snippet in the list will include a 150px-'
+                  'wide image from the snippet\'s thumbnail field.'
+    )
     actions = blocks.ListBlock(blocks.StructBlock([
         ('link_label', blocks.CharBlock(
             help_text='E.g., "Download" or "Order free prints"'
@@ -910,7 +915,7 @@ class SnippetList(blocks.StructBlock):
                     getattr(m, 'snippet_list_field_choices', [])
                 ) for m in get_snippet_models()
             ],
-            help_text='Corresponds to the available fields for the selected'
+            help_text='Corresponds to the available fields for the selected '
                       'snippet type.'
         )),
     ]))
