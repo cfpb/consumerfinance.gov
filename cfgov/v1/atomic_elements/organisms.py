@@ -859,6 +859,30 @@ class ChartBlock(blocks.StructBlock):
         js = ['chart.js']
 
 
+class MortgageChartBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=True, classname="title")
+    chart_type = blocks.ChoiceBlock(choices=[
+        ('line', 'Line'),
+        ('map', 'Map'),
+    ], required=True)
+    description = blocks.CharBlock(
+        required=False,
+        help_text='Chart summary for visually impaired users.')
+
+    class Meta:
+        label = 'Mortgage Chart Block'
+        icon = 'image'
+        template = '_includes/organisms/mortgage-chart.html'
+
+    class Media:
+        js = ['mortgage-performance-trends.js']
+
+    def render(self, value, context=None):
+        if self.chart_type == 'map':
+            self.meta.template = '_includes/organisms/mortgage-map.html'
+        super(MortgageChartBlock, self).render(value, context)
+
+
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
