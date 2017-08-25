@@ -58,10 +58,13 @@
         }
         .histogram_toggle,
         .histogram_select-demographic {
-            width: 45%;
             padding: 0;
             border: none;
             margin: 0;
+        }
+        .histogram_select-demographic {
+            width: 30%;
+            margin-left: 30px;
         }
         .histogram_title {
             margin-top: 30px;
@@ -188,74 +191,97 @@
     </figure>
 
     <div class="block">
-        <h2>Review your answers</h2>
         <p>
             We calculated your score based on the answers to
             the financial well-being questionnaire.
             If you’d like to be able to answer the questions differently
-            next time, see the recommendations.
+            next time, see our suggestions and next steps.
         </p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Your answer</th>
-                    <th>Suggestion</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>I could handle a major unexpected expense</td>
-                    <td>Somewhat</td>
-                    <td>Consider action</td>
-                </tr>
-                <tr>
-                    <td>I am securing my financial future</td>
-                    <td>Very little</td>
-                    <td>Take action</td>
-                </tr>
-                <tr>
-                    <td>Because of my money situation, I feel like I will never have the things I want in life</td>
-                    <td>Somewhat</td>
-                    <td>Consider action</td>
-                </tr>
-                <tr>
-                    <td>I can enjoy life because of the way I’m managing my money</td>
-                    <td>Somewhat</td>
-                    <td>Consider action</td>
-                </tr>
-                <tr>
-                    <td>I am just getting by financially</td>
-                    <td>Completely</td>
-                    <td>Take action</td>
-                </tr>
-                <tr>
-                    <td>I am concerned that the money I have or will save won’t last</td>
-                    <td>Not at all</td>
-                    <td>Stay on track</td>
-                </tr>
-                <tr>
-                    <td>Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month</td>
-                    <td>Never</td>
-                    <td>Stay on track</td>
-                </tr>
-                <tr>
-                    <td>I have money left over at the end of the month</td>
-                    <td>Rarely</td>
-                    <td>Take action</td>
-                </tr>
-                <tr>
-                    <td>I am behind with my finances</td>
-                    <td>Sometimes</td>
-                    <td>Consider action</td>
-                </tr>
-                <tr>
-                    <td>My finances control my life</td>
-                    <td>Always</td>
-                    <td>Take action</td>
-                </tr>
-            </tbody>
-        </table>
+
+        <div class="o-expandable">
+            <button class="o-expandable_target">
+                <div class="o-expandable_header">
+                    <span class="o-expandable_header-left o-expandable_label">
+                        Review your answers
+                    </span>
+                    <span class="o-expandable_header-right o-expandable_link">
+                        <span class="o-expandable_cue o-expandable_cue-open">
+                            Show
+                            <span class="cf-icon cf-icon-plus-round"></span>
+                        </span>
+                        <span class="o-expandable_cue o-expandable_cue-close">
+                            Hide
+                            <span class="cf-icon cf-icon-minus-round"></span>
+                        </span>
+                    </span>
+                </div>
+            </button>
+            <div class="o-expandable_content">
+                <div class="o-expandable_content-animated">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Your answer</th>
+                                <th>Suggestion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>I could handle a major unexpected expense</td>
+                                <td>Somewhat</td>
+                                <td>Consider action</td>
+                            </tr>
+                            <tr>
+                                <td>I am securing my financial future</td>
+                                <td>Very little</td>
+                                <td>Take action</td>
+                            </tr>
+                            <tr>
+                                <td>Because of my money situation, I feel like I will never have the things I want in life</td>
+                                <td>Somewhat</td>
+                                <td>Consider action</td>
+                            </tr>
+                            <tr>
+                                <td>I can enjoy life because of the way I’m managing my money</td>
+                                <td>Somewhat</td>
+                                <td>Consider action</td>
+                            </tr>
+                            <tr>
+                                <td>I am just getting by financially</td>
+                                <td>Completely</td>
+                                <td>Take action</td>
+                            </tr>
+                            <tr>
+                                <td>I am concerned that the money I have or will save won’t last</td>
+                                <td>Not at all</td>
+                                <td>Stay on track</td>
+                            </tr>
+                            <tr>
+                                <td>Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month</td>
+                                <td>Never</td>
+                                <td>Stay on track</td>
+                            </tr>
+                            <tr>
+                                <td>I have money left over at the end of the month</td>
+                                <td>Rarely</td>
+                                <td>Take action</td>
+                            </tr>
+                            <tr>
+                                <td>I am behind with my finances</td>
+                                <td>Sometimes</td>
+                                <td>Consider action</td>
+                            </tr>
+                            <tr>
+                                <td>My finances control my life</td>
+                                <td>Always</td>
+                                <td>Take action</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="block">
@@ -366,7 +392,7 @@
                     </div>
                 </fieldset>
 
-                <fieldset class="histogram_select-demographic u-right">
+                <fieldset class="histogram_select-demographic u-left">
                     <div class="m-form-field m-form-field__select">
                         <label class="a-label">Show scores for</label>
                         <div class="a-select">
