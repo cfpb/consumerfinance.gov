@@ -20,7 +20,7 @@
                 <ul class="ac-catnav-list unstyled spaced">
                     {% for a in cat.featured_answers() %}
                      <li>
-                        <a href="{{ slugurl( a.slug_es ) }}">{{ a.question_es|safe }}</a>
+                        <a href="{{ a.spanish_page.url }}">{{ a.question_es|safe }}</a>
                      </li>
                     {% endfor %}
                 </ul>
