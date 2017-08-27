@@ -34,7 +34,7 @@
                     {% if questions %}
                     {% for question in questions %}
                     {% if question.question_es %}
-                    <a href=" {{ slugurl( question.slug_es ) }} " class="ac-qa-summary">
+                    <a href="/es/obtener-respuestas/{{ question.slug_es }} " class="ac-qa-summary">
 						<article>
 						    <h3 class="ac-qa-question">{{ question.question_es|safe }}</h3>
 						    <div class="ac-qa-answer">
