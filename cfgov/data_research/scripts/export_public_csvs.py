@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import datetime
 from dateutil import parser
 from cStringIO import StringIO
-import json
 import logging
 
 import unicodecsv
@@ -42,7 +41,7 @@ LATE_VALUE_TITLE = {
 logger = logging.getLogger(__name__)
 
 
-def save_metadata(csv_size, slug, thru_month, date_value, geo_type):
+def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
     """Save slug, URL, thru_month and file size of a new CSV download file."""
     pub_date = "{}".format(datetime.date.today())
     csv_url = "{}/{}.csv".format(S3_MORTGAGE_DOWNLOADS_BASE, slug)
@@ -55,18 +54,17 @@ def save_metadata(csv_size, slug, thru_month, date_value, geo_type):
                     'thru_month': thru_month,
                     'pub_date': pub_date}}
     if not download_meta_file.json_value:
-        download_meta_file.json_value = json.dumps(
-            {thru_month: {date_value: new_posting}})
+        download_meta_file.json_value = {thru_month: {days_late: new_posting}}
     else:
-        current = json.loads(download_meta_file.json_value)
+        current = download_meta_file.json_value
         if thru_month in current:
-            if date_value in current[thru_month]:
-                current[thru_month][date_value].update(new_posting)
+            if days_late in current[thru_month]:
+                current[thru_month][days_late].update(new_posting)
             else:
-                current[thru_month].update({date_value: new_posting})
+                current[thru_month].update({days_late: new_posting})
         else:
-            current.update({thru_month: {date_value: new_posting}})
-        download_meta_file.json_value = json.dumps(current)
+            current.update({thru_month: {days_late: new_posting}})
+        download_meta_file.json_value = current
     download_meta_file.save()
     logger.info("Saved metadata for {}".format(slug))
 

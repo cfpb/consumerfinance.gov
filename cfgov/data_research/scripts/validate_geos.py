@@ -11,6 +11,7 @@ from data_research.mortgage_utilities.fips_meta import (
 from data_research.models import (
     CountyMortgageData,
     MSAMortgageData,
+    NonMSAMortgageData,
     StateMortgageData)
 
 logger = logging.getLogger(__name__)
@@ -24,15 +25,13 @@ def validate_geo(geo, fips, year, count):
     """
     # from data_research.models import (
     #     CountyMortgageData, MSAMortgageData, StateMortgageData)
-    qsets = {
-        'county': CountyMortgageData.objects.filter(
-            date__year=year, fips=fips),
-        'msa': MSAMortgageData.objects.filter(
-            date__year=year, fips=fips),
-        'state': StateMortgageData.objects.filter(
-            date__year=year, fips=fips)
+    data_objects = {
+        'county': CountyMortgageData,
+        'msa': MSAMortgageData,
+        'state': StateMortgageData,
+        'non_msa': NonMSAMortgageData
     }
-    records = qsets[geo]
+    records = data_objects[geo].objects.filter(date__year=year, fips=fips)
     msum = sum([record.total for record in records if record.total])
     if records.count() != 0:
         avg = round((msum * 1.0) / records.count())
@@ -60,23 +59,48 @@ def update_valid_geos():
     load_fips_meta()  # this loads the FIPS metadata object
     county_list = []
     msa_list = []
+    non_msa_list = []
     state_list = []
     for fips in FIPS.county_fips:
         if validate_geo(
-                'county', fips, FIPS.threshold_year, FIPS.threshold_count):
+                'county',
+                fips,
+                FIPS.threshold_year,
+                FIPS.threshold_count):
             county_list.append(fips)
     for fips in FIPS.msa_fips:
         if validate_geo(
-                'msa', fips, FIPS.threshold_year, FIPS.threshold_count):
+                'msa',
+                fips,
+                FIPS.threshold_year,
+                FIPS.threshold_count):
             msa_list.append(fips)
     for fips in FIPS.state_fips:
         if validate_geo(
-                'state', fips, FIPS.threshold_year, FIPS.threshold_count):
+                'state',
+                fips,
+                FIPS.threshold_year,
+                FIPS.threshold_count):
             state_list.append(fips)
-    final_list = sorted(county_list) + sorted(msa_list) + sorted(state_list)
+    for fips in FIPS.state_fips:
+        if validate_geo(
+                'non_msa',
+                '{}-non'.format(fips),
+                FIPS.threshold_year,
+                FIPS.threshold_count):
+            non_msa_list.append('{}-non'.format(fips))
+    final_list = (
+        sorted(county_list)
+        + sorted(msa_list)
+        + sorted(state_list)
+        + sorted(non_msa_list))
     with open('{}/fips_whitelist.json'.format(FIPS_DATA_PATH), 'wb') as f:
         f.write(json.dumps(final_list))
-    for cls in (CountyMortgageData, MSAMortgageData, StateMortgageData):
+    for cls in (
+            CountyMortgageData,
+            MSAMortgageData,
+            NonMSAMortgageData,
+            StateMortgageData):
         for record in cls.objects.filter(fips__in=final_list):
             record.valid = True
             if cls != CountyMortgageData:
@@ -85,13 +109,16 @@ def update_valid_geos():
                 record.save()
     pct_values = {
         'counties': round(len(county_list) * 100 / len(FIPS.county_fips)),
-        'msas': round(len(msa_list) * 100 / len(FIPS.msa_fips))}
+        'msas': round(len(msa_list) * 100 / len(FIPS.msa_fips)),
+        'non_msas': round(len(non_msa_list) * 100 / len(FIPS.state_fips))
+    }
     message = (
-        "In {}, {} percent of counties and {} percent of MSAs met our "
-        "mortgage-count threshold for visualizations.".format(
+        "In {}, {} percent of counties, {} percent of MSAs, and {} percent of "
+        "non-MSAs met our mortgage-count threshold for visualizations.".format(
             FIPS.threshold_year,
             pct_values['counties'],
-            pct_values['msas']))
+            pct_values['msas'],
+            pct_values['non_msas']))
     logger.info(message)
 
 

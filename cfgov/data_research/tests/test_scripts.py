@@ -2,13 +2,12 @@ from __future__ import unicode_literals
 
 import datetime
 from dateutil import parser
-import json
 import mock
 from mock import mock_open, patch
 import StringIO
 import unittest
 
-import django.test
+import django
 from model_mommy import mommy
 import unicodecsv
 
@@ -28,6 +27,7 @@ from data_research.scripts.load_mortgage_performance_csv import (
 from data_research.scripts.load_mortgage_aggregates import (
     load_msa_values,
     load_national_values,
+    load_non_msa_state_values,
     load_state_values,
     run as run_aggregates)
 from data_research.scripts.export_public_csvs import (
@@ -50,7 +50,7 @@ class ValidateGeoTest(django.test.TestCase):
 
 class DataLoadIntegrityTest(django.test.TestCase):
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
 
@@ -113,13 +113,40 @@ class DataLoadIntegrityTest(django.test.TestCase):
 class AggregateLoadTest(django.test.TestCase):
     """Tests aggregate loading function"""
 
-    fixtures = ['mortgage_constants.json']
+    def setUp(self):
+
+        mommy.make(
+            CountyMortgageData,
+            current=1250,
+            date=datetime.date(2016, 9, 1),
+            fips='12081',
+            id=1,
+            ninety=100,
+            other=100,
+            sixty=100,
+            thirty=100,
+            total=1650)
+
+        mommy.make(
+            CountyMortgageData,
+            current=1250,
+            date=datetime.date(2016, 9, 1),
+            fips='12082',
+            id=1,
+            ninety=100,
+            other=100,
+            sixty=100,
+            thirty=100,
+            total=1650)
+
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     @mock.patch('data_research.scripts.'
                 'load_mortgage_aggregates.load_fips_meta')
     def test_load_msa_values(self, mock_load_meta):
         from data_research.scripts.load_mortgage_aggregates import (
-            FIPS, MSAMortgageData, load_msa_values)
+            FIPS, MSAMortgageData)
+        FIPS.created = 0
         FIPS.msa_fips = {
             '45300':
             {'msa': 'Tampa-St. Petersburg-Clearwater, FL',
@@ -127,11 +154,34 @@ class AggregateLoadTest(django.test.TestCase):
         date = "2016-09-01"
         load_msa_values(date)
         self.assertEqual(MSAMortgageData.objects.count(), 1)
+        self.assertEqual(FIPS.created, 1)
+
+    @mock.patch('data_research.models.load_fips_meta')
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_aggregates.load_fips_meta')
+    def test_load_non_msa_state_values(self, mock_load_meta, mock_model_meta):
+        from data_research.scripts.load_mortgage_aggregates import (
+            FIPS, NonMSAMortgageData)
+        FIPS.state_fips = {'12': {'abbr': 'FL',
+                                  'non_msa_counties': ['12081', '12082']}}
+        FIPS.created = 0
+        FIPS.updated = 0
+        date = "2016-09-01"
+        load_non_msa_state_values(date)
+        self.assertEqual(NonMSAMortgageData.objects.count(), 1)
+        self.assertEqual(FIPS.created, 1)
+        self.assertEqual(
+            NonMSAMortgageData.objects.first().fips,
+            '12-non')
+        FIPS.state_fips = {'12': {'abbr': 'FL',
+                                  'non_msa_counties': []}}
+        load_non_msa_state_values(date)
+        self.assertEqual(FIPS.updated, 1)
 
 
 class MergeTheDadesTest(django.test.TestCase):
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
 
@@ -186,7 +236,7 @@ class MergeTheDadesTest(django.test.TestCase):
 class DataExportTest(django.test.TestCase):
     """Tests exporting functions"""
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
 
@@ -252,7 +302,7 @@ class DataExportTest(django.test.TestCase):
 class RunExportTest(django.test.TestCase):
     """Tests the export runner."""
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     @mock.patch(
         'data_research.scripts.export_public_csvs.export_downloadable_csv')
@@ -264,7 +314,7 @@ class RunExportTest(django.test.TestCase):
 class DataLoadTest(django.test.TestCase):
     """Tests loading functions."""
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
 
@@ -352,7 +402,7 @@ class DataLoadTest(django.test.TestCase):
 
 class UpdateSamplingDatesTest(django.test.TestCase):
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
 
@@ -379,8 +429,10 @@ class UpdateSamplingDatesTest(django.test.TestCase):
             '["2008-01-01"]')
 
 
-class DataScriptTest(unittest.TestCase):
+class DataScriptTest(django.test.TestCase):
     """Tests for data pipeline automations"""
+
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def test_validate_fips_too_short(self):
         fips_input = '12'
@@ -416,6 +468,8 @@ class DataScriptTest(unittest.TestCase):
             fips_input, keep_outdated=True), '02201')
 
     @mock.patch('data_research.scripts.'
+                'load_mortgage_aggregates.load_non_msa_state_values')
+    @mock.patch('data_research.scripts.'
                 'load_mortgage_aggregates.load_fips_meta')
     @mock.patch('data_research.scripts.'
                 'load_mortgage_aggregates.load_msa_values')
@@ -424,7 +478,7 @@ class DataScriptTest(unittest.TestCase):
     @mock.patch('data_research.scripts.'
                 'load_mortgage_aggregates.load_national_values')
     def test_run_aggregates(self, mock_load_national, mock_load_states,
-                            mock_load_msas, mock_load_fips):
+                            mock_load_msas, mock_load_fips, mock_load_non_msa):
         from data_research.scripts.load_mortgage_aggregates import FIPS
         FIPS.dates = ['2016-09-01']
         run_aggregates()
@@ -464,8 +518,9 @@ class SaveMetadataTests(django.test.TestCase):
         self.assertEqual(
             MortgageMetaData.objects.filter(name='download_files').count(), 1)
         save_metadata(9999, 'slug2', '2017-02-01', 'percent_90', 'County')
+        save_metadata(9999, 'slug3', '2017-02-01', 'percent_30_60', 'County')
         updated_meta = MortgageMetaData.objects.get(name='download_files')
-        data = json.loads(updated_meta.json_value)
+        data = updated_meta.json_value
         self.assertEqual(len(data), 2)
 
 
@@ -476,9 +531,21 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
     def setUp(self):
         self.states = {
             '10':
-            {'AP': 'Del.', 'fips': '10', 'name': 'Delaware', 'abbr': 'DE'},
+            {'AP': 'Del.',
+             'fips': '10',
+             'name': 'Delaware',
+             'msa_counties': [],
+             'non_msa_counties': [],
+             'msas': [],
+             'abbr': 'DE'},
             '15':
-            {'AP': 'Hawaii', 'fips': '15', 'name': 'Hawaii', 'abbr': 'HI'}
+            {'AP': 'Hawaii',
+             'fips': '15',
+             'name': 'Hawaii',
+             'msa_counties': ['15007'],
+             'non_msa_counties': ['155005'],
+             'msas': [],
+             'abbr': 'HI'}
         }
         self.msas = {
             "27980": {
@@ -523,9 +590,22 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
         self.assertTrue(
             MortgageMetaData.objects.filter(name='state_msa_meta').exists())
         self.assertEqual(mock_bake_s3.call_count, 1)
-        test_json = json.loads(
-            MortgageMetaData.objects.get(name='state_msa_meta').json_value)
+        test_json = MortgageMetaData.objects.get(
+            name='state_msa_meta').json_value
         self.assertEqual(len(test_json), 2)
+
+    @mock.patch('data_research.scripts.'
+                'update_county_msa_meta.bake_json_to_s3')
+    @mock.patch('data_research.scripts.'
+                'update_county_msa_meta.FIPS')
+    def test_update_non_msa_meta(self, mock_FIPS, mock_bake_s3):
+        mock_FIPS = self.load_fips(mock_FIPS)
+        self.assertFalse(
+            MortgageMetaData.objects.filter(name='state_msa_meta').exists())
+        update_state_to_geo_meta('non_msa')
+        self.assertTrue(
+            MortgageMetaData.objects.filter(name='state_msa_meta').exists())
+        self.assertEqual(mock_bake_s3.call_count, 1)
 
     @mock.patch('data_research.scripts.'
                 'update_county_msa_meta.bake_json_to_s3')
@@ -537,12 +617,17 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
             MortgageMetaData.objects.filter(name='state_county_meta').exists())
         update_state_to_geo_meta('county')
         self.assertEqual(mock_bake_s3.call_count, 1)
-        test_json = json.loads(
-            MortgageMetaData.objects.get(name='state_county_meta').json_value)
+        test_json = MortgageMetaData.objects.get(
+            name='state_county_meta').json_value
         self.assertEqual(len(test_json), 2)
+
+
+class UpdateStateMsaDropdownTests(django.test.TestCase):
+
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     @mock.patch('data_research.scripts.'
                 'update_county_msa_meta.update_state_to_geo_meta')
     def test_run_rebuild(self, mock_update):
         run_update()
-        self.assertEqual(mock_update.call_count, 2)
+        self.assertEqual(mock_update.call_count, 3)
