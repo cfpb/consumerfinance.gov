@@ -49,7 +49,7 @@
                     <h4 class="supplement-title">Preguntas similares</h4>
                     <ul class="unstyled spaced nav-list">
                 {% endif %}
-                    <li><a href="{{ slugurl(a.slug_es) }}">{{ a.question_es|safe }}</a></li>
+                    <li><a href="{{ a.spanish_page.url }}">{{ a.question_es|safe }}</a></li>
                 {% if loop.last %}
                     </ul>
                     </aside>
