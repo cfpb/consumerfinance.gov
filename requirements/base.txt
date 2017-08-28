@@ -29,6 +29,7 @@ govdelivery==1.0
 html5lib==0.9999999
 icalendar==3.9.0
 Jinja2==2.7.3
+jsonfield==2.0.2
 jsonschema==2.0.0
 lxml==3.6.0
 ntplib==0.3.3

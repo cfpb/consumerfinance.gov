@@ -6,6 +6,7 @@ import mock
 from mock import mock_open, patch
 from model_mommy import mommy
 
+from data_research.mortgage_utilities.fips_meta import load_constants
 from data_research.scripts.validate_geos import (
     update_valid_geos,
     validate_geo,
@@ -18,6 +19,14 @@ from data_research.models import (
 )
 
 
+class LoadConstantsTest(django.test.TestCase):
+
+    @mock.patch('data_research.mortgage_utilities.fips_meta.FIPS')
+    def test_constants_no_models(self, mock_FIPS):
+        load_constants()
+        self.assertEqual(mock_FIPS.starting_year, 2008)
+
+
 class MortgageMetaTests(django.test.TestCase):
     """
     Make sure our validator finds counties, metros and states that meet
@@ -25,7 +34,7 @@ class MortgageMetaTests(django.test.TestCase):
     """
     #  constants are consulted to set thresholds.
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
         mommy.make(
@@ -124,7 +133,8 @@ class MortgageMetaTests(django.test.TestCase):
             update_valid_geos()
         self.assertEqual(m.call_count, 1)
         self.assertEqual(mock_load_fips_meta.call_count, 1)
-        self.assertEqual(mock_validate_geo.call_count, 3)
+        # validate_geo should be called for county, metro, non-metro and state
+        self.assertEqual(mock_validate_geo.call_count, 4)
         self.assertIs(
             CountyMortgageData.objects.get(fips='12081').valid,
             True)
