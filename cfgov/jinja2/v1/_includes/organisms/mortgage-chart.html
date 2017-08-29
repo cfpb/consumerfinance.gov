@@ -16,8 +16,7 @@
 {% set metro_meta = csv_meta['MetroArea'] %}   
 {% set state_meta = csv_meta['State'] %} 
 
-<h1>Chart template: {{ time_frame }} {{ value.chart_type }}</h1>
-<div style="margin-bottom:0 !important;" id="mp-line-chart-container" data-chart-time-frame="{{ time_frame }}" data-chart-type="{{ value.chart_type }}">
+<div style="margin-bottom:0 !important;" id="mp-line-chart-container" data-chart-time-frame="{{ time_frame }}" data-chart-type="line">
   <form class="content-l" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
     <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
       <label class="a-label u-mb20" for="test_select"><strong>Select location type</strong></label>

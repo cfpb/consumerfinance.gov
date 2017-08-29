@@ -42,14 +42,6 @@ class MortgagePerformancePageTests(django.test.TestCase):
             self.chart_page.template,
             'browse-basic/index.html')
 
-    def test_chart_page_add_js(self):
-        test_page = self.chart_page
-        test_js = {'template': []}
-        test_page.add_page_js(test_js)
-        self.assertTrue(
-            'mortgage-performance-trends.js'
-            in test_page.media['template'])
-
     def test_chart_page_context_30_89(self):
         test_page = self.chart_page
         request = HttpRequest()
