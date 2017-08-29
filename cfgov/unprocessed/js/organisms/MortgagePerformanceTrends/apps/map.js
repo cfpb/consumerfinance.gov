@@ -27,7 +27,7 @@ function MortgagePerformanceMap( { container } ) {
   this.$mapTitle = document.querySelector( '#mp-map-title-status' );
   this.$mapTitleDate = document.querySelector( '#mp-map-title-date' );
   this.$loadingSpinner = document.querySelector( '#mp-map-loading' );
-  this.timespan = this.$container.getAttribute('data-chart-time-span');
+  this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
   this.chart = ccb.createChart( {
     el: this.$container.querySelector( '#mp-map' ),
     source: `map-data/${ this.timespan }/states/2009-01`,
@@ -98,7 +98,7 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       action = actions.clearGeo();
   }
 
-  store.dispatch( action );
+  return store.dispatch( action );
 
 };
 
@@ -139,7 +139,7 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
   utils.hideEl( this.$loadingSpinner );
   // If counties aren't being loaded and the geo type hasn't changed, nothing to do here.
   if ( !state.isLoadingCounties && prevState.geo.type === state.geo.type ) {
-    return;
+    return false;
   }
   var geoType;
   if ( state.isLoadingCounties ) {
@@ -158,7 +158,7 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
   if ( !state.geo.type ) {
     return this.chart.highchart.chart.zoomOut();
   }
-  utils.showEl( geo );
+  return utils.showEl( geo );
 };
 
 MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state ) {

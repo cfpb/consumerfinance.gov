@@ -42,17 +42,6 @@ actions.updateNational = includeNational => {
   return action;
 };
 
-// actions.updateMap = ( geoId, geoName ) => {
-//   return dispatch => {
-//     dispatch( actions.zoomMap( geoId, geoName ) );
-//     type: 'UPDATE_CHART',
-//     geo: {
-//       id: geoId,
-//       name: geoName
-//     }
-//   }
-// };
-
 actions.updateDate = date => ( {
   type: 'UPDATE_DATE',
   date: date
@@ -80,6 +69,7 @@ actions.fetchMetros = metroState => dispatch => {
     dispatch( actions.setMetros( newMetros ) );
     dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );
     dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro' ) );
+    return newMetros;
   } );
 };
 
@@ -95,6 +85,7 @@ actions.fetchCounties = ( countyState, includeNational ) => dispatch => {
     dispatch( actions.setCounties( newCounties ) );
     dispatch( actions.setGeo( newCounties[0].fips, newCounties[0].county, 'county' ) );
     dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].county, 'county', includeNational ) );
+    return newCounties;
   } );
 };
 

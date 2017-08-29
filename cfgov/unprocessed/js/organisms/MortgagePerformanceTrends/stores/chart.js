@@ -6,9 +6,9 @@ const updateGeo = ( geo, action ) => {
   switch ( action.type ) {
     case 'CLEAR_GEO':
       return {
-        type: undefined,
-        id: undefined,
-        name: undefined
+        type: null,
+        id: null,
+        name: null
       };
     case 'SET_GEO':
     case 'UPDATE_CHART':

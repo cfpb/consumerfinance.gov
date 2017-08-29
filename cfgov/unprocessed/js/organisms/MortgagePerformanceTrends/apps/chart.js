@@ -112,11 +112,12 @@ MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state 
 
   // If no geo is provided, default to national data
   if ( !state.geo.id || !state.geo.type ) {
-    return this.chart.update( {
+    this.chart.update( {
       source: baseSource
     } ).then( () => {
       store.dispatch( actions.stopLoading() );
     } );
+    return;
   }
 
   // Otherwise, load the geo and optionally national data

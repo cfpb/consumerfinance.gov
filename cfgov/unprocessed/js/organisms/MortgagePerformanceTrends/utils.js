@@ -20,7 +20,7 @@ var utils = {
     if ( counties ) {
       return cb( null, counties );
     }
-    ajax( { url: COUNTIES_URL }, function( resp ) {
+    return ajax( { url: COUNTIES_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
       counties = data;
       cb( null, data );
@@ -30,14 +30,14 @@ var utils = {
     if ( metros ) {
       return cb( null, metros );
     }
-    ajax( { url: METROS_URL }, function( resp ) {
+    return ajax( { url: METROS_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
       metros = data;
       cb( null, data );
     } );
   },
   getDate: dateString => {
-    var dates = dateString.split('-');
+    var dates = dateString.split( '-' );
     var months = [
       'January',
       'February',
@@ -52,35 +52,31 @@ var utils = {
       'November',
       'December'
     ];
-    return `${months[parseInt(dates[1], 10)-1]}, ${dates[0]}`;
+    return `${ months[parseInt( dates[1], 10 ) - 1] }, ${ dates[0] }`;
   },
-  thunkMiddleware: store => {
-    return next => action => {
-      if (typeof action === 'function') {
-        return action( store.dispatch, store.getState );
-      }
+  thunkMiddleware: store => next => action => {
+    if ( typeof action === 'function' ) {
+      return action( store.dispatch, store.getState );
+    }
+    return next( action );
+  },
+  loggerMiddleware: store => next => action => {
+    if ( !window.MP_DEBUG ) {
       return next( action );
-    };
-  },
-  loggerMiddleware: store => {
-    return next => action => {
-      if (!window.MP_DEBUG) {
-        return next(action);
-      }
-      console.groupCollapsed(action.type);
-      console.group('action:');
-      console.log(JSON.stringify(action, '', '\t'));
-      console.groupEnd();
-      console.groupCollapsed('previous state:');
-      console.log(JSON.stringify(store.getState(), '', '\t'));
-      console.groupEnd();
-      var result = next( action );
-      console.groupCollapsed('state:');
-      console.log(JSON.stringify(store.getState(), '', '\t'));
-      console.groupEnd();
-      console.groupEnd();
-      return result;
-    };
+    }
+    console.groupCollapsed( action.type );
+    console.group( 'action:' );
+    console.log( JSON.stringify( action, '', '\t' ) );
+    console.groupEnd();
+    console.groupCollapsed( 'previous state:' );
+    console.log( JSON.stringify( store.getState(), '', '\t' ) );
+    console.groupEnd();
+    var result = next( action ); // eslint-disable-line
+    console.groupCollapsed( 'state:' );
+    console.log( JSON.stringify( store.getState(), '', '\t' ) );
+    console.groupEnd();
+    console.groupEnd();
+    return result;
   }
 };
 
