@@ -169,9 +169,8 @@ class MapData(APIView):
             payload = {'meta': {'fips_type': geo_dict[geo]['fips_type'],
                                 'date': '{}'.format(date)},
                        'data': {}}
-            data_series = nat_records.time_series(days_late)
-            data_series.update({'name': 'United States'})
-            payload['data'].update(data_series)
+            nat_data_series.update({'name': 'United States'})
+            payload['data'].update(nat_data_series)
         else:
             records = geo_dict[geo]['queryset']
             fips_meta = geo_dict[geo]['fips_meta']
