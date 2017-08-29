@@ -111,7 +111,14 @@ if __name__ == '__main__':
             issue.create_comment(body=body)
         else:
             # New issue, post to github
-            issue = repo.create_issue(title=title, body=body)
+            issue = repo.create_issue(
+                title=title,
+                body=body,
+                labels=[
+                    'Maintenance and Response',
+                    'alert'
+                ],
+            )
             # AND post to chat, if credentials provided
             if args.mattermost_webhook_url and args.mattermost_username:
                 post_to_chat(
