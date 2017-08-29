@@ -286,6 +286,15 @@ reg_comment = {
     }
 }
 
+snippet_list = {
+    "type": "snippet_list",
+    "value": {
+        "heading": "Test Snippet List",
+        "snippet_type": "v1.models.snippets.Resource",
+        "show_thumbnails": True,
+    }
+}
+
 table_block = {
     'type': 'table_block',
     'value': {
