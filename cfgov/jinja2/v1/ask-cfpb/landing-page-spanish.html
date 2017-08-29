@@ -12,7 +12,7 @@
         {% for cat in categories %}
             <article class="ac-catnav ac-cat-{{ cat.slug_es }}">
                 <h2 class="ac-catnav-heading">
-                    <a href="{{ 'categoria-' + cat.slug_es }}">
+                    <a href="{{ 'categoria-' + cat.slug_es }}/">
                         <img src="{{ static( 'nemo/_/img/icon-' + cat.slug + '-retina.png' ) }}" alt="" class="icon-40">
                         {{ cat.name_es }}
                     </a>
@@ -20,11 +20,11 @@
                 <ul class="ac-catnav-list unstyled spaced">
                     {% for a in cat.featured_answers() %}
                      <li>
-                        <a href="{{ slugurl( a.slug_es ) }}">{{ a.question_es|safe }}</a>
+                        <a href="{{ a.spanish_page.url }}">{{ a.question_es|safe }}</a>
                      </li>
                     {% endfor %}
                 </ul>
-                <a href="{{ 'categoria-' + cat.slug_es }}" class="ac-catnav-learn">
+                <a href="{{ 'categoria-' + cat.slug_es }}/" class="ac-catnav-learn">
                     <img src="{{ static( 'nemo/_/img/icon-arrow-right-disc-retina.png' ) }}" alt="" class="icon-18">
                     Más acerca de {{ cat.name_es|lower }}
                 </a>

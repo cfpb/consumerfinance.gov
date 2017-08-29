@@ -46,6 +46,7 @@ class BrowsePage(CFGOVPage):
         ('html_block', organisms.HTMLBlock()),
         ('chart_block', organisms.ChartBlock()),
         ('mortgage_chart_block', organisms.MortgageChartBlock()),
+        ('mortgage_map_block', organisms.MortgageMapBlock()),
         ('snippet_list', organisms.SnippetList()),
         ('data_snapshot', organisms.DataSnapshot()),
     ], blank=True)

@@ -76,7 +76,7 @@ def get_ask_nav_items(request, current_page):
     return [
         {
             'title': cat.name,
-            'url': '/ask-cfpb/category-' + cat.slug,
+            'url': '/ask-cfpb/category-' + cat.slug + '/',
             'active': False if not hasattr(current_page, 'ask_category')
             else cat.name == current_page.ask_category.name,
             'expanded': True
