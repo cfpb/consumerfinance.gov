@@ -10,6 +10,7 @@ const environment = require( '../config/environment' );
 const paths = environment.paths;
 const scriptsManifest = require( '../gulp/utils/scripts-manifest' );
 const webpack = require( 'webpack' );
+const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
 // Constants.
 const JS_ROUTES_PATH = '/js/routes';
@@ -29,7 +30,12 @@ const modernConf = {
             targets: {
               browsers: environment.getSupportedBrowserList()
             },
-            debug: true
+            debug: true,
+            // See https://stackoverflow.com/a/45088328 and
+            // https://github.com/babel/babel-preset-env/tree/v2.0.0-alpha.19#forcealltransforms
+            // Webpack's uglify plugin doesn't play nicely with ES6.
+            // Eventually we should migrate to https://github.com/babel/minify
+            forceAllTransforms: true
           } ] ]
         }
       } ],
@@ -45,7 +51,7 @@ const modernConf = {
       name: COMMON_BUNDLE_NAME
     } ),
     // Change `warnings` flag to true to view linter-style warnings at runtime.
-    new webpack.optimize.UglifyJsPlugin( {
+    new UglifyWebpackPlugin( {
       compress: { warnings: false }
     } ),
     // Wrap JS in raw Jinja tags so included JS won't get parsed by Jinja.
@@ -59,7 +65,7 @@ const ieConf = {
     filename: 'common.ie.js'
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin( {
+    new UglifyWebpackPlugin( {
       compress: { warnings: false }
     } )
   ]
@@ -71,7 +77,7 @@ const externalConf = {
     filename: 'external-site.js'
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin( {
+    new UglifyWebpackPlugin( {
       compress: { warnings: false }
     } )
   ]
@@ -88,7 +94,7 @@ const onDemandConf = {
   },
   plugins: [
     // Change warnings flag to true to view linter-style warnings at runtime.
-    new webpack.optimize.UglifyJsPlugin( {
+    new UglifyWebpackPlugin( {
       compress: { warnings: false }
     } )
   ]
@@ -110,7 +116,7 @@ const spanishConf = {
     filename: 'spanish.js'
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin( {
+    new UglifyWebpackPlugin( {
       compress: { warnings: false }
     } )
   ]

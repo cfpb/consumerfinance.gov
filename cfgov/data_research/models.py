@@ -231,7 +231,7 @@ class MortgagePerformancePage(BrowsePage):
         context.update(self.get_mortgage_meta())
         if '30-89' in request.url:
             context.update({'delinquency': 'percent_30_60',
-                            'time_frame': '30'})
+                            'time_frame': '30-89'})
         elif '90' in request.url:
             context.update({'delinquency': 'percent_90',
                             'time_frame': '90'})
