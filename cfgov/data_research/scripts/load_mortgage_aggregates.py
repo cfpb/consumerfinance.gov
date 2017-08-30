@@ -58,7 +58,7 @@ def load_non_msa_state_values(date):
 def load_national_values(date):
     record, cr = NationalMortgageData.objects.get_or_create(
         date=parser.parse(date).date(),
-        fips='nation')
+        fips='-----')
     record.save()
     if cr:
         FIPS.created += 1
