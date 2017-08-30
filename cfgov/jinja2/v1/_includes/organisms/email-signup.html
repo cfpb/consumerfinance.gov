@@ -44,7 +44,7 @@
 
     {% set field = 'email' %}
     {% for form in value.form_field %}
-        {{ render_stream_child(form) }}
+        {% include_block form %}
     {% endfor %}
 
     <div class="form-group">

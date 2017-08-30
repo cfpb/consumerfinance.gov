@@ -175,6 +175,27 @@ class FormFieldWithButton(blocks.StructBlock):
         icon = 'mail'
         template = '_includes/molecules/form-field-with-button.html'
 
+    def get_context(self, value, parent_context=None):
+        context = super(FormFieldWithButton, self).get_context(
+            value,
+            parent_context=parent_context
+        )
+
+        page = context.get('page')
+        language = page.language if page else 'en'
+
+        if value.get('required'):
+            required_text = {
+                'en': '(required)',
+                'es': '(se require)',
+            }[language]
+        else:
+            required_text = ''
+
+        context['field_required_text'] = required_text
+
+        return context
+
 
 class FeaturedContent(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
