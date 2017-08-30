@@ -60,7 +60,7 @@ def matching_issue(title, issues):
 
 
 def post_to_chat(endpoint, username, message, issue_url):
-    text = 'Alert: {}. Github issue created at {}'.format(
+    text = 'Alert: {}. Github issue at {}'.format(
         message,
         issue_url,
     )
