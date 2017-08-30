@@ -286,7 +286,7 @@ reg_comment = {
     }
 }
 
-snippet_list = {
+snippet_list_show_thumbnails_false = {
     "type": "snippet_list",
     "value": {
         "heading": "Test Snippet List",
@@ -295,7 +295,7 @@ snippet_list = {
     }
 }
 
-snippet_list_show_thumbnails = {
+snippet_list_show_thumbnails_true = {
     "type": "snippet_list",
     "value": {
         "heading": "Test Snippet List",

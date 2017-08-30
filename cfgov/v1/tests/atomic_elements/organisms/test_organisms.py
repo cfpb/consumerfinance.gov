@@ -331,7 +331,7 @@ class OrganismsTestCase(TestCase):
         )
         browse_page.content = StreamValue(
             browse_page.content.stream_block,
-            [atomic.snippet_list],
+            [atomic.snippet_list_show_thumbnails_false],
             True
         )
         publish_page(child=browse_page)
@@ -342,15 +342,15 @@ class OrganismsTestCase(TestCase):
         self.assertContains(response, 'Test Snippet List')
         self.assertContains(response, 'Test Resource')
 
-    def test_snippet_list_shows_thumbnails_when_show_thumbnails_is_true(self):
-        """ Snippet List renders thumbnails when show_thumbnails is True"""
+    def test_snippet_list_show_thumbnails_false(self):
+        """ Snippet List doesn't show thumbs when show_thumbnails is False"""
         no_thumbnails_page = BrowsePage(
             title='No Thumbnails Page',
             slug='no-thumbnails',
         )
         no_thumbnails_page.content = StreamValue(
             no_thumbnails_page.content.stream_block,
-            [atomic.snippet_list],
+            [atomic.snippet_list_show_thumbnails_false],
             True
         )
         publish_page(child=no_thumbnails_page)
@@ -360,13 +360,15 @@ class OrganismsTestCase(TestCase):
         response = self.client.get('/no-thumbnails/')
         self.assertNotContains(response, 'o-snippet-list_list-thumbnail')
 
+    def test_snippet_list_show_thumbnails_true(self):
+        """ Snippet List shows thumbnails when show_thumbnails is True"""
         thumbnails_page = BrowsePage(
             title='Thumbnails Page',
             slug='thumbnails',
         )
         thumbnails_page.content = StreamValue(
             thumbnails_page.content.stream_block,
-            [atomic.snippet_list_show_thumbnails],
+            [atomic.snippet_list_show_thumbnails_true],
             True
         )
         publish_page(child=thumbnails_page)
