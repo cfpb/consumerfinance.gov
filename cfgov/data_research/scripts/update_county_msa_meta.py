@@ -64,7 +64,7 @@ def update_state_to_geo_meta(geo):
     }
     ```
 
-    An non-MSA meta entry, combining all non-MSA counties in a state:
+    A non-MSA meta entry, combining all non-MSA counties in a state:
     ```json
     {
         "HI": {
