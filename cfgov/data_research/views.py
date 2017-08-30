@@ -163,16 +163,21 @@ class MapData(APIView):
         }
         if geo not in geo_dict:
             return Response("Unkown geographic unit")
-        records = geo_dict[geo]['queryset']
-        fips_meta = geo_dict[geo]['fips_meta']
-        payload = {'meta': {'fips_type': geo_dict[geo]['fips_type'],
-                            'date': '{}'.format(date)},
-                   'data': {}}
+        nat_records = geo_dict['national']['queryset']
+        nat_data_series = nat_records.time_series(days_late)
         if geo == 'national':
-            data_series = records.time_series(days_late)
-            data_series.update({'name': 'United States'})
-            payload['data'].update(data_series)
+            payload = {'meta': {'fips_type': geo_dict[geo]['fips_type'],
+                                'date': '{}'.format(date)},
+                       'data': {}}
+            nat_data_series.update({'name': 'United States'})
+            payload['data'].update(nat_data_series)
         else:
+            records = geo_dict[geo]['queryset']
+            fips_meta = geo_dict[geo]['fips_meta']
+            payload = {'meta': {'fips_type': geo_dict[geo]['fips_type'],
+                                'date': '{}'.format(date),
+                                'national_average': nat_data_series['value']},
+                       'data': {}}
             for record in records:
                 data_series = record.time_series(days_late)
                 data_series.update(
