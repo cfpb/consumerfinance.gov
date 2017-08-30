@@ -13,29 +13,31 @@ var _plurals = {
   county: 'counties'
 };
 
-function MortgagePerformanceMap( { container } ) {
-  this.$container = document.getElementById( container );
-  this.$form = this.$container.querySelector( '#mp-map-controls' );
-  this.$geo = this.$container.querySelector( '#mp-map-geo' );
-  this.$state = this.$container.querySelector( '#mp-map-state' );
-  this.$metro = this.$container.querySelector( '#mp-map-metro' );
-  this.$countyState = this.$container.querySelector( '#mp-map-county-state' );
-  this.$county = this.$container.querySelector( '#mp-map-county' );
-  this.$month = this.$container.querySelector( '#mp-map-month' );
-  this.$year = this.$container.querySelector( '#mp-map-year' );
-  this.$map = this.$container.querySelector( '#mp-map' );
-  this.$mapTitle = document.querySelector( '#mp-map-title-status' );
-  this.$mapTitleDate = document.querySelector( '#mp-map-title-date' );
-  this.$loadingSpinner = document.querySelector( '#mp-map-loading' );
-  this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
-  this.chart = ccb.createChart( {
-    el: this.$container.querySelector( '#mp-map' ),
-    source: `map-data/${ this.timespan }/states/2009-01`,
-    type: 'geo-map',
-    metadata: 'states'
-  } );
-  this.eventListeners();
-  utils.hideEl( this.$loadingSpinner );
+class MortgagePerformanceMap {
+  constructor( { container } ) {
+    this.$container = document.getElementById( container );
+    this.$form = this.$container.querySelector( '#mp-map-controls' );
+    this.$geo = this.$container.querySelector( '#mp-map-geo' );
+    this.$state = this.$container.querySelector( '#mp-map-state' );
+    this.$metro = this.$container.querySelector( '#mp-map-metro' );
+    this.$countyState = this.$container.querySelector( '#mp-map-county-state' );
+    this.$county = this.$container.querySelector( '#mp-map-county' );
+    this.$month = this.$container.querySelector( '#mp-map-month' );
+    this.$year = this.$container.querySelector( '#mp-map-year' );
+    this.$map = this.$container.querySelector( '#mp-map' );
+    this.$mapTitle = document.querySelector( '#mp-map-title-status' );
+    this.$mapTitleDate = document.querySelector( '#mp-map-title-date' );
+    this.$loadingSpinner = document.querySelector( '#mp-map-loading' );
+    this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
+    this.chart = ccb.createChart( {
+      el: this.$container.querySelector( '#mp-map' ),
+      source: `map-data/${ this.timespan }/states/2009-01`,
+      type: 'geo-map',
+      metadata: 'states'
+    } );
+    this.eventListeners();
+    utils.hideEl( this.$loadingSpinner );
+  }
 }
 
 MortgagePerformanceMap.prototype.eventListeners = function() {
@@ -98,7 +100,7 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       action = actions.clearGeo();
   }
 
-  return store.dispatch( action );
+  store.dispatch( action );
 
 };
 
@@ -133,14 +135,10 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
 
 MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) {
   // If we're waiting for data, abort.
-  if ( state.isLoading ) {
-    return utils.showEl( this.$loadingSpinner );
-  }
-  utils.hideEl( this.$loadingSpinner );
-  // If counties aren't being loaded and the geo type hasn't changed, nothing to do here.
-  if ( !state.isLoadingCounties && prevState.geo.type === state.geo.type ) {
-    return false;
-  }
+  // if ( state.isLoading ) {
+  //   return utils.showEl( this.$loadingSpinner );
+  // }
+  // utils.hideEl( this.$loadingSpinner );
   var geoType;
   if ( state.isLoadingCounties ) {
     geoType = 'county';
@@ -158,7 +156,9 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
   if ( !state.geo.type ) {
     return this.chart.highchart.chart.zoomOut();
   }
-  return utils.showEl( geo );
+  if ( geo ) {
+    utils.showEl( geo );
+  }
 };
 
 MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state ) {

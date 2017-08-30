@@ -36,7 +36,6 @@ class MortgagePerformanceLineChart {
 
 MortgagePerformanceLineChart.prototype.eventListeners = function() {
   this.$form.addEventListener( 'change', this.onChange.bind( this ) );
-  // this.$compare.addEventListener( 'click', this.onClick.bind( this ) );
   store.subscribe( this.renderChart.bind( this ) );
   store.subscribe( this.renderChartTitle.bind( this ) );
   store.subscribe( this.renderChartForm.bind( this ) );
@@ -112,18 +111,17 @@ MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state 
 
   // If no geo is provided, default to national data
   if ( !state.geo.id || !state.geo.type ) {
-    this.chart.update( {
+    return this.chart.update( {
       source: baseSource
     } ).then( () => {
       store.dispatch( actions.stopLoading() );
     } );
-    return;
   }
 
   // Otherwise, load the geo and optionally national data
   source = `time-series/${ this.timespan }/${ state.geo.id }`;
   if ( state.includeNational ) {
-    source = `${ baseSource };${ source }`;
+    source = `${ source };${ baseSource }`;
   }
   this.chart.update( {
     source: source
@@ -138,9 +136,6 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
   //   return utils.showEl( this.$loadingSpinner );
   // }
   // utils.hideEl( this.$loadingSpinner );
-  // if ( !state.isLoadingCounties && prevState.geo.type === state.geo.type ) {
-  //   return;
-  // }
   var geoType;
   if ( prevState.isLoadingCounties || state.isLoadingCounties ) {
     geoType = 'county';
@@ -160,7 +155,9 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
   } else {
     utils.hideEl( this.$compareContainer );
   }
-  utils.showEl( geo );
+  if ( geo ) {
+    utils.showEl( geo );
+  }
 };
 
 MortgagePerformanceLineChart.prototype.renderChartTitle = function( prevState, state ) {

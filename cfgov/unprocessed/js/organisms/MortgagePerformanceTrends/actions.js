@@ -23,13 +23,11 @@ actions.updateChart = ( geoId, geoName, geoType, includeNational ) => {
     geo: {
       id: geoId,
       name: geoName
-    }
+    },
+    includeNational
   };
   if ( geoType ) {
     action.geo.type = geoType;
-  }
-  if ( includeNational ) {
-    action.includeNational = includeNational;
   }
   return action;
 };
@@ -57,7 +55,7 @@ actions.requestMetros = () => ( {
   isLoadingMetros: true
 } );
 
-actions.fetchMetros = metroState => dispatch => {
+actions.fetchMetros = ( metroState, includeNational ) => dispatch => {
   dispatch( actions.requestMetros( metroState ) );
   return utils.getMetroData( ( err, data ) => {
     if ( err ) {
@@ -100,7 +98,7 @@ actions.setCounties = counties => ( {
 } );
 
 actions.startLoading = () => ( {
-  type: 'STOP_LOADING',
+  type: 'START_LOADING',
   isLoading: true
 } );
 

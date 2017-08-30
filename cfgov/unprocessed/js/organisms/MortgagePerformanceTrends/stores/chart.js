@@ -78,7 +78,7 @@ const updateCounties = ( counties, action ) => {
 const includeNational = ( include, action ) => {
   switch ( action.type ) {
     case 'UPDATE_CHART':
-      return action.includeNational;
+      return typeof action.includeNational === 'undefined' ? include : action.includeNational;
     default:
       return include;
   }
