@@ -258,9 +258,9 @@ class CFGOVPage(Page):
             return self.serve_post(request, *args, **kwargs)
 
         # Force the page's language on the request
-        with translation.override(self.language):
-            request.LANGUAGE_CODE = translation.get_language()
-            return super(CFGOVPage, self).serve(request, *args, **kwargs)
+        translation.activate(self.language)
+        request.LANGUAGE_CODE = translation.get_language()
+        return super(CFGOVPage, self).serve(request, *args, **kwargs)
 
     def _return_bad_post_response(self, request):
         if request.is_ajax():
