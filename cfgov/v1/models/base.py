@@ -10,7 +10,9 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.response import TemplateResponse
 from django.utils import timezone
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
@@ -255,6 +257,9 @@ class CFGOVPage(Page):
         if request.method == 'POST':
             return self.serve_post(request, *args, **kwargs)
 
+        # Force the page's language on the request
+        translation.activate(self.language)
+        request.LANGUAGE_CODE = translation.get_language()
         return super(CFGOVPage, self).serve(request, *args, **kwargs)
 
     def _return_bad_post_response(self, request):
