@@ -273,7 +273,7 @@ urlpatterns = [
 
     flagged_url('EREGS20',
                 r'^eregs2/',
-                include_if_app_enabled('eregs_core', 'eregs.urls')
+                include_if_app_enabled('eregs_core', 'eregs_core.urls')
                 ),
     url(r'^eregs-api/',
         include_if_app_enabled('regcore', 'regcore.urls')),
@@ -384,6 +384,11 @@ urlpatterns = [
                  template_name='es/quienes-somos/index.html')),
 
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
+
+    flagged_url('FWB_RELEASE',
+                r'^(?i)consumer-tools/financial-well-being/',
+                include('wellbeing.urls')
+    ),
 ]
 
 if settings.ALLOW_ADMIN_URL:

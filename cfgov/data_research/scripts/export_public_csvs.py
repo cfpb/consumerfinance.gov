@@ -3,21 +3,23 @@ from __future__ import unicode_literals
 import datetime
 from dateutil import parser
 from cStringIO import StringIO
+import json
 import logging
 
 import unicodecsv
 
+from core.utils import format_file_size
 from data_research.models import (
     CountyMortgageData,
     MSAMortgageData,
+    MortgageMetaData,
     NationalMortgageData,
     StateMortgageData,
 )
 from data_research.mortgage_utilities.s3_utils import (
-    bake_csv_to_s3, MORTGAGE_SUB_BUCKET)
+    bake_csv_to_s3, MORTGAGE_SUB_BUCKET, S3_MORTGAGE_DOWNLOADS_BASE)
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
-TIMESTAMP = "{}".format(datetime.date.today())
 BASE_DATE = datetime.date(2008, 1, 1)
 BASE_QUERYSET = CountyMortgageData.objects.filter(date__gte=BASE_DATE)
 NATION_QUERYSET = NationalMortgageData.objects.filter(date__gte=BASE_DATE)
@@ -38,6 +40,35 @@ LATE_VALUE_TITLE = {
 
 
 logger = logging.getLogger(__name__)
+
+
+def save_metadata(csv_size, slug, thru_month, date_value, geo_type):
+    """Save slug, URL, thru_month and file size of a new CSV download file."""
+    pub_date = "{}".format(datetime.date.today())
+    csv_url = "{}/{}.csv".format(S3_MORTGAGE_DOWNLOADS_BASE, slug)
+    download_meta_file, cr = MortgageMetaData.objects.get_or_create(
+        name='download_files')
+    new_posting = {geo_type:
+                   {'slug': slug,
+                    'url': csv_url,
+                    'size': csv_size,
+                    'thru_month': thru_month,
+                    'pub_date': pub_date}}
+    if not download_meta_file.json_value:
+        download_meta_file.json_value = json.dumps(
+            {thru_month: {date_value: new_posting}})
+    else:
+        current = json.loads(download_meta_file.json_value)
+        if thru_month in current:
+            if date_value in current[thru_month]:
+                current[thru_month][date_value].update(new_posting)
+            else:
+                current[thru_month].update({date_value: new_posting})
+        else:
+            current.update({thru_month: {date_value: new_posting}})
+        download_meta_file.json_value = json.dumps(current)
+    download_meta_file.save()
+    logger.info("Saved metadata for {}".format(slug))
 
 
 def round_pct(value):
@@ -80,30 +111,31 @@ def export_downloadable_csv(geo_type, late_value):
 
     CSVs are posted at
     http://files.consumerfinance.gov.s3.amazonaws.com/data/mortgage-performance/downloads/  # noqa: E501
+
+    The script also stores URLs and file sizes for use in page footnotes.
     """
     date_list = FIPS.short_dates
+    thru_date = FIPS.dates[-1]
+    thru_month = thru_date[:-3]
     geo_dict = {
         'County': {
             'queryset': BASE_QUERYSET,
             'headings': ['RegionType', 'State', 'Name', 'FIPSCode'],
-            'slug': "CountyMortgagePerformance-{}.csv".format(TIMESTAMP),
             'meta': FIPS.county_fips
         },
         'MetroArea': {
             'queryset': MSAMortgageData.objects.filter(date__gte=BASE_DATE),
             'headings': ['RegionType', 'Name', 'CBSACode'],
-            'slug': "MetroAreaMortgagePerformance-{}.csv".format(TIMESTAMP),
             'meta': FIPS.msa_fips
         },
         'State': {
             'queryset': StateMortgageData.objects.filter(date__gte=BASE_DATE),
             'headings': ['RegionType', 'Name', 'FIPSCode'],
-            'slug': "StateMortgagePerformance-{}.csv".format(TIMESTAMP),
             'meta': FIPS.state_fips
         },
     }
-    slug = "{}Mortgages{}DaysLate-{}".format(
-        geo_type, LATE_VALUE_TITLE[late_value], TIMESTAMP)
+    slug = "{}Mortgages{}DaysLate-thru-{}".format(
+        geo_type, LATE_VALUE_TITLE[late_value], thru_month)
     _map = geo_dict.get(geo_type)
     meta = _map['meta']
     csvfile = StringIO()
@@ -122,6 +154,11 @@ def export_downloadable_csv(geo_type, late_value):
         slug,
         csvfile,
         sub_bucket="{}/downloads".format(MORTGAGE_SUB_BUCKET))
+    logger.info("Baked {} to S3".format(slug))
+    csvfile.seek(0, 2)
+    bytecount = csvfile.tell()
+    csv_size = format_file_size(bytecount)
+    save_metadata(csv_size, slug, thru_month, late_value, geo_type)
 
 
 def run(prep_only=False):

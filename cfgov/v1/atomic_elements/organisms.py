@@ -859,6 +859,32 @@ class ChartBlock(blocks.StructBlock):
         js = ['chart.js']
 
 
+class MortgageChartBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=True, classname="title")
+    description = blocks.CharBlock(
+        required=False,
+        help_text='Chart summary for visually impaired users.')
+
+    class Meta:
+        label = 'Mortgage Chart Block'
+        icon = 'image'
+        template = '_includes/organisms/mortgage-chart.html'
+
+    class Media:
+        js = ['mortgage-performance-trends.js']
+
+
+class MortgageMapBlock(MortgageChartBlock):
+
+    class Meta:
+        label = 'Mortgage Map Block'
+        icon = 'image'
+        template = '_includes/organisms/mortgage-map.html'
+
+    class Media:
+        js = ['mortgage-performance-trends.js']
+
+
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
@@ -873,6 +899,11 @@ class SnippetList(blocks.StructBlock):
         ],
         required=True
     )
+    show_thumbnails = blocks.BooleanBlock(
+        required=False,
+        help_text='If selected, each snippet in the list will include a 150px-'
+                  'wide image from the snippet\'s thumbnail field.'
+    )
     actions = blocks.ListBlock(blocks.StructBlock([
         ('link_label', blocks.CharBlock(
             help_text='E.g., "Download" or "Order free prints"'
@@ -884,7 +915,7 @@ class SnippetList(blocks.StructBlock):
                     getattr(m, 'snippet_list_field_choices', [])
                 ) for m in get_snippet_models()
             ],
-            help_text='Corresponds to the available fields for the selected'
+            help_text='Corresponds to the available fields for the selected '
                       'snippet type.'
         )),
     ]))

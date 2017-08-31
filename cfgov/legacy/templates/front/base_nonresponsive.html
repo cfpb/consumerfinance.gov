@@ -42,7 +42,10 @@ please send an email with your full name to tech@cfpb.gov.
     <meta property="fb:app_id" content="210516218981921">
 
     {% block open_graph_image %}
-    <meta property="og:image" content="{% static 'nemo/_/img/logo.svg' %}">
+    <meta property="og:image"
+          content="{% static 'img/logo_open-graph_facebook.png' %}">
+    <meta property="twitter:image"
+          content="{% static 'img/logo_open-graph_twitter.png' %}">
     {% endblock %}
 
     {% block page_meta %}

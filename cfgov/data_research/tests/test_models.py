@@ -1,20 +1,58 @@
 from __future__ import unicode_literals
 import datetime
-import mock
 import unittest
 
 from model_mommy import mommy
 
 import django.test
+from django.http import HttpRequest
 
 from data_research.models import (
     CountyMortgageData,
     MortgageDataConstant,
+    MortgageMetaData,
+    MortgagePerformancePage,
     MSAMortgageData,
     NationalMortgageData,
     StateMortgageData
 )
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+
+
+class MortgagePerformancePageTests(django.test.TestCase):
+
+    fixtures = ['mortgage_metadata.json']
+
+    def setUp(self):
+        from v1.tests.wagtail_pages.helpers import save_new_page
+        page_stub = MortgagePerformancePage(
+            slug='mortgage-chart-page',
+            title='Mortgage Charts')
+        self.chart_page = save_new_page(page_stub).as_page_object()
+
+    def test_chart_page_get_mortgage_meta(self):
+        page = self.chart_page
+        self.assertIn(
+            'sampling_dates',
+            page.get_mortgage_meta()
+        )
+
+    def test_page_template(self):
+        self.assertEqual(
+            self.chart_page.template,
+            'browse-basic/index.html')
+
+    def test_chart_page_context_30_89(self):
+        test_page = self.chart_page
+        request = HttpRequest()
+        request.url = '/data-research/mortgages-30-89-days-delinquent'
+        self.assertIn('delinquency', test_page.get_context(request))
+
+    def test_chart_page_context_90(self):
+        test_page = self.chart_page
+        request = HttpRequest()
+        request.url = '/data-research/mortgages-90-days-delinquent'
+        self.assertIn('delinquency', test_page.get_context(request))
 
 
 class ModelStringTest(unittest.TestCase):
@@ -24,7 +62,7 @@ class ModelStringTest(unittest.TestCase):
     def test_county_string_max_length(self):
         """
         Test that no MSA county-list string (a string of FIPS codes)
-        will exceed the 255-char limit for MSAMortgageData.county.
+        will exceed the 255-char limit for `MSAMortgageData.county`
         """
         load_fips_meta()
         county_string_lengths = sorted(set([
@@ -38,7 +76,7 @@ class ModelStringTest(unittest.TestCase):
 
 class MortgageModelTests(django.test.TestCase):
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def setUp(self):
 
@@ -78,15 +116,13 @@ class MortgageModelTests(django.test.TestCase):
             thirty=67668,
             total=2674899)
 
-        print_patch = mock.patch(
-            'data_research.scripts.load_mortgage_aggregates.print'
-        )
-        print_patch.start()
-        self.addCleanup(print_patch.stop)
-
     def test_constant_string(self):
         constant = MortgageDataConstant.objects.first()
         self.assertEqual(constant.__str__(), "{}".format(constant))
+
+    def test_meta_string(self):
+        meta = MortgageMetaData.objects.first()
+        self.assertEqual(meta.__str__(), "{}".format(meta))
 
     def test_base_data_properties(self):
         """Test basic calculation functions"""
@@ -105,11 +141,11 @@ class MortgageModelTests(django.test.TestCase):
     def test_base_data_properties_time_series(self):
         data_record = self.base_data
         self.assertEqual(
-            sorted(data_record.time_series.keys()),
-            ['date', 'pct30', 'pct90'])
+            sorted(data_record.time_series('90').keys()),
+            ['date', 'value'])
         self.assertEqual(
-            sorted(data_record.time_series.values()),
-            [0.0, 0.047244094488188976, 1472702400000])
+            sorted(data_record.time_series('90').values()),
+            [0.0, 1472702400000])
 
     def test_msa_data_properties(self):
         msa_record = self.msa_data

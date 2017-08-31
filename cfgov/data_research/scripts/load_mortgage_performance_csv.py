@@ -6,7 +6,8 @@ import json
 import logging
 import sys
 
-from data_research.models import MortgageDataConstant, CountyMortgageData
+from data_research.models import (
+    MortgageDataConstant, MortgageMetaData, CountyMortgageData)
 from data_research.mortgage_utilities.s3_utils import read_in_s3_csv
 from data_research.mortgage_utilities.fips_meta import (
     FIPS_DATA_PATH, OUTDATED_FIPS)
@@ -55,9 +56,9 @@ def update_sampling_dates():
     dates = sorted(set([obj.date for obj in CountyMortgageData.objects.filter(
         date__gte=datetime.date(starting_year, 1, 1))]))
     date_list = ["{}".format(date) for date in dates]
-    date_list_obj, cr = MortgageDataConstant.objects.get_or_create(
+    date_list_obj, cr = MortgageMetaData.objects.get_or_create(
         name='sampling_dates')
-    date_list_obj.string_value = json.dumps(date_list)
+    date_list_obj.json_value = json.dumps(date_list)
     date_list_obj.save()
     with open('{}/sampling_dates.json'.format(FIPS_DATA_PATH), 'wb') as f:
         f.write(json.dumps(date_list))
