@@ -1,36 +1,44 @@
 from __future__ import absolute_import
+
 import HTMLParser
 import os
 import re
 import unicodedata
-from urlparse import urlparse, parse_qs
+from urlparse import parse_qs, urlparse
+
+from bs4 import BeautifulSoup, NavigableString
+from compressor.contrib.jinja2ext import CompressorExtension
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import (
-    linebreaksbr,
-    pluralize,
-    slugify,
-)
+from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.utils.module_loading import import_string
 from django.utils.timezone import template_localtime
+from django.utils.translation import ugettext, ungettext
 
-from jinja2 import contextfunction, Markup
+from jinja2 import Markup, contextfunction
+
+from wagtail.wagtailcore.rich_text import RichText, expand_db_html
+
+from core.utils import signed_redirect, unsigned_redirect
+from flags.template_functions import flag_disabled, flag_enabled
+from processors.processors_common import fix_link
 from sheerlike import environment as sheerlike_environment
-from compressor.contrib.jinja2ext import CompressorExtension
-from flags.template_functions import flag_enabled, flag_disabled
+from v1.routing import get_protected_url
 from v1.util.util import get_unique_id
 
-from wagtail.wagtailcore.rich_text import expand_db_html, RichText
-from bs4 import BeautifulSoup, NavigableString
-from processors.processors_common import fix_link
-from core.utils import signed_redirect, unsigned_redirect
-from v1.routing import get_protected_url
-
-
 default_app_config = 'v1.apps.V1AppConfig'
+
+
+class JinjaTranslations(object):
+
+    def gettext(self, message):
+        return ugettext(message)
+
+    def ngettext(self, singular, plural, number):
+        return ungettext(singular, plural, number)
 
 
 def strip_accents(value):
@@ -40,13 +48,16 @@ def strip_accents(value):
 
 
 def environment(**options):
-    options.setdefault('extensions', []).append(CompressorExtension)
-    options['extensions'].append('jinja2.ext.loopcontrols')
-    env = sheerlike_environment(**options)
-    env.autoescape = True
     from v1.models import CFGOVPage
     from v1.templatetags.activity_feed import get_latest_activities
     from v1.util import ref
+
+    options.setdefault('extensions', []).append(CompressorExtension)
+    options['extensions'].append('jinja2.ext.loopcontrols')
+    options['extensions'].append('jinja2.ext.i18n')
+    env = sheerlike_environment(**options)
+    env.autoescape = True
+    env.install_gettext_translations(JinjaTranslations())
     env.globals.update({
         'static': staticfiles_storage.url,
         'global_dict': {},
