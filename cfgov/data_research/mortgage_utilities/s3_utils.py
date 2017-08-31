@@ -9,14 +9,16 @@ from boto.s3.key import Key
 import requests
 import unicodecsv
 
+from django.conf import settings
+
 # bake_to_s3 functions require S3 secrets to be stored in the env
 S3_KEY = os.getenv('AWS_S3_ACCESS_KEY_ID')
 S3_SECRET = os.getenv('AWS_S3_SECRET_ACCESS_KEY')
-BASE_BUCKET = 'files.consumerfinance.gov'
+BASE_BUCKET = settings.AWS_STORAGE_BUCKET_NAME
 MORTGAGE_SUB_BUCKET = "data/mortgage-performance"
-# s3_base is "http://files.consumerfinance.gov"
-# files live at
-# http://s3.amazonaws.com/files.consumerfinance.gov/data/mortgage-performance/
+S3_MORTGAGE_DOWNLOADS_BASE = (
+    'http://{}.s3.amazonaws.com/{}/downloads'.format(
+        BASE_BUCKET, MORTGAGE_SUB_BUCKET))
 
 
 def read_in_s3_csv(url):

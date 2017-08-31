@@ -37,6 +37,15 @@ def extract_answers_from_request(request):
     return answers
 
 
+def format_file_size(bytecount, suffix='B'):
+    """Convert a byte count into a human-readable file size."""
+    for unit in ['', 'K', 'M', 'G']:
+        if abs(bytecount) < 1024.0:
+            return "%3.1f%s%s" % (bytecount, unit, suffix)
+        bytecount /= 1024.0
+    return "%.1f%s%s" % (bytecount, 'T', suffix)
+
+
 class NoMigrations(object):
     def __contains__(self, item):
         return True
