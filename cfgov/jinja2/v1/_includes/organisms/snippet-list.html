@@ -21,6 +21,10 @@
    value.snippet_type:              The type of snippet being listed.
                                     Options defined in ref.py.
 
+   value.show_thumbnails:           A boolean for whether the template should
+                                    render a thumbnail image for each
+                                    snippet in the list.
+
    value.actions:                   A list of actions with two fields each:
                                     link_label and snippet_field
 
@@ -41,7 +45,7 @@
     {% set img = image(value.image.upload, 'original')
        if value.image.upload
        else '/' %}
-    {% set image = {
+    {% set info_unit_image = {
          'url': img.url,
          'alt': image_alt_value(value.image),
          'is_square': true,
@@ -55,7 +59,7 @@
        else '' %}
     {{ info_unit( {
         'modifier': modifier,
-        'image': image,
+        'image': info_unit_image,
         'heading': heading,
         'body': parse_links(value.body) | safe
     } ) }}
@@ -68,11 +72,23 @@
         <div class="o-table__stack-on-small o-snippet-list_list" data-display-table="table">
             <header data-display-table="thead">
                 <div class="o-snippet-list_list-heading" data-display-table="cell">Description</div>
+            {% if value.show_thumbnails %}
+                <div class="o-snippet-list_list-heading" data-display-table="cell"></div>
+            {% endif %}
                 <div class="o-snippet-list_list-heading" data-display-table="cell">Actions</div>
             </header>
             <ul data-display-table="row-group">
             {% for snippet in filtered_snippets %}
                 <li data-display-table="row">
+                {% if value.show_thumbnails %}
+                    <div class="o-snippet-list_list-thumbnail" data-display-table="cell">
+                    {% if snippet.thumbnail %}
+                        {% set tmp_thumb = image(snippet.thumbnail, 'width-300') %}
+                        <img src="{{ tmp_thumb.url }}"
+                             alt="{{ tmp_thumb.alt }}">
+                    {% endif %}
+                    </div>
+                {% endif %}
                     <div data-display-table="cell">
                         <div class="o-snippet-list_list-item-title">{{ snippet }}</div>
                         {{ snippet.desc if snippet.desc else '' }}
@@ -84,8 +100,8 @@
                     {% for action in value.actions %}
                         {% if snippet[action.snippet_field] %}
                             {%- set href = snippet[action.snippet_field].url
-                               if snippet[action.snippet_field].url is defined
-                               else snippet[action.snippet_field] -%}
+                                if snippet[action.snippet_field].url is defined
+                                else snippet[action.snippet_field] -%}
                             {% set link = '<a href="' ~ href ~ '">' ~ action.link_label ~ '</a>' %}
                             <li class="m-list_item">
                                {{ parse_links(link) | safe }}

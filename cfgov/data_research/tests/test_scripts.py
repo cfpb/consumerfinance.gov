@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import datetime
 from dateutil import parser
+import json
 import mock
 from mock import mock_open, patch
 import StringIO
@@ -13,7 +14,7 @@ import unicodecsv
 
 from data_research.models import (
     CountyMortgageData,
-    MortgageDataConstant,
+    MortgageMetaData,
     MSAMortgageData,
     NationalMortgageData,
     StateMortgageData
@@ -29,10 +30,14 @@ from data_research.scripts.load_mortgage_aggregates import (
     load_national_values,
     load_state_values,
     run as run_aggregates)
-from data_research.scripts.export_public_csv import (
+from data_research.scripts.export_public_csvs import (
     export_downloadable_csv,
     round_pct,
-    run as run_export)
+    run as run_export,
+    save_metadata)
+from data_research.scripts.update_county_msa_meta import (
+    run as run_update,
+    update_state_to_geo_meta)
 from data_research.scripts.validate_geos import validate_geo
 
 
@@ -233,7 +238,7 @@ class DataExportTest(django.test.TestCase):
             thirty=10000,
             total=2540000)
 
-    @mock.patch('data_research.scripts.export_public_csv.bake_csv_to_s3')
+    @mock.patch('data_research.scripts.export_public_csvs.bake_csv_to_s3')
     def test_export_downloadable_csv(self, mock_bake):
         run_export(prep_only=True)
         export_downloadable_csv('County', 'percent_30_60')
@@ -250,7 +255,7 @@ class RunExportTest(django.test.TestCase):
     fixtures = ['mortgage_constants.json']
 
     @mock.patch(
-        'data_research.scripts.export_public_csv.export_downloadable_csv')
+        'data_research.scripts.export_public_csvs.export_downloadable_csv')
     def test_run_export(self, mock_export):
         run_export()
         self.assertEqual(mock_export.call_count, 6)
@@ -369,8 +374,8 @@ class UpdateSamplingDatesTest(django.test.TestCase):
             update_sampling_dates()
         self.assertEqual(m.call_count, 1)
         self.assertEqual(
-            MortgageDataConstant.objects.get(
-                name='sampling_dates').string_value,
+            MortgageMetaData.objects.get(
+                name='sampling_dates').json_value,
             '["2008-01-01"]')
 
 
@@ -450,3 +455,94 @@ class ExportRoundingTests(unittest.TestCase):
     def test_round_pct_greater_than_100(self):
         value = 1.00498991409295352325
         self.assertEqual(round_pct(value), 100.5)
+
+
+class SaveMetadataTests(django.test.TestCase):
+
+    def test_save_metadata(self):
+        save_metadata(999, 'slug1', '2017-01-01', 'percent_90', 'County')
+        self.assertEqual(
+            MortgageMetaData.objects.filter(name='download_files').count(), 1)
+        save_metadata(9999, 'slug2', '2017-02-01', 'percent_90', 'County')
+        updated_meta = MortgageMetaData.objects.get(name='download_files')
+        data = json.loads(updated_meta.json_value)
+        self.assertEqual(len(data), 2)
+
+
+class BuildStateMsaDropdownTests(django.test.TestCase):
+
+    fixtures = ['mortgage_constants.json']
+
+    def setUp(self):
+        self.states = {
+            '10':
+            {'AP': 'Del.', 'fips': '10', 'name': 'Delaware', 'abbr': 'DE'},
+            '15':
+            {'AP': 'Hawaii', 'fips': '15', 'name': 'Hawaii', 'abbr': 'HI'}
+        }
+        self.msas = {
+            "27980": {
+                "fips": "27980",
+                "name": "Kahului-Wailuku-Lahaina, HI",
+                "county_list": ['15005', '15007'],
+            },
+            "46520": {
+                "fips": "46520",
+                "name": "Urban Honolulu, HI",
+                "county_list": ['15005', '15007'],
+            }
+        }
+        self.counties = {
+            "15005": {
+                "fips": "15005",
+                "name": "Kalawao County",
+                "state": "HI"
+            },
+            "15007": {
+                "fips": "15007",
+                "name": "Kauai County",
+                "state": "HI"
+            }
+        }
+
+    def load_fips(self, mock_obj):
+        mock_obj.state_fips = self.states
+        mock_obj.msa_fips = self.msas
+        mock_obj.county_fips = self.counties
+        return mock_obj
+
+    @mock.patch('data_research.scripts.'
+                'update_county_msa_meta.bake_json_to_s3')
+    @mock.patch('data_research.scripts.'
+                'update_county_msa_meta.FIPS')
+    def test_update_msa_meta(self, mock_FIPS, mock_bake_s3):
+        mock_FIPS = self.load_fips(mock_FIPS)
+        self.assertFalse(
+            MortgageMetaData.objects.filter(name='state_msa_meta').exists())
+        update_state_to_geo_meta('msa')
+        self.assertTrue(
+            MortgageMetaData.objects.filter(name='state_msa_meta').exists())
+        self.assertEqual(mock_bake_s3.call_count, 1)
+        test_json = json.loads(
+            MortgageMetaData.objects.get(name='state_msa_meta').json_value)
+        self.assertEqual(len(test_json), 2)
+
+    @mock.patch('data_research.scripts.'
+                'update_county_msa_meta.bake_json_to_s3')
+    @mock.patch('data_research.scripts.'
+                'update_county_msa_meta.FIPS')
+    def test_update_county_meta(self, mock_FIPS, mock_bake_s3):
+        mock_FIPS = self.load_fips(mock_FIPS)
+        self.assertFalse(
+            MortgageMetaData.objects.filter(name='state_county_meta').exists())
+        update_state_to_geo_meta('county')
+        self.assertEqual(mock_bake_s3.call_count, 1)
+        test_json = json.loads(
+            MortgageMetaData.objects.get(name='state_county_meta').json_value)
+        self.assertEqual(len(test_json), 2)
+
+    @mock.patch('data_research.scripts.'
+                'update_county_msa_meta.update_state_to_geo_meta')
+    def test_run_rebuild(self, mock_update):
+        run_update()
+        self.assertEqual(mock_update.call_count, 2)
