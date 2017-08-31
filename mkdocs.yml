@@ -13,6 +13,7 @@ pages:
 - Back-end guidelines:
     - Wagtail and Django migrations: wagtail-migrations.md
     - Wagtail Pages vs Django views: django-to-wagtail.md
+    - Translation: translation.md
 - Front-end guidelines:
     - Atomic structure and design: atomic-structure.md
     - Notes on adapting atomic design: notes-on-atomic-design.md
