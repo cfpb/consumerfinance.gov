@@ -10,13 +10,14 @@ import unittest
 
 from bs4 import BeautifulSoup as bs
 
-from django.utils import timezone
 from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponse, Http404
 from django.template.defaultfilters import slugify
 from django.test import TestCase
 from django.utils import html
+from django.utils import timezone
+from django.utils.translation import ugettext as _
 
 from v1.models import CFGOVImage
 from v1.util.migrations import get_or_create_page, get_free_path
@@ -719,13 +720,14 @@ class AnswerModelTestCase(TestCase):
         test_redirect_page = self.create_answer_page(answer_base=answer2)
         test_page.redirect_to = test_redirect_page.answer_base
         self.assertEqual(
-            test_page.status_string.lower(), "redirected but not live")
+            test_page.status_string.lower(),
+            _("redirected but not live").lower())
         test_page.live = True
         self.assertEqual(
-            test_page.status_string.lower(), "redirected")
+            test_page.status_string.lower(), _("redirected").lower())
         test_page.redirect_to = None
         self.assertEqual(
-            test_page.status_string.lower(), "live")
+            test_page.status_string.lower(), _("live").lower())
 
     def test_get_ask_nav_items(self):
         from ask_cfpb.models import get_ask_nav_items
