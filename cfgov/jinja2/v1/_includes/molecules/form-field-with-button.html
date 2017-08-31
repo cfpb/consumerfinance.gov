@@ -29,7 +29,10 @@
     {% set form_id = ('form_' ~ range(1, 100) | random) %}
     <div class="form-group">
         <label for="{{ form_id }}">
-            <b>{{ value.label }}</b> {{ field_required_text }}
+            <b>{{ value.label }}</b>
+            {# TODO: Update required param name to is_required
+                     to make clear it's a boolean. #}
+            {{ _('(required)') if value.required else '' }}
         </label>
 
         <input id="{{ form_id }}"
