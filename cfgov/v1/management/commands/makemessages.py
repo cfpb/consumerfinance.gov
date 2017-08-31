@@ -29,12 +29,21 @@ class Command(makemessages.Command):
         django_block_re = trans_real.block_re
         django_endblock_re = trans_real.endblock_re
 
-        # Match both Django and Jinja2 translation blocks
+        # This monkey-patches support for Jinja2's {% trans %}{% endtrans %}
+        # blocks into trans_real's block/endblock-matching regular expressions.
+        # These differ from Django's {% blocktrans %}{% endblocktrans %}
+        # blocks.
+        #
+        # trans_real's other regular expressions, context_re, inline_re,
+        # plural_re, constant_re, and one_percent_re should match both Jinja2
+        # and Django conventions.
         trans_real.block_re = re.compile(
             django_block_re + '|' + jinja_block_re)
         trans_real.endblock_re = re.compile(
             django_endblock_re + '|' + jinja_endblock_re)
 
+        # The rest of trans_real's regular expressions should match conventions
+        # used in both Django and Jinja2 templates.
         # Call makemessages
         super(Command, self).handle(*args, **options)
 
