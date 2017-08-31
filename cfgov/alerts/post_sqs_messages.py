@@ -60,7 +60,7 @@ def matching_issue(title, issues):
 
 
 def post_to_chat(endpoint, username, message, issue_url):
-    text = 'Alert: {}. Github issue created at {}'.format(
+    text = 'Alert: {}. Github issue at {}'.format(
         message,
         issue_url,
     )
@@ -119,14 +119,14 @@ if __name__ == '__main__':
                     'alert'
                 ],
             )
-            # AND post to chat, if credentials provided
-            if args.mattermost_webhook_url and args.mattermost_username:
-                post_to_chat(
-                    endpoint=args.mattermost_webhook_url,
-                    username=args.mattermost_username,
-                    message=body,
-                    issue_url=issue.html_url,
-                )
+        # Post to chat, if credentials provided
+        if args.mattermost_webhook_url and args.mattermost_username:
+            post_to_chat(
+                endpoint=args.mattermost_webhook_url,
+                username=args.mattermost_username,
+                message=body,
+                issue_url=issue.html_url,
+            )
 
         client.delete_message(
             QueueUrl=args.queue_url,
