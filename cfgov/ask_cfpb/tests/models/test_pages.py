@@ -10,14 +10,14 @@ import unittest
 
 from bs4 import BeautifulSoup as bs
 
-from django.utils import timezone
-from django.utils.translation import ugettext as _
 from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponse, Http404
 from django.template.defaultfilters import slugify
 from django.test import TestCase
 from django.utils import html
+from django.utils import timezone
+from django.utils.translation import ugettext as _
 
 from v1.models import CFGOVImage
 from v1.util.migrations import get_or_create_page, get_free_path

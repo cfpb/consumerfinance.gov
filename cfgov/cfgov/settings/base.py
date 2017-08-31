@@ -187,6 +187,7 @@ LANGUAGES = (
     ('en', _('English')),
     ('es', _('Spanish')),
 )
+
 LOCALE_PATHS = (
     os.path.join(PROJECT_ROOT, 'locale'),
 )

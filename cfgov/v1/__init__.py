@@ -4,35 +4,28 @@ import HTMLParser
 import os
 import re
 import unicodedata
+from urlparse import parse_qs, urlparse
 
-from urlparse import urlparse, parse_qs
+from bs4 import BeautifulSoup, NavigableString
+from compressor.contrib.jinja2ext import CompressorExtension
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import (
-    linebreaksbr,
-    pluralize,
-    slugify,
-)
+from django.template.defaultfilters import linebreaksbr, pluralize, slugify
 from django.utils.module_loading import import_string
 from django.utils.timezone import template_localtime
 from django.utils.translation import ugettext, ungettext
 
-from jinja2 import contextfunction, Markup
-from compressor.contrib.jinja2ext import CompressorExtension
+from jinja2 import Markup, contextfunction
 
-from wagtail.wagtailcore.rich_text import expand_db_html, RichText
-
-from bs4 import BeautifulSoup, NavigableString
-
-from flags.template_functions import flag_enabled, flag_disabled
+from wagtail.wagtailcore.rich_text import RichText, expand_db_html
 
 from core.utils import signed_redirect, unsigned_redirect
+from flags.template_functions import flag_disabled, flag_enabled
 from processors.processors_common import fix_link
 from sheerlike import environment as sheerlike_environment
-
 from v1.routing import get_protected_url
 from v1.util.util import get_unique_id
 
