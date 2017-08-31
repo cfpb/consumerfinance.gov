@@ -32,7 +32,7 @@ from v1.util.util import get_unique_id
 default_app_config = 'v1.apps.V1AppConfig'
 
 
-class JinjaTranslations:
+class JinjaTranslations(object):
 
     def gettext(self, message):
         return ugettext(message)
