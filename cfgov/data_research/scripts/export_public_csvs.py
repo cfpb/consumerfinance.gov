@@ -9,32 +9,31 @@ import unicodecsv
 
 from core.utils import format_file_size
 from data_research.models import (
-    CountyMortgageData,
-    MSAMortgageData,
+    County, CountyMortgageData,
+    MetroArea, MSAMortgageData,
+    NonMSAMortgageData,
     MortgageMetaData,
     NationalMortgageData,
-    StateMortgageData,
+    State, StateMortgageData,
 )
 from data_research.mortgage_utilities.s3_utils import (
     bake_csv_to_s3, MORTGAGE_SUB_BUCKET, S3_MORTGAGE_DOWNLOADS_BASE)
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
-BASE_DATE = datetime.date(2008, 1, 1)
-BASE_QUERYSET = CountyMortgageData.objects.filter(date__gte=BASE_DATE)
-NATION_QUERYSET = NationalMortgageData.objects.filter(date__gte=BASE_DATE)
+NATION_QUERYSET = NationalMortgageData.objects.all()
 
 
 NATION_STARTER = {
     'RegionType': 'National',
     'State': '',
     'Name': 'United States',
-    'FIPSCode': '',
-    'CBSACode': ''}
+    'FIPSCode': '-----',
+    'CBSACode': '-----'}
 
 
 LATE_VALUE_TITLE = {
     'percent_30_60': 'Percent-30-89',
-    'percent_90': 'Percent-90+',
+    'percent_90': 'Percent-90-plus',
 }
 
 
@@ -73,14 +72,20 @@ def round_pct(value):
     return round((value * 100), 1)
 
 
-def row_starter(geo_type, meta):
+def row_starter(geo_type, obj):
     if geo_type == 'County':
         return [geo_type,
-                meta['state'],
-                meta['name'],
-                "'{}'".format(meta['fips'])]
+                obj.county.state.abbr,
+                obj.county.name,
+                "'{}'".format(obj.fips)]
+    elif geo_type == 'MetroArea':
+        return [geo_type, obj.msa.name, obj.fips]
+    elif geo_type == 'State':
+        return [geo_type,
+                obj.state.name,
+                "'{}'".format(obj.fips)]
     else:
-        return [geo_type, meta['name'], "'{}'".format(meta['fips'])]
+        return [geo_type, obj.state.name, obj.fips]
 
 
 def fill_nation_row_date_values(date_set):
@@ -104,6 +109,7 @@ def export_downloadable_csv(geo_type, late_value):
 
     geo_types are County, MetroArea or State.
     late_values are percent_30_60 or percent_90.
+    Non-Metro areas are added to the MetroArea CSV.
 
     Each CSV is to start with a National row for comparison.
 
@@ -117,25 +123,37 @@ def export_downloadable_csv(geo_type, late_value):
     thru_month = thru_date[:-3]
     geo_dict = {
         'County': {
-            'queryset': BASE_QUERYSET,
+            'queryset': CountyMortgageData.objects.filter(
+                county__valid=True),
             'headings': ['RegionType', 'State', 'Name', 'FIPSCode'],
-            'meta': FIPS.county_fips
+            'fips_list': sorted(
+                [county.fips for county in County.objects.filter(valid=True)])
         },
         'MetroArea': {
-            'queryset': MSAMortgageData.objects.filter(date__gte=BASE_DATE),
+            'queryset': MSAMortgageData.objects.filter(msa__valid=True),
             'headings': ['RegionType', 'Name', 'CBSACode'],
-            'meta': FIPS.msa_fips
+            'fips_list': sorted(
+                [metro.fips for metro in MetroArea.objects.filter(valid=True)])
+        },
+        'NonMetroArea': {
+            'queryset': NonMSAMortgageData.objects.filter(
+                state__non_msa_valid=True),
+            'headings': ['RegionType', 'Name', 'CBSACode'],
+            'fips_list': sorted(
+                ["{}-non".format(state.fips) for state
+                 in State.objects.filter(non_msa_valid=True)])
         },
         'State': {
-            'queryset': StateMortgageData.objects.filter(date__gte=BASE_DATE),
+            'queryset': StateMortgageData.objects.all(),
             'headings': ['RegionType', 'Name', 'FIPSCode'],
-            'meta': FIPS.state_fips
+            'fips_list': sorted(
+                [state.fips for state in State.objects.all()])
         },
     }
     slug = "{}Mortgages{}DaysLate-thru-{}".format(
         geo_type, LATE_VALUE_TITLE[late_value], thru_month)
     _map = geo_dict.get(geo_type)
-    meta = _map['meta']
+    fips_list = _map['fips_list']
     csvfile = StringIO()
     writer = unicodecsv.writer(csvfile)
     writer.writerow(_map['headings'] + date_list)
@@ -143,11 +161,20 @@ def export_downloadable_csv(geo_type, late_value):
                       for heading in _map['headings']]
     nation_ender = FIPS.nation_row[late_value]
     writer.writerow(nation_starter + nation_ender)
-    for fips in sorted(meta.keys()):
-        geos = _map['queryset'].filter(fips=fips)
-        geo_starter = row_starter(geo_type, meta[fips])
-        geo_ender = [round_pct(getattr(geo, late_value)) for geo in geos]
-        writer.writerow(geo_starter + geo_ender)
+    for fips in fips_list:
+        records = _map['queryset'].filter(fips=fips)
+        record_starter = row_starter(geo_type, records.first())
+        record_ender = [round_pct(getattr(record, late_value))
+                        for record in records]
+        writer.writerow(record_starter + record_ender)
+    if geo_type == 'MetroArea':
+        non_map = geo_dict['NonMetroArea']
+        for fips in non_map['fips_list']:
+            records = non_map['queryset'].filter(fips=fips)
+            record_starter = row_starter('NonMetroArea', records.first())
+            record_ender = [round_pct(getattr(record, late_value))
+                            for record in records]
+            writer.writerow(record_starter + record_ender)
     bake_csv_to_s3(
         slug,
         csvfile,

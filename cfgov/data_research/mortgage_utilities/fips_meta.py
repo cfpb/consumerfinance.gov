@@ -13,49 +13,43 @@ FIPS_DATA_PATH = (
 # We have minimal data for territories, so we exclude all but Puerto Rico (72)
 NON_STATES = {'MP': '69', 'AS': '60', 'VI': '78', 'GU': '66'}  # , 'PR': '72'}
 
-
-OUTDATED_FIPS = {
-    # These outdated FIPS codes can show up in the mortgage data and should be
-    # ignored, except for Shannon County, SD, which should be changed.
-    # The deprecated Dade FIPs gets a pass, because we want to add its values
-    # to Miami-Dade county
-    '02201': '',  # Prince of Wales-Outer Ketchikan, AK
-    '02270': '',  # Wade Hampton Census Area, AK
-    # '12025': '',  # Dade, which became Miami-Dade (12086) in 1990s
-    '12151': '',  # FL (??) only shows up thru 2011
-    '46113': '46102',  # Shannon County SD, renamed Oglala Lakota 2015-05-01
-    '51560': '',  # Clifton Forge County, VA, DELETED 2001-07-01
-    '51780': '',  # South Boston City, VA, DELETED 1995-06-30
-    # These older codes should also be ignored if they are ever encountered:
-    '02231': '',  # Skagway-Yakutat-Angoon Census Area, AK, DELETED 1992-09-22
-    '02232': '',  # Skagway-Hoonah-Angoon Census Area, AK, DELETED 2007-06-20
-    '02280': '',  # Wrangell-Petersburg Census Area, AK, DELETED 2008-06-01
-}
+# Census no longer uses these FIPS codes, but they show up in the NMDB data.
+# For more details on stale FIPS and FIPS for territories, see
+# [GHE]/CFGOV/mortgage-performance/wiki/Processing-of-source-file
+STALE_FIPS = [
+    '02201',  # Prince of Wales-Outer Ketchikan, AK
+    '02231',  # Skagway-Yakutat-Angoon Census Area, AK, DELETED 1992-09-22
+    '02232',  # Skagway-Hoonah-Angoon Census Area, AK, DELETED 2007-06-20
+    '02270',  # Wade Hampton Census Area, AK
+    '02280',  # Wrangell-Petersburg Census Area, AK, DELETED 2008-06-01
+    '12151',  # anomaly with insignificant data
+    '24057',  # anomaly with insignificant data
+    '41113',  # anomaly with insignificant data
+    '51560',  # Clifton Forge County, VA, DELETED 2001-07-01
+    '51780',  # South Boston City, VA, DELETED 1995-06-30
+]
+# These codes refer to small U.S. territories that don't meet our threshold.
+TERRITORIES_TO_IGNORE = [
+    '60010',
+    '66010',
+    '69110',
+    '69120',
+    '78010',
+    '78020',
+    '78030',
+]
+IGNORE_FIPS = STALE_FIPS + TERRITORIES_TO_IGNORE
 
 SOURCE_HEADINGS = [  # last changed 2017-07-31
     'date',
     'fips',
-    'open',
+    'open',  # stored as `total` in database
     'current',
     'thirty',
     'sixty',
     'ninety',
     'other'
 ]
-
-OUTPUT_HEADINGS = [  # These have not been finalized
-    'date',
-    'fips',
-    'state',
-    'county',
-    'msa',
-    'open_num',
-    'current_num',
-    '30_60_days_delinquent_num',
-    '30_60_days_delinquent_percent',
-    '90_days_delinquent_num',
-    '90_days_delinquent_percent',
-    'other_num']
 
 logger = logging.getLogger(__name__)
 
@@ -130,21 +124,12 @@ def load_county_mappings():
         )
 
 
-def load_whitelist():
-    with open("{}/fips_whitelist.json".format(FIPS_DATA_PATH), 'rb') as f:
-        FIPS.whitelist = json.loads(f.read())
-        FIPS.whitelist.append('-----')
-
-
-def load_all_fips():
-    with open("{}/all_fips.json".format(FIPS_DATA_PATH), 'rb') as f:
-        FIPS.all_fips = json.loads(f.read())
-        FIPS.all_fips.append('-----')
-
-
-def load_states():
-    with open("{}/state_meta.json".format(FIPS_DATA_PATH), 'rb') as f:
-        FIPS.state_fips = json.loads(f.read())
+def load_fips_lists():
+    from data_research.models import MortgageMetaData
+    for attr in ['whitelist', 'all_fips']:
+        setattr(FIPS, attr, MortgageMetaData.objects.get(name=attr).json_value)
+    FIPS.state_fips = MortgageMetaData.objects.get(
+        name='state_meta').json_value
 
 
 def load_constants():
@@ -204,9 +189,7 @@ def load_fips_meta(counties=True):
                                     if row['state'] not in NON_STATES}
             else:
                 FIPS.msa_fips = assemble_msa_mapping(fips_data)
-    load_states()
+    load_fips_lists()
     if counties is True:
         load_county_mappings()
-    load_all_fips()
-    load_whitelist()
     load_constants()

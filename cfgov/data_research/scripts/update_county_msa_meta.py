@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 import json
 import logging
 
-from data_research.models import MortgageMetaData
+from data_research.models import MortgageMetaData, NonMSAMortgageData
 from data_research.mortgage_utilities.s3_utils import bake_json_to_s3
-from data_research.views import FIPS, load_fips_meta
+from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
 logger = logging.getLogger(__name__)
 
@@ -184,7 +184,18 @@ def update_state_to_geo_meta(geo):
     logger.info("Saved metadata object '{}.'".format(slug))
 
 
+def update_non_msa_fips():
+    fips = sorted(set(
+        [obj.fips for obj in NonMSAMortgageData.objects.filter(
+            state__non_msa_valid=True)]))
+    meta_obj, cr = MortgageMetaData.objects.get_or_create(
+        name='non_msa_fips')
+    meta_obj.json_value = fips
+    meta_obj.save()
+
+
 def run():
     load_fips_meta()
     for geo in ['msa', 'county', 'non_msa']:
         update_state_to_geo_meta(geo)
+    update_non_msa_fips()

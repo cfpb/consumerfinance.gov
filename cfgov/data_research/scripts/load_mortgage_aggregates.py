@@ -4,55 +4,42 @@ from dateutil import parser
 import logging
 
 from data_research.models import (
-    MSAMortgageData,
+    MetroArea, MSAMortgageData,
     NationalMortgageData,
+    # MortgageMetaData,
     NonMSAMortgageData,
-    StateMortgageData,
+    State, StateMortgageData
 )
-from data_research.views import FIPS, load_fips_meta
+from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
 logger = logging.getLogger(__name__)
 
 
 def load_msa_values(date):
-    for msa_fips in FIPS.msa_fips:
-        _map = FIPS.msa_fips[msa_fips]
+    for metro in MetroArea.objects.all():
         msa_obj, cr = MSAMortgageData.objects.get_or_create(
             date=parser.parse(date).date(),
-            fips=msa_fips)
-        if cr:
-            FIPS.created += 1
-        else:
-            FIPS.updated += 1
-        county_string = ", ".join(_map['county_list'])
-        if msa_obj.counties != county_string:
-            msa_obj.counties = county_string
-            if msa_obj.counties:
-                msa_obj.save()
+            msa=metro,
+            fips=metro.fips)
+        msa_obj.aggregate_data()
 
 
 def load_state_values(date):
-    for state_fips in FIPS.state_fips.keys():
+    for state in State.objects.all():
         record, cr = StateMortgageData.objects.get_or_create(
             date=parser.parse(date).date(),
-            fips=state_fips)
-        if cr:
-            FIPS.created += 1
-        else:
-            FIPS.updated += 1
-        record.save()
+            state=state,
+            fips=state.fips)
+        record.aggregate_data()
 
 
 def load_non_msa_state_values(date):
-    for state_fips in FIPS.state_fips.keys():
+    for state in State.objects.all():
         record, cr = NonMSAMortgageData.objects.get_or_create(
             date=parser.parse(date).date(),
-            fips='{}-non'.format(state_fips))
-        if cr:
-            FIPS.created += 1
-        else:
-            FIPS.updated += 1
-        record.save()
+            state=state,
+            fips='{}-non'.format(state.fips))
+        record.aggregate_data()
 
 
 def load_national_values(date):

@@ -5,7 +5,7 @@ from data_research.views import (
 
 urlpatterns = [
 
-    url(r'^time-series/(?P<days_late>[3890-]*)/(?P<fips>\d{2,5})/?$',
+    url(r'^time-series/(?P<days_late>[3890-]*)/(?P<fips>[0-9non-]*)/?$',
         TimeSeriesData.as_view(),
         name='data_research_api_mortgage_timeseries'),
     url(r'^time-series/(?P<days_late>[3890-]*)/national/?$',

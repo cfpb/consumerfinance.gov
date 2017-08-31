@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import datetime
+import unittest
 
 from model_mommy import mommy
 
@@ -7,15 +8,226 @@ import django
 from django.http import HttpRequest
 
 from data_research.models import (
-    CountyMortgageData,
+    County, CountyMortgageData,
     MortgageDataConstant,
-    MortgageMetaData,
+    MortgageBase, MortgageMetaData,
     MortgagePerformancePage,
-    MSAMortgageData,
+    MetroArea, MSAMortgageData, NonMSAMortgageData,
     NationalMortgageData,
-    StateMortgageData
+    State, StateMortgageData
 )
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+
+
+class GeoValidationTests(django.test.TestCase):
+    """
+    Check the functions that validate metro, non-metro and county areas
+    against our data thresholds.
+    """
+
+    fixtures = ['mortgage_metadata.json', 'mortgage_constants.json']
+
+    def setUp(self):
+
+        mommy.make(
+            State,
+            fips='12',
+            name='Florida',
+            abbr='FL',
+            ap_abbr='Fla.',
+            counties=["12013", "12081"],
+            non_msa_counties=["12013"],
+            msas=["45300", "35840", "45220"])
+
+        mommy.make(
+            MetroArea,
+            fips='45220',
+            name='Tallahassee, FL',
+            counties=['12039'],
+            states=['12'],
+            valid=False)
+
+        mommy.make(
+            MetroArea,
+            fips='35840',
+            name='North Port-Sarasota-Bradenton, FL',
+            counties=['12081'],
+            states=['12'],
+            valid=True)
+
+        mommy.make(
+            County,
+            fips='12081',
+            name='Manatee County',
+            state=State.objects.get(fips='12'),
+            valid=False)
+
+        mommy.make(
+            County,
+            fips='12039',
+            name='Gadsden County',
+            state=State.objects.get(fips='12'),
+            valid=False)
+
+        mommy.make(
+            County,
+            fips='12013',
+            name='Calhoun County',
+            state=State.objects.get(fips='12'),
+            valid=True)
+
+        mommy.make(
+            MSAMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='45220',
+            total='200',
+            current='100',
+            thirty='50',
+            sixty='0',
+            ninety='50',
+            other='0',
+            msa=MetroArea.objects.get(fips='45220'))
+
+        mommy.make(
+            MSAMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='35840',
+            total='2000',
+            current='500',
+            thirty='500',
+            sixty='500',
+            ninety='500',
+            other='0',
+            msa=MetroArea.objects.get(fips='35840'))
+
+        mommy.make(
+            CountyMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='12039',
+            total='200',
+            current='100',
+            thirty='50',
+            sixty='0',
+            ninety='50',
+            other='0',
+            county=County.objects.get(fips='12039'))
+
+        mommy.make(
+            CountyMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='12081',
+            total='2643',
+            current='2526',
+            thirty='35',
+            sixty='11',
+            ninety='44',
+            other='26',
+            county=County.objects.get(fips='12081'))
+
+        mommy.make(
+            CountyMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='12013',
+            total='2643',
+            current='2526',
+            thirty='35',
+            sixty='11',
+            ninety='44',
+            other='26',
+            county=County.objects.get(fips='12013'))
+
+        mommy.make(
+            NonMSAMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='12-non',
+            total='200',
+            current='110',
+            thirty='35',
+            sixty='11',
+            ninety='44',
+            other='0',
+            state=State.objects.get(fips='12'))
+
+        mommy.make(
+            StateMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='12',
+            total='1000000',
+            current='0',
+            thirty='0',
+            sixty='0',
+            ninety='0',
+            other='0')
+
+        mommy.make(
+            NationalMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='-----',
+            total='0',
+            current='110',
+            thirty='35',
+            sixty='11',
+            ninety='44',
+            other='0')
+
+    def test_county_validation(self):
+        county = County.objects.get(fips='12081')
+        county_data = CountyMortgageData.objects.get(fips='12081')
+        county.validate()
+        self.assertIs(county.valid, True)
+        county_data.total = 100
+        county_data.save()
+        county.validate()
+        self.assertIs(county.valid, False)
+
+    def test_msa_validation(self):
+        msa = MetroArea.objects.get(fips='45220')
+        msa.validate()
+        self.assertIs(msa.valid, False)
+        msa2 = MetroArea.objects.get(fips='35840')
+        msa2.validate()
+        self.assertIs(msa2.valid, True)
+
+    def test_non_msa_validation(self):
+        """Non-MSA validation occurs on the State model."""
+        state = State.objects.get(fips='12')
+        non_msa = NonMSAMortgageData.objects.get(fips='12-non')
+        state.validate_non_msas()
+        self.assertIs(state.non_msa_valid, False)
+        non_msa.aggregate_data()
+        state.validate_non_msas()
+        self.assertIs(state.non_msa_valid, True)
+
+    def test_national_aggregation(self):
+        """National records aggregate state records."""
+        nation_record = NationalMortgageData.objects.get(
+            date=datetime.date(2016, 1, 1))
+        self.assertEqual(nation_record.total, 0)
+        nation_record.aggregate_data()
+        self.assertEqual(nation_record.total, 1000000)
+
+    def test_state_name_string(self):
+        state = State.objects.get(fips='12')
+        self.assertEqual(
+            state.__str__(), "{} ({})".format(state.name, state.fips))
+
+    def test_metro_name_string(self):
+        metro = MetroArea.objects.get(fips='35840')
+        self.assertEqual(
+            metro.__str__(), "{} ({})".format(metro.name, metro.fips))
+
+    def test_county_name_string(self):
+        county = County.objects.get(fips='12081')
+        self.assertEqual(
+            county.__str__(), "{}, {} ({})".format(
+                county.name, county.state.abbr, county.fips))
+
+
+class MortgageBaseCountiesTest(unittest.TestCase):
+    def test_bare_mortgage_base_counties(self):
+        """No county_list should be applied to county data records."""
+        base = MortgageBase()
+        self.assertEqual(base.county_list, [])
 
 
 class MortgagePerformancePageTests(django.test.TestCase):
@@ -94,8 +306,7 @@ class MortgageModelTests(django.test.TestCase):
             MSAMortgageData,
             total=0,
             fips='45300',
-            date=datetime.date(2016, 9, 1),
-            counties='12081')
+            date=datetime.date(2016, 9, 1))
 
         self.state_obj = mommy.make(
             StateMortgageData,
@@ -153,4 +364,4 @@ class MortgageModelTests(django.test.TestCase):
         self.assertEqual(
             msa_record.percent_90, county_record.percent_90)
         self.assertEqual(
-            msa_record.percent_30_60, 0.047244094488188976)
+            msa_record.percent_30_60, 0)
