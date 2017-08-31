@@ -1,4 +1,5 @@
-from __future__ import absolute_import  # Python 2 only
+# Python 2 only
+from __future__ import absolute_import
 
 import os
 import os.path
