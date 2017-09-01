@@ -28,7 +28,7 @@ const modernConf = {
         options: {
           presets: [ [ 'env', {
             targets: {
-              browsers: environment.getSupportedBrowserList()
+              browsers: environment.getSupportedBrowserList( 'js' )
             },
             debug: true
           } ] ]
