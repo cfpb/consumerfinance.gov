@@ -88,8 +88,11 @@ please send an email with your full name to tech@cfpb.gov.
 
     {% block page_css %}
     {% endblock %}
+
+    {% block page_header_footer_css %}
     <link rel="stylesheet" href="{% static 'css/header.nonresponsive.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/footer.nonresponsive.css' %}"/>
+    {% endblock %}
 
     {# Google Tag Manager #}
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
