@@ -9,6 +9,7 @@ var store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
 
 class MortgagePerformanceLineChart {
   constructor( { container } ) {
+    // TODO: Make these selections less verbose.
     this.$container = document.getElementById( container );
     this.$form = this.$container.querySelector( '#mp-line-chart-controls' );
     this.$geo = this.$container.querySelector( '#mp-line-chart-geo' );

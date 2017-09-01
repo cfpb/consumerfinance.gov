@@ -1,5 +1,6 @@
 'use strict';
 
+// TODO: Move this into cfgov-refresh's utils to encourage reuse
 class Store {
   constructor( mid = [] ) {
     this.subscribers = [];

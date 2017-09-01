@@ -1,5 +1,6 @@
 'use strict';
 
+// TODO: Replace with our internal xhr util: https://goo.gl/i6gs5Y
 var ajax = require( 'xdr' );
 
 var COUNTIES_URL = 'https://s3.amazonaws.com/files.consumerfinance.gov/data/mortgage-performance/meta/state_county_dropdown.json';
