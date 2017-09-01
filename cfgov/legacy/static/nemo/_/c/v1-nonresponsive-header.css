@@ -271,22 +271,26 @@ input[type="text"].disabled,input[type="search"].disabled,input[type="email"].di
     }
 }
 
-.list__unstyled {
+.list__unstyled, .m-list__unstyled {
     padding-left: 0;
     list-style-type: none;
 }
-.list__unstyled .list_item {
+.list__unstyled .list_item,
+.m-list__unstyled .m-list_item {
     margin-left: 0;
 }
-.list__horizontal {
+.list__horizontal,
+.m-list__horizontal {
     padding-left: 0;
 }
-.list__horizontal .list_item {
+.list__horizontal .list_item,
+..m-list__horizontal .m-list_item {
     display: inline-block;
     margin-right: .25em;
     margin-left: 0;
 }
-.lt-ie8 .list__horizontal .list_item {
+.lt-ie8 .list__horizontal .list_item,
+.lt-ie8 .m-list__horizontal .m-list_item {
     display: inline;
 }
 .list_link {

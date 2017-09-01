@@ -1,0 +1,242 @@
+# Spanish translations for cfgov-refresh
+
+#, fuzzy
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2017-08-30 20:30-0400\n"
+"Language: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ask_cfpb/models/pages.py:590
+msgid "redirected but not live"
+msgstr ""
+
+#: ask_cfpb/models/pages.py:592
+msgid "redirected"
+msgstr ""
+
+#: cfgov/settings/base.py:187
+msgid "English"
+msgstr ""
+
+#: cfgov/settings/base.py:188
+msgid "Spanish"
+msgstr ""
+
+#: core/forms.py:40
+msgid "Signature validation failed"
+msgstr ""
+
+#: core/forms.py:43
+msgid ""
+"URL must either be allowed by settings.EXTERNAL_URL_WHITELIST or have a "
+"valid signature"
+msgstr ""
+
+#: jinja2/v1/_includes/molecules/form-field-with-button.html:33
+msgid "(required)"
+msgstr "(se require)"
+
+#: legacy/templates/common/forgot_password.html:24
+msgid "Email"
+msgstr ""
+
+#: legacy/templates/common/forgot_password.html:28
+msgid "Continue"
+msgstr ""
+
+#: legacy/templates/common/login.html:31
+msgid "Password:"
+msgstr ""
+
+#: legacy/templates/common/login.html:39
+msgid "Log in"
+msgstr ""
+
+#: legacy/templates/common/password_change_confirm.html:9
+#: legacy/templates/common/password_change_form.html:9
+#: templates/admin/base.html:12
+msgid "Documentation"
+msgstr ""
+
+#: legacy/templates/common/password_change_confirm.html:10
+#: legacy/templates/common/password_change_form.html:11
+#: templates/admin/base.html:16
+msgid "Change password"
+msgstr ""
+
+#: legacy/templates/common/password_change_confirm.html:12
+#: legacy/templates/common/password_change_form.html:13
+#: templates/admin/base.html:20
+msgid "Log out"
+msgstr ""
+
+#: legacy/templates/common/password_change_confirm.html:16
+#: legacy/templates/common/password_change_form.html:18
+msgid "Home"
+msgstr ""
+
+#: legacy/templates/common/password_change_confirm.html:17
+#: legacy/templates/common/password_change_confirm.html:21
+#: legacy/templates/common/password_change_form.html:19
+#: legacy/templates/common/password_change_form.html:23
+#: legacy/templates/common/password_change_form.html:49
+msgid "Password change"
+msgstr ""
+
+#: legacy/templates/common/password_change_form.html:33
+msgid ""
+"\n"
+"        Please correct the error below."
+msgid_plural ""
+"Please correct the errors below.\n"
+"        "
+msgstr[0] ""
+msgstr[1] ""
+
+#: legacy/templates/common/password_change_form.html:51
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#: legacy/templates/common/password_change_form.html:67
+msgid "Old password"
+msgstr ""
+
+#: legacy/templates/common/password_change_form.html:72
+msgid "New password"
+msgstr ""
+
+#: legacy/templates/common/password_change_form.html:77
+msgid "Password (again)"
+msgstr ""
+
+#: legacy/templates/common/password_change_form.html:84
+msgid "Change my password"
+msgstr ""
+
+#: legacy/templates/common/reset_password_confirm.html:5
+msgid "Login"
+msgstr ""
+
+#: legacy/templates/common/reset_password_confirm.html:5
+msgid "login"
+msgstr ""
+
+#: legacy/templates/front/base_nonresponsive.html:24
+#: legacy/templates/front/base_nonresponsive.html:25
+#: legacy/templates/front/base_nonresponsive.html:26
+#: legacy/templates/front/base_nonresponsive.html:28
+#: legacy/templates/front/base_update.html:23
+#: legacy/templates/front/base_update.html:24
+#: legacy/templates/front/base_update.html:25
+#: legacy/templates/front/base_update.html:27
+msgid "en-US"
+msgstr ""
+
+#: legacy/templates/front/base_nonresponsive.html:34
+#: legacy/templates/front/base_update.html:46
+msgid "Consumer Financial Protection Bureau"
+msgstr ""
+
+#: legacy/templates/front/base_nonresponsive.html:109
+#: legacy/templates/front/base_update.html:162
+msgid "en"
+msgstr ""
+
+#: templates/admin/base.html:7
+msgid "View site"
+msgstr ""
+
+#: templates/admin/base.html:18
+msgid "Wagtail login"
+msgstr ""
+
+#: templates/admin/base.html:19
+msgid "Task launcher"
+msgstr ""
+
+#: templates/wagtailadmin/access_denied.html:7
+msgid "Sorry!"
+msgstr ""
+
+#: templates/wagtailadmin/access_denied.html:8
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: templates/wagtailadmin/access_denied.html:16
+msgid "Otherwise, you may want to"
+msgstr ""
+
+#: templates/wagtailadmin/access_denied.html:16
+msgid "LOG OUT "
+msgstr ""
+
+#: templates/wagtailadmin/account/password_reset/confirm.html:3
+#: templates/wagtailadmin/account/password_reset/confirm.html:32
+msgid "Set your new password"
+msgstr ""
+
+#: templates/wagtailadmin/account/password_reset/confirm.html:43
+msgid "Reset password"
+msgstr ""
+
+#: templates/wagtailadmin/login.html:56
+msgid "Forgotten it?"
+msgstr ""
+
+#: templates/wagtailadmin/login.html:69
+msgid "Signing in..."
+msgstr ""
+
+#: templates/wagtailadmin/login.html:69
+msgid "Sign in"
+msgstr ""
+
+#: templates/wagtailadmin/pages/listing/_button_with_dropdown.html:9
+msgid "Delete"
+msgstr ""
+
+#: templates/welcome.html:7
+msgid "Welcome"
+msgstr ""
+
+#: v1/models/base.py:40
+msgid "Author"
+msgstr ""
+
+#: v1/models/base.py:41
+msgid "Authors"
+msgstr ""
+
+#: v1/models/base.py:48
+msgid "Tag"
+msgstr ""
+
+#: v1/models/base.py:49
+msgid "Tags"
+msgstr ""
+
+#: v1/models/base.py:411
+msgid "password"
+msgstr ""
+
+#: v1/templates/cdnadmin/disabled.html:4 v1/templates/cdnadmin/index.html:5
+msgid "CDN Manager"
+msgstr ""
+
+#: v1/views/__init__.py:56
+msgid "Your password has been changed successfully!"
+msgstr ""
+
+#: v1/views/__init__.py:181
+msgid "Enter new password"
+msgstr ""
+
+#: v1/views/__init__.py:194
+msgid "Password reset unsuccessful"
+msgstr ""
