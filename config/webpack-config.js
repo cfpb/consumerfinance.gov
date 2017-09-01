@@ -39,7 +39,10 @@ const modernConf = {
           } ] ]
         }
       } ],
-      exclude: /node_modules/
+      exclude: {
+        test: /node_modules/,
+        exclude: /node_modules\/cfpb-chart-builder(\-\w+)?/
+      }
     } ]
   },
   output: {

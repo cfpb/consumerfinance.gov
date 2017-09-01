@@ -68,7 +68,8 @@
     "uglifyjs-webpack-plugin": "1.0.0-beta.1",
     "ustream-embedapi": "1.0.0",
     "webpack": "3.5.3",
-    "webpack-stream": "4.0.0"
+    "webpack-stream": "4.0.0",
+    "xdr": "0.5.3"
   },
   "devDependencies": {
     "chai": "4.0.2",
