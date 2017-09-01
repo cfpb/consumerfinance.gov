@@ -1,8 +1,6 @@
 from __future__ import unicode_literals
 import datetime
 
-import json
-
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -31,7 +29,7 @@ class MetaData(APIView):
             record = MortgageMetaData.objects.get(name=meta_name)
         except MortgageMetaData.DoesNotExist:
             return Response("No metadata object found.")
-        meta_json = json.loads(record.json_value)
+        meta_json = record.json_value
         return Response(meta_json)
 
 

@@ -66,6 +66,7 @@ class FipsMeta(object):
         self.county_fips = {}  # 3 mappings of FIPS to metadata
         self.state_fips = {}
         self.msa_fips = {}
+        self.non_msa_fips = {}
         self.nation_row = {}  # storage placeholder for CSV downloads
         self.whitelist = []  # FIPS that meet our threshold for display
         self.all_fips = []  # All valid county, MSA and state FIPS
@@ -106,16 +107,39 @@ def assemble_msa_mapping(msa_data):
     return mapping
 
 
+def load_county_mappings():
+    """Add lists of counties and non-MSA counties to state_fips attribute."""
+    from data_research.models import MortgageMetaData
+    msa_meta = MortgageMetaData.objects.get(name='state_msa_meta').json_value
+    for each in FIPS.state_fips:
+        _attr = FIPS.state_fips[each]
+        abbr = _attr['abbr']
+        _attr['counties'] = (
+            [county_fips for county_fips in FIPS.county_fips
+             if county_fips[:2] == each])
+        _attr['msas'] = [entry['fips'] for entry in msa_meta[abbr]['metros']]
+        _attr['msa_counties'] = []
+        for msa in _attr['msas']:
+            _attr['msa_counties'] += (
+                [county for county in FIPS.msa_fips[msa]['county_list']
+                 if county in _attr['counties']])
+        _attr['msa_counties'] = sorted(set(_attr['msa_counties']))
+        _attr['non_msa_counties'] = (
+            [county for county in _attr['counties']
+             if county not in _attr['msa_counties']]
+        )
+
+
 def load_whitelist():
     with open("{}/fips_whitelist.json".format(FIPS_DATA_PATH), 'rb') as f:
         FIPS.whitelist = json.loads(f.read())
-        FIPS.whitelist.append('00000')
+        FIPS.whitelist.append('-----')
 
 
 def load_all_fips():
     with open("{}/all_fips.json".format(FIPS_DATA_PATH), 'rb') as f:
         FIPS.all_fips = json.loads(f.read())
-        FIPS.all_fips.append('00000')
+        FIPS.all_fips.append('-----')
 
 
 def load_states():
@@ -140,7 +164,7 @@ def load_constants():
         setattr(FIPS, name, value)
     try:
         dates_obj = MortgageMetaData.objects.get(name='sampling_dates')
-        dates = json.loads(dates_obj.json_value)
+        dates = dates_obj.json_value
     except MortgageMetaData.DoesNotExist:
         with open("{}/sampling_dates.json".format(FIPS_DATA_PATH), 'rb') as f:
             dates = json.loads(f.read())
@@ -148,7 +172,7 @@ def load_constants():
     FIPS.short_dates = [date[:-3] for date in FIPS.dates]
 
 
-def load_fips_meta():
+def load_fips_meta(counties=True):
     """
     Load FIPS mappings, starting with base CSV files.
 
@@ -181,6 +205,8 @@ def load_fips_meta():
             else:
                 FIPS.msa_fips = assemble_msa_mapping(fips_data)
     load_states()
+    if counties is True:
+        load_county_mappings()
     load_all_fips()
     load_whitelist()
     load_constants()

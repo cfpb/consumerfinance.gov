@@ -1,10 +1,9 @@
 from __future__ import unicode_literals
 import datetime
-import unittest
 
 from model_mommy import mommy
 
-import django.test
+import django
 from django.http import HttpRequest
 
 from data_research.models import (
@@ -55,9 +54,9 @@ class MortgagePerformancePageTests(django.test.TestCase):
         self.assertIn('delinquency', test_page.get_context(request))
 
 
-class ModelStringTest(unittest.TestCase):
+class ModelStringTest(django.test.TestCase):
 
-    fixtures = ['mortgage_constants.json']
+    fixtures = ['mortgage_constants.json', 'mortgage_metadata.json']
 
     def test_county_string_max_length(self):
         """

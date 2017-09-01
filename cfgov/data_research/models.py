@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
 from dateutil import parser
-import json
 
 from django.db import models
+from jsonfield import JSONField
 
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 from v1.models import BrowsePage, PageManager
@@ -116,6 +116,23 @@ class MSAMortgageData(MortgageBase):
             setattr(self, field, count_fields[field])
 
 
+class MortgageMetaData(models.Model):
+    """
+    Metadata values, stored as json, to supplement display of mortgage charts.
+    """
+    name = models.CharField(max_length=255)
+    json_value = JSONField(blank=True)
+    note = models.TextField(blank=True)
+    updated = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return "{}, updated {}".format(self.name, self.updated)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = "Mortgage metadata"
+
+
 class StateMortgageData(MortgageBase):
     """
     A model to store aggregate state mortgage performance for a given date,
@@ -128,9 +145,9 @@ class StateMortgageData(MortgageBase):
         super(StateMortgageData, self).save(**kwargs)
 
     def aggregate_data(self):
+
         load_fips_meta()
-        state_fips_list = [fips for fips in FIPS.county_fips
-                           if fips[:2] == self.fips]
+        state_fips_list = FIPS.state_fips[self.fips]['counties']
         count_fields = {
             'total': 0, 'current': 0, 'thirty': 0,
             'sixty': 0, 'ninety': 0, 'other': 0}
@@ -141,6 +158,33 @@ class StateMortgageData(MortgageBase):
                 count_fields[field] += getattr(county, field)
         for field in count_fields:
             setattr(self, field, count_fields[field])
+
+
+class NonMSAMortgageData(MortgageBase):
+
+    def save(self, aggregate=True, **kwargs):
+        if aggregate is True:
+            self.aggregate_data()
+        super(NonMSAMortgageData, self).save(**kwargs)
+
+    def aggregate_data(self):
+
+        load_fips_meta()
+        non_msa_list = FIPS.state_fips[self.fips[:2]]['non_msa_counties']
+        count_fields = {
+            'total': 0, 'current': 0, 'thirty': 0,
+            'sixty': 0, 'ninety': 0, 'other': 0}
+        if not non_msa_list:
+            for field in count_fields:
+                setattr(self, field, count_fields[field])
+        else:
+            county_records = CountyMortgageData.objects.filter(
+                date=self.date, fips__in=non_msa_list)
+            for county in county_records:
+                for field in count_fields:
+                    count_fields[field] += getattr(county, field)
+            for field in count_fields:
+                setattr(self, field, count_fields[field])
 
 
 class NationalMortgageData(MortgageBase):
@@ -185,23 +229,6 @@ class MortgageDataConstant(models.Model):
         ordering = ['name']
 
 
-class MortgageMetaData(models.Model):
-    """
-    Metadata values, stored as json, to supplement display of mortgage charts.
-    """
-    name = models.CharField(max_length=255)
-    json_value = models.TextField(blank=True)
-    note = models.TextField(blank=True)
-    updated = models.DateField(auto_now=True)
-
-    def __str__(self):
-        return "{}, updated {}".format(self.name, self.updated)
-
-    class Meta:
-        ordering = ['name']
-        verbose_name_plural = "Mortgage metadata"
-
-
 class MortgagePerformancePage(BrowsePage):
     """
     A model for data_research pages about mortgage delinquency
@@ -213,7 +240,7 @@ class MortgagePerformancePage(BrowsePage):
 
     def get_mortgage_meta(self):
         meta_set = MortgageMetaData.objects.all()
-        meta = {obj.name: json.loads(obj.json_value) for obj in meta_set}
+        meta = {obj.name: obj.json_value for obj in meta_set}
         thru_date_string = meta['sampling_dates'][-1]
         thru_date = parser.parse(thru_date_string)
         meta['thru_month'] = thru_date.strftime("%Y-%m")
@@ -236,3 +263,6 @@ class MortgagePerformancePage(BrowsePage):
             context.update({'delinquency': 'percent_90',
                             'time_frame': '90'})
         return context
+
+    class Media:
+        css = ['secondary-navigation.css']
