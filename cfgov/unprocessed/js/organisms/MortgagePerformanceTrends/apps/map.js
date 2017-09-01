@@ -100,7 +100,7 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       action = actions.clearGeo();
   }
 
-  store.dispatch( action );
+  return store.dispatch( action );
 
 };
 
@@ -159,6 +159,7 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
   if ( geo ) {
     utils.showEl( geo );
   }
+  return geoType;
 };
 
 MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state ) {

@@ -6,9 +6,9 @@
 
 'use strict';
 
-// Enable console logging of state changes.
+// Enable console logging of state changes (except in IE).
 // TODO: Set to false before release.
-window.MP_DEBUG = true;
+window.MP_DEBUG = window.navigator.userAgent.indexOf('MSIE ') === -1;
 
 // CFPB's charting library looks for data files on S3 by default.
 // MP uses a custom API so point our charts to it instead.
