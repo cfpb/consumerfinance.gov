@@ -32,6 +32,7 @@
     "cf-tables": "4.1.2",
     "cf-typography": "4.1.2",
     "cfpb-chart-builder": "2.0.3",
+    "cfpb-chart-builder-canary": "*",
     "del": "2.2.2",
     "es5-shim": "4.5.9",
     "glob-all": "3.1.0",
@@ -64,9 +65,11 @@
     "psi": "3.0.0",
     "require-dir": "0.3.2",
     "sauce-connect-tunnel": "0.2.1",
+    "uglifyjs-webpack-plugin": "1.0.0-beta.1",
     "ustream-embedapi": "1.0.0",
     "webpack": "3.5.3",
-    "webpack-stream": "4.0.0"
+    "webpack-stream": "4.0.0",
+    "xdr": "0.5.3"
   },
   "devDependencies": {
     "chai": "4.0.2",
@@ -81,6 +84,7 @@
     "mkdirp": "0.5.1",
     "mocha": "3.2.0",
     "mocha-jsdom": "1.1.0",
+    "mockery": "2.1.0",
     "protractor": "5.1.2",
     "protractor-accessibility-plugin": "github:cfpb/protractor-accessibility-plugin#on-page-load",
     "protractor-cucumber-framework": "3.1.2",
