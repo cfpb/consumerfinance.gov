@@ -368,7 +368,7 @@
                 </div>
             </fieldset>
         </form>
-        <h2 id="mp-map-title">Percentage of mortgages 30-89 days delinquent: <span id="mp-map-title-date">January 2008</span></h2>
+        <h2 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame }} days delinquent: <span id="mp-map-title-date">January 2008</span></h2>
     </div>
     <img src="https://i.imgur.com/3AyyOQN.png" alt="">
     <div data-chart-color="green" data-chart-description="{{ value.description }}" data-chart-source="mortgage-performance/map/states-2009-01.json" data-chart-metadata="states" data-chart-title="MP test" data-chart-type="geo-map" id="mp-map">
