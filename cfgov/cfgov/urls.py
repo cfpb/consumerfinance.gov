@@ -109,6 +109,9 @@ urlpatterns = [
         include(fin_ed.urls_for_prefix('adult-financial-education'))),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
+    url(r'^empowerment/$', TemplateView.as_view(
+        template_name='empowerment/index.html'),
+        name='empowerment'),
     url(r'^students/$', TemplateView.as_view(
         template_name='students/index.html'),
         name='students'),
