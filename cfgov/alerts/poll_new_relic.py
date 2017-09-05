@@ -92,9 +92,10 @@ def format_message_for_violation(violation):
         condition_name=violation['condition_name'],
         entity_name=violation['entity']['name']
     )
-    body = '(New Relic {product}, {type} violation)'.format(
+    body = 'New Relic {product}, {label}'.format(
         product=violation['entity']['product'],
         type=violation['entity']['type'],
+        label=violation['label']
     )
     message_body = '{title} - {body}'.format(title=title, body=body)
     return message_body
