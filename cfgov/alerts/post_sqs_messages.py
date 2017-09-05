@@ -100,7 +100,11 @@ if __name__ == '__main__':
     )
 
     for message in response.get('Messages', {}):
-        body = message.get('Body')
+        body = message.get('Body').replace(
+            '#', '# '  # Avoids erroneous Github issue link
+        ).replace(
+            '[Open]', ''  # We want to expand the link
+        )
         title = body.split(" - ")[0]
         logger.info('Retrieved message {} from SQS'.format(body))
 
