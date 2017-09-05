@@ -371,7 +371,7 @@ class TimeseriesViewTests(django.test.TestCase):
                         'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
         msa_value = json.loads(response.content)['data'][msa.fips]['value']
-        self.assertEqual(msa_value, 0)
+        self.assertIs(msa_value, None)
 
     def test_national_map_data_30_89(self):
         response = self.client.get(

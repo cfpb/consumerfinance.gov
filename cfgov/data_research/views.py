@@ -194,7 +194,7 @@ class MapData(APIView):
                 payload['data'].update({record.fips: data_series})
             if geo == 'metros':
                 for metro in MetroArea.objects.filter(valid=False):
-                    payload['data'][metro.fips]['value'] = 0
+                    payload['data'][metro.fips]['value'] = None
                 for record in NonMSAMortgageData.objects.filter(
                         state__non_msa_valid=True, date=date):
                     non_data_series = record.time_series(days_late)
