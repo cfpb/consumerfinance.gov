@@ -2,6 +2,7 @@ import argparse
 import boto3
 import datetime
 import logging
+import re
 import sys
 
 import requests
@@ -44,13 +45,18 @@ parser.add_argument(
     help='Number of minutes for which to consider a violation "new"'
 )
 parser.add_argument(
+    '--filter',
+    default=r'.*',
+    help='Filter New Relic violation policy names with the given regex'
+)
+parser.add_argument(
     '--dryrun',
     action='store_true',
     help='Read from New Relic but do not write to SQS'
 )
 
 
-def get_new_violations(newrelic_token, newrelic_url, threshold):
+def get_new_violations(newrelic_token, newrelic_url, threshold, filter):
     """ Check for violations in New Relic that are newer than the
     newness_threshold in minutes. """
     headers = {'X-Api-Key': newrelic_token}
@@ -65,6 +71,11 @@ def get_new_violations(newrelic_token, newrelic_url, threshold):
 
     violations = []
     for violation in response_json['violations']:
+        # Filter on the policy name
+        policy_name = violation['policy_name']
+        if not filter.search(policy_name):
+            continue
+
         # New Relic timestamps are in miliseconds
         opened_timestamp = violation['opened_at'] / 1000.0
         opened = datetime.datetime.fromtimestamp(opened_timestamp)
@@ -77,11 +88,13 @@ def get_new_violations(newrelic_token, newrelic_url, threshold):
 def format_message_for_violation(violation):
     """ Format the given violation dictionary into an SQS message
     dictionary """
-    title = violation['entity']['name']
-    body = '{product} {type} {condition_name}'.format(
+    title = '{condition_name}, {entity_name}'.format(
+        condition_name=violation['condition_name'],
+        entity_name=violation['entity']['name']
+    )
+    body = '(New Relic {product}, {type} violation)'.format(
         product=violation['entity']['product'],
         type=violation['entity']['type'],
-        condition_name=violation['condition_name'],
     )
     message_body = '{title} - {body}'.format(title=title, body=body)
     return message_body
@@ -97,10 +110,16 @@ if __name__ == "__main__":
         region_name='us-east-1',
     )
 
+    try:
+        filter = re.compile(args.filter)
+    except Exception as err:
+        logging.error("Unable to compile filter regular expression")
+        raise err
+
     threshold = datetime.timedelta(minutes=args.threshold)
     violations = get_new_violations(args.newrelic_token,
                                     args.newrelic_url,
-                                    threshold)
+                                    threshold, filter)
     # Send the violations to SQS as messages
     for violation in violations:
         message_body = format_message_for_violation(violation)
