@@ -277,6 +277,25 @@ email_signup = {
     }
 }
 
+email_signup_required = {
+    'type': 'email_signup',
+    'value': {
+        'heading': 'Email Sign Up',
+        'text': 'Sign up for our newsletter.',
+        'gd_code': 'TEST-GD-CODE',
+        'form_field': [
+            {
+                'btn_text': 'this is a form field with button',
+                'required': True,
+                'info': 'We will never share your email address.',
+                'label': 'Learn more',
+                'type': 'email',
+                'placeholder': 'email@domain.com',
+            }
+        ]
+    }
+}
+
 reg_comment = {
     "type": "reg_comment",
     "value": {

@@ -46,7 +46,7 @@ How to change | See below | With the release cycle | Use [API versioning](http:/
 
 ## Front-end Resources
 
-Front-end resources should conform to the [CFPB front-end guides](front-end-guide.md) and should use atomic elements, organisms, existing structure and convention. When applicable, front-end components should be added to Capital Framework using atomic design principles.
+Front-end resources should conform to [CFPB development standards](https://github.com/cfpb/development) and should use atomic elements, organisms, existing structure and convention. When applicable, front-end components should be added to Capital Framework using atomic design principles.
 
 Projects that will be part of cfgov but live in their own repositories should:
 

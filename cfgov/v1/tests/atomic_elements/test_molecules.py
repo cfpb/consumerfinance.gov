@@ -2,6 +2,7 @@ from django.test import Client, TestCase
 from wagtail.wagtailcore.blocks import StreamValue
 
 from scripts import _atomic_helpers as atomic
+from v1.atomic_elements.molecules import FormFieldWithButton
 from v1.models.browse_filterable_page import BrowseFilterablePage
 from v1.models.browse_page import BrowsePage
 from v1.models.landing_page import LandingPage
@@ -220,3 +221,4 @@ class MoleculesTestCase(TestCase):
         publish_page(child=sublanding_page)
         response = django_client.get('/sublanding/')
         self.assertContains(response, 'this is a form field with button')
+        self.assertNotContains(response, '(required)')
