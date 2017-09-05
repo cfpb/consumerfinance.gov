@@ -8,7 +8,9 @@ import sys
 import requests
 
 logger = logging.getLogger(__name__)
-logger.addHandler(logging.StreamHandler())
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+logger.addHandler(handler)
 
 # add ch to logger
 parser = argparse.ArgumentParser()
@@ -50,7 +52,7 @@ parser.add_argument(
     help='Number of minutes for which to consider a violation "new"'
 )
 parser.add_argument(
-    '--filter',
+    '--policy_filter',
     default=r'.*',
     help='Filter New Relic violation policy names with the given regex'
 )
@@ -61,7 +63,7 @@ parser.add_argument(
 )
 
 
-def get_new_violations(newrelic_token, newrelic_url, threshold, filter):
+def get_new_violations(newrelic_token, newrelic_url, threshold, policy_filter):
     """ Check for violations in New Relic that are newer than the
     newness_threshold in minutes. """
     headers = {'X-Api-Key': newrelic_token}
@@ -78,7 +80,7 @@ def get_new_violations(newrelic_token, newrelic_url, threshold, filter):
     for violation in response_json['violations']:
         # Filter on the policy name
         policy_name = violation['policy_name']
-        if not filter.search(policy_name):
+        if not policy_filter.search(policy_name):
             continue
 
         # New Relic timestamps are in miliseconds
@@ -127,15 +129,15 @@ if __name__ == "__main__":
     )
 
     try:
-        filter = re.compile(args.filter)
+        policy_filter = re.compile(args.policy_filter)
     except Exception as err:
-        logging.error("Unable to compile filter regular expression")
+        logging.error("Unable to compile policy filter regular expression")
         raise err
 
     threshold = datetime.timedelta(minutes=args.threshold)
     violations = get_new_violations(args.newrelic_token,
                                     args.newrelic_url,
-                                    threshold, filter)
+                                    threshold, policy_filter)
     # Send the violations to SQS as messages
     for violation in violations:
         message_body = format_message_for_violation(
@@ -151,4 +153,4 @@ if __name__ == "__main__":
                              "'{}' to SQS".format(message_body))
                 sys.exit(1)
         else:
-            print(message_body)
+            logger.info(message_body)
