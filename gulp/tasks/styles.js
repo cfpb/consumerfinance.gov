@@ -28,7 +28,7 @@ function stylesModern() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors.bind( this, { exitProcess: true } ) )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList()
+      browsers: environment.getSupportedBrowserList( 'css' )
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpSourcemaps.write( '.' ) )
@@ -99,7 +99,7 @@ function stylesOnDemand() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList()
+      browsers: environment.getSupportedBrowserList( 'css' )
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulp.dest( configStyles.dest ) )
@@ -127,7 +127,7 @@ function stylesFeatureFlags() {
     .pipe( gulpLess( configStyles.settings ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList()
+      browsers: environment.getSupportedBrowserList( 'css' )
     } ) )
     .pipe( gulp.dest( configStyles.dest + '/feature-flags' ) )
     .pipe( browserSync.reload( {
@@ -146,7 +146,7 @@ function stylesKnowledgebaseProd() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList()
+      browsers: environment.getSupportedBrowserList( 'css' )
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( 'es-ask-styles.min.css' ) )
@@ -166,7 +166,7 @@ function stylesKnowledgebaseIE() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList()
+      browsers: environment.getSupportedBrowserList( 'css' )
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( 'es-ask-styles-ie.min.css' ) )
@@ -185,7 +185,7 @@ function stylesNemoProd() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList()
+      browsers: environment.getSupportedBrowserList( 'css' )
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( 'es-styles.min.css' ) )
@@ -204,7 +204,7 @@ function stylesNemoIE() {
     .pipe( gulpLess( { compress: true } ) )
     .on( 'error', handleErrors )
     .pipe( gulpAutoprefixer( {
-      browsers: environment.getSupportedBrowserList()
+      browsers: environment.getSupportedBrowserList( 'css' )
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
     .pipe( gulpRename( 'es-styles-ie.min.css' ) )
