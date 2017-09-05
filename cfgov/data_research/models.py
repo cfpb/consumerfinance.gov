@@ -81,7 +81,7 @@ class State(models.Model):
         blank=True, help_text='FIPS list of MSAs in the state')
     non_msa_valid = models.BooleanField(default=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} ({})".format(self.name, self.fips)
 
     def validate_non_msas(self):
@@ -133,7 +133,7 @@ class MetroArea(models.Model):
             self.valid = False
         self.save()
 
-    def __unicode__(self):
+    def __str__(self):
         return "{} ({})".format(self.name, self.fips)
 
     class Meta:
@@ -166,7 +166,7 @@ class County(models.Model):
             self.valid = False
         self.save()
 
-    def __unicode__(self):
+    def __str__(self):
         return "{}, {} ({})".format(self.name, self.state.abbr, self.fips)
 
 
