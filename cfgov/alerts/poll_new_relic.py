@@ -34,6 +34,11 @@ parser.add_argument(
     help='Access token for New Relic API'
 )
 parser.add_argument(
+    '--newrelic_account',
+    required=True,
+    help='New Relic account number, used to construct alert link URLs'
+)
+parser.add_argument(
     '--newrelic_url',
     default="https://api.newrelic.com/v2/",
     help='URL base for the New Relic API v2'
@@ -85,17 +90,27 @@ def get_new_violations(newrelic_token, newrelic_url, threshold, filter):
     return violations
 
 
-def format_message_for_violation(violation):
+def format_message_for_violation(violation, account_number):
     """ Format the given violation dictionary into an SQS message
     dictionary """
     title = '{condition_name}, {entity_name}'.format(
         condition_name=violation['condition_name'],
         entity_name=violation['entity']['name']
     )
-    body = 'New Relic {product}, {label}'.format(
+    incidents_link = (
+        'https://alerts.newrelic.com/accounts/'
+        '{account_number}/incidents'
+    ).format(
+        account_number=account_number
+    )
+    body = (
+        'New Relic {product}, {label}.'
+        '<a href="{link}">View incidents</a>'
+    ).format(
         product=violation['entity']['product'],
         type=violation['entity']['type'],
-        label=violation['label']
+        label=violation['label'],
+        link=incidents_link
     )
     message_body = '{title} - {body}'.format(title=title, body=body)
     return message_body
@@ -123,7 +138,8 @@ if __name__ == "__main__":
                                     threshold, filter)
     # Send the violations to SQS as messages
     for violation in violations:
-        message_body = format_message_for_violation(violation)
+        message_body = format_message_for_violation(
+            violation, args.newrelic_account)
         logger.info("Sending message '{}' to SQS".format(message_body))
         if not args.dryrun:
             response = client.send_message(
