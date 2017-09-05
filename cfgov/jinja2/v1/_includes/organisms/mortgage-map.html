@@ -14,10 +14,11 @@
 {% set county_meta = csv_meta['County'] %}
 {% set metro_meta = csv_meta['MetroArea'] %}
 {% set state_meta = csv_meta['State'] %}
+{% set data_vis_color = 'blue' if time_frame == '30-89' else 'navy' %}
 
-<div class="o-full-width-text-group" id="mp-map-container" data-chart-time-span="{{ time_frame }}" data-chart-color="{{ 'blue' if time_frame == '30-89' else 'navy' }}">
+<div class="o-full-width-text-group" id="mp-map-container" data-chart-time-span="{{ time_frame }}" data-chart-color="{{ data_vis_color }}">
     <div class="m-full-width-text">
-        <form id="mp-map-controls" name="mp-map-controls" class="mp-controls">
+        <form id="mp-map-controls" name="mp-map-controls" class="mp-controls u-js-only">
             <div id="mp-map-loading" class="mp-loading"></div>
             <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:1px;border:0;">
                 <label class="a-label u-mb20" for="test_select"><strong>Select location type</strong></label>
@@ -327,7 +328,7 @@
                 </div>
             </fieldset>
             <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
-                <label class="a-label u-mb20"><strong>Select month and year to display</strong></label>
+                <label class="a-label u-mb20"><h4>Select month and year to display</h4></label>
                 <div class="m-form-field m-form-field__select" id="mp-map-month-container">
                     <label class="a-label" for="mp-map-month">Month</label>
                     <div class="a-select">
@@ -368,34 +369,48 @@
                 </div>
             </fieldset>
         </form>
-        <h2 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame }} days delinquent: <span id="mp-map-title-date">January 2008</span></h2>
     </div>
-    <div class="o-mp-map">
-      <div data-chart-color="green" data-chart-description="{{ value.description }}" data-chart-source="mortgage-performance/map/states-2009-01.json" data-chart-metadata="states" data-chart-title="MP test" data-chart-type="geo-map" id="mp-map">
-          This is the chart description.
-      </div>
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 671.8 91.6" enable-background="new 0 0 671.8 91.6" xml:space="preserve" class="m-color-ramp" data-chart-color="blue">
-        <g>
-        	<g>
-            <rect class="a-ramp-value-0" x="0.2" y="28.4" stroke="#848588" stroke-width="0.5" stroke-miterlimit="10" width="91.5" height="15" />
-        		<rect class="a-ramp-value-1" x="91.4" y="28.4" stroke="#848588" stroke-width="0.5" stroke-miterlimit="10" width="91.5" height="15" />
-        		<rect class="a-ramp-value-2" x="180.9" y="28.4" stroke="#848588" stroke-width="0.5" stroke-miterlimit="10" width="91.5" height="15" />
-        		<rect class="a-ramp-value-3" x="271.1" y="28.4" stroke="#848588" stroke-width="0.5" stroke-miterlimit="10" width="91.5" height="15" />
-        		<rect class="a-ramp-value-4" x="360.6" y="28.4" stroke="#848588" stroke-width="0.5" stroke-miterlimit="10" width="91.5" height="15" />
-        		<rect class="a-ramp-value-5" x="451.8" y="28.4" stroke="#848588" stroke-width="0.5" stroke-miterlimit="10" width="91.5" height="15" />
-        		<rect class="a-ramp-value-6" x="544.2" y="28.4" stroke="#848588" stroke-width="0.5" stroke-miterlimit="10" width="91.5" height="15" />
-        	</g>
-        	<polygon fill="none" points="671.8,91.6 1,91.6 0.9,50.9 671.7,50.9  " />
-        	<text transform="matrix(1 1.000000e-05 2.000000e-05 1 0.9628 60.0024)">
-        		<tspan x="0" y="0" fill="#010101" font-size="12">Insufficient         0%                        1%                         2%                        3%                         4%                         5%                      6%+</tspan>
-        		<tspan x="0.1" y="20" fill="#010101" font-size="12">data</tspan>
-        	</text>
-        	<polygon fill="none" points="334.9,17 1,17 0.9,1.2 334.8,1.2  " />
-        	<text transform="matrix(1 1.000000e-05 2.000000e-05 1 0.9696 10.2465)" fill="#231F20" font-size="12">Delinquency rates</text>
-        </g>
-      </svg>
+    <div class="o-mp-map m-full-width-text">
+        <h3 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame }} days delinquent: <span id="mp-map-title-date">January 2008</span></h3>
+        <div id="mp-map">
+            {{ value.description }}
+        </div>
+        <svg viewBox="0 0 642 93" xmlns="http://www.w3.org/2000/svg" class="m-color-ramp" data-chart-color="{{ data_vis_color }}">
+            <g>
+                <title>U.S. Map Legend for Mortgages {{ time_frame }} days delinquent</title>
+                <description>The percentage of mortgages {{ time_frame }} days delinquent varies by location from 0% to 6%.</description>
+                <rect fill="none" id="canvas_background" height="95" width="644" y="-1" x="-1"/>
+            </g>
+            <g>
+                <g>
+                    <g>
+                        <rect y="30.1535" x="1.2" class="a-ramp-value-0" />
+                        <rect y="30.1535" x="92.4" class="a-ramp-value-1" />
+                        <rect y="30.1535" x="181.9" class="a-ramp-value-2" />
+                        <rect y="30.1535" x="272.1" class="a-ramp-value-3" />
+                        <rect y="30.1535" x="361.6" class="a-ramp-value-4" />
+                        <rect y="30.1535" x="452.8" class="a-ramp-value-5" />
+                        <rect y="30.1535" x="545.2" class="a-ramp-value-6" />
+                    </g>
+                    <text x="0.999965" y="1.75349" transform="matrix(1,0.00001,0.00002,1,0.9696,10.2465)">Delinquency rates</text>
+                </g>
+                <g class="labels">
+                    <text y="60" x="4">
+                        <tspan x="0">Insufficient</tspan>
+                        <tspan x="0" dy="1.2em">data</tspan>
+                    </text>
+                    <text y="60" x="85">0%</text>
+                    <text y="60" x="174">1%</text>
+                    <text y="60" x="264">2%</text>
+                    <text y="60" x="354">3%</text>
+                    <text y="60" x="446">4%</text>
+                    <text y="60" x="537">5%</text>
+                    <text y="60" x="610">6%+</text>
+                </g>
+            </g>
+        </svg>
     </div>
-    <p class="m-chart-footnote block__sub block__border-top block short-desc" style="font-size:14px !important"><strong>Source:</strong> Download CSV files with <a class="icon-link icon-link__download" href="{{ state_meta['url'] }}" <span class="icon-link_text">state</span></a> ({{ state_meta['size'] }}), <a class="icon-link icon-link__download" href="{{ metro_meta['url'] }}" <span class="icon-link_text">metro area</span></a> ({{ metro_meta['size'] }}), or <a class="icon-link icon-link__download" href="{{ county_meta['url'] }}" <span class="icon-link_text">county</span></a> ({{ county_meta['size'] }})  data.<br>
+    <p class="m-chart-footnote block__sub block__border-top block short-desc" style="font-size:14px !important"><strong>Source:</strong> Download CSV files with <a class="icon-link icon-link__download" href="{{ state_meta['url'] }}" <span class="icon-link_text">state</span></a> ({{ state_meta['size'] }}), <a class="icon-link icon-link__download" href="{{ metro_meta['url'] }}" <span class="icon-link_text">metro area</span></a> ({{ metro_meta['size'] }}), or <a class="icon-link icon-link__download" href="{{ county_meta['url'] }}"><span class="icon-link_text">county</span></a> ({{ county_meta['size'] }}) data.<br>
         <strong>Date published:</strong> {{ pub_date_formatted }}<br>
         <strong>Note:</strong> Data from the last six months are not final. The most recent data available in each visualization is for {{ thru_month_formatted }}.
     </p>
