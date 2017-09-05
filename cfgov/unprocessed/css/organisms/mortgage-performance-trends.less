@@ -1,0 +1,48 @@
+// Import external cfpb-chart-builder stylesheet
+// This is also imported by the chart block (in chart.less)
+@import (less) 'cfpb-chart-builder.less';
+
+.o-mp-chart {
+
+}
+
+.o-mp-map {
+  border: 1px solid @gray-20;
+  padding: 1em 1em .5em;
+}
+
+.m-color-ramp {
+
+  &[data-chart-color='blue'] {
+
+    .a-ramp-value {
+
+      &-0 { fill: @gray-10; }
+      &-1 { fill: @pacific-20; }
+      &-2 { fill: @pacific-40; }
+      &-3 { fill: @pacific-60; }
+      &-4 { fill: @pacific-80; }
+      &-5 { fill: @pacific; }
+      &-6 { fill: @dark-pacific; }
+
+    }
+
+  }
+
+  &[data-chart-color='navy'] {
+
+    .a-ramp-value {
+
+      &-0 { fill: @gray-10; }
+      &-1 { fill: @navy-20; }
+      &-2 { fill: @navy-40; }
+      &-3 { fill: @navy-60; }
+      &-4 { fill: @navy-80; }
+      &-5 { fill: @navy; }
+      &-6 { fill: @dark-navy; }
+
+    }
+
+  }
+
+}
