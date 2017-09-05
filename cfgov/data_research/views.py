@@ -1,23 +1,17 @@
 from __future__ import unicode_literals
 import datetime
 
-import json
-
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-# from rest_framework_csv import renderers as rfc_renderers
 
 from data_research.models import (
-    CountyMortgageData,
-    # MortgageDataConstant,
-    MSAMortgageData,
-    MortgageMetaData,
-    NationalMortgageData,
-    StateMortgageData)
-from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+    County, CountyMortgageData,
+    MetroArea, MSAMortgageData, NonMSAMortgageData,
+    State, StateMortgageData,
+    MortgageMetaData, NationalMortgageData)
 
-ALLOWED_DATE_RANGES = ['30-89', '90']
+DAYS_LATE_RANGE = ['30-89', '90']
 
 
 class MetaData(APIView):
@@ -31,7 +25,7 @@ class MetaData(APIView):
             record = MortgageMetaData.objects.get(name=meta_name)
         except MortgageMetaData.DoesNotExist:
             return Response("No metadata object found.")
-        meta_json = json.loads(record.json_value)
+        meta_json = record.json_value
         return Response(meta_json)
 
 
@@ -43,7 +37,7 @@ class TimeSeriesNational(APIView):
     renderer_classes = (JSONRenderer,)  # , rfc_renderers.CSVRenderer)
 
     def get(self, request, days_late):
-        if days_late not in ALLOWED_DATE_RANGES:
+        if days_late not in DAYS_LATE_RANGE:
             return Response("Unknown delinquency range")
         records = NationalMortgageData.objects.all()
         data = {'meta': {'name': 'United States',
@@ -58,47 +52,56 @@ class TimeSeriesData(APIView):
     View for delivering geo-based time-series data
     from the mortgage performance dataset.
     """
-    renderer_classes = (JSONRenderer,)  # , rfc_renderers.CSVRenderer)
+    renderer_classes = (JSONRenderer,)
 
     def get(self, request, days_late, fips):
         """
         Return a FIPS-based slice of base data as a json timeseries.
         """
-        if days_late not in ALLOWED_DATE_RANGES:
+        if days_late not in DAYS_LATE_RANGE:
             return Response("Unknown delinquency range")
-        load_fips_meta()
-        if fips not in FIPS.all_fips:
-            return Response("FIPS code not found.")
-        DATE_STARTER = datetime.date(FIPS.starting_year, 1, 1)
+        reference_lists = {
+            entry: MortgageMetaData.objects.get(name=entry).json_value
+            for entry in ['whitelist', 'msa_fips', 'non_msa_fips']}
+        if fips not in reference_lists['whitelist']:
+            return Response("FIPS code not found or not valid.")
         if len(fips) == 2:
+            state = State.objects.get(fips=fips)
             records = StateMortgageData.objects.filter(
-                fips=fips, date__gte=DATE_STARTER, valid=True)
+                fips=fips)
             data = {'meta': {'fips': fips,
-                             'name': FIPS.state_fips[fips]['name'],
+                             'name': state.name,
                              'fips_type': 'state'},
                     'data': [record.time_series(days_late)
                              for record in records]}
             return Response(data)
-
-        if fips in FIPS.msa_fips:
-            records = MSAMortgageData.objects.filter(
-                fips=fips, date__gte=DATE_STARTER, valid=True)
-            if not records:
-                return Response("Metro area is below display threshold.")
-            name = FIPS.msa_fips[fips]['msa']
+        if 'non' in fips:
+            records = NonMSAMortgageData.objects.filter(
+                fips=fips)
             data = {'meta': {'fips': fips,
-                             'name': name,
+                             'name': "{} non_metro area".format(
+                                 records.first().state.name),
+                             'fips_type': 'non_msa'},
+                    'data': [record.time_series(days_late)
+                             for record in records]}
+            return Response(data)
+
+        if fips in reference_lists['msa_fips']:
+            metro_area = MetroArea.objects.get(fips=fips, valid=True)
+            records = MSAMortgageData.objects.filter(fips=fips)
+            data = {'meta': {'fips': fips,
+                             'name': metro_area.name,
                              'fips_type': 'msa'},
                     'data': [record.time_series(days_late)
                              for record in records]}
-        else:
-            records = CountyMortgageData.objects.filter(
-                fips=fips, date__gte=DATE_STARTER, valid=True)
-            if not records:
+            return Response(data)
+        else:  # must be a county request
+            try:
+                county = County.objects.get(fips=fips, valid=True)
+            except County.DoesNotExist:
                 return Response("County is below display threshold.")
-            name = "{}, {}".format(
-                FIPS.county_fips[fips]['county'],
-                FIPS.county_fips[fips]['state'])
+            records = CountyMortgageData.objects.filter(fips=fips)
+            name = "{}, {}".format(county.name, county.state.abbr)
             data = {'meta': {'fips': fips,
                              'name': name,
                              'fips_type': 'county'},
@@ -131,35 +134,34 @@ class MapData(APIView):
     View for delivering geo-based map data by date
     from the mortgage performance dataset.
     """
-    renderer_classes = (JSONRenderer,)  # , rfc_renderers.CSVRenderer)
+    renderer_classes = (JSONRenderer,)
 
-    def get(self, request, geo, days_late, year_month):
+    def get(self, request, days_late, geo, year_month):
         date = validate_year_month(year_month)
         if date is None:
             return Response("Invalid year-month pair")
-        if days_late not in ALLOWED_DATE_RANGES:
+        if days_late not in DAYS_LATE_RANGE:
             return Response("Unknown delinquency range")
-        load_fips_meta()
         geo_dict = {
             'national':
                 {'queryset': NationalMortgageData.objects.get(date=date),
                  'fips_type': 'nation',
-                 'fips_meta': ''},
-            'counties':
-                {'queryset': CountyMortgageData.objects.filter(
-                    date=date, valid=True),
-                 'fips_type': 'county',
-                 'fips_meta': FIPS.county_fips},
-            'metros':
-                {'queryset': MSAMortgageData.objects.filter(
-                    date=date, valid=True),
-                 'fips_type': 'metro',
-                 'fips_meta': FIPS.msa_fips},
+                 'geo_obj': ''},
             'states':
                 {'queryset': StateMortgageData.objects.filter(
-                    date=date, valid=True),
+                    date=date),
                  'fips_type': 'state',
-                 'fips_meta': FIPS.state_fips}
+                 'geo_obj': 'state'},
+            'counties':
+                {'queryset': CountyMortgageData.objects.filter(
+                    date=date, county__valid=True),
+                 'fips_type': 'county',
+                 'geo_obj': 'county'},
+            'metros':
+                {'queryset': MSAMortgageData.objects.filter(
+                    date=date),
+                 'fips_type': 'msa',
+                 'geo_obj': 'msa'},
         }
         if geo not in geo_dict:
             return Response("Unkown geographic unit")
@@ -170,20 +172,34 @@ class MapData(APIView):
                                 'date': '{}'.format(date)},
                        'data': {}}
             nat_data_series.update({'name': 'United States'})
+            del(nat_data_series['date'])
             payload['data'].update(nat_data_series)
         else:
             records = geo_dict[geo]['queryset']
-            fips_meta = geo_dict[geo]['fips_meta']
             payload = {'meta': {'fips_type': geo_dict[geo]['fips_type'],
                                 'date': '{}'.format(date),
                                 'national_average': nat_data_series['value']},
                        'data': {}}
             for record in records:
                 data_series = record.time_series(days_late)
-                data_series.update(
-                    {'name': fips_meta[record.fips]['name']})
+                geo_parent = getattr(record, geo_dict[geo]['geo_obj'])
                 if geo == 'counties':
-                    data_series['name'] += (
-                        ', {}'.format(fips_meta[record.fips]['state']))
+                    name = "{}, {}".format(
+                        geo_parent.name, geo_parent.state.abbr)
+                else:
+                    name = geo_parent.name
+                data_series.update(
+                    {'name': name})
+                del(data_series['date'])
                 payload['data'].update({record.fips: data_series})
+            if geo == 'metros':
+                for metro in MetroArea.objects.filter(valid=False):
+                    payload['data'][metro.fips]['value'] = None
+                for record in NonMSAMortgageData.objects.filter(
+                        state__non_msa_valid=True, date=date):
+                    non_data_series = record.time_series(days_late)
+                    non_name = "{} non-metro area".format(record.state.name)
+                    non_data_series.update({'name': non_name})
+                    del non_data_series['date']
+                    payload['data'].update({record.fips: non_data_series})
         return Response(payload)
