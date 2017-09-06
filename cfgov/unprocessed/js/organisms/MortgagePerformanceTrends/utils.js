@@ -53,7 +53,7 @@ var utils = {
       'November',
       'December'
     ];
-    return `${ months[parseInt( dates[1], 10 ) - 1] }, ${ dates[0] }`;
+    return `${ months[parseInt( dates[1], 10 ) - 1] } ${ dates[0] }`;
   },
   thunkMiddleware: store => next => action => {
     if ( typeof action === 'function' ) {
