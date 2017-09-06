@@ -108,9 +108,13 @@ if __name__ == '__main__':
         title = body.split(" - ")[0]
         logger.info('Retrieved message {} from SQS'.format(body))
 
-        issue = matching_issue(title=title, issues=repo.iter_issues())
-        if issue:
-            # Issue already exists,
+        issue = matching_issue(
+            title=title,
+            issues=repo.iter_issues(state='all')
+        )
+        if issue:  # Issue already exists
+            if issue.is_closed():
+                issue.reopen()
             # add comment to it to document it happened again
             issue.create_comment(body=body)
         else:
