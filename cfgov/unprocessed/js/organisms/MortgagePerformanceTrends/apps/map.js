@@ -108,6 +108,7 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
 
 MortgagePerformanceMap.prototype.zoom = function( prevState, state ) {
   this.chart.highchart.chart.get( state.geo.id ).zoomTo();
+  this.chart.highchart.chart.get( state.geo.id ).select();
 };
 
 MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
@@ -125,11 +126,11 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
       source: `map-data/${ this.timespan }/${ _plurals[state.geo.type] }/${ state.date }`,
       metadata: _plurals[state.geo.type]
     } ).then( () => {
-      this.$state.value = '';
-      this.$metro.value = '';
-      this.$county.value = '';
-      this.$county.innerHTML = '';
       if ( prevState.geo.type !== state.geo.type ) {
+        this.$state.value = '';
+        this.$metro.value = '';
+        this.$county.value = '';
+        this.$county.innerHTML = '';
         this.chart.highchart.chart.zoomOut();
       }
       store.dispatch( actions.stopLoading() );
