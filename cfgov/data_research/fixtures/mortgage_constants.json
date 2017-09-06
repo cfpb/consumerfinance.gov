@@ -34,5 +34,29 @@
     },
     "model": "data_research.mortgagedataconstant",
     "pk": 3
+},
+{
+    "fields": {
+        "updated": "2017-09-06",
+        "string_value": "Map notes to come.",
+        "value": null,
+        "note": "",
+        "slug": "",
+        "name": "map_notes"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 6
+},
+{
+    "fields": {
+        "updated": "2017-09-06",
+        "string_value": "Locations with insufficient data are not provided.",
+        "value": null,
+        "note": "",
+        "slug": "",
+        "name": "chart_notes"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 7
 }
 ]
