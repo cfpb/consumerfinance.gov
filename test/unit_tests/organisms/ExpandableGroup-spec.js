@@ -1,10 +1,11 @@
 'use strict';
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var ExpandableGroup = require( BASE_JS_PATH + 'organisms/ExpandableGroup' );
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-describe( 'ExpandableGroup', function() {
+const chai = require( 'chai' );
+const expect = chai.expect;
+const ExpandableGroup = require( BASE_JS_PATH + 'organisms/ExpandableGroup' );
+
+describe( 'ExpandableGroup', () => {
   // TODO: Implement tests.
 } );

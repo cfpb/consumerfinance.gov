@@ -62,7 +62,7 @@ actions.fetchMetros = ( metroState, includeNational ) => dispatch => {
       return console.error( 'Error getting metro data', err );
     }
     // Alphabetical order
-    var newMetros = data[metroState].msas.sort( ( a, b ) => (a.name < b.name ? -1 : 1) );
+    var newMetros = data[metroState].msas.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newMetros = newMetros.filter( msa => msa.valid );
     dispatch( actions.setMetros( newMetros ) );
     dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );

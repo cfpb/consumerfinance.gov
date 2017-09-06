@@ -5,9 +5,7 @@ const fullWidthTextSelector = 'input[value=\'full_width_text\']' +
                             ' + .sequence-member-inner';
 
 function isActive( ) {
-
   function _getElement( selector ) {
-
     return document.querySelector( selector ) !== null;
   }
 
@@ -25,25 +23,15 @@ function getMenuItems() {
   }
 
   return {
-
     callToActionBtn:      _getFullWidthTextElement( '.action-add-block-cta' ),
-
     contentBtn:           _getFullWidthTextElement( '.action-add-block-content' ),
-
     contentWithAnchorBtn: _getFullWidthTextElement( '.action-add-block-image_text_25_75_group' ),
-
     imageInsetBtn:        _getFullWidthTextElement( '.action-add-block-image_inset' ),
-
     mediaBtn:             _getFullWidthTextElement( '.action-add-block-media' ),
-
     quoteBtn:             _getFullWidthTextElement( '.action-add-block-quote' ),
-
     relatedLinksBtn:      _getFullWidthTextElement( '.action-add-block-related_links' ),
-
     reusableTextBtn:      _getFullWidthTextElement( '.action-add-block-reusable_text' ),
-
     tableBlock:           _getFullWidthTextElement( '.action-add-block-table_block' )
-
   };
 
 }
