@@ -1,6 +1,5 @@
 import argparse
 import boto3
-import datetime
 import logging
 import re
 import sys
@@ -8,9 +7,8 @@ import sys
 import requests
 
 logger = logging.getLogger(__name__)
-handler = logging.StreamHandler()
-handler.setLevel(logging.INFO)
-logger.addHandler(handler)
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.INFO)
 
 # add ch to logger
 parser = argparse.ArgumentParser()
@@ -61,6 +59,12 @@ parser.add_argument(
     action='store_true',
     help='Read from New Relic but do not write to SQS'
 )
+parser.add_argument(
+    '-v', '--verbose',
+    action='count',
+    default=0,
+    help='Increase verbosity, up to three times'
+)
 
 
 def get_new_violations(newrelic_token, newrelic_url, threshold, policy_filter):
@@ -72,21 +76,14 @@ def get_new_violations(newrelic_token, newrelic_url, threshold, policy_filter):
     r = requests.get(violations_url, headers=headers)
     response_json = r.json()
 
-    # Figure out if a violation is new based on our threshold. Should
-    # correspond to how often this script is run.
-    now = datetime.datetime.now()
-
     violations = []
     for violation in response_json['violations']:
+        logger.debug("Found violation: {violation}".format(
+                     violation=violation))
         # Filter on the policy name
         policy_name = violation['policy_name']
-        if not policy_filter.search(policy_name):
-            continue
-
-        # New Relic timestamps are in miliseconds
-        opened_timestamp = violation['opened_at'] / 1000.0
-        opened = datetime.datetime.fromtimestamp(opened_timestamp)
-        if now - opened < threshold:
+        if policy_filter.search(policy_name) and \
+                violation['duration'] <= threshold:
             violations.append(violation)
 
     return violations
@@ -128,16 +125,18 @@ if __name__ == "__main__":
         region_name='us-east-1',
     )
 
+    if args.verbose > 0:
+        logger.setLevel(logging.DEBUG)
+
     try:
         policy_filter = re.compile(args.policy_filter)
     except Exception as err:
         logging.error("Unable to compile policy filter regular expression")
         raise err
 
-    threshold = datetime.timedelta(minutes=args.threshold)
     violations = get_new_violations(args.newrelic_token,
                                     args.newrelic_url,
-                                    threshold, policy_filter)
+                                    args.threshold, policy_filter)
     # Send the violations to SQS as messages
     for violation in violations:
         message_body = format_message_for_violation(
