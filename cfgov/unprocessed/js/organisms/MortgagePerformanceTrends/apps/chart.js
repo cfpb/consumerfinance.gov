@@ -1,6 +1,6 @@
 'use strict';
 
-var ccb = require( 'cfpb-chart-builder-canary' );
+var ccb = require( 'cfpb-chart-builder' );
 var actions = require( '../actions' );
 var Store = require( '../stores/chart' );
 var utils = require( '../utils' );

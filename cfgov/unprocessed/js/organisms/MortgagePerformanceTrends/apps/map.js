@@ -1,6 +1,6 @@
 'use strict';
 
-var ccb = require( 'cfpb-chart-builder-canary' );
+var ccb = require( 'cfpb-chart-builder' );
 var actions = require( '../actions' );
 var Store = require( '../stores/map' );
 var utils = require( '../utils' );
@@ -33,6 +33,7 @@ class MortgagePerformanceMap {
       el: this.$container.querySelector( '#mp-map' ),
       source: `map-data/${ this.timespan }/states/2009-01`,
       type: 'geo-map',
+      color: this.$container.getAttribute( 'data-chart-color' ),
       metadata: 'states'
     } );
     this.eventListeners();
@@ -65,6 +66,7 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
       geoId = '';
       geoName = '';
+      this.chart.highchart.chart.zoomOut();
       action = actions.setGeo( geoId, geoName, geoType );
       break;
     case 'mp-map-state':
@@ -127,7 +129,9 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
       this.$metro.value = '';
       this.$county.value = '';
       this.$county.innerHTML = '';
-      this.chart.highchart.chart.zoomOut();
+      if ( prevState.geo.type !== state.geo.type ) {
+        this.chart.highchart.chart.zoomOut();
+      }
       store.dispatch( actions.stopLoading() );
     } );
   }
