@@ -1,6 +1,6 @@
 // Import external cfpb-chart-builder stylesheet
 // This is also imported by the chart block (in chart.less)
-@import (less) 'cfpb-chart-builder.less';
+@import 'cfpb-chart-builder.less';
 
 .o-mp-chart {
 
@@ -9,6 +9,7 @@
 .o-mp-map {
     border: 1px solid @gray-40;
     padding: 2em 2em 1em;
+
 }
 
 .m-color-ramp {
@@ -64,17 +65,31 @@
         }
     } );
 
+    // Override some cfpb-chart-builder styles
+    .highcharts-map-series {
+        .highcharts-point-select,
+        .highcharts-point:hover {
+            stroke: @black !important;
+            stroke-width: 2px !important;
+        }
+    }
+
+    .highcharts-tooltip-box {
+        fill: @white;
+    }
+
 }
 
-// Override some cfpb-chart-builder styles
-.highcharts-map-series {
-  .highcharts-point-select,
-  .highcharts-point:hover {
-    stroke: @black !important;
-    stroke-width: 2px !important;
-  }
-}
-
-.highcharts-tooltip-box {
-  fill: @white;
+// Fieldsets have silly default values. We should remove them at the CF level
+// but for now I'm removing them only within our app.
+#mp-chart-container,
+#mp-map-container {
+    fieldset {
+        padding-left: 0;
+        margin-left: 0;
+        border: 0;
+    }
+    .content-l_col {
+        border-left-width: 0;
+    }
 }
