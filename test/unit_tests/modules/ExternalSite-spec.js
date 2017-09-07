@@ -1,10 +1,11 @@
 'use strict';
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var ExternalSite = require( BASE_JS_PATH + 'modules/ExternalSite' );
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-describe( 'ExternalSite', function() {
+const chai = require( 'chai' );
+const expect = chai.expect;
+const ExternalSite = require( BASE_JS_PATH + 'modules/ExternalSite' );
+
+describe( 'ExternalSite', () => {
   // TODO: Implement tests.
 } );

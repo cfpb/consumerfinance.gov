@@ -1,17 +1,18 @@
 'use strict';
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'mocha-jsdom' );
-var sinon = require( 'sinon' );
-var ClearableInput = require( BASE_JS_PATH + 'modules/ClearableInput' );
-var sandbox;
-var baseDom;
-var clearBtnDom;
-var inputDom;
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var HTML_SNIPPET =
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'mocha-jsdom' );
+const sinon = require( 'sinon' );
+const ClearableInput = require( BASE_JS_PATH + 'modules/ClearableInput' );
+let sandbox;
+let baseDom;
+let clearBtnDom;
+let inputDom;
+
+const HTML_SNIPPET =
   `<div class="o-form__input-w-btn_input-container">
        <div class="m-btn-inside-input
                    input-contains-label">
@@ -39,10 +40,10 @@ function triggerEvent( target, eventType, eventOption ) {
 }
 
 
-describe( 'ClearableInput', function() {
+describe( 'ClearableInput', () => {
   jsdom();
 
-  beforeEach( function() {
+  beforeEach( () => {
     sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     baseDom = document.querySelector( '.o-form__input-w-btn_input-container' );
@@ -50,25 +51,25 @@ describe( 'ClearableInput', function() {
     clearBtnDom = baseDom.querySelector( '.input-contains-label_after__clear' );
   } );
 
-  afterEach( function() {
+  afterEach( () => {
     sandbox.restore();
   } );
 
-  describe( 'init function', function() {
-    it( 'should hide the clear button when a value is empty', function() {
+  describe( 'init function', () => {
+    it( 'should hide the clear button when a value is empty', () => {
       new ClearableInput( baseDom ).init();
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).to.equal( true );
     } );
 
-    it( 'should display the clear button when a value is present', function() {
+    it( 'should display the clear button when a value is present', () => {
       inputDom.value = 'testing init function';
       new ClearableInput( baseDom ).init();
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).to.equal( false );
     } );
   } );
 
-  describe( 'on clear button click', function() {
-    it( 'should hide itself', function() {
+  describe( 'on clear button click', () => {
+    it( 'should hide itself', () => {
       inputDom.value = 'testing clear button';
       new ClearableInput( baseDom ).init();
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).to.equal( false );
@@ -76,7 +77,7 @@ describe( 'ClearableInput', function() {
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).to.equal( true );
     } );
 
-    it( 'should clear the input value', function() {
+    it( 'should clear the input value', () => {
       inputDom.value = 'testing clear button';
       new ClearableInput( baseDom ).init();
       triggerEvent( clearBtnDom, 'mousedown' );
@@ -84,8 +85,8 @@ describe( 'ClearableInput', function() {
     } );
   } );
 
-  describe( 'on input keystroke', function() {
-    it( 'should show the clear button, if value present', function() {
+  describe( 'on input keystroke', () => {
+    it( 'should show the clear button, if value present', () => {
       new ClearableInput( baseDom ).init();
 
       // Event code 65 is the `a` character.
@@ -93,7 +94,7 @@ describe( 'ClearableInput', function() {
       expect( clearBtnDom.classList.contains( 'u-hidden' ) ).to.equal( false );
     } );
 
-    it( 'should hide the clear button, if value not present', function() {
+    it( 'should hide the clear button, if value not present', () => {
       new ClearableInput( baseDom ).init();
 
       // Event code 8 is backspace.

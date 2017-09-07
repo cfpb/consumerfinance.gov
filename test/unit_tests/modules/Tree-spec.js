@@ -1,35 +1,35 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var Tree = require( BASE_JS_PATH + 'modules/Tree' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const Tree = require( BASE_JS_PATH + 'modules/Tree' );
 
-describe( 'Tree', function() {
-  var tree;
+describe( 'Tree', () => {
+  let tree;
 
-  beforeEach( function() {
+  beforeEach( () => {
     tree = new Tree();
   } );
 
-  describe( '.init()', function() {
-    it( 'should have a proper state before initialization', function() {
+  describe( '.init()', () => {
+    it( 'should have a proper state before initialization', () => {
       expect( tree instanceof Tree ).to.be.true;
       expect( tree.getRoot() ).to.be.null;
       expect( tree.getAllAtLevel( 0 ) instanceof Array ).to.be.true;
       expect( tree.getAllAtLevel( 0 ).length ).to.equal( 0 );
     } );
 
-    it( 'should have a proper state after initialization', function() {
+    it( 'should have a proper state after initialization', () => {
       expect( tree.init( 'R' ) instanceof Tree ).to.be.true;
       expect( tree.getRoot().constructor.name === 'TreeNode' ).to.be.true;
       expect( tree.getAllAtLevel( 0 ) instanceof Array ).to.be.true;
     } );
   } );
 
-  describe( '.getRoot()', function() {
-    it( 'should have a properly initialized root node', function() {
+  describe( '.getRoot()', () => {
+    it( 'should have a properly initialized root node', () => {
       tree.init( 'R' );
       expect( tree.getRoot() ).to.not.be.null;
       expect( tree.getRoot().constructor.name === 'TreeNode' ).to.be.true;
@@ -41,10 +41,10 @@ describe( 'Tree', function() {
     } );
   } );
 
-  describe( '.getAllAtLevel()', function() {
-    it( 'should return the root level', function() {
+  describe( '.getAllAtLevel()', () => {
+    it( 'should return the root level', () => {
       tree.init( 'R' );
-      var nodeR = tree.getRoot();
+      const nodeR = tree.getRoot();
       expect( tree.getAllAtLevel( 0 )[0] ).to.equal( nodeR );
     } );
 
@@ -54,11 +54,11 @@ describe( 'Tree', function() {
      *       / \
      *      A   B
      */
-    it( 'should return the first level', function() {
+    it( 'should return the first level', () => {
       tree.init( 'R' );
-      var nodeR = tree.getRoot();
-      var nodeA = tree.add( 'A', nodeR );
-      var nodeB = tree.add( 'B', nodeR );
+      const nodeR = tree.getRoot();
+      const nodeA = tree.add( 'A', nodeR );
+      const nodeB = tree.add( 'B', nodeR );
       expect( tree.getAllAtLevel( 0 )[0] ).to.equal( nodeR );
       expect( tree.getAllAtLevel( 1 )[0] ).to.equal( nodeA );
       expect( tree.getAllAtLevel( 1 )[1] ).to.equal( nodeB );
@@ -72,12 +72,12 @@ describe( 'Tree', function() {
      *    /
      *   C
      */
-    it( 'should return the second level', function() {
+    it( 'should return the second level', () => {
       tree.init( 'R' );
-      var nodeR = tree.getRoot();
-      var nodeA = tree.add( 'A', nodeR );
-      var nodeB = tree.add( 'B', nodeR );
-      var nodeC = tree.add( 'C', nodeA );
+      const nodeR = tree.getRoot();
+      const nodeA = tree.add( 'A', nodeR );
+      const nodeB = tree.add( 'B', nodeR );
+      const nodeC = tree.add( 'C', nodeA );
       expect( tree.getAllAtLevel( 0 )[0] ).to.equal( nodeR );
       expect( tree.getAllAtLevel( 1 )[0] ).to.equal( nodeA );
       expect( tree.getAllAtLevel( 1 )[1] ).to.equal( nodeB );
@@ -85,11 +85,11 @@ describe( 'Tree', function() {
     } );
   } );
 
-  describe( '.add()', function() {
-    it( 'should have a properly initialzed child node', function() {
+  describe( '.add()', () => {
+    it( 'should have a properly initialzed child node', () => {
       tree.init( 'R' );
-      var nodeR = tree.getRoot();
-      var nodeA = tree.add( 'A', nodeR );
+      const nodeR = tree.getRoot();
+      const nodeA = tree.add( 'A', nodeR );
       expect( nodeA ).to.not.be.null;
       expect( nodeA.constructor.name === 'TreeNode' ).to.be.true;
       expect( nodeA.tree ).to.equal( tree );
@@ -103,8 +103,8 @@ describe( 'Tree', function() {
     } );
   } );
 
-  describe( '.remove()', function() {
-    xit( 'should have a properly initialized tree', function() {
+  describe( '.remove()', () => {
+    xit( 'should have a properly initialized tree', () => {
       // TODO: Implement tree.remove() method.
     } );
   } );

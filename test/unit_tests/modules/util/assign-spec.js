@@ -1,21 +1,21 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var assign = require( BASE_JS_PATH + 'modules/util/assign.js' ).assign;
-var testObjectA;
-var testObjectB;
-var testObjectC;
-var undefinedVar;
+const chai = require( 'chai' );
+const expect = chai.expect;
+const assign = require( BASE_JS_PATH + 'modules/util/assign.js' ).assign;
+let testObjectA;
+let testObjectB;
+let testObjectC;
+let undefinedVar;
 
 
-beforeEach( function() {
+beforeEach( () => {
 
   testObjectA = {
     str:  'test',
-    func: function() { return 'testStr'; },
+    func: () => 'testStr',
     num:  1
   };
 
@@ -33,9 +33,9 @@ beforeEach( function() {
 
 } );
 
-describe( 'Assign', function() {
+describe( 'Assign', () => {
 
-  it( 'should assign properties from source to destination', function() {
+  it( 'should assign properties from source to destination', () => {
     assign( testObjectA, testObjectB );
 
     expect( testObjectA.hasOwnProperty( 'obj' ) ).to.be.true;
@@ -43,7 +43,7 @@ describe( 'Assign', function() {
     expect( testObjectA.hasOwnProperty( '_null' ) ).to.be.true;
   } );
 
-  it( 'should assign values from source to destination', function() {
+  it( 'should assign values from source to destination', () => {
     assign( testObjectA, testObjectB );
 
     expect( testObjectA.obj.test === 2 ).to.be.true;
@@ -51,7 +51,7 @@ describe( 'Assign', function() {
     expect( testObjectA._null === null ).to.be.true;
   } );
 
-  it( 'should assign multiple source properties to destination', function() {
+  it( 'should assign multiple source properties to destination', () => {
     assign( testObjectA, testObjectB, testObjectC );
 
     expect( testObjectA.hasOwnProperty( 'bool' ) ).to.be.true;
@@ -59,7 +59,7 @@ describe( 'Assign', function() {
     expect( testObjectA.hasOwnProperty( 'num' ) ).to.be.true;
   } );
 
-  it( 'should assign multiple source values to destination', function() {
+  it( 'should assign multiple source values to destination', () => {
     assign( testObjectA, testObjectB, testObjectC );
 
     expect( testObjectA.bool === false ).to.be.true;
@@ -67,7 +67,7 @@ describe( 'Assign', function() {
     expect( testObjectA.num === 4 ).to.be.true;
   } );
 
-  it( 'should selectively overwrite existing source properties', function() {
+  it( 'should selectively overwrite existing source properties', () => {
     expect( testObjectA.num === 1 ).to.be.true;
 
     assign( testObjectA, testObjectC );
