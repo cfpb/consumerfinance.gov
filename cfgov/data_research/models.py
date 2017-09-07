@@ -333,7 +333,7 @@ class MortgagePerformancePage(BrowsePage):
             'download_files')[meta['thru_month']]['percent_90']['County']
         meta['pub_date'] = meta_sample['pub_date']
         meta['pub_date_formatted'] = parser.parse(
-            meta['pub_date']).strftime("%B %-d, %Y")
+            meta['pub_date']).strftime("%B %Y")
         meta['viz_notes'] = MortgageDataConstant.get_viz_notes()
         return meta
 
