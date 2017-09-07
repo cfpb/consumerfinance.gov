@@ -18,16 +18,17 @@
 
 <div class="o-full-width-text-group" id="mp-map-container" data-chart-time-span="{{ time_frame }}" data-chart-color="{{ data_vis_color }}">
     <div class="m-full-width-text">
+        <h4>Choose location to display on the map</h4>
         <form id="mp-map-controls" name="mp-map-controls" class="mp-controls u-js-only">
             <div id="mp-map-loading" class="mp-loading"></div>
             <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:1px;border:0;">
-                <label class="a-label u-mb20" for="test_select"><strong>Select location type</strong></label>
+                <label class="a-label u-mb20" for="test_select">Select map view</label>
                 <div class="m-form-field m-form-field__radio" id="mp-map-geo">
                     <div class="m-form-field m-form-field__radio u-mb10">
                         <input class="a-radio" id="mp-map_geo-state" name="mp-map_geo" type="radio" checked="checked"> <label class="a-label" for="mp-map_geo-state">States</label>
                     </div>
                     <div class="m-form-field m-form-field__radio u-mb10">
-                        <input class="a-radio" id="mp-map_geo-metro" name="mp-map_geo" type="radio"> <label class="a-label" for="mp-map_geo-metro">Metro areas</label>
+                        <input class="a-radio" id="mp-map_geo-metro" name="mp-map_geo" type="radio"> <label class="a-label" for="mp-map_geo-metro">Metro and non-metro areas</label>
                     </div>
                     <div class="m-form-field m-form-field__radio u-mb10">
                         <input class="a-radio" id="mp-map_geo-county" name="mp-map_geo" type="radio"> <label class="a-label" for="mp-map_geo-county">Counties</label>
@@ -260,7 +261,7 @@
                     </div>
                 </div>
                 <div class="m-form-field m-form-field__select mp-map-select-container" id="mp-map-state-container">
-                    <label class="a-label" for="mp-map-state">State</label>
+                    <label class="a-label" for="mp-map-state">Select state to zoom</label>
                     <div class="a-select">
                         <select id="mp-map-state">
                             <option value="" selected> </option>
@@ -371,14 +372,14 @@
         </form>
     </div>
     <div class="o-mp-map m-full-width-text">
-        <h3 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame }} days delinquent: <span id="mp-map-title-date">January 2008</span></h3>
+        <h3 id="mp-map-title">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent: <span id="mp-map-title-date"><strong>January 2008</strong></span></h3>
         <div id="mp-map">
             {{ value.description }}
         </div>
         <svg viewBox="0 0 642 93" xmlns="http://www.w3.org/2000/svg" class="m-color-ramp" data-chart-color="{{ data_vis_color }}">
             <g>
                 <title>U.S. Map Legend for Mortgages {{ time_frame }} days delinquent</title>
-                <description>The percentage of mortgages {{ time_frame }} days delinquent varies by location from 0% to 6%.</description>
+                <description>The percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent varies by location from 0% to 6%.</description>
                 <rect fill="none" id="canvas_background" height="95" width="644" y="-1" x="-1"/>
             </g>
             <g>
