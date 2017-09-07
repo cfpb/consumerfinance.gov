@@ -2,15 +2,15 @@
 const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
-const mockery = require('mockery');
+const mockery = require( 'mockery' );
 const expect = chai.expect;
 
 // Disable the AJAX library used by the action creator
 const noop = () => ( {} );
-mockery.enable({
+mockery.enable( {
   warnOnReplace: false,
   warnOnUnregistered: false
-});
+} );
 mockery.registerMock( 'xdr', noop );
 
 const actions = require( BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/actions.js' );

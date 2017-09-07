@@ -1,28 +1,29 @@
 'use strict';
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'mocha-jsdom' );
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-var ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
-var validators = require( BASE_JS_PATH + 'modules/util/validators.js' );
-var testField;
-var returnedObject;
 
-describe( 'Validators date field', function() {
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'mocha-jsdom' );
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const ERROR_MESSAGES = require( BASE_JS_PATH + 'config/error-messages-config' );
+const validators = require( BASE_JS_PATH + 'modules/util/validators.js' );
+let testField;
+let returnedObject;
+
+describe( 'Validators date field', () => {
   jsdom();
 
-  beforeEach( function() {
+  beforeEach( () => {
     testField = document.createElement( 'input' );
   } );
 
-  it( 'should return an empty object for a valid date', function() {
+  it( 'should return an empty object for a valid date', () => {
     testField.value = '11/12/2007';
     returnedObject = validators.date( testField );
 
     expect( returnedObject ).to.be.empty;
   } );
 
-  it( 'should return an error object for a malformed date', function() {
+  it( 'should return an error object for a malformed date', () => {
     testField.value = '11-12-07';
     returnedObject = validators.date( testField );
 
@@ -31,7 +32,7 @@ describe( 'Validators date field', function() {
       .to.have.property( 'msg', ERROR_MESSAGES.DATE.INVALID );
   } );
 
-  it( 'should return an error object for a UTC date', function() {
+  it( 'should return an error object for a UTC date', () => {
     testField.value = new Date( 2007, 11, 12 );
     returnedObject = validators.date( testField );
 
@@ -41,21 +42,21 @@ describe( 'Validators date field', function() {
   } );
 } );
 
-describe( 'Validators email field', function() {
+describe( 'Validators email field', () => {
   jsdom();
 
-  beforeEach( function() {
+  beforeEach( () => {
     testField = document.createElement( 'input' );
   } );
 
-  it( 'should return an empty object for a valid email', function() {
+  it( 'should return an empty object for a valid email', () => {
     testField.value = 'test@demo.com';
     returnedObject = validators.email( testField );
 
     expect( returnedObject ).to.be.empty;
   } );
 
-  it( 'should return an error object for a missing domain', function() {
+  it( 'should return an error object for a missing domain', () => {
     testField.value = 'test';
     returnedObject = validators.email( testField );
 
@@ -64,7 +65,7 @@ describe( 'Validators email field', function() {
       .to.have.property( 'msg', ERROR_MESSAGES.EMAIL.INVALID );
   } );
 
-  it( 'should return an error object for a missing user', function() {
+  it( 'should return an error object for a missing user', () => {
     testField.value = '@demo.com';
     returnedObject = validators.email( testField );
 
@@ -74,22 +75,22 @@ describe( 'Validators email field', function() {
   } );
 } );
 
-describe( 'Validators empty field', function() {
+describe( 'Validators empty field', () => {
   jsdom();
 
-  beforeEach( function() {
+  beforeEach( () => {
     testField = document.createElement( 'input' );
     testField.setAttribute( 'required', '' );
   } );
 
-  it( 'should return an empty object for a filed field', function() {
+  it( 'should return an empty object for a filed field', () => {
     testField.value = 'testing';
     returnedObject = validators.empty( testField );
 
     expect( returnedObject ).to.be.empty;
   } );
 
-  it( 'should return an error object for am empty field', function() {
+  it( 'should return an error object for am empty field', () => {
     testField.value = '';
     returnedObject = validators.empty( testField );
 
@@ -99,18 +100,18 @@ describe( 'Validators empty field', function() {
   } );
 } );
 
-describe( 'Validators checkbox field', function() {
+describe( 'Validators checkbox field', () => {
   jsdom();
 
-  beforeEach( function() {
+  beforeEach( () => {
     testField = document.createElement( 'label' );
     testField.setAttribute( 'name', 'test-checkboxes' );
     testField.setAttribute( 'data-required', '2' );
   } );
 
   it( 'should return an empty object ' +
-      'when total checkboxes equals required total', function() {
-    var fieldset = [
+      'when total checkboxes equals required total', () => {
+    const fieldset = [
       document.createElement( 'input' ),
       document.createElement( 'input' )
     ];
@@ -120,8 +121,8 @@ describe( 'Validators checkbox field', function() {
   } );
 
   it( 'should return an empty object ' +
-      'when total checkboxes is more than required total', function() {
-    var fieldset = [
+      'when total checkboxes is more than required total', () => {
+    const fieldset = [
       document.createElement( 'input' ),
       document.createElement( 'input' ),
       document.createElement( 'input' )
@@ -132,8 +133,8 @@ describe( 'Validators checkbox field', function() {
   } );
 
   it( 'should return an error object ' +
-       'when total checkboxes is less than required total', function() {
-    var fieldset = [
+       'when total checkboxes is less than required total', () => {
+    const fieldset = [
       document.createElement( 'input' )
     ];
     returnedObject = validators.checkbox( testField, null, fieldset );
@@ -144,10 +145,9 @@ describe( 'Validators checkbox field', function() {
     );
   } );
 
-  it( 'should return an empty object ' +
-      'when required total is empty', function() {
+  it( 'should return an empty object when required total is empty', () => {
     testField.removeAttribute( 'data-required' );
-    var fieldset = [
+    const fieldset = [
       document.createElement( 'input' )
     ];
     returnedObject = validators.checkbox( testField, null, fieldset );
@@ -156,7 +156,7 @@ describe( 'Validators checkbox field', function() {
   } );
 } );
 
-describe( 'Validators radio field', function() {
+describe( 'Validators radio field', () => {
   jsdom();
 
   beforeEach( function() {
@@ -166,8 +166,8 @@ describe( 'Validators radio field', function() {
   } );
 
   it( 'should return an empty object ' +
-      'when total radios equals required total', function() {
-    var fieldset = [
+      'when total radios equals required total', () => {
+    const fieldset = [
       document.createElement( 'input' )
     ];
     returnedObject = validators.radio( testField, null, fieldset );
@@ -176,8 +176,8 @@ describe( 'Validators radio field', function() {
   } );
 
   it( 'should return an empty object ' +
-      'when total radios is more than required total', function() {
-    var fieldset = [
+      'when total radios is more than required total', () => {
+    const fieldset = [
       document.createElement( 'input' ),
       document.createElement( 'input' )
     ];
@@ -187,8 +187,8 @@ describe( 'Validators radio field', function() {
   } );
 
   it( 'should return an error object ' +
-      'when total checkboxes is less than required total', function() {
-    var fieldset = [];
+      'when total checkboxes is less than required total', () => {
+    const fieldset = [];
     returnedObject = validators.radio( testField, null, fieldset );
 
     expect( returnedObject ).to.have.property( 'radio', false );
@@ -198,9 +198,9 @@ describe( 'Validators radio field', function() {
   } );
 
   it( 'should return an empty object ' +
-      'when required total is empty', function() {
+      'when required total is empty', () => {
     testField.removeAttribute( 'data-required' );
-    var fieldset = [
+    const fieldset = [
       document.createElement( 'input' )
     ];
     returnedObject = validators.radio( testField, null, fieldset );

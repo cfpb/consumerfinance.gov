@@ -1,24 +1,24 @@
 'use strict';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'mocha-jsdom' );
-var sinon = require( 'sinon' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'mocha-jsdom' );
+const sinon = require( 'sinon' );
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
-var FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+const FooterButton = require( BASE_JS_PATH + 'modules/footer-button.js' );
 
-var footerBtnDom;
-var bodyDom;
-var sandbox;
-var lastTime = 0;
+let footerBtnDom;
+let bodyDom;
+let sandbox;
+let lastTime = 0;
 
-var HTML_SNIPPET =
-    '<a class="a-btn a-btn__secondary o-footer_top-button" ' +
-        'data-gtm_ignore="true" data-js-hook="behavior_return-to-top" ' +
-        'href="#">' +
-        'Back to top <span class="cf-icon cf-icon-arrow-up"></span>' +
-    '</a>';
+const HTML_SNIPPET =
+  '<a class="a-btn a-btn__secondary o-footer_top-button" ' +
+      'data-gtm_ignore="true" data-js-hook="behavior_return-to-top" ' +
+      'href="#">' +
+      'Back to top <span class="cf-icon cf-icon-arrow-up"></span>' +
+  '</a>';
 
 function triggerClick( target ) {
   var clickEvent = new window.MouseEvent( 'click', {
@@ -49,17 +49,17 @@ function requestAnimationFrame( callback ) {
   return id;
 }
 
-describe( 'Footer', function() {
+describe( 'Footer', () => {
   jsdom();
 
-  before( function() {
+  before( () => {
     sandbox = sinon.sandbox.create();
 
     global.NodeList = window.NodeList;
     global.Node = window.Node;
   } );
 
-  beforeEach( function( ) {
+  beforeEach( () => {
     bodyDom = document.body;
     bodyDom.innerHTML = HTML_SNIPPET;
     footerBtnDom = document.querySelector( '.o-footer_top-button' );
@@ -68,7 +68,7 @@ describe( 'Footer', function() {
     window.scrollTo = scrollTo;
   } );
 
-  afterEach( function() {
+  afterEach( () => {
     sandbox.restore();
   } );
 
@@ -78,9 +78,10 @@ describe( 'Footer', function() {
       FooterButton.init();
       triggerClick( footerBtnDom );
       this.timeout( 3000 );
-      window.setTimeout( function( ) {
+      window.setTimeout( () => {
         expect( window.scrollY ).to.equal( 0 );
         done();
       }, 2000 );
-    } );
+    }
+  );
 } );

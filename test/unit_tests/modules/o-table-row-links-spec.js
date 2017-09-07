@@ -1,20 +1,20 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
-var simpleTableRowLinks =
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+const simpleTableRowLinks =
   require( BASE_JS_PATH + 'modules/o-table-row-links' );
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'mocha-jsdom' );
-var sinon = require( 'sinon' );
-var sandbox;
-var tableDom;
-var linkDom;
-var linkRowCellDom;
-var nonLinkRowCellDom;
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'mocha-jsdom' );
+const sinon = require( 'sinon' );
+let sandbox;
+let tableDom;
+let linkDom;
+let linkRowCellDom;
+let nonLinkRowCellDom;
 
-var HTML_SNIPPET =
+const HTML_SNIPPET =
   '<table class="o-table__row-links">' +
   '<tbody>' +
     '<tr>' +
@@ -39,10 +39,10 @@ function triggerClickEvent( target ) {
 }
 
 
-describe( 'o-table-row-links', function() {
+describe( 'o-table-row-links', () => {
   jsdom();
-  beforeEach( function() {
-    var windowLocation;
+  beforeEach( () => {
+    let windowLocation;
     sandbox = sinon.sandbox.create();
 
     document.body.innerHTML = HTML_SNIPPET;
@@ -52,7 +52,7 @@ describe( 'o-table-row-links', function() {
     nonLinkRowCellDom = tableDom.querySelector( '.nonLinkRowCell' );
 
     Object.defineProperty( window, 'location', {
-      get: function() { return windowLocation; },
+      get: () => windowLocation,
       set: function( location ) {
         windowLocation = location;
       },
@@ -71,24 +71,26 @@ describe( 'o-table-row-links', function() {
     simpleTableRowLinks.init();
   } );
 
-  afterEach( function() {
+  afterEach( () => {
     sandbox.restore();
   } );
 
-  it( 'should navigate to new location when link row cell clicked', function() {
+  it( 'should navigate to new location when link row cell clicked', () => {
     triggerClickEvent( linkRowCellDom );
     expect( window.location ).to.equal( 'http://www.example.info' );
   } );
 
   it( 'should bubble click events to the parent element when a link is clicked',
-  function() {
-    triggerClickEvent( linkDom );
-    expect( window.location ).to.equal( 'http://www.example.info' );
-  } );
+    () => {
+      triggerClickEvent( linkDom );
+      expect( window.location ).to.equal( 'http://www.example.info' );
+    }
+  );
 
   it( 'should not navigate to new location when non link row cell clicked',
-  function() {
-    triggerClickEvent( nonLinkRowCellDom );
-    expect( window.location ).to.equal( 'http://www.example.com' );
-  } );
+    () => {
+      triggerClickEvent( nonLinkRowCellDom );
+      expect( window.location ).to.equal( 'http://www.example.com' );
+    }
+  );
 } );

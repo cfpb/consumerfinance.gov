@@ -1,7 +1,5 @@
 'use strict';
 
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
 const { defineSupportCode } = require( 'cucumber' );
 const { shouldShouldnt, toCamelCase } = require( '../../util/index.js' );
 const chai = require( 'chai' );
@@ -81,7 +79,7 @@ defineSupportCode( function( { Then, When, Before } ) {
     return _dom.globalSearchTrigger.click();
   } );
 
-  Then(/the mega-menu\s?(shouldn't|should)/, function( dispayElement ) {
+  Then( /the mega-menu\s?(shouldn't|should)/, function( dispayElement ) {
     browser.sleep( 500 );
 
     return expect( _dom.megaMenuContent.getAttribute( 'aria-expanded' ) )

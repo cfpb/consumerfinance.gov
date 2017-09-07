@@ -1,11 +1,12 @@
 'use strict';
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var SecondaryNavigation =
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+
+const chai = require( 'chai' );
+const expect = chai.expect;
+const SecondaryNavigation =
   require( BASE_JS_PATH + 'organisms/SecondaryNavigation' );
 
-describe( 'SecondaryNavigation', function() {
+describe( 'SecondaryNavigation', () => {
   // TODO: Implement tests.
 } );
