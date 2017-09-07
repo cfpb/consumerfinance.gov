@@ -107,17 +107,12 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
 
 };
 
-MortgagePerformanceMap.prototype.zoom = function( prevState, state ) {
-  this.chart.highchart.chart.get( state.geo.id ).zoomTo();
-  this.chart.highchart.chart.get( state.geo.id ).select();
-};
-
 MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   if ( !state.geo.id ) {
     this.chart.highchart.chart.zoomOut();
   }
   if ( prevState.date === state.date && prevState.geo.type === state.geo.type && state.geo.id ) {
-    this.chart.highchart.chart.get( state.geo.id ).select();
+    this.chart.highchart.chart.get( state.geo.id ).select( true );
     this.chart.highchart.chart.get( state.geo.id ).zoomTo();
     this.chart.highchart.chart.mapZoom( 5 );
   }
