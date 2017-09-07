@@ -8,7 +8,7 @@ if [ "$RUNTEST" == "frontend" ]; then
     source $HOME/.nvm/nvm.sh
     nvm use 8.0.0
     gulp "test" --travis
-    gulp "test:codecov"
+    gulp "test:submit-coverage"
 elif [ "$RUNTEST" == "backend" ]; then
     tox -e fast
     tox -e missing-migrations

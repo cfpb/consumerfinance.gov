@@ -417,7 +417,7 @@ gulp.task( 'test', [ 'lint', 'test:unit' ] );
 gulp.task( 'test:a11y', testA11y );
 gulp.task( 'test:acceptance', testAcceptanceBrowser );
 gulp.task( 'test:acceptance:protractor', spawnProtractor );
-gulp.task( 'test:codecov', testCodecov );
+gulp.task( 'test:submit-coverage', testCodecov );
 gulp.task( 'test:perf', testPerf );
 gulp.task( 'test:unit', [ 'test:unit:scripts' ] );
 gulp.task( 'test:unit:scripts', testUnitScripts );
