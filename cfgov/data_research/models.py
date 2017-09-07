@@ -325,10 +325,11 @@ class MortgagePerformancePage(BrowsePage):
         meta_names = ['sampling_dates', 'download_files']
         meta_set = MortgageMetaData.objects.filter(name__in=meta_names)
         meta = {obj.name: obj.json_value for obj in meta_set}
-        thru_date_string = meta['sampling_dates'][-1]
-        thru_date = parser.parse(thru_date_string)
+        thru_date = parser.parse(meta['sampling_dates'][-1])
+        from_date = parser.parse(meta['sampling_dates'][0])
         meta['thru_month'] = thru_date.strftime("%Y-%m")
         meta['thru_month_formatted'] = thru_date.strftime("%B %Y")
+        meta['from_month_formatted'] = from_date.strftime("%B %Y")
         meta_sample = meta.get(
             'download_files')[meta['thru_month']]['percent_90']['County']
         meta['pub_date'] = meta_sample['pub_date']
