@@ -1,8 +1,16 @@
 # Notes on Atomic Design
 
-Check out [Don't Build Pages, Build Modules](http://www.ebaytechblog.com/?p=3113). It encompasses exactly what we are trying to achieve by building components using atomic design. It's important to note that our front-end atomic architecture is still evolving.
+Check out [Don't Build Pages, Build Modules](http://www.ebaytechblog.com/?p=3113).
+It encompasses exactly what we are trying to achieve by building components
+using atomic design.
+It's important to note that our front-end atomic architecture is still evolving.
 
-Our components are broken down into templates, organisms, molecules, and atoms. We opted not to use the page component, although it exists in atomic design. Our components are composed of HTML, CSS, and JavaScript. If a component doesn’t have user interactions or require styling, then it won’t have an associated js and/or css file. We compose our atomic components as follows:
+Our components are broken down into templates, organisms, molecules, and atoms.
+We opted not to use the page component, although it exists in atomic design.
+Our components are composed of HTML, CSS, and JavaScript (JS).
+If a component doesn’t have user interactions or require styling,
+then it won’t have an associated JS and/or CSS file.
+We compose our atomic components as follows:
 
 ### Atoms
 
@@ -18,10 +26,10 @@ Prefixed with “a-” in CSS, JavaScript, and HTML files.
 
 ```css
  .a-overlay {
-        // Only show overlay at mobile/tablet size.
-        .respond-to-max( @bp-sm-max, {
-            height: 100%;
-            width: 100%;
+    // Only show overlay at mobile/tablet size.
+    .respond-to-max( @bp-sm-max, {
+        height: 100%;
+        width: 100%;
 ```
 
 
@@ -32,10 +40,15 @@ Prefixed with “m-” in CSS, JavaScript, and HTML files.
 #### HTML
 
 ```html
-<div class="m-notification m-notification__error m-notification__visible" data-js-hook="state_atomic_init">
-      <span class="m-notification_icon cf-icon"></span>
-      <div class="m-notification_content" role="alert"></div>
- </div>
+<div class="m-notification
+            m-notification__visible
+            m-notification__error"
+     data-js-hook="state_atomic_init">
+    <span class="m-notification_icon cf-icon"></span>
+    <div class="m-notification_content" role="alert">
+        <div class="h4 m-notification_message">Page not found.</div>
+    </div>
+</div>
 ```
 
 #### CSS
@@ -44,32 +57,33 @@ Prefixed with “m-” in CSS, JavaScript, and HTML files.
 .m-notification {
     display: none;
     position: relative;
-    padding: @m-notification-padding__px;
-    padding-left: 40px;
+    padding: @notification-padding__px;
+    …
 ```
 
 #### JavaScript
 
 ```javascript
 function Notification( element ) {
-   // eslint-disable-line max-statements, inline-comments, max-len
-   var BASE_CLASS = 'm-notification';
+   const BASE_CLASS = 'm-notification';
 
    // Constants for the state of this Notification.
-   var SUCCESS = 'success';
-   var WARNING = 'warning';
-   var ERROR = 'error';
+   const SUCCESS = 'success';
+   const WARNING = 'warning';
+   const ERROR = 'error';
+
    // Constants for the Notification modifiers.
-   var MODIFIER_VISIBLE = BASE_CLASS + '__visible';
-   var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-   var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+   const MODIFIER_VISIBLE = BASE_CLASS + '__visible';
+   const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+   const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+   …
 ```
 
 The notification molecule can be instantiated with the following code:
 
 ```javascript
-_notification = new Notification( _dom );
-_notification.init();
+const notification = new Notification( _dom );
+notification.init();
 ```
 
 ### Organisms
@@ -79,46 +93,48 @@ Prefixed with “o-” in CSS, JavaScript, and HTML.
 #### HTML
 
 ```html
-<div data-qa-hook="expandable" class="o-expandable
-                                      o-expandable__borders
-                                      o-expandable__midtone
-                                      o-expandable__expanded"
-                               data-js-hook="state_atomic_init">
+<div class="o-expandable
+            o-expandable__borders
+            o-expandable__midtone
+            o-expandable__expanded"
+     data-js-hook="state_atomic_init">
     <button class="o-expandable_target" aria-pressed="true">
         <div class="o-expandable_header">
+        …
 ```
 
 JavaScript:
 
 ```javascript
  function Expandable( element ) {
-  var BASE_CLASS = 'o-expandable';
+  const BASE_CLASS = 'o-expandable';
 
   // Bitwise flags for the state of this Expandable.
-  var COLLAPSED = 0;
-  var COLLAPSING = 1;
-  var EXPANDING = 2;
-  var EXPANDED = 3;
+  const COLLAPSED = 0;
+  const COLLAPSING = 1;
+  const EXPANDING = 2;
+  const EXPANDED = 3;
 
   // The Expandable element will directly be the Expandable
   // when used in an ExpandableGroup, otherwise it can be the parent container.
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
-  var _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _target = _dom.querySelector( '.' + BASE_CLASS + '_target' );
+  const _content = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  …
 ```
 
 The Expandable organism can be instantiated with the following code:
 
 ```javascript
-_expandable = new Expandable( _dom.querySelector( '.o-expandable' ) );
-_expandable.init( _expandable.EXPANDED );
+const expandable = new Expandable( _dom.querySelector( '.o-expandable' ) );
+expandable.init( _expandable.EXPANDED );
 ```
 
 or
 
 ```javascript
-var atomicHelpers = require( '../../modules/util/atomic-helpers' );
-var Expandable = require( '../../organisms/Expandable' );
+const atomicHelpers = require( '../../modules/util/atomic-helpers' );
+const Expandable = require( '../../organisms/Expandable' );
 atomicHelpers.instantiateAll( '.o-expandable', Expandable );
 ```
 
@@ -137,7 +153,9 @@ Prefixed with “t-” in CSS, JavaScript, and HTML.
 
 ### Folder Structure
 
-Atomic code is currently separated and named based on asset type. This is a mistake in my view, as I believe we should begin migrating to a modular folder structure based on the component.
+Atomic code is currently separated and named based on asset type.
+This may be viewed as a mistake, in which case the code should begin
+to be migrated to a modular folder structure based on the component.
 
 #### Current Structure
 
@@ -186,7 +204,10 @@ README.MD
 
 ### JavaScript Architecture
 
-There was considerable discussion on how we should create JS components. The components aren't constructed to be used on SPAs (Single Page Applications). They are built to be rendered on the sever and then enhanced via JavaScript on the client. The basic interface for the components is as follows:
+There was considerable discussion on how we should create JS components.
+The components aren't constructed to be used on SPAs (Single Page Applications).
+They are built to be rendered on the sever and then enhanced via JavaScript
+on the client. The basic interface for the components is as follows:
 
 ```javascript
 function AtomicComponent( domElement ) {
@@ -204,14 +225,16 @@ function AtomicComponent( domElement ) {
 }
 ```
 
-We aren't testing for interface adherence but we probably should. We generally favor composition over inheritance. You can get more information by reading the following:
+We aren't testing for interface adherence but we probably should.
+We generally favor composition over inheritance.
+You can get more information by reading the following:
 
 #### Articles
 
 [A Simple Challenge to Classical Inheritance Fans](https://medium.com/javascript-scene/a-simple-challenge-to-classical-inheritance-fans-e78c2cf5eead#.mtrvhcjiw)
 [Composition over Inheritance (Youtube)](https://www.youtube.com/watch?v=wfMtDGfHWpA)
 
-#### Code and Related PRs
+#### Code and Related Pull Requests
 
 [View Unit Test](https://github.com/cfpb/cfgov-refresh/pull/916)
 [Expandable example 1](http://jsfiddle.net/0j9u66h0/9/)
@@ -221,23 +244,33 @@ We aren't testing for interface adherence but we probably should. We generally f
 
 #### Gulp
 
-Gulp is used as a task automation tool. A specific breakdown of each task is contained [here](https://github.com/cfpb/cfgov-refresh#available-gulp-tasks).
+Gulp is used as a task automation tool.
 
 #### Webpack
 
-Wepback is used as a module bundler although it's capable of more. We create page, global, and atomic specific bundles. The configuration for the bundles is contained in webpack-config.js. An explanation for the usage of each bundle is contained in scripts.js.
+Wepback is used as a module bundler although it's capable of more.
+We create page, global, and atomic specific bundles.
+The configuration for the bundles is contained in config/webpack-config.js.
+An explanation for the usage of each bundle is contained in scripts.js.
 
 #### Routes
 
-Routes are used to serve JavaScript bundles to the browser based on the requested URL or Wagtail page Media property. The happens via code contained in base.html.
+Routes are used to serve JavaScript bundles to the browser based
+on the requested URL or Wagtail page Media property.
+This happens via code contained in base.html.
 
 #### Base.html
 
-This file serves as the base document for serving up assets and content. It's currently very complicated, obtrusive, and needs to be refactored.
+This file serves as the base document for serving up assets and content.
+It's currently very complicated, obtrusive, and needs to be refactored.
 
 #### Wagtail Page Media Property
 
-Each Atomic component has a media property which list the JavaScript files that should be rendered via base.html. When a page is requested via the browser, code contained in base.html will loop all Atomic components for the requested page and render the appropriate Atomic JavaScript bundles.
+Each atomic component has a media property that list the JavaScript files
+that should be rendered via base.html.
+When a page is requested via the browser, code contained in base.html will
+loop all atomic components for the requested page and render
+the appropriate atomic JavaScript bundles.
 
 #### Questions and Concerns
 
