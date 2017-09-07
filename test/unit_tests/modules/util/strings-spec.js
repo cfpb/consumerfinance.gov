@@ -1,89 +1,84 @@
 'use strict';
-var chai = require( 'chai' );
-var expect = chai.expect;
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-var strings = require( BASE_JS_PATH + 'modules/util/strings' );
-var string;
-var control;
 
-describe( 'Strings stringEscape()', function() {
+const chai = require( 'chai' );
+const expect = chai.expect;
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const strings = require( BASE_JS_PATH + 'modules/util/strings' );
+let string;
+let control;
 
-  it( 'should escape a url', function() {
+describe( 'Strings stringEscape()', () => {
+
+  it( 'should escape a url', () => {
     string = 'http://google.com';
 
     expect( strings.stringEscape( string ) )
       .to.equal( 'http://google\\.com' );
   } );
 
-  it( 'should escape a hyphenated name', function() {
+  it( 'should escape a hyphenated name', () => {
     string = 'Miller-Webster';
 
     expect( strings.stringEscape( string ) )
       .to.equal( 'Miller\\-Webster' );
   } );
 
-  it( 'should escape a comma', function() {
+  it( 'should escape a comma', () => {
     string = 'Students, Parents, and Teachers';
 
     expect( strings.stringEscape( string ) )
-      .to.equal( 'Students\, Parents\, and Teachers' );
+      .to.equal( 'Students, Parents, and Teachers' );
   } );
 } );
 
-describe( 'Strings stringValid()', function() {
-  it( 'should return true when testing a standard string', function() {
+describe( 'Strings stringValid()', () => {
+  it( 'should return true when testing a standard string', () => {
     string = 'Test String';
 
     expect( strings.stringValid( string ) ).to.be.true;
   } );
 
-  it( 'should return true when testing a hyphenated string', function() {
+  it( 'should return true when testing a hyphenated string', () => {
     string = 'Test-String';
 
     expect( strings.stringValid( string ) ).to.be.true;
   } );
 
-  it( 'should return true when testing an underscored string', function() {
+  it( 'should return true when testing an underscored string', () => {
     string = 'Test_String';
 
     expect( strings.stringValid( string ) ).to.be.true;
   } );
 
   it( 'should return false when testing a string containing a single tick',
-    function() {
+    () => {
       string = 'Person\'s Name';
 
       expect( strings.stringValid( string ) ).to.be.false;
     }
   );
 
-  it( 'should return false when testing a string containing a period',
-    function() {
-      string = 'Some P. Name';
+  it( 'should return false when testing a string containing a period', () => {
+    string = 'Some P. Name';
 
-      expect( strings.stringValid( string ) ).to.be.false;
-    }
-  );
+    expect( strings.stringValid( string ) ).to.be.false;
+  } );
 
-  it( 'should return false when testing a string containing a colon',
-    function() {
-      string = 'Person: Name';
+  it( 'should return false when testing a string containing a colon', () => {
+    string = 'Person: Name';
 
-      expect( strings.stringValid( string ) ).to.be.false;
-    }
-  );
+    expect( strings.stringValid( string ) ).to.be.false;
+  } );
 
-  it( 'should return false when testing a string containing a gt or lt',
-    function() {
-      string = '<body>';
+  it( 'should return false when testing a string containing a gt or lt', () => {
+    string = '<body>';
 
-      expect( strings.stringValid( string ) ).to.be.false;
-    }
-  );
+    expect( strings.stringValid( string ) ).to.be.false;
+  } );
 } );
 
-describe( 'Strings stringMatch()', function() {
-  it( 'should return true when testing matching strings', function() {
+describe( 'Strings stringMatch()', () => {
+  it( 'should return true when testing matching strings', () => {
     string = 'Test String';
     control = 'Test String';
 
@@ -92,7 +87,7 @@ describe( 'Strings stringMatch()', function() {
   } );
 
   it( 'should return true when testing matching strings with differing casing',
-    function() {
+    () => {
       string = 'test string';
       control = 'Test String';
 
@@ -101,7 +96,7 @@ describe( 'Strings stringMatch()', function() {
     }
   );
 
-  it( 'should return false when testing differing strings', function() {
+  it( 'should return false when testing differing strings', () => {
     string = 'Test String';
     control = 'Result String';
 
