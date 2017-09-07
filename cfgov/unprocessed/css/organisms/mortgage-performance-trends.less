@@ -7,8 +7,23 @@
 }
 
 .o-mp-map {
+
     border: 1px solid @gray-40;
     padding: 2em 2em 1em;
+
+    // Override some cfpb-chart-builder styles
+    .highcharts-map-series {
+        .highcharts-point-select,
+        .highcharts-point:hover {
+            stroke: @black;
+            stroke-width: 2px;
+            transition: stroke-width 200ms;
+        }
+    }
+
+    .highcharts-tooltip-box {
+        fill: @white;
+    }
 
 }
 
@@ -64,19 +79,6 @@
             font-size: @size-v;
         }
     } );
-
-    // Override some cfpb-chart-builder styles
-    .highcharts-map-series {
-        .highcharts-point-select,
-        .highcharts-point:hover {
-            stroke: @black !important;
-            stroke-width: 2px !important;
-        }
-    }
-
-    .highcharts-tooltip-box {
-        fill: @white;
-    }
 
 }
 
