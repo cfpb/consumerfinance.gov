@@ -10,7 +10,7 @@ from v1.models.browse_page import BrowsePage
 from v1.models.images import CFGOVImage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import LearnPage
-from v1.models.snippets import Contact
+from v1.models.snippets import Contact, Resource
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
@@ -41,6 +41,16 @@ class OrganismsTestCase(TestCase):
         )
         contact.save()
         return contact
+
+    def create_resource(self):
+        thumb = CFGOVImage.objects.create(
+            title='test resource thumbnail',
+            file=get_test_image_file()
+        )
+
+        resource = Resource(title='Test Resource')
+        resource.thumbnail = thumb
+        resource.save()
 
     def test_well(self):
         """Well content correctly displays on a Landing Page"""
@@ -312,6 +322,61 @@ class OrganismsTestCase(TestCase):
             'The most recent data available in each visualization is for April 2016'
         )
         self.assertContains(response, 'January 2018')
+
+    def test_snippet_list(self):
+        """ Snippet List renders thumbnails when show_thumbnails is True"""
+        browse_page = BrowsePage(
+            title='Browse Page',
+            slug='browse',
+        )
+        browse_page.content = StreamValue(
+            browse_page.content.stream_block,
+            [atomic.snippet_list_show_thumbnails_false],
+            True
+        )
+        publish_page(child=browse_page)
+
+        self.create_resource()
+
+        response = self.client.get('/browse/')
+        self.assertContains(response, 'Test Snippet List')
+        self.assertContains(response, 'Test Resource')
+
+    def test_snippet_list_show_thumbnails_false(self):
+        """ Snippet List doesn't show thumbs when show_thumbnails is False"""
+        no_thumbnails_page = BrowsePage(
+            title='No Thumbnails Page',
+            slug='no-thumbnails',
+        )
+        no_thumbnails_page.content = StreamValue(
+            no_thumbnails_page.content.stream_block,
+            [atomic.snippet_list_show_thumbnails_false],
+            True
+        )
+        publish_page(child=no_thumbnails_page)
+
+        self.create_resource()
+
+        response = self.client.get('/no-thumbnails/')
+        self.assertNotContains(response, 'o-snippet-list_list-thumbnail')
+
+    def test_snippet_list_show_thumbnails_true(self):
+        """ Snippet List shows thumbnails when show_thumbnails is True"""
+        thumbnails_page = BrowsePage(
+            title='Thumbnails Page',
+            slug='thumbnails',
+        )
+        thumbnails_page.content = StreamValue(
+            thumbnails_page.content.stream_block,
+            [atomic.snippet_list_show_thumbnails_true],
+            True
+        )
+        publish_page(child=thumbnails_page)
+
+        self.create_resource()
+
+        response = self.client.get('/thumbnails/')
+        self.assertContains(response, 'o-snippet-list_list-thumbnail')
 
 
 class TestInfoUnitGroup(TestCase):

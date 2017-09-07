@@ -1,0 +1,13 @@
+codecov:
+  branch: master
+  notify:
+    require_ci_to_pass: yes
+comment: off
+coverage:
+  status:
+    project: 
+      default:
+        threshold: 0%
+    patch:
+      default:
+        threshold: 0%

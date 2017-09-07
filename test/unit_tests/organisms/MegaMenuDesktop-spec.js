@@ -1,10 +1,11 @@
 'use strict';
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var MegaMenuDesktop = require( BASE_JS_PATH + 'organisms/MegaMenuDesktop' );
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-describe( 'MegaMenuDesktop', function() {
+const chai = require( 'chai' );
+const expect = chai.expect;
+const MegaMenuDesktop = require( BASE_JS_PATH + 'organisms/MegaMenuDesktop' );
+
+describe( 'MegaMenuDesktop', () => {
   // TODO: Implement tests.
 } );

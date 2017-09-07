@@ -1,11 +1,11 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var EventObserver = require( BASE_JS_PATH + 'modules/util/EventObserver' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const EventObserver = require( BASE_JS_PATH + 'modules/util/EventObserver' );
 
-describe( 'EventObserver', function() {
+describe( 'EventObserver', () => {
   // TODO: Implement tests.
 } );

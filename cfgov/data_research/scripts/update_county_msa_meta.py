@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 import json
 import logging
 
-from data_research.models import MortgageMetaData
+from data_research.models import MortgageMetaData, NonMSAMortgageData
 from data_research.mortgage_utilities.s3_utils import bake_json_to_s3
-from data_research.views import FIPS, load_fips_meta
+from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
 logger = logging.getLogger(__name__)
 
@@ -35,8 +35,8 @@ logger = logging.getLogger(__name__)
 
 def update_state_to_geo_meta(geo):
     """
-    Assemble dictionaries that map state abbreviations to all counties or
-    metro areas in a given state, for use in building chart drop-downs.
+    Assemble dictionaries that map state abbreviations to all counties, metro
+    areas and non-metro-areas in a given state, for use in building drop-downs.
 
     Areas are marked `valid: true` or `valid: false` based on whether they meet
     our display threshold of reporting at least 1,000 open mortgages.
@@ -57,6 +57,21 @@ def update_state_to_geo_meta(geo):
                     "valid": true
                 }
             ],
+            "state_fips": "15",
+            "state_name": "Hawaii"
+        },
+    ...
+    }
+    ```
+
+    A non-MSA meta entry, combining all non-MSA counties in a state:
+    ```json
+    {
+        "HI": {
+            "non_msa_fips": "15-non",
+            "valid": true,
+            "non_msa_countiess": ["15007", "15005", "15001"],
+            "msa_counties": ["15003", "15009"],
             "state_fips": "15",
             "state_name": "Hawaii"
         },
@@ -104,9 +119,15 @@ def update_state_to_geo_meta(geo):
                 'fips_dict': FIPS.msa_fips,
                 'query': MortgageMetaData.objects.get_or_create(
                     name='state_msa_meta')},
+        'non_msa': {'label': 'non-metro-counties',
+                    'output_slug': 'state_non_msa_meta',
+                    'fips_dict': FIPS.state_fips,
+                    'query': MortgageMetaData.objects.get_or_create(
+                        name='state_non_msa_meta')},
     }
-    fips_dict = geo_dict[geo]['fips_dict']
-    label = geo_dict[geo]['label']
+    g_dict = geo_dict[geo]
+    fips_dict = g_dict['fips_dict']
+    label = g_dict['label']
     setup = {
         FIPS.state_fips[fips]['abbr']: {
             label: [],
@@ -117,8 +138,8 @@ def update_state_to_geo_meta(geo):
     for fips in fips_dict:
         _dict = fips_dict[fips]
         geo_name = _dict['name']
-        geo_valid = fips in FIPS.whitelist
         if geo == 'msa':
+            geo_valid = fips in FIPS.whitelist
             msa_state_list = []
             for county_fips in _dict['county_list']:
                 state = FIPS.county_fips[county_fips]['state']
@@ -129,16 +150,25 @@ def update_state_to_geo_meta(geo):
                     {'name': geo_name,
                      'fips': fips,
                      'valid': geo_valid})
+        elif geo == 'non_msa':
+            non_fips = '{}-non'.format(fips)
+            s_dict = FIPS.state_fips[fips]
+            abbr = s_dict['abbr']
+            geo_valid = non_fips in FIPS.whitelist
+            for each in ['msa_counties', 'non_msa_counties', 'msas']:
+                setup[abbr][each] = s_dict[each]
+            setup[abbr]['non_fips'] = non_fips
         else:
+            geo_valid = fips in FIPS.whitelist
             this_state = FIPS.county_fips[fips]['state']
             setup[this_state]['counties'].append(
                 {'name': geo_name,
                  'fips': fips,
                  'valid': geo_valid})
-        for state_abbr in setup:
-            setup[state_abbr][label].sort(
-                key=lambda entry: entry['fips'])
-
+        if geo != 'non_msa':
+            for state_abbr in setup:
+                setup[state_abbr][label].sort(
+                    key=lambda entry: entry['fips'])
     json_out = json.dumps(setup)
     # dump to s3 and save to database
     slug = geo_dict[geo]['output_slug']
@@ -149,12 +179,23 @@ def update_state_to_geo_meta(geo):
     logger.info("Saved '{}.json' to S3".format(slug))
     meta_obj, cr = MortgageMetaData.objects.get_or_create(
         name=slug)
-    meta_obj.json_value = json_out
+    meta_obj.json_value = setup
     meta_obj.save()
     logger.info("Saved metadata object '{}.'".format(slug))
 
 
+def update_non_msa_fips():
+    fips = sorted(set(
+        [obj.fips for obj in NonMSAMortgageData.objects.filter(
+            state__non_msa_valid=True)]))
+    meta_obj, cr = MortgageMetaData.objects.get_or_create(
+        name='non_msa_fips')
+    meta_obj.json_value = fips
+    meta_obj.save()
+
+
 def run():
     load_fips_meta()
-    for geo in ['msa', 'county']:
+    for geo in ['msa', 'county', 'non_msa']:
         update_state_to_geo_meta(geo)
+    update_non_msa_fips()

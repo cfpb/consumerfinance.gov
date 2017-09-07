@@ -56,11 +56,11 @@ parser.add_argument(
 
 
 def matching_issue(title, issues):
-    next((issue for issue in issues if issue.title == title), None)
+    return next((issue for issue in issues if issue.title == title), None)
 
 
 def post_to_chat(endpoint, username, message, issue_url):
-    text = 'Alert: {}. Github issue created at {}'.format(
+    text = 'Alert: {}. Github issue at {}'.format(
         message,
         issue_url,
     )
@@ -99,25 +99,45 @@ if __name__ == '__main__':
         args.github_repo,
     )
 
-    if 'Messages' in response:
-        for message in response['Messages']:
-            body = message['Body']
-            title = body.split(" - ")[0]
-            logger.info('Retrieved message {} from SQS'.format(body))
+    for message in response.get('Messages', {}):
+        body = message.get('Body').replace(
+            '#', '# '  # Avoids erroneous Github issue link
+        ).replace(
+            '[Open]', ''  # We want to expand the link
+        )
+        title = body.split(" - ")[0]
+        logger.info('Retrieved message {} from SQS'.format(body))
 
-            issue = matching_issue(title=title, issues=repo.iter_issues())
-            if issue:
-                # Issue already exists,
-                # add comment to it to document it happened again
-                issue.create_comment(body=body)
-            else:
-                # New issue, post to github
-                issue = repo.create_issue(title=title, body=body)
-                # AND post to chat, if credentials provided
-                if args.mattermost_webhook_url and args.mattermost_username:
-                    post_to_chat(
-                        endpoint=args.mattermost_webhook_url,
-                        username=args.mattermost_username,
-                        message=body,
-                        issue_url=issue.html_url,
-                    )
+        issue = matching_issue(
+            title=title,
+            issues=repo.iter_issues(state='all')
+        )
+        if issue:  # Issue already exists
+            if issue.is_closed():
+                issue.reopen()
+            # add comment to it to document it happened again
+            issue.create_comment(body=body)
+        else:
+            # New issue, post to github
+            issue = repo.create_issue(
+                title=title,
+                body=body,
+                labels=[
+                    'Maintenance and Response',
+                    'alert'
+                ],
+            )
+        # Post to chat, if credentials provided
+        if args.mattermost_webhook_url and args.mattermost_username:
+            post_to_chat(
+                endpoint=args.mattermost_webhook_url,
+                username=args.mattermost_username,
+                message=body,
+                issue_url=issue.html_url,
+            )
+
+        client.delete_message(
+            QueueUrl=args.queue_url,
+            ReceiptHandle=message.get('ReceiptHandle')
+        )
+        logger.info('Deleted message {} from SQS'.format(body))

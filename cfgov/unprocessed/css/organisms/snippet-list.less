@@ -24,14 +24,23 @@
 
     [data-display-table="cell"] {
         display: table-cell;
-        padding: unit( 10px / @base-font-size-px, em);
+        padding: unit( 10px / @base-font-size-px, em );
+        vertical-align: middle;
     }
 
     &-heading {
         .heading-5();
 
-        padding: unit( 10px / @font-size, em);
+        padding: unit( 10px / @font-size, em );
         background: @gray-10;
+    }
+
+    &-thumbnail {
+        width: 150px;
+
+        img {
+            width: 150px;
+        }
     }
 
     &-item-title {
@@ -39,6 +48,8 @@
     }
 
     &-action-list {
+        margin-top: 0;
+
         > li {
             margin-bottom: 0;
         }

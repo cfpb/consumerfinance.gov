@@ -7,10 +7,10 @@ import logging
 import sys
 
 from data_research.models import (
-    MortgageDataConstant, MortgageMetaData, CountyMortgageData)
+    MortgageDataConstant, MortgageMetaData, County, CountyMortgageData)
 from data_research.mortgage_utilities.s3_utils import read_in_s3_csv
 from data_research.mortgage_utilities.fips_meta import (
-    FIPS_DATA_PATH, OUTDATED_FIPS)
+    FIPS_DATA_PATH, IGNORE_FIPS)
 
 S3_SOURCE_BUCKET = (
     'http://files.consumerfinance.gov.s3.amazonaws.com/'
@@ -19,6 +19,10 @@ S3_SOURCE_BUCKET = (
 ORIGINAL_FILENAME = 'delinquency_county_0317.csv'
 
 logger = logging.getLogger(__name__)
+
+# sample CSV field_names and row:
+# date,fips,open,current,thirty,sixty,ninety,other
+# 01/01/98,1001,268,260,4,1,0,3
 
 
 def merge_the_dades():
@@ -75,21 +79,19 @@ def validate_fips(raw_fips, keep_outdated=False):
     """
     if len(raw_fips) not in [4, 5]:
         return None
-    if raw_fips == '46113':  # Fix Oglala Lakota County, SD
-        return OUTDATED_FIPS['46113']
+    if raw_fips == '46113':  # The former Shannon County, SD
+        return '46102'  # Change to 46102, Oglala Lakota County, SD
     if len(raw_fips) == 4:
         new_fips = "0{}".format(raw_fips)
     else:
         new_fips = raw_fips
-    if keep_outdated is False:
-        if new_fips in OUTDATED_FIPS:
-            return None
-        else:
-            return new_fips
-    return new_fips
+    if keep_outdated is False and new_fips in IGNORE_FIPS:
+        return None
+    else:
+        return new_fips
 
 
-def load_values(s3_filename, return_fips=False):
+def load_values(s3_filename, starting_date, return_fips=False):
     """Drop and reload the CountyMortgageData table."""
 
     counter = 0
@@ -101,16 +103,17 @@ def load_values(s3_filename, return_fips=False):
     raw_data = read_in_s3_csv(source_url)
     # raw_data is a generator delivering data dicts, each representing a row
     if return_fips is True:
-        fips_list = []
-        for row in raw_data:
-            fips_list.append(validate_fips(row.get('fips')))
+        fips_list = [validate_fips(row.get('fips')) for row in raw_data]
         return sorted(set(fips_list))
     for row in raw_data:
         valid_fips = validate_fips(row.get('fips'))
-        if valid_fips:
+        sampling_date = parser.parse(row.get('date')).date()
+        if valid_fips and sampling_date >= starting_date:
+            county = County.objects.get(fips=valid_fips)
             obj = CountyMortgageData(
                 fips=valid_fips,
-                date=parser.parse(row.get('date')).date(),
+                county=county,
+                date=sampling_date,
                 total=int(row.get('open')),
                 current=int(row.get('current')),
                 thirty=int(row.get('thirty')),
@@ -130,8 +133,24 @@ def load_values(s3_filename, return_fips=False):
         CountyMortgageData.objects.count()))
 
 
+def validate_counties():
+    for each in County.objects.all():
+        each.validate()
+
+
 def run(*args):  # pragma: no cover
+    starting_year = MortgageDataConstant.objects.get(
+        name='starting_year').value
+    starting_date = datetime.date(starting_year, 1, 1)
     if args:
-        load_values(s3_filename=args[0])
+        load_values(s3_filename=args[0], starting_date=starting_date)
+        logger.info("County mortgage data loaded; now validating counties.")
+        validate_counties()
+        total = County.objects.count()
+        valid = County.objects.filter(valid=True).count()
+        if total != 0:
+            logger.info(
+                "{} counties of {} were found to be valid -- {}%)".format(
+                    valid, total, round((valid * 100.0 / total), 1)))
     else:
         logger.info('You must provide an S3 filename to load.')

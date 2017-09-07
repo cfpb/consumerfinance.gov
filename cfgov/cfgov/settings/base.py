@@ -3,6 +3,8 @@ import os
 import sys
 
 from django.conf import global_settings
+from django.utils.translation import ugettext_lazy as _
+
 from unipath import Path
 
 from ..util import admin_emails
@@ -100,7 +102,7 @@ OPTIONAL_APPS = [
 
 if DEPLOY_ENVIRONMENT == 'build':
     OPTIONAL_APPS += [
-        {'import': 'eregs', 'apps': ('eregs_core',)},
+        {'import': 'eregs_core', 'apps': ('eregs_core',)},
     ]
 
 MIDDLEWARE_CLASSES = (
@@ -180,6 +182,15 @@ DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('es', _('Spanish')),
+)
+
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT, 'locale'),
+)
 
 TIME_ZONE = 'America/New_York'
 
@@ -561,7 +572,9 @@ FLAGS = {
 
 
     # The next version of eRegulations
-    'EREGS20': {},
+    'EREGS20': {
+        'boolean': DEPLOY_ENVIRONMENT == 'build',
+    },
 
     # Add sortable tables to Wagtail
     # When enabled, the sortable tables option will be added to the Wagtail Admin
