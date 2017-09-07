@@ -11,14 +11,25 @@
     border: 1px solid @gray-40;
     padding: 2em 2em 1em;
 
+    h3 span {
+      .u-webfont-demi();
+    }
+
     // Override some cfpb-chart-builder styles
     .highcharts-map-series {
         .highcharts-point-select,
         .highcharts-point:hover {
-            stroke: @black;
-            stroke-width: 2px;
-            transition: stroke-width 200ms;
+            stroke: @black !important;
+            stroke-width: 2px !important;
+            transition: stroke-width 200ms !important;
         }
+        .highcharts-point {
+            stroke: #838588;
+        }
+    }
+
+    .highcharts-color-0 {
+        stroke: #838588;
     }
 
     .highcharts-tooltip-box {
@@ -60,7 +71,7 @@
     rect {
         font-size: @size-vi;
         height: 15px;
-        stroke: @gray-10;
+        stroke: #838588;
         stroke-miterlimit: 10;
         stroke-width: 0.5;
         width: 91.5px;

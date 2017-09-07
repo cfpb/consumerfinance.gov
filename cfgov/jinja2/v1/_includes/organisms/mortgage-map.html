@@ -373,7 +373,7 @@
         </form>
     </div>
     <div class="o-mp-map m-full-width-text">
-        <h3 id="mp-map-title">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent: <span id="mp-map-title-date"><strong>January 2008</strong></span></h3>
+        <h3 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame }} days delinquent: <span id="mp-map-title-location">state view</span> for <span id="mp-map-title-date"><strong>January 2008</strong></span></h3>
         <div id="mp-map">
             {{ value.description }}
         </div>

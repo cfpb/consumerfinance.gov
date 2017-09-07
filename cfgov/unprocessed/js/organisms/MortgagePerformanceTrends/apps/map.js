@@ -26,6 +26,7 @@ class MortgagePerformanceMap {
     this.$year = this.$container.querySelector( '#mp-map-year' );
     this.$map = this.$container.querySelector( '#mp-map' );
     this.$mapTitle = document.querySelector( '#mp-map-title-status' );
+    this.$mapTitleLocation = document.querySelector( '#mp-map-title-location' );
     this.$mapTitleDate = document.querySelector( '#mp-map-title-date' );
     this.$loadingSpinner = document.querySelector( '#mp-map-loading' );
     this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
@@ -168,6 +169,11 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
 };
 
 MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state ) {
+  let location = state.geo.name;
+  if ( !location ) {
+    location = `${ state.geo.type } view`;
+  }
+  this.$mapTitleLocation.innerHTML = location;
   this.$mapTitleDate.innerHTML = utils.getDate( state.date );
 };
 
