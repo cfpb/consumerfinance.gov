@@ -9,7 +9,10 @@
 .o-mp-map {
 
     border: 1px solid @gray-40;
-    padding: 2em 2em 1em;
+    margin-top: unit( 30px / @base-font-size-px, em );
+    padding: unit( 30px / @base-font-size-px, em )
+             unit( 30px / @base-font-size-px, em )
+             unit( 15px / @base-font-size-px, em );
 
     h3 span {
       .u-webfont-demi();
@@ -39,6 +42,8 @@
 }
 
 .m-color-ramp {
+
+    margin-top: unit( 15px / @base-font-size-px, em );
 
     &[data-chart-color='blue'] {
 
@@ -93,10 +98,15 @@
 
 }
 
-// Fieldsets have silly default values. We should remove them at the CF level
-// but for now I'm removing them only within our app.
 #mp-chart-container,
 #mp-map-container {
+
+    .a-label h4 {
+        .u-mb10();
+    }
+
+    // Fieldsets have silly default values. We should remove them at the CF level
+    // but for now I'm removing them only within our app.
     fieldset {
         padding-left: 0;
         margin-left: 0;
