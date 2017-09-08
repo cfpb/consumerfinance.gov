@@ -3,8 +3,8 @@
 // TODO: Replace with our internal xhr util: https://goo.gl/i6gs5Y
 var ajax = require( 'xdr' );
 
-var COUNTIES_URL = 'https://s3.amazonaws.com/files.consumerfinance.gov/data/mortgage-performance/meta/state_county_dropdown.json';
-var METROS_URL = 'https://s3.amazonaws.com/files.consumerfinance.gov/data/mortgage-performance/meta/state_msa_dropdown.json';
+var COUNTIES_URL = '/data-research/mortgages/api/v1/metadata/state_county_meta';
+var METROS_URL = '/data-research/mortgages/api/v1/metadata/state_msa_meta';
 var counties;
 var metros;
 
@@ -23,7 +23,6 @@ var utils = {
     }
     return ajax( { url: COUNTIES_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
-      counties = data;
       cb( null, data );
     } );
   },
@@ -33,7 +32,6 @@ var utils = {
     }
     return ajax( { url: METROS_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
-      metros = data;
       cb( null, data );
     } );
   },
@@ -53,7 +51,7 @@ var utils = {
       'November',
       'December'
     ];
-    return `${ months[parseInt( dates[1], 10 ) - 1] }, ${ dates[0] }`;
+    return `${ months[parseInt( dates[1], 10 ) - 1] } ${ dates[0] }`;
   },
   thunkMiddleware: store => next => action => {
     if ( typeof action === 'function' ) {
