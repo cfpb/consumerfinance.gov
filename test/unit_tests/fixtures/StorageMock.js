@@ -1,6 +1,5 @@
 'use strict';
 
-
 function StorageMock() {
   this.storage = {};
 }

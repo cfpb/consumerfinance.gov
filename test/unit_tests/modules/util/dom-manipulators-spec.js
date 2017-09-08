@@ -1,17 +1,17 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'mocha-jsdom' );
-var domManipulators = require( BASE_JS_PATH + 'modules/util/dom-manipulators' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'mocha-jsdom' );
+const domManipulators = require( BASE_JS_PATH + 'modules/util/dom-manipulators' );
 
-describe( 'Dom Manipulators create', function() {
+describe( 'Dom Manipulators create', () => {
   jsdom();
 
-  before( function() {
-    var heading = domManipulators.create( 'h1', {
+  before( () => {
+    const heading = domManipulators.create( 'h1', {
       'textContent': 'Create Heading Text',
       'id':          'create-heading-id',
       'className':   'create-heading-class',
@@ -37,8 +37,8 @@ describe( 'Dom Manipulators create', function() {
   } );
 
 
-  it( 'should create a single elem', function() {
-    var query = document.querySelector( 'h1' );
+  it( 'should create a single elem', () => {
+    const query = document.querySelector( 'h1' );
 
     expect( query.id ).to.equal( 'create-heading-id' );
     expect( query.className ).to.equal( 'create-heading-class' );
@@ -46,8 +46,8 @@ describe( 'Dom Manipulators create', function() {
       .to.equal( 'create-heading-data' );
   } );
 
-  it( 'should create an elem inside another', function() {
-    var query = document.querySelector( 'span' );
+  it( 'should create an elem inside another', () => {
+    const query = document.querySelector( 'span' );
 
     expect( query.textContent ).to.equal( 'Heading Span' );
     expect( query.id ).to.equal( 'create-span-id' );
@@ -56,8 +56,8 @@ describe( 'Dom Manipulators create', function() {
       .to.equal( 'create-span-data' );
   } );
 
-  it( 'should create an elem around another', function() {
-    var query = document.querySelector( 'div' );
+  it( 'should create an elem around another', () => {
+    const query = document.querySelector( 'div' );
 
     expect( query.id ).to.equal( 'create-div-id' );
     expect( query.className ).to.equal( 'create-div-class' );

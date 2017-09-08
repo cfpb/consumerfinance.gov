@@ -107,6 +107,28 @@ urlpatterns = [
 
     url(r'^adult-financial-education/',
         include(fin_ed.urls_for_prefix('adult-financial-education'))),
+    url(r'^your-story/$', TemplateView.as_view(
+        template_name='/your-story/index.html')),
+    url(r'^empowerment/$', TemplateView.as_view(
+        template_name='empowerment/index.html'),
+        name='empowerment'),
+    url(r'^fair-lending/$', TemplateView.as_view(
+        template_name='fair-lending/index.html'),
+        name='fair-lending'),
+    url(r'^students/$', TemplateView.as_view(
+        template_name='students/index.html'),
+        name='students'),
+    url(r'^students/knowbeforeyouowe/$', TemplateView.as_view(
+        template_name='students/knowbeforeyouowe/index.html'),
+        name='students-knowbeforeyouowe'),
+    url(r'^students/helping-borrowers-find-ways-to-stay-afloat/$',
+        TemplateView.as_view(
+            template_name='students/helping-borrowers-find-'
+                      'ways-to-stay-afloat/index.html'),
+            name='students-helping-borrowers'),
+    url(r'^servicemembers/$', TemplateView.as_view(
+        template_name='service-members/index.html'),
+        name='servicemembers'),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
@@ -268,7 +290,7 @@ urlpatterns = [
 
     flagged_url('EREGS20',
                 r'^eregs2/',
-                include_if_app_enabled('eregs_core', 'eregs.urls')
+                include_if_app_enabled('eregs_core', 'eregs_core.urls')
                 ),
     url(r'^eregs-api/',
         include_if_app_enabled('regcore', 'regcore.urls')),
@@ -377,6 +399,13 @@ urlpatterns = [
 
     es_conv_flag(r'^es/quienes-somos/$', TemplateView.as_view(
                  template_name='es/quienes-somos/index.html')),
+
+    url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
+
+    flagged_url('FWB_RELEASE',
+                r'^(?i)consumer-tools/financial-well-being/',
+                include('wellbeing.urls')
+    ),
 ]
 
 if settings.ALLOW_ADMIN_URL:

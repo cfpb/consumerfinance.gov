@@ -1,10 +1,10 @@
 'use strict';
 
-var _oFilterableListControls =
-    element( by.css( '.o-filterable-list-controls' ) );
+const _oFilterableListControls =
+  element( by.css( '.o-filterable-list-controls' ) );
 
-var multiselect = require( '../shared_objects/multi-select' );
-var EC = protractor.ExpectedConditions;
+const multiselect = require( '../shared_objects/multi-select' );
+const EC = protractor.ExpectedConditions;
 
 
 function _getFilterableElement( selector ) {
@@ -12,27 +12,23 @@ function _getFilterableElement( selector ) {
 }
 
 function open() {
-  var expandable = this.mExpandable;
+  const expandable = this.mExpandable;
 
   return expandable.click()
-         .then( function() {
-           return browser.wait( EC.elementToBeClickable( expandable ) );
-         } );
+    .then( function() {
+      return browser.wait( EC.elementToBeClickable( expandable ) );
+    } );
 }
 
 function close() {
   return this.mExpandable.click();
 }
 
-var oFilterableListControls = {
+const oFilterableListControls = {
   mExpandable:   _getFilterableElement( '.o-expandable' ),
-
   mNotification: _getFilterableElement( '.m-notification' ),
-
   oPostPreview:  _getFilterableElement( '.o-post-preview' ),
-
   open:          open,
-
   close:         close
 };
 

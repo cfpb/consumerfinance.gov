@@ -1,0 +1,118 @@
+// Import external cfpb-chart-builder stylesheet
+// This is also imported by the chart block (in chart.less)
+@import 'cfpb-chart-builder.less';
+
+.o-mp-chart {
+
+}
+
+.o-mp-map {
+
+    border: 1px solid @gray-40;
+    margin-top: unit( 30px / @base-font-size-px, em );
+    padding: unit( 30px / @base-font-size-px, em )
+             unit( 30px / @base-font-size-px, em )
+             unit( 15px / @base-font-size-px, em );
+
+    h3 span {
+      .u-webfont-demi();
+    }
+
+    // Override some cfpb-chart-builder styles
+    .highcharts-map-series {
+        .highcharts-point-select,
+        .highcharts-point:hover {
+            stroke: @black !important;
+            stroke-width: 2px !important;
+            transition: stroke-width 200ms !important;
+        }
+        .highcharts-point {
+            stroke: #838588;
+        }
+    }
+
+    .highcharts-color-0 {
+        stroke: #838588;
+    }
+
+    .highcharts-tooltip-box {
+        fill: @white;
+    }
+
+}
+
+.m-color-ramp {
+
+    margin-top: unit( 15px / @base-font-size-px, em );
+
+    &[data-chart-color='blue'] {
+
+        .a-ramp-value {
+            &-0 { fill: @gray-10; }
+            &-1 { fill: @pacific-20; }
+            &-2 { fill: @pacific-40; }
+            &-3 { fill: @pacific-60; }
+            &-4 { fill: @pacific-80; }
+            &-5 { fill: @pacific; }
+            &-6 { fill: @dark-pacific; }
+        }
+
+    }
+
+    &[data-chart-color='navy'] {
+
+        .a-ramp-value {
+            &-0 { fill: @gray-10; }
+            &-1 { fill: @navy-20; }
+            &-2 { fill: @navy-40; }
+            &-3 { fill: @navy-60; }
+            &-4 { fill: @navy-80; }
+            &-5 { fill: @navy; }
+            &-6 { fill: @dark-navy; }
+        }
+
+    }
+
+    rect {
+        font-size: @size-vi;
+        height: 15px;
+        stroke: #838588;
+        stroke-miterlimit: 10;
+        stroke-width: 0.5;
+        width: 91.5px;
+    }
+
+    text {
+        font-size: @size-vi;
+        text-anchor: start;
+    }
+
+    .respond-to-max( @bp-sm-max, {
+        text {
+            font-size: @size-v;
+        }
+        tspan {
+            font-size: @size-v;
+        }
+    } );
+
+}
+
+#mp-chart-container,
+#mp-map-container {
+
+    .a-label h4 {
+        .u-mb10();
+    }
+
+    // Fieldsets have silly default values. We should remove them at the CF level
+    // but for now I'm removing them only within our app.
+    fieldset {
+        padding-left: 0;
+        margin-left: 0;
+        border: 0;
+    }
+    .content-l_col {
+        border-left-width: 0;
+    }
+}

@@ -1,27 +1,27 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'jsdom' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'jsdom' );
 
-var BaseTransition =
+const BaseTransition =
   require( BASE_JS_PATH + 'modules/transition/BaseTransition' );
 
-describe( 'BaseTransition', function() {
+describe( 'BaseTransition', () => {
 
-  var transition;
+  let transition;
 
   // DOM-related settings.
-  var initdom;
-  var document;
-  var HTML_SNIPPET = '<div class="content-1"></div>' +
+  let initdom;
+  let document;
+  const HTML_SNIPPET = '<div class="content-1"></div>' +
                      '<div class="content-2"></div>';
-  var contentDom;
-  var content2Dom;
+  let contentDom;
+  let content2Dom;
 
-  beforeEach( function() {
+  beforeEach( () => {
     initdom = jsdom.jsdom( HTML_SNIPPET );
     document = initdom.defaultView.document;
     contentDom = document.querySelector( '.content-1' );
@@ -30,27 +30,27 @@ describe( 'BaseTransition', function() {
       new BaseTransition( contentDom, { BASE_CLASS: 'u-test-transition' } );
   } );
 
-  describe( '.init()', function() {
-    it( 'should have public static methods', function() {
+  describe( '.init()', () => {
+    it( 'should have public static methods', () => {
       expect( BaseTransition.BEGIN_EVENT ).to.equal( 'transitionBegin' );
       expect( BaseTransition.END_EVENT ).to.equal( 'transitionEnd' );
       expect( BaseTransition.NO_ANIMATION_CLASS ).to.equal( 'u-no-animation' );
     } );
 
-    it( 'should have correct state before initializing', function() {
+    it( 'should have correct state before initializing', () => {
       expect( transition.isAnimated() ).to.be.false;
       expect( transition.remove() ).to.be.false;
       expect( transition.animateOn() instanceof BaseTransition ).to.be.true;
       expect( transition.animateOff() instanceof BaseTransition ).to.be.true;
     } );
 
-    it( 'should have correct state after initializing', function() {
+    it( 'should have correct state after initializing', () => {
       expect( transition.init() instanceof BaseTransition ).to.be.true;
     } );
   } );
 
-  describe( '.setElement()', function() {
-    it( 'should move classes from old element to new element', function() {
+  describe( '.setElement()', () => {
+    it( 'should move classes from old element to new element', () => {
       var className = 'u-test-transition';
       expect( contentDom.classList.contains( className ) ).to.be.false;
       transition.init();
@@ -61,18 +61,18 @@ describe( 'BaseTransition', function() {
     } );
   } );
 
-  describe( '.halt()', function() {
-    xit( 'should immediately fire transition end event', function() {
+  describe( '.halt()', () => {
+    xit( 'should immediately fire transition end event', () => {
       // TODO: To test halt() the transition needs to be started and
       //       then halt() needs to be called before the transition
       //       duration has completed.
     } );
   } );
 
-  describe( '.remove()', function() {
-    it( 'should remove transition classes from element', function() {
+  describe( '.remove()', () => {
+    it( 'should remove transition classes from element', () => {
       transition.init();
-      var hasClass = contentDom.classList.contains( 'u-test-transition' );
+      let hasClass = contentDom.classList.contains( 'u-test-transition' );
       expect( hasClass ).to.be.true;
       expect( transition.remove() ).to.be.true;
       hasClass = contentDom.classList.contains( 'u-test-transition' );
@@ -80,60 +80,60 @@ describe( 'BaseTransition', function() {
     } );
   } );
 
-  describe( '.isAnimated()', function() {
-    beforeEach( function() {
+  describe( '.isAnimated()', () => {
+    beforeEach( () => {
       transition.init();
     } );
 
-    it( 'should be true after animation is initialized', function() {
+    it( 'should be true after animation is initialized', () => {
       expect( transition.isAnimated() ).to.be.true;
     } );
 
-    it( 'should be true after animation is turned On', function() {
+    it( 'should be true after animation is turned On', () => {
       transition.animateOn();
       expect( transition.isAnimated() ).to.be.true;
     } );
 
-    it( 'should be false after animation is turned Off', function() {
+    it( 'should be false after animation is turned Off', () => {
       transition.animateOff();
       expect( transition.isAnimated() ).to.be.false;
     } );
   } );
 
-  describe( '.animateOff()', function() {
-    beforeEach( function() {
+  describe( '.animateOff()', () => {
+    beforeEach( () => {
       transition.init();
     } );
 
-    it( 'should return an instance', function() {
+    it( 'should return an instance', () => {
       expect( transition.animateOff() instanceof BaseTransition ).to.be.true;
     } );
 
-    it( 'should set u-no-animation class when called', function() {
+    it( 'should set u-no-animation class when called', () => {
       expect( contentDom.classList.contains( 'u-no-animation' ) ).to.be.false;
       transition.animateOff();
       expect( contentDom.classList.contains( 'u-no-animation' ) ).to.be.true;
     } );
   } );
 
-  describe( '.animateOn()', function() {
-    beforeEach( function() {
+  describe( '.animateOn()', () => {
+    beforeEach( () => {
       transition.init();
     } );
 
-    it( 'should return an instance', function() {
+    it( 'should return an instance', () => {
       expect( transition.animateOn() instanceof BaseTransition ).to.be.true;
     } );
 
-    it( 'should remove u-no-animation class, if set', function() {
+    it( 'should remove u-no-animation class, if set', () => {
       transition.animateOff();
       transition.animateOn();
       expect( contentDom.classList.contains( 'u-no-animation' ) ).to.be.false;
     } );
   } );
 
-  describe( '.applyClass()', function() {
-    it( 'should apply a class', function() {
+  describe( '.applyClass()', () => {
+    it( 'should apply a class', () => {
       expect( transition.applyClass( 'u-test-transition' ) ).to.be.false;
       transition.init();
       contentDom.classList.remove( 'u-test-transition' );

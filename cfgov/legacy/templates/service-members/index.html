@@ -1,0 +1,275 @@
+{% extends "front/base_nonresponsive.html" %}
+{% load static from staticfiles %}
+
+{% block title %}Information for servicemembers &gt; Consumer Financial Protection Bureau{% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="/" class="internal-link">Home</a></li>
+<li>INFORMATION FOR SERVICEMEMBERS</li>
+{% endblock %}
+
+{% block page_header_footer_css %}
+<link rel="stylesheet" href="{% static 'nemo/_/c/v1-nonresponsive-header.css' %}"/>
+<link rel="stylesheet" href="{% static 'nemo/_/c/v1-nonresponsive-footer.css' %}"/>
+{% endblock %}
+
+{% block content %}
+{% include "front/share_block.html" %}
+<article class="page">
+    <header class="pagetitle">
+        <h1>Information for servicemembers</h1>
+    </header>
+    <form id="signup" class="signup inlineSignup right"
+          action="https://public.govdelivery.com/service/process_ss.xml"
+          method="GET" data-thanks="Thanks, we'll be in touch!">
+        <fieldset>
+            <h3>Stay informed about our work for servicemembers, veterans, and their families</h3>
+            <p><input name="code" type="hidden" value="USCFPB_94" /></p>
+            <p><label for="email">Email address:</label> <input name="email" size="33" type="email" /></p>
+            <p><button>Sign up</button>
+        </fieldset>
+    </form>
+    <p>The CFPB is committed to addressing consumer financial challenges affecting servicemembers, veterans, and their families. We do that through financial education, monitoring of complaints submitted by consumers to the CFPB, and coordinating with other Federal and state agencies on military consumer protection measures. We understand that military life has some extra challenges, such as deployment and frequent moves, and that those challenges can have powerful financial repercussions. Our job is to make sure that others understand the unique consumer financial challenges faced by the military, and to encourage the CFPB and other agencies use their powers to make financial markets work better for our military and veteran families.</p>
+    <p>Those who serve, or have served, our country should not have to worry about falling victim to unfair, deceptive, or abusive financial practices. We are here to ensure that the military community’s concerns are heard—and that we do something about them.</p>
+    <div class="three-col">
+        <h2>Your stories</h2>
+        <p style="margin-bottom: -0.5em;">The servicemembers we work for aren&#8217;t statistics in uniform. When they contact the CFPB for help, we learn more about how companies act in the market and how bad actions hurt military families. These stories matter.</p>
+        <div class="col">
+            <figure>
+                <img class="attachment-consumer-stories wp-post-image"
+                     src="{% static 'nemo/_/img/CaptJamison_video_thumbnail.png' %}"
+                     alt="Captain Jamison video thumbnail"
+                     width="305" height="172" />
+            </figure>
+            <p>
+                <img class="play-button"
+                     style="position: relative; top: -92px; left: 234px; height: 50px; width: 50px;"
+                     src="{% static 'nemo/_/img/play_button_normal.png' %}"
+                     alt="" />
+            </p>
+            <p style="margin-top: -5em;">
+                When a servicemember couldn&#8217;t get anywhere with his mortgage lender, <a href="/everyone-has-a-story/captain-jamison-trouble-with-mortgage-lenders/">Captain Jamison helped him submit a complaint.</a>
+            </p>
+        </div>
+        <div class="col">
+            <figure>
+                <img class="attachment-consumer-stories wp-post-image"
+                     src="{% static 'nemo/_/img/Harry_video_thumbnail.png' %}"
+                     alt="Harry video thumbnail"
+                     width="305" height="172" />
+            </figure>
+            <p>
+                <img class="play-button"
+                     style="position: relative; top: -92px; left: 234px; height: 50px; width: 50px;"
+                     src="{% static 'nemo/_/img/play_button_normal.png' %}"
+                     alt=""  /></p>
+            <p style="margin-top: -5em;">Harry spoke up when he noticed his son struggling with a car loan;
+                <a href="/everyone-has-a-story/harry-and-ari-struggling-with-an-auto-loan/">he ended up helping thousands of servicemembers.</a>
+            </p>
+        </div>
+        <div class="col" style="padding-top: 1em;">
+            <h3>Stories from real people</h3>
+            <p>&nbsp;</p>
+            <figure style="float: left; height: 60px; width: 60px; margin-right: 0.5em; vertical-align: top;">
+                <img style="width: 60px;" src="{% static 'nemo/_/img/hero_map_graphic.png' %}" alt="" />
+            </figure>
+            <p>
+                <a href="/everyone-has-a-story/"><strong>See more stories.</strong></a>
+            </p>
+            <p>&nbsp;</p>
+            <figure style="float: left; height: 60px; width: 60px; margin-top: -1em;
+                            margin-right: 0.5em; vertical-align: top;">
+                <img src="{% static 'nemo/_/img/isocons-alt-green-consumer-review.png' %}" alt="" />
+            </figure>
+            <p><a href="https://story.consumerfinance.gov/tell-your-story/s/tell-your-story"><strong>Share your story.</strong></a></p>
+            <p>&nbsp;</p>
+            <figure style="float: left; height: 60px; width: 60px;
+                           margin-top: -1em; margin-right: 0.5em; vertical-align: top;">
+                <img src="{% static 'nemo/_/img/isocons-alt-green-submit-a-complaint.png' %}" alt="" />
+            </figure>
+            <p><a href="/complaint/"><strong>Submit a complaint.</strong></a></p>
+        </div>
+    </div>
+    <div class="three-col">
+        <h2>Taking action to assist servicemembers</h2>
+        <div class="col">
+            <h3>Get answers</h3>
+            <p>If you have a complaint against a financial company, you can submit it to us. We&#8217;ll forward your issue to the company, give you a tracking number, and keep you updated on the status of your complaint. We also have answers to common consumer issues right at your fingertips.</p>
+            <p><a href="/complaint/">Submit your complaint.</a><br />
+                <a href="/askcfpb/search/?q=&amp;selected_facets=audience_exact%3AServicemembers">Get straightforward answers</a> to financial questions affecting servicemembers.
+            </p>
+        </div>
+        <div class="col">
+            <h3>What we&#8217;ve heard from servicemembers</h3>
+            <p>We&#8217;ve received more than 74,000 complaints from servicemembers, veterans, and their family members. Their experiences tell us a lot about priorities in the market and where to focus.</p>
+            <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/201705_cfpb_OSA_Military-Lifecycle-Report.pdf">2017 Military lifecycle report</a><br />
+                <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/112016_cfpb_OSA_VA_refinance_snapshot.pdf">Issues related to VA mortgage refinancing</a><br />
+                <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201603_cfpb_snapshot-of-complaints-received-from-servicemembers-veterans-and-their-families.pdf">2016 Annual servicemember report</a><br />
+                <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201511_cfpb_snapshot-of-servicemember-complaints.pdf">Products impacted by the new MLA rule</a><br />
+                Read <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201504_cfpb_snapshot-of-complaints-received-from-servicemembers-veterans-and-their-families.pdf">2015</a> and <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201403_cfpb_snapshot-report_complaints-received-servicemembers.pdf">2014</a> annual reports
+            </p>
+            <p>
+                <strong><a href="/complaintdatabase/">See the full database of consumers&#8217; complaints</a></strong><br />
+            </p>
+        </div>
+        <div class="col">
+            <h3>Bringing actions against bad actors</h3>
+            <p>We&#8217;ve recovered millions in relief for servicemembers from companies that targeted them with scams or illegal practices.</p>
+            <p><a href="/about-us/newsroom/cfpb-sues-nations-largest-student-loan-company-navient-failing-borrowers-every-stage-repayment/">CFPB Sues Nation&#8217;s Largest Student Loan Company Navient for Failing Borrowers at Every Stage of Repayment</a> (Jan 2017)</p>
+            <p><a href="/about-us/newsroom/cfpb-orders-navy-federal-credit-union-pay-285-million-improper-debt-collection-actions/">CFPB Orders Navy Federal Credit Union to Pay $28.5 Million for Improper Debt Collection Actions</a> (Oct 2016)</p>
+            <p><a href="/newsroom/cfpb-orders-servicemember-auto-loan-company-to-pay-3-28-million-for-illegal-debt-collection-tactics/">CFPB Orders Servicemember Auto Loan Company to Pay $3.28 Million for Illegal Debt Collection Tactics</a> (Oct 2015)</p>
+            <p><a href="/policy-compliance/enforcement/actions/?form-id=0&amp;filter0_title=&amp;filter0_topics=servicemembers&amp;filter0_from_date=&amp;filter0_to_date="><strong>See all our actions against companies targeting servicemembers</strong></a></p>
+        </div>
+    </div>
+    <div class="three-col">
+        <h2>Pushing for better protections</h2>
+        <div class="col">
+            <h3>Strengthening the Military Lending Act</h3>
+            <p>Congress enacted the MLA to protect servicemembers from loans with a military annual percentage rate over 36 percent, with some exceptions. The initial rule implementing the MLA applied its protections to a very limited set of products, including narrowly-defined payday loans, auto title loans, and tax refund anticipation loans. In July 2015, the Department of Defense changed the implementing regulation so that more products are covered by the law&#8217;s protections. The products covered now more closely align with the traditional definition of consumer credit.</p>
+            <p>
+                <!--a href="/newsroom/hollister-k-petraeus-before-the-u-s-senate-committee-on-commerce-science-transportation/">Testimony before the U.S. Senate Committee on Commerce, Science & Transportation</a--><br />
+                <a href="/newsroom/cfpb-report-finds-loopholes-in-military-lending-act-rules-rack-up-costs-for-servicemembers/">Report: how MLA loopholes hurt servicemembers</a><br />
+                <a href="/newsroom/cfpb-lays-out-guidelines-for-protecting-servicemembers-in-the-payday-lending-market/">Guide to protecting servicemembers in the payday lending market</a><br />
+                <a href="/newsroom/cfpb-releases-statement-on-department-of-defense-proposal-to-amend-military-lending-act-rule/">CFPB statement on proposed amendments to strengthen the MLA</a><br />
+                <a href="https://www.gpo.gov/fdsys/pkg/FR-2015-07-22/pdf/2015-17480.pdf">MLA Final Rule</a>
+            </p>
+        </div>
+        <div class="col">
+            <h3>Protecting Servicemembers from abuses in the allotment system</h3>
+            <p>The military discretionary allotment system allows servicemembers to automatically direct a portion of their paycheck to financial institutions or people of their choosing. However, military personnel using the allotment system instead of other automatic payment options like ACH (Automated Clearing House) can end up losing out on certain legal protections. In November 2014, Secretary Hagel announced important changes to the allotment system in order to better protect from abuses.</p>
+            <p><a href="/newsroom/cfpb-cautions-military-lenders-against-illegal-military-allotment-practices/">CFPB Cautions Military Lenders Against Illegal Military Allotment Practices</a><br />
+                <a href="/blog/what-you-should-know-about-military-allotments/">What you should know about allotments</a><br />
+                <a href="/newsroom/cfpb-issues-statement-on-department-of-defenses-military-allotment-system-reforms-to-protect-servicemembers/">Statement on DoD allotment system reforms</a>
+            </p>
+        </div>
+        <div class="col">
+            <h3>Helping Struggling Military Homeowners</h3>
+            <p>Together with prudential regulators from the Federal Reserve System, the FDIC, NCUA and the OCC, we issued <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201206_cfpb_PCS_Orders_Guidance.pdf">joint guidance to address mortgage servicer practices</a> that may put military homeowners at risk.</p>
+            <p>Other federal regulators have helped as well. In June 2012, the <a href="https://www.fhfa.gov/Media/PublicAffairs/Pages/FHFA-Announces-Short-Sale-Assistance-for-Military-Homeowners-with-Fannie-Mae-or-Freddie-Mac-Loans.aspx">FHFA issued guidance</a> stating that PCSing military homeowners who obtained a short sale for FHFA loans would not have to pay the deficiency if there was a loss.</p>
+            <p><a href="https://www.treasury.gov/connect/blog/Pages/new-hamp-enhancements-will-help-military-homeowners.aspx/">Changes to the HAMP program also helped struggling military homeowners</a> by altering the definition of “primary residence” to take into account a PCS move and subsequent relocation.</p>
+        </div>
+    </div>
+    <div class="two-col">
+        <h2>Advocating for resources for servicemembers, veterans, and their families</h2>
+        <div class="col">
+            <h3>Military education benefits and student loans</h3>
+            <p>Most people paying for higher education take out student loans. Servicemembers, veterans, and their families have special options that could save them money and make them better off in the long run.</p>
+            <p><a href="/reports/overseas-underserved-student-loan-servicing-and-the-cost-to-our-men-and-women-in-uniform/">Report on student loan servicing and the cost to our men and women in uniform</a> (July 2015)<br />
+                <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/201604_cfpb_servicemember-student-loan-guide.pdf">Action guide for servicemembers: minimize your student loan payments</a><br />
+                <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201210_cfpb_servicemember-student-loan-servicing.pdf">Report on student loan servicing and the cost to our men and women in uniform</a> (October 2012)<br />
+                <a href="https://benefits.va.gov/gibill/comparison">GI Bill calculator</a>
+            </p>
+            <p>Know your options when it comes to repaying your loans. We have tools that can help you point you in the right direction.</p>
+            <p><a href="/paying-for-college/repay-student-debt/">Repaying Student Debt</a></p>
+        </div>
+        <div class="col">
+            <h3>Safeguarding veterans benefits</h3>
+            <p>Depending on when you&#8217;re discharged, some of your veterans&#8217; benefits kick in quickly while others come later. At every point, we want to make sure you protect what&#8217;s rightfully yours.</p>
+            <p><a href="/askcfpb/1715/i-was-offered-pension-advance-what-what-should-i-look-out.html">Protect your pension from poachers</a><br />
+                <a href="/askcfpb/1157/can-creditor-garnish-my-social-security-benefits-pay-debt.html">Can a debt collector take my VA benefits?</a><br />
+                <a href="/blog/consumer-advisory-your-benefits-are-protected-from-garnishment/">Your benefits are protected from garnishment</a>
+            </p>
+            <h3>Financial coaching</h3>
+            <p><a href="/blog/the-launch-of-the-cfpb-financial-coaching-initiative/#coaching">Financial coaching for transitioning veterans</a></p>
+        </div>
+    </div>
+    <div class="two-col">
+        <h2>Providing tools for educators and servicemembers</h2>
+        <div class="col">
+            <h3>Virtual training</h3>
+            <p>The Office of Servicemember Affairs hosts an ongoing series of online Military Financial Educator eLearnings on consumer financial topics for military leaders, Command Financial Specialist, service providers who deliver financial, educational, or legal counseling to servicemembers and their families.</p>
+            <p><a href="/servicemembers/on-demand-forums-and-tools/">View our latest virtual training topics here.</a></p>
+        </div>
+        <div class="col">
+            <h3>Tools &amp; Resources</h3>
+            <p><a href="/askcfpb/search/?q=&amp;selected_facets=audience_exact%3AServicemembers">Ask CFPB</a> &#8211; Get straightforward answers to financial questions affecting servicemembers.</p>
+            <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201508_cfpb_fraud-protection-tools-to-help-safeguard-servicemembers.pdf">Fraud protection tools to help safeguard servicemembers</a></p>
+            <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/cfpb_servicemembers_know-your-rights-when-a-debt-collector-calls.pdf">Servicemembers: Know your rights when a debt collector calls </a></p>
+            <h4>Find a Professional</h4>
+            <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/cfpb_servicemembers_choosing-a-financial-professional.pdf">Guide to choosing a financial professional.</a><br />
+                <a href="https://www.militaryonesource.mil/financial-and-legal/personal-financial-management-and-taxes?content_id=290479">Find a local military Personal Financial Manager</a> to help you navigate the confusing consumer financial marketplace.<br />
+                <a href="https://legalassistance.law.af.mil/content/locator.php">Find an Armed Forces Legal Assistance attorney close to you.</a>
+            </p>
+        </div>
+    </div>
+    <h3>STATE CONSUMER FINANCIAL PROTECTION RESOURCES FOR SERVICEMEMBERS</h3>
+    <p>We&#8217;ve compiled a listing of the consumer financial protection resources available to servicemembers and their families in each of the 50 states. Generally, these resources are provided by the Consumer Protection Division/Units of the State Attorney General. Several states centralize consumer protection services under a separate state government office such as the Department of Consumer Affairs or the Department of Commerce and Consumer Affairs. The inclusion of these state resources are especially important to servicemembers and their families as they move from duty station to duty station and are often unfamiliar with the consumer protection assistance available to them.</p>
+    <div class="three-col">
+        <div class="col">Arizona<br />
+            <a href="https://www.azag.gov/veterans">Office of the Attorney General. “Military and Veterans.”</a><br />
+            California<br />
+            <a href="https://oag.ca.gov/consumers/general/military">Department of Justice. Office of the Attorney General. “Military Consumer Protection.”</a><br />
+            Colorado<br />
+            <a href="https://www.stopfraudcolorado.gov/military">Office of the Attorney General. “Stop Fraud Colorado—Military.”</a><br />
+            Florida<br />
+            <a href="https://www.myfloridacfo.com/YMM/financialfrontlines/">Chief Financial Officer. &#8220;Empowering and Protecting Florida&#8217;s Military Consumers.&#8221;</a><br />
+            Georgia<br />
+            <a href="https://www.consumer.ga.gov/consumer-topics/military-consumer-protection-resource-page">Military Consumer Protection Resource Page</a><br />
+            Illinois<br />
+            <a href="https://www.illinoisattorneygeneral.gov/rights/veterans.html">Office of the Attorney General. “Military &amp; Veterans Rights.”</a><br />
+            Indiana<br />
+            <a href="https://www.in.gov/attorneygeneral/2843.htm">Office of the Attorney General. “Protecting Military Servicemembers.”</a><br />
+            Kansas<br />
+            <a href="https://ag.ks.gov/in-your-corner-kansas/your-family/military-families">Office of the Attorney General. Consumer Protection Division. “Military Families.”</a><br />
+            Kentucky<br />
+            <a href="https://ag.ky.gov/civil/consumerprotection/military/Documents/consumer_protection_guide_for_military_servicemembers.pdf">Office of the Attorney General. “Consumer Protection Guide for Military Servicemembers.”</a>
+        </div>
+        <div class="col">Louisiana<br />
+            <a href="https://ladoj.ag.state.la.us/Article.aspx?articleID=753&amp;catID=0">Office of the Attorney General. “Resource Guide for Servicemembers and Veterans.”</a><br />
+            Massachusetts<br />
+            <a href="https://www.mass.gov/ago/docs/civilrights/vets-guide.pdf">Office of the Attorney General. “Resource Guide for Veterans and Servicemembers.”</a><br />
+            Michigan<br />
+            <a href="https://michigan.gov/ag/0,4534,7-164-65798---,00.html">Office of the Attorney General. “Legal Protections and Rights Available to Military Servicemembers.”</a><br />
+            Minnesota<br />
+            <a href="https://www.ag.state.mn.us/Consumer/Handbooks/VetHnbk/Default.asp">Office of the Attorney General. “Veterans and Servicemembers.”</a><br />
+            Mississippi<br />
+            <a href="https://www.ago.state.ms.us/resources-for-military-service-personnel-and-families/">Office of the Attorney General. “Resources for Military Service Personnel and Families.”</a><br />
+            Montana<br />
+            <a href="https://dojmt.gov/consumer/military-consumer-protection-tips/">Military Consumer Protection Tips</a><br />
+            New York<br />
+            <a style="line-height: 1.5;" href="https://www.ag.ny.gov/consumer-frauds/veterans-resource-guide">Office of the Attorney General. “Veterans &amp; Service Members Resource Guide.”</a><br />
+            North Carolina<br />
+            <a style="line-height: 1.5;" href="https://www.ncdoj.gov/military.aspx">Department of Justice. Office of the Attorney General. “Tips for Military Personnel.”</a>
+        </div>
+        <div class="col">Ohio<br />
+            <a href="https://www.ohioattorneygeneral.gov/Individuals-and-Families/Military-and-Veterans">Office of the Attorney General. “Services for Military and Veterans.”</a><br />
+            Oregon<br />
+            <a href="https://www.doj.state.or.us/veterans/pages/protections.aspx">Department of Justice. Veterans Resources, Consumer Protections. “Consumer Protections for Military Personnel and Military Spouses.”</a><br />
+            Pennsylvania<br />
+            <a href="https://www.attorneygeneral.gov/SplashPage.aspx?refLink=/Quick_Links/Office_of_Military_and_Veterans_Affairs/Office_of_Military_and_Veterans_Affairs_Protecting_Consumers/">Office of the Attorney General. Office of Military and Veterans Affairs. “Office of Military and Veterans Affairs Protecting Consumers.”</a><br />
+            Tennessee<br />
+            <a href="https://www.tn.gov/attorneygeneral/cpro/militaryguide/militaryconsumerguide.pdf">Office of the Attorney General and Reporter. “Consumer Protection Guide for Consumer Affairs Counselors and United States Military Servicemembers.</a><br />
+            Virginia<br />
+            <a href="https://www.oag.state.va.us/index.php/programs-initiatives/veterans-assistance-resources">Office of the Attorney General. “Veterans Assistance &#8211; Resources”</a><br />
+            Washington<br />
+            <a href="https://www.atg.wa.gov/consumer-protections-veterans-military-personnel">Office of the Attorney General. “Consumer Protections for Veterans &amp; Military Personnel.”</a>
+        </div>
+    </div>
+    <h2>Latest posts from the Office of Servicemember Affairs</h2>
+    <p class="wp-caption-text"><strong><a href="/about-us/blog/our-office-servicemember-affairs-guides-you-through-financial-hurdles-your-military-career/">The office of Servicemember Affairs guides you through the financial hurdles of your military career</a></strong> &#8211; Paul Kantwill, 05/17/2017</p>
+    <p class="wp-caption-text"><strong><a href="/about-us/blog/tips-student-loan-borrowers/">Tips for student loan borrowers</a></strong> &#8211; Seth Frotman and Paul Kantwill, 01/27/2017</p>
+    <p class="wp-caption-text"><strong><a href="https://www.consumerfinance.gov/about-us/blog/veterans-day-complaint-review-va-home-loan-refinancing/">A Veterans Day complaint review: VA home loan refinancing</a></strong> &#8211; Holly Petraeus, 11/10/2016</p>
+    <p class="wp-caption-text"><strong><a href="https://www.consumerfinance.gov/about-us/blog/be-your-familys-financial-action-hero-during-emergency/">Be your family&#8217;s financial action hero during an emergency</a> </strong>&#8211; Holly Petraeus, 09/13/2016</p>
+    <p class="wp-caption-text"><strong><a href="https://www.consumerfinance.gov/about-us/blog/guard-against-fraud-and-make-better-financial-decisions-military-consumer-protection-month/">Guard against fraud and make better financial decisions for Military Consumer Protection Month</a></strong> – Holly Petraeus, 07/01/2016</p>
+    <p class="wp-caption-text"><strong><a href="https://www.consumerfinance.gov/about-us/blog/arm-yourself-knowledge-when-shopping-auto-loan/">Arm yourself with knowledge when shopping for an auto loan</a></strong> – Holly Petraeus, 06/16/2016</p>
+    <p class="wp-caption-text"><strong><a href="/blog/servicemembers-2015-a-year-in-review/">Servicemembers 2015: A year in review</a></strong> &#8211; Holly Petraeus, 03/22/2016</p>
+    <p class="wp-caption-text"><strong><a href="/blog/dont-be-a-zombie-with-your-personal-finances/">Don&#8217;t Be a Zombie with Your Personal Finances</a></strong> &#8211; Mechel Glass, 10/27/2015</p>
+    <p class="wp-caption-text"><strong><a href="/blog/servicemembers-protecting-your-credit-when-youre-away-from-home/">Servicemembers: Protecting your credit when you&#8217;re away from home</a></strong> – Holly Petraeus, 09/01/2015</p>
+    <p class="wp-caption-text"><strong><a href="/blog/the-launch-of-the-cfpb-financial-coaching-initiative/">The launch of the CFPB financial coaching initiative</a></strong> &#8211; Holly Petraeus and Daniel Dodd-Ramirez, 05/20/2015</p>
+    <p class="wp-caption-text"><strong><a href="/blog/heres-what-were-hearing-from-servicemembers-and-their-families/">Here&#8217;s what we&#8217;re hearing from Servicemembers and their families</a></strong> – Holly Petraeus, 04/27/2015</p>
+    <p class="wp-caption-text"><strong><a href="/blog/the-va-doesnt-send-you-mortgage-ads/">The VA doesn&#8217;t send you mortgage ads</a></strong> – Holly Petraeus, 04/09/2015</p>
+    <p class="wp-caption-text"><strong><a href="/blog/consumer-advisory-3-pension-advance-traps-to-avoid/">Consumer advisory: 3 pension advance traps to avoid</a></strong> – Holly Petraeus and Nora Down Eisenhower, 03/16/2015</p>
+    <p class="wp-caption-text"><strong><a href="/blog/are-unpaid-debts-a-military-career-killer/">Are unpaid debts a military career-killer?</a></strong> – Holly Petraeus, 01/09/2015</p>
+    <p class="wp-caption-text"><strong><a href="/blog/freedom-stores-to-provide-over-2-5-million-in-refunds-and-penalties/">Freedom Stores to provide over $2.5 million in refunds and penalties</a></strong> – Holly Petraeus, 12/18/2014</p>
+    <p class="wp-caption-text"><strong><a href="/blog/social-security-disability-income-shouldnt-mean-you-dont-qualify-for-a-mortgage/">Social Security disability income shouldn&#8217;t mean you don&#8217;t qualify for a mortgage</a></strong> – Holly Petraeus and Patrice Ficklin, 11/19/2014</p>
+    <p class="wp-caption-text"><strong><a href="/blog/veterans-dont-let-student-loan-forgiveness-damage-your-credit/">Veterans: Take advantage of student loan forgiveness, but don&#8217;t let it damage your credit</a></strong> – Holly Petraeus and Rohit Chopra, 11/17/2014</p>
+    <p class="wp-caption-text"><strong><a href="/blog/working-together-to-protect-student-veterans/">Working together to protect student veterans</a></strong> – Holly Petraeus, 08/26/2014</p>
+    <h4 class="wp-caption-text"><a href="https://www.consumerfinance.gov/about-us/blog/?form-id=1&amp;filter1_title=&amp;filter1_topics=servicemembers&amp;filter1_from_date=&amp;filter1_to_date=">Read all of our blog posts for servicemembers and veterans</a></h4>
+    <div style="margin-top: 2em;" data-ce-key="755">
+        <h2 data-ce-key="756">Connect with us</h2>
+        <p class="connect" data-ce-key="757"><a href="mailto:military@cfpb.gov" class="noStyles" data-ce-key="758"><img style="vertical-align: top;" src="{% static 'nemo/_/img/icon_small_email.png' %}" alt="" data-ce-key="759"></a> Email <a href="mailto:military@cfpb.gov" data-ce-key="760">military@cfpb.gov</a></p>
+        <p class="connect" data-ce-key="761"><a href="https://twitter.com/cfpbmilitary" class="noStyles" data-ce-key="762"><img style="vertical-align: top;" src="{% static 'nemo/_/img/icon_small_twitter.png' %}" alt="Twitter icon" data-ce-key="763"></a> Follow <a href="https://twitter.com/cfpbmilitary" data-ce-key="764">@cfpbmilitary</a></p>
+        <p class="connect" data-ce-key="765"><a href="https://www.facebook.com/CFPBMilitary" class="noStyles" data-ce-key="766"><img style="vertical-align: top;" src="{% static 'nemo/_/img/icon_small_facebook.png' %}" alt="Facebook logo" data-ce-key="767"></a> Like <a href="https://www.facebook.com/CFPBMilitary" data-ce-key="768">CFPB Military</a></p>
+    </div>
+</article>
+{% endblock %}

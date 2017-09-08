@@ -1,0 +1,393 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    Your financial well-being score
+{%- endblock %}
+
+{% block desc -%}
+    See your survey results and learn how you may be able to improve your score.
+{%- endblock %}
+
+{% block css %}
+    {{ super() }}
+    <style>
+        .save-links {
+            padding-bottom: 15px;
+            border-bottom: 1px solid #b4b5b6;
+            margin: 30px 0;
+            text-align: right;
+        }
+        .spectrum {
+            padding-top: 70px;
+            margin-top: 30px;
+            position: relative;
+        }
+        #score-box {
+            height: 120px; /* .spectrum's padding-top + height of spectrum image */
+            border-color: #101820;
+            border-style: dotted;
+            position: absolute;
+            top: 0;
+        }
+        .score-box__left {
+            padding-left: 15px;
+            border-width: 0 0 0 2px;
+        }
+        .score-box__right {
+            padding-right: 15px;
+            border-width: 0 2px 0 0;
+            text-align: right;
+        }
+        #score-box a {
+            border-bottom-width: 1px;
+        }
+        .spectrum_label {
+            width: 45%;
+            margin-top: 5px;
+        }
+        .spectrum_label.u-right {
+            text-align: right;
+        }
+        table {
+            width: 100%;
+        }
+        .answer-col {
+            width: 20%;
+        }
+
+        /* CF Enhancements */
+        .u-left {
+            float: left;
+        }
+    </style>
+{% endblock %}
+
+{% block content_main %}
+    <h1>Your financial well-being score</h1>
+
+    <p class="lead-paragraph">
+        Well done! You’ve taken a good step
+        in understanding your financial picture.
+    </p>
+
+    <p>
+        Your financial well-being score is calculated
+        based on the answers you gave.
+    </p>
+
+    <p>
+        Review your score and your answers below and think about
+        whether you want to take action and make improvements.
+        Our tools and resources can help.
+        You can return and retake the questionnaire to see if
+        you are able to answer the questions differently next time.
+    </p>
+
+    <ul class="save-links m-list m-list__horizontal">
+        <li class="m-list_item">
+            <a href="#" class="m-list_link
+                               a-link
+                               a-link__icon
+                               cf-icon
+                               cf-icon-print
+                               cf-icon__before">
+                <span class="a-link_text">Print</span>
+            </a>
+        </li>
+        <li class="m-list_item">
+            <a href="#" class="m-list_link
+                               a-link
+                               a-link__icon
+                               cf-icon
+                               cf-icon-download
+                               cf-icon__before">
+                <span class="a-link_text">Save as PDF</span>
+            </a>
+        </li>
+    </ul>
+
+    <h2>Your result</h2>
+
+    <figure class="spectrum u-clearfix">
+        <img src="{{ static('img/spectrum_1740x100.png') }}"
+             alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
+                  Higher scores represent a higher financial well-being."
+             height="50">
+        <div class="score-box__left" id="score-box">
+            Your score as of today: <b id="score-value"></b>
+            <div>
+                <a id="compare-link" href="../compare/">
+                    Score comparisons
+                </a>
+            </div>
+        </div>
+        <figcaption class="spectrum_label u-left" aria-hidden="true">
+            Lower financial well-being
+        </figcaption>
+        <figcaption class="spectrum_label u-right" aria-hidden="true">
+            Higher financial well-being
+        </figcaption>
+    </figure>
+
+    <div class="block">
+        <h2>Review your answers</h2>
+        <p>
+            We calculated your score based on the answers to
+            the financial well-being questionnaire.
+            If you’d like to be able to answer the questions differently
+            next time, see the recommendations.
+        </p>
+
+        <h3>Where to stay on track</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th class="answer-col">Your answer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>I am concerned that the money I have or will save won’t last</td>
+                    <td>Not at all</td>
+                </tr>
+                <tr>
+                    <td>Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month</td>
+                    <td>Never</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Where to consider action</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th class="answer-col">Your answer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>I could handle a major unexpected expense</td>
+                    <td>Somewhat</td>
+                </tr>
+                <tr>
+                    <td>Because of my money situation, I feel like I will never have the things I want in life</td>
+                    <td>Somewhat</td>
+                </tr>
+                <tr>
+                    <td>I can enjoy life because of the way I’m managing my money</td>
+                    <td>Somewhat</td>
+                </tr>
+                <tr>
+                    <td>I am behind with my finances</td>
+                    <td>Sometimes</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Where to take action</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th class="answer-col">Your answer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>I am securing my financial future</td>
+                    <td>Very little</td>
+                </tr>
+                <tr>
+                    <td>I am just getting by financially</td>
+                    <td>Completely</td>
+                </tr>
+                <tr>
+                    <td>I have money left over at the end of the month</td>
+                    <td>Rarely</td>
+                </tr>
+                <tr>
+                    <td>My finances control my life</td>
+                    <td>Always</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="block">
+        <h2>Consider your next steps</h2>
+
+        <div class="content-l u-mt30 u-mb30">
+            <div class="content-l_col content-l_col-1-2">
+                <h3>Next steps to take control of day-to-day money management</h3>
+                <ul>
+                    <li>
+                        <b>Get free or low-cost one-on-one help.</b>
+                        Locate a
+                        <a href="https://www.consumerfinance.gov/f/documents/201708_cfpb_financial-coaching-delivery-sites-list.pdf"
+                           class="a-link
+                                  a-link__icon
+                                  cf-icon
+                                  cf-icon-download
+                                  cf-icon__after">
+                            <span class="a-link_text">financial coach</span>
+                        </a>
+                        or
+                        <a href="https://www.consumerfinance.gov/find-a-housing-counselor/">housing counselor</a>
+                        near you.
+                    </li>
+                    <li>
+                        <b>Get a grip on debt.</b>
+                        Find out how to locate a <a href="TKTKTK">trustworthy debt counselor</a>,
+                        and stay on top of what you owe with our <a href="TKTKTK">debt log</a>.
+                    </li>
+                    <li>
+                        <b>Track where your money goes.</b>
+                        Fill out the <a href="TKTKTK">bill calendar</a> and the <a href="TKTKTK">spending tracker</a>
+                        to see your everyday expenses.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-l_col content-l_col-1-2">
+                <h3>Next steps to get on track for your financial future</h3>
+                <ul>
+                    <li>
+                        <b>Look toward home ownership.</b>
+                        Find a
+                        <a href="https://www.consumerfinance.gov/find-a-housing-counselor/">housing counselor</a>
+                        near you, and consult our
+                        <a href="/owning-a-home/">Owning a Home</a>
+                        tools and resources.
+                    </li>
+                    <li>
+                        <b>Create an action plan to meet your goals.</b>
+                        Use our
+                        <a href="TKTKTK"
+                           class="a-link
+                                  a-link__icon
+                                  cf-icon
+                                  cf-icon-download
+                                  cf-icon__after">
+                            <span class="a-link_text">worksheet</span>
+                        </a>
+                        or
+                        <a href="https://www.consumerfinance.gov/f/documents/201705_cfpb_MAYG_My-New-Money-Goal.pdf"
+                           class="a-link
+                                  a-link__icon
+                                  cf-icon
+                                  cf-icon-download
+                                  cf-icon__after">
+                            <span class="a-link_text">goal setting tool</span>
+                        </a>.
+                    </li>
+                    <li>
+                        <b>Consider the right age for claiming Social Security.</b>
+                        Use our
+                        <a href="/retirement/before-you-claim/">
+                            Planning for Retirement
+                        </a>
+                        tool before you make your decision.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Looking for more help?</h3>
+        <p>
+            You can further explore the tips, tools, answers, and resources
+            in our Consumer Tools section.
+            Or, visit your local library for help finding resources in your area.
+        </p>
+    </div>
+{% endblock %}
+
+{% block content_sidebar %}
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">Looking for more help?</h2>
+        </header>
+        <p>
+            You can further explore the tips, tools, answers, and resources
+            in our Consumer Tools section.
+            Or, visit your local library for help finding resources in your area.
+        </p>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ super() }}
+
+    <script>
+    /* eslint no-extra-semi: "off" */
+    'use strict';
+
+    ( function() {
+
+      if ( !location.pathname.match( '/results' ) ) {
+        return;
+      }
+
+      var score = Number( location.search.slice( 1 ) );
+      var min = 14;
+      var max = 95;
+      var average = 39;
+      var high = 64;
+
+      var resourcesByScore = [
+        {
+          graph: 'improvement.png',
+          wellBeing: 'Could be improved'
+        },
+        {
+          graph: 'average.png',
+          wellBeing: 'Average'
+        },
+        {
+          graph: 'high.png',
+          wellBeing: 'High'
+        }
+      ];
+
+      var imgPath = window.location.pathname.replace( 'results.html', '' ) +
+        'static/img/';
+
+      function getResourcesByScore() {
+        if ( score < average ) return resourcesByScore[0];
+        if ( score < high ) return resourcesByScore[1];
+        return resourcesByScore[2];
+      }
+
+      function loadResources( resources ) {
+        var scoreBox = document.querySelector( '#score-box' );
+        var scoreValue = document.querySelector( '#score-value' );
+        var scorePercentage = ( score - min ) / ( max - min ) * 100;
+        var compareLink = document.querySelector( '#compare-link' );
+        // var blurb = document.querySelector( '#well-being-blurb' );
+        // var graph = document.querySelector( '#score-graph' );
+
+        if ( scorePercentage > 50 ) {
+          scorePercentage = 100 - scorePercentage;
+          scoreBox.style.right = scorePercentage.toString() + '%';
+          scoreBox.className = 'score-box__right';
+        } else {
+          scoreBox.style.left = scorePercentage.toString() + '%';
+        }
+        scoreValue.textContent = score;
+        compareLink.setAttribute( 'href', '../compare/?' + score );
+        // blurb.textContent = blurb.textContent + ' ' + resources.wellBeing;
+        // graph.setAttribute( 'src', imgPath + resources.graph );
+      }
+
+      // $( document ).ready( function() {
+      //   var score = Number( location.search.slice( 1 ) );
+      //   loadResources( score, getResourcesByScore( score ) );
+      // } );
+
+      loadResources( getResourcesByScore() );
+
+    } )();
+
+    </script>
+{% endblock %}

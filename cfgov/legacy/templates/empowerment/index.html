@@ -1,0 +1,148 @@
+{% extends "front/base_nonresponsive.html" %}
+{% load static from staticfiles %}
+
+{% block title %}Financial empowerment &gt; Consumer Financial Protection Bureau{% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="/" class="internal-link">Home</a></li>
+<li>FINANCIAL EMPOWERMENT</li>
+{% endblock %}
+
+{% block page_header_footer_css %}
+<link rel="stylesheet" href="{% static 'nemo/_/c/v1-nonresponsive-header.css' %}"/>
+<link rel="stylesheet" href="{% static 'nemo/_/c/v1-nonresponsive-footer.css' %}"/>
+{% endblock %}
+
+{% block content %}
+{% include "front/share_block.html" %}
+<article class="page">
+    <header class="pagetitle">
+        <h1>Financial empowerment</h1>
+    </header>
+    <form id="signup" class="signup inlineSignup right" action="https://public.govdelivery.com/service/process_ss.xml" method="GET" data-thanks="Thanks, we’ll be in touch!">
+        <fieldset>
+            <h3>Stay informed about our work</h3>
+            <p><input name="code" type="hidden" value="USCFPB_24" /></p>
+            <p><label for="email">Email address:</label> <input name="email" size="33" type="email" /></p>
+            <p><button>Sign up</button>
+        </fieldset>
+    </form>
+    <p>We work to empower low-income and economically vulnerable consumers to make informed financial decisions by providing them with tools and information and by promoting a more inclusive and fair financial marketplace.</p>
+    <p>We work closely with social service providers, financial educators, and community-based organizations, to reach low- to moderate-income consumers where they are and get them information when they need it most.</p>
+    <hr />
+    <p><strong>2016 <em>Your Money, Your Goals</em> Second Cohort Announced</strong></p>
+    <p>The Consumer Financial Protection Bureau is providing <a href="https://www.consumerfinance.gov/educational-resources/your-money-your-goals/"><em>Your Money, Your Goals</em></a> toolkits, training, and technical assistance to an additional <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/20160819_cfpb_ymyg_partner-organizations.pdf">30 entities</a> across the country that are committed to helping financially empower the populations they serve. Our first 2016 cohort of <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/documents/20160429_ymyg_cohort_list.pdf">20 entities</a> was <a href="https://www.consumerfinance.gov/about-us/blog/your-money-your-goals-expands-its-reach/">announced</a> in April. We are working with entities that serve low-income and other vulnerable populations. These include public and private social service, faith-based, legal aid, volunteer, and worker-focused organizations. <a href="https://www.consumerfinance.gov/about-us/blog/cfpb-announces-30-new-your-money-your-goals-partners-help-low-income-consumers/">Read the announcement</a> to learn more.</p>
+    <p>
+        <!--img class="alignright size-full wp-image-85811" style="float: right; margin: 0px; padding: 4px;" src="/f/201509_cfpb_fined-taxtime.png" alt="" width="225" height="126" />
+            <h3>Helping people save at tax time</h3>
+
+
+            We’ve identified some ways to help people save a portion of their tax refund when they file. We’re looking for organizations who are interested in participating in our 2016 tax season pilot – read our <a href="/f/201509_cfpb_saving-tax-time-pilot-2016-criteria-for-interested-volunteer-income-tax-assistance-programs.pdf">criteria</a> for participating in the pilot to find out more. You can also read our <a href="/f/201509_cfpb_increasing-saving-at-tax-time-and-promising-practices-for-the-field.pdf">paper</a> about promising practices for promoting saving at tax time to learn about our work over the past two tax seasons.-->
+    </p>
+    <hr />
+    <div class="three-col">
+        <h2>HELPING YOU HELP OTHERS</h2>
+        <h3>Financial empowerment tools and resources</h3>
+        <div class="col">
+            <h5>Community training resources</h5>
+            <p>We offer specialized web-based trainings, toolkits, and other materials for community members, front-line social service providers, legal aid attorneys and staff, community volunteers and worker organizations to help the people they work with identify financial hurdles and the means to overcome them.</p>
+            <p><a href="/your-money-your-goals/">Download the <em>Your Money, Your Goals</em> toolkit</a></p>
+            <p><a href="/library-resources/">Learn more about community financial education resources for libraries </a></p>
+        </div>
+        <div class="col">
+            <h5>Empowering youth</h5>
+            <p>We provide materials to help groups working with youth—such as those who are seeking employment, in foster care, or at-risk—navigate the financial marketplace. We also collaborate with strategic partners to remove barriers and expand access to financial services for these populations.</p>
+            <p><a href="/reports/building-financial-capability-in-youth-employment-programs/">Browse youth employment tools </a></p>
+            <p><a href="/blog/how-to-protect-vulnerable-children-from-identity-theft/#tips">Protecting foster youth from identity theft </a></p>
+        </div>
+        <div class="col">
+            <h5>Tax-time savings</h5>
+            <p>A tax refund may be the single biggest check some consumers receive all year—it’s a huge opportunity for individuals to set aside savings to help reach their financial goals. Saving money from a tax refund can be done easily and automatically while filing a tax return—service providers can learn more about tax-time saving options to better help those they serve.</p>
+            <p><a href="/tax-preparer-resources">Ready, set, save!</a></p>
+            <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201509_cfpb_increasing-saving-at-tax-time-and-promising-practices-for-the-field.pdf">Increasing saving at tax time and promising practices for the field</a></p>
+            <p><a href="/blog/3-tips-to-help-you-make-the-most-of-your-tax-refund/">Tips to help make the most of your refund</a></p>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+    <hr />
+    <div class="three-col">
+        <h2>REACHING PEOPLE IN THEIR COMMUNITIES</h2>
+        <h3>Embedding financial empowerment services</h3>
+        <div class="col">
+            <h5>Financial coaching</h5>
+            <p>We’re working with direct service providers across the country to bring one-on-one financial coaching services to economically vulnerable consumers and transitioning veterans.</p>
+            <p><a href="/blog/the-launch-of-the-cfpb-financial-coaching-initiative/">Learn more about financial coaching</a></p>
+            <p><a href="/adult-financial-education">Find resources for financial educators</a></p>
+        </div>
+        <div class="col">
+            <h5>Financial security for people with disabilities</h5>
+            <p>People with disabilities may face challenges navigating the financial marketplace. We aim to support the financial capability of individuals with disabilities as they transition into the workforce or make plans to take control of their financial lives by helping them improve credit, reduce debt, gain access to appropriate financial services, and increase savings.</p>
+            <p><a href="/blog/working-to-improve-the-financial-lives-of-people-with-disabilities/">Read more about our efforts to support the financial capability of people with disabilities</a></p>
+            <p><a href="/blog/social-security-disability-income-shouldnt-mean-you-dont-qualify-for-a-mortgage/">Review the financial rights of those receiving Social Security Disability income</a></p>
+        </div>
+        <div class="col">
+            <h5>Partnerships with other federal agencies</h5>
+            <p>We’re teaming up with other federal agencies to increase the financial knowledge and skills of people getting trained or placed in jobs, and those receiving federally funded services and public benefits by integrating financial capability tools and services into existing programs.</p>
+            <p><a href="/blog/a-federal-partnership-to-increase-financial-capability-for-workers-with-disabilities/">Read about our partnership with the Department of Labor to help workers with disabilities increase their financial capability</a></p>
+            <p><a href="https://csgjusticecenter.org/nrrc/projects/firc/">Learn about our involvement in the Federal Interagency Reentry Council to help formerly incarcerated individuals successfully transition back into their communities upon release</a></p>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+    <hr />
+    <div class="three-col">
+        <h2>BUILDING A FOUNDATION OF FINANCIAL CAPABILITY</h2>
+        <h3>Learning and sharing what works</h3>
+        <div class="col">
+            <h5>Measuring impact</h5>
+            <p>Enhancing the ability of organizations to fund and evaluate the effectiveness of financial capability programs serving low-income and economically vulnerable consumers.</p>
+            <p><a href="/newsroom/cfpb-announces-project-catalyst-research-pilot/">Read about our research pilot on early intervention strategies to improve consumer financial outcomes</a></p>
+            <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201311_cfpb_report_empowering-economically-vulnerable-consumers.pdf">Read our report from a national convening on financial empowerment</a></p>
+            <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201511_cfpb_mobile-financial-services.pdf">Read our report on mobile financial services for the underserved – find out what people are saying and doing about the opportunities and risks with mobile</a></p>
+        </div>
+        <div class="col">
+            <h5>Promoting savings habits</h5>
+            <p>As part of <a href="/ProjectCatalyst/">Project Catalyst</a>, we’re working with financial service providers to promote regular saving habits among low- and moderate-income consumers to help them improve their long-term financial well-being.</p>
+            <p><a href="/blog/evaluating-ways-to-promote-regular-saving-habits-among-prepaid-card-users/">Read more about our work evaluating saving habits among prepaid card users with American Express</a></p>
+            <p><a href="/newsroom/cfpb-announces-project-catalyst-research-pilot-on-tax-time-saving/">Learn about our work with H&amp;R Block to encourage tax-time saving</a></p>
+        </div>
+        <div class="col">
+            <h5>Opening the door to better financial services</h5>
+            <p>We’re committed to helping people improve their ability to access financial products and services, including appropriate transaction accounts and credit products.</p>
+            <p><a href="/blog/forum-on-access-to-checking-accounts/">Explore how consumers are affected by checking account screening policies and practices</a></p>
+            <p><a href="/blog/guides-to-help-you-open-and-manage-your-checking-account/">Learn about opening and managing a checking account</a></p>
+            <p>Read our consumer guides on <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201602_cfpb_consumer-guide-to-selecting-a-lower-risk-account.pdf">selecting a lower-risk account</a> , <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201602_cfpb_consumer-guide-to-managing-your-checking-account.pdf">managing your checking account</a> , and <a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201602_cfpb_consumer-guide-to-being-denied-a-checking-account.pdf">checking account denials</a></p>
+            <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201602_cfpb_helping-consumers-who-have-been-denied-checking-accounts.pdf">If you or someone you’re helping has been denied a checking account, read our factsheet</a></p>
+        </div>
+        <hr />
+        <div class="three-col">
+            <h2>RELATED BUREAU RESOURCES</h2>
+            <h3>Our office is always monitoring consumer financial policy areas that affect financially vulnerable populations</h3>
+            <div class="col">
+                <h5>Reports and publications</h5>
+                <p><a href="/reports/financial-well-being/">Read our report on financial well-being: The goal of financial education</a></p>
+                <p><a href="/newsroom/cfpb-spotlights-concerns-with-medical-debt-collection-and-reporting/">Read our report on medical debt collection</a></p>
+                <p><a href="/reports/data-point-credit-invisibles/">Read our data point on credit invisibles</a></p>
+            </div>
+            <div class="col">
+                <h5>Bureau policy studies</h5>
+                <p><a href="/reports/the-cfpb-study-of-overdraft-programs/">Read our study of overdraft programs and what they mean for consumers</a></p>
+                <p><a href="/newsroom/consumer-financial-protection-bureau-considers-rules-on-prepaid-cards/">Read about our work to promote safety and transparency in the growing pre-paid card market</a></p>
+                <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201403_cfpb_report_payday-lending.pdf">Read our report on payday lending</a></p>
+                <p><a href="/reports/study-of-prepaid-account-agreements/">Read our report on prepaid cards</a></p>
+            </div>
+            <div class="col">
+                <h5>More community resources</h5>
+                <p><a href="/complaint/">Submit a complaint about a consumer financial product or service</a></p>
+                <p><a href="/complaintdatabase/">Browse the consumer complaint database</a></p>
+                <p><a href="/askcfpb/">Get answers to common financial questions at AskCFPB </a></p>
+                <p><a href="/paying-for-college/">Get help with decisions on paying for college</a></p>
+                <p><a href="/owning-a-home/">Use our tools to help navigate the home buying process</a></p>
+                <p><a href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201312_cfpb_mortgages_help-for-struggling-borrowers.pdf">Review a mortgage servicing guide</a></p>
+                <p><a href="/mortgagehelp/">Get mortgage and foreclosure help</a></p>
+                <p><a href="https://promotions.usa.gov/cfpbpubs.html">Order free financial education materials</a></p>
+            </div>
+            <p>Have a question for the Office of Financial Empowerment? Send us an email: <a href="mailto:empowerment@consumerfinance.gov">empowerment@consumerfinance.gov</a></p>
+        </div>
+    </div>
+</article>
+{% endblock %}

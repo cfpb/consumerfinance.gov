@@ -1,26 +1,26 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'mocha-jsdom' );
-var sinon = require( 'sinon' );
-var sandbox;
-var Analytics;
-var dataLayerOptions;
-var getDataLayerOptions;
-var UNDEFINED;
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'mocha-jsdom' );
+const sinon = require( 'sinon' );
+let sandbox;
+let Analytics;
+let dataLayerOptions;
+let getDataLayerOptions;
+let UNDEFINED;
 
-describe( 'Analytics', function() {
+describe( 'Analytics', () => {
   jsdom();
 
-  before( function() {
+  before( () => {
     Analytics = require( BASE_JS_PATH + 'modules/Analytics' );
     getDataLayerOptions = Analytics.getDataLayerOptions;
   } );
 
-  beforeEach( function() {
+  beforeEach( () => {
     sandbox = sinon.sandbox.create();
 
     function push( object ) {
@@ -46,20 +46,20 @@ describe( 'Analytics', function() {
 
   } );
 
-  afterEach( function() {
+  afterEach( () => {
     sandbox.restore();
   } );
 
-  describe( '.init()', function() {
-    it( 'should have a proper state after initialization', function() {
+  describe( '.init()', () => {
+    it( 'should have a proper state after initialization', () => {
       expect( Analytics.tagManagerIsLoaded === false ).to.be.true;
       window.google_tag_manager = {};
       Analytics.init();
       expect( Analytics.tagManagerIsLoaded === true ).to.be.true;
     } );
 
-    it( 'should properly set the google_tag_manager object', function() {
-      var mockGTMObject = { testing: true };
+    it( 'should properly set the google_tag_manager object', () => {
+      const mockGTMObject = { testing: true };
       Analytics.init();
       expect( Analytics.tagManagerIsLoaded === false ).to.be.true;
       window.google_tag_manager = mockGTMObject;
@@ -68,11 +68,11 @@ describe( 'Analytics', function() {
     } );
   } );
 
-  describe( '.sendEvent()', function() {
-    it( 'should properly add objects to the dataLayer Array', function() {
-      var action = 'inbox:clicked';
-      var label = 'text:null';
-      var options = Object.assign( {}, dataLayerOptions, {
+  describe( '.sendEvent()', () => {
+    it( 'should properly add objects to the dataLayer Array', () => {
+      const action = 'inbox:clicked';
+      const label = 'text:null';
+      const options = Object.assign( {}, dataLayerOptions, {
         action: action,
         label:  label
       } );
@@ -83,60 +83,68 @@ describe( 'Analytics', function() {
       expect( window.dataLayer[0] ).to.deep.equal( options );
     } );
 
-    it( 'shouldn\'t add objects to the dataLayer Array if GTM is undefined',
-    function() {
-      var action = 'inbox:clicked';
-      var label = 'text:null';
-      delete window.google_tag_manager;
-      Analytics.init();
-      Analytics.sendEvent( getDataLayerOptions( action, label ) );
-      expect( window.dataLayer.length === 0 ).to.be.true;
-    } );
+    it( "shouldn't add objects to the dataLayer Array if GTM is undefined",
+      () => {
+        const action = 'inbox:clicked';
+        const label = 'text:null';
+        delete window.google_tag_manager;
+        Analytics.init();
+        Analytics.sendEvent( getDataLayerOptions( action, label ) );
+        expect( window.dataLayer.length === 0 ).to.be.true;
+      }
+    );
 
-    it( 'should invoke the callback if provided', function() {
+    it( 'should invoke the callback if provided', () => {
       Analytics.init();
-      var action = 'inbox:clicked';
-      var label = 'text:null';
-      var callback = sinon.stub();
+      const action = 'inbox:clicked';
+      const label = 'text:null';
+      const callback = sinon.stub();
       window.google_tag_manager = {};
       Analytics.sendEvent( getDataLayerOptions( action, label, '', callback ) );
       expect( callback.called ).to.be.true;
     } );
   } );
 
-  describe( '.sendEvents()', function() {
-    it( 'should properly add objects to the dataLayer Array', function() {
-      var options1 = getDataLayerOptions( Object.assign( {}, dataLayerOptions,
-        {
+  describe( '.sendEvents()', () => {
+    it( 'should properly add objects to the dataLayer Array', () => {
+      const options1 = getDataLayerOptions(
+        Object.assign( {}, dataLayerOptions, {
           action: 'inbox:clicked',
           label:  'text:label_1'
-        } ) );
-      var options2 = getDataLayerOptions( Object.assign( {}, dataLayerOptions,
-        {
+        } )
+      );
+      const options2 = getDataLayerOptions(
+        Object.assign( {}, dataLayerOptions, {
           action: 'checbox:clicked',
           label:  'text:label_2'
-        } ) );
+        } )
+      );
       window.google_tag_manager = {};
       Analytics.init();
       Analytics.sendEvents( [ options1, options2 ] );
       expect( window.dataLayer.length === 2 ).to.be.true;
     } );
 
-    it( 'shouldn\'t add objects to the dataLayer Array if an array isn\'t passed',
-    function() {
-      var options1 = getDataLayerOptions( Object.assign( {}, dataLayerOptions, {
-        action: 'inbox:clicked',
-        label:  'text:label_1'
-      } ) );
-      var options2 = getDataLayerOptions( Object.assign( {}, dataLayerOptions, {
-        action: 'checbox:clicked',
-        label:  'text:label_2'
-      } ) );
-      window.google_tag_manager = {};
-      Analytics.init();
-      Analytics.sendEvents( options1, options2 );
-      expect( window.dataLayer.length === 0 ).to.be.true;
-    } );
+    it( "shouldn't add objects to the dataLayer Array if an array isn't passed",
+      () => {
+        const options1 = getDataLayerOptions(
+          Object.assign( {}, dataLayerOptions, {
+            action: 'inbox:clicked',
+            label:  'text:label_1'
+          } )
+        );
+        const options2 = getDataLayerOptions(
+          Object.assign( {}, dataLayerOptions, {
+            action: 'checbox:clicked',
+            label:  'text:label_2'
+          } )
+        );
+        window.google_tag_manager = {};
+        Analytics.init();
+        Analytics.sendEvents( options1, options2 );
+        expect( window.dataLayer.length === 0 ).to.be.true;
+      }
+    );
   } );
 
 } );

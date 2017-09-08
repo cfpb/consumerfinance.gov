@@ -1,7 +1,5 @@
 'use strict';
 
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-const breakpointsConfig = require( BASE_JS_PATH + 'config/breakpoints-config' );
 const chai = require( 'chai' );
 const chaiAsPromised = require( 'chai-as-promised' );
 const { defineSupportCode } = require( 'cucumber' );

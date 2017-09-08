@@ -1,0 +1,203 @@
+{# ==========================================================================
+
+   Mortgage Map
+
+   ==========================================================================
+
+   Description:
+
+   Create a mortgage chart organism using map markup.
+   See [GHE]/flapjack/Modules-V1/wiki/Mortgage-Map
+
+   ========================================================================== #}
+{% set csv_meta = download_files[thru_month][delinquency] %}
+{% set county_meta = csv_meta['County'] %}
+{% set metro_meta = csv_meta['MetroArea'] %}
+{% set state_meta = csv_meta['State'] %}
+{% set data_vis_color = 'blue' if time_frame == '30-89' else 'navy' %}
+
+<div class="o-full-width-text-group" id="mp-map-container" data-chart-time-span="{{ time_frame }}" data-chart-color="{{ data_vis_color }}">
+    <div class="m-full-width-text">
+        <form id="mp-map-controls" name="mp-map-controls" class="mp-controls u-js-only">
+            <div id="mp-map-loading" class="mp-loading"></div>
+            <h3>Choose location to display on the map</h3>
+            <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:1px;border:0;">
+                <label class="a-label" for="test_select"><h4>Select map view</h4></label>
+                <div class="m-form-field m-form-field__radio" id="mp-map-geo">
+                    <div class="m-form-field m-form-field__radio u-mb10">
+                        <input class="a-radio" id="mp-map_geo-state" name="mp-map_geo" type="radio" checked="checked"> <label class="a-label" for="mp-map_geo-state">States</label>
+                    </div>
+                    <div class="m-form-field m-form-field__radio u-mb10">
+                        <input class="a-radio" id="mp-map_geo-metro" name="mp-map_geo" type="radio"> <label class="a-label" for="mp-map_geo-metro">Metro and non-metro areas</label>
+                    </div>
+                    <div class="m-form-field m-form-field__radio u-mb10">
+                        <input class="a-radio" id="mp-map_geo-county" name="mp-map_geo" type="radio"> <label class="a-label" for="mp-map_geo-county">Counties</label>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
+                <div class="m-form-field m-form-field__select mp-map-select-container" id="mp-map-state-container">
+                    <label class="a-label" for="mp-map-state"><h4>Select state to zoom</h4></label>
+                    <div class="a-select">
+                        <select id="mp-map-state">
+                            <option value="" selected> </option>
+                            <option value="01" data-abbr="AL">Alabama</option>
+                            <option value="02" data-abbr="AK">Alaska</option>
+                            <option value="04" data-abbr="AZ">Arizona</option>
+                            <option value="05" data-abbr="AR">Arkansas</option>
+                            <option value="06" data-abbr="CA">California</option>
+                            <option value="08" data-abbr="CO">Colorado</option>
+                            <option value="09" data-abbr="CT">Connecticut</option>
+                            <option value="10" data-abbr="DE">Delaware</option>
+                            <option value="11" data-abbr="DC">District of Columbia</option>
+                            <option value="12" data-abbr="FL">Florida</option>
+                            <option value="13" data-abbr="GA">Georgia</option>
+                            <option value="15" data-abbr="HI">Hawaii</option>
+                            <option value="16" data-abbr="ID">Idaho</option>
+                            <option value="17" data-abbr="IL">Illinois</option>
+                            <option value="18" data-abbr="IN">Indiana</option>
+                            <option value="19" data-abbr="IA">Iowa</option>
+                            <option value="20" data-abbr="KS">Kansas</option>
+                            <option value="21" data-abbr="KY">Kentucky</option>
+                            <option value="22" data-abbr="LA">Louisiana</option>
+                            <option value="23" data-abbr="ME">Maine</option>
+                            <option value="24" data-abbr="MD">Maryland</option>
+                            <option value="25" data-abbr="MA">Massachusetts</option>
+                            <option value="26" data-abbr="MI">Michigan</option>
+                            <option value="27" data-abbr="MN">Minnesota</option>
+                            <option value="28" data-abbr="MS">Mississippi</option>
+                            <option value="29" data-abbr="MO">Missouri</option>
+                            <option value="30" data-abbr="MT">Montana</option>
+                            <option value="31" data-abbr="NE">Nebraska</option>
+                            <option value="32" data-abbr="NV">Nevada</option>
+                            <option value="33" data-abbr="NH">New Hampshire</option>
+                            <option value="34" data-abbr="NJ">New Jersey</option>
+                            <option value="35" data-abbr="NM">New Mexico</option>
+                            <option value="36" data-abbr="NY">New York</option>
+                            <option value="37" data-abbr="NC">North Carolina</option>
+                            <option value="38" data-abbr="ND">North Dakota</option>
+                            <option value="39" data-abbr="OH">Ohio</option>
+                            <option value="40" data-abbr="OK">Oklahoma</option>
+                            <option value="41" data-abbr="OR">Oregon</option>
+                            <option value="42" data-abbr="PA">Pennsylvania</option>
+                            <option value="44" data-abbr="RI">Rhode Island</option>
+                            <option value="45" data-abbr="SC">South Carolina</option>
+                            <option value="46" data-abbr="SD">South Dakota</option>
+                            <option value="47" data-abbr="TN">Tennessee</option>
+                            <option value="48" data-abbr="TX">Texas</option>
+                            <option value="49" data-abbr="UT">Utah</option>
+                            <option value="50" data-abbr="VT">Vermont</option>
+                            <option value="51" data-abbr="VA">Virginia</option>
+                            <option value="53" data-abbr="WA">Washington</option>
+                            <option value="54" data-abbr="WV">West Virginia</option>
+                            <option value="55" data-abbr="WI">Wisconsin</option>
+                            <option value="56" data-abbr="WY">Wyoming</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="m-form-field m-form-field__select mp-map-select-container" id="mp-map-metro-container" style="display:none">
+                    <label class="a-label u-mt20" for="mp-map-metro"><h4>Select metro or non-metro area to highlight</h4></label>
+                    <div class="a-select">
+                        <select id="mp-map-metro">
+                            <option value="" selected> </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="m-form-field m-form-field__select mp-map-select-container" id="mp-map-county-container" style="display:none">
+                    <label class="a-label u-mt20" for="mp-map-metro"><h4>Select county to highlight</h4></label>
+                    <div class="a-select">
+                        <select id="mp-map-county" disabled>
+                            <option value="" selected> </option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="content-l">
+                <h4>Select month and year to display</h4>
+                <div class="content-l_col content-l_col-1-2 u-m0">
+                    <div class="m-form-field m-form-field__select" id="mp-map-month-container">
+                        <label class="a-label u-mb5" for="mp-map-month">Month</label>
+                        <div class="a-select">
+                            <select id="mp-map-month">
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-l_col content-l_col-1-2">
+                    <div class="m-form-field m-form-field__select" id="mp-map-year-container">
+                        <label class="a-label u-mb5" for="mp-map-year">Year</label>
+                        <div class="a-select">
+                            <select id="mp-map-year">
+                                <option value="2008">2008</option>
+                                <option value="2009">2009</option>
+                                <option value="2010">2010</option>
+                                <option value="2011">2011</option>
+                                <option value="2012">2012</option>
+                                <option value="2013">2013</option>
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="o-mp-map m-full-width-text">
+        <h3 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame }} days delinquent: <span id="mp-map-title-location">state view</span> for <span id="mp-map-title-date"><strong>January 2008</strong></span></h3>
+        <div id="mp-map">
+            {{ value.description }}
+        </div>
+        <svg viewBox="0 0 642 93" xmlns="http://www.w3.org/2000/svg" class="m-color-ramp" data-chart-color="{{ data_vis_color }}">
+            <g>
+                <title>U.S. Map Legend for Mortgages {{ time_frame }} days delinquent</title>
+                <description>The percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent varies by location from 0% to 6%.</description>
+            </g>
+            <g>
+                <g>
+                    <g>
+                        <rect y="30.1535" x="1.2" class="a-ramp-value-0" />
+                        <rect y="30.1535" x="92.4" class="a-ramp-value-1" />
+                        <rect y="30.1535" x="181.9" class="a-ramp-value-2" />
+                        <rect y="30.1535" x="272.1" class="a-ramp-value-3" />
+                        <rect y="30.1535" x="361.6" class="a-ramp-value-4" />
+                        <rect y="30.1535" x="452.8" class="a-ramp-value-5" />
+                        <rect y="30.1535" x="545.2" class="a-ramp-value-6" />
+                    </g>
+                    <text x="0.999965" y="1.75349" transform="matrix(1,0.00001,0.00002,1,0.9696,10.2465)">Delinquency rates</text>
+                </g>
+                <g class="labels">
+                    <text y="60" x="4">
+                        <tspan x="0">Insuff. data</tspan>
+                        <!-- <tspan x="0" dy="1.2em">data</tspan> -->
+                    </text>
+                    <text y="60" x="85">0%</text>
+                    <text y="60" x="174">1%</text>
+                    <text y="60" x="264">2%</text>
+                    <text y="60" x="354">3%</text>
+                    <text y="60" x="446">4%</text>
+                    <text y="60" x="537">5%+</text>
+                </g>
+            </g>
+        </svg>
+    </div>
+    <p class="m-chart-footnote block__sub block__border-top block short-desc">
+    <strong>Source:</strong> National Mortgage Database<br>
+    <strong>Date published:</strong> {{ pub_date_formatted }}<br>
+    <strong>Downloads:</strong> CSV files with data by <a class="icon-link icon-link__download" href="{{ state_meta['url'] }}" <span class="icon-link_text">state</span></a> ({{ state_meta['size'] }}), <a class="icon-link icon-link__download" href="{{ metro_meta['url'] }}" <span class="icon-link_text">metro and non-metro areas</span></a> ({{ metro_meta['size'] }}), or <a class="icon-link icon-link__download" href="{{ county_meta['url'] }}"><span class="icon-link_text">county</span></a> ({{ county_meta['size'] }}).<br>
+    <strong>Note:</strong> {{ viz_notes['map_notes'] }}<br>
+    </p>
+</div>
