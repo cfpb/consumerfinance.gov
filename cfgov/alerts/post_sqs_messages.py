@@ -1,9 +1,9 @@
 import argparse
 import boto3
-import json
 import logging
-import github3
-import requests
+
+from github_alert import GithubAlert
+from mattermost_alert import MattermostAlert
 
 logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser()
@@ -55,26 +55,32 @@ parser.add_argument(
 )
 
 
-def matching_issue(title, issues):
-    return next((issue for issue in issues if issue.title == title), None)
+def post_message(body, title, github_creds={}, mattermost_creds={}):
+    issue = GithubAlert(github_creds).post(
+        title=title,
+        body=body,
+    )
+
+    if mattermost_creds:
+        MattermostAlert(mattermost_creds).post(
+            text='Alert: {}. Github issue at {}'.format(
+                body,
+                issue.html_url,
+            )
+        )
 
 
-def post_to_chat(endpoint, username, message, issue_url):
-    text = 'Alert: {}. Github issue at {}'.format(
-        message,
-        issue_url,
+def cleanup_jenkins_message(message):
+    return message.replace(
+        '#', '# '  # Avoids erroneous Github issue link
+    ).replace(
+        '[Open]', ''  # We want to expand the link
     )
-    payload = {
-        'text': text,
-        'username': args.mattermost_username,
-    }
-    requests.post(
-        args.mattermost_webhook_url,
-        data=json.dumps(payload),
-    )
+
 
 if __name__ == '__main__':
     args = parser.parse_args()
+
     # Initialize Amazon SQS client
     client = boto3.client(
         'sqs',
@@ -83,58 +89,38 @@ if __name__ == '__main__':
         region_name='us-east-1',
     )
 
+    # Intialize Github credentials
+    github_creds = {
+        'repo_name': args.github_repo,
+        'token': args.github_token,
+        'url': args.github_url,
+        'user': args.github_user,
+    }
+
+    # Initialize Mattermost credentials (optional)
+    mattermost_creds = {}
+    if args.mattermost_webhook_url and args.mattermost_username:
+        mattermost_creds['webhook_url'] = args.mattermost_webhook_url
+        mattermost_creds['username'] = args.mattermost_username
+
     # Receive messages from specified SQS queue
     response = client.receive_message(
         QueueUrl=args.queue_url,
         MaxNumberOfMessages=10,
     )
 
-    # Initialize github API & repo to post to
-    gh = github3.login(
-        token=args.github_token,
-        url=args.github_url,
-    )
-    repo = gh.repository(
-        args.github_user,
-        args.github_repo,
-    )
-
     for message in response.get('Messages', {}):
-        body = message.get('Body').replace(
-            '#', '# '  # Avoids erroneous Github issue link
-        ).replace(
-            '[Open]', ''  # We want to expand the link
-        )
+        body = cleanup_jenkins_message(message.get('Body'))
         title = body.split(" - ")[0]
+
         logger.info('Retrieved message {} from SQS'.format(body))
 
-        issue = matching_issue(
+        post_message(
+            body=body,
             title=title,
-            issues=repo.iter_issues(state='all')
+            github_creds=github_creds,
+            mattermost_creds=mattermost_creds,
         )
-        if issue:  # Issue already exists
-            if issue.is_closed():
-                issue.reopen()
-            # add comment to it to document it happened again
-            issue.create_comment(body=body)
-        else:
-            # New issue, post to github
-            issue = repo.create_issue(
-                title=title,
-                body=body,
-                labels=[
-                    'Maintenance and Response',
-                    'alert'
-                ],
-            )
-        # Post to chat, if credentials provided
-        if args.mattermost_webhook_url and args.mattermost_username:
-            post_to_chat(
-                endpoint=args.mattermost_webhook_url,
-                username=args.mattermost_username,
-                message=body,
-                issue_url=issue.html_url,
-            )
 
         client.delete_message(
             QueueUrl=args.queue_url,
