@@ -1,8 +1,8 @@
 'use strict';
 
 // Required modules.
-var atomicHelpers = require( '../modules/util/atomic-helpers' );
-var standardType = require( '../modules/util/standard-type' );
+const atomicHelpers = require( '../modules/util/atomic-helpers' );
+const standardType = require( '../modules/util/standard-type' );
 
 /**
  * Notification
@@ -16,20 +16,20 @@ var standardType = require( '../modules/util/standard-type' );
  */
 function Notification( element ) { // eslint-disable-line max-statements, inline-comments, max-len
 
-  var BASE_CLASS = 'm-notification';
+  const BASE_CLASS = 'm-notification';
 
   // Constants for the state of this Notification.
-  var SUCCESS = 'success';
-  var WARNING = 'warning';
-  var ERROR = 'error';
+  const SUCCESS = 'success';
+  const WARNING = 'warning';
+  const ERROR = 'error';
 
   // Constants for the Notification modifiers.
-  var MODIFIER_VISIBLE = BASE_CLASS + '__visible';
+  const MODIFIER_VISIBLE = BASE_CLASS + '__visible';
 
-  var _dom = atomicHelpers.checkDom( element, BASE_CLASS );
-  var _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
+  const _dom = atomicHelpers.checkDom( element, BASE_CLASS );
+  const _contentDom = _dom.querySelector( '.' + BASE_CLASS + '_content' );
 
-  var _currentType;
+  let _currentType;
 
   /**
    * @returns {Notification|undefined} An instance,
@@ -41,7 +41,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
     }
 
     // Check and set default type of notification.
-    var classList = _dom.classList;
+    const classList = _dom.classList;
     if ( classList.contains( BASE_CLASS + '__' + SUCCESS ) ) {
       _currentType = SUCCESS;
     } else if ( classList.contains( BASE_CLASS + '__' + WARNING ) ) {
@@ -54,10 +54,10 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   }
 
   /**
-   * @param {number} type The notifiation type.
-   * @param {string} messageText The content of the notifiation message.
+   * @param {number} type The notification type.
+   * @param {string} messageText The content of the notification message.
    * @param {string|HTMLNode} explanationText
-   *   The content of the notifiation explanation.
+   *   The content of the notification explanation.
    * @returns {Notification} An instance.
    */
   function setTypeAndContent( type, messageText, explanationText ) {
@@ -68,15 +68,15 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   }
 
   /**
-   * @param {string} messageText The content of the notifiation message.
+   * @param {string} messageText The content of the notification message.
    * @param {string|HTMLNode} explanationText
-   *   The content of the notifiation explanation.
+   *   The content of the notification explanation.
    * @returns {Notification} An instance.
    */
   function setContent( messageText, explanationText ) {
-    var content = '<p class="h4">' +
-                  messageText +
-                  '</p>';
+    let content = '<p class="h4 m-notification_message">' +
+                    messageText +
+                    '</p>';
     if ( typeof explanationText !== 'undefined' ) {
       content += '<p class="h4 m-notification_explanation">' +
                  explanationText +
@@ -88,7 +88,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
   }
 
   /**
-   * @param {number} type The notifiation type.
+   * @param {number} type The notification type.
    * @returns {Notification} An instance.
    */
   function _setType( type ) {
@@ -97,7 +97,7 @@ function Notification( element ) { // eslint-disable-line max-statements, inline
       return this;
     }
 
-    var classList = _dom.classList;
+    const classList = _dom.classList;
     classList.remove( BASE_CLASS + '__' + _currentType );
 
     if ( type === SUCCESS ||

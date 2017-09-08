@@ -1,10 +1,11 @@
 'use strict';
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var UStreamPlayer = require( BASE_JS_PATH + 'modules/UStreamPlayer' );
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-describe( 'UStreamPlayer', function() {
+const chai = require( 'chai' );
+const expect = chai.expect;
+const UStreamPlayer = require( BASE_JS_PATH + 'modules/UStreamPlayer' );
+
+describe( 'UStreamPlayer', () => {
   // TODO: Implement tests.
 } );

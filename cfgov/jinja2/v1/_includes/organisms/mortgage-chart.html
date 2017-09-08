@@ -1,4 +1,3 @@
-
 {# ==========================================================================
 
    Mortgage Chart
@@ -32,6 +31,9 @@
                     </div>
                     <div class="m-form-field m-form-field__radio u-mb10">
                         <input class="a-radio" id="mp-line-chart_geo-metro" name="mp-line-chart_geo" type="radio"> <label class="a-label" for="mp-line-chart_geo-metro">Metro area</label>
+                    </div>
+                    <div class="m-form-field m-form-field__radio u-mb10">
+                        <input class="a-radio" id="mp-line-chart_geo-non-metro" name="mp-line-chart_non_geo" type="radio"> <label class="a-label" for="mp-line-chart_geo-non-metro">Non-metro area</label>
                     </div>
                     <div class="m-form-field m-form-field__radio u-mb10">
                         <input class="a-radio" id="mp-line-chart_geo-county" name="mp-line-chart_geo" type="radio"> <label class="a-label" for="mp-line-chart_geo-county">County</label>
@@ -348,6 +350,6 @@
     <strong>Source:</strong> National Mortgage Database<br>
     <strong>Date published:</strong> {{ pub_date_formatted }}<br>
     <strong>Downloads:</strong> CSV files with data by <a class="icon-link icon-link__download" href="{{ state_meta['url'] }}" <span class="icon-link_text">state</span></a> ({{ state_meta['size'] }}), <a class="icon-link icon-link__download" href="{{ metro_meta['url'] }}" <span class="icon-link_text">metro and non-metro areas</span></a> ({{ metro_meta['size'] }}), or <a class="icon-link icon-link__download" href="{{ county_meta['url'] }}"><span class="icon-link_text">county</span></a> ({{ county_meta['size'] }}).<br>
-    <strong>Notes:</strong> {{ viz_notes['chart_notes'] }}<br>
+    <strong>Note:</strong> {{ viz_notes['chart_notes'] }}<br>
     </p>
 </div>

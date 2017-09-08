@@ -112,6 +112,9 @@ urlpatterns = [
     url(r'^empowerment/$', TemplateView.as_view(
         template_name='empowerment/index.html'),
         name='empowerment'),
+    url(r'^fair-lending/$', TemplateView.as_view(
+        template_name='fair-lending/index.html'),
+        name='fair-lending'),
     url(r'^students/$', TemplateView.as_view(
         template_name='students/index.html'),
         name='students'),

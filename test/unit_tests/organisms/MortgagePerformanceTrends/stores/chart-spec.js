@@ -97,7 +97,7 @@ describe( 'Mortgage Performance line chart store', () => {
   } );
 
   it( 'should properly reduce loading metros state', () => {
-    let action = {
+    const action = {
       type: 'REQUEST_METROS'
     };
     store.dispatch( action );
@@ -105,7 +105,7 @@ describe( 'Mortgage Performance line chart store', () => {
   } );
 
   it( 'should properly reduce loading counties state', () => {
-    let action = {
+    const action = {
       type: 'REQUEST_COUNTIES'
     };
     store.dispatch( action );
@@ -113,7 +113,7 @@ describe( 'Mortgage Performance line chart store', () => {
   } );
 
   it( 'should properly reduce metros', () => {
-    let action = {
+    const action = {
       type: 'SET_METROS',
       metros: { 12345: 'Akron, OH' }
     };
@@ -122,7 +122,7 @@ describe( 'Mortgage Performance line chart store', () => {
   } );
 
   it( 'should properly reduce counties', () => {
-    let action = {
+    const action = {
       type: 'SET_COUNTIES',
       counties: { 12345: 'Acme County' }
     };

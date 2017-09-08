@@ -1,16 +1,16 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
-var dataSet = require( BASE_JS_PATH + 'modules/util/data-set' ).dataSet;
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const dataSet = require( BASE_JS_PATH + 'modules/util/data-set' ).dataSet;
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'mocha-jsdom' );
-var sinon = require( 'sinon' );
-var sandbox;
-var baseDom;
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'mocha-jsdom' );
+const sinon = require( 'sinon' );
+let sandbox;
+let baseDom;
 
-var HTML_SNIPPET =
+const HTML_SNIPPET =
   '<div data-test-value-a="testValueA"' +
         'data-test-value-B="testValueB"' +
         'data-testValue-C="testValueC"' +
@@ -21,7 +21,7 @@ var HTML_SNIPPET =
 
 // JSdom hasn't implmented Element.dataset so I used Chrome to determine
 // the correct values : http://jsfiddle.net/0j9u66h0/13/.
-var datasetLookup = {
+const datasetLookup = {
   testValueA: 'testValueA',
   testValueB: 'testValueB',
   testvalueC: 'testValueC',
@@ -29,24 +29,22 @@ var datasetLookup = {
   testValueE: 'testValueE'
 };
 
-describe( 'data-set', function() {
+describe( 'data-set', () => {
   jsdom();
 
-  beforeEach( function() {
+  beforeEach( () => {
     sandbox = sinon.sandbox.create();
     document.body.innerHTML = HTML_SNIPPET;
     baseDom = document.querySelector( 'div' );
   } );
 
-  afterEach( function() {
+  afterEach( () => {
     sandbox.restore();
   } );
 
-  it( 'should have the correct keys and values when using utility',
-    function() {
-      var dataset = dataSet( baseDom );
-      expect( JSON.stringify( dataset ) ===
-        JSON.stringify( datasetLookup ) ).to.equal( true );
-    }
-  );
+  it( 'should have the correct keys and values when using utility', () => {
+    const dataset = dataSet( baseDom );
+    expect( JSON.stringify( dataset ) ===
+      JSON.stringify( datasetLookup ) ).to.equal( true );
+  } );
 } );

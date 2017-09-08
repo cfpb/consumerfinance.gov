@@ -30,6 +30,3 @@ env:
 
 script:
   - ./run_travis.sh
-
-notifications:
-  webhooks: https://coveralls.io/webhook?repo_token=COVERALLS_REPO_TOKEN

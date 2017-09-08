@@ -1,10 +1,11 @@
 'use strict';
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var Header = require( BASE_JS_PATH + 'organisms/Header' );
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-describe( 'Header', function() {
+const chai = require( 'chai' );
+const expect = chai.expect;
+const Header = require( BASE_JS_PATH + 'organisms/Header' );
+
+describe( 'Header', () => {
   // TODO: Implement tests.
 } );
