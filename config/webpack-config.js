@@ -37,8 +37,9 @@ const modernConf = {
       exclude: {
         test: /node_modules/,
         // TODO: Move this into a config variable so that we can easily add
-        // other modules in the future.
-        exclude: /node_modules\/cfpb-chart-builder(\-\w+)?/
+        // other modules in the future. The below regex will capture all
+        // node modules that start with `cf`.
+        exclude: /node_modules\/cf(.+)/
       }
     } ]
   },

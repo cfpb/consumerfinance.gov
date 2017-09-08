@@ -183,12 +183,12 @@ MortgagePerformanceLineChart.prototype.renderCounties = function( prevState, sta
   if ( JSON.stringify( prevState.counties ) === JSON.stringify( state.counties ) ) {
     return;
   }
-  state.counties.sort( ( a, b ) => a.county < b.county ? -1 : 1 );
+  state.counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
   var fragment = document.createDocumentFragment();
   state.counties.forEach( county => {
     var option = document.createElement( 'option' );
     option.value = county.fips;
-    option.text = county.county;
+    option.text = county.name;
     fragment.appendChild( option );
   } );
   this.$county.innerHTML = '';
