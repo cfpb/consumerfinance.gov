@@ -90,6 +90,14 @@ describe( 'Mortgage Performance action creator', () => {
     } );
   } );
 
+  it( 'should create an action to request metros', () => {
+    const action = actions.requestMetros();
+    expect( action ).to.deep.equal( {
+      type: 'REQUEST_METROS',
+      isLoadingMetros: true
+    } );
+  } );
+
   it( 'should create an action to set metros', () => {
     const action = actions.setMetros( [ { name: 'Akron, OH' } ] );
     expect( action ).to.deep.equal( {
