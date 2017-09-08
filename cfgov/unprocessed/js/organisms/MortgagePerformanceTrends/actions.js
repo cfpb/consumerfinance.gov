@@ -55,6 +55,22 @@ actions.requestMetros = () => ( {
   isLoadingMetros: true
 } );
 
+actions.fetchEndDate = ( metroState, includeNational ) => dispatch => {
+  dispatch( actions.requestMetros( metroState ) );
+  return utils.getMetroData( ( err, data ) => {
+    if ( err ) {
+      return console.error( 'Error getting metro data', err );
+    }
+    // Alphabetical order
+    var newMetros = data[metroState].msas.sort( ( a, b ) => (a.name < b.name ? -1 : 1) );
+    newMetros = newMetros.filter( msa => msa.valid );
+    dispatch( actions.setMetros( newMetros ) );
+    dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );
+    dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro' ) );
+    return newMetros;
+  } );
+};
+
 actions.fetchMetros = ( metroState, includeNational ) => dispatch => {
   dispatch( actions.requestMetros( metroState ) );
   return utils.getMetroData( ( err, data ) => {
