@@ -65,7 +65,7 @@
                 {% if flag_enabled('SORTABLE_TABLES', true) and value.is_sortable and value.sortable_types[loop.index0] != '' %}
                     {% set data_sort = ' data-sort_type="' + value.sortable_types[loop.index0] + '"' %}
                     <button class="sortable"{{ data_sort }}>
-                        {{ _render_cell(cell) }}
+                        {{ _render_cell(cell) | striptags }}
                     </button>
                 {% else %}
                     {{ _render_cell(cell) }}
