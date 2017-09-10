@@ -14,6 +14,7 @@ var _plurals = {
 };
 
 class MortgagePerformanceMap {
+
   constructor( { container } ) {
     this.$container = document.getElementById( container );
     this.$form = this.$container.querySelector( '#mp-map-controls' );
@@ -31,14 +32,16 @@ class MortgagePerformanceMap {
     this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
     this.chart = ccb.createChart( {
       el: this.$container.querySelector( '#mp-map' ),
-      source: `map-data/${ this.timespan }/states/2009-01`,
+      source: `map-data/${ this.timespan }/states/2008-01`,
       type: 'geo-map',
       color: this.$container.getAttribute( 'data-chart-color' ),
-      metadata: 'states'
+      metadata: 'states',
+      tooltipFormatter: this.renderTooltip()
     } );
     this.eventListeners();
     utils.hideEl( this.$loadingSpinner );
   }
+
 }
 
 MortgagePerformanceMap.prototype.eventListeners = function() {
@@ -128,7 +131,8 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
     store.dispatch( actions.startLoading() );
     this.chart.update( {
       source: `map-data/${ this.timespan }/${ _plurals[state.geo.type] }/${ state.date }`,
-      metadata: _plurals[state.geo.type]
+      metadata: _plurals[state.geo.type],
+      tooltipFormatter: this.renderTooltip()
     } ).then( () => {
       if ( prevState.geo.type !== state.geo.type ) {
         this.$state.value = '';
@@ -143,11 +147,6 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
 };
 
 MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) {
-  // If we're waiting for data, abort.
-  // if ( state.isLoading ) {
-  //   return utils.showEl( this.$loadingSpinner );
-  // }
-  // utils.hideEl( this.$loadingSpinner );
   var geoType = state.geo.type;
   if ( state.isLoadingCounties ) {
     geoType = 'county';
@@ -177,7 +176,7 @@ MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state )
   if ( !location ) {
     location = `${ state.geo.type } view`;
   }
-  this.$mapTitleLocation.innerHTML = location;
+  this.$mapTitleLocation.innerText = location;
   this.$mapTitleDate.innerHTML = utils.getDate( state.date );
 };
 
@@ -213,6 +212,18 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
   } );
   this.$metro.innerHTML = '';
   this.$metro.appendChild( fragment );
+};
+
+MortgagePerformanceMap.prototype.renderTooltip = function() {
+  return ( point, meta ) => {
+    var percent = Math.round( point.value * 10 ) / 10;
+    var nationalPercent = Math.round( meta.national_average * 1000 ) / 10;
+    return `<dl class='m-mp-map-tooltip'>
+      <dt>${ point.name }</dt>
+      <dd><strong>${ percent }%</strong> mortgage delinquency rate</dd>
+      <dd><strong>${ nationalPercent }%</strong> national average</dd>
+    </dl>`;
+  };
 };
 
 module.exports = MortgagePerformanceMap;

@@ -30,15 +30,31 @@
             stroke: #838588;
         }
     }
-
     .highcharts-color-0 {
         stroke: #838588;
     }
-
     .highcharts-tooltip-box {
         fill: @white;
+        fill-opacity: 1;
     }
 
+}
+
+.m-mp-map-tooltip {
+  .u-webfont-regular();
+  dt {
+    border-bottom: 1px solid @black;
+    font-size: @size-vi;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+    text-transform: none;
+  }
+  dd {
+    display: block;
+    font-size: @size-vi;
+    padding: 2px 0;
+  }
 }
 
 .m-color-ramp {
@@ -74,7 +90,7 @@
     }
 
     rect {
-        font-size: @size-vi;
+        font-size: unit( 12px / @base-font-size-px, em );;
         height: 15px;
         stroke: #838588;
         stroke-miterlimit: 10;
@@ -83,16 +99,16 @@
     }
 
     text {
-        font-size: @size-vi;
+        font-size: unit( 12px / @base-font-size-px, em );;
         text-anchor: start;
     }
 
     .respond-to-max( @bp-sm-max, {
         text {
-            font-size: @size-v;
+            font-size: unit( 14px / @base-font-size-px, em );;
         }
         tspan {
-            font-size: @size-v;
+            font-size: unit( 14px / @base-font-size-px, em );;
         }
     } );
 
@@ -107,9 +123,9 @@
     // Fieldsets have silly default values. We should remove them at the CF level
     // but for now I'm removing them only within our app.
     fieldset {
-        padding-left: 0;
-        margin-left: 0;
         border: 0;
+        margin-left: 0;
+        padding-left: 0;
     }
     .content-l_col {
         border-left-width: 0;
