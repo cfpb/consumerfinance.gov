@@ -62,11 +62,11 @@ actions.fetchMetros = ( metroState, includeNational ) => dispatch => {
       return console.error( 'Error getting metro data', err );
     }
     // Alphabetical order
-    var newMetros = data[metroState].msas.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
-    newMetros = newMetros.filter( msa => msa.valid );
+    var newMetros = data[metroState].metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    newMetros = newMetros.filter( metro => metro.valid );
     dispatch( actions.setMetros( newMetros ) );
     dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );
-    dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro' ) );
+    dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro', includeNational ) );
     return newMetros;
   } );
 };
@@ -78,11 +78,11 @@ actions.fetchCounties = ( countyState, includeNational ) => dispatch => {
       return console.error( 'Error getting county data', err );
     }
     // Alphabetical order
-    var newCounties = data[countyState].counties.sort( ( a, b ) => a.county < b.county ? -1 : 1 );
+    var newCounties = data[countyState].counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newCounties = newCounties.filter( county => county.valid );
     dispatch( actions.setCounties( newCounties ) );
-    dispatch( actions.setGeo( newCounties[0].fips, newCounties[0].county, 'county' ) );
-    dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].county, 'county', includeNational ) );
+    dispatch( actions.setGeo( newCounties[0].fips, newCounties[0].name, 'county' ) );
+    dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].name, 'county', includeNational ) );
     return newCounties;
   } );
 };

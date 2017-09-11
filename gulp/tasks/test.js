@@ -4,7 +4,6 @@ const configTest = require( '../config' ).test;
 const envvars = require( '../../config/environment' ).envvars;
 const fsHelper = require( '../utils/fs-helper' );
 const gulp = require( 'gulp' );
-const gulpCodecov = require( 'gulp-codecov' );
 const gulpIstanbul = require( 'gulp-istanbul' );
 const gulpMocha = require( 'gulp-mocha' );
 const gulpUtil = require( 'gulp-util' );
@@ -405,19 +404,10 @@ function spawnProtractor( ) {
   }
 }
 
-/**
- * Run codecov reports on Travis.
- */
-function testCodecov() {
-  gulp.src( configTest.tests + '/unit_test_coverage/lcov.info' )
-    .pipe( gulpCodecov() );
-}
-
 gulp.task( 'test', [ 'lint', 'test:unit' ] );
 gulp.task( 'test:a11y', testA11y );
 gulp.task( 'test:acceptance', testAcceptanceBrowser );
 gulp.task( 'test:acceptance:protractor', spawnProtractor );
-gulp.task( 'test:submit-coverage', testCodecov );
 gulp.task( 'test:perf', testPerf );
 gulp.task( 'test:unit', [ 'test:unit:scripts' ] );
 gulp.task( 'test:unit:scripts', testUnitScripts );

@@ -15,8 +15,6 @@
                 Default is false.
 
    message:     Text to display within the notification markup.
-                Default is 'Success.', 'Warning!', or 'Error!',
-                depending on notification type.
 
    explanation: Text to display as an explanation
                 within the notification markup.
@@ -39,7 +37,8 @@
               {{ 'm-notification__visible' if is_visible else '' }}">
       <span class="m-notification_icon
                    cf-icon"></span>
-      <div class="m-notification_content">
+      <div class="m-notification_content"
+           { 'role="alert"' if type == 'warning' or type == 'error' else '' }}>
           <div class="h4 m-notification_message">{{ message }}</div>
           {% if explanation %}
               <p class="h4 m-notification_explanation">{{ explanation }}</p>
