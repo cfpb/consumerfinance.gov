@@ -98,9 +98,8 @@
 
 }
 
-#mp-chart-container,
+#mp-line-chart-container,
 #mp-map-container {
-
     .a-label h4 {
         .u-mb10();
     }
@@ -114,5 +113,14 @@
     }
     .content-l_col {
         border-left-width: 0;
+    }
+
+    // Helper text under some filter or zoom options
+    .m-field-helper-text {
+        padding-top: unit(15px / @base-font-size-px, em);
+        margin-top: unit(30px / @base-font-size-px, em);
+        color: @gray-80;
+        @font-size: 12px;
+        font-size: unit(@font-size / @base-font-size-px, em);
     }
 }
