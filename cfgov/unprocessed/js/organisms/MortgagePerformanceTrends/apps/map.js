@@ -172,12 +172,12 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
 };
 
 MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state ) {
-  let location = state.geo.name;
-  if ( !location ) {
-    location = `${ state.geo.type } view`;
+  let loc = state.geo.name;
+  if ( !loc ) {
+    loc = `${ state.geo.type } view`;
   }
-  this.$mapTitleLocation.innerText = location;
-  this.$mapTitleDate.innerHTML = utils.getDate( state.date );
+  this.$mapTitleLocation.innerText = loc;
+  this.$mapTitleDate.innerText = utils.getDate( state.date );
 };
 
 MortgagePerformanceMap.prototype.renderCounties = function( prevState, state ) {
