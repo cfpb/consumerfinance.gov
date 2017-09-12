@@ -216,11 +216,17 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
 
 MortgagePerformanceMap.prototype.renderTooltip = function() {
   return ( point, meta ) => {
-    var percent = Math.round( point.value * 10 ) / 10;
+    var percent;
     var nationalPercent = Math.round( meta.national_average * 1000 ) / 10;
+    if ( point.value < 0 ) {
+      percent = 'Insufficient data';
+    } else {
+      percent = Math.round( point.value * 10 ) / 10;
+      percent = `<strong>${ percent }%</strong> mortgage delinquency rate`;
+    }
     return `<dl class='m-mp-map-tooltip'>
       <dt>${ point.name }</dt>
-      <dd><strong>${ percent }%</strong> mortgage delinquency rate</dd>
+      <dd>${ percent }</dd>
       <dd><strong>${ nationalPercent }%</strong> national average</dd>
     </dl>`;
   };
