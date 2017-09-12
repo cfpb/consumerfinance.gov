@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import argparse
 import boto3
 import logging
@@ -70,7 +72,7 @@ def post_message(body, title, github_creds={}, mattermost_creds={}):
         )
 
 
-def cleanup_jenkins_message(message):
+def cleanup_message(message):
     return message.replace(
         '#', '# '  # Avoids erroneous Github issue link
     ).replace(
@@ -110,7 +112,7 @@ if __name__ == '__main__':
     )
 
     for message in response.get('Messages', {}):
-        body = cleanup_jenkins_message(message.get('Body'))
+        body = cleanup_message(message.get('Body'))
         title = body.split(" - ")[0]
 
         logger.info('Retrieved message {} from SQS'.format(body))

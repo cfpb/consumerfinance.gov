@@ -3,34 +3,39 @@ import os
 import github3
 
 
-class GithubAlert:
+class GithubAlert(object):
     def __init__(self, credentials):
-        token = credentials.get(
+        self.token = credentials.get(
             'token',
             os.environ.get('GITHUB_TOKEN')
         )
-        url = credentials.get(
+        self.url = credentials.get(
             'url',
             os.environ.get('GITHUB_URL')
         )
-        user = credentials.get(
+        self.user = credentials.get(
             'user',
             os.environ.get('GITHUB_USER')
         )
-        repo_name = credentials.get(
+        self.repo_name = credentials.get(
             'repo_name',
             os.environ.get('GITHUB_REPO')
         )
 
-        gh = github3.login(
-            token=token,
-            url=url,
-        )
-
-        self.repo = gh.repository(user, repo_name)
+    def repo(self):
+        try:
+            gh = github3.login(
+                token=self.token,
+                url=self.url,
+            )
+            return gh.repository(self.user, self.repo_name)
+        except:
+            raise ValueError(
+                'Github credentials provided are incorrect'
+            )
 
     def matching_issue(self, title):
-        issues = self.repo.iter_issues(state='all')
+        issues = self.repo().iter_issues(state='all')
         return next((issue for issue in issues if issue.title == title), None)
 
     def post(self, title, body):
@@ -42,7 +47,7 @@ class GithubAlert:
             issue.create_comment(body=body)
         else:
             # New issue, post to github
-            issue = self.repo.create_issue(
+            issue = self.repo().create_issue(
                 title=title,
                 body=body,
                 labels=[
