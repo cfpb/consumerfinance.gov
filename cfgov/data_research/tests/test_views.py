@@ -374,7 +374,7 @@ class TimeseriesViewTests(django.test.TestCase):
         self.assertIs(msa_value, None)
 
     def test_map_view_non_msa_below_threshold(self):
-        """The view should deliver a below-threshold MSA with value of None"""
+        """Should deliver a below-threshold non-MSA with value of None"""
         non_msa = NonMSAMortgageData.objects.get(fips='12-non')
         geo = non_msa.state
         geo.non_msa_valid = False
