@@ -19,7 +19,8 @@ class MattermostAlert(object):
             'text': text,
             'username': self.username,
         }
-        requests.post(
+        resp = requests.post(
             self.webhook_url,
             data=json.dumps(payload),
         )
+        resp.raise_for_status()
