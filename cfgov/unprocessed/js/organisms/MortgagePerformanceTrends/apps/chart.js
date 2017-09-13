@@ -56,7 +56,7 @@ MortgagePerformanceLineChart.prototype.onClick = function( event ) {
 MortgagePerformanceLineChart.prototype.onChange = function( event ) {
 
   var action, geoEl, geoType, geoId, geoName;
-  var includeNational = this.$compare.checked;
+  var includeComparison = this.$compare.checked;
 
   switch ( event.target.id ) {
     case 'mp-line-chart_geo-state':
@@ -77,29 +77,29 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
       if ( geoType === 'state' ) {
         geoId = this.$state.value;
         geoName = this.$state.options[this.$state.selectedIndex].text;
-        action = actions.updateChart( geoId, geoName, 'state', includeNational );
+        action = actions.updateChart( geoId, geoName, 'state', includeComparison );
       } else {
         geoId = this.$county.value;
         geoName = this.$county.options[this.$county.selectedIndex].text;
-        action = actions.fetchCounties( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ), includeNational );
+        action = actions.fetchCounties( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ), includeComparison );
       }
       break;
     case 'mp-line-chart-metro':
       geoId = this.$metro.value;
       geoName = this.$metro.options[this.$metro.selectedIndex].text;
-      action = actions.updateChart( geoId, geoName, 'metro', includeNational );
+      action = actions.updateChart( geoId, geoName, 'metro', includeComparison );
       break;
     case 'mp-line-chart-county':
       geoId = this.$county.value;
       geoName = this.$county.options[this.$county.selectedIndex].text;
-      action = actions.updateChart( geoId, geoName, 'county', includeNational );
+      action = actions.updateChart( geoId, geoName, 'county', includeComparison );
       break;
     case 'mp-line-chart-compare':
-      action = actions.updateNational( includeNational );
+      utils.hideEl( this.$chartTitleComparison );
+      utils.hideEl( this.$chartTitleNational );
+      action = actions.updateNational( includeComparison );
       break;
     default:
-      utils.hideEl( this.$chartTitleComparison );
-      utils.showEl( this.$chartTitleNational );
       action = actions.clearGeo();
   }
 
@@ -111,7 +111,7 @@ MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state 
   var source;
   var baseSource = `time-series/${ this.timespan }/national`;
   // If the geo hasn't changed, don't re-render the chart.
-  if ( prevState.geo.id === state.geo.id && prevState.includeNational === state.includeNational ) {
+  if ( prevState.geo.id === state.geo.id && prevState.includeComparison === state.includeComparison ) {
     return;
   }
 
@@ -127,7 +127,7 @@ MortgagePerformanceLineChart.prototype.renderChart = function( prevState, state 
 
   // Otherwise, load the geo and optionally national data
   source = `time-series/${ this.timespan }/${ state.geo.id }`;
-  if ( state.includeNational ) {
+  if ( state.includeComparison ) {
     source = `${ source };${ baseSource }`;
   }
   this.chart.update( {
@@ -169,14 +169,14 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
 
 MortgagePerformanceLineChart.prototype.renderChartTitle = function( prevState, state ) {
   var geoName = state.geo.name;
-  var includeNational = state.includeNational;
+  var includeComparison = state.includeComparison;
   if ( geoName ) {
     utils.showEl( this.$chartTitle );
     this.$chartTitleGeo.innerHTML = geoName;
   } else {
     utils.hideEl( this.$chartTitle );
   }
-  if ( includeNational ) {
+  if ( includeComparison ) {
     utils.showEl( this.$chartTitleComparison );
   } else {
     utils.hideEl( this.$chartTitleComparison );

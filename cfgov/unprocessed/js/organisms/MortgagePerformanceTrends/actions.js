@@ -17,14 +17,14 @@ actions.clearGeo = () => ( {
   type: 'CLEAR_GEO'
 } );
 
-actions.updateChart = ( geoId, geoName, geoType, includeNational ) => {
+actions.updateChart = ( geoId, geoName, geoType, includeComparison ) => {
   var action = {
     type: 'UPDATE_CHART',
     geo: {
       id: geoId,
       name: geoName
     },
-    includeNational
+    includeComparison
   };
   if ( geoType ) {
     action.geo.type = geoType;
@@ -32,10 +32,10 @@ actions.updateChart = ( geoId, geoName, geoType, includeNational ) => {
   return action;
 };
 
-actions.updateNational = includeNational => {
+actions.updateNational = includeComparison => {
   var action = {
     type: 'UPDATE_CHART',
-    includeNational
+    includeComparison
   };
   return action;
 };
@@ -55,7 +55,7 @@ actions.requestMetros = () => ( {
   isLoadingMetros: true
 } );
 
-actions.fetchMetros = ( metroState, includeNational ) => dispatch => {
+actions.fetchMetros = ( metroState, includeComparison ) => dispatch => {
   dispatch( actions.requestMetros( metroState ) );
   return utils.getMetroData( ( err, data ) => {
     if ( err ) {
@@ -66,12 +66,12 @@ actions.fetchMetros = ( metroState, includeNational ) => dispatch => {
     newMetros = newMetros.filter( metro => metro.valid );
     dispatch( actions.setMetros( newMetros ) );
     dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );
-    dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro', includeNational ) );
+    dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro', includeComparison ) );
     return newMetros;
   } );
 };
 
-actions.fetchCounties = ( countyState, includeNational ) => dispatch => {
+actions.fetchCounties = ( countyState, includeComparison ) => dispatch => {
   dispatch( actions.requestCounties( countyState ) );
   return utils.getCountyData( ( err, data ) => {
     if ( err ) {
@@ -82,7 +82,7 @@ actions.fetchCounties = ( countyState, includeNational ) => dispatch => {
     newCounties = newCounties.filter( county => county.valid );
     dispatch( actions.setCounties( newCounties ) );
     dispatch( actions.setGeo( newCounties[0].fips, newCounties[0].name, 'county' ) );
-    dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].name, 'county', includeNational ) );
+    dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].name, 'county', includeComparison ) );
     return newCounties;
   } );
 };

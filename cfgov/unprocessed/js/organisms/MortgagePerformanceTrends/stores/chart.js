@@ -75,10 +75,10 @@ const updateCounties = ( counties, action ) => {
   }
 };
 
-const includeNational = ( include, action ) => {
+const includeComparison = ( include, action ) => {
   switch ( action.type ) {
     case 'UPDATE_CHART':
-      return typeof action.includeNational === 'undefined' ? include : action.includeNational;
+      return typeof action.includeComparison === 'undefined' ? include : action.includeComparison;
     default:
       return include;
   }
@@ -102,7 +102,7 @@ const initialState = {
   // Is the chart being re-rendered?
   isLoadingChart: false,
   // Should the national trend be shown alongside the geo's?
-  includeNational: true
+  includeComparison: true
 };
 
 class LineChartStore extends Store {
@@ -118,7 +118,7 @@ class LineChartStore extends Store {
       isLoading: isLoading( action ),
       isLoadingMetros: isLoadingMetros( action ),
       isLoadingCounties: isLoadingCounties( action ),
-      includeNational: includeNational( state.includeNational, action ),
+      includeComparison: includeComparison( state.includeComparison, action ),
       counties: updateCounties( state.counties, action ),
       metros: updateMetros( state.metros, action )
     };
