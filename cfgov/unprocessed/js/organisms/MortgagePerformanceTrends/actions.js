@@ -55,6 +55,11 @@ actions.requestMetros = () => ( {
   isLoadingMetros: true
 } );
 
+actions.requestNonMetros = () => ( {
+  type: 'REQUEST_NON_METROS',
+  isLoadingNonMetros: true
+} );
+
 actions.fetchMetros = ( metroState, includeComparison ) => dispatch => {
   dispatch( actions.requestMetros( metroState ) );
   return utils.getMetroData( ( err, data ) => {
@@ -64,10 +69,32 @@ actions.fetchMetros = ( metroState, includeComparison ) => dispatch => {
     // Alphabetical order
     var newMetros = data[metroState].metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newMetros = newMetros.filter( metro => metro.valid );
+    if ( !newMetros.length ) {
+      newMetros = [{
+        fips: null,
+        name: 'No metros have sufficient data'
+      }];
+    }
     dispatch( actions.setMetros( newMetros ) );
     dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );
     dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro', includeComparison ) );
     return newMetros;
+  } );
+};
+
+actions.fetchNonMetros = ( metroState, includeComparison ) => dispatch => {
+  dispatch( actions.requestNonMetros() );
+  return utils.getNonMetroData( ( err, data ) => {
+    if ( err ) {
+      return console.error( 'Error getting non-metro data', err );
+    }
+    var nonMetros = data.filter( nonMetro => nonMetro.valid );
+    // Alphabetical order
+    nonMetros = nonMetros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    dispatch( actions.setNonMetros( nonMetros ) );
+    dispatch( actions.setGeo( nonMetros[0].fips, nonMetros[0].name, 'non-metro' ) );
+    dispatch( actions.updateChart( nonMetros[0].fips, nonMetros[0].name, 'non-metro', includeComparison ) );
+    return nonMetros;
   } );
 };
 
@@ -90,6 +117,11 @@ actions.fetchCounties = ( countyState, includeComparison ) => dispatch => {
 actions.setMetros = metros => ( {
   type: 'SET_METROS',
   metros: metros
+} );
+
+actions.setNonMetros = metros => ( {
+  type: 'SET_NON_METROS',
+  nonMetros: metros
 } );
 
 actions.setCounties = counties => ( {

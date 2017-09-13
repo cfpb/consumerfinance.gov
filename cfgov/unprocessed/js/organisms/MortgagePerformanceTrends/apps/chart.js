@@ -15,6 +15,7 @@ class MortgagePerformanceLineChart {
     this.$geo = this.$container.querySelector( '#mp-line-chart-geo' );
     this.$state = this.$container.querySelector( '#mp-line-chart-state' );
     this.$metro = this.$container.querySelector( '#mp-line-chart-metro' );
+    this.$nonMetro = this.$container.querySelector( '#mp-line-chart-non-metro' );
     this.$county = this.$container.querySelector( '#mp-line-chart-county' );
     this.$compareContainer = this.$container.querySelector( '#mp-line-chart-compare-container' );
     this.$compare = this.$container.querySelector( '#mp-line-chart-compare' );
@@ -42,6 +43,8 @@ MortgagePerformanceLineChart.prototype.eventListeners = function() {
   store.subscribe( this.renderChartTitle.bind( this ) );
   store.subscribe( this.renderChartForm.bind( this ) );
   store.subscribe( this.renderCounties.bind( this ) );
+  store.subscribe( this.renderMetros.bind( this ) );
+  store.subscribe( this.renderNonMetros.bind( this ) );
 };
 
 MortgagePerformanceLineChart.prototype.onClick = function( event ) {
@@ -58,25 +61,42 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
 
   switch ( event.target.id ) {
     case 'mp-line-chart_geo-state':
-    case 'mp-line-chart_geo-metro':
       // Reset the county dropdown to the first item if we're no longer using it
+      this.$metro.selectedIndex = 0;
+      this.$nonMetro.selectedIndex = 0;
       this.$county.selectedIndex = 0;
-      geoType = this.$container.querySelector( 'input[name="mp-line-chart_geo"]:checked' ).id.replace( 'mp-line-chart_geo-', '' );
-      geoEl = this['$' + geoType];
-      geoId = geoEl.value;
-      geoName = geoEl.options[geoEl.selectedIndex].text;
-      action = actions.setGeo( geoId, geoName, geoType );
+      geoId = this.$state.value;
+      geoName = this.$state.options[this.$state.selectedIndex].text;
+      action = actions.setGeo( geoId, geoName, 'state' );
+      break;
+    case 'mp-line-chart_geo-metro':
+      action = actions.fetchMetros( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ) );
+      break;
+    case 'mp-line-chart_geo-non-metro':
+      action = actions.fetchNonMetros();
       break;
     case 'mp-line-chart_geo-county':
       action = actions.fetchCounties( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ) );
       break;
     case 'mp-line-chart-state':
       geoType = this.$container.querySelector( 'input[name="mp-line-chart_geo"]:checked' ).id.replace( 'mp-line-chart_geo-', '' );
+      // TODO: Waaaaay too much code repetition here.
       if ( geoType === 'state' ) {
         geoId = this.$state.value;
         geoName = this.$state.options[this.$state.selectedIndex].text;
         action = actions.updateChart( geoId, geoName, 'state', includeComparison );
-      } else {
+      }
+      if ( geoType === 'metro' ) {
+        geoId = this.$metro.value;
+        geoName = this.$metro.options[this.$metro.selectedIndex].text;
+        action = actions.fetchMetros( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ), includeComparison );
+      }
+      if ( geoType === 'non-metro' ) {
+        geoId = this.$nonMetro.value;
+        geoName = this.$nonMetro.options[this.$nonMetro.selectedIndex].text;
+        action = actions.fetchNonMetros( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ), includeComparison );
+      }
+      if ( geoType === 'county' ) {
         geoId = this.$county.value;
         geoName = this.$county.options[this.$county.selectedIndex].text;
         action = actions.fetchCounties( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ), includeComparison );
@@ -86,6 +106,11 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
       geoId = this.$metro.value;
       geoName = this.$metro.options[this.$metro.selectedIndex].text;
       action = actions.updateChart( geoId, geoName, 'metro', includeComparison );
+      break;
+    case 'mp-line-chart-non-metro':
+      geoId = this.$nonMetro.value;
+      geoName = this.$nonMetro.options[this.$nonMetro.selectedIndex].text;
+      action = actions.updateChart( geoId, geoName, 'non-metro', includeComparison );
       break;
     case 'mp-line-chart-county':
       geoId = this.$county.value;
@@ -143,6 +168,10 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
   var geoType;
   if ( prevState.isLoadingCounties || state.isLoadingCounties ) {
     geoType = 'county';
+  } else if ( prevState.isLoadingMetros || state.isLoadingMetros ) {
+    geoType = 'metro';
+  } else if ( prevState.isLoadingNonMetros || state.isLoadingNonMetros ) {
+    geoType = 'non-metro';
   } else {
     geoType = state.geo.type;
   }
@@ -151,10 +180,10 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
   for ( var i = 0; i < containers.length; ++i ) {
     utils.hideEl( containers[i] );
   }
-  if ( geoType === 'county' ) {
+  if ( geoType === 'county' || geoType === 'metro' ) {
     utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
   }
-  if ( state.geo.type ) {
+  if ( geoType ) {
     utils.showEl( this.$compareContainer );
   } else {
     utils.hideEl( this.$compareContainer );
@@ -195,6 +224,40 @@ MortgagePerformanceLineChart.prototype.renderCounties = function( prevState, sta
   } );
   this.$county.innerHTML = '';
   this.$county.appendChild( fragment );
+};
+
+MortgagePerformanceLineChart.prototype.renderMetros = function( prevState, state ) {
+  this.$metro.disabled = state.isLoadingMetros;
+  if ( JSON.stringify( prevState.metros ) === JSON.stringify( state.metros ) ) {
+    return;
+  }
+  state.metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+  var fragment = document.createDocumentFragment();
+  state.metros.forEach( metro => {
+    var option = document.createElement( 'option' );
+    option.value = metro.fips;
+    option.text = metro.name;
+    fragment.appendChild( option );
+  } );
+  this.$metro.innerHTML = '';
+  this.$metro.appendChild( fragment );
+};
+
+MortgagePerformanceLineChart.prototype.renderNonMetros = function( prevState, state ) {
+  this.$nonMetro.disabled = state.isLoadingNonMetros;
+  if ( JSON.stringify( prevState.nonMetros ) === JSON.stringify( state.nonMetros ) ) {
+    return;
+  }
+  state.nonMetros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+  var fragment = document.createDocumentFragment();
+  state.nonMetros.forEach( nonMetro => {
+    var option = document.createElement( 'option' );
+    option.value = nonMetro.fips;
+    option.text = nonMetro.name;
+    fragment.appendChild( option );
+  } );
+  this.$nonMetro.innerHTML = '';
+  this.$nonMetro.appendChild( fragment );
 };
 
 module.exports = MortgagePerformanceLineChart;
