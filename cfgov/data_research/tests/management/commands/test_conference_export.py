@@ -197,11 +197,13 @@ class TestCommandHandler(unittest.TestCase):
         self.assertEqual(mock_get_form.call_count, 1)
 
     @mock.patch('data_research.management.commands.'
+                'conference_export.ConferenceExporter.to_csv')
+    @mock.patch('data_research.management.commands.'
                 'conference_export.ConferenceExporter.create_email_message')
     @mock.patch('data_research.management.commands.'
                 'conference_export.get_registration_form_from_page')
     def test_conference_export_command_handler_dryrun(
-            self, mock_get_registration, mock_email_create):
+            self, mock_get_registration, mock_email_create, mock_csv_exporter):
         command = Command()
         command.handle(
             page_id=1,
@@ -211,3 +213,5 @@ class TestCommandHandler(unittest.TestCase):
             dry_run=True
         )
         self.assertEqual(mock_email_create.call_count, 1)
+        self.assertEqual(mock_get_registration.call_count, 1)
+        self.assertEqual(mock_csv_exporter.call_count, 0)
