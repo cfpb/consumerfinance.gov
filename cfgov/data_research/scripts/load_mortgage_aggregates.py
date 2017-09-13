@@ -46,11 +46,7 @@ def load_national_values(date):
     record, cr = NationalMortgageData.objects.get_or_create(
         date=parser.parse(date).date(),
         fips='-----')
-    record.save()
-    if cr:
-        FIPS.created += 1
-    else:
-        FIPS.updated += 1
+    record.aggregate_data()
 
 
 def run():
