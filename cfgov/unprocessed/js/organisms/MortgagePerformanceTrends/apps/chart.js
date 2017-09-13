@@ -22,7 +22,6 @@ class MortgagePerformanceLineChart {
     this.$chartTitle = document.querySelector( '#mp-line-chart-title-status' );
     this.$chartTitleGeo = document.querySelector( '#mp-line-chart-title-status-geo' );
     this.$chartTitleComparison = document.querySelector( '#mp-line-chart-title-status-comparison' );
-    this.$chartTitleNational = document.querySelector( '#mp-line-chart-title-status-national' );
     this.$loadingSpinner = document.querySelector( '#mp-chart-loading' );
     this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
     this.chart = ccb.createChart( {
@@ -32,7 +31,6 @@ class MortgagePerformanceLineChart {
     } );
     this.eventListeners();
     utils.hideEl( this.$chartTitleComparison );
-    utils.showEl( this.$chartTitleNational );
     utils.hideEl( this.$loadingSpinner );
     utils.hideEl( this.$compareContainer );
   }
@@ -96,7 +94,6 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
       break;
     case 'mp-line-chart-compare':
       utils.hideEl( this.$chartTitleComparison );
-      utils.hideEl( this.$chartTitleNational );
       action = actions.updateNational( includeComparison );
       break;
     default:
@@ -172,9 +169,9 @@ MortgagePerformanceLineChart.prototype.renderChartTitle = function( prevState, s
   var includeComparison = state.includeComparison;
   if ( geoName ) {
     utils.showEl( this.$chartTitle );
-    this.$chartTitleGeo.innerHTML = geoName;
+    this.$chartTitleGeo.innerText = geoName;
   } else {
-    utils.hideEl( this.$chartTitle );
+    this.$chartTitleGeo.innerText = 'national average';
   }
   if ( includeComparison ) {
     utils.showEl( this.$chartTitleComparison );
