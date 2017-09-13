@@ -23,16 +23,11 @@ class GithubAlert(object):
         )
 
     def repo(self):
-        try:
-            gh = github3.login(
-                token=self.token,
-                url=self.url,
-            )
-            return gh.repository(self.user, self.repo_name)
-        except:
-            raise ValueError(
-                'Github credentials provided are incorrect'
-            )
+        gh = github3.login(
+            token=self.token,
+            url=self.url,
+        )
+        return gh.repository(self.user, self.repo_name)
 
     def matching_issue(self, title):
         issues = self.repo().iter_issues(state='all')
