@@ -69,7 +69,7 @@ def process_sqs_message(message, github_alert, mattermost_alert):
     body = cleanup_message(message.get('Body'))
     title = body.split(" - ")[0]
 
-    logger.info('Retrieved message {} from SQS'.format(body))
+    logger.debug('Retrieved message {} from SQS'.format(body))
 
     issue = github_alert.post(
         title=title,
@@ -127,6 +127,6 @@ if __name__ == '__main__':
             QueueUrl=args.queue_url,
             ReceiptHandle=message.get('ReceiptHandle')
         )
-        logger.info(
+        logger.debug(
             'Deleted message {} from SQS'.format(message.get('Body'))
         )
