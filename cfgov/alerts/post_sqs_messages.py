@@ -57,27 +57,31 @@ parser.add_argument(
 )
 
 
-def post_message(body, title, github_creds={}, mattermost_creds={}):
-    issue = GithubAlert(github_creds).post(
-        title=title,
-        body=body,
-    )
-
-    if mattermost_creds:
-        MattermostAlert(mattermost_creds).post(
-            text='Alert: {}. Github issue at {}'.format(
-                body,
-                issue.html_url,
-            )
-        )
-
-
 def cleanup_message(message):
     return message.replace(
         '#', '# '  # Avoids erroneous Github issue link
     ).replace(
         '[Open]', ''  # We want to expand the link
     )
+
+
+def process_sqs_message(message, github_alert, mattermost_alert):
+    body = cleanup_message(message.get('Body'))
+    title = body.split(" - ")[0]
+
+    logger.info('Retrieved message {} from SQS'.format(body))
+
+    issue = github_alert.post(
+        title=title,
+        body=body
+    )
+    if mattermost_alert:
+        mattermost_alert.post(
+            text='Alert: {}. Github issue at {}'.format(
+                body,
+                issue.html_url
+            )
+        )
 
 
 if __name__ == '__main__':
@@ -88,44 +92,41 @@ if __name__ == '__main__':
         'sqs',
         aws_access_key_id=args.aws_access_key_id,
         aws_secret_access_key=args.aws_secret_access_key,
-        region_name='us-east-1',
+        region_name='us-east-1'
     )
 
-    # Intialize Github credentials
-    github_creds = {
+    # Intialize GithubAlert class
+    github_alert = GithubAlert({
         'repo_name': args.github_repo,
         'token': args.github_token,
         'url': args.github_url,
-        'user': args.github_user,
-    }
+        'user': args.github_user
+    })
 
-    # Initialize Mattermost credentials (optional)
-    mattermost_creds = {}
+    mattermost_alert = None
+    # Initialize MattermostAlert class (optional)
     if args.mattermost_webhook_url and args.mattermost_username:
-        mattermost_creds['webhook_url'] = args.mattermost_webhook_url
-        mattermost_creds['username'] = args.mattermost_username
+        mattermost_alert = MattermostAlert({
+            'webhook_url': args.mattermost_webhook_url,
+            'username': args.mattermost_username
+        })
 
     # Receive messages from specified SQS queue
     response = client.receive_message(
         QueueUrl=args.queue_url,
-        MaxNumberOfMessages=10,
+        MaxNumberOfMessages=10
     )
 
     for message in response.get('Messages', {}):
-        body = cleanup_message(message.get('Body'))
-        title = body.split(" - ")[0]
-
-        logger.info('Retrieved message {} from SQS'.format(body))
-
-        post_message(
-            body=body,
-            title=title,
-            github_creds=github_creds,
-            mattermost_creds=mattermost_creds,
+        process_sqs_message(
+            message=message,
+            github_alert=github_alert,
+            mattermost_alert=mattermost_alert
         )
-
         client.delete_message(
             QueueUrl=args.queue_url,
             ReceiptHandle=message.get('ReceiptHandle')
         )
-        logger.info('Deleted message {} from SQS'.format(body))
+        logger.info(
+            'Deleted message {} from SQS'.format(message.get('Body'))
+        )

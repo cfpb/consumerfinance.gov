@@ -21,7 +21,7 @@ class TestMattermostAlert(TestCase):
         text = u'foö'
 
         MattermostAlert(credentials).post(text)
-        mock.assert_called_with(
+        mock.assert_called_once_with(
             webhook_url,
             data=json.dumps({'text': text, 'username': username})
         )
