@@ -22,6 +22,7 @@ class MortgagePerformanceLineChart {
     this.$chartTitle = document.querySelector( '#mp-line-chart-title-status' );
     this.$chartTitleGeo = document.querySelector( '#mp-line-chart-title-status-geo' );
     this.$chartTitleComparison = document.querySelector( '#mp-line-chart-title-status-comparison' );
+    this.$chartTitleNational = document.querySelector( '#mp-line-chart-title-status-national' );
     this.$loadingSpinner = document.querySelector( '#mp-chart-loading' );
     this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
     this.chart = ccb.createChart( {
@@ -30,6 +31,8 @@ class MortgagePerformanceLineChart {
       type: 'line-comparison'
     } );
     this.eventListeners();
+    utils.hideEl( this.$chartTitleComparison );
+    utils.showEl( this.$chartTitleNational );
     utils.hideEl( this.$loadingSpinner );
     utils.hideEl( this.$compareContainer );
   }
@@ -95,6 +98,8 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
       action = actions.updateNational( includeNational );
       break;
     default:
+      utils.hideEl( this.$chartTitleComparison );
+      utils.showEl( this.$chartTitleNational );
       action = actions.clearGeo();
   }
 
