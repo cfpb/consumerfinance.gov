@@ -56,13 +56,11 @@ def update_state_to_geo_meta(geo):
                     "fips": "46520",
                     "name": "Urban Honolulu, HI",
                     "valid": true
-                }
-            ],
-            "non_msa":
+                },
                 {
                     "fips": "15-non",
                     "valid": true,
-                    "non_msa_counties": ["15007", "15005", "15001"],
+                    "name": "Hawaii non-metro area"
                 },
             "state_fips": "15",
             "state_name": "Hawaii"
