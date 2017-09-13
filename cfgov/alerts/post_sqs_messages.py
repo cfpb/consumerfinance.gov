@@ -4,8 +4,8 @@ import argparse
 import boto3
 import logging
 
-from github_alert import GithubAlert
-from mattermost_alert import MattermostAlert
+from alerts.github_alert import GithubAlert
+from alerts.mattermost_alert import MattermostAlert
 
 logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser()
