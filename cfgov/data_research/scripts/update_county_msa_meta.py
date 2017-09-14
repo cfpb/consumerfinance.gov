@@ -150,16 +150,17 @@ def update_state_to_geo_meta(geo):
             s_dict = FIPS.state_fips[state_fips]
             state_abbr = s_dict['abbr']
             state_name = s_dict['name']
-            non_fips_name = "{} non-metro area".format(state_name)
+            non_fips_name = "Non-metro area of {}".format(state_name)
             non_valid = non_fips in FIPS.whitelist
             setup[state_abbr]['metros'].append(
                 {'fips': non_fips,
                  'valid': non_valid,
-                 'name': "{} non-metro area".format(state_name)})
+                 'name': "Non-metro area of {}".format(state_name)})
             non_msa_fips_output.append(
                 {'fips': non_fips,
                  'valid': non_valid,
                  'name': non_fips_name,
+                 'state_name': state_name,
                  'abbr': state_abbr})
     json_out = json.dumps(setup)
     # dump to s3 and save to database
