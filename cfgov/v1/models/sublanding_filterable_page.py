@@ -65,7 +65,7 @@ class ActivityLogPage(SublandingFilterablePage):
     @classmethod
     def base_query(cls, hostname):
         """
-        Activity log pages should only show content from certain categories.
+        Recent updates pages should only show content from certain categories.
         """
         eligible_pages = AbstractFilterPage.objects.live()
 
