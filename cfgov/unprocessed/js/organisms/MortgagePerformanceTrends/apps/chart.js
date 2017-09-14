@@ -248,12 +248,13 @@ MortgagePerformanceLineChart.prototype.renderNonMetros = function( prevState, st
   if ( JSON.stringify( prevState.nonMetros ) === JSON.stringify( state.nonMetros ) ) {
     return;
   }
-  state.nonMetros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+  state.nonMetros.sort( ( a, b ) => a.state_name < b.state_name ? -1 : 1 );
   var fragment = document.createDocumentFragment();
   state.nonMetros.forEach( nonMetro => {
     var option = document.createElement( 'option' );
     option.value = nonMetro.fips;
     option.text = nonMetro.name;
+    option.label = nonMetro.state_name;
     fragment.appendChild( option );
   } );
   this.$nonMetro.innerHTML = '';
