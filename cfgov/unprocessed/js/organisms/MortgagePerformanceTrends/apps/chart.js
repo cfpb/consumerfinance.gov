@@ -180,6 +180,12 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
   for ( var i = 0; i < containers.length; ++i ) {
     utils.hideEl( containers[i] );
   }
+  if ( geoType === 'state' || geoType === 'county' ) {
+    utils.hideEl( this.$container.querySelector( '#mp-line-chart-state-metro-helper-text' ) );
+  }
+  if ( geoType === 'metro' ) {
+    utils.showEl( this.$container.querySelector( '#mp-line-chart-state-metro-helper-text' ) );
+  }
   if ( geoType === 'county' || geoType === 'metro' ) {
     utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
   }
