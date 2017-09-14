@@ -160,6 +160,7 @@ def update_state_to_geo_meta(geo):
                 {'fips': non_fips,
                  'valid': non_valid,
                  'name': non_fips_name,
+                 'state_name': state_name,
                  'abbr': state_abbr})
     json_out = json.dumps(setup)
     # dump to s3 and save to database
