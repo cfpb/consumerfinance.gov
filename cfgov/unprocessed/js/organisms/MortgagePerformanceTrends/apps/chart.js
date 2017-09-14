@@ -234,6 +234,9 @@ MortgagePerformanceLineChart.prototype.renderMetros = function( prevState, state
   state.metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
   var fragment = document.createDocumentFragment();
   state.metros.forEach( metro => {
+    if ( metro.fips.indexOf( '-non' ) > -1 ) {
+      return;
+    }
     var option = document.createElement( 'option' );
     option.value = metro.fips;
     option.text = metro.name;
