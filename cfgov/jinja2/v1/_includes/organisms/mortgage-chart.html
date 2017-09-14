@@ -18,7 +18,7 @@
 <div class="o-full-width-text-group" id="mp-line-chart-container" data-chart-time-span="{{ time_frame }}">
     <div class="m-full-width-text">
         <h3>Filter by location to display trends</h3>
-        <form class="content-l" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
+        <form class="content-l u-mb45" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
             <div id="mp-chart-loading" class="mp-loading"></div>
             <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
                 <label class="a-label" for="mp-line-chart-geo"><h4>Select location type</h4></label>
@@ -41,7 +41,7 @@
                 </div>
             </fieldset>
             <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
-                <div class="m-form-field m-form-field__select mp-line-chart-select-container" id="mp-line-chart-state-container" style="display:none">
+                <div class="m-form-field m-form-field__select mp-line-chart-select-container u-mb30" id="mp-line-chart-state-container" style="display:none">
                     <label class="a-label" for="mp-line-chart-state"><h4>Select state</h4></label>
                     <div class="a-select">
                         <select id="mp-line-chart-state">
@@ -117,7 +117,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="m-form-field m-form-field__select mp-line-chart-select-container u-mt10" id="mp-line-chart-county-container" style="display:none">
+                <div class="m-form-field m-form-field__select mp-line-chart-select-container u-mb30" id="mp-line-chart-county-container" style="display:none">
                     <label class="a-label" for="mp-line-chart-county"><h4>Select county</h4></label>
                     <div class="a-select">
                         <select id="mp-line-chart-county">
@@ -126,7 +126,7 @@
                         </select>
                         <p></p>
                     </div>
-                    <p class="m-field-helper-text">
+                    <p class="m-field-helper-text u-mt15">
                       Counties with insufficient data not shown. <a href="#">Learn why.</a>
                     </p>
                 </div>
@@ -136,7 +136,7 @@
                 </div>
             </fieldset>
         </form>
-        <h3 id="mp-line-chart-title" style="margin-top:20px">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
+        <h3 id="mp-line-chart-title" class="u-mt20">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
             <span id="mp-line-chart-title-status">
                 <strong><span id="mp-line-chart-title-status-geo">national average</span></strong><span id="mp-line-chart-title-status-comparison"> versus <strong>national average</strong></span></span>, {{ from_month_formatted }}-{{ thru_month_formatted }}
         </h3>
