@@ -136,10 +136,10 @@
                 </div>
             </fieldset>
         </form>
-        <h2 id="mp-line-chart-title" style="margin-top:20px">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
+        <h3 id="mp-line-chart-title" style="margin-top:20px">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
             <span id="mp-line-chart-title-status">
                 <strong><span id="mp-line-chart-title-status-geo">national average</span></strong><span id="mp-line-chart-title-status-comparison"> versus <strong>national average</strong></span></span>, {{ from_month_formatted }}-{{ thru_month_formatted }}
-        </h2>
+        </h3>
     </div>
     <div class="cfpb-chart" data-chart-ignore="true" data-chart-color="blue" data-chart-type="line-comparison" id="mp-line-chart">
         {{ value.description }}
