@@ -10,6 +10,7 @@
 const browserSync = require( 'browser-sync' );
 const gulp = require( 'gulp' );
 const gulpConcat = require( 'gulp-concat' );
+const gulpContains = require( 'gulp-contains' );
 const gulpModernizr = require( 'gulp-modernizr' );
 const gulpRename = require( 'gulp-rename' );
 const gulpReplace = require( 'gulp-replace' );
@@ -165,6 +166,17 @@ function scriptsEs5Shim() {
     } ) );
 }
 
+/**
+ * Rudimentary check to verify that transpiled JavaScript does not contain
+ * common ES6 "const" feature, indicating transpiling didn't happen on all
+ * generated JavaScript.
+ */
+function verifyTranspiling() {
+  return gulp.src( paths.processed + '/js/**/*.js' )
+    .pipe( gulpContains( 'const ' ) );
+}
+
+
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
 gulp.task( 'scripts:ie', scriptsIE );
@@ -178,6 +190,7 @@ gulp.task( 'scripts:ondemand', [
 ] );
 gulp.task( 'scripts:nemo', scriptsNemo );
 gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
+gulp.task( 'scripts:verifyTranspiling', verifyTranspiling )
 
 gulp.task( 'scripts', [
   'scripts:polyfill',
@@ -186,5 +199,6 @@ gulp.task( 'scripts', [
   'scripts:external',
   'scripts:nemo',
   'scripts:es5-shim',
-  'scripts:spanish'
+  'scripts:spanish',
+  'scripts:verifyTranspiling'
 ] );

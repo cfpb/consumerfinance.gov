@@ -75,6 +75,7 @@
     "chai": "4.0.2",
     "chai-as-promised": "7.0.0",
     "cucumber": "2.3.1",
+    "gulp-contains": "1.1.0",
     "jasmine-reporters": "2.2.1",
     "jasmine-spec-reporter": "4.1.1",
     "jsdoc": "3.4.3",
