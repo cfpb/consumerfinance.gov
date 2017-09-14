@@ -63,7 +63,7 @@ class NewRelicAlertViolations(object):
         )
         body = (
             'New Relic {product}, {name}, {label}.'
-            '<a href="{link}">View incidents</a>'
+            'View incidents: {link}'
         ).format(
             product=violation['entity']['product'],
             type=violation['entity']['type'],
