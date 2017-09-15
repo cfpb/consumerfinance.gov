@@ -79,7 +79,7 @@ class TimeSeriesData(APIView):
             records = NonMSAMortgageData.objects.filter(
                 fips=fips)
             data = {'meta': {'fips': fips,
-                             'name': "{} non_metro area".format(
+                             'name': "Non-metro area of {}".format(
                                  records.first().state.name),
                              'fips_type': 'non_msa'},
                     'data': [record.time_series(days_late)
