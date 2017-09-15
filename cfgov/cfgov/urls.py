@@ -41,7 +41,6 @@ from v1.views.documents import DocumentServeView
 
 fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
-es_conv_flag = partial(flagged_url, 'ES_CONV_FLAG')
 
 urlpatterns = [
 
@@ -385,19 +384,19 @@ urlpatterns = [
     url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
 
-    es_conv_flag(r'^es/$', TemplateView.as_view(
+    url(r'^es/$', TemplateView.as_view(
                  template_name='/es/index.html')),
 
-    es_conv_flag(r'^es/hogar/$', TemplateView.as_view(
+    url(r'^es/hogar/$', TemplateView.as_view(
                  template_name='es/hogar/index.html')),
 
-    es_conv_flag(r'^es/nuestra-historia/$', TemplateView.as_view(
+    url(r'^es/nuestra-historia/$', TemplateView.as_view(
                  template_name='es/nuestra-historia/index.html')),
 
-    es_conv_flag(r'^es/presentar-una-queja/$', TemplateView.as_view(
+    url(r'^es/presentar-una-queja/$', TemplateView.as_view(
                  template_name='es/presentar-una-queja/index.html')),
 
-    es_conv_flag(r'^es/quienes-somos/$', TemplateView.as_view(
+    url(r'^es/quienes-somos/$', TemplateView.as_view(
                  template_name='es/quienes-somos/index.html')),
 
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),
