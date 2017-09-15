@@ -864,6 +864,9 @@ class MortgageChartBlock(blocks.StructBlock):
     description = blocks.CharBlock(
         required=False,
         help_text='Chart summary for visually impaired users.')
+    note = blocks.CharBlock(
+        required=False,
+        help_text='Note on visualization data.')
 
     class Meta:
         label = 'Mortgage Chart Block'
