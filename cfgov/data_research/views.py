@@ -79,7 +79,7 @@ class TimeSeriesData(APIView):
             records = NonMSAMortgageData.objects.filter(
                 fips=fips)
             data = {'meta': {'fips': fips,
-                             'name': "{} non_metro area".format(
+                             'name': "Non-metro area of {}".format(
                                  records.first().state.name),
                              'fips_type': 'non_msa'},
                     'data': [record.time_series(days_late)
@@ -199,7 +199,7 @@ class MapData(APIView):
                     non_data_series = record.time_series(days_late)
                     if record.state.non_msa_valid is False:
                         non_data_series['value'] = None
-                    non_name = "{} non-metro area".format(record.state.name)
+                    non_name = "Non-metro area of {}".format(record.state.name)
                     non_data_series.update({'name': non_name})
                     del non_data_series['date']
                     payload['data'].update({record.fips: non_data_series})
