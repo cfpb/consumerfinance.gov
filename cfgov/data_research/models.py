@@ -43,13 +43,6 @@ class MortgageDataConstant(models.Model):
         threshold_year = cls.objects.get(name='threshold_year').value
         return (threshold_count, threshold_year)
 
-    @classmethod
-    def get_viz_notes(cls):
-        """Returns note content that runs below charts and maps."""
-        return {obj.name: obj.string_value
-                for obj in MortgageDataConstant.objects.filter(
-                    name__in=['chart_notes', 'map_notes'])}
-
     class Meta:
         ordering = ['name']
 
@@ -335,7 +328,6 @@ class MortgagePerformancePage(BrowsePage):
         meta['pub_date'] = meta_sample['pub_date']
         meta['pub_date_formatted'] = parser.parse(
             meta['pub_date']).strftime("%B %Y")
-        meta['viz_notes'] = MortgageDataConstant.get_viz_notes()
         return meta
 
     def get_context(self, request, *args, **kwargs):
