@@ -468,6 +468,7 @@ CSP_SCRIPT_SRC = ("'self'",
                   "'unsafe-eval'",
                   '*.google-analytics.com',
                   '*.googletagmanager.com',
+                  'tagmanager.google.com',
                   'ajax.googleapis.com',
                   'search.usa.gov',
                   'api.mapbox.com',
@@ -488,7 +489,8 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'fast.fonts.net',
-    'api.mapbox.com')
+    'api.mapbox.com',
+    'tagmanager.google.com')
 
 # These specify valid image sources
 CSP_IMG_SRC = (
@@ -502,6 +504,7 @@ CSP_IMG_SRC = (
     'searchstats.usa.gov',
     'gtrk.s3.amazonaws.com',
     '*.googletagmanager.com',
+    'tagmanager.google.com',
     'api.mapbox.com',
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
