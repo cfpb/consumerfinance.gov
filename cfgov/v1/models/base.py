@@ -10,7 +10,9 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.template.response import TemplateResponse
 from django.utils import timezone
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
@@ -255,6 +257,9 @@ class CFGOVPage(Page):
         if request.method == 'POST':
             return self.serve_post(request, *args, **kwargs)
 
+        # Force the page's language on the request
+        translation.activate(self.language)
+        request.LANGUAGE_CODE = translation.get_language()
         return super(CFGOVPage, self).serve(request, *args, **kwargs)
 
     def _return_bad_post_response(self, request):
@@ -348,7 +353,10 @@ class CFGOVPage(Page):
     # Recursively search the blocks and classes for declared Media.js
     def _add_block_js(self, block, js):
         self._assign_js(block, js)
-        if issubclass(type(block), blocks.StructBlock):
+        if (
+            issubclass(type(block), blocks.StructBlock) or
+            issubclass(type(block), blocks.StreamBlock)
+        ):
             for child in block.child_blocks.values():
                 self._add_block_js(child, js)
         elif issubclass(type(block), blocks.ListBlock):
@@ -356,23 +364,20 @@ class CFGOVPage(Page):
 
     # Assign the Media js to the dictionary appropriately
     def _assign_js(self, obj, js):
-        try:
-            if hasattr(obj.Media, 'js'):
-                for key in js.keys():
-                    if obj.__module__.endswith(key):
-                        js[key] += obj.Media.js
-                if not [key for key in js.keys()
-                        if obj.__module__.endswith(key)]:
-                    js.update({'other': obj.Media.js})
-        except:
-            pass
+        if hasattr(obj, 'Media') and hasattr(obj.Media, 'js'):
+            for key in js.keys():
+                if obj.__module__.endswith(key):
+                    js[key] += obj.Media.js
+            if not [key for key in js.keys()
+                    if obj.__module__.endswith(key)]:
+                js['other'] += obj.Media.js
 
     # Returns all the JS files specific to this page and it's current
     # Streamfield's blocks
     @property
     def media(self):
         js = OrderedDict()
-        for key in ['template', 'organisms', 'molecules', 'atoms']:
+        for key in ['template', 'organisms', 'molecules', 'atoms', 'other']:
             js.update({key: []})
         self.add_page_js(js)
         self._add_streamfield_js(js)

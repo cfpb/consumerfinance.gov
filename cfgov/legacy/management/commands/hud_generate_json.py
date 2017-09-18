@@ -1,49 +1,44 @@
 from __future__ import absolute_import, unicode_literals
 
-import csv
 import logging
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 
 from legacy.housing_counselor.cleaner import clean_counselors
 from legacy.housing_counselor.fetcher import fetch_counselors
-from legacy.housing_counselor.geocoder import geocode_counselors
 from legacy.housing_counselor.generator import generate_counselor_json
+from legacy.housing_counselor.geocoder import (
+    GazetteerZipCodeFile, GeocodedZipCodeCsv, geocode_counselors
+)
 
 
 logger = logging.getLogger(__name__)
-
-
-def load_zipcodes(filename):
-    """Load zipcode location data from Census gazetteer file.
-
-    See https://www.census.gov/geo/maps-data/data/gazetteer2016.html
-
-    Returns a tuple: (zipcode, latitude_degreees, longitude_degrees)
-    """
-    logger.info('Reading zipcodes from %s', filename)
-    with open(filename, 'r') as f:
-        reader = csv.reader(f, delimiter=str('\t'))
-        next(reader)
-
-        zipcodes = dict(
-            (row[0], (float(row[5].strip()), float(row[6].strip())))
-            for row in reader
-        )
-
-    logger.info('Loaded %d zipcodes', len(zipcodes))
-    return zipcodes
 
 
 class Command(BaseCommand):
     help = 'Generate bulk housing counselor JSON data'
 
     def add_arguments(self, parser):
-        parser.add_argument('zipcode_filename')
-        parser.add_argument('target')
+        parser.add_argument('target', help='JSON output directory')
+        parser.add_argument('--zipcode-csv-file',
+                            help='CSV containing zipcode lat/lngs')
+        parser.add_argument('--zipcode-gazetteer-file',
+                            help='Census Gazetteer zipcode file')
 
     def handle(self, *args, **options):
-        zipcodes = load_zipcodes(options['zipcode_filename'])
+        zipcode_csv_file = options['zipcode_csv_file']
+        zipcode_gazetteer_file = options['zipcode_gazetteer_file']
+
+        if zipcode_csv_file:
+            zipcodes = GeocodedZipCodeCsv.read(zipcode_csv_file)
+        elif zipcode_gazetteer_file:
+            zipcodes = GazetteerZipCodeFile.read(zipcode_gazetteer_file)
+        else:
+            raise CommandError(
+                'One of --zipcode-csv-file or --zipcode-gazetteer-file '
+                'must be provided to enable mapping from zipcode to '
+                'latitude/longitude coordinates.'
+            )
 
         # Retrieve counselors from the HUD website.
         counselors = fetch_counselors()

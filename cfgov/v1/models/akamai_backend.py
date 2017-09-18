@@ -71,6 +71,7 @@ class AkamaiBackend(BaseBackend):
         )
         payload['type'] = 'cpcode'
         payload['domain'] = 'production'
+        payload['action'] = 'invalidate'
 
         resp = requests.post(
             os.environ['AKAMAI_PURGE_ALL_URL'],

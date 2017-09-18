@@ -7,6 +7,7 @@ from wagtail.wagtailadmin.edit_handlers import (
 )
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
+from wagtail.wagtailcore import blocks
 
 from data_research.blocks import ConferenceRegistrationForm
 from jobmanager.models import JobListingTable
@@ -25,6 +26,7 @@ class BrowsePage(CFGOVPage):
 
     content = StreamField([
         ('bureau_structure', organisms.BureauStructure()),
+        ('info_unit_group', organisms.InfoUnitGroup()),
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),
@@ -39,8 +41,12 @@ class BrowsePage(CFGOVPage):
         ('job_listing_table', JobListingTable()),
         ('feedback', v1_blocks.Feedback()),
         ('conference_registration_form', ConferenceRegistrationForm()),
+        ('raw_html_block', blocks.RawHTMLBlock(
+            label='Raw HTML block')),
         ('html_block', organisms.HTMLBlock()),
         ('chart_block', organisms.ChartBlock()),
+        ('mortgage_chart_block', organisms.MortgageChartBlock()),
+        ('mortgage_map_block', organisms.MortgageMapBlock()),
         ('snippet_list', organisms.SnippetList()),
         ('data_snapshot', organisms.DataSnapshot()),
     ], blank=True)

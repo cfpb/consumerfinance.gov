@@ -6,7 +6,7 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
-from wagtail.wagtailcore.blocks import StreamValue
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.models import Site
 
 from v1.models import BrowsePage, CFGOVPage, Feedback
@@ -100,7 +100,7 @@ class TestCFGOVPage(TestCase):
         Django messages framework to set a message.
         """
         page = BrowsePage(title='test', slug='test')
-        page.content = StreamValue(
+        page.content = blocks.StreamValue(
             page.content.stream_block,
             [{'type': 'feedback', 'value': 'something'}],
             True
@@ -297,3 +297,33 @@ class TestFeedbackModel(TestCase):
                      "tester@example.com",
                      "{}".format(self.test_feedback.submitted_on.date())]:
             self.assertIn(term, test_csv)
+
+
+class TestCFGOVPageMediaProperty(TestCase):
+    """Tests how the page.media property pulls in child block JS."""
+    def setUp(self):
+        self.expected_keys = (
+            'template', 'organisms', 'molecules', 'atoms', 'other',
+        )
+        self.empty_dict = {k: [] for k in self.expected_keys}
+
+    def test_empty_page_has_no_media(self):
+        return self.assertEqual(CFGOVPage().media, self.empty_dict)
+
+    def test_page_pulls_in_child_block_media(self):
+        page = CFGOVPage()
+        page.sidefoot = blocks.StreamValue(
+            page.sidefoot.stream_block,
+            [
+                {
+                    'type': 'email_signup',
+                    'value': {'heading': 'Heading'}
+                },
+            ],
+            True
+        )
+
+        self.assertEqual(
+            page.media['organisms'],
+            ['email-signup.js']
+        )

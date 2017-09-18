@@ -9,6 +9,8 @@ from django.template.defaultfilters import slugify
 from haystack.query import SearchQuerySet
 from haystack.inputs import Clean
 from wagtail.wagtailcore.models import Site
+from wagtailsharing.models import SharingSite
+from wagtailsharing.views import ServeView
 
 from ask_cfpb.models import (
     Answer,
@@ -77,13 +79,24 @@ def print_answer(request, slug, language, answer_id):
 def view_answer(request, slug, language, answer_id):
     answer_page = get_object_or_404(
         AnswerPage, language=language, answer_base__id=answer_id)
+    if answer_page.live is False:
+        raise Http404
     if answer_page.redirect_to:
         new_page = answer_page.redirect_to.answer_pages.get(language=language)
         return redirect(new_page.url)
     if "{}-{}-{}".format(slug, language, answer_id) != answer_page.slug:
         return redirect(answer_page.url)
     else:
-        return answer_page.serve(request)
+        try:
+            sharing_site = SharingSite.find_for_request(request)
+        except SharingSite.DoesNotExist:
+            return answer_page.serve(request)
+        page, args, kwargs = ServeView.get_requested_page(
+            sharing_site.site,
+            request,
+            request.path)
+        return ServeView.serve_latest_revision(
+            page, request, args, kwargs)
 
 
 def ask_search(request, language='en', as_json=False):
@@ -169,16 +182,16 @@ def redirect_ask_search(request, language='en'):
         def redirect_to_category(category, language):
             if language == 'es':
                 return redirect(
-                    '/es/obtener-respuestas/categoria-{category}'.format(
+                    '/es/obtener-respuestas/categoria-{category}/'.format(
                         category=category), permanent=True)
             return redirect(
-                '/ask-cfpb/category-{category}'.format(
+                '/ask-cfpb/category-{category}/'.format(
                     category=category), permanent=True)
 
         def redirect_to_audience(audience):
             """We currently only offer audience pages to English users"""
             return redirect(
-                '/ask-cfpb/audience-{audience}'.format(
+                '/ask-cfpb/audience-{audience}/'.format(
                     audience=audience), permanent=True)
 
         def redirect_to_tag(tag, language):

@@ -9,42 +9,61 @@
 
    Render an article when given:
 
-   settings:
+   post:                          An object with specific article information.
 
-   settings.heading:            A string with the title of the post.
-   settings.body:               A string with content of post preview/post summary.
-   settings.author:             An array with authors of the post.
-   settings.published_date:     A datetime object with published date.
+   post.specific_class.__name__:  String used to check for EventPage post type.
+   post.specific:                 An object with specific event information.
+   post.specific.start_dt:        A datetime object with the time of the event.
+   post.specific.venue_city:      A string with the event venue city.
+   post.specific.venue_state:     A string with the event venue state.
+   post.specific.venue_name:      A string with the event venue name.
+   post.specific.live_stream_url: URL for the live stream.
 
-   settings.image_url:          A string with the url of the thumbnail image.
-   settings.image_alt:          A string with the alt text of the thumbnail image.
+   post.date_published:           A date timestamp to format.
+   post.categories:               An array with the categories for the post.
+                                  Maximum length of array is 2.
+   post.preview_image:            A string with the url of the thumbnail image.
+   post.preview_title:            A string with a preview title
+                                  if post.title is not set.
+   post.title:                    A string with the title of the post.
+   post.comments_close_date:      A datetime object marking the deadline of the
+                                  comment period.
+   post.preview_subheading:       A string with the subheading of the post.
+   post.preview_description:      A string with content of post summary.
+   post.get_authors():            An array with authors of the post.
+   post.tags:                     An array with the post tags for the post.
+   post.secondary_link_url:
+   post.secondary_link_text:
 
-   settings.post_category:      An array with the categories for the post. Up to 2.
-   settings.post_tags:          An array with the post tags for the post.
+   post.event_start_dt:     A datetime object with the time of the event.
+   post.event_stream_link:  A string with livestream link
+   post.event_venue:        A string with the event venue.
+   post.event_street:       A string with the event street.
+   post.event_city:         A string with the event city.
+   post.event_state:        A string with the event state.
+   post.event_zip:          A string with the event zip.
 
-   settings.event_start_dt:     A datetime object with the time of the event.
-   settings.event_stream_link:  A string with livestream link
-   settings.event_venue:        A string with the event venue.
-   settings.event_street:       A string with the event street.
-   settings.event_city:         A string with the event city.
-   settings.event_state:        A string with the event state.
-   settings.event_zip:          A string with the event zip.
+   post.preview_link_text:  A string with the description text of an external link.
+   post.preview_link_url:   A string with the url of an external link.
 
-   settings.comments_close_date: A datetime object marking the deadline of the comment period.
-   settings.preview_link_text:   A string with the description text of an external link.
-   settings.preview_link_url:    A string with the url of an external link.
+   controls:                       An object with specific article information.
+   controls.post_date_description: A string of the post publication description.
+   controls.categories:            An array with the categories for the post.
 
-   path:                        A string with the path for the homepage of the pagetype
-                                `/about-us/blog/`, `/about-us/newsroom/`
+   form_id:                        A unique ID for a form filter URL.
+                                   Defaults to 0.
+
+   url: A string with the path for the homepage of the pagetype
+                              `/about-us/blog/`, `/about-us/newsroom/`
+
+   post_date_description:   A string of the post publication description.
 
    ========================================================================== #}
 
-{% import 'macros/category-slug.html' as category_slug %}
 {% import 'macros/time.html' as time %}
-{% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
 
 {% macro render(post, controls, form_id=0, url='', post_date_description='') %}
-    {% set date_desc = controls.post_date_description  or post_date_description or 'Published' %}
+    {% set date_desc = controls.post_date_description or post_date_description or 'Published' %}
     {% set cat_controls = controls.categories %}
     {% set show_categories = cat_controls.show_preview_categories if cat_controls is defined else true %}
     {% set page_url = url or get_protected_url(page) %}
@@ -61,20 +80,17 @@
             </span>
             {# Newsroom Blog category logic #}
             {% if show_categories %}
+                {% import 'macros/category-slug.html' as category_slug %}
                 {% if cat_controls and 'newsroom' in cat_controls.page_type and is_blog(post) %}
-                    {{ category_slug.render('blog',
-                            page_url,
-                            'm-meta-header_left',
-                            false, form_id) }}
+                    {{ category_slug.render('blog', page_url, '',
+                                            false, form_id) }}
                 {% else %}
                     {% for cat in post.categories.all() %}
                         {% if loop.index > 1 %}
                             |
                         {% endif %}
-                        {{ category_slug.render(cat.name,
-                                page_url,
-                                'm-meta-header_left',
-                                false, form_id) }}
+                        {{ category_slug.render(cat.name, page_url, '',
+                                                false, form_id) }}
                     {% endfor %}
                 {% endif %}
             {% endif %}
@@ -94,6 +110,7 @@
                              src="http://placehold.it/160x90"
                              alt="Livestream event">
                     {% else %}
+                        {% from 'macros/util/format/url.html' import location_image_url as location_image_url %}
                         <img class="o-post-preview_image"
                              src="{{ event.location_image_url() }}"
                              alt="Google Maps image of {{ event.venue_name }}">
@@ -144,30 +161,29 @@
                     {{ parse_links(post.preview_description) | safe }}
                 </div>
             {% endif %}
-            <div class="post_meta">
-                {% for author in post.get_authors() %}
-                    <span class="o-post-preview_byline">
-                        {% if loop.index == 1  %}
-                            By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
-                                {{ author.name }}
-                                </a>
-                        {% elif loop.last == true %}
-                            and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
-                                {{ author.name }}
-                                </a>
-                        {% else %}
-                            ,<a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
-                                {{ author.name }}
-                                </a>
-                        {% endif %}
-                    </span>
-                {% endfor %}
-
-                {% if post.tags.exists() %}
-                    {%- import 'tags.html' as tags %}
-                    {{ tags.render(related_metadata_tags(post), page_url, true, false, form_id, is_wagtail=True) }}
+            <div class="o-post-preview_byline-group">
+            {% for author in post.get_authors() %}
+                {% if loop.index == 1  %}
+                    By <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                       {{ author.name }}
+                       </a>
+                {% elif loop.last == true %}
+                    and <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                        {{ author.name }}
+                        </a>
+                {% else %}
+                    , <a href="{{ page_url }}?filter{{ form_id }}_authors={{ author.slug }}">
+                      {{ author.name }}
+                      </a>
                 {% endif %}
+            {% endfor %}
             </div>
+
+            {% if post.tags.exists() %}
+                {%- import 'tags.html' as tags %}
+                {{ tags.render(related_metadata_tags(post), page_url, true, false, form_id, is_wagtail=True) }}
+            {% endif %}
+
             {% if post.secondary_link_url and post.secondary_link_text %}
                 <a href="{{ post.secondary_link_url }}" class="a-link a-link__jump">
                     {{ post.secondary_link_text }}

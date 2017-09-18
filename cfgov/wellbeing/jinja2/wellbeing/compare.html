@@ -1,0 +1,596 @@
+{% extends 'layout-2-1-bleedbar.html' %}
+
+{% block title -%}
+    See how your score compares
+{%- endblock %}
+
+{% block desc -%}
+    Compare your financial well-being to people like you from across the country.
+{%- endblock %}
+
+{% block css %}
+    {{ super() }}
+    <style>
+        .histogram_toggle {
+            padding: 0;
+            border: none;
+            margin: 0;
+        }
+        .histogram_title {
+            margin-top: 30px;
+        }
+        .histogram_chart {
+            margin-top: 30px;
+            position: relative;
+        }
+        .score-box {
+            /* .histogram_chart's padding-top + height of histogram image - 2px bottom border */
+            /* TODO: Update to be responsive */
+            height: 278px;
+            border-color: #101820;
+            border-style: dotted;
+            position: absolute;
+            top: 0;
+        }
+        .score-box__avg {
+            /* position it below the user's score-box */
+            height: 248px;
+            top: 30px;
+            /* Default for all adults. Includes -1.875% adjustment to compensate
+               for space between bars. */
+            right: 48.4336%;
+        }
+        .score-box__left {
+            padding-left: 15px;
+            border-width: 0 0 0 2px;
+        }
+        .score-box__right,
+        .score-box__avg {
+            padding-right: 15px;
+            border-width: 0 2px 0 0;
+            text-align: right;
+        }
+        .score-box a {
+            border-bottom-width: 1px;
+        }
+        .histogram_bar-labels {
+            padding-top: 0.375em;
+            text-align: center;
+        }
+        .histogram_bar-labels li {
+            width: 5.46875%; /* roughly 92px / 1740px */
+            margin-right: 0.4375%; /* roughly 9px / 1740px */
+            margin-left: 0;
+            float: left;
+            font-size: 0.875em;
+        }
+        .histogram_bar-labels li:last-child {
+            margin-right: 0;
+        }
+        .histogram_x-label {
+            width: 45%;
+            margin: 5px 0;
+        }
+        .histogram_x-label.u-right {
+            text-align: right;
+        }
+        .histogram_x-label__overall {
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+        .histogram_source {
+            padding-top: 15px;
+            border-top: 1px solid #b4b5b6;
+            margin-top: 30px;
+            color: #75787b;
+            font-size: 0.75em;
+        }
+        .histogram_source dt {
+            font-size: inherit;
+            letter-spacing: normal;
+            text-transform: none;
+        }
+
+        /* CF Enhancements */
+        .u-left {
+            float: left;
+        }
+    </style>
+{% endblock %}
+
+
+{% block pre_content %}
+    <div class="content_wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+            <a class="breadcrumbs_link" id="results-link" href="../results-alt/">
+                Back to your results
+            </a>
+        </nav>
+    </div>
+{% endblock %}
+
+
+{% block content_main %}
+    <h1>See how your score compares</h1>
+
+    <p class="lead-paragraph">
+        We surveyed thousands of people in the United States
+        to get a picture of financial well-being, nationwide.
+        See how your financial well-being compares to people like you.
+    </p>
+
+    <a class="a-link a-link__jump" href="../about/">
+        <span class="a-link_text">See background on the financial well-being survey</span>
+    </a>
+
+    <div class="block">
+        <h2>Compare by age</h2>
+
+        <figure class="histogram" id="age-histogram">
+            <fieldset class="histogram_toggle">
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="age_all-adults"
+                           name="age-histogram"
+                           data-nicename="all adults"
+                           type="radio"
+                           checked>
+                    <label class="a-label" for="age_all-adults">All adults</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="age_18-30"
+                           name="age-histogram"
+                           data-nicename="ages 18–30"
+                           type="radio">
+                    <label class="a-label" for="age_18-30">18–30</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="age_31-45"
+                           name="age-histogram"
+                           data-nicename="ages 31–45"
+                           type="radio">
+                    <label class="a-label" for="age_31-45">31–45</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="age_46-61"
+                           name="age-histogram"
+                           data-nicename="ages 46–61"
+                           type="radio">
+                    <label class="a-label" for="age_46-61">46–61</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="age_62+"
+                           name="age-histogram"
+                           data-nicename="ages 62+"
+                           type="radio">
+                    <label class="a-label" for="age_62+">62+</label>
+                </div>
+            </fieldset>
+
+            <h3 class="histogram_title">
+                Distribution of scores for <span id="histogram_title_grouping__age">all adults</span>
+            </h3>
+
+            <div class="histogram_chart">
+                <div class="score-box score-box__user">
+                    Your score: <b class="score-value"></b>
+                </div>
+
+                <div class="score-box score-box__avg" id="score-box__avg__age">
+                    Average score: <b id="score-value__avg__age">54</b>
+                </div>
+
+                <img id="histogram_image__age"
+                     src="{{ static('img/histogram_all-adults_1540x560.png') }}"
+                     alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
+                          Higher scores represent a higher financial well-being.">
+
+                <ol class="histogram_bar-labels m-list m-list__unstyled">
+                    <li class="m-list_item">11–15</li>
+                    <li class="m-list_item">16–20</li>
+                    <li class="m-list_item">21–25</li>
+                    <li class="m-list_item">26–30</li>
+                    <li class="m-list_item">31–35</li>
+                    <li class="m-list_item">36–40</li>
+                    <li class="m-list_item">41–45</li>
+                    <li class="m-list_item">46–50</li>
+                    <li class="m-list_item">51–55</li>
+                    <li class="m-list_item">56–60</li>
+                    <li class="m-list_item">61–65</li>
+                    <li class="m-list_item">66–70</li>
+                    <li class="m-list_item">71–75</li>
+                    <li class="m-list_item">76–80</li>
+                    <li class="m-list_item">81–85</li>
+                    <li class="m-list_item">86–90</li>
+                    <li class="m-list_item">91–95</li>
+                </ol>
+                <figcaption class="histogram_x-label u-left" aria-hidden="true">
+                    Lower financial well-being
+                </figcaption>
+                <figcaption class="histogram_x-label u-right" aria-hidden="true">
+                    Higher financial well-being
+                </figcaption>
+                <figcaption class="histogram_x-label__overall">
+                    <b>Financial well-being score range</b>
+                </figcaption>
+            </div>
+
+            <figcaption class="histogram_source">
+                <dl>
+                    <dt>Source:</dt>
+                    <dd>
+                        <a href="#">Download CSV file</a> |
+                        <a href="TKTKTK">Financial Well-Being in America report</a>
+                    </dd>
+
+                    <dt>Date published:</dt>
+                    <dd>September 26, 2017</dd>
+                </dl>
+            </figcaption>
+        </figure>
+    </div>
+
+    <div class="block block__padded-top block__border-top">
+        <h2>Compare by sex</h2>
+
+        <figure class="histogram" id="sex-histogram">
+            <fieldset class="histogram_toggle">
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="sex_all-adults"
+                           name="sex-histogram"
+                           data-nicename="all adults"
+                           type="radio"
+                           checked>
+                    <label class="a-label" for="sex_all-adults">All adults</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="sex_men"
+                           name="sex-histogram"
+                           data-nicename="men"
+                           type="radio">
+                    <label class="a-label" for="sex_men">Men</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="sex_women"
+                           name="sex-histogram"
+                           data-nicename="women"
+                           type="radio">
+                    <label class="a-label" for="sex_women">Women</label>
+                </div>
+            </fieldset>
+
+            <h3 class="histogram_title">
+                Distribution of scores for <span id="histogram_title_grouping__sex">all adults</span>
+            </h3>
+
+            <div class="histogram_chart">
+                <div class="score-box score-box__user">
+                    Your score: <b class="score-value"></b>
+                </div>
+
+                <div class="score-box score-box__avg" id="score-box__avg__sex">
+                    Average score: <b id="score-value__avg__sex">54</b>
+                </div>
+
+                <img id="histogram_image__sex"
+                     src="{{ static('img/histogram_all-adults_1540x560.png') }}"
+                     alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
+                          Higher scores represent a higher financial well-being.">
+
+                <ol class="histogram_bar-labels m-list m-list__unstyled">
+                    <li class="m-list_item">11–15</li>
+                    <li class="m-list_item">16–20</li>
+                    <li class="m-list_item">21–25</li>
+                    <li class="m-list_item">26–30</li>
+                    <li class="m-list_item">31–35</li>
+                    <li class="m-list_item">36–40</li>
+                    <li class="m-list_item">41–45</li>
+                    <li class="m-list_item">46–50</li>
+                    <li class="m-list_item">51–55</li>
+                    <li class="m-list_item">56–60</li>
+                    <li class="m-list_item">61–65</li>
+                    <li class="m-list_item">66–70</li>
+                    <li class="m-list_item">71–75</li>
+                    <li class="m-list_item">76–80</li>
+                    <li class="m-list_item">81–85</li>
+                    <li class="m-list_item">86–90</li>
+                    <li class="m-list_item">91–95</li>
+                </ol>
+                <figcaption class="histogram_x-label u-left" aria-hidden="true">
+                    Lower financial well-being
+                </figcaption>
+                <figcaption class="histogram_x-label u-right" aria-hidden="true">
+                    Higher financial well-being
+                </figcaption>
+                <figcaption class="histogram_x-label__overall">
+                    <b>Financial well-being score range</b>
+                </figcaption>
+            </div>
+
+            <figcaption class="histogram_source">
+                <dl>
+                    <dt>Source:</dt>
+                    <dd>
+                        <a href="#">Download CSV file</a> |
+                        <a href="TKTKTK">Financial Well-Being in America report</a>
+                    </dd>
+
+                    <dt>Date published:</dt>
+                    <dd>September 26, 2017</dd>
+                </dl>
+            </figcaption>
+        </figure>
+    </div>
+
+    <div class="block block__padded-top block__border-top">
+        <h2>Compare by household income</h2>
+
+        <figure class="histogram" id="income-histogram">
+            <fieldset class="histogram_toggle">
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="income_all-adults"
+                           name="income-histogram"
+                           data-nicename="all adults"
+                           type="radio"
+                           checked>
+                    <label class="a-label" for="income_all-adults">All adults</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="income_income-level-1"
+                           name="income-histogram"
+                           data-nicename="household income $34,999 and lower"
+                           type="radio">
+                    <label class="a-label" for="income_income-level-1">$34,999 and lower</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="income_income-level-2"
+                           name="income-histogram"
+                           data-nicename="household income $35,000–$59,999"
+                           type="radio">
+                    <label class="a-label" for="income_income-level-2">$35,000–$59,999</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="income_income-level-3"
+                           name="income-histogram"
+                           data-nicename="household income $60,000–$99,999"
+                           type="radio">
+                    <label class="a-label" for="income_income-level-3">$60,000–$99,999</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="income_income-level-4"
+                           name="income-histogram"
+                           data-nicename="household income $100,000–$174,999"
+                           type="radio">
+                    <label class="a-label" for="income_income-level-4">$100,000–$174,999</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio"
+                           id="income_income-level-5"
+                           name="income-histogram"
+                           data-nicename="household income $175,000 and higher"
+                           type="radio">
+                    <label class="a-label" for="income_income-level-5">$175,000 and higher</label>
+                </div>
+            </fieldset>
+
+            <h3 class="histogram_title">
+                Distribution of scores for <span id="histogram_title_grouping__income">all adults</span>
+            </h3>
+
+            <div class="histogram_chart">
+                <div class="score-box score-box__user">
+                    Your score: <b class="score-value"></b>
+                </div>
+
+                <div class="score-box score-box__avg" id="score-box__avg__income">
+                    Average score: <b id="score-value__avg__income">54</b>
+                </div>
+
+                <img id="histogram_image__income"
+                     src="{{ static('img/histogram_all-adults_1540x560.png') }}"
+                     alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
+                          Higher scores represent a higher financial well-being.">
+
+                <ol class="histogram_bar-labels m-list m-list__unstyled">
+                    <li class="m-list_item">11–15</li>
+                    <li class="m-list_item">16–20</li>
+                    <li class="m-list_item">21–25</li>
+                    <li class="m-list_item">26–30</li>
+                    <li class="m-list_item">31–35</li>
+                    <li class="m-list_item">36–40</li>
+                    <li class="m-list_item">41–45</li>
+                    <li class="m-list_item">46–50</li>
+                    <li class="m-list_item">51–55</li>
+                    <li class="m-list_item">56–60</li>
+                    <li class="m-list_item">61–65</li>
+                    <li class="m-list_item">66–70</li>
+                    <li class="m-list_item">71–75</li>
+                    <li class="m-list_item">76–80</li>
+                    <li class="m-list_item">81–85</li>
+                    <li class="m-list_item">86–90</li>
+                    <li class="m-list_item">91–95</li>
+                </ol>
+                <figcaption class="histogram_x-label u-left" aria-hidden="true">
+                      Lower financial well-being
+                </figcaption>
+                <figcaption class="histogram_x-label u-right" aria-hidden="true">
+                      Higher financial well-being
+                </figcaption>
+                <figcaption class="histogram_x-label__overall">
+                    <b>Financial well-being score range</b>
+                </figcaption>
+            </div>
+
+            <figcaption class="histogram_source">
+                <dl>
+                    <dt>Source:</dt>
+                    <dd>
+                        <a href="#">Download CSV file</a> |
+                        <a href="TKTKTK">Financial Well-Being in America report</a>
+                    </dd>
+
+                    <dt>Date published:</dt>
+                    <dd>September 26, 2017</dd>
+                </dl>
+            </figcaption>
+        </figure>
+    </div>
+{% endblock %}
+
+
+{% block content_sidebar %}
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">Looking for more help?</h2>
+        </header>
+        <p>
+            You can further explore the tips, tools, answers, and resources
+            in our Consumer Tools section.
+            Or, visit your local library for help finding resources in your area.
+        </p>
+    </div>
+
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">For further reading and research</h2>
+        </header>
+        <p>
+            <a href="/data-research/research-reports/financial-well-being/">
+                Learn more about financial well-being
+            </a>
+            and how we came to understand its meaning.
+        </p>
+        <p>
+            <a href="/data-research/research-reports/financial-well-being-scale/">
+                View our guide to the Financial Well-Being Scale
+            </a>,
+            how it was developed, and the importance of measuring financial well-being.
+        </p>
+        <p>
+            <a href="TKTKTK">
+                Read results of the National Financial Well-Being Survey
+            </a>
+            with descriptions of how financial well-being varies among different groups.
+            This includes national survey data (without personally identifying information)
+            so that others with an interest in this topic can
+            explore financial well-being nationwide.
+        </p>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    {{ super() }}
+
+    <script>
+    /* eslint no-extra-semi: "off" */
+    'use strict';
+
+    ( function() {
+
+      if ( !location.pathname.match( '/compare' ) ) {
+        return;
+      }
+
+      var score = Number( location.search.slice( 1 ) );
+      var min = 14;
+      var max = 95;
+
+      var means = {
+        'all-adults': 54,
+        '18-30': 51,
+        '31-45': 52,
+        '46-61': 54,
+        '62+': 60,
+        'men': 54,
+        'women': 54,
+        'income-level-1': 48,
+        'income-level-2': 52,
+        'income-level-3': 56,
+        'income-level-4': 59,
+        'income-level-5': 63
+      };
+
+      function populateScores() {
+        var scoreBoxes = document.querySelectorAll( '.score-box__user' );
+        var scoreBoxLR = 'left';
+        var scoreValues = document.querySelectorAll( '.score-value' );
+        // +1.875 is a manual adjustment to compensate for space between bars
+        var scorePercentage = ( score - min ) / ( max - min ) * 100 + 1.875;
+        var resultsLink = document.querySelector( '#results-link' );
+
+        if ( scorePercentage > 50 ) {
+          scorePercentage = 100 - scorePercentage;
+          scoreBoxLR = 'right';
+        }
+
+        [].forEach.call( scoreBoxes, function( el ) {
+          if ( el.classList ) {
+            el.classList.add( 'score-box__' + scoreBoxLR );
+          } else {
+            el.className += ' score-box__' + scoreBoxLR;
+          }
+          el.setAttribute(
+            'style', scoreBoxLR + ': ' + scorePercentage.toString() + '%'
+          );
+        } );
+
+        [].forEach.call( scoreValues, function( el ) {
+          el.textContent = score;
+        } );
+
+        resultsLink.setAttribute( 'href', '../results-alt/?' + score );
+      }
+
+      var radioButtons = document.querySelectorAll( '.histogram_toggle input' );
+      [].forEach.call( radioButtons, function( el ) {
+        el.addEventListener( 'click', function( event ) {
+          var input = event.target;
+
+          if ( input.name && input.checked ) {
+            var bits = input.id.split( '_' );
+            var category = bits[0];
+            var grouping = bits[1];
+            var nicename = input.getAttribute( 'data-nicename' );
+            var image = document.querySelector( '#histogram_image__' + category );
+            var filename = '/static/img/histogram_' + grouping + '_1540x560.png';
+            var groupingText = document.querySelector(
+              '#histogram_title_grouping__' + category
+            );
+            var groupingMeanBox = document.querySelector(
+              '#score-box__avg__' + category
+            );
+            var groupingMeanValue = document.querySelector(
+              '#score-value__avg__' + category
+            );
+            // +1.875 is a manual adjustment to compensate for space between bars
+            var groupingMeanPercentage = 100 - ( ( means[grouping] - min ) /
+                                 ( max - min ) * 100 + 1.875 );
+            image.setAttribute( 'src', filename );
+            groupingText.textContent = nicename;
+            groupingMeanValue.textContent = means[grouping];
+            // average score boxes will always be right-aligned
+            groupingMeanBox.style.right = groupingMeanPercentage.toString() + '%';
+          }
+        } );
+      } );
+
+      populateScores();
+
+    } )();
+
+    </script>
+{% endblock %}

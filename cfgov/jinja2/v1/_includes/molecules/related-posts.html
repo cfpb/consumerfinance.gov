@@ -75,7 +75,6 @@
    ========================================================================== #}
 
 {% macro _related_posts_list(posts, limit) %}
-    {% import 'macros/time.html' as time %}
     {% set limit = limit | int if posts | length >= limit | int else posts | length %}
     <ul class="m-related-posts_list
                m-list
@@ -96,6 +95,7 @@
                 </p>
                 {% endif %}
                 <p class="a-date">
+                    {% import 'macros/time.html' as time %}
                     {% set date = posts[i].start_dt
                                   or posts[i].date_published
                                   or posts[i].latest_revision_created_at

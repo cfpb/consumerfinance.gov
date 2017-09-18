@@ -1,0 +1,62 @@
+[
+{
+    "fields": {
+        "updated": "2017-07-30",
+        "string_value": "",
+        "value": 2016,
+        "note": "The year used to determine count thresholds for counties and metro areas.",
+        "slug": "thresholdYear",
+        "name": "threshold_year"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 1
+},
+{
+    "fields": {
+        "updated": "2017-07-30",
+        "string_value": "",
+        "value": 1000,
+        "note": "The average number of mortgages reported per month during our threshold year.  Jurisdictions that fall below this count are not displayed in visualizations.",
+        "slug": "thresholdCount",
+        "name": "threshold_count"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 2
+},
+{
+    "fields": {
+        "updated": "2017-07-30",
+        "string_value": "",
+        "value": 2008,
+        "note": "The first year of data we want to be displayed in our visualizations. The earliest year available is 1998.",
+        "slug": "startingYear",
+        "name": "starting_year"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 3
+},
+{
+    "fields": {
+        "updated": "2017-09-06",
+        "string_value": "Map notes to come.",
+        "value": null,
+        "note": "",
+        "slug": "",
+        "name": "map_notes"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 6
+},
+{
+    "fields": {
+        "updated": "2017-09-06",
+        "string_value": "Locations with insufficient data are not provided.",
+        "value": null,
+        "note": "",
+        "slug": "",
+        "name": "chart_notes"
+    },
+    "model": "data_research.mortgagedataconstant",
+    "pk": 7
+}
+]

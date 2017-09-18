@@ -44,17 +44,34 @@
     - cfgov-organisms
 */
 .o-info-unit-group {
+    // Set correct spacing for consecutive headings in the intro per DM specs:
+    // http://cfpb.github.io/design-manual/brand-guidelines/typography.html#heading-followed-by-a-heading
+    > h2 + .rich-text > h3:first-child {
+        margin-top: unit( @grid_gutter-width / @size-iii, em );
+    }
+
+    > h2 + .rich-text > h4:first-child,
+    > h3 + .rich-text > h4:first-child {
+        margin-top: unit( @grid_gutter-width / @size-iv, em );
+    }
+
+    .content-l {
+        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+
     .content-l_col-1 + .content-l_col-1 {
         // Adds margin top to info units that follow another
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em ) !important;
     }
 
-    .respond-to-min(@bp-sm-min, {
-        .content-l_col-1-2:nth-of-type(n+3) {
-            // Adds margin top to info units that are 3rd and up in a group
-            margin-top: unit(@grid_gutter-width / @base-font-size-px, em);
+    .respond-to-min( @bp-sm-min, {
+        .content-l_col-1-2:nth-of-type( n+3 ),
+        .content-l_col-1-3:nth-of-type( n+4 ) {
+            // Adds margin-top to info units that begin a new row in their group
+            margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
         }
     } );
+
 }
 
 /* topdoc

@@ -42,7 +42,10 @@ please send an email with your full name to tech@cfpb.gov.
     <meta property="fb:app_id" content="210516218981921">
 
     {% block open_graph_image %}
-    <meta property="og:image" content="{% static 'nemo/_/img/logo.svg' %}">
+    <meta property="og:image"
+          content="{% static 'img/logo_open-graph_facebook.png' %}">
+    <meta property="twitter:image"
+          content="{% static 'img/logo_open-graph_twitter.png' %}">
     {% endblock %}
 
     {% block page_meta %}
@@ -85,8 +88,11 @@ please send an email with your full name to tech@cfpb.gov.
 
     {% block page_css %}
     {% endblock %}
+
+    {% block page_header_footer_css %}
     <link rel="stylesheet" href="{% static 'css/header.nonresponsive.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/footer.nonresponsive.css' %}"/>
+    {% endblock %}
 
     {# Google Tag Manager #}
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

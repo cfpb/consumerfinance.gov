@@ -3,10 +3,12 @@ import requests
 
 from django import forms
 from django.apps import apps
+from django.core.exceptions import ValidationError
+from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_text
-from django.utils.safestring import mark_safe
 from django.utils.functional import cached_property
+from django.utils.safestring import mark_safe
 from functools import partial
 from jinja2 import Markup
 from wagtail.contrib.table_block.blocks import TableBlock
@@ -35,14 +37,99 @@ class Well(blocks.StructBlock):
         classname = 'block__flush'
 
 
+class InfoUnitGroup(blocks.StructBlock):
+    format = blocks.ChoiceBlock(
+        choices=[
+            ('50-50', '50/50'),
+            ('33-33-33', '33/33/33'),
+            ('25-75', '25/75'),
+        ],
+        default='50-50',
+        label='Format',
+        help_text='Choose the number and width of info unit columns.',
+    )
+
+    heading = v1_blocks.HeadingBlock(required=False)
+
+    intro = blocks.RichTextBlock(
+        required=False,
+        help_text='If this field is not empty, '
+                  'the Heading field must also be set.'
+    )
+
+    link_image_and_heading = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        help_text=('Check this to link all images and headings to the URL of '
+                   'the first link in their unit\'s list, if there is a link.')
+    )
+
+    lines_between_items = blocks.BooleanBlock(
+        default=True,
+        required=False,
+        label='Show lines between 25/75 items',
+        help_text=('Check this to show horizontal rule lines between info '
+                   'units in a 25/75 layout. Does not apply to other formats.')
+    )
+
+    info_units = blocks.ListBlock(molecules.InfoUnit())
+
+    sharing = blocks.StructBlock([
+        ('shareable', blocks.BooleanBlock(label='Include sharing links?',
+                                          help_text='If checked, share links '
+                                                    'will be included below '
+                                                    'the items.',
+                                          required=False)),
+        ('share_blurb', blocks.CharBlock(help_text='Sets the tweet text, '
+                                                   'email subject line, and '
+                                                   'LinkedIn post text.',
+                                         required=False)),
+    ])
+
+    def clean(self, value):
+        cleaned = super(InfoUnitGroup, self).clean(value)
+
+        # Intro paragraph may only be specified with a heading.
+        if cleaned.get('intro') and not cleaned.get('heading'):
+            raise ValidationError(
+                'Validation error in InfoUnitGroup: intro with no heading',
+                params={'heading': ErrorList([
+                    'Required if paragraph is not empty. (If it looks empty, '
+                    'click into it and hit the delete key a bunch of times.)'
+                ])}
+            )
+
+        # If 25/75, info units must have images.
+        if cleaned.get('format') == '25-75':
+            for unit in cleaned.get('info_units'):
+                if not unit['image']['upload']:
+                    raise ValidationError(
+                        ('Validation error in InfoUnitGroup: '
+                         '25-75 with no image'),
+                        params={'format': ErrorList([
+                            'Info units must include images when using the '
+                            '25/75 format. Search for an "FPO" image if you '
+                            'need a temporary placeholder.'
+                        ])}
+                    )
+
+        return cleaned
+
+    class Meta:
+        icon = 'image'
+        template = '_includes/organisms/info-unit-group-2.html'
+
+
 class ImageText5050Group(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
+
     link_image_and_heading = blocks.BooleanBlock(
         default=False,
         required=False,
         help_text=('Check this to link all images and headings to the URL of '
                    'the first link in their unit\'s list, if there is a link.')
     )
+
     sharing = blocks.StructBlock([
         ('shareable', blocks.BooleanBlock(label='Include sharing links?',
                                           help_text='If checked, share links '
@@ -237,6 +324,9 @@ class Table(blocks.StructBlock):
         icon = None
         template = '_includes/organisms/table.html'
         label = ' '
+
+    class Media:
+        js = ['table.js']
 
 
 class BureauStructurePosition(blocks.StructBlock):
@@ -769,6 +859,35 @@ class ChartBlock(blocks.StructBlock):
         js = ['chart.js']
 
 
+class MortgageChartBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=True, classname="title")
+    description = blocks.CharBlock(
+        required=False,
+        help_text='Chart summary for visually impaired users.')
+    note = blocks.CharBlock(
+        required=False,
+        help_text='Text for "Note" section of footnotes.')
+
+    class Meta:
+        label = 'Mortgage Chart Block'
+        icon = 'image'
+        template = '_includes/organisms/mortgage-chart.html'
+
+    class Media:
+        js = ['mortgage-performance-trends.js']
+
+
+class MortgageMapBlock(MortgageChartBlock):
+
+    class Meta:
+        label = 'Mortgage Map Block'
+        icon = 'image'
+        template = '_includes/organisms/mortgage-map.html'
+
+    class Media:
+        js = ['mortgage-performance-trends.js']
+
+
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
@@ -783,6 +902,11 @@ class SnippetList(blocks.StructBlock):
         ],
         required=True
     )
+    show_thumbnails = blocks.BooleanBlock(
+        required=False,
+        help_text='If selected, each snippet in the list will include a 150px-'
+                  'wide image from the snippet\'s thumbnail field.'
+    )
     actions = blocks.ListBlock(blocks.StructBlock([
         ('link_label', blocks.CharBlock(
             help_text='E.g., "Download" or "Order free prints"'
@@ -794,7 +918,7 @@ class SnippetList(blocks.StructBlock):
                     getattr(m, 'snippet_list_field_choices', [])
                 ) for m in get_snippet_models()
             ],
-            help_text='Corresponds to the available fields for the selected'
+            help_text='Corresponds to the available fields for the selected '
                       'snippet type.'
         )),
     ]))

@@ -35,7 +35,7 @@
     <div class="question_list">
   		{% for answer in answers %}
       	<article class="question_summary">
-    		{{ partially_styled_link.render( {'plain_text': answer.question, 'underlined_text': 'Read answer', 'url': slugurl( answer.slug )} ) }}  
+    		{{ partially_styled_link.render( {'plain_text': answer.question, 'underlined_text': 'Read answer', 'url': answer.english_page.url } ) }}  
   		</article>
   		{% endfor %}
 	</div>

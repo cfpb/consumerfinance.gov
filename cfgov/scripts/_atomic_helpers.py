@@ -231,6 +231,26 @@ half_width_link_blob_group = {
     }
 }
 
+info_unit_group = {
+    "type": "info_unit_group",
+    "value": {
+        "heading": {
+            "text": "Info Unit Group",
+        },
+        "info_units": [
+            {
+                "body": "this is an info unit",
+                "links": [
+                    {
+                        "url": "/",
+                        "text": "test"
+                    }
+                ],
+            }
+        ]
+    }
+}
+
 html_block = {
     "type": "html_block",
     "value": {
@@ -257,12 +277,49 @@ email_signup = {
     }
 }
 
+email_signup_required = {
+    'type': 'email_signup',
+    'value': {
+        'heading': 'Email Sign Up',
+        'text': 'Sign up for our newsletter.',
+        'gd_code': 'TEST-GD-CODE',
+        'form_field': [
+            {
+                'btn_text': 'this is a form field with button',
+                'required': True,
+                'info': 'We will never share your email address.',
+                'label': 'Learn more',
+                'type': 'email',
+                'placeholder': 'email@domain.com',
+            }
+        ]
+    }
+}
+
 reg_comment = {
     "type": "reg_comment",
     "value": {
         'document_id': 'test document id',
         'generic_regs_link': True,
         'id': 'test id',
+    }
+}
+
+snippet_list_show_thumbnails_false = {
+    "type": "snippet_list",
+    "value": {
+        "heading": "Test Snippet List",
+        "snippet_type": "v1.models.snippets.Resource",
+        "show_thumbnails": False,
+    }
+}
+
+snippet_list_show_thumbnails_true = {
+    "type": "snippet_list",
+    "value": {
+        "heading": "Test Snippet List",
+        "snippet_type": "v1.models.snippets.Resource",
+        "show_thumbnails": True,
     }
 }
 

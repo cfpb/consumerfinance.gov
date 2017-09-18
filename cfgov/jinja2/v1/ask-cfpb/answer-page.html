@@ -1,16 +1,15 @@
 {% extends 'layout-2-1-bleedbar.html' %}
-{% import 'macros/time.html' as time %}
 {% import 'tags.html' as tags with context %}
 {% import 'form_block.html' as form_block with context %}
 {% import 'macros/util/format/datetime.html' as dt %}
 {% import 'ask/ask-search-bar.html' as ask_search_bar with context %}
 
 {% block title %}
-    {{ page.question|striptags }}
+    {{ page.question | striptags }}
 {% endblock %}
 
 {% block desc %}
-    {{ description|striptags|safe}}
+    {{ description | striptags | safe}}
 {% endblock %}
 
 {% block banner_top %}
@@ -127,7 +126,7 @@
                 <ul class="m-list m-list__unstyled m-list__links">
                     {% for subcat in subcategories %}
                         <li class="m-list_item">
-                            <a href="{{slugurl('category-' + subcat.parent.slug)}}{{subcat.slug}}" class="m-list_link">
+                            <a href="{{slugurl('category-' + subcat.parent.slug)}}{{subcat.slug}}/" class="m-list_link">
                                 {{ subcat.name }}
                             </a>
                         </li>
@@ -153,7 +152,7 @@
                 <ul class="m-list m-list__unstyled m-list__links">
                     {% for question in related_questions %}
                     <li class="m-list_item">
-                        <a href="{{ slugurl(question.slug) }}" class="m-list_link">
+                        <a href="{{ question.english_page.url }}" class="m-list_link">
                             {{ question.question | safe }}
                         </a>
                     </li>

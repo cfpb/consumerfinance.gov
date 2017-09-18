@@ -18,6 +18,7 @@ class LandingPage(CFGOVPage):
     ], blank=True)
 
     content = StreamField([
+        ('info_unit_group', organisms.InfoUnitGroup()),
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('image_text_50_50_group', organisms.ImageText5050Group()),
         ('half_width_link_blob_group', organisms.HalfWidthLinkBlobGroup()),

@@ -168,7 +168,6 @@
         <div class="wrapper">
             <div class="content_main content_main__home">
                 <h2>Latest updates</h2>
-                {% import 'macros/time.html' as time %}
                 <div class="content-l">
                     {% for sections in page.latest_updates %}
                         <section class="content-l_col
@@ -186,12 +185,8 @@
                                         {{ block.link.text }}
                                     </a>
                                     <p class="a-date">
-                                        <span class="datetime">
-                                            {% import 'macros/time.html' as time %}
-                                            <time class="datetime_date">
-                                                {{ time.render(block.date, {'date':true}) }}
-                                            </time>
-                                        </span>
+                                        {% import 'macros/time.html' as time %}
+                                        {{ time.render(block.date, {'date':true}) }}
                                     </p>
                                 </div>
                             {% endfor %}
@@ -200,7 +195,7 @@
                                 <a class="a-link
                                           a-link__jump"
                                    href="/activity-log/">
-                                    See all activities
+                                    See all updates
                                 </a>
                             </div>
                         {% endif %}

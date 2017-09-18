@@ -3,6 +3,8 @@ import os
 import sys
 
 from django.conf import global_settings
+from django.utils.translation import ugettext_lazy as _
+
 from unipath import Path
 
 from ..util import admin_emails
@@ -55,6 +57,7 @@ INSTALLED_APPS = (
     'taggit',
     'wagtailsharing',
     'flags',
+    'watchman',
     'haystack',
     'ask_cfpb',
     'overextends',
@@ -74,7 +77,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'reversion',
     'tinymce',
-    'jobmanager'
+    'jobmanager',
+    'wellbeing',
 )
 
 OPTIONAL_APPS = [
@@ -98,7 +102,7 @@ OPTIONAL_APPS = [
 
 if DEPLOY_ENVIRONMENT == 'build':
     OPTIONAL_APPS += [
-        {'import': 'eregs', 'apps': ('eregs_core',)},
+        {'import': 'eregs_core', 'apps': ('eregs_core',)},
     ]
 
 MIDDLEWARE_CLASSES = (
@@ -151,9 +155,9 @@ TEMPLATES = [
             V1_TEMPLATE_ROOT,
             V1_TEMPLATE_ROOT.child('_includes'),
             V1_TEMPLATE_ROOT.child('_layouts'),
-            PROJECT_ROOT.child('static_built')
+            PROJECT_ROOT.child('static_built'),
         ],
-        'APP_DIRS': False,
+        'APP_DIRS': True,
         'OPTIONS': {
             'environment': 'v1.environment',
             'extensions': [
@@ -173,37 +177,20 @@ ALLOW_ADMIN_URL = os.environ.get('ALLOW_ADMIN_URL', False)
 
 DATABASE_ROUTERS = ['v1.db_router.CFGOVRouter']
 
-if 'collectstatic' in sys.argv:
-    COLLECTSTATIC = True
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'v1',
-        }
-    }
-else:
-    COLLECTSTATIC = False
-    MYSQL_ENGINE = 'django.db.backends.mysql'
-
-    # Database
-    # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-    DATABASES = {
-        'default': {
-            'ENGINE': MYSQL_ENGINE,
-            'NAME': os.environ.get('MYSQL_NAME', 'v1'),
-            'USER': os.environ.get('MYSQL_USER', 'root'),
-            'PASSWORD': os.environ.get('MYSQL_PW', ''),
-            'HOST': os.environ.get('MYSQL_HOST', ''),  # empty string == localhost
-            'PORT': os.environ.get('MYSQL_PORT', ''),  # empty string == default
-        },
-    }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('es', _('Spanish')),
+)
+
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT, 'locale'),
+)
 
 TIME_ZONE = 'America/New_York'
 
@@ -426,30 +413,6 @@ BACKENDS = {
     'diffs': 'regcore.db.django_models.DMDiffs',
 }
 
-CACHES = {
-    'default' : {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_cache',
-    },
-    'eregs_longterm_cache': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_longterm_cache',
-        'TIMEOUT': 60*60*24*15,     # 15 days
-        'OPTIONS': {
-            'MAX_ENTRIES': 10000,
-        },
-    },
-    'api_cache':{
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'api_cache_memory',
-        'TIMEOUT': 3600,
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        },
-    }
-}
-
-
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
@@ -491,7 +454,10 @@ CSP_SCRIPT_SRC = ("'self'",
                   '*.youtube.com',
                   '*.ytimg.com',
                   'trk.cetrk.com',
-                  'universal.iperceptions.com')
+                  'universal.iperceptions.com',
+                  'sample.crazyegg.com',
+                  'about:'
+                  )
 
 # These specify valid sources of CSS code
 CSP_STYLE_SRC = (
@@ -514,6 +480,7 @@ CSP_IMG_SRC = (
     '*.googletagmanager.com',
     'api.mapbox.com',
     '*.tiles.mapbox.com',
+    'stats.search.usa.gov',
     'data:')
 
 # These specify what URL's we allow to appear in frames/iframes
@@ -532,6 +499,8 @@ CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
 CSP_CONNECT_SRC = ("'self'",
                    '*.tiles.mapbox.com',
                    'bam.nr-data.net',
+                   'files.consumerfinance.gov',
+                   's3.amazonaws.com',
                    'api.iperceptions.com')
 
 # Feature flags
@@ -542,7 +511,12 @@ FLAGS = {
     # Beta banner, seen on beta.consumerfinance.gov
     # When enabled, a banner appears across the top of the site proclaiming
     # "This beta site is a work in progress."
-    'BETA_NOTICE': {},
+    'BETA_NOTICE': {
+        'site': 'beta.consumerfinance.gov',
+    },
+
+    # When enabled, Display a "techical issues" banner on /complaintdatabase
+    'CCDB_TECHNICAL_ISSUES': {},
 
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
@@ -552,10 +526,9 @@ FLAGS = {
     # When enabled, the top margin of full-width text insets is increased
     'INSET_TEST': {},
 
-    # Footer link for the Office of Administrative Adjudication
-    # When enabled, a link to "Administrative Adjudication" appears in the
-    # footer
-    'OAA_FOOTER_LINK': {},
+    # When enabled, serves `/es/` pages from this
+    # repo ( excluding /obtener-respuestas/ pages ).
+    'ES_CONV_FLAG': {},
 
     # Transition of "About Us" to Wagtail
     # When enabled, the "About Us" pages are served from Wagtail
@@ -575,7 +548,9 @@ FLAGS = {
 
 
     # The next version of eRegulations
-    'EREGS20': {},
+    'EREGS20': {
+        'boolean': DEPLOY_ENVIRONMENT == 'build',
+    },
 
     # Add sortable tables to Wagtail
     # When enabled, the sortable tables option will be added to the Wagtail Admin
@@ -583,9 +558,26 @@ FLAGS = {
     # and the table will not be sortable until cf-tables from CF 4.x is implemented
     'SORTABLE_TABLES': {},
 
-    # Serve housing counselor JSON and PDFs from S3.
-    # Access e.g. /find-a-housing-counselor/?zipcode=20001&s3=True
-    'HOUSING_COUNSELOR_S3': {
-        'parameter': 's3',
-    },
+    # The release of the consumer Financial Well Being Scale app
+    'FWB_RELEASE': {},
 }
+
+
+# Watchman tokens, used to authenticate global status endpoint
+WATCHMAN_TOKENS = os.environ.get('WATCHMAN_TOKENS', os.urandom(32))
+
+# This specifies what checks Watchman should run and include in its output
+# https://github.com/mwarkentin/django-watchman#custom-checks
+WATCHMAN_CHECKS = (
+    'watchman.checks.databases',
+    'watchman.checks.storage',
+    'watchman.checks.caches',
+    'alerts.checks.check_clock_drift',
+)
+
+# Used to check server's time against in check_clock_drift
+NTP_TIME_SERVER = 'north-america.pool.ntp.org'
+
+# If server's clock drifts from NTP by more than specified offset
+# (in seconds), check_clock_drift will fail
+MAX_ALLOWED_TIME_OFFSET = 5

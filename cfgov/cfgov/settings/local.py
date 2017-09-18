@@ -1,4 +1,6 @@
 from .base import *
+from .mysql_mixin import *
+
 
 DEBUG = True
 SECRET_KEY = 'not-secret-key-for-testing'
@@ -6,42 +8,6 @@ INSTALLED_APPS += (
     'sslserver',
     'wagtail.contrib.wagtailstyleguide',
 )
-
-if not COLLECTSTATIC:
-    if os.environ.get('DATABASE_ROUTING', False):
-
-        DATABASES = {
-            'default': {
-                'ENGINE': MYSQL_ENGINE,
-                'NAME': os.environ.get('MYSQL_NAME', ''),
-                'USER': os.environ.get('MYSQL_USER', ''),
-                'PASSWORD': os.environ.get('MYSQL_PW', ''),
-                'HOST': os.environ.get('MYSQL_HOST', ''),
-                'PORT': os.environ.get('MYSQL_PORT', ''),
-                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
-            },
-            'legacy': {
-                'ENGINE': MYSQL_ENGINE,
-                'NAME': os.environ.get('LEGACY_MYSQL_NAME', ''),
-                'USER': os.environ.get('LEGACY_MYSQL_USER', ''),
-                'PASSWORD': os.environ.get('LEGACY_MYSQL_PW', ''),
-                'HOST': os.environ.get('LEGACY_MYSQL_HOST', ''),
-                'PORT': os.environ.get('LEGACY_MYSQL_PORT', ''),
-                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
-            },
-        }
-    else:
-        DATABASES = {
-            'default': {
-                'ENGINE': MYSQL_ENGINE,
-                'NAME': os.environ.get('MYSQL_NAME', ''),
-                'USER': os.environ.get('MYSQL_USER', ''),
-                'PASSWORD': os.environ.get('MYSQL_PW', ''),
-                'HOST': os.environ.get('MYSQL_HOST', ''),
-                'PORT': os.environ.get('MYSQL_PORT', ''),
-                'OPTIONS': {'init_command': os.environ.get('STORAGE_ENGINE', 'SET storage_engine=MYISAM') },
-                },
-            }
 
 STATIC_ROOT = REPOSITORY_ROOT.child('collectstatic')
 
@@ -79,4 +45,12 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
 
 
 MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
-CSP_REPORT_ONLY = True
+
+# Define caches necessary for eRegs.
+# Disable caching when working locally.
+CACHES = {
+    k: {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'TIMEOUT': 0,
+    } for k in ('default', 'eregs_longterm_cache', 'api_cache')
+}

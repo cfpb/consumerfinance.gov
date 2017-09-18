@@ -45,7 +45,7 @@ function _chooseSuite( params ) {
       windowWidthPx = WINDOW_SIZES.MOBILE.WIDTH;
       windowHeightPx = WINDOW_SIZES.MOBILE.HEIGHT;
     }
-    let windowSize = `--window-size=${windowWidthPx}x${windowHeightPx}`;
+    const windowSize = `--window-size=${ windowWidthPx }x${ windowHeightPx }`;
     capabilities[0].chromeOptions.args.push( windowSize );
   } else if ( paramsAreNotSet && _useSauceLabs() ) {
     capabilities = defaultSuites.full;

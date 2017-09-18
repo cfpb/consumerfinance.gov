@@ -30,8 +30,8 @@
                     u-mb0">
             <legend class="a-label a-label__heading">
                 {{ settings.legend }}
-                {%- if options.required -%}
-                    * <span class="u-visually-hidden">Required</span>
+                {%- if options.required == False -%}
+                    <small class="a-label_helper">(optional)</small>
                 {%- endif -%}
             </legend>
         </div>

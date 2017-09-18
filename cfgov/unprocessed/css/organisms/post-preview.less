@@ -30,7 +30,7 @@
                 <p class="o-post-preview_description">
                     Sed senectus feugiat arcu tempor, ac vulputate sem pulvinar porta hendrerit magnis, interdum habitasse taciti.
                 </p>
-                <div>
+                <div class="o-post-preview_byline-group">
                     <span class="o-post-preview_byline">
                         By <a href="/about-us/blog/?filter_author=Tom">
                             Tom
@@ -71,9 +71,9 @@
                 h3.o-post-preview_title
                 p.o-post-preview_description
             p.post_dek
-            div
-              span.o-post-preview_byline
-              div.tags
+            div.o-post-preview_byline-group
+              span
+            div.tags
   tags:
     - cfgov-organisms
 */
@@ -84,6 +84,10 @@
         margin-top: unit( @grid_gutter-width * 2 / @base-font-size-px, em);
     }
 
+    &_description {
+        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
+    }
+
     &_image-container {
         .respond-to-max(@bp-sm-max, {
             margin-bottom: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -92,12 +96,20 @@
             .grid_column(4);
         });
     }
+
     &_image {
         display: block;
         width: 100%;
     }
+
     &_title a {
         .u-link__colors( @black, @pacific-80 );
+    }
+
+    &_byline-group,
+    .tags {
+        display: block;
+        margin-bottom: unit( @grid_gutter-width / 2 / @base-font-size-px, em);
     }
 }
 

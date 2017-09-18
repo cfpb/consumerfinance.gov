@@ -1,12 +1,16 @@
+from scripts import _atomic_helpers as atomic
+
+from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 from wagtail.wagtailcore.blocks import StreamValue
+from wagtail.wagtailimages.tests.utils import get_test_image_file
 
-from scripts import _atomic_helpers as atomic
-from v1.atomic_elements.organisms import TableBlock
+from v1.atomic_elements.organisms import InfoUnitGroup, TableBlock
 from v1.models.browse_page import BrowsePage
+from v1.models.images import CFGOVImage
 from v1.models.landing_page import LandingPage
 from v1.models.learn_page import LearnPage
-from v1.models.snippets import Contact
+from v1.models.snippets import Contact, Resource
 from v1.models.sublanding_page import SublandingPage
 from v1.tests.wagtail_pages.helpers import publish_page
 
@@ -37,6 +41,16 @@ class OrganismsTestCase(TestCase):
         )
         contact.save()
         return contact
+
+    def create_resource(self):
+        thumb = CFGOVImage.objects.create(
+            title='test resource thumbnail',
+            file=get_test_image_file()
+        )
+
+        resource = Resource(title='Test Resource')
+        resource.thumbnail = thumb
+        resource.save()
 
     def test_well(self):
         """Well content correctly displays on a Landing Page"""
@@ -143,6 +157,21 @@ class OrganismsTestCase(TestCase):
         publish_page(child=landing_page)
         response = django_client.get('/landing/')
         self.assertContains(response, 'Half Width Link Blob Group')
+
+    def test_info_unit_group(self):
+        """Info Unit Group correctly displays on a Landing Page"""
+        landing_page = LandingPage(
+            title='Landing Page',
+            slug='landing',
+        )
+        landing_page.content = StreamValue(
+            landing_page.content.stream_block,
+            [atomic.info_unit_group],
+            True
+        )
+        publish_page(child=landing_page)
+        response = django_client.get('/landing/')
+        self.assertContains(response, 'Info Unit Group')
 
     # TODO: More comprehensive test for this organism
     def test_reg_comment(self):
@@ -293,3 +322,166 @@ class OrganismsTestCase(TestCase):
             'The most recent data available in each visualization is for April 2016'
         )
         self.assertContains(response, 'January 2018')
+
+    def test_snippet_list(self):
+        """ Snippet List renders thumbnails when show_thumbnails is True"""
+        browse_page = BrowsePage(
+            title='Browse Page',
+            slug='browse',
+        )
+        browse_page.content = StreamValue(
+            browse_page.content.stream_block,
+            [atomic.snippet_list_show_thumbnails_false],
+            True
+        )
+        publish_page(child=browse_page)
+
+        self.create_resource()
+
+        response = self.client.get('/browse/')
+        self.assertContains(response, 'Test Snippet List')
+        self.assertContains(response, 'Test Resource')
+
+    def test_snippet_list_show_thumbnails_false(self):
+        """ Snippet List doesn't show thumbs when show_thumbnails is False"""
+        no_thumbnails_page = BrowsePage(
+            title='No Thumbnails Page',
+            slug='no-thumbnails',
+        )
+        no_thumbnails_page.content = StreamValue(
+            no_thumbnails_page.content.stream_block,
+            [atomic.snippet_list_show_thumbnails_false],
+            True
+        )
+        publish_page(child=no_thumbnails_page)
+
+        self.create_resource()
+
+        response = self.client.get('/no-thumbnails/')
+        self.assertNotContains(response, 'o-snippet-list_list-thumbnail')
+
+    def test_snippet_list_show_thumbnails_true(self):
+        """ Snippet List shows thumbnails when show_thumbnails is True"""
+        thumbnails_page = BrowsePage(
+            title='Thumbnails Page',
+            slug='thumbnails',
+        )
+        thumbnails_page.content = StreamValue(
+            thumbnails_page.content.stream_block,
+            [atomic.snippet_list_show_thumbnails_true],
+            True
+        )
+        publish_page(child=thumbnails_page)
+
+        self.create_resource()
+
+        response = self.client.get('/thumbnails/')
+        self.assertContains(response, 'o-snippet-list_list-thumbnail')
+
+
+class TestInfoUnitGroup(TestCase):
+    def setUp(self):
+        self.image = CFGOVImage.objects.create(
+            title='test',
+            file=get_test_image_file()
+        )
+
+    def test_no_heading_or_intro_ok(self):
+        block = InfoUnitGroup()
+        value = block.to_python({})
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('no heading and no intro should not fail validation')
+
+    def test_heading_only_ok(self):
+        block = InfoUnitGroup()
+        value = block.to_python({
+            'heading': {
+                'text': 'Heading'
+            }
+        })
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('heading alone should not fail validation')
+
+    def test_intro_only_fails_validation(self):
+        block = InfoUnitGroup()
+        value = block.to_python({'intro': '<p>Only an intro</p>'})
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_heading_and_intro_ok(self):
+        block = InfoUnitGroup()
+        value = block.to_python({
+            'heading': {
+                'text': 'Heading'
+            },
+            'intro': '<p>Rich txt</p>'
+        })
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('heading with intro should not fail validation')
+
+    def test_2575_with_image_ok(self):
+        block = InfoUnitGroup()
+        value = block.to_python({
+            'format': '25-75',
+            'info_units': [
+                {
+                    'image': {
+                        'upload': self.image.pk
+                    },
+                    'links': [],  # must remove default empty link
+                }
+            ]
+        })
+
+        try:
+            block.clean(value)
+        except ValidationError:
+            self.fail('25-75 group with info unit that has an image validates')
+
+    def test_2575_with_no_images_fails_validation(self):
+        block = InfoUnitGroup()
+        value = block.to_python({
+            'format': '25-75',
+            'info_units': [
+                {
+                    'image': {},
+                    'body': '<p>Info unit with no image</p>',
+                    'links': [],  # must remove default empty link
+                }
+            ]
+        })
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
+
+    def test_2575_with_some_images_fails(self):
+        block = InfoUnitGroup()
+        value = block.to_python({
+            'format': '25-75',
+            'info_units': [
+                {
+                    'image': {
+                        'upload': self.image.pk
+                    },
+                    'links': [],  # must remove default empty link
+                },
+                {
+                    'image': {},
+                    'body': '<p>Info unit with no image</p>',
+                    'links': [],  # must remove default empty link
+                }
+            ]
+        })
+
+        with self.assertRaises(ValidationError):
+            block.clean(value)
