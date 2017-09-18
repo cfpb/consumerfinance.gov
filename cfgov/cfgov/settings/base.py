@@ -413,30 +413,6 @@ BACKENDS = {
     'diffs': 'regcore.db.django_models.DMDiffs',
 }
 
-CACHES = {
-    'default' : {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_cache',
-    },
-    'eregs_longterm_cache': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_longterm_cache',
-        'TIMEOUT': 60*60*24*15,     # 15 days
-        'OPTIONS': {
-            'MAX_ENTRIES': 10000,
-        },
-    },
-    'api_cache':{
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'api_cache_memory',
-        'TIMEOUT': 3600,
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        },
-    }
-}
-
-
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
