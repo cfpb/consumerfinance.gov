@@ -1,3 +1,4 @@
+import datetime
 import re
 
 import requests
@@ -34,7 +35,7 @@ class NewRelicAlertViolations(object):
         this method are automatically added to known_violations. """
         violations = []
         for violation in self.get_current_violations():
-            if violation['id'] in self.known_violations:
+            if str(violation['id']) in self.known_violations:
                 continue
 
             self.known_violations.append(violation['id'])
@@ -51,6 +52,9 @@ class NewRelicAlertViolations(object):
     def format_violation(self, violation):
         """ Format the given violation dictionary into an SQS message
         dictionary """
+        opened_timestamp = violation['opened_at'] / 1000.0
+        opened = datetime.datetime.fromtimestamp(opened_timestamp)
+        opened_str = opened.strftime('%a, %b %d %Y, at %I:%M %p %z')
         title = '{condition_name}, {entity_name}'.format(
             condition_name=violation['condition_name'],
             entity_name=violation['entity']['name']
@@ -62,13 +66,16 @@ class NewRelicAlertViolations(object):
             account_number=self.account_number
         )
         body = (
-            'New Relic {product}, {name}, {label}.'
+            'New Relic {product}, {name}, {label} '
+            '({opened}, violation id {id}).'
             'View incidents: {link}'
         ).format(
             product=violation['entity']['product'],
             type=violation['entity']['type'],
             label=violation['label'],
             name=violation['entity']['name'],
+            id=violation['id'],
+            opened=opened_str,
             link=incidents_link
         )
         message_body = '{title} - {body}'.format(title=title, body=body)

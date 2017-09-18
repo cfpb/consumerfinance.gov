@@ -16,7 +16,7 @@ class TestSendNewRelicMessagesToSQS(unittest.TestCase):
     def test_cache_known_violations(self):
         with mock.patch('__builtin__.open', create=True) as mock_open:
             mock_open.return_value = mock.MagicMock(spec=file)
-            cache_known_violations('/some/file.json', ['12345', '23456'])
+            cache_known_violations('/some/file.json', [12345, '23456'])
 
         file_handle = mock_open.return_value.__enter__.return_value
         file_handle.writelines.assert_called_with(['12345', '23456'])
