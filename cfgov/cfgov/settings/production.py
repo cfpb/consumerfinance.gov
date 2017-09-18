@@ -44,7 +44,7 @@ LOGGING = {
         'db': {
             'level': 'ERROR',
             'class': 'alerts.logging_handlers.CFGovErrorHandler',
-        }
+        },
         'syslog': {
             'address': syslog_device,
             'class': 'logging.handlers.SysLogHandler',
