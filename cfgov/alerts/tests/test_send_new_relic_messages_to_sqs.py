@@ -2,7 +2,6 @@ import unittest
 
 import boto3
 import mock
-from botocore.stub import Stubber
 
 from alerts.send_new_relic_messages_to_sqs import (
     cache_known_violations,

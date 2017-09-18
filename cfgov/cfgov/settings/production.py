@@ -74,3 +74,27 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+# Define caches necessary for eRegs.
+CACHES = {
+    'default' : {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/eregs_cache',
+    },
+    'eregs_longterm_cache': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp/eregs_longterm_cache',
+        'TIMEOUT': 60*60*24*15,     # 15 days
+        'OPTIONS': {
+            'MAX_ENTRIES': 10000,
+        },
+    },
+    'api_cache':{
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'api_cache_memory',
+        'TIMEOUT': 3600,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        },
+    }
+}
