@@ -180,6 +180,12 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
   for ( var i = 0; i < containers.length; ++i ) {
     utils.hideEl( containers[i] );
   }
+  if ( geoType === 'state' || geoType === 'county' ) {
+    utils.hideEl( this.$container.querySelector( '#mp-line-chart-state-metro-helper-text' ) );
+  }
+  if ( geoType === 'metro' ) {
+    utils.showEl( this.$container.querySelector( '#mp-line-chart-state-metro-helper-text' ) );
+  }
   if ( geoType === 'county' || geoType === 'metro' ) {
     utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
   }
@@ -202,7 +208,8 @@ MortgagePerformanceLineChart.prototype.renderChartTitle = function( prevState, s
   } else {
     this.$chartTitleGeo.innerText = 'national average';
   }
-  if ( includeComparison ) {
+  // Only show comparison text if a location type is selected
+  if ( geoName && includeComparison ) {
     utils.showEl( this.$chartTitleComparison );
   } else {
     utils.hideEl( this.$chartTitleComparison );
@@ -234,6 +241,10 @@ MortgagePerformanceLineChart.prototype.renderMetros = function( prevState, state
   state.metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
   var fragment = document.createDocumentFragment();
   state.metros.forEach( metro => {
+    // Remove non-metros (locations with fips ending in -non)
+    if ( metro.fips.indexOf( '-non' ) > -1 ) {
+      return;
+    }
     var option = document.createElement( 'option' );
     option.value = metro.fips;
     option.text = metro.name;
@@ -248,12 +259,13 @@ MortgagePerformanceLineChart.prototype.renderNonMetros = function( prevState, st
   if ( JSON.stringify( prevState.nonMetros ) === JSON.stringify( state.nonMetros ) ) {
     return;
   }
-  state.nonMetros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+  state.nonMetros.sort( ( a, b ) => a.state_name < b.state_name ? -1 : 1 );
   var fragment = document.createDocumentFragment();
   state.nonMetros.forEach( nonMetro => {
     var option = document.createElement( 'option' );
     option.value = nonMetro.fips;
     option.text = nonMetro.name;
+    option.label = nonMetro.state_name;
     fragment.appendChild( option );
   } );
   this.$nonMetro.innerHTML = '';

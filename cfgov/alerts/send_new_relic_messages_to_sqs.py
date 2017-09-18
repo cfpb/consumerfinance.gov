@@ -1,10 +1,10 @@
 import argparse
-import boto3
 import logging
-import re
 import sys
 
-import requests
+import boto3
+
+from alerts.newrelic_alerts import NewRelicAlertViolations
 
 logger = logging.getLogger(__name__)
 logger.addHandler(logging.StreamHandler())
@@ -39,9 +39,9 @@ parser.add_argument(
     help='New Relic account number, used to construct alert link URLs'
 )
 parser.add_argument(
-    '--newrelic_url',
-    default="https://api.newrelic.com/v2/",
-    help='URL base for the New Relic API v2'
+    '--known_violations_file',
+    required=True,
+    help='File to store known New Relic violations across invocations'
 )
 parser.add_argument(
     '--threshold',
@@ -67,52 +67,35 @@ parser.add_argument(
 )
 
 
-def get_new_violations(newrelic_token, newrelic_url, threshold, policy_filter):
-    """ Check for violations in New Relic that are newer than the
-    newness_threshold in minutes. """
-    headers = {'X-Api-Key': newrelic_token}
-    violations_url = (newrelic_url +
-                      'alerts_violations.json?only_open=true')
-    r = requests.get(violations_url, headers=headers)
-    response_json = r.json()
-
-    violations = []
-    for violation in response_json['violations']:
-        logger.debug("Found violation: {violation}".format(
-                     violation=violation))
-        # Filter on the policy name
-        policy_name = violation['policy_name']
-        if policy_filter.search(policy_name) and \
-                violation['duration'] <= threshold:
-            violations.append(violation)
-
-    return violations
+def cache_known_violations(known_violations_filename, known_violations):
+    with open(known_violations_filename, 'w') as known_violations_file:
+        known_violations_file.writelines([str(v) for v in known_violations])
 
 
-def format_message_for_violation(violation, account_number):
-    """ Format the given violation dictionary into an SQS message
-    dictionary """
-    title = '{condition_name}, {entity_name}'.format(
-        condition_name=violation['condition_name'],
-        entity_name=violation['entity']['name']
-    )
-    incidents_link = (
-        'https://alerts.newrelic.com/accounts/'
-        '{account_number}/incidents'
-    ).format(
-        account_number=account_number
-    )
-    body = (
-        'New Relic {product}, {label}.'
-        '<a href="{link}">View incidents</a>'
-    ).format(
-        product=violation['entity']['product'],
-        type=violation['entity']['type'],
-        label=violation['label'],
-        link=incidents_link
-    )
-    message_body = '{title} - {body}'.format(title=title, body=body)
-    return message_body
+def read_known_violations(known_violations_filename):
+    try:
+        with open(known_violations_filename, 'r') as known_violations_file:
+            known_violations = known_violations_file.readlines()
+    except IOError:
+        logger.warning("Known violations file does not exist")
+        known_violations = []
+    return known_violations
+
+
+def send_violations(sqs_client, queue_url, violation_messages, dryrun=False):
+    for message in violation_messages:
+        logger.info("Sending message '{}' to SQS".format(message))
+        if not dryrun:
+            response = sqs_client.send_message(
+                QueueUrl=queue_url,
+                MessageBody=message,
+            )
+            if response['ResponseMetadata']['HTTPStatusCode'] != 200:
+                logger.error("There was an error posting the message "
+                             "'{}' to SQS".format(message))
+                sys.exit(1)
+        else:
+            logger.info(message)
 
 
 if __name__ == "__main__":
@@ -128,28 +111,19 @@ if __name__ == "__main__":
     if args.verbose > 0:
         logger.setLevel(logging.DEBUG)
 
-    try:
-        policy_filter = re.compile(args.policy_filter)
-    except Exception as err:
-        logging.error("Unable to compile policy filter regular expression")
-        raise err
+    # Read cached known violations
+    known_violations = read_known_violations(args.known_violations_file)
 
-    violations = get_new_violations(args.newrelic_token,
-                                    args.newrelic_url,
-                                    args.threshold, policy_filter)
     # Send the violations to SQS as messages
-    for violation in violations:
-        message_body = format_message_for_violation(
-            violation, args.newrelic_account)
-        logger.info("Sending message '{}' to SQS".format(message_body))
-        if not args.dryrun:
-            response = client.send_message(
-                QueueUrl=args.queue_url,
-                MessageBody=message_body,
-            )
-            if response['ResponseMetadata']['HTTPStatusCode'] != 200:
-                logger.error("There was an error posting the message "
-                             "'{}' to SQS".format(message_body))
-                sys.exit(1)
-        else:
-            logger.info(message_body)
+    nralert_violations = NewRelicAlertViolations(
+        args.newrelic_token,
+        args.policy_filter,
+        args.newrelic_account,
+        known_violations=known_violations
+    )
+    messages = nralert_violations.get_new_violation_messages()
+    send_violations(client, args.queue_url, messages, dryrun=args.dryrun)
+
+    # Cache known violations
+    cache_known_violations(args.known_violations_file,
+                           nralert_violations.known_violations)

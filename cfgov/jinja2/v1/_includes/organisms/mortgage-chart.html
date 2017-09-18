@@ -18,7 +18,7 @@
 <div class="o-full-width-text-group" id="mp-line-chart-container" data-chart-time-span="{{ time_frame }}">
     <div class="m-full-width-text">
         <h3>Filter by location to display trends</h3>
-        <form class="content-l" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
+        <form class="content-l u-mb45" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
             <div id="mp-chart-loading" class="mp-loading"></div>
             <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
                 <label class="a-label" for="mp-line-chart-geo"><h4>Select location type</h4></label>
@@ -33,7 +33,7 @@
                         <input class="a-radio" id="mp-line-chart_geo-metro" name="mp-line-chart_geo" type="radio"> <label class="a-label" for="mp-line-chart_geo-metro">Metro area</label>
                     </div>
                     <div class="m-form-field m-form-field__radio u-mb10">
-                        <input class="a-radio" id="mp-line-chart_geo-non-metro" name="mp-line-chart_geo" type="radio"> <label class="a-label" for="mp-line-chart_geo-non-metro">Non-metro area</label>
+                        <input class="a-radio" id="mp-line-chart_geo-non-metro" name="mp-line-chart_geo" type="radio"> <label class="a-label" for="mp-line-chart_geo-non-metro">Non-metro area by state</label>
                     </div>
                     <div class="m-form-field m-form-field__radio u-mb10">
                         <input class="a-radio" id="mp-line-chart_geo-county" name="mp-line-chart_geo" type="radio"> <label class="a-label" for="mp-line-chart_geo-county">County</label>
@@ -41,7 +41,7 @@
                 </div>
             </fieldset>
             <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
-                <div class="m-form-field m-form-field__select mp-line-chart-select-container" id="mp-line-chart-state-container" style="display:none">
+                <div class="m-form-field m-form-field__select mp-line-chart-select-container u-mb30" id="mp-line-chart-state-container" style="display:none">
                     <label class="a-label" for="mp-line-chart-state"><h4>Select state</h4></label>
                     <div class="a-select">
                         <select id="mp-line-chart-state">
@@ -98,6 +98,9 @@
                             <option value="56" data-abbr="WY">Wyoming</option>
                         </select>
                     </div>
+                    <p class="m-field-helper-text u-mt15" id="mp-line-chart-state-metro-helper-text" style="display:none">
+                      Some metro areas cover multiple areas.</a>
+                    </p>
                 </div>
                 <div class="m-form-field m-form-field__select mp-line-chart-select-container" id="mp-line-chart-metro-container" style="display:none">
                     <label class="a-label" for="mp-line-chart-metro"><h4>Select metro area</h4></label>
@@ -107,6 +110,9 @@
                           </option>
                         </select>
                     </div>
+                    <p class="m-field-helper-text u-mt15">
+                      Metro areas with insufficient data not shown. <a href="/data-research/mortgage-performance-trends/about-data/#anchor_why-some-counties-are-unavailable">Learn why.</a>
+                    </p>
                 </div>
                 <div class="m-form-field m-form-field__select mp-line-chart-select-container" id="mp-line-chart-non-metro-container" style="display:none">
                     <label class="a-label" for="mp-line-chart-non-metro"><h4>Select non-metro area by state</h4></label>
@@ -117,17 +123,16 @@
                         </select>
                     </div>
                 </div>
-                <div class="m-form-field m-form-field__select mp-line-chart-select-container u-mt10" id="mp-line-chart-county-container" style="display:none">
+                <div class="m-form-field m-form-field__select mp-line-chart-select-container u-mb30" id="mp-line-chart-county-container" style="display:none">
                     <label class="a-label" for="mp-line-chart-county"><h4>Select county</h4></label>
                     <div class="a-select">
                         <select id="mp-line-chart-county">
                             <option value="">
                             </option>
                         </select>
-                        <p></p>
                     </div>
-                    <p class="m-field-helper-text">
-                      Counties with insufficient data not shown. <a href="#">Learn why.</a>
+                    <p class="m-field-helper-text u-mt15">
+                      Counties with insufficient data not shown. <a href="/data-research/mortgage-performance-trends/about-data/#anchor_why-some-counties-are-unavailable">Learn why.</a>
                     </p>
                 </div>
                 <div class="m-form-field m-form-field__checkbox u-mt20" id="mp-line-chart-compare-container" style="display:none">
@@ -136,9 +141,9 @@
                 </div>
             </fieldset>
         </form>
-        <h2 id="mp-line-chart-title" style="margin-top:20px">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
+        <h3 id="mp-line-chart-title" class="u-mt20">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
             <span id="mp-line-chart-title-status">
-                <strong><span id="mp-line-chart-title-status-geo">national average</span></strong><span id="mp-line-chart-title-status-comparison"> versus <strong>national average</strong></span></span>, {{ from_month_formatted }}-{{ thru_month_formatted }}
+                <strong><span id="mp-line-chart-title-status-geo">national average</span></strong><span id="mp-line-chart-title-status-comparison"> versus <strong>national average</strong></span></span>, {{ from_month_formatted|safe }}-{{ thru_month_formatted|safe }}
         </h2>
     </div>
     <div class="cfpb-chart" data-chart-ignore="true" data-chart-color="blue" data-chart-type="line-comparison" id="mp-line-chart">
@@ -148,6 +153,6 @@
     <strong>Source:</strong> National Mortgage Database<br>
     <strong>Date published:</strong> {{ pub_date_formatted }}<br>
     <strong>Downloads:</strong> CSV files with data by <a class="icon-link icon-link__download" href="{{ state_meta['url'] }}" <span class="icon-link_text">state</span></a> ({{ state_meta['size'] }}), <a class="icon-link icon-link__download" href="{{ metro_meta['url'] }}" <span class="icon-link_text">metro and non-metro areas</span></a> ({{ metro_meta['size'] }}), or <a class="icon-link icon-link__download" href="{{ county_meta['url'] }}"><span class="icon-link_text">county</span></a> ({{ county_meta['size'] }}).<br>
-    <strong>Note:</strong> {{ viz_notes['chart_notes'] }}<br>
+    <strong>Note:</strong> {{ value.note }}<br>
     </p>
 </div>

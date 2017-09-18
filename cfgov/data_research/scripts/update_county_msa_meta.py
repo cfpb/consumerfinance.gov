@@ -99,25 +99,21 @@ def update_state_to_geo_meta(geo):
     """
     non_msa_fips_output = []
     geo_dict = {
-        'county': {'label': 'counties',
+        'county': {'geo_list': 'counties',
                    'output_slug': 'state_county_meta',
-                   'fips_dict': FIPS.county_fips,
-                   'query': MortgageMetaData.objects.get_or_create(
-                       name='state_county_meta')},
-        'msa': {'label': 'metros',
+                   'fips_dict': FIPS.county_fips},
+        'msa': {'geo_list': 'metros',
                 'output_slug': 'state_msa_meta',
-                'fips_dict': FIPS.msa_fips,
-                'query': MortgageMetaData.objects.get_or_create(
-                    name='state_msa_meta')}
+                'fips_dict': FIPS.msa_fips}
     }
     g_dict = geo_dict[geo]
     fips_dict = g_dict['fips_dict']
-    label = g_dict['label']
+    geo_list = g_dict['geo_list']
     setup = {
         FIPS.state_fips[fips]['abbr']: {
-            label: [],
             'state_fips': fips,
-            'state_name': FIPS.state_fips[fips]['name']}
+            'state_name': FIPS.state_fips[fips]['name'],
+            geo_list: []}
         for fips in FIPS.state_fips
     }
     for fips in fips_dict:
@@ -131,35 +127,36 @@ def update_state_to_geo_meta(geo):
                 if state not in msa_state_list:
                     msa_state_list.append(state)
             for state_abbr in msa_state_list:
-                setup[state_abbr]['metros'].append(
+                setup[state_abbr][geo_list].append(
                     {'name': geo_name,
                      'fips': fips,
                      'valid': geo_valid})
         else:  # geo is 'county'
             this_state = FIPS.county_fips[fips]['state']
-            setup[this_state]['counties'].append(
+            setup[this_state][geo_list].append(
                 {'name': geo_name,
                  'fips': fips,
                  'valid': geo_valid})
-            for state_abbr in setup:
-                setup[state_abbr][label].sort(
-                    key=lambda entry: entry['fips'])
+        for state_abbr in setup:
+            setup[state_abbr][geo_list].sort(
+                key=lambda entry: entry['fips'])
     if geo == 'msa':
         for state_fips in FIPS.state_fips:
             non_fips = '{}-non'.format(state_fips)
             s_dict = FIPS.state_fips[state_fips]
             state_abbr = s_dict['abbr']
             state_name = s_dict['name']
-            non_fips_name = "{} non-metro area".format(state_name)
+            non_fips_name = "Non-metro area of {}".format(state_name)
             non_valid = non_fips in FIPS.whitelist
-            setup[state_abbr]['metros'].append(
+            setup[state_abbr][geo_list].append(
                 {'fips': non_fips,
                  'valid': non_valid,
-                 'name': "{} non-metro area".format(state_name)})
+                 'name': "Non-metro area of {}".format(state_name)})
             non_msa_fips_output.append(
                 {'fips': non_fips,
                  'valid': non_valid,
                  'name': non_fips_name,
+                 'state_name': state_name,
                  'abbr': state_abbr})
     json_out = json.dumps(setup)
     # dump to s3 and save to database
@@ -175,6 +172,7 @@ def update_state_to_geo_meta(geo):
     meta_obj.save()
     logger.info("Saved metadata object '{}.'".format(slug))
     if non_msa_fips_output:
+        non_msa_fips_output.sort(key=lambda k: k['state_name'])
         non_meta_obj, cr = MortgageMetaData.objects.get_or_create(
             name='non_msa_fips')
         non_meta_obj.json_value = non_msa_fips_output
