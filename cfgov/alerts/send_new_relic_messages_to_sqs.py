@@ -69,7 +69,7 @@ parser.add_argument(
 
 def cache_known_violations(known_violations_filename, known_violations):
     with open(known_violations_filename, 'w') as known_violations_file:
-        known_violations_file.writelines(known_violations)
+        known_violations_file.writelines([str(v) for v in known_violations])
 
 
 def read_known_violations(known_violations_filename):

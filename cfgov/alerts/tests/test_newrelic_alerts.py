@@ -70,7 +70,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
             'token',
             'cf.gov',
             '123456',
-            known_violations=[23456781],
+            known_violations=['23456781'],
         )
         violations = nralert_violations.get_new_violations()
         self.assertEqual(len(violations), 1)
