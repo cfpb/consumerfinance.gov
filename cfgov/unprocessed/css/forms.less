@@ -618,11 +618,11 @@
           &.focus {
               .cf-input_checkbox,
               .cf-input_radio {
-                  box-shadow: 0px 0px 0px 2px @input-border-focus;
+                  box-shadow: 0px 0px 0px 2px @input-border__focused;
                   // Older IE does not support border-radius or box-shadow it's ok to
                   // use outline here.
                   .lt-ie9 & {
-                      outline: 1px solid @input-border-focus;
+                      outline: 1px solid @input-border__focused;
                   }
               }
           }
@@ -633,7 +633,7 @@
         &:hover .cf-input_label,
         input:focus + .cf-input_label,
         input:checked + .cf-input_label     {
-            outline: 1px solid @input-border-focus;
+            outline: 1px solid @input-border__focused;
         }
 
         &.selected .cf-input_label,
