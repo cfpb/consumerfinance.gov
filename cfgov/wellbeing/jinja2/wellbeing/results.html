@@ -18,118 +18,159 @@
             text-align: right;
         }
         .spectrum {
-            padding-top: 70px;
+            padding-top: 120px;
             margin-top: 30px;
             position: relative;
         }
         .score-box {
-            height: 120px; /* .chart's padding-top + height of spectrum image */
+            height: 150px;
             border-color: #101820;
-            border-style: dotted;
+            border-style: solid;
             position: absolute;
             top: 0;
         }
         .score-box__left {
-            padding-left: 15px;
-            border-width: 0 0 0 2px;
+            padding-left: 10px;
+            border-width: 0 0 0 1px;
         }
-        .score-box__right,
-        .score-box__avg {
-            padding-right: 15px;
-            border-width: 0 2px 0 0;
+        .score-box__right {
+            padding-right: 10px;
+            border-width: 0 1px 0 0;
             text-align: right;
+        }
+        .score-box__avg {
+            height: 70px;
+            top: 80px;
         }
         .score-box a {
             border-bottom-width: 1px;
         }
-        .spectrum_label,
-        .histogram_x-label {
-            width: 45%;
-            margin: 5px 0;
+        .spectrum_x-label {
+            padding-top: 5px;
+            padding-left: 5px;
+            border-left: 1px solid #b4b5b6;
+            position: absolute;
+            font-size: 0.75em;
+            list-style: none;
         }
-        .spectrum_label.u-right,
-        .histogram_x-label.u-right {
-            text-align: right;
-        }
-        .histogram_x-label__overall {
+        .spectrum_x-label__40 { left: 32.0987654321% }
+        .spectrum_x-label__50 { left: 44.4444444444% }
+        .spectrum_x-label__60 { left: 56.7901234568% }
+        .spectrum_x-label__70 { left: 69.1358024691% }
+        .spectrum_x-label__overall {
             width: 100%;
-            clear: both;
+            margin-top: 30px;
             text-align: center;
         }
-        .histogram_toggle,
-        .histogram_select-demographic {
+        .comparison-chart_toggle {
             padding: 0;
             border: none;
             margin: 0;
         }
-        .histogram_select-demographic {
-            width: 30%;
-            margin-left: 30px;
-        }
-        .histogram_title {
+        .comparison-chart_title {
             margin-top: 30px;
         }
-        .histogram_chart {
+        .comparison-chart_list {
             margin-top: 30px;
             position: relative;
         }
-        .histogram .score-box {
-            /* .histogram_chart's padding-top + height of histogram image - 2px bottom border */
-            /* TODO: Update to be responsive */
-            height: 278px;
+        .comparison-chart_list dt,
+        .comparison-chart_source dt {
+            font-size: inherit;
+            letter-spacing: normal;
+            text-transform: none;
         }
-        .histogram .score-box__avg {
-            /* position it below the user's score-box */
-            height: 248px;
-            top: 30px;
-            /* Default for all adults. Includes -1.875% adjustment to compensate
-               for space between bars. */
-            right: 48.4336%;
+        .comparison-chart_list dt {
+            width: 30%;
+            margin-bottom: 20px;
+            text-align: right;
         }
-        .histogram_bar-labels {
-            padding-top: 0.375em;
-            text-align: center;
+        .comparison-chart_list dd {
+            display: inline-block;
+            width: 60%;
+            border-bottom: 1px solid #b4b5b6;
+            position: relative;
+            bottom: 0.25em;
         }
-        .histogram_bar-labels li {
-            width: 5.46875%; /* roughly 92px / 1740px */
-            margin-right: 0.4375%; /* roughly 9px / 1740px */
-            margin-left: 0;
-            float: left;
-            font-size: 0.875em;
+        .comparison-chart_list dd span {
+            height: 30px;
+            padding-left: 5px;
+            border-left-width: 4px;
+            border-left-style: solid;
+            margin-left: -2px;
+            position: absolute;
+            bottom: -0.5em;
+            line-height: 1;
         }
-        .histogram_bar-labels li:last-child {
-            margin-right: 0;
+        .js [class^="comparison_data-point income"],
+        .js [class^="comparison_data-point employment"] {
+            /* Hiden when JavaScript is enabled so that the toggle buttons
+               can toggle to them. */
+            display: none;
         }
-        .histogram_source {
+        .comparison-chart_source {
             padding-top: 15px;
             border-top: 1px solid #b4b5b6;
             margin-top: 30px;
             color: #75787b;
             font-size: 0.75em;
         }
-        .histogram_source dt {
-            font-size: inherit;
-            letter-spacing: normal;
-            text-transform: none;
-        }
 
         /* CF Enhancements */
         .u-left {
             float: left;
         }
-        select {
-            line-height: 22px;
+        .no-js .o-expandable_link {
+            display: none;
         }
     </style>
 {% endblock %}
 
+{% block pre_content %}
+    <div class="content_wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumbs">
+            <a class="breadcrumbs_link" id="results-link" href="../">
+                Back to the questionnaire
+            </a>
+        </nav>
+    </div>
+{% endblock %}
+
+{% set user_pct = user_score.pct if user_score else 0 %}
+{% if user_pct > 50 %}
+    {% set user_pct_spectrum = 100 - user_pct %}
+    {% set score_box_positioning = 'right' %}
+{% else %}
+    {% set user_pct_spectrum = user_pct %}
+    {% set score_box_positioning = 'left' %}
+{% endif %}
+{% set avg_pct = avg_score.pct %}
+{% set avg_pct_spectrum = avg_pct if score_box_positioning == 'left' <= 50 else 100 - avg_pct %}
+
 {% block content_main %}
     <h1>Your financial well-being score</h1>
 
+{% if user_score %}
     <p class="lead-paragraph">
-        Well done! You’ve taken a good step
+        You’ve taken a good step
         in understanding your financial picture.
     </p>
+{% else %}
+    <div class="m-notification
+                m-notification__visible
+                m-notification__warning
+                u-mb15">
+        <span class="m-notification_icon cf-icon"></span>
+        <div class="m-notification_content">
+            <div class="h4 m-notification_message">
+                We never collect or store answers to the financial well-being questionnaire.
+                If you would like to see your score and answers on the page below,
+                please start with the <a href="../">questionnaire</a> and enter your responses.
+            </div>
+        </div>
+    </div>
+{% endif %}
+
 
     <p>
         Your financial well-being score is calculated
@@ -145,23 +186,26 @@
     </p>
 
     <ul class="save-links m-list m-list__horizontal">
-        <li class="m-list_item">
-            <a href="#" class="m-list_link
-                               a-link
-                               a-link__icon
-                               cf-icon
-                               cf-icon-print
-                               cf-icon__before">
+        <li class="m-list_item u-js-only">
+            <a class="m-list_link
+                      a-link
+                      a-link__icon
+                      cf-icon
+                      cf-icon-print
+                      cf-icon__before"
+               href="javascript:window.print()">
                 <span class="a-link_text">Print</span>
             </a>
         </li>
         <li class="m-list_item">
-            <a href="#" class="m-list_link
-                               a-link
-                               a-link__icon
-                               cf-icon
-                               cf-icon-download
-                               cf-icon__before">
+            <a class="m-list_link
+                      a-link
+                      a-link__icon
+                      cf-icon
+                      cf-icon-download
+                      cf-icon__before"
+               href="../../save-as-pdf-instructions/"
+               target="_blank">
                 <span class="a-link_text">Save as PDF</span>
             </a>
         </li>
@@ -170,23 +214,34 @@
     <h2>Your result</h2>
 
     <figure class="spectrum u-clearfix">
-        <img src="{{ static('img/spectrum_1740x100.png') }}"
-             alt="Horizontal scale with a minimum value of 14 and a maximum value of 95.
-                  Higher scores represent a higher financial well-being."
-             height="50">
-        <div class="score-box score-box__user score-box__left">
-            Your score as of today: <b class="score-value"></b>
+        <img src="{{ static('img/spectrum_1540x60.png') }}"
+             alt="Chart showing that financial well-being scores below 40 are in the lowest of five ranges. Scores between 40 and 50 are in the second lowest. Scores between 50 and 60 are in the middle range. Scores between 60 and 70 are in the second highest range. Scores above 70 are in the highest range."
+             height="30">
+    {% if user_score %}
+        <div class="score-box score-box__user score-box__{{ score_box_positioning }}"
+             style="{{ score_box_positioning }}: {{ user_pct_spectrum }}%">
+            Your score: <b class="score-value">{{ user_score }}</b>
             <div>
                 <a id="compare-link" href="#compare">
-                    See how your score compares
+                    More score comparisons
                 </a>
             </div>
         </div>
-        <figcaption class="spectrum_label u-left" aria-hidden="true">
-            Lower financial well-being
+    {% endif %}
+        <div class="score-box score-box__avg score-box__{{ score_box_positioning }}"
+             style="{{ score_box_positioning }}: {{ avg_pct_spectrum }}%" id="score-box__avg">
+            U.S. average: <b id="score-value__avg">{{ avg_score }}</b>
+        </div>
+        <figcaption class="spectrum_x-labels">
+            <ol>
+                <li class="spectrum_x-label spectrum_x-label__40">40</li>
+                <li class="spectrum_x-label spectrum_x-label__50">50</li>
+                <li class="spectrum_x-label spectrum_x-label__60">60</li>
+                <li class="spectrum_x-label spectrum_x-label__70">70</li>
+            </ol>
         </figcaption>
-        <figcaption class="spectrum_label u-right" aria-hidden="true">
-            Higher financial well-being
+        <figcaption class="spectrum_x-label__overall">
+            Financial well-being score
         </figcaption>
     </figure>
 
@@ -197,7 +252,7 @@
             If you’d like to be able to answer the questions differently
             next time, see our suggestions and next steps.
         </p>
-
+    {% if user_score %}
         <div class="o-expandable">
             <button class="o-expandable_target">
                 <div class="o-expandable_header">
@@ -223,74 +278,40 @@
                             <tr>
                                 <th>Question</th>
                                 <th>Your answer</th>
-                                <th>Suggestion</th>
                             </tr>
                         </thead>
                         <tbody>
+                        {% for question in questions %}
                             <tr>
-                                <td>I could handle a major unexpected expense</td>
-                                <td>Somewhat</td>
-                                <td>Consider action</td>
+                                <td>{{ question['question'] }}</td>
+                                <td>{{ question['answers'][answers[loop.index - 1]] }}</td>
                             </tr>
-                            <tr>
-                                <td>I am securing my financial future</td>
-                                <td>Very little</td>
-                                <td>Take action</td>
-                            </tr>
-                            <tr>
-                                <td>Because of my money situation, I feel like I will never have the things I want in life</td>
-                                <td>Somewhat</td>
-                                <td>Consider action</td>
-                            </tr>
-                            <tr>
-                                <td>I can enjoy life because of the way I’m managing my money</td>
-                                <td>Somewhat</td>
-                                <td>Consider action</td>
-                            </tr>
-                            <tr>
-                                <td>I am just getting by financially</td>
-                                <td>Completely</td>
-                                <td>Take action</td>
-                            </tr>
-                            <tr>
-                                <td>I am concerned that the money I have or will save won’t last</td>
-                                <td>Not at all</td>
-                                <td>Stay on track</td>
-                            </tr>
-                            <tr>
-                                <td>Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month</td>
-                                <td>Never</td>
-                                <td>Stay on track</td>
-                            </tr>
-                            <tr>
-                                <td>I have money left over at the end of the month</td>
-                                <td>Rarely</td>
-                                <td>Take action</td>
-                            </tr>
-                            <tr>
-                                <td>I am behind with my finances</td>
-                                <td>Sometimes</td>
-                                <td>Consider action</td>
-                            </tr>
-                            <tr>
-                                <td>My finances control my life</td>
-                                <td>Always</td>
-                                <td>Take action</td>
-                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+    {% endif %}
     </div>
 
     <div class="block">
-        <h2>Consider your next steps</h2>
+        <h2>What would you like to do next?</h2>
+        <p>
+            If you have a sense of the top money challenges or goals you’d like to work on,
+            you can get started on your own.
+        </p>
 
         <div class="content-l u-mt30 u-mb30">
             <div class="content-l_col content-l_col-1-2">
-                <h3>Next steps to take control of day-to-day money management</h3>
+                <h3>Take control of day-to-day money management</h3>
                 <ul>
+                    <li>
+                        <b>Repay student loans wisely.</b>
+                        Use our tool to optimize how you
+                        <a href="/consumer-tools/student-loans/#repaying-student-loans">repay your student debt</a>,
+                        or find templates to help you communicate with debt collectors.
+                    </li>
                     <li>
                         <b>Get free or low-cost one-on-one help.</b>
                         Locate a
@@ -308,8 +329,8 @@
                     </li>
                     <li>
                         <b>Get a grip on debt.</b>
-                        Find out how to locate a <a href="TKTKTK">trustworthy debt counselor</a>,
-                        and stay on top of what you owe with our <a href="TKTKTK">debt log</a>.
+                        Stay on top of what you owe with our
+                        <a href="TKTKTK">debt log</a>.
                     </li>
                     <li>
                         <b>Track where your money goes.</b>
@@ -320,13 +341,11 @@
             </div>
 
             <div class="content-l_col content-l_col-1-2">
-                <h3>Next steps to get on track for your financial future</h3>
+                <h3>Get on track for your financial future</h3>
                 <ul>
                     <li>
                         <b>Look toward home ownership.</b>
-                        Find a
-                        <a href="https://www.consumerfinance.gov/find-a-housing-counselor/">housing counselor</a>
-                        near you, and consult our
+                        Consult our
                         <a href="/owning-a-home/">Owning a Home</a>
                         tools and resources.
                     </li>
@@ -354,154 +373,125 @@
                     <li>
                         <b>Consider the right age for claiming Social Security.</b>
                         Use our
-                        <a href="/retirement/before-you-claim/">
-                            Planning for Retirement
-                        </a>
+                        <a href="/retirement/before-you-claim/">Planning for Retirement</a>
                         tool before you make your decision.
+                    </li>
+                    <li>
+                        <b>Build or repair your credit</b>
+                        so you can reduce your cost of borrowing.
                     </li>
                 </ul>
             </div>
         </div>
 
-        <h3>Looking for more help?</h3>
+        <h3>Get personalized help</h3>
         <p>
-            You can further explore the tips, tools, answers, and resources
-            in our Consumer Tools section.
-            Or, visit your local library for help finding resources in your area.
+            If you’re looking for a more thorough financial assessment and personalized advice,
+            free and low-cost services may be available.
+            Here are a few ways to get help:
         </p>
+
+        <ul>
+            <li>
+                <b>A credit counselor</b>
+                can help you set up a reasonable repayment plan for
+                credit cards and other consumer debt.
+                See <a href="/ask-cfpb/how-do-i-choose-which-credit-counselor-is-right-for-me-en-1355/">tips for choosing a credit counselor</a>.
+            </li>
+            <li>
+                <b>A housing counselor</b>
+                can give advice if you’re having trouble paying your mortgage.
+                <a href="/find-a-housing-counselor/">Find one in your area.</a>
+            </li>
+            <li>
+                <b>A financial coach</b>
+                can assess your situation and work with you over time to resolve issues and get ahead.
+                <a href="https://www.consumerfinance.gov/f/documents/201708_cfpb_financial-coaching-delivery-sites-list.pdf"
+                   class="a-link
+                          a-link__icon
+                          cf-icon
+                          cf-icon-download
+                          cf-icon__after">
+                    <span class="a-link_text">Find a CFPB participating coach.</span>
+                </a>
+            </li>
+            <li>
+                <b>Your local library</b>
+                can often connect you with organizations and people in your area.
+            </li>
+        </ul>
     </div>
 
     <div class="block" id="compare">
         <h2>See how your score compares</h2>
 
-        <figure class="histogram" id="combo-histogram">
-            <div class="u-clearfix">
-                <fieldset class="histogram_toggle u-left">
-                    <legend>Compare by</legend>
-                    <div class="m-form-field m-form-field__radio">
-                        <input class="a-radio" id="compare-by_age" name="compare-by" type="radio" checked>
-                        <label class="a-label" for="compare-by_age">Age</label>
-                    </div>
-                    <div class="m-form-field m-form-field__radio">
-                        <input class="a-radio" id="compare-by_sex" name="compare-by" type="radio">
-                        <label class="a-label" for="compare-by_sex">Sex</label>
-                    </div>
-                    <div class="m-form-field m-form-field__radio">
-                        <input class="a-radio" id="compare-by_income" name="compare-by" type="radio">
-                        <label class="a-label" for="compare-by_income">Income</label>
-                    </div>
-                </fieldset>
-
-                <fieldset class="histogram_select-demographic u-left">
-                    <div class="m-form-field m-form-field__select">
-                        <label class="a-label">Show scores for</label>
-                        <div class="a-select">
-                            <select id="select-age" name="select-age">
-                                <option value="all-adults" data-nicename="all adults">
-                                    All ages
-                                </option>
-                                <option value="18-30" data-nicename="ages 18–30">
-                                    18–30
-                                </option>
-                                <option value="31-45" data-nicename="ages 31–45">
-                                    31–45
-                                </option>
-                                <option value="46-61" data-nicename="ages 46–61">
-                                    46–61
-                                </option>
-                                <option value="62+" data-nicename="ages 62+">
-                                    62+
-                                </option>
-                            </select>
-                            <select id="select-sex" name="select-sex" style="display: none;">
-                                <option value="all-adults" data-nicename="all adults">
-                                    All adults
-                                </option>
-                                <option value="men" data-nicename="men">
-                                    men
-                                </option>
-                                <option value="women" data-nicename="women">
-                                    women
-                                </option>
-                            </select>
-                            <select id="select-income" name="select-income" style="display: none;">
-                                <option value="all-adults" data-nicename="all adults">
-                                    All income levels
-                                </option>
-                                <option value="income-level-1"
-                                        data-nicename="household income $34,999 and lower">
-                                    $34,999 and lower
-                                </option>
-                                <option value="income-level-2"
-                                        data-nicename="household income $35,000–$59,999">
-                                    $35,000–$59,999
-                                </option>
-                                <option value="income-level-3"
-                                        data-nicename="household income $60,000–$99,999">
-                                    $60,000–$99,999
-                                </option>
-                                <option value="income-level-4"
-                                        data-nicename="household income $100,000–$174,999">
-                                    $100,000–$174,999
-                                </option>
-                                <option value="income-level-5"
-                                        data-nicename="household income $175,000 and higher">
-                                    $175,000 and higher
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-
-            <h3 class="histogram_title">
-                Distribution of scores for <span id="histogram_title_grouping">all adults</span>
-            </h3>
-
-            <div class="histogram_chart">
-                <div class="score-box score-box__user">
-                    Your score: <b class="score-value"></b>
+    {% if not user_score %}
+        <div class="m-notification
+                    m-notification__visible
+                    m-notification__warning
+                    u-mb15">
+            <span class="m-notification_icon cf-icon"></span>
+            <div class="m-notification_content">
+                <div class="h4 m-notification_message">
+                    We never collect or store answers to the financial well-being questionnaire.
+                    If you would like to see your score and answers on the page below,
+                    please start with the <a href="../">questionnaire</a> and enter your responses.
                 </div>
-
-                <div class="score-box score-box__avg" id="score-box__avg">
-                    Average score: <b id="score-value__avg">54</b>
-                </div>
-
-                <img id="histogram_image"
-                     src="{{ static('img/histogram_all-adults_1540x560.png') }}"
-                     alt="TKTKTK">
-
-                <ol class="histogram_bar-labels m-list m-list__unstyled">
-                    <li class="m-list_item">11–15</li>
-                    <li class="m-list_item">16–20</li>
-                    <li class="m-list_item">21–25</li>
-                    <li class="m-list_item">26–30</li>
-                    <li class="m-list_item">31–35</li>
-                    <li class="m-list_item">36–40</li>
-                    <li class="m-list_item">41–45</li>
-                    <li class="m-list_item">46–50</li>
-                    <li class="m-list_item">51–55</li>
-                    <li class="m-list_item">56–60</li>
-                    <li class="m-list_item">61–65</li>
-                    <li class="m-list_item">66–70</li>
-                    <li class="m-list_item">71–75</li>
-                    <li class="m-list_item">76–80</li>
-                    <li class="m-list_item">81–85</li>
-                    <li class="m-list_item">86–90</li>
-                    <li class="m-list_item">91–95</li>
-                </ol>
-                <figcaption class="histogram_x-label u-left" aria-hidden="true">
-                    Lower financial well-being
-                </figcaption>
-                <figcaption class="histogram_x-label u-right" aria-hidden="true">
-                    Higher financial well-being
-                </figcaption>
-                <figcaption class="histogram_x-label__overall">
-                    <b>Financial well-being score range</b>
-                </figcaption>
             </div>
+        </div>
+    {% endif %}
 
-            <figcaption class="histogram_source">
+        <figure class="comparison-chart" id="comparison-chart">
+            <fieldset class="comparison-chart_toggle u-js-only">
+                <legend>Compare by</legend>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="compare-by_age" name="compare-by" type="radio" checked>
+                    <label class="a-label" for="compare-by_age">Age</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="compare-by_income" name="compare-by" type="radio">
+                    <label class="a-label" for="compare-by_income">Household income</label>
+                </div>
+                <div class="m-form-field m-form-field__radio">
+                    <input class="a-radio" id="compare-by_employment" name="compare-by" type="radio">
+                    <label class="a-label" for="compare-by_employment">Employment status</label>
+                </div>
+            </fieldset>
+
+            <!-- <h3 class="comparison-chart_title">
+                Distribution of scores for <span id="comparison-chart_title_grouping">all adults</span>
+            </h3> -->
+
+            <dl class="comparison-chart_list">
+            {% if user_score %}
+                <dt><b>Your score</b></dt>
+                <dd>
+                    <span style="left: {{ user_score.pct }}%; border-color: {{ user_score.color }};">
+                        {{ user_score }}
+                    </span>
+                </dd>
+            {% endif %}
+
+                <dt>U.S. average</dt>
+                <dd>
+                    <span style="left: {{ avg_score.pct }}%; border-color: {{ avg_score.color }};">
+                        {{ avg_score }}
+                    </span>
+                </dd>
+
+        {% for slug, means in group_means.items() %}
+            {% for group_name, group_data in means.items() %}
+                <dt class="comparison_data-point {{ slug }}_group">{{ group_name }}</dt>
+                <dd class="comparison_data-point {{ slug }}_mean">
+                    <span style="left: {{ group_data.pct }}%; border-color: {{ group_data.color }};">
+                        {{ group_data }}
+                    </span>
+                </dd>
+            {% endfor %}
+        {% endfor %}
+            </dl>
+
+            <figcaption class="comparison-chart_source">
                 <dl>
                     <dt>Source:</dt>
                     <dd>
@@ -524,9 +514,22 @@
         </header>
         <p>
             You can further explore the tips, tools, answers, and resources
-            in our Consumer Tools section.
-            Or, visit your local library for help finding resources in your area.
+            in our Consumer Tools section, including:
         </p>
+        <ul>
+            <li>
+                <a href="/consumer-tools/debt-collection/">Debt collection</a>
+            </li>
+            <li>
+                <a href="/consumer-tools/student-loans/">Student loans</a>
+            </li>
+            <li>
+                <a href="/consumer-tools/credit-reports-and-scores/">Credit report and scores</a>
+            </li>
+            <li>
+                <a href="/ask-cfpb/category-credit-cards/">Credit cards</a>
+            </li>
+        </ul>
     </div>
 {% endblock %}
 
@@ -543,91 +546,18 @@
         return;
       }
 
-      var score = Number( location.search.slice( 1 ) );
-      var min = 14;
-      var max = 95;
+      var radioButtons = document.querySelectorAll( '.comparison-chart_toggle input' );
 
-      var means = {
-        'all-adults': 54,
-        '18-30': 51,
-        '31-45': 52,
-        '46-61': 54,
-        '62+': 60,
-        'men': 54,
-        'women': 54,
-        'income-level-1': 48,
-        'income-level-2': 52,
-        'income-level-3': 56,
-        'income-level-4': 59,
-        'income-level-5': 63
-      };
-
-      function populateScores() {
-        var scoreBoxes = document.querySelectorAll( '.score-box__user' );
-        var scoreBoxLR = 'left';
-        var scoreValues = document.querySelectorAll( '.score-value' );
-        // +1.875 is a manual adjustment to compensate for space between bars
-        var scorePercentage = ( score - min ) / ( max - min ) * 100 + 1.875;
-
-        if ( scorePercentage > 50 ) {
-          scorePercentage = 100 - scorePercentage;
-          scoreBoxLR = 'right';
-        }
-
-        [].forEach.call( scoreBoxes, function( el ) {
-          if ( el.classList ) {
-            el.classList.add( 'score-box__' + scoreBoxLR );
-          } else {
-            el.className += ' score-box__' + scoreBoxLR;
-          }
-          el.setAttribute( 'style',
-                           scoreBoxLR + ': ' + scorePercentage.toString() + '%' );
-        } );
-
-        [].forEach.call( scoreValues, function( el ) {
-          el.textContent = score;
-        } );
-      }
-
-      var radioButtons = document.querySelectorAll( '.histogram_toggle input' );
-      var selectBoxes = document.querySelectorAll(
-        '.histogram_select-demographic select'
-      );
-
-      function switchDemographicSelector( category ) {
-        [].forEach.call( selectBoxes, function( el ) {
+      function switchComparisons( category ) {
+        var allCategories = document.querySelectorAll( '.comparison_data-point' );
+        [].forEach.call( allCategories, function( el ) {
           el.style.display = 'none';
         } );
 
-        var demographicSelector = document.querySelector( '#select-' + category );
-        demographicSelector.style.display = 'inline-block';
-      }
-
-      function switchHistogram( select ) {
-        if ( select.name ) {
-          // var category = select.id.split( '-' )[1];
-          var grouping = select.value;
-          var nicename = select.options[select.selectedIndex].dataset.nicename;
-          var image = document.querySelector( '#histogram_image' );
-          var filename = '/static/img/histogram_' + grouping + '_1540x560.png';
-          var groupingText = document.querySelector(
-            '#histogram_title_grouping'
-          );
-          var groupingMeanBox = document.querySelector(
-            '#score-box__avg'
-          );
-          var groupingMeanValue = document.querySelector(
-            '#score-value__avg'
-          );
-          // +1.875 is a manual adjustment to compensate for space between bars
-          var groupingMeanPercentage = 100 - ( ( means[grouping] - min ) /
-                                       ( max - min ) * 100 + 1.875 );
-          image.setAttribute( 'src', filename );
-          groupingText.textContent = nicename;
-          groupingMeanValue.textContent = means[grouping];
-          // average score boxes will always be right-aligned
-          groupingMeanBox.style.right = groupingMeanPercentage.toString() + '%';
-        }
+        var showCategory = document.querySelectorAll( '[class^="comparison_data-point ' + category + '"]' );
+        [].forEach.call( showCategory, function( el ) {
+          el.style.display = 'inline-block';
+        } );
       }
 
       [].forEach.call( radioButtons, function( el ) {
@@ -636,21 +566,10 @@
 
           if ( input.name && input.checked ) {
             var category = input.id.split( '_' )[1];
-            var select = document.querySelector( '#select-' + category );
-            switchDemographicSelector( category );
-            switchHistogram( select );
+            switchComparisons( category );
           }
         } );
       } );
-
-      [].forEach.call( selectBoxes, function( el ) {
-        el.addEventListener( 'change', function( event ) {
-          var select = event.target;
-          switchHistogram( select );
-        } );
-      } );
-
-      populateScores();
 
     } )();
 
