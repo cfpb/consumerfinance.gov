@@ -268,7 +268,7 @@ urlpatterns = [
         'hud_api_replace',
         'hud_api_replace.urls',
         namespace='hud_api_replace')),
-    url(r'^retirement/',
+    url(r'^consumer-tools/retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
     url(r'^data-research/consumer-complaints/',
@@ -346,6 +346,11 @@ urlpatterns = [
             RedirectView.as_view(
                 url='/consumer-tools/money-as-you-grow/%(path)s',
                 permanent=True)),
+
+    # retirement redirects
+    url(r'^retirement/(?P<path>.*)$', RedirectView.as_view(
+            url='/consumer-tools/retirement/%(path)s',
+            permanent=True)),
 
     # ask-cfpb
     url(r'^askcfpb/$',
