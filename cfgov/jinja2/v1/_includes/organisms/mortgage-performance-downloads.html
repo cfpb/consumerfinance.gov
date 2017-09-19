@@ -82,8 +82,7 @@
 {% set archive_90 = download_files[date]['percent_90'] %}
 <div class="o-full-width-text-group">
     <div class="m-full-width-text">
-        <h4> Data through {{ download_files[date]['thru_month'] }},  published in {{ download_files[date]['pub_date'] }}
-
+        <h5> Download mortgage performance data through {{ download_files[date]['thru_month'] }}</h5>
     </div>
 </div>
 <div class="block block__flush-top">
@@ -133,6 +132,7 @@
         </tr>
     </tbody>
 </table>
+<p class="m-chart-footnote">Date published: {{ download_files[date]['pub_date'] }}
 </div>
 {% endfor %}
 {% endif %}
