@@ -42,27 +42,31 @@ logger = logging.getLogger(__name__)
 
 def save_metadata(csv_size, slug, thru_month, days_late, geo_type):
     """Save slug, URL, thru_month and file size of a new CSV download file."""
-    pub_date = "{}".format(datetime.date.today())
+    pub_date = datetime.date.today().strftime("%B %Y")
+    thru_month_formatted = parser.parse(thru_month).strftime("%B %Y")
     csv_url = "{}/{}.csv".format(S3_MORTGAGE_DOWNLOADS_BASE, slug)
     download_meta_file, cr = MortgageMetaData.objects.get_or_create(
         name='download_files')
-    new_posting = {geo_type:
-                   {'slug': slug,
-                    'url': csv_url,
-                    'size': csv_size,
-                    'thru_month': thru_month,
-                    'pub_date': pub_date}}
+    new_posting = {geo_type: {'slug': slug,
+                              'url': csv_url,
+                              'size': csv_size}}
     if not download_meta_file.json_value:
-        download_meta_file.json_value = {thru_month: {days_late: new_posting}}
+        download_meta_file.json_value = {
+            thru_month: {days_late: new_posting,
+                         'thru_month': thru_month_formatted,
+                         'pub_date': pub_date}}
     else:
         current = download_meta_file.json_value
-        if thru_month in current:
-            if days_late in current[thru_month]:
+        if thru_month in current.keys():
+            if days_late in current[thru_month].keys():
                 current[thru_month][days_late].update(new_posting)
             else:
-                current[thru_month].update({days_late: new_posting})
+                current[thru_month][days_late] = new_posting
         else:
-            current.update({thru_month: {days_late: new_posting}})
+            current.update(
+                {thru_month: {days_late: new_posting,
+                              'thru_month': thru_month_formatted,
+                              'pub_date': pub_date}})
         download_meta_file.json_value = current
     download_meta_file.save()
     logger.info("Saved metadata for {}".format(slug))

@@ -24,21 +24,54 @@
         .highcharts-point:hover {
             stroke: @black !important;
             stroke-width: 2px !important;
-            transition: stroke-width 200ms !important;
+            transition: fill 500ms, fill-opacity 500ms, stroke-width 0 !important;
         }
         .highcharts-point {
-            stroke: #838588;
+            stroke: @black;
+            &.highcharts-null-point {
+              stroke-width: 0 !important;
+            }
         }
     }
-
-    .highcharts-color-0 {
-        stroke: #838588;
+    .cfpb-chart-geo- {
+        &state-outline-states,
+        &state-outline-metros,
+        &state-outline-counties,
+        &map-separators {
+            .highcharts-point {
+                stroke: @black;
+            }
+        }
+        &data-outline-counties,
+        &data-outline-metros {
+            .highcharts-point {
+                stroke: #838588;
+            }
+        }
     }
-
     .highcharts-tooltip-box {
         fill: @white;
+        fill-opacity: 1;
+        stroke: @black;
     }
 
+}
+
+.m-mp-map-tooltip {
+    .u-webfont-regular();
+    dt {
+        border-bottom: 1px solid @black;
+        font-size: @size-vi;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+        width: 100%;
+        text-transform: none;
+    }
+    dd {
+        display: block;
+        font-size: @size-vi;
+        padding: 2px 0;
+    }
 }
 
 .m-color-ramp {
@@ -48,7 +81,7 @@
     &[data-chart-color='blue'] {
 
         .a-ramp-value {
-            &-0 { fill: @gray-10; }
+            &-0 { fill: @gray-5; }
             &-1 { fill: @pacific-20; }
             &-2 { fill: @pacific-40; }
             &-3 { fill: @pacific-60; }
@@ -62,7 +95,7 @@
     &[data-chart-color='navy'] {
 
         .a-ramp-value {
-            &-0 { fill: @gray-10; }
+            &-0 { fill: @gray-5; }
             &-1 { fill: @navy-20; }
             &-2 { fill: @navy-40; }
             &-3 { fill: @navy-60; }
@@ -74,7 +107,7 @@
     }
 
     rect {
-        font-size: @size-vi;
+        font-size: unit( 12px / @base-font-size-px, em );;
         height: 15px;
         stroke: #838588;
         stroke-miterlimit: 10;
@@ -83,36 +116,42 @@
     }
 
     text {
-        font-size: @size-vi;
+        font-size: unit( 12px / @base-font-size-px, em );;
         text-anchor: start;
     }
 
     .respond-to-max( @bp-sm-max, {
         text {
-            font-size: @size-v;
+            font-size: unit( 14px / @base-font-size-px, em );;
         }
         tspan {
-            font-size: @size-v;
+            font-size: unit( 14px / @base-font-size-px, em );;
         }
     } );
 
 }
 
-#mp-chart-container,
+#mp-line-chart-container,
 #mp-map-container {
-
     .a-label h4 {
-        .u-mb10();
+        .u-mb15();
     }
 
     // Fieldsets have silly default values. We should remove them at the CF level
     // but for now I'm removing them only within our app.
     fieldset {
-        padding-left: 0;
-        margin-left: 0;
         border: 0;
+        margin-left: 0;
+        padding-left: 0;
     }
     .content-l_col {
         border-left-width: 0;
+    }
+
+    // Helper text under some filter or zoom options
+    .m-field-helper-text {
+        color: @gray-80;
+        @font-size: 12px;
+        font-size: unit(@font-size / @base-font-size-px, em);
     }
 }

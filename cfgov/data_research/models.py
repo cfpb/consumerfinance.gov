@@ -43,13 +43,6 @@ class MortgageDataConstant(models.Model):
         threshold_year = cls.objects.get(name='threshold_year').value
         return (threshold_count, threshold_year)
 
-    @classmethod
-    def get_viz_notes(cls):
-        """Returns note content that runs below charts and maps."""
-        return {obj.name: obj.string_value
-                for obj in MortgageDataConstant.objects.filter(
-                    name__in=['chart_notes', 'map_notes'])}
-
     class Meta:
         ordering = ['name']
 
@@ -328,14 +321,12 @@ class MortgagePerformancePage(BrowsePage):
         thru_date = parser.parse(meta['sampling_dates'][-1])
         from_date = parser.parse(meta['sampling_dates'][0])
         meta['thru_month'] = thru_date.strftime("%Y-%m")
-        meta['thru_month_formatted'] = thru_date.strftime("%B %Y")
-        meta['from_month_formatted'] = from_date.strftime("%B %Y")
-        meta_sample = meta.get(
-            'download_files')[meta['thru_month']]['percent_90']['County']
-        meta['pub_date'] = meta_sample['pub_date']
-        meta['pub_date_formatted'] = parser.parse(
-            meta['pub_date']).strftime("%B %Y")
-        meta['viz_notes'] = MortgageDataConstant.get_viz_notes()
+        meta['thru_month_formatted'] = thru_date.strftime("%B&nbsp;%Y")
+        meta['from_month_formatted'] = from_date.strftime("%B&nbsp;%Y")
+        meta['pub_date_formatted'] = meta.get(
+            'download_files')[meta['thru_month']]['pub_date']
+        meta['archive_dates'] = sorted([
+            date for date in meta['download_files'].keys()[1:]], reverse=True)
         return meta
 
     def get_context(self, request, *args, **kwargs):

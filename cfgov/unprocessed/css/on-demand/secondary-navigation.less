@@ -23,11 +23,16 @@
 @import (reference) 'cf-layout.less';
 @import (reference) 'cf-typography.less';
 
-// The Capital Framework (CF) brand color palette.
-@import (reference) "../brand-palette.less";
+// Font variables
+@import (less) 'licensed-fonts.css';
 
-// Override the CF theme variables with colors from the brand color palette.
-@import (reference) "../cf-theme-overrides.less";
+@webfont-regular: 'AvenirNextLTW01-Regular';
+@webfont-italic: 'AvenirNextLTW01-Italic';
+@webfont-medium: 'AvenirNextLTW01-Medium';
+@webfont-demi: 'AvenirNextLTW01-Demi';
+
+// // Icon font path
+@cf-icon-path:                  '../fonts';
 
 // Enhancements that are on a migration path to being added to CF.
 // CF Core

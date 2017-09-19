@@ -1,9 +1,11 @@
+from __future__ import unicode_literals
+
 import argparse
 import boto3
-import json
 import logging
-import github3
-import requests
+
+from alerts.github_alert import GithubAlert
+from alerts.mattermost_alert import MattermostAlert
 
 logger = logging.getLogger(__name__)
 parser = argparse.ArgumentParser()
@@ -55,89 +57,76 @@ parser.add_argument(
 )
 
 
-def matching_issue(title, issues):
-    return next((issue for issue in issues if issue.title == title), None)
+def cleanup_message(message):
+    return message.replace(
+        '#', '# '  # Avoids erroneous Github issue link
+    ).replace(
+        '[Open]', ''  # We want to expand the link
+    )
 
 
-def post_to_chat(endpoint, username, message, issue_url):
-    text = 'Alert: {}. Github issue at {}'.format(
-        message,
-        issue_url,
+def process_sqs_message(message, github_alert, mattermost_alert):
+    body = cleanup_message(message.get('Body'))
+    title = body.split(" - ")[0]
+
+    logger.debug('Retrieved message {} from SQS'.format(body))
+
+    issue = github_alert.post(
+        title=title,
+        body=body
     )
-    payload = {
-        'text': text,
-        'username': args.mattermost_username,
-    }
-    requests.post(
-        args.mattermost_webhook_url,
-        data=json.dumps(payload),
-    )
+    if mattermost_alert:
+        mattermost_alert.post(
+            text='Alert: {}. Github issue at {}'.format(
+                body,
+                issue.html_url
+            )
+        )
+
 
 if __name__ == '__main__':
     args = parser.parse_args()
+
     # Initialize Amazon SQS client
     client = boto3.client(
         'sqs',
         aws_access_key_id=args.aws_access_key_id,
         aws_secret_access_key=args.aws_secret_access_key,
-        region_name='us-east-1',
+        region_name='us-east-1'
     )
+
+    # Intialize GithubAlert class
+    github_alert = GithubAlert({
+        'repo_name': args.github_repo,
+        'token': args.github_token,
+        'url': args.github_url,
+        'user': args.github_user
+    })
+
+    mattermost_alert = None
+    # Initialize MattermostAlert class (optional)
+    if args.mattermost_webhook_url and args.mattermost_username:
+        mattermost_alert = MattermostAlert({
+            'webhook_url': args.mattermost_webhook_url,
+            'username': args.mattermost_username
+        })
 
     # Receive messages from specified SQS queue
     response = client.receive_message(
         QueueUrl=args.queue_url,
-        MaxNumberOfMessages=10,
-    )
-
-    # Initialize github API & repo to post to
-    gh = github3.login(
-        token=args.github_token,
-        url=args.github_url,
-    )
-    repo = gh.repository(
-        args.github_user,
-        args.github_repo,
+        MaxNumberOfMessages=10
     )
 
     for message in response.get('Messages', {}):
-        body = message.get('Body').replace(
-            '#', '# '  # Avoids erroneous Github issue link
-        ).replace(
-            '[Open]', ''  # We want to expand the link
+        process_sqs_message(
+            message=message,
+            github_alert=github_alert,
+            mattermost_alert=mattermost_alert
         )
-        title = body.split(" - ")[0]
-        logger.info('Retrieved message {} from SQS'.format(body))
-
-        issue = matching_issue(
-            title=title,
-            issues=repo.iter_issues(state='all')
-        )
-        if issue:  # Issue already exists
-            if issue.is_closed():
-                issue.reopen()
-            # add comment to it to document it happened again
-            issue.create_comment(body=body)
-        else:
-            # New issue, post to github
-            issue = repo.create_issue(
-                title=title,
-                body=body,
-                labels=[
-                    'Maintenance and Response',
-                    'alert'
-                ],
-            )
-        # Post to chat, if credentials provided
-        if args.mattermost_webhook_url and args.mattermost_username:
-            post_to_chat(
-                endpoint=args.mattermost_webhook_url,
-                username=args.mattermost_username,
-                message=body,
-                issue_url=issue.html_url,
-            )
-
         client.delete_message(
             QueueUrl=args.queue_url,
             ReceiptHandle=message.get('ReceiptHandle')
         )
-        logger.info('Deleted message {} from SQS'.format(body))
+        logger.debug(
+            'Deleted message {} from SQS'.format(message.get('Body'))
+        )

@@ -45,7 +45,7 @@ describe( 'Mortgage Performance action creator', () => {
         id: 12345,
         name: 'Alabama'
       },
-      includeNational: false
+      includeComparison: false
     } );
     action = actions.updateChart( null, null, null, false );
     expect( action ).to.deep.equal( {
@@ -54,7 +54,7 @@ describe( 'Mortgage Performance action creator', () => {
         id: null,
         name: null
       },
-      includeNational: false
+      includeComparison: false
     } );
   } );
 
@@ -62,7 +62,7 @@ describe( 'Mortgage Performance action creator', () => {
     const action = actions.updateNational( false );
     expect( action ).to.deep.equal( {
       type: 'UPDATE_CHART',
-      includeNational: false
+      includeComparison: false
     } );
   } );
 
@@ -90,11 +90,11 @@ describe( 'Mortgage Performance action creator', () => {
     } );
   } );
 
-  it( 'should create an action to request metros', () => {
-    const action = actions.requestMetros();
+  it( 'should create an action to request non-metros', () => {
+    const action = actions.requestNonMetros();
     expect( action ).to.deep.equal( {
-      type: 'REQUEST_METROS',
-      isLoadingMetros: true
+      type: 'REQUEST_NON_METROS',
+      isLoadingNonMetros: true
     } );
   } );
 
@@ -103,6 +103,14 @@ describe( 'Mortgage Performance action creator', () => {
     expect( action ).to.deep.equal( {
       type: 'SET_METROS',
       metros: [ { name: 'Akron, OH' } ]
+    } );
+  } );
+
+  it( 'should create an action to set non-metros', () => {
+    const action = actions.setNonMetros( [ { name: 'Tampa, FL' } ] );
+    expect( action ).to.deep.equal( {
+      type: 'SET_NON_METROS',
+      nonMetros: [ { name: 'Tampa, FL' } ]
     } );
   } );
 
