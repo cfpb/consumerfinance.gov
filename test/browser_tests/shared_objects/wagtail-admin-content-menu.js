@@ -11,33 +11,20 @@ const _content = element
 const EC = protractor.ExpectedConditions;
 
 const menuItems = {
-
   callToActionBtn:      _getStreamMenuElement( '.action-add-block-call_to_action' ),
-
   contentBtn:           _getStreamMenuElement( '.action-add-block-content' ),
-
   contentWithAnchorBtn: _getStreamMenuElement( '.action-add-block-image_text_25_75_group' ),
-
   emailSignupBtn:       _getStreamMenuElement( '.action-add-block-email_signup' ),
-
   expandableBtn:        _getStreamMenuElement( '.action-add-block-expandable' ),
-
   expandableGroupBtn:   _getStreamMenuElement( '.action-add-block-expandable_group' ),
-
   fullWidthTextBtn:     _getStreamMenuElement( '.action-add-block-full_width_text' ),
-
   imageText2575Btn:     _getStreamMenuElement( '.action-add-block-image_text_25_75_group' ),
-
   tableBlock:           _getStreamMenuElement( '.action-add-block-table_block' ),
-
   videoPlayerBtn:       _getStreamMenuElement( '.action-add-block-video_player' ),
-
   wellBtn:              _getStreamMenuElement( '.action-add-block-well' )
-
 };
 
 function _getStreamMenuElement( selector ) {
-
   return _content.element( by.css( selector ) );
 }
 
@@ -86,12 +73,10 @@ function selectItem( componentName ) {
 }
 
 function open() {
-
   return toggleBtn.click();
 }
 
 function close() {
-
   return toggleBtn.click();
 }
 

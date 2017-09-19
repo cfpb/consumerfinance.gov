@@ -24,7 +24,7 @@ class MortgageDataConstantModelAdmin(ModelAdmin):
     list_display = (
         'name',
         'value',
-        'note',
+        'string_value',
         'updated')
 
 

@@ -1,11 +1,11 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var fnBind = require( BASE_JS_PATH + 'modules/util/fn-bind' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const fnBind = require( BASE_JS_PATH + 'modules/util/fn-bind' );
 
-describe( 'fn-bind', function() {
+describe( 'fn-bind', () => {
   // TODO: Implement tests.
 } );

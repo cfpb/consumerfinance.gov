@@ -8,12 +8,12 @@ if [ "$RUNTEST" == "frontend" ]; then
     source $HOME/.nvm/nvm.sh
     nvm use 8.0.0
     gulp "test" --travis
-    gulp "test:coveralls"
+    bash <(curl -s https://codecov.io/bash) -F frontend
 elif [ "$RUNTEST" == "backend" ]; then
     flake8
     tox -e fast
     tox -e missing-migrations
-    coveralls
+    bash <(curl -s https://codecov.io/bash) -F backend
 elif [ "$RUNTEST" == "acceptance" ]; then
     source $HOME/.nvm/nvm.sh
     nvm use 8.0.0

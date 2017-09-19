@@ -1,10 +1,11 @@
 'use strict';
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var GlobalSearch = require( BASE_JS_PATH + 'molecules/GlobalSearch' );
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-describe( 'GlobalSearch', function() {
+const chai = require( 'chai' );
+const expect = chai.expect;
+const GlobalSearch = require( BASE_JS_PATH + 'molecules/GlobalSearch' );
+
+describe( 'GlobalSearch', () => {
   // TODO: Implement tests.
 } );

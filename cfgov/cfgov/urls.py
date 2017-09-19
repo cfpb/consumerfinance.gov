@@ -39,9 +39,7 @@ from v1.views import (
 from v1.views.documents import DocumentServeView
 
 
-fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
-es_conv_flag = partial(flagged_url, 'ES_CONV_FLAG')
 
 urlpatterns = [
 
@@ -104,11 +102,20 @@ urlpatterns = [
             permanent=True)),
     url(r'^know-before-you-owe/',
         include(SheerSite('know-before-you-owe').urls)),
-
-    url(r'^adult-financial-education/',
-        include(fin_ed.urls_for_prefix('adult-financial-education'))),
+    url(r'^adult-financial-education/$', TemplateView.as_view(
+        template_name='/adult-financial-education/index.html')),
+    url(r'^fin-ed/privacy-act-statement/$',
+        TemplateView.as_view(
+        template_name='/adult-financial-education/'
+                      'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
+    url(r'^empowerment/$', TemplateView.as_view(
+        template_name='empowerment/index.html'),
+        name='empowerment'),
+    url(r'^fair-lending/$', TemplateView.as_view(
+        template_name='fair-lending/index.html'),
+        name='fair-lending'),
     url(r'^students/$', TemplateView.as_view(
         template_name='students/index.html'),
         name='students'),
@@ -123,11 +130,14 @@ urlpatterns = [
     url(r'^servicemembers/$', TemplateView.as_view(
         template_name='service-members/index.html'),
         name='servicemembers'),
+    url(r'^servicemembers/on-demand-forums-and-tools/$',
+        TemplateView.as_view(
+        template_name='service-members/on-demand-forums-and-tools'
+                      '/index.html'),
+        name='servicemembers'),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
-    url(r'fin-ed/privacy-act-statement/',
-        include(fin_ed.urls_for_prefix('privacy-act-statement'))),
     url(r'^blog/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/blog/%(path)s', permanent=True)),
@@ -379,19 +389,19 @@ urlpatterns = [
     url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
 
-    es_conv_flag(r'^es/$', TemplateView.as_view(
+    url(r'^es/$', TemplateView.as_view(
                  template_name='/es/index.html')),
 
-    es_conv_flag(r'^es/hogar/$', TemplateView.as_view(
+    url(r'^es/hogar/$', TemplateView.as_view(
                  template_name='es/hogar/index.html')),
 
-    es_conv_flag(r'^es/nuestra-historia/$', TemplateView.as_view(
+    url(r'^es/nuestra-historia/$', TemplateView.as_view(
                  template_name='es/nuestra-historia/index.html')),
 
-    es_conv_flag(r'^es/presentar-una-queja/$', TemplateView.as_view(
+    url(r'^es/presentar-una-queja/$', TemplateView.as_view(
                  template_name='es/presentar-una-queja/index.html')),
 
-    es_conv_flag(r'^es/quienes-somos/$', TemplateView.as_view(
+    url(r'^es/quienes-somos/$', TemplateView.as_view(
                  template_name='es/quienes-somos/index.html')),
 
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),

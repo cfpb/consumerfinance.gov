@@ -10,10 +10,10 @@ from model_mommy import mommy
 
 from data_research.views import validate_year_month
 from data_research.models import (
-    CountyMortgageData,
-    MSAMortgageData,
+    County, CountyMortgageData,
+    MetroArea, MSAMortgageData, NonMSAMortgageData,
     NationalMortgageData,
-    StateMortgageData)
+    State, StateMortgageData)
 
 
 class YearMonthValidatorTests(unittest.TestCase):
@@ -50,10 +50,44 @@ class TimeseriesViewTests(django.test.TestCase):
 
     def setUp(self):
         mommy.make(
+            State,
+            fips='12',
+            abbr='FL',
+            ap_abbr='Fla.',
+            counties=["12081"],
+            msas=["52081"],
+            name='Florida',
+            non_msa_counties=["12001"],
+            non_msa_valid=True)
+
+        mommy.make(
+            County,
+            fips='12081',
+            name='Manatee County',
+            state=State.objects.get(fips='12'),
+            valid=True)
+
+        mommy.make(
+            MetroArea,
+            fips='35840',
+            name='North Port-Sarasota-Bradenton, FL',
+            states=["12"],
+            counties=["12081", "12115"],
+            valid=True)
+
+        mommy.make(
+            MetroArea,
+            fips='16220',
+            name='Casper, WY',
+            states=["56"],
+            counties=["12081", "12115"],
+            valid=True)
+
+        mommy.make(
             NationalMortgageData,
             current=2500819,
             date=datetime.date(2008, 1, 1),
-            fips=00000,
+            fips='-----',
             id=1,
             ninety=40692,
             other=36196,
@@ -66,8 +100,8 @@ class TimeseriesViewTests(django.test.TestCase):
             current=250081,
             date=datetime.date(2008, 1, 1),
             fips='12',
-            valid=True,
             id=1,
+            state=State.objects.get(fips='12'),
             ninety=4069,
             other=3619,
             sixty=2758,
@@ -78,8 +112,21 @@ class TimeseriesViewTests(django.test.TestCase):
             MSAMortgageData,
             current=5250,
             date=datetime.date(2008, 1, 1),
+            msa=MetroArea.objects.get(fips='35840'),
             fips='35840',
-            valid=True,
+            id=1,
+            ninety=1406,
+            other=361,
+            sixty=1275,
+            thirty=3676,
+            total=22674)
+
+        mommy.make(
+            NonMSAMortgageData,
+            current=5250,
+            date=datetime.date(2008, 1, 1),
+            state=State.objects.get(fips='12'),
+            fips='12-non',
             id=1,
             ninety=1406,
             other=361,
@@ -91,7 +138,7 @@ class TimeseriesViewTests(django.test.TestCase):
             CountyMortgageData,
             current=250,
             date=datetime.date(2008, 1, 1),
-            valid=True,
+            county=County.objects.get(fips='12081'),
             fips='12081',
             id=1,
             ninety=406,
@@ -165,6 +212,31 @@ class TimeseriesViewTests(django.test.TestCase):
                         'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
 
+    def test_msa_timeseries_90_below_threshold(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_timeseries',
+                kwargs={'fips': '16220',
+                        'days_late': '90'}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('not valid', response.content)
+
+    def test_non_msa_timeseries_30_89(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_timeseries',
+                kwargs={'fips': '12-non',
+                        'days_late': '30-89'}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_non_msa_timeseries_90(self):
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_timeseries',
+                kwargs={'fips': '12-non',
+                        'days_late': '90'}))
+        self.assertEqual(response.status_code, 200)
+
     def test_county_timeseries_30_89(self):
         response = self.client.get(
             reverse(
@@ -188,7 +260,7 @@ class TimeseriesViewTests(django.test.TestCase):
                 kwargs={'fips': '99999',
                         'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
-        self.assertIn('FIPS code not found.', response.content)
+        self.assertIn('FIPS code not found', response.content)
 
     def test_map_data_bad_date(self):
         response = self.client.get(
@@ -252,7 +324,7 @@ class TimeseriesViewTests(django.test.TestCase):
         response_data = json.loads(response.content)
         self.assertEqual(
             sorted(response_data.get('data').get('12081').keys()),
-            ['date', 'name', 'value'])
+            ['name', 'value'])
 
     def test_county_map_data_90(self):
         response = self.client.get(
@@ -265,7 +337,7 @@ class TimeseriesViewTests(django.test.TestCase):
         response_data = json.loads(response.content)
         self.assertEqual(
             sorted(response_data.get('data').get('12081').keys()),
-            ['date', 'name', 'value'])
+            ['name', 'value'])
 
     def test_msa_map_data_30_89(self):
         response = self.client.get(
@@ -285,23 +357,37 @@ class TimeseriesViewTests(django.test.TestCase):
                         'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
 
-    def test_state_map_data_30_89(self):
+    def test_map_view_msa_below_threshold(self):
+        """The view should deliver a below-threshold MSA with value of None"""
+        msa = MSAMortgageData.objects.get(fips='35840')
+        geo = msa.msa
+        geo.valid = False
+        geo.save()
         response = self.client.get(
             reverse(
                 'data_research_api_mortgage_mapdata',
-                kwargs={'geo': 'states',
-                        'days_late': '30-89',
-                        'year_month': '2008-01'}))
-        self.assertEqual(response.status_code, 200)
-
-    def test_state_map_data_90(self):
-        response = self.client.get(
-            reverse(
-                'data_research_api_mortgage_mapdata',
-                kwargs={'geo': 'states',
+                kwargs={'geo': 'metros',
                         'days_late': '90',
                         'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
+        msa_value = json.loads(response.content)['data'][msa.fips]['value']
+        self.assertIs(msa_value, None)
+
+    def test_map_view_non_msa_below_threshold(self):
+        """Should deliver a below-threshold non-MSA with value of None"""
+        non_msa = NonMSAMortgageData.objects.get(fips='12-non')
+        geo = non_msa.state
+        geo.non_msa_valid = False
+        geo.save()
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'metros',
+                        'days_late': '90',
+                        'year_month': '2008-01'}))
+        self.assertEqual(response.status_code, 200)
+        msa_value = json.loads(response.content)['data'][non_msa.fips]['value']
+        self.assertIs(msa_value, None)
 
     def test_national_map_data_30_89(self):
         response = self.client.get(
@@ -322,24 +408,12 @@ class TimeseriesViewTests(django.test.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_county_timeseries_data_invalid(self):
-        for county in CountyMortgageData.objects.all():
-            county.valid = False
-            county.save()
+        county = County.objects.get(fips='12081')
+        county.valid = False
+        county.save()
         response = self.client.get(
             reverse(
                 'data_research_api_mortgage_timeseries',
                 kwargs={'fips': '12081', 'days_late': '90'}))
         self.assertEqual(response.status_code, 200)
         self.assertIn('County is below display threshold', response.content)
-
-    def test_msa_timeseries_data_invalid(self):
-        for msa in MSAMortgageData.objects.all():
-            msa.valid = False
-            msa.save(aggregate=False)
-        response = self.client.get(
-            reverse(
-                'data_research_api_mortgage_timeseries',
-                kwargs={'fips': '35840', 'days_late': '90'}))
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(
-            'Metro area is below display threshold', response.content)

@@ -1,11 +1,11 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var dataHook = require( BASE_JS_PATH + 'modules/util/data-hook' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const dataHook = require( BASE_JS_PATH + 'modules/util/data-hook' );
 
-describe( 'data-hook', function() {
+describe( 'data-hook', () => {
   // TODO: Implement tests.
 } );

@@ -25,7 +25,7 @@ related_posts_categories = [
 ]
 
 page_types = [
-    ('activity-log', 'Activity Log'),
+    ('activity-log', 'Recent updates'),
     ('administrative-adjudication', 'Administrative adjudication'),
     ('amicus-brief', 'Amicus Brief'),
     ('blog', 'Blog'),
@@ -159,7 +159,7 @@ def related_posts_category_lookup(related_categories):
 
 def page_type_choices():
     new_choices = [
-        ('Activity Log', (
+        ('Recent updates', (
             ('blog', 'Blog'),
             ('op-ed', 'Op-Ed'),
             ('press-release', 'Press Release'),

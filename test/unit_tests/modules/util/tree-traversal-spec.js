@@ -1,21 +1,21 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var Tree = require( BASE_JS_PATH + 'modules/Tree' );
-var treeTraversal = require( BASE_JS_PATH + 'modules/util/tree-traversal' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const Tree = require( BASE_JS_PATH + 'modules/Tree' );
+const treeTraversal = require( BASE_JS_PATH + 'modules/util/tree-traversal' );
 
-describe( 'Tree traversal', function() {
+describe( 'Tree traversal', () => {
 
-  var tree;
-  var nodeR;
-  var nodeA;
-  var nodeB;
-  var nodeC;
-  var nodeD;
-  var nodeE;
+  let tree;
+  let nodeR;
+  let nodeA;
+  let nodeB;
+  let nodeC;
+  let nodeD;
+  let nodeE;
 
   /**
    * Make this Tree:
@@ -25,7 +25,7 @@ describe( 'Tree traversal', function() {
    *    / | \
    *   C  D  E
    */
-  beforeEach( function() {
+  beforeEach( () => {
     tree = new Tree();
     tree.init( 'R' );
     nodeR = tree.getRoot();
@@ -36,10 +36,10 @@ describe( 'Tree traversal', function() {
     nodeE = tree.add( 'E', nodeA );
   } );
 
-  describe( 'backtrack', function() {
-    it( 'should traverse up the tree', function() {
-      var nodes = [];
-      var that;
+  describe( 'backtrack', () => {
+    it( 'should traverse up the tree', () => {
+      const nodes = [];
+      let that;
       treeTraversal.backtrack( nodeC, function( node ) {
         that = this;
         nodes.push( node );
@@ -52,10 +52,10 @@ describe( 'Tree traversal', function() {
     } );
   } );
 
-  describe( 'breadth-first search', function() {
-    it( 'should traverse down the tree', function() {
-      var nodes = [];
-      var that;
+  describe( 'breadth-first search', () => {
+    it( 'should traverse down the tree', () => {
+      const nodes = [];
+      let that;
       treeTraversal.bfs( nodeR, function( node ) {
         that = this;
         nodes.push( node );
@@ -71,10 +71,10 @@ describe( 'Tree traversal', function() {
     } );
   } );
 
-  describe( 'depth-first search', function() {
-    it( 'should traverse down the tree', function() {
-      var nodes = [];
-      var that;
+  describe( 'depth-first search', () => {
+    it( 'should traverse down the tree', () => {
+      const nodes = [];
+      let that;
       treeTraversal.dfs( nodeR, function( node ) {
         that = this;
         nodes.push( node );

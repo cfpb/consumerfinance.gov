@@ -38,12 +38,12 @@ def extract_answers_from_request(request):
 
 
 def format_file_size(bytecount, suffix='B'):
-    """Convert a byte count into a human-readable file size."""
+    """Convert a byte count into a rounded human-friendly file size."""
     for unit in ['', 'K', 'M', 'G']:
         if abs(bytecount) < 1024.0:
-            return "%3.1f%s%s" % (bytecount, unit, suffix)
+            return "{:1.0f} {}{}".format(bytecount, unit, suffix)
         bytecount /= 1024.0
-    return "%.1f%s%s" % (bytecount, 'T', suffix)
+    return "{:.0f} {}{}".format(bytecount, 'T', suffix)
 
 
 class NoMigrations(object):

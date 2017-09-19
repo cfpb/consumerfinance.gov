@@ -1,14 +1,14 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'jsdom' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'jsdom' );
 
-var MoveTransition =
+const MoveTransition =
   require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
 
-describe( 'MoveTransition', function() {
+describe( 'MoveTransition', () => {
   // TODO: Implement tests.
 } );

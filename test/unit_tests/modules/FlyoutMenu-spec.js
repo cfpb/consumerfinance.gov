@@ -1,33 +1,33 @@
 'use strict';
 
-var BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../cfgov/unprocessed/js/';
 
-var chai = require( 'chai' );
-var expect = chai.expect;
-var jsdom = require( 'jsdom' );
-var sinon = require( 'sinon' );
+const chai = require( 'chai' );
+const expect = chai.expect;
+const jsdom = require( 'jsdom' );
+const sinon = require( 'sinon' );
 
-var FlyoutMenu = require( BASE_JS_PATH + 'modules/behavior/FlyoutMenu' );
-var MoveTransition =
+const FlyoutMenu = require( BASE_JS_PATH + 'modules/behavior/FlyoutMenu' );
+const MoveTransition =
   require( BASE_JS_PATH + 'modules/transition/MoveTransition' );
 
-describe( 'FlyoutMenu', function() {
+describe( 'FlyoutMenu', () => {
 
-  var flyoutMenu;
+  let flyoutMenu;
 
   // Sinon-related settings.
-  var triggerClickSpy;
-  var triggerOverSpy;
-  var expandBeginSpy;
-  var expandEndSpy;
-  var collapseBeginSpy;
-  var collapseEndSpy;
+  let triggerClickSpy;
+  let triggerOverSpy;
+  let expandBeginSpy;
+  let expandEndSpy;
+  let collapseBeginSpy;
+  let collapseEndSpy;
 
   // DOM-related settings.
-  var initdom;
-  var window;
-  var document;
-  var HTML_SNIPPET =
+  let initdom;
+  let window;
+  let document;
+  const HTML_SNIPPET =
     '<div data-js-hook="behavior_flyout-menu">' +
       '<button data-js-hook="behavior_flyout-menu_trigger" ' +
               'aria-pressed="false" ' +
@@ -37,14 +37,14 @@ describe( 'FlyoutMenu', function() {
                 'aria-expanded="false"></button>' +
       '</div>' +
     '</div>';
-  var SEL_PREFIX = '[data-js-hook=behavior_flyout-menu';
+  const SEL_PREFIX = '[data-js-hook=behavior_flyout-menu';
 
-  var containerDom;
-  var triggerDom;
-  var contentDom;
-  var altTriggerDom;
+  let containerDom;
+  let triggerDom;
+  let contentDom;
+  let altTriggerDom;
 
-  beforeEach( function() {
+  beforeEach( () => {
     initdom = jsdom.jsdom( HTML_SNIPPET );
     window = initdom.defaultView;
     document = window.document;
@@ -61,14 +61,14 @@ describe( 'FlyoutMenu', function() {
     flyoutMenu = new FlyoutMenu( containerDom );
   } );
 
-  describe( '.init()', function() {
-    it( 'should have public static methods', function() {
+  describe( '.init()', () => {
+    it( 'should have public static methods', () => {
       expect( FlyoutMenu.EXPAND_TYPE ).to.equal( 'expand' );
       expect( FlyoutMenu.COLLAPSE_TYPE ).to.equal( 'collapse' );
       expect( FlyoutMenu.BASE_CLASS ).to.equal( 'behavior_flyout-menu' );
     } );
 
-    it( 'should have correct state before initializing', function() {
+    it( 'should have correct state before initializing', () => {
       expect( triggerDom.getAttribute( 'aria-pressed' ) ).to.equal( 'false' );
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
@@ -81,13 +81,13 @@ describe( 'FlyoutMenu', function() {
       expect( flyoutMenu.getData() ).to.be.undefined;
     } );
 
-    it( 'should have correct state after initializing', function() {
+    it( 'should have correct state after initializing', () => {
       expect( flyoutMenu.init() instanceof FlyoutMenu ).to.be.true;
     } );
   } );
 
-  describe( 'mouseover/click', function() {
-    beforeEach( function() {
+  describe( 'mouseover/click', () => {
+    beforeEach( () => {
       // Set up expected event listeners.
       triggerOverSpy = sinon.spy();
       triggerClickSpy = sinon.spy();
@@ -97,10 +97,10 @@ describe( 'FlyoutMenu', function() {
       flyoutMenu.addEventListener( 'triggerClick', triggerClickSpy );
     } );
 
-    afterEach( function() {
+    afterEach( () => {
       // Check expected event broadcasts.
       expect( triggerOverSpy.callCount ).to.equal( 1 );
-      var args = triggerOverSpy.getCall( 0 ).args[0];
+      let args = triggerOverSpy.getCall( 0 ).args[0];
       expect( args.target ).to.equal( flyoutMenu );
       expect( args.type ).to.equal( 'triggerOver' );
 
@@ -110,28 +110,28 @@ describe( 'FlyoutMenu', function() {
       expect( args.type ).to.equal( 'triggerClick' );
     } );
 
-    it( 'should dispatch events when called by trigger click', function() {
+    it( 'should dispatch events when called by trigger click', () => {
       // TODO: Ideally this would use `new MouseEvent`,
       //       but how do we import MouseEvent (or Event) into Mocha.
       //       Please investigate.
-      var mouseEvent = document.createEvent( 'MouseEvents' );
+      const mouseEvent = document.createEvent( 'MouseEvents' );
       mouseEvent.initEvent( 'mouseover', true, true );
       triggerDom.dispatchEvent( mouseEvent );
       triggerDom.click();
     } );
 
-    xit( 'should dispatch events when called by alt trigger click', function() {
+    xit( 'should dispatch events when called by alt trigger click', () => {
       // TODO: alt trigger doesn't dispatch mouseover events,
       //       but it probably should to match the trigger API.
-      var mouseEvent = document.createEvent( 'MouseEvents' );
+      const mouseEvent = document.createEvent( 'MouseEvents' );
       mouseEvent.initEvent( 'mouseover', true, true );
       altTriggerDom.dispatchEvent( mouseEvent );
       altTriggerDom.click();
     } );
   } );
 
-  describe( '.expand()', function() {
-    beforeEach( function() {
+  describe( '.expand()', () => {
+    beforeEach( () => {
       // Set up expected event listeners.
       expandBeginSpy = sinon.spy();
       expandEndSpy = sinon.spy();
@@ -141,7 +141,7 @@ describe( 'FlyoutMenu', function() {
       flyoutMenu.addEventListener( 'expandEnd', expandEndSpy );
     } );
 
-    afterEach( function() {
+    afterEach( () => {
       // Check expected event broadcasts.
       expect( expandBeginSpy.callCount ).to.equal( 1 );
       var args = expandBeginSpy.getCall( 0 ).args[0];
@@ -163,23 +163,23 @@ describe( 'FlyoutMenu', function() {
     } );
 
     it( 'should dispatch events and set aria attributes, ' +
-        'when called by trigger click', function() {
+        'when called by trigger click', () => {
       triggerDom.click();
     } );
 
     it( 'should dispatch events and set aria attributes, ' +
-        'when called by alt trigger click', function() {
+        'when called by alt trigger click', () => {
       altTriggerDom.click();
     } );
 
     it( 'should dispatch events and set aria attributes, ' +
-        'when called directly', function() {
+        'when called directly', () => {
       flyoutMenu.expand();
     } );
   } );
 
-  describe( '.collapse()', function() {
-    beforeEach( function() {
+  describe( '.collapse()', () => {
+    beforeEach( () => {
       // Set up expected event listeners.
       collapseBeginSpy = sinon.spy();
       collapseEndSpy = sinon.spy();
@@ -190,7 +190,7 @@ describe( 'FlyoutMenu', function() {
       triggerDom.click();
     } );
 
-    afterEach( function() {
+    afterEach( () => {
       // Check expected event broadcasts.
       expect( collapseBeginSpy.callCount ).to.equal( 1 );
       var args = collapseBeginSpy.getCall( 0 ).args[0];
@@ -212,29 +212,29 @@ describe( 'FlyoutMenu', function() {
     } );
 
     it( 'should dispatch events and set aria attributes, ' +
-        'when called by trigger click', function() {
+        'when called by trigger click', () => {
       triggerDom.click();
     } );
 
     it( 'should dispatch events and set aria attributes, ' +
-        'when called by alt trigger click', function() {
+        'when called by alt trigger click', () => {
       altTriggerDom.click();
     } );
 
     it( 'should dispatch events and set aria attributes, ' +
-        'when called directly', function() {
+        'when called directly', () => {
       flyoutMenu.collapse();
     } );
   } );
 
-  describe( '.setExpandTransition()', function() {
+  describe( '.setExpandTransition()', () => {
     it( 'should set a transition', function( done ) {
       flyoutMenu.init();
-      var transition = new MoveTransition( contentDom ).init();
+      const transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
-      flyoutMenu.addEventListener( 'expandEnd', function() {
+      flyoutMenu.addEventListener( 'expandEnd', () => {
         try {
-          var hasClass = contentDom.classList.contains( 'u-move-transition' );
+          const hasClass = contentDom.classList.contains( 'u-move-transition' );
           expect( hasClass ).to.be.true;
           done();
         } catch ( err ) {
@@ -245,15 +245,15 @@ describe( 'FlyoutMenu', function() {
     } );
   } );
 
-  describe( '.setCollapseTransition()', function() {
+  describe( '.setCollapseTransition()', () => {
     it( 'should set a transition', function( done ) {
       flyoutMenu.init();
-      var transition = new MoveTransition( contentDom ).init();
+      const transition = new MoveTransition( contentDom ).init();
       triggerDom.click();
       flyoutMenu.setCollapseTransition( transition, transition.moveLeft );
-      flyoutMenu.addEventListener( 'collapseEnd', function() {
+      flyoutMenu.addEventListener( 'collapseEnd', () => {
         try {
-          var hasClass = contentDom.classList.contains( 'u-move-transition' );
+          const hasClass = contentDom.classList.contains( 'u-move-transition' );
           expect( hasClass ).to.be.true;
           done();
         } catch ( err ) {
@@ -264,11 +264,11 @@ describe( 'FlyoutMenu', function() {
     } );
   } );
 
-  describe( '.getTransition()', function() {
-    it( 'should return a transition instance', function() {
+  describe( '.getTransition()', () => {
+    it( 'should return a transition instance', () => {
       flyoutMenu.init();
       expect( flyoutMenu.getTransition() ).to.be.undefined;
-      var transition = new MoveTransition( contentDom ).init();
+      const transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
       expect( flyoutMenu.getTransition() ).to.equal( transition );
@@ -277,13 +277,13 @@ describe( 'FlyoutMenu', function() {
     } );
   } );
 
-  describe( '.clearTransitions()', function() {
-    it( 'should remove all transitions', function() {
+  describe( '.clearTransitions()', () => {
+    it( 'should remove all transitions', () => {
       flyoutMenu.init();
-      var transition = new MoveTransition( contentDom ).init();
+      const transition = new MoveTransition( contentDom ).init();
       flyoutMenu.setExpandTransition( transition, transition.moveLeft );
       flyoutMenu.setCollapseTransition( transition, transition.moveToOrigin );
-      var hasClass = contentDom.classList.contains( 'u-move-transition' );
+      let hasClass = contentDom.classList.contains( 'u-move-transition' );
       expect( hasClass ).to.be.true;
       flyoutMenu.clearTransitions();
       expect( flyoutMenu.getTransition() ).to.be.undefined;
@@ -292,10 +292,10 @@ describe( 'FlyoutMenu', function() {
     } );
   } );
 
-  describe( '.getDom()', function() {
-    it( 'should return references to full dom', function() {
+  describe( '.getDom()', () => {
+    it( 'should return references to full dom', () => {
       flyoutMenu.init();
-      var dom = flyoutMenu.getDom();
+      const dom = flyoutMenu.getDom();
       expect( dom.container ).to.equal( containerDom );
       expect( dom.trigger ).to.equal( triggerDom );
       expect( dom.content ).to.equal( contentDom );
@@ -303,8 +303,8 @@ describe( 'FlyoutMenu', function() {
     } );
   } );
 
-  describe( 'suspend/resume behavior', function() {
-    beforeEach( function() {
+  describe( 'suspend/resume behavior', () => {
+    beforeEach( () => {
       // Set up expected event listeners.
       expandBeginSpy = sinon.spy();
       expandEndSpy = sinon.spy();
@@ -317,8 +317,8 @@ describe( 'FlyoutMenu', function() {
       flyoutMenu.addEventListener( 'collapseEnd', collapseEndSpy );
     } );
 
-    describe( '.suspend()', function() {
-      it( 'should not broadcast events after being suspended', function() {
+    describe( '.suspend()', () => {
+      it( 'should not broadcast events after being suspended', () => {
         // Set up expected event listeners.
         flyoutMenu.suspend();
         triggerDom.click();
@@ -329,8 +329,8 @@ describe( 'FlyoutMenu', function() {
       } );
     } );
 
-    describe( '.resume()', function() {
-      it( 'should broadcast events after resuming from suspended', function() {
+    describe( '.resume()', () => {
+      it( 'should broadcast events after resuming from suspended', () => {
         // Set up expected event listeners.
         flyoutMenu.suspend();
         flyoutMenu.resume();
@@ -345,26 +345,26 @@ describe( 'FlyoutMenu', function() {
 
   } );
 
-  describe( '.setData()', function() {
-    it( 'should return the instance when set', function() {
+  describe( '.setData()', () => {
+    it( 'should return the instance when set', () => {
       flyoutMenu.init();
       var inst = flyoutMenu.setData( 'test-data' );
       expect( inst instanceof FlyoutMenu ).to.be.true;
     } );
   } );
 
-  describe( '.getData()', function() {
-    it( 'should return the set data', function() {
+  describe( '.getData()', () => {
+    it( 'should return the set data', () => {
       flyoutMenu.init();
       flyoutMenu.setData( 'test-data' );
       expect( flyoutMenu.getData() ).to.equal( 'test-data' );
     } );
   } );
 
-  describe( '.isAnimating()', function() {
+  describe( '.isAnimating()', () => {
     it( 'should return true when expanding', function( done ) {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandBegin', function() {
+      flyoutMenu.addEventListener( 'expandBegin', () => {
         try {
           expect( flyoutMenu.isAnimating() ).to.be.true;
           done();
@@ -377,7 +377,7 @@ describe( 'FlyoutMenu', function() {
 
     it( 'should return false after expanding', function( done ) {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandEnd', function() {
+      flyoutMenu.addEventListener( 'expandEnd', () => {
         try {
           expect( flyoutMenu.isAnimating() ).to.be.false;
           done();
@@ -390,7 +390,7 @@ describe( 'FlyoutMenu', function() {
 
     it( 'should return true while collapsing', function( done ) {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'collapseBegin', function() {
+      flyoutMenu.addEventListener( 'collapseBegin', () => {
         try {
           expect( flyoutMenu.isAnimating() ).to.be.true;
           done();
@@ -404,7 +404,7 @@ describe( 'FlyoutMenu', function() {
 
     it( 'should return false after collapsing', function( done ) {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'collapseEnd', function() {
+      flyoutMenu.addEventListener( 'collapseEnd', () => {
         try {
           expect( flyoutMenu.isAnimating() ).to.be.false;
           done();
@@ -417,10 +417,10 @@ describe( 'FlyoutMenu', function() {
     } );
   } );
 
-  describe( '.isExpanded()', function() {
+  describe( '.isExpanded()', () => {
     it( 'should return false before expanding', function( done ) {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandBegin', function() {
+      flyoutMenu.addEventListener( 'expandBegin', () => {
         try {
           expect( flyoutMenu.isExpanded() ).to.be.false;
           done();
@@ -433,7 +433,7 @@ describe( 'FlyoutMenu', function() {
 
     it( 'should return true after expanding', function( done ) {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'expandEnd', function() {
+      flyoutMenu.addEventListener( 'expandEnd', () => {
         try {
           expect( flyoutMenu.isExpanded() ).to.be.true;
           done();
@@ -447,7 +447,7 @@ describe( 'FlyoutMenu', function() {
     it( 'should return true before collapsing', function( done ) {
       flyoutMenu.init();
       triggerDom.click();
-      flyoutMenu.addEventListener( 'triggerClick', function() {
+      flyoutMenu.addEventListener( 'triggerClick', () => {
         try {
           expect( flyoutMenu.isExpanded() ).to.be.true;
           done();
@@ -460,7 +460,7 @@ describe( 'FlyoutMenu', function() {
 
     it( 'should return false after collapsing', function( done ) {
       flyoutMenu.init();
-      flyoutMenu.addEventListener( 'collapseEnd', function() {
+      flyoutMenu.addEventListener( 'collapseEnd', () => {
         try {
           expect( flyoutMenu.isExpanded() ).to.be.false;
           done();
