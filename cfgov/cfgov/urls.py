@@ -128,6 +128,11 @@ urlpatterns = [
     url(r'^servicemembers/$', TemplateView.as_view(
         template_name='service-members/index.html'),
         name='servicemembers'),
+    url(r'^servicemembers/on-demand-forums-and-tools/$',
+        TemplateView.as_view(
+        template_name='service-members/on-demand-forums-and-tools'
+                      '/index.html'),
+        name='servicemembers'),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
