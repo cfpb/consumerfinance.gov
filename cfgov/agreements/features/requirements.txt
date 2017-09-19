@@ -1,0 +1,4 @@
+selenium
+nose
+pyhamcrest
+behave

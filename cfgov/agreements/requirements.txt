@@ -1,0 +1,2 @@
+tinys3==0.1.11
+awesome-slugify==1.6.5

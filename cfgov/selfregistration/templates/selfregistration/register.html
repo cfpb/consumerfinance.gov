@@ -1,0 +1,221 @@
+{% extends "front/base_nonresponsive.html" %}
+{% load staticfiles %}
+
+{% block title %}Sign up to address complaints{% endblock %}
+{% block app_css %}
+
+<link rel="stylesheet" href="{% static 'selfregistration/register.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'selfregistration/select2/select2.css' %}" />
+
+{% endblock app_css %}
+
+{% block app_js %}
+
+
+<script src="{% static 'selfregistration/select2/select2.min.js' %}"></script>
+<script src="{% static 'selfregistration/jquery.form.js' %}"></script>
+<script src="{% static 'selfregistration/register.js' %}"></script>
+<script>
+    $(function(){
+        $.post('/token-provider/', function(token_tag){ $(token_tag).appendTo('#reg-form')})
+    })
+</script>
+{% endblock app_js %}
+
+
+{% block content %}
+
+
+<!-- fancy UI for the state dropdown menu -->
+
+<!-- this script contains all the behaviors that specific to this page; ideally it should go into the footer -->
+
+<div id="reg-wrapper">
+        <section id="reg-intro" class="shaded">
+            <h1>Sign up to address complaints</h1>
+            <p>Every day, consumers submit complaints to us. Companies can respond to those complaints using a secure website. Sign up to start reviewing and responding to any complaints we have about your company.</p>
+            <p>After you sign up, we’ll call your point of contact for more detailed information and make sure you have the information you need to respond effectively to your complaints.</p>
+            <p>
+            <a href="http://www.consumerfinance.gov/complaint/">About the complaint process</a>
+            </p>
+        </section>
+        <form id="reg-form" method="post">
+
+
+        <section id="reg-fields">
+            <div class="col">
+                <h2>Company information</h2>
+                <fieldset>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="company_name">Company name:</label>
+                        <input class="textbox" type="text" id="company-name" name="company_name" data-validation="min-3" />
+                        <div class="error">Please enter the name of the company</div>
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="company_address">Address:</label>
+                        <input class="textbox" type="text" id="company-address" name="company_address" data-validation="min-3" />
+                        <div class="error">Please enter the address of the company headquarters</div>
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="company_address2">Address line 2: <span class="hint">(Optional)</span></label>
+                        <input class="textbox optional" type="text" id="company-address2" name="company_address2" />
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="company_city">City:</label>
+                        <input class="textbox" type="text" id="company-city" name="company_city" data-validation="min-2" />
+                        <div class="error">Please enter the city in which the company headquarters is located</div>
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="company_state">State:</label>
+                        <select name="company_state" data-validation="min-2">
+                            <option value="">Select...</option>
+                            <option value="AL">Alabama</option>
+	                        <option value="AK">Alaska</option>
+	                        <option value="AZ">Arizona</option>
+	                        <option value="AR">Arkansas</option>
+	                        <option value="CA">California</option>
+	                        <option value="CO">Colorado</option>
+	                        <option value="CT">Connecticut</option>
+	                        <option value="DE">Delaware</option>
+	                        <option value="DC">District Of Columbia</option>
+	                        <option value="FL">Florida</option>
+	                        <option value="GA">Georgia</option>
+	                        <option value="HI">Hawaii</option>
+	                        <option value="ID">Idaho</option>
+	                        <option value="IL">Illinois</option>
+	                        <option value="IN">Indiana</option>
+	                        <option value="IA">Iowa</option>
+	                        <option value="KS">Kansas</option>
+	                        <option value="KY">Kentucky</option>
+	                        <option value="LA">Louisiana</option>
+	                        <option value="ME">Maine</option>
+	                        <option value="MD">Maryland</option>
+	                        <option value="MA">Massachusetts</option>
+	                        <option value="MI">Michigan</option>
+	                        <option value="MN">Minnesota</option>
+	                        <option value="MS">Mississippi</option>
+	                        <option value="MO">Missouri</option>
+	                        <option value="MT">Montana</option>
+	                        <option value="NE">Nebraska</option>
+	                        <option value="NV">Nevada</option>
+	                        <option value="NH">New Hampshire</option>
+	                        <option value="NJ">New Jersey</option>
+	                        <option value="NM">New Mexico</option>
+	                        <option value="NY">New York</option>
+	                        <option value="NC">North Carolina</option>
+	                        <option value="ND">North Dakota</option>
+	                        <option value="OH">Ohio</option>
+	                        <option value="OK">Oklahoma</option>
+	                        <option value="OR">Oregon</option>
+	                        <option value="PA">Pennsylvania</option>
+	                        <option value="RI">Rhode Island</option>
+	                        <option value="SC">South Carolina</option>
+	                        <option value="SD">South Dakota</option>
+	                        <option value="TN">Tennessee</option>
+	                        <option value="TX">Texas</option>
+	                        <option value="UT">Utah</option>
+	                        <option value="VT">Vermont</option>
+	                        <option value="VA">Virginia</option>
+	                        <option value="WA">Washington</option>
+	                        <option value="WV">West Virginia</option>
+	                        <option value="WI">Wisconsin</option>
+	                        <option value="WY">Wyoming</option>
+                        </select>
+                        <div class="error">Please select the state in which the company headquarters is located</div>
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="company_state">Zip code:</label>
+                        <input class="textbox zip" type="text" id="company-zip" name="company_zip" maxlength="5" data-validation="numeric-5"/>
+                        <div class="error">Please enter a valid ZIP code for the company headquarters</div>
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="company_tax_id1">Federal Tax ID:</label>
+                        <input class="textbox tax1" type="text" id="company-tax-id1" name="company_tax_id1" maxlength="2" data-validation="min-2" />
+                        <input class="textbox tax2" type="text" id="company-tax-id2" name="company_tax_id2" maxlength="7" data-validation="min-7" />
+                        <div class="error">Please enter a valid Federal Tax ID for the company</div>
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="company_website">Website: <span class="hint">(Optional)</span></label>
+                        <input class="textbox optional" type="text" id="company-website" name="company_website" />
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="company_phone">Phone:</label>
+                        <input class="textbox phone" type="text" id="company-phone1" name="company_phone1" maxlength="3" data-validation="numeric-3" />
+                        <input class="textbox phone" type="text" id="company-phone2" name="company_phone2" maxlength="3" data-validation="numeric-3" />
+                        <input class="textbox phone-last" type="text" id="company-phone3" name="company_phone3" maxlength="4" data-validation="numeric-4" />
+                        <div class="error">Please enter a phone number for the company</div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col last-col">
+                <h2>Point of contact</h2>
+                <fieldset>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="poc_name">Name:</label>
+                        <input class="textbox" type="text" id="poc-name" name="poc_name" data-validation="min-3" />
+                        <div class="error">Please enter your name</div>
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="poc_title">Title:</label>
+                        <input class="textbox optional" type="text" id="poc-title" name="poc_title"/>
+
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <label for="poc_email">Email:</label>
+                        <input class="textbox" type="text" id="poc-email" name="poc_email" data-validation="email"/>
+                        <div class="error">Please enter a valid email address</div>
+                    </div>
+                    <div class="field">
+                        <div class="icon"></div>
+                        <div class="subfield-left">
+                            <label for="poc_phone1">Phone:</label>
+                            <input class="textbox phone" type="text" id="poc-phone1" name="poc_phone1" maxlength="3" data-validation="numeric-3" />
+                            <input class="textbox phone" type="text" id="poc-phone2" name="poc_phone2" maxlength="3" data-validation="numeric-3" />
+                            <input class="textbox phone-last" type="text" id="poc-phone3" name="poc_phone3" maxlength="4" data-validation="numeric-4" />
+                            <div class="error">Please enter a valid phone number</div>
+                        </div>
+                        <div class="subfield-right">
+                            <label for="poc_extension">Extension: <span class="hint">(Optional)</span></label>
+                            <input class="textbox optional phone" type="text" id="poc-extension" name="poc_extension" />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </section>
+
+        <section id="reg-submit" class="shaded">
+            <div id="reg_privacy" class="col">
+                <h3>Privacy notice</h3>
+                We’re authorized to collect this information by Public Law III-203, Title X, Sections 1011,1012,1013(b)(3), 1021, 1034, codified at 12 U.S.C. 5491, 5493(b)(3), 5511,5534. You’re not required to sign up using this form, but if you don’t, and we need your response to outstanding consumer complaints, we’ll contact you directly to help you sign up.
+            </div>
+            <div id="reg-certify" class="col last-col">
+                <label for="reg_certify_checkbox">
+                    <input type="checkbox" id="reg-certify-checkbox" name="reg_certify" value="1" />
+                    The information given is true to the best of my knowledge and belief.
+                    <div class="error">You must check this box in order to submit the form</div>
+                </label>
+
+                <input id="reg-submit-button" type="submit" class="button inactive-button" value="submit" />
+            </div>
+        </section>
+    </form>
+
+    <section id="reg-success">
+        <h2>Success!</h2>
+        <p>Thank you for signing up! We’ll call your point of contact directly within the next seven business days to finish getting you set up.</p>
+
+
+{% endblock %}
