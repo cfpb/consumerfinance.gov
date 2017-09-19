@@ -67,7 +67,7 @@ class NewRelicAlertViolations(object):
         )
         body = (
             'New Relic {product}, {name}, {label} '
-            '({opened}, violation id {id}).'
+            '({priority}, opened {opened}, violation id {id}).'
             'View incidents: {link}'
         ).format(
             product=violation['entity']['product'],
@@ -75,6 +75,7 @@ class NewRelicAlertViolations(object):
             label=violation['label'],
             name=violation['entity']['name'],
             id=violation['id'],
+            priority=violation['priority'],
             opened=opened_str,
             link=incidents_link
         )
