@@ -73,7 +73,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
             'token',
             'cf.gov',
             '123456',
-            known_violations=['23456781'],
+            known_violations=[23456781],
         )
         violations = nralert_violations.get_new_violations()
         self.assertEqual(len(violations), 1)
@@ -86,7 +86,6 @@ class TestNewRelicAlertViolations(unittest.TestCase):
         )
         formatted_violation = nralert_violations.format_violation(
             self.newrelic_response['violations'][0])
-        print formatted_violation
         violation = self.newrelic_response['violations'][0]
         opened_timestamp = violation['opened_at'] / 1000.0
         opened = datetime.datetime.fromtimestamp(opened_timestamp)

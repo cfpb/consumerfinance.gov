@@ -35,7 +35,7 @@ class NewRelicAlertViolations(object):
         this method are automatically added to known_violations. """
         violations = []
         for violation in self.get_current_violations():
-            if str(violation['id']) in self.known_violations:
+            if violation['id'] in self.known_violations:
                 continue
 
             self.known_violations.append(violation['id'])
