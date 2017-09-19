@@ -19,6 +19,6 @@ class TestLoggingHandlers(TestCase):
         record = MagicMock(message=message)
         CFGovErrorHandler().emit(record)
         github_alert.assert_called_once_with(
-            title=message[:30],
+            title=message[:29],
             body=message,
         )
