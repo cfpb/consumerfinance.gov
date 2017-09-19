@@ -104,7 +104,7 @@ urlpatterns = [
         include(SheerSite('know-before-you-owe').urls)),
     url(r'^adult-financial-education/$', TemplateView.as_view(
         template_name='/adult-financial-education/index.html')),
-    url(r'^adult-financial-education/privacy-act-statement/$',
+    url(r'^fin-ed/privacy-act-statement/$',
         TemplateView.as_view(
         template_name='/adult-financial-education/'
                       'privacy-act-statement/index.html')),
