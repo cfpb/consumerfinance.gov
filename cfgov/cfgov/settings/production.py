@@ -41,6 +41,10 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
+        'db': {
+            'level': 'ERROR',
+            'class': 'alerts.logging_handlers.CFGovErrorHandler',
+        },
         'syslog': {
             'address': syslog_device,
             'class': 'logging.handlers.SysLogHandler',
@@ -49,7 +53,7 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['console'],
+            'handlers': ['console', 'db'],
             'level': 'WARNING',
             'propagate': True,
         },
