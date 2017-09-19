@@ -119,13 +119,18 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
 };
 
 MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
+  let zoomLevel;
   if ( !state.geo.id ) {
     this.chart.highchart.chart.zoomOut();
   }
   if ( prevState.date === state.date && prevState.geo.type === state.geo.type && state.geo.id ) {
+    // Highcharts zooming is unreliable and difficult to customize :(
+    // http://api.highcharts.com/highmaps/Chart.mapZoom
+    // If it's a state or non-metro, zoom in more than other location types
+    zoomLevel = state.geo.type === 'state' || utils.isNonMetro( state.geo.id ) ? 5 : 10;
     this.chart.highchart.chart.get( state.geo.id ).select( true );
     this.chart.highchart.chart.get( state.geo.id ).zoomTo();
-    this.chart.highchart.chart.mapZoom( 5 );
+    this.chart.highchart.chart.mapZoom( zoomLevel );
   }
   if ( prevState.date !== state.date || prevState.geo.type !== state.geo.type ) {
     store.dispatch( actions.startLoading() );
@@ -202,7 +207,13 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
   if ( JSON.stringify( prevState.metros ) === JSON.stringify( state.metros ) ) {
     return;
   }
-  state.metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+  state.metros.sort( ( a, b ) => {
+    // Alphabetize location names except for non-metros, keep them at the bottom
+    if ( a.name < b.name && !utils.isNonMetro( a.fips ) ) {
+      return -1;
+    }
+    return 1;
+  } );
   var fragment = document.createDocumentFragment();
   state.metros.forEach( metro => {
     var option = document.createElement( 'option' );

@@ -242,7 +242,7 @@ MortgagePerformanceLineChart.prototype.renderMetros = function( prevState, state
   var fragment = document.createDocumentFragment();
   state.metros.forEach( metro => {
     // Remove non-metros (locations with fips ending in -non)
-    if ( metro.fips.indexOf( '-non' ) > -1 ) {
+    if ( utils.isNonMetro( metro.fips ) ) {
       return;
     }
     var option = document.createElement( 'option' );
