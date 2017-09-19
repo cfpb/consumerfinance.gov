@@ -48,6 +48,9 @@ var utils = {
   },
   getDate: dateString => {
     var dates = dateString.split( '-' );
+    if ( dates.length < 2 ) {
+      return dateString;
+    }
     var months = [
       'January',
       'February',
