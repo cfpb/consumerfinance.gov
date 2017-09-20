@@ -23,8 +23,9 @@ class Export(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
         # Create the HttpResponse object with the appropriate CSV header.
         now = datetime.now()
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="registrations-%s.csv"' % now.strftime(
-            '%Y%m%d%I%M')
+        export_filename = 'registrations-%s.csv' % now.strftime('%Y%m%d%I%M')
+        disposition_header = 'attachment; filename="%s"' % export_filename
+        response['Content-Disposition'] = disposition_header
 
         writer = csv.writer(response)
         writer.writerow(['id',

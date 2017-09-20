@@ -35,15 +35,17 @@ class CompanyInfoForm(forms.Form):
         company_info_data['city'] = form_data['company_city']
         company_info_data['state'] = form_data['company_state']
         company_info_data['zip'] = form_data['company_zip']
-        company_info_data['tax_id'] = "{company_tax_id1}-{company_tax_id2}" .format(
-            **form_data)
+        company_info_data['tax_id'] = \
+            "{company_tax_id1}-{company_tax_id2}".format(**form_data)
         company_info_data['website'] = form_data['company_website']
-        company_info_data['company_phone'] = "{company_phone1}-{company_phone2}-{company_phone3}".format(
+        company_info_data['company_phone'] = \
+            "{company_phone1}-{company_phone2}-{company_phone3}".format(
             **form_data)
         company_info_data['contact_name'] = form_data['poc_name']
         company_info_data['contact_title'] = form_data['poc_title']
         company_info_data['contact_email'] = form_data['poc_email']
-        company_info_data['contact_phone'] = "{poc_phone1}-{poc_phone2}-{poc_phone3}".format(
+        company_info_data['contact_phone'] = \
+            "{poc_phone1}-{poc_phone2}-{poc_phone3}".format(
             **form_data)
         company_info_data['contact_ext'] = form_data['poc_extension']
 

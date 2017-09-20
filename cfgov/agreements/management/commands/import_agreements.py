@@ -1,12 +1,10 @@
 import os
-import logging
 import urllib
 from datetime import datetime
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from .util import *
+from .util import upload_to_s3, update_agreement, update_issuer, clear_tables
 
 
 class Command(BaseCommand):

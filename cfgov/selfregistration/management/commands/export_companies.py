@@ -3,7 +3,7 @@ from datetime import datetime
 from optparse import make_option
 import os.path
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from selfregistration.models import CompanyInfo
 
@@ -25,7 +25,8 @@ class Command(BaseCommand):
         filename = timestamp.strftime("companies_%Y%m%d%H%M%s.csv")
         output_path = os.path.join(output_dir, filename)
         writer = csv.writer(file(output_path, 'w'))
-        companies_to_export = CompanyInfo.objects.all().filter(submitted__lte=timestamp)
+        all_companies = CompanyInfo.objects.all()
+        companies_to_export = all_companies.filter(submitted__lte=timestamp)
 
         writer.writerow(['company_name',
                          'address1',
@@ -60,7 +61,7 @@ class Command(BaseCommand):
         self.stdout.write("Exported records to %s\n" % output_path)
 
         if options['delete']:
-            companies_to_delete = CompanyInfo.objects.all().filter(submitted__lte=timestamp)
-            companies_to_delete.delete()
+            to_delete = all_companies.filter(submitted__lte=timestamp)
+            to_delete.delete()
 
             self.stdout.write("And deleted them!\n")
