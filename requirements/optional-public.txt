@@ -1,9 +1,9 @@
-https://github.com/cfpb/college-costs/releases/download/2.3.8/college_costs-2.3.4-py2-none-any.whl
-https://github.com/cfpb/complaint/releases/download/1.4.1/complaintdatabase-1.3.3-py2-none-any.whl
+https://github.com/cfpb/college-costs/releases/download/2.3.9/college_costs-2.3.9-py2-none-any.whl
+https://github.com/cfpb/complaint/releases/download/1.4.2/complaintdatabase-1.4.2-py2-none-any.whl
 git+https://github.com/cfpb/owning-a-home-api.git@0.9.96#egg=owning-a-home-api
 git+https://github.com/cfpb/regulations-core.git@1.2.5#egg=regcore
 git+https://github.com/cfpb/regulations-site.git@2.1.8#egg=regulations
-https://github.com/cfpb/retirement/releases/download/0.5.9/retirement-0.5.9-py2-none-any.whl
+https://github.com/cfpb/retirement/releases/download/0.5.11/retirement-0.5.11-py2-none-any.whl
 git+https://github.com/cfpb/ccdb5-api.git@v0.8.0#egg=ccdb5-api
 git+https://github.com/cfpb/ccdb5-ui.git@v0.7.13#egg=ccdb5_ui
 git+https://github.com/cfpb/eregs-2.0.git@0.0.5#egg=eregs
