@@ -35,6 +35,8 @@ exclude =
     cfgov/jobmanager/migrations/*.py,
     cfgov/v1/migrations/*.py,
     cfgov/ask_cfpb/migrations/*.py,
+    cfgov/selfregistration/migrations/*.py,
+    cfgov/agreements/migrations/*.py,
 
     # Our settings files might need to conform to different readability
     # standards
@@ -43,5 +45,6 @@ exclude =
     # Now we come to the bits we exclude because they haven't had a
     # proper cleanup yet.
     cfgov/v1/tests
+    cfgov/agreements/features
 
 # max-complexity = 10
