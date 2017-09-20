@@ -1,4 +1,0 @@
-selenium
-nose
-pyhamcrest
-behave
