@@ -53,7 +53,10 @@ parser.add_argument(
 parser.add_argument(
     '--mattermost_username',
     help='Mattermost user that is posting the message'
-
+)
+parser.add_argument(
+    '--mattermost_icon_url',
+    help='URL to an icon to use for the Mattermost user'
 )
 
 
