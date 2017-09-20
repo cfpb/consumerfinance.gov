@@ -8,6 +8,9 @@ from alerts.github_alert import GithubAlert
 from alerts.mattermost_alert import MattermostAlert
 
 logger = logging.getLogger(__name__)
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.INFO)
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
@@ -58,6 +61,12 @@ parser.add_argument(
     '--mattermost_icon_url',
     help='URL to an icon to use for the Mattermost user'
 )
+parser.add_argument(
+    '-v', '--verbose',
+    action='count',
+    default=0,
+    help='Increase verbosity, up to three times'
+)
 
 
 def cleanup_message(message):
@@ -89,6 +98,9 @@ def process_sqs_message(message, github_alert, mattermost_alert):
 
 if __name__ == '__main__':
     args = parser.parse_args()
+
+    if args.verbose > 0:
+        logger.setLevel(logging.DEBUG)
 
     # Initialize Amazon SQS client
     client = boto3.client(
