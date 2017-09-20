@@ -1,11 +1,9 @@
 import csv
-from datetime import datetime
 from optparse import make_option
 import os.path
 import os
-import glob
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from selfregistration.models import CompanyInfo
 
