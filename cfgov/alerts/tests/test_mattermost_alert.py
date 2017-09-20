@@ -19,9 +19,12 @@ class TestMattermostAlert(TestCase):
         username = 'test'
         credentials = {'username': username, 'webhook_url': webhook_url}
         text = u'foö'
+        icon = 'http://some/icon.png'
 
-        MattermostAlert(credentials).post(text)
+        MattermostAlert(credentials, icon_url=icon).post(text)
         mock.assert_called_once_with(
             webhook_url,
-            data=json.dumps({'text': text, 'username': username})
+            data=json.dumps({'text': text,
+                             'username': username,
+                             'icon_url': icon})
         )
