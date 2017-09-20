@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'watchman',
     'haystack',
     'ask_cfpb',
+    'agreements',
     'overextends',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,14 +81,13 @@ INSTALLED_APPS = (
     'tinymce',
     'jobmanager',
     'wellbeing',
+    'selfregistration'
 )
 
 OPTIONAL_APPS = [
     {'import': 'comparisontool', 'apps': ('comparisontool', 'haystack',)},
     {'import': 'paying_for_college',
      'apps': ('paying_for_college', 'haystack',)},
-    {'import': 'agreements', 'apps': ('agreements', 'haystack',)},
-    {'import': 'selfregistration', 'apps': ('selfregistration',)},
     {'import': 'hud_api_replace', 'apps': ('hud_api_replace',)},
     {'import': 'retirement_api', 'apps': ('retirement_api',)},
     {'import': 'complaint', 'apps': ('complaint',
