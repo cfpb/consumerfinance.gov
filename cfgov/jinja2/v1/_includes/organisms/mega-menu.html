@@ -46,7 +46,9 @@
 {%- for group in nav_groups %}
 <div class="{{ _classes( nav_depth, '-list' ) }}">
     {% if group.title %} 
-    <h3 class="h5 {{' hide-title' if group.hide_title else ''}}"
+    <h3 class="h5 
+              {{ base_class ~ '_group-heading' }} 
+              {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_title else ''}} "
         {% if group.hide_title %} aria-hidden="true"{% endif %}>
         {{group.title | safe}}
     </h3>
@@ -142,7 +144,7 @@
                     {{ _nav_list( nav_depth, nav_groups ) }}
                 </div>
                {% if footer %}
-          <div class="nav_footer">
+          <div class="{{ base_class ~ '_footer' }}">
             {% for item in footer %}
             <p>{{ item | safe }}</p>
             {% endfor %}

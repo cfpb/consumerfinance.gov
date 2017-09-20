@@ -27,6 +27,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
                     'id': 12345678,
                     'label': 'This test opened just now',
                     'policy_name': 'cf.gov unit tests',
+                    'priority': 'Critical',
                     'opened_at': time.time() * 1000.0
                 },
                 {
@@ -39,6 +40,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
                     'id': 23456781,
                     'label': 'This test opened 2 min ago',
                     'policy_name': 'cf.gov unit tests',
+                    'priority': 'Critical',
                     'opened_at': time.time() * 1000.0
                 },
                 {
@@ -51,6 +53,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
                     'id': 34567812,
                     'label': 'This is a different application',
                     'policy_name': 'other unit tests',
+                    'priority': 'Critical',
                     'opened_at': time.time() * 1000.0
                 },
             ],
@@ -73,7 +76,7 @@ class TestNewRelicAlertViolations(unittest.TestCase):
             'token',
             'cf.gov',
             '123456',
-            known_violations=['23456781'],
+            known_violations=[23456781],
         )
         violations = nralert_violations.get_new_violations()
         self.assertEqual(len(violations), 1)
@@ -86,7 +89,6 @@ class TestNewRelicAlertViolations(unittest.TestCase):
         )
         formatted_violation = nralert_violations.format_violation(
             self.newrelic_response['violations'][0])
-        print formatted_violation
         violation = self.newrelic_response['violations'][0]
         opened_timestamp = violation['opened_at'] / 1000.0
         opened = datetime.datetime.fromtimestamp(opened_timestamp)
@@ -94,5 +96,5 @@ class TestNewRelicAlertViolations(unittest.TestCase):
         self.assertIn(
             'cf.gov test opened now, cf.gov synthetic entity '
             '- New Relic Synthetic, cf.gov synthetic entity, '
-            'This test opened just now', formatted_violation)
+            'This test opened just now (Critical', formatted_violation)
         self.assertIn(opened_str, formatted_violation)
