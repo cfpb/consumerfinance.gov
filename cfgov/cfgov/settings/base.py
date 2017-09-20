@@ -480,6 +480,7 @@ CSP_IMG_SRC = (
     'searchstats.usa.gov',
     'gtrk.s3.amazonaws.com',
     '*.googletagmanager.com',
+    'maps.googleapis.com',
     'optimize.google.com',
     'api.mapbox.com',
     '*.tiles.mapbox.com',
