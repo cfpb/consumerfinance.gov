@@ -58,6 +58,10 @@ parser.add_argument(
     help='Mattermost user that is posting the message'
 )
 parser.add_argument(
+    '--mattermost_icon_url',
+    help='URL to an icon to use for the Mattermost user'
+)
+parser.add_argument(
     '-v', '--verbose',
     action='count',
     default=0,
