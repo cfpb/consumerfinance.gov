@@ -8,32 +8,30 @@ var Analytics = require( '../../modules/Analytics' );
   var totalQuestions = 12;
   var quizComplete = false;
   var questionValues = {};
-
-  var submitInput = document.querySelector( '#submit-quiz' );
+  var radioButtons = document.querySelectorAll( '[type="radio"]' );
+  var submitButton = document.querySelector( '#submit-quiz' );
 
   function allQuestionsCompleted() {
     return Object.keys( questionValues ).length === totalQuestions;
   }
 
   function enableSubmit() {
-    submitInput.title = 'Get your score';
+    submitButton.title = 'Get your score';
     var className = 'a-btn__disabled';
-    if ( submitInput.classList ) {
-      submitInput.classList.remove( className );
+
+    if ( submitButton.classList ) {
+      submitButton.classList.remove( className );
     } else {
-      submitInput.className = submitInput.className
-                                         .replace( new RegExp( '(^|\\b)' +
-                            className.split( ' ' )
-                                     .join( '|' ) + '(\\b|$)', 'gi' ), ' ' );
+      // Support browsers who don't have the classList API.
+      var classRegex = new RegExp( '(^|\\b)' +
+                                   className.split( ' ' ).join( '|' ) +
+                                   '(\\b|$)', 'gi' );
+      submitButton.className = submitButton.className.replace( classRegex,
+                                                               ' ' );
     }
   }
 
-  // thanks jQuery
-  function checkOnBack( el ) {
-    handleInput( el );
-  }
-
-  function handleInput( input ) {
+  function handleRadio( input ) {
     if ( input.name && input.checked ) {
       questionValues[input.name] = input.value;
     }
@@ -45,26 +43,25 @@ var Analytics = require( '../../modules/Analytics' );
     }
   }
 
-  submitInput.addEventListener( 'click', function( event ) {
-    if ( !quizComplete ) {
-      return event.preventDefault();
-    }
-    return null;
-  } );
-
   function sendEvent( action, label, category ) {
     var eventData = Analytics.getDataLayerOptions( action, label, category );
     Analytics.sendEvent( eventData );
   }
 
-  var inputs = document.querySelectorAll( '.content_main input' );
-  [].forEach.call( inputs, function( el ) {
+  submitButton.addEventListener( 'click', function( event ) {
+    // Confirm that all questions are answered
+    if ( !quizComplete ) {
+      // If not, block the form submission action
+      return event.preventDefault();
+    }
+    // Otherise, allow the form submission to go through as normal
+    return null;
+  } );
+
+  [].forEach.call( radioButtons, function( el ) {
     el.addEventListener( 'click', function( event ) {
       var input = event.target;
-
-      if ( input.name && input.checked ) {
-        questionValues[input.name] = input.value;
-      }
+      handleRadio( input );
 
       var action = input.getAttribute( 'data-gtm-action' );
       var label = input.getAttribute( 'data-gtm-label' );
@@ -75,16 +72,16 @@ var Analytics = require( '../../modules/Analytics' );
       } else {
         Analytics.addEventListener( 'gtmLoaded', sendEvent );
       }
-
-      quizComplete = allQuestionsCompleted();
-
-      if ( quizComplete ) {
-        enableSubmit();
-      }
     } );
   } );
-  inputs.forEach( function( input ) {
-    checkOnBack( input );
+
+  // Disable submit button initially
+  submitButton.classList.add( 'a-btn__disabled' );
+  submitButton.title = 'Please answer all questions to get your score';
+
+  // Look at all radios on coming back to the page or on reload
+  radioButtons.forEach( function( input ) {
+    handleRadio( input );
   } );
 
 } )();
