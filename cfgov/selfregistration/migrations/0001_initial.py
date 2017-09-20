@@ -26,11 +26,9 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('selfregistration', ['CompanyInfo'])
 
-
     def backwards(self, orm):
         # Deleting model 'CompanyInfo'
         db.delete_table('selfregistration_companyinfo')
-
 
     models = {
         'selfregistration.companyinfo': {

@@ -9,15 +9,17 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'CompanyInfo.contact_ext'
-        db.add_column('selfregistration_companyinfo', 'contact_ext',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=50),
-                      keep_default=False)
-
+        db.add_column(
+            'selfregistration_companyinfo',
+            'contact_ext',
+            self.gf('django.db.models.fields.CharField')(
+                default='',
+                max_length=50),
+            keep_default=False)
 
     def backwards(self, orm):
         # Deleting field 'CompanyInfo.contact_ext'
         db.delete_column('selfregistration_companyinfo', 'contact_ext')
-
 
     models = {
         'selfregistration.companyinfo': {

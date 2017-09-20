@@ -10,7 +10,11 @@ __author__ = 'CFPBLabs'
 
 
 class Website(object):
-    def __init__(self, base_url=r'http://localhost/', driver=None, delay_secs=0):
+    def __init__(
+            self,
+            base_url=r'http://localhost/',
+            driver=None,
+            delay_secs=0):
         if driver is None:
             assert 'Driver is invalid or was not provided.'
 
@@ -34,59 +38,73 @@ class Website(object):
 
     def open_submenu_link(self, sub_menu_link):
         self.utils.zzz()
-        link = WebDriverWait(self.driver, 5).until(lambda driver: driver.find_element_by_link_text(sub_menu_link))
+        link = WebDriverWait(
+            self.driver, 5).until(
+            lambda driver: driver.find_element_by_link_text(sub_menu_link))
         link.click()
 
     def open_footer_link(self, footer_link):
         self.utils.zzz()
         # ToDo: ensure that we start from the footer
         footer = self.driver
-        link = WebDriverWait(footer, 5).until(lambda footer: footer.find_element_by_link_text(footer_link))
+        link = WebDriverWait(
+            footer, 5).until(
+            lambda footer: footer.find_element_by_link_text(footer_link))
         link.click()
 
     def click_link(self, link_text):
         self.utils.zzz()
-        link = WebDriverWait(self.driver, 5).until(lambda driver: driver.find_element_by_link_text(link_text))
+        link = WebDriverWait(
+            self.driver, 5).until(
+            lambda driver: driver.find_element_by_link_text(link_text))
         link.click()
 
     def click_image_by_id(self, image_id):
         self.utils.zzz()
-        image = WebDriverWait(self.driver, 5).until(lambda driver: driver.find_element_by_id(image_id))
+        image = WebDriverWait(
+            self.driver, 5).until(
+            lambda driver: driver.find_element_by_id(image_id))
         image.click()
 
-    def search_and_select_first_from_drop_list(self, element_nickname, entered_text):
+    def search_and_select_first_from_drop_list(
+            self, element_nickname, entered_text):
         self.utils.zzz()
         # convert nickname into an element id
         element_id = self.utils.convert_nickname_to_id(element_nickname)
-        element = WebDriverWait(self.driver, 5).until(lambda driver: driver.find_element_by_id(element_id))
+        element = WebDriverWait(self.driver, 5).until(
+            lambda driver: driver.find_element_by_id(element_id))
         element.click()
 
-        search_box = WebDriverWait(self.driver, 5).until(lambda driver: driver.find_element_by_css_selector(".chzn-search input"))
+        search_box = WebDriverWait(self.driver, 5).until(
+            lambda driver: driver.find_element_by_css_selector(".chzn-search input"))
         search_box.click()
 
         search_box.send_keys(entered_text)
         search_box.send_keys(Keys.ARROW_DOWN)
         search_box.send_keys(Keys.ENTER)
 
-    def search_and_select_link_from_autocomplete(self, element_nickname, entered_text, link_text):
+    def search_and_select_link_from_autocomplete(
+            self, element_nickname, entered_text, link_text):
         self.utils.zzz()
         # convert nickname into an element id
         element_id = self.utils.convert_nickname_to_id(element_nickname)
-        search_box = WebDriverWait(self.driver, 5).until(lambda driver: driver.find_element_by_id(element_id))
+        search_box = WebDriverWait(self.driver, 5).until(
+            lambda driver: driver.find_element_by_id(element_id))
         search_box.click()
         search_box.send_keys(entered_text)
 
         # Give autocomplete 1 second.
         self.utils.zzz(1)
-        link = WebDriverWait(self.driver, 5).until(lambda driver : driver.find_element_by_link_text(link_text))
+        link = WebDriverWait(
+            self.driver, 5).until(
+            lambda driver: driver.find_element_by_link_text(link_text))
         link.click()
-
-
 
     def enter_text(self, element_id, entered_text):
         self.utils.zzz()
         # Sends keys to an element by id.
-        element = WebDriverWait(self.driver, 5).until(lambda driver: driver.find_element_by_id(element_id))
+        element = WebDriverWait(self.driver, 5).until(
+            lambda driver: driver.find_element_by_id(element_id))
         element.send_keys(entered_text)
 
     def close_browser(self):
@@ -99,7 +117,7 @@ class Website(object):
     def get_title(self):
         return self.driver.title
 
-    def get_footer(self,tag_name="footer"):
+    def get_footer(self, tag_name="footer"):
         return self.driver.find_element_by_tag_name(tag_name)
 
     def save_screenshot(self, filename=''):
@@ -108,14 +126,14 @@ class Website(object):
         # ToDo: write util to build proper screenshot file path based on config
         full_path = '%s/%s.%s' % ('./test-results', filename, 'png')
 
-        self.driver.save_screenshot(full_path) # This saves the 'screenshot'
+        self.driver.save_screenshot(full_path)  # This saves the 'screenshot'
 
     # Assertion Helpers
     def is_text_in_body(self, text):
         try:
             # look in the body of the page
             element = self.driver.find_element_by_tag_name("body")
-        except NoSuchElementException, e:
+        except NoSuchElementException as e:
             return False
 
         return text in element.text
@@ -144,4 +162,3 @@ class Website(object):
             return False
 
         return True
-

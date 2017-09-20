@@ -2,6 +2,7 @@ __author__ = 'CFPBLabs'
 
 import time
 
+
 class Utils(object):
 
     def __init__(self, default_delay_secs=0):

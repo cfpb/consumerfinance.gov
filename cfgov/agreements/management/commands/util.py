@@ -26,7 +26,11 @@ def update_issuer(name):
     return issuer
 
 
-def update_agreement(issuer=None, file_name=None, file_path=None, s3_location=None):
+def update_agreement(
+        issuer=None,
+        file_name=None,
+        file_path=None,
+        s3_location=None):
     try:
         agreement = Agreement.objects.get(file_name=file_name)
     except Agreement.DoesNotExist:
@@ -50,7 +54,11 @@ def upload_to_s3(file_path=None, s3_dest_path=None):
     AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-    conn = tinys3.Connection(AWS_S3_ACCESS_KEY_ID, AWS_S3_SECRET_ACCESS_KEY, tls=True, endpoint='s3.amazonaws.com')
+    conn = tinys3.Connection(
+        AWS_S3_ACCESS_KEY_ID,
+        AWS_S3_SECRET_ACCESS_KEY,
+        tls=True,
+        endpoint='s3.amazonaws.com')
 
     file = open(file_path, 'rb')
     conn.upload(s3_dest_path, file, AWS_STORAGE_BUCKET_NAME)

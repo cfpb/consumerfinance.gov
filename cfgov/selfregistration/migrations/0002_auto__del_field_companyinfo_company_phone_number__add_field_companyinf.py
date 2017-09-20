@@ -9,27 +9,47 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Deleting field 'CompanyInfo.company_phone_number'
-        db.delete_column('selfregistration_companyinfo', 'company_phone_number')
+        db.delete_column(
+            'selfregistration_companyinfo',
+            'company_phone_number')
 
         # Adding field 'CompanyInfo.company_phone'
-        db.add_column('selfregistration_companyinfo', 'company_phone',
-                      self.gf('localflavor.us.models.PhoneNumberField')(default='7175551212', max_length=20),
-                      keep_default=False)
+        db.add_column(
+            'selfregistration_companyinfo',
+            'company_phone',
+            self.gf('localflavor.us.models.PhoneNumberField')(
+                default='7175551212',
+                max_length=20),
+            keep_default=False)
 
         # Adding field 'CompanyInfo.submitted'
-        db.add_column('selfregistration_companyinfo', 'submitted',
-                      self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=datetime.datetime(2013, 5, 10, 0, 0), blank=True),
-                      keep_default=False)
-
+        db.add_column(
+            'selfregistration_companyinfo',
+            'submitted',
+            self.gf('django.db.models.fields.DateTimeField')(
+                auto_now_add=True,
+                default=datetime.datetime(
+                    2013,
+                    5,
+                    10,
+                    0,
+                    0),
+                blank=True),
+            keep_default=False)
 
         # Changing field 'CompanyInfo.website'
-        db.alter_column('selfregistration_companyinfo', 'website', self.gf('django.db.models.fields.URLField')(max_length=200, null=True))
+        db.alter_column('selfregistration_companyinfo', 'website', self.gf(
+            'django.db.models.fields.URLField')(max_length=200, null=True))
 
     def backwards(self, orm):
         # Adding field 'CompanyInfo.company_phone_number'
-        db.add_column('selfregistration_companyinfo', 'company_phone_number',
-                      self.gf('localflavor.us.models.PhoneNumberField')(default='http://google.com', max_length=20),
-                      keep_default=False)
+        db.add_column(
+            'selfregistration_companyinfo',
+            'company_phone_number',
+            self.gf('localflavor.us.models.PhoneNumberField')(
+                default='http://google.com',
+                max_length=20),
+            keep_default=False)
 
         # Deleting field 'CompanyInfo.company_phone'
         db.delete_column('selfregistration_companyinfo', 'company_phone')
@@ -37,9 +57,10 @@ class Migration(SchemaMigration):
         # Deleting field 'CompanyInfo.submitted'
         db.delete_column('selfregistration_companyinfo', 'submitted')
 
-
-        # User chose to not deal with backwards NULL issues for 'CompanyInfo.website'
-        raise RuntimeError("Cannot reverse this migration. 'CompanyInfo.website' and its values cannot be restored.")
+        # User chose to not deal with backwards NULL issues for
+        # 'CompanyInfo.website'
+        raise RuntimeError(
+            "Cannot reverse this migration. 'CompanyInfo.website' and its values cannot be restored.")
 
     models = {
         'selfregistration.companyinfo': {

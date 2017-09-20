@@ -12,26 +12,34 @@ class Migration(SchemaMigration):
         db.delete_column('selfregistration_companyinfo', 'address')
 
         # Adding field 'CompanyInfo.address1'
-        db.add_column('selfregistration_companyinfo', 'address1',
-                      self.gf('django.db.models.fields.CharField')(default='Address', max_length=1000),
-                      keep_default=False)
+        db.add_column(
+            'selfregistration_companyinfo',
+            'address1',
+            self.gf('django.db.models.fields.CharField')(
+                default='Address',
+                max_length=1000),
+            keep_default=False)
 
         # Adding field 'CompanyInfo.address2'
-        db.add_column('selfregistration_companyinfo', 'address2',
-                      self.gf('django.db.models.fields.CharField')(default='address', max_length=1000),
-                      keep_default=False)
-
+        db.add_column(
+            'selfregistration_companyinfo',
+            'address2',
+            self.gf('django.db.models.fields.CharField')(
+                default='address',
+                max_length=1000),
+            keep_default=False)
 
     def backwards(self, orm):
 
-        # User chose to not deal with backwards NULL issues for 'CompanyInfo.address'
-        raise RuntimeError("Cannot reverse this migration. 'CompanyInfo.address' and its values cannot be restored.")
+        # User chose to not deal with backwards NULL issues for
+        # 'CompanyInfo.address'
+        raise RuntimeError(
+            "Cannot reverse this migration. 'CompanyInfo.address' and its values cannot be restored.")
         # Deleting field 'CompanyInfo.address1'
         db.delete_column('selfregistration_companyinfo', 'address1')
 
         # Deleting field 'CompanyInfo.address2'
         db.delete_column('selfregistration_companyinfo', 'address2')
-
 
     models = {
         'selfregistration.companyinfo': {

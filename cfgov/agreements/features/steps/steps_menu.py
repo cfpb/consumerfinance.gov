@@ -14,9 +14,9 @@ agency_name = 'Consumer Financial Protection Bureau'
 def step(context, menu_item):
     context.website.open_menu_item(menu_item)
 
+
 @when('I click on "{sub_menu_link}" item')
 def step(context, sub_menu_link):
     context.website.open_submenu_link(sub_menu_link)
 
 # Then statements
-

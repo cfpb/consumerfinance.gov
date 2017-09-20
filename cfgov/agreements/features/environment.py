@@ -24,7 +24,8 @@ def before_all(context):
 
     context.take_screenshots = False
     if config.has_option('browser_testing', 'take_screenshots'):
-        context.take_screenshots = config.getboolean('browser_testing', 'take_screenshots')
+        context.take_screenshots = config.getboolean(
+            'browser_testing', 'take_screenshots')
 
     browser = 'Chrome'
     if config.has_option('browser_testing', 'browser'):
@@ -36,12 +37,14 @@ def before_all(context):
         chromedriver_path = ''
 
         if config.has_option('chrome_driver', 'chromedriver_path'):
-            chromedriver_path = config.get('chrome_driver', 'chromedriver_path')
+            chromedriver_path = config.get(
+                'chrome_driver', 'chromedriver_path')
 
         driver = webdriver.Chrome(chromedriver_path)
 
     # Create context property for Website interaction
     context.website = Website(base_url, driver, delay_secs)
+
 
 def after_all(context):
     context.website.close_browser()

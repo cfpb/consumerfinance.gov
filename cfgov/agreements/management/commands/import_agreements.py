@@ -33,7 +33,7 @@ class Command(BaseCommand):
             dir_name = os.path.basename(current_dir)
 
             if ('Credit Card Agreements' in dir_name or
-                'credit_agreements' in dir_name):
+                    'credit_agreements' in dir_name):
                 continue
             issuer = update_issuer(dir_name)
 
@@ -44,11 +44,10 @@ class Command(BaseCommand):
                 unique_fname = suffix + urllib.quote(fname, ' -')
 
                 update_agreement(
-                    issuer=issuer,
-                    file_name=fname,
-                    file_path=os.path.join(current_dir, fname),
-                    s3_location=("%s%s/%s" % (uri_hostname, s3_key, unique_fname))
-                )
+                    issuer=issuer, file_name=fname, file_path=os.path.join(
+                        current_dir, fname), s3_location=(
+                        "%s%s/%s" %
+                        (uri_hostname, s3_key, unique_fname)))
 
                 if os.environ.get('AGREEMENTS_S3_UPLOAD_ENABLED', False):
                     upload_to_s3(

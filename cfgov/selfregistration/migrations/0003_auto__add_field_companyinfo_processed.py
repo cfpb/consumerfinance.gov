@@ -9,15 +9,16 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'CompanyInfo.processed'
-        db.add_column('selfregistration_companyinfo', 'processed',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
-
+        db.add_column(
+            'selfregistration_companyinfo',
+            'processed',
+            self.gf('django.db.models.fields.BooleanField')(
+                default=False),
+            keep_default=False)
 
     def backwards(self, orm):
         # Deleting field 'CompanyInfo.processed'
         db.delete_column('selfregistration_companyinfo', 'processed')
-
 
     models = {
         'selfregistration.companyinfo': {
