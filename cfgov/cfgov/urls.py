@@ -247,9 +247,9 @@ urlpatterns = [
         include_if_app_enabled(
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
-        include_if_app_enabled('agreements', 'agreements.urls')),
+        include('agreements.urls')),
     url(r'^selfregs/',
-        include_if_app_enabled('selfregistration', 'selfregistration.urls')),
+        include('selfregistration.urls')),
     url(r'^hud-api-replace/', include_if_app_enabled(
         'hud_api_replace',
         'hud_api_replace.urls',
