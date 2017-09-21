@@ -466,7 +466,7 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'fast.fonts.net',
-    'tagmanager.google.com'
+    'tagmanager.google.com',
     'optimize.google.com',
     'api.mapbox.com')
 
