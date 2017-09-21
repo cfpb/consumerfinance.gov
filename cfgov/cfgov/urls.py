@@ -39,7 +39,6 @@ from v1.views import (
 from v1.views.documents import DocumentServeView
 
 
-fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
 
 urlpatterns = [
@@ -103,9 +102,12 @@ urlpatterns = [
             permanent=True)),
     url(r'^know-before-you-owe/',
         include(SheerSite('know-before-you-owe').urls)),
-
-    url(r'^adult-financial-education/',
-        include(fin_ed.urls_for_prefix('adult-financial-education'))),
+    url(r'^adult-financial-education/$', TemplateView.as_view(
+        template_name='/adult-financial-education/index.html')),
+    url(r'^fin-ed/privacy-act-statement/$',
+        TemplateView.as_view(
+        template_name='/adult-financial-education/'
+                      'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
     url(r'^empowerment/$', TemplateView.as_view(
@@ -128,11 +130,14 @@ urlpatterns = [
     url(r'^servicemembers/$', TemplateView.as_view(
         template_name='service-members/index.html'),
         name='servicemembers'),
+    url(r'^servicemembers/on-demand-forums-and-tools/$',
+        TemplateView.as_view(
+        template_name='service-members/on-demand-forums-and-tools'
+                      '/index.html'),
+        name='servicemembers'),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
-    url(r'fin-ed/privacy-act-statement/',
-        include(fin_ed.urls_for_prefix('privacy-act-statement'))),
     url(r'^blog/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/blog/%(path)s', permanent=True)),
@@ -263,7 +268,7 @@ urlpatterns = [
         'hud_api_replace',
         'hud_api_replace.urls',
         namespace='hud_api_replace')),
-    url(r'^retirement/',
+    url(r'^consumer-tools/retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
     url(r'^data-research/consumer-complaints/',
@@ -341,6 +346,11 @@ urlpatterns = [
             RedirectView.as_view(
                 url='/consumer-tools/money-as-you-grow/%(path)s',
                 permanent=True)),
+
+    # retirement redirects
+    url(r'^retirement/(?P<path>.*)$', RedirectView.as_view(
+            url='/consumer-tools/retirement/%(path)s',
+            permanent=True)),
 
     # ask-cfpb
     url(r'^askcfpb/$',

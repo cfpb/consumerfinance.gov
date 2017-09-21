@@ -200,10 +200,11 @@ body {
         }
     }
 
-    .nav_footer {
+    &_footer {
         border-top: 1px solid @gray-40;
         padding: @grid_gutter-width / 2 0;
     }
+
 
     // Mobile sizes.
     .respond-to-max( @bp-xs-max, {
@@ -421,19 +422,6 @@ body {
                     border-bottom: none;
                 }
             }
-
-            h3 {
-                margin-top: @grid_gutter-width;
-
-                &.hide-title {
-                    .u-visually-hidden;
-                }
-
-                // add border between title and following list
-                &:not(.hide-title) + ul {
-                    border-top: 1px solid @gray-40;
-                }
-            }
         }
 
         // 3rd-level menu - Tablet/Mobile.
@@ -462,6 +450,21 @@ body {
                 padding-right: unit( @grid_gutter-width / 2 / @base-font-size-px, em );
             }
         }
+
+        // Group heading - Tablet/Mobile
+        &_group-heading {
+            margin-top: @grid_gutter-width;
+
+            &__hidden {
+                .u-visually-hidden;
+            }
+
+            // add border between title and following list
+            &:not(&__hidden) + ul {
+                border-top: 1px solid @gray-40;
+            }
+        }
+
     } );
 
     // Desktop sizes.
@@ -471,7 +474,7 @@ body {
             display: none;
         }
 
-        .nav_footer {
+        &_footer {
             margin-top: @grid_gutter-width;
             font-size: unit( 18px / @base-font-size-px, em );
         }
@@ -626,10 +629,8 @@ body {
                     border-left-color: @green;
                 }
             }
-        }
 
-        .hide-title {
-            visibility: hidden;
+            
         }
 
         // 3rd-level menu - Desktop.
@@ -646,7 +647,6 @@ body {
 
     // Large desktop size.
     .respond-to-min( @bp-lg-min, {
-
         &_content-1 {
             &-item {
                 margin-right: @grid_gutter-width * 1.5;
@@ -659,6 +659,17 @@ body {
                 // TODO: Check if .grid_nested-col-group()
                 //       can be used here when implementing Featured Menu Content.
                 border-left: 0;
+            }
+        }
+
+        // Group heading - Large desktop.
+
+        &_group-heading {
+            // match link item indentation
+            padding-left: unit( @grid_gutter-width * 2 / 3 / @size-v, em );
+
+            &__hidden {
+                visibility: hidden;
             }
         }
     } );

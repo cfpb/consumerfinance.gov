@@ -1,22 +1,15 @@
 from django.conf.urls import url
 from django.views.generic import TemplateView
 
+from wellbeing.views import ResultsView
+
 urlpatterns = [
     url(
         r'^$',
         TemplateView.as_view(template_name='wellbeing/home.html')
     ),
     url(
-        r'^results/$',
-        TemplateView.as_view(template_name='wellbeing/results.html')
-    ),
-    url(
-        r'^results-alt/$',
-        TemplateView.as_view(template_name='wellbeing/results-alt.html')
-    ),
-    url(
-        r'^compare/$',
-        TemplateView.as_view(template_name='wellbeing/compare.html')
+        r'^results/$', ResultsView.as_view(), name='fwb_results'
     ),
     url(
         r'^about/$',

@@ -27,15 +27,32 @@
             transition: fill 500ms, fill-opacity 500ms, stroke-width 0 !important;
         }
         .highcharts-point {
-            stroke: #838588;
+            stroke: @black;
+            &.highcharts-null-point {
+              stroke-width: 0 !important;
+            }
         }
     }
-    .highcharts-color-0 {
-        stroke: #838588;
+    .cfpb-chart-geo- {
+        &state-outline-states,
+        &state-outline-metros,
+        &state-outline-counties,
+        &map-separators {
+            .highcharts-point {
+                stroke: @black;
+            }
+        }
+        &data-outline-counties,
+        &data-outline-metros {
+            .highcharts-point {
+                stroke: #838588;
+            }
+        }
     }
     .highcharts-tooltip-box {
         fill: @white;
         fill-opacity: 1;
+        stroke: @black;
     }
 
 }
@@ -64,7 +81,7 @@
     &[data-chart-color='blue'] {
 
         .a-ramp-value {
-            &-0 { fill: @gray-10; }
+            &-0 { fill: @gray-5; }
             &-1 { fill: @pacific-20; }
             &-2 { fill: @pacific-40; }
             &-3 { fill: @pacific-60; }
@@ -78,7 +95,7 @@
     &[data-chart-color='navy'] {
 
         .a-ramp-value {
-            &-0 { fill: @gray-10; }
+            &-0 { fill: @gray-5; }
             &-1 { fill: @navy-20; }
             &-2 { fill: @navy-40; }
             &-3 { fill: @navy-60; }

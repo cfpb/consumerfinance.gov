@@ -34,6 +34,8 @@ class GithubAlert(object):
         return next((issue for issue in issues if issue.title == title), None)
 
     def post(self, title, body):
+        # Truncate the title if needed, max is 256 chars
+        title = title[:256]
         issue = self.matching_issue(title)
         if issue:  # Issue already exists
             if issue.is_closed():
