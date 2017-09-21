@@ -218,6 +218,9 @@ MortgagePerformanceMap.prototype.renderTooltip = function() {
   return ( point, meta ) => {
     var percent;
     var nationalPercent = Math.round( meta.national_average * 1000 ) / 10;
+    if ( point.value === null ) {
+      return "<div class='m-mp-map-tooltip'>Insufficient data for this area</div>";
+    }
     if ( point.value < 0 ) {
       percent = 'Insufficient data';
     } else {

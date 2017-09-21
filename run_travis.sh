@@ -10,6 +10,7 @@ if [ "$RUNTEST" == "frontend" ]; then
     gulp "test" --travis
     bash <(curl -s https://codecov.io/bash) -F frontend
 elif [ "$RUNTEST" == "backend" ]; then
+    flake8
     tox -e fast
     tox -e missing-migrations
     bash <(curl -s https://codecov.io/bash) -F backend

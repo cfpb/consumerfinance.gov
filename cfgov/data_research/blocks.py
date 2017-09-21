@@ -37,3 +37,17 @@ class ConferenceRegistrationForm(AbstractFormBlock):
     class Meta:
         handler = 'data_research.handlers.ConferenceRegistrationHandler'
         template = '_includes/conference-registration-form.html'
+
+
+class MortgageDataDownloads(blocks.StructBlock):
+    show_archives = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        help_text=(
+            'Check this box to allow the archival section to display. '
+            'No section will appear if there are no archival downloads.'))
+
+    class Meta:
+        label = 'Mortgage Downloads Block'
+        icon = 'table'
+        template = '_includes/organisms/mortgage-performance-downloads.html'
