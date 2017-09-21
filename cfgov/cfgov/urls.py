@@ -10,7 +10,6 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
-from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
