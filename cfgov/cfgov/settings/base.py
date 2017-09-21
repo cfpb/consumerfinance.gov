@@ -538,14 +538,6 @@ FLAGS = {
     # repo ( excluding /obtener-respuestas/ pages ).
     'ES_CONV_FLAG': {},
 
-    # Transition of "About Us" to Wagtail
-    # When enabled, the "About Us" pages are served from Wagtail
-    'WAGTAIL_ABOUT_US': {},
-
-    # Transition of "Doing Business with Us" to Wagtail
-    # When enabled, the "Doing Business With Us" pages are served from Wagtail
-    'WAGTAIL_DOING_BUSINESS_WITH_US': {},
-
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},
 
