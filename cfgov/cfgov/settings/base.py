@@ -505,7 +505,7 @@ CSP_FRAME_SRC = (
     'universal.iperceptions.com')
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = ("'self'", "data:", "fast.fonts.net", "fonts.google.com")
+CSP_FONT_SRC = ("'self'", "data:", "fast.fonts.net", "fonts.google.com", "fonts.gstatic.com")
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to.
 CSP_CONNECT_SRC = ("'self'",
