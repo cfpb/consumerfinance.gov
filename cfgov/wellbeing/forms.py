@@ -106,6 +106,5 @@ class ResultsForm(forms.Form):
         age = cleaned_data.get('age')
         user_score = FWBScore(SCORING[method][age][answer_values])
 
-        # Is this the right way to do this?
         cleaned_data['answers'] = answers
         cleaned_data['user_score'] = user_score
