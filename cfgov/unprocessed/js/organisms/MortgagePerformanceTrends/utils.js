@@ -48,6 +48,9 @@ var utils = {
   },
   getDate: dateString => {
     var dates = dateString.split( '-' );
+    if ( dates.length < 2 ) {
+      return dateString;
+    }
     var months = [
       'January',
       'February',
@@ -64,6 +67,8 @@ var utils = {
     ];
     return `${ months[parseInt( dates[1], 10 ) - 1] } ${ dates[0] }`;
   },
+  // Non-metro areas have FIPS that include "-non"
+  isNonMetro: fips => fips.indexOf( '-non' ) > -1,
   thunkMiddleware: store => next => action => {
     if ( typeof action === 'function' ) {
       return action( store.dispatch, store.getState );
