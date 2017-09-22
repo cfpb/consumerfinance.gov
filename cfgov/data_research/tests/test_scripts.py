@@ -684,19 +684,6 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
                 'update_county_msa_meta.bake_json_to_s3')
     @mock.patch('data_research.scripts.'
                 'update_county_msa_meta.FIPS')
-    def test_update_non_msa_meta(self, mock_FIPS, mock_bake_s3):
-        mock_FIPS = self.load_fips(mock_FIPS)
-        self.assertFalse(
-            MortgageMetaData.objects.filter(name='state_msa_meta').exists())
-        update_state_to_geo_meta('non_msa')
-        self.assertTrue(
-            MortgageMetaData.objects.filter(name='state_msa_meta').exists())
-        self.assertEqual(mock_bake_s3.call_count, 1)
-
-    @mock.patch('data_research.scripts.'
-                'update_county_msa_meta.bake_json_to_s3')
-    @mock.patch('data_research.scripts.'
-                'update_county_msa_meta.FIPS')
     def test_update_county_meta(self, mock_FIPS, mock_bake_s3):
         mock_FIPS = self.load_fips(mock_FIPS)
         self.assertFalse(
@@ -716,4 +703,4 @@ class UpdateStateMsaDropdownTests(django.test.TestCase):
                 'update_county_msa_meta.update_state_to_geo_meta')
     def test_run_rebuild(self, mock_update):
         run_update()
-        self.assertEqual(mock_update.call_count, 3)
+        self.assertEqual(mock_update.call_count, 2)

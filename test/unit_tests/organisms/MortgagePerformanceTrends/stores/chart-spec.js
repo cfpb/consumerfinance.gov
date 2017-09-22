@@ -36,7 +36,7 @@ describe( 'Mortgage Performance line chart store', () => {
   } );
 
   it( 'should default to comparing national data', () => {
-    expect( store.state.includeNational ).to.be.true;
+    expect( store.state.includeComparison ).to.be.true;
   } );
 
   it( 'should properly reduce geos', () => {
@@ -104,6 +104,14 @@ describe( 'Mortgage Performance line chart store', () => {
     expect( store.getState().isLoadingMetros ).to.be.true;
   } );
 
+  it( 'should properly reduce loading non-metros state', () => {
+    const action = {
+      type: 'REQUEST_NON_METROS'
+    };
+    store.dispatch( action );
+    expect( store.getState().isLoadingNonMetros ).to.be.true;
+  } );
+
   it( 'should properly reduce loading counties state', () => {
     const action = {
       type: 'REQUEST_COUNTIES'
@@ -121,6 +129,15 @@ describe( 'Mortgage Performance line chart store', () => {
     expect( store.getState().metros ).to.deep.equal( { 12345: 'Akron, OH' } );
   } );
 
+  it( 'should properly reduce non-metros', () => {
+    const action = {
+      type: 'SET_NON_METROS',
+      nonMetros: { 67890: 'Boston, MA' }
+    };
+    store.dispatch( action );
+    expect( store.getState().nonMetros ).to.deep.equal( { 67890: 'Boston, MA' } );
+  } );
+
   it( 'should properly reduce counties', () => {
     const action = {
       type: 'SET_COUNTIES',
@@ -135,13 +152,13 @@ describe( 'Mortgage Performance line chart store', () => {
       type: 'UPDATE_CHART'
     };
     store.dispatch( action );
-    expect( store.getState().includeNational ).to.be.true;
+    expect( store.getState().includeComparison ).to.be.true;
     action = {
       type: 'UPDATE_CHART',
-      includeNational: false
+      includeComparison: false
     };
     store.dispatch( action );
-    expect( store.getState().includeNational ).to.be.false;
+    expect( store.getState().includeComparison ).to.be.false;
   } );
 
 } );

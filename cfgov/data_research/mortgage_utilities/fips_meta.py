@@ -111,7 +111,9 @@ def load_county_mappings():
         _attr['counties'] = (
             [county_fips for county_fips in FIPS.county_fips
              if county_fips[:2] == each])
-        _attr['msas'] = [entry['fips'] for entry in msa_meta[abbr]['metros']]
+        _attr['msas'] = [entry['fips']
+                         for entry in msa_meta[abbr]['metros']
+                         if 'non' not in entry['fips']]
         _attr['msa_counties'] = []
         for msa in _attr['msas']:
             _attr['msa_counties'] += (

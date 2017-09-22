@@ -414,30 +414,6 @@ BACKENDS = {
     'diffs': 'regcore.db.django_models.DMDiffs',
 }
 
-CACHES = {
-    'default' : {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_cache',
-    },
-    'eregs_longterm_cache': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/tmp/eregs_longterm_cache',
-        'TIMEOUT': 60*60*24*15,     # 15 days
-        'OPTIONS': {
-            'MAX_ENTRIES': 10000,
-        },
-    },
-    'api_cache':{
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'api_cache_memory',
-        'TIMEOUT': 3600,
-        'OPTIONS': {
-            'MAX_ENTRIES': 1000,
-        },
-    }
-}
-
-
 # GovDelivery environment variables
 ACCOUNT_CODE = os.environ.get('GOVDELIVERY_ACCOUNT_CODE')
 
@@ -469,6 +445,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   "'unsafe-eval'",
                   '*.google-analytics.com',
                   '*.googletagmanager.com',
+                  'tagmanager.google.com',
+                  'optimize.google.com',
                   'ajax.googleapis.com',
                   'search.usa.gov',
                   'api.mapbox.com',
@@ -489,6 +467,8 @@ CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     'fast.fonts.net',
+    'tagmanager.google.com',
+    'optimize.google.com',
     'api.mapbox.com')
 
 # These specify valid image sources
@@ -503,6 +483,9 @@ CSP_IMG_SRC = (
     'searchstats.usa.gov',
     'gtrk.s3.amazonaws.com',
     '*.googletagmanager.com',
+    'tagmanager.google.com',
+    'maps.googleapis.com',
+    'optimize.google.com',
     'api.mapbox.com',
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
@@ -513,6 +496,7 @@ CSP_FRAME_SRC = (
     "'self'",
     '*.googletagmanager.com',
     '*.google-analytics.com',
+    'optimize.google.com',
     'www.youtube.com',
     '*.doubleclick.net',
     'universal.iperceptions.com')
@@ -554,14 +538,6 @@ FLAGS = {
     # When enabled, serves `/es/` pages from this
     # repo ( excluding /obtener-respuestas/ pages ).
     'ES_CONV_FLAG': {},
-
-    # Transition of "About Us" to Wagtail
-    # When enabled, the "About Us" pages are served from Wagtail
-    'WAGTAIL_ABOUT_US': {},
-
-    # Transition of "Doing Business with Us" to Wagtail
-    # When enabled, the "Doing Business With Us" pages are served from Wagtail
-    'WAGTAIL_DOING_BUSINESS_WITH_US': {},
 
     # The next version of the public consumer complaint database
     'CCDB5_RELEASE': {},

@@ -45,3 +45,12 @@ if os.environ.get('ENABLE_DEBUG_TOOLBAR'):
 
 
 MIDDLEWARE_CLASSES += CSP_MIDDLEWARE_CLASSES
+
+# Define caches necessary for eRegs.
+# Disable caching when working locally.
+CACHES = {
+    k: {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'TIMEOUT': 0,
+    } for k in ('default', 'eregs_longterm_cache', 'api_cache')
+}

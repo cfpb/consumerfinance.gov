@@ -358,7 +358,7 @@ class TimeseriesViewTests(django.test.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_map_view_msa_below_threshold(self):
-        """The view should deliver a below-threshold MSA with value set to 0"""
+        """The view should deliver a below-threshold MSA with value of None"""
         msa = MSAMortgageData.objects.get(fips='35840')
         geo = msa.msa
         geo.valid = False
@@ -371,6 +371,22 @@ class TimeseriesViewTests(django.test.TestCase):
                         'year_month': '2008-01'}))
         self.assertEqual(response.status_code, 200)
         msa_value = json.loads(response.content)['data'][msa.fips]['value']
+        self.assertIs(msa_value, None)
+
+    def test_map_view_non_msa_below_threshold(self):
+        """Should deliver a below-threshold non-MSA with value of None"""
+        non_msa = NonMSAMortgageData.objects.get(fips='12-non')
+        geo = non_msa.state
+        geo.non_msa_valid = False
+        geo.save()
+        response = self.client.get(
+            reverse(
+                'data_research_api_mortgage_mapdata',
+                kwargs={'geo': 'metros',
+                        'days_late': '90',
+                        'year_month': '2008-01'}))
+        self.assertEqual(response.status_code, 200)
+        msa_value = json.loads(response.content)['data'][non_msa.fips]['value']
         self.assertIs(msa_value, None)
 
     def test_national_map_data_30_89(self):

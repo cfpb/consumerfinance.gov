@@ -1,0 +1,538 @@
+
+{% extends 'layout-side-nav.html' %}
+
+{% set description  = "We help you help the people you serve. For adult financial educators, the tools here show our latest thinking on consumer financial behavior and effective financial education practices." %}
+
+{% block desc %}
+    {{ description }}
+{% endblock %}
+
+{% block og_desc %}
+    {{ description }}
+{% endblock %}
+
+{% block title %}
+    Resources for financial educators > Consumer Financial Protection Bureau
+{% endblock %}
+
+{% block css %}
+<style>
+    @media only all and (min-width: 37.5em) {
+        .m-list__two-col {
+            -webkit-column-count: 2;
+            -moz-column-count: 2;
+            column-count: 2;
+            -webkit-column-gap: 30px;
+            -moz-column-gap: 30px;
+            column-gap: 30px;
+        }
+    }
+
+    .resource-section_header {
+        margin-bottom: 15px;
+    }
+
+    .video-thumbnail-wrapper {
+        max-width: 320px;
+        position: relative;
+    }
+
+    .webinar-archive_list dd {
+        display: block !important;
+        margin-left: 0;
+    }
+
+    .webinar-archive_list dt {
+        margin-top: 15px;
+        margin-bottom: 0;
+        letter-spacing: normal;
+        text-transform: none;
+        font-weight: 700;
+        font-size: 1em;
+    }
+
+    .play-button-overlay {
+        font-family: 'CFPB Minicons';
+        font-style: normal;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        display: block;
+        width: 1em;
+        height: 1em;
+        padding: .5em;
+        border: 3px solid #fff;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        background: rgba(16,24,32,.75);
+        color: #fff;
+        font-size: 1.25em;
+        line-height: 1.0625;
+        text-align: center;
+        text-indent: .1875em;
+    }
+
+    .play-button-overlay:before {
+        content: "\e640";
+    }
+</style>
+{{ super() }}
+{% endblock %}
+
+{% block content_main_modifiers %}
+    content_main
+    content__flush-top-on-small
+    content__flush-bottom
+{% endblock %}
+
+{% block content_main %}
+<section>
+    <h1>Resources for financial educators</h1>
+    <p class="lead-paragraph">We help you help the people you serve. For adult financial educators, the tools here show our latest thinking on consumer financial behavior and effective financial education practices.</p>
+    <section class="block
+                    block__bg
+                    block__border
+                    block__flush-sides">
+        <h2 id="upcoming-webinar">
+            Upcoming webinar
+        </h2>
+        <div class="content-l content-l__full">
+            <div class="content-l_col content-l_col-1-2">
+                <p>Join us for a free webinar on Thursday, Sept. 28, from 2–3 p.m. ET, to learn about disaster preparedness. When a catastrophe like Hurricane Harvey happens, it may be difficult for people to know where to look for guidance and assistance, as well as what financial steps to take as they begin recovering. Even if your area isn’t affected this time, you may want to help people prepare—for upcoming catastrophes or just for their peace of mind. On this webinar, we will discuss tools and resources available from the CFPB and other federal agencies to help consumers prepare for and cope with the financial aspects of disasters.</p>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <p>Email <a href="mailto:CFPB_FinEx@consumerfinance.gov">CFPB_FinEx@consumerfinance.gov</a> to reserve your spot.</p>
+                <p>Missed a webinar? <a href="#webinar-archive">View past webinars</a></p>
+            </div>
+        </div>
+    </section>
+    <section class="block resource-section">
+        <div class="resource-section_header">
+            <h2 id="resources-for-financial-educators">
+                Resources for financial educators
+            </h2>
+        </div>
+
+        <p><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-download"
+              href="https://s3.amazonaws.com/files.consumerfinance.gov/f/201603_cfpb_finex-resource-inventory.pdf">
+              <span class="a-link_text">See the whole inventory</span>
+           </a> of materials that you can access, download, and use for free. Or
+                <a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link"
+                   href="https://promotions.usa.gov/cfpbpubs.html">
+            <span class="a-link_text">order CFPB financial education materials</span> </a>.
+        </p>
+    </section>
+    <section class="block resource-section">
+        <div class="resource-section_header">
+            <h2 id="understanding-the-financial-education-field">
+                Understanding the financial education field
+            </h2>
+            <p>Get to know the landscape of the financial education field and the challenges other financial educators are facing.</p>
+        </div>
+        <ul class="m-list m-list__links m-list__two-col">
+            <li class="m-list_item">
+                <a class="m-list_link" href="/reports/navigating-the-market/">
+                Navigating the market
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/reports/financial-wellness-at-work/">
+                Financial wellness at work
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/reports/rigorous-evaluation-of-financial-capability-strategies-why-when-and-how/">
+                Rigorous evaluation of financial capability strategies
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/reports/feedback-from-the-financial-education-field/">
+                Feedback from the financial education field
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/data-research/research-reports/financial-education-programs-serving-immigrant-populations/">
+                Financial education programs serving immigrant populations
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/data-research/research-reports/financial-coaching-strategy-improve-financial-well-being/">
+                Financial coaching research and practitioner briefs
+                </a>
+            </li>
+        </ul>
+    </section>
+    <section class="block resource-section">
+        <div class="resource-section_header">
+            <h2 id="understanding-consumers">
+                Understanding consumers
+            </h2>
+            <p>Gain insights into consumer behaviors, motivations, perceptions, and attitudes. Understand the challenges facing consumers in the financial products and services marketplace.</p>
+        </div>
+        <ul class="m-list m-list__links m-list__two-col">
+            <li class="m-list_item">
+                <a class="m-list_link"
+                   href="/reports/financial-well-being/">
+                Financial well-being
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link"
+                   href="/data-research/research-reports/financial-well-being-scale/">
+                Measuring financial well-being
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link"
+                   href="/reports/consumer-voices-on-credit-reports-and-scores/">
+                Consumer voices on credit reports and scores
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download"
+                   href="https://www.consumerfinance.gov/f/cfpb_fin-ed-digest_saving-for-emergencies.pdf">
+                <span class="a-link_text">Digest: Saving for financial shocks and emergencies</span>
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download"
+                   href="https://www.consumerfinance.gov/f/cfpb_fin-ed-digest_organizing-finances.pdf">
+                <span class="a-link_text">Digest: Organizing and managing finances</span>
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download"
+                   href="https://www.consumerfinance.gov/f/cfpb_fin-ed-digest_using-credit-cards.pdf">
+                <span class="a-link_text">Digest: Using credit cards</span>
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download"
+                   href="https://www.consumerfinance.gov/f/cfpb_fin-ed-digest_managing-cash-flow.pdf">
+                <span class="a-link_text">Digest: Managing cash flow and bill payments</span>
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download"
+                   href="https://files.consumerfinance.gov/f/documents/201606_cfpb_consumer-voices-on-automobile-financing.pdf">
+                <span class="a-link_text">Consumer voices on automobile financing</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <section class="block resource-section">
+        <div class="resource-section_header">
+            <h2 id="tools-for-financial-educators">
+                Tools for financial educators
+            </h2>
+            <p>Review a few tools and techniques to improve your effectiveness and service to consumers.</p>
+        </div>
+        <ul class="m-list
+                   m-list__links
+                   m-list__two-col">
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/documents/201606_cfpb_take-control-of-your-auto-loan-guide.pdf"><span class="a-link_text">Take control of your auto loan: A step-by-step guide</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/blog/the-newcomers-guides-to-managing-money/">Newcomers Guides to Money Management</a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/know-before-you-owe/">Know Before You Owe | Mortgages</a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/201510_cfpb_spanish-style-guide-glossary.pdf"><span class="a-link_text">Glossary of English-Spanish Financial Terms</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/201510_cfpb_chinese-style-guide-glossary.pdf"><span class="a-link_text">Glossary of English-Chinese Financial Terms</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/201603_cfpb_rules-to-live-by_consumer-voices-report.pdf"><span class="a-link_text">Consumer Voices on Financial Rules to Live By</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/201603_cfpb_rules-to-live-by_ideas-for-financial-educators.pdf"><span class="a-link_text">Financial rules to live by: Ideas for financial educators</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/documents/201701_cfpb_Financial-Education-Research-Brief.pdf"><span class="a-link_text">The power of light-touch financial education: A demonstration with credit card revolvers</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/documents/201701_cfpb_Financial-Educators-Digest-on-Credit-Card-Use.pdf"><span class="a-link_text">Helpful shortcuts for credit card use: Ideas for financial educators</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/documents/cfpb_worksheet_my-credit-reporting-rule-to-live-by.pdf"><span class="a-link_text">Worksheet: My credit rule to live by</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/documents/cfpb_worksheet_my-savings-rule-to-live-by.pdf"><span class="a-link_text">Worksheet: My savings rule to live by</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/documents/cfpb_worksheet_my-spending-rule-to-live-by.pdf"><span class="a-link_text">Worksheet: My spending rule to live by</span> </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link a-link a-link__icon cf-icon cf-icon__after cf-icon-download" href="https://www.consumerfinance.gov/f/documents/cfpb_worksheet_my-credit-spending-rule-to-live-by.pdf"><span class="a-link_text">Worksheet: My credit spending rule to live by</span> </a>
+            </li>
+        </ul>
+    </section>
+    <section class="block resource-section">
+        <div class="resource-section_header">
+            <h2 id="webinar-archive">
+                Webinar archive
+            </h2>
+            <p>Each webinar is added to the archive a few weeks after its presentation date.</p>
+        </div>
+        <dl class="webinar-archive_list">
+            <dt>Workplace financial education</dt>
+            <dd>August 2017</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=YyYAeEDM21E"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/documents/cfpb_webinar_workplace-financial-education.txt">Read the transcript</a></dd>
+            <dt>Youth financial literacy and savings behavior</dt>
+            <dd>July 2017</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=ju6uK4qphD0"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/documents/cfpb_webinar_youth-financial-literacy.txt">Read the transcript</a></dd>
+            <dt>Principles for effective financial education</dt>
+            <dd>June 2017</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=1kXIoAiwD9s"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/documents/cfpb_webinar_effective-fin-ed-principles.txt">Read the transcript</a></dd>
+            <dt>Tools and resources for servicemembers and veterans</dt>
+            <dd>May 2017</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=XXYn_FMzVl0"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/documents/cfpb_webinar_servicemember-veteran-resources.txt">Read the transcript</a></dd>
+            <dt>Credit scores and reports</dt>
+            <dd>April 2017</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=zmNk6okF9Lo"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/documents/201705_cfpb_webinar-credit-scores-reports.txt">Read the transcript</a></dd>
+            <dt>Managing spending</dt>
+            <dd>March 2017</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=NFMabSfaK3g"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/documents/201704_cfpb_webinar-managing-spending.txt">Read the transcript</a></dd>
+            <dt>Debt collection resources</dt>
+            <dd>February 2017</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=x2K5yLgAsWA"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/documents/201704_cfpb_webinar-debt-collection-resources.txt">Read the transcript</a></dd>
+            <dt>Light-touch financial education on credit card debt</dt>
+            <dd>January 2017</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=jbia-Ejm03A"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/documents/201703_cfpb_webinar-credit-card-debt-fin-ed.txt">Read the transcript</a></dd>
+            <dt>Libraries as a financial education resource</dt>
+            <dd>December 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=LTvMzr9j3rc"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/documents/201702_cfpb_webinar-library-resources.txt">Read the transcript</a></dd>
+            <dt>Helping youth to build financial capability</dt>
+            <dd>November 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=pA5zTCHWYRM"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201612_cfpb_webinar-youth-financial-capability.txt">Read the transcript</a></dd>
+            <dt>Financial coaching</dt>
+            <dd>October 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=HY1aUa-cU4g"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201612_cfpb_webinar-financial-coaching.txt">Read the transcript</a></dd>
+            <dt>Financial education programs serving immigrant communities</dt>
+            <dd>September 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=dhBAxdnDUgk"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201611_cfpb_webinar-immigrant-communities.txt">Read the transcript</a></dd>
+            <dt>CFPB Financial Education Exchange National Conference</dt>
+            <dd>September 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=Of8tEt5Gels"> <span class="a-link_text">Watch the recording</span> </a></dd>
+            <dt>Federal financial education resources</dt>
+            <dd>July 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=qJ7t5cJmFvs"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201608_cfpb_webinar-federal-fined-resources.txt">Read the transcript</a></dd>
+            <dt>Take control of your auto loan</dt>
+            <dd>June 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=RIYKGRp1veM"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201607_cfpb_webinar-auto-loans.txt">Read the transcript</a></dd>
+            <dt>Financial rules to live by</dt>
+            <dd>May 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=MJyOSafqszw"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201606_cfpb_webinar-rules-to-live-by.txt">Read the transcript</a></dd>
+            <dt>Evidence-based insights: tips for strengthening financial education curriculum</dt>
+            <dd>April 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=OIlIz_vVGPg"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201606_cfpb_webinar-strengthening-curriculum.txt">Read the transcript</a></dd>
+            <dt>Money as You Grow</dt>
+            <dd>March 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=bZBu3TXhxHM"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201604_cfpb_webinar-money-as-you-grow.txt">Read the transcript</a></dd>
+            <dt>Financial caregivers tools and resources</dt>
+            <dd>February 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=Lt8zxfPHA5M"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201603_cfpb_webinar-financial-caregivers-transcript.txt">Read the transcript</a></dd>
+            <dt>Measuring financial well-being</dt>
+            <dd>January 2016</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=BdRSmf32NgI"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201602_cfpb_webinar-well-being-transcript.txt">Read the transcript</a></dd>
+            <dt>Planning for Retirement</dt>
+            <dd>December 2015</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=y_7GpiRtoJw"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201602_cfpb_webinar-retirement-transcript.txt">Read the transcript</a></dd>
+            <dt>Owning a Home</dt>
+            <dd>November 2015</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=AJbsK1MHOvY"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201512_cfpb_webinar-oah-transcript.txt">Read the transcript</a></dd>
+            <dt>Tax time savings</dt>
+            <dd>September 2015</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=AKnkQ6x0O28"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201509_cfpb_webinar-tax-time-savings-transcript.txt">Read the transcript</a></dd>
+            <dt>Your Money, Your Goals toolkit</dt>
+            <dd>August 2015</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=TK1563celeQ"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201509_cfpb_webinar-ymyg-toolkit-transcript.txt">Read the transcript</a></dd>
+            <dt>Consumer complaints</dt>
+            <dd>July 2015</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=DCYtJq7wFns"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201508_cfpb_webinar-consumer-complaints-transcript.txt">Read the transcript</a></dd>
+            <dt>Credit reports</dt>
+            <dd>June 2015</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=9BM0lWZ8As0"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201508_cfpb_webinar-credit-reports-transcript.txt">Read the transcript</a></dd>
+            <dt>Financial well-being</dt>
+            <dd>May 2015</dd>
+            <dd><a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.youtube.com/watch?v=X-PEctDJgYg"> <span class="a-link_text">Watch the recording</span> </a> | <a href="https://www.consumerfinance.gov/f/201506_cfpb_webinar-financial-well-being-transcript.txt">Read the transcript</a></dd>
+        </dl>
+    </section>
+    <section class="block">
+        <h2 id="videos">Videos</h2>
+        <p>We’ve created a portfolio of ideas for helping with common money management challenges. Two challenges are described in the short videos below.</p>
+        <div class="content-l content-l__full">
+            <article class="content-l_col content-l_col-1-2">
+                <a class="video-wrapping-link" href="https://www.youtube.com/watch?v=PHBSFixZm_c">
+                    <div class="video-thumbnail-wrapper">
+                        <img src="https://s3.amazonaws.com/files.consumerfinance.gov/f/financial-emergencies-preview_640.png" alt="">
+                        <span class="play-button-overlay"></span>
+                    </div>
+                    <h3 class="h4 u-mt30">Saving for financial shocks and emergencies</h3>
+                </a>
+                <p>Nearly half of American households are unprepared for financial emergencies, so even small financial shocks can lead to large financial setbacks. </p>
+            </article>
+            <article class="content-l_col content-l_col-1-2">
+                <a class="video-wrapping-link" href="https://www.youtube.com/watch?v=IrnKfefYh5E">
+                    <div class="video-thumbnail-wrapper">
+                        <img src="https://s3.amazonaws.com/files.consumerfinance.gov/f/organizing-finances-preview_640.png" alt="">
+                        <span class="play-button-overlay"></span>
+                    </div>
+                    <h3 class="h4 u-mt30">Organizing and managing finances</h3>
+                </a>
+                <p>Many American households live paycheck-to-paycheck, so managing expenses better can free them to pay attention to long-term goals.</p>
+            </article>
+        </div>
+    </section>
+    <aside class="block block__bg
+                  block__border
+                  block__flush-bottom
+                  block__flush-sides">
+        <header class="m-slug-header">
+            <h2 class="a-heading">
+                Tools to use with your clients
+            </h2>
+        </header>
+        <ul class="m-list m-list__links m-list__two-col">
+            <li class="m-list_item">
+                <a class="m-list_link" href="/complaint/">
+                Submit a complaint
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/askcfpb/">
+                Ask CFPB
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/paying-for-college/">
+                Paying for College
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/owning-a-home/">
+                Owning a Home
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/your-story/">
+                Tell Your Story
+                </a>
+            </li>
+        </ul>
+    </aside>
+    <aside class="block
+                  block__bg
+                  block__border
+                  block__flush-top
+                  block__flush-bottom
+                  block__flush-sides">
+        <header class="m-slug-header">
+            <h2 class="a-heading">
+                Stay informed
+            </h2>
+        </header>
+        <div class="content-l content-l__full">
+            <div class="content-l_col content-l_col-1-2">
+                <p><b>Connect with us.</b> We have created a Financial Education Exchange for financial educators to get the latest news and research from us, and to learn from your peers about what’s working. Sign up to receive regular communications and invitations to webinars and seminars.</p>
+                <p>Email <a href="mailto:CFPB_FinEx@consumerfinance.gov?subject=FinEx%20registration">CFPB_FinEx@consumerfinance.gov</a> to sign up.</p>
+                <p><small><a class="privacy-statement-link"
+                            href="../fin-ed/privacy-act-statement">View Privacy Act statement</a></small></p>
+            </div>
+            <div class="content-l_col content-l_col-1-2">
+                <p><b>Connect with others.</b> We also invite you to join our <a class="a-link a-link__icon cf-icon cf-icon__after cf-icon-external-link" href="https://www.linkedin.com/grp/home?gid=5056623"> <span class="a-link_text">Financial Education Discussion Group</span></a> on LinkedIn, where we regularly post research, reports, and discussion topics.</p>
+            </div>
+        </div>
+    </aside>
+</section>
+{% endblock %}
+
+{% block content_sidebar -%}
+<nav class="o-secondary-navigation" aria-label="Section navigation" data-js-hook="state_atomic_init">
+    <div data-qa-hook="expandable" class="o-expandable o-expandable__midtone" data-js-hook="state_atomic_init">
+        <button class="o-expandable_target" aria-pressed="false">
+            <div class="o-expandable_header">
+                <span class="o-expandable_header-left
+                    o-expandable_label">
+                In this section
+                </span>
+                <span class="o-expandable_header-right o-expandable_link">
+                <span class="o-expandable_cue
+                    o-expandable_cue-open">
+                <span class="o-expandable_cue-label">Show</span>
+                <span class="o-expandable_cue-label o-expandable_cue-label__es">Mostrar</span>
+                <span class="cf-icon cf-icon-plus-round"></span>
+                </span>
+                <span class="o-expandable_cue
+                    o-expandable_cue-close">
+                <span class="o-expandable_cue-label">Hide</span>
+                <span class="o-expandable_cue-label o-expandable_cue-label__es">Ocultar</span>
+                <span class="cf-icon cf-icon-minus-round"></span>
+                </span>
+                </span>
+            </div>
+        </button>
+        <div class="o-expandable_content" aria-expanded="false">
+            <div class="o-expandable_content-animated">
+                <ul class="o-secondary-navigation_list
+                    o-secondary-navigation_list__parents">
+                    <li>
+                        <a class="m-nav-link
+                            m-nav-link__parent
+                            m-nav-link__current"
+                            href="/adult-financial-education/">
+                        Adult financial education
+                        </a>
+                    </li>
+                    <li>
+                        <a class="m-nav-link
+                            m-nav-link__parent"
+                           href="/youth-financial-education/">
+                        Youth financial education
+                        </a>
+                    </li>
+                    <li>
+                        <a class="m-nav-link
+                            m-nav-link__parent"
+                           href="/library-resources/">
+                        Resources for libraries
+                        </a>
+                        <ul class="o-secondary-navigation_list
+                            o-secondary-navigation_list__children">
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="m-nav-link
+                            m-nav-link__parent"
+                           href="/tax-preparer-resources/">
+                        Resources for tax preparers
+                        </a>
+                    </li>
+                    <li>
+                        <a class="m-nav-link
+                            m-nav-link__parent"
+                           href="/money-as-you-grow/">
+                        Resources for parents
+                        </a>
+                        <ul class="o-secondary-navigation_list
+                            o-secondary-navigation_list__children">
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="m-nav-link
+                            m-nav-link__parent"
+                           href="/managing-someone-elses-money/">
+                        Guides for managing someone else’s money
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+{%- endblock %}

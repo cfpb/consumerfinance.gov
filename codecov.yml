@@ -1,7 +1,7 @@
 codecov:
   branch: master
   notify:
-    require_ci_to_pass: yes
+    require_ci_to_pass: no
 
 comment: off
 
@@ -9,14 +9,14 @@ coverage:
   status:
     project:
       frontend:
-        threshold: 0%
+        threshold: 0.02%
         flags: frontend
       backend:
-        threshold: 0%
+        threshold: 0.02%
         flags: backend
     patch:
       default:
-        threshold: 0%
+        target: 100%
 
 flags:
   backend:

@@ -10,7 +10,6 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
-from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
@@ -39,9 +38,7 @@ from v1.views import (
 from v1.views.documents import DocumentServeView
 
 
-fin_ed = SheerSite('fin-ed-resources')
 oah = SheerSite('owning-a-home')
-es_conv_flag = partial(flagged_url, 'ES_CONV_FLAG')
 
 urlpatterns = [
 
@@ -104,9 +101,12 @@ urlpatterns = [
             permanent=True)),
     url(r'^know-before-you-owe/',
         include(SheerSite('know-before-you-owe').urls)),
-
-    url(r'^adult-financial-education/',
-        include(fin_ed.urls_for_prefix('adult-financial-education'))),
+    url(r'^adult-financial-education/$', TemplateView.as_view(
+        template_name='/adult-financial-education/index.html')),
+    url(r'^fin-ed/privacy-act-statement/$',
+        TemplateView.as_view(
+        template_name='/adult-financial-education/'
+                      'privacy-act-statement/index.html')),
     url(r'^your-story/$', TemplateView.as_view(
         template_name='/your-story/index.html')),
     url(r'^empowerment/$', TemplateView.as_view(
@@ -129,25 +129,20 @@ urlpatterns = [
     url(r'^servicemembers/$', TemplateView.as_view(
         template_name='service-members/index.html'),
         name='servicemembers'),
+    url(r'^servicemembers/on-demand-forums-and-tools/$',
+        TemplateView.as_view(
+        template_name='service-members/on-demand-forums-and-tools'
+                      '/index.html'),
+        name='servicemembers'),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
-    url(r'fin-ed/privacy-act-statement/',
-        include(fin_ed.urls_for_prefix('privacy-act-statement'))),
     url(r'^blog/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/blog/%(path)s', permanent=True)),
     url(r'^newsroom/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/newsroom/%(path)s', permanent=True)),
-
-    flagged_url(
-        'WAGTAIL_ABOUT_US',
-        r'^about-us/newsroom/press-resources/$',
-        lambda req: ServeView.as_view()(req, req.path),
-        fallback=TemplateView.as_view(
-            template_name='newsroom/press-resources/index.html'),
-        name='press-resources'),
 
     url(r'^the-bureau/(?P<path>.*)$',
             RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
@@ -160,22 +155,6 @@ urlpatterns = [
     url(r'^doing-business-with-us/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
-    url(r'^about-us/doing-business-with-us/', include([
-        flagged_url(
-            'WAGTAIL_DOING_BUSINESS_WITH_US',
-            r'^$',
-            lambda req: ServeView.as_view()(req, req.path),
-            fallback=TemplateView.as_view(
-                template_name='about-us/doing-business-with-us/index.html'),
-            name='index'),
-        flagged_url(
-            'WAGTAIL_DOING_BUSINESS_WITH_US',
-            r'^(?P<page_slug>[\w-]+)/$',
-            lambda req, page_slug: ServeView.as_view()(req, req.path),
-            fallback=SheerTemplateView.as_view(),
-            name='page')
-        ],
-        namespace='business')),
 
     url(r'^external-site/$', ExternalURLNoticeView.as_view(),
         name='external-site'),
@@ -234,14 +213,6 @@ urlpatterns = [
     url(r'^newsroom-feed/$',
         RedirectView.as_view(url='/about-us/newsroom/feed/', permanent=True)),
 
-    flagged_url(
-        'WAGTAIL_ABOUT_US',
-        r'^about-us/$',
-        lambda req: ServeView.as_view()(req, req.path),
-        fallback=SheerTemplateView.as_view(
-            template_name='about-us/index.html'),
-        name='about-us'),
-
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/careers/%(path)s', permanent=True)),
 
@@ -264,7 +235,7 @@ urlpatterns = [
         'hud_api_replace',
         'hud_api_replace.urls',
         namespace='hud_api_replace')),
-    url(r'^retirement/',
+    url(r'^consumer-tools/retirement/',
         include_if_app_enabled('retirement_api', 'retirement_api.urls')),
 
     url(r'^data-research/consumer-complaints/',
@@ -343,6 +314,11 @@ urlpatterns = [
                 url='/consumer-tools/money-as-you-grow/%(path)s',
                 permanent=True)),
 
+    # retirement redirects
+    url(r'^retirement/(?P<path>.*)$', RedirectView.as_view(
+            url='/consumer-tools/retirement/%(path)s',
+            permanent=True)),
+
     # ask-cfpb
     url(r'^askcfpb/$',
         RedirectView.as_view(
@@ -385,19 +361,19 @@ urlpatterns = [
     url(r'^(?P<language>es)/obtener-respuestas/api/autocomplete/$',
         ask_autocomplete, name='ask-autocomplete-es'),
 
-    es_conv_flag(r'^es/$', TemplateView.as_view(
+    url(r'^es/$', TemplateView.as_view(
                  template_name='/es/index.html')),
 
-    es_conv_flag(r'^es/hogar/$', TemplateView.as_view(
+    url(r'^es/hogar/$', TemplateView.as_view(
                  template_name='es/hogar/index.html')),
 
-    es_conv_flag(r'^es/nuestra-historia/$', TemplateView.as_view(
+    url(r'^es/nuestra-historia/$', TemplateView.as_view(
                  template_name='es/nuestra-historia/index.html')),
 
-    es_conv_flag(r'^es/presentar-una-queja/$', TemplateView.as_view(
+    url(r'^es/presentar-una-queja/$', TemplateView.as_view(
                  template_name='es/presentar-una-queja/index.html')),
 
-    es_conv_flag(r'^es/quienes-somos/$', TemplateView.as_view(
+    url(r'^es/quienes-somos/$', TemplateView.as_view(
                  template_name='es/quienes-somos/index.html')),
 
     url(r'^_status/', include_if_app_enabled('watchman', 'watchman.urls')),

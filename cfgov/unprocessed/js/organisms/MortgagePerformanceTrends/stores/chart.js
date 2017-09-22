@@ -34,6 +34,15 @@ const isLoadingMetros = action => {
   }
 };
 
+const isLoadingNonMetros = action => {
+  switch ( action.type ) {
+    case 'REQUEST_NON_METROS':
+      return true;
+    default:
+      return false;
+  }
+};
+
 const isLoadingCounties = action => {
   switch ( action.type ) {
     case 'REQUEST_COUNTIES':
@@ -64,6 +73,17 @@ const updateMetros = ( metros, action ) => {
   }
 };
 
+const updateNonMetros = ( nonMetros, action ) => {
+  switch ( action.type ) {
+    case 'SET_NON_METROS':
+      return action.nonMetros;
+    case 'FETCH_NON__METROS':
+    case 'REQUEST_NON_METROS':
+    default:
+      return nonMetros;
+  }
+};
+
 const updateCounties = ( counties, action ) => {
   switch ( action.type ) {
     case 'SET_COUNTIES':
@@ -75,10 +95,10 @@ const updateCounties = ( counties, action ) => {
   }
 };
 
-const includeNational = ( include, action ) => {
+const includeComparison = ( include, action ) => {
   switch ( action.type ) {
     case 'UPDATE_CHART':
-      return typeof action.includeNational === 'undefined' ? include : action.includeNational;
+      return typeof action.includeComparison === 'undefined' ? include : action.includeComparison;
     default:
       return include;
   }
@@ -95,6 +115,7 @@ const initialState = {
   },
   counties: {},
   metros: {},
+  nonMetros: {},
   // Is the chart waiting for data?
   isLoading: false,
   // Is the county dropdown waiting for data?
@@ -102,7 +123,7 @@ const initialState = {
   // Is the chart being re-rendered?
   isLoadingChart: false,
   // Should the national trend be shown alongside the geo's?
-  includeNational: true
+  includeComparison: true
 };
 
 class LineChartStore extends Store {
@@ -117,10 +138,12 @@ class LineChartStore extends Store {
       geo: updateGeo( state.geo, action ),
       isLoading: isLoading( action ),
       isLoadingMetros: isLoadingMetros( action ),
+      isLoadingNonMetros: isLoadingNonMetros( action ),
       isLoadingCounties: isLoadingCounties( action ),
-      includeNational: includeNational( state.includeNational, action ),
+      includeComparison: includeComparison( state.includeComparison, action ),
       counties: updateCounties( state.counties, action ),
-      metros: updateMetros( state.metros, action )
+      metros: updateMetros( state.metros, action ),
+      nonMetros: updateNonMetros( state.nonMetros, action )
     };
     return newState;
   }

@@ -1,8 +1,12 @@
+import mock
+import unittest
+
 from django.test import TestCase
 from model_mommy import mommy
 from wagtail.wagtailcore.models import Page
 
 from data_research.management.commands.conference_export import (
+    Command,
     ConferenceExporter,
     get_registration_form_from_page
 )
@@ -60,14 +64,6 @@ class TestConferenceExporter(TestCase):
 
         with self.assertRaises(RuntimeError):
             ConferenceExporter(page_id=revision.page_id)
-
-    def test_page_with_block_no_error(self):
-        page_id = make_page_with_form()
-
-        try:
-            ConferenceExporter(page_id=page_id)
-        except Exception:
-            self.fail('valid page should not raise exception')
 
     def test_exporter_conference_code(self):
         page_id = make_page_with_form(code='foo')
@@ -147,7 +143,7 @@ class TestExporterWithFixture(TestCase):
 
     def test_csv(self):
         page_id = make_page_with_form(code='CODE')
-        exporter = ConferenceExporter(page_id=page_id)
+        exporter = ConferenceExporter(page_id=page_id, verbose=True)
         csv = exporter.to_csv()
         self.assertEqual(len(csv.strip().split('\n')), 4)
 
@@ -158,3 +154,64 @@ class TestExporterWithFixture(TestCase):
         self.assertEqual(message.from_email, 'from')
         self.assertEqual(message.to, ['to'])
         self.assertEqual(len(message.attachments), 1)
+
+
+class TestCommandHandler(unittest.TestCase):
+
+    def setUp(self):
+
+        print_patch = mock.patch(
+            'data_research.management.commands.conference_export.print'
+        )
+        print_patch.start()
+        self.addCleanup(print_patch.stop)
+
+    @mock.patch('data_research.management.commands.'
+                'conference_export.ConferenceExporter')
+    def test_conference_export_command_handler(self, mock_exporter):
+        command = Command()
+        command.handle(
+            page_id=1,
+            verbosity=2,
+            email_from_address='staff@cfpb.gov',
+            email_to_address=['fictional.employee@cfpb.gov'],
+            dry_run=False
+        )
+        self.assertEqual(mock_exporter.call_count, 1)
+
+    @mock.patch('data_research.management.commands.'
+                'conference_export.ConferenceExporter.to_csv')
+    @mock.patch('data_research.management.commands.'
+                'conference_export.get_registration_form_from_page')
+    def test_conference_export_command_to_csv(
+            self, mock_get_form, mock_csv_exporter):
+        command = Command()
+        command.handle(
+            page_id=1,
+            verbosity=2,
+            email_from_address='staff@cfpb.gov',
+            email_to_address=[],
+            dry_run=False
+        )
+        self.assertEqual(mock_csv_exporter.call_count, 1)
+        self.assertEqual(mock_get_form.call_count, 1)
+
+    @mock.patch('data_research.management.commands.'
+                'conference_export.ConferenceExporter.to_csv')
+    @mock.patch('data_research.management.commands.'
+                'conference_export.ConferenceExporter.create_email_message')
+    @mock.patch('data_research.management.commands.'
+                'conference_export.get_registration_form_from_page')
+    def test_conference_export_command_handler_dryrun(
+            self, mock_get_registration, mock_email_create, mock_csv_exporter):
+        command = Command()
+        command.handle(
+            page_id=1,
+            verbosity=2,
+            email_from_address='staff@cfpb.gov',
+            email_to_address=['fictional.employee@cfpb.gov'],
+            dry_run=True
+        )
+        self.assertEqual(mock_email_create.call_count, 1)
+        self.assertEqual(mock_get_registration.call_count, 1)
+        self.assertEqual(mock_csv_exporter.call_count, 0)

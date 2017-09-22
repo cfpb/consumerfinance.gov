@@ -17,14 +17,14 @@ actions.clearGeo = () => ( {
   type: 'CLEAR_GEO'
 } );
 
-actions.updateChart = ( geoId, geoName, geoType, includeNational ) => {
+actions.updateChart = ( geoId, geoName, geoType, includeComparison ) => {
   var action = {
     type: 'UPDATE_CHART',
     geo: {
       id: geoId,
       name: geoName
     },
-    includeNational
+    includeComparison
   };
   if ( geoType ) {
     action.geo.type = geoType;
@@ -32,10 +32,10 @@ actions.updateChart = ( geoId, geoName, geoType, includeNational ) => {
   return action;
 };
 
-actions.updateNational = includeNational => {
+actions.updateNational = includeComparison => {
   var action = {
     type: 'UPDATE_CHART',
-    includeNational
+    includeComparison
   };
   return action;
 };
@@ -55,7 +55,12 @@ actions.requestMetros = () => ( {
   isLoadingMetros: true
 } );
 
-actions.fetchMetros = ( metroState, includeNational ) => dispatch => {
+actions.requestNonMetros = () => ( {
+  type: 'REQUEST_NON_METROS',
+  isLoadingNonMetros: true
+} );
+
+actions.fetchMetros = ( metroState, includeComparison ) => dispatch => {
   dispatch( actions.requestMetros( metroState ) );
   return utils.getMetroData( ( err, data ) => {
     if ( err ) {
@@ -64,14 +69,36 @@ actions.fetchMetros = ( metroState, includeNational ) => dispatch => {
     // Alphabetical order
     var newMetros = data[metroState].metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newMetros = newMetros.filter( metro => metro.valid );
+    if ( !newMetros.length ) {
+      newMetros = [{
+        fips: null,
+        name: 'No metros have sufficient data'
+      }];
+    }
     dispatch( actions.setMetros( newMetros ) );
     dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );
-    dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro', includeNational ) );
+    dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro', includeComparison ) );
     return newMetros;
   } );
 };
 
-actions.fetchCounties = ( countyState, includeNational ) => dispatch => {
+actions.fetchNonMetros = ( metroState, includeComparison ) => dispatch => {
+  dispatch( actions.requestNonMetros() );
+  return utils.getNonMetroData( ( err, data ) => {
+    if ( err ) {
+      return console.error( 'Error getting non-metro data', err );
+    }
+    var nonMetros = data.filter( nonMetro => nonMetro.valid );
+    // Alphabetical order
+    nonMetros = nonMetros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    dispatch( actions.setNonMetros( nonMetros ) );
+    dispatch( actions.setGeo( nonMetros[0].fips, nonMetros[0].name, 'non-metro' ) );
+    dispatch( actions.updateChart( nonMetros[0].fips, nonMetros[0].name, 'non-metro', includeComparison ) );
+    return nonMetros;
+  } );
+};
+
+actions.fetchCounties = ( countyState, includeComparison ) => dispatch => {
   dispatch( actions.requestCounties( countyState ) );
   return utils.getCountyData( ( err, data ) => {
     if ( err ) {
@@ -82,7 +109,7 @@ actions.fetchCounties = ( countyState, includeNational ) => dispatch => {
     newCounties = newCounties.filter( county => county.valid );
     dispatch( actions.setCounties( newCounties ) );
     dispatch( actions.setGeo( newCounties[0].fips, newCounties[0].name, 'county' ) );
-    dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].name, 'county', includeNational ) );
+    dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].name, 'county', includeComparison ) );
     return newCounties;
   } );
 };
@@ -90,6 +117,11 @@ actions.fetchCounties = ( countyState, includeNational ) => dispatch => {
 actions.setMetros = metros => ( {
   type: 'SET_METROS',
   metros: metros
+} );
+
+actions.setNonMetros = metros => ( {
+  type: 'SET_NON_METROS',
+  nonMetros: metros
 } );
 
 actions.setCounties = counties => ( {
