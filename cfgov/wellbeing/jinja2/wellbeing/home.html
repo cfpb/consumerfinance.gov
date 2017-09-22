@@ -12,15 +12,15 @@
     {{ super() }}
     <style>
         .m-hero {
-            background-color: #b4d2d1;
+            background-color: #7eb7e8;
         }
         .m-hero_image {
-            background-image: url( '{{ static("img/fwb_hero_760x300.png") }}' );
+            background-image: url( '{{ static("img/fwb_hero_826x380.png") }}' );
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-                    src='{{ static("img/fwb_hero_760x300.png") }}',
+                    src='{{ static("img/fwb_hero_826x380.png") }}',
                     sizingMethod='scale'
             );
-            padding-bottom: 31.915%;
+            padding-bottom: 40.42553191%; /* Image height / max width 940 */
         }
         .question-group {
             padding: 0 30px 30px 30px;
@@ -53,6 +53,14 @@
                 width: 16.6666666667%;
             }
         }
+
+        /* CF Enhancements */
+        .m-notification__subtle {
+            border-width: 0;
+        }
+        .m-notification__subtle .m-notification_message {
+            font-size: 1em;
+        }
     </style>
 {%- endblock %}
 
@@ -79,7 +87,7 @@
 {%- endblock %}
 
 {% block content_main -%}
-    <h2>Here's how it works:</h2>
+    <h2>Here’s how it works:</h2>
 
     <p>
         <b>Answer the questions and get your score.</b>
@@ -100,15 +108,16 @@
 
     <div class="m-notification
                 m-notification__visible
-                m-notification__warning">
+                m-notification__warning
+                m-notification__subtle">
         <span class="m-notification_icon cf-icon"></span>
         <div class="m-notification_content">
-            <div class="h4 m-notification_message">
+            <p class="h4 m-notification_message">
                 We never collect or store the answers you provide.
                 <a href="/privacy/website-privacy-policy/">
-                    See how your privacy is protected
+                    See how your privacy is protected.
                 </a>
-            </div>
+            </p>
         </div>
     </div>
 
@@ -125,7 +134,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-1-completely"
-                               name="question-1"
+                               name="question_1"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
@@ -138,7 +147,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-1-very-well"
-                               name="question-1"
+                               name="question_1"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
@@ -151,7 +160,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-1-somewhat"
-                               name="question-1"
+                               name="question_1"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
@@ -164,7 +173,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-1-very-little"
-                               name="question-1"
+                               name="question_1"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
@@ -177,7 +186,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-1-not-at-all"
-                               name="question-1"
+                               name="question_1"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
@@ -196,7 +205,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-2-completely"
-                               name="question-2"
+                               name="question_2"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
@@ -209,7 +218,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-2-very-well"
-                               name="question-2"
+                               name="question_2"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
@@ -222,7 +231,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-2-somewhat"
-                               name="question-2"
+                               name="question_2"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
@@ -235,7 +244,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-2-very-little"
-                               name="question-2"
+                               name="question_2"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
@@ -248,7 +257,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-2-not-at-all"
-                               name="question-2"
+                               name="question_2"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
@@ -267,7 +276,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-3-completely"
-                               name="question-3"
+                               name="question_3"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
@@ -280,7 +289,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-3-very-well"
-                               name="question-3"
+                               name="question_3"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
@@ -293,7 +302,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-3-somewhat"
-                               name="question-3"
+                               name="question_3"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
@@ -306,7 +315,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-3-very-little"
-                               name="question-3"
+                               name="question_3"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
@@ -319,7 +328,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-3-not-at-all"
-                               name="question-3"
+                               name="question_3"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
@@ -338,7 +347,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-4-completely"
-                               name="question-4"
+                               name="question_4"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
@@ -351,7 +360,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-4-very-well"
-                               name="question-4"
+                               name="question_4"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
@@ -364,7 +373,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-4-somewhat"
-                               name="question-4"
+                               name="question_4"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
@@ -377,7 +386,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-4-very-little"
-                               name="question-4"
+                               name="question_4"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
@@ -390,7 +399,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-4-not-at-all"
-                               name="question-4"
+                               name="question_4"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
@@ -409,7 +418,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-5-completely"
-                               name="question-5"
+                               name="question_5"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
@@ -422,7 +431,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-5-very-well"
-                               name="question-5"
+                               name="question_5"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
@@ -435,7 +444,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-5-somewhat"
-                               name="question-5"
+                               name="question_5"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
@@ -448,7 +457,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-5-very-little"
-                               name="question-5"
+                               name="question_5"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
@@ -461,7 +470,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-5-not-at-all"
-                               name="question-5"
+                               name="question_5"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
@@ -480,7 +489,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-6-completely"
-                               name="question-6"
+                               name="question_6"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
@@ -493,7 +502,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-6-very-well"
-                               name="question-6"
+                               name="question_6"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
@@ -506,7 +515,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-6-somewhat"
-                               name="question-6"
+                               name="question_6"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
@@ -519,7 +528,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-6-very-little"
-                               name="question-6"
+                               name="question_6"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
@@ -532,7 +541,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-6-not-at-all"
-                               name="question-6"
+                               name="question_6"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
@@ -556,7 +565,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-7-always"
-                               name="question-7"
+                               name="question_7"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
@@ -569,7 +578,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-7-often"
-                               name="question-7"
+                               name="question_7"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
@@ -582,7 +591,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-7-sometimes"
-                               name="question-7"
+                               name="question_7"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
@@ -595,7 +604,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-7-rarely"
-                               name="question-7"
+                               name="question_7"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
@@ -608,7 +617,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-7-never"
-                               name="question-7"
+                               name="question_7"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
@@ -627,7 +636,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-8-always"
-                               name="question-8"
+                               name="question_8"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
@@ -640,7 +649,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-8-often"
-                               name="question-8"
+                               name="question_8"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
@@ -653,7 +662,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-8-sometimes"
-                               name="question-8"
+                               name="question_8"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
@@ -666,7 +675,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-8-rarely"
-                               name="question-8"
+                               name="question_8"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
@@ -679,7 +688,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-8-never"
-                               name="question-8"
+                               name="question_8"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
@@ -698,7 +707,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-9-always"
-                               name="question-9"
+                               name="question_9"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
@@ -711,7 +720,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-9-often"
-                               name="question-9"
+                               name="question_9"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
@@ -724,7 +733,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-9-sometimes"
-                               name="question-9"
+                               name="question_9"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
@@ -737,7 +746,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-9-rarely"
-                               name="question-9"
+                               name="question_9"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
@@ -750,7 +759,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-9-never"
-                               name="question-9"
+                               name="question_9"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
@@ -769,7 +778,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-10-always"
-                               name="question-10"
+                               name="question_10"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
@@ -782,7 +791,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-10-often"
-                               name="question-10"
+                               name="question_10"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
@@ -795,7 +804,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-10-sometimes"
-                               name="question-10"
+                               name="question_10"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
@@ -808,7 +817,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-10-rarely"
-                               name="question-10"
+                               name="question_10"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
@@ -821,7 +830,7 @@
                         <input class="a-radio"
                                type="radio"
                                id="question-10-never"
-                               name="question-10"
+                               name="question_10"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
@@ -974,11 +983,28 @@
         </header>
         <p>
             CFPB researchers developed the questionnaire and a way to score it,
-            to measure how well your current money situation is providing you
-            with security and freedom of choice, today and for the future.
+            as a tool to help measure your current financial well-being—that is,
+            how well your current money situation is providing you with
+            financial security and freedom of choice, today and for the future.
         </p>
         <a class="a-link a-link__jump" href="about/">
             <span class="a-link_text">See more background</span>
         </a>
+    </div>
+
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">Legal disclaimer</h2>
+        </header>
+        <p>
+            The content on this page provides general consumer information.
+            It is not legal advice or regulatory guidance.
+            The CFPB updates this information periodically.
+            This information may include links or references
+            to third-party resources or content.
+            We do not endorse the third-party or guarantee
+            the accuracy of this third-party information.
+            There may be other resources that also serve your needs.
+        </p>
     </div>
 {%- endblock %}
