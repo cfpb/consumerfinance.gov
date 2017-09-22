@@ -9,7 +9,8 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore.models import PageManager
 from wagtail.wagtailcore import blocks
 
-from data_research.blocks import ConferenceRegistrationForm
+from data_research.blocks import (
+    ConferenceRegistrationForm, MortgageDataDownloads)
 from jobmanager.models import JobListingTable
 
 from .. import blocks as v1_blocks
@@ -47,6 +48,7 @@ class BrowsePage(CFGOVPage):
         ('chart_block', organisms.ChartBlock()),
         ('mortgage_chart_block', organisms.MortgageChartBlock()),
         ('mortgage_map_block', organisms.MortgageMapBlock()),
+        ('mortgage_downloads_block', MortgageDataDownloads()),
         ('snippet_list', organisms.SnippetList()),
         ('data_snapshot', organisms.DataSnapshot()),
     ], blank=True)
