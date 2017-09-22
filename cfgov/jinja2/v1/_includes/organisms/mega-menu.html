@@ -47,30 +47,29 @@
    ========================================================================== #}
 
 {% macro _nav_item( nav_depth, nav_item ) %}
-    {% set link = nav_item.link if nav_item.link else nav_item %}
-    {% if link %}
-        {% set url = link.page_link.url if link.page_link else link.external_link %}
-        {% set text = link.link_text %}
-        {% set has_children = nav_item.nav_groups | count > 0 %}
+{% set link = nav_item.link if nav_item.link else nav_item %}
+{% if link %}
+    {% set url = link.page_link.url if link.page_link else link.external_link %}
+    {% set text = link.link_text %}
+    {% set has_children = nav_item.nav_groups | count > 0 %}
 
-        <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
-            {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
-            {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
-            <a class="{{ 'u-link__disabled' if url == '' else '' }}
-                      {{ _classes( nav_depth, '-link' ) }}
-                      {{ _classes( nav_depth, '-link__has-children' ) if has_children else '' }}
-                      {{ _classes( nav_depth, '-link__current' ) if url == request.path else '' }}"
-               {{ '' if url == '' else 'href=' + url | e }}
-               {{ 'data-js-hook=behavior_flyout-menu_trigger' if has_children else '' }}
-               {{ 'aria-pressed=false' if has_children else '' }}>
-                  {{ text }}
-            </a>
-            {% if has_children %}
-                {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
-            {% endif %}
-        </li>
-    {% endif %}
-
+    <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
+        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
+        {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
+        <a class="{{ 'u-link__disabled' if url == '' else '' }}
+                  {{ _classes( nav_depth, '-link' ) }}
+                  {{ _classes( nav_depth, '-link__has-children' ) if has_children else '' }}
+                  {{ _classes( nav_depth, '-link__current' ) if url == request.path else '' }}"
+           {{ '' if url == '' else 'href=' + url | e }}
+           {{ 'data-js-hook=behavior_flyout-menu_trigger' if has_children else '' }}
+           {{ 'aria-pressed=false' if has_children else '' }}>
+              {{ text }}
+        </a>
+        {% if has_children %}
+            {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
+        {% endif %}
+    </li>
+{% endif %}
 {% endmacro %}
 
 
@@ -91,32 +90,32 @@
    ========================================================================== #}
 
 {% macro _nav_list( nav_depth, nav_groups ) %}
-    <div class="{{ _classes( nav_depth, '-lists' ) }}">
-        {% for nav_group in nav_groups %}
-        {% set group = nav_group.value %}
-        <div class="{{ _classes( nav_depth, '-list' ) }}">
-            {% if group.group_title %} 
-                <h3 class="h5 
-                          {{ base_class ~ '_group-heading' }} 
-                          {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_title else ''}}"
-                    {% if group.hide_group_title %} aria-hidden="true" {% endif %}>
-                    {{ group.group_title | safe }}
-                </h3>
-            {% endif %}
-            <ul class="m-list m-list__unstyled">
-                {% if nav_depth == 1 -%}
-                <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
-                    {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
-                    {{ global_header_cta.render() }}
-                </li>
-                {%- endif %}
-                {%- for item in group.nav_items %}
-                    {{ _nav_item( nav_depth, item ) }}
-                {%- endfor %}
-            </ul>
-        </div>
-        {% endfor %}
+<div class="{{ _classes( nav_depth, '-lists' ) }}">
+    {% for nav_group in nav_groups %}
+    {% set group = nav_group.value %}
+    <div class="{{ _classes( nav_depth, '-list' ) }}">
+        {% if group.group_title %} 
+        <h3 class="h5 
+                  {{ base_class ~ '_group-heading' }} 
+                  {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_title else ''}}"
+            {% if group.hide_group_title %} aria-hidden="true" {% endif %}>
+            {{ group.group_title | safe }}
+        </h3>
+        {% endif %}
+        <ul class="m-list m-list__unstyled">
+            {% if nav_depth == 1 -%}
+            <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}">
+                {% import 'molecules/global-header-cta.html' as global_header_cta with context %}
+                {{ global_header_cta.render() }}
+            </li>
+            {%- endif %}
+            {%- for item in group.nav_items %}
+                {{ _nav_item( nav_depth, item ) }}
+            {%- endfor %}
+        </ul>
     </div>
+    {% endfor %}
+</div>
 
 {% endmacro %}
 
@@ -145,7 +144,7 @@
      aria-expanded="false"
      data-js-hook="behavior_flyout-menu_content">
     <div class="{{ _classes( nav_depth, '-wrapper' ) }}">
-      {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
+        {{ '<div class="wrapper">' | safe if nav_depth > 1 else '' }}
         {# Open wrapper if needed #}
         {% if nav_depth > 1 %}
         <button class="{{ _classes( nav_depth, '-alt-trigger' ) }}"
@@ -155,43 +154,41 @@
         {% endif %}
         <div class="{{ _classes( nav_depth, '-grid', 'three-col' if nav_item.featured_content or nav_item.nav_groups | count < 4 else '' ) }}">
 
-          {% if nav_depth > 1 %}
+            {% if nav_depth > 1 %}
             <span class="{{ _classes( nav_depth, '-overview' ) }}">
               {# TODO: Remove the check for '#' when real overview pages
                        are added for the Consumer Resources and Education
                        pages. #}
-              {% if nav_overview_url %}
+                {% if nav_overview_url %}
                 <a class="{{ 'u-link__disabled' if nav_overview_url == '#' else '' }}
                           {{ _classes( nav_depth, '-overview-link' ) }}
                           {{ _classes( nav_depth, '-overview-link__current' ) if nav_overview_url == request.path else '' }}"
                     {{ '' if nav_overview_url == request.path or nav_overview_url == '#' else 'href=' + nav_overview_url | e }}>
                     {{ nav_overview_text ~ ' Overview' }}
                 </a>
-              {% endif %}
+                {% endif %}
             </span>
-          {% endif %}
+            {% endif %}
 
-          {% if nav_item.nav_groups %}
-            {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
-          {% endif %}
+            {% if nav_item.nav_groups %}
+                {{ _nav_list( nav_depth, nav_item.nav_groups ) }}
+            {% endif %}
 
-            {% if nav_item.footer %}
+            {% if nav_item.footer and nav_item.footer.value %}
             <div class="{{ base_class ~ '_footer' }}">
-                {{ nav_item.footer.content | safe }}
-
+                {{ nav_item.footer.value.content | safe }}
             </div>
             {% endif %}
         </div>
         {{ featured_menu_content.render(nav_item.featured_content.value) if nav_item.featured_content else ''}}     
-      {# Close Wrapper if needed #}
-      {{ '</div>' | safe if nav_depth > 1 else '' }}
+        {# Close Wrapper if needed #}
+        {{ '</div>' | safe if nav_depth > 1 else '' }}
     </div>
 
     {% if nav_depth == 1 %}
     {% import 'molecules/global-eyebrow.html' as global_eyebrow with context %}
     {{ global_eyebrow.render() }}
     {% endif %}
-
 </div>
 {% endmacro %}
 

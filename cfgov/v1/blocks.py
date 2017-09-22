@@ -188,6 +188,7 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
 class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
     pass
 
+
 class FeaturedMenuContent(blocks.StructBlock):
     draft = blocks.BooleanBlock(required=False)
     link = atoms.Hyperlink(required=False)
@@ -198,12 +199,13 @@ class FeaturedMenuContent(blocks.StructBlock):
 class Link(blocks.StructBlock):
     link_text = blocks.CharBlock(required=True)
     page_link = blocks.PageChooserBlock(
-                    required=False,
-                    help_text='Link to a page in Wagtail.')
-    external_link = blocks.CharBlock(required=False, 
-                        max_length=1000,
-                        default="#",
-                        help_text="Enter url for page outside Wagtail.")
+        required=False,
+        help_text='Link to a page in Wagtail.')
+    external_link = blocks.CharBlock(
+        required=False,
+        max_length=1000,
+        default="#",
+        help_text="Enter url for page outside Wagtail.")
 
 
 class NavItem(blocks.StructBlock):
@@ -221,9 +223,12 @@ class NavItem(blocks.StructBlock):
 
 class NavGroup(blocks.StructBlock):
     draft = blocks.BooleanBlock(required=False)
-    group_title = blocks.CharBlock(required=False,
+    group_title = blocks.CharBlock(
+        required=False,
         label="Column title")
-    hide_group_title = blocks.BooleanBlock(required=False,
+    hide_group_title = blocks.BooleanBlock(
+        required=False,
         label="Hide column title")
-    nav_items =  blocks.ListBlock(NavItem(),
+    nav_items = blocks.ListBlock(
+        NavItem(),
         required=False)

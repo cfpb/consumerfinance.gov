@@ -19,7 +19,8 @@ from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from wagtail.wagtailsnippets.models import register_snippet
 
 from v1 import blocks as v1_blocks
-from v1.atomic_elements import atoms, molecules
+from v1.atomic_elements import molecules
+
 
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
@@ -174,19 +175,20 @@ class Resource(ClusterableModel):
     class Meta:
         ordering = ('order', 'title')
 
+
 @python_2_unicode_compatible
 @register_snippet
 class MenuItem(models.Model):
-
-    link_text = models.CharField(max_length=255,
+    link_text = models.CharField(
+        max_length=255,
         help_text="Display text for menu link")
 
     external_link = models.CharField(
-                        null=True,
-                        blank=True,
-                        max_length=1000,
-                        help_text="Enter url for page outside Wagtail.",
-                        default="#")
+        null=True,
+        blank=True,
+        max_length=1000,
+        help_text="Enter url for page outside Wagtail.",
+        default="#")
 
     page_link = models.ForeignKey(
         'wagtailcore.Page',
@@ -221,7 +223,7 @@ class MenuItem(models.Model):
         ('nav_group', v1_blocks.NavGroup(
             label="Nav items group")),
         ('featured_content', v1_blocks.FeaturedMenuContent(
-            label="Featured content module") )
+            label="Featured content module"))
     ], blank=True)
 
     nav_footer = StreamField([
@@ -248,11 +250,11 @@ class MenuItem(models.Model):
 
     def get_active_block(self, blocks, show_draft):
         active = None
-        for index, block in enumerate(blocks):
+        for idx, block in enumerate(blocks):
             is_draft = block.value.get('draft', '')
-            is_last = index == len(blocks) - 1
+            is_last = idx == len(blocks) - 1
             if (show_draft and is_draft) or \
-               (show_draft and is_last and active == None) or \
+               (show_draft and is_last and active is None) or \
                (not show_draft and not is_draft):
                 active = block
         return active
@@ -261,12 +263,10 @@ class MenuItem(models.Model):
         self.nav_groups = []
         for i in range(4):
             col = getattr(self, 'column_' + str(i + 1))
-            if col:
-                block = self.get_active_block(col, show_draft)
-                if block and block.block_type == 'nav_group':
-                    self.nav_groups.append(block)
-                elif block and block.block_type == "featured_content":
-                    self.featured_content = block
-        footer = self.get_active_block(self.nav_footer, show_draft)
-        self.footer = footer.value if footer else ''      
+            block = self.get_active_block(col, show_draft)    
+            if block and block.block_type == 'nav_group':
+                self.nav_groups.append(block)
+            elif block and block.block_type == "featured_content":
+                self.featured_content = block
+        self.footer = self.get_active_block(self.nav_footer, show_draft)
         return self
