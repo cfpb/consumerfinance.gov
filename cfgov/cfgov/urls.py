@@ -10,7 +10,6 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
-from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
@@ -145,14 +144,6 @@ urlpatterns = [
         RedirectView.as_view(
             url='/about-us/newsroom/%(path)s', permanent=True)),
 
-    flagged_url(
-        'WAGTAIL_ABOUT_US',
-        r'^about-us/newsroom/press-resources/$',
-        lambda req: ServeView.as_view()(req, req.path),
-        fallback=TemplateView.as_view(
-            template_name='newsroom/press-resources/index.html'),
-        name='press-resources'),
-
     url(r'^the-bureau/(?P<path>.*)$',
             RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
                                  permanent=True)
@@ -164,22 +155,6 @@ urlpatterns = [
     url(r'^doing-business-with-us/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
-    url(r'^about-us/doing-business-with-us/', include([
-        flagged_url(
-            'WAGTAIL_DOING_BUSINESS_WITH_US',
-            r'^$',
-            lambda req: ServeView.as_view()(req, req.path),
-            fallback=TemplateView.as_view(
-                template_name='about-us/doing-business-with-us/index.html'),
-            name='index'),
-        flagged_url(
-            'WAGTAIL_DOING_BUSINESS_WITH_US',
-            r'^(?P<page_slug>[\w-]+)/$',
-            lambda req, page_slug: ServeView.as_view()(req, req.path),
-            fallback=SheerTemplateView.as_view(),
-            name='page')
-        ],
-        namespace='business')),
 
     url(r'^external-site/$', ExternalURLNoticeView.as_view(),
         name='external-site'),
@@ -237,14 +212,6 @@ urlpatterns = [
         RedirectView.as_view(url='/about-us/newsroom/feed/', permanent=True)),
     url(r'^newsroom-feed/$',
         RedirectView.as_view(url='/about-us/newsroom/feed/', permanent=True)),
-
-    flagged_url(
-        'WAGTAIL_ABOUT_US',
-        r'^about-us/$',
-        lambda req: ServeView.as_view()(req, req.path),
-        fallback=SheerTemplateView.as_view(
-            template_name='about-us/index.html'),
-        name='about-us'),
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/careers/%(path)s', permanent=True)),
