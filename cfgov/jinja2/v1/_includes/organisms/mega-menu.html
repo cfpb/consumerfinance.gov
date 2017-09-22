@@ -32,49 +32,6 @@
 
 {# ==========================================================================
 
-   _nav_item()
-
-   ==========================================================================
-
-   Description:
-
-   Creates mega menu nav item markup when given:
-
-   nav_depth: Level of menu nesting. 1 equals the root menu.
-
-   nav_item: A nav menu item.
-
-   ========================================================================== #}
-
-{% macro _nav_item( nav_depth, nav_item ) %}
-{% set link = nav_item.link if nav_item.link else nav_item %}
-{% if link %}
-    {% set url = link.page_link.url if link.page_link else link.external_link %}
-    {% set text = link.link_text %}
-    {% set has_children = nav_item.nav_groups | count > 0 %}
-
-    <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
-        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
-        {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
-        <a class="{{ 'u-link__disabled' if url == '' else '' }}
-                  {{ _classes( nav_depth, '-link' ) }}
-                  {{ _classes( nav_depth, '-link__has-children' ) if has_children else '' }}
-                  {{ _classes( nav_depth, '-link__current' ) if url == request.path else '' }}"
-           {{ '' if url == '' else 'href=' + url | e }}
-           {{ 'data-js-hook=behavior_flyout-menu_trigger' if has_children else '' }}
-           {{ 'aria-pressed=false' if has_children else '' }}>
-              {{ text }}
-        </a>
-        {% if has_children %}
-            {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
-        {% endif %}
-    </li>
-{% endif %}
-{% endmacro %}
-
-
-{# ==========================================================================
-
    _nav_list()
 
    ==========================================================================
@@ -191,6 +148,49 @@
     {% endif %}
 </div>
 {% endmacro %}
+
+{# ==========================================================================
+
+   _nav_item()
+
+   ==========================================================================
+
+   Description:
+
+   Creates mega menu nav item markup when given:
+
+   nav_depth: Level of menu nesting. 1 equals the root menu.
+
+   nav_item: A nav menu item.
+
+   ========================================================================== #}
+
+{% macro _nav_item( nav_depth, nav_item ) %}
+{% set link = nav_item.link if nav_item.link else nav_item %}
+{% if link %}
+    {% set url = link.page_link.url if link.page_link else link.external_link %}
+    {% set text = link.link_text %}
+    {% set has_children = nav_item.nav_groups | count > 0 %}
+
+    <li class="m-list_item {{ _classes( nav_depth, '-item' ) }}"
+        {{ 'data-js-hook=behavior_flyout-menu' if has_children else '' }}>
+        {# TODO: Disable link (or overview link) of page user is currently on (on mobile). #}
+        <a class="{{ 'u-link__disabled' if url == '' else '' }}
+                  {{ _classes( nav_depth, '-link' ) }}
+                  {{ _classes( nav_depth, '-link__has-children' ) if has_children else '' }}
+                  {{ _classes( nav_depth, '-link__current' ) if url == request.path else '' }}"
+           {{ '' if url == '' else 'href=' + url | e }}
+           {{ 'data-js-hook=behavior_flyout-menu_trigger' if has_children else '' }}
+           {{ 'aria-pressed=false' if has_children else '' }}>
+              {{ text }}
+        </a>
+        {% if has_children %}
+            {{ _nav_level( nav_depth | int + 1, nav_item, url, text ) }}
+        {% endif %}
+    </li>
+{% endif %}
+{% endmacro %}
+
 
 {# ==========================================================================
 
