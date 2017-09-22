@@ -608,6 +608,12 @@ body {
             }
 
             &-list {
+                .grid_column(3);
+            }
+
+            
+
+            &-grid&__three-col &-list {
                 .grid_column(4);
             }
 
@@ -654,7 +660,7 @@ body {
         }
         // 2nd-level menu - Large desktop.
          &_content-2 {
-            &-grid {
+            &-grid&__three-col {
                 .grid_column( 8 );
                 // TODO: Check if .grid_nested-col-group()
                 //       can be used here when implementing Featured Menu Content.

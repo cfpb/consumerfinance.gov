@@ -31,6 +31,8 @@
    ========================================================================== #}
 
 {% macro render( value ) %}
+{% set featured_image = image(value.image.upload, 'width-270') %}
+
 <aside class="m-featured-menu-content
               {{ 'm-featured-menu-content__horizontal'
                  if value.is_horizontal == true else '' }}">
@@ -44,9 +46,10 @@
             {{ value.body }}
         </p>
     </div>
+
     <a href="{{ value.link.url }}"
        class="m-featured-menu-content_img">
-        <img src="{{ static(value.image.src) }}"
+        <img src="{{ featured_image.url }}"
              alt="{{ value.image.alt }}"
              height="150"
              width="270">

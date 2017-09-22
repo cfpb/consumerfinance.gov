@@ -3,6 +3,7 @@ from django.utils.module_loading import import_string
 from django.utils.safestring import mark_safe, SafeText
 from django.utils.text import slugify
 from wagtail.wagtailcore import blocks
+from v1.atomic_elements import atoms
 
 from .util.util import get_unique_id
 
@@ -186,3 +187,43 @@ class PlaceholderFieldBlock(blocks.FieldBlock):
 
 class PlaceholderCharBlock(PlaceholderFieldBlock, blocks.CharBlock):
     pass
+
+class FeaturedMenuContent(blocks.StructBlock):
+    draft = blocks.BooleanBlock(required=False)
+    link = atoms.Hyperlink(required=False)
+    body = blocks.RichTextBlock(required=False)
+    image = atoms.ImageBasic(required=False)
+
+
+class Link(blocks.StructBlock):
+    link_text = blocks.CharBlock(required=True)
+    page_link = blocks.PageChooserBlock(
+                    required=False,
+                    help_text='Link to a page in Wagtail.')
+    external_link = blocks.CharBlock(required=False, 
+                        max_length=1000,
+                        default="#",
+                        help_text="Enter url for page outside Wagtail.")
+
+
+class NavItem(blocks.StructBlock):
+    link = Link(required=False)
+    nav_groups = blocks.StreamBlock([
+        ('nav_group', blocks.StructBlock([
+            ('nav_items', blocks.ListBlock(
+                blocks.StructBlock([
+                    ('link', Link())
+                ])
+            ))
+        ]))
+    ], label="Child nav items")
+
+
+class NavGroup(blocks.StructBlock):
+    draft = blocks.BooleanBlock(required=False)
+    group_title = blocks.CharBlock(required=False,
+        label="Column title")
+    hide_group_title = blocks.BooleanBlock(required=False,
+        label="Hide column title")
+    nav_items =  blocks.ListBlock(NavItem(),
+        required=False)

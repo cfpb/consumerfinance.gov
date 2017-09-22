@@ -92,7 +92,9 @@
             </a>
 
             {% block primary_nav %}
-                {% include 'organisms/mega-menu.html' with context %}
+                {% set menu_items = page.get_menu_items(request) %}
+                {% from 'organisms/mega-menu.html' import mega_menu with context %}
+                {{ mega_menu(menu_items) }}
             {% endblock primary_nav %}
         </div>
 

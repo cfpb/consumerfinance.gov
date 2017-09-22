@@ -564,6 +564,9 @@ FLAGS = {
 
     # The release of the consumer Financial Well Being Scale app
     'FWB_RELEASE': {},
+
+    # Menu draft state
+    'DRAFT_MENU': {},
 }
 
 

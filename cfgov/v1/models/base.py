@@ -31,6 +31,7 @@ from v1 import get_protected_url
 from v1.atomic_elements import molecules, organisms
 from v1.models.snippets import ReusableText, ReusableTextChooserBlock
 from v1.util import ref
+from flags.template_functions import flag_enabled, flag_disabled
 
 
 class CFGOVAuthoredPages(TaggedItemBase):
@@ -225,6 +226,14 @@ class CFGOVPage(Page):
             if ancestor in home_page_children:
                 return [ancestor for ancestor in ancestors[i + 1:]]
         return []
+
+    def get_menu_items(self, request):
+        from v1.models.snippets import MenuItem
+        draft_flag_enabled = flag_enabled('DRAFT_MENU', request)
+        menu_items = [menu_item.construct_item(
+            draft_flag_enabled) for menu_item in 
+            MenuItem.objects.all().order_by('order')]
+        return {'nav_groups': [{'value': {'nav_items': menu_items}}]}
 
     def get_appropriate_descendants(self, hostname, inclusive=True):
         return CFGOVPage.objects.live().descendant_of(

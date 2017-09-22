@@ -8,7 +8,9 @@ from taggit.models import TaggedItemBase
 from taggit.managers import TaggableManager
 
 from django.utils.encoding import python_2_unicode_compatible
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel, StreamFieldPanel, PageChooserPanel)
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
@@ -16,8 +18,8 @@ from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
 from wagtail.wagtailsnippets.models import register_snippet
 
-from v1.atomic_elements import molecules
-
+from v1 import blocks as v1_blocks
+from v1.atomic_elements import atoms, molecules
 
 class ReusableTextChooserBlock(SnippetChooserBlock):
     class Meta:
@@ -171,3 +173,100 @@ class Resource(ClusterableModel):
 
     class Meta:
         ordering = ('order', 'title')
+
+@python_2_unicode_compatible
+@register_snippet
+class MenuItem(models.Model):
+
+    link_text = models.CharField(max_length=255,
+        help_text="Display text for menu link")
+
+    external_link = models.CharField(
+                        null=True,
+                        blank=True,
+                        max_length=1000,
+                        help_text="Enter url for page outside Wagtail.",
+                        default="#")
+
+    page_link = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        related_name='+',
+        help_text='Link to a page in Wagtail.'
+    )
+
+    order = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        help_text='Determines order in which this menu item appears in nav.'
+    )
+
+    column_1 = StreamField([
+        ('nav_group', v1_blocks.NavGroup(
+            label="Nav items group"),)
+    ], blank=True)
+
+    column_2 = StreamField([
+        ('nav_group', v1_blocks.NavGroup(
+            label="Nav items group"))
+    ], blank=True)
+
+    column_3 = StreamField([
+        ('nav_group', v1_blocks.NavGroup(
+            label="Nav items group"))
+    ], blank=True)
+
+    column_4 = StreamField([
+        ('nav_group', v1_blocks.NavGroup(
+            label="Nav items group")),
+        ('featured_content', v1_blocks.FeaturedMenuContent(
+            label="Featured content module") )
+    ], blank=True)
+
+    nav_footer = StreamField([
+        ('footer', blocks.StructBlock([
+            ('draft', blocks.BooleanBlock(required=False)),
+            ('content', blocks.RichTextBlock(required=False))
+        ]))
+    ], blank=True)
+
+    panels = [
+        FieldPanel('link_text'),
+        PageChooserPanel('page_link'),
+        FieldPanel('external_link'),
+        FieldPanel('order'),
+        StreamFieldPanel('column_1'),
+        StreamFieldPanel('column_2'),
+        StreamFieldPanel('column_3'),
+        StreamFieldPanel('column_4'),
+        StreamFieldPanel('nav_footer'),
+    ]
+
+    def __str__(self):
+        return self.link_text
+
+    def get_active_block(self, blocks, show_draft):
+        active = None
+        for index, block in enumerate(blocks):
+            is_draft = block.value.get('draft', '')
+            is_last = index == len(blocks) - 1
+            if (show_draft and is_draft) or \
+               (show_draft and is_last and active == None) or \
+               (not show_draft and not is_draft):
+                active = block
+        return active
+
+    def construct_item(self, show_draft):
+        self.nav_groups = []
+        for i in range(4):
+            col = getattr(self, 'column_' + str(i + 1))
+            if col:
+                block = self.get_active_block(col, show_draft)
+                if block and block.block_type == 'nav_group':
+                    self.nav_groups.append(block)
+                elif block and block.block_type == "featured_content":
+                    self.featured_content = block
+        footer = self.get_active_block(self.nav_footer, show_draft)
+        self.footer = footer.value if footer else ''      
+        return self
