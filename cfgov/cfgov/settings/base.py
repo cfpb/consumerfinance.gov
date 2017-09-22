@@ -469,12 +469,15 @@ CSP_STYLE_SRC = (
     'fast.fonts.net',
     'tagmanager.google.com',
     'optimize.google.com',
-    'api.mapbox.com')
+    'api.mapbox.com',
+    'fonts.googleapis.com')
 
 # These specify valid image sources
 CSP_IMG_SRC = (
     "'self'",
     's3.amazonaws.com',
+    'www.gstatic.com',
+    'ssl.gstatic.com',
     'stats.g.doubleclick.net',
     'files.consumerfinance.gov',
     'img.youtube.com',
@@ -502,7 +505,7 @@ CSP_FRAME_SRC = (
     'universal.iperceptions.com')
 
 # These specify where we allow fonts to come from
-CSP_FONT_SRC = ("'self'", 'fast.fonts.net')
+CSP_FONT_SRC = ("'self'",'data:', 'fast.fonts.net', 'fonts.google.com')
 
 # These specify hosts we can make (potentially) cross-domain AJAX requests to.
 CSP_CONNECT_SRC = ("'self'",
