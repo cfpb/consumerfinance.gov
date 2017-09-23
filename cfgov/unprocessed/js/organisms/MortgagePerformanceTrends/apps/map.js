@@ -122,6 +122,7 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   let zoomLevel;
   if ( !state.geo.id ) {
     this.chart.highchart.chart.zoomOut();
+    this.chart.highchart.chart.get( prevState.geo.id ).select( false );
   }
   if ( prevState.date === state.date && prevState.geo.type === state.geo.type && state.geo.id ) {
     // Highcharts zooming is unreliable and difficult to customize :(
