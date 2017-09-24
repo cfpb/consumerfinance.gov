@@ -76,8 +76,8 @@ actions.fetchMetros = ( metroState, includeComparison ) => dispatch => {
       }];
     }
     dispatch( actions.setMetros( newMetros ) );
-    dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );
-    dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro', includeComparison ) );
+    // dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );
+    // dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro', includeComparison ) );
     return newMetros;
   } );
 };
@@ -92,8 +92,8 @@ actions.fetchNonMetros = ( metroState, includeComparison ) => dispatch => {
     // Alphabetical order
     nonMetros = nonMetros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     dispatch( actions.setNonMetros( nonMetros ) );
-    dispatch( actions.setGeo( nonMetros[0].fips, nonMetros[0].name, 'non-metro' ) );
-    dispatch( actions.updateChart( nonMetros[0].fips, nonMetros[0].name, 'non-metro', includeComparison ) );
+    // dispatch( actions.setGeo( nonMetros[0].fips, nonMetros[0].name, 'non-metro' ) );
+    // dispatch( actions.updateChart( nonMetros[0].fips, nonMetros[0].name, 'non-metro', includeComparison ) );
     return nonMetros;
   } );
 };
@@ -108,8 +108,8 @@ actions.fetchCounties = ( countyState, includeComparison ) => dispatch => {
     var newCounties = data[countyState].counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newCounties = newCounties.filter( county => county.valid );
     dispatch( actions.setCounties( newCounties ) );
-    dispatch( actions.setGeo( newCounties[0].fips, newCounties[0].name, 'county' ) );
-    dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].name, 'county', includeComparison ) );
+    // dispatch( actions.setGeo( newCounties[0].fips, newCounties[0].name, 'county' ) );
+    // dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].name, 'county', includeComparison ) );
     return newCounties;
   } );
 };

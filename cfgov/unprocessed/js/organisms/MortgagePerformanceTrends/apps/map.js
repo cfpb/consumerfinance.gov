@@ -70,24 +70,24 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
       geoId = '';
       geoName = '';
-      this.chart.highchart.chart.zoomOut();
       action = actions.setGeo( geoId, geoName, geoType );
       break;
     case 'mp-map-state':
       geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
-      if ( geoType === 'metro' ) {
+      if ( geoType === 'metro' || geoType === 'county' ) {
         abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
+        // If no state is selected, zoom out and abort
         if ( !abbr ) {
-          return this.chart.highchart.chart.zoomOut();
+          this.chart.highchart.chart.zoomOut();
+          action = actions.setGeo( '', '', geoType );
+          break;
         }
+      }
+      if ( geoType === 'metro' ) {
         action = actions.fetchMetros( abbr );
         break;
       }
       if ( geoType === 'county' ) {
-        abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
-        if ( !abbr ) {
-          return this.chart.highchart.chart.zoomOut();
-        }
         action = actions.fetchCounties( abbr );
         break;
       }
@@ -120,33 +120,40 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
 
 MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   let zoomLevel;
-  if ( !state.geo.id ) {
-    this.chart.highchart.chart.zoomOut();
+  const prevType = prevState.geo.type;
+  const currType = state.geo.type;
+  const prevId = prevState.geo.id;
+  const currId = state.geo.id;
+  if ( prevState.geo.id && prevState.geo.id !== state.geo.id ) {
     this.chart.highchart.chart.get( prevState.geo.id ).select( false );
   }
-  if ( prevState.date === state.date && prevState.geo.type === state.geo.type && state.geo.id ) {
+  if ( prevState.date === state.date && prevType === currType && state.geo.id ) {
     // Highcharts zooming is unreliable and difficult to customize :(
     // http://api.highcharts.com/highmaps/Chart.mapZoom
     // If it's a state or non-metro, zoom in more than other location types
-    zoomLevel = state.geo.type === 'state' || utils.isNonMetro( state.geo.id ) ? 5 : 10;
+    zoomLevel = currType === 'state' || utils.isNonMetro( state.geo.id ) ? 5 : 10;
     this.chart.highchart.chart.get( state.geo.id ).select( true );
     this.chart.highchart.chart.get( state.geo.id ).zoomTo();
     this.chart.highchart.chart.mapZoom( zoomLevel );
   }
-  if ( prevState.date !== state.date || prevState.geo.type !== state.geo.type ) {
+  // If no geo is selected, ensure metro and county dropdowns are cleared
+  if ( !currId || prevType !== currType ) {
+    this.$metro.value = '';
+    this.$metro.innerHTML = '';
+    this.$county.value = '';
+    this.$county.innerHTML = '';
+  }
+  // If the geo type was changed, ensure the state dropdown is cleared as well
+  if ( prevType !== currType ) {
+    this.$state.value = '';
+  }
+  if ( prevState.date !== state.date || prevType !== currType ) {
     store.dispatch( actions.startLoading() );
     this.chart.update( {
-      source: `map-data/${ this.timespan }/${ _plurals[state.geo.type] }/${ state.date }`,
-      metadata: _plurals[state.geo.type],
+      source: `map-data/${ this.timespan }/${ _plurals[currType] }/${ state.date }`,
+      metadata: _plurals[currType],
       tooltipFormatter: this.renderTooltip()
     } ).then( () => {
-      if ( prevState.geo.type !== state.geo.type ) {
-        this.$state.value = '';
-        this.$metro.value = '';
-        this.$county.value = '';
-        this.$county.innerHTML = '';
-        this.chart.highchart.chart.zoomOut();
-      }
       store.dispatch( actions.stopLoading() );
     } );
   }
@@ -167,9 +174,6 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
   }
   if ( geoType === 'county' || geoType === 'metro' ) {
     utils.showEl( this.$container.querySelector( '#mp-map-state-container' ) );
-  }
-  if ( !state.geo.type ) {
-    return this.chart.highchart.chart.zoomOut();
   }
   if ( geo ) {
     utils.showEl( geo );

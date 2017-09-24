@@ -19,6 +19,14 @@ var utils = {
     el.style.display = 'none';
     return el;
   },
+  disableEl: el => {
+    el.disabled = true;
+    return el;
+  },
+  enableEl: el => {
+    el.disabled = false;
+    return el;
+  },
   getCountyData: cb => {
     if ( counties ) {
       return cb( null, counties );
