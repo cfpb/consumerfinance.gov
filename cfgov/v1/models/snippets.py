@@ -248,25 +248,32 @@ class MenuItem(models.Model):
     def __str__(self):
         return self.link_text
 
-    def get_active_block(self, blocks, show_draft):
-        active = None
-        for idx, block in enumerate(blocks):
-            is_draft = block.value.get('draft', '')
-            is_last = idx == len(blocks) - 1
-            if (show_draft and is_draft) or \
-               (show_draft and is_last and active is None) or \
-               (not show_draft and not is_draft):
-                active = block
-        return active
-
-    def construct_item(self, show_draft):
+    def filter_blocks(self, show_draft):
         self.nav_groups = []
-        for i in range(4):
-            col = getattr(self, 'column_' + str(i + 1))
-            block = self.get_active_block(col, show_draft)    
+        for i in range(1, 5):
+            col = getattr(self, 'column_' + str(i))
+            block = self.get_block_by_state(col, show_draft)
             if block and block.block_type == 'nav_group':
                 self.nav_groups.append(block)
             elif block and block.block_type == "featured_content":
                 self.featured_content = block
-        self.footer = self.get_active_block(self.nav_footer, show_draft)
+        self.footer = self.get_block_by_state(
+            self.nav_footer, show_draft)
         return self
+
+    @classmethod
+    def get_items(cls, show_draft):
+        return [item.filter_blocks(show_draft)
+                for item in cls.objects.all().order_by('order')]
+
+    @staticmethod
+    def get_block_by_state(blocks, show_draft):
+        block_to_display = None
+        for i, block in enumerate(blocks):
+            is_draft = block.value.get('draft', '')
+            is_last = i == len(blocks) - 1
+            if (not show_draft and not is_draft) or \
+               (show_draft and is_draft) or \
+               (show_draft and is_last and block_to_display is None):
+                    block_to_display = block
+        return block_to_display

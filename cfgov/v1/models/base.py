@@ -230,10 +230,7 @@ class CFGOVPage(Page):
 
     def get_menu_items(self, request):
         from v1.models.snippets import MenuItem
-        draft_flag_enabled = flag_enabled('DRAFT_MENU', request)
-        menu_items = [menu_item.construct_item(
-            draft_flag_enabled) for menu_item in
-            MenuItem.objects.all().order_by('order')]
+        menu_items = MenuItem.get_items(flag_enabled('DRAFT_MENU', request))
         return {'nav_groups': [{'value': {'nav_items': menu_items}}]}
 
     def get_appropriate_descendants(self, hostname, inclusive=True):
