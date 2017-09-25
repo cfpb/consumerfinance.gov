@@ -36,7 +36,7 @@ const COMMON_MODULE_CONFIG = {
       test: /node_modules/,
       // The below regex will capture all node modules that start with `cf`
       // or atomic-component. Regex test: https://regex101.com/r/zizz3V/1/.
-      exclude: /node_modules\/(?:cf.+)/
+      exclude: /node_modules\/(?:cf.+|atomic-component)/
     }
   } ]
 };
