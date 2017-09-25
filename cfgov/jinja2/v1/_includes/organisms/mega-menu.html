@@ -54,7 +54,7 @@
         {% if group.group_title %} 
         <h3 class="h5 
                   {{ base_class ~ '_group-heading' }} 
-                  {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_title else ''}}"
+                  {{ base_class ~ '_group-heading' ~ '__hidden' if group.hide_group_title else ''}}"
             {% if group.hide_group_title %} aria-hidden="true" {% endif %}>
             {{ group.group_title | safe }}
         </h3>
