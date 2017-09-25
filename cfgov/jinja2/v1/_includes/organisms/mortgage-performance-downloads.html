@@ -17,7 +17,7 @@
 <div class="o-full-width-text-group">
     <div class="m-full-width-text">
         <h2>The most recent data</h2>
-        <p>We recommend using the most recent data, which include the full time series and all revisions. Published in {{ pub_date_formatted }}, these data cover January 2008 - {{ thru_month_formatted }}.</p>      
+        <p>We recommend using the most recent data, which include the full time series and all revisions. These data cover {{ from_month_formatted }} - {{ thru_month_formatted }}.</p>      
     </div>
 </div>
 
@@ -68,13 +68,14 @@
         </tr>
     </tbody>
 </table>
+<p class="m-chart-footnote">Date published: {{ pub_date_formatted }}
 </div>
 
 {% if value.show_archives and archive_dates %}
 <div class="o-full-width-text-group">
     <div class="m-full-width-text">
         <h2>Archived versions</h2>
-        <p>All archived versions have data series that begin January 2008.</p><br>
+        <p>Archived versions do not include later revisions.</p><br>
     </div>
 </div>
 {% for date in archive_dates %}
@@ -82,7 +83,7 @@
 {% set archive_90 = download_files[date]['percent_90'] %}
 <div class="o-full-width-text-group">
     <div class="m-full-width-text">
-        <h5> Download mortgage performance data through {{ download_files[date]['thru_month'] }}</h5>
+        <h5> Download archival data {{ from_month_formatted }} - {{ download_files[date]['thru_month'] }}</h5>
     </div>
 </div>
 <div class="block block__flush-top">
