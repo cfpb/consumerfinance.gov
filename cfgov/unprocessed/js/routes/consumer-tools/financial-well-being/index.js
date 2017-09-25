@@ -2,7 +2,9 @@
 'use strict';
 
 var Analytics = require( '../../../modules/Analytics' );
+
 ( function() {
+
   var totalQuestions = 12;
   var quizComplete = false;
   var questionValues = {};
@@ -15,14 +17,14 @@ var Analytics = require( '../../../modules/Analytics' );
 
   function enableSubmit() {
     submitButton.title = 'Get your score';
-    var className = 'a-btn__disabled';
+    var disabledClass = 'a-btn__disabled';
 
     if ( submitButton.classList ) {
-      submitButton.classList.remove( className );
+      submitButton.classList.remove( disabledClass );
     } else {
       // Support browsers who don't have the classList API.
       var classRegex = new RegExp( '(^|\\b)' +
-                                   className.split( ' ' ).join( '|' ) +
+                                   disabledClass.split( ' ' ).join( '|' ) +
                                    '(\\b|$)', 'gi' );
       submitButton.className = submitButton.className.replace( classRegex,
                                                                ' ' );
@@ -78,8 +80,8 @@ var Analytics = require( '../../../modules/Analytics' );
   submitButton.title = 'Please answer all questions to get your score';
 
   // Look at all radios on coming back to the page or on reload
-  radioButtons.forEach( function( input ) {
-    handleRadio( input );
-  } );
+  [].forEach.call( radioButtons, function( el ) {
+    handleRadio( el );
+  });
 
 } )();
