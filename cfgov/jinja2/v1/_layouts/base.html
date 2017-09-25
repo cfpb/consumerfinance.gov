@@ -242,12 +242,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
     {% include '/js/routes/common.js' %}
 </script>
-{# Remove after sheer has been completely phased out #}
-{% if not page %}
-<script>
-    {% include '/js/routes/sheer.js' %}
-</script>
-{% endif %}
 
 {# Include template and page-specific JavaScript. #}
 {% macro page_template_js() %}
