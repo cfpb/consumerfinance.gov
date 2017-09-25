@@ -1,6 +1,17 @@
 /* eslint no-extra-semi: "off" */
 'use strict';
 
+var Expandable = require( '../../../../organisms/Expandable' );
+
+var expandableDom = document.querySelectorAll( '.content .o-expandable' );
+ var expandable;
+ if ( expandableDom ) {
+   for ( var i = 0, len = expandableDom.length; i < len; i++ ) {
+     expandable = new Expandable( expandableDom[i] );
+     expandable.init();
+   }
+ }
+
 ( function() {
 
   if ( !location.pathname.match( '/results' ) ) {
