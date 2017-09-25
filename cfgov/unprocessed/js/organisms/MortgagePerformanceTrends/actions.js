@@ -4,15 +4,6 @@ var utils = require( './utils' );
 
 var actions = {};
 
-actions.setGeo = ( geoId, geoName, geoType ) => ( {
-  type: 'SET_GEO',
-  geo: {
-    type: geoType,
-    id: geoId,
-    name: geoName
-  }
-} );
-
 actions.clearGeo = () => ( {
   type: 'CLEAR_GEO'
 } );
@@ -29,6 +20,14 @@ actions.updateChart = ( geoId, geoName, geoType, includeComparison ) => {
   if ( geoType ) {
     action.geo.type = geoType;
   }
+  return action;
+};
+
+actions.zoomChart = stateAbbr => {
+  var action = {
+    type: 'ZOOM_CHART',
+    target: stateAbbr
+  };
   return action;
 };
 
@@ -67,17 +66,18 @@ actions.fetchMetros = ( metroState, includeComparison ) => dispatch => {
       return console.error( 'Error getting metro data', err );
     }
     // Alphabetical order
-    var newMetros = data[metroState].metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    let newMetros = data[metroState].metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newMetros = newMetros.filter( metro => metro.valid );
     if ( !newMetros.length ) {
-      newMetros = [{
+      newMetros = [ {
         fips: null,
         name: 'No metros have sufficient data'
-      }];
+      } ];
     }
     dispatch( actions.setMetros( newMetros ) );
-    // dispatch( actions.setGeo( newMetros[0].fips, newMetros[0].name, 'metro' ) );
-    // dispatch( actions.updateChart( newMetros[0].fips, newMetros[0].name, 'metro', includeComparison ) );
+    if ( newMetros.length ) {
+      dispatch( actions.zoomChart( metroState ) );
+    }
     return newMetros;
   } );
 };
@@ -91,9 +91,6 @@ actions.fetchNonMetros = ( metroState, includeComparison ) => dispatch => {
     var nonMetros = data.filter( nonMetro => nonMetro.valid );
     // Alphabetical order
     nonMetros = nonMetros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
-    dispatch( actions.setNonMetros( nonMetros ) );
-    // dispatch( actions.setGeo( nonMetros[0].fips, nonMetros[0].name, 'non-metro' ) );
-    // dispatch( actions.updateChart( nonMetros[0].fips, nonMetros[0].name, 'non-metro', includeComparison ) );
     return nonMetros;
   } );
 };
@@ -107,7 +104,9 @@ actions.fetchCounties = ( countyState, includeComparison ) => dispatch => {
     // Alphabetical order
     var newCounties = data[countyState].counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newCounties = newCounties.filter( county => county.valid );
+
     dispatch( actions.setCounties( newCounties ) );
+    dispatch( actions.zoomChart( countyState ) );
     // dispatch( actions.setGeo( newCounties[0].fips, newCounties[0].name, 'county' ) );
     // dispatch( actions.updateChart( newCounties[0].fips, newCounties[0].name, 'county', includeComparison ) );
     return newCounties;

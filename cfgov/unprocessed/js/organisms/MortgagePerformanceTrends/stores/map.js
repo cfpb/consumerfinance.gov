@@ -10,7 +10,6 @@ const updateGeo = ( geo, action ) => {
         id: null,
         name: null
       };
-    case 'SET_GEO':
     case 'UPDATE_CHART':
       return {
         type: action.geo.type || geo.type,
@@ -55,6 +54,15 @@ const isLoading = action => {
       return action.isLoading;
     default:
       return false;
+  }
+};
+
+const updateZoomTarget = ( prevTarget, action ) => {
+  switch ( action.type ) {
+    case 'ZOOM_CHART':
+      return action.target;
+    default:
+      return null;
   }
 };
 
@@ -107,6 +115,7 @@ class MapStore extends Store {
       isLoadingMetros: isLoadingMetros( action ),
       isLoadingCounties: isLoadingCounties( action ),
       isLoading: isLoading( action ),
+      zoomTarget: updateZoomTarget( state.zoomTarget, action ),
       counties: updateCounties( state.counties, action ),
       metros: updateMetros( state.metros, action )
     };
