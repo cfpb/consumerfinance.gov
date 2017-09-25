@@ -459,7 +459,8 @@ CSP_SCRIPT_SRC = ("'self'",
                   'trk.cetrk.com',
                   'universal.iperceptions.com',
                   'sample.crazyegg.com',
-                  'about:'
+                  'about:',
+                  'connect.facebook.net'
                   )
 
 # These specify valid sources of CSS code
@@ -492,7 +493,8 @@ CSP_IMG_SRC = (
     'api.mapbox.com',
     '*.tiles.mapbox.com',
     'stats.search.usa.gov',
-    'data:')
+    'data:',
+    'www.facebook.com')
 
 # These specify what URL's we allow to appear in frames/iframes
 CSP_FRAME_SRC = (
@@ -502,7 +504,9 @@ CSP_FRAME_SRC = (
     'optimize.google.com',
     'www.youtube.com',
     '*.doubleclick.net',
-    'universal.iperceptions.com')
+    'universal.iperceptions.com',
+    'www.facebook.com',
+    'staticxx.facebook.com')
 
 # These specify where we allow fonts to come from
 CSP_FONT_SRC = ("'self'", "data:", "fast.fonts.net", "fonts.google.com", "fonts.gstatic.com")
