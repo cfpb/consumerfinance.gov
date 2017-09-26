@@ -1,7 +1,7 @@
 /* eslint no-extra-semi: "off" */
 'use strict';
 
-var Analytics = require( '../../../modules/Analytics' );
+var Analytics = require( '../../../../modules/Analytics' );
 var Expandable = require( '../../../../organisms/Expandable' );
 
 var expandableDom = document.querySelectorAll( '.content .o-expandable' );
