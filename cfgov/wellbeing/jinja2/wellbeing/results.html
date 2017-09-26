@@ -26,6 +26,7 @@
             padding-top: 120px;
             margin-top: 30px;
             position: relative;
+            max-width: 770px;
         }
         .score-box {
             height: 150px;
@@ -147,14 +148,6 @@
         }
 
         @media print {
-            /* Hide various things when printing */
-            .save-links,
-            .o-expandable_link,
-            .comparison-chart_toggle,
-            .o-footer {
-                display: none;
-            }
-
             /* Force all these things back on when printing, regardless
                of how the user has interacted with the page */
             .js [class^="comparison_data-point age"],
@@ -168,13 +161,21 @@
                 height: auto !important;
             }
 
-            .content_main,
-            .content_sidebar {
+            .content_main {
                 display: block !important;
             }
 
-            * {
+            .content_main * {
                 overflow: visible !important;
+            }
+
+            /* Hide various things when printing */
+            .save-links,
+            .o-expandable_link,
+            .comparison-chart_toggle,
+            .o-footer,
+            .content_sidebar {
+                display: none !important;
             }
         }
     </style>
