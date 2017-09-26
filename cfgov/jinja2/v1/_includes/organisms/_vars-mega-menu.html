@@ -256,6 +256,34 @@
     ],
 } %}
 
+{% if flag_enabled('FWB_RELEASE', request) %}
+
+    {% set data_research_group_one = {
+        'nav_items': [
+            {'text': 'Research & Reports', 'url': '/data-research/research-reports/'},
+            {'text': 'CFPB Research Conference', 'url': '/data-research/cfpb-research-conference/'},
+            {'text': 'CFPB Researchers', 'url': '/data-research/cfpb-researchers/'},
+        ]
+    } %}
+    {% set data_research_group_three = {
+        'nav_items': [
+            {'text': 'Consumer Credit Trends', 'url': '/data-research/consumer-credit-trends/'},
+            {'text': 'Credit Card Surveys & Agreements', 'url': '/data-research/credit-card-data/'},
+            {'text': 'Financial Well-Being Survey', 'url': '/data-research/financial-well-being-survey'},
+        ]
+    } %}
+
+    {% set data_research = {
+        'text': 'Data & Research',
+        'url': '/data-research/',
+        'nav_groups': [
+            data_research_group_one,
+            data_research_group_two,
+            data_research_group_three,
+        ],
+    } %}
+
+{% endif %}
 
 {# Policy & Compliance menu items #}
 
