@@ -60,6 +60,11 @@ if ( expandableDom ) {
     }
   }
 
+  function sendEvent( action, label, category ) {
+    var eventData = Analytics.getDataLayerOptions( action, label, category );
+    Analytics.sendEvent( eventData );
+  }
+
   [].forEach.call( toggleButtons, function( el ) {
     el.addEventListener( 'click', function( event ) {
       var input = event.target;
