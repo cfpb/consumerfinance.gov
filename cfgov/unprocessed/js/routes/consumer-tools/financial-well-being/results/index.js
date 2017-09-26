@@ -1,16 +1,17 @@
 /* eslint no-extra-semi: "off" */
 'use strict';
 
+var Analytics = require( '../../../../modules/Analytics' );
 var Expandable = require( '../../../../organisms/Expandable' );
 
 var expandableDom = document.querySelectorAll( '.content .o-expandable' );
- var expandable;
- if ( expandableDom ) {
-   for ( var i = 0, len = expandableDom.length; i < len; i++ ) {
-     expandable = new Expandable( expandableDom[i] );
-     expandable.init();
-   }
- }
+var expandable;
+if ( expandableDom ) {
+  for ( var i = 0, len = expandableDom.length; i < len; i++ ) {
+    expandable = new Expandable( expandableDom[i] );
+    expandable.init();
+  }
+}
 
 ( function() {
 
@@ -64,6 +65,16 @@ var expandableDom = document.querySelectorAll( '.content .o-expandable' );
       var input = event.target;
       var category = input.dataset.compareBy;
       switchComparisons( category );
+
+      var action = input.getAttribute( 'data-gtm-action' );
+      var label = input.getAttribute( 'data-gtm-label' );
+      var category = input.getAttribute( 'data-gtm-category' );
+
+      if ( Analytics.tagManagerIsLoaded ) {
+        sendEvent( action, label, category );
+      } else {
+        Analytics.addEventListener( 'gtmLoaded', sendEvent );
+      }
     } );
   } );
 
