@@ -246,16 +246,6 @@
     ]
 } %}
 
-{% set data_research = {
-    'text': 'Data & Research',
-    'url': '/data-research/',
-    'nav_groups': [
-        data_research_group_one,
-        data_research_group_two,
-        data_research_group_three,
-    ],
-} %}
-
 {% if flag_enabled('FWB_RELEASE', request) %}
 
     {% set data_research_group_one = {
@@ -273,17 +263,17 @@
         ]
     } %}
 
-    {% set data_research = {
-        'text': 'Data & Research',
-        'url': '/data-research/',
-        'nav_groups': [
-            data_research_group_one,
-            data_research_group_two,
-            data_research_group_three,
-        ],
-    } %}
-
 {% endif %}
+
+{% set data_research = {
+    'text': 'Data & Research',
+    'url': '/data-research/',
+    'nav_groups': [
+        data_research_group_one,
+        data_research_group_two,
+        data_research_group_three,
+    ],
+} %}
 
 {# Policy & Compliance menu items #}
 
