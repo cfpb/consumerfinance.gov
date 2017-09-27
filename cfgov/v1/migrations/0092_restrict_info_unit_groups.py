@@ -13,7 +13,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0089_output_snippet_list_thumbnails'),
+        ('v1', '0091_add_mortgage_download_block_to_browsepage'),
     ]
 
     operations = [
