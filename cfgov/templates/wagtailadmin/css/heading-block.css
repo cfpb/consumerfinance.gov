@@ -1,12 +1,16 @@
-.heading-level-block,
+/* CSS to display HeadingTextBlock, HeadingLevelBlock, and HeadingIconBlock
+   inline when used in a HeadingBlock, which overrides its form_template to
+   add the field name classes you see below so we can hook into them. */
+
 .heading-text-block,
+.heading-level-block,
 .heading-icon-block {
     display: inline-block;
     margin-right: -0.25em;
 }
 
-.heading-level-block { width: 20%; }
 .heading-text-block { width: 50%; }
+.heading-level-block { width: 20%; }
 .heading-icon-block { width: 26%; }
 
 .heading-level-block,
@@ -14,16 +18,16 @@
     margin-left: 2%;
 }
 
-.heading-level-block label,
 .heading-text-block label,
+.heading-level-block label,
 .heading-icon-block label {
     display: block;
     width: auto;
     float: none;
 }
 
-.heading-level-block .field-content,
 .heading-text-block .field-content,
+.heading-level-block .field-content,
 .heading-icon-block .field-content {
     /* Using !important to override default styling without needing
        excessively long selectors here. */
@@ -31,7 +35,8 @@
 }
 
 .heading-level-block.required > label::after {
-    /* Using !important to override default styling without needing
-       excessively long selectors here. */
+    /* Hide the unnecessary required. We are forcing a default value, so
+       indicating that it's required is superfluous. Using !important to
+       override default styling without needing an excessively long selector. */
     display: none !important;
 }
