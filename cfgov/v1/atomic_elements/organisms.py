@@ -116,8 +116,22 @@ class InfoUnitGroup(blocks.StructBlock):
         return cleaned
 
     class Meta:
-        icon = 'image'
+        icon = 'list-ul'
         template = '_includes/organisms/info-unit-group-2.html'
+
+
+class InfoUnitGroup2575Only(InfoUnitGroup):
+    format = blocks.ChoiceBlock(
+        choices=[
+            ('25-75', '25/75'),
+        ],
+        default='25-75',
+        label='Format',
+        help_text='25/75 is the only allowed format for this page type.',
+    )
+
+    class Meta:
+        label = 'Info unit group'
 
 
 class ImageText5050Group(blocks.StructBlock):
