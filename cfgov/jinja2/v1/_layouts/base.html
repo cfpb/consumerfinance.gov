@@ -64,6 +64,7 @@
         <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
+{% block og_image %}
     {% if page and page.meta_image %}
         {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}
         <meta property="og:image" content="{{ meta_image_url }}">
@@ -77,6 +78,7 @@
         <meta property="twitter:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_twitter.png') }}">
     {% endif %}
+{% endblock %}
         <!--  Optional -->
         <meta property="og:description"
               content="
