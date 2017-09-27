@@ -29,9 +29,6 @@ var utils = {
     const option = document.createElement( 'option' );
     option.value = value;
     option.text = text;
-    // if ( selected ) {
-    //   option.selected = 'selected';
-    // }
     return option;
   },
   getCountyData: cb => {

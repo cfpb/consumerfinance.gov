@@ -1,7 +1,7 @@
 'use strict';
 
 const ccb = require( 'cfpb-chart-builder' );
-const actions = require( '../actions' );
+const actions = require( '../actions/map' );
 const Store = require( '../stores/map' );
 const utils = require( '../utils' );
 
@@ -92,11 +92,11 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
         }
       }
       if ( geoType === 'metro' ) {
-        action = actions.fetchMetros( abbr );
+        action = actions.fetchMetros( abbr, true );
         break;
       }
       if ( geoType === 'county' ) {
-        action = actions.fetchCounties( abbr );
+        action = actions.fetchCounties( abbr, true );
         break;
       }
       geoId = this.$state.value;
@@ -209,7 +209,13 @@ MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state )
 MortgagePerformanceMap.prototype.renderCounties = function( prevState, state ) {
   let option;
   this.$county.disabled = state.isLoadingCounties;
+  // If there are no counties to render, abort.
   if ( JSON.stringify( state.counties ) === JSON.stringify( {} ) ) {
+    this.$county.disabled = true;
+    return;
+  }
+  // If a county is actively selected, abort.
+  if ( this.$county.value ) {
     return;
   }
   state.counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
@@ -233,18 +239,38 @@ MortgagePerformanceMap.prototype.renderCounties = function( prevState, state ) {
 };
 
 MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
-  let option;
+  let option, nonMSA;
   this.$metro.disabled = state.isLoadingMetros;
+  // If there are no metros to render, abort.
   if ( JSON.stringify( state.metros ) === JSON.stringify( {} ) ) {
+    this.$metro.disabled = true;
+    return;
+  }
+  // If a metro is actively selected, abort.
+  if ( this.$metro.value ) {
     return;
   }
   state.metros.sort( ( a, b ) => {
     // Alphabetize location names except for non-metros, keep them at the bottom
-    if ( a.name < b.name && !utils.isNonMetro( a.fips ) ) {
+    if ( a.name < b.name ) {
       return -1;
     }
     return 1;
   } );
+  // Pull out any non-metros and put them at the end.
+  state.metros = state.metros.filter( metro => {
+    if ( utils.isNonMetro( metro.fips ) ) {
+      nonMSA = {
+        fips: metro.fips,
+        name: metro.name
+      };
+      return false;
+    }
+    return true;
+  } );
+  if ( nonMSA ) {
+    state.metros.push( nonMSA );
+  }
   const fragment = document.createDocumentFragment();
   option = utils.addOption( {
     document,
