@@ -60,10 +60,15 @@ def run():
     load_fips_meta()
     for date in FIPS.dates:
         logger.info(
-            "aggregating data for {}".format(date))
+            "Aggregating data for {}".format(date))
         load_msa_values(date)
         load_state_values(date)
         load_non_msa_state_values(date)
         load_national_values(date)
     logger.info("Created {} records and updated {}".format(
         FIPS.created, FIPS.updated))
+    logger.info("Validating MSAs and non-MSAs")
+    for metro in MetroArea.objects.all():
+        metro.validate()
+    for state in State.objects.all():
+        state.validate_non_msas()
