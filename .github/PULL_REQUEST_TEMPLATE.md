@@ -34,7 +34,7 @@ Short description explaining the high-level reason for the pull request
 * [ ] Code can be automatically merged (no conflicts)
 * [ ] Code follows the standards laid out in the [development playbook](https://github.com/cfpb/development)
 * [ ] Passes all existing automated tests
-* [ ] New functions include new tests
+* [ ] Any *change* in functionality is tested
 * [ ] New functions are documented (with a description, list of inputs, and expected output)
 * [ ] Placeholder code is flagged
 * [ ] Visually tested in supported browsers and devices
