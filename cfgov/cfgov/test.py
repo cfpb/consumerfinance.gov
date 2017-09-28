@@ -54,7 +54,6 @@ class PlaceholderJSMixin(object):
     """
     PLACEHOLDER_FILES = (
         'static_built/js/routes/common.js',
-        'static_built/js/routes/sheer.js',
     )
 
     PLACEHOLDER_STRING = (
