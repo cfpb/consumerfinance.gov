@@ -13,6 +13,16 @@
     See your survey results and learn how you may be able to improve your score.
 {%- endblock %}
 
+{% block og_desc -%}
+    See your survey results and learn how you may be able to improve your score.
+{%- endblock %}
+
+{% block og_image %}
+        <meta property="og:image" content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta property="twitter:image" content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+
 {% block css %}
     {{ super() }}
     <style>
@@ -26,6 +36,7 @@
             padding-top: 120px;
             margin-top: 30px;
             position: relative;
+            max-width: 770px;
         }
         .score-box {
             height: 150px;
@@ -147,34 +158,51 @@
         }
 
         @media print {
-            /* Hide various things when printing */
-            .save-links,
-            .o-expandable_link,
-            .comparison-chart_toggle,
-            .o-footer {
-                display: none;
-            }
-
             /* Force all these things back on when printing, regardless
                of how the user has interacted with the page */
             .js [class^="comparison_data-point age"],
             .js [class^="comparison_data-point income"],
             .js [class^="comparison_data-point employment"] {
-                display: inline-block;
+                display: inline-block !important;
             }
+
             .o-expandable_content {
-                /* /* Using !important to work around IE not handling the
+                /* Using !important to work around IE not handling the
                    :not([aria-expanded="true"]) selector */
                 height: auto !important;
             }
 
-            .content_main,
-            .content_sidebar {
+            .o-expandable_content table {
+                height: 510px;
+            }
+
+            .o-expandable_content thead {
+                border-bottom: none;
+            }
+
+            .o-expandable_content th:last-child {
+                width: 25% !important;
+            }
+
+            .o-expandable_content tbody tr {
+                border-bottom: none;
+            }
+
+            .content_main {
                 display: block !important;
             }
 
-            * {
+            .content_main * {
                 overflow: visible !important;
+            }
+
+            /* Hide various things when printing */
+            .save-links,
+            .o-expandable_link,
+            .comparison-chart_toggle,
+            .content_sidebar,
+            .o-footer {
+                display: none !important;
             }
         }
     </style>
@@ -398,9 +426,8 @@
                     <li>
                         <b>Repay student loans wisely.</b>
                         Use our tool to see your choices about how you
-                        <a href="/consumer-tools/student-loans/#repaying-student-loans">
-                          repay your student debt
-                        </a>.
+                        <a href="/paying-for-college/repay-student-debt/">
+                          repay your student debt</a>.
                     </li>
                 </ul>
             </div>
@@ -422,7 +449,7 @@
                                   cf-icon
                                   cf-icon-download
                                   cf-icon__after"
-                           href="http://files.consumerfinance.gov/f/documents/201705_cfpb_MAYG_My-New-Money-Goal.pdf">
+                           href="http://files.consumerfinance.gov/f/documents/201705_cfpb_My-New-Money-Goal.pdf">
                             <span class="a-link_text">worksheet</span>
                         </a>
                         or
@@ -467,8 +494,7 @@
                 credit cards and other consumer debt.
                 See
                 <a href="/ask-cfpb/how-do-i-choose-which-credit-counselor-is-right-for-me-en-1355/">
-                    tips for choosing a credit counselor
-                </a>.
+                    tips for choosing a credit counselor</a>.
             </li>
             <li>
                 <b>A HUD-certified housing counselor</b>
@@ -517,17 +543,26 @@
                 <button class="a-btn
                                comparison-chart_toggle-button
                                comparison-chart_toggle-button__selected"
-                        data-compare-by="age">
+                        data-compare-by="age"
+                        data-gtm-action="Compare By Button Clicked"
+                        data-gtm-label="Age"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
                     Age
                 </button>
                 <button class="a-btn
                                comparison-chart_toggle-button"
-                        data-compare-by="income">
+                        data-compare-by="income"
+                        data-gtm-action="Compare By Button Clicked"
+                        data-gtm-label="Household income"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
                     Household income
                 </button>
                 <button class="a-btn
                                comparison-chart_toggle-button"
-                        data-compare-by="employment">
+                        data-compare-by="employment"
+                        data-gtm-action="Compare By Button Clicked"
+                        data-gtm-label="Employment status"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
                     Employment status
                 </button>
             </div>
@@ -603,12 +638,17 @@
             </li>
             <li class="m-list_item">
                 <a class="m-list_link" href="/consumer-tools/credit-reports-and-scores/">
-                  Credit report and scores
+                  Credit reports and scores
                 </a>
             </li>
             <li class="m-list_item">
                 <a class="m-list_link" href="/ask-cfpb/category-credit-cards/">
                   Credit cards
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/consumer-tools/mortgages/">
+                  Mortgages
                 </a>
             </li>
         </ul>

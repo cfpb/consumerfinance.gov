@@ -8,6 +8,16 @@
     Answer ten questions to measure your own current financial well-being and see steps you can take to improve it.
 {%- endblock %}
 
+{% block og_desc -%}
+    Find out your financial well-being by answering ten questions, and then see steps you can take to improve it.
+{%- endblock %}
+
+{% block og_image %}
+        <meta property="og:image" content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta property="twitter:image" content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+
 {% block css -%}
     {{ super() }}
     <style>
@@ -138,7 +148,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-1-completely">
                             Completely
                         </label>
@@ -151,7 +161,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-1-very-well">
                             Very well
                         </label>
@@ -164,7 +174,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-1-somewhat">
                             Somewhat
                         </label>
@@ -177,7 +187,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-1-very-little">
                             Very little
                         </label>
@@ -190,7 +200,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-1-not-at-all">
                             Not at all
                         </label>
@@ -209,7 +219,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-2-completely">
                             Completely
                         </label>
@@ -222,7 +232,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-2-very-well">
                             Very well
                         </label>
@@ -235,7 +245,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-2-somewhat">
                             Somewhat
                         </label>
@@ -248,7 +258,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-2-very-little">
                             Very little
                         </label>
@@ -261,7 +271,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-2-not-at-all">
                             Not at all
                         </label>
@@ -280,7 +290,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-3-completely">
                             Completely
                         </label>
@@ -293,7 +303,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-3-very-well">
                             Very well
                         </label>
@@ -306,7 +316,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-3-somewhat">
                             Somewhat
                         </label>
@@ -319,7 +329,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-3-very-little">
                             Very little
                         </label>
@@ -332,7 +342,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-3-not-at-all">
                             Not at all
                         </label>
@@ -351,7 +361,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-4-completely">
                             Completely
                         </label>
@@ -364,7 +374,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-4-very-well">
                             Very well
                         </label>
@@ -377,7 +387,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-4-somewhat">
                             Somewhat
                         </label>
@@ -390,7 +400,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-4-very-little">
                             Very little
                         </label>
@@ -403,7 +413,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-4-not-at-all">
                             Not at all
                         </label>
@@ -422,7 +432,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-5-completely">
                             Completely
                         </label>
@@ -435,7 +445,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-5-very-well">
                             Very well
                         </label>
@@ -448,7 +458,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-5-somewhat">
                             Somewhat
                         </label>
@@ -461,7 +471,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-5-very-little">
                             Very little
                         </label>
@@ -474,7 +484,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-5-not-at-all">
                             Not at all
                         </label>
@@ -493,7 +503,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-6-completely">
                             Completely
                         </label>
@@ -506,7 +516,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-6-very-well">
                             Very well
                         </label>
@@ -519,7 +529,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-6-somewhat">
                             Somewhat
                         </label>
@@ -532,7 +542,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-6-very-little">
                             Very little
                         </label>
@@ -545,7 +555,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-6-not-at-all">
                             Not at all
                         </label>
@@ -569,7 +579,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-7-always">
                             Always
                         </label>
@@ -582,7 +592,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-7-often">
                             Often
                         </label>
@@ -595,7 +605,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-7-sometimes">
                             Sometimes
                         </label>
@@ -608,7 +618,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-7-rarely">
                             Rarely
                         </label>
@@ -621,7 +631,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-7-never">
                             Never
                         </label>
@@ -640,7 +650,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-8-always">
                             Always
                         </label>
@@ -653,7 +663,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-8-often">
                             Often
                         </label>
@@ -666,7 +676,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-8-sometimes">
                             Sometimes
                         </label>
@@ -679,7 +689,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-8-rarely">
                             Rarely
                         </label>
@@ -692,7 +702,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-8-never">
                             Never
                         </label>
@@ -711,7 +721,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-9-always">
                             Always
                         </label>
@@ -724,7 +734,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-9-often">
                             Often
                         </label>
@@ -737,7 +747,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-9-sometimes">
                             Sometimes
                         </label>
@@ -750,7 +760,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-9-rarely">
                             Rarely
                         </label>
@@ -763,7 +773,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-9-never">
                             Never
                         </label>
@@ -782,7 +792,7 @@
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-10-always">
                             Always
                         </label>
@@ -795,7 +805,7 @@
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-10-often">
                             Often
                         </label>
@@ -808,7 +818,7 @@
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-10-sometimes">
                             Sometimes
                         </label>
@@ -821,7 +831,7 @@
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-10-rarely">
                             Rarely
                         </label>
@@ -834,7 +844,7 @@
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
                         <label class="a-label" for="question-10-never">
                             Never
                         </label>
@@ -856,7 +866,10 @@
                                        type="radio"
                                        name="age"
                                        id="age-18-61"
-                                       value="18-61">
+                                       value="18-61"
+                                       data-gtm-action="Questionnaire Radio Button Clicked"
+                                       data-gtm-label="Select your age group: 18-61"
+                                       data-gtm-category="Financial Well-Being Tool Interaction">
                                 <label class="a-label" for="age-18-61">
                                     18–61
                                 </label>
@@ -868,7 +881,10 @@
                                        type="radio"
                                        name="age"
                                        id="age-62-plus"
-                                       value="62-plus">
+                                       value="62-plus"
+                                       data-gtm-action="Questionnaire Radio Button Clicked"
+                                       data-gtm-label="Select your age group: 62+"
+                                       data-gtm-category="Financial Well-Being Tool Interaction">
                                 <label class="a-label" for="age-62-plus">
                                     62+
                                 </label>
@@ -888,6 +904,9 @@
                                        name="method"
                                        id="read-self"
                                        value="read-self"
+                                       data-gtm-action="Questionnaire Radio Button Clicked"
+                                       data-gtm-label="Select how you completed the questionnaire: I read and answered the questions myself"
+                                       data-gtm-category="Financial Well-Being Tool Interaction"
                                        checked>
                                 <label class="a-label" for="read-self">
                                     I read and answered the questions myself
@@ -900,7 +919,10 @@
                                        type="radio"
                                        name="method"
                                        id="read-to-me"
-                                       value="read-to-me">
+                                       value="read-to-me"
+                                       data-gtm-action="Questionnaire Radio Button Clicked"
+                                       data-gtm-label="Select how you completed the questionnaire: I read the questions to someone else and recorded their answers"
+                                       data-gtm-category="Financial Well-Being Tool Interaction">
                                 <label class="a-label" for="read-to-me">
                                     I read the questions to someone else and recorded their answers
                                 </label>
@@ -914,7 +936,13 @@
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
         <div class="o-form_group">
-            <input class="submit-quiz a-btn" id="submit-quiz" type="submit" value="Get my score">
+            <input class="submit-quiz a-btn"
+                   id="submit-quiz"
+                   type="submit"
+                   value="Get my score"
+                   data-gtm-action="Questionnaire Submitted"
+                   data-gtm-label="Get my score"
+                   data-gtm-category="Financial Well-Being Tool Interaction">
         </div>
     </form>
 {%- endblock %}
