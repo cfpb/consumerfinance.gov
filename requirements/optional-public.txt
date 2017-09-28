@@ -2,7 +2,7 @@ https://github.com/cfpb/college-costs/releases/download/2.3.10/college_costs-2.3
 https://github.com/cfpb/complaint/releases/download/1.4.2/complaintdatabase-1.4.2-py2-none-any.whl
 git+https://github.com/cfpb/owning-a-home-api.git@0.9.96#egg=owning-a-home-api
 git+https://github.com/cfpb/regulations-core.git@1.2.5#egg=regcore
-git+https://github.com/cfpb/regulations-site.git@2.1.8#egg=regulations
+https://github.com/cfpb/regulations-site/releases/download/2.1.10/regulations-2.1.10-py2-none-any.whl
 https://github.com/cfpb/retirement/releases/download/0.5.12/retirement-0.5.12-py2-none-any.whl
 git+https://github.com/cfpb/ccdb5-api.git@v0.8.0#egg=ccdb5-api
 git+https://github.com/cfpb/ccdb5-ui.git@v0.7.13#egg=ccdb5_ui
