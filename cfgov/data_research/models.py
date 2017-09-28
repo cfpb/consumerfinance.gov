@@ -1,11 +1,14 @@
 from __future__ import unicode_literals
 
 from dateutil import parser
+import logging
 
 from django.db import models
 from jsonfield import JSONField
 
 from v1.models import BrowsePage, PageManager
+
+logger = logging.getLogger(__name__)
 
 
 # Used for registering users for a conference
@@ -303,6 +306,7 @@ class NationalMortgageData(MortgageBase):
                 count_fields[field] += getattr(state, field)
         for field in count_fields:
             setattr(self, field, count_fields[field])
+        self.save()
 
 
 class MortgagePerformancePage(BrowsePage):
@@ -343,3 +347,14 @@ class MortgagePerformancePage(BrowsePage):
 
     class Media:
         css = ['secondary-navigation.css']
+
+
+def validate_counties():
+    for each in County.objects.all():
+        each.validate()
+    total = County.objects.count()
+    valid = County.objects.filter(valid=True).count()
+    if total != 0:
+        logger.info(
+            "{} counties of {} were found to be valid -- {}%)".format(
+                valid, total, round((valid * 100.0 / total), 1)))

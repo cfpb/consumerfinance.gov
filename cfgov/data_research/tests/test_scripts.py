@@ -16,24 +16,25 @@ from data_research.models import (
     County, CountyMortgageData,
     MetroArea, MSAMortgageData, NonMSAMortgageData,
     State, StateMortgageData,
-    NationalMortgageData)
-from data_research.scripts.load_mortgage_performance_csv import (
-    load_values,
-    merge_the_dades,
-    update_sampling_dates,
-    validate_fips,
+    NationalMortgageData,
     validate_counties)
-from data_research.scripts.load_mortgage_aggregates import (
-    load_msa_values,
-    load_national_values,
-    load_non_msa_state_values,
-    load_state_values,
-    run as run_aggregates)
+from data_research.mortgage_utilities.fips_meta import (
+    validate_fips)
 from data_research.scripts.export_public_csvs import (
     export_downloadable_csv,
     round_pct, row_starter,
     run as run_export,
     save_metadata)
+from data_research.scripts.generate_county_data_loading_csv import create_csv
+from data_research.scripts.load_mortgage_performance_csv import load_values
+from data_research.scripts.load_mortgage_aggregates import (
+    load_msa_values,
+    load_national_values,
+    load_non_msa_state_values,
+    load_state_values,
+    merge_the_dades,
+    update_sampling_dates,
+    run as run_aggregates)
 from data_research.scripts.update_county_msa_meta import (
     run as run_update,
     update_state_to_geo_meta)
@@ -82,11 +83,8 @@ class DataLoadIntegrityTest(django.test.TestCase):
     @mock.patch(
         'data_research.scripts.load_mortgage_performance_csv.'
         'read_in_s3_csv')
-    @mock.patch(
-        'data_research.scripts.load_mortgage_performance_csv.'
-        'update_sampling_dates')
     def test_data_creation_from_base_row(
-            self, mock_update_dates, mock_read_csv):
+            self, mock_read_csv):
         """
         Confirm that loading a single row of real base data creates
         a CountyMortgageData object with the base row's values,
@@ -394,14 +392,14 @@ class DataLoadTest(django.test.TestCase):
 
         mommy.make(
             CountyMortgageData,
-            date=datetime.date(2008, 1, 1),
+            date=datetime.date(2016, 1, 1),
             fips='12081',
             county=manatee)
 
         mommy.make(
             MSAMortgageData,
             current=5250,
-            date=datetime.date(2008, 1, 1),
+            date=datetime.date(2016, 1, 1),
             fips='35840',
             msa=MetroArea.objects.get(fips='35840'),
             id=1,
@@ -414,8 +412,9 @@ class DataLoadTest(django.test.TestCase):
         mommy.make(
             NonMSAMortgageData,
             current=250081,
-            date=datetime.date(2008, 1, 1),
+            date=datetime.date(2016, 1, 1),
             fips='12-non',
+            state=State.objects.get(fips='12'),
             id=1,
             ninety=4069,
             other=3619,
@@ -426,7 +425,8 @@ class DataLoadTest(django.test.TestCase):
         mommy.make(
             StateMortgageData,
             current=250081,
-            date=datetime.date(2009, 1, 1),
+            date=datetime.date(2016, 1, 1),
+            state=State.objects.get(fips='12'),
             fips='12',
             id=1,
             ninety=4069,
@@ -458,20 +458,27 @@ class DataLoadTest(django.test.TestCase):
 
     @mock.patch('data_research.scripts.'
                 'load_mortgage_performance_csv.read_in_s3_csv')
-    @mock.patch('data_research.scripts.'
-                'load_mortgage_performance_csv.update_sampling_dates')
-    @mock.patch('data_research.scripts.'
-                'load_mortgage_performance_csv.merge_the_dades')
-    def test_load_values(self, mock_dades, mock_update, mock_read_in):
+    def test_load_values(self, mock_read_in):
         mock_read_in.return_value = [{
             'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
             'ninety': '0', 'date': '01/01/2008', 'open': '270', 'other': '3',
             'fips': '12081'}]
         load_values('mock_s3_url', STARTING_DATE)
         self.assertEqual(mock_read_in.call_count, 1)
-        self.assertEqual(mock_update.call_count, 1)
-        self.assertEqual(mock_dades.call_count, 1)
         self.assertEqual(CountyMortgageData.objects.count(), 1)
+
+    @mock.patch('data_research.scripts.'
+                'generate_county_data_loading_csv.read_in_s3_csv')
+    def test_generate_loading_csv(self, mock_read_in):
+        mock_read_in.return_value = [{
+            'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
+            'ninety': '0', 'date': '01/01/2008', 'open': '270', 'other': '3',
+            'fips': '12081'}]
+        m = mock_open()
+        with patch('__builtin__.open', m, create=True):
+            create_csv('mock_s3_url', STARTING_DATE)
+        self.assertEqual(m.call_count, 1)
+        self.assertEqual(mock_read_in.call_count, 1)
 
     @mock.patch('data_research.scripts.'
                 'load_mortgage_performance_csv.read_in_s3_csv')
@@ -484,6 +491,32 @@ class DataLoadTest(django.test.TestCase):
             'mock_s3_url', STARTING_DATE, return_fips=True)
         self.assertEqual(mock_read_in.call_count, 1)
         self.assertEqual(fips_list, ['12081'])
+
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_aggregates.update_sampling_dates')
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_aggregates.validate_counties')
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_aggregates.load_non_msa_state_values')
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_aggregates.load_msa_values')
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_aggregates.load_state_values')
+    @mock.patch('data_research.scripts.'
+                'load_mortgage_aggregates.load_national_values')
+    def test_run_aggregates(self, mock_load_national, mock_load_states,
+                            mock_load_msas, mock_load_non_msa,
+                            mock_validate_counties, mock_update_dates):
+        dates = MortgageMetaData.objects.get(
+            name='sampling_dates')
+        dates.json_value = ['2016-01-01']
+        dates.save()
+        run_aggregates()
+        self.assertEqual(mock_load_national.call_count, 1)
+        self.assertEqual(mock_load_states.call_count, 1)
+        self.assertEqual(mock_load_msas.call_count, 1)
+        self.assertEqual(mock_validate_counties.call_count, 1)
+        self.assertEqual(mock_update_dates.call_count, 1)
 
 
 class UpdateSamplingDatesTest(django.test.TestCase):
@@ -512,7 +545,7 @@ class UpdateSamplingDatesTest(django.test.TestCase):
         self.assertEqual(
             MortgageMetaData.objects.get(
                 name='sampling_dates').json_value,
-            '["2008-01-01"]')
+            ['2008-01-01'])
 
 
 class DataScriptTest(django.test.TestCase):
@@ -552,26 +585,6 @@ class DataScriptTest(django.test.TestCase):
         fips_input = '02201'  # a normally excluded outdated FIPS code
         self.assertEqual(validate_fips(
             fips_input, keep_outdated=True), '02201')
-
-    @mock.patch('data_research.scripts.'
-                'load_mortgage_aggregates.load_non_msa_state_values')
-    @mock.patch('data_research.scripts.'
-                'load_mortgage_aggregates.load_fips_meta')
-    @mock.patch('data_research.scripts.'
-                'load_mortgage_aggregates.load_msa_values')
-    @mock.patch('data_research.scripts.'
-                'load_mortgage_aggregates.load_state_values')
-    @mock.patch('data_research.scripts.'
-                'load_mortgage_aggregates.load_national_values')
-    def test_run_aggregates(self, mock_load_national, mock_load_states,
-                            mock_load_msas, mock_load_fips, mock_load_non_msa):
-        from data_research.scripts.load_mortgage_aggregates import FIPS
-        FIPS.dates = ['2016-09-01']
-        run_aggregates()
-        self.assertEqual(mock_load_fips.call_count, 1)
-        self.assertEqual(mock_load_national.call_count, 1)
-        self.assertEqual(mock_load_states.call_count, 1)
-        self.assertEqual(mock_load_msas.call_count, 1)
 
     @mock.patch('data_research.scripts.'
                 'load_mortgage_performance_csv.load_values')
@@ -665,31 +678,25 @@ class BuildStateMsaDropdownTests(django.test.TestCase):
         return mock_obj
 
     @mock.patch('data_research.scripts.'
-                'update_county_msa_meta.bake_json_to_s3')
-    @mock.patch('data_research.scripts.'
                 'update_county_msa_meta.FIPS')
-    def test_update_msa_meta(self, mock_FIPS, mock_bake_s3):
+    def test_update_msa_meta(self, mock_FIPS):
         mock_FIPS = self.load_fips(mock_FIPS)
         self.assertFalse(
             MortgageMetaData.objects.filter(name='state_msa_meta').exists())
         update_state_to_geo_meta('msa')
         self.assertTrue(
             MortgageMetaData.objects.filter(name='state_msa_meta').exists())
-        self.assertEqual(mock_bake_s3.call_count, 1)
         test_json = MortgageMetaData.objects.get(
             name='state_msa_meta').json_value
         self.assertEqual(len(test_json), 2)
 
     @mock.patch('data_research.scripts.'
-                'update_county_msa_meta.bake_json_to_s3')
-    @mock.patch('data_research.scripts.'
                 'update_county_msa_meta.FIPS')
-    def test_update_county_meta(self, mock_FIPS, mock_bake_s3):
+    def test_update_county_meta(self, mock_FIPS):
         mock_FIPS = self.load_fips(mock_FIPS)
         self.assertFalse(
             MortgageMetaData.objects.filter(name='state_county_meta').exists())
         update_state_to_geo_meta('county')
-        self.assertEqual(mock_bake_s3.call_count, 1)
         test_json = MortgageMetaData.objects.get(
             name='state_county_meta').json_value
         self.assertEqual(len(test_json), 2)
