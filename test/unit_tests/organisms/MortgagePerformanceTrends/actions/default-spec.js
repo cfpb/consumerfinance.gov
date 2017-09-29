@@ -1,8 +1,9 @@
 'use strict';
-const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
+const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const mockery = require( 'mockery' );
+const sinon = require('sinon');
 const expect = chai.expect;
 
 // Disable the AJAX library used by the action creator
@@ -13,9 +14,22 @@ mockery.enable( {
 } );
 mockery.registerMock( 'xdr', noop );
 
-const actions = require( BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/actions.js' );
+mockery.registerMock( '../utils', {
+  getNonMetroData: cb => {
+    const nonMetros = [
+      {
+        valid: true,
+        fips: '12345',
+        name: 'Acme metro'
+      }
+    ];
+    cb( nonMetros );
+  }
+} );
 
-describe( 'Mortgage Performance action creator', () => {
+const actions = require( BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/actions/default.js' )();
+
+describe( 'Mortgage Performance default action creators', () => {
 
   it( 'should create an action to set a geo', () => {
     const action = actions.setGeo( 12345, 'Alabama', 'state' );
@@ -96,6 +110,16 @@ describe( 'Mortgage Performance action creator', () => {
       type: 'REQUEST_NON_METROS',
       isLoadingNonMetros: true
     } );
+  } );
+
+  it( 'should dispatch actions to fetch non-metros', () => {
+    const dispatch = sinon.spy();
+    actions.fetchNonMetros( 'AL', true )( dispatch );
+    expect( dispatch.callCount ).to.equal( 4 );
+  } );
+
+  it( 'should fail on bad non-metro state abbr', () => {
+    expect( actions.fetchNonMetros( 'bloop', true ) ).to.throw();
   } );
 
   it( 'should create an action to set metros', () => {
