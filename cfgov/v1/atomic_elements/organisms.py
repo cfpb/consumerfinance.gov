@@ -886,6 +886,7 @@ class MortgageChartBlock(blocks.StructBlock):
         label = 'Mortgage Chart Block'
         icon = 'image'
         template = '_includes/organisms/mortgage-chart.html'
+        classname = 'block__flush-top'
 
     class Media:
         js = ['mortgage-performance-trends.js']

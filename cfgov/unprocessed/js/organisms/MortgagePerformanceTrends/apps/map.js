@@ -1,13 +1,13 @@
 'use strict';
 
-var ccb = require( 'cfpb-chart-builder' );
-var actions = require( '../actions' );
-var Store = require( '../stores/map' );
-var utils = require( '../utils' );
+const ccb = require( 'cfpb-chart-builder' );
+const actions = require( '../actions/map' );
+const Store = require( '../stores/map' );
+const utils = require( '../utils' );
 
-var store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
+const store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
 
-var _plurals = {
+const _plurals = {
   state: 'states',
   metro: 'metros',
   county: 'counties'
@@ -61,34 +61,43 @@ MortgagePerformanceMap.prototype.onClick = function( event ) {
 };
 
 MortgagePerformanceMap.prototype.onChange = function( event ) {
-  var abbr, action, geoEl, geoType, geoId, geoName, countyState, date;
+  let abbr, action, geoType, geoId, geoName, date;
+
+  abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
+  geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
 
   switch ( event.target.id ) {
     case 'mp-map_geo-state':
     case 'mp-map_geo-metro':
     case 'mp-map_geo-county':
-      geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
       geoId = '';
       geoName = '';
-      this.chart.highchart.chart.zoomOut();
-      action = actions.setGeo( geoId, geoName, geoType );
+      action = actions.updateChart( geoId, geoName, geoType );
+      // If a state has been pre-selected, populate the metros dropdown
+      if ( abbr && geoType === 'metro' ) {
+        store.dispatch( actions.fetchMetros( abbr ) );
+      }
+      // If a state has been pre-selected, populate the counties dropdown
+      if ( abbr && geoType === 'county' ) {
+        store.dispatch( actions.fetchCounties( abbr ) );
+      }
       break;
     case 'mp-map-state':
-      geoType = this.$container.querySelector( 'input[name="mp-map_geo"]:checked' ).id.replace( 'mp-map_geo-', '' );
-      if ( geoType === 'metro' ) {
-        abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
+      if ( geoType === 'metro' || geoType === 'county' ) {
+        // If no state is selected, zoom out and abort
         if ( !abbr ) {
-          return this.chart.highchart.chart.zoomOut();
+          this.chart.highchart.chart.mapZoom();
+          utils.setZoomLevel( 10 );
+          action = actions.updateChart( '', '', geoType );
+          break;
         }
-        action = actions.fetchMetros( abbr );
+      }
+      if ( geoType === 'metro' ) {
+        action = actions.fetchMetros( abbr, true );
         break;
       }
       if ( geoType === 'county' ) {
-        abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
-        if ( !abbr ) {
-          return this.chart.highchart.chart.zoomOut();
-        }
-        action = actions.fetchCounties( abbr );
+        action = actions.fetchCounties( abbr, true );
         break;
       }
       geoId = this.$state.value;
@@ -97,11 +106,19 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       break;
     case 'mp-map-metro':
       geoId = this.$metro.value;
+      if ( !geoId ) {
+        action = actions.zoomChart( abbr );
+        break;
+      }
       geoName = this.$metro.options[this.$metro.selectedIndex].text;
       action = actions.updateChart( geoId, geoName );
       break;
     case 'mp-map-county':
       geoId = this.$county.value;
+      if ( !geoId ) {
+        action = actions.zoomChart( abbr );
+        break;
+      }
       geoName = this.$county.options[this.$county.selectedIndex].text;
       action = actions.updateChart( geoId, geoName );
       break;
@@ -119,34 +136,49 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
 };
 
 MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
+  const prevType = prevState.geo.type;
+  const currType = state.geo.type;
+  const prevId = prevState.geo.id;
+  const currId = state.geo.id;
   let zoomLevel;
-  if ( !state.geo.id ) {
-    this.chart.highchart.chart.zoomOut();
+  if ( prevId && prevId !== currId ) {
+    this.chart.highchart.chart.get( prevId ).select( false );
   }
-  if ( prevState.date === state.date && prevState.geo.type === state.geo.type && state.geo.id ) {
+  if ( prevState.date === state.date && prevType === currType && currId ) {
     // Highcharts zooming is unreliable and difficult to customize :(
     // http://api.highcharts.com/highmaps/Chart.mapZoom
     // If it's a state or non-metro, zoom in more than other location types
-    zoomLevel = state.geo.type === 'state' || utils.isNonMetro( state.geo.id ) ? 5 : 10;
-    this.chart.highchart.chart.get( state.geo.id ).select( true );
-    this.chart.highchart.chart.get( state.geo.id ).zoomTo();
+    zoomLevel = currType === 'state' || utils.isNonMetro( currId ) ? 5 : 10;
+    this.chart.highchart.chart.get( currId ).select( true );
+    this.chart.highchart.chart.get( currId ).zoomTo();
     this.chart.highchart.chart.mapZoom( zoomLevel );
   }
-  if ( prevState.date !== state.date || prevState.geo.type !== state.geo.type ) {
-    store.dispatch( actions.startLoading() );
+  if ( state.zoomTarget ) {
+    let centroid = utils.stateCentroids[state.zoomTarget];
+    this.chart.highchart.chart.mapZoom();
+    utils.setZoomLevel( 10 );
+    zoomLevel = utils.getZoomLevel( 5 );
+    this.chart.highchart.chart.mapZoom( zoomLevel, centroid[0], centroid[1] );
+  }
+  // If no geo is selected, ensure metro and county dropdowns are cleared
+  if ( !currId || prevType !== currType ) {
+    this.$metro.value = '';
+    this.$metro.innerHTML = '';
+    this.$county.value = '';
+    this.$county.innerHTML = '';
+  }
+  if ( prevState.date !== state.date || prevType !== currType ) {
+    // store.dispatch( actions.startLoading() );
+    this.chart.highchart.chart.showLoading();
     this.chart.update( {
-      source: `map-data/${ this.timespan }/${ _plurals[state.geo.type] }/${ state.date }`,
-      metadata: _plurals[state.geo.type],
+      source: `map-data/${ this.timespan }/${ _plurals[currType] }/${ state.date }`,
+      metadata: _plurals[currType],
       tooltipFormatter: this.renderTooltip()
     } ).then( () => {
-      if ( prevState.geo.type !== state.geo.type ) {
-        this.$state.value = '';
-        this.$metro.value = '';
-        this.$county.value = '';
-        this.$county.innerHTML = '';
-        this.chart.highchart.chart.zoomOut();
+      // store.dispatch( actions.stopLoading() );
+      if ( prevState.date !== state.date && currId ) {
+        this.chart.highchart.chart.get( currId ).select( true );
       }
-      store.dispatch( actions.stopLoading() );
     } );
   }
 };
@@ -167,9 +199,6 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
   if ( geoType === 'county' || geoType === 'metro' ) {
     utils.showEl( this.$container.querySelector( '#mp-map-state-container' ) );
   }
-  if ( !state.geo.type ) {
-    return this.chart.highchart.chart.zoomOut();
-  }
   if ( geo ) {
     utils.showEl( geo );
   }
@@ -186,16 +215,31 @@ MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state )
 };
 
 MortgagePerformanceMap.prototype.renderCounties = function( prevState, state ) {
+  let option;
   this.$county.disabled = state.isLoadingCounties;
-  if ( JSON.stringify( prevState.counties ) === JSON.stringify( state.counties ) ) {
+  // If there are no counties to render, abort.
+  if ( !state.counties || !state.counties.length ) {
+    this.$county.disabled = true;
+    return;
+  }
+  // If a county is actively selected and they haven't changed, abort.
+  if ( this.$county.value && !prevState.isLoadingCounties ) {
     return;
   }
   state.counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
-  var fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
+  option = utils.addOption( {
+    document,
+    value: '',
+    text: 'Please select a county'
+  } );
+  fragment.appendChild( option );
   state.counties.forEach( county => {
-    var option = document.createElement( 'option' );
-    option.value = county.fips;
-    option.text = county.name;
+    option = utils.addOption( {
+      document,
+      value: county.fips,
+      text: county.name
+    } );
     fragment.appendChild( option );
   } );
   this.$county.innerHTML = '';
@@ -203,22 +247,47 @@ MortgagePerformanceMap.prototype.renderCounties = function( prevState, state ) {
 };
 
 MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
+  let option, nonMSA;
   this.$metro.disabled = state.isLoadingMetros;
-  if ( JSON.stringify( prevState.metros ) === JSON.stringify( state.metros ) ) {
+  // If there are no metros to render, abort.
+  if ( !state.metros || !state.metros.length ) {
+    this.$metro.disabled = true;
     return;
   }
-  state.metros.sort( ( a, b ) => {
-    // Alphabetize location names except for non-metros, keep them at the bottom
-    if ( a.name < b.name && !utils.isNonMetro( a.fips ) ) {
-      return -1;
+  // If a metro is actively selected and they haven't changed, abort.
+  if ( this.$metro.value && !prevState.isLoadingMetros ) {
+    return;
+  }
+  // Alphabetize mero names
+  state.metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+  // Pull out any non-metros and put them at the end.
+  state.metros = state.metros.filter( metro => {
+    if ( utils.isNonMetro( metro.fips ) ) {
+      nonMSA = {
+        fips: metro.fips,
+        name: metro.name
+      };
+      return false;
     }
-    return 1;
+    return true;
   } );
-  var fragment = document.createDocumentFragment();
+  if ( nonMSA ) {
+    state.metros.push( nonMSA );
+  }
+  const fragment = document.createDocumentFragment();
+  option = utils.addOption( {
+    document,
+    value: '',
+    text: 'Please select an area'
+  } );
+  fragment.appendChild( option );
   state.metros.forEach( metro => {
-    var option = document.createElement( 'option' );
-    option.value = metro.fips;
-    option.text = metro.name;
+    option = document.createElement( 'option' );
+    option = utils.addOption( {
+      document,
+      value: metro.fips,
+      text: metro.name
+    } );
     fragment.appendChild( option );
   } );
   this.$metro.innerHTML = '';
