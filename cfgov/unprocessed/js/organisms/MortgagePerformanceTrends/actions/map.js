@@ -5,6 +5,13 @@ const defaultActionCreators = require( './default' );
 
 const mapActionCreators = defaultActionCreators();
 
+/**
+ * zoomChart - Creates action to zoom chart
+ *
+ * @param {String} stateAbbr Two-letter U.S. state abbreviation.
+ *
+ * @returns {Object} zoom chart action
+ */
 mapActionCreators.zoomChart = stateAbbr => {
   var action = {
     type: 'ZOOM_CHART',
@@ -13,6 +20,15 @@ mapActionCreators.zoomChart = stateAbbr => {
   return action;
 };
 
+/**
+ * updateChart - Creates action to re-render chart
+ *
+ * @param {String} geoId   ID of location
+ * @param {String} geoName Name of location
+ * @param {String} geoType Type of location (state, metro, county)
+ *
+ * @returns {Object} update chart action
+ */
 mapActionCreators.updateChart = ( geoId, geoName, geoType ) => {
   var action = {
     type: 'UPDATE_CHART',
@@ -31,12 +47,17 @@ mapActionCreators.updateChart = ( geoId, geoName, geoType ) => {
   return action;
 };
 
+/**
+ * fetchMetros - Creates async action to fetch list of metros
+ *
+ * @param {String} metroState Two-letter U.S. state abbreviation.
+ * @param {Boolean} shouldZoom Zoom to U.S. state after fetching?
+ *
+ * @returns {Function} Thunk called with new metros
+ */
 mapActionCreators.fetchMetros = ( metroState, shouldZoom ) => dispatch => {
   dispatch( mapActionCreators.requestMetros( metroState ) );
-  return utils.getMetroData( ( err, data ) => {
-    if ( err ) {
-      return console.error( 'Error getting metro data', err );
-    }
+  return utils.getMetroData( data => {
     // Alphabetical order
     let newMetros = data[metroState].metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newMetros = newMetros.filter( metro => metro.valid );
@@ -54,12 +75,17 @@ mapActionCreators.fetchMetros = ( metroState, shouldZoom ) => dispatch => {
   } );
 };
 
+/**
+ * fetchCounties - Creates async action to fetch list of counties
+ *
+ * @param {String} countyState Two-letter U.S. state abbreviation.
+ * @param {Boolean} shouldZoom Zoom to U.S. state after fetching?
+ *
+ * @returns {Function} Thunk called with new metros
+ */
 mapActionCreators.fetchCounties = ( countyState, shouldZoom ) => dispatch => {
   dispatch( mapActionCreators.requestCounties( countyState ) );
-  return utils.getCountyData( ( err, data ) => {
-    if ( err ) {
-      return console.error( 'Error getting county data', err );
-    }
+  return utils.getCountyData( data => {
     // Alphabetical order
     var newCounties = data[countyState].counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newCounties = newCounties.filter( county => county.valid );

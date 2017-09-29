@@ -33,29 +33,29 @@ var utils = {
   },
   getCountyData: cb => {
     if ( counties ) {
-      return cb( null, counties );
+      return cb( counties );
     }
     return ajax( { url: COUNTIES_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
-      cb( null, data );
+      cb( data );
     } );
   },
   getMetroData: cb => {
     if ( metros ) {
-      return cb( null, metros );
+      return cb( metros );
     }
     return ajax( { url: METROS_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
-      cb( null, data );
+      cb( data );
     } );
   },
   getNonMetroData: cb => {
     if ( nonMetros ) {
-      return cb( null, nonMetros );
+      return cb( nonMetros );
     }
     return ajax( { url: NON_METROS_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
-      cb( null, data );
+      cb( data );
     } );
   },
   getDate: dateString => {

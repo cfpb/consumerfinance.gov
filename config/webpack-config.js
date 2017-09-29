@@ -55,9 +55,9 @@ const modernConf = {
       name: COMMON_BUNDLE_NAME
     } ),
     // Change `warnings` flag to true to view linter-style warnings at runtime.
-    // new UglifyWebpackPlugin( {
-    //   compress: { warnings: false }
-    // } ),
+    new UglifyWebpackPlugin( {
+      compress: { warnings: false }
+    } ),
     // Wrap JS in raw Jinja tags so included JS won't get parsed by Jinja.
     new BannerFooterPlugin( '{% raw %}', '{% endraw %}', { raw: true } )
   ]
@@ -70,9 +70,9 @@ const ieConf = {
     filename: 'common.ie.js'
   },
   plugins: [
-    // new UglifyWebpackPlugin( {
-    //   compress: { warnings: false }
-    // } )
+    new UglifyWebpackPlugin( {
+      compress: { warnings: false }
+    } )
   ]
 };
 
@@ -83,9 +83,9 @@ const externalConf = {
     filename: 'external-site.js'
   },
   plugins: [
-    // new UglifyWebpackPlugin( {
-    //   compress: { warnings: false }
-    // } )
+    new UglifyWebpackPlugin( {
+      compress: { warnings: false }
+    } )
   ]
 };
 
@@ -101,9 +101,9 @@ const onDemandConf = {
   },
   plugins: [
     // Change warnings flag to true to view linter-style warnings at runtime.
-    // new UglifyWebpackPlugin( {
-    //   compress: { warnings: false }
-    // } )
+    new UglifyWebpackPlugin( {
+      compress: { warnings: false }
+    } )
   ]
 };
 
@@ -126,9 +126,9 @@ const spanishConf = {
     filename: 'spanish.js'
   },
   plugins: [
-    // new UglifyWebpackPlugin( {
-    //   compress: { warnings: false }
-    // } )
+    new UglifyWebpackPlugin( {
+      compress: { warnings: false }
+    } )
   ]
 };
 

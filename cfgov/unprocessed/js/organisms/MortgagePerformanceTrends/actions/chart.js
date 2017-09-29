@@ -4,12 +4,18 @@ const utils = require( '../utils' );
 const defaultActionCreators = require( './default' );
 
 const chartActionCreators = defaultActionCreators();
- chartActionCreators.fetchMetros = ( metroState, includeComparison ) => dispatch => {
+
+/**
+ * fetchMetros - Creates async action to fetch list of metros
+ *
+ * @param {String} metroState Two-letter U.S. state abbreviation.
+ * @param {Boolean} includeComparison Include national comparison?
+ *
+ * @returns {Function} Thunk called with new metros
+ */
+chartActionCreators.fetchMetros = ( metroState, includeComparison ) => dispatch => {
   dispatch( chartActionCreators.requestMetros( metroState ) );
-  return utils.getMetroData( ( err, data ) => {
-    if ( err ) {
-      return console.error( 'Error getting metro data', err );
-    }
+  return utils.getMetroData( data => {
     // Alphabetical order
     var newMetros = data[metroState].metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newMetros = newMetros.filter( metro => metro.valid );
@@ -25,12 +31,18 @@ const chartActionCreators = defaultActionCreators();
     return newMetros;
   } );
 };
- chartActionCreators.fetchCounties = ( countyState, includeComparison ) => dispatch => {
+
+/**
+ * fetchCounties - Creates async action to fetch list of counties
+ *
+ * @param {String} countyState Two-letter U.S. state abbreviation.
+ * @param {Boolean} includeComparison Include national comparison?
+ *
+ * @returns {Function} Thunk called with new metros
+ */
+chartActionCreators.fetchCounties = ( countyState, includeComparison ) => dispatch => {
   dispatch( chartActionCreators.requestCounties( countyState ) );
-  return utils.getCountyData( ( err, data ) => {
-    if ( err ) {
-      return console.error( 'Error getting county data', err );
-    }
+  return utils.getCountyData( data => {
     // Alphabetical order
     var newCounties = data[countyState].counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
     newCounties = newCounties.filter( county => county.valid );
