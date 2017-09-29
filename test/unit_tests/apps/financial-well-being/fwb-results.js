@@ -14,7 +14,7 @@ const dataLayerEvent = {
   event: 'Financial Well-Being Tool Interaction',
   action: 'Compare By Button Clicked',
   label: 'Age',
-  eventCallback: undefined,
+  eventCallback: undefined, // eslint-disable-line  no-undefined
   eventTimeout: 500
 };
 
