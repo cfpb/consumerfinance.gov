@@ -874,6 +874,7 @@ class ChartBlock(blocks.StructBlock):
 
 
 class MortgageChartBlock(blocks.StructBlock):
+    content_block = blocks.RichTextBlock()
     title = blocks.CharBlock(required=True, classname="title")
     description = blocks.CharBlock(
         required=False,
