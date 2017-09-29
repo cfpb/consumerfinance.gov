@@ -68,7 +68,7 @@ function init() {
   [].forEach.call( toggleButtons, function( el ) {
     el.addEventListener( 'click', function( event ) {
       var input = event.target;
-      var category = input.dataset.compareBy;
+      var category = input.getAttribute( 'data-compare-by' );
       switchComparisons( category );
 
       var action = input.getAttribute( 'data-gtm-action' );
