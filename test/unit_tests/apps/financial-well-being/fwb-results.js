@@ -10,6 +10,7 @@ let expandableTarget;
 let fwbResults;
 let sandbox;
 let toggleButtons;
+let dataPoint;
 const dataLayerEvent = {
   event: 'Financial Well-Being Tool Interaction',
   action: 'Compare By Button Clicked',
@@ -73,6 +74,29 @@ const HTML_SNIPPET =
             </span>
         </dd>
         <dt>U.S. average</dt>
+        <dd>
+            <span style="left: 49.3827160494%; border-color: #a6a329;">
+                54
+            </span>
+        </dd>
+        <dt class="comparison_data-point age_group">18-24 year olds</dt>
+        <dd class="comparison_data-point age_mean">
+            <span style="left: 45.6790123457%; border-color: #a6a329;">
+                51
+            </span>
+        </dd>
+        <dt class="comparison_data-point employment_group" style="display: none;">Self-employed</dt>
+        <dd class="comparison_data-point employment_mean" style="display: none;">
+            <span style="left: 49.3827160494%; border-color: #a6a329;">
+                54
+            </span>
+        </dd>
+        <dt class="comparison_data-point income_group" style="display: none;">Less than $20,000</dt>
+        <dd class="comparison_data-point income_mean" style="display: none;">
+            <span style="left: 39.5061728395%; border-color: #f9921c;">
+                46
+            </span>
+        </dd>
     </dl>
   </figure>
 </div>`;
@@ -103,6 +127,9 @@ describe( 'fwb-results', () => {
     toggleButtons = document.querySelectorAll(
       '.comparison-chart_toggle-button'
     );
+    dataPoint = document.querySelectorAll(
+      '.comparison_data-point'
+    );
     expandableContent = document.querySelector( '.o-expandable_content' );
     expandableTarget = document.querySelector( '.o-expandable_target' );
   } );
@@ -127,5 +154,15 @@ describe( 'fwb-results', () => {
       expect( window.dataLayer[0] ).to.deep.equal( dataLayerEvent );
     }
   );
+
+  it( 'should show the correct category content when the toggle is clicked',
+    () => {
+      initFwbResults();
+      triggerClickEvent( toggleButtons[1] );
+      expect(
+        toggleButtons[0].classList.contains( 'comparison-chart_toggle-button__selected' )
+      ).to.equal( false );
+      expect( dataPoint[0].style.display ).to.equal( 'none' );
+    } );
 
 } );
