@@ -93,8 +93,7 @@ module.exports = {
     },
     vendorCss: {
       src: [
-        paths.unprocessed + '/css/pdfreactor-fonts.css',
-        paths.modules + '/timelinejs/build/css/timeline.css'
+        paths.unprocessed + '/css/pdfreactor-fonts.css'
       ],
       dest: paths.processed + '/css'
     },
