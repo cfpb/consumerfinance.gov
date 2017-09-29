@@ -38,21 +38,6 @@ describe( 'Mortgage Performance map store', () => {
     expect( store.prevState ).to.deep.equal( {} );
   } );
 
-  it( 'should properly reduce geos', () => {
-    const action = {
-      type: 'SET_GEO',
-      geo: {
-        type: 'county',
-        id: 12345,
-        name: 'Acme County'
-      }
-    };
-    store.dispatch( action );
-    expect( store.getState().geo.type ).to.equal( 'county' );
-    expect( store.getState().geo.id ).to.equal( 12345 );
-    expect( store.getState().geo.name ).to.equal( 'Acme County' );
-  } );
-
   it( 'should properly clear geos', () => {
     const action = {
       type: 'CLEAR_GEO'
@@ -61,25 +46,6 @@ describe( 'Mortgage Performance map store', () => {
     expect( store.getState().geo.type ).to.equal( null );
     expect( store.getState().geo.id ).to.equal( null );
     expect( store.getState().geo.name ).to.equal( null );
-  } );
-
-  it( 'should pass through geos if action is bad', () => {
-    let action = {
-      type: 'SET_GEO',
-      geo: {
-        type: 'county',
-        id: 12345,
-        name: 'Acme County'
-      }
-    };
-    store.dispatch( action );
-    action = {
-      type: 'SOME_OTHER_ACTION'
-    };
-    store.dispatch( action );
-    expect( store.getState().geo.type ).to.equal( 'county' );
-    expect( store.getState().geo.id ).to.equal( 12345 );
-    expect( store.getState().geo.name ).to.equal( 'Acme County' );
   } );
 
   it( 'should properly reduce app loading state', () => {
@@ -104,6 +70,22 @@ describe( 'Mortgage Performance map store', () => {
     expect( store.getState().isLoadingMetros ).to.be.true;
   } );
 
+  it( 'should properly reduce fetching metros', () => {
+    const action = {
+      type: 'FETCH_METROS'
+    };
+    store.dispatch( action );
+    expect( store.getState().metros.length ).to.equal( 0 );
+  } );
+
+  it( 'should properly reduce fetching counties', () => {
+    const action = {
+      type: 'FETCH_COUNTIES'
+    };
+    store.dispatch( action );
+    expect( store.getState().counties.length ).to.equal( 0 );
+  } );
+
   it( 'should properly reduce loading counties state', () => {
     const action = {
       type: 'REQUEST_COUNTIES'
@@ -113,21 +95,52 @@ describe( 'Mortgage Performance map store', () => {
   } );
 
   it( 'should properly reduce metros', () => {
-    const action = {
+    let action = {
       type: 'SET_METROS',
       metros: { 12345: 'Akron, OH' }
     };
     store.dispatch( action );
     expect( store.getState().metros ).to.deep.equal( { 12345: 'Akron, OH' } );
+    action = {
+      type: 'UPDATE_CHART',
+      geo: {
+        type: 'metro',
+        id: '67890',
+        name: 'Boston, MA'
+      },
+      metros: { 67890: 'Boston, MA' }
+    };
+    store.dispatch( action );
+    expect( store.getState().metros ).to.deep.equal( { 67890: 'Boston, MA' } );
   } );
 
   it( 'should properly reduce counties', () => {
-    const action = {
+    let action = {
       type: 'SET_COUNTIES',
       counties: { 12345: 'Acme County' }
     };
     store.dispatch( action );
     expect( store.getState().counties ).to.deep.equal( { 12345: 'Acme County' } );
+    action = {
+      type: 'UPDATE_CHART',
+      geo: {
+        type: 'county',
+        id: '67890',
+        name: 'Some other county'
+      },
+      counties: { 67890: 'Some other county' }
+    };
+    store.dispatch( action );
+    expect( store.getState().counties ).to.deep.equal( { 67890: 'Some other county' } );
+  } );
+
+  it( 'should properly chart zooming', () => {
+    const action = {
+      type: 'ZOOM_CHART',
+      target: 'MA'
+    };
+    store.dispatch( action );
+    expect( store.getState().zoomTarget ).to.equal( 'MA' );
   } );
 
 } );
