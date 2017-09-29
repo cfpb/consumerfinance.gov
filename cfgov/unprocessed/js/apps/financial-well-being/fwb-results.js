@@ -29,7 +29,7 @@ function init() {
     } );
     // ... and deselect all toggle buttons ...
     [].forEach.call( toggleButtons, function( el ) {
-        el.classList.remove( selectedButtonClass );
+      el.classList.remove( selectedButtonClass );
     } );
     // ... so that we can show only the right category data ...
     var showCategory = document.querySelectorAll( '[class^="comparison_data-point ' + category + '"]' );
