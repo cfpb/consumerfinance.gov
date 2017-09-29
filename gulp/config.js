@@ -103,7 +103,7 @@ module.exports = {
     },
     timelinejs: {
       src: [
-        paths.modules + '/timelinejs/build/**/*',
+        paths.modules + '/timelinejs/build/**/*'
       ],
       dest: paths.processed + '/timelinejs'
     },
@@ -116,7 +116,7 @@ module.exports = {
     vendorJs: {
       src: [
         paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js',
-        paths.unprocessed + '/js/know-before-you-owe/kbyo-timeline.json',
+        paths.unprocessed + '/js/know-before-you-owe/kbyo-timeline.json'
       ],
       dest: paths.processed + '/js/'
     }
