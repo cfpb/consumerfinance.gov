@@ -61,6 +61,7 @@ function init() {
       if ( Analytics.tagManagerIsLoaded ) {
         sendEvent( action, label, category );
       } else {
+        /* istanbul ignore next */
         Analytics.addEventListener( 'gtmLoaded', sendEvent );
       }
     } );
