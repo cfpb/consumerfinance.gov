@@ -17,18 +17,8 @@ function init() {
 
   function enableSubmit() {
     submitButton.title = 'Get your score';
-    var disabledClass = 'a-btn__disabled';
 
-    if ( submitButton.classList ) {
-      submitButton.classList.remove( disabledClass );
-    } else {
-      // Support browsers who don't have the classList API.
-      var classRegex = new RegExp( '(^|\\b)' +
-                                   disabledClass.split( ' ' ).join( '|' ) +
-                                   '(\\b|$)', 'gi' );
-      submitButton.className = submitButton.className.replace( classRegex,
-                                                               ' ' );
-    }
+    submitButton.classList.remove( 'a-btn__disabled' );
   }
 
   function handleRadio( input ) {
