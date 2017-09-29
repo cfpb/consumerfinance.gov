@@ -16,6 +16,12 @@ const updateGeo = ( geo, action ) => {
         id: action.geo.id,
         name: action.geo.name
       };
+    case 'ZOOM_CHART':
+      return {
+        type: geo.type,
+        id: '',
+        name: ''
+      };
     default:
       return geo;
   }
@@ -70,6 +76,8 @@ const updateMetros = ( metros, action ) => {
   switch ( action.type ) {
     case 'SET_METROS':
       return action.metros;
+    case 'UPDATE_CHART':
+      return action.metros || metros;
     case 'FETCH_METROS':
     case 'REQUEST_METROS':
     default:
@@ -81,6 +89,8 @@ const updateCounties = ( counties, action ) => {
   switch ( action.type ) {
     case 'SET_COUNTIES':
       return action.counties;
+    case 'UPDATE_CHART':
+      return action.counties || counties;
     case 'FETCH_COUNTIES':
     case 'REQUEST_COUNTIES':
     default:
@@ -95,8 +105,8 @@ const initialState = {
     name: null
   },
   date: '2008-01',
-  counties: {},
-  metros: {},
+  counties: [],
+  metros: [],
   isLoadingCounties: false,
   isLoadingChart: false
 };

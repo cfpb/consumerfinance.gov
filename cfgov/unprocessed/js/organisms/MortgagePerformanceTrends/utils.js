@@ -81,10 +81,14 @@ var utils = {
   },
   // Non-metro areas have FIPS that include "-non"
   isNonMetro: fips => fips.indexOf( '-non' ) > -1,
-  calcZoomLevel: zoomLevel => {
+  getZoomLevel: zoomLevel => {
     const level = zoomLevel / globalZoomLevel;
     globalZoomLevel = zoomLevel;
     return level;
+  },
+  setZoomLevel: zoomLevel => {
+    globalZoomLevel = zoomLevel;
+    return zoomLevel;
   },
   // Centroid of every state on the map organized by FIPS code
   stateCentroids: {

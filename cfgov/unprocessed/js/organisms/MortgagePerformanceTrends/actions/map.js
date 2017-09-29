@@ -13,6 +13,24 @@ mapActionCreators.zoomChart = stateAbbr => {
   return action;
 };
 
+mapActionCreators.updateChart = ( geoId, geoName, geoType ) => {
+  var action = {
+    type: 'UPDATE_CHART',
+    geo: {
+      id: geoId,
+      name: geoName
+    }
+  };
+  if ( geoType ) {
+    action.geo.type = geoType;
+  }
+  if ( !geoId ) {
+    action.counties = [];
+    action.metros = [];
+  }
+  return action;
+};
+
 mapActionCreators.fetchMetros = ( metroState, shouldZoom ) => dispatch => {
   dispatch( mapActionCreators.requestMetros( metroState ) );
   return utils.getMetroData( ( err, data ) => {

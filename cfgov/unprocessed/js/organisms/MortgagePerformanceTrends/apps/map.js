@@ -86,7 +86,8 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       if ( geoType === 'metro' || geoType === 'county' ) {
         // If no state is selected, zoom out and abort
         if ( !abbr ) {
-          this.chart.highchart.chart.zoomOut();
+          this.chart.highchart.chart.mapZoom();
+          utils.setZoomLevel( 10 );
           action = actions.updateChart( '', '', geoType );
           break;
         }
@@ -106,7 +107,7 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
     case 'mp-map-metro':
       geoId = this.$metro.value;
       if ( !geoId ) {
-        action = actions.updateChart( '', '' );
+        action = actions.zoomChart( abbr );
         break;
       }
       geoName = this.$metro.options[this.$metro.selectedIndex].text;
@@ -115,7 +116,7 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
     case 'mp-map-county':
       geoId = this.$county.value;
       if ( !geoId ) {
-        action = actions.updateChart( '', '' );
+        action = actions.zoomChart( abbr );
         break;
       }
       geoName = this.$county.options[this.$county.selectedIndex].text;
@@ -154,7 +155,10 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   }
   if ( state.zoomTarget ) {
     let centroid = utils.stateCentroids[state.zoomTarget];
-    this.chart.highchart.chart.mapZoom( utils.calcZoomLevel( 5 ), centroid[0], centroid[1] );
+    this.chart.highchart.chart.mapZoom();
+    utils.setZoomLevel( 10 );
+    zoomLevel = utils.getZoomLevel( 5 );
+    this.chart.highchart.chart.mapZoom( zoomLevel, centroid[0], centroid[1] );
   }
   // If no geo is selected, ensure metro and county dropdowns are cleared
   if ( !currId || prevType !== currType ) {
@@ -164,13 +168,17 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
     this.$county.innerHTML = '';
   }
   if ( prevState.date !== state.date || prevType !== currType ) {
-    store.dispatch( actions.startLoading() );
+    // store.dispatch( actions.startLoading() );
+    this.chart.highchart.chart.showLoading();
     this.chart.update( {
       source: `map-data/${ this.timespan }/${ _plurals[currType] }/${ state.date }`,
       metadata: _plurals[currType],
       tooltipFormatter: this.renderTooltip()
     } ).then( () => {
-      store.dispatch( actions.stopLoading() );
+      // store.dispatch( actions.stopLoading() );
+      if ( prevState.date !== state.date && currId ) {
+        this.chart.highchart.chart.get( currId ).select( true );
+      }
     } );
   }
 };
@@ -210,12 +218,12 @@ MortgagePerformanceMap.prototype.renderCounties = function( prevState, state ) {
   let option;
   this.$county.disabled = state.isLoadingCounties;
   // If there are no counties to render, abort.
-  if ( JSON.stringify( state.counties ) === JSON.stringify( {} ) ) {
+  if ( !state.counties || !state.counties.length ) {
     this.$county.disabled = true;
     return;
   }
-  // If a county is actively selected, abort.
-  if ( this.$county.value ) {
+  // If a county is actively selected and they haven't changed, abort.
+  if ( this.$county.value && !prevState.isLoadingCounties ) {
     return;
   }
   state.counties.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
@@ -242,21 +250,16 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
   let option, nonMSA;
   this.$metro.disabled = state.isLoadingMetros;
   // If there are no metros to render, abort.
-  if ( JSON.stringify( state.metros ) === JSON.stringify( {} ) ) {
+  if ( !state.metros || !state.metros.length ) {
     this.$metro.disabled = true;
     return;
   }
-  // If a metro is actively selected, abort.
-  if ( this.$metro.value ) {
+  // If a metro is actively selected and they haven't changed, abort.
+  if ( this.$metro.value && !prevState.isLoadingMetros ) {
     return;
   }
-  state.metros.sort( ( a, b ) => {
-    // Alphabetize location names except for non-metros, keep them at the bottom
-    if ( a.name < b.name ) {
-      return -1;
-    }
-    return 1;
-  } );
+  // Alphabetize mero names
+  state.metros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
   // Pull out any non-metros and put them at the end.
   state.metros = state.metros.filter( metro => {
     if ( utils.isNonMetro( metro.fips ) ) {
