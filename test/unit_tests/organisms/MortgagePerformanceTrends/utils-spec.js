@@ -18,8 +18,8 @@ const utils = require( BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/utils
 
 let el;
 let document = {
-  createElement: () => ({})
-}
+  createElement: () => ( {} )
+};
 
 describe( 'Mortgage Performance utilities', () => {
 
