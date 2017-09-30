@@ -18,6 +18,12 @@
 
 <div class="o-full-width-text-group" id="mp-map-container" data-chart-time-span="{{ time_frame }}" data-chart-color="{{ data_vis_color }}" data-chart-start-date="{{ sampling_dates|first }}" data-chart-end-date="{{ sampling_dates|last }}">
     <div class="m-full-width-text">
+        <div class="block 
+                block__flush-top
+                block__flush-bottom
+                block__padded-bottom">
+        {{ value.content_block|safe }}
+        </div>
         <form id="mp-map-controls" name="mp-map-controls" class="mp-controls u-js-only">
             <div id="mp-map-loading" class="mp-loading"></div>
             <h3>Choose location to display on the map</h3>

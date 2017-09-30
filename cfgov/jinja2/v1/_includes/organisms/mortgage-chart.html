@@ -17,6 +17,12 @@
 
 <div class="o-full-width-text-group" id="mp-line-chart-container" data-chart-time-span="{{ time_frame }}" data-chart-start-date="{{ sampling_dates|first }}" data-chart-end-date="{{ sampling_dates|last }}">
     <div class="m-full-width-text">
+        <div class="block 
+                block__flush-top
+                block__flush-bottom
+                block__padded-bottom">
+        {{ value.content_block|safe }}
+        </div>
         <h3>Filter by location to display trends</h3>
         <form class="content-l u-mb45" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
             <div id="mp-chart-loading" class="mp-loading"></div>
