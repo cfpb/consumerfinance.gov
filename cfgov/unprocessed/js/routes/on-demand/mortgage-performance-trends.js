@@ -6,9 +6,9 @@
 
 'use strict';
 
-// Enable console logging of state changes (except in IE).
-// TODO: Set to false before release.
-window.MP_DEBUG = window.navigator.userAgent.indexOf('MSIE ') === -1;
+// To aid debugging, uncomment the below line.
+// It will enable console logging of state changes (except in IE).
+// window.MP_DEBUG = window.navigator.userAgent.indexOf('MSIE ') === -1;
 
 // CFPB's charting library looks for data files on S3 by default.
 // MP uses a custom API so point our charts to it instead.
@@ -18,10 +18,3 @@ const MortgagePerformanceTrends = require( '../../organisms/MortgagePerformanceT
 
 const chart = new MortgagePerformanceTrends.Chart( { container: 'mp-line-chart-container' } );
 const map = new MortgagePerformanceTrends.Map( { container: 'mp-map-container' } );
-
-// Expose charts to aid debugging while in development.
-// TODO: Remove before release.
-window.CFPB_CHART_DEBUG = {
-  chart,
-  map
-}
