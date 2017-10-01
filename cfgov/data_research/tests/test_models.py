@@ -236,13 +236,17 @@ class MortgagePerformancePageTests(django.test.TestCase):
 
     def setUp(self):
         from v1.tests.wagtail_pages.helpers import save_new_page
-        page_stub = MortgagePerformancePage(
-            slug='mortgage-chart-page',
+        page_stub_30 = MortgagePerformancePage(
+            slug='mortgages-30-89-days-delinquent',
             title='Mortgage Charts')
-        self.chart_page = save_new_page(page_stub).as_page_object()
+        self.chart_page_30 = save_new_page(page_stub_30).as_page_object()
+        page_stub_90 = MortgagePerformancePage(
+            slug='mortgages-90-days-delinquent',
+            title='Mortgage Maps')
+        self.map_page_90 = save_new_page(page_stub_90).as_page_object()
 
     def test_chart_page_get_mortgage_meta(self):
-        page = self.chart_page
+        page = self.chart_page_30
         self.assertIn(
             'sampling_dates',
             page.get_mortgage_meta()
@@ -250,20 +254,22 @@ class MortgagePerformancePageTests(django.test.TestCase):
 
     def test_page_template(self):
         self.assertEqual(
-            self.chart_page.template,
+            self.chart_page_30.template,
             'browse-basic/index.html')
 
     def test_chart_page_context_30_89(self):
-        test_page = self.chart_page
+        test_page = self.chart_page_30
         request = HttpRequest()
-        request.url = '/data-research/mortgages-30-89-days-delinquent'
         self.assertIn('delinquency', test_page.get_context(request))
+        self.assertEqual(
+            test_page.get_context(request)['delinquency'], 'percent_30_60')
 
     def test_chart_page_context_90(self):
-        test_page = self.chart_page
+        test_page = self.map_page_90
         request = HttpRequest()
-        request.url = '/data-research/mortgages-90-days-delinquent'
         self.assertIn('delinquency', test_page.get_context(request))
+        self.assertEqual(
+            test_page.get_context(request)['delinquency'], 'percent_90')
 
 
 class ModelStringTest(django.test.TestCase):
