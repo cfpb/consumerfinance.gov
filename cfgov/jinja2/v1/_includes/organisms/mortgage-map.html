@@ -16,8 +16,14 @@
 {% set state_meta = csv_meta['State'] %}
 {% set data_vis_color = 'blue' if time_frame == '30-89' else 'navy' %}
 
-<div class="o-full-width-text-group" id="mp-map-container" data-chart-time-span="{{ time_frame }}" data-chart-color="{{ data_vis_color }}">
+<div class="o-full-width-text-group" id="mp-map-container" data-chart-time-span="{{ time_frame }}" data-chart-color="{{ data_vis_color }}" data-chart-start-date="{{ sampling_dates|first }}" data-chart-end-date="{{ sampling_dates|last }}">
     <div class="m-full-width-text">
+        <div class="block
+                block__flush-top
+                block__flush-bottom
+                block__padded-bottom">
+        {{ value.content_block|safe }}
+        </div>
         <form id="mp-map-controls" name="mp-map-controls" class="mp-controls u-js-only">
             <div id="mp-map-loading" class="mp-loading"></div>
             <h3>Choose location to display on the map</h3>
@@ -169,13 +175,13 @@
             <g>
                 <g>
                     <g>
-                        <rect y="30.1535" x="1.2" class="a-ramp-value-0" />
-                        <rect y="30.1535" x="92.4" class="a-ramp-value-1" />
-                        <rect y="30.1535" x="181.9" class="a-ramp-value-2" />
-                        <rect y="30.1535" x="272.1" class="a-ramp-value-3" />
-                        <rect y="30.1535" x="361.6" class="a-ramp-value-4" />
-                        <rect y="30.1535" x="452.8" class="a-ramp-value-5" />
-                        <rect y="30.1535" x="545.2" class="a-ramp-value-6" />
+                        <rect y="30.1535" x="1.2" height="15" width="91" class="a-ramp-value-0" />
+                        <rect y="30.1535" x="92.4" height="15" width="91" class="a-ramp-value-1" />
+                        <rect y="30.1535" x="181.9" height="15" width="91" class="a-ramp-value-2" />
+                        <rect y="30.1535" x="272.1" height="15" width="91" class="a-ramp-value-3" />
+                        <rect y="30.1535" x="361.6" height="15" width="91" class="a-ramp-value-4" />
+                        <rect y="30.1535" x="452.8" height="15" width="91" class="a-ramp-value-5" />
+                        <rect y="30.1535" x="545.2" height="15" width="91" class="a-ramp-value-6" />
                     </g>
                     <text x="0.999965" y="1.75349" transform="matrix(1,0.00001,0.00002,1,0.9696,10.2465)">Delinquency rates</text>
                 </g>
