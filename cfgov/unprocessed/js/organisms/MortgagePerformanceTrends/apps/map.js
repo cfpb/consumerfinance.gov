@@ -30,6 +30,7 @@ class MortgagePerformanceMap {
     this.$mapTitleDate = document.querySelector( '#mp-map-title-date' );
     this.$notification = document.querySelector( '#mp-map-notification' );
     this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
+    this.startDate = this.$container.getAttribute( 'data-chart-start-date' );
     this.endDate = this.$container.getAttribute( 'data-chart-end-date' );
     this.chart = ccb.createChart( {
       el: this.$container.querySelector( '#mp-map' ),
@@ -40,6 +41,7 @@ class MortgagePerformanceMap {
       tooltipFormatter: this.renderTooltip()
     } );
     this.eventListeners();
+    this.renderYears();
   }
 
 }
@@ -290,7 +292,6 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
   } );
   fragment.appendChild( option );
   state.metros.forEach( metro => {
-    option = document.createElement( 'option' );
     option = utils.addOption( {
       document,
       value: metro.fips,
@@ -300,6 +301,28 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
   } );
   this.$metro.innerHTML = '';
   this.$metro.appendChild( fragment );
+};
+
+MortgagePerformanceMap.prototype.renderYears = function() {
+  const fragment = document.createDocumentFragment();
+  let startYear = utils.getYear( this.startDate );
+  const endYear = utils.getYear( this.endDate );
+  let option = utils.addOption( {
+    document,
+    value: startYear,
+    text: startYear
+  } );
+  fragment.appendChild( option );
+  while ( startYear++ < endYear ) {
+    option = utils.addOption( {
+      document,
+      value: startYear,
+      text: startYear
+    } );
+    fragment.appendChild( option );
+  }
+  this.$year.innerHTML = '';
+  this.$year.appendChild( fragment );
 };
 
 MortgagePerformanceMap.prototype.renderTooltip = function() {

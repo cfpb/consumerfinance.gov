@@ -90,6 +90,7 @@ var utils = {
     globalZoomLevel = zoomLevel;
     return zoomLevel;
   },
+  getYear: date => date.split( '-' )[0],
   isDateValid: ( currDate, endDate ) => {
     currDate = currDate.split( '-' );
     endDate = endDate.split( '-' );
