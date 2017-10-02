@@ -29,11 +29,10 @@ def create_csv(s3_filename, starting_date):
 
     sample input CSV field_names and row:
     date,fips,open,current,thirty,sixty,ninety,other
-    01/01/98,1001,268,260,4,1,0,3
+    01/01/08,1001,268,260,4,1,0,3
 
     sample output row aimed at the `data_research_countymortgagedata` table:
-    1,01001,2008-01-01,464,443,10,5,4,2,2891
-
+    1,01001,2008-01-01,268,260,4,1,0,3,2891
     """
     starter = datetime.datetime.now()
     counter = 0
