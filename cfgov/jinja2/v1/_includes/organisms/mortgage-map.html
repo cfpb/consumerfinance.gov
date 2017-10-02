@@ -146,20 +146,25 @@
                         <label class="a-label u-mb5" for="mp-map-year">Year</label>
                         <div class="a-select">
                             <select id="mp-map-year">
-                                <option value="2008">2008</option>
-                                <option value="2009">2009</option>
-                                <option value="2010">2010</option>
-                                <option value="2011">2011</option>
-                                <option value="2012">2012</option>
-                                <option value="2013">2013</option>
-                                <option value="2014">2014</option>
-                                <option value="2015">2015</option>
-                                <option value="2016">2016</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </fieldset>
+            <div class="m-notification
+                        m-notification__visible
+                        m-notification__warning"
+                  id="mp-map-notification"
+                  style="display:none">
+                <span class="m-notification_icon cf-icon"></span>
+                <div class="m-notification_content">
+                    <div class="h4 m-notification_message">Invalid date</div>
+                    <p class="h4 m-notification_explanation">
+                      We only have data available through {{ thru_month_formatted }}.
+                      Please select a valid date.
+                    </p>
+                </div>
+            </div>
         </form>
     </div>
     <div class="o-mp-map m-full-width-text">

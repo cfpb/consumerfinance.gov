@@ -72,6 +72,30 @@ describe( 'Mortgage Performance utilities', () => {
     expect( utils.setZoomLevel( 234.56 ) ).to.equal( 234.56 );
   } );
 
+  it( 'should be able to parse years in date strings', () => {
+    expect( utils.getYear( '2008-01' ) ).to.equal( '2008' );
+    expect( utils.getYear( '3099-01' ) ).to.equal( '3099' );
+    expect( utils.getYear( '2012-01-01' ) ).to.equal( '2012' );
+    expect( utils.getYear( 'blah' ) ).to.equal( 'blah' );
+  } );
+
+  it( 'should be able to detect valid dates', () => {
+    expect( utils.isDateValid( '2008-01', '2016-10-01' ) ).to.be.true;
+    expect( utils.isDateValid( '2009-11', '2016-12-01' ) ).to.be.true;
+    expect( utils.isDateValid( '2009-11', '2016-12' ) ).to.be.true;
+    expect( utils.isDateValid( '2009-11-01', '2009-11-01' ) ).to.be.true;
+    expect( utils.isDateValid( '2009-11-01', '2009-11' ) ).to.be.true;
+    expect( utils.isDateValid( '2009-11', '2009-11' ) ).to.be.true;
+  } );
+
+  it( 'should be able to detect invalid dates', () => {
+    expect( utils.isDateValid( '2017-01', '2014-10-01' ) ).to.be.false;
+    expect( utils.isDateValid( 'foo', '2016-10-01' ) ).to.be.false;
+    expect( utils.isDateValid( '2014-10', 'bar' ) ).to.be.false;
+    expect( utils.isDateValid( 'foo', 'bar' ) ).to.be.false;
+    expect( utils.isDateValid( '2011-01-01', '2010-10-01' ) ).to.be.false;
+  } );
+
   it( 'should parse date strings', () => {
     let date = utils.getDate( '2009-01-01' );
     expect( date ).to.equal( 'January 2009' );

@@ -28,8 +28,10 @@ class MortgagePerformanceMap {
     this.$mapTitle = document.querySelector( '#mp-map-title-status' );
     this.$mapTitleLocation = document.querySelector( '#mp-map-title-location' );
     this.$mapTitleDate = document.querySelector( '#mp-map-title-date' );
-    this.$loadingSpinner = document.querySelector( '#mp-map-loading' );
+    this.$notification = document.querySelector( '#mp-map-notification' );
     this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
+    this.startDate = this.$container.getAttribute( 'data-chart-start-date' );
+    this.endDate = this.$container.getAttribute( 'data-chart-end-date' );
     this.chart = ccb.createChart( {
       el: this.$container.querySelector( '#mp-map' ),
       source: `map-data/${ this.timespan }/states/2008-01`,
@@ -39,7 +41,7 @@ class MortgagePerformanceMap {
       tooltipFormatter: this.renderTooltip()
     } );
     this.eventListeners();
-    utils.hideEl( this.$loadingSpinner );
+    this.renderYears();
   }
 
 }
@@ -141,6 +143,11 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
   const prevId = prevState.geo.id;
   const currId = state.geo.id;
   let zoomLevel;
+  if ( !utils.isDateValid( state.date, this.endDate ) ) {
+    utils.showEl( this.$notification );
+    return;
+  }
+  utils.hideEl( this.$notification );
   if ( prevId && prevId !== currId ) {
     this.chart.highchart.chart.get( prevId ).select( false );
   }
@@ -207,6 +214,9 @@ MortgagePerformanceMap.prototype.renderChartForm = function( prevState, state ) 
 
 MortgagePerformanceMap.prototype.renderChartTitle = function( prevState, state ) {
   let loc = state.geo.name;
+  if ( !utils.isDateValid( state.date, this.endDate ) ) {
+    return;
+  }
   if ( !loc ) {
     loc = `${ state.geo.type } view`;
   }
@@ -282,7 +292,6 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
   } );
   fragment.appendChild( option );
   state.metros.forEach( metro => {
-    option = document.createElement( 'option' );
     option = utils.addOption( {
       document,
       value: metro.fips,
@@ -292,6 +301,28 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
   } );
   this.$metro.innerHTML = '';
   this.$metro.appendChild( fragment );
+};
+
+MortgagePerformanceMap.prototype.renderYears = function() {
+  const fragment = document.createDocumentFragment();
+  let startYear = utils.getYear( this.startDate );
+  const endYear = utils.getYear( this.endDate );
+  let option = utils.addOption( {
+    document,
+    value: startYear,
+    text: startYear
+  } );
+  fragment.appendChild( option );
+  while ( startYear++ < endYear ) {
+    option = utils.addOption( {
+      document,
+      value: startYear,
+      text: startYear
+    } );
+    fragment.appendChild( option );
+  }
+  this.$year.innerHTML = '';
+  this.$year.appendChild( fragment );
 };
 
 MortgagePerformanceMap.prototype.renderTooltip = function() {
