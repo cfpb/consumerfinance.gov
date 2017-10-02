@@ -72,6 +72,13 @@ describe( 'Mortgage Performance utilities', () => {
     expect( utils.setZoomLevel( 234.56 ) ).to.equal( 234.56 );
   } );
 
+  it( 'should be able to parse years in date strings', () => {
+    expect( utils.getYear( '2008-01' ) ).to.equal( '2008' );
+    expect( utils.getYear( '3099-01' ) ).to.equal( '3099' );
+    expect( utils.getYear( '2012-01-01' ) ).to.equal( '2012' );
+    expect( utils.getYear( 'blah' ) ).to.equal( 'blah' );
+  } );
+
   it( 'should be able to detect valid dates', () => {
     expect( utils.isDateValid( '2008-01', '2016-10-01' ) ).to.be.true;
     expect( utils.isDateValid( '2009-11', '2016-12-01' ) ).to.be.true;
