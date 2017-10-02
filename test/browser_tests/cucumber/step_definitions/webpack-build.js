@@ -31,13 +31,15 @@ defineSupportCode( ( { When, Given } ) => {
             const isFailure = transpileRegex.test( contents );
             if ( isFailure ) {
               reject( directoryMapKeys[i] + ' contains const or ()=>' );
+            } else if ( i === directoryMapLength - 1 ) {
+              // All files searched.
+              resolve();
             }
           }
         );
       }
 
-      // All files searched.
-      resolve();
+
     } );
   } );
 } );
