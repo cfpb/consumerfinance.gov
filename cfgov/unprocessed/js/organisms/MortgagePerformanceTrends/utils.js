@@ -90,6 +90,19 @@ var utils = {
     globalZoomLevel = zoomLevel;
     return zoomLevel;
   },
+  isDateValid: ( currDate, endDate ) => {
+    currDate = currDate.split( '-' );
+    endDate = endDate.split( '-' );
+    // If dates are invalid, abort.
+    if ( currDate.length === 1 || endDate.length === 1 ) {
+      return false;
+    }
+    // Check if current date is less than or equal to the end date.
+    if ( currDate[0] <= endDate[0] && currDate[1] <= endDate[1] ) {
+      return true;
+    }
+    return false;
+  },
   // Centroid of every state on the map organized by FIPS code
   stateCentroids: {
     AL: [ 6614, -5006.5 ],
