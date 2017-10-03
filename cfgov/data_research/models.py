@@ -330,7 +330,7 @@ class MortgagePerformancePage(BrowsePage):
         meta['pub_date_formatted'] = meta.get(
             'download_files')[meta['thru_month']]['pub_date']
         meta['archive_dates'] = sorted([
-            date for date in meta['download_files'].keys()[1:]], reverse=True)
+            date for date in meta['download_files'].keys()], reverse=True)[1:]
         return meta
 
     def get_context(self, request, *args, **kwargs):
