@@ -3,9 +3,11 @@
 const gulp = require( 'gulp' );
 const gulpChanged = require( 'gulp-changed' );
 const gulpReplace = require( 'gulp-replace' );
+const gulpUtil = require( 'gulp-util' );
 const configCopy = require( '../config' ).copy;
 const handleErrors = require( '../utils/handle-errors' );
 const browserSync = require( 'browser-sync' );
+const del = require( 'del' );
 
 /**
  * Generic copy files flow from source to destination.
@@ -60,7 +62,10 @@ gulp.task( 'copy:vendorimg', () => {
 
 gulp.task( 'copy:timelinejs', () => {
   const timelinejs = configCopy.timelinejs;
-  return _genericCopy( timelinejs.src, timelinejs.dest );
+  return _genericCopy( timelinejs.src, timelinejs.dest )
+    .pipe( gulpUtil.buffer( () => {
+      del.sync( timelinejs.dest + '/css/themes' );
+    } ) );
 } );
 
 gulp.task( 'copy:lightbox2', () => {
