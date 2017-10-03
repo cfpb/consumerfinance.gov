@@ -93,14 +93,18 @@ urlpatterns = [
     url(r'^owning-a-home/process/sources/',
         include(oah.urls_for_prefix('process/sources/'))),
 
-    # the redirect is an unfortunate workaround, could be resolved by
-    # using static('path/to/asset') in the source template
-    url(r'^know-before-you-owe/static/(?P<path>.*)$',
-        RedirectView.as_view(
-            url='/static/know-before-you-owe/static/%(path)s',
-            permanent=True)),
-    url(r'^know-before-you-owe/',
-        include(SheerSite('know-before-you-owe').urls)),
+    url(r'^know-before-you-owe/$',
+        TemplateView.as_view(
+        template_name='know-before-you-owe/index.html'),
+        name='know-before-you-owe'),
+    url(r'^know-before-you-owe/timeline/$',
+        TemplateView.as_view(
+        template_name='know-before-you-owe/timeline/index.html'),
+        name='kbyo-timeline'),
+    url(r'^know-before-you-owe/compare/$',
+        TemplateView.as_view(
+        template_name='know-before-you-owe/compare/index.html'),
+        name='kbyo-compare'),
     url(r'^fin-ed/privacy-act-statement/$',
         TemplateView.as_view(
         template_name='/adult-financial-education/'
