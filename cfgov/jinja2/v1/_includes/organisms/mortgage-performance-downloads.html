@@ -45,13 +45,21 @@
                 <p>Mortgages 30-89 days delinquent</p>
             </td>
             <td>
-                <p><a href="{{ archive_30_60['State']['url'] }}">CSV</a> ({{ archive_30_60['State']['size'] }})</p>
+                <p><a aria-label="Download latest CSV file of mortgages 30 to 60 days delinquent by state"
+                        href="{{ archive_30_60['State']['url'] }}">
+                    CSV</a> 
+                    ({{ archive_30_60['State']['size'] }})
+                </p>
             </td>
             <td>
-                <p><a href="{{ archive_30_60['MetroArea']['url'] }}">CSV</a> ({{ archive_30_60['MetroArea']['size'] }})</p>
+                <p><a aria-label="Download latest CSV file of mortgages 30 to 60 days delinquent by metro area"
+                        href="{{ archive_30_60['MetroArea']['url'] }}">
+                    CSV</a> ({{ archive_30_60['MetroArea']['size'] }})</p>
             </td>
             <td>
-                <p><a href="{{ archive_30_60['County']['url'] }}">CSV</a> ({{ archive_30_60['County']['size'] }})</p>
+                <p><a aria-label="Download latest CSV file of mortgages 30 to 60 days delinquent by county"
+                        href="{{ archive_30_60['County']['url'] }}">
+                    CSV</a> ({{ archive_30_60['County']['size'] }})</p>
             </td>
         </tr>                
         <tr>
@@ -59,13 +67,19 @@
                 <p>Mortgages 90 or more days delinquent</p>
             </td>
             <td>
-                <p><a href="{{ archive_90['State']['url'] }}">CSV</a> ({{ archive_90['State']['size'] }})</p>
+                <p><a aria-label="Download latest CSV file of mortgages 90 or more days delinquent by state"
+                    href="{{ archive_90['State']['url'] }}">
+                CSV</a> ({{ archive_90['State']['size'] }})</p>
             </td>
             <td>
-                <p><a href="{{ archive_90['MetroArea']['url'] }}">CSV</a> ({{ archive_90['MetroArea']['size'] }})</p>
+                <p><a aria-label="Download latest CSV file of mortgages 90 or more days delinquent by metro area"
+                    href="{{ archive_90['MetroArea']['url'] }}">
+                CSV</a> ({{ archive_90['MetroArea']['size'] }})</p>
             </td>
             <td>
-                <p><a href="{{ archive_90['County']['url'] }}">CSV</a> ({{ archive_90['County']['size'] }})</p>
+                <p><a aria-label="Download latest CSV file of mortgages 90 or more days delinquent by county"
+                    href="{{ archive_90['County']['url'] }}">
+                CSV</a> ({{ archive_90['County']['size'] }})</p>
             </td>
         </tr>
     </tbody>
@@ -112,13 +126,19 @@
                 <p>Mortgages 30-89 days delinquent</p>
             </td>
             <td>
-                <p><a href="{{ archive_30_60['State']['url'] }}">CSV</a> ({{ archive_30_60['State']['size'] }})</p>
+                <p><a aria-label="Download archival CSV file through {{ download_files[date]['thru_month'] }} of mortgages 30 to 60 days delinquent by state"
+                    href="{{ archive_30_60['State']['url'] }}">
+                CSV</a> ({{ archive_30_60['State']['size'] }})</p>
             </td>
             <td>
-                <p><a href="{{ archive_30_60['MetroArea']['url'] }}">CSV</a> ({{ archive_30_60['MetroArea']['size'] }})</p>
+                <p><a aria-label="Download archival CSV file through {{ download_files[date]['thru_month'] }} of mortgages 30 to 60 days delinquent by metro area"
+                    href="{{ archive_30_60['MetroArea']['url'] }}">
+                CSV</a> ({{ archive_30_60['MetroArea']['size'] }})</p>
             </td>
             <td>
-                <p><a href="{{ archive_30_60['County']['url'] }}">CSV</a> ({{ archive_30_60['County']['size'] }})</p>
+                <p><a aria-label="Download archival CSV file through {{ download_files[date]['thru_month'] }} of mortgages 30 to 60 days delinquent by county"
+                    href="{{ archive_30_60['County']['url'] }}">
+                CSV</a> ({{ archive_30_60['County']['size'] }})</p>
             </td>
         </tr>                
         <tr>
@@ -126,13 +146,19 @@
                 <p>Mortgages 90 or more days delinquent</p>
             </td>
             <td>
-                <p><a href="{{ archive_90['State']['url'] }}">CSV</a> ({{ archive_90['State']['size'] }})</p>
+                <p><a aria-label="Download archival CSV file through {{ download_files[date]['thru_month'] }} of mortgages 90 or more days delinquent by state"
+                    href="{{ archive_90['State']['url'] }}">
+                CSV</a> ({{ archive_90['State']['size'] }})</p>
             </td>
             <td>
-                <p><a href="{{ archive_90['MetroArea']['url'] }}">CSV</a> ({{ archive_90['MetroArea']['size'] }})</p>
+                <p><a aria-label="Download archival CSV file through {{ download_files[date]['thru_month'] }} of mortgages 90 or more days delinquent by metro area"
+                    href="{{ archive_90['MetroArea']['url'] }}">
+                CSV</a> ({{ archive_90['MetroArea']['size'] }})</p>
             </td>
             <td>
-                <p><a href="{{ archive_90['County']['url'] }}">CSV</a> ({{ archive_90['County']['size'] }})</p>
+                <p><a aria-label="Download archival CSV file through {{ download_files[date]['thru_month'] }} of mortgages 90 or more days delinquent by county"
+                    href="{{ archive_90['County']['url'] }}">
+                CSV</a> ({{ archive_90['County']['size'] }})</p>
             </td>
         </tr>
     </tbody>

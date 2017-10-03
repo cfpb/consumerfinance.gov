@@ -5,43 +5,41 @@ const expect = chai.expect;
 const fs = require( 'fs' );
 const SCRIPTS_DIR = 'cfgov/static_built/js/';
 const scritpsManifest = require( '../../../../gulp/utils/scripts-manifest' );
-const directoryMap = scritpsManifest.getDirectoryMap( 'cfgov/static_built/js/' );
+const directoryMap = scritpsManifest.getDirectoryMap( SCRIPTS_DIR );
 const { defineSupportCode } = require( 'cucumber' );
 
 
-defineSupportCode( function( { When, Given } ) {
+defineSupportCode( ( { When, Given } ) => {
 
-  Given( /I run gulp build/,
+  Given( /I run gulp build to generate JS bundles/, () => {
+    expect( 'routes/common.js' in directoryMap ).to.equal( true );
+  } );
 
-    function( ) {
+  When( /the JS bundles shouldn't contain double arrows or constants/, () => {
+    const transpileRegex = /\(\)\s?=>|const .*=/g;
+    const directoryMapKeys = Object.keys( directoryMap );
+    const directoryMapLength = directoryMapKeys.length;
 
-      return expect( 'routes/common.js' in directoryMap )
-             .to.equal( true );
-    }
-  );
-
-  When( /the js bundles shouldn't contain double arrows or constants/,
-    function( ) {
-      const transpileRegex = /\(\)\s?=>|const .*=/g;
-      const directoryMapKeys = Object.keys( directoryMap );
-      const directoryMapLength = directoryMapKeys.length;
-
-      return new Promise( function( resolve, reject ) {
-        for ( let i = 0; i < directoryMapLength; i++ ) {
-          fs.readFile( SCRIPTS_DIR + directoryMapKeys[i], 'utf8', function( error, contents ) {
+    return new Promise( ( resolve, reject ) => {
+      for ( let i = 0; i < directoryMapLength; i++ ) {
+        fs.readFile( SCRIPTS_DIR + directoryMapKeys[i], 'utf8',
+          ( error, contents ) => {
             if ( error ) {
               reject( error );
-            } else {
-              const isFailure = transpileRegex.test( contents );
-              if ( isFailure ) {
-                reject( directoryMapKeys[i] + ' contains const or ()=>' );
-              } else if ( i === directoryMapLength - 1 ) {
-                resolve();
-              }
             }
-          } );
-        }
-      } );
-    }
-  );
+
+            const isFailure = transpileRegex.test( contents );
+            if ( isFailure ) {
+              reject( directoryMapKeys[i] + ' contains const or ()=>' );
+            } else if ( i === directoryMapLength - 1 ) {
+              // All files searched.
+              resolve();
+            }
+          }
+        );
+      }
+
+
+    } );
+  } );
 } );

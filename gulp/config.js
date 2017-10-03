@@ -101,9 +101,22 @@ module.exports = {
       src: [],
       dest: paths.processed + '/img'
     },
+    timelinejs: {
+      src: [
+        paths.modules + '/timelinejs/build/**/*'
+      ],
+      dest: paths.processed + '/timelinejs'
+    },
+    lightbox2: {
+      src: [
+        paths.modules + '/lightbox2/dist/**/*'
+      ],
+      dest: paths.processed + '/lightbox2'
+    },
     vendorJs: {
       src: [
-        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js'
+        paths.modules + '/ustream-embedapi/dist/ustream-embedapi.min.js',
+        paths.unprocessed + '/js/know-before-you-owe/kbyo-timeline.json'
       ],
       dest: paths.processed + '/js/'
     }
