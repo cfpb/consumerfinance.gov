@@ -38,7 +38,7 @@ msgstr ""
 
 #: jinja2/v1/_includes/molecules/form-field-with-button.html:33
 msgid "(required)"
-msgstr "(se require)"
+msgstr "(se requiere)"
 
 #: legacy/templates/common/forgot_password.html:24
 msgid "Email"
