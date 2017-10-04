@@ -3,7 +3,9 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const expect = chai.expect;
-const Store = require( BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/stores/map.js' );
+const Store = require(
+  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/stores/map.js'
+);
 let store;
 
 describe( 'Mortgage Performance map store', () => {
@@ -120,7 +122,8 @@ describe( 'Mortgage Performance map store', () => {
       counties: { 12345: 'Acme County' }
     };
     store.dispatch( action );
-    expect( store.getState().counties ).to.deep.equal( { 12345: 'Acme County' } );
+    expect( store.getState().counties )
+      .to.deep.equal( { 12345: 'Acme County' } );
     action = {
       type: 'UPDATE_CHART',
       geo: {
@@ -131,7 +134,8 @@ describe( 'Mortgage Performance map store', () => {
       counties: { 67890: 'Some other county' }
     };
     store.dispatch( action );
-    expect( store.getState().counties ).to.deep.equal( { 67890: 'Some other county' } );
+    expect( store.getState().counties )
+      .to.deep.equal( { 67890: 'Some other county' } );
   } );
 
   it( 'should properly chart zooming', () => {

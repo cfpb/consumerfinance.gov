@@ -1,3 +1,5 @@
+/* eslint max-len: "off" */
+
 'use strict';
 
 const fullWidthTextMenu = require( './wagtail-admin-full-width-text-menu.js' );

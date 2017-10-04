@@ -55,7 +55,9 @@ mockery.registerMock( '../utils', {
   }
 } );
 
-const actions = require( BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/actions/chart.js' );
+const actions = require(
+  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/actions/chart.js'
+);
 
 describe( 'Mortgage Performance chart action creators', () => {
 

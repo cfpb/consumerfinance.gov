@@ -3,7 +3,7 @@ const BASE_JS_PATH = '../../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const mockery = require( 'mockery' );
-const sinon = require('sinon');
+const sinon = require( 'sinon' );
 const expect = chai.expect;
 
 // Disable the AJAX library used by the action creator
@@ -27,7 +27,9 @@ mockery.registerMock( '../utils', {
   }
 } );
 
-const actions = require( BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/actions/default.js' )();
+const actions = require(
+  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/actions/default.js'
+)();
 
 describe( 'Mortgage Performance default action creators', () => {
 
