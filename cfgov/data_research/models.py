@@ -1,11 +1,14 @@
 from __future__ import unicode_literals
 
 from dateutil import parser
+import logging
 
 from django.db import models
 from jsonfield import JSONField
 
 from v1.models import BrowsePage, PageManager
+
+logger = logging.getLogger(__name__)
 
 
 # Used for registering users for a conference
@@ -27,9 +30,14 @@ class MortgageDataConstant(models.Model):
     name = models.CharField(max_length=255)
     slug = models.CharField(max_length=255,
                             blank=True,
-                            help_text="CAMELCASE VARIABLE NAME FOR JS")
+                            help_text="OPTIONAL SLUG")
     value = models.IntegerField(null=True, blank=True)
-    string_value = models.TextField(blank=True)
+    date_value = models.DateField(
+        null=True,
+        blank=True,
+        help_text=(
+            "CHOOSE THE LAST MONTH OF DATA TO DISPLAY "
+            "(AND SELECT THE FIRST DAY OF THAT MONTH)"))
     note = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
 
@@ -303,6 +311,7 @@ class NationalMortgageData(MortgageBase):
                 count_fields[field] += getattr(state, field)
         for field in count_fields:
             setattr(self, field, count_fields[field])
+        self.save()
 
 
 class MortgagePerformancePage(BrowsePage):
@@ -343,3 +352,14 @@ class MortgagePerformancePage(BrowsePage):
 
     class Media:
         css = ['secondary-navigation.css']
+
+
+def validate_counties():
+    for each in County.objects.all():
+        each.validate()
+    total = County.objects.count()
+    valid = County.objects.filter(valid=True).count()
+    if total != 0:
+        logger.info(
+            "{} counties of {} were found to be valid -- {}%)".format(
+                valid, total, round((valid * 100.0 / total), 1)))
