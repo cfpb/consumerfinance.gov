@@ -151,21 +151,32 @@ function FormSubmit( element, baseClass, opts ) {
    */
   function _replaceFormWithNotification( message ) {
     var transition = new AlphaTransition( _baseElement ).init();
-    scroll.scrollIntoView( _formElement, { offset: 100, callback: fadeOutForm } );
+    scroll.scrollIntoView(
+      _formElement, { offset: 100, callback: fadeOutForm }
+    );
 
+    /**
+     * Transition the form out of view
+     */
     function fadeOutForm() {
       transition.addEventListener( BaseTransition.END_EVENT, fadeInMessage );
       transition.fadeOut();
     }
 
+    /**
+     * Transition the  message into view
+     */
     function fadeInMessage() {
       if ( opts.minReplacementHeight ) {
-        _baseElement.style.marginBottom = Math.min( _formElement.offsetHeight, 100 ) + 'px';
+        _baseElement.style.marginBottom =
+          Math.min( _formElement.offsetHeight, 100 ) + 'px';
       }
       _formElement.style.display = 'none';
       _notification.setTypeAndContent( _notification.SUCCESS, message );
       _notification.show();
-      transition.removeEventListener( BaseTransition.END_EVENT, fadeInMessage );
+      transition.removeEventListener(
+        BaseTransition.END_EVENT, fadeInMessage
+      );
       transition.fadeIn();
     }
   }
@@ -180,7 +191,11 @@ function FormSubmit( element, baseClass, opts ) {
     var fields = ( _formElement || {} ).elements;
     for ( var f = 0; f < fields.length; f++ ) {
       var field = fields[f];
-      if ( field.name && !field.disabled && nonInputTypes.indexOf( field.type ) === -1 ) {
+      if (
+        field.name &&
+        !field.disabled &&
+        nonInputTypes.indexOf( field.type ) === -1
+      ) {
         if ( field.type === 'radio' || field.type === 'checkbox' ) {
           cachedFields[field.name] = cachedFields[field.name] || [];
           cachedFields[field.name].push( field );
