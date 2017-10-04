@@ -113,11 +113,14 @@
             text-align: right;
         }
         .comparison-chart_list dd {
-            display: inline-block;
             width: 65%;
             border-bottom: 1px solid #b4b5b6;
             position: relative;
             bottom: 0.25em;
+        }
+        .comparison-chart_list dd:not(.u-hidden),
+        .lt-ie9 .comparison-chart_list dd {
+            display: inline-block;
         }
         .comparison-chart_list dd span {
             height: 30px;
@@ -128,12 +131,6 @@
             position: absolute;
             bottom: -0.5em;
             line-height: 1;
-        }
-        .js [class^="comparison_data-point income"],
-        .js [class^="comparison_data-point employment"] {
-            /* Hiden when JavaScript is enabled so that the toggle buttons
-               can toggle to them. */
-            display: none;
         }
         .comparison-chart_source {
             padding-top: 15px;
@@ -160,9 +157,7 @@
         @media print {
             /* Force all these things back on when printing, regardless
                of how the user has interacted with the page */
-            .js [class^="comparison_data-point age"],
-            .js [class^="comparison_data-point income"],
-            .js [class^="comparison_data-point employment"] {
+            .js .comparison_data-point {
                 display: inline-block !important;
             }
 
