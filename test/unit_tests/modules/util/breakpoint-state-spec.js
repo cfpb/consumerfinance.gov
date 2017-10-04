@@ -40,7 +40,7 @@ describe( 'getBreakpointState', () => {
     let trueValueCount = 0;
 
     breakpointState = getBreakpointState();
-    for ( let stateKey in breakpointState ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
+    for ( const stateKey in breakpointState ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
       if ( breakpointState[stateKey] === true ) trueValueCount++;
     }
 
@@ -51,7 +51,7 @@ describe( 'getBreakpointState', () => {
     let width;
     let breakpointStateKey;
 
-    for ( let rangeKey in breakpointConfig ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
+    for ( const rangeKey in breakpointConfig ) { // eslint-disable-line guard-for-in, no-inline-comments, max-len
       width = breakpointConfig[rangeKey].max ||
               breakpointConfig[rangeKey].min;
       breakpointState = getBreakpointState( width );
