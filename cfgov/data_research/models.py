@@ -30,9 +30,14 @@ class MortgageDataConstant(models.Model):
     name = models.CharField(max_length=255)
     slug = models.CharField(max_length=255,
                             blank=True,
-                            help_text="CAMELCASE VARIABLE NAME FOR JS")
+                            help_text="OPTIONAL SLUG")
     value = models.IntegerField(null=True, blank=True)
-    string_value = models.TextField(blank=True)
+    date_value = models.DateField(
+        null=True,
+        blank=True,
+        help_text=(
+            "CHOOSE THE LAST MONTH OF DATA TO DISPLAY "
+            "(AND SELECT THE FIRST DAY OF THAT MONTH)"))
     note = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
 
