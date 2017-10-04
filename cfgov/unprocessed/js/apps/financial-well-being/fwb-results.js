@@ -1,72 +1,112 @@
 /* eslint no-extra-semi: "off" */
 'use strict';
 
-var Analytics = require( '../../modules/Analytics' );
-var Expandable = require( '../../organisms/Expandable' );
+const Analytics = require( '../../modules/Analytics' );
+const Expandable = require( '../../organisms/Expandable' );
 
-var expandableDom = document.querySelectorAll( '.content .o-expandable' );
-var expandable;
+const expandableDom = document.querySelectorAll( '.content .o-expandable' );
+let expandable;
+
 if ( expandableDom ) {
-  for ( var i = 0, len = expandableDom.length; i < len; i++ ) {
+  for ( let i = 0, len = expandableDom.length; i < len; i++ ) {
     expandable = new Expandable( expandableDom[i] );
     expandable.init();
   }
 }
 
+/**
+ * Initialize the results interactions
+ */
 function init() {
 
-  var toggleButtons = document.querySelectorAll(
+  const buttonsDom = document.querySelectorAll(
     '.comparison-chart_toggle-button'
   );
 
+  /**
+   * Changes the visibility of the results by category
+   * based on user input
+   * @param {string} category - The category to display
+   */
   function switchComparisons( category ) {
-    var allCategories = document.querySelectorAll( '.comparison_data-point' );
-    var selectedButtonClass = 'comparison-chart_toggle-button__selected';
+    const allCategories = document.querySelectorAll( '.comparison_data-point' );
+    const showCategory = document.querySelectorAll(
+      '[class^="comparison_data-point ' + category + '"]'
+    );
+    const selectedButton = document.querySelector(
+      '[data-compare-by="' + category + '"]'
+    );
+    const selectedButtonClass = 'comparison-chart_toggle-button__selected';
+    const hiddenClass = 'u-hidden';
 
     // Hide all categories ...
     [].forEach.call( allCategories, function( el ) {
-      el.style.display = 'none';
+      el.classList.add( hiddenClass );
     } );
     // ... and deselect all toggle buttons ...
-    [].forEach.call( toggleButtons, function( el ) {
+    [].forEach.call( buttonsDom, function( el ) {
       el.classList.remove( selectedButtonClass );
     } );
     // ... so that we can show only the right category data ...
-    var showCategory = document.querySelectorAll( '[class^="comparison_data-point ' + category + '"]' );
-
     [].forEach.call( showCategory, function( el ) {
-      el.style.display = 'inline-block';
+      el.classList.remove( hiddenClass );
     } );
     // ... and then highlight the correct button.
-    var selectedButton = document.querySelector( '[data-compare-by="' + category + '"]' );
-
     selectedButton.classList.add( selectedButtonClass );
   }
 
+  /**
+   * Sends the user interaction to Analytics
+   * @param {string} action - A GTM data attribute
+   * @param {string} label - A GTM data attribute
+   * @param {string} category - A GTM data attribute
+   */
   function sendEvent( action, label, category ) {
-    var eventData = Analytics.getDataLayerOptions( action, label, category );
+    const eventData = Analytics.getDataLayerOptions( action, label, category );
     Analytics.sendEvent( eventData );
   }
 
-  [].forEach.call( toggleButtons, function( el ) {
-    el.addEventListener( 'click', function( event ) {
-      var input = event.target;
-      var category = input.getAttribute( 'data-compare-by' );
-      switchComparisons( category );
+  /**
+   * Determines the state of Analytics and either passes the data-sets
+   * or waits for Analytics to report readiness
+   * @param {HTMLNode} input - A dom element
+   */
+  function handleButtonAnalytics( input ) {
+    const action = input.getAttribute( 'data-gtm-action' );
+    const label = input.getAttribute( 'data-gtm-label' );
+    const category = input.getAttribute( 'data-gtm-category' );
 
-      var action = input.getAttribute( 'data-gtm-action' );
-      var label = input.getAttribute( 'data-gtm-label' );
-      category = input.getAttribute( 'data-gtm-category' );
+    if ( Analytics.tagManagerIsLoaded ) {
+      sendEvent( action, label, category );
+    } else {
+      /* istanbul ignore next */
+      Analytics.addEventListener( 'gtmLoaded', sendEvent );
+    }
+  }
 
-      if ( Analytics.tagManagerIsLoaded ) {
-        sendEvent( action, label, category );
-      } else {
-        /* istanbul ignore next */
-        Analytics.addEventListener( 'gtmLoaded', sendEvent );
-      }
+  /**
+   * Event handler to watch user interaction on each button
+   */
+  function setUpListeners() {
+    [].forEach.call( buttonsDom, function( el ) {
+      el.addEventListener( 'click', function( event ) {
+        const input = event.target;
+
+        switchComparisons( input.getAttribute( 'data-compare-by' ) );
+        handleButtonAnalytics( input );
+      } );
     } );
-  } );
+  }
 
+  /**
+   * Sets up the UI for the default age category
+   */
+  function setUpUI() {
+    switchComparisons( 'age' );
+    setUpListeners();
+  }
+
+  setUpUI();
 }
 
 module.exports = { init: init };
