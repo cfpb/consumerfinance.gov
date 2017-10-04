@@ -64,24 +64,14 @@
                 <fieldset class="o-form_fieldset">
                     <legend class="a-label a-label__heading"
                             for="categories">
-                        {% if 'leadership-calendar' in controls.categories.page_type %}
-                            Calendars
-                            </legend>
-                            <ul class="m-list m-list__unstyled">
-                            {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
-                                {{ _filter_selectable('radio', index, category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
-                            {% endfor %}
-                            </ul>
-                        {% else %}
-                            Category
-                            </legend>
-                            <ul class="m-list m-list__unstyled">
-                            {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
-                                {{ _filter_selectable('checkbox', index, category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
-                            {% endfor %}
-                            </ul>
-                        {% endif %}
-                  </fieldset>
+                        Category
+                    </legend>
+                    <ul class="m-list m-list__unstyled">
+                    {% for slug, name in choices_for_page_type(controls.categories.page_type) %}
+                        {{ _filter_selectable('checkbox', index, category_label(slug), 'categories_' ~ slug, 'categories', slug) }}
+                    {% endfor %}
+                    </ul>
+                </fieldset>
             </div>
         </div>
     {% endif %}
