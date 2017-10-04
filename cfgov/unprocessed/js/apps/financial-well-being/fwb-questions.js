@@ -1,83 +1,172 @@
-/* eslint no-global-assign: "off" */
 'use strict';
 
-var Analytics = require( '../../modules/Analytics' );
+const Analytics = require( '../../modules/Analytics' );
 
+/**
+ * Initialize the questionnaire
+ */
 function init() {
+  const questionsDom = document.querySelectorAll( '#quiz-form fieldset' );
+  const radiosDom = document.querySelectorAll( '#quiz-form [type="radio"]' );
+  const submitDom = document.querySelector( '#submit-quiz' );
+  const questionStates = {};
 
-  var totalQuestions = 12;
-  var quizComplete = false;
-  var questionValues = {};
-  var radioButtons = document.querySelectorAll( '[type="radio"]' );
-  var submitButton = document.querySelector( '#submit-quiz' );
+  /**
+   * Checks the selection status of a group of radio inputs,
+   * belonging to a parent fieldset
+   * @param {HTMLNode} childRadios - An array of DOM elements.
+   * @returns {boolean} The status of the group of inputs
+   */
+  function checkQuestionState( childRadios ) {
+    let radioIsChecked = false;
+    const radiosLength = childRadios.length;
 
-  function allQuestionsCompleted() {
-    return Object.keys( questionValues ).length === totalQuestions;
-  }
-
-  function enableSubmit() {
-    submitButton.title = 'Get your score';
-
-    submitButton.classList.remove( 'a-btn__disabled' );
-  }
-
-  function handleRadio( input ) {
-    if ( input.name && input.checked ) {
-
-      questionValues[input.name] = input.value;
+    for ( let i = 0; i < radiosLength; i++ ) {
+      if ( childRadios[i].checked ) {
+        radioIsChecked = true;
+      }
     }
 
-    quizComplete = allQuestionsCompleted();
+    return radioIsChecked;
+  }
 
-    if ( quizComplete ) {
+  /**
+   * Checks the status of each fieldset to determine if
+   * the user has completed the form
+   * @returns {boolean} The completion status of the form
+   */
+  function checkFormCompletion() {
+    let formCompleted = true;
+
+    Object.keys( questionStates ).forEach( key => {
+      if ( !questionStates[key] ) {
+        formCompleted = false;
+      }
+    } );
+
+    return formCompleted;
+  }
+
+  /**
+   * Event handler to prevent clicking the submit button before
+   * the form is completed
+   * @param {Object} event - The event object for the click event.
+   */
+  function handleDisabledSubmit( event ) {
+    event.preventDefault();
+  }
+
+
+  /**
+   * Sets the disabled state of the submit button
+   */
+  function disableSubmit() {
+    submitDom.disabled = true;
+    submitDom.addEventListener( 'click', handleDisabledSubmit );
+  }
+
+  /**
+   * Sets the enabled state of the submit button
+   */
+  function enableSubmit() {
+    submitDom.title = 'Get your score';
+    submitDom.disabled = false;
+    submitDom.removeEventListener( 'click', handleDisabledSubmit );
+  }
+
+
+  /**
+   * Updates the status of the fieldset in the data store
+   * and checks if the form has been completed
+   * @param {HTMLNode} input - A DOM element
+   */
+  function handleRadio( input ) {
+    if ( input.name && input.checked ) {
+      questionStates[input.name] = true;
+    }
+
+    if ( checkFormCompletion() ) {
       enableSubmit();
     }
   }
 
+  /**
+   * Sends the user interaction to Analytics
+   * @param {string} action - A GTM data attribute
+   * @param {string} label - A GTM data attribute
+   * @param {string} category - A GTM data attribute
+   */
   function sendEvent( action, label, category ) {
-    var eventData = Analytics.getDataLayerOptions( action, label, category );
+    const eventData = Analytics.getDataLayerOptions( action, label, category );
     Analytics.sendEvent( eventData );
   }
 
-  submitButton.addEventListener( 'click', function( event ) {
-    // Confirm that all questions are answered
-    if ( !quizComplete ) {
-      // If not, block the form submission action
-      return event.preventDefault();
+  /**
+   * Determines the state of Analytics and either passes the data-sets
+   * or waits for Analytics to report readiness
+   * @param {HTMLNode} input - A DOM element
+   */
+  function handleRadioAnalytics( input ) {
+    const action = input.getAttribute( 'data-gtm-action' );
+    const label = input.getAttribute( 'data-gtm-label' );
+    const category = input.getAttribute( 'data-gtm-category' );
+
+    if ( Analytics.tagManagerIsLoaded ) {
+      sendEvent( action, label, category );
+    } else {
+      /* istanbul ignore next */
+      Analytics.addEventListener( 'gtmLoaded', sendEvent );
+    }
+  }
+
+  /**
+   * Event handler to watch user interaction on each input
+   */
+  function setUpListeners() {
+    [].forEach.call( radiosDom, function( el ) {
+      el.addEventListener( 'click', function( event ) {
+        const input = event.target;
+
+        handleRadio( input );
+        handleRadioAnalytics( input );
+      } );
+    } );
+  }
+
+  /**
+   * Determines the state of the form and modifies the UI appropriately
+   */
+  function setUpUI() {
+    if ( checkFormCompletion() ) {
+      // Enable submit button initially if the answers are completed
+      enableSubmit();
+    } else {
+      // Otherwise disable submit button initially
+      disableSubmit();
     }
 
-    // Otherise, allow the form submission to go through as normal
-    return null;
-  } );
+    setUpListeners();
+  }
 
-  [].forEach.call( radioButtons, function( el ) {
-    el.addEventListener( 'click', function radioButtonClickHandler( event ) {
-      var input = event.target;
-      handleRadio( input );
+  /**
+   * Initializes a data store from the initial state of each fieldset
+   */
+  function setUpData() {
+    const questionsLength = questionsDom.length;
 
-      var action = input.getAttribute( 'data-gtm-action' );
-      var label = input.getAttribute( 'data-gtm-label' );
-      var category = input.getAttribute( 'data-gtm-category' );
+    for ( let i = 0; i < questionsLength; i++ ) {
+      const questionID = questionsDom[i].id;
+      const childRadios = document.querySelectorAll(
+        '#' + questionID + ' input'
+      );
 
-      if ( Analytics.tagManagerIsLoaded ) {
-        sendEvent( action, label, category );
-      } else {
-        /* istanbul ignore next */
-        Analytics.addEventListener( 'gtmLoaded', sendEvent );
-      }
-    } );
-  } );
+      questionStates[questionID] = checkQuestionState( childRadios );
+    }
 
-  // Disable submit button initially
-  submitButton.classList.add( 'a-btn__disabled' );
-  submitButton.title = 'Please answer all questions to get your score';
+    setUpUI();
+  }
 
-  // Look at all radios on coming back to the page or on reload
-  [].forEach.call( radioButtons, function( el ) {
-    handleRadio( el );
-  } );
-
+  setUpData();
 }
 
 module.exports = { init: init };
-
