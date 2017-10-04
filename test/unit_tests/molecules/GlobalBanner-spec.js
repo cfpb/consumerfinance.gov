@@ -29,42 +29,43 @@ describe( 'Global Banner State', () => {
 
     // TODO: Investigate importing the HTML directly from the atomic template.
     document.body.innerHTML =
-      '<div class="m-global-banner">' +
-      '<div class="wrapper ' +
-                  'wrapper__match-content ' +
-                  'o-expandable ' +
-                  'o-expandable__expanded">' +
-          '<div class="m-global-banner_head">' +
-              '<span class="cf-icon ' +
-                           'cf-icon-error-round ' +
-                           'm-global-banner_icon"></span>' +
-              'This beta site is a work in progress.' +
-          '</div>' +
-          '<div class="o-expandable_content" ' +
-                'aria-expanded="true" style="height: 22px;">' +
-              '<p class="m-global-banner_desc ' +
-                        'o-expandable_content-animated">' +
-                  'We’re prototyping new designs. ' +
-                  'Things may not work as expected. ' +
-                  'Our regular site continues to be at ' +
-                  '<a href="http://www.consumerfinance.gov/">' +
-                      'www.consumerfinance.gov</a>.' +
-              '</p>' +
-          '</div>' +
-          '<button class="a-btn ' +
-                         'm-global-banner_btn ' +
-                         'o-expandable_target ' +
-                         'o-expandable_link" id="m-global-banner_btn" ' +
-                   'aria-pressed="true">' +
-              '<span class="o-expandable_cue o-expandable_cue-close">' +
-                  'Collapse <span class="cf-icon cf-icon-up"></span>' +
-              '</span>' +
-              '<span class="o-expandable_cue o-expandable_cue-open">' +
-                  'More info <span class="cf-icon cf-icon-down"></span>' +
-              '</span>' +
-          '</button>' +
-      '</div>' +
-      '</div>';
+      `<div class="m-global-banner">
+        <div class="wrapper
+                    wrapper__match-content
+                    o-expandable
+                    o-expandable__expanded">
+            <div class="m-global-banner_head">
+                <span class="cf-icon
+                             cf-icon-error-round
+                             m-global-banner_icon"></span>
+                This beta site is a work in progress.
+            </div>
+            <div class="o-expandable_content"
+                  aria-expanded="true" style="height: 22px;">
+                <p class="m-global-banner_desc
+                          o-expandable_content-animated">
+                    We’re prototyping new designs.
+                    Things may not work as expected.
+                    Our regular site continues to be at
+                    <a href="http://www.consumerfinance.gov/">
+                        www.consumerfinance.gov</a>.
+                </p>
+            </div>
+            <button class="a-btn
+                           m-global-banner_btn
+                           o-expandable_target
+                           o-expandable_link"
+                    id="m-global-banner_btn"
+                    aria-pressed="true">
+                <span class="o-expandable_cue o-expandable_cue-close">
+                    Collapse <span class="cf-icon cf-icon-up"></span>
+                </span>
+                <span class="o-expandable_cue o-expandable_cue-open">
+                    More info <span class="cf-icon cf-icon-down"></span>
+                </span>
+            </button>
+        </div>
+      </div>`;
 
     contentDom = document.querySelector( '.o-expandable_content' );
     contentAnimatedDom =
