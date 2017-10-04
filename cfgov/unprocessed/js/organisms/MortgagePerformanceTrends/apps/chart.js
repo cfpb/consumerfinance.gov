@@ -58,25 +58,27 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
 
   var action, geoEl, geoType, geoId, geoName;
   var includeComparison = this.$compare.checked;
+  var abbr = this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' );
 
   switch ( event.target.id ) {
     case 'mp-line-chart_geo-state':
-      // Reset the county dropdown to the first item if we're no longer using it
+      // Reset the metro and county dropdowns to the first item if we're no longer using it
       this.$metro.selectedIndex = 0;
-      this.$nonMetro.selectedIndex = 0;
       this.$county.selectedIndex = 0;
+      // Keep the non-metro dropdown synced with the state dropdown
+      this.$nonMetro.selectedIndex = this.$state.options[this.$state.selectedIndex] + '-non';
       geoId = this.$state.value;
       geoName = this.$state.options[this.$state.selectedIndex].text;
       action = actions.setGeo( geoId, geoName, 'state' );
       break;
     case 'mp-line-chart_geo-metro':
-      action = actions.fetchMetros( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ) );
+      action = actions.fetchMetros( abbr );
       break;
     case 'mp-line-chart_geo-non-metro':
-      action = actions.fetchNonMetros();
+      action = actions.fetchNonMetros( abbr );
       break;
     case 'mp-line-chart_geo-county':
-      action = actions.fetchCounties( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ) );
+      action = actions.fetchCounties( abbr );
       break;
     case 'mp-line-chart-state':
       geoType = this.$container.querySelector( 'input[name="mp-line-chart_geo"]:checked' ).id.replace( 'mp-line-chart_geo-', '' );
@@ -89,17 +91,18 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
       if ( geoType === 'metro' ) {
         geoId = this.$metro.value;
         geoName = this.$metro.options[this.$metro.selectedIndex].text;
-        action = actions.fetchMetros( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ), includeComparison );
+        action = actions.fetchMetros( abbr, includeComparison );
       }
       if ( geoType === 'non-metro' ) {
         geoId = this.$nonMetro.value;
         geoName = this.$nonMetro.options[this.$nonMetro.selectedIndex].text;
-        action = actions.fetchNonMetros( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ), includeComparison );
+        action = actions.fetchNonMetros( abbr, includeComparison );
+        action = actions.updateChart( geoId, geoName, 'non-metro', includeComparison );
       }
       if ( geoType === 'county' ) {
         geoId = this.$county.value;
         geoName = this.$county.options[this.$county.selectedIndex].text;
-        action = actions.fetchCounties( this.$state.options[this.$state.selectedIndex].getAttribute( 'data-abbr' ), includeComparison );
+        action = actions.fetchCounties( abbr, includeComparison );
       }
       break;
     case 'mp-line-chart-metro':
