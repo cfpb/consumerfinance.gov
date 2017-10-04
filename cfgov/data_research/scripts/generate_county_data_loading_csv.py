@@ -22,7 +22,7 @@ DEFAULT_S3_SOURCE_FILE = 'latest_county_delinquency.csv'
 logger = logging.getLogger(__name__)
 
 
-def create_csv(s3_filename, starting_date):
+def create_csv(s3_filename, starting_date, through_date):
     """
     Produce a header-less CSV that can loaded directly into a Mysql table with
     `LOAD DATA INFILE`. The CSV is saved to /tmp as `countydata.csv`
@@ -42,7 +42,7 @@ def create_csv(s3_filename, starting_date):
     raw_data = read_in_s3_csv(source_url)
     for row in raw_data:
         sampling_date = parser.parse(row.get('date')).date()
-        if sampling_date >= starting_date:
+        if sampling_date >= starting_date and sampling_date <= through_date:
             valid_fips = validate_fips(row.get('fips'))
             if valid_fips:
                 county_pk = County.objects.get(fips=valid_fips).pk
@@ -80,7 +80,15 @@ def run(*args):  # pragma: no cover
     starting_year = MortgageDataConstant.objects.get(
         name='starting_year').value
     starting_date = datetime.date(starting_year, 1, 1)
+    through_date = MortgageDataConstant.objects.get(
+        name='through_date').date_value
     if args:
-        create_csv(s3_filename=args[0], starting_date=starting_date)
+        create_csv(
+            s3_filename=args[0],
+            starting_date=starting_date,
+            through_date=through_date)
     else:
-        create_csv(DEFAULT_S3_SOURCE_FILE, starting_date=starting_date)
+        create_csv(
+            DEFAULT_S3_SOURCE_FILE,
+            starting_date=starting_date,
+            through_date=through_date)

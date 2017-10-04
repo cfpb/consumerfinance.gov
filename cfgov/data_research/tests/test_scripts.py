@@ -41,6 +41,7 @@ from data_research.scripts.update_county_msa_meta import (
 
 
 STARTING_DATE = datetime.date(2008, 1, 1)
+THROUGH_DATE = datetime.date(2017, 3, 1)
 
 
 class DataLoadIntegrityTest(django.test.TestCase):
@@ -476,7 +477,7 @@ class DataLoadTest(django.test.TestCase):
             'fips': '12081'}]
         m = mock_open()
         with patch('__builtin__.open', m, create=True):
-            create_csv('mock_s3_url', STARTING_DATE)
+            create_csv('mock_s3_url', STARTING_DATE, THROUGH_DATE)
         self.assertEqual(m.call_count, 1)
         self.assertEqual(mock_read_in.call_count, 1)
 
