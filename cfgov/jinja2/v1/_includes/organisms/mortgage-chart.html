@@ -23,10 +23,10 @@
                 block__padded-bottom">
         {{ value.content_block|safe }}
         </div>
-        <h3>Filter by location to display trends</h3>
-        <form class="content-l u-mb45" id="mp-line-chart-controls" name="mp-line-chart-controls" style="margin-left:2px">
+        <h3 class="u-mb30">Filter by location to display trends</h3>
+        <form class="content-l u-mb45" id="mp-line-chart-controls" name="mp-line-chart-controls">
             <div id="mp-chart-loading" class="mp-loading"></div>
-            <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
+            <fieldset class="content-l_col content-l_col-1-2">
                 <label class="a-label" for="mp-line-chart-geo"><h4>Select location type</h4></label>
                 <div class="m-form-field m-form-field__radio" id="mp-line-chart-geo">
                     <div class="m-form-field m-form-field__radio u-mb10">
@@ -41,12 +41,12 @@
                     <div class="m-form-field m-form-field__radio u-mb10">
                         <input class="a-radio" id="mp-line-chart_geo-non-metro" name="mp-line-chart_geo" type="radio"> <label class="a-label" for="mp-line-chart_geo-non-metro">Non-metro area by state</label>
                     </div>
-                    <div class="m-form-field m-form-field__radio u-mb10">
+                    <div class="m-form-field m-form-field__radio">
                         <input class="a-radio" id="mp-line-chart_geo-county" name="mp-line-chart_geo" type="radio"> <label class="a-label" for="mp-line-chart_geo-county">County</label>
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="content-l_col content-l_col-1-2" style="margin-left:0;padding-left:0;border:0;">
+            <fieldset class="content-l_col content-l_col-1-2">
                 <div class="m-form-field m-form-field__select mp-line-chart-select-container u-mb30" id="mp-line-chart-state-container" style="display:none">
                     <label class="a-label" for="mp-line-chart-state"><h4>Select state</h4></label>
                     <div class="a-select">
@@ -157,7 +157,7 @@
                 </div>
             </fieldset>
         </form>
-        <h3 id="mp-line-chart-title" class="u-mt20">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
+        <h3 id="mp-line-chart-title">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
             <span id="mp-line-chart-title-status">
                 <strong><span id="mp-line-chart-title-status-geo">national average</span></strong><span id="mp-line-chart-title-status-comparison"> versus <strong>national average</strong></span></span>, {{ from_month_formatted|safe }}-{{ thru_month_formatted|safe }}
         </h2>
