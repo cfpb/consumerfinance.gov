@@ -7,8 +7,6 @@
 
 // Global modules.
 require( '../modules/focus-target' ).init();
-require( '../modules/UStreamPlayer' ).init( '.video-player__ustream' );
-require( '../modules/YoutubePlayer' ).init( '.video-player__youtube' );
 
 // GLOBAL ATOMIC ELEMENTS.
 // Organisms.

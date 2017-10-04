@@ -797,6 +797,9 @@ class VideoPlayer(blocks.StructBlock):
         icon = 'media'
         template = '_includes/organisms/video-player.html'
 
+    class Media:
+        js = ['video-player.js']
+
 
 class HTMLBlock(blocks.StructBlock):
     html_url = blocks.RegexBlock(
