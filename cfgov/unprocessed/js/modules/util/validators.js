@@ -46,8 +46,8 @@ function email( field, currentStatus, options ) {
   var status = currentStatus || {};
   var opts = options || {};
   var regex =
-    '^[a-z0-9\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+(?:\\.[a-z0-9' +
-    '\u007F-\uffff!#$%&\'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9]' +
+    '^[a-z0-9\u007F-\uffff!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9' +
+    '\u007F-\uffff!#$%&\'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]' +
     '(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z]{2,}$';
   var emailRegex = new RegExp( regex, 'i' );
   var emptyValidation = empty( field );
@@ -75,6 +75,9 @@ function email( field, currentStatus, options ) {
   return status;
 }
 
+
+// TODO: Rename this function so it’s clearer
+// that it’s checking a required attribute
 /**
  * empty Determines if a required field contains a value.
  *
@@ -83,7 +86,6 @@ function email( field, currentStatus, options ) {
  * @returns {Object} An empty object if the field passes,
  *   otherwise an object with msg and type properties if it failed.
  */
- // TODO: Rename this so it's clearer it's checking a required attribute
 function empty( field, currentStatus ) {
   var status = currentStatus || {};
   var isRequired = field.getAttribute( 'required' ) !== null;
