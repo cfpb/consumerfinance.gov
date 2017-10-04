@@ -213,6 +213,9 @@ class FeaturedContent(blocks.StructBlock):
         label = 'Featured Content'
         classname = 'block__flush'
 
+    class Media:
+        js = ['video-player.js']
+
 
 class CallToAction(blocks.StructBlock):
     slug_text = blocks.CharBlock(required=False)
