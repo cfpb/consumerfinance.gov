@@ -159,6 +159,18 @@ class GeoValidationTests(django.test.TestCase):
             state=State.objects.get(fips='12'))
 
         mommy.make(
+            NonMSAMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='34-non',
+            total=None,
+            current=None,
+            thirty=None,
+            sixty=None,
+            ninety=None,
+            other=None,
+            state=State.objects.get(fips='34'))
+
+        mommy.make(
             StateMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='12',
@@ -213,6 +225,11 @@ class GeoValidationTests(django.test.TestCase):
         state = State.objects.get(fips='34')
         state.validate_non_msas()
         self.assertIs(state.non_msa_valid, False)
+
+    def test_non_msa_aggregation_no_counties(self):
+        non_msa_no_counties = NonMSAMortgageData.objects.get(fips='34-non')
+        non_msa_no_counties.aggregate_data()
+        self.assertEqual(non_msa_no_counties.total, 0)
 
     def test_national_aggregation(self):
         """National records aggregate state records."""

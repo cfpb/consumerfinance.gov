@@ -221,6 +221,10 @@ class MortgageBase(models.Model):
             for field in count_fields:
                 setattr(self, field, count_fields[field])
             self.save()
+        elif self.__class__ == NonMSAMortgageData:
+            for field in count_fields:
+                setattr(self, field, count_fields[field])
+            self.save()
 
     def time_series(self, days_late):
         if days_late == '30-89':

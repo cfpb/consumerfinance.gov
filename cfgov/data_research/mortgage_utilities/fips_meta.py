@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-import json
 import logging
 
 from django.conf import settings
@@ -178,7 +177,7 @@ def load_fips_lists():
 
 
 def load_constants():
-    """Get data thresholds from database, or fall back to starting defaults."""
+    """Get data thresholds."""
     from data_research.models import MortgageDataConstant, MortgageMetaData
     threshold_defaults = {
         'starting_year': 2008,
@@ -192,12 +191,7 @@ def load_constants():
         except MortgageDataConstant.DoesNotExist:
             value = threshold_defaults[name]
         setattr(FIPS, name, value)
-    try:
-        dates_obj = MortgageMetaData.objects.get(name='sampling_dates')
-        dates = dates_obj.json_value
-    except MortgageMetaData.DoesNotExist:
-        with open("{}/sampling_dates.json".format(FIPS_DATA_PATH), 'rb') as f:
-            dates = json.loads(f.read())
+    dates = MortgageMetaData.objects.get(name='sampling_dates').json_value
     FIPS.dates = ['{}'.format(date) for date in dates]
     FIPS.short_dates = [date[:-3] for date in FIPS.dates]
 

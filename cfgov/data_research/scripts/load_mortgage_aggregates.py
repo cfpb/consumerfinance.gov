@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import datetime
 from dateutil import parser
-import json
 import logging
 import os
 
@@ -13,7 +12,6 @@ from data_research.models import (
     State, StateMortgageData,
     validate_counties
 )
-from data_research.mortgage_utilities.fips_meta import FIPS_DATA_PATH
 
 logger = logging.getLogger(__name__)
 script = os.path.basename(__file__)
@@ -29,8 +27,6 @@ def update_sampling_dates():
         name='sampling_dates')
     date_list_obj.json_value = date_list
     date_list_obj.save()
-    with open('{}/sampling_dates.json'.format(FIPS_DATA_PATH), 'wb') as f:
-        f.write(json.dumps(date_list))
     logger.info(
         "Sampling dates updated; the {} dates now range from {} to {}".format(
             len(date_list), date_list[0], date_list[-1]))

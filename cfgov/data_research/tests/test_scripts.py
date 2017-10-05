@@ -25,7 +25,7 @@ from data_research.scripts.export_public_csvs import (
     round_pct, row_starter,
     run as run_export,
     save_metadata)
-from data_research.scripts.generate_county_data_loading_csv import (
+from data_research.scripts.source_to_csv import (
     create_csv, update_through_date_constant)
 from data_research.scripts.load_mortgage_performance_csv import load_values
 from data_research.scripts.load_mortgage_aggregates import (
@@ -477,7 +477,7 @@ class DataLoadTest(django.test.TestCase):
         self.assertEqual(CountyMortgageData.objects.count(), 1)
 
     @mock.patch('data_research.scripts.'
-                'generate_county_data_loading_csv.read_in_s3_csv')
+                'source_to_csv.read_in_s3_csv')
     def test_generate_loading_csv(self, mock_read_in):
         mock_read_in.return_value = [{
             'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
@@ -537,10 +537,7 @@ class UpdateSamplingDatesTest(django.test.TestCase):
             total=1650)
 
     def test_update_sampling_dates(self):
-        m = mock_open()
-        with patch('__builtin__.open', m, create=True):
-            update_sampling_dates()
-        self.assertEqual(m.call_count, 1)
+        update_sampling_dates()
         self.assertEqual(
             MortgageMetaData.objects.get(
                 name='sampling_dates').json_value,
@@ -584,13 +581,6 @@ class DataScriptTest(django.test.TestCase):
         fips_input = '02201'  # a normally excluded outdated FIPS code
         self.assertEqual(validate_fips(
             fips_input, keep_outdated=True), '02201')
-
-    # @mock.patch('data_research.scripts.'
-    #             'load_mortgage_performance_csv.load_values')
-    # def test_run_csv_load(self, mock_load):
-    #     from data_research.scripts import load_mortgage_performance_csv
-    #     load_mortgage_performance_csv.run('2016-12-01')
-    #     self.assertEqual(mock_load.call_count, 1)
 
 
 class ExportRoundingTests(unittest.TestCase):
