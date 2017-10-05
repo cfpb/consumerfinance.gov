@@ -20,12 +20,18 @@ var _requestAnimationFrame = window.requestAnimationFrame ||
  *
  */
 function _easeInOutQuad( currentTime, startPosition, distance, duration ) {
-  currentTime /= duration / 2;
-  if ( currentTime < 1 ) {
-    return distance / 2 * currentTime * currentTime + startPosition;
+  let distanceDelta;
+  const halfDuration = duration / 2;
+  let updatedTime = currentTime / halfDuration;
+
+  if ( updatedTime < 1 ) {
+    distanceDelta = distance / 2 * updatedTime * updatedTime;
+  } else {
+    updatedTime--;
+    // eslint-disable-next-line no-mixed-operators
+    distanceDelta = -distance / 2 * ( updatedTime * ( updatedTime - 2 ) - 1 );
   }
-  currentTime--;
-  return -distance / 2 * ( currentTime * ( currentTime - 2 ) - 1 ) + startPosition;
+  return distanceDelta + startPosition;
 }
 
 /**
@@ -54,6 +60,12 @@ function scrollTo( to, opts ) {
   var duration = opts.duration || _calculateDuration( distance );
   var startTime;
 
+  /**
+   * Scroll the window for the duration
+   * Trigger a callback after the duration has ended
+   * @param {Number} timestamp - the current time returned by
+   *    requestAnimationFrame
+   */
   function scroll( timestamp ) {
     startTime = startTime || timestamp;
     var elapsed = timestamp - startTime;
