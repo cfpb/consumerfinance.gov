@@ -6,17 +6,11 @@ import logging
 import os
 import sys
 
-# from django.core.exceptions import ObjectDoesNotExist
-
 from data_research.models import (
     MortgageDataConstant, County, CountyMortgageData)
-from data_research.mortgage_utilities.s3_utils import read_in_s3_csv
+from data_research.mortgage_utilities.s3_utils import (
+    read_in_s3_csv, S3_SOURCE_BUCKET, S3_SOURCE_FILE)
 from data_research.mortgage_utilities.fips_meta import validate_fips
-
-S3_SOURCE_BUCKET = (
-    'http://files.consumerfinance.gov.s3.amazonaws.com/'
-    'data/mortgage-performance/source'
-)
 
 logger = logging.getLogger(__name__)
 script = os.path.basename(__file__)
@@ -26,23 +20,35 @@ script = os.path.basename(__file__)
 # 01/01/98,1001,268,260,4,1,0,3
 
 
-def load_values(s3_filename, starting_date, return_fips=False):
-    """Drop and reload the CountyMortgageData table."""
+def load_values(return_fips=False):
+    """
+    Drop and reload the CountyMortgageData table, or just return a FIPS list.
+
+    This is not used in the data pipeline and is mainly for local testing.
+    Passing `return_fips=True` will return a sorted list of source FIPS values.
+    The script assumes that `starting_date` and `through_date`
+    have been set in constants.
+    """
 
     counter = 0
-    source_url = "{}/{}".format(S3_SOURCE_BUCKET, s3_filename)
-    logger.info("Deleting CountyMortgageData objects.")
-    CountyMortgageData.objects.all().delete()
-    logger.info("CountyMorgtgageData count is now {}".format(
-        CountyMortgageData.objects.count()))
+    source_url = "{}/{}".format(S3_SOURCE_BUCKET, S3_SOURCE_FILE)
+    starting_year = MortgageDataConstant.objects.get(
+        name='starting_year').value
+    starting_date = datetime.date(starting_year, 1, 1)
+    through_date = MortgageDataConstant.objects.get(
+        name='through_date').date_value
     raw_data = read_in_s3_csv(source_url)
     # raw_data is a generator delivering data dicts, each representing a row
     if return_fips is True:
         fips_list = [validate_fips(row.get('fips')) for row in raw_data]
         return sorted(set(fips_list))
+    logger.info("Deleting CountyMortgageData objects.")
+    CountyMortgageData.objects.all().delete()
+    logger.info("CountyMorgtgageData count is now {}".format(
+        CountyMortgageData.objects.count()))
     for row in raw_data:
         sampling_date = parser.parse(row.get('date')).date()
-        if sampling_date >= starting_date:
+        if sampling_date >= starting_date and sampling_date <= through_date:
             valid_fips = validate_fips(row.get('fips'))
             if valid_fips:
                 county = County.objects.get(fips=valid_fips)
@@ -67,18 +73,5 @@ def load_values(s3_filename, starting_date, return_fips=False):
         CountyMortgageData.objects.count()))
 
 
-def run(*args):  # pragma: no cover
-    """
-    Pass in the S3 filename like so:
-    `--script-args latest_county_delinquency.csv`
-    """
-    starter = datetime.datetime.now()
-    starting_year = MortgageDataConstant.objects.get(
-        name='starting_year').value
-    starting_date = datetime.date(starting_year, 1, 1)
-    if args:
-        load_values(s3_filename=args[0], starting_date=starting_date)
-        logger.info("{} took {} to run.".format(
-            script, (datetime.datetime.now() - starter)))
-    else:
-        logger.info('You must provide an S3 filename to load.')
+def run():  # pragma: no cover
+    load_values()

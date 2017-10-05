@@ -40,6 +40,16 @@ class GeoValidationTests(django.test.TestCase):
             msas=["45300", "35840", "45220"])
 
         mommy.make(
+            State,
+            fips='34',
+            name='New Jersey',
+            abbr='NJ',
+            ap_abbr='N.J.',
+            counties=[],
+            non_msa_counties=[],
+            msas=[])
+
+        mommy.make(
             MetroArea,
             fips='45220',
             name='Tallahassee, FL',
@@ -197,6 +207,12 @@ class GeoValidationTests(django.test.TestCase):
         non_msa.aggregate_data()
         state.validate_non_msas()
         self.assertIs(state.non_msa_valid, True)
+
+    def test_non_msa_validation_no_counties(self):
+        """Non-MSA validation occurs on the State model."""
+        state = State.objects.get(fips='34')
+        state.validate_non_msas()
+        self.assertIs(state.non_msa_valid, False)
 
     def test_national_aggregation(self):
         """National records aggregate state records."""

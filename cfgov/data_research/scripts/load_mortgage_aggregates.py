@@ -100,12 +100,17 @@ def run():
     """
     This script should be run following a refresh of county mortgage data.
 
-    The script makes sure a national, state or metro aggregate record exists
-    for every relevant date, then saves the record, which triggers aggregation
-    calculations. Resulting aggregate values are stored in the record.
+    The script wipes national, state and metro-based aggregate records,
+    creates new ones for every date in range, and then updates metadata.
     """
-    NationalMortgageData.objects.all().delete()
     starter = datetime.datetime.now()
+    aggregate_classes = [
+        NationalMortgageData,
+        StateMortgageData,
+        MSAMortgageData,
+        NonMSAMortgageData]
+    for cls in aggregate_classes:
+        cls.objects.all().delete()
     update_sampling_dates()
     merge_the_dades()
     validate_counties()

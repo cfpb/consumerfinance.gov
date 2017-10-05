@@ -102,7 +102,12 @@ class State(models.Model):
          threshold_year) = MortgageDataConstant.get_thresholds()
         records = self.nonmsamortgagedata_set.filter(
             date__year=threshold_year)
-        annual_sum = sum(record.total for record in records)
+        if not self.non_msa_counties:
+            self.non_msa_valid = False
+            self.save()
+            return
+        annual_sum = sum(
+            record.total for record in records if record.total)
         monthly_average = annual_sum * 1.0 / records.count()
         if monthly_average >= threshold_count:
             self.non_msa_valid = True
