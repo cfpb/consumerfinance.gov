@@ -142,7 +142,7 @@
     fieldset {
         border: 0;
         margin-left: 0;
-        padding-left: 0;
+        padding:0;
     }
     .content-l_col {
         border-left-width: 0;
@@ -159,4 +159,20 @@
       color: @gray-80;
     }
 
+}
+
+#mp-line-chart-controls,
+#mp-map-controls {
+  margin-left: 0px;
+}
+
+#mp-line-chart-geo,
+#mp-map-geo {
+  margin-left: 2px;
+}
+
+#mp-map-month-container label,
+#mp-map-year-container label {
+  @font-size: 14px;
+  font-size: unit(@font-size / @base-font-size-px, em);
 }

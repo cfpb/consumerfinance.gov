@@ -1,3 +1,5 @@
+/* eslint max-len: "off" */
+
 'use strict';
 
 const fullWidthTextSelector = 'input[value=\'full_width_text\']' +

@@ -14,10 +14,12 @@ mockery.enable( {
 } );
 mockery.registerMock( 'xdr', noop );
 
-const utils = require( BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/utils.js' );
+const utils = require(
+  BASE_JS_PATH + 'organisms/MortgagePerformanceTrends/utils.js'
+);
 
 let el;
-let document = {
+const document = {
   createElement: () => ( {} )
 };
 
