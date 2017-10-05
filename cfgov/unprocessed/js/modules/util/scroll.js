@@ -62,7 +62,7 @@ function scrollTo( to, opts ) {
 
   /**
    * Scroll the window for the duration
-   * Trigger a callback afte the duration has ended
+   * Trigger a callback after the duration has ended
    * @param {Number} timestamp - the current time returned by
    *    requestAnimationFrame
    */

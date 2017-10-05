@@ -76,7 +76,7 @@ function email( field, currentStatus, options ) {
 }
 
 
-// TODO: Rename this function so it's clearer
+// TODO: Rename this function so it’s clearer
 // that it’s checking a required attribute
 /**
  * empty Determines if a required field contains a value.

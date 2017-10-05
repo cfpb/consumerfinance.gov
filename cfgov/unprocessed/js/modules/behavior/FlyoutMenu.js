@@ -40,10 +40,12 @@ function FlyoutMenu( element ) { // eslint-disable-line max-statements, no-inlin
   // Verify that the expected dom attributes are present.
   var _dom = behavior.checkBehaviorDom( element, BASE_CLASS );
   var _triggerDom = behavior.checkBehaviorDom(
-    element, BASE_CLASS + '_trigger'
+    element,
+    BASE_CLASS + '_trigger'
   );
   var _contentDom = behavior.checkBehaviorDom(
-    element, BASE_CLASS + '_content'
+    element,
+    BASE_CLASS + '_content'
   );
 
   var _altTriggerDom = _dom.querySelector( SEL_PREFIX + '_alt-trigger]' );

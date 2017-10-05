@@ -152,7 +152,8 @@ function FormSubmit( element, baseClass, opts ) {
   function _replaceFormWithNotification( message ) {
     var transition = new AlphaTransition( _baseElement ).init();
     scroll.scrollIntoView(
-      _formElement, { offset: 100, callback: fadeOutForm }
+      _formElement,
+      { offset: 100, callback: fadeOutForm }
     );
 
     /**
@@ -164,18 +165,21 @@ function FormSubmit( element, baseClass, opts ) {
     }
 
     /**
-     * Transition the  message into view
+     * Transition the message into view
      */
     function fadeInMessage() {
       if ( opts.minReplacementHeight ) {
-        _baseElement.style.marginBottom =
-          Math.min( _formElement.offsetHeight, 100 ) + 'px';
+        _baseElement.style.marginBottom = Math.min(
+          _formElement.offsetHeight,
+          100
+        ) + 'px';
       }
       _formElement.style.display = 'none';
       _notification.setTypeAndContent( _notification.SUCCESS, message );
       _notification.show();
       transition.removeEventListener(
-        BaseTransition.END_EVENT, fadeInMessage
+        BaseTransition.END_EVENT,
+        fadeInMessage
       );
       transition.fadeIn();
     }

@@ -55,8 +55,10 @@ function FilterableListControls( element ) {
     // instantiate multiselects before their containing expandable
     // so height of any 'selected choice' buttons is included when
     // expandable height is calculated initially
-    var multiSelects =
-      atomicHelpers.instantiateAll( 'select[multiple]', Multiselect );
+    var multiSelects = atomicHelpers.instantiateAll(
+      'select[multiple]',
+      Multiselect
+    );
 
     // TODO: FilterableListControls should use expandable
     //       behavior (FlyoutMenu), not an expandable directly.
