@@ -87,7 +87,8 @@ class SourceToSQLTest(django.test.TestCase):
             county=Autauga)
 
     def test_convert_row_to_sql_tuple(self):
-        row = '1,01001,2008-01-01,1464,1443,10,5,4,2,2891'
+        row = ['1', '01001', '2008-01-01', '1464',
+               '1443', '10', '5', '4', '2', '2891']
         expected = "(1,'01001','2008-01-01',1464,1443,10,5,4,2,2891)"
         entry = convert_row_to_sql_tuple(row)
         self.assertEqual(entry, expected)
