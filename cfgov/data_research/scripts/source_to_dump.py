@@ -31,10 +31,10 @@ def update_through_date_constant(date):
 def convert_row_to_sql_tuple(row):
     """
     Take an amended source CSV row:
-    1,01001,2008-01-01,268,260,4,1,0,3,2891
+    ['1', '01001', '2008-01-01', '268', '260', '4', '1', '0', '3', '2891']
 
     and turn it into an SQL load tuple:
-    (1,'01001','2008-01-01',268,260,4,1,0,3,2891)
+    "(1,'01001','2008-01-01',268,260,4,1,0,3,2891)"
     """
     return "({},'{}','{}',{},{},{},{},{},{},{})".format(*row)
 
