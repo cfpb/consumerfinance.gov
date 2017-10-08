@@ -20,14 +20,14 @@ from data_research.models import (
     validate_counties)
 from data_research.mortgage_utilities.fips_meta import (
     validate_fips)
+from data_research.mortgage_utilities.sql_utils import (
+    assemble_insertions,
+    chunk_entries)
 from data_research.scripts.export_public_csvs import (
     export_downloadable_csv,
     round_pct, row_starter,
     run as run_export,
     save_metadata)
-from data_research.scripts.source_to_csv import (
-    create_csv, update_through_date_constant)
-from data_research.scripts.load_mortgage_performance_csv import load_values
 from data_research.scripts.load_mortgage_aggregates import (
     load_msa_values,
     load_national_values,
@@ -36,6 +36,14 @@ from data_research.scripts.load_mortgage_aggregates import (
     merge_the_dades,
     update_sampling_dates,
     run as run_aggregates)
+from data_research.scripts.load_mortgage_performance_csv import load_values
+from data_research.scripts.source_to_dump import (
+    update_through_date_constant,
+    convert_row_to_sql_tuple,
+    dump_as_csv,
+    dump_as_sql,
+    create_dump,
+    run as run_source_to_dump)
 from data_research.scripts.update_county_msa_meta import (
     run as run_update,
     update_state_to_geo_meta)
@@ -43,6 +51,144 @@ from data_research.scripts.update_county_msa_meta import (
 
 STARTING_DATE = datetime.date(2008, 1, 1)
 THROUGH_DATE = datetime.date(2016, 12, 1)
+
+
+class SourceToSQLTest(django.test.TestCase):
+
+    date = datetime.date(2008, 1, 1)
+    data_row = ['1,01001,2008-01-01,1464,1443,10,5,4,2,2891']
+    fixtures = ['mortgage_constants.json']
+
+    def setUp(self):
+        AL = mommy.make(
+            State,
+            fips='01',
+            abbr='AL',
+            name='Alabama')
+
+        Autauga = mommy.make(
+            County,
+            id=2891,
+            fips='01001',
+            name='Autauga County',
+            state=AL,
+            valid=True)
+
+        mommy.make(
+            CountyMortgageData,
+            fips='01001',
+            date=self.date,
+            total=1464,
+            current=1443,
+            thirty=10,
+            sixty=5,
+            ninety=4,
+            other=2,
+            county=Autauga)
+
+    def test_convert_row_to_sql_tuple(self):
+        row = '1,01001,2008-01-01,1464,1443,10,5,4,2,2891'
+        expected = "(1,'01001','2008-01-01',1464,1443,10,5,4,2,2891)"
+        entry = convert_row_to_sql_tuple(row)
+        self.assertEqual(entry, expected)
+
+    def test_chunk_entries(self):
+        entries = [
+            '1,01001,2008-01-01,1464,1443,10,5,4,2,2891',
+            '2,01001,2008-01-01,1464,1443,10,5,4,2,2891',
+            '3,01001,2008-01-01,1464,1443,10,5,4,2,2891',
+            '4,01001,2008-01-01,1464,1443,10,5,4,2,2891'
+        ]
+        expected_chunks = [
+            ['1,01001,2008-01-01,1464,1443,10,5,4,2,2891',
+             '2,01001,2008-01-01,1464,1443,10,5,4,2,2891'],
+            ['3,01001,2008-01-01,1464,1443,10,5,4,2,2891',
+             '4,01001,2008-01-01,1464,1443,10,5,4,2,2891']
+        ]
+        chunk_generator = chunk_entries(entries, 2)
+        self.assertEqual(
+            [each for each in chunk_generator],
+            expected_chunks)
+
+    def test_update_thru_date(self):
+        new_val = '2018-12-01'
+        new_date = datetime.date(2018, 12, 1)
+        update_through_date_constant(new_val)
+        self.assertEqual(
+            MortgageDataConstant.objects.get(name='through_date').date_value,
+            new_date)
+
+    def test_assemble_insertions(self):
+        output = assemble_insertions(self.data_row)
+        self.assertTrue(output.startswith('\n--\n--'))
+
+    @mock.patch('data_research.scripts.'
+                'source_to_dump.assemble_insertions')
+    def test_dump_as_sql(self, mock_assemble):
+        m = mock_open()
+        with patch('__builtin__.open', m, create=True):
+            dump_as_sql(self.data_row)
+        self.assertEqual(m.call_count, 1)
+        self.assertEqual(mock_assemble.call_count, 1)
+
+    def test_dump_as_csv(self):
+        m = mock_open()
+        with patch('__builtin__.open', m, create=True):
+            dump_as_csv(self.data_row)
+        self.assertEqual(m.call_count, 1)
+
+    @mock.patch('data_research.scripts.'
+                'source_to_dump.create_dump')
+    @mock.patch('data_research.scripts.'
+                'source_to_dump.update_through_date_constant')
+    def test_run_command(self, mock_update, mock_dump):
+        run_source_to_dump('2017-03-01')
+        self.assertEqual(mock_update.call_count, 1)
+        self.assertEqual(mock_dump.call_count, 1)
+
+    @mock.patch('data_research.scripts.'
+                'source_to_dump.create_dump')
+    @mock.patch('data_research.scripts.source_to_dump.'
+                'update_through_date_constant')
+    def test_run_command_csv(self, mock_update, mock_dump):
+        run_source_to_dump('2017-03-01', 'csv')
+        self.assertEqual(mock_update.call_count, 1)
+        self.assertEqual(mock_dump.call_count, 1)
+
+    @mock.patch('data_research.scripts.'
+                'source_to_dump.create_dump')
+    @mock.patch('data_research.scripts.source_to_dump.'
+                'update_through_date_constant')
+    def test_run_command_no_args(self, mock_update, mock_dump):
+        run_source_to_dump()
+        self.assertEqual(mock_update.call_count, 0)
+        self.assertEqual(mock_dump.call_count, 0)
+
+    @mock.patch('data_research.scripts.'
+                'source_to_dump.read_in_s3_csv')
+    @mock.patch('data_research.scripts.'
+                'source_to_dump.dump_as_sql')
+    def test_create_dump_sql(self, mock_dump_sql, mock_read_in):
+        mock_read_in.return_value = [{
+            'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
+            'ninety': '0', 'date': '01/01/2008', 'open': '270', 'other': '3',
+            'fips': '01001'}]
+        create_dump(STARTING_DATE, THROUGH_DATE)
+        self.assertEqual(mock_dump_sql.call_count, 1)
+        self.assertEqual(mock_read_in.call_count, 1)
+
+    @mock.patch('data_research.scripts.'
+                'source_to_dump.read_in_s3_csv')
+    @mock.patch('data_research.scripts.'
+                'source_to_dump.dump_as_csv')
+    def test_create_dump_csv(self, mock_dump_csv, mock_read_in):
+        mock_read_in.return_value = [{
+            'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
+            'ninety': '0', 'date': '01/01/2008', 'open': '270', 'other': '3',
+            'fips': '01001'}]
+        create_dump(STARTING_DATE, THROUGH_DATE, sql=False)
+        self.assertEqual(mock_dump_csv.call_count, 1)
+        self.assertEqual(mock_read_in.call_count, 1)
 
 
 class DataLoadIntegrityTest(django.test.TestCase):
@@ -475,19 +621,6 @@ class DataLoadTest(django.test.TestCase):
         load_values()
         self.assertEqual(mock_read_in.call_count, 1)
         self.assertEqual(CountyMortgageData.objects.count(), 1)
-
-    @mock.patch('data_research.scripts.'
-                'source_to_csv.read_in_s3_csv')
-    def test_generate_loading_csv(self, mock_read_in):
-        mock_read_in.return_value = [{
-            'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
-            'ninety': '0', 'date': '01/01/2008', 'open': '270', 'other': '3',
-            'fips': '12081'}]
-        m = mock_open()
-        with patch('__builtin__.open', m, create=True):
-            create_csv(STARTING_DATE, THROUGH_DATE)
-        self.assertEqual(m.call_count, 1)
-        self.assertEqual(mock_read_in.call_count, 1)
 
     @mock.patch('data_research.scripts.'
                 'load_mortgage_performance_csv.read_in_s3_csv')

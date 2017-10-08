@@ -36,8 +36,7 @@ def convert_row_to_sql_tuple(row):
     and turn it into an SQL load tuple:
     (1,'01001','2008-01-01',268,260,4,1,0,3,2891)
     """
-    split = row.split(',')
-    return "({},'{}','{}',{},{},{},{},{},{},{})".format(*split)
+    return "({},'{}','{}',{},{},{},{},{},{},{})".format(*row)
 
 
 def dump_as_csv(rows_out):
