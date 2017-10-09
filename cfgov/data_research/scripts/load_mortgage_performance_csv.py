@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-import datetime
 from dateutil import parser
 import logging
 import os
@@ -32,9 +31,8 @@ def load_values(return_fips=False):
 
     counter = 0
     source_url = "{}/{}".format(S3_SOURCE_BUCKET, S3_SOURCE_FILE)
-    starting_year = MortgageDataConstant.objects.get(
-        name='starting_year').value
-    starting_date = datetime.date(starting_year, 1, 1)
+    starting_date = MortgageDataConstant.objects.get(
+        name='starting_date').date_value
     through_date = MortgageDataConstant.objects.get(
         name='through_date').date_value
     raw_data = read_in_s3_csv(source_url)

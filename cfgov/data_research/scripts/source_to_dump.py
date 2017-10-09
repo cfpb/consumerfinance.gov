@@ -126,7 +126,7 @@ def run(*args):
     `--script-args 2017-03-01 csv`
     """
     starting_date = MortgageDataConstant.objects.get(
-        name='starting_year').date_value
+        name='starting_date').date_value
     if args:
         through_date = parser.parse(args[0]).date()
         update_through_date_constant(through_date)
