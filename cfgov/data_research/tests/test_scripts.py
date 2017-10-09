@@ -56,7 +56,8 @@ THROUGH_DATE = datetime.date(2016, 12, 1)
 class SourceToSQLTest(django.test.TestCase):
 
     date = datetime.date(2008, 1, 1)
-    data_row = ['1,01001,2008-01-01,1464,1443,10,5,4,2,2891']
+    data_row = ['1', '01001', '2008-01-01', '1464',
+                '1443', '10', '5', '4', '2', '2891']
     fixtures = ['mortgage_constants.json']
 
     def setUp(self):
@@ -87,10 +88,8 @@ class SourceToSQLTest(django.test.TestCase):
             county=Autauga)
 
     def test_convert_row_to_sql_tuple(self):
-        row = ['1', '01001', '2008-01-01', '1464',
-               '1443', '10', '5', '4', '2', '2891']
         expected = "(1,'01001','2008-01-01',1464,1443,10,5,4,2,2891)"
-        entry = convert_row_to_sql_tuple(row)
+        entry = convert_row_to_sql_tuple(self.data_row)
         self.assertEqual(entry, expected)
 
     def test_chunk_entries(self):
@@ -128,14 +127,14 @@ class SourceToSQLTest(django.test.TestCase):
     def test_dump_as_sql(self, mock_assemble):
         m = mock_open()
         with patch('__builtin__.open', m, create=True):
-            dump_as_sql(self.data_row)
+            dump_as_sql([self.data_row])
         self.assertEqual(m.call_count, 1)
         self.assertEqual(mock_assemble.call_count, 1)
 
     def test_dump_as_csv(self):
         m = mock_open()
         with patch('__builtin__.open', m, create=True):
-            dump_as_csv(self.data_row)
+            dump_as_csv([self.data_row])
         self.assertEqual(m.call_count, 1)
 
     @mock.patch('data_research.scripts.'

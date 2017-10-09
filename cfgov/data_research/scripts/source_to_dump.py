@@ -46,7 +46,7 @@ def dump_as_csv(rows_out):
     Sample output row:
     1,01001,2008-01-01,268,260,4,1,0,3,2891
     """
-    with open('/tmp/{}.csv'.format(DUMP_SLUG), 'w') as f:
+    with open('{}.csv'.format(DUMP_SLUG), 'w') as f:
         writer = unicodecsv.writer(f)
         for row in rows_out:
             writer.writerow(row)
@@ -61,7 +61,7 @@ def dump_as_sql(rows_out):
     """
     sql_rows = [convert_row_to_sql_tuple(row) for row in rows_out]
 
-    with open('/tmp/countymortgagedata.sql', 'w') as f:
+    with open('{}.sql'.format(DUMP_SLUG), 'w') as f:
         f.write(
             DROP_AND_CREATE_STRING +
             assemble_insertions(sql_rows) +
