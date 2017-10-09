@@ -119,8 +119,8 @@ def create_dump(starting_date, through_date, sql=True):
 
 def run(*args):
     """
-    Ingests a through-date in YYYY-MM-DD format. Command is:
-    `manage.py runscript source_to_dump_file --script-args 2017-03-01`
+    Ingests a through-date in YYYY-MM-DD format. Sample command:
+    `manage.py runscript source_to_dump --script-args 2017-03-01`
 
     Adding an optional second arg 'csv' will dump a CSV instead of SQL:
     `--script-args 2017-03-01 csv`
