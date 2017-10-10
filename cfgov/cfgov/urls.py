@@ -337,7 +337,7 @@ urlpatterns = [
     url(r'^askcfpb/search/',
         redirect_ask_search,
         name='redirect-ask-search'),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
         ask_search,
         name='ask-search-es'),
     url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
