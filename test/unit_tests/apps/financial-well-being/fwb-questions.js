@@ -9,10 +9,17 @@ let fwbQuestions;
 let sandbox;
 let submitBtnDom;
 let radioButtonsDom;
-const dataLayerEvent = {
+const dataLayerEventRadio = {
   event: 'Financial Well-Being Tool Interaction',
   action: 'Questionnaire Radio Button Clicked',
   label: 'I could handle a major unexpected expense',
+  eventCallback: undefined, // eslint-disable-line  no-undefined
+  eventTimeout: 500
+};
+const dataLayerEventSubmit = {
+  event: 'Financial Well-Being Tool Interaction',
+  action: 'Questionnaire Submitted',
+  label: 'Get my score',
   eventCallback: undefined, // eslint-disable-line  no-undefined
   eventTimeout: 500
 };
@@ -203,6 +210,14 @@ describe( 'fwb-questions', () => {
        'when a radio button is clicked', () => {
     initFwbQuestions();
     triggerClickEvent( radioButtonsDom[0] );
-    expect( window.dataLayer[0] ).to.deep.equal( dataLayerEvent );
+    expect( window.dataLayer[0] ).to.deep.equal( dataLayerEventRadio );
+  } );
+
+  it( 'should send the correct analytics ' +
+       'when the submit button is clicked', () => {
+    fillOutForm();
+    initFwbQuestions();
+    triggerClickEvent( submitBtnDom );
+    expect( window.dataLayer[0] ).to.deep.equal( dataLayerEventSubmit );
   } );
 } );
