@@ -48,7 +48,6 @@ function isOneExpanded( elems ) {
  *   the passed callback.
  */
 function toggleExpandedState( elems, state, cb, delay ) {
-  var navTimeout;
   if ( elems.constructor !== NodeList &&
        elems.constructor !== Array ) {
     elems = [ elems ];
