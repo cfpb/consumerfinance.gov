@@ -146,7 +146,8 @@ urlpatterns = [
         name='servicemembers-planning'),
     url(r'^servicemembers/planning/creativesavingsstrategies/$',
         TemplateView.as_view(
-        template_name='service-members/planning/creativesavingsstrategies/index.html'),
+        template_name='service-members/planning/'
+                      'creativesavingsstrategies/index.html'),
         name='servicemembers-planning'),
     url(r'^servicemembers/protecting/$',
         TemplateView.as_view(
