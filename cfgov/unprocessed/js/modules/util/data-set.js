@@ -8,7 +8,7 @@ var _assign = require( './assign' ).assign;
  * @returns {string} The string in camelCase form.
  */
 function _toCamelCase( str ) {
-  return str.replace( /\-([a-z])/g, function( all, match ) {
+  return str.replace( /-([a-z])/g, function( all, match ) {
     return match.toUpperCase();
   } );
 }
