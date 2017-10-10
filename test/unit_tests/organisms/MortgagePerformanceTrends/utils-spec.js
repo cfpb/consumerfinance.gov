@@ -88,6 +88,7 @@ describe( 'Mortgage Performance utilities', () => {
     expect( utils.isDateValid( '2009-11-01', '2009-11-01' ) ).to.be.true;
     expect( utils.isDateValid( '2009-11-01', '2009-11' ) ).to.be.true;
     expect( utils.isDateValid( '2009-11', '2009-11' ) ).to.be.true;
+    expect( utils.isDateValid( '2009-07', '2011-03' ) ).to.be.true;
   } );
 
   it( 'should be able to detect invalid dates', () => {
