@@ -26,7 +26,7 @@
 {
     "fields": {
         "note": "The through_date represents the last month of data we intend to represent in visualizations for a given quarterly set of source data. Although the true time unit is a month, we use a date -- the first of a month --\r\n as a reference point that can be parsed as a date in scripts and as a finite point in time that can be represented as an epoch value tick for charting software.\r\n\r\nBecause of observed data fall-off problems with the most recent months available in quarterly updates, we decided to omit the three most recent months from any quarterly update. By setting this value before processing a quarterly update, we can intentionally narrow down source data to our desired range.\r\n",
-        "updated": "2017-10-09",
+        "updated": "2017-10-10",
         "name": "through_date",
         "value": null,
         "date_value": "2017-03-01",
