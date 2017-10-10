@@ -136,6 +136,23 @@ urlpatterns = [
         template_name='service-members/on-demand-forums-and-tools'
                       '/index.html'),
         name='servicemembers'),
+    url(r'^servicemembers/additionalresources/$',
+        TemplateView.as_view(
+        template_name='service-members/additionalresources/index.html'),
+        name='servicemembers'),
+    url(r'^servicemembers/planning/$',
+        TemplateView.as_view(
+        template_name='service-members/planning/index.html'),
+        name='servicemembers-planning'),
+    url(r'^servicemembers/planning/creativesavingsstrategies/$',
+        TemplateView.as_view(
+        template_name='service-members/planning/'
+                      'creativesavingsstrategies/index.html'),
+        name='servicemembers-planning'),
+    url(r'^servicemembers/protecting/$',
+        TemplateView.as_view(
+        template_name='service-members/protecting/index.html'),
+        name='servicemembers-protecting'),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
