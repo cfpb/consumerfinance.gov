@@ -85,14 +85,12 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       }
       break;
     case 'mp-map-state':
-      if ( geoType === 'metro' || geoType === 'county' ) {
-        // If no state is selected, zoom out and abort
-        if ( !abbr ) {
-          this.chart.highchart.chart.mapZoom();
-          utils.setZoomLevel( 10 );
-          action = actions.updateChart( '', '', geoType );
-          break;
-        }
+      // If no state is selected, zoom out and abort
+      if ( !abbr ) {
+        this.chart.highchart.chart.mapZoom();
+        utils.setZoomLevel( 10 );
+        action = actions.updateChart( '', '', geoType );
+        break;
       }
       if ( geoType === 'metro' ) {
         action = actions.fetchMetros( abbr, true );
