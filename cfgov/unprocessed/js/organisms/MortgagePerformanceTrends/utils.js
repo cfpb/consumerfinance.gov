@@ -222,9 +222,12 @@ var utils = {
     if ( currDate.length === 1 || endDate.length === 1 ) {
       return false;
     }
-    // Check if current year is less than or equal to the end year and
-    // then verify if current month is less than or equal to end month.
-    if ( currDate[0] <= endDate[0] && currDate[1] <= endDate[1] ) {
+    // Is the current year less than the end year?
+    if ( currDate[0] < endDate[0] ) {
+      return true;
+    }
+    // If the years are the same, is the current month less than the end month?
+    if ( currDate[0] === endDate[0] && currDate[1] <= endDate[1] ) {
       return true;
     }
     return false;
