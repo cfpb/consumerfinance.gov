@@ -282,10 +282,14 @@ function Autocomplete( element, opts ) {
     if ( _xhr ) {
       _xhr.abort();
     }
-    _xhr = ajaxRequest( 'GET', _settings.url + _settings.cleanQuery( _searchTerm ), {
-      success: _success,
-      fail: _fail
-    } );
+    _xhr = ajaxRequest(
+      'GET',
+      _settings.url + _settings.cleanQuery( _searchTerm ),
+      {
+        success: _success,
+        fail: _fail
+      }
+    );
   }
 
   /**
