@@ -62,7 +62,7 @@
                     content-l_col-1-3">
             <div class="o-form_group">
                 <fieldset class="o-form_fieldset">
-                    <legend class="a-label a-label__heading"
+                    <legend class="a-legend"
                             for="categories">
                         Category
                     </legend>
@@ -84,13 +84,13 @@
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
-                            <fieldset class="o-form_fieldset">
+                            <div class="m-form-field">
                                 <label class="a-label a-label__heading"
                                        for="{{ field_id }}">
                                     Topic
                                 </label>
                                 {{ form.render_with_id(form.topics, field_id) }}
-                            </fieldset>
+                            </div>
                         </div>
                     </div>
                 {% endif %}
@@ -99,13 +99,13 @@
                     <div class="content-l_col
                                 content-l_col-1-2">
                         <div class="o-form_group">
-                            <fieldset class="o-form_fieldset">
+                            <div class="m-form-field">
                                 <label class="a-label a-label__heading"
                                        for="{{ field_id }}">
                                     Author
                                 </label>
                                 {{ form.render_with_id(form.authors, field_id) }}
-                            </fieldset>
+                            </div>
                         </div>
                     </div>
                 {% endif %}
@@ -114,13 +114,13 @@
                                 content-l_col-1">
                         <div class="o-form_group">
                             <fieldset class="o-form_fieldset">
-                                <label class="a-label a-label__heading">
+                                <legend class="a-legend">
                                     Date range
-                                </label>
+                                </legend>
                                 <div class="content-l">
                                     <div class="content-l_col
                                                 content-l_col-1-2">
-                                        <div class="o-form_group">
+                                        <div class="m-form-field">
                                             <label class="a-label a-label__heading"
                                                    for="{{ 'filter' ~ index ~ '_from_date' }}">
                                                 From:
@@ -131,7 +131,7 @@
                                     </div>
                                     <div class="content-l_col
                                                 content-l_col-1-2">
-                                        <div class="o-form_group">
+                                        <div class="m-form-field">
                                             <label class="a-label a-label__heading"
                                                    for="{{ 'filter' ~ index ~ '_to_date' }}">
                                                 To:
