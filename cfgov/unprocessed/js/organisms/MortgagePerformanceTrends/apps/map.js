@@ -5,8 +5,6 @@ const actions = require( '../actions/map' );
 const Store = require( '../stores/map' );
 const utils = require( '../utils' );
 
-const store = new Store( [ utils.thunkMiddleware, utils.loggerMiddleware ] );
-
 const _plurals = {
   state: 'states',
   metro: 'metros',
@@ -34,9 +32,14 @@ class MortgagePerformanceMap {
     this.endDate = this.$container.getAttribute( 'data-chart-end-date' );
     this.endMonth = utils.getMonth( this.endDate );
     this.endYear = utils.getYear( this.endDate );
+    const date = `${ this.endYear }-${ this.endMonth }`;
+    this.store = new Store( {
+      date,
+      middleware: [ utils.thunkMiddleware, utils.loggerMiddleware ]
+    } );
     this.chart = ccb.createChart( {
       el: this.$container.querySelector( '#mp-map' ),
-      source: `map-data/${ this.timespan }/states/${ this.endYear }-${ this.endMonth }`,
+      source: `map-data/${ this.timespan }/states/${ date }`,
       type: 'geo-map',
       color: this.$container.getAttribute( 'data-chart-color' ),
       metadata: 'states',
@@ -51,11 +54,11 @@ class MortgagePerformanceMap {
 
 MortgagePerformanceMap.prototype.eventListeners = function() {
   this.$form.addEventListener( 'change', this.onChange.bind( this ) );
-  store.subscribe( this.renderChart.bind( this ) );
-  store.subscribe( this.renderChartTitle.bind( this ) );
-  store.subscribe( this.renderChartForm.bind( this ) );
-  store.subscribe( this.renderCounties.bind( this ) );
-  store.subscribe( this.renderMetros.bind( this ) );
+  this.store.subscribe( this.renderChart.bind( this ) );
+  this.store.subscribe( this.renderChartTitle.bind( this ) );
+  this.store.subscribe( this.renderChartForm.bind( this ) );
+  this.store.subscribe( this.renderCounties.bind( this ) );
+  this.store.subscribe( this.renderMetros.bind( this ) );
 };
 
 MortgagePerformanceMap.prototype.onClick = function( event ) {
@@ -80,11 +83,11 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       action = actions.updateChart( geoId, geoName, geoType );
       // If a state has been pre-selected, populate the metros dropdown
       if ( abbr && geoType === 'metro' ) {
-        store.dispatch( actions.fetchMetros( abbr ) );
+        this.store.dispatch( actions.fetchMetros( abbr ) );
       }
       // If a state has been pre-selected, populate the counties dropdown
       if ( abbr && geoType === 'county' ) {
-        store.dispatch( actions.fetchCounties( abbr ) );
+        this.store.dispatch( actions.fetchCounties( abbr ) );
       }
       break;
     case 'mp-map-state':
@@ -134,7 +137,7 @@ MortgagePerformanceMap.prototype.onChange = function( event ) {
       action = actions.clearGeo();
   }
 
-  return store.dispatch( action );
+  return this.store.dispatch( action );
 
 };
 
@@ -176,14 +179,14 @@ MortgagePerformanceMap.prototype.renderChart = function( prevState, state ) {
     this.$county.innerHTML = '';
   }
   if ( prevState.date !== state.date || prevType !== currType ) {
-    // store.dispatch( actions.startLoading() );
+    // this.store.dispatch( actions.startLoading() );
     this.chart.highchart.chart.showLoading();
     this.chart.update( {
       source: `map-data/${ this.timespan }/${ _plurals[currType] }/${ state.date }`,
       metadata: _plurals[currType],
       tooltipFormatter: this.renderTooltip()
     } ).then( () => {
-      // store.dispatch( actions.stopLoading() );
+      // this.store.dispatch( actions.stopLoading() );
       if ( prevState.date !== state.date && currId ) {
         this.chart.highchart.chart.get( currId ).select( true );
       }
