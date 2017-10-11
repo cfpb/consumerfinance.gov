@@ -11,7 +11,6 @@
 * and success, fail, and done callbacks
 * @returns {Object} xhr
 */
-
 function ajaxRequest( type, url, opts ) {
   var DONE_CODE = 4;
   var SUCCESS_CODES = {
