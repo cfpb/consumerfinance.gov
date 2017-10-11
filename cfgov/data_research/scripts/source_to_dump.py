@@ -122,6 +122,7 @@ def run(*args):
     """
     Ingests a through-date (YYYY-MM-DD) and dump location/slug. Sample command:
     `manage.py runscript source_to_dump --script-args 2017-03-01 /tmp/mp_countydata`  # noqa: E501
+    Note that the script will add a `.csv` or `.sql` extension as appropriate.
 
     Adding an optional third arg 'csv' will dump a CSV instead of SQL:
     `--script-args 2017-03-01 /tmp/mp_countydata csv`
