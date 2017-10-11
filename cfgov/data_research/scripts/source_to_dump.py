@@ -16,7 +16,7 @@ from data_research.mortgage_utilities.sql_utils import (
     DROP_AND_CREATE_STRING,
     UNLOCK_STRING)
 
-DUMP_SLUG = '/tmp/mp_countydata'
+DEFAULT_DUMP_SLUG = '/tmp/mp_countydata'
 
 logger = logging.getLogger(__name__)
 
@@ -39,20 +39,20 @@ def convert_row_to_sql_tuple(row):
     return "({},'{}','{}',{},{},{},{},{},{},{})".format(*row)
 
 
-def dump_as_csv(rows_out):
+def dump_as_csv(rows_out, dump_slug):
     """
     Drops a headerless CSV to `/tmp/mp_countydata.csv
 
     Sample output row:
     1,01001,2008-01-01,268,260,4,1,0,3,2891
     """
-    with open('{}.csv'.format(DUMP_SLUG), 'w') as f:
+    with open('{}.csv'.format(dump_slug), 'w') as f:
         writer = unicodecsv.writer(f)
         for row in rows_out:
             writer.writerow(row)
 
 
-def dump_as_sql(rows_out):
+def dump_as_sql(rows_out, dump_slug):
     """
     Drops an SQL dump file to /tmp/mp_countydata.sql
 
@@ -61,14 +61,15 @@ def dump_as_sql(rows_out):
     """
     sql_rows = [convert_row_to_sql_tuple(row) for row in rows_out]
 
-    with open('{}.sql'.format(DUMP_SLUG), 'w') as f:
+    with open('{}.sql'.format(dump_slug), 'w') as f:
         f.write(
             DROP_AND_CREATE_STRING +
             assemble_insertions(sql_rows) +
             UNLOCK_STRING.format(datetime.datetime.now()))
 
 
-def create_dump(starting_date, through_date, sql=True):
+def create_dump(
+        starting_date, through_date, dump_slug, sql=True):
     """
     Sample input CSV field_names and row:
     date,fips,open,current,thirty,sixty,ninety,other
@@ -110,29 +111,33 @@ def create_dump(starting_date, through_date, sql=True):
                 if counter % 100000 == 0:  # pragma: no cover
                     logger.info("\n{}".format(counter))
     if sql is True:
-        dump_as_sql(rows_out)
+        dump_as_sql(rows_out, dump_slug)
     else:
-        dump_as_csv(rows_out)
+        dump_as_csv(rows_out, dump_slug)
     logger.info('\nceate_dump took {} to create a file with {} rows'.format(
         (datetime.datetime.now() - starter), len(rows_out)))
 
 
 def run(*args):
     """
-    Ingests a through-date in YYYY-MM-DD format. Sample command:
-    `manage.py runscript source_to_dump --script-args 2017-03-01`
+    Ingests a through-date (YYYY-MM-DD) and dump location/slug. Sample command:
+    `manage.py runscript source_to_dump --script-args 2017-03-01 /tmp/mp_countydata`  # noqa: E501
 
-    Adding an optional second arg 'csv' will dump a CSV instead of SQL:
-    `--script-args 2017-03-01 csv`
+    Adding an optional third arg 'csv' will dump a CSV instead of SQL:
+    `--script-args 2017-03-01 /tmp/mp_countydata csv`
     """
+    dump_slug = DEFAULT_DUMP_SLUG
+    sql = True
     starting_date = MortgageDataConstant.objects.get(
         name='starting_date').date_value
     if args:
         through_date = parser.parse(args[0]).date()
         update_through_date_constant(through_date)
+        if args[1] and args[1] != 'csv':
+            dump_slug = args[1]
         if 'csv' in args:
-            create_dump(starting_date, through_date, sql=False)
-        else:
-            create_dump(starting_date, through_date)
+            sql = False
+        create_dump(
+            starting_date, through_date, dump_slug=dump_slug, sql=sql)
     else:
         logger.info("Please provide a through-date in this form: YYYY-MM-DD")

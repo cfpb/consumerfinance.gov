@@ -127,14 +127,14 @@ class SourceToSQLTest(django.test.TestCase):
     def test_dump_as_sql(self, mock_assemble):
         m = mock_open()
         with patch('__builtin__.open', m, create=True):
-            dump_as_sql([self.data_row])
+            dump_as_sql([self.data_row], '/tmp/mp_countydata')
         self.assertEqual(m.call_count, 1)
         self.assertEqual(mock_assemble.call_count, 1)
 
     def test_dump_as_csv(self):
         m = mock_open()
         with patch('__builtin__.open', m, create=True):
-            dump_as_csv([self.data_row])
+            dump_as_csv([self.data_row], '/tmp/mp_countydata')
         self.assertEqual(m.call_count, 1)
 
     @mock.patch('data_research.scripts.'
@@ -142,7 +142,7 @@ class SourceToSQLTest(django.test.TestCase):
     @mock.patch('data_research.scripts.'
                 'source_to_dump.update_through_date_constant')
     def test_run_command(self, mock_update, mock_dump):
-        run_source_to_dump('2017-03-01')
+        run_source_to_dump('2017-03-01', '/tmp/mp_countydata')
         self.assertEqual(mock_update.call_count, 1)
         self.assertEqual(mock_dump.call_count, 1)
 
@@ -151,7 +151,7 @@ class SourceToSQLTest(django.test.TestCase):
     @mock.patch('data_research.scripts.source_to_dump.'
                 'update_through_date_constant')
     def test_run_command_csv(self, mock_update, mock_dump):
-        run_source_to_dump('2017-03-01', 'csv')
+        run_source_to_dump('2017-03-01', '/tmp/mp_countydata', 'csv')
         self.assertEqual(mock_update.call_count, 1)
         self.assertEqual(mock_dump.call_count, 1)
 
@@ -173,7 +173,7 @@ class SourceToSQLTest(django.test.TestCase):
             'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
             'ninety': '0', 'date': '01/01/2008', 'open': '270', 'other': '3',
             'fips': '01001'}]
-        create_dump(STARTING_DATE, THROUGH_DATE)
+        create_dump(STARTING_DATE, THROUGH_DATE, '/tmp/mp_countydata')
         self.assertEqual(mock_dump_sql.call_count, 1)
         self.assertEqual(mock_read_in.call_count, 1)
 
@@ -186,7 +186,8 @@ class SourceToSQLTest(django.test.TestCase):
             'thirty': '4', 'month': '1', 'current': '262', 'sixty': '1',
             'ninety': '0', 'date': '01/01/2008', 'open': '270', 'other': '3',
             'fips': '01001'}]
-        create_dump(STARTING_DATE, THROUGH_DATE, sql=False)
+        create_dump(
+            STARTING_DATE, THROUGH_DATE, '/tmp/mp_countydata', sql=False)
         self.assertEqual(mock_dump_csv.call_count, 1)
         self.assertEqual(mock_read_in.call_count, 1)
 

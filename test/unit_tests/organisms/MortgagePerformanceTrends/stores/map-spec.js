@@ -11,7 +11,7 @@ let store;
 describe( 'Mortgage Performance map store', () => {
 
   beforeEach( () => {
-    store = new Store();
+    store = new Store( {} );
   } );
 
   it( 'should instantiate a store', () => {
