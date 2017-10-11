@@ -207,6 +207,15 @@ var utils = {
   getYear: date => date.split( '-' )[0],
 
   /**
+   * getMonth - Returns the month form a date in the format YYYY-MM-DD.
+   *
+   * @param {string} date Date in format YYYY-MM-DD.
+   *
+   * @returns {string} Month as MM.
+   */
+  getMonth: date => date.split( '-' )[1],
+
+  /**
    * isDateValid - Check if date is less than or equal to the provided end date.
    *
    * @param {string} currDate Date in format YYYY-MM-DD.
