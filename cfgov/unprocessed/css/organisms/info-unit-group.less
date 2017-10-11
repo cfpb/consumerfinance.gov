@@ -64,13 +64,15 @@
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em ) !important;
     }
     
-    .content-l__dividers + .content-l__dividers {
+    .content-l__top-divider + .content-l__top-divider {
+        // Adds top divider between info units
         .grid_column__top-divider;
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     }
     
     .respond-to-max( @bp-xs-max, {
-        .content-l__dividers {
+        // Adds top divider between info unit cols on small screens
+        .content-l__top-divider {
             .content-l_col + .content-l_col {
                 .grid_column__top-divider;
                 margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
@@ -79,7 +81,8 @@
     });
 
     .respond-to-min( @bp-sm-min, {
-        .content-l__dividers + .content-l__dividers {
+        .content-l__top-divider + .content-l__top-divider {
+            // Matches top divider width to cols on larger screens
             &:before {
                 margin-left: 15px !important;
                 margin-right: 15px;
