@@ -32,9 +32,11 @@ class MortgagePerformanceMap {
     this.timespan = this.$container.getAttribute( 'data-chart-time-span' );
     this.startDate = this.$container.getAttribute( 'data-chart-start-date' );
     this.endDate = this.$container.getAttribute( 'data-chart-end-date' );
+    this.endMonth = utils.getMonth( this.endDate );
+    this.endYear = utils.getYear( this.endDate );
     this.chart = ccb.createChart( {
       el: this.$container.querySelector( '#mp-map' ),
-      source: `map-data/${ this.timespan }/states/2008-01`,
+      source: `map-data/${ this.timespan }/states/${ this.endYear }-${ this.endMonth }`,
       type: 'geo-map',
       color: this.$container.getAttribute( 'data-chart-color' ),
       metadata: 'states',
@@ -42,6 +44,7 @@ class MortgagePerformanceMap {
     } );
     this.eventListeners();
     this.renderYears();
+    this.setDate();
   }
 
 }
@@ -299,6 +302,13 @@ MortgagePerformanceMap.prototype.renderMetros = function( prevState, state ) {
   } );
   this.$metro.innerHTML = '';
   this.$metro.appendChild( fragment );
+};
+
+MortgagePerformanceMap.prototype.setDate = function() {
+  const month = this.$month.querySelector( `option[value="${ this.endMonth }"]` );
+  const year = this.$year.querySelector( `option[value="${ this.endYear }"]` );
+  month.setAttribute( 'selected', 'selected' );
+  year.setAttribute( 'selected', 'selected' );
 };
 
 MortgagePerformanceMap.prototype.renderYears = function() {
