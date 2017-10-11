@@ -63,8 +63,30 @@
         // Adds margin top to info units that follow another
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em ) !important;
     }
+    
+    .content-l__dividers + .content-l__dividers {
+        .grid_column__top-divider;
+        margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+    }
+    
+    .respond-to-max( @bp-xs-max, {
+        .content-l__dividers {
+            .content-l_col + .content-l_col {
+                .grid_column__top-divider;
+                margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
+            }
+        }
+    });
 
     .respond-to-min( @bp-sm-min, {
+        .content-l__dividers + .content-l__dividers {
+            &:before {
+                margin-left: 15px !important;
+                margin-right: 15px;
+                width: auto;
+            }
+        }
+        .content-l_col-1:nth-of-type( n+2 ),
         .content-l_col-1-2:nth-of-type( n+3 ),
         .content-l_col-1-3:nth-of-type( n+4 ) {
             // Adds margin-top to info units that begin a new row in their group
