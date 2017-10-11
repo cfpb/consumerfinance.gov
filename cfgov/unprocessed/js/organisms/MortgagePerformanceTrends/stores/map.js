@@ -112,10 +112,11 @@ const initialState = {
 };
 
 class MapStore extends Store {
-  constructor( mid ) {
-    super( mid );
+  constructor( { date, middleware } ) {
+    super( middleware );
     this.prevState = {};
     this.state = initialState;
+    this.state.date = date;
     this.state = this.reduce( this.state, {} );
   }
   reduce( state, action ) {
