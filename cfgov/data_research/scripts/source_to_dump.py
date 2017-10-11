@@ -134,11 +134,12 @@ def run(*args):
     if args:
         through_date = parser.parse(args[0]).date()
         update_through_date_constant(through_date)
-        if args[1] and args[1] != 'csv':
+        if len(args) > 1 and args[1] != 'csv':
             dump_slug = args[1]
         if 'csv' in args:
             sql = False
         create_dump(
             starting_date, through_date, dump_slug=dump_slug, sql=sql)
     else:
-        logger.info("Please provide a through-date in this form: YYYY-MM-DD")
+        logger.info("Please provide a through-date (YYYY-MM-DD) and "
+                    "a dump location/slug, such as '/tmp/mp_countydata'")
