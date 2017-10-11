@@ -43,8 +43,6 @@ function FilterableListControls( element ) {
     ]
   };
 
-  var _cachedLabels = {};
-
   /**
    * @returns {FilterableListControls|undefined} An instance,
    *   or undefined if it was already initialized.
@@ -57,7 +55,10 @@ function FilterableListControls( element ) {
     // instantiate multiselects before their containing expandable
     // so height of any 'selected choice' buttons is included when
     // expandable height is calculated initially
-    var multiSelects = atomicHelpers.instantiateAll( 'select[multiple]', Multiselect );
+    var multiSelects = atomicHelpers.instantiateAll(
+      'select[multiple]',
+      Multiselect
+    );
 
     // TODO: FilterableListControls should use expandable
     //       behavior (FlyoutMenu), not an expandable directly.
@@ -109,7 +110,6 @@ function FilterableListControls( element ) {
     _form.addEventListener( 'change', function sendEvent( event ) {
       var action;
       var field = event.target;
-      var fieldValue;
 
       if ( !field ) {
         return;
