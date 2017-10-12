@@ -330,8 +330,6 @@
   notes:
     - "Adds transitions utilty classes for transform, opacity,
        and for the removing the transition duration."
-    - "`.u-move-transition__disabled` is used for disabling tests
-        in protractor tests"
   tags:
     - cfgov-misc
 */
@@ -345,13 +343,6 @@
 
 .u-no-animation {
     transition-duration: 0s;
-}
-
-// The mega-menu code doesn't work with a transition of 0ms
-.u-move-transition__disabled {
-  .u-move-transition {
-    transition: transform 1ms ease;
-  }
 }
 
 /* topdoc
