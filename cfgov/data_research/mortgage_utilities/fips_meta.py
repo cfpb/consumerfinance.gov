@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-import json
 import logging
 
 from django.conf import settings
@@ -85,7 +84,7 @@ class FipsMeta(object):
         self.all_fips = []  # All valid county, MSA and state FIPS
         self.dates = []  # All the sampling dates we're displaying; will grow
         self.short_dates = []  # Shortened date versions for output labels
-        self.starting_year = None  # next 3 values will reflect db constants
+        self.starting_date = None  # next 3 values will reflect db constants
         self.threshold_date = None
         self.threshold_count = None
         self.created = 0  # final 2 can serve as a global counters
@@ -178,32 +177,20 @@ def load_fips_lists():
 
 
 def load_constants():
-    """Get data thresholds from database, or fall back to starting defaults."""
+    """Get data thresholds."""
     from data_research.models import MortgageDataConstant, MortgageMetaData
-    threshold_defaults = {
-        'starting_year': 2008,
-        'threshold_count': 1000,
-        'threshold_year': 2016,
-    }
-    for name in threshold_defaults:
-        try:
-            value = MortgageDataConstant.objects.get(
-                name=name).value
-        except MortgageDataConstant.DoesNotExist:
-            value = threshold_defaults[name]
-        setattr(FIPS, name, value)
-    try:
-        dates_obj = MortgageMetaData.objects.get(name='sampling_dates')
-        dates = dates_obj.json_value
-    except MortgageMetaData.DoesNotExist:
-        with open("{}/sampling_dates.json".format(FIPS_DATA_PATH), 'rb') as f:
-            dates = json.loads(f.read())
+    FIPS.starting_date = MortgageDataConstant.objects.get(
+        name='starting_date').date_value
+    for threshold in ['threshold_count', 'threshold_year']:
+        value = MortgageDataConstant.objects.get(name=threshold).value
+        setattr(FIPS, threshold, value)
+    dates = MortgageMetaData.objects.get(name='sampling_dates').json_value
     FIPS.dates = ['{}'.format(date) for date in dates]
     FIPS.short_dates = [date[:-3] for date in FIPS.dates]
 
 
 def load_fips_meta(counties=True):
-    """
+    """`
     Load FIPS mappings, starting with base CSV files.
 
     County CSV headings are:
