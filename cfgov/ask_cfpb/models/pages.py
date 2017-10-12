@@ -449,6 +449,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
                  a.question_es,
                  Truncator(a.answer_es).words(40, truncate=' ...'))
                 for a in tag_dict['tag_map'][tag]
+                if a.answer_pages.filter(language='es', live=True)
             ]
         else:
             self.answers = [
@@ -456,6 +457,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
                  a.question,
                  Truncator(a.answer).words(40, truncate=' ...'))
                 for a in tag_dict['tag_map'][tag]
+                if a.answer_pages.filter(language='en', live=True)
             ]
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)

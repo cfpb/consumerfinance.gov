@@ -28,5 +28,9 @@ env:
     - RUNTEST=backend
     - RUNTEST=acceptance
 
+branches:
+  only: 
+    - master
+
 script:
   - ./run_travis.sh

@@ -102,7 +102,12 @@ class State(models.Model):
          threshold_year) = MortgageDataConstant.get_thresholds()
         records = self.nonmsamortgagedata_set.filter(
             date__year=threshold_year)
-        annual_sum = sum(record.total for record in records)
+        if not self.non_msa_counties:
+            self.non_msa_valid = False
+            self.save()
+            return
+        annual_sum = sum(
+            record.total for record in records if record.total)
         monthly_average = annual_sum * 1.0 / records.count()
         if monthly_average >= threshold_count:
             self.non_msa_valid = True
@@ -213,6 +218,10 @@ class MortgageBase(models.Model):
             for county in county_records:
                 for field in count_fields:
                     count_fields[field] += getattr(county, field)
+            for field in count_fields:
+                setattr(self, field, count_fields[field])
+            self.save()
+        elif type(self) == NonMSAMortgageData:
             for field in count_fields:
                 setattr(self, field, count_fields[field])
             self.save()
@@ -334,8 +343,8 @@ class MortgagePerformancePage(BrowsePage):
         meta['from_month_formatted'] = from_date.strftime("%B&nbsp;%Y")
         meta['pub_date_formatted'] = meta.get(
             'download_files')[meta['thru_month']]['pub_date']
-        meta['archive_dates'] = sorted([
-            date for date in meta['download_files'].keys()], reverse=True)[1:]
+        download_dates = sorted(meta['download_files'].keys(), reverse=True)
+        meta['archive_dates'] = download_dates[1:]
         return meta
 
     def get_context(self, request, *args, **kwargs):

@@ -19,13 +19,26 @@ const SauceConnectTunnel = require( 'sauce-connect-tunnel' );
  * @param {Function} cb - Callback function to call on completion.
  */
 function testUnitScripts( cb ) {
+  const params = minimist( process.argv.slice( 3 ) ) || {};
+
+  // If --specs=path/to/js/spec flag is added on the command-line,
+  // pass the value to mocha to test individual unit test files.
+  const specs = params.specs;
+  let src = configTest.tests + '/unit_tests/';
+
+  if ( specs ) {
+    src += specs;
+  } else {
+    src += '**/*.js';
+  }
+
   gulp.src( configTest.src )
     .pipe( gulpIstanbul( {
       includeUntested: false
     } ) )
     .pipe( gulpIstanbul.hookRequire() )
     .on( 'finish', () => {
-      gulp.src( configTest.tests + '/unit_tests/**/*.js' )
+      gulp.src( src )
         .pipe( gulpMocha( {
           reporter: configTest.reporter ? 'spec' : 'nyan'
         } ) )

@@ -67,14 +67,15 @@ function init() {
   }
 
   /**
-   * Determines the state of Analytics and either passes the data-sets
-   * or waits for Analytics to report readiness
-   * @param {HTMLNode} input - A dom element
+   * Grabs analytics event data from the passed element's data attributes.
+   * Determines the state of the Analytics module and either passes the data
+   * or waits for Analytics to report readiness, then passes the data.
+   * @param {HTMLNode} el - A dom element
    */
-  function handleButtonAnalytics( input ) {
-    const action = input.getAttribute( 'data-gtm-action' );
-    const label = input.getAttribute( 'data-gtm-label' );
-    const category = input.getAttribute( 'data-gtm-category' );
+  function handleAnalytics( el ) {
+    const action = el.getAttribute( 'data-gtm-action' );
+    const label = el.getAttribute( 'data-gtm-label' );
+    const category = el.getAttribute( 'data-gtm-category' );
 
     if ( Analytics.tagManagerIsLoaded ) {
       sendEvent( action, label, category );
@@ -93,7 +94,7 @@ function init() {
         const input = event.target;
 
         switchComparisons( input.getAttribute( 'data-compare-by' ) );
-        handleButtonAnalytics( input );
+        handleAnalytics( input );
       } );
     } );
   }
