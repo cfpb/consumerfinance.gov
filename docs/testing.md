@@ -207,7 +207,9 @@ The audit will run against
 [Google's PageSpeed Insights](https://github.com/addyosmani/psi).
 
 
-# Django and Python unit tests
+# Unit testing
+
+## Django and Python unit tests
 
 To run the the full suite of Python 2.7 unit tests using Tox, cd to the project
 root, make sure the `TOXENV` variable is set in your `.env` file and then run
@@ -225,6 +227,16 @@ To see Python code coverage information, run
 ```
 ./show_coverage.sh
 ```
+
+## JavaScript unit tests
+
+JavaScript module unit tests are run with `gulp test:unit`.
+
+If you want to run individual spec files, pass in the `--specs` command-line
+argument with the path to the spec,
+such as `gulp test:unit --specs=modules/Tree-spec.js`.
+Globs can be used to run a group of unit tests in the same directory,
+such as `gulp test:unit --specs=modules/transition/*.js`.
 
 
 # Accessibility Testing

@@ -16,9 +16,11 @@ S3_KEY = os.getenv('AWS_S3_ACCESS_KEY_ID')
 S3_SECRET = os.getenv('AWS_S3_SECRET_ACCESS_KEY')
 BASE_BUCKET = settings.AWS_STORAGE_BUCKET_NAME
 MORTGAGE_SUB_BUCKET = "data/mortgage-performance"
-S3_MORTGAGE_DOWNLOADS_BASE = (
-    'http://{}.s3.amazonaws.com/{}/downloads'.format(
-        BASE_BUCKET, MORTGAGE_SUB_BUCKET))
+PUBLIC_ACCESS_BASE = 'http://{}.s3.amazonaws.com/{}'.format(
+    BASE_BUCKET, MORTGAGE_SUB_BUCKET)
+S3_MORTGAGE_DOWNLOADS_BASE = '{}/downloads'.format(PUBLIC_ACCESS_BASE)
+S3_SOURCE_BUCKET = '{}/source'.format(PUBLIC_ACCESS_BASE)
+S3_SOURCE_FILE = 'latest_county_delinquency.csv'
 
 
 def read_in_s3_csv(url):
