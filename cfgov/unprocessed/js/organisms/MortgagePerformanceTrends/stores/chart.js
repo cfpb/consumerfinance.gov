@@ -62,6 +62,17 @@ const isLoading = action => {
   }
 };
 
+const updateStates = ( states, action ) => {
+  switch ( action.type ) {
+    case 'SET_STATES':
+      return action.states;
+    case 'FETCH_STATES':
+    case 'REQUEST_STATES':
+    default:
+      return states;
+  }
+};
+
 const updateMetros = ( metros, action ) => {
   switch ( action.type ) {
     case 'SET_METROS':
@@ -116,6 +127,7 @@ const initialState = {
   counties: {},
   metros: {},
   nonMetros: {},
+  states: {},
   // Is the chart waiting for data?
   isLoading: false,
   // Is the county dropdown waiting for data?
@@ -143,7 +155,8 @@ class LineChartStore extends Store {
       includeComparison: includeComparison( state.includeComparison, action ),
       counties: updateCounties( state.counties, action ),
       metros: updateMetros( state.metros, action ),
-      nonMetros: updateNonMetros( state.nonMetros, action )
+      nonMetros: updateNonMetros( state.nonMetros, action ),
+      states: updateStates( state.states, action )
     };
     return newState;
   }
