@@ -378,6 +378,23 @@ class OrganismsTestCase(TestCase):
         response = self.client.get('/thumbnails/')
         self.assertContains(response, 'o-snippet-list_list-thumbnail')
 
+    def test_snippet_list_set_col_width(self):
+        """ Snippet List Assets column width is fixed when set"""
+        assets_width_page = BrowsePage(
+            title='Assets Width Test Page',
+            slug='assets-width',
+        )
+        assets_width_page.content = StreamValue(
+            assets_width_page.content.stream_block,
+            [atomic.snippet_list_actions_column_width_40],
+            True
+        )
+        publish_page(child=assets_width_page)
+
+        self.create_resource()
+
+        response = self.client.get('/assets-width/')
+        self.assertContains(response, 'style="width: 40%;"')
 
 class TestInfoUnitGroup(TestCase):
     def setUp(self):

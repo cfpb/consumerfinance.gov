@@ -71,11 +71,19 @@
     {% if filtered_snippets.exists() %}
         <div class="o-table__stack-on-small o-snippet-list_list" data-display-table="table">
             <header data-display-table="thead">
-                <div class="o-snippet-list_list-heading" data-display-table="cell">Description</div>
+                <div class="o-snippet-list_list-heading" data-display-table="cell">
+                    Description
+                 </div>
             {% if value.show_thumbnails %}
                 <div class="o-snippet-list_list-heading" data-display-table="cell"></div>
             {% endif %}
-                <div class="o-snippet-list_list-heading" data-display-table="cell">Actions</div>
+                <div class="o-snippet-list_list-heading"
+                     data-display-table="cell"
+                     {% if value.actions_column_width %}
+                     style="width: {{ value.actions_column_width }}%;"
+                     {% endif %}>
+                    Actions
+                </div>
             </header>
             <ul data-display-table="row-group">
             {% for snippet in filtered_snippets %}
