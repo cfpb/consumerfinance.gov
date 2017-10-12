@@ -36,7 +36,9 @@
     {{ parse_links(value.paragraph) | safe }}
 
     {% if value.links %}
-        <ul class="m-list m-list__unstyled m-list__links">
+        <ul class="m-list
+                   m-list__unstyled
+                   m-list__links">
         {% for link in value.links %}
             <li class="m-list_item">
                 <a href="{{ link.url }}" class="m-list_link">{{ link.text }}</a>
