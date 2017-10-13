@@ -911,12 +911,20 @@ class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic(required=False)
-    actions_column_width = blocks.CharBlock(
-        label='Actions col width (%)',
+    actions_column_width = blocks.ChoiceBlock(
+        label='Width of "Actions" column',
         required=False,
-        max_length=2,
-        help_text='Enter a two digit percentage without the % symbol '
-                  'to set the width of the actions column'
+        help_text='Choose the width in % that you wish to set '
+                  'the Actions column in a snippet list.',
+        choices=[
+            ('70', '70%'),
+            ('66', '66%'),
+            ('60', '60%'),
+            ('50', '50%'),
+            ('40', '40%'),
+            ('33', '33%'),
+            ('30', '30%'),
+        ],
     )
 
     snippet_type = blocks.ChoiceBlock(

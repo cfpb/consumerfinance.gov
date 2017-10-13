@@ -77,11 +77,9 @@
             {% if value.show_thumbnails %}
                 <div class="o-snippet-list_list-heading" data-display-table="cell"></div>
             {% endif %}
-                <div class="o-snippet-list_list-heading"
-                     data-display-table="cell"
-                     {% if value.actions_column_width %}
-                     style="width: {{ value.actions_column_width }}%;"
-                     {% endif %}>
+                <div class="o-snippet-list_list-heading
+                           {{- ' u-w' ~ value.actions_column_width ~ 'pct' if value.actions_column_width else '' -}}"
+                     data-display-table="cell">
                     Actions
                 </div>
             </header>
