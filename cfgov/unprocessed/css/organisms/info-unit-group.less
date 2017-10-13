@@ -84,7 +84,8 @@
         .content-l__top-divider + .content-l__top-divider {
             // Matches top divider width to cols on larger screens
             &:before {
-                margin-left: 15px !important;
+                // Overrides .grid_column__top-divider margin-left !important rule
+                margin-left: 15px !important; 
                 margin-right: 15px;
                 width: auto;
             }

@@ -64,17 +64,17 @@
 {%- if value.intro %}
     {{ value.intro | safe }}
 {%- endif %}
-  {% if not value.lines_between_items %}
-  <div class="content-l">
-  {% endif %}
+    {% if not value.lines_between_items %}
+    <div class="content-l">
+    {% endif %}
     {% for unit in value.info_units %}
         {% if value.lines_between_items and  (
-          ( loop.index == 1 ) or
-          ( value.format == '25-75' ) or
-          ( value.format == '50-50' and loop.index % 2 == 1 ) or
-          ( value.format == '33-33-33' and loop.index  % 3 == 1 ) 
+            ( loop.index == 1 ) or
+            ( value.format == '25-75' ) or
+            ( value.format == '50-50' and loop.index % 2 == 1 ) or
+            ( value.format == '33-33-33' and loop.index  % 3 == 1 ) 
         ) %}
-        <div class="content-l content-l__top-divider">
+            <div class="content-l content-l__top-divider">
         {% endif %}
         
         <div class="content-l_col
@@ -85,10 +85,10 @@
         </div>
         
         {% if value.lines_between_items and (
-          ( value.format == '25-75' ) or
-          ( value.format == '50-50' and loop.index % 2 == 0 ) or
-          ( value.format == '33-33-33' and loop.index % 3 == 0 ) or
-          ( loop.index == value.info_units | length )
+            ( value.format == '25-75' ) or
+            ( value.format == '50-50' and loop.index % 2 == 0 ) or
+            ( value.format == '33-33-33' and loop.index % 3 == 0 ) or
+            ( loop.index == value.info_units | length )
         ) %}
         </div>
         {% endif %}
