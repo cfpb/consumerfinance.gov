@@ -153,7 +153,7 @@
             </fieldset>
             <div class="m-notification
                         m-notification__visible
-                        m-notification__warning"
+                        m-notification__warning u-mt30"
                   id="mp-map-notification"
                   style="display:none">
                 <span class="m-notification_icon cf-icon"></span>
@@ -168,7 +168,7 @@
         </form>
     </div>
     <div class="o-mp-map m-full-width-text">
-        <h3 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame }} days delinquent:<br /><span id="mp-map-title-location">state view</span> for <span id="mp-map-title-date"><strong>January 2008</strong></span></h3>
+        <h3 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame }} days delinquent:<br /><span id="mp-map-title-location">state view</span> for <span id="mp-map-title-date"><strong>{{ thru_month_formatted }}</strong></span></h3>
         <div id="mp-map">
             {{ value.description }}
         </div>

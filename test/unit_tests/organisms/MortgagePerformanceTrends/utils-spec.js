@@ -81,6 +81,13 @@ describe( 'Mortgage Performance utilities', () => {
     expect( utils.getYear( 'blah' ) ).to.equal( 'blah' );
   } );
 
+  it( 'should be able to parse months in date strings', () => {
+    expect( utils.getMonth( '2008-01' ) ).to.equal( '01' );
+    expect( utils.getMonth( '1999-11' ) ).to.equal( '11' );
+    expect( utils.getMonth( '2012-05-01' ) ).to.equal( '05' );
+    expect( utils.getMonth( 'blah' ) ).to.be.undefined;
+  } );
+
   it( 'should be able to detect valid dates', () => {
     expect( utils.isDateValid( '2008-01', '2016-10-01' ) ).to.be.true;
     expect( utils.isDateValid( '2009-11', '2016-12-01' ) ).to.be.true;
@@ -88,6 +95,7 @@ describe( 'Mortgage Performance utilities', () => {
     expect( utils.isDateValid( '2009-11-01', '2009-11-01' ) ).to.be.true;
     expect( utils.isDateValid( '2009-11-01', '2009-11' ) ).to.be.true;
     expect( utils.isDateValid( '2009-11', '2009-11' ) ).to.be.true;
+    expect( utils.isDateValid( '2009-07', '2011-03' ) ).to.be.true;
   } );
 
   it( 'should be able to detect invalid dates', () => {

@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import datetime
 from dateutil import parser
-import json
 import logging
 import os
 
@@ -13,7 +12,6 @@ from data_research.models import (
     State, StateMortgageData,
     validate_counties
 )
-from data_research.mortgage_utilities.fips_meta import FIPS_DATA_PATH
 
 logger = logging.getLogger(__name__)
 script = os.path.basename(__file__)
@@ -29,8 +27,6 @@ def update_sampling_dates():
         name='sampling_dates')
     date_list_obj.json_value = date_list
     date_list_obj.save()
-    with open('{}/sampling_dates.json'.format(FIPS_DATA_PATH), 'wb') as f:
-        f.write(json.dumps(date_list))
     logger.info(
         "Sampling dates updated; the {} dates now range from {} to {}".format(
             len(date_list), date_list[0], date_list[-1]))
@@ -100,12 +96,17 @@ def run():
     """
     This script should be run following a refresh of county mortgage data.
 
-    The script makes sure a national, state or metro aggregate record exists
-    for every relevant date, then saves the record, which triggers aggregation
-    calculations. Resulting aggregate values are stored in the record.
+    The script wipes national, state and metro-based aggregate records,
+    creates new ones for every date in range, and then updates metadata.
     """
-    NationalMortgageData.objects.all().delete()
     starter = datetime.datetime.now()
+    aggregate_classes = [
+        NationalMortgageData,
+        StateMortgageData,
+        MSAMortgageData,
+        NonMSAMortgageData]
+    for cls in aggregate_classes:
+        cls.objects.all().delete()
     update_sampling_dates()
     merge_the_dades()
     validate_counties()

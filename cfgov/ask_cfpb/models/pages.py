@@ -249,7 +249,7 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
         context.update({
             'answers': answers,
             'audiences': audiences,
-            'facet_map': facet_map,
+            'facets': facet_dict,
             'choices': subcats,
             'results_count': answers.count(),
             'get_secondary_nav_items': get_ask_nav_items
@@ -295,10 +295,10 @@ class AnswerCategoryPage(RoutablePageMixin, CFGOVPage):
             self.ask_subcategory = subcat
         else:
             raise Http404
-        answers = self.ask_subcategory.answer_set.order_by(
-            '-pk').values(
-            'id', 'question', 'slug')
         context = self.get_context(request)
+        id_key = str(subcat.pk)
+        answers = context['answers'].filter(
+            pk__in=context['facets']['subcategories'][id_key])
         paginator = Paginator(answers, 20)
         page_number = validate_page_number(request, paginator)
         page = paginator.page(page_number)
@@ -449,6 +449,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
                  a.question_es,
                  Truncator(a.answer_es).words(40, truncate=' ...'))
                 for a in tag_dict['tag_map'][tag]
+                if a.answer_pages.filter(language='es', live=True)
             ]
         else:
             self.answers = [
@@ -456,6 +457,7 @@ class TagResultsPage(RoutablePageMixin, AnswerResultsPage):
                  a.question,
                  Truncator(a.answer).words(40, truncate=' ...'))
                 for a in tag_dict['tag_map'][tag]
+                if a.answer_pages.filter(language='en', live=True)
             ]
         paginator = Paginator(self.answers, 20)
         page_number = validate_page_number(request, paginator)
