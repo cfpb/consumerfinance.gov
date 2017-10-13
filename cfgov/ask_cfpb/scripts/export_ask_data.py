@@ -49,7 +49,7 @@ def assemble_output():
             answer.answer)
         if answer.english_page:
             output['URL'] = answer.english_page.url_path.replace(
-                '/cfgov', '') if answer.english_page else ''
+                '/cfgov', '')
             output['Live'] = answer.english_page.live
             output['Redirect'] = answer.english_page.redirect_to_id
         output['SpanishQuestion'] = answer.question_es.replace('\x81', '')
