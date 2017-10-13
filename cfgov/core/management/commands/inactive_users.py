@@ -68,18 +68,25 @@ class Command(BaseCommand):
             self.send_email(emails, period, inactive_users)
 
         # Deactivate and notify inactive users
+        self.stdout.write('Deactivating and emailing {} users who have been'
+                          'inactive for {} days'.format(
+                              len(inactive_users),
+                              period))
         for user in inactive_users:
             self.deactivate_user(user)
-            self.send_user_deactivation_email(user, period)
+            self.send_user_deactivation_email(user.email, period)
 
         # List users to warn about inactivity and email them
         self.stdout.write('Users inactive for {}+ days:\n'.format(warn_period))
         self.stdout.write(self.format_inactive_users(warn_users))
 
         # Notify users approaching deactivation
+        self.stdout.write('Emailing {} users who have been'
+                          'inactive for {} days'.format(
+                              len(warn_users),
+                              warn_period))
         for user in warn_users:
-            self.send_user_warning_email(user, warn_period, period)
-
+            self.send_user_warning_email(user.email, warn_period, period)
 
     def format_inactive_users(self, inactive_users):
         """Formats the list of inactive users for text email"""
@@ -116,13 +123,12 @@ class Command(BaseCommand):
             "Your Wagtail account has not been accessed for more than " + \
             "{} days. In accordance with information security policies, " + \
             "your account will be deactivated after {} days of inactivity." + \
-            "\n\nIf you require access to Wagtail in the future and would  " + \
-            "like your account to be reactivated, please contact  " + \
-            "Design & Development at designdev@cfpb.gov and indicate your  " + \
+            "\n\nIf you require access to Wagtail in the future and would " + \
+            "like your account to be reactivated, please contact " + \
+            "Design & Development at designdev@cfpb.gov and indicate your " + \
             "business reason for needing access reinstated.\n\n " + \
             "Thank you,\nWagtail system owners".format(warn_period, period)
-        email_message = mail.EmailMessage(subject, msg, None, user.email)
-        email_message.send()
+        user.email_user(subject, msg)
 
     def send_user_deactivation_email(self, user, period):
         """Send the specified user a warning that the have been deactivated
@@ -134,13 +140,12 @@ class Command(BaseCommand):
             "{} days. In accordance with information security policies, " + \
             "your account has been deactivated.\n\n" + \
             "If you require access to Wagtail in the future and would  " + \
-            "like your account to be reactivated, please contact  " + \
-            "Design & Development at designdev@cfpb.gov and indicate your  " + \
+            "like your account to be reactivated, please contact " + \
+            "Design & Development at designdev@cfpb.gov and indicate your " + \
             "business reason for needing access reinstated.\n\n" + \
             "Thank you,\nWagtail system owners".format(period)
-        email_message = mail.EmailMessage(subject, msg, None, user.email)
-        email_message.send()
+        user.email_user(subject, msg)
 
     def deactivate_user(self, user):
         """Deactivate the specified user account"""
-        pass
+        user.is_active = False
