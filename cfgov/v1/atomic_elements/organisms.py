@@ -63,25 +63,25 @@ class InfoUnitGroup(blocks.StructBlock):
         help_text=('Check this to link all images and headings to the URL of '
                    'the first link in their unit\'s list, if there is a link.')
     )
-    
+
     has_top_border = blocks.BooleanBlock(
-      default=False,
-      required=False,
-      help_text='Check this to add a border to top of info unit group.'
+        default=False,
+        required=False,
+        help_text='Check this to add a border to top of info unit group.'
     )
-  
+
     has_bottom_border = blocks.BooleanBlock(
-      default=False,
-      required=False,
-      help_text='Check this to add a border to bottom of info unit group.'
+        default=False,
+        required=False,
+        help_text='Check this to add a border to bottom of info unit group.'
     )
-    
+
     lines_between_items = blocks.BooleanBlock(
-          default=True,
-          required=False,
-          label='Show lines between items',
-          help_text=('Check this to show horizontal rule lines between info '
-                     'units.')
+        default=True,
+        required=False,
+        label='Show lines between items',
+        help_text=('Check this to show horizontal rule lines between info '
+                   'units.')
     )
 
     info_units = blocks.ListBlock(molecules.InfoUnit())
@@ -97,7 +97,6 @@ class InfoUnitGroup(blocks.StructBlock):
                                                    'LinkedIn post text.',
                                          required=False)),
     ])
-    
 
     def clean(self, value):
         cleaned = super(InfoUnitGroup, self).clean(value)
