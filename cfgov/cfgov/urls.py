@@ -439,7 +439,7 @@ if settings.ALLOW_ADMIN_URL:
 
 
         # Export company registrations
-        url(r'^/django-admin/selfregs/', include('selfregistration.urls')),
+        url(r'^django-admin/selfregs/', include('selfregistration.urls')),
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([
