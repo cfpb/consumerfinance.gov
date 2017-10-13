@@ -7,18 +7,14 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+
+from selfregistration.forms import CompanyInfoForm
 
 
 class UserFacingViews(TestCase):
-    def test_simple_render(self):
-        """
-        Test that the index page is reachable
-        """
-        url = reverse('company-signup')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
+    def setUp(self):
 
-    def test_valid_submission(self):
         form_data = {}
 
         form_data['company_name'] = 'My cool company'
@@ -40,6 +36,35 @@ class UserFacingViews(TestCase):
         form_data['poc_phone3'] = '2222'
         form_data['reg_certify'] = True
 
+        self.form_data = form_data
+
+        self.superuser = User.objects.create_superuser(username='superuser',
+                                                       email='',
+                                                       password='password')
+
+        form = CompanyInfoForm(self.form_data)
+
+        assert(form.is_valid())
+
+        form.save()
+
+    def test_simple_render(self):
+        """
+        Test that the index page is reachable
+        """
         url = reverse('company-signup')
-        response = self.client.post(url, form_data)
+        response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
+
+    def test_valid_submission(self):
+
+        url = reverse('company-signup')
+        response = self.client.post(url, self.form_data)
+        self.assertEquals(response.status_code, 200)
+
+    def test_export_all(self):
+        url = reverse('export_registrations')
+
+        self.client.login(username='superuser', password='password')
+        response = self.client.post(url, {'export_all': True})
+        self.assertContains(response, 'My cool company')
