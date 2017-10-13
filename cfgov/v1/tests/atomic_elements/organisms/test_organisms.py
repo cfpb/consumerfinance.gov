@@ -394,7 +394,7 @@ class OrganismsTestCase(TestCase):
         self.create_resource()
 
         response = self.client.get('/assets-width/')
-        self.assertContains(response, 'style="width: 40%;"')
+        self.assertContains(response, 'u-w40pct"')
 
 class TestInfoUnitGroup(TestCase):
     def setUp(self):
