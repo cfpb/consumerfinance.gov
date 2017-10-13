@@ -47,6 +47,7 @@ def assemble_output():
             answer.snippet)
         output['Answer'] = clean_and_strip(
             answer.answer)
+
         if answer.english_page:
             output['URL'] = answer.english_page.url_path.replace(
                 '/cfgov', '')
