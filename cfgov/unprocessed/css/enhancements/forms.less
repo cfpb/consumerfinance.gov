@@ -1,149 +1,4 @@
-// TODO: Remove after Capital Framework v4 is merged in.
-
-.a-label {
-    display: inline-block;
-}
-
-.a-label__heading {
-    .heading-4();
-
-    display: block;
-
-    // Overwrites heading-5 margin.
-    margin-bottom: 10px;
-}
-
-
-@input-border__focused: @pacific;
-@input-bg__disabled: @gray-5;
-
-.m-form-field {
-    .a-text-input {
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    .a-label + .a-text-input {
-        margin-top: unit( 5px / @base-font-size-px, em );
-    }
-
-    &__checkbox,
-    &__radio {
-        .a-label {
-            vertical-align: middle;
-            cursor: pointer;
-
-            &:before {
-                display: inline-block;
-
-                border: 1px solid @input-border;
-                height: unit( 18px / @base-font-size-px, em );
-                width: unit( 18px / @base-font-size-px, em );
-                margin-right: 10px;
-
-                background-color: @input-bg;
-                content: '';
-                vertical-align: top;
-
-                .lt-ie9 & {
-                    display: none !important;
-                }
-            }
-
-            &:hover:before {
-                border-color: @input-border__focused;
-            }
-        }
-
-        .a-checkbox,
-        .a-radio {
-            .u-visually-hidden();
-
-            .lt-ie9 & {
-                height: unit( 20px / @base-font-size-px, em );
-                width: unit( 20px / @base-font-size-px, em );
-                border: 0;
-                float: left;
-                margin: 1em;
-                position: static;
-                width: auto;
-                clear: both;
-            }
-
-            &:disabled + .a-label {
-                cursor: not-allowed;
-
-                &:before {
-                    border-color: @input-border;
-                    background: @input-bg__disabled;
-                }
-            }
-        }
-    }
-
-    &__checkbox {
-        .a-label {
-            &:before {
-                font-family: 'CFPB Minicons';
-                text-align: center;
-                line-height: unit( 18px / @base-font-size-px, em );
-            }
-        }
-
-        .a-checkbox {
-            &:focus + .a-label:before,
-            &:hover + .a-label:before {
-                border-color: @input-border__focused;
-                outline: 1px solid @input-border__focused;
-            }
-
-            &:checked + .a-label:before {
-                content: @cf-icon-approved;
-            }
-        }
-    }
-}
-
-.o-form {
-    &_group {
-        margin-bottom: unit( 30px / @base-font-size-px, em );
-    }
-
-    &_fieldset {
-        // Overwrite Normalize.
-        border: none;
-        margin: 0;
-        padding: 0;
-
-        .m-field + .m-field {
-            margin-top: unit( 10px / @base-font-size-px, em );
-        }
-    }
-}
-
-.o-form_fieldset .a-text-input {
-  box-sizing: border-box;
-  width: 100%;
-}
-
-
-/* topdoc
-  name: Set form elements to base webfont
-  family: cf-core
-  tags:
-    - cf-core
-*/
-
-input[type="text"],
-input[type="search"],
-input[type="email"],
-input[type="url"],
-input[type="tel"],
-input[type="number"],
-textarea,
-select[multiple] {
-    .u-webfont-regular();
-}
+// TODO: Move to the DM & CF
 
 /* topdoc
   name: Icon inside input
@@ -341,15 +196,8 @@ select[multiple] {
     }
 }
 
-/* topdoc
-  name: Sets default styling for multi-selects
- */
 
-select[multiple] {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 5px;
-}
+// TODO: Move to the DM and update existing o-form__input-w-btn in CF
 
 /* topdoc
   name: Match the input to button
@@ -376,22 +224,7 @@ input {
     }
 }
 
-/* topdoc
-  name: Ensure form legends wrap in IE
-  family: cf-form
-  notes:
-    - "Legends do not wrap in IE. Different styles are
-      required to ensure wrapping in different versions."
-  tags:
-    - cf-form
-*/
-
-legend {
-  box-sizing: border-box; /* IE9-11 & Edge 12-13 */
-  display: table; /* IE8-11 */
-  max-width: 100%; /* Patch for IE9-11 & Edge 12-13 */
-  white-space: normal; /* IE8-11 */
-}
+// TODO: Move to the DM and update existing o-form__input-w-btn in CF
 
 /* topdoc
   name: Input with button bar
@@ -470,6 +303,9 @@ legend {
     }
 }
 
+
+
+// TODO: Move to the DM & CF
 
 /* ==========================================================================
    Scale questions

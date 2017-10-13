@@ -10,12 +10,17 @@ const updateGeo = ( geo, action ) => {
         id: null,
         name: null
       };
-    case 'SET_GEO':
     case 'UPDATE_CHART':
       return {
         type: action.geo.type || geo.type,
         id: action.geo.id,
         name: action.geo.name
+      };
+    case 'ZOOM_CHART':
+      return {
+        type: geo.type,
+        id: '',
+        name: ''
       };
     default:
       return geo;
@@ -58,10 +63,21 @@ const isLoading = action => {
   }
 };
 
+const updateZoomTarget = ( prevTarget, action ) => {
+  switch ( action.type ) {
+    case 'ZOOM_CHART':
+      return action.target;
+    default:
+      return null;
+  }
+};
+
 const updateMetros = ( metros, action ) => {
   switch ( action.type ) {
     case 'SET_METROS':
       return action.metros;
+    case 'UPDATE_CHART':
+      return action.metros || metros;
     case 'FETCH_METROS':
     case 'REQUEST_METROS':
     default:
@@ -73,6 +89,8 @@ const updateCounties = ( counties, action ) => {
   switch ( action.type ) {
     case 'SET_COUNTIES':
       return action.counties;
+    case 'UPDATE_CHART':
+      return action.counties || counties;
     case 'FETCH_COUNTIES':
     case 'REQUEST_COUNTIES':
     default:
@@ -87,17 +105,18 @@ const initialState = {
     name: null
   },
   date: '2008-01',
-  counties: {},
-  metros: {},
+  counties: [],
+  metros: [],
   isLoadingCounties: false,
   isLoadingChart: false
 };
 
 class MapStore extends Store {
-  constructor( mid ) {
-    super( mid );
+  constructor( { date, middleware } ) {
+    super( middleware );
     this.prevState = {};
     this.state = initialState;
+    this.state.date = date;
     this.state = this.reduce( this.state, {} );
   }
   reduce( state, action ) {
@@ -107,6 +126,7 @@ class MapStore extends Store {
       isLoadingMetros: isLoadingMetros( action ),
       isLoadingCounties: isLoadingCounties( action ),
       isLoading: isLoading( action ),
+      zoomTarget: updateZoomTarget( state.zoomTarget, action ),
       counties: updateCounties( state.counties, action ),
       metros: updateMetros( state.metros, action )
     };

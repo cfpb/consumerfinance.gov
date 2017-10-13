@@ -28,15 +28,15 @@ describe( 'FlyoutMenu', () => {
   let window;
   let document;
   const HTML_SNIPPET =
-    '<div data-js-hook="behavior_flyout-menu">' +
-      '<button data-js-hook="behavior_flyout-menu_trigger" ' +
-              'aria-pressed="false" ' +
-              'aria-expanded="false"></button>' +
-      '<div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">' +
-        '<button data-js-hook="behavior_flyout-menu_alt-trigger" ' +
-                'aria-expanded="false"></button>' +
-      '</div>' +
-    '</div>';
+    `<div data-js-hook="behavior_flyout-menu">
+      <button data-js-hook="behavior_flyout-menu_trigger"
+              aria-pressed="false"
+              aria-expanded="false"></button>
+      <div data-js-hook="behavior_flyout-menu_content" aria-expanded="false">
+        <button data-js-hook="behavior_flyout-menu_alt-trigger"
+                aria-expanded="false"></button>
+      </div>
+    </div>`;
   const SEL_PREFIX = '[data-js-hook=behavior_flyout-menu';
 
   let containerDom;
@@ -73,7 +73,9 @@ describe( 'FlyoutMenu', () => {
       expect( triggerDom.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
       expect( contentDom.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
       expect( altTriggerDom.getAttribute( 'aria-pressed' ) ).to.be.null;
-      expect( altTriggerDom.getAttribute( 'aria-expanded' ) ).to.equal( 'false' );
+      expect(
+        altTriggerDom.getAttribute( 'aria-expanded' )
+      ).to.equal( 'false' );
 
       expect( flyoutMenu.isAnimating() ).to.be.false;
       expect( flyoutMenu.isExpanded() ).to.be.false;

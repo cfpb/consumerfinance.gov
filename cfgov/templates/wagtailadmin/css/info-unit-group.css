@@ -1,0 +1,11 @@
+/* Hide the Format select menu when there is only a single option to select. */
+[value="info_unit_group_25_75_only"] ~ .sequence-member-inner .fieldname-format .input {
+    display: none;
+}
+
+/* Make the notice that there is only one option more prominent. */
+[value="info_unit_group_25_75_only"] ~ .sequence-member-inner .fieldname-format .help {
+    margin-top: 1.2em;
+    font-size: 1.1em;
+    font-style: italic;
+}

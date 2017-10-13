@@ -13,12 +13,15 @@ class TestLoggingHandlers(TestCase):
         """ Test that calling CFGOVErrorHandler.emit
         makes a GithubAlert post with the right parameters
         """
-        message = (u'Internal Server Error: /tést-page/'
-                   'Traceback (most recent call last):'
-                   '... more details ...')
-        record = MagicMock(message=message)
+        message = u'Internal Server Error: /tést'
+        exc_text = ('Traceback (most recent call last)'
+                    'TypeError: NoneType object has no attribute __getitem__')
+        record = MagicMock(
+            message=message,
+            exc_text=exc_text,
+        )
         CFGovErrorHandler().emit(record)
         github_alert.assert_called_once_with(
-            title=message[:30],
-            body=message,
+            title=message,
+            body=exc_text,
         )

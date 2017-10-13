@@ -10,7 +10,6 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
-from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
@@ -94,16 +93,18 @@ urlpatterns = [
     url(r'^owning-a-home/process/sources/',
         include(oah.urls_for_prefix('process/sources/'))),
 
-    # the redirect is an unfortunate workaround, could be resolved by
-    # using static('path/to/asset') in the source template
-    url(r'^know-before-you-owe/static/(?P<path>.*)$',
-        RedirectView.as_view(
-            url='/static/know-before-you-owe/static/%(path)s',
-            permanent=True)),
-    url(r'^know-before-you-owe/',
-        include(SheerSite('know-before-you-owe').urls)),
-    url(r'^adult-financial-education/$', TemplateView.as_view(
-        template_name='/adult-financial-education/index.html')),
+    url(r'^know-before-you-owe/$',
+        TemplateView.as_view(
+        template_name='know-before-you-owe/index.html'),
+        name='know-before-you-owe'),
+    url(r'^know-before-you-owe/timeline/$',
+        TemplateView.as_view(
+        template_name='know-before-you-owe/timeline/index.html'),
+        name='kbyo-timeline'),
+    url(r'^know-before-you-owe/compare/$',
+        TemplateView.as_view(
+        template_name='know-before-you-owe/compare/index.html'),
+        name='kbyo-compare'),
     url(r'^fin-ed/privacy-act-statement/$',
         TemplateView.as_view(
         template_name='/adult-financial-education/'
@@ -135,6 +136,23 @@ urlpatterns = [
         template_name='service-members/on-demand-forums-and-tools'
                       '/index.html'),
         name='servicemembers'),
+    url(r'^servicemembers/additionalresources/$',
+        TemplateView.as_view(
+        template_name='service-members/additionalresources/index.html'),
+        name='servicemembers'),
+    url(r'^servicemembers/planning/$',
+        TemplateView.as_view(
+        template_name='service-members/planning/index.html'),
+        name='servicemembers-planning'),
+    url(r'^servicemembers/planning/creativesavingsstrategies/$',
+        TemplateView.as_view(
+        template_name='service-members/planning/'
+                      'creativesavingsstrategies/index.html'),
+        name='servicemembers-planning'),
+    url(r'^servicemembers/protecting/$',
+        TemplateView.as_view(
+        template_name='service-members/protecting/index.html'),
+        name='servicemembers-protecting'),
     url(r'^parents/(?P<path>.*)$',
         RedirectView.as_view(
             url='/money-as-you-grow/%(path)s', permanent=True)),
@@ -144,14 +162,6 @@ urlpatterns = [
     url(r'^newsroom/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/newsroom/%(path)s', permanent=True)),
-
-    flagged_url(
-        'WAGTAIL_ABOUT_US',
-        r'^about-us/newsroom/press-resources/$',
-        lambda req: ServeView.as_view()(req, req.path),
-        fallback=TemplateView.as_view(
-            template_name='newsroom/press-resources/index.html'),
-        name='press-resources'),
 
     url(r'^the-bureau/(?P<path>.*)$',
             RedirectView.as_view(url='/about-us/the-bureau/%(path)s',
@@ -164,22 +174,6 @@ urlpatterns = [
     url(r'^doing-business-with-us/(?P<path>.*)$',
         RedirectView.as_view(
             url='/about-us/doing-business-with-us/%(path)s', permanent=True)),
-    url(r'^about-us/doing-business-with-us/', include([
-        flagged_url(
-            'WAGTAIL_DOING_BUSINESS_WITH_US',
-            r'^$',
-            lambda req: ServeView.as_view()(req, req.path),
-            fallback=TemplateView.as_view(
-                template_name='about-us/doing-business-with-us/index.html'),
-            name='index'),
-        flagged_url(
-            'WAGTAIL_DOING_BUSINESS_WITH_US',
-            r'^(?P<page_slug>[\w-]+)/$',
-            lambda req, page_slug: ServeView.as_view()(req, req.path),
-            fallback=SheerTemplateView.as_view(),
-            name='page')
-        ],
-        namespace='business')),
 
     url(r'^external-site/$', ExternalURLNoticeView.as_view(),
         name='external-site'),
@@ -237,14 +231,6 @@ urlpatterns = [
         RedirectView.as_view(url='/about-us/newsroom/feed/', permanent=True)),
     url(r'^newsroom-feed/$',
         RedirectView.as_view(url='/about-us/newsroom/feed/', permanent=True)),
-
-    flagged_url(
-        'WAGTAIL_ABOUT_US',
-        r'^about-us/$',
-        lambda req: ServeView.as_view()(req, req.path),
-        fallback=SheerTemplateView.as_view(
-            template_name='about-us/index.html'),
-        name='about-us'),
 
     url(r'^careers/(?P<path>.*)$', RedirectView.as_view(
         url='/about-us/careers/%(path)s', permanent=True)),
@@ -368,19 +354,19 @@ urlpatterns = [
     url(r'^askcfpb/search/',
         redirect_ask_search,
         name='redirect-ask-search'),
-    url(r'^(?P<language>es)/obtener-respuestas/buscar/?$',
+    url(r'^(?P<language>es)/obtener-respuestas/buscar/$',
         ask_search,
         name='ask-search-es'),
     url(r'^(?P<language>es)/obtener-respuestas/buscar/(?P<as_json>json)/$',
         ask_search,
         name='ask-search-es-json'),
-    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/?$',
+    url(r'^(?i)ask-cfpb/([-\w]{1,244})-(en)-(\d{1,6})/$',
         view_answer,
         name='ask-english-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/?$',
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/$',
         view_answer,
         name='ask-spanish-answer'),
-    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/?$',
+    url(r'^es/obtener-respuestas/([-\w]{1,244})-(es)-(\d{1,6})/imprimir/$',
         print_answer,
         name='ask-spanish-print-answer'),
     url(r'^(?i)ask-cfpb/search/$',

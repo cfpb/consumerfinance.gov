@@ -64,6 +64,7 @@
         <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
         <meta property="og:type" content="{% block og_type %}website{% endblock %}">
         <meta property="og:url" content="{{ request.url }}">
+{% block og_image %}
     {% if page and page.meta_image %}
         {% set meta_image_url = request.build_absolute_uri(image(page.meta_image, 'original').url) %}
         <meta property="og:image" content="{{ meta_image_url }}">
@@ -77,6 +78,7 @@
         <meta property="twitter:image"
               content="{{ request.scheme }}://{{ request.get_host() }}{{ static('img/logo_open-graph_twitter.png') }}">
     {% endif %}
+{% endblock %}
         <!--  Optional -->
         <meta property="og:description"
               content="
@@ -242,12 +244,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
     {% include '/js/routes/common.js' %}
 </script>
-{# Remove after sheer has been completely phased out #}
-{% if not page %}
-<script>
-    {% include '/js/routes/sheer.js' %}
-</script>
-{% endif %}
 
 {# Include template and page-specific JavaScript. #}
 {% macro page_template_js() %}

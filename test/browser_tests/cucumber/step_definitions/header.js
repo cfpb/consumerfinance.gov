@@ -36,7 +36,9 @@ defineSupportCode( function( { Then, When, Before } ) {
       overlay:             element( by.css( OVERLAY_SEL ) ),
       megaMenu:            element( by.css( MEGA_MENU_SEL ) ),
       megaMenuTrigger:     element( by.css( MEGA_MENU_TRIGGER_SEL ) ),
-      megaMenuContent:     element.all( by.css( MEGA_MENU_CONTENT_SEL ) ).first(),
+      megaMenuContent:     element
+                             .all( by.css( MEGA_MENU_CONTENT_SEL ) )
+                             .first(),
       globalSearch:        element( by.css( GLOBAL_SEARCH_SEL ) ),
       globalSearchTrigger: element( by.css( GLOBAL_SEARCH_TRIGGER_SEL ) ),
       globalSearchContent: element( by.css( GLOBAL_SEARCH_CONTENT_SEL ) ),

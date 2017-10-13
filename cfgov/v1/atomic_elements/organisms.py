@@ -116,8 +116,22 @@ class InfoUnitGroup(blocks.StructBlock):
         return cleaned
 
     class Meta:
-        icon = 'image'
+        icon = 'list-ul'
         template = '_includes/organisms/info-unit-group-2.html'
+
+
+class InfoUnitGroup2575Only(InfoUnitGroup):
+    format = blocks.ChoiceBlock(
+        choices=[
+            ('25-75', '25/75'),
+        ],
+        default='25-75',
+        label='Format',
+        help_text='25/75 is the only allowed format for this page type.',
+    )
+
+    class Meta:
+        label = 'Info unit group'
 
 
 class ImageText5050Group(blocks.StructBlock):
@@ -783,6 +797,9 @@ class VideoPlayer(blocks.StructBlock):
         icon = 'media'
         template = '_includes/organisms/video-player.html'
 
+    class Media:
+        js = ['video-player.js']
+
 
 class HTMLBlock(blocks.StructBlock):
     html_url = blocks.RegexBlock(
@@ -860,6 +877,7 @@ class ChartBlock(blocks.StructBlock):
 
 
 class MortgageChartBlock(blocks.StructBlock):
+    content_block = blocks.RichTextBlock()
     title = blocks.CharBlock(required=True, classname="title")
     description = blocks.CharBlock(
         required=False,
@@ -872,6 +890,7 @@ class MortgageChartBlock(blocks.StructBlock):
         label = 'Mortgage Chart Block'
         icon = 'image'
         template = '_includes/organisms/mortgage-chart.html'
+        classname = 'block__flush-top'
 
     class Media:
         js = ['mortgage-performance-trends.js']

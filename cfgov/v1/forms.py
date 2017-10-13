@@ -162,7 +162,7 @@ class FilterableListForm(forms.Form):
             if field.html_name == f:
                 self.fields[f].widget.attrs.update({
                     'id': attr_id,
-                    'class': 'a-text-input'
+                    'class': 'a-text-input a-text-input__full'
                 })
                 self.set_field_html_name(self.fields[f], attr_id)
                 return self[f]

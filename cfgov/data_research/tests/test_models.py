@@ -40,6 +40,16 @@ class GeoValidationTests(django.test.TestCase):
             msas=["45300", "35840", "45220"])
 
         mommy.make(
+            State,
+            fips='34',
+            name='New Jersey',
+            abbr='NJ',
+            ap_abbr='N.J.',
+            counties=[],
+            non_msa_counties=[],
+            msas=[])
+
+        mommy.make(
             MetroArea,
             fips='45220',
             name='Tallahassee, FL',
@@ -149,6 +159,18 @@ class GeoValidationTests(django.test.TestCase):
             state=State.objects.get(fips='12'))
 
         mommy.make(
+            NonMSAMortgageData,
+            date=datetime.date(2016, 1, 1),
+            fips='34-non',
+            total=None,
+            current=None,
+            thirty=None,
+            sixty=None,
+            ninety=None,
+            other=None,
+            state=State.objects.get(fips='34'))
+
+        mommy.make(
             StateMortgageData,
             date=datetime.date(2016, 1, 1),
             fips='12',
@@ -198,6 +220,17 @@ class GeoValidationTests(django.test.TestCase):
         state.validate_non_msas()
         self.assertIs(state.non_msa_valid, True)
 
+    def test_non_msa_validation_no_counties(self):
+        """Non-MSA validation occurs on the State model."""
+        state = State.objects.get(fips='34')
+        state.validate_non_msas()
+        self.assertIs(state.non_msa_valid, False)
+
+    def test_non_msa_aggregation_no_counties(self):
+        non_msa_no_counties = NonMSAMortgageData.objects.get(fips='34-non')
+        non_msa_no_counties.aggregate_data()
+        self.assertEqual(non_msa_no_counties.total, 0)
+
     def test_national_aggregation(self):
         """National records aggregate state records."""
         nation_record = NationalMortgageData.objects.get(
@@ -236,13 +269,17 @@ class MortgagePerformancePageTests(django.test.TestCase):
 
     def setUp(self):
         from v1.tests.wagtail_pages.helpers import save_new_page
-        page_stub = MortgagePerformancePage(
-            slug='mortgage-chart-page',
+        page_stub_30 = MortgagePerformancePage(
+            slug='mortgages-30-89-days-delinquent',
             title='Mortgage Charts')
-        self.chart_page = save_new_page(page_stub).as_page_object()
+        self.chart_page_30 = save_new_page(page_stub_30).as_page_object()
+        page_stub_90 = MortgagePerformancePage(
+            slug='mortgages-90-days-delinquent',
+            title='Mortgage Maps')
+        self.map_page_90 = save_new_page(page_stub_90).as_page_object()
 
     def test_chart_page_get_mortgage_meta(self):
-        page = self.chart_page
+        page = self.chart_page_30
         self.assertIn(
             'sampling_dates',
             page.get_mortgage_meta()
@@ -250,20 +287,22 @@ class MortgagePerformancePageTests(django.test.TestCase):
 
     def test_page_template(self):
         self.assertEqual(
-            self.chart_page.template,
+            self.chart_page_30.template,
             'browse-basic/index.html')
 
     def test_chart_page_context_30_89(self):
-        test_page = self.chart_page
+        test_page = self.chart_page_30
         request = HttpRequest()
-        request.url = '/data-research/mortgages-30-89-days-delinquent'
         self.assertIn('delinquency', test_page.get_context(request))
+        self.assertEqual(
+            test_page.get_context(request)['delinquency'], 'percent_30_60')
 
     def test_chart_page_context_90(self):
-        test_page = self.chart_page
+        test_page = self.map_page_90
         request = HttpRequest()
-        request.url = '/data-research/mortgages-90-days-delinquent'
         self.assertIn('delinquency', test_page.get_context(request))
+        self.assertEqual(
+            test_page.get_context(request)['delinquency'], 'percent_90')
 
 
 class ModelStringTest(django.test.TestCase):

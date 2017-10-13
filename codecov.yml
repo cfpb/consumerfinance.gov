@@ -9,14 +9,16 @@ coverage:
   status:
     project:
       frontend:
-        threshold: 0%
+        threshold: 0.02%
         flags: frontend
+        if_not_found: success  # no commit found? still set a success
       backend:
-        threshold: 0%
+        threshold: 0.02%
         flags: backend
+        if_not_found: success  # no commit found? still set a success
     patch:
       default:
-        threshold: 0%
+        target: 100%
 
 flags:
   backend:

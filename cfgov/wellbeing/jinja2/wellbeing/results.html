@@ -1,5 +1,10 @@
 {% extends 'layout-2-1-bleedbar.html' %}
 
+{% block meta_viewport %}
+    {{ super() }}
+    <meta name="robots" content="noindex">
+{% endblock %}
+
 {% block title -%}
     Your financial well-being score
 {%- endblock %}
@@ -7,6 +12,16 @@
 {% block desc -%}
     See your survey results and learn how you may be able to improve your score.
 {%- endblock %}
+
+{% block og_desc -%}
+    See your survey results and learn how you may be able to improve your score.
+{%- endblock %}
+
+{% block og_image %}
+        <meta property="og:image" content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta property="twitter:image" content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta name="twitter:card" content="summary_large_image">
+{% endblock %}
 
 {% block css %}
     {{ super() }}
@@ -21,6 +36,7 @@
             padding-top: 120px;
             margin-top: 30px;
             position: relative;
+            max-width: 770px;
         }
         .score-box {
             height: 150px;
@@ -67,6 +83,17 @@
             border: none;
             margin: 0;
         }
+        .comparison-chart_toggle-button {
+            margin-bottom: 5px;
+            background-color: #d6e8fa;
+            color: #101820;
+            font-size: 0.875em;
+        }
+        .comparison-chart_toggle-button:hover,
+        .comparison-chart_toggle-button:focus,
+        .comparison-chart_toggle-button__selected {
+            background-color: #7eb7e8;
+        }
         .comparison-chart_title {
             margin-top: 30px;
         }
@@ -86,11 +113,14 @@
             text-align: right;
         }
         .comparison-chart_list dd {
-            display: inline-block;
-            width: 60%;
+            width: 65%;
             border-bottom: 1px solid #b4b5b6;
             position: relative;
             bottom: 0.25em;
+        }
+        .comparison-chart_list dd:not(.u-hidden),
+        .lt-ie9 .comparison-chart_list dd {
+            display: inline-block;
         }
         .comparison-chart_list dd span {
             height: 30px;
@@ -101,12 +131,6 @@
             position: absolute;
             bottom: -0.5em;
             line-height: 1;
-        }
-        .js [class^="comparison_data-point income"],
-        .js [class^="comparison_data-point employment"] {
-            /* Hiden when JavaScript is enabled so that the toggle buttons
-               can toggle to them. */
-            display: none;
         }
         .comparison-chart_source {
             padding-top: 15px;
@@ -123,13 +147,66 @@
         .no-js .o-expandable_link {
             display: none;
         }
+
+        @media all and (max-width: 37.5em) {
+            .comparison-chart_toggle-button {
+                display: block;
+            }
+        }
+
+        @media print {
+            /* Force all these things back on when printing, regardless
+               of how the user has interacted with the page */
+            .js .comparison_data-point {
+                display: inline-block !important;
+            }
+
+            .o-expandable_content {
+                /* Using !important to work around IE not handling the
+                   :not([aria-expanded="true"]) selector */
+                height: auto !important;
+            }
+
+            .o-expandable_content table {
+                height: 510px;
+            }
+
+            .o-expandable_content thead {
+                border-bottom: none;
+            }
+
+            .o-expandable_content th:last-child {
+                width: 25% !important;
+            }
+
+            .o-expandable_content tbody tr {
+                border-bottom: none;
+            }
+
+            .content_main {
+                display: block !important;
+            }
+
+            .content_main * {
+                overflow: visible !important;
+            }
+
+            /* Hide various things when printing */
+            .save-links,
+            .o-expandable_link,
+            .comparison-chart_toggle,
+            .content_sidebar,
+            .o-footer {
+                display: none !important;
+            }
+        }
     </style>
 {% endblock %}
 
 {% block pre_content %}
     <div class="content_wrapper">
         <nav class="breadcrumbs" aria-label="Breadcrumbs">
-            <a class="breadcrumbs_link" id="results-link" href="../">
+            <a class="breadcrumbs_link" id="results-link" href="{{ url('fwb_home') }}">
                 Back to the questionnaire
             </a>
         </nav>
@@ -145,11 +222,10 @@
     {% set score_box_positioning = 'left' %}
 {% endif %}
 {% set avg_pct = avg_score.pct %}
-{% set avg_pct_spectrum = avg_pct if score_box_positioning == 'left' <= 50 else 100 - avg_pct %}
+{% set avg_pct_spectrum = avg_pct if score_box_positioning == 'left' else 100 - avg_pct %}
 
 {% block content_main %}
     <h1>Your financial well-being score</h1>
-
 {% if user_score %}
     <p class="lead-paragraph">
         You’ve taken a good step
@@ -247,7 +323,7 @@
 
     <div class="block">
         <p>
-            We calculated your score based on the answers to
+            Your score is based on the answers to
             the financial well-being questionnaire.
             If you’d like to be able to answer the questions differently
             next time, see our suggestions and next steps.
@@ -307,35 +383,46 @@
                 <h3>Take control of day-to-day money management</h3>
                 <ul>
                     <li>
-                        <b>Repay student loans wisely.</b>
-                        Use our tool to optimize how you
-                        <a href="/consumer-tools/student-loans/#repaying-student-loans">repay your student debt</a>,
-                        or find templates to help you communicate with debt collectors.
-                    </li>
-                    <li>
-                        <b>Get free or low-cost one-on-one help.</b>
-                        Locate a
-                        <a href="https://www.consumerfinance.gov/f/documents/201708_cfpb_financial-coaching-delivery-sites-list.pdf"
-                           class="a-link
+                        <b>Track where your money goes.</b>
+                        Fill out the
+                        <a class="a-link
                                   a-link__icon
                                   cf-icon
                                   cf-icon-download
-                                  cf-icon__after">
-                            <span class="a-link_text">financial coach</span>
+                                  cf-icon__after"
+                           href="http://files.consumerfinance.gov/f/documents/cfpb_well-being_bill-calendar.pdf">
+                            <span class="a-link_text">bill calendar</span>
                         </a>
-                        or
-                        <a href="https://www.consumerfinance.gov/find-a-housing-counselor/">housing counselor</a>
-                        near you.
+                        and
+                        <a class="a-link
+                                  a-link__icon
+                                  cf-icon
+                                  cf-icon-download
+                                  cf-icon__after"
+                           href="http://files.consumerfinance.gov/f/documents/cfpb_well-being_spending-tracker.pdf">
+                            <span class="a-link_text">spending tracker</span>
+                        </a>
+                        to see and manage your everyday expenses.
                     </li>
                     <li>
                         <b>Get a grip on debt.</b>
                         Stay on top of what you owe with our
-                        <a href="TKTKTK">debt log</a>.
+                        <a class="a-link
+                                  a-link__icon
+                                  cf-icon
+                                  cf-icon-download
+                                  cf-icon__after"
+                           href="http://files.consumerfinance.gov/f/documents/cfpb_well-being_debt-worksheet.pdf">
+                            <span class="a-link_text">debt log</span>
+                        </a>
+                        and find templates to help you communicate with
+                        <a href="/consumer-tools/debt-collection/">debt collectors</a>.
                     </li>
                     <li>
-                        <b>Track where your money goes.</b>
-                        Fill out the <a href="TKTKTK">bill calendar</a> and the <a href="TKTKTK">spending tracker</a>
-                        to see your everyday expenses.
+                        <b>Repay student loans wisely.</b>
+                        Use our tool to see your choices about how you
+                        <a href="/paying-for-college/repay-student-debt/">
+                          repay your student debt</a>.
                     </li>
                 </ul>
             </div>
@@ -352,22 +439,22 @@
                     <li>
                         <b>Create an action plan to meet your goals.</b>
                         Use our
-                        <a href="TKTKTK"
-                           class="a-link
+                        <a class="a-link
                                   a-link__icon
                                   cf-icon
                                   cf-icon-download
-                                  cf-icon__after">
+                                  cf-icon__after"
+                           href="http://files.consumerfinance.gov/f/documents/201705_cfpb_My-New-Money-Goal.pdf">
                             <span class="a-link_text">worksheet</span>
                         </a>
                         or
-                        <a href="https://www.consumerfinance.gov/f/documents/201705_cfpb_MAYG_My-New-Money-Goal.pdf"
-                           class="a-link
+                        <a class="a-link
                                   a-link__icon
                                   cf-icon
                                   cf-icon-download
-                                  cf-icon__after">
-                            <span class="a-link_text">goal setting tool</span>
+                                  cf-icon__after"
+                           href="http://files.consumerfinance.gov/f/documents/cfpb_well-being_monthly-budget.pdf">
+                            <span class="a-link_text">budgeting tool</span>
                         </a>.
                     </li>
                     <li>
@@ -377,8 +464,12 @@
                         tool before you make your decision.
                     </li>
                     <li>
-                        <b>Build or repair your credit</b>
-                        so you can reduce your cost of borrowing.
+                        <b>Build and maintain your credit record.</b>
+                        Understand
+                        <a href="/consumer-tools/credit-reports-and-scores/">
+                            credit reports and scores
+                        </a>
+                        and their effect on your cost of borrowing.
                     </li>
                 </ul>
             </div>
@@ -393,26 +484,24 @@
 
         <ul>
             <li>
-                <b>A credit counselor</b>
+                <b>A nonprofit credit counselor</b>
                 can help you set up a reasonable repayment plan for
                 credit cards and other consumer debt.
-                See <a href="/ask-cfpb/how-do-i-choose-which-credit-counselor-is-right-for-me-en-1355/">tips for choosing a credit counselor</a>.
+                See
+                <a href="/ask-cfpb/how-do-i-choose-which-credit-counselor-is-right-for-me-en-1355/">
+                    tips for choosing a credit counselor</a>.
             </li>
             <li>
-                <b>A housing counselor</b>
-                can give advice if you’re having trouble paying your mortgage.
+                <b>A HUD-certified housing counselor</b>
+                can give advice if you’re having trouble paying your mortgage
+                or help you get ready for homeownership.
                 <a href="/find-a-housing-counselor/">Find one in your area.</a>
             </li>
             <li>
                 <b>A financial coach</b>
                 can assess your situation and work with you over time to resolve issues and get ahead.
-                <a href="https://www.consumerfinance.gov/f/documents/201708_cfpb_financial-coaching-delivery-sites-list.pdf"
-                   class="a-link
-                          a-link__icon
-                          cf-icon
-                          cf-icon-download
-                          cf-icon__after">
-                    <span class="a-link_text">Find a CFPB participating coach.</span>
+                <a href="/about-us/blog/the-launch-of-the-cfpb-financial-coaching-initiative/">
+                    Find out about the CFPB coaching initiative.
                 </a>
             </li>
             <li>
@@ -422,8 +511,10 @@
         </ul>
     </div>
 
-    <div class="block" id="compare">
-        <h2>See how your score compares</h2>
+    <span id="compare"></span>
+
+    <div class="block">
+        <h2>See how your score compares to group averages</h2>
 
     {% if not user_score %}
         <div class="m-notification
@@ -442,21 +533,34 @@
     {% endif %}
 
         <figure class="comparison-chart" id="comparison-chart">
-            <fieldset class="comparison-chart_toggle u-js-only">
-                <legend>Compare by</legend>
-                <div class="m-form-field m-form-field__radio">
-                    <input class="a-radio" id="compare-by_age" name="compare-by" type="radio" checked>
-                    <label class="a-label" for="compare-by_age">Age</label>
-                </div>
-                <div class="m-form-field m-form-field__radio">
-                    <input class="a-radio" id="compare-by_income" name="compare-by" type="radio">
-                    <label class="a-label" for="compare-by_income">Household income</label>
-                </div>
-                <div class="m-form-field m-form-field__radio">
-                    <input class="a-radio" id="compare-by_employment" name="compare-by" type="radio">
-                    <label class="a-label" for="compare-by_employment">Employment status</label>
-                </div>
-            </fieldset>
+            <div class="comparison-chart_toggle u-js-only">
+                <h4>Compare by</h4>
+                <button class="a-btn
+                               comparison-chart_toggle-button
+                               comparison-chart_toggle-button__selected"
+                        data-compare-by="age"
+                        data-gtm-action="Compare By Button Clicked"
+                        data-gtm-label="Age"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
+                    Age
+                </button>
+                <button class="a-btn
+                               comparison-chart_toggle-button"
+                        data-compare-by="income"
+                        data-gtm-action="Compare By Button Clicked"
+                        data-gtm-label="Household income"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
+                    Household income
+                </button>
+                <button class="a-btn
+                               comparison-chart_toggle-button"
+                        data-compare-by="employment"
+                        data-gtm-action="Compare By Button Clicked"
+                        data-gtm-label="Employment status"
+                        data-gtm-category="Financial Well-Being Tool Interaction">
+                    Employment status
+                </button>
+            </div>
 
             <!-- <h3 class="comparison-chart_title">
                 Distribution of scores for <span id="comparison-chart_title_grouping">all adults</span>
@@ -495,8 +599,8 @@
                 <dl>
                     <dt>Source:</dt>
                     <dd>
-                        <a href="#">Download CSV file</a> |
-                        <a href="TKTKTK">Financial Well-Being in America report</a>
+                        <a href="/data-research/research-reports/financial-well-being-america/">Financial Well-Being in America report</a> |
+                        <a href="http://files.consumerfinance.gov/f/documents/cfpb_well-being_score-comparison-data.csv">Download CSV file</a>
                     </dd>
 
                     <dt>Date published:</dt>
@@ -508,7 +612,7 @@
 {% endblock %}
 
 {% block content_sidebar %}
-    <div class="block">
+    <div class="block block__flush-top">
         <header class="m-slug-header">
             <h2 class="a-heading">Looking for more help?</h2>
         </header>
@@ -516,62 +620,63 @@
             You can further explore the tips, tools, answers, and resources
             in our Consumer Tools section, including:
         </p>
-        <ul>
-            <li>
-                <a href="/consumer-tools/debt-collection/">Debt collection</a>
+        <ul class="m-list m-list__links">
+            <li class="m-list_item">
+                <a class="m-list_link" href="/consumer-tools/debt-collection/">
+                  Debt collection
+                </a>
             </li>
-            <li>
-                <a href="/consumer-tools/student-loans/">Student loans</a>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/consumer-tools/student-loans/">
+                  Student loans
+                </a>
             </li>
-            <li>
-                <a href="/consumer-tools/credit-reports-and-scores/">Credit report and scores</a>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/consumer-tools/credit-reports-and-scores/">
+                  Credit reports and scores
+                </a>
             </li>
-            <li>
-                <a href="/ask-cfpb/category-credit-cards/">Credit cards</a>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/ask-cfpb/category-credit-cards/">
+                  Credit cards
+                </a>
+            </li>
+            <li class="m-list_item">
+                <a class="m-list_link" href="/consumer-tools/mortgages/">
+                  Mortgages
+                </a>
             </li>
         </ul>
     </div>
-{% endblock %}
 
-{% block javascript %}
-    {{ super() }}
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">About this questionnaire</h2>
+        </header>
+        <p>
+            CFPB researchers developed the questionnaire and a way to score it,
+            as a tool to help measure your current financial well-being—that is,
+            how well your current money situation is providing you with
+            financial security and freedom of choice, today and for the future.
+        </p>
+        <a class="a-link a-link__jump" href="{{ url('fwb_about') }}">
+            <span class="a-link_text">See more background</span>
+        </a>
+    </div>
 
-    <script>
-    /* eslint no-extra-semi: "off" */
-    'use strict';
-
-    ( function() {
-
-      if ( !location.pathname.match( '/results' ) ) {
-        return;
-      }
-
-      var radioButtons = document.querySelectorAll( '.comparison-chart_toggle input' );
-
-      function switchComparisons( category ) {
-        var allCategories = document.querySelectorAll( '.comparison_data-point' );
-        [].forEach.call( allCategories, function( el ) {
-          el.style.display = 'none';
-        } );
-
-        var showCategory = document.querySelectorAll( '[class^="comparison_data-point ' + category + '"]' );
-        [].forEach.call( showCategory, function( el ) {
-          el.style.display = 'inline-block';
-        } );
-      }
-
-      [].forEach.call( radioButtons, function( el ) {
-        el.addEventListener( 'click', function( event ) {
-          var input = event.target;
-
-          if ( input.name && input.checked ) {
-            var category = input.id.split( '_' )[1];
-            switchComparisons( category );
-          }
-        } );
-      } );
-
-    } )();
-
-    </script>
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">Legal disclaimer</h2>
+        </header>
+        <p>
+            The content on this page provides general consumer information.
+            It is not legal advice or regulatory guidance.
+            The CFPB updates this information periodically.
+            This information may include links or references
+            to third-party resources or content.
+            We do not endorse the third-party or guarantee
+            the accuracy of this third-party information.
+            There may be other resources that also serve your needs.
+        </p>
+    </div>
 {% endblock %}

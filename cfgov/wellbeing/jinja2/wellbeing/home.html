@@ -8,19 +8,29 @@
     Answer ten questions to measure your own current financial well-being and see steps you can take to improve it.
 {%- endblock %}
 
+{% block og_desc -%}
+    Find out your financial well-being by answering ten questions, and then see steps you can take to improve it.
+{%- endblock %}
+
+{% block og_image %}
+        <meta property="og:image" content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta property="twitter:image" content="https://s3.amazonaws.com/files.consumerfinance.gov/f/images/cfpb_fwb_tool-graphic_1200.original.png">
+        <meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+
 {% block css -%}
     {{ super() }}
     <style>
         .m-hero {
-            background-color: #b4d2d1;
+            background-color: #7eb7e8;
         }
         .m-hero_image {
-            background-image: url( '{{ static("img/fwb_hero_760x300.png") }}' );
+            background-image: url( '{{ static("img/fwb_hero_826x380.png") }}' );
             filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-                    src='{{ static("img/fwb_hero_760x300.png") }}',
+                    src='{{ static("img/fwb_hero_826x380.png") }}',
                     sizingMethod='scale'
             );
-            padding-bottom: 31.915%;
+            padding-bottom: 40.42553191%; /* Image height / max width 940 */
         }
         .question-group {
             padding: 0 30px 30px 30px;
@@ -53,6 +63,14 @@
                 width: 16.6666666667%;
             }
         }
+
+        /* CF Enhancements */
+        .m-notification__subtle {
+            border-width: 0;
+        }
+        .m-notification__subtle .m-notification_message {
+            font-size: 1em;
+        }
     </style>
 {%- endblock %}
 
@@ -79,13 +97,13 @@
 {%- endblock %}
 
 {% block content_main -%}
-    <h2>Here's how it works:</h2>
+    <h2>Here’s how it works:</h2>
 
     <p>
         <b>Answer the questions and get your score.</b>
         You won’t be asked about any personal financial data—it’s
         not that kind of questionnaire.
-        <a href="about/">See how and why we developed it.</a>
+        <a href="{{ url('fwb_about') }}">See how and why we developed it.</a>
     </p>
 
     <p>
@@ -100,15 +118,16 @@
 
     <div class="m-notification
                 m-notification__visible
-                m-notification__warning">
+                m-notification__warning
+                m-notification__subtle">
         <span class="m-notification_icon cf-icon"></span>
         <div class="m-notification_content">
-            <div class="h4 m-notification_message">
+            <p class="h4 m-notification_message">
                 We never collect or store the answers you provide.
                 <a href="/privacy/website-privacy-policy/">
-                    See how your privacy is protected
+                    See how your privacy is protected.
                 </a>
-            </div>
+            </p>
         </div>
     </div>
 
@@ -116,7 +135,7 @@
         <div class="block">
             <h2>Part 1: How well does this statement describe you or your situation?</h2>
             <div class="question-group">
-                <fieldset class="o-scale" id="question-1">
+                <fieldset class="o-scale" id="question_1">
                     <h3 class="o-scale_header">
                         I could handle a major unexpected expense
                     </h3>
@@ -124,70 +143,70 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-1-completely"
-                               name="question-1"
+                               id="question_1-completely"
+                               name="question_1"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-1-completely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_1-completely">
                             Completely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-1-very-well"
-                               name="question-1"
+                               id="question_1-very-well"
+                               name="question_1"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-1-very-well">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_1-very-well">
                             Very well
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-1-somewhat"
-                               name="question-1"
+                               id="question_1-somewhat"
+                               name="question_1"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-1-somewhat">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_1-somewhat">
                             Somewhat
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-1-very-little"
-                               name="question-1"
+                               id="question_1-very-little"
+                               name="question_1"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-1-very-little">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_1-very-little">
                             Very little
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-1-not-at-all"
-                               name="question-1"
+                               id="question_1-not-at-all"
+                               name="question_1"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I could handle a major unexpected expense"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-1-not-at-all">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_1-not-at-all">
                             Not at all
                         </label>
                     </div>
                 </fieldset>
-                <fieldset class="o-scale" id="question-2">
+                <fieldset class="o-scale" id="question_2">
                     <h3 class="o-scale_header">
                         I am securing my financial future
                     </h3>
@@ -195,70 +214,70 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-2-completely"
-                               name="question-2"
+                               id="question_2-completely"
+                               name="question_2"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-2-completely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_2-completely">
                             Completely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-2-very-well"
-                               name="question-2"
+                               id="question_2-very-well"
+                               name="question_2"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-2-very-well">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_2-very-well">
                             Very well
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-2-somewhat"
-                               name="question-2"
+                               id="question_2-somewhat"
+                               name="question_2"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-2-somewhat">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_2-somewhat">
                             Somewhat
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-2-very-little"
-                               name="question-2"
+                               id="question_2-very-little"
+                               name="question_2"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-2-very-little">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_2-very-little">
                             Very little
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-2-not-at-all"
-                               name="question-2"
+                               id="question_2-not-at-all"
+                               name="question_2"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am securing my financial future"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-2-not-at-all">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_2-not-at-all">
                             Not at all
                         </label>
                     </div>
                 </fieldset>
-                <fieldset class="o-scale" id="question-3">
+                <fieldset class="o-scale" id="question_3">
                     <h3 class="o-scale_header">
                         Because of my money situation, I feel like I will never have the things I want in life
                     </h3>
@@ -266,70 +285,70 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-3-completely"
-                               name="question-3"
+                               id="question_3-completely"
+                               name="question_3"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-3-completely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_3-completely">
                             Completely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-3-very-well"
-                               name="question-3"
+                               id="question_3-very-well"
+                               name="question_3"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-3-very-well">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_3-very-well">
                             Very well
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-3-somewhat"
-                               name="question-3"
+                               id="question_3-somewhat"
+                               name="question_3"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-3-somewhat">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_3-somewhat">
                             Somewhat
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-3-very-little"
-                               name="question-3"
+                               id="question_3-very-little"
+                               name="question_3"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-3-very-little">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_3-very-little">
                             Very little
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-3-not-at-all"
-                               name="question-3"
+                               id="question_3-not-at-all"
+                               name="question_3"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Because of my money situation, I feel like I will never have the things I want in life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-3-not-at-all">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_3-not-at-all">
                             Not at all
                         </label>
                     </div>
                 </fieldset>
-                <fieldset class="o-scale" id="question-4">
+                <fieldset class="o-scale" id="question_4">
                     <h3 class="o-scale_header">
                         I can enjoy life because of the way I’m managing my money
                     </h3>
@@ -337,70 +356,70 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-4-completely"
-                               name="question-4"
+                               id="question_4-completely"
+                               name="question_4"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-4-completely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_4-completely">
                             Completely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-4-very-well"
-                               name="question-4"
+                               id="question_4-very-well"
+                               name="question_4"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-4-very-well">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_4-very-well">
                             Very well
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-4-somewhat"
-                               name="question-4"
+                               id="question_4-somewhat"
+                               name="question_4"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-4-somewhat">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_4-somewhat">
                             Somewhat
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-4-very-little"
-                               name="question-4"
+                               id="question_4-very-little"
+                               name="question_4"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-4-very-little">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_4-very-little">
                             Very little
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-4-not-at-all"
-                               name="question-4"
+                               id="question_4-not-at-all"
+                               name="question_4"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I can enjoy life because of the way I’m managing my money"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-4-not-at-all">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_4-not-at-all">
                             Not at all
                         </label>
                     </div>
                 </fieldset>
-                <fieldset class="o-scale" id="question-5">
+                <fieldset class="o-scale" id="question_5">
                     <h3 class="o-scale_header">
                         I am just getting by financially
                     </h3>
@@ -408,70 +427,70 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-5-completely"
-                               name="question-5"
+                               id="question_5-completely"
+                               name="question_5"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-5-completely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_5-completely">
                             Completely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-5-very-well"
-                               name="question-5"
+                               id="question_5-very-well"
+                               name="question_5"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-5-very-well">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_5-very-well">
                             Very well
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-5-somewhat"
-                               name="question-5"
+                               id="question_5-somewhat"
+                               name="question_5"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-5-somewhat">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_5-somewhat">
                             Somewhat
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-5-very-little"
-                               name="question-5"
+                               id="question_5-very-little"
+                               name="question_5"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-5-very-little">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_5-very-little">
                             Very little
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-5-not-at-all"
-                               name="question-5"
+                               id="question_5-not-at-all"
+                               name="question_5"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am just getting by financially"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-5-not-at-all">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_5-not-at-all">
                             Not at all
                         </label>
                     </div>
                 </fieldset>
-                <fieldset class="o-scale" id="question-6">
+                <fieldset class="o-scale" id="question_6">
                     <h3 class="o-scale_header">
                         I am concerned that the money I have or will save won’t last
                     </h3>
@@ -479,65 +498,65 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-6-completely"
-                               name="question-6"
+                               id="question_6-completely"
+                               name="question_6"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-6-completely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_6-completely">
                             Completely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-6-very-well"
-                               name="question-6"
+                               id="question_6-very-well"
+                               name="question_6"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-6-very-well">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_6-very-well">
                             Very well
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-6-somewhat"
-                               name="question-6"
+                               id="question_6-somewhat"
+                               name="question_6"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-6-somewhat">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_6-somewhat">
                             Somewhat
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-6-very-little"
-                               name="question-6"
+                               id="question_6-very-little"
+                               name="question_6"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-6-very-little">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_6-very-little">
                             Very little
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-6-not-at-all"
-                               name="question-6"
+                               id="question_6-not-at-all"
+                               name="question_6"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am concerned that the money I have or will save won’t last"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-6-not-at-all">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_6-not-at-all">
                             Not at all
                         </label>
                     </div>
@@ -547,7 +566,7 @@
         <div class="block">
             <h2>Part 2: How often does this statement apply to you?</h2>
             <div class="question-group">
-                <fieldset class="o-scale" id="question-7">
+                <fieldset class="o-scale" id="question_7">
                     <h3 class="o-scale_header">
                         Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month
                     </h3>
@@ -555,70 +574,70 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-7-always"
-                               name="question-7"
+                               id="question_7-always"
+                               name="question_7"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-7-always">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_7-always">
                             Always
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-7-often"
-                               name="question-7"
+                               id="question_7-often"
+                               name="question_7"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-7-often">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_7-often">
                             Often
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-7-sometimes"
-                               name="question-7"
+                               id="question_7-sometimes"
+                               name="question_7"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-7-sometimes">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_7-sometimes">
                             Sometimes
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-7-rarely"
-                               name="question-7"
+                               id="question_7-rarely"
+                               name="question_7"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-7-rarely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_7-rarely">
                             Rarely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-7-never"
-                               name="question-7"
+                               id="question_7-never"
+                               name="question_7"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="Giving a gift for a wedding, birthday or other occasion would put a strain on my finances for the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-7-never">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_7-never">
                             Never
                         </label>
                     </div>
                 </fieldset>
-                <fieldset class="o-scale" id="question-8">
+                <fieldset class="o-scale" id="question_8">
                     <h3 class="o-scale_header">
                         I have money left over at the end of the month
                     </h3>
@@ -626,70 +645,70 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-8-always"
-                               name="question-8"
+                               id="question_8-always"
+                               name="question_8"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-8-always">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_8-always">
                             Always
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-8-often"
-                               name="question-8"
+                               id="question_8-often"
+                               name="question_8"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-8-often">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_8-often">
                             Often
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-8-sometimes"
-                               name="question-8"
+                               id="question_8-sometimes"
+                               name="question_8"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-8-sometimes">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_8-sometimes">
                             Sometimes
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-8-rarely"
-                               name="question-8"
+                               id="question_8-rarely"
+                               name="question_8"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-8-rarely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_8-rarely">
                             Rarely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-8-never"
-                               name="question-8"
+                               id="question_8-never"
+                               name="question_8"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I have money left over at the end of the month"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-8-never">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_8-never">
                             Never
                         </label>
                     </div>
                 </fieldset>
-                <fieldset class="o-scale" id="question-9">
+                <fieldset class="o-scale" id="question_9">
                     <h3 class="o-scale_header">
                         I am behind with my finances
                     </h3>
@@ -697,70 +716,70 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-9-always"
-                               name="question-9"
+                               id="question_9-always"
+                               name="question_9"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-9-always">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_9-always">
                             Always
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-9-often"
-                               name="question-9"
+                               id="question_9-often"
+                               name="question_9"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-9-often">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_9-often">
                             Often
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-9-sometimes"
-                               name="question-9"
+                               id="question_9-sometimes"
+                               name="question_9"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-9-sometimes">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_9-sometimes">
                             Sometimes
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-9-rarely"
-                               name="question-9"
+                               id="question_9-rarely"
+                               name="question_9"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-9-rarely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_9-rarely">
                             Rarely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-9-never"
-                               name="question-9"
+                               id="question_9-never"
+                               name="question_9"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="I am behind with my finances"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-9-never">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_9-never">
                             Never
                         </label>
                     </div>
                 </fieldset>
-                <fieldset class="o-scale" id="question-10">
+                <fieldset class="o-scale" id="question_10">
                     <h3 class="o-scale_header">
                         My finances control my life
                     </h3>
@@ -768,65 +787,65 @@
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-10-always"
-                               name="question-10"
+                               id="question_10-always"
+                               name="question_10"
                                value="0"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-10-always">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_10-always">
                             Always
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-10-often"
-                               name="question-10"
+                               id="question_10-often"
+                               name="question_10"
                                value="1"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-10-often">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_10-often">
                             Often
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-10-sometimes"
-                               name="question-10"
+                               id="question_10-sometimes"
+                               name="question_10"
                                value="2"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-10-sometimes">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_10-sometimes">
                             Sometimes
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-10-rarely"
-                               name="question-10"
+                               id="question_10-rarely"
+                               name="question_10"
                                value="3"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-10-rarely">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_10-rarely">
                             Rarely
                         </label>
                     </div>
                     <div class="m-form-field m-form-field__radio">
                         <input class="a-radio"
                                type="radio"
-                               id="question-10-never"
-                               name="question-10"
+                               id="question_10-never"
+                               name="question_10"
                                value="4"
                                data-gtm-action="Questionnaire Radio Button Clicked"
                                data-gtm-label="My finances control my life"
-                               data-gtm-category="Page Interaction">
-                        <label class="a-label" for="question-10-never">
+                               data-gtm-category="Financial Well-Being Tool Interaction">
+                        <label class="a-label" for="question_10-never">
                             Never
                         </label>
                     </div>
@@ -836,7 +855,7 @@
         <div class="block u-mb30">
             <h2>About you</h2>
             <div class="question-group">
-                <fieldset class="o-form_fieldset">
+                <fieldset class="o-form_fieldset" id="age">
                     <h3 class="o-scale_header">
                         Select your age group. This changes the scoring calculation.
                     </h3>
@@ -847,7 +866,10 @@
                                        type="radio"
                                        name="age"
                                        id="age-18-61"
-                                       value="18-61">
+                                       value="18-61"
+                                       data-gtm-action="Questionnaire Radio Button Clicked"
+                                       data-gtm-label="Select your age group: 18-61"
+                                       data-gtm-category="Financial Well-Being Tool Interaction">
                                 <label class="a-label" for="age-18-61">
                                     18–61
                                 </label>
@@ -859,7 +881,10 @@
                                        type="radio"
                                        name="age"
                                        id="age-62-plus"
-                                       value="62-plus">
+                                       value="62-plus"
+                                       data-gtm-action="Questionnaire Radio Button Clicked"
+                                       data-gtm-label="Select your age group: 62+"
+                                       data-gtm-category="Financial Well-Being Tool Interaction">
                                 <label class="a-label" for="age-62-plus">
                                     62+
                                 </label>
@@ -867,7 +892,7 @@
                         </li>
                     </ul>
                 </fieldset>
-                <fieldset class="o-form_fieldset">
+                <fieldset class="o-form_fieldset" id="method">
                     <h3 class="o-scale_header">
                         Select how you completed the questionnaire. This changes the scoring calculation.
                     </h3>
@@ -879,6 +904,9 @@
                                        name="method"
                                        id="read-self"
                                        value="read-self"
+                                       data-gtm-action="Questionnaire Radio Button Clicked"
+                                       data-gtm-label="Select how you completed the questionnaire: I read and answered the questions myself"
+                                       data-gtm-category="Financial Well-Being Tool Interaction"
                                        checked>
                                 <label class="a-label" for="read-self">
                                     I read and answered the questions myself
@@ -891,7 +919,10 @@
                                        type="radio"
                                        name="method"
                                        id="read-to-me"
-                                       value="read-to-me">
+                                       value="read-to-me"
+                                       data-gtm-action="Questionnaire Radio Button Clicked"
+                                       data-gtm-label="Select how you completed the questionnaire: I read the questions to someone else and recorded their answers"
+                                       data-gtm-category="Financial Well-Being Tool Interaction">
                                 <label class="a-label" for="read-to-me">
                                     I read the questions to someone else and recorded their answers
                                 </label>
@@ -905,7 +936,14 @@
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
         <div class="o-form_group">
-            <input class="submit-quiz a-btn" id="submit-quiz" type="submit" value="Get my score">
+            <input class="submit-quiz a-btn"
+                   id="submit-quiz"
+                   type="submit"
+                   value="Get my score"
+                   title="Please answer all questions to get your score"
+                   data-gtm-action="Questionnaire Submitted"
+                   data-gtm-label="Get my score"
+                   data-gtm-category="Financial Well-Being Tool Interaction">
         </div>
     </form>
 {%- endblock %}
@@ -925,151 +963,96 @@
 
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="a-heading">Latest blog posts</h2>
+            <h2 class="a-heading">About this questionnaire</h2>
+        </header>
+        <p>
+            CFPB researchers developed the questionnaire and a way to score it,
+            as a tool to help measure your current financial well-being—that is,
+            how well your current money situation is providing you with
+            financial security and freedom of choice, today and for the future.
+        </p>
+        <a class="a-link a-link__jump" href="{{ url('fwb_about') }}">
+            <span class="a-link_text">See more background</span>
+        </a>
+    </div>
+
+    <div class="block">
+        <header class="m-slug-header">
+            <h2 class="a-heading">
+                Latest blog posts
+            </h2>
         </header>
         <div class="m-related-posts_list-container">
+
             <ul class="m-related-posts_list
-                   m-list
-                   m-list__unstyled
-                   m-list__spaced">
+                       m-list
+                       m-list__unstyled
+                       m-list__spaced">
+
                 <li class="m-list_item">
                     <h3 class="h4 u-mb5">
-                        <a class="m-list_link"
-                           href="/about-us/blog/weve-issued-new-rule-arbitration-help-groups-people-take-companies-court/">
-                            We’ve issued a new rule on arbitration to help
-                            groups of people take companies to court
+                        <a href="/about-us/blog/were-working-better-serve-people-through-financial-coaching/"
+                          class="m-list_link">
+                            We’re working to better serve people through financial coaching
                         </a>
                     </h3>
                     <p class="a-date">
                         <span class="datetime">
-                            <time class="datetime_date" datetime="2017-07-10T00:00:00.000000">
-                                JUL 10, 2017
+                            <time class="datetime_date" datetime="2017-08-17T00:00:00.000000">
+                              AUG 17, 2017
                             </time>
                         </span>
                     </p>
                 </li>
                 <li class="m-list_item">
                     <h3 class="h4 u-mb5">
-                        <a class="m-list_link"
-                           href="/about-us/blog/cfpb-proposes-prohibiting-mandatory-arbitration-clauses-deny-groups-consumers-their-day-court/">
-                            CFPB proposes prohibiting mandatory arbitration clauses
-                            that deny groups of consumers their day in court
+                        <a href="/about-us/blog/effective-financial-education-five-principles-and-how-use-them/"
+                          class="m-list_link">
+                            Effective financial education: Five principles and how to use them
                         </a>
                     </h3>
                     <p class="a-date">
                         <span class="datetime">
-                            <time class="datetime_date" datetime="2016-05-05T00:00:00.000000">
-                                MAY 05, 2016
+                            <time class="datetime_date" datetime="2017-06-14T00:00:00.000000">
+                              JUN 14, 2017
                             </time>
                         </span>
                     </p>
                 </li>
+                <li class="m-list_item">
+                    <h3 class="h4 u-mb5">
+                        <a href="/about-us/blog/four-elements-define-personal-financial-well-being/"
+                           class="m-list_link">
+                            Four elements define personal financial well-being
+                        </a>
+                    </h3>
+                    <p class="a-date">
+                        <span class="datetime">
+                            <time class="datetime_date" datetime="2015-01-27T00:00:00.000000">
+                              JAN 27, 2015
+                            </time>
+                        </span>
+                    </p>
+                </li>
+
             </ul>
+
         </div>
     </div>
 
     <div class="block">
         <header class="m-slug-header">
-            <h2 class="a-heading">About this questionnaire</h2>
+            <h2 class="a-heading">Legal disclaimer</h2>
         </header>
         <p>
-            CFPB researchers developed the questionnaire and a way to score it,
-            to measure how well your current money situation is providing you
-            with security and freedom of choice, today and for the future.
+            The content on this page provides general consumer information.
+            It is not legal advice or regulatory guidance.
+            The CFPB updates this information periodically.
+            This information may include links or references
+            to third-party resources or content.
+            We do not endorse the third-party or guarantee
+            the accuracy of this third-party information.
+            There may be other resources that also serve your needs.
         </p>
-        <a class="a-link a-link__jump" href="about/">
-            <span class="a-link_text">See more background</span>
-        </a>
     </div>
 {%- endblock %}
-
-{% block javascript %}
-    {{ super() }}
-
-    <script>
-    /* eslint no-global-assign: "off" */
-    'use strict';
-
-    ( function() {
-
-      var totalQuestions = 12;
-      var quizComplete = false;
-      var questionValues = {};
-      var radioButtons = document.querySelectorAll( '[type="radio"]' );
-      var submitBtn = document.querySelector( '#submit-quiz' );
-
-      function allQuestionsCompleted() {
-        return Object.keys( questionValues ).length === totalQuestions;
-      }
-
-      function enableSubmit() {
-        submitBtn.title = 'Get your score';
-        var className = 'a-btn__disabled';
-
-        if ( submitBtn.classList ) {
-          submitBtn.classList.remove( className );
-        } else {
-          // Support browsers who don't have the classList API.
-          submitBtn.className = submitBtn.className
-                                         .replace( new RegExp( '(^|\\b)' + className.split( ' ' )
-                                                  .join( '|' ) + '(\\b|$)', 'gi' ), ' ' );
-        }
-      }
-
-      function handleRadio( input ) {
-        if ( input.name && input.checked ) {
-          questionValues[input.name] = input.value;
-        }
-
-        quizComplete = allQuestionsCompleted();
-
-        if ( quizComplete ) {
-          enableSubmit();
-        }
-      }
-
-      function sendEvent( action, label, category ) {
-        var eventData = Analytics.getDataLayerOptions( action, label, category );
-        Analytics.sendEvent( eventData );
-      }
-
-      submitBtn.addEventListener( 'click', function( event ) {
-        // Confirm that all questions are answered
-        if ( !quizComplete ) {
-          // If not, block the form submission action
-          return event.preventDefault();
-        }
-        // Otherise, allow the form submission to go through as normal
-        return null;
-      } );
-
-      [].forEach.call( radioButtons, function( el ) {
-        el.addEventListener( 'click', function( event ) {
-          var input = event.target;
-          handleRadio( input );
-
-          var action = input.getAttribute( 'data-gtm-action' );
-          var label = input.getAttribute( 'data-gtm-label' );
-          var category = input.getAttribute( 'data-gtm-category' );
-
-          if ( Analytics.tagManagerIsLoaded ) {
-            sendEvent( action, label, category );
-          } else {
-            Analytics.addEventListener( 'gtmLoaded', sendEvent );
-          }
-        } );
-      } );
-
-      // Disable submit button initially
-      submitBtn.classList.add( 'a-btn__disabled' );
-      submitBtn.title = 'Please answer all questions to get your score';
-
-      // Look at all radios on coming back to the page or on reload
-      radioButtons.forEach( function( input ) {
-        handleRadio( input );
-      } );
-
-    } )();
-
-    </script>
-{% endblock %}

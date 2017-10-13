@@ -1,36 +1,11 @@
 from __future__ import unicode_literals
 
-import json
 import logging
 
 from data_research.models import MortgageMetaData
-from data_research.mortgage_utilities.s3_utils import bake_json_to_s3
 from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
 
 logger = logging.getLogger(__name__)
-
-"""
-# FIPS entries after loading:
-
-# FIPS.county_fips
-{'25003':
-   {'name': 'Berkshire County',
-    'state': 'MA'}
-}
-
-# FIPS.msa_fips
-{'38340':
-   {'fips': '38340',
-    'name': 'Pittsfield, MA',
-    'county_list': ['25003']}
-
-# FIPS.state_fips
-{'09':
-   {'AP': 'Conn.',
-    'fips': '09',
-    'name': 'Connecticut',
-    'abbr': 'CT'}
-"""
 
 
 def update_state_to_geo_meta(geo):
@@ -158,14 +133,8 @@ def update_state_to_geo_meta(geo):
                  'name': non_fips_name,
                  'state_name': state_name,
                  'abbr': state_abbr})
-    json_out = json.dumps(setup)
-    # dump to s3 and save to database
+    # save to database
     slug = geo_dict[geo]['output_slug']
-    bake_json_to_s3(
-        slug,
-        json_out,
-        sub_bucket='data/mortgage-performance/meta')
-    logger.info("Saved '{}.json' to S3".format(slug))
     meta_obj, cr = MortgageMetaData.objects.get_or_create(
         name=slug)
     meta_obj.json_value = setup

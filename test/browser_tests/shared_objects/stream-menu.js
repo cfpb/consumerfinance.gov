@@ -1,3 +1,5 @@
+/* eslint max-len: "off" */
+
 'use strict';
 
 const _streamMenu = element.all( by.css( '.stream-menu' ) ).first();
@@ -13,7 +15,7 @@ const content = {
   emailSignupBtn:       _getContentElement( '.action-add-block-email_signup' ),
   expandableBtn:        _getContentElement( '.action-add-block-expandable' ),
   expandableGroupBtn:   _getContentElement( '.action-add-block-expandable_group' ),
-  feedbackBtn:          _getContentElement( '. action-add-block-feedback' ),
+  feedbackBtn:          _getContentElement( '.action-add-block-feedback' ),
   fullWidthTextBtn:     _getContentElement( '.action-add-block-full_width_text' ),
   mediaBtn:             _getContentElement( '.action-add-block-media' ),
   quoteBtn:             _getContentElement( '.action-add-block-quote' ),

@@ -98,7 +98,7 @@ class AbstractFilterPage(CFGOVPage):
 
 class LearnPage(AbstractFilterPage):
     content = StreamField([
-        ('info_unit_group', organisms.InfoUnitGroup()),
+        ('info_unit_group_25_75_only', organisms.InfoUnitGroup2575Only()),
         ('image_text_25_75_group', organisms.ImageText2575Group()),
         ('well', organisms.Well()),
         ('full_width_text', organisms.FullWidthText()),
@@ -278,6 +278,9 @@ class EventPage(AbstractFilterPage):
     ])
 
     template = 'events/event.html'
+
+    def add_page_js(self, js):
+        js['template'] = ['video-player.js']
 
     def location_image_url(self, scale='2', size='276x155', zoom='12'):
         center = 'Washington, DC'

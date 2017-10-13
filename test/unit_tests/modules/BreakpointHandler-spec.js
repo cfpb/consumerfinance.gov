@@ -24,7 +24,7 @@ describe( 'BreakpointHandler', () => {
   jsdom( {
     created: function( error, win ) {
       if ( error ) {
-        console.log( error );
+        console.log( error ); // eslint-disable-line  no-console
       }
 
       const resizeEvent = win.document.createEvent( 'Event' );
@@ -85,7 +85,7 @@ describe( 'BreakpointHandler', () => {
   } );
 
   it( 'should correctly create BreakpointHandler instances', () => {
-    let breakpointHandler = new BreakpointHandler( args );
+    const breakpointHandler = new BreakpointHandler( args );
     expect( breakpointHandler.watchWindowResize )
       .to.be.an.instanceof( Function );
     expect( breakpointHandler.handleViewportChange )
