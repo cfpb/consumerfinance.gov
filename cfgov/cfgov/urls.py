@@ -25,6 +25,8 @@ from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorView, HousingCounselorPDFView
 )
+from selfregistration.views import CompanySignup
+
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
 from transition_utilities.conditional_urls import include_if_app_enabled
@@ -248,8 +250,6 @@ urlpatterns = [
             'paying_for_college', 'paying_for_college.config.urls')),
     url(r'^credit-cards/agreements/',
         include('agreements.urls')),
-    url(r'^selfregs/',
-        include('selfregistration.urls')),
     url(r'^hud-api-replace/', include_if_app_enabled(
         'hud_api_replace',
         'hud_api_replace.urls',
@@ -315,6 +315,9 @@ urlpatterns = [
         name='cckbyo'),
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
+
+    # self-registration
+    url(r'^company-signup/', CompanySignup.as_view(), name='company-signup'),
 
     # data-research-api
     url(r'^data-research/mortgages/api/v1/',
@@ -434,6 +437,10 @@ if settings.ALLOW_ADMIN_URL:
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
 
+
+        # Export company registrations
+        url(r'^selfregs/', include('selfregistration.urls')),
+
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([
             url(r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',  # noqa: E501
@@ -454,9 +461,6 @@ if settings.ALLOW_ADMIN_URL:
 
     ]
 
-    if 'selfregistration' in settings.INSTALLED_APPS:
-        patterns.append(url(r'^selfregs/', include('selfregistration.urls')))
-
     if 'csp.middleware.CSPMiddleware' in settings.MIDDLEWARE_CLASSES:
         # allow browsers to push CSP error reports back to the server
         patterns.append(url(r'^csp-report/',
@@ -464,11 +468,6 @@ if settings.ALLOW_ADMIN_URL:
 
     urlpatterns = patterns + urlpatterns
 
-
-if 'selfregistration' in settings.INSTALLED_APPS:
-    from selfregistration.views import CompanySignup
-    pattern = url(r'^company-signup/', CompanySignup.as_view())
-    urlpatterns.append(pattern)
 
 if settings.DEBUG:
     urlpatterns.append(
@@ -514,6 +513,7 @@ def handle_error(code, request):
 
         return HttpResponse("This request could not be processed, "
                             "HTTP Error %s." % str(code), status=code)
+
 
 handler404 = partial(handle_error, 404)
 handler500 = partial(handle_error, 500)
