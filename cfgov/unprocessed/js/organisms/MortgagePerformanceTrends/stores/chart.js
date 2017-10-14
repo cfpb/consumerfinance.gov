@@ -52,6 +52,15 @@ const isLoadingCounties = action => {
   }
 };
 
+const isLoadingStates = action => {
+  switch ( action.type ) {
+    case 'REQUEST_STATES':
+      return true;
+    default:
+      return false;
+  }
+};
+
 const isLoading = action => {
   switch ( action.type ) {
     case 'UPDATE_CHART':
@@ -152,6 +161,7 @@ class LineChartStore extends Store {
       isLoadingMetros: isLoadingMetros( action ),
       isLoadingNonMetros: isLoadingNonMetros( action ),
       isLoadingCounties: isLoadingCounties( action ),
+      isLoadingStates: isLoadingStates( action ),
       includeComparison: includeComparison( state.includeComparison, action ),
       counties: updateCounties( state.counties, action ),
       metros: updateMetros( state.metros, action ),

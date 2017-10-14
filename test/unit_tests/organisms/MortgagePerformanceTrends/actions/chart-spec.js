@@ -61,6 +61,24 @@ const actions = require(
 
 describe( 'Mortgage Performance chart action creators', () => {
 
+  it( 'should dispatch actions to fetch metro states', () => {
+    const dispatch = sinon.spy();
+    actions.fetchMetroStates( 'AL', true )( dispatch );
+    expect( dispatch.callCount ).to.equal( 2 );
+  } );
+
+  it( 'should dispatch actions to fetch non-metro states', () => {
+    const dispatch = sinon.spy();
+    actions.fetchNonMetroStates( 'WY', true )( dispatch );
+    expect( dispatch.callCount ).to.equal( 2 );
+  } );
+
+  it( 'should dispatch actions to fetch county states', () => {
+    const dispatch = sinon.spy();
+    actions.fetchCountyStates( 'CA', true )( dispatch );
+    expect( dispatch.callCount ).to.equal( 2 );
+  } );
+
   it( 'should dispatch actions to fetch metros', () => {
     const dispatch = sinon.spy();
     actions.fetchMetros( 'AL', true )( dispatch );

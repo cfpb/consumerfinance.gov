@@ -48,7 +48,7 @@
             </fieldset>
             <fieldset class="content-l_col content-l_col-1-2">
                 <div class="m-form-field m-form-field__select mp-line-chart-select-container u-mb30" id="mp-line-chart-state-container" style="display:none">
-                    <label class="a-label" for="mp-line-chart-state"><h4>Select state</h4></label>
+                    <label class="a-label" for="mp-line-chart-state"><h4 id="mp-state-dropdown-title">Select state</h4></label>
                     <div class="a-select">
                         <select id="mp-line-chart-state">
                             <option value="01" data-abbr="AL">Alabama</option>
@@ -104,10 +104,13 @@
                             <option value="56" data-abbr="WY">Wyoming</option>
                         </select>
                     </div>
-                    <p class="m-field-helper-text u-mt15" id="mp-line-chart-state-metro-helper-text" style="display:none">
+                    <p class="m-field-helper-text u-mt15" id="mp-state-metro-helper-text" style="display:none">
                       Some metro areas cover multiple states. States are only
                       listed if they have at least one metro area with
                       sufficient data.
+                    </p>
+                    <p class="m-field-helper-text u-mt15" id="mp-state-non-metro-helper-text" style="display:none">
+                      States are only listed if their non-metro area has sufficient data.
                     </p>
                 </div>
                 <div class="m-form-field m-form-field__select mp-line-chart-select-container" id="mp-line-chart-metro-container" style="display:none">
@@ -122,19 +125,6 @@
                       Metro areas with insufficient data not shown. <a
                       href="/data-research/mortgage-performance-trends/about-the-data/#anchor_why-some-counties-are-unavailable"
                       target="_blank" rel="noopener">Learn why.</a>
-                    </p>
-                </div>
-                <div class="m-form-field m-form-field__select mp-line-chart-select-container" id="mp-line-chart-non-metro-container" style="display:none">
-                    <label class="a-label" for="mp-line-chart-non-metro"><h4>Select non-metro area by state</h4></label>
-                    <div class="a-select">
-                        <select id="mp-line-chart-non-metro">
-                          <option value="">
-                          </option>
-                        </select>
-                    </div>
-                    <p class="m-field-helper-text u-mt15">
-                      States are only listed if their non-metro area has
-                      sufficient data.
                     </p>
                 </div>
                 <div class="m-form-field m-form-field__select mp-line-chart-select-container u-mb30" id="mp-line-chart-county-container" style="display:none">
