@@ -160,13 +160,27 @@ describe( 'Mortgage Performance line chart store', () => {
   } );
 
   it( 'should properly reduce u.s. states', () => {
-    const action = {
+    let action = {
       type: 'SET_STATES',
       states: { AL: 'Alabama' }
     };
     store.dispatch( action );
     expect( store.getState().states )
       .to.deep.equal( { AL: 'Alabama' } );
+    action = {
+      type: 'FETCH_STATES',
+      states: { CA: 'California' }
+    };
+    store.dispatch( action );
+    expect( store.getState().states )
+      .to.deep.equal( { AL: 'Alabama' } );
+    action = {
+      type: 'SET_STATES',
+      states: { CA: 'California' }
+    };
+    store.dispatch( action );
+    expect( store.getState().states )
+      .to.deep.equal( { CA: 'California' } );
   } );
 
   it( 'should properly reduce national comparison', () => {

@@ -4,6 +4,7 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const mockery = require( 'mockery' );
+const sinon = require( 'sinon' );
 const expect = chai.expect;
 
 // Disable the AJAX library used by the action creator
@@ -60,6 +61,12 @@ describe( 'Mortgage Performance utilities', () => {
       selected: false
     } );
     expect( option ).to.deep.equal( { value: 'AL', text: 'Alabama' } );
+  } );
+
+  it( 'should get county data', () => {
+    const cb = sinon.spy();
+    utils.getCountyData( cb );
+    expect( cb.called ).to.be.false;
   } );
 
   it( 'should be able to calculate zoom levels', () => {

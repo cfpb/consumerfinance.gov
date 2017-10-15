@@ -88,7 +88,6 @@ var utils = {
     }
     return ajax( { url: COUNTIES_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
-      counties = data;
       cb( data );
     } );
   },
@@ -106,7 +105,6 @@ var utils = {
     }
     return ajax( { url: METROS_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
-      metros = data;
       cb( data );
     } );
   },
@@ -124,7 +122,6 @@ var utils = {
     }
     return ajax( { url: NON_METROS_URL }, function( resp ) {
       var data = JSON.parse( resp.data );
-      nonMetros = data;
       cb( data );
     } );
   },

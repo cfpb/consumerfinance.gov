@@ -23,6 +23,11 @@ mockery.registerMock( '../utils', {
             valid: true,
             fips: '12345',
             name: 'Acme metro'
+          },
+          {
+            valid: true,
+            fips: '12-non',
+            name: 'Acme non-metro'
           }
         ]
       }
@@ -34,7 +39,8 @@ mockery.registerMock( '../utils', {
       {
         valid: true,
         fips: '12345',
-        name: 'Acme metro'
+        name: 'Acme metro',
+        abbr: 'AL'
       }
     ];
     cb( nonMetros );
@@ -62,8 +68,11 @@ const actions = require(
 describe( 'Mortgage Performance chart action creators', () => {
 
   it( 'should dispatch actions to fetch metro states', () => {
-    const dispatch = sinon.spy();
+    let dispatch = sinon.spy();
     actions.fetchMetroStates( 'AL', true )( dispatch );
+    expect( dispatch.callCount ).to.equal( 2 );
+    dispatch = sinon.spy();
+    actions.fetchMetroStates( 'CA', true )( dispatch );
     expect( dispatch.callCount ).to.equal( 2 );
   } );
 
@@ -83,6 +92,7 @@ describe( 'Mortgage Performance chart action creators', () => {
     const dispatch = sinon.spy();
     actions.fetchMetros( 'AL', true )( dispatch );
     expect( dispatch.callCount ).to.equal( 4 );
+    expect( actions.fetchMetros( 'AK', true ) ).to.throw();
   } );
 
   it( 'should fail on bad metro state abbr', () => {
