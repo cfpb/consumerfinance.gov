@@ -47,10 +47,6 @@ defineSupportCode( function( { Then, When, Before } ) {
       globalEyebrowLG:     element( by.css( GLOBAL_EYEBROW_LG_SEL ) ),
       globalEyebrowSM:     element( by.css( GLOBAL_EYEBROW_SM_SEL ) )
     };
-
-    const script = 'document.body.className = "u-move-transition__disabled";';
-
-    browser.executeScript( script );
   } );
 
   Then( /the header organism (should|shouldn't) display the (.*)/,

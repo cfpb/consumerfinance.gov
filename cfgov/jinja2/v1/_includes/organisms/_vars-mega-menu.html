@@ -202,26 +202,52 @@
 
 {# Data & Research menu items #}
 
-{% set data_research_group_one = {
-    'nav_items': [
-        {'text': 'Research & Reports', 'url': '/data-research/research-reports/'},
-        {'text': 'CFPB Research Conference', 'url': '/data-research/cfpb-research-conference/'},
-        {'text': 'CFPB Researchers', 'url': '/data-research/cfpb-researchers/'},
-    ]
-} %}
-{% set data_research_group_two = {
-    'nav_items': [
-        {'text': 'Consumer Complaint Database', 'url': '/data-research/consumer-complaints/'},
-        {'text': 'Mortgage Database (HMDA)', 'url': '/data-research/mortgage-data-hmda/'},
-    ]
-} %}
-{% set data_research_group_three = {
-    'nav_items': [
-        {'text': 'Consumer Credit Trends', 'url': '/data-research/consumer-credit-trends/'},
-        {'text': 'Credit Card Surveys & Agreements', 'url': '/data-research/credit-card-data/'},
-        {'text': 'Financial Well-Being Survey', 'url': '/data-research/financial-well-being-survey-data/'},
-    ]
-} %}
+{% if flag_disabled('MORTGAGE_PERFORMANCE_RELEASE', request) %}
+  {% set data_research_group_one = {
+      'nav_items': [
+          {'text': 'Research & Reports', 'url': '/data-research/research-reports/'},
+          {'text': 'CFPB Research Conference', 'url': '/data-research/cfpb-research-conference/'},
+          {'text': 'CFPB Researchers', 'url': '/data-research/cfpb-researchers/'},
+      ]
+  } %}
+  {% set data_research_group_two = {
+      'nav_items': [
+          {'text': 'Consumer Complaint Database', 'url': '/data-research/consumer-complaints/'},
+          {'text': 'Mortgage Database (HMDA)', 'url': '/data-research/mortgage-data-hmda/'},
+      ]
+  } %}
+  {% set data_research_group_three = {
+      'nav_items': [
+          {'text': 'Consumer Credit Trends', 'url': '/data-research/consumer-credit-trends/'},
+          {'text': 'Credit Card Surveys & Agreements', 'url': '/data-research/credit-card-data/'},
+          {'text': 'Financial Well-Being Survey', 'url': '/data-research/financial-well-being-survey-data/'},
+      ]
+  } %}
+{% endif %}
+
+{% if flag_enabled('MORTGAGE_PERFORMANCE_RELEASE', request) %}
+  {% set data_research_group_one = {
+      'nav_items': [
+          {'text': 'Research & Reports', 'url': '/data-research/research-reports/'},
+          {'text': 'Consumer Complaint Database', 'url': '/data-research/consumer-complaints/'},
+          {'text': 'Mortgage Database (HMDA)', 'url': '/data-research/mortgage-data-hmda/'},
+      ]
+  } %}
+  {% set data_research_group_two = {
+      'nav_items': [
+          {'text': 'Consumer Credit Trends', 'url': '/data-research/consumer-credit-trends/'},
+          {'text': 'Mortgage Performance Trends', 'url': '/data-research/mortgage-performance-trends/'},
+          {'text': 'Financial Well-Being Survey', 'url': '/data-research/financial-well-being-survey-data/'},
+      ]
+  } %}
+  {% set data_research_group_three = {
+      'nav_items': [
+          {'text': 'Credit Card Surveys & Agreements', 'url': '/data-research/credit-card-data/'},
+          {'text': 'CFPB Research Conference', 'url': '/data-research/cfpb-research-conference/'},
+          {'text': 'CFPB Researchers', 'url': '/data-research/cfpb-researchers/'},
+      ]
+  } %}
+{% endif %}
 
 {% set data_research = {
     'text': 'Data & Research',

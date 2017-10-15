@@ -117,11 +117,6 @@ Scenario: User logs in
 
 ## Sauce Connect - send tests to the cloud
 
-!!! danger
-    The instruction for automatically
-    running Sauce Connect from gulp are not working.
-    See https://github.com/cfpb/cfgov-refresh/issues/2324
-
 Sauce Labs can be used to run tests remotely in the cloud.
 
 1. Log into [http://saucelabs.com/account](http://saucelabs.com/account).
@@ -146,16 +141,12 @@ Sauce Labs can be used to run tests remotely in the cloud.
 
 5. Update and uncomment the `SAUCE_USERNAME`, `SAUCE_ACCESS_KEY`,
    and `SAUCE_SELENIUM_URL` values in your `.env` file.
-   The access key can be found in lower-left on the Sauce Labs
-   [account profile page](https://saucelabs.com/account/profile).
+   The access key can be found on the Sauce Labs
+   [user settings page](https://saucelabs.com/beta/user-settings).
 
 6. Reload the settings with `cd .. && cd cfgov-refresh`. Type `y` if prompted.
 
-7. Run the tests with `gulp test:acceptance`.
-
-    !!! Note:
-        If you want to temporarily disable testing on Sauce Labs,
-        run the command as: `gulp test:acceptance --sauce=false`.
+7. Run the tests with `gulp test:acceptance --sauce`.
 
 8. Monitor progress of the tests
    on the [Sauce Labs dashboard](https://saucelabs.com/dashboard) Automated Tests tab.
@@ -212,7 +203,7 @@ The audit will run against
 ## Django and Python unit tests
 
 To run the the full suite of Python 2.7 unit tests using Tox, cd to the project
-root, make sure the `TOXENV` variable is set in your `.env` file and then run
+root, make sure the `TOXENV` variable is set in your `.env` file and then run:
 
 ```
 tox
