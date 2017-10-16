@@ -8,7 +8,7 @@ const sinon = require( 'sinon' );
 const expect = chai.expect;
 
 // Disable the AJAX library used by the action creator
-const noop = () => ( {} );
+const noop = () => ( { mock: 'data' } );
 mockery.enable( {
   warnOnReplace: false,
   warnOnUnregistered: false
@@ -65,8 +65,12 @@ describe( 'Mortgage Performance utilities', () => {
 
   it( 'should get county data', () => {
     const cb = sinon.spy();
-    utils.getCountyData( cb );
-    expect( cb.called ).to.be.false;
+    expect( utils.getCountyData( cb ) ).to.deep.equal( { mock: 'data' } );
+  } );
+
+  it( 'should get state data', () => {
+    const cb = sinon.spy();
+    expect( utils.getStateData( cb ) ).to.deep.equal( { mock: 'data' } );
   } );
 
   it( 'should be able to calculate zoom levels', () => {

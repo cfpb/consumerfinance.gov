@@ -64,9 +64,7 @@ MortgagePerformanceLineChart.prototype.onChange = function( event ) {
       // Reset the metro, non-metro and county dropdowns to the first item if we're no longer using it
       this.$county.selectedIndex = 0;
       this.$metro.selectedIndex = 0;
-      geoId = this.$state.value;
-      geoName = this.$state.options[this.$state.selectedIndex].text;
-      action = actions.setGeo( geoId, geoName, 'state' );
+      action = actions.fetchStates( abbr );
       break;
     case 'mp-line-chart_geo-metro':
       this.$metro.selectedIndex = 0;

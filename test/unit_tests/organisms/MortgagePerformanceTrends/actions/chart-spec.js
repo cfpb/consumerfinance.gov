@@ -58,6 +58,23 @@ mockery.registerMock( '../utils', {
       }
     };
     cb( counties );
+  },
+  getStateData: cb => {
+    const counties = {
+      10: {
+        AP: 'Del.',
+        fips: '10',
+        name: 'Delaware',
+        abbr: 'DE'
+      },
+      11: {
+        AP: 'D.C.',
+        fips: '11',
+        name: 'District of Columbia',
+        abbr: 'DC'
+      }
+    };
+    cb( counties );
   }
 } );
 
@@ -86,6 +103,12 @@ describe( 'Mortgage Performance chart action creators', () => {
     const dispatch = sinon.spy();
     actions.fetchCountyStates( 'CA', true )( dispatch );
     expect( dispatch.callCount ).to.equal( 2 );
+  } );
+
+  it( 'should dispatch actions to fetch states', () => {
+    const dispatch = sinon.spy();
+    actions.fetchStates( 'CA', true )( dispatch );
+    expect( dispatch.callCount ).to.equal( 3 );
   } );
 
   it( 'should dispatch actions to fetch metros', () => {

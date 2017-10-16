@@ -111,6 +111,34 @@ chartActionCreators.fetchCountyStates = countyState => dispatch =>
   } );
 
 /**
+ * fetchStates - Creates async action to fetch list of valid states.
+ *
+ * @returns {Function} Thunk called with valid states.
+ */
+chartActionCreators.fetchStates = ( selectedState, includeComparison ) => dispatch =>
+  utils.getStateData( states => {
+    states = Object.keys( states ).map( fips => {
+      const state = {
+        abbr: states[fips].abbr,
+        fips: fips,
+        name: states[fips].name,
+        text: states[fips].name
+      };
+      if ( selectedState === states[fips].abbr ) {
+        selectedState = state;
+        state.selected = true;
+      }
+      return state;
+    } );
+    // Alphabetical order
+    states = states.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
+    dispatch( chartActionCreators.setStates( states ) );
+    dispatch( chartActionCreators.setGeo( selectedState.fips, selectedState.name, 'state' ) );
+    dispatch( chartActionCreators.updateChart( selectedState.fips, selectedState.name, 'state', includeComparison ) );
+    return states;
+  } );
+
+/**
  * setStates - New U.S. states.
  *
  * @param {Array} states List of U.S. states.
