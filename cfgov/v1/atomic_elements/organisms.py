@@ -70,12 +70,6 @@ class InfoUnitGroup(blocks.StructBlock):
         help_text='Check this to add a border to top of info unit group.'
     )
 
-    has_bottom_border = blocks.BooleanBlock(
-        default=False,
-        required=False,
-        help_text='Check this to add a border to bottom of info unit group.'
-    )
-
     lines_between_items = blocks.BooleanBlock(
         default=True,
         required=False,
