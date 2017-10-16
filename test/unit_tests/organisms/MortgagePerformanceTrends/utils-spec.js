@@ -63,6 +63,16 @@ describe( 'Mortgage Performance utilities', () => {
     expect( option ).to.deep.equal( { value: 'AL', text: 'Alabama' } );
   } );
 
+  it( 'should get metro data', () => {
+    const cb = sinon.spy();
+    expect( utils.getMetroData( cb ) ).to.deep.equal( { mock: 'data' } );
+  } );
+
+  it( 'should get non-metro data', () => {
+    const cb = sinon.spy();
+    expect( utils.getNonMetroData( cb ) ).to.deep.equal( { mock: 'data' } );
+  } );
+
   it( 'should get county data', () => {
     const cb = sinon.spy();
     expect( utils.getCountyData( cb ) ).to.deep.equal( { mock: 'data' } );

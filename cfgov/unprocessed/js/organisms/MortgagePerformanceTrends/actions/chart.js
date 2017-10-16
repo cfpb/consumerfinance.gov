@@ -113,6 +113,9 @@ chartActionCreators.fetchCountyStates = countyState => dispatch =>
 /**
  * fetchStates - Creates async action to fetch list of valid states.
  *
+ * @param {String} selectedState Two-letter U.S. state abbreviation.
+ * @param {Boolean} includeComparison Include national comparison?
+ *
  * @returns {Function} Thunk called with valid states.
  */
 chartActionCreators.fetchStates = ( selectedState, includeComparison ) => dispatch =>
