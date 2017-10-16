@@ -214,9 +214,34 @@ function stylesNemoIE() {
     } ) );
 }
 
+/**
+ * Process Owning a Home CSS.
+ * @returns {PassThrough} A source stream.
+ */
+function stylesOAH() {
+  return gulp.src( configStyles.cwd + '/apps/owning-a-home/main.less' )
+    .pipe( gulpSourcemaps.init() )
+    .pipe( gulpLess( configStyles.settings ) )
+    .on( 'error', handleErrors )
+    .pipe( gulpAutoprefixer( {
+      browsers: environment.getSupportedBrowserList( 'css' )
+    } ) )
+    .pipe( gulpBless( { cacheBuster: false, suffix: '.part' } ) )
+    .pipe( gulpCleanCss( {
+      compatibility: 'ie9',
+      inline: [ 'none' ]
+    } ) )
+    .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
+    .pipe( gulp.dest( configStyles.dest + '/owning-a-home/' ) )
+    .pipe( browserSync.reload( {
+      stream: true
+    } ) );
+}
+
 gulp.task( 'styles:modern', stylesModern );
 gulp.task( 'styles:stylesIE8', stylesIE8 );
 gulp.task( 'styles:stylesIE9', stylesIE9 );
+gulp.task( 'styles:stylesOAH', stylesOAH );
 gulp.task( 'styles:ondemand', stylesOnDemand );
 gulp.task( 'styles:featureFlags', stylesFeatureFlags );
 gulp.task( 'styles:knowledgebase', stylesKnowledgebaseProd );
@@ -232,6 +257,7 @@ gulp.task( 'styles:ie', [ 'styles:stylesIE8', 'styles:stylesIE9' ] );
 gulp.task( 'styles', [
   'styles:modern',
   'styles:ie',
+  'styles:stylesOAH',
   'styles:ondemand',
   'styles:featureFlags',
   'styles:knowledgebase',

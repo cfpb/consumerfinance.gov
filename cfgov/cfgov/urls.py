@@ -78,7 +78,9 @@ urlpatterns = [
     url(r'^owning-a-home/mortgage-closing/',
         include(oah.urls_for_prefix('mortgage-closing'))),
     url(r'^owning-a-home/mortgage-estimate/',
-        include(oah.urls_for_prefix('mortgage-estimate'))),
+        TemplateView.as_view(
+        template_name='owning-a-home/mortgage-estimate/index.html'),
+        name='morgage-estimate'),
 
     url(r'^owning-a-home/process/',
         include(oah.urls_for_prefix('process/prepare/'))),

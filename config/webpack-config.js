@@ -12,8 +12,10 @@ const scriptsManifest = require( '../gulp/utils/scripts-manifest' );
 const webpack = require( 'webpack' );
 const UglifyWebpackPlugin = require( 'uglifyjs-webpack-plugin' );
 
+
 // Constants.
 const JS_ROUTES_PATH = '/js/routes';
+const OAH_COMMON_BUNDLE_ROUTE = '/js/routes/owning-a-home/';
 const COMMON_BUNDLE_NAME = 'common.js';
 
 // Commmon webpack 'module' option used in each configuration.
@@ -132,9 +134,35 @@ const spanishConf = {
   ]
 };
 
+const owningAHomeConf = {
+  cache: true,
+  context: path.join( __dirname, '/../',
+    paths.unprocessed, OAH_COMMON_BUNDLE_ROUTE
+  ),
+  entry: scriptsManifest.getDirectoryMap(
+    paths.unprocessed + OAH_COMMON_BUNDLE_ROUTE
+  ),
+  module: COMMON_MODULE_CONFIG,
+  output: {
+    path: path.join( __dirname, 'js' ),
+    filename: '[name]',
+    jsonpFunction: 'OAH'
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin( {
+      name: COMMON_BUNDLE_NAME
+    } ),
+    new webpack.optimize.UglifyJsPlugin( {
+      compress: {
+        warnings: false
+      }
+    } ) ]
+};
+
 module.exports = {
   onDemandHeaderRawConf: onDemandHeaderRawConf,
   onDemandConf:          onDemandConf,
+  owningAHomeConf:       owningAHomeConf,
   ieConf:                ieConf,
   modernConf:            modernConf,
   externalConf:          externalConf,
