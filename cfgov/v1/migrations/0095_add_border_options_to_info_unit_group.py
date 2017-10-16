@@ -16,7 +16,7 @@ import v1.atomic_elements.organisms
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('v1', '0093_add_intro_fields_to_mortgage_charts'),
+        ('v1', '0094_add_snippet_list_col_width'),
     ]
 
     operations = [
