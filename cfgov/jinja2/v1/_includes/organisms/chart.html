@@ -20,6 +20,9 @@
   <div class="m-chart-image cfpb-chart"
        {% if value.title %}data-chart-title="{{ value.title }}"{% endif %}
        {% if value.chart_type %}data-chart-type="{{ value.chart_type }}"{% endif %}
+       {% if value.y_axis_label %}
+            data-chart-x-axis-label="{{ value.y_axis_label }}"
+       {% endif %}
        {% if value.metadata %}data-chart-metadata="{{ value.metadata }}"{% endif %}
        {% if value.data_source %}data-chart-source="{{ value.data_source }}"{% endif %}
        {% if value.description %}data-chart-description="{{ value.description }}"{% endif %}

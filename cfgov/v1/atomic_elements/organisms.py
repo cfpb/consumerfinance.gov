@@ -866,6 +866,9 @@ class ChartBlock(blocks.StructBlock):
         required=False,
         help_text='Text to display as a footnote. For example, '
                   '"Data from the last six months are not final."')
+    y_axis_label = blocks.CharBlock(
+        required=False,
+        help_text='Optional y-axis label')
 
     class Meta:
         label = 'Chart Block'
