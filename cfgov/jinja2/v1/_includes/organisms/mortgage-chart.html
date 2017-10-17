@@ -14,6 +14,7 @@
 {% set county_meta = csv_meta['County'] %}
 {% set metro_meta = csv_meta['MetroArea'] %}
 {% set state_meta = csv_meta['State'] %}
+{% if time_frame == '30-89' %} {% set time_frame_styled = '30&ndash;89'%} {% else %} {% set time_frame_styled = time_frame %}{% endif %}
 
 <div class="o-full-width-text-group" id="mp-line-chart-container" data-chart-time-span="{{ time_frame }}" data-chart-start-date="{{ sampling_dates|first }}" data-chart-end-date="{{ sampling_dates|last }}">
     <div class="m-full-width-text">
@@ -150,9 +151,9 @@
                 </div>
             </fieldset>
         </form>
-        <h3 id="mp-line-chart-title">Percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
+        <h3 id="mp-line-chart-title">Percentage of mortgages {{ time_frame_styled }} {% if time_frame == '90' %} or more {% endif %} days delinquent:<br/>
             <span id="mp-line-chart-title-status">
-                <strong><span id="mp-line-chart-title-status-geo">national average</span></strong><span id="mp-line-chart-title-status-comparison"> versus <strong>national average</strong></span></span>, {{ from_month_formatted|safe }}-{{ thru_month_formatted|safe }}
+                <strong><span id="mp-line-chart-title-status-geo">national average</span></strong><span id="mp-line-chart-title-status-comparison"> versus <strong>national average</strong></span></span>, {{ from_month_formatted|safe }}&ndash;{{ thru_month_formatted|safe }}
         </h2>
     </div>
     <div class="cfpb-chart" data-chart-ignore="true" data-chart-color="blue" data-chart-type="line-comparison" id="mp-line-chart">
