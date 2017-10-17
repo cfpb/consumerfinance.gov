@@ -16,9 +16,13 @@ HEADINGS = [
     'ShortAnswer',
     'Answer',
     'URL',
+    'Live',
+    'Redirect',
     'SpanishQuestion',
     'SpanishAnswer',
     'SpanishURL',
+    'SpanishLive',
+    'SpanishRedirect',
     'Topic',
     'SubCategories',
     'Audiences',
@@ -43,16 +47,22 @@ def assemble_output():
             answer.snippet)
         output['Answer'] = clean_and_strip(
             answer.answer)
-        # output['SpanishAnswer'] = clean_and_strip(
-        #     answer.answer_es)
-        output['URL'] = answer.english_page.url_path.replace(
-            '/cfgov', '') if answer.english_page else ''
+
+        if answer.english_page:
+            output['URL'] = answer.english_page.url_path.replace(
+                '/cfgov', '')
+            output['Live'] = answer.english_page.live
+            output['Redirect'] = answer.english_page.redirect_to_id
         output['SpanishQuestion'] = answer.question_es.replace('\x81', '')
         output['SpanishAnswer'] = clean_and_strip(
             answer.answer_es).replace('\x81', '')
-        output['SpanishURL'] = (
-            answer.spanish_page.url_path.replace(
-                '/cfgov', '') if answer.spanish_page else '')
+
+        if answer.spanish_page:
+            output['SpanishURL'] = answer.spanish_page.url_path.replace(
+                '/cfgov', '')
+            output['SpanishLive'] = answer.spanish_page.live
+            output['SpanishRedirect'] = answer.spanish_page.redirect_to_id
+
         output['Topic'] = (answer.category.first().name
                            if answer.category.all() else '')
         output['SubCategories'] = " | ".join(
