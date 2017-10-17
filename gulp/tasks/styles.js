@@ -232,7 +232,7 @@ function stylesOAH() {
       inline: [ 'none' ]
     } ) )
     .pipe( gulpHeader( configBanner, { pkg: configPkg } ) )
-    .pipe( gulp.dest( configLegacy.dest + '/owning-a-home/' ) )
+    .pipe( gulp.dest( configLegacy.dest + '/oah/' ) )
     .pipe( browserSync.reload( {
       stream: true
     } ) );
