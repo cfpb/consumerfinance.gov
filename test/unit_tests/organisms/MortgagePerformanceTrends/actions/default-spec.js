@@ -20,7 +20,8 @@ mockery.registerMock( '../utils', {
       {
         valid: true,
         fips: '12345',
-        name: 'Acme metro'
+        name: 'Acme metro',
+        abbr: 'AL'
       }
     ];
     cb( nonMetros );
@@ -118,6 +119,8 @@ describe( 'Mortgage Performance default action creators', () => {
     const dispatch = sinon.spy();
     actions.fetchNonMetros( 'AL', true )( dispatch );
     expect( dispatch.callCount ).to.equal( 4 );
+    actions.fetchNonMetros( 'CA', true )( dispatch );
+    expect( dispatch.callCount ).to.equal( 8 );
   } );
 
   it( 'should fail on bad non-metro state abbr', () => {
