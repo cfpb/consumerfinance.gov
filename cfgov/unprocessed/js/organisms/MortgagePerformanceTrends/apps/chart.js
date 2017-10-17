@@ -172,14 +172,16 @@ MortgagePerformanceLineChart.prototype.renderChartForm = function( prevState, st
   utils.hideEl( this.$container.querySelector( '#mp-state-non-metro-helper-text' ) );
   if ( geoType === 'county' ) {
     utils.showEl( this.$container.querySelector( '#mp-state-county-helper-text' ) );
+    utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
   }
   if ( geoType === 'metro' ) {
     utils.showEl( this.$container.querySelector( '#mp-state-metro-helper-text' ) );
+    utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
   }
   if ( geoType === 'non-metro' ) {
     utils.showEl( this.$container.querySelector( '#mp-state-non-metro-helper-text' ) );
+    utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
   }
-  utils.showEl( this.$container.querySelector( '#mp-line-chart-state-container' ) );
   if ( geoType ) {
     utils.showEl( this.$compareContainer );
   } else {
