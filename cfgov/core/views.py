@@ -4,7 +4,7 @@ import logging
 import requests
 from django.conf import settings
 from django.contrib import messages
-from django.http import (Http404, HttpResponse, HttpResponseForbidden, 
+from django.http import (Http404, HttpResponse, HttpResponseForbidden,
                          HttpResponseBadRequest, JsonResponse)
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
