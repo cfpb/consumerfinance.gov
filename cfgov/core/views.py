@@ -4,8 +4,8 @@ import logging
 import requests
 from django.conf import settings
 from django.contrib import messages
-from django.http import (Http404, HttpResponse, HttpResponseForbidden,
-                         HttpResponseBadRequest, JsonResponse)
+from django.http import (Http404, HttpResponse, HttpResponseBadRequest,
+                         JsonResponse)
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -134,22 +134,21 @@ def submit_comment(data):
 
 
 @csrf_exempt
+@require_http_methods(['POST'])
 def csp_violation_report(request):
-    if request.method == 'POST':
-        try:
-            csp_dict = json.loads(request.body)['csp-report']
-        # bare except is non-ideal, but if parsing fails for any reason
-        # we need to abort
-        except:
-            logger.error('could not parse CSP report: ' + request.body)
-            return HttpResponseBadRequest()
+    try:
+        csp_dict = json.loads(request.body)['csp-report']
+    # bare except is non-ideal, but if parsing fails for any reason
+    # we need to abort
+    except:
+        logger.error('could not parse CSP report: ' + request.body)
+        return HttpResponseBadRequest()
 
-        message_template = ('{blocked-uri} blocked on {document-uri}, '
-                            'violated {violated-directive}')
-        message = message_template.format(**csp_dict)
-        logger.error(message)
-        return HttpResponse()
-    return HttpResponseForbidden()
+    message_template = ('{blocked-uri} blocked on {document-uri}, '
+                        'violated {violated-directive}')
+    message = message_template.format(**csp_dict)
+    logger.error(message)
+    return HttpResponse()
 
 
 class ExternalURLNoticeView(FormMixin, TemplateView):
