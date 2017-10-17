@@ -4,8 +4,8 @@ import logging
 import requests
 from django.conf import settings
 from django.contrib import messages
-from django.http import (Http404, HttpResponse, HttpResponseForbidden,
-                         JsonResponse)
+from django.http import (Http404, HttpResponse, HttpResponseForbidden, 
+                         HttpResponseBadRequest, JsonResponse)
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -141,7 +141,8 @@ def csp_violation_report(request):
         # bare except is non-ideal, but if parsing fails for any reason
         # we need to abort
         except:
-            return HttpResponseForbidden()
+            logger.error('could not parse CSP report: ' + request.body)
+            return HttpResponseBadRequest()
 
         message_template = ('{blocked-uri} blocked on {document-uri}, '
                             'violated {violated-directive}')
