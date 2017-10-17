@@ -134,6 +134,10 @@
 
 #mp-line-chart-container,
 #mp-map-container {
+
+    // Highcharts auto resizes the charts, causing odd overflow issues
+    overflow: inherit;
+
     .a-label h4 {
         .u-mb15();
     }
@@ -154,10 +158,6 @@
         color: @gray-80;
         @font-size: 12px;
         font-size: unit(@font-size / @base-font-size-px, em);
-    }
-
-    select option:first-child {
-      color: @gray-80;
     }
 
 }
