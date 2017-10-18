@@ -86,6 +86,7 @@ class Command(BaseCommand):
                           'inactive for {} days'.format(
                               len(warn_users),
                               warn_period))
+
         for user in warn_users:
             self.send_user_warning_email(user, warn_period, period)
 
