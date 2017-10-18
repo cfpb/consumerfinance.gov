@@ -19,25 +19,25 @@ class Command(BaseCommand):
             '--period',
             type=int,
             default=90,
-            help='The number of days that defines inactivity'
+            help='The number of days that defines inactivity when a user is disabled'
         )
         parser.add_argument(
-            '--warn-user-period',
+            '--warn-after',
             type=int,
             default=60,
-            help='The number of days that defines inactivity'
+            help='The number of days a user can be inactive before getting an inactivity warning email'
         )
         parser.add_argument(
             '--emails',
             nargs='+',
             default=[],
-            help='Email output to a list of addresses'
+            help='Email output to a list of system owner addresses'
         )
 
     def handle(self, *args, **options):
         period = options['period']
         emails = options['emails']
-        warn_period = options['warn-user-period']
+        warn_period = options['warn_after']
 
         last_possible_date = timezone.now() - timedelta(days=period)
         warn_date = timezone.now() - timedelta(days=warn_period)
@@ -72,21 +72,22 @@ class Command(BaseCommand):
                           'inactive for {} days'.format(
                               len(inactive_users),
                               period))
+
         for user in inactive_users:
             self.deactivate_user(user)
-            self.send_user_deactivation_email(user.email, period)
+            self.send_user_deactivation_email(user, period)
 
         # List users to warn about inactivity and email them
         self.stdout.write('Users inactive for {}+ days:\n'.format(warn_period))
         self.stdout.write(self.format_inactive_users(warn_users))
 
         # Notify users approaching deactivation
-        self.stdout.write('Emailing {} users who have been'
+        self.stdout.write('Emailing {} users who have been '
                           'inactive for {} days'.format(
                               len(warn_users),
                               warn_period))
         for user in warn_users:
-            self.send_user_warning_email(user.email, warn_period, period)
+            self.send_user_warning_email(user, warn_period, period)
 
     def format_inactive_users(self, inactive_users):
         """Formats the list of inactive users for text email"""
@@ -126,9 +127,9 @@ class Command(BaseCommand):
             "\n\nIf you require access to Wagtail in the future and would " + \
             "like your account to be reactivated, please contact " + \
             "Design & Development at designdev@cfpb.gov and indicate your " + \
-            "business reason for needing access reinstated.\n\n " + \
-            "Thank you,\nWagtail system owners".format(warn_period, period)
-        user.email_user(subject, msg)
+            "business reason for needing access reinstated.\n\n" + \
+            "Thank you,\nWagtail system owners"
+        user.email_user(subject, msg.format(warn_period, period))
 
     def send_user_deactivation_email(self, user, period):
         """Send the specified user a warning that the have been deactivated
@@ -139,12 +140,12 @@ class Command(BaseCommand):
             "Your Wagtail account has not been accessed for more than " + \
             "{} days. In accordance with information security policies, " + \
             "your account has been deactivated.\n\n" + \
-            "If you require access to Wagtail in the future and would  " + \
+            "If you require access to Wagtail in the future and would " + \
             "like your account to be reactivated, please contact " + \
             "Design & Development at designdev@cfpb.gov and indicate your " + \
             "business reason for needing access reinstated.\n\n" + \
-            "Thank you,\nWagtail system owners".format(period)
-        user.email_user(subject, msg)
+            "Thank you,\nWagtail system owners"
+        user.email_user(subject, msg.format(period))
 
     def deactivate_user(self, user):
         """Deactivate the specified user account"""
