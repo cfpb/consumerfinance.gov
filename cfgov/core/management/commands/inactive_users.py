@@ -19,13 +19,13 @@ class Command(BaseCommand):
             '--period',
             type=int,
             default=90,
-            help='The number of days that defines inactivity when a user is disabled'
+            help='The number of days that defines inactivity and a user is disabled'
         )
         parser.add_argument(
             '--warn-after',
             type=int,
             default=60,
-            help='The number of days a user can be inactive before getting an inactivity warning email'
+            help='The number of days that prompts sending an inactivity warning email'
         )
         parser.add_argument(
             '--emails',
