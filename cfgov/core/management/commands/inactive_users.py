@@ -50,6 +50,7 @@ class Command(BaseCommand):
         )
         warn_users = User.objects.filter(
             Q(last_login__lt=warn_date) | Q(last_login__isnull=True),
+            last_login__gt=last_possible_date,
             is_active=True,
             date_joined__lt=warn_date
         )
@@ -68,7 +69,7 @@ class Command(BaseCommand):
             self.send_email(emails, period, inactive_users)
 
         # Deactivate and notify inactive users
-        self.stdout.write('Deactivating and emailing {} users who have been'
+        self.stdout.write('Deactivating and emailing {} users who have been '
                           'inactive for {} days'.format(
                               len(inactive_users),
                               period))
@@ -76,10 +77,6 @@ class Command(BaseCommand):
         for user in inactive_users:
             self.deactivate_user(user)
             self.send_user_deactivation_email(user, period)
-
-        # List users to warn about inactivity and email them
-        self.stdout.write('Users inactive for {}+ days:\n'.format(warn_period))
-        self.stdout.write(self.format_inactive_users(warn_users))
 
         # Notify users approaching deactivation
         self.stdout.write('Emailing {} users who have been '

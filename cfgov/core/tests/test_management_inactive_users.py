@@ -23,7 +23,7 @@ class InactiveUsersTestCase(TestCase):
         days_90 = timezone.now() - timedelta(days=90)
         days_89 = timezone.now() - timedelta(days=89)
 
-        # This user is clearly inactive at 90 days
+        # This user is clearly inactive at 91 days
         self.user_1 = User.objects.create(username='user_1',
                                           last_login=days_91,
                                           date_joined=days_91)
@@ -34,6 +34,7 @@ class InactiveUsersTestCase(TestCase):
                                           date_joined=days_91)
 
         # This user is not inactive because it's been 89 days
+        # This user will receive a warning email
         self.user_3 = User.objects.create(username='üser_3',
                                           last_login=days_89,
                                           date_joined=days_91)
@@ -65,7 +66,7 @@ class InactiveUsersTestCase(TestCase):
         )
 
     def test_get_inactive_users(self):
-        """ Test that two users are listed for the default 90 period
+        """ Test that three users are listed for the default 90 period
         including one that last logged in 90 days ago. """
         call_command('inactive_users', stdout=self.stdout)
         self.assertIn("user_1", self.get_stdout())
@@ -75,7 +76,7 @@ class InactiveUsersTestCase(TestCase):
         self.assertNotIn("user_5", self.get_stdout())
 
     def test_get_inactive_users_87_days(self):
-        """ Test that all users are listed for a custom 87 day period """
+        """ Test that four users are listed for a custom 87 day period """
         call_command('inactive_users', period=87, stdout=self.stdout)
         self.assertIn("user_1", self.get_stdout())
         self.assertIn("user_2", self.get_stdout())
@@ -99,7 +100,8 @@ class InactiveUsersTestCase(TestCase):
         call_command('inactive_users',
                      emails=['test@example.com'],
                      stdout=self.stdout)
-        self.assertEqual(len(mail.outbox), 1)
+        # Outbox will have one system-owner email and four user emails
+        self.assertEqual(len(mail.outbox), 5)
 
         email = mail.outbox[0]
         self.assertEqual(email.to, ['test@example.com'])
@@ -111,5 +113,6 @@ class InactiveUsersTestCase(TestCase):
         self.assertIn("user_1", message)
         self.assertIn("user_2", message)
         self.assertIn("user_4", message)
-        self.assertNotIn("üser_3", message)
+        self.assertIn("üser_3", message)
+        self.assertNotIn("user_5", message)
         self.assertIn("test@example.com", self.get_stdout())
