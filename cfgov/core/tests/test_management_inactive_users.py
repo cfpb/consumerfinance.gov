@@ -103,6 +103,7 @@ class InactiveUsersTestCase(TestCase):
         # Outbox will have one system-owner email and four user emails
         self.assertEqual(len(mail.outbox), 5)
 
+        # Test the first (summary) email for inactive users only
         email = mail.outbox[0]
         self.assertEqual(email.to, ['test@example.com'])
         self.assertEqual(email.from_email, 'webmaster@localhost')
@@ -113,6 +114,6 @@ class InactiveUsersTestCase(TestCase):
         self.assertIn("user_1", message)
         self.assertIn("user_2", message)
         self.assertIn("user_4", message)
-        self.assertIn("üser_3", message)
+        self.assertNotIn("üser_3", message)
         self.assertNotIn("user_5", message)
         self.assertIn("test@example.com", self.get_stdout())
