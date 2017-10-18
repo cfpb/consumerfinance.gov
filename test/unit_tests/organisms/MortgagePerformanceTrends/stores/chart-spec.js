@@ -122,6 +122,14 @@ describe( 'Mortgage Performance line chart store', () => {
     expect( store.getState().isLoadingCounties ).to.be.true;
   } );
 
+  it( 'should properly reduce loading u.s. states', () => {
+    const action = {
+      type: 'REQUEST_STATES'
+    };
+    store.dispatch( action );
+    expect( store.getState().isLoadingStates ).to.be.true;
+  } );
+
   it( 'should properly reduce metros', () => {
     const action = {
       type: 'SET_METROS',
@@ -149,6 +157,30 @@ describe( 'Mortgage Performance line chart store', () => {
     store.dispatch( action );
     expect( store.getState().counties )
       .to.deep.equal( { 12345: 'Acme County' } );
+  } );
+
+  it( 'should properly reduce u.s. states', () => {
+    let action = {
+      type: 'SET_STATES',
+      states: { AL: 'Alabama' }
+    };
+    store.dispatch( action );
+    expect( store.getState().states )
+      .to.deep.equal( { AL: 'Alabama' } );
+    action = {
+      type: 'FETCH_STATES',
+      states: { CA: 'California' }
+    };
+    store.dispatch( action );
+    expect( store.getState().states )
+      .to.deep.equal( { AL: 'Alabama' } );
+    action = {
+      type: 'SET_STATES',
+      states: { CA: 'California' }
+    };
+    store.dispatch( action );
+    expect( store.getState().states )
+      .to.deep.equal( { CA: 'California' } );
   } );
 
   it( 'should properly reduce national comparison', () => {

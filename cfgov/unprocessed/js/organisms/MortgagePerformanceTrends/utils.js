@@ -5,7 +5,8 @@ const ajax = require( 'xdr' );
 const COUNTIES_URL = '/data-research/mortgages/api/v1/metadata/state_county_meta';
 const METROS_URL = '/data-research/mortgages/api/v1/metadata/state_msa_meta';
 const NON_METROS_URL = '/data-research/mortgages/api/v1/metadata/non_msa_fips';
-let counties, metros, nonMetros;
+const STATES_URL = '/data-research/mortgages/api/v1/metadata/state_meta';
+let counties, metros, nonMetros, states;
 let globalZoomLevel = 10;
 
 var utils = {
@@ -73,6 +74,23 @@ var utils = {
     option.value = value;
     option.text = text;
     return option;
+  },
+
+  /**
+   * getStateData - XHR state metadata
+   *
+   * @param {function} cb Function called with state data.
+   *
+   * @returns {function} Function called with state data.
+   */
+  getStateData: cb => {
+    if ( states ) {
+      return cb( states );
+    }
+    return ajax( { url: STATES_URL }, function( resp ) {
+      var data = JSON.parse( resp.data );
+      cb( data );
+    } );
   },
 
   /**

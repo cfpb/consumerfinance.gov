@@ -4,10 +4,11 @@ const BASE_JS_PATH = '../../../../cfgov/unprocessed/js/';
 
 const chai = require( 'chai' );
 const mockery = require( 'mockery' );
+const sinon = require( 'sinon' );
 const expect = chai.expect;
 
 // Disable the AJAX library used by the action creator
-const noop = () => ( {} );
+const noop = () => ( { mock: 'data' } );
 mockery.enable( {
   warnOnReplace: false,
   warnOnUnregistered: false
@@ -60,6 +61,26 @@ describe( 'Mortgage Performance utilities', () => {
       selected: false
     } );
     expect( option ).to.deep.equal( { value: 'AL', text: 'Alabama' } );
+  } );
+
+  it( 'should get metro data', () => {
+    const cb = sinon.spy();
+    expect( utils.getMetroData( cb ) ).to.deep.equal( { mock: 'data' } );
+  } );
+
+  it( 'should get non-metro data', () => {
+    const cb = sinon.spy();
+    expect( utils.getNonMetroData( cb ) ).to.deep.equal( { mock: 'data' } );
+  } );
+
+  it( 'should get county data', () => {
+    const cb = sinon.spy();
+    expect( utils.getCountyData( cb ) ).to.deep.equal( { mock: 'data' } );
+  } );
+
+  it( 'should get state data', () => {
+    const cb = sinon.spy();
+    expect( utils.getStateData( cb ) ).to.deep.equal( { mock: 'data' } );
   } );
 
   it( 'should be able to calculate zoom levels', () => {
