@@ -67,13 +67,15 @@ class InfoUnitGroup(blocks.StructBlock):
     has_top_border = blocks.BooleanBlock(
         default=False,
         required=False,
-        help_text='Check this to add a border to top of info unit group.'
+        label="Has top rule line",
+        help_text=('Check this to add a horizontal rule line to top of '
+                  'info unit group.')
     )
 
     lines_between_items = blocks.BooleanBlock(
         default=True,
         required=False,
-        label='Show lines between items',
+        label='Show rule lines between items',
         help_text=('Check this to show horizontal rule lines between info '
                    'units.')
     )
