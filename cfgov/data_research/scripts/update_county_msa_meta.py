@@ -2,10 +2,31 @@ from __future__ import unicode_literals
 
 import logging
 
-from data_research.models import MortgageMetaData
-from data_research.mortgage_utilities.fips_meta import FIPS, load_fips_meta
+from data_research.models import County, MetroArea, MortgageMetaData, State
+from data_research.mortgage_utilities.fips_meta import (
+    FIPS, load_fips_meta, NON_STATES)
 
 logger = logging.getLogger(__name__)
+
+NON_STATE_FIPS = NON_STATES.values()
+
+
+def update_whitelist():
+    county_list = [county.fips for county in County.objects.filter(valid=True)]
+    msa_list = [msa.fips for msa in MetroArea.objects.filter(valid=True)]
+    state_list = [state.fips for state
+                  in State.objects.exclude(fips__in=NON_STATE_FIPS)]
+    non_msa_list = ["{}-non".format(state.fips) for state
+                    in State.objects.filter(fips__in=state_list)
+                    if state.non_msa_valid is True]
+    final_list = (
+        sorted(county_list)
+        + sorted(msa_list)
+        + sorted(state_list)
+        + sorted(non_msa_list))
+    whitelist = MortgageMetaData.objects.get(name='whitelist')
+    whitelist.json_value = final_list
+    whitelist.save()
 
 
 def update_state_to_geo_meta(geo):
@@ -89,7 +110,7 @@ def update_state_to_geo_meta(geo):
             'state_fips': fips,
             'state_name': FIPS.state_fips[fips]['name'],
             geo_list: []}
-        for fips in FIPS.state_fips
+        for fips in FIPS.state_fips if fips not in NON_STATE_FIPS
     }
     for fips in fips_dict:
         _dict = fips_dict[fips]
@@ -116,7 +137,9 @@ def update_state_to_geo_meta(geo):
             setup[state_abbr][geo_list].sort(
                 key=lambda entry: entry['fips'])
     if geo == 'msa':
-        for state_fips in FIPS.state_fips:
+        live_fips = [fips for fips in FIPS.state_fips
+                     if fips not in NON_STATE_FIPS]
+        for state_fips in live_fips:
             non_fips = '{}-non'.format(state_fips)
             s_dict = FIPS.state_fips[state_fips]
             state_abbr = s_dict['abbr']
@@ -150,6 +173,7 @@ def update_state_to_geo_meta(geo):
 
 
 def run():
+    update_whitelist()
     load_fips_meta()
     for geo in ['msa', 'county']:
         update_state_to_geo_meta(geo)

@@ -147,7 +147,9 @@ def load_county_mappings():
     """Add lists of counties and non-MSA counties to state_fips attribute."""
     from data_research.models import MortgageMetaData
     msa_meta = MortgageMetaData.objects.get(name='state_msa_meta').json_value
-    for each in FIPS.state_fips:
+    live_fips = [fips for fips in FIPS.state_fips
+                 if fips not in NON_STATES.values()]
+    for each in live_fips:
         _attr = FIPS.state_fips[each]
         abbr = _attr['abbr']
         _attr['counties'] = (
