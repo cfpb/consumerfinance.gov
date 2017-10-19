@@ -144,7 +144,7 @@ A number of command-line arguments can be set to test particular configurations:
  - `--suite`: Choose a particular suite or suites to run.
    For example, `gulp test:acceptance --suite=content` or `gulp test:acceptance --suite=content,functional`.
  - `--specs`: Choose a particular spec or specs to run.
-   For example, `gulp test:acceptance --specs=contact-us.feature`, `gulp test:acceptance --specs=contact-us.js,about-us.js`, or `gulp test:acceptance --specs=foo*.js`. If `--suite` is specified, this argument will be ignored. If neither `--suite` nor `--specs` are specified, all specs will be run.
+   For example, `gulp test:acceptance --specs=contact-us.feature`, `gulp test:acceptance --specs=contact-us.feature,about-us.feature`, or `gulp test:acceptance --specs=foo*.feature`. If `--suite` is specified, this argument will be ignored. If neither `--suite` nor `--specs` are specified, all specs will be run.
  - `--windowSize`: Set the window size in pixels in `w,h` format.
    For example, `gulp test:acceptance --windowSize=900,400`.
  - `--browserName`: Set the browser to run.
