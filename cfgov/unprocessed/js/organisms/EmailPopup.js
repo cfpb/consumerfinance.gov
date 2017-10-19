@@ -59,7 +59,7 @@ function EmailPopup( el ) {
 
   /**
    * Callback function invoked after successful email submission.
-   * @param {event} event Click event.
+   * @param {event} Click event.
    *
    */
   function _onEmailSignupSuccess( event ) {
