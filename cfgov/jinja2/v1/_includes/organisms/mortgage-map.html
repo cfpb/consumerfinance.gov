@@ -15,6 +15,7 @@
 {% set metro_meta = csv_meta['MetroArea'] %}
 {% set state_meta = csv_meta['State'] %}
 {% set data_vis_color = 'blue' if time_frame == '30-89' else 'navy' %}
+{% if time_frame == '30-89' %} {% set time_frame_styled = '30&ndash;89'%} {% else %} {% set time_frame_styled = time_frame %}{% endif %}
 
 <div class="o-full-width-text-group" id="mp-map-container" data-chart-time-span="{{ time_frame }}" data-chart-color="{{ data_vis_color }}" data-chart-start-date="{{ sampling_dates|first }}" data-chart-end-date="{{ sampling_dates|last }}">
     <div class="m-full-width-text">
@@ -168,14 +169,14 @@
         </form>
     </div>
     <div class="o-mp-map m-full-width-text">
-        <h3 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame }} days delinquent:<br /><span id="mp-map-title-location">state view</span> for <span id="mp-map-title-date"><strong>{{ thru_month_formatted }}</strong></span></h3>
+        <h3 id="mp-map-title">Percentage of mortgages {% if time_frame == '90' %} at least {% endif %} {{ time_frame_styled }} days delinquent:<br /><span id="mp-map-title-location">state view</span> for <span id="mp-map-title-date"><strong>{{ thru_month_formatted }}</strong></span></h3>
         <div id="mp-map">
             {{ value.description }}
         </div>
         <svg viewBox="0 0 642 93" xmlns="http://www.w3.org/2000/svg" class="m-color-ramp" data-chart-color="{{ data_vis_color }}">
             <g>
-                <title>U.S. Map Legend for Mortgages {{ time_frame }} days delinquent</title>
-                <description>The percentage of mortgages {{ time_frame }} {% if time_frame == '90' %} or more {% endif %} days delinquent varies by location from 0% to 6%.</description>
+                <title>U.S. Map Legend for Mortgages {{ time_frame_styled }} days delinquent</title>
+                <description>The percentage of mortgages {{ time_frame_styled }} {% if time_frame == '90' %} or more {% endif %} days delinquent varies by location from 0% to 6%.</description>
             </g>
             <g>
                 <g>
