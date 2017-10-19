@@ -868,7 +868,7 @@ class ChartBlock(blocks.StructBlock):
                   '"Data from the last six months are not final."')
     y_axis_label = blocks.CharBlock(
         required=False,
-        help_text='Optional y-axis label')
+        help_text='Custom y-axis label')
 
     class Meta:
         label = 'Chart Block'
