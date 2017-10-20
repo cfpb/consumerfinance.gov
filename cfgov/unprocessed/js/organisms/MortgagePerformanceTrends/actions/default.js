@@ -118,20 +118,26 @@ const defaultActionCreators = () => {
     /**
      * fetchNonMetros - Creates async action to fetch list of non-metros.
      *
-     * @param {String} metroState Two-letter U.S. state abbreviation.
+     * @param {String} nonMetroState Two-letter U.S. state abbreviation.
      * @param {Boolean} includeComparison Include national comparison?
      *
      * @returns {Function} Thunk called with non metros
      */
-    fetchNonMetros: ( metroState, includeComparison ) => dispatch => {
+    fetchNonMetros: ( nonMetroState, includeComparison ) => dispatch => {
       dispatch( actions.requestNonMetros() );
       return utils.getNonMetroData( data => {
-        var nonMetros = data.filter( nonMetro => nonMetro.valid );
+        let nonMetros = data.filter( nonMetro => nonMetro.valid );
+        let currStateIndex = 0;
+        nonMetros.forEach( ( nonMetro, i ) => {
+          if ( nonMetro.abbr === nonMetroState ) {
+            currStateIndex = i;
+          }
+        } );
         // Alphabetical order
         nonMetros = nonMetros.sort( ( a, b ) => a.name < b.name ? -1 : 1 );
         dispatch( actions.setNonMetros( nonMetros ) );
-        dispatch( actions.setGeo( nonMetros[0].fips, nonMetros[0].name, 'non-metro' ) );
-        dispatch( actions.updateChart( nonMetros[0].fips, nonMetros[0].name, 'non-metro', includeComparison ) );
+        dispatch( actions.setGeo( nonMetros[currStateIndex].fips, nonMetros[currStateIndex].name, 'non-metro' ) );
+        dispatch( actions.updateChart( nonMetros[currStateIndex].fips, nonMetros[currStateIndex].name, 'non-metro', includeComparison ) );
         return nonMetros;
       } );
     },

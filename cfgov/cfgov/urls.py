@@ -25,7 +25,6 @@ from legacy.views import token_provider
 from legacy.views.housing_counselor import (
     HousingCounselorView, HousingCounselorPDFView
 )
-from selfregistration.views import CompanySignup
 
 from sheerlike.sites import SheerSite
 from sheerlike.views.generic import SheerTemplateView
@@ -80,7 +79,9 @@ urlpatterns = [
     url(r'^owning-a-home/mortgage-closing/',
         include(oah.urls_for_prefix('mortgage-closing'))),
     url(r'^owning-a-home/mortgage-estimate/',
-        include(oah.urls_for_prefix('mortgage-estimate'))),
+        TemplateView.as_view(
+        template_name='owning-a-home/mortgage-estimate/index.html'),
+        name='morgage-estimate'),
 
     url(r'^owning-a-home/process/',
         include(oah.urls_for_prefix('process/prepare/'))),
@@ -316,9 +317,6 @@ urlpatterns = [
     # Form csrf token provider for JS form submission
     url(r'^token-provider/', token_provider),
 
-    # self-registration
-    url(r'^company-signup/', CompanySignup.as_view(), name='company-signup'),
-
     # data-research-api
     url(r'^data-research/mortgages/api/v1/',
         include_if_app_enabled('data_research', 'data_research.urls')),
@@ -437,9 +435,6 @@ if settings.ALLOW_ADMIN_URL:
             name='django_admin_account_change_password'),
         url(r'^django-admin/', include(admin.site.urls)),
 
-
-        # Export company registrations
-        url(r'^django-admin/selfregs/', include('selfregistration.urls')),
 
         # Override Django and Wagtail password views with our password policy
         url(r'^admin/password_reset/', include([

@@ -556,6 +556,8 @@ FLAGS = {
     # Intended for use with path conditions.
     'AB_TESTING': {},
 
+    # When enabled, should display the email popup.
+    'EMAIL_POPUP': {},
 
     # The next version of eRegulations
     'EREGS20': {

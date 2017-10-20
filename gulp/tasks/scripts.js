@@ -165,8 +165,20 @@ function scriptsEs5Shim() {
     } ) );
 }
 
+/**
+ * Bundle scripts in /js/routes/apps/owning-a-home/
+ * and factor out common modules into common.js.
+ * @returns {PassThrough} A source stream.
+ */
+function scriptsOAH() {
+  return _processScript( webpackConfig.owningAHomeConf,
+                         '/js/routes/apps/owning-a-home/common.js',
+                         '/js/owning-a-home/' );
+}
+
 gulp.task( 'scripts:polyfill', scriptsPolyfill );
 gulp.task( 'scripts:modern', scriptsModern );
+gulp.task( 'scripts:oah', scriptsOAH );
 gulp.task( 'scripts:ie', scriptsIE );
 gulp.task( 'scripts:external', scriptsExternal );
 gulp.task( 'scripts:spanish', scriptsSpanish );
@@ -182,6 +194,7 @@ gulp.task( 'scripts:es5-shim', scriptsEs5Shim );
 gulp.task( 'scripts', [
   'scripts:polyfill',
   'scripts:modern',
+  'scripts:oah',
   'scripts:ie',
   'scripts:external',
   'scripts:nemo',
