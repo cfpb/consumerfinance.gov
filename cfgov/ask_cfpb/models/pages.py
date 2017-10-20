@@ -26,7 +26,8 @@ from wagtail.wagtailcore.fields import StreamField
 
 from v1 import blocks as v1_blocks
 from v1.models import CFGOVPage, CFGOVPageManager, LandingPage
-from v1.models.snippets import ReusableText
+from v1.models.snippets import ReusableText, ReusableTextChooserBlock
+from v1.atomic_elements import molecules, organisms
 
 
 SPANISH_ANSWER_SLUG_BASE = '/es/obtener-respuestas/slug-es-{}/'
@@ -508,6 +509,19 @@ class AnswerPage(CFGOVPage):
         FieldPanel('redirect_to'),
     ]
 
+    sidebar = StreamField([
+        ('call_to_action', molecules.CallToAction()),
+        ('related_links', molecules.RelatedLinks()),
+        ('related_metadata', molecules.RelatedMetadata()),
+        ('email_signup', organisms.EmailSignUp()),
+        ('sidebar_contact', organisms.SidebarContactInfo()),
+        ('rss_feed', molecules.RSSFeed()),
+        ('social_media', molecules.SocialMedia()),
+        ('reusable_text', ReusableTextChooserBlock(ReusableText)),
+    ], blank=True)
+
+    sidebar_panels = [StreamFieldPanel('sidebar'), ]
+
     search_fields = Page.search_fields + [
         index.SearchField('question'),
         index.SearchField('answer'),
@@ -517,6 +531,7 @@ class AnswerPage(CFGOVPage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
+        ObjectList(sidebar_panels, heading='Sidebar (English only)'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
