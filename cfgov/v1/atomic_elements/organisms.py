@@ -69,11 +69,11 @@ class InfoUnitGroup(blocks.StructBlock):
         required=False,
         label="Has top rule line",
         help_text=('Check this to add a horizontal rule line to top of '
-                  'info unit group.')
+                   'info unit group.')
     )
 
     lines_between_items = blocks.BooleanBlock(
-        default=True,
+        default=False,
         required=False,
         label='Show rule lines between items',
         help_text=('Check this to show horizontal rule lines between info '
@@ -164,6 +164,22 @@ class ImageText5050Group(blocks.StructBlock):
                                          required=False)),
     ])
 
+    has_top_border = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has top rule line",
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'image text group.')
+    )
+
+    lines_between_items = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Show rule lines between items',
+        help_text=('Check this to show horizontal rule lines between image '
+                   'text units.')
+    )
+
     image_texts = blocks.ListBlock(molecules.ImageText5050())
 
     class Meta:
@@ -179,6 +195,13 @@ class ImageText2575Group(blocks.StructBlock):
         help_text=('Check this to link all images and headings to the URL of '
                    'the first link in their unit\'s list, if there is a link.')
     )
+    has_top_border = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has top rule line",
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'image text group.')
+    )
     image_texts = blocks.ListBlock(molecules.ImageText2575())
 
     class Meta:
@@ -188,8 +211,27 @@ class ImageText2575Group(blocks.StructBlock):
 
 class LinkBlobGroup(blocks.StructBlock):
     heading = blocks.CharBlock(icon='title', required=False)
-    has_top_border = blocks.BooleanBlock(required=False)
-    has_bottom_border = blocks.BooleanBlock(required=False)
+    has_top_border = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has top rule line",
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'link blob group.')
+    )
+    has_bottom_border = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has bottom rule line",
+        help_text=('Check this to add a horizontal rule line to bottom of '
+                   'link blob group.')
+    )
+    lines_between_items = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label='Show rule lines between items',
+        help_text=('Check this to show horizontal rule lines between link '
+                   'blob rows.')
+    )
     link_blobs = blocks.ListBlock(molecules.HalfWidthLinkBlob())
 
 
@@ -322,6 +364,12 @@ class RelatedPosts(blocks.StructBlock):
 
 class MainContactInfo(blocks.StructBlock):
     contact = SnippetChooserBlock(ContactSnippetClass)
+    has_top_border = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has top rule line",
+        help_text='Add a horizontal rule line to top of contact block.'
+    )
 
     class Meta:
         icon = 'wagtail'
@@ -576,6 +624,12 @@ class ModelTable(ModelBlock):
         label='No Table Data Message',
         required=False,
         help_text='Message to display if there is no table data.'
+    )
+    has_top_border = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has top rule line",
+        help_text='Add a horizontal rule line to top of table block.'
     )
 
     def render(self, value, context=None):
@@ -862,6 +916,14 @@ class ChartBlock(blocks.StructBlock):
         required=True,
         help_text='Briefly summarize the chart for visually impaired users.')
 
+    has_top_border = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has top rule line",
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'chart block.')
+    )
+
     last_updated_projected_data = blocks.DateBlock(
         help_text='Month of latest entry in dataset'
     )
@@ -918,6 +980,13 @@ class MortgageMapBlock(MortgageChartBlock):
 class SnippetList(blocks.StructBlock):
     heading = blocks.CharBlock(required=False)
     body = blocks.RichTextBlock(required=False)
+    has_top_border = blocks.BooleanBlock(
+        default=False,
+        required=False,
+        label="Has top rule line",
+        help_text=('Check this to add a horizontal rule line to top of '
+                   'chart block.')
+    )
     image = atoms.ImageBasic(required=False)
     actions_column_width = blocks.ChoiceBlock(
         label='Width of "Actions" column',

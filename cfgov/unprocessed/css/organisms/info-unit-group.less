@@ -58,6 +58,10 @@
     .content-l {
         margin-top: unit( @grid_gutter-width / @base-font-size-px, em );
     }
+    
+    > .content-l:first-child {
+        margin-top: 0;
+    }
 
     .content-l_col-1 + .content-l_col-1 {
         // Adds margin top to info units that follow another

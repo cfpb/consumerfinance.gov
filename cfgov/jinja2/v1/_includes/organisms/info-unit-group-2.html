@@ -48,7 +48,7 @@
      {{- ' id="' ~ value.heading.text|slugify ~ '" ' if value.heading.text else ' ' -}}
      data-qa-hook="@TODO: Find out if I need this!">
 
-{% if value.heading %}
+{% if value.heading and value.heading.text %}
     <{{ value.heading.level -}}
         {%- if value.heading.icon -%}
             {{- ' class="cf-icon cf-icon-' ~ value.heading.icon ~ '"' -}}

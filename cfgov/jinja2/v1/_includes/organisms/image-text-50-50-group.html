@@ -3,13 +3,19 @@
     <h2>{{ value.heading }}</h2>
     {% endif %}
 
+    {% if not value.lines_between_items %}
     <div class="content-l">
+    {% endif %}
       {% for block in value.image_texts %}
+        {% if value.lines_between_items and (
+            ( loop.index == 1 ) or
+            ( loop.index % 2 == 1 )
+        ) %}
+        <div class="content-l content-l__top-divider">
+        {% endif %}
+
         <div class="content-l_col
                     content-l_col-1-2">
-            {% if block.has_rule %}
-                <div class="a-rule-break"></div>
-            {% endif %}
 
             {% do block.update( {
               'link_image_and_heading': value.link_image_and_heading
@@ -17,8 +23,20 @@
 
             {{ block }}
         </div>
+
+        {% if value.lines_between_items and (
+            loop.index % 2 == 0 or
+            loop.index == value.image_texts | length
+        ) %}
+        </div>
+        {% endif %}
+
         {% endfor %}
-    </div>
+
+
+    {% if not value.lines_between_items %}
+     </div>
+    {% endif %}
 
     {% if value.sharing.shareable %}
         {% import 'molecules/social-media.html' as social_media with context %}

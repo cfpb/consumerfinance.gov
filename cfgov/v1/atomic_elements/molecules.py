@@ -63,7 +63,12 @@ class ImageText2575(blocks.StructBlock):
     body = blocks.RichTextBlock(required=False)
     image = atoms.ImageBasic()
     links = blocks.ListBlock(atoms.Hyperlink(), required=False)
-    has_rule = blocks.BooleanBlock(required=False)
+    has_rule = blocks.BooleanBlock(
+        required=False,
+        label="Has top rule",
+        help_text=('Check this to add a horizontal rule line to top '
+                   'of image text unit.')
+    )
 
     class Meta:
         icon = 'image'
@@ -75,7 +80,12 @@ class TextIntroduction(blocks.StructBlock):
     intro = blocks.RichTextBlock(required=False)
     body = blocks.RichTextBlock(required=False)
     links = blocks.ListBlock(atoms.Hyperlink(required=False), required=False)
-    has_rule = blocks.BooleanBlock(required=False)
+    has_rule = blocks.BooleanBlock(
+        required=False,
+        label="Has bottom rule",
+        help_text=('Check this to add a horizontal rule line to bottom of '
+                   'text introduction.')
+    )
 
     class Meta:
         icon = 'title'
