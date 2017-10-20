@@ -534,6 +534,9 @@ FLAGS = {
     # When enabled, Display a "techical issues" banner on /complaintdatabase
     'CCDB_TECHNICAL_ISSUES': {},
 
+    # When enabled, use wagtail for /company-signup/ (instead of selfregistration app)
+    'WAGTAIL_COMPANY_SIGNUP': {},
+
     # IA changes to mega menu for user testing
     # When enabled, the mega menu under "Consumer Tools" is arranged by topic
     'IA_USER_TESTING_MENU': {},
@@ -557,6 +560,8 @@ FLAGS = {
     # Intended for use with path conditions.
     'AB_TESTING': {},
 
+    # When enabled, should display the email popup.
+    'EMAIL_POPUP': {},
 
     # The next version of eRegulations
     'EREGS20': {
