@@ -126,7 +126,7 @@ Sauce Labs can be used to run tests remotely in the cloud.
    The access key can be found on the Sauce Labs
    [user settings page](https://saucelabs.com/beta/user-settings).
 
-3. Reload the settings with `cd .. && cd cfgov-refresh`. Type `y` if prompted.
+3. Reload the settings with `source .env`.
 
 4. Run the tests with `gulp test:acceptance --sauce`.
 
@@ -144,7 +144,7 @@ A number of command-line arguments can be set to test particular configurations:
  - `--suite`: Choose a particular suite or suites to run.
    For example, `gulp test:acceptance --suite=content` or `gulp test:acceptance --suite=content,functional`.
  - `--specs`: Choose a particular spec or specs to run.
-   For example, `gulp test:acceptance --specs=contact-us.feature`, `gulp test:acceptance --specs=contact-us.feature,about-us.feature`, or `gulp test:acceptance --specs=foo*.feature`. If `--suite` is specified, this argument will be ignored. If neither `--suite` nor `--specs` are specified, all specs will be run.
+   For example, `gulp test:acceptance --specs=header.feature`, `gulp test:acceptance --specs=header.feature, pagination.feature`, or `gulp test:acceptance --specs=filterable*.feature`. If `--suite` is specified, this argument will be ignored. If neither `--suite` nor `--specs` are specified, all specs will be run.
  - `--windowSize`: Set the window size in pixels in `w,h` format.
    For example, `gulp test:acceptance --windowSize=900,400`.
  - `--browserName`: Set the browser to run.
