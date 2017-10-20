@@ -576,6 +576,9 @@ FLAGS = {
 
     # The release of the consumer Financial Well Being Scale app
     'FWB_RELEASE': {},
+
+    # The release of new Whistleblowers content/pages
+    'WHISTLEBLOWER_RELEASE': {},
 }
 
 
