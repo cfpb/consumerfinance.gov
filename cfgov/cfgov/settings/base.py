@@ -81,7 +81,6 @@ INSTALLED_APPS = (
     'tinymce',
     'jobmanager',
     'wellbeing',
-    'selfregistration'
 )
 
 OPTIONAL_APPS = [
