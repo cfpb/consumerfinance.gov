@@ -531,7 +531,7 @@ class AnswerPage(CFGOVPage):
 
     edit_handler = TabbedInterface([
         ObjectList(content_panels, heading='Content'),
-        ObjectList(sidebar_panels, heading='Sidebar'),
+        ObjectList(sidebar_panels, heading='Sidebar (English only)'),
         ObjectList(CFGOVPage.settings_panels, heading='Configuration'),
     ])
 
