@@ -18,11 +18,6 @@ frontend() {
         curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
         source $HOME/.nvm/nvm.sh
         nvm install 8.0.0
-        nvm use 8.0.0
-        echo `which node`
-        echo `which npm`
-        echo `node -v`
-        echo `npm -v`
     fi
 
     npm install -g gulp-cli

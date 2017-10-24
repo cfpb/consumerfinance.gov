@@ -2,6 +2,7 @@ pipeline {
     agent any
     options {
         timeout(time: 1, unit: 'HOURS') 
+        tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
     }
     triggers {
         pollSCM('* * * * *')
