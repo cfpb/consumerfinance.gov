@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+# Fail if any command fails.
+set -e
+
+# Set RUNTEST to the first argument if it's not set
 if [ -z $RUNTEST ]; then
     RUNTEST=$1
 fi
-
 
 # Install frontend dependencies
 frontend() {
@@ -26,11 +29,20 @@ frontend() {
 
 # Install backend dependencies
 backend() {
+    # Use .venv as the virtualenv path if not already defined.
+    VIRTUALENV_PATH=".venv"
+
+    # Create virtualenv if needed.
+    if [ ! -e "$VIRTUALENV_PATH" ]; then
+        printf "Creating virtualenv in %s\n" "$VIRTUALENV_PATH"
+        virtualenv -p `which python2.7` "$VIRTUALENV_PATH"
+    else
+        printf "%s already exists\n" "$VIRTUALENV_PATH"
+    fi
+
+    # Install dependencies if provided.
     pip install -r requirements/travis.txt
 }
-
-# Fail if any command fails.
-set -e
 
 echo "running $RUNTEST tests"
 if [ "$RUNTEST" == "frontend" ]; then
