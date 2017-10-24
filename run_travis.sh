@@ -40,6 +40,8 @@ backend() {
         printf "%s already exists\n" "$VIRTUALENV_PATH"
     fi
 
+    source "$VIRTUALENV_PATH/bin/activate"
+
     # Install dependencies if provided.
     pip install -r requirements/travis.txt
 }
