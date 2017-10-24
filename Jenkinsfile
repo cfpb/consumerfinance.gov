@@ -8,17 +8,17 @@ pipeline {
             steps {
                 parallel(
                     "Front-End Tests": {
-                        sleep 2
                         echo 'Hello front-end!'
+                        sh 'run_travis.sh frontend'
+                        }
                     },
                     "Back-End Tests": {
-                        sleep 2
                         echo 'Hello back-end!'
-                        exit 1
+                        sh 'run_travis.sh backend'
                     },
                     "Acceptance Tests": {
-                        sleep 5
                         echo 'Hello acceptance!'
+                        sh 'run_travis.sh acceptance'
                     }
                 )
             }
