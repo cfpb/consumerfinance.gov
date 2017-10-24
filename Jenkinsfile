@@ -11,6 +11,7 @@ pipeline {
                     "Back-End Tests": {
                         sleep 2
                         echo 'Hello back-end!'
+                        exit 1
                     },
                     "Acceptance Tests": {
                         sleep 5
