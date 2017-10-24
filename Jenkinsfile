@@ -9,16 +9,15 @@ pipeline {
     stages {
         stage('Unit Testing') {
             steps {
+                tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                 parallel(
                     "Front-End Tests": {
-                        tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                         sh './run_travis.sh frontend'
                     },
                     "Back-End Tests": {
                         sh './run_travis.sh backend'
                     },
                     "Acceptance Tests": {
-                        tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                         sh './run_travis.sh acceptance'
                     }
                 )
