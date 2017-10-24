@@ -32,10 +32,7 @@
                 content-l__main
                 content-l__large-gutters">
         <div class="content-l_col content-l_col-1-2">
-            <ul class="m-list
-                       m-list__unstyled
-                       m-list__links
-                       u-mb0">
+            <ul class="m-list m-list__links">
             {%- for link in related_links %}
                 <li class="m-list_item">
                     {{- link_template(link) -}}
@@ -44,10 +41,7 @@
             </ul>
         </div>
         <div class="content-l_col content-l_col-1-2">
-            <ul class="m-list
-                       m-list__unstyled
-                       m-list__links
-                       u-mb0">
+            <ul class="m-list m-list__links">
             {%- for link in related_links_2 %}
                 <li class="m-list_item">
                     {{- link_template(link) -}}
@@ -57,9 +51,7 @@
         </div>
     </div><!-- END .content-l -->
 {%- else %}
-    <ul class="m-list
-               m-list__unstyled
-               m-list__links">
+    <ul class="m-list m-list__links">
     {%- for link in related_links %}
         <li class="m-list_item">
             {{- link_template(link) -}}
