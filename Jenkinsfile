@@ -4,7 +4,7 @@ pipeline {
         timeout(time: 1, unit: 'HOURS') 
     }
     triggers {
-        pollSCM('1 * * * *')
+        pollSCM('* * * * *')
     }
     stages {
         stage('Unit Testing') {
