@@ -19,9 +19,8 @@ frontend() {
         source $HOME/.nvm/nvm.sh
         nvm install 8.0.0
         nvm use 8.0.0
-        node -v
-        npm -v
-
+        echo `node -v`
+        echo `npm -v`
     fi
 
     npm install -g gulp-cli
