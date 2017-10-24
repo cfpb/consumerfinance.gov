@@ -12,9 +12,7 @@ fi
 frontend() {
     export CXX=clang++
 
-    if [ $(command -v node) ] && [[ "$(node -v)" == 'v8.'* ]]; then
-        echo "Node v8 found"
-    else
+    if [[ "$(node -v)" != 'v8.'* ]]; then
         curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
         source $HOME/.nvm/nvm.sh
         nvm install 8.0.0
