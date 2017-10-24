@@ -333,21 +333,32 @@ Here's a rundown of each of the scripts called by `setup.sh` and what they do.
    that can trigger different options for different environments.
    Since you ran it with no arguments, it will set up the dev environment.
 
-   It will then set some env vars for the Node and Bower dependency directories.
-1. **Clean project dependencies** (`clean`)
+   It then creates a checksum for `package-lock.json` (if it exists) and
+   `package.json`.
+   This will be used later to determine if dependencies need to be installed.
 
-   The script will now empty out all installed dependencies,
-   so the new installation can start fresh.
-1. **Install project dependencies** (`install`)
+   It will then set some env vars for the Node dependency directories.
+1. **Clean and install project dependencies** (`clean_and_install`)
 
-   Node and Bower dependencies are installed.
+   The script will now compare the checksums to see if it needs to install
+   dependencies, or if they are already up-to-date.
+
+   If the checksums do not match, the script will empty out all installed
+   dependencies (`clean`) so the new installation can start fresh,
+   then install the latest requested dependencies (`install`).
+
    The `devDependencies` from `package.json` are not installed
    if the environment is production, and if it's the dev or test environment,
    it checks to see if Protractor is globally installed.
+
+   Finally, it creates a new checksum for future comparisons.
 1. **Run tasks to build the project for distribution** (`build`)
 
    Finally, the script executes `gulp clean` to wipe out any lingering
    `dist` files, then runs `gulp build` to rebuild everything.
+
+   If this is the production environment, it also triggers
+   `gulp scripts:ondemand`, which isn't part of a standard `gulp build`.
 
 ### 2. `backend.sh`
 
