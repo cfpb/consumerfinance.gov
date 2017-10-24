@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [-z $RUNTEST]; then
+if [ -z $RUNTEST ]; then
     RUNTEST=$1
 fi
 
