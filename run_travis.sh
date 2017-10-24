@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [-z $RUNTEST] {
+    RUNTEST=$1
+}
+
 # Install frontend dependencies
 frontend() {
     export CXX=clang++
