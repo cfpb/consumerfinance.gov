@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-if [-z $RUNTEST] {
+if [-z $RUNTEST]; then
     RUNTEST=$1
-}
+fi
+
 
 # Install frontend dependencies
 frontend() {
