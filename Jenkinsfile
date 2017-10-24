@@ -3,6 +3,7 @@ pipeline {
     options {
         timeout(time: 1, unit: 'HOURS') 
     }
+    wrappers { nodejs("Node 8x Current") }
     triggers {
         pollSCM('* * * * *')
     }
