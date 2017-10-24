@@ -3,6 +3,9 @@ pipeline {
     options {
         timeout(time: 1, unit: 'HOURS') 
     }
+    triggers {
+        pollSCM('1 * * * *')
+    }
     stages {
         stage('Unit Testing') {
             steps {
@@ -10,7 +13,6 @@ pipeline {
                     "Front-End Tests": {
                         echo 'Hello front-end!'
                         sh 'run_travis.sh frontend'
-                        }
                     },
                     "Back-End Tests": {
                         echo 'Hello back-end!'
