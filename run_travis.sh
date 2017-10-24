@@ -19,6 +19,8 @@ frontend() {
         source $HOME/.nvm/nvm.sh
         nvm install 8.0.0
         nvm use 8.0.0
+        echo `which node`
+        echo `which npm`
         echo `node -v`
         echo `npm -v`
     fi
