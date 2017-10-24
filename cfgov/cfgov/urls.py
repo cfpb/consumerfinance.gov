@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtailsharing import urls as wagtailsharing_urls
+from wagtailsharing.views import ServeView
 
 from flags.urls import flagged_url
 
@@ -469,7 +470,9 @@ if settings.ALLOW_ADMIN_URL:
 
 if 'selfregistration' in settings.INSTALLED_APPS:
     from selfregistration.views import CompanySignup
-    pattern = url(r'^company-signup/', CompanySignup.as_view())
+    pattern = flagged_url('WAGTAIL_COMPANY_SIGNUP', r'^company-signup/',
+                          CompanySignup.as_view(), state=False,
+                          fallback=lambda req: ServeView.as_view()(req, req.path)) # noqa
     urlpatterns.append(pattern)
 
 if settings.DEBUG:
@@ -516,6 +519,7 @@ def handle_error(code, request):
 
         return HttpResponse("This request could not be processed, "
                             "HTTP Error %s." % str(code), status=code)
+
 
 handler404 = partial(handle_error, 404)
 handler500 = partial(handle_error, 500)
