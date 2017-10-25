@@ -1,7 +1,5 @@
 node {
     stage('Unit Testing') {
-        // Abort any still-running stages if one fails
-        failFast true
         parallel {
             stage('Front-end tests') {
                 def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
