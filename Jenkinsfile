@@ -5,7 +5,7 @@ pipeline {
         timestamps()
     }
     tools {
-        nodejs 'Node 8x Current'
+        jenkins.plugins.nodejs.tools.NodeJSInstallation 'Node 8x Current'
     }
     triggers {
         pollSCM('* * * * *')
@@ -13,17 +13,23 @@ pipeline {
     stages {
         stage('Unit Testing') {
             steps {
-                parallel(
-                    "Front-End Tests": {
-                        sh './run_travis.sh frontend'
-                    },
-                    "Back-End Tests": {
-                        sh './run_travis.sh backend'
-                    },
-                    "Acceptance Tests": {
-                        sh './run_travis.sh acceptance'
+                parallel {
+                    stage('Front-end tests') {
+                        steps {
+                            sh './run_travis.sh frontend'
+                        },
                     }
-                )
+                    stage('Back-end tests") {
+                        steps {
+                            sh './run_travis.sh backend'
+                        }
+                    }
+                    stage('Acceptance tests') {
+                        steps {
+                            sh './run_travis.sh acceptance'
+                        }
+                    }
+                }
             }
         }
         stage('Coverage') {
