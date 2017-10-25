@@ -8,19 +8,19 @@ node {
                 // Abort any still-running stages if one fails
                 failFast true
                 parallel {
-                    'Front-end tests': {
+                    stage('Front-end tests') {
                         def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                         env.PATH = '${node}/bin:${env.PATH}'
                         steps {
                             sh './run_travis.sh frontend'
                         }
-                    },
-                    'Back-end tests': {
+                    }
+                    stage('Back-end tests') {
                         steps {
                             sh './run_travis.sh backend'
                         }
                     },
-                    'Acceptance tests': {
+                    stage('Acceptance tests') {
                         def node = tool name: 'Node 8x Current', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
                         env.PATH = '${node}/bin:${env.PATH}'
                         steps {
